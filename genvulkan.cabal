@@ -15,8 +15,7 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Data.String.Strip
-                       ProcessVkXml
+  exposed-modules:     ProcessVkXml
                        VkXml.Parser
                        VkXml.Sections.Types
   build-depends:       base >= 4.7 && < 5

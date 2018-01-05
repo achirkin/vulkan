@@ -1,44 +1,22 @@
-{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE OverloadedStrings          #-}
-{-# LANGUAGE RecordWildCards            #-}
 {-# LANGUAGE Strict                     #-}
 {-# LANGUAGE FlexibleContexts           #-}
 {-# LANGUAGE Rank2Types                 #-}
-{-# LANGUAGE ConstraintKinds            #-}
-{-# LANGUAGE DuplicateRecordFields      #-}
 module ProcessVkXml (processVkXmlFile, generateVkSource) where
 
 import           Control.Monad                    (unless)
 import           Control.Monad.Catch
-import           Control.Monad.Except
--- import           Control.Monad.IO.Class
--- import           Control.Monad.Trans.Class
--- import           Control.Monad.Trans.Except
--- import           Control.Monad.Trans.Maybe
 import           Control.Monad.Trans.Resource
-import           Control.Monad.Trans.State.Strict
-import           Control.Monad.Trans.Reader (ReaderT (..))
 import           Control.Monad.Reader
-import           Control.Arrow
 import           Data.Conduit
 import           Data.Conduit.Binary              (sourceFile)
-import           Data.Conduit.Lift
-import           Data.List                        (intercalate)
-import           Data.Map                         (Map)
-import qualified Data.Map.Strict                  as Map
--- import           Data.Maybe
 import           Data.Semigroup
-import           Data.String                      (IsString)
-import           Data.Text                        (Text)
-import qualified Data.Text                        as T
 import           Data.XML.Types
 import           Debug.Trace
 import           Path
 import           Path.IO
-import qualified Data.XML.Types                   as Xml
 import           Text.XML                         as Xml
 import           Text.XML.Stream.Parse            as Xml
-import           GHC.Stack
 
 import VkXml.Parser
 import VkXml.Sections.Types
@@ -79,29 +57,29 @@ generateVkSource outputDir = do
         generateVkSource outputDir
 
 f :: VkXmlParser m => Event -> Sink Event m ()
-f EventBeginDocument                     = return () -- liftIO $ putStrLn "Document started"
-f EventEndDocument                       = return () -- liftIO $ putStrLn "Document ended"
-f (EventBeginDoctype _text _mexternalID) = return () -- liftIO $ print text >> print mexternalID
-f EventEndDoctype                        = return () -- liftIO $ putStrLn "Doctype ended"
-f (EventInstruction _instruction)        = return () -- liftIO $ putStrLn "instruction" >> print instruction
+f EventBeginDocument                     = return ()
+f EventEndDocument                       = return ()
+f (EventBeginDoctype _text _mexternalID) = return ()
+f EventEndDoctype                        = return ()
+f (EventInstruction _instruction)        = return ()
 f ev@(EventBeginElement "types" _)       = do
-   leftover ev
-   typeMap <- parseTypes
-   traceShowM typeMap
+    leftover ev
+    typeMap <- parseTypes
+    mapM_ traceShowM typeMap
 f (EventBeginElement _name _attrs)       = return ()
-f (EventEndElement _name)                = return () -- liftIO $ putStrLn "Element Ended" >> print name
-f (EventContent _content)                = return () -- liftIO $ putStrLn "Content" >> print content
-f (EventComment _txt)                    = return () -- liftIO $ putStrLn "Comment" >> print txt
-f (EventCDATA _txt)                      = return () -- liftIO $ putStrLn "CDATA" >> print txt
+f (EventEndElement _name)                = return ()
+f (EventContent _content)                = return ()
+f (EventComment _txt)                    = return ()
+f (EventCDATA _txt)                      = return ()
 
 
 
-newtype VkComment = VkComment { _unVkComment :: Text }
-  deriving (Eq, Ord, Show, Read, IsString)
+-- newtype VkComment = VkComment { _unVkComment :: Text }
+--   deriving (Eq, Ord, Show, Read, IsString)
 
 
-data VkDoc
-  = VkDoc
-  { title :: Text
-  , comment :: VkComment
-  }
+-- data VkDoc
+--   = VkDoc
+--   { title :: Text
+--   , comment :: VkComment
+--   }
