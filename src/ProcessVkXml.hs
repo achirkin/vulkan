@@ -20,6 +20,7 @@ import           Text.XML.Stream.Parse            as Xml
 
 import VkXml.Parser
 import VkXml.Sections.Types
+import VkXml.Sections.Enums
 
 processVkXmlFile ::
        Path a File -- ^ path to vk.xml
@@ -65,7 +66,11 @@ f (EventInstruction _instruction)        = return ()
 f ev@(EventBeginElement "types" _)       = do
     leftover ev
     typeMap <- parseTypes
-    mapM_ traceShowM typeMap
+    traceM $ "Parsed " <> show (length typeMap) <> " types."
+f ev@(EventBeginElement "enums" _)       = do
+    leftover ev
+    menum <- parseEnums
+    mapM_ traceShowM menum
 f (EventBeginElement _name _attrs)       = return ()
 f (EventEndElement _name)                = return ()
 f (EventContent _content)                = return ()

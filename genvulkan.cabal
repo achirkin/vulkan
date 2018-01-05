@@ -17,7 +17,9 @@ library
   hs-source-dirs:      src
   exposed-modules:     ProcessVkXml
                        VkXml.Parser
+                       VkXml.CommonTypes
                        VkXml.Sections.Types
+                       VkXml.Sections.Enums
   build-depends:       base >= 4.7 && < 5
                      , path -any
                      , path-io -any

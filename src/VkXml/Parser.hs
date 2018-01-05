@@ -17,6 +17,7 @@ module VkXml.Parser
   , parseTag
   , parseTagForceAttrs
   , unContent
+  , forceAttr
   ) where
 
 import           Control.Monad.Catch
@@ -208,6 +209,13 @@ runAttrParser p x = do
       Left (SomeException e) -> throwM e
   where
     uncontent = T.unpack . unContent
+
+forceAttr :: HasCallStack => Name -> ReaderT ParseLoc AttrParser Text
+forceAttr n = do
+  mv <- lift (attr n)
+  case mv of
+    Nothing -> parseFailed $ "Missing tag attribute " <> show n
+    Just v  -> return v
 
 unContent :: Content -> Text
 unContent (ContentText t)   = t
