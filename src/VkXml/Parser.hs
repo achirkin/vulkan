@@ -1,6 +1,7 @@
 {-# LANGUAGE ConstraintKinds            #-}
 {-# LANGUAGE FlexibleContexts           #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE LambdaCase                 #-}
 {-# LANGUAGE OverloadedStrings          #-}
 {-# LANGUAGE RecordWildCards            #-}
 {-# LANGUAGE Strict                     #-}
@@ -15,6 +16,7 @@ module VkXml.Parser
   , awaitReq
   , parseTag
   , parseTagForceAttrs
+  , unContent
   ) where
 
 import           Control.Monad.Catch
@@ -22,11 +24,11 @@ import           Control.Monad.Reader
 import           Control.Monad.State.Class
 import           Data.Conduit
 import           Data.Conduit.Lift
-import           Data.List             (intercalate)
+import           Data.List                 (intercalate)
 import           Data.Semigroup
-import           Data.String           (IsString)
-import           Data.Text             (Text)
-import qualified Data.Text             as T
+import           Data.String               (IsString)
+import           Data.Text                 (Text)
+import qualified Data.Text                 as T
 import           Data.XML.Types
 import           GHC.Stack
 import           Path
@@ -123,7 +125,7 @@ readLoc defLoc pipe
 
 
 -- | Fail with `parseFailed` if encounter end of input
-awaitReq :: VkXmlParser m => Consumer Event m Event
+awaitReq :: (VkXmlParser m, HasCallStack) => Consumer Event m Event
 awaitReq = await >>= maybe (parseFailed "unexpected end of input") pure
 
 
@@ -142,7 +144,8 @@ parseTag :: VkXmlParser m
          -> ConduitM Event o m (Maybe c)
 parseTag name attrParser pipeF' = do
     getAttrs <- runReaderT attrParser <$> ask
-    tag' (matching (name==)) getAttrs (\b -> evalStateC (0 :: Int) pipeGuard =$= pipeF' b)
+    tag' (matching (name==)) getAttrs
+         (\b -> evalStateC (0 :: Int) pipeGuard =$= pipeF' b)
   where
     pipeGuard = awaitReq >>= \ev -> case ev of
       EventBeginElement {} -> do
@@ -160,7 +163,7 @@ parseTag name attrParser pipeF' = do
       _ -> yield ev >> pipeGuard
 
 -- | Raise an exception if attributes failed to parse
-parseTagForceAttrs :: VkXmlParser m
+parseTagForceAttrs :: (VkXmlParser m, HasCallStack)
                    => Name
                       -- ^ match the name exactly
                    -> ReaderT ParseLoc AttrParser b
@@ -172,10 +175,18 @@ parseTagForceAttrs name attrParser pipeF' = do
     mr <- parseTag name attrParser pipeF'
     case mr of
       Just r  -> return $ Just r
-      Nothing -> awaitReq >>= \ev -> case ev of
-        EventBeginElement "type" attrs -> runAttrParser attrParser attrs
-            >>= \x -> x `seq` parseFailed "failed to parse tag type attributes."
-        _ -> leftover ev >> return Nothing
+      Nothing -> await >>=
+       \case
+          Just ev@(EventBeginElement n attrs)
+           | n == name -> runAttrParser attrParser attrs
+              >>= \x -> x `seq` parseFailed
+               ( "failed to parse tag attributes for " <> show ev
+               )
+          Just (EventContent c)
+            | T.null (T.strip (unContent c))
+            -> parseTagForceAttrs name attrParser pipeF'
+          Nothing -> return Nothing
+          Just ev -> leftover ev >> return Nothing
 
 -- | Use GHC hachery to get
 --      `xml-conduit-1.7.0/Text.XML.Stream.Parse.runAttrParser`
@@ -184,7 +195,8 @@ runAttrParser :: (VkXmlParser m, HasCallStack)
 runAttrParser p x = do
     loc <- ask
     let p' = runReaderT p loc
-        pf :: [(Name, [Content])] -> Either SomeException ([(Name, [Content])], a)
+        pf :: [(Name, [Content])]
+           -> Either SomeException ([(Name, [Content])], a)
         pf = p' `seq` unsafeCoerce p'
     case pf x of
       Right ([], r) -> pure r
@@ -195,5 +207,8 @@ runAttrParser p x = do
                             ) xs )
       Left (SomeException e) -> throwM e
   where
-    uncontent (ContentText t) = T.unpack t
-    uncontent (ContentEntity t) = T.unpack t
+    uncontent = T.unpack . unContent
+
+unContent :: Content -> Text
+unContent (ContentText t)   = t
+unContent (ContentEntity t) = t
