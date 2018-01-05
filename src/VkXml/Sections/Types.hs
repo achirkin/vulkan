@@ -1,6 +1,5 @@
 {-# LANGUAGE DuplicateRecordFields      #-}
 {-# LANGUAGE FlexibleContexts           #-}
-{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE MultiParamTypeClasses      #-}
 {-# LANGUAGE OverloadedStrings          #-}
 {-# LANGUAGE RecordWildCards            #-}
@@ -8,13 +7,10 @@
 -- | Vulkan types, as they defined in vk.xml
 module VkXml.Sections.Types
   ( parseTypes
-  , VkTypeName (..), VkTypeQualifier (..)
+  , VkTypeQualifier (..)
   , VkTypeAttrs (..), VkMemberAttrs (..)
   , VkTypeCategory (..)
   , VkType (..), VkTypeData (..), VkTypeMember (..)
-
-  , VkEnumName (..), VkEnumValueName (..)
-  , VkMemberName (..), VkName (..)
   ) where
 
 import           Control.Applicative
@@ -28,7 +24,6 @@ import           Data.Map                   (Map)
 import qualified Data.Map.Strict            as Map
 import           Data.Maybe
 import           Data.Semigroup
-import           Data.String                (IsString)
 import           Data.Text                  (Text)
 import qualified Data.Text                  as T
 import qualified Data.Text.Read             as T
@@ -36,28 +31,11 @@ import           Data.XML.Types
 import           Text.XML.Stream.Parse
 
 import           VkXml.Parser
-
+import           VkXml.CommonTypes
 
 -- * Types
 
 
-newtype VkEnumName = VkEnumName { unVkEnumName :: Text }
-  deriving (Eq, Ord, Show, Read, IsString)
-
-newtype VkEnumValueName = VkEnumValueName { unVkEnumValueName :: Text }
-  deriving (Eq, Ord, Show, Read, IsString)
-
--- | Type name
-newtype VkTypeName = VkTypeName { unVkTypeName :: Text }
-  deriving (Eq, Ord, Show, Read, IsString)
-
--- | E.g. member of a struct
-newtype VkMemberName = VkMemberName { unVkMemberName :: Text }
-  deriving (Eq, Ord, Show, Read, IsString)
-
--- | Some identifier
-newtype VkName = VkName { unVkName :: Text }
-  deriving (Eq, Ord, Show, Read, IsString)
 
 data VkTypeQualifier
   = VkTypeQStar
@@ -147,11 +125,13 @@ data VkType
 -- * Parsing
 
 
--- | Parse type definitions based on xml tag `type`
+-- | Try to parse current tag as being types,
+--
+--   * If tag name does not match, return events upstream as leftovers
+--   * If failed to parse tag "types", throw an exception
 parseTypes :: VkXmlParser m
-            => Sink Event m (Map VkTypeName VkType)
-parseTypes = fmap (fromMaybe mempty)
-           $ parseTag "types" (lift ignoreAttrs)
+            => Sink Event m (Maybe (Map VkTypeName VkType))
+parseTypes = parseTag "types" (lift ignoreAttrs)
            $ \_ -> execStateC mempty (awaitForever go)
   where
     -- encounter new type definition
