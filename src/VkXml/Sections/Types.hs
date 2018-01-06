@@ -13,15 +13,12 @@ module VkXml.Sections.Types
   , VkType (..), VkTypeData (..), VkTypeMember (..)
   ) where
 
-import           Control.Applicative
+import           Control.Arrow
+import           Control.Applicative ((<|>))
 import           Control.Monad.Except
-import           Control.Monad.State.Class
 import           Control.Monad.Trans.Reader (ReaderT (..))
 import           Data.Coerce
 import           Data.Conduit
-import           Data.Conduit.Lift
-import           Data.Map                   (Map)
-import qualified Data.Map.Strict            as Map
 import           Data.Maybe
 import           Data.Semigroup
 import           Data.Text                  (Text)
@@ -112,7 +109,7 @@ data VkType
   | VkTypeComposite
     { name       :: VkTypeName
     , attributes :: VkTypeAttrs
-    , members    :: [(Maybe Text, [VkTypeMember])]
+    , members    :: Sections VkTypeMember
       -- ^ Members sometimes separated by comments
     }
   deriving Show
@@ -130,24 +127,8 @@ data VkType
 --   * If tag name does not match, return events upstream as leftovers
 --   * If failed to parse tag "types", throw an exception
 parseTypes :: VkXmlParser m
-            => Sink Event m (Maybe (Map VkTypeName VkType))
-parseTypes = parseTag "types" (lift ignoreAttrs)
-           $ \_ -> execStateC mempty (awaitForever go)
-  where
-    -- encounter new type definition
-    go ev@(EventBeginElement "type" _) = do
-      leftover ev -- need to put event back to do a propser parsing
-      typeI <- transPipe lift parseVkType
-      modify' (Map.insert (name (typeI :: VkType)) typeI)
-    -- do not expect types section to have a meaningful content
-    go (EventContent _)                    = return ()
-    -- ignore comments for now
-    go (EventBeginElement "comment" _)     = return ()
-    go (EventEndElement "comment")         = return ()
-    -- ignore xml comments too
-    go EventComment {}                     = return ()
-    -- unhandled token
-    go e = parseFailed $ "unexpected token " <> show e
+            => Sink Event m (Maybe (Sections VkType))
+parseTypes = tagIgnoreAttrs "types" $ parseSections parseVkType
 
 
 
@@ -311,55 +292,60 @@ parseVkTypeData =
 
 
 
-parseVkType :: VkXmlParser m
-            => Sink Event m VkType
-parseVkType = do
-    mr <- parseTagForceAttrs "type" parseVkTypeAttrs $ \attrs -> do
-      mems <- parseMembers []
-      case (mems, name (attrs :: VkTypeAttrs)) of
-        ([], Just n) -> VkTypeSimple n attrs <$> parseVkTypeData
-        (_ , Just n) -> pure $ VkTypeComposite n attrs mems
-        ([], Nothing) -> do
-          d <- parseVkTypeData
-          case fst <$> name (d :: VkTypeData VkTypeName) of
-            Just n -> pure $ VkTypeSimple n attrs d
-            Nothing -> parseFailed
-                     $ "Could not get type name from tag content or attributes "
-                     <> show attrs <> " "
-                     <> show d
-        (_, Nothing) -> parseFailed
-                     $ "Could not get type name from tag attributes "
-                     <> show attrs
-    case mr of
+parseVkType :: VkXmlParser m => Sink Event m (Maybe VkType)
+parseVkType = parseTagForceAttrs "type" parseVkTypeAttrs $ \attrs ->
+  hasMembers >>= \has ->
+    if has
+    then do
+      mems <- parseSections parseVkTypeMember
+      case name (attrs :: VkTypeAttrs) of
+        Just n  -> pure $ VkTypeComposite n attrs mems
+        Nothing -> parseFailed
+                 $ "Could not get type name from tag attributes "
+                 <> show attrs
+    else do
+      d <- parseVkTypeData
+      case name (attrs :: VkTypeAttrs)
+       <|> fst <$> name (d :: VkTypeData VkTypeName) of
+        Just n -> pure $ VkTypeSimple n attrs d
+        Nothing -> parseFailed
+                 $ "Could not get type name from tag content or attributes "
+                 <> show attrs <> " "
+                 <> show d
+
+parseVkTypeMember :: VkXmlParser m
+                  => Sink Event m (Maybe VkTypeMember)
+parseVkTypeMember = parseTagForceAttrs "member" parseVkMemberAttrs $ \ma -> do
+    d <- parseVkTypeData
+    case fst <$> name (d :: VkTypeData VkMemberName) of
+      Just n -> VkTypeMember n ma <$> parseVkTypeData
       Nothing -> parseFailed
-                "failed to parse tag type, unexpected evet tag 'type'"
-      Just r  -> return r
+               $ "Could not get name from member tag content "
+               <> show d
+
+-- | Look ahead if there are any "member" tags inside,
+--   and no other tags except "member" or "comment"
+hasMembers :: VkXmlParser m => Sink Event m Bool
+hasMembers = do
+    cmns <- grabComments
+    (ctnPiece, mev) <- grabContent
+    returnAll cmns ctnPiece mev
+    return $ case mev of
+      Just (EventBeginElement "member" _) -> True
+      _ -> False
   where
-    parseMembers mems = do
+    grabComments = many $ tagIgnoreAttrs "comment" content
+    grabContent = do
       mev <- await
       case mev of
-        Nothing -> return mems
-        Just ev -> leftover ev >> do
-          mcomment <- tagIgnoreAttrs "comment" contentMaybe
-          mmem <- parseTagForceAttrs "member"
-            parseVkMemberAttrs
-            (\ma -> do
-              d <- parseVkTypeData
-              case fst <$> name (d :: VkTypeData VkMemberName) of
-                Just n -> VkTypeMember n ma <$> parseVkTypeData
-                Nothing -> parseFailed
-                         $ "Could not get name from member tag content "
-                         <> show d
-            )
-          case (mcomment, mmem, mems) of
-            (Just com, Just mem, _) -> parseMembers ((com, [mem]):mems)
-            (Nothing, Nothing, _) -> pure $ reverse mems
-            (Nothing, Just mem, []) -> parseMembers [(Nothing, [mem])]
-            (Nothing, Just mem, (c,ms):xs) -> parseMembers ((c, ms ++ [mem]):xs)
-            -- looks like we have read a wrong thing!
-            (Just (Just com), Nothing, []) -> do
-              leftover (EventBeginElement "comment" [])
-              leftover (EventContent (ContentText com))
-              leftover (EventEndElement "comment")
-              return []
-            _ -> pure $ reverse mems
+        Just (EventContent c) -> first (unContent c <>) <$> grabContent
+        _ -> return (mempty, mev)
+    returnAll cmns ctnPiece mev = do
+      mapM_ leftover mev
+      unless (T.null ctnPiece) $
+        leftover . EventContent $ ContentText ctnPiece
+      mapM_ returnComment $ reverse cmns
+    returnComment c = do
+      leftover (EventEndElement "comment")
+      leftover (EventContent (ContentText c))
+      leftover (EventBeginElement "comment" [])

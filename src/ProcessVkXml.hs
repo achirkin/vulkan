@@ -19,6 +19,7 @@ import           Text.XML                         as Xml
 import           Text.XML.Stream.Parse            as Xml
 
 import VkXml.Parser
+import VkXml.CommonTypes
 import VkXml.Sections.Types
 import VkXml.Sections.Enums
 
@@ -66,7 +67,7 @@ f (EventInstruction _instruction)        = return ()
 f ev@(EventBeginElement "types" _)       = do
     leftover ev
     typeMap <- parseTypes
-    traceM $ "Parsed " <> show (length typeMap) <> " types."
+    traceM $ "Parsed " <> show (length . items <$> typeMap) <> " types."
 f ev@(EventBeginElement "enums" _)       = do
     leftover ev
     menum <- parseEnums
