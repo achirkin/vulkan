@@ -3,7 +3,7 @@
 {-# LANGUAGE OverloadedStrings          #-}
 module VkXml.CommonTypes
   ( VkEnumValueName (..)
-  , VkTypeName (..), VkMemberName (..)
+  , VkTypeName (..), VkMemberName (..), VkCommandName (..)
   , Sections (..), parseSections
   ) where
 
@@ -28,6 +28,10 @@ newtype VkTypeName = VkTypeName { unVkTypeName :: Text }
 
 -- | E.g. member of a struct
 newtype VkMemberName = VkMemberName { unVkMemberName :: Text }
+  deriving (Eq, Ord, Show, Read, IsString)
+
+-- | Type name
+newtype VkCommandName = VkCommandName { unVkCommandName :: Text }
   deriving (Eq, Ord, Show, Read, IsString)
 
 

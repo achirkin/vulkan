@@ -4,6 +4,7 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE Strict                #-}
+-- | Vulkan enums, as they defined in vk.xml
 module VkXml.Sections.Enums
   ( parseEnums
   , VkEnums (..)

@@ -78,6 +78,7 @@ f ev@(EventBeginElement "enums" _)       = do
 f ev@(EventBeginElement "commands" _)       = do
     leftover ev
     mcoms <- parseCommands
+    -- mapM_ traceShowM (maybe [] commands mcoms)
     traceM $ "Parsed " <> show (maybe 0 (length . commands) mcoms) <> " commands."
 f (EventBeginElement _name _attrs)       = return ()
 f (EventEndElement _name)                = return ()
