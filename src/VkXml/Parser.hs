@@ -20,14 +20,15 @@ module VkXml.Parser
   , forceAttr
   ) where
 
+import           Control.Applicative
 import           Control.Monad.Catch
 import           Control.Monad.Reader
 import           Control.Monad.State.Class
+import           Control.Monad.Zip
 import           Data.Conduit
 import           Data.Conduit.Lift
 import           Data.List                 (intercalate)
 import           Data.Semigroup
-import           Data.String               (IsString)
 import           Data.Text                 (Text)
 import qualified Data.Text                 as T
 import           Data.XML.Types
@@ -40,26 +41,61 @@ import           Unsafe.Coerce
 
 
 defParseLoc :: Path b File
-             -> ParseLoc
+            -> ParseLoc
 defParseLoc = ParseLoc Nothing [] . toFilePath
+
+newtype VkXmlParserT m a
+  = VkXmlParserT {runVkXmlParserT :: ReaderT ParseLoc m a }
+  deriving ( Functor, Applicative, Alternative, Monad, MonadTrans
+           , MonadFix, MonadIO, MonadPlus, MonadZip
+           , MonadReader ParseLoc, MonadState s
+           )
+
+instance MonadThrow m => MonadThrow (VkXmlParserT m) where
+  throwM err' = VkXmlParserT $ do
+      eLoc <- ask
+      let (cs, err) = case fromException (toException err') of
+            Nothing                          -> (callStack, show err')
+            Just (VkXmlParseException cs' e) -> (cs', show e)
+      throwM . VkXmlParseException cs . T.pack
+        $ "\nParsing failed at " <> show eLoc <> ":\n  " <> err
+        <> maybe "" (\e -> "\nlast opening tags were:\n" <> T.unpack e)
+                    (mBeginTag eLoc)
+        <> "\n" <> prettyCallStack cs
+    where
+      mBeginTag eLoc = case treePath eLoc of
+        []      -> Nothing
+        [x]     -> Just $ mkTag x
+        [x,y]   -> Just $ mkTag y <> "\n  " <> mkTag x
+        x:y:z:_ -> Just $ mkTag z <> "\n  " <> mkTag y <> "\n    " <> mkTag x
+      mkTag (n,as) =
+                  "<" <> nameLocalName n
+                   <> T.concat (map mkAttr as)
+                   <> ">"
+      mkAttr (n, cs) = " " <> nameLocalName n <> "=\""
+                           <> T.intercalate ","  (map unContent cs)
+                           <> "\""
+
 
 -- | Location of parsing in the xml file
 data ParseLoc = ParseLoc
   { posRange :: Maybe PositionRange
-  , treePath :: [Name]
+  , treePath :: [(Name, [(Name, [Content])])]
   , filePath :: FilePath
   }
 
 instance Show ParseLoc where
   show ParseLoc {..}
     = "{"
-       <> (intercalate "." . map (T.unpack . nameLocalName) $ reverse treePath)
+       <> (intercalate "." . map (T.unpack . nameLocalName . fst) $ reverse treePath)
        <> "} in " <> filePath
                 <> maybe "" ((":[" <>) . (<> "]") . show ) posRange
 
-newtype VkXmlParseException
-  = VkXmlParseException { unVkXmlParseException :: Text }
-  deriving IsString
+data VkXmlParseException
+  = VkXmlParseException
+  { exceptCS              :: CallStack
+  , unVkXmlParseException :: Text
+  }
 instance Show VkXmlParseException where
   show msg = "VkXmlParseException: " <> T.unpack (unVkXmlParseException msg)
 instance Exception VkXmlParseException
@@ -73,21 +109,18 @@ type VkXmlParser m =
 -- | Show a meaningful message with error location
 --   if parsing xml file has failed.
 parseFailed :: (VkXmlParser m, HasCallStack) => String -> m a
-parseFailed msg = do
-  eLoc <- ask
-  throwM . VkXmlParseException . T.pack
-    $ "Parsing failed at " <> show eLoc <> ": " <> msg
-    <> "\n" <> prettyCallStack callStack
+parseFailed msg =
+  throwM . VkXmlParseException callStack $ T.pack msg
 
 
 -- | Add full location information to the parsing events
 parseWithLoc :: Monad m
              => ParseLoc
-             -> ConduitM Event o (ReaderT ParseLoc m) r
+             -> ConduitM Event o (VkXmlParserT m) r
              -> ConduitM EventPos o m r
 parseWithLoc initLoc pipe = parseWithLoc' initLoc =$= readLoc initLoc pipe
 
-goDownTree :: Name -> ParseLoc -> ParseLoc
+goDownTree :: (Name, [(Name, [Content])]) -> ParseLoc -> ParseLoc
 goDownTree n pl = pl { treePath = n : treePath pl}
 
 goUpTree :: ParseLoc -> ParseLoc
@@ -104,21 +137,21 @@ parseWithLoc' defLoc
     updatedLoc <- lift $ do
       modify' (updatePos mloc)
       case ev of
-        EventBeginElement n _ -> modify' (goDownTree n)
-        EventEndElement _     -> modify' goUpTree
-        _                     -> return ()
+        EventBeginElement n attrs -> modify' (goDownTree (n,attrs))
+        EventEndElement _         -> modify' goUpTree
+        _                         -> return ()
       get
     yield ( updatedLoc, ev )
 
 -- | Move location information from upstream to MonadReader environment
 readLoc :: Monad m
         => ParseLoc
-        -> ConduitM Event o (ReaderT ParseLoc m) r
+        -> ConduitM Event o (VkXmlParserT m) r
         -> ConduitM (ParseLoc, Event) o m r
 readLoc defLoc pipe
     = evalStateC defLoc
     $ awaitForever updateStateAndYield
-   =$= transPipe (\x -> get >>= lift . runReaderT x) pipe
+   =$= transPipe (\x -> get >>= lift . runReaderT (runVkXmlParserT x)) pipe
   where
     updateStateAndYield (l, ev) = lift (put l) >> yield ev
 
