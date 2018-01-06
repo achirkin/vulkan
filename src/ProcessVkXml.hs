@@ -28,6 +28,7 @@ import           VkXml.Sections.Types
 import           VkXml.Sections.Feature
 import           VkXml.Sections.VendorIds
 import           VkXml.Sections.Tags
+import           VkXml.Sections.Extensions
 
 processVkXmlFile ::
        Path a File -- ^ path to vk.xml
@@ -103,6 +104,13 @@ f ev@(EventBeginElement "tags" _)       = do
     traceM $ "Parsed "
           <> show (maybe 0 (length . tags) mtags)
           <> " tags."
+f ev@(EventBeginElement "extensions" _)       = do
+    leftover ev
+    mextensions <- parseExtensions
+    -- mapM_ traceShowM (maybe [] extensions mextensions)
+    traceM $ "Parsed "
+          <> show (maybe 0 (length . extensions) mextensions)
+          <> " extensions."
 f (EventBeginElement _name _attrs)       = return ()
 f (EventEndElement _name)                = return ()
 f (EventContent _content)                = return ()

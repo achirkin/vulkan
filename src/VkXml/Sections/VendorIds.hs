@@ -8,8 +8,7 @@
 module VkXml.Sections.VendorIds
   ( parseVendorIds
   , VendorIds (..), VendorId (..)
-  )
-   where
+  ) where
 
 import           Data.Conduit
 import           Data.Text             (Text)

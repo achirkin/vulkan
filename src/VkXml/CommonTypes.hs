@@ -4,7 +4,7 @@
 module VkXml.CommonTypes
   ( VkEnumValueName (..)
   , VkTypeName (..), VkMemberName (..), VkCommandName (..)
-  , Sections (..), VkTagName (..)
+  , Sections (..), VkTagName (..), VkExtensionName (..)
   , parseSections
   ) where
 
@@ -39,6 +39,9 @@ newtype VkCommandName = VkCommandName { unVkCommandName :: Text }
 newtype VkTagName = VkTagName { unVkTagName :: Text }
   deriving (Eq, Ord, Show, Read, IsString)
 
+
+newtype VkExtensionName = VkExtensionName { unVkExtensionName :: Text }
+  deriving (Eq, Ord, Show, Read, IsString)
 
 
 -- | Parse a list of elements interspersed with comments,
