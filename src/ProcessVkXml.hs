@@ -25,6 +25,7 @@ import           VkXml.Parser
 import           VkXml.Sections.Commands
 import           VkXml.Sections.Enums
 import           VkXml.Sections.Types
+import           VkXml.Sections.Feature
 
 processVkXmlFile ::
        Path a File -- ^ path to vk.xml
@@ -82,6 +83,12 @@ f ev@(EventBeginElement "commands" _)       = do
     -- mapM_ traceShowM (maybe [] commands mcoms)
     traceM $ "Parsed "
           <> show (maybe 0 (length . commands) mcoms) <> " commands."
+f ev@(EventBeginElement "feature" _)       = do
+    leftover ev
+    mfeature <- parseFeature
+    traceM $ "Parsed "
+          <> show (maybe 0 (length . reqList) mfeature)
+          <> " requires in a feature."
 f (EventBeginElement _name _attrs)       = return ()
 f (EventEndElement _name)                = return ()
 f (EventContent _content)                = return ()

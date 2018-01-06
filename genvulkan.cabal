@@ -21,6 +21,7 @@ library
                        VkXml.Sections.Types
                        VkXml.Sections.Enums
                        VkXml.Sections.Commands
+                       VkXml.Sections.Feature
   build-depends:       base >= 4.7 && < 5
                      , path -any
                      , path-io -any
