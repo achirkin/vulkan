@@ -20,7 +20,6 @@ import           Data.Maybe
 import           Data.Semigroup
 import           Data.Text                  (Text)
 import qualified Data.Text                  as T
-import qualified Data.Text.Read             as T
 import           Data.XML.Types
 import           Text.XML.Stream.Parse
 
@@ -149,7 +148,7 @@ parseVkCommandParam =
         paramArraySize = parseArraySize paramArraySizeTxt
     return VkCommandParam {..}
   where
-    parseArraySize t = case T.decimal . T.drop 1 $ T.strip t of
+    parseArraySize t = case decOrHex . T.drop 1 $ T.strip t of
       Left _      -> Nothing
       Right (i,_) -> Just i
 

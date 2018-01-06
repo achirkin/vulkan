@@ -24,7 +24,6 @@ import           Data.Maybe
 import           Data.Semigroup
 import           Data.Text                  (Text)
 import qualified Data.Text                  as T
-import qualified Data.Text.Read             as T
 import           Data.XML.Types
 import           Text.XML.Stream.Parse
 
@@ -256,7 +255,7 @@ parseVkTypeData =
               parseQualifiers n
     getSimpleQualifiers t = case T.uncons (T.stripStart t) of
       Just ('*', s) -> VkTypeQStar : getSimpleQualifiers s
-      Just ('[', s) -> case T.decimal (T.stripStart s) of
+      Just ('[', s) -> case decOrHex (T.stripStart s) of
         Left _       -> case T.breakOn "]" s of
            (enumname, rest) -> VkTypeQArrLenEnum (VkEnumValueName $ T.strip enumname)
                                : getSimpleQualifiers (T.drop 1 rest)

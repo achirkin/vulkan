@@ -4,7 +4,8 @@
 module VkXml.CommonTypes
   ( VkEnumValueName (..)
   , VkTypeName (..), VkMemberName (..), VkCommandName (..)
-  , Sections (..), parseSections
+  , Sections (..), VkTagName (..)
+  , parseSections
   ) where
 
 import           Control.Monad.State.Class
@@ -30,9 +31,14 @@ newtype VkTypeName = VkTypeName { unVkTypeName :: Text }
 newtype VkMemberName = VkMemberName { unVkMemberName :: Text }
   deriving (Eq, Ord, Show, Read, IsString)
 
--- | Type name
+-- | Command name
 newtype VkCommandName = VkCommandName { unVkCommandName :: Text }
   deriving (Eq, Ord, Show, Read, IsString)
+
+
+newtype VkTagName = VkTagName { unVkTagName :: Text }
+  deriving (Eq, Ord, Show, Read, IsString)
+
 
 
 -- | Parse a list of elements interspersed with comments,

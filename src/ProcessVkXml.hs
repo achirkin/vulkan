@@ -26,6 +26,8 @@ import           VkXml.Sections.Commands
 import           VkXml.Sections.Enums
 import           VkXml.Sections.Types
 import           VkXml.Sections.Feature
+import           VkXml.Sections.VendorIds
+import           VkXml.Sections.Tags
 
 processVkXmlFile ::
        Path a File -- ^ path to vk.xml
@@ -89,6 +91,18 @@ f ev@(EventBeginElement "feature" _)       = do
     traceM $ "Parsed "
           <> show (maybe 0 (length . reqList) mfeature)
           <> " requires in a feature."
+f ev@(EventBeginElement "vendorids" _)       = do
+    leftover ev
+    mvs <- parseVendorIds
+    traceM $ "Parsed "
+          <> show (maybe 0 (length . vendorids) mvs)
+          <> " vendorids."
+f ev@(EventBeginElement "tags" _)       = do
+    leftover ev
+    mtags <- parseTags
+    traceM $ "Parsed "
+          <> show (maybe 0 (length . tags) mtags)
+          <> " tags."
 f (EventBeginElement _name _attrs)       = return ()
 f (EventEndElement _name)                = return ()
 f (EventContent _content)                = return ()
