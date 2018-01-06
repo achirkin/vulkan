@@ -126,7 +126,7 @@ parseVkEnumValueAttrs :: ReaderT ParseLoc AttrParser VkEnumValue
 parseVkEnumValueAttrs = do
   n <- VkEnumValueName <$> forceAttr "name"
   mc <- lift $ attr "comment"
-  ev <- T.signed T.decimal <$> forceAttr "value"
+  ev <- T.signed decOrHex <$> forceAttr "value"
   case ev of
     Left err -> parseFailed
               $ "could not parse enum value: " <> err
@@ -136,8 +136,8 @@ parseVkBitmaskValueAttrs :: ReaderT ParseLoc AttrParser VkBitmaskValue
 parseVkBitmaskValueAttrs = do
   n <- VkEnumValueName <$> forceAttr "name"
   mc <- lift $ attr "comment"
-  mbpv <- fmap T.decimal <$> lift (attr "bitpos")
-  mvav <- fmap (T.signed T.decimal) <$> lift (attr "value")
+  mbpv <- fmap decOrHex <$> lift (attr "bitpos")
+  mvav <- fmap (T.signed decOrHex) <$> lift (attr "value")
   case (mbpv, mvav) of
     (Nothing, Nothing) -> parseFailed
                           "missing bitpos or value attribute for a bitmask."

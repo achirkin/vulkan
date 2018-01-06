@@ -18,6 +18,7 @@ module VkXml.Parser
   , parseTagForceAttrs
   , unContent
   , forceAttr
+  , decOrHex
   ) where
 
 import           Control.Applicative
@@ -31,6 +32,7 @@ import           Data.List                 (intercalate)
 import           Data.Semigroup
 import           Data.Text                 (Text)
 import qualified Data.Text                 as T
+import qualified Data.Text.Read            as T
 import           Data.XML.Types
 import           GHC.Stack
 import           Path
@@ -253,3 +255,8 @@ forceAttr n = do
 unContent :: Content -> Text
 unContent (ContentText t)   = t
 unContent (ContentEntity t) = t
+
+decOrHex :: Integral a => T.Reader a
+decOrHex t = if "0x" `T.isPrefixOf` t
+             then T.hexadecimal t
+             else T.decimal t

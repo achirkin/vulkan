@@ -22,6 +22,8 @@ library
                        VkXml.Sections.Enums
                        VkXml.Sections.Commands
                        VkXml.Sections.Feature
+                       VkXml.Sections.VendorIds
+                       VkXml.Sections.Tags
   build-depends:       base >= 4.7 && < 5
                      , path -any
                      , path-io -any
