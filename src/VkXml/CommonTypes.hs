@@ -1,5 +1,5 @@
-{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE FlexibleContexts           #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE OverloadedStrings          #-}
 module VkXml.CommonTypes
   ( VkName (..)
@@ -10,10 +10,10 @@ module VkXml.CommonTypes
 
 import           Control.Monad.State.Class
 import           Control.Monad.Trans.Class
-import           Data.String                (IsString)
-import           Data.Text                  (Text)
 import           Data.Conduit
 import           Data.Conduit.Lift
+import           Data.String               (IsString)
+import           Data.Text                 (Text)
 import           Data.XML.Types
 import           Text.XML.Stream.Parse
 
@@ -35,11 +35,11 @@ newtype VkMemberName = VkMemberName { unVkMemberName :: Text }
 newtype VkName = VkName { unVkName :: Text }
   deriving (Eq, Ord, Show, Read, IsString)
 
--- | Parse a list of elemenents interspersed with comments,
+-- | Parse a list of elements interspersed with comments,
 --   that overwise would be a homogenous list of xml tag.
 data Sections a
   = Sections
-  { items :: [a]
+  { items    :: [a]
     -- ^ List of items in original order from xml file
   , comments :: [(Int, Text)]
     -- ^ Comments and their indices in between items.

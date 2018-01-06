@@ -1,27 +1,28 @@
-{-# LANGUAGE OverloadedStrings          #-}
-{-# LANGUAGE Strict                     #-}
-{-# LANGUAGE FlexibleContexts           #-}
-{-# LANGUAGE Rank2Types                 #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE Rank2Types            #-}
+{-# LANGUAGE Strict                #-}
 module ProcessVkXml (processVkXmlFile, generateVkSource) where
 
-import           Control.Monad                    (unless)
+import           Control.Monad                (unless)
 import           Control.Monad.Catch
-import           Control.Monad.Trans.Resource
 import           Control.Monad.Reader
+import           Control.Monad.Trans.Resource
 import           Data.Conduit
-import           Data.Conduit.Binary              (sourceFile)
+import           Data.Conduit.Binary          (sourceFile)
 import           Data.Semigroup
 import           Data.XML.Types
 import           Debug.Trace
 import           Path
 import           Path.IO
-import           Text.XML                         as Xml
-import           Text.XML.Stream.Parse            as Xml
+import           Text.XML                     as Xml
+import           Text.XML.Stream.Parse        as Xml
 
-import VkXml.Parser
-import VkXml.CommonTypes
-import VkXml.Sections.Types
-import VkXml.Sections.Enums
+import           VkXml.CommonTypes
+import           VkXml.Parser
+import           VkXml.Sections.Enums
+import           VkXml.Sections.Types
 
 processVkXmlFile ::
        Path a File -- ^ path to vk.xml
