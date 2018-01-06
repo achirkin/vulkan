@@ -1,3 +1,4 @@
+{-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE OverloadedStrings     #-}
@@ -21,6 +22,7 @@ import           Text.XML.Stream.Parse        as Xml
 
 import           VkXml.CommonTypes
 import           VkXml.Parser
+import           VkXml.Sections.Commands
 import           VkXml.Sections.Enums
 import           VkXml.Sections.Types
 
@@ -68,11 +70,15 @@ f (EventInstruction _instruction)        = return ()
 f ev@(EventBeginElement "types" _)       = do
     leftover ev
     typeMap <- parseTypes
-    traceM $ "Parsed " <> show (length . items <$> typeMap) <> " types."
+    traceM $ "Parsed " <> show (maybe 0 (length . items) typeMap) <> " types."
 f ev@(EventBeginElement "enums" _)       = do
     leftover ev
     menum <- parseEnums
-    mapM_ traceShowM menum
+    mapM_ (traceM . reportEnums) menum
+f ev@(EventBeginElement "commands" _)       = do
+    leftover ev
+    mcoms <- parseCommands
+    traceM $ "Parsed " <> show (maybe 0 (length . commands) mcoms) <> " commands."
 f (EventBeginElement _name _attrs)       = return ()
 f (EventEndElement _name)                = return ()
 f (EventContent _content)                = return ()
@@ -80,13 +86,10 @@ f (EventComment _txt)                    = return ()
 f (EventCDATA _txt)                      = return ()
 
 
-
--- newtype VkComment = VkComment { _unVkComment :: Text }
---   deriving (Eq, Ord, Show, Read, IsString)
-
-
--- data VkDoc
---   = VkDoc
---   { title :: Text
---   , comment :: VkComment
---   }
+reportEnums :: VkEnums -> String
+reportEnums VkEnums {memberEnums = xs, name = VkTypeName n }
+  = "Parsed " <> show (length . items $ xs) <> " enums " <> show n <> "."
+reportEnums VkBitmasks {memberMasks = xs, name = VkTypeName n }
+  = "Parsed " <> show (length . items $ xs) <> " bitmasks " <> show n <> "."
+reportEnums VkConstants {memberConsts = xs, name = VkTypeName n }
+  = "Parsed " <> show (length . items $ xs) <> " constants " <> show n <> "."

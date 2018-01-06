@@ -20,6 +20,7 @@ library
                        VkXml.CommonTypes
                        VkXml.Sections.Types
                        VkXml.Sections.Enums
+                       VkXml.Sections.Commands
   build-depends:       base >= 4.7 && < 5
                      , path -any
                      , path-io -any
