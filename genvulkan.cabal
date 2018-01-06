@@ -8,7 +8,7 @@ license-file:        LICENSE
 author:              Artem Chirkin
 maintainer:          chirkin@arch.ethz.ch
 copyright:           Copyright: (c) 2017 Artem Chirkin
-category:            Vulkan
+category:            vulkan, bsd3, graphics, library, opengl
 build-type:          Simple
 extra-source-files:  README.md
 cabal-version:       >=1.10
