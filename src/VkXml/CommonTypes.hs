@@ -2,8 +2,7 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE OverloadedStrings          #-}
 module VkXml.CommonTypes
-  ( VkName (..)
-  , VkEnumValueName (..)
+  ( VkEnumValueName (..)
   , VkTypeName (..), VkMemberName (..)
   , Sections (..), parseSections
   ) where
@@ -31,9 +30,6 @@ newtype VkTypeName = VkTypeName { unVkTypeName :: Text }
 newtype VkMemberName = VkMemberName { unVkMemberName :: Text }
   deriving (Eq, Ord, Show, Read, IsString)
 
--- | Some identifier
-newtype VkName = VkName { unVkName :: Text }
-  deriving (Eq, Ord, Show, Read, IsString)
 
 -- | Parse a list of elements interspersed with comments,
 --   that overwise would be a homogenous list of xml tag.
