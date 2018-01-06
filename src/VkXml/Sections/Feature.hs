@@ -8,8 +8,7 @@
 module VkXml.Sections.Feature
   ( parseFeature
   , VkFeature (..), VkRequire (..)
-  )
-   where
+  ) where
 
 import           Data.Conduit
 import           Data.Text             (Text)

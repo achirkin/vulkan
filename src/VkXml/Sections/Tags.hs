@@ -8,8 +8,7 @@
 module VkXml.Sections.Tags
   ( parseTags
   , VkTags (..), VkTag (..)
-  )
-   where
+  ) where
 
 import           Data.Conduit
 import           Data.Text             (Text)
@@ -32,10 +31,10 @@ data VkTag
   , contact :: Text
   } deriving Show
 
--- | Try to parse current tag as being "vendorids",
+-- | Try to parse current tag as being "tags",
 --
 --   * If tag name does not match, return events upstream as leftovers
---   * If failed to parse tag "vendorids", throw an exception
+--   * If failed to parse tag "tags", throw an exception
 parseTags :: VkXmlParser m => Sink Event m (Maybe VkTags)
 parseTags =
   parseTagForceAttrs "tags" (forceAttr "comment") $ \comment -> do
