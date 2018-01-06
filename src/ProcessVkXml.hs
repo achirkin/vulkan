@@ -69,17 +69,19 @@ f EventEndDoctype                        = return ()
 f (EventInstruction _instruction)        = return ()
 f ev@(EventBeginElement "types" _)       = do
     leftover ev
-    typeMap <- parseTypes
-    traceM $ "Parsed " <> show (maybe 0 (length . items) typeMap) <> " types."
+    mtypes <- parseTypes
+    traceM $ "Parsed "
+          <> show (maybe 0 (length . items . types) mtypes) <> " types."
 f ev@(EventBeginElement "enums" _)       = do
     leftover ev
-    menum <- parseEnums
-    mapM_ (traceM . reportEnums) menum
+    menums <- parseEnums
+    mapM_ (traceM . reportEnums) menums
 f ev@(EventBeginElement "commands" _)       = do
     leftover ev
     mcoms <- parseCommands
     -- mapM_ traceShowM (maybe [] commands mcoms)
-    traceM $ "Parsed " <> show (maybe 0 (length . commands) mcoms) <> " commands."
+    traceM $ "Parsed "
+          <> show (maybe 0 (length . commands) mcoms) <> " commands."
 f (EventBeginElement _name _attrs)       = return ()
 f (EventEndElement _name)                = return ()
 f (EventContent _content)                = return ()

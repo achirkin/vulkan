@@ -7,6 +7,7 @@
 -- | Vulkan types, as they defined in vk.xml
 module VkXml.Sections.Types
   ( parseTypes
+  , VkTypes (..)
   , VkTypeQualifier (..)
   , VkTypeAttrs (..), VkMemberAttrs (..)
   , VkTypeCategory (..)
@@ -31,6 +32,12 @@ import           VkXml.CommonTypes
 import           VkXml.Parser
 
 -- * Types
+
+data VkTypes
+  = VkTypes
+  { comment :: Text
+  , types   :: Sections VkType
+  } deriving Show
 
 
 
@@ -126,12 +133,11 @@ data VkType
 --
 --   * If tag name does not match, return events upstream as leftovers
 --   * If failed to parse tag "types", throw an exception
-parseTypes :: VkXmlParser m
-            => Sink Event m (Maybe (Sections VkType))
-parseTypes = tagIgnoreAttrs "types" $ parseSections parseVkType
-
-
-
+parseTypes :: VkXmlParser m => Sink Event m (Maybe VkTypes)
+parseTypes = parseTagForceAttrs "types" (lift $ attr "comment")
+  $ \secComment -> do
+    tps <- parseSections parseVkType
+    return $ VkTypes (fromMaybe mempty secComment) tps
 
 
 parseAttrVkTypeCategory :: ReaderT ParseLoc AttrParser VkTypeCategory

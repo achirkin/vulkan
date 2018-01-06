@@ -82,10 +82,10 @@ data VkCommandParamAttrs
 -- * Parsing
 
 
--- | Try to parse current tag as being types,
+-- | Try to parse current tag as being commands,
 --
 --   * If tag name does not match, return events upstream as leftovers
---   * If failed to parse tag "types", throw an exception
+--   * If failed to parse tag "commands", throw an exception
 parseCommands :: VkXmlParser m => Sink Event m (Maybe VkCommands)
 parseCommands = parseTagForceAttrs "commands" (lift $ attr "comment")
   $ \secComment -> do
