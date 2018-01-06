@@ -1,9 +1,9 @@
-{-# LANGUAGE DuplicateRecordFields      #-}
-{-# LANGUAGE FlexibleContexts           #-}
-{-# LANGUAGE MultiParamTypeClasses      #-}
-{-# LANGUAGE OverloadedStrings          #-}
-{-# LANGUAGE RecordWildCards            #-}
-{-# LANGUAGE Strict                     #-}
+{-# LANGUAGE DuplicateRecordFields #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE RecordWildCards       #-}
+{-# LANGUAGE Strict                #-}
 -- | Vulkan types, as they defined in vk.xml
 module VkXml.Sections.Types
   ( parseTypes
@@ -13,8 +13,8 @@ module VkXml.Sections.Types
   , VkType (..), VkTypeData (..), VkTypeMember (..)
   ) where
 
+import           Control.Applicative        ((<|>))
 import           Control.Arrow
-import           Control.Applicative ((<|>))
 import           Control.Monad.Except
 import           Control.Monad.Trans.Reader (ReaderT (..))
 import           Data.Coerce
@@ -27,8 +27,8 @@ import qualified Data.Text.Read             as T
 import           Data.XML.Types
 import           Text.XML.Stream.Parse
 
-import           VkXml.Parser
 import           VkXml.CommonTypes
+import           VkXml.Parser
 
 -- * Types
 
@@ -332,14 +332,14 @@ hasMembers = do
     returnAll cmns ctnPiece mev
     return $ case mev of
       Just (EventBeginElement "member" _) -> True
-      _ -> False
+      _                                   -> False
   where
     grabComments = many $ tagIgnoreAttrs "comment" content
     grabContent = do
       mev <- await
       case mev of
         Just (EventContent c) -> first (unContent c <>) <$> grabContent
-        _ -> return (mempty, mev)
+        _                     -> return (mempty, mev)
     returnAll cmns ctnPiece mev = do
       mapM_ leftover mev
       unless (T.null ctnPiece) $
