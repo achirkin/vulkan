@@ -18,6 +18,7 @@ library
   exposed-modules:     ProcessVkXml
                        VkXml.Parser
                        VkXml.CommonTypes
+                       VkXml.Sections
                        VkXml.Sections.Types
                        VkXml.Sections.Enums
                        VkXml.Sections.Commands
