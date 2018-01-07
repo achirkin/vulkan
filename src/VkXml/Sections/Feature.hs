@@ -52,20 +52,16 @@ parseFeature = parseTagForceAttrs "feature"
 
 parseVkRequire :: VkXmlParser m => Sink Event m (Maybe VkRequire)
 parseVkRequire = parseTagForceAttrs "require" (forceAttr "comment") $ \comm ->
-    parseIt $ VkRequire comm [] [] []
+    foldr ($) (VkRequire comm [] [] []) <$> many parseIt
   where
-    parseIt req = do
-      mreq <- choose
+    parseIt = choose
         [ parseTagForceAttrs "type"
             (VkTypeName <$> forceAttr "name")
-            (\x -> pure req {requireTypes = x : requireTypes req})
+            (\x -> pure $ \r -> r {requireTypes = x : requireTypes r})
         , parseTagForceAttrs "command"
             (VkCommandName <$> forceAttr "name")
-            (\x -> pure req {requireComms = x : requireComms req})
+            (\x -> pure $ \r -> r {requireComms = x : requireComms r})
         , parseTagForceAttrs "enum"
             (VkEnumValueName <$> forceAttr "name")
-            (\x -> pure req {requireEnums = x : requireEnums req})
+            (\x -> pure $ \r -> r {requireEnums = x : requireEnums r})
         ]
-      case mreq of
-        Nothing -> return req
-        Just r' -> parseIt r'
