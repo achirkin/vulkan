@@ -26,6 +26,7 @@ library
                        VkXml.Sections.VendorIds
                        VkXml.Sections.Tags
                        VkXml.Sections.Extensions
+                       Write
   build-depends:       base >= 4.7 && < 5
                      , path -any
                      , path-io -any
@@ -40,7 +41,9 @@ library
                      , text -any
                      , exceptions -any
 
+                     , shakespeare -any
                      , haskell-src-exts -any
+                     , pretty -any
                      , lens -any
                      , mtl -any
                      , transformers -any

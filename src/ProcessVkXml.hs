@@ -2,7 +2,6 @@
 module ProcessVkXml
   ( processVkXmlFile
   , generateVkSource
-  , VkXml (..), InOrder (..)
   ) where
 
 import           Control.Monad                (unless)
@@ -17,6 +16,7 @@ import           Text.XML.Stream.Parse        as Xml
 
 import           VkXml.Parser
 import           VkXml.Sections
+import           Write
 
 processVkXmlFile ::
        Path a File -- ^ path to vk.xml
@@ -39,6 +39,3 @@ processVkXmlFile vkXmlFile outputDir = do
     return y
   where
     initLoc = defParseLoc vkXmlFile
-
-generateVkSource :: Path b Dir -> VkXml -> IO ()
-generateVkSource _outputDir _vkXml = return ()

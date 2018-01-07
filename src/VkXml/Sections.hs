@@ -4,6 +4,10 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE DeriveFunctor         #-}
+{-# LANGUAGE DeriveFoldable        #-}
+{-# LANGUAGE DeriveTraversable     #-}
+{-# LANGUAGE RecordWildCards       #-}
 module VkXml.Sections
   ( parseVkXml
   , VkXml (..), InOrder (..)
@@ -16,6 +20,8 @@ import           Data.Foldable             (toList)
 import           Data.Sequence             (Seq, (|>))
 import qualified Data.Sequence             as Seq
 import           Data.Text                 (Text)
+import           Data.List                 (sort)
+import           Data.Semigroup
 import           Data.XML.Types
 import           Text.XML.Stream.Parse     as Xml
 
@@ -30,7 +36,7 @@ import           VkXml.Sections.VendorIds
 
 
 
-parseVkXml :: VkXmlParser m => Sink Event m VkXml
+parseVkXml :: VkXmlParser m => Sink Event m (VkXml ())
 parseVkXml = fmap fixVkXml . execStateC
     (VkXmlPartial mempty mempty mempty mempty
                   mempty mempty mempty mempty 0)
@@ -41,49 +47,49 @@ parseVkXml = fmap fixVkXml . execStateC
         [ tagIgnoreAttrs "comment" $ do
             com <- content
             modify' $ \v -> v
-              { gpComments = gpComments v |> InOrder (gpCurLength v) com
+              { gpComments = gpComments v |> inOrd (gpCurLength v) com
               , gpCurLength = gpCurLength v + 1
               }
         , parseVendorIds >>= \case
             Nothing -> pure Nothing
             Just x  -> fmap (const $ Just ()) . modify' $ \v -> v
-                { gpVendorIds = gpVendorIds v |> InOrder (gpCurLength v) x
+                { gpVendorIds = gpVendorIds v |> inOrd (gpCurLength v) x
                 , gpCurLength = gpCurLength v + 1
                 }
         , parseTags >>= \case
             Nothing -> pure Nothing
             Just x  -> fmap (const $ Just ()) . modify' $ \v -> v
-                { gpTags = gpTags v |> InOrder (gpCurLength v) x
+                { gpTags = gpTags v |> inOrd (gpCurLength v) x
                 , gpCurLength = gpCurLength v + 1
                 }
         , parseTypes >>= \case
             Nothing -> pure Nothing
             Just x  -> fmap (const $ Just ()) . modify' $ \v -> v
-                { gpTypes = gpTypes v |> InOrder (gpCurLength v) x
+                { gpTypes = gpTypes v |> inOrd (gpCurLength v) x
                 , gpCurLength = gpCurLength v + 1
                 }
         , parseEnums >>= \case
             Nothing -> pure Nothing
             Just x  -> fmap (const $ Just ()) . modify' $ \v -> v
-                { gpEnums = gpEnums v |> InOrder (gpCurLength v) x
+                { gpEnums = gpEnums v |> inOrd (gpCurLength v) x
                 , gpCurLength = gpCurLength v + 1
                 }
         , parseCommands >>= \case
             Nothing -> pure Nothing
             Just x  -> fmap (const $ Just ()) . modify' $ \v -> v
-                { gpCommands = gpCommands v |> InOrder (gpCurLength v) x
+                { gpCommands = gpCommands v |> inOrd (gpCurLength v) x
                 , gpCurLength = gpCurLength v + 1
                 }
         , parseFeature >>= \case
             Nothing -> pure Nothing
             Just x  -> fmap (const $ Just ()) . modify' $ \v -> v
-                { gpFeature = gpFeature v |> InOrder (gpCurLength v) x
+                { gpFeature = gpFeature v |> inOrd (gpCurLength v) x
                 , gpCurLength = gpCurLength v + 1
                 }
         , parseExtensions >>= \case
             Nothing -> pure Nothing
             Just x  -> fmap (const $ Just ()) . modify' $ \v -> v
-                { gpExtensions = gpExtensions v |> InOrder (gpCurLength v) x
+                { gpExtensions = gpExtensions v |> inOrd (gpCurLength v) x
                 , gpCurLength = gpCurLength v + 1
                 }
         ]
@@ -93,41 +99,79 @@ parseVkXml = fmap fixVkXml . execStateC
 
 
 
-data InOrder a = InOrder
+data InOrder a l = InOrder
   { getOrder  :: Int
+  , getMeta   :: l
   , unInorder :: a
-  } deriving (Eq, Show)
+  } deriving (Eq, Show, Functor, Foldable, Traversable)
 
+inOrd :: Int -> a -> InOrder a ()
+inOrd i = InOrder i ()
 
-data VkXml
+ordAndMeta :: InOrder a l -> Arg Int l
+ordAndMeta InOrder {..} = Arg getOrder getMeta
+
+fromArg :: Arg a b -> b
+fromArg (Arg _ b) = b
+
+-- | Contains all parsed content of vk.xml,
+--    hopefully, preserves ordering of original vk.xml.
+--
+--   The data type is foldable and traversable functor
+data VkXml l
   = VkXml
-  { globComments   :: [InOrder Text]
-  , globVendorIds  :: InOrder VendorIds
-  , globTags       :: InOrder VkTags
-  , globTypes      :: InOrder VkTypes
-  , globEnums      :: [InOrder VkEnums]
-  , globCommands   :: InOrder VkCommands
-  , globFeature    :: InOrder VkFeature
-  , globExtensions :: InOrder VkExtensions
-  } deriving Show
+  { globComments   :: [InOrder Text l]
+  , globVendorIds  :: InOrder VendorIds l
+  , globTags       :: InOrder VkTags l
+  , globTypes      :: InOrder VkTypes l
+  , globEnums      :: [InOrder VkEnums l]
+  , globCommands   :: InOrder VkCommands l
+  , globFeature    :: InOrder VkFeature l
+  , globExtensions :: InOrder VkExtensions l
+  , globLength     :: Int
+  } deriving (Show, Functor, Traversable)
 
+instance Foldable VkXml where
+  length = globLength
+  null   = (0==) . globLength
+  toList VkXml {..}
+    = map fromArg
+    $ sort [ ordAndMeta globVendorIds
+           , ordAndMeta globTags
+           , ordAndMeta globTypes
+           , ordAndMeta globCommands
+           , ordAndMeta globFeature
+           , ordAndMeta globExtensions
+           ]
+    `mergeAsc` map ordAndMeta globComments
+    `mergeAsc` map ordAndMeta globEnums
+  foldr f i = foldr f i . toList
+  foldMap f = foldMap f . toList
+
+
+mergeAsc :: [Arg Int a] -> [Arg Int a] -> [Arg Int a]
+mergeAsc [] xs = xs
+mergeAsc xs [] = xs
+mergeAsc (x@(Arg i _):xs) (y@(Arg j _):ys)
+  | i <= j    = x : mergeAsc xs (y:ys)
+  | otherwise = y : mergeAsc (x:xs) ys
 
 data VkXmlPartial
   = VkXmlPartial
-  { gpComments   :: Seq (InOrder Text)
-  , gpVendorIds  :: Seq (InOrder VendorIds)
-  , gpTags       :: Seq (InOrder VkTags)
-  , gpTypes      :: Seq (InOrder VkTypes)
-  , gpEnums      :: Seq (InOrder VkEnums)
-  , gpCommands   :: Seq (InOrder VkCommands)
-  , gpFeature    :: Seq (InOrder VkFeature)
-  , gpExtensions :: Seq (InOrder VkExtensions)
+  { gpComments   :: Seq (InOrder Text ())
+  , gpVendorIds  :: Seq (InOrder VendorIds ())
+  , gpTags       :: Seq (InOrder VkTags ())
+  , gpTypes      :: Seq (InOrder VkTypes ())
+  , gpEnums      :: Seq (InOrder VkEnums ())
+  , gpCommands   :: Seq (InOrder VkCommands ())
+  , gpFeature    :: Seq (InOrder VkFeature ())
+  , gpExtensions :: Seq (InOrder VkExtensions ())
   , gpCurLength  :: Int
   } deriving Show
 
 
 fixVkXml :: VkXmlPartial
-         -> VkXml
+         -> VkXml ()
 fixVkXml VkXmlPartial
   { gpComments   = pComments
   , gpVendorIds  = Seq.Empty Seq.:|> pVendorIds
@@ -137,6 +181,7 @@ fixVkXml VkXmlPartial
   , gpCommands   = Seq.Empty Seq.:|> pCommands
   , gpFeature    = Seq.Empty Seq.:|> pFeature
   , gpExtensions = Seq.Empty Seq.:|> pExtensions
+  , gpCurLength  = curLength
   } = VkXml
   { globComments   = toList pComments
   , globVendorIds  = pVendorIds
@@ -146,5 +191,6 @@ fixVkXml VkXmlPartial
   , globCommands   = pCommands
   , globFeature    = pFeature
   , globExtensions = pExtensions
+  , globLength     = curLength
   }
 fixVkXml _ = error "Unexpected number of sections in vk.xml"
