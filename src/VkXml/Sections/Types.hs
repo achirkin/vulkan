@@ -323,7 +323,7 @@ parseVkTypeMember :: VkXmlParser m
 parseVkTypeMember = parseTagForceAttrs "member" parseVkMemberAttrs $ \ma -> do
     d <- parseVkTypeData
     case fst <$> name (d :: VkTypeData VkMemberName) of
-      Just n -> VkTypeMember n ma <$> parseVkTypeData
+      Just n  -> pure $ VkTypeMember n ma d
       Nothing -> parseFailed
                $ "Could not get name from member tag content "
                <> show d
