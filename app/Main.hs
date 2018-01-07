@@ -8,4 +8,3 @@ main :: IO ()
 main = processVkXmlFile
         [relfile|vulkan-docs/src/spec/vk.xml|]
         [reldir|out|]
-        generateVkSource
