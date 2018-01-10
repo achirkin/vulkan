@@ -1,27 +1,32 @@
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE QuasiQuotes       #-}
-{-# LANGUAGE RecordWildCards   #-}
-{-# LANGUAGE Strict            #-}
+
+{-# LANGUAGE DuplicateRecordFields #-}
+{-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE QuasiQuotes           #-}
+{-# LANGUAGE RecordWildCards       #-}
+{-# LANGUAGE Strict                #-}
 module Write
   (generateVkSource
   ) where
 
 import           Data.Semigroup
-import           Data.Text                        (Text)
-import qualified Data.Text                        as T
+import qualified Data.Text                            as T
 import           Path
+import           System.IO                            (writeFile)
 
 -- import           Language.Haskell.Exts.Build
-import           Language.Haskell.Exts.Comments
+import           Data.Bits
 import           Language.Haskell.Exts.ExactPrint
 import           Language.Haskell.Exts.Parser
 import           Language.Haskell.Exts.Pretty
-import           Language.Haskell.Exts.SrcLoc
+import           Language.Haskell.Exts.SimpleComments
 import           Language.Haskell.Exts.Syntax
+import           Numeric
 import           Text.Shakespeare.Text
--- import Text.PrettyPrint
 
+import           VkXml.CommonTypes
 import           VkXml.Sections
+import           VkXml.Sections.Enums                 as Enums
+
 
 
 generateVkSource :: Path b Dir
@@ -32,7 +37,7 @@ generateVkSource :: Path b Dir
                     --
                  -> VkXml ()
                  -> IO ()
-generateVkSource _outputDir _vkXml = do
+generateVkSource outputDir vkXml = do
 
   let f1 = [st|
 module F1 where
@@ -77,7 +82,6 @@ func2 = show -- we show it here!
   putStrLn "-----------------+++"
 
 
-
   let m = Module Nothing
          (Just $ ModuleHead Nothing
                             (ModuleName Nothing "GoodModule") Nothing Nothing
@@ -94,124 +98,199 @@ func2 = show -- we show it here!
   putStrLn "-----------------"
   putStrLn $ prettyPrint m
   putStrLn "-----------------"
-  putStrLn $ uncurry exactPrint . toExactHaddocked $ m
+  putStrLn $ uncurry exactPrint . ppWithComments $ m
+  putStrLn "-------------------------------------------------------------------"
+  let testS = T.unpack [st|
+newtype VkImageLayout = VkImageLayout Int32
+                      deriving (Eq, Ord, Storable)
+-- | Implicit layout an image is when its contents are undefined due to various reasons (e.g. right after creation)
+pattern VK_IMAGE_LAYOUT_UNDEFINED :: VkImageLayout
+pattern VK_IMAGE_LAYOUT_UNDEFINED = VkImageLayout 0
+-- | General layout when image can be used for any kind of access
+pattern VK_IMAGE_LAYOUT_GENERAL :: VkImageLayout
+pattern VK_IMAGE_LAYOUT_GENERAL = VkImageLayout 1
+            |]
+  putStrLn testS
   putStrLn "-----------------"
+  print $ ((Nothing :: Maybe CodeComment) <$) . fst <$> parseModuleWithComments defaultParseMode testS
+  putStrLn $ prettyPrint $ simpleNewtypeDecl "VkStructureType" "Int32" . pure $ deriveInstances ["Eq","Show","Ord","Storable"]
+  let mf = Module Nothing
+            (Just $ ModuleHead Nothing
+                            (ModuleName Nothing "Graphics.Vulkan") Nothing Nothing
+             )
+             [ LanguagePragma Nothing [Ident Nothing "PatternSynonyms"]
+             , LanguagePragma Nothing [Ident Nothing "GeneralizedNewtypeDeriving"]
+             , LanguagePragma Nothing [Ident Nothing "Strict"]
+             ]
+             [ ImportDecl
+               { importAnn = Nothing
+               , importModule = ModuleName Nothing "Data.Int"
+               , importQualified = False
+               , importSrc = False
+               , importSafe = False
+               , importPkg = Nothing
+               , importAs = Nothing
+               , importSpecs =
+                   Just (ImportSpecList Nothing False
+                     [IAbs Nothing (NoNamespace Nothing) (Ident Nothing "Int32")
+                     ])
+               }
+              , ImportDecl
+                { importAnn = Nothing
+                , importModule = ModuleName Nothing "Data.Bits"
+                , importQualified = False
+                , importSrc = False
+                , importSafe = False
+                , importPkg = Nothing
+                , importAs = Nothing
+                , importSpecs =
+                    Just (ImportSpecList Nothing False
+                      [IAbs Nothing (NoNamespace Nothing) (Ident Nothing "Bits")
+                      ])
+                }
+              , ImportDecl
+                { importAnn = Nothing
+                , importModule = ModuleName Nothing "Foreign.Storable"
+                , importQualified = False
+                , importSrc = False
+                , importSafe = False
+                , importPkg = Nothing
+                , importAs = Nothing
+                , importSpecs =
+                    Just (ImportSpecList Nothing False
+                      [IThingAll Nothing
+                        (Ident Nothing "Storable")
+                      ])
+                }
+             ]
+  putStrLn "-------------------------------------------------------------------"
+  -- putStrLn . prettyPrint $ mf $ genEnums vkXml
 
+  let rez = uncurry exactPrint . ppWithComments . mf $ genEnums vkXml
+  -- putStrLn rez
 
+  writeFile (toFilePath $ outputDir </> [relfile|Vulkan.hs|]) rez
 
-toExactHaddocked :: Module (Maybe Text)
-                 -> (Module SrcSpanInfo, [Comment])
-toExactHaddocked m@(Module _ _ _ _ decs)
-  = case parseModule $ prettyPrint m of
-      err@ParseFailed {} -> error $ show err
-      ParseOk m' ->
-        let f (Module l h p i _) [] procDecs comms
-              = (Module l h p i $ reverse procDecs, comms)
-            f om@(Module _ _ _ _ odecs) (mtxt:ms) procDecs ocomms
-              = let (Module l h p i ndecs, ncomms)
-                       = insertPreCommentsSSI mtxt (srcInfoSpan . ann $ head odecs) om
-                in f (Module l h p i $ tail ndecs) ms (head ndecs : procDecs)
-                       $ ocomms <> ncomms
-            f _ _ _ _ = undefined
-        in f m' (map ann decs) [] []
-toExactHaddocked _ = error "unexpected module layout"
-
-
--- -- | Make a textual comment into a top-level declaration documentation.
--- topLevelDecDoc :: Int -> Maybe Text -> [Comment]
--- topLevelDecDoc _ Nothing = []
--- topLevelDecDoc n (Just txt) = mkComment n lns
---   where
---     lns = map T.unpack . indent $ T.lines txt
---     indent []     = []
---     indent (x:xs) = (" | " <> x) : map ("   " <>) xs
---     mkComment _ [] = []
---     mkComment i (x:xs)
---       = Comment False (SrcSpan "<unknown>.hs" i 1 i $ 3 + length x) x
---         : mkComment (i+1) xs
---
--- -- | Shift this many lines up or down
--- shiftLinesSpan :: Int -> SrcSpan -> SrcSpan
--- shiftLinesSpan n s@SrcSpan {..}
---   = s
---   { srcSpanStartLine = srcSpanStartLine + n
---   , srcSpanEndLine = srcSpanEndLine + n
---   }
---
--- shiftLines :: Int -> SrcSpanInfo -> SrcSpanInfo
--- shiftLines n SrcSpanInfo {..}
---   = SrcSpanInfo
---   { srcInfoSpan = shiftLinesSpan n srcInfoSpan
---   , srcInfoPoints = map (shiftLinesSpan n) srcInfoPoints
---   }
---
--- shiftComment :: Int -> Comment -> Comment
--- shiftComment n (Comment a s c) =  Comment a (shiftLinesSpan n s) c
---
--- -- | Add top-level haddock comment on top of the source,
--- --   expanding spaninfo down.
--- catCommentSpan :: Maybe Text -> SrcSpanInfo -> (SrcSpanInfo, [Comment])
--- catCommentSpan mtxt SrcSpanInfo {srcInfoSpan = s, srcInfoPoints = ps} =
---     ( SrcSpanInfo
---       { srcInfoSpan = s
---          { srcSpanEndLine = srcSpanEndLine s + n
---          }
---       , srcInfoPoints = map (shiftLinesSpan n) ps
---       }
---     , cmts )
---   where
---     cmts = topLevelDecDoc (srcSpanStartLine s) mtxt
---     n = length cmts
---
--- -- | Combine two sources vertically
--- catSources :: SrcSpanInfo -> SrcSpanInfo -> SrcSpanInfo
--- catSources s1 s2
---   = let n = fst . spanSize $ srcInfoSpan s1
---         s2' = shiftLines n s2
---     in SrcSpanInfo
---        { srcInfoSpan = mergeSrcSpan (srcInfoSpan s1) (srcInfoSpan s2')
---        , srcInfoPoints = srcInfoPoints s1 <> srcInfoPoints s2'
---        }
-
-
-insertPreCommentsSSI :: Functor f
-                     => Maybe Text
-                     -> SrcSpan -- ^ location of an element
-                                --   for comments to be attached
-                     -> f SrcSpanInfo -> (f SrcSpanInfo, [Comment])
-insertPreCommentsSSI mtxt locs = flip (,) cmts . fmap f
+genEnums :: VkXml a -> [Decl (Maybe CodeComment)]
+genEnums vkXml = allEnums >>= genEnum . unInorder
   where
-    cmtLoc = SrcLoc (srcSpanFilename locs)
-                    startL
-                    (srcSpanStartColumn locs)
-    cmts = mkComments cmtLoc '|' mtxt
-    startL = srcSpanStartLine locs
-    lineN = length cmts
-    f SrcSpanInfo {srcInfoSpan = s, srcInfoPoints = ps}
-      = SrcSpanInfo
-      { srcInfoSpan = g s, srcInfoPoints = fmap g ps }
-    g s | srcSpanEndLine s < startL
-          = s
-        | srcSpanStartLine s >= startL
-          = s { srcSpanStartLine = srcSpanStartLine s + lineN
-              , srcSpanEndLine = srcSpanEndLine s + lineN
-              }
-        | otherwise
-          = s { srcSpanEndLine = srcSpanEndLine s + lineN }
+    -- allTypes = unInorder $ globTypes vkXml
+    allEnums = globEnums vkXml
+    genEnum vkenum =
+      if tName == "API Constants"
+      then tPatBinding
+      else
+         amap (const tComment)
+          ( simpleNewtypeDecl tName "Int32" $ enumDerives vkenum )
+          : tPatBinding
+       where
+         tName = enumName vkenum
+         tConstr = simpleConstr tName
+         tComment = enumComment vkenum
+         tPats = enumPats tConstr vkenum
+         tPatBinding = case tPats of
+           [] -> []
+           xs -> [FunBind Nothing xs]
+    enumName VkEnums {..}     = T.unpack $ unVkTypeName name
+    enumName VkBitmasks {..}  = T.unpack $ unVkTypeName name
+    enumName VkConstants {..} = T.unpack $ unVkTypeName name
 
--- | Make a textual comment into a documentation.
-mkComments :: SrcLoc -- ^ location of the comment start
-           -> Char -- ^ special comment character (i.e. "*" or "^" or "|")
-           -> Maybe Text -- ^ text to put into a comment (multiline)
-           -> [Comment]
-mkComments _ _ Nothing = []
-mkComments SrcLoc {..} c (Just txt) = mkComment srcLine lns
+    enumComment VkEnums {..}     = comment >>= preComment . T.unpack
+    enumComment VkBitmasks {..}  = comment >>= preComment . T.unpack
+    enumComment VkConstants {..} = comment >>= preComment . T.unpack
+
+    enumDerives VkEnums {..} = Just
+        $ deriveInstances ["Eq","Ord","Storable"]
+    enumDerives VkBitmasks {..} = Just
+        $ deriveInstances ["Eq","Ord","Bits","Storable"]
+    enumDerives VkConstants {..} = Just
+        $ deriveInstances ["Eq","Ord","Storable"]
+
+    enumPats tConstr VkEnums {..}
+      = map (genEnumPat tConstr) $ items memberEnums
+    enumPats tConstr VkBitmasks {..}
+      = map (genBitMaskPat tConstr) $ items memberMasks
+    enumPats _tConstr VkConstants {..} = []
+
+    genEnumPat tConstr VkEnumValue {..}
+      = amap (const $ comment >>= preComment . T.unpack)
+      $ enumPattern tConstr (T.unpack $ unVkEnumValueName name) value
+
+    genBitMaskPat tConstr VkBitmaskBitpos {..}
+        = genEnumPat tConstr $ VkEnumValue name c v
+      where
+        v = shiftL 1 (fromIntegral bitpos)
+        c = appendComLine comment
+          $ "Bit position " <> T.pack (show bitpos) <> "."
+    genBitMaskPat tConstr VkBitmaskValue {..}
+        = genEnumPat tConstr $ VkEnumValue name c value
+      where
+        c = appendComLine comment
+          $ "Bitmask value " <> T.pack (showHex value ".")
+
+    appendComLine Nothing c = Just c
+    appendComLine (Just s) c
+      | "" <- T.strip s = Just c
+      | otherwise = Just $ T.stripEnd s <> "\n\n" <> c
+
+
+type A = Maybe CodeComment
+
+simpleInstRule :: String -> InstRule A
+simpleInstRule className = IRule Nothing Nothing Nothing (IHCon Nothing (UnQual Nothing (Ident Nothing className)))
+
+deriveInstances :: [String] -> Deriving A
+deriveInstances = Deriving Nothing . map simpleInstRule
+
+simpleConDecl :: String -> [String] -> QualConDecl A
+simpleConDecl cname pams
+  = QualConDecl Nothing Nothing Nothing
+     (ConDecl Nothing (Ident Nothing cname)
+        $ map (TyCon Nothing . UnQual Nothing . Ident Nothing) pams
+     )
+
+simpleDataDecl :: String
+               -> [QualConDecl A]
+               -> Maybe (Deriving A)
+               -> Decl A
+simpleDataDecl dname cdecs
+    = DataDecl Nothing dataOrNew Nothing
+              (DHead Nothing (Ident Nothing dname)) cdecs
   where
-    lns = indent . lines $ T.unpack txt
-    indent []     = []
-    indent (x:xs) = (' ':c:' ':x) : map ("   " ++) xs
-    mkComment _ [] = []
-    mkComment i (x:xs)
-      = Comment False
-        (SrcSpan srcFilename i srcColumn i $ srcColumn + 2 + length x) x
-        : mkComment (i+1) xs
+    dataOrNew = case cdecs of
+      [QualConDecl _ _ _ (ConDecl _ _ [_])] -> NewType Nothing
+      [QualConDecl _ _ _ (RecDecl _ _ [_])] -> NewType Nothing
+      _                                     -> DataType Nothing
+
+
+simpleNewtypeDecl :: String
+                  -> String
+                  -> Maybe (Deriving A)
+                  -> Decl A
+simpleNewtypeDecl dname t
+    = simpleDataDecl dname [simpleConDecl dname [t]]
+
+
+type Constr = QName A
+
+simpleConstr :: String -> Constr
+simpleConstr s = UnQual Nothing (Ident Nothing s)
+
+
+
+
+enumPattern :: Constr -> String -> Int -> Match A
+enumPattern constr ename eval =
+  Match Nothing (Ident Nothing "pattern")
+    [PApp Nothing (UnQual Nothing (Ident Nothing ename)) []]
+    (UnGuardedRhs Nothing
+     (App Nothing (Con Nothing constr) . f  $ fromIntegral eval)
+    ) Nothing
+  where
+    f x | x < 0 = Paren Nothing
+                    (NegApp Nothing
+                      (Lit Nothing
+                        (Int Nothing (abs x) $ show (abs x))
+                      )
+                    )
+        | otherwise = Lit Nothing (Int Nothing x $ show x)
