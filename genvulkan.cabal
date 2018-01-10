@@ -43,6 +43,7 @@ library
 
                      , shakespeare -any
                      , haskell-src-exts -any
+                     , haskell-src-exts-sc -any
                      , pretty -any
                      , lens -any
                      , mtl -any
