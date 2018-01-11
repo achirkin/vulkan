@@ -16,6 +16,8 @@ module VkXml.Sections
 import           Control.Monad.State.Class
 import           Data.Conduit
 import           Data.Conduit.Lift
+import           Data.Map.Strict           (Map)
+import qualified Data.Map.Strict           as Map
 import           Data.Foldable             (toList)
 import           Data.Sequence             (Seq, (|>))
 import qualified Data.Sequence             as Seq
@@ -26,6 +28,7 @@ import           Data.XML.Types
 import           Text.XML.Stream.Parse     as Xml
 
 import           VkXml.Parser
+import           VkXml.CommonTypes
 import           VkXml.Sections.Commands
 import           VkXml.Sections.Enums
 import           VkXml.Sections.Extensions
@@ -124,7 +127,7 @@ data VkXml l
   , globVendorIds  :: InOrder VendorIds l
   , globTags       :: InOrder VkTags l
   , globTypes      :: InOrder VkTypes l
-  , globEnums      :: [InOrder VkEnums l]
+  , globEnums      :: Map VkTypeName (InOrder VkEnums l)
   , globCommands   :: InOrder VkCommands l
   , globFeature    :: InOrder VkFeature l
   , globExtensions :: InOrder VkExtensions l
@@ -144,7 +147,7 @@ instance Foldable VkXml where
            , ordAndMeta globExtensions
            ]
     `mergeAsc` map ordAndMeta globComments
-    `mergeAsc` map ordAndMeta globEnums
+    `mergeAsc` map ordAndMeta (toList globEnums)
   foldr f i = foldr f i . toList
   foldMap f = foldMap f . toList
 
@@ -187,7 +190,11 @@ fixVkXml VkXmlPartial
   , globVendorIds  = pVendorIds
   , globTags       = pTags
   , globTypes      = pTypes
-  , globEnums      = toList pEnums
+  , globEnums      = Map.fromList
+                   . map (\e -> ( (name :: VkEnums -> VkTypeName)
+                                 $ unInorder e, e)
+                         )
+                   $ toList pEnums
   , globCommands   = pCommands
   , globFeature    = pFeature
   , globExtensions = pExtensions
