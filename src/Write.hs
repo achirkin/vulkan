@@ -28,7 +28,7 @@ import           Data.Set (Set)
 import qualified Data.Set as Set
 import Data.Traversable (mapAccumL)
 import           Control.Monad
-import           Control.Monad.Trans.RWS.Strict
+import           Control.Monad.Trans.RWS.Strict (RWST(..), modify)
 import           Control.Monad.Fix
 import           Control.Monad.Fail
 import           Control.Monad.IO.Class
@@ -69,6 +69,14 @@ generateVkSource outputDir vkXml = do
           ]
         }
       testS = T.unpack [text|
+                module A
+                  ( VkImageLayout (..)
+                  , pattern VK_IMAGE_LAYOUT_UNDEFINED
+                  , pattern VK_IMAGE_LAYOUT_GENERAL
+                  ) where
+                newtype VkImageLayout = VkImageLayout Int32
+                                      deriving (Eq, Ord, Storable)
+
                 pattern VK_IMAGE_LAYOUT_UNDEFINED :: VkImageLayout
                 pattern VK_IMAGE_LAYOUT_UNDEFINED = VkImageLayout 0
 
@@ -77,95 +85,83 @@ generateVkSource outputDir vkXml = do
             |]
   putStrLn testS
   putStrLn "-----------------"
-  print $ ((Nothing :: Maybe CodeComment) <$)
-       <$> parseModuleWithMode pMode testS
-  print $ ((Nothing :: Maybe CodeComment) <$) . fst
-       <$> parseModuleWithComments pMode testS
+  print $ (() <$) <$> parseModuleWithMode pMode testS
 
-  let mf = Module Nothing
-            (Just $ ModuleHead Nothing
-                            (ModuleName Nothing "Graphics.Vulkan") Nothing Nothing
-             )
-             [ LanguagePragma Nothing [Ident Nothing "PatternSynonyms"]
-             , LanguagePragma Nothing [Ident Nothing "GeneralizedNewtypeDeriving"]
-             , LanguagePragma Nothing [Ident Nothing "Strict"]
-             ]
-             [ simpleImport
-                 ( ModuleName Nothing "Data.Int" )
-                 [ IAbs Nothing (NoNamespace Nothing) (Ident Nothing "Int32") ]
-             ,  simpleImport
-                 ( ModuleName Nothing "Data.Bits" )
-                 [ IAbs Nothing (NoNamespace Nothing) (Ident Nothing "Bits") ]
-             ,  simpleImport
-                 ( ModuleName Nothing "Foreign.Storable" )
-                 [ IThingAll Nothing (Ident Nothing "Storable") ]
-             ]
-  putStrLn "-------------------------------------------------------------------"
-  -- putStrLn . prettyPrint $ mf $ genEnums vkXml
 
-  let rez = uncurry exactPrint . ppWithCommentsMode defaultMode . mf $ genEnums vkXml
+
+  ((), mr) <- runModuleWriter vkXml genEnums
+  let rez = uncurry exactPrint
+          . ppWithCommentsMode defaultMode
+          $ genModule "Graphics.Vulkan" mr
   -- putStrLn rez
 
   writeFile (toFilePath $ outputDir </> [relfile|Vulkan.hs|]) rez
 
-genEnums :: VkXml a -> [Decl (Maybe CodeComment)]
-genEnums vkXml = allEnums >>= genEnum . unInorder
+genEnums :: Monad m
+         => ModuleWriter m ()
+genEnums = do
+    vkXml <- ask
+    writePragma "Strict"
+    writeImport "Data.Bits"
+      $ IAbs () (NoNamespace ()) (Ident () "Bits")
+    writeImport "Foreign.Storable"
+      $ IThingAll () (Ident () "Storable")
+    forM_ (unInorder <$> globEnums vkXml) genEnum
   where
     -- allTypes = unInorder $ globTypes vkXml
-    allEnums = globEnums vkXml
-    genEnum vkenum =
-        if tname == VkTypeName "API Constants"
-        then tPats
-        else newInt32TypeDec tname (enumDerives vkenum) tcomment : tPats
+    genEnum vkenum = do
+        unless (tname == VkTypeName "API Constants")
+          $ newInt32TypeDec tname (enumDerives vkenum) tcomment
+        enumPats tname vkenum
       where
         tname = (name :: VkEnums -> VkTypeName) vkenum
         tcomment = (comment :: VkEnums -> Maybe Text) vkenum
-        tPats = enumPats tname vkenum
 
     enumDerives VkEnums {..} = ["Eq","Ord","Storable"]
     enumDerives VkBitmasks {..} = ["Eq","Ord","Bits","Storable"]
     enumDerives VkConstants {..} = ["Eq","Ord","Storable"]
 
     enumPats tname VkEnums {..}
-      = items memberEnums >>= enumPattern tname
+      = writeWithComments 2 (enumPattern tname) memberEnums
     enumPats tname VkBitmasks {..}
-      = items memberMasks >>= bitmaskPattern tname
-    enumPats _tname VkConstants {..} = []
+      = writeWithComments 2 (bitmaskPattern tname) memberMasks
+    enumPats _tname VkConstants {..} = pure ()
 
-
-
-type A = Maybe CodeComment
-
-simpleImport :: ModuleName A -> [ImportSpec A] -> ImportDecl A
-simpleImport mname ispecs = ImportDecl
-  { importAnn = Nothing
-  , importModule = mname
-  , importQualified = False
-  , importSrc = False
-  , importSafe = False
-  , importPkg = Nothing
-  , importAs = Nothing
-  , importSpecs =
-      Just (ImportSpecList Nothing False ispecs)
-  }
-
-
-
-newInt32TypeDec :: VkTypeName -> [Text] -> Maybe Text -> Decl A
-newInt32TypeDec (VkTypeName tname) insts com
-    = amap (const rezComment) rezDef
+-- | Write section elements interspersed with comments as section delimers
+writeWithComments :: Monad m
+                  => Int
+                  -> (a -> ModuleWriter m ())
+                  -> Sections a
+                  -> ModuleWriter m ()
+writeWithComments slvl f Sections {..} = go 0 items comments
   where
-    tinsts = T.intercalate ", " insts
-    rezDef = parseDecl'
+    go _ [] cs = writeSection 0 . T.unlines $ map snd cs
+    go i (a:as) [] = f a >> go i as []
+    go i (a:as) (c@(j, txt):cs)
+      | i >= j = writeSection slvl txt >> go i (a:as) cs
+      | otherwise = f a >> go (i+1) as (c:cs)
+
+
+newInt32TypeDec :: Monad m
+                => VkTypeName -> [Text] -> Maybe Text -> ModuleWriter m ()
+newInt32TypeDec (VkTypeName tname) insts com = do
+    writePragma "GeneralizedNewtypeDeriving"
+    writeImport "Data.Int"
+      $ IAbs () (NoNamespace ()) (Ident () "Int32")
+    writeDecl . setComment rezComment $ parseDecl'
       [text|
         newtype $tname = $tname Int32
           deriving ($tinsts)
       |]
+    writeExport $ EThingWith ()
+                  (EWildcard () 0)
+                  (UnQual () $ Ident () $ T.unpack tname) []
+  where
+    tinsts = T.intercalate ", " insts
     rezComment = com >>= preComment . T.unpack
 
 
-
-bitmaskPattern :: VkTypeName -> VkBitmaskValue -> [Decl A]
+bitmaskPattern :: Monad m => VkTypeName -> VkBitmaskValue -> ModuleWriter m ()
 bitmaskPattern tname VkBitmaskBitpos {..}
     = enumPattern tname $ VkEnumValue name c v
   where
@@ -178,17 +174,20 @@ bitmaskPattern tname VkBitmaskValue {..}
     c = appendComLine comment
       $ "Bitmask value @0x" <> T.pack (showHex value "@")
 
-enumPattern :: VkTypeName -> VkEnumValue -> [Decl A]
-enumPattern (VkTypeName tname) VkEnumValue {..}
-    = [ amap (const rezComment) rezSig
-      , rezPat
-      ]
+
+enumPattern :: Monad m => VkTypeName -> VkEnumValue -> ModuleWriter m ()
+enumPattern (VkTypeName tname) VkEnumValue {..} = do
+    writePragma "PatternSynonyms"
+    writeDecl . setComment rezComment
+              $ parseDecl' [text|pattern $patname :: $tname|]
+    writeDecl $ parseDecl' [text|pattern $patname = $tname $patval|]
+    writeExport $ EAbs ()
+                  (PatternNamespace ())
+                  (UnQual () (Ident () $ T.unpack patname))
   where
     patname = unVkEnumValueName name
     patval = if value < 0 then "(" <> T.pack (show value) <> ")"
                           else T.pack (show value)
-    rezSig = parseDecl' [text|pattern $patname :: $tname|]
-    rezPat = parseDecl' [text|pattern $patname = $tname $patval|]
     rezComment = comment >>= preComment . T.unpack
 
 
@@ -216,6 +215,10 @@ vkParseMode = defaultParseMode
         ]
       }
 
+setComment :: Annotated m
+           => Maybe CodeComment
+           -> m A -> m A
+setComment mcc = amap (const mcc)
 
 {-
 What do we need to write in the writing monad?
@@ -305,7 +308,8 @@ writePragma pname = ModuleWriter . modify $
 -- | Add an export declaration to a module export list
 writeExport :: Monad m => ExportSpec () -> ModuleWriter m ()
 writeExport espec = ModuleWriter . modify $
-   \mr -> mr { mExports = mExports mr Seq.|> ((f <$> pendingSec mr) <$ espec)
+   \mr -> mr { mExports = mExports mr Seq.|>
+                          amap (const $ f <$> pendingSec mr) (Nothing <$ espec)
              , pendingSec = Nothing
              }
   where
@@ -328,3 +332,20 @@ writeSection lvl txt
     f (Just t) s = Just . unlines $ lines t ++ "":s
     indent = if lvl <= 0 then "" else reverse $ ' ' : replicate lvl '*'
     ss = lines . T.unpack $ T.strip txt
+
+
+
+type A = Maybe CodeComment
+
+simpleImport :: ModuleName A -> [ImportSpec A] -> ImportDecl A
+simpleImport mname ispecs = ImportDecl
+  { importAnn = Nothing
+  , importModule = mname
+  , importQualified = False
+  , importSrc = False
+  , importSafe = False
+  , importPkg = Nothing
+  , importAs = Nothing
+  , importSpecs =
+      Just (ImportSpecList Nothing False ispecs)
+  }
