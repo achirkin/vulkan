@@ -41,7 +41,7 @@ library
                      , text -any
                      , exceptions -any
 
-                     , shakespeare -any
+                     , neat-interpolation -any
                      , haskell-src-exts -any
                      , haskell-src-exts-sc -any
                      , pretty -any
