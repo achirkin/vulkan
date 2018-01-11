@@ -7,6 +7,7 @@ extra-deps:
   - unix-compat-0.4.3.1
   - either-4.4.1.1
   - haskell-src-exts-sc-0.1.0.3
+  - hfmt-0.2.0
 
 packages:
   - .

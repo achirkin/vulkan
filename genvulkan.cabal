@@ -27,6 +27,8 @@ library
                        VkXml.Sections.Tags
                        VkXml.Sections.Extensions
                        Write
+                       Write.ModuleWriter
+                       Write.Enums
   build-depends:       base >= 4.7 && < 5
                      , path -any
                      , path-io -any
@@ -52,6 +54,7 @@ library
                      , primitive -any
                      , aeson -any
                      , ghc-prim -any
+                     , hfmt
   default-language:    Haskell2010
   ghc-options:         -Wall
 

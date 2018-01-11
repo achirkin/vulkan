@@ -12,6 +12,7 @@ module VkXml.Sections.Types
   , VkTypeAttrs (..), VkMemberAttrs (..)
   , VkTypeCategory (..)
   , VkType (..), VkTypeData (..), VkTypeMember (..)
+  , vkTypeCat
   ) where
 
 import           Control.Applicative        ((<|>))
@@ -83,6 +84,9 @@ data VkTypeData name
   } deriving Show
 
 
+vkTypeCat :: VkType -> VkTypeCategory
+vkTypeCat = category
+          . (attributes :: VkType -> VkTypeAttrs)
 
 data VkTypeMember
   = VkTypeMember
