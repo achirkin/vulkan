@@ -1,24 +1,25 @@
 {-# LANGUAGE DuplicateRecordFields      #-}
 {-# LANGUAGE FlexibleContexts           #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE MultiParamTypeClasses      #-}
 {-# LANGUAGE OverloadedStrings          #-}
 {-# LANGUAGE RecordWildCards            #-}
 {-# LANGUAGE Strict                     #-}
+{-# LANGUAGE UndecidableInstances       #-}
 module Write.ModuleWriter
   ( A, ModuleWriting (..), ModuleWriter (..)
   , runModuleWriter, genModule
   , writeImport, writeExport
   , writePragma, writeDecl
-  , writeSection
+  , writeSection, writeSectionPre
     -- * Helpers
   , appendComLine, parseDecl', setComment
   , writeWithComments, vkRegistryLink
   , writeSections
+  , toHaskellType, toHaskellVar, qNameTxt
+  , requireType, requireTypeMember, requireVar, requirePattern
+  , toCamelCase
   ) where
-
-import           Data.Semigroup
-import           Data.Text                            (Text)
-import qualified Data.Text                            as T
 
 import           Control.Applicative
 import           Control.Monad
@@ -26,24 +27,32 @@ import           Control.Monad.Fail
 import           Control.Monad.Fix
 import           Control.Monad.IO.Class
 import           Control.Monad.Reader.Class
-import           Control.Monad.Trans.RWS.Strict       (RWST (..), modify, gets)
+import           Control.Monad.Trans.Class
+import           Control.Monad.Morph
+import           Control.Monad.Trans.RWS.Strict       (RWST (..), gets, modify)
+import           Data.Char
+import           Data.Coerce
 import           Data.Foldable                        (toList)
 import qualified Data.List                            as List
 import           Data.Map.Strict                      (Map)
 import qualified Data.Map.Strict                      as Map
+import           Data.Semigroup
 import           Data.Sequence                        (Seq)
 import qualified Data.Sequence                        as Seq
 import           Data.Set                             (Set)
 import qualified Data.Set                             as Set
+import           Data.Text                            (Text)
+import qualified Data.Text                            as T
 import           Data.Traversable                     (mapAccumL)
 import           GHC.Stack                            (HasCallStack)
 import           Language.Haskell.Exts.Extension
 import           Language.Haskell.Exts.Parser
+import           Language.Haskell.Exts.Pretty         (prettyPrint)
 import           Language.Haskell.Exts.SimpleComments
 import           Language.Haskell.Exts.Syntax
 
-import           VkXml.Sections
 import           VkXml.CommonTypes
+import           VkXml.Sections
 import qualified VkXml.Sections.Feature               as Feature
 
 
@@ -52,7 +61,8 @@ type A = Maybe CodeComment
 
 data ModuleWriting
   = ModuleWriting
-  { mImports      :: Map (ModuleName ()) (Set (ImportSpec ()))
+  { mName         :: ModuleName ()
+  , mImports      :: Map (ModuleName ()) (Set (ImportSpec ()))
   , mPragmas      :: Set String
   , mDecs         :: Seq (Decl A)
   , mExports      :: Seq (ExportSpec A)
@@ -60,28 +70,30 @@ data ModuleWriting
   , currentSecLvl :: Int
   }
 
-
 newtype ModuleWriter m a
   = ModuleWriter
   { unModuleWriter :: RWST (VkXml ()) () ModuleWriting m a
   } deriving (Functor, Applicative, Monad, MonadFix, MonadFail, MonadIO
-             , Alternative, MonadPlus, MonadReader (VkXml ()))
+             , Alternative, MonadPlus, MonadReader (VkXml ())
+             , MFunctor, MonadTrans)
+
 
 runModuleWriter :: Functor m
-                => VkXml () -> ModuleWriter m a -> m (a, ModuleWriting)
-runModuleWriter vkxml mw
+                => VkXml ()
+                -> String -- ^ module name
+                -> ModuleWriter m a -> m (a, ModuleWriting)
+runModuleWriter vkxml mname mw
     = f <$> runRWST (unModuleWriter mw) vkxml
-                    (ModuleWriting mempty mempty mempty mempty mempty 1)
+                    (ModuleWriting (ModuleName () mname)
+                                   mempty mempty mempty mempty mempty 1)
   where
     f (a,s,_) = (a, s)
 
 
-genModule :: String -> ModuleWriting -> Module A
-genModule mname ModuleWriting {..}
+genModule :: ModuleWriting -> Module A
+genModule ModuleWriting {..}
     = Module Nothing
-        (Just $ ModuleHead Nothing
-          (ModuleName Nothing mname) Nothing (Just exports)
-        )
+        (Just $ ModuleHead Nothing (Nothing <$ mName) Nothing (Just exports))
         pragmas imports decs
   where
     genPragma s = LanguagePragma Nothing [Ident Nothing s]
@@ -91,7 +103,6 @@ genModule mname ModuleWriting {..}
     imports = genImport <$> Map.toList mImports
     decs = toList mDecs
     exports = ExportSpecList Nothing $ toList mExports
-
 
 
 
@@ -158,6 +169,24 @@ writeSection lvl txt
     indent = if lvl <= 0 then "" else reverse $ ' ' : replicate lvl '*'
     ss = lines . T.unpack $ T.strip txt
 
+-- | Write a comment; prepend it to another comment if there is any.
+writeSectionPre :: Monad m
+                => Int    -- ^ Section level - number of star symbols
+                          --   (zero for simple text)
+                -> Text   -- ^ Section name
+                          -- (And section content on further lines)
+                -> ModuleWriter m ()
+writeSectionPre lvl txt = do
+    mps <- ModuleWriter $ gets pendingSec
+    case mps of
+      Nothing -> writeSection lvl txt
+      Just s -> do
+        ModuleWriter . modify $ \mr -> mr { pendingSec = Nothing}
+        writeSection lvl txt
+        ModuleWriter . modify $ \mr -> mr { pendingSec = f (pendingSec mr) s}
+  where
+    f Nothing  s = Just s
+    f (Just t) s = Just . unlines $ lines t ++ "": lines s
 
 -- | Write section elements interspersed with comments as section delimers.
 --   Determine subsection level automatically.
@@ -228,6 +257,7 @@ vkParseMode = defaultParseMode
       , extensions =
         [ EnableExtension GeneralizedNewtypeDeriving
         , EnableExtension PatternSynonyms
+        , EnableExtension EmptyDataDecls
         , UnknownExtension "Strict"
         ]
       }
@@ -243,3 +273,86 @@ vkRegistryLink tname = do
         <> Feature.number (unInorder $ globFeature vkXml)
         <> "/man/html/" <> tname <> ".html "
         <> tname <> " registry at www.khronos.org>"
+
+
+qNameTxt :: QName a -> Text
+qNameTxt (Qual _ _ (Ident _ t))  = T.pack t
+qNameTxt (Qual _ _ (Symbol _ t)) = T.pack t
+qNameTxt (UnQual _ (Ident _ t))  = T.pack t
+qNameTxt (UnQual _ (Symbol _ t)) = T.pack t
+qNameTxt (Special _ t)           = T.pack $ prettyPrint t
+
+requireType :: Monad m => QName () -> ModuleWriter m ()
+requireType (Qual _ (ModuleName _ m) n) = writeImport m (IThingWith () n [])
+requireType _                           = pure ()
+
+
+requireVar :: Monad m => QName () -> ModuleWriter m ()
+requireVar (Qual _ (ModuleName _ m) n) = writeImport m (IVar () n)
+requireVar _                           = pure ()
+
+requireTypeMember :: Monad m => QName () -> CName () -> ModuleWriter m ()
+requireTypeMember (Qual _ (ModuleName _ m) n) c
+  = writeImport m (IThingWith () n [c])
+requireTypeMember _ _ = pure ()
+
+requirePattern :: Monad m => QName () -> ModuleWriter m ()
+requirePattern (Qual _ (ModuleName _ m) n)
+  = writeImport m (IAbs () (PatternNamespace ()) n)
+requirePattern _ = pure ()
+
+toHaskellType :: VkTypeName -> QName ()
+toHaskellType (VkTypeName "void")
+  = Special () (UnitCon ())
+toHaskellType (VkTypeName "char")
+  = Qual () (ModuleName () "Foreign.C.Types") (Ident () "CChar")
+toHaskellType (VkTypeName "float")
+  = Qual () (ModuleName () "Foreign.C.Types") (Ident () "CFloat")
+toHaskellType (VkTypeName "double")
+  = Qual () (ModuleName () "Foreign.C.Types") (Ident () "CDouble")
+toHaskellType (VkTypeName "uint8_t")
+  = Qual () (ModuleName () "Data.Word") (Ident () "Word8")
+toHaskellType (VkTypeName "uint16_t")
+  = Qual () (ModuleName () "Data.Word") (Ident () "Word16")
+toHaskellType (VkTypeName "uint32_t")
+  = Qual () (ModuleName () "Data.Word") (Ident () "Word32")
+toHaskellType (VkTypeName "uint64_t")
+  = Qual () (ModuleName () "Data.Word") (Ident () "Word64")
+toHaskellType (VkTypeName "int8_t")
+  = Qual () (ModuleName () "Data.Int") (Ident () "Int8")
+toHaskellType (VkTypeName "int16_t")
+  = Qual () (ModuleName () "Data.Int") (Ident () "Int16")
+toHaskellType (VkTypeName "int32_t")
+  = Qual () (ModuleName () "Data.Int") (Ident () "Int32")
+toHaskellType (VkTypeName "int64_t")
+  = Qual () (ModuleName () "Data.Int") (Ident () "Int64")
+toHaskellType (VkTypeName "size_t")
+  = Qual () (ModuleName () "Foreign.C.Types") (Ident () "CSize")
+toHaskellType (VkTypeName "int")
+  = Qual () (ModuleName () "Foreign.C.Types") (Ident () "CInt")
+toHaskellType (VkTypeName t)
+    = UnQual ()
+    . Ident ()
+    . toCamelCase
+    . firstUp
+    . dropWhile (not . isAlpha)
+    . filter (\x -> isAlphaNum x || x == '_' || x == '\'')
+    $ T.unpack t
+  where
+    firstUp []     = error "toHaskellType: empty type name!"
+    firstUp (x:xs) = toUpper x : xs
+
+toHaskellVar :: Coercible a Text
+             => a -> QName ()
+toHaskellVar
+    = UnQual () . Ident ()
+    . dropWhile (\x -> not (isAlpha x) && x /= '_')
+    . filter (\x -> isAlphaNum x || x == '_' || x == '\'')
+    . T.unpack . coerce
+
+
+toCamelCase :: String -> String
+toCamelCase ('_':c:cs)
+  | isLower c = toUpper c : toCamelCase cs
+toCamelCase (c:cs) = c : toCamelCase cs
+toCamelCase [] = []

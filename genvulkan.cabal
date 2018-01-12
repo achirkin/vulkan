@@ -28,7 +28,8 @@ library
                        VkXml.Sections.Extensions
                        Write
                        Write.ModuleWriter
-                       Write.Enums
+                       Write.Types
+                       Write.Types.Enums
   build-depends:       base >= 4.7 && < 5
                      , path -any
                      , path-io -any
@@ -42,6 +43,7 @@ library
                      , containers -any
                      , text -any
                      , exceptions -any
+                     , mmorph -any
 
                      , neat-interpolation -any
                      , haskell-src-exts -any
