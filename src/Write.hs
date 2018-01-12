@@ -8,25 +8,21 @@ module Write
 
 import           Control.Monad
 import           Data.Semigroup
--- import           Data.Text                            (Text)
 import qualified Data.Text                            as T
 import           Language.Haskell.Exts.ExactPrint
 import           Language.Haskell.Exts.Extension
 import           Language.Haskell.Exts.Parser
 import           Language.Haskell.Exts.Pretty
 import           Language.Haskell.Exts.SimpleComments
--- import           Language.Haskell.Exts.Syntax
 import           Language.Haskell.Format
 import           NeatInterpolation
 import           Path
 import           System.IO                            (writeFile)
 
--- import           VkXml.CommonTypes
 import           VkXml.Sections
-import           VkXml.Sections.Types
-
 import           Write.ModuleWriter
-import           Write.Enums
+import           Write.Types
+import           Write.Types.Enums
 
 generateVkSource :: Path b Dir
                     -- ^ multiline
@@ -52,16 +48,11 @@ generateVkSource outputDir vkXml = do
                   , pattern VK_IMAGE_LAYOUT_UNDEFINED
                   , pattern VK_IMAGE_LAYOUT_GENERAL
                   ) where
-                newtype VkImageLayout = VkImageLayout Int32
-                                      deriving (Eq, Ord, Storable)
 
-                pattern VK_IMAGE_LAYOUT_UNDEFINED :: VkImageLayout
-                pattern VK_IMAGE_LAYOUT_UNDEFINED = VkImageLayout 0
+                import B(pattern HeyPat)
 
-                pattern VK_IMAGE_LAYOUT_GENERAL :: VkImageLayout
-                pattern VK_IMAGE_LAYOUT_GENERAL = VkImageLayout (-1)
-
-                type Hello = Int32
+                pattern VK_LOD_CLAMP_NONE :: (Fractional a, Eq a) => a
+                pattern VK_LOD_CLAMP_NONE = 1000.0
             |]
   putStrLn testS
   putStrLn "-----------------"
@@ -69,18 +60,14 @@ generateVkSource outputDir vkXml = do
 
 
 
-  ((), mr) <- runModuleWriter vkXml
-    $ flip writeSections
-           (types . unInorder $ globTypes vkXml) $ \t ->
-      case vkTypeCat t of
-        VkTypeCatBitmask -> genEnum t
-        VkTypeCatEnum -> genEnum t
-        _ -> pure ()
+  ((), mr) <- runModuleWriter vkXml "Graphics.Vulkan" $ do
+      genApiConstants
+      genTypes
 
   let rez = uncurry exactPrint
           . ppWithCommentsMode defaultMode
-          $ genModule "Graphics.Vulkan" mr
-  -- putStrLn rez
+          $ genModule mr
+  rez `seq` putStrLn "Done generating; now apply hfmt to reformat code..."
   frez <- hfmt rez
   case frez of
     Left err -> do
@@ -94,11 +81,15 @@ generateVkSource outputDir vkXml = do
 
 
 
-
+-- unfortunately, I have to disable hindent for now,
+--  because it breaks haddock:
+--   moves the first section declaration before the opening parenthesis
+--   in the export list.
 hfmt :: String -> IO (Either String ([Suggestion], String))
 hfmt source = do
     sets <- autoSettings
-    mfts <- formatters sets
+    mfts <- sequence [hlint sets,  stylish sets]
+     -- formatters sets   -- hindent sets,
     pure $ go mfts (Right ([], source))
   where
     go [] esr       = esr
