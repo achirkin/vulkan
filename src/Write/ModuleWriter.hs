@@ -150,7 +150,8 @@ writeExport espec = ModuleWriter . modify $
              , pendingSec = mempty
              }
   where
-    f txts = case unlines . g $ toList txts >>= normalize of
+    -- the whole thing below is to compile comments
+    f txts = case removeLastNewline . unlines . g $ toList txts >>= normalize of
        "" -> Nothing
        s  -> Just $ CodeComment AboveCode ' ' s
     -- take a list of one-liners as arguments
@@ -158,10 +159,16 @@ writeExport espec = ModuleWriter . modify $
     g ((i, s):(0,t):xs) | i > 0 = (indent i ++ s):"|":t:g xs
     g ((i,s):xs) = (indent i ++ s) : g xs
     indent lvl = if lvl <= 0 then "" else reverse $ ' ' : replicate lvl '*'
-    normalize (lvl, txt) = setlvls . lines . T.unpack $ T.strip txt
+    removeLastNewline [] = []
+    removeLastNewline ['\n'] = []
+    removeLastNewline (x:xs) = x : removeLastNewline xs
+    normalize (lvl, txt) = lastWithNewline . setlvls . lines . T.unpack $ T.strip txt
       where
         setlvls [] = []
         setlvls (x:xs) = (lvl, x) : map ((,) 0) xs
+        lastWithNewline [] = []
+        lastWithNewline [(i,s)] = [(i,s ++ "\n")]
+        lastWithNewline (x:xs) = x : lastWithNewline xs
 
 
 -- | Add a section split to a module export list
@@ -173,25 +180,6 @@ writeSection :: Monad m
              -> ModuleWriter m ()
 writeSection lvl txt = ModuleWriter . modify $
   \mr -> mr { pendingSec = pendingSec mr Seq.|> (lvl, txt)}
-    -- | [] <- ss = pure ()
-    -- | s1:srest <- ss
-    -- , s <- (indent ++ s1) : srest
-  -- where
-  --   f Nothing  s = Just $ unlines $ barOnSecond lvl s
-  --   f (Just t) s = Just . unlines $ barBefore lvl (lines t) s
-  --   indent = if lvl <= 0 then "" else reverse $ ' ' : replicate lvl '*'
-  --   ss = lines . T.unpack $ T.strip txt
-  --   -- add a bar on a second line; only if it is not a normal text.
-  --   barOnSecond 0 xs = xs
-  --   barOnSecond _ [] = []
-  --   barOnSecond _ [x] = [x]
-  --   barOnSecond _ (x:y:zs) = x:"|":y:zs
-  --   barBefore 0 t s | not (isBarHere False t) = t ++ "":"|":s
-  --   barBefore _ t s = t ++ "":s
-  --   isBarHere _ (('|':_):xs) = isBarHere True xs
-  --   isBarHere _ (('*':_):xs) = isBarHere False xs
-  --   isBarHere b (_:xs) = isBarHere b xs
-  --   isBarHere b [] = b
 
 
 -- | Write section elements interspersed with comments as section delimers.
