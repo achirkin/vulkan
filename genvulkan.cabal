@@ -29,7 +29,8 @@ library
                        Write
                        Write.ModuleWriter
                        Write.Types
-                       Write.Types.Enums
+                       Write.Types.Enum
+                       Write.Types.Handle
   build-depends:       base >= 4.7 && < 5
                      , path -any
                      , path-io -any
