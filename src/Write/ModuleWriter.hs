@@ -11,7 +11,7 @@ module Write.ModuleWriter
   , runModuleWriter, genModule
   , writeImport, writeExport
   , writePragma, writeDecl
-  , writeSection, writeSectionPre
+  , writeSection --, writeSectionPre
     -- * Helpers
   , appendComLine, parseDecl', setComment
   , writeWithComments, vkRegistryLink
@@ -66,9 +66,10 @@ data ModuleWriting
   , mPragmas      :: Set String
   , mDecs         :: Seq (Decl A)
   , mExports      :: Seq (ExportSpec A)
-  , pendingSec    :: Maybe String
+  , pendingSec    :: Seq (Int, Text)
   , currentSecLvl :: Int
   }
+
 
 newtype ModuleWriter m a
   = ModuleWriter
@@ -145,11 +146,23 @@ writePragma pname = ModuleWriter . modify $
 writeExport :: Monad m => ExportSpec () -> ModuleWriter m ()
 writeExport espec = ModuleWriter . modify $
    \mr -> mr { mExports = mExports mr Seq.|>
-                          setComment (f <$> pendingSec mr) (Nothing <$ espec)
-             , pendingSec = Nothing
+                          setComment (f $ pendingSec mr) (Nothing <$ espec)
+             , pendingSec = mempty
              }
   where
-    f = CodeComment AboveCode ' '
+    f txts = case unlines . g $ toList txts >>= normalize of
+       "" -> Nothing
+       s  -> Just $ CodeComment AboveCode ' ' s
+    -- take a list of one-liners as arguments
+    g [] = []
+    g ((i, s):(0,t):xs) | i > 0 = (indent i ++ s):"|":t:g xs
+    g ((i,s):xs) = (indent i ++ s) : g xs
+    indent lvl = if lvl <= 0 then "" else reverse $ ' ' : replicate lvl '*'
+    normalize (lvl, txt) = setlvls . lines . T.unpack $ T.strip txt
+      where
+        setlvls [] = []
+        setlvls (x:xs) = (lvl, x) : map ((,) 0) xs
+
 
 -- | Add a section split to a module export list
 writeSection :: Monad m
@@ -158,35 +171,28 @@ writeSection :: Monad m
              -> Text   -- ^ Section name
                        -- (And section content on further lines)
              -> ModuleWriter m ()
-writeSection lvl txt
-    | [] <- ss = pure ()
-    | s1:srest <- ss
-    , s <- (indent ++ s1) : srest
-    = ModuleWriter . modify $ \mr -> mr { pendingSec = f (pendingSec mr) s}
-  where
-    f Nothing  s = Just $ unlines s
-    f (Just t) s = Just . unlines $ lines t ++ "":s
-    indent = if lvl <= 0 then "" else reverse $ ' ' : replicate lvl '*'
-    ss = lines . T.unpack $ T.strip txt
+writeSection lvl txt = ModuleWriter . modify $
+  \mr -> mr { pendingSec = pendingSec mr Seq.|> (lvl, txt)}
+    -- | [] <- ss = pure ()
+    -- | s1:srest <- ss
+    -- , s <- (indent ++ s1) : srest
+  -- where
+  --   f Nothing  s = Just $ unlines $ barOnSecond lvl s
+  --   f (Just t) s = Just . unlines $ barBefore lvl (lines t) s
+  --   indent = if lvl <= 0 then "" else reverse $ ' ' : replicate lvl '*'
+  --   ss = lines . T.unpack $ T.strip txt
+  --   -- add a bar on a second line; only if it is not a normal text.
+  --   barOnSecond 0 xs = xs
+  --   barOnSecond _ [] = []
+  --   barOnSecond _ [x] = [x]
+  --   barOnSecond _ (x:y:zs) = x:"|":y:zs
+  --   barBefore 0 t s | not (isBarHere False t) = t ++ "":"|":s
+  --   barBefore _ t s = t ++ "":s
+  --   isBarHere _ (('|':_):xs) = isBarHere True xs
+  --   isBarHere _ (('*':_):xs) = isBarHere False xs
+  --   isBarHere b (_:xs) = isBarHere b xs
+  --   isBarHere b [] = b
 
--- | Write a comment; prepend it to another comment if there is any.
-writeSectionPre :: Monad m
-                => Int    -- ^ Section level - number of star symbols
-                          --   (zero for simple text)
-                -> Text   -- ^ Section name
-                          -- (And section content on further lines)
-                -> ModuleWriter m ()
-writeSectionPre lvl txt = do
-    mps <- ModuleWriter $ gets pendingSec
-    case mps of
-      Nothing -> writeSection lvl txt
-      Just s -> do
-        ModuleWriter . modify $ \mr -> mr { pendingSec = Nothing}
-        writeSection lvl txt
-        ModuleWriter . modify $ \mr -> mr { pendingSec = f (pendingSec mr) s}
-  where
-    f Nothing  s = Just s
-    f (Just t) s = Just . unlines $ lines t ++ "": lines s
 
 -- | Write section elements interspersed with comments as section delimers.
 --   Determine subsection level automatically.

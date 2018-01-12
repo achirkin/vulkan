@@ -9,6 +9,8 @@ module Write
 import           Control.Monad
 import           Data.Semigroup
 import qualified Data.Text                            as T
+import           Data.Char
+import qualified Data.List as L
 import           Language.Haskell.Exts.ExactPrint
 import           Language.Haskell.Exts.Extension
 import           Language.Haskell.Exts.Parser
@@ -22,7 +24,7 @@ import           System.IO                            (writeFile)
 import           VkXml.Sections
 import           Write.ModuleWriter
 import           Write.Types
-import           Write.Types.Enums
+import           Write.Types.Enum
 
 generateVkSource :: Path b Dir
                     -- ^ multiline
@@ -72,11 +74,13 @@ generateVkSource outputDir vkXml = do
   case frez of
     Left err -> do
       putStrLn $ "Could not format the code:\n" <> err
-      writeFile (toFilePath $ outputDir </> [relfile|Vulkan.hs|]) rez
+      writeFile (toFilePath $ outputDir </> [relfile|Vulkan.hs|])
+        $ fixHaddockHooks rez
     Right (ss, rez') -> do
       forM_ ss $ \(Suggestion s) ->
         putStrLn $ "Formatting suggestion:\n    " <> s
-      writeFile (toFilePath $ outputDir </> [relfile|Vulkan.hs|]) rez'
+      writeFile (toFilePath $ outputDir </> [relfile|Vulkan.hs|])
+        $ fixHaddockHooks rez'
 
 
 
@@ -98,3 +102,16 @@ hfmt source = do
         Left err -> Left err
         Right (Reformatted (HaskellSource _ txt') suggs')
           -> go fs (Right ( suggs ++ suggs', txt'))
+
+
+fixHaddockHooks :: String -> String
+fixHaddockHooks = splitExportSextions
+  where
+    stripBeginSpace = dropWhile isSpace
+    splitExportSextions = unlines . go . lines
+      where
+        go [] = []
+        go (x:y:zs) | "-- *" `L.isPrefixOf` stripBeginSpace y
+                    && "--" `L.isPrefixOf` stripBeginSpace x
+                    = x:"":y:go zs
+        go (x:xs) = x : go xs

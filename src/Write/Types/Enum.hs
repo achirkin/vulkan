@@ -4,7 +4,7 @@
 {-# LANGUAGE RecordWildCards       #-}
 {-# LANGUAGE Strict                #-}
 -- Generate enums and bitmasks
-module Write.Types.Enums
+module Write.Types.Enum
   ( genEnum
   , genAlias
   , genApiConstants

@@ -24,7 +24,8 @@ import           VkXml.Sections
 import           VkXml.Sections.Types
 
 import           Write.ModuleWriter
-import           Write.Types.Enums
+import           Write.Types.Enum
+import           Write.Types.Handle
 
 
 genTypes :: Monad m => ModuleWriter m ()
@@ -42,7 +43,7 @@ genTypes' = do
       let curcat = vkTypeCat t
       when (oldcat /= Just curcat) $ do
         lift . State.put $ Just curcat
-        writeSectionPre curlvl $ case curcat of
+        writeSection curlvl $ case curcat of
           VkTypeNoCat          -> "External types"
           VkTypeCatInclude     -> "Include pragmas"
           VkTypeCatDefine      -> "Define pragmas"
@@ -55,6 +56,7 @@ genTypes' = do
           VkTypeCatUnion       -> "C unions"
       case vkTypeCat t of
         VkTypeNoCat       -> genNocatData t
+        VkTypeCatInclude  -> genInclude t
         VkTypeCatBasetype -> genBasetypeAlias t
         VkTypeCatBitmask  -> genEnum t
         VkTypeCatEnum     -> genEnum t
@@ -89,10 +91,20 @@ genNocatData VkTypeSimple
     rezComment = ((\s -> "Requires @" <> s <> "@") . unVkTypeName <$> mreq)
               >>= preComment . T.unpack
 genNocatData t = error
-  $ "genNocatData: data with no description, but got: "
+  $ "genNocatData: expected data with no description, but got: "
   <> show t
 
 
+-- | Stub for VkTypeCatInclude
+genInclude :: Monad m => VkType -> ModuleWriter m ()
+genInclude VkTypeSimple
+    { typeData = VkTypeData
+       { code = c
+       }
+    } = writeSection 0 . T.unlines . map ("> " <>) $ T.lines c
+genInclude t = error
+  $ "genInclude: expected C-style include code, but got: "
+  <> show t
 
 -- | VkTypeCatBasetype
 genBasetypeAlias :: Monad m => VkType -> ModuleWriter m ()
