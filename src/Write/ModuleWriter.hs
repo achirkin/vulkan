@@ -16,11 +16,13 @@ module Write.ModuleWriter
   , appendComLine, parseDecl', setComment
   , writeWithComments, vkRegistryLink
   , writeSections
+  , foldSectionsWithComments, pushSecLvl
   , toHaskellType, toHaskellVar, qNameTxt
   , requireType, requireTypeMember, requireVar, requirePattern
   , toCamelCase
   ) where
 
+import           Control.Arrow
 import           Control.Applicative
 import           Control.Monad
 import           Control.Monad.Fail
@@ -190,9 +192,37 @@ writeSections :: Monad m
               -> ModuleWriter m ()
 writeSections f secs = do
     slvl <- ModuleWriter $ gets currentSecLvl
-    let g = ModuleWriter . modify
-          $ \mr -> mr { currentSecLvl = slvl + 1}
-    writeWithComments slvl (\a -> g >> f a) secs
+    writeWithComments slvl (pushSecLvl . const . f) secs
+
+
+-- | Go over element in a sections list,
+--   provide a list of comments preceding each element.
+foldSectionsWithComments :: Monad m
+                         => ([Text] -> a -> ModuleWriter m ())
+                            -- ^ What to do with element and comments before it.
+                         -> ([Text] -> ModuleWriter m ())
+                            -- ^ What to do with last comments.
+                         -> Sections a
+                         -> ModuleWriter m ()
+foldSectionsWithComments f g Sections {..} = go 0 items comments
+  where
+    go _ [] cs = g $ map snd cs
+    go i (a:as) cs
+      = let (curCS, remCs) = first (map snd) $ span ((i>=) . fst) cs
+        in  f curCS a >> go (i+1) as remCs
+
+-- | Increase section level by 1, run an action with that level,
+--   and decrease section level back to original state.
+pushSecLvl :: Monad m
+           => (Int -> ModuleWriter m a)
+           -> ModuleWriter m a
+pushSecLvl f = do
+  slvl <- ModuleWriter $ gets currentSecLvl
+  ModuleWriter . modify $ \mr -> mr { currentSecLvl = slvl + 1}
+  r <- f (slvl + 1)
+  ModuleWriter . modify $ \mr -> mr { currentSecLvl = slvl}
+  return r
+
 
 -- | Write section elements interspersed with comments as section delimers
 writeWithComments :: Monad m
