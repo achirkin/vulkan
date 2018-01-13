@@ -12,13 +12,14 @@ module Write.Types.Enum
 
 import           Control.Monad
 import           Control.Monad.Reader.Class
+import qualified Control.Monad.Trans.RWS.Strict       as RWS
 import           Data.Bits
-import           Data.Word
+import qualified Data.Map.Strict                      as Map
 import           Data.Semigroup
 import           Data.Text                            (Text)
 import qualified Data.Text                            as T
-import qualified Data.Map.Strict           as Map
-import qualified Data.Text.Read as T
+import qualified Data.Text.Read                       as T
+import           Data.Word
 import           Language.Haskell.Exts.SimpleComments
 import           Language.Haskell.Exts.Syntax
 import           NeatInterpolation
@@ -26,14 +27,18 @@ import           Numeric
 
 import           VkXml.CommonTypes
 import           VkXml.Sections
-import           VkXml.Sections.Types
 import           VkXml.Sections.Enums
+import           VkXml.Sections.Types
 
 import           Write.ModuleWriter
 
 genApiConstants :: Monad m => ModuleWriter m ()
-genApiConstants = ask >>= \vk -> mapM_ genEnums
-  (unInorder <$> Map.lookup (VkTypeName "API Constants") (globEnums vk))
+genApiConstants = do
+  glvl <- ModuleWriter $ RWS.gets currentSecLvl
+  writeSection glvl "API Constants"
+  vk <- ask
+  pushSecLvl . const $ mapM_ genEnums
+    (unInorder <$> Map.lookup (VkTypeName "API Constants") (globEnums vk))
 
 
 -- | Lookup an enum in vk.xml and generate code for it
@@ -95,7 +100,7 @@ genAlias VkTypeSimple
     rezComment' = if txt == mempty
                   then mtxt2
                   else case mtxt2 of
-                    Nothing -> Just txt
+                    Nothing   -> Just txt
                     Just txt2 -> appendComLine (Just txt) txt2
 genAlias t@VkTypeSimple
     { typeData = td@VkTypeData

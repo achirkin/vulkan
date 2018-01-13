@@ -35,33 +35,38 @@ genTypes = hoist (`State.evalStateT` Nothing) genTypes'
 genTypes' :: Monad m => ModuleWriter (StateT (Maybe VkTypeCategory) m) ()
 genTypes' = do
     vkXml <- ask
-    curlvl <- ModuleWriter $ RWS.gets currentSecLvl
-    ModuleWriter . RWS.modify $ \mr -> mr { currentSecLvl = curlvl + 1}
-    flip writeSections
-         (types . unInorder $ globTypes vkXml) $ \t -> do
-      oldcat <- lift State.get
-      let curcat = vkTypeCat t
-      when (oldcat /= Just curcat) $ do
-        lift . State.put $ Just curcat
-        writeSection curlvl $ case curcat of
-          VkTypeNoCat          -> "External types"
-          VkTypeCatInclude     -> "Include pragmas"
-          VkTypeCatDefine      -> "Define pragmas"
-          VkTypeCatBasetype    -> "Base types"
-          VkTypeCatBitmask     -> "Bitmasks"
-          VkTypeCatHandle      -> "Handles"
-          VkTypeCatEnum        -> "Enums"
-          VkTypeCatFuncpointer -> "Function pointers"
-          VkTypeCatStruct      -> "C structures"
-          VkTypeCatUnion       -> "C unions"
-      case vkTypeCat t of
-        VkTypeNoCat       -> genNocatData t
-        VkTypeCatInclude  -> genInclude t
-        VkTypeCatBasetype -> genBasetypeAlias t
-        VkTypeCatBitmask  -> genEnum t
-        VkTypeCatEnum     -> genEnum t
-        _                 -> pure ()
-    ModuleWriter . RWS.modify $ \mr -> mr { currentSecLvl = curlvl + 1}
+    glvl <- ModuleWriter $ RWS.gets currentSecLvl
+    writeSection glvl "Types and enumerations"
+    pushSecLvl $ \curlvl ->
+      foldSectionsWithComments (fItem curlvl) fLast
+                               (types . unInorder $ globTypes vkXml)
+        where
+          fItem curlvl cs t = do
+            oldcat <- lift State.get
+            let curcat = vkTypeCat t
+            when (oldcat /= Just curcat) $ do
+              lift . State.put $ Just curcat
+              writeSection curlvl $ case curcat of
+                VkTypeNoCat          -> "External types"
+                VkTypeCatInclude     -> "Include pragmas"
+                VkTypeCatDefine      -> "Define pragmas"
+                VkTypeCatBasetype    -> "Base types"
+                VkTypeCatBitmask     -> "Bitmasks"
+                VkTypeCatHandle      -> "Handles"
+                VkTypeCatEnum        -> "Enums"
+                VkTypeCatFuncpointer -> "Function pointers"
+                VkTypeCatStruct      -> "C structures"
+                VkTypeCatUnion       -> "C unions"
+            forM_ cs $ writeSection (curlvl+1)
+            case vkTypeCat t of
+              VkTypeNoCat       -> genNocatData t
+              VkTypeCatInclude  -> genInclude t
+              VkTypeCatBasetype -> genBasetypeAlias t
+              VkTypeCatBitmask  -> genEnum t
+              VkTypeCatEnum     -> genEnum t
+              _                 -> pure ()
+          fLast [] = pure ()
+          fLast cs = writeSection 0 $ T.unlines $ "|":cs
 
 
 
