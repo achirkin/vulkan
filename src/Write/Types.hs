@@ -24,6 +24,7 @@ import           VkXml.Sections
 import           VkXml.Sections.Types
 
 import           Write.ModuleWriter
+import           Write.Types.Define
 import           Write.Types.Enum
 import           Write.Types.Handle
 
@@ -61,8 +62,10 @@ genTypes' = do
             case vkTypeCat t of
               VkTypeNoCat       -> genNocatData t
               VkTypeCatInclude  -> genInclude t
+              VkTypeCatDefine   -> genDefine t
               VkTypeCatBasetype -> genBasetypeAlias t
               VkTypeCatBitmask  -> genEnum t
+              VkTypeCatHandle   -> genHandle t
               VkTypeCatEnum     -> genEnum t
               _                 -> pure ()
           fLast [] = pure ()

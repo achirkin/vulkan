@@ -14,6 +14,7 @@ module Write.ModuleWriter
   , writeSection --, writeSectionPre
     -- * Helpers
   , appendComLine, parseDecl', setComment
+  , parseDecls, insertDeclComment
   , writeWithComments, vkRegistryLink
   , writeSections
   , foldSectionsWithComments, pushSecLvl
@@ -133,6 +134,8 @@ writeImport mname is = ModuleWriter . modify $
       | an == bn
       = (Nothing, IThingAll () bn)
     check ma b = (ma, b)
+
+
 
 -- | Add a declaration to a module
 writeDecl :: Monad m => Decl A -> ModuleWriter m ()
@@ -267,13 +270,100 @@ parseDecl' t = case parseDeclWithMode vkParseMode (T.unpack t) of
   err@ParseFailed{} -> error $ show err
   ParseOk r         -> Nothing <$ r
 
+parseDecls :: HasCallStack => Text -> [Decl A]
+parseDecls t = case parseModuleWithMode vkParseMode (T.unpack t) of
+    err@ParseFailed{} -> error $ show err
+    ParseOk (Module _ _ _ _ r) -> fmap (Nothing <$) r
+    ParseOk _ -> error "declarations should be a part of a simple module."
 
 setComment :: Annotated m
            => Maybe CodeComment
            -> m A -> m A
 setComment mcc = amap (const mcc)
 
-
+-- | Insert comment into a declaration with a given name.
+insertDeclComment :: String
+                  -> Maybe CodeComment
+                  -> [Decl A]
+                  -> [Decl A]
+insertDeclComment _ Nothing xs = xs
+insertDeclComment _ _ [] = []
+insertDeclComment s c (x:xs)
+  | TypeDecl _ h _ <- x, matchDHead h
+    = setComment c x : xs
+  | TypeFamDecl _ h _ _ <- x, matchDHead h
+    = setComment c x : xs
+  | ClosedTypeFamDecl _ h _ _ _ <- x, matchDHead h
+    = setComment c x : xs
+  | DataDecl _ _ _ h _ _ <- x, matchDHead h
+    = setComment c x : xs
+  | GDataDecl _ _ _ h _ _ _ <- x, matchDHead h
+    = setComment c x : xs
+  | DataFamDecl _ _ h _ <- x, matchDHead h
+    = setComment c x : xs
+  -- | TypeInsDecl l (Type l) (Type l) <- x, matchDHead h
+  --   = setComment c x : xs
+  -- | DataInsDecl l (DataOrNew l) (Type l) [QualConDecl l] (Maybe (Deriving l)) <- x, matchDHead h
+  --   = setComment c x : xs
+  -- | GDataInsDecl l (DataOrNew l) (Type l) (Maybe (Kind l)) [GadtDecl l] (Maybe (Deriving l)) <- x, matchDHead h
+  --   = setComment c x : xs
+  | ClassDecl _ _ h _ _ <- x, matchDHead h
+    = setComment c x : xs
+  -- | InstDecl l (Maybe (Overlap l)) (InstRule l) (Maybe [InstDecl l]) <- x, matchDHead h
+  --   = setComment c x : xs
+  -- | DerivDecl l (Maybe (Overlap l)) (InstRule l) <- x, matchDHead h
+  --   = setComment c x : xs
+  -- | InfixDecl l (Assoc l) (Maybe Int) [Op l] <- x, matchDHead h
+  --   = setComment c x : xs
+  -- | DefaultDecl l [Type l] <- x, matchDHead h
+  --   = setComment c x : xs
+  -- | SpliceDecl l (Exp l) <- x, matchDHead h
+  --   = setComment c x : xs
+  | TypeSig _ (n:_) _ <- x, matchName n
+    = setComment c x : xs
+  | PatSynSig _ n _ _ _ _ <- x, matchName n
+    = setComment c x : xs
+  -- | FunBind l [Match l] <- x, matchDHead h
+  --   = setComment c x : xs
+  -- | PatBind l (Pat l) (Rhs l) (Maybe (Binds l)) <- x, matchDHead h
+  --   = setComment c x : xs
+  -- | PatSyn l (Pat l) (Pat l) (PatternSynDirection l) <- x, matchDHead h
+  --   = setComment c x : xs
+  | ForImp _ _ _ _ n _ <- x, matchName n
+    = setComment c x : xs
+  | ForExp _ _ _ n _ <- x, matchName n
+    = setComment c x : xs
+  -- | RulePragmaDecl l [Rule l] <- x, matchDHead h
+  --   = setComment c x : xs
+  -- | DeprPragmaDecl l [([Name l], String)] <- x, matchDHead h
+  --   = setComment c x : xs
+  -- | WarnPragmaDecl l [([Name l], String)] <- x, matchDHead h
+  --   = setComment c x : xs
+  -- | InlineSig l Bool (Maybe (Activation l)) (QName l) <- x, matchDHead h
+  --   = setComment c x : xs
+  -- | InlineConlikeSig l (Maybe (Activation l)) (QName l) <- x, matchDHead h
+  --   = setComment c x : xs
+  -- | SpecSig l (Maybe (Activation l)) (QName l) [Type l] <- x, matchDHead h
+  --   = setComment c x : xs
+  -- | SpecInlineSig l Bool (Maybe (Activation l)) (QName l) [Type l] <- x, matchDHead h
+  --   = setComment c x : xs
+  -- | InstSig l (InstRule l) <- x, matchDHead h
+  --   = setComment c x : xs
+  -- | AnnPragma l (Annotation l) <- x, matchDHead h
+  --   = setComment c x : xs
+  -- | MinimalPragma l (Maybe (BooleanFormula l)) <- x, matchDHead h
+  --   = setComment c x : xs
+  -- | RoleAnnotDecl l (QName l) [Role l] <- x, matchDHead h
+  --   = setComment c x : xs
+  | otherwise
+    = x : insertDeclComment s c xs
+  where
+    matchName (Ident _ t) = t == s
+    matchName (Symbol _ t) = t == s
+    matchDHead (DHead _ t) = matchName t
+    matchDHead (DHInfix _ _ t) = matchName t
+    matchDHead (DHParen _ t) = matchDHead t
+    matchDHead (DHApp _ t _) = matchDHead t
 
 vkParseMode :: ParseMode
 vkParseMode = defaultParseMode
@@ -282,6 +372,8 @@ vkParseMode = defaultParseMode
         [ EnableExtension GeneralizedNewtypeDeriving
         , EnableExtension PatternSynonyms
         , EnableExtension EmptyDataDecls
+        , EnableExtension ViewPatterns
+        , EnableExtension RoleAnnotations
         , UnknownExtension "Strict"
         ]
       }

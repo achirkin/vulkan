@@ -41,20 +41,17 @@ generateVkSource outputDir vkXml = do
         , extensions =
           [ EnableExtension GeneralizedNewtypeDeriving
           , EnableExtension PatternSynonyms
+          , EnableExtension CPP
           , UnknownExtension "Strict"
           ]
         }
       testS = T.unpack [text|
                 module A
-                  ( VkImageLayout (..)
-                  , pattern VK_IMAGE_LAYOUT_UNDEFINED
-                  , pattern VK_IMAGE_LAYOUT_GENERAL
-                  ) where
+                  () where
 
-                import B(pattern HeyPat)
-
-                pattern VK_LOD_CLAMP_NONE :: (Fractional a, Eq a) => a
-                pattern VK_LOD_CLAMP_NONE = 1000.0
+                _VK_MAKE_VERSION :: Bits a => a -> a -> a -> a
+                _VK_MAKE_VERSION major minor patch = unsafeShiftL major 22 .|. unsafeShiftL minor 12 .|. patch
+                {-# INLINE _VK_MAKE_VERSION #-}
             |]
   putStrLn testS
   putStrLn "-----------------"
@@ -75,12 +72,12 @@ generateVkSource outputDir vkXml = do
     Left err -> do
       putStrLn $ "Could not format the code:\n" <> err
       writeFile (toFilePath $ outputDir </> [relfile|Vulkan.hs|])
-        $ fixHaddockHooks rez
+        $ fixSourceHooks rez
     Right (ss, rez') -> do
       forM_ ss $ \(Suggestion s) ->
         putStrLn $ "Formatting suggestion:\n    " <> s
       writeFile (toFilePath $ outputDir </> [relfile|Vulkan.hs|])
-        $ fixHaddockHooks rez'
+        $ fixSourceHooks rez'
 
 
 
@@ -103,15 +100,25 @@ hfmt source = do
         Right (Reformatted (HaskellSource _ txt') suggs')
           -> go fs (Right ( suggs ++ suggs', txt'))
 
-
-fixHaddockHooks :: String -> String
-fixHaddockHooks = splitExportSextions
+-- | Various small fixes to normalize haddock output, enable CPP, etc.
+fixSourceHooks :: String -> String
+fixSourceHooks = uncommentCPP . splitExportSections
   where
     stripBeginSpace = dropWhile isSpace
-    splitExportSextions = unlines . go . lines
+
+    -- improve haddock layout
+    splitExportSections = unlines . go . lines
       where
         go [] = []
         go (x:y:zs) | "-- *" `L.isPrefixOf` stripBeginSpace y
                     && "--" `L.isPrefixOf` stripBeginSpace x
                     = x:"":y:go zs
         go (x:xs) = x : go xs
+
+    -- enable CPP: I put all CPP code into comments starting with @-- ##@
+    uncommentCPP = unlines . go . lines
+      where
+        go [] = []
+        go (x:xs) | "-- ##" `L.isPrefixOf` stripBeginSpace x
+                  = (drop 5 $ stripBeginSpace x) : go xs
+                  | otherwise = x : go xs

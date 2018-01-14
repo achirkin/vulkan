@@ -29,6 +29,7 @@ library
                        Write
                        Write.ModuleWriter
                        Write.Types
+                       Write.Types.Define
                        Write.Types.Enum
                        Write.Types.Handle
   build-depends:       base >= 4.7 && < 5

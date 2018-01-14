@@ -8,6 +8,7 @@ module Write.Types.Enum
   ( genEnum
   , genAlias
   , genApiConstants
+  , constantPattern
   ) where
 
 import           Control.Monad
