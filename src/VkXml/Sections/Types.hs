@@ -268,36 +268,59 @@ parseVkTypeData =
           _             -> []
       _ -> []
     parseIt d@VkTypeData{..} = do
-      mev <- await
-      case mev of
-        Nothing -> return d
-        Just ev -> leftover ev >> do
-         mnewname <- join
-                 <$> tagIgnoreAttrs "name" (coerce <$> contentMaybe)
-         mnewnameq <- mapM parseQualifiers mnewname
-         mnewref <- join
-                 <$> tagIgnoreAttrs "type" (coerce <$> contentMaybe)
-         mnewrefq <- mapM parseQualifiers mnewref
-         mnewcomment <- join <$> tagIgnoreAttrs "comment" contentMaybe
-         newcontent <- content
-         -- fallback to error if could not manage to parse anything
-         when (  isNothing mnewname
-              && isNothing mnewref
-              && isNothing mnewcomment
-              && newcontent  == mempty
-              ) $ parseFailed $ "Unexpected event in type content tree: "
-                             <> show ev
-         -- add newly parsed stuff to VkTypeData
-         parseIt (d
-             { name      = mnewnameq <|> name
-             , reference = reference <> maybeToList mnewrefq
-             , comment   = mnewcomment <|> comment
-             , code      = code
-                         <> maybe mempty coerce mnewname
-                         <> maybe mempty coerce mnewref
-                         <> newcontent
-             }
-           )
+      mr <- choose
+        [ fmap (\c -> d { code = code <> c}) <$> contentMaybe
+        , (join <$> tagIgnoreAttrs "type" (coerce <$> contentMaybe)) >>= mapM
+          (\newref -> do
+            newrefq <- parseQualifiers newref
+            return $ d { code = code <> coerce newref, reference = reference <> [newrefq] }
+          )
+        , (join <$> tagIgnoreAttrs "name" (coerce <$> contentMaybe)) >>= mapM
+          (\newname -> do
+            newnameq <- parseQualifiers newname
+            return d { code = code <> coerce newname, name = Just newnameq }
+          )
+        , fmap (dataComment d) . join <$> tagIgnoreAttrs "comment" contentMaybe
+        ]
+      case mr of
+        Nothing -> pure d
+        Just d' -> parseIt d'
+
+dataComment :: VkTypeData a -> Text -> VkTypeData a
+dataComment d@VkTypeData{ comment = Just s} t = d { comment = Just (T.unlines [s,t])}
+dataComment d@VkTypeData{ comment = Nothing} t = d { comment = Just t}
+
+      -- do
+      -- mev <- await
+      -- case mev of
+      --   Nothing -> return d
+      --   Just ev -> leftover ev >> do
+      --     mnewref <- join
+      --           <$> tagIgnoreAttrs "type" (coerce <$> contentMaybe)
+      --     mnewrefq <- mapM parseQualifiers mnewref
+      --     newcontent <- content
+      --     mnewname <- join
+      --            <$> tagIgnoreAttrs "name" (coerce <$> contentMaybe)
+      --     mnewnameq <- mapM parseQualifiers mnewname
+      --     mnewcomment <- join <$> tagIgnoreAttrs "comment" contentMaybe
+      --     -- fallback to error if could not manage to parse anything
+      --     when (  isNothing mnewname
+      --         && isNothing mnewref
+      --         && isNothing mnewcomment
+      --         && newcontent  == mempty
+      --         ) $ parseFailed $ "Unexpected event in type content tree: "
+      --                        <> show ev
+      --     -- add newly parsed stuff to VkTypeData
+      --     parseIt (d
+      --        { name      = mnewnameq <|> name
+      --        , reference = reference <> maybeToList mnewrefq
+      --        , comment   = mnewcomment <|> comment
+      --        , code      = code
+      --                    <> maybe mempty coerce mnewref
+      --                    <> newcontent
+      --                    <> maybe mempty coerce mnewname
+      --        }
+      --      )
 
 
 
