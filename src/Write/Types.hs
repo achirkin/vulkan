@@ -26,6 +26,7 @@ import           VkXml.Sections.Types
 import           Write.ModuleWriter
 import           Write.Types.Define
 import           Write.Types.Enum
+import           Write.Types.Funcpointer
 import           Write.Types.Handle
 
 
@@ -60,14 +61,15 @@ genTypes' = do
                 VkTypeCatUnion       -> "C unions"
             forM_ cs $ writeSection (curlvl+1)
             case vkTypeCat t of
-              VkTypeNoCat       -> genNocatData t
-              VkTypeCatInclude  -> genInclude t
-              VkTypeCatDefine   -> genDefine t
-              VkTypeCatBasetype -> genBasetypeAlias t
-              VkTypeCatBitmask  -> genEnum t
-              VkTypeCatHandle   -> genHandle t
-              VkTypeCatEnum     -> genEnum t
-              _                 -> pure ()
+              VkTypeNoCat          -> genNocatData t
+              VkTypeCatInclude     -> genInclude t
+              VkTypeCatDefine      -> genDefine t
+              VkTypeCatBasetype    -> genBasetypeAlias t
+              VkTypeCatBitmask     -> genEnum t
+              VkTypeCatHandle      -> genHandle t
+              VkTypeCatEnum        -> genEnum t
+              VkTypeCatFuncpointer -> genFuncpointer t
+              _                    -> pure ()
           fLast [] = pure ()
           fLast cs = writeSection 0 $ T.unlines $ "|":cs
 
