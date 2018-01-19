@@ -20,7 +20,7 @@ module Write.ModuleWriter
   , foldSectionsWithComments, pushSecLvl
   , toHaskellType, toHaskellVar, qNameTxt
   , requireType, requireTypeMember, requireVar, requirePattern
-  , toCamelCase
+  , toCamelCase, toType, unqualify
   ) where
 
 import           Control.Arrow
@@ -301,59 +301,59 @@ insertDeclComment s c (x:xs)
     = setComment c x : xs
   | DataFamDecl _ _ h _ <- x, matchDHead h
     = setComment c x : xs
-  -- | TypeInsDecl l (Type l) (Type l) <- x, matchDHead h
+  --  TypeInsDecl l (Type l) (Type l) <- x, matchDHead h
   --   = setComment c x : xs
-  -- | DataInsDecl l (DataOrNew l) (Type l) [QualConDecl l] (Maybe (Deriving l)) <- x, matchDHead h
+  --  DataInsDecl l (DataOrNew l) (Type l) [QualConDecl l] (Maybe (Deriving l)) <- x, matchDHead h
   --   = setComment c x : xs
-  -- | GDataInsDecl l (DataOrNew l) (Type l) (Maybe (Kind l)) [GadtDecl l] (Maybe (Deriving l)) <- x, matchDHead h
+  --  GDataInsDecl l (DataOrNew l) (Type l) (Maybe (Kind l)) [GadtDecl l] (Maybe (Deriving l)) <- x, matchDHead h
   --   = setComment c x : xs
   | ClassDecl _ _ h _ _ <- x, matchDHead h
     = setComment c x : xs
-  -- | InstDecl l (Maybe (Overlap l)) (InstRule l) (Maybe [InstDecl l]) <- x, matchDHead h
+  --  InstDecl l (Maybe (Overlap l)) (InstRule l) (Maybe [InstDecl l]) <- x, matchDHead h
   --   = setComment c x : xs
-  -- | DerivDecl l (Maybe (Overlap l)) (InstRule l) <- x, matchDHead h
+  --  DerivDecl l (Maybe (Overlap l)) (InstRule l) <- x, matchDHead h
   --   = setComment c x : xs
-  -- | InfixDecl l (Assoc l) (Maybe Int) [Op l] <- x, matchDHead h
+  --  InfixDecl l (Assoc l) (Maybe Int) [Op l] <- x, matchDHead h
   --   = setComment c x : xs
-  -- | DefaultDecl l [Type l] <- x, matchDHead h
+  --  DefaultDecl l [Type l] <- x, matchDHead h
   --   = setComment c x : xs
-  -- | SpliceDecl l (Exp l) <- x, matchDHead h
+  --  SpliceDecl l (Exp l) <- x, matchDHead h
   --   = setComment c x : xs
   | TypeSig _ (n:_) _ <- x, matchName n
     = setComment c x : xs
   | PatSynSig _ n _ _ _ _ <- x, matchName n
     = setComment c x : xs
-  -- | FunBind l [Match l] <- x, matchDHead h
+  --  FunBind l [Match l] <- x, matchDHead h
   --   = setComment c x : xs
-  -- | PatBind l (Pat l) (Rhs l) (Maybe (Binds l)) <- x, matchDHead h
+  --  PatBind l (Pat l) (Rhs l) (Maybe (Binds l)) <- x, matchDHead h
   --   = setComment c x : xs
-  -- | PatSyn l (Pat l) (Pat l) (PatternSynDirection l) <- x, matchDHead h
+  --  PatSyn l (Pat l) (Pat l) (PatternSynDirection l) <- x, matchDHead h
   --   = setComment c x : xs
   | ForImp _ _ _ _ n _ <- x, matchName n
     = setComment c x : xs
   | ForExp _ _ _ n _ <- x, matchName n
     = setComment c x : xs
-  -- | RulePragmaDecl l [Rule l] <- x, matchDHead h
+  --  RulePragmaDecl l [Rule l] <- x, matchDHead h
   --   = setComment c x : xs
-  -- | DeprPragmaDecl l [([Name l], String)] <- x, matchDHead h
+  --  DeprPragmaDecl l [([Name l], String)] <- x, matchDHead h
   --   = setComment c x : xs
-  -- | WarnPragmaDecl l [([Name l], String)] <- x, matchDHead h
+  --  WarnPragmaDecl l [([Name l], String)] <- x, matchDHead h
   --   = setComment c x : xs
-  -- | InlineSig l Bool (Maybe (Activation l)) (QName l) <- x, matchDHead h
+  --  InlineSig l Bool (Maybe (Activation l)) (QName l) <- x, matchDHead h
   --   = setComment c x : xs
-  -- | InlineConlikeSig l (Maybe (Activation l)) (QName l) <- x, matchDHead h
+  --  InlineConlikeSig l (Maybe (Activation l)) (QName l) <- x, matchDHead h
   --   = setComment c x : xs
-  -- | SpecSig l (Maybe (Activation l)) (QName l) [Type l] <- x, matchDHead h
+  --  SpecSig l (Maybe (Activation l)) (QName l) [Type l] <- x, matchDHead h
   --   = setComment c x : xs
-  -- | SpecInlineSig l Bool (Maybe (Activation l)) (QName l) [Type l] <- x, matchDHead h
+  --  SpecInlineSig l Bool (Maybe (Activation l)) (QName l) [Type l] <- x, matchDHead h
   --   = setComment c x : xs
-  -- | InstSig l (InstRule l) <- x, matchDHead h
+  --  InstSig l (InstRule l) <- x, matchDHead h
   --   = setComment c x : xs
-  -- | AnnPragma l (Annotation l) <- x, matchDHead h
+  --  AnnPragma l (Annotation l) <- x, matchDHead h
   --   = setComment c x : xs
-  -- | MinimalPragma l (Maybe (BooleanFormula l)) <- x, matchDHead h
+  --  MinimalPragma l (Maybe (BooleanFormula l)) <- x, matchDHead h
   --   = setComment c x : xs
-  -- | RoleAnnotDecl l (QName l) [Role l] <- x, matchDHead h
+  --  RoleAnnotDecl l (QName l) [Role l] <- x, matchDHead h
   --   = setComment c x : xs
   | otherwise
     = x : insertDeclComment s c xs
@@ -472,3 +472,26 @@ toCamelCase ('_':c:cs)
   | isLower c = toUpper c : toCamelCase cs
 toCamelCase (c:cs) = c : toCamelCase cs
 toCamelCase [] = []
+
+-- | Construct a type from a qualified type name and pointer level.
+--   If the type is c void and it is wrapped into a Ptr,
+--     I treat it as Void.
+toType :: Word -- ^ number of times pointer
+       -> QName () -- ^ name of the type
+       -> Type ()
+toType 0 t = TyCon () t
+toType n t | t == toHaskellType (VkTypeName "void")
+             = appPtr n voidTy
+           | otherwise
+             = appPtr n $ TyCon () t
+  where
+    appPtr 0 ty = ty
+    appPtr k ty = appPtr (k-1) $ TyApp () ptrTy ty
+    voidTy = TyCon () (Qual () (ModuleName () "Data.Void") (Ident () "Void"))
+    ptrTy  = TyCon () (Qual () (ModuleName () "Foreign.Ptr") (Ident () "Ptr"))
+
+
+unqualify :: QName a -> Name a
+unqualify (Qual _ _ n) = n
+unqualify (UnQual _ n) = n
+unqualify (Special _ _) = error "unqualify: cannot unqualify special name."
