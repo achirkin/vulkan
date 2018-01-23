@@ -89,10 +89,45 @@ genNocatData VkTypeSimple
       { requires = mreq
       }
   } = case tname of
-      UnQual{} -> do
-        writePragma "EmptyDataDecls"
-        writeDecl . setComment rezComment $ parseDecl'
-          [text|data $tnametxt|]
+      UnQual () (Ident () n) -> do
+        -- Guess representation of some imported types
+        -- https://github.com/haskell/win32
+        -- https://github.com/xmonad/X11
+        case n of
+          "HINSTANCE" -> writeDecl . setComment rezComment $ parseDecl'
+              [text|type HINSTANCE = Ptr ()|]
+          "HWND" -> writeDecl . setComment rezComment $ parseDecl'
+              [text|type HWND = Ptr ()|]
+          "HANDLE" -> writeDecl . setComment rezComment $ parseDecl'
+              [text|type HANDLE = Ptr ()|]
+          "DWORD" -> writeDecl . setComment rezComment $ parseDecl'
+              [text|type DWORD = Word32|]
+          "DDWORD" -> writeDecl . setComment rezComment $ parseDecl'
+              [text|type DWORD = Word64|]
+          "LPCWSTR" -> do
+            writeImport "Foreign.C.Types"
+              $ IThingAll () (Ident () "CWchar")
+            writeDecl . setComment rezComment $ parseDecl'
+              [text|type LPCWSTR = Ptr CWchar|]
+          "Xcb_window_t" -> do
+            writeImport "Foreign.C.Types"
+              $ IThingAll () (Ident () "CULong")
+            writeDecl . setComment rezComment $ parseDecl'
+              [text|type Xcb_window_t = CULong|]
+          "Xcb_visualid_t" -> do
+            writeImport "Foreign.C.Types"
+              $ IThingAll () (Ident () "CULong")
+            writeDecl . setComment rezComment $ parseDecl'
+              [text|type Xcb_visualid_t = CULong|]
+          "Window" -> do
+            writeImport "Foreign.C.Types"
+              $ IThingAll () (Ident () "CULong")
+            writeDecl . setComment rezComment $ parseDecl'
+              [text|type Window = CULong|]
+          _ -> do
+            writePragma "EmptyDataDecls"
+            writeDecl . setComment rezComment $ parseDecl'
+              [text|data $tnametxt|]
         writeExport $ EAbs () (NoNamespace ()) tname
       Qual{}   -> do
         requireType tname
