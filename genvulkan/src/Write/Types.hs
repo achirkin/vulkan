@@ -28,6 +28,8 @@ import           Write.Types.Define
 import           Write.Types.Enum
 import           Write.Types.Funcpointer
 import           Write.Types.Handle
+import           Write.Types.Struct
+import           Write.Types.Union
 
 
 genTypes :: Monad m => ModuleWriter m ()
@@ -69,7 +71,8 @@ genTypes' = do
               VkTypeCatHandle      -> genHandle t
               VkTypeCatEnum        -> genEnum t
               VkTypeCatFuncpointer -> genFuncpointer t
-              _                    -> pure ()
+              VkTypeCatStruct      -> genStruct t
+              VkTypeCatUnion       -> genUnion t
           fLast [] = pure ()
           fLast cs = writeSection 0 $ T.unlines $ "|":cs
 

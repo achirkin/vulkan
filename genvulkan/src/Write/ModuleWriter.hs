@@ -9,7 +9,7 @@
 module Write.ModuleWriter
   ( A, ModuleWriting (..), ModuleWriter (..)
   , runModuleWriter, genModule
-  , writeImport, writeExport
+  , writeImport, writeFullImport, writeExport
   , writePragma, writeDecl
   , writeSection --, writeSectionPre
     -- * Helpers
@@ -66,6 +66,7 @@ data ModuleWriting
   = ModuleWriting
   { mName         :: ModuleName ()
   , mImports      :: Map (ModuleName ()) (Set (ImportSpec ()))
+  , mFullImports  :: Set (ModuleName ())
   , mPragmas      :: Set String
   , mDecs         :: Seq (Decl A)
   , mExports      :: Seq (ExportSpec A)
@@ -89,7 +90,7 @@ runModuleWriter :: Functor m
 runModuleWriter vkxml mname mw
     = f <$> runRWST (unModuleWriter mw) vkxml
                     (ModuleWriting (ModuleName () mname)
-                                   mempty mempty mempty mempty mempty 1)
+                                   mempty mempty mempty mempty mempty mempty 1)
   where
     f (a,s,_) = (a, s)
 
@@ -102,9 +103,14 @@ genModule ModuleWriting {..}
   where
     genPragma s = LanguagePragma Nothing [Ident Nothing s]
     genImport (m, specs)
-      = simpleImport (Nothing <$ m) (fmap (const Nothing) <$> toList specs)
+      | not $ m `Set.member` mFullImports
+      = [simpleImport (Nothing <$ m) (fmap (const Nothing) <$> toList specs)]
+      | otherwise = []
+    genFullImport m
+      = ImportDecl Nothing (Nothing <$ m) False False False Nothing Nothing Nothing
     pragmas = genPragma <$> toList mPragmas
-    imports = genImport <$> Map.toList mImports
+    imports = (Map.toList mImports >>= genImport)
+           ++ (genFullImport <$> Set.toList mFullImports)
     decs = toList mDecs
     exports = ExportSpecList Nothing $ toList mExports
 
@@ -135,6 +141,12 @@ writeImport mname is = ModuleWriter . modify $
       = (Nothing, IThingAll () bn)
     check ma b = (ma, b)
 
+-- | Add a symbol to module imports
+writeFullImport :: Monad m
+                => String
+                -> ModuleWriter m ()
+writeFullImport mname = ModuleWriter . modify $
+    \mr -> mr {mFullImports = Set.insert (ModuleName () mname) $ mFullImports mr}
 
 
 -- | Add a declaration to a module
@@ -374,6 +386,8 @@ vkParseMode = defaultParseMode
         , EnableExtension EmptyDataDecls
         , EnableExtension ViewPatterns
         , EnableExtension RoleAnnotations
+        , EnableExtension MagicHash
+        , EnableExtension UnboxedTuples
         , UnknownExtension "Strict"
         ]
       }
@@ -449,7 +463,7 @@ toHaskellType (VkTypeName "int")
 toHaskellType (VkTypeName t)
     = UnQual ()
     . Ident ()
-    . toCamelCase
+    -- . toCamelCase
     . firstUp
     . dropWhile (not . isAlpha)
     . filter (\x -> isAlphaNum x || x == '_' || x == '\'')
