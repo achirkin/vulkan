@@ -49,6 +49,7 @@ library
                      , text -any
                      , exceptions -any
                      , mmorph -any
+                     , deepseq -any
 
                      , neat-interpolation -any
                      , haskell-src-exts -any

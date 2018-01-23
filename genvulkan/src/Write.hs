@@ -7,6 +7,7 @@ module Write
   ) where
 
 import           Control.Arrow                        (first)
+import           Control.DeepSeq
 import           Control.Monad
 import           Data.Char
 import qualified Data.List                            as L
@@ -68,7 +69,7 @@ generateVkSource outputDir vkXml = do
   let rez = uncurry exactPrint
           . ppWithCommentsMode defaultMode
           $ genModule mr
-  rez `seq` putStrLn "Done generating; now apply hfmt to reformat code..."
+  rez `deepseq` putStrLn "Done generating; now apply hfmt to reformat code..."
   frez <- hfmt rez
   case frez of
     Left err -> do

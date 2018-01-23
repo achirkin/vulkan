@@ -28,9 +28,9 @@ genUnion VkTypeComposite
         }
     }
     = do
-    writePragma "EmptyDataDecls"
+    -- TODO: terribly bad stub!
     let ds = parseDecls [text|
-          data $tnametxt
+          type $tnametxt = Ptr Void
           |]
 
     mapM_ writeDecl
