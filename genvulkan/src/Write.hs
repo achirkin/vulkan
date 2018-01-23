@@ -6,11 +6,12 @@ module Write
   ( generateVkSource
   ) where
 
+import           Control.Arrow                        (first)
 import           Control.Monad
+import           Data.Char
+import qualified Data.List                            as L
 import           Data.Semigroup
 import qualified Data.Text                            as T
-import           Data.Char
-import qualified Data.List as L
 import           Language.Haskell.Exts.ExactPrint
 import           Language.Haskell.Exts.Extension
 import           Language.Haskell.Exts.Parser
@@ -19,6 +20,7 @@ import           Language.Haskell.Exts.SimpleComments
 import           Language.Haskell.Format
 import           NeatInterpolation
 import           Path
+import           Path.IO
 import           System.IO                            (writeFile)
 
 import           VkXml.Sections
@@ -49,15 +51,15 @@ generateVkSource outputDir vkXml = do
                 module A
                   () where
 
-                _VK_MAKE_VERSION :: Bits a => a -> a -> a -> a
-                _VK_MAKE_VERSION major minor patch = unsafeShiftL major 22 .|. unsafeShiftL minor 12 .|. patch
-                {-# INLINE _VK_MAKE_VERSION #-}
+                ttt = hee * sizeOf (undefined :: Int)
             |]
   putStrLn testS
   putStrLn "-----------------"
   print $ (() <$) <$> parseModuleWithMode pMode testS
 
 
+
+  createDirIfMissing True (outputDir </> [reldir|Graphics|])
 
   ((), mr) <- runModuleWriter vkXml "Graphics.Vulkan" $ do
       genApiConstants
@@ -76,7 +78,7 @@ generateVkSource outputDir vkXml = do
     Right (ss, rez') -> do
       forM_ ss $ \(Suggestion s) ->
         putStrLn $ "Formatting suggestion:\n    " <> s
-      writeFile (toFilePath $ outputDir </> [relfile|Vulkan.hs|])
+      writeFile (toFilePath $ outputDir </> [relfile|Graphics/Vulkan.hs|])
         $ fixSourceHooks rez'
 
 
@@ -91,7 +93,8 @@ hfmt source = do
     sets <- autoSettings
     mfts <- sequence [hlint sets,  stylish sets]
      -- formatters sets   -- hindent sets,
-    pure $ go mfts (Right ([], source))
+    pure . fmap (first removeCamelCaseSuggestions)
+         $ go mfts (Right ([], source))
   where
     go [] esr       = esr
     go _ (Left err) = Left err
@@ -99,6 +102,10 @@ hfmt source = do
         Left err -> Left err
         Right (Reformatted (HaskellSource _ txt') suggs')
           -> go fs (Right ( suggs ++ suggs', txt'))
+    removeCamelCaseSuggestions [] = []
+    removeCamelCaseSuggestions (Suggestion s:xs)
+      | "Use camelCase" `L.isInfixOf` s = removeCamelCaseSuggestions xs
+      | otherwise = Suggestion s : removeCamelCaseSuggestions xs
 
 -- | Various small fixes to normalize haddock output, enable CPP, etc.
 fixSourceHooks :: String -> String
@@ -120,5 +127,5 @@ fixSourceHooks = uncommentCPP . splitExportSections
       where
         go [] = []
         go (x:xs) | "-- ##" `L.isPrefixOf` stripBeginSpace x
-                  = (drop 5 $ stripBeginSpace x) : go xs
+                  = drop 5 (stripBeginSpace x) : go xs
                   | otherwise = x : go xs

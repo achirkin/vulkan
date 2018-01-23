@@ -35,7 +35,7 @@ genHandle VkTypeSimple
   where
     tname = toHaskellType vkTName
     tnametxt = qNameTxt tname
-    tnameT = toHaskellType $ VkTypeName . (<>"T") $ unVkTypeName vkTName
+    tnameT = toHaskellType $ VkTypeName . (<>"_T") $ unVkTypeName vkTName
     tnametxtT = qNameTxt tnameT
     rezComment = rezComment' >>= preComment . T.unpack
     rezComment' = if txt == mempty

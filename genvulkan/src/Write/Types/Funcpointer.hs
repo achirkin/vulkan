@@ -1,5 +1,6 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE QuasiQuotes     #-}
 {-# LANGUAGE Strict                #-}
 -- | Generate function pointer types
 module Write.Types.Funcpointer
@@ -9,9 +10,11 @@ module Write.Types.Funcpointer
 
 import           Control.Arrow
 import           Data.Semigroup
+import Data.Char (toUpper)
 import qualified Data.Text                            as T
 import           Language.Haskell.Exts.SimpleComments
 import           Language.Haskell.Exts.Syntax
+import           NeatInterpolation
 
 import           VkXml.CommonTypes
 import           VkXml.Sections.Types
@@ -38,22 +41,52 @@ genFuncpointer VkTypeSimple
     , rtype <- TyApp () (TyCon () (UnQual () (Ident () "IO")))
              . uncurry (flip toType)
              . first toHaskellType $ countStars rtypeTxt
+    , funtype <- foldr accumRefs rtype refs
+    , pfuntype <- TyApp () (TyCon () (UnQual () (Ident () "FunPtr")))
+                           (TyCon () tfname)
     = do
+    writeImport "Foreign.C.Types" (IThingAll ()  (Ident () "CSize"))
     writeImport "Foreign.Ptr"
       $ IAbs () (NoNamespace ()) (Ident () "Ptr")
     writeImport "Foreign.Ptr"
       $ IAbs () (NoNamespace ()) (Ident () "FunPtr")
     writeImport "Data.Void"
       $ IAbs () (NoNamespace ()) (Ident () "Void")
+    writeDecl . (Nothing <$) $
+      TypeDecl () (DHead () $ unqualify tfname) funtype
     writeDecl . setComment rezComment
               . (Nothing <$)
               $
-      TypeDecl ()
-      (DHead () $ unqualify tname)
-      (foldr accumRefs rtype refs)
+      TypeDecl () (DHead () $ unqualify tname) pfuntype
+    writeDecl
+      . setComment
+        (preComment $ "Wrap haskell function into C-callable FunPtr.\n"
+                    <> "Note, you need to free resources after using it.")
+      $ parseDecl'
+      [text|
+        foreign import ccall "wrapper"
+            $newFun :: $tfnametxt -> IO $tnametxt
+      |]
+    writeDecl $ parseDecl'
+      [text|
+        foreign import ccall "dynamic"
+            $unwrapFun :: $tnametxt -> $tfnametxt
+      |]
     writeExport $ EAbs () (NoNamespace ()) tname
+    writeExport $ EAbs () (NoNamespace ()) tfname
+    writeExport $ EVar () (UnQual () (Ident () $ T.unpack newFun))
+    writeExport $ EVar () (UnQual () (Ident () $ T.unpack unwrapFun))
   where
     tname = toHaskellType vkTName
+    tnametxt = qNameTxt tname
+    tfname = toHaskellType . VkTypeName $ "HS_" <> tnamebasetxt
+    tfnametxt = qNameTxt tfname
+    tnamebasetxt = T.drop 1 . T.dropWhile ('_' /=) $ unVkTypeName vkTName
+    tnamebasetxtC = case T.uncons tnamebasetxt of
+                      Just (x, xs) -> toUpper x `T.cons` xs
+                      Nothing      -> tnamebasetxt
+    newFun = "new" <> tnamebasetxtC
+    unwrapFun = "unwrap" <> tnamebasetxtC
     countStars s | "*" `T.isSuffixOf` s = second (1+) $ countStars (T.dropEnd 1 s)
                  | otherwise = (VkTypeName s, 0)
     refs = map (second length) refs'

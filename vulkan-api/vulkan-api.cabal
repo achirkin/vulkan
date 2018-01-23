@@ -1,0 +1,28 @@
+name:                vulkan-api
+version:             0.1.0.0
+synopsis:            Low-level low-overhead vulkan api bindings
+description:         Haskell bindings for vulkan api as described in vk.xml.
+homepage:            https://github.com/achirkin/genvulkan#readme
+license:             BSD3
+license-file:        LICENSE
+author:              Artem Chirkin
+maintainer:          chirkin@arch.ethz.ch
+copyright:           Copyright: (c) 2018 Artem Chirkin
+category:            vulkan, bsd3, graphics, library, opengl
+build-type:          Simple
+extra-source-files:  README.md
+cabal-version:       >=1.10
+
+library
+  hs-source-dirs:      src, src-gen
+  exposed-modules:     Graphics.Vulkan
+                       Graphics.Vulkan.Marshal
+  build-depends:       base >= 4.7 && < 5
+                     , ghc-prim >= 0.4 && < 0.6
+  default-language:    Haskell2010
+  ghc-options:         -Wall
+  extra-libraries:     vulkan
+
+source-repository head
+  type:     git
+  location: https://github.com/achirkin/genvulkan
