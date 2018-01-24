@@ -4,7 +4,7 @@
 {-# LANGUAGE Strict                #-}
 -- | WIP
 module Write.Types.Struct
-  ( genStruct
+  ( genStruct, genUnion
   ) where
 
 
@@ -24,10 +24,14 @@ import           VkXml.Sections.Types
 
 import           Write.ModuleWriter
 
-
-
 genStruct :: Monad m => VkType -> ModuleWriter m ()
-genStruct VkTypeComposite
+genStruct = genStructOrUnion False
+
+genUnion :: Monad m => VkType -> ModuleWriter m ()
+genUnion = genStructOrUnion True
+
+genStructOrUnion :: Monad m => Bool -> VkType -> ModuleWriter m ()
+genStructOrUnion isUnion VkTypeComposite
     { name = vkTName
     , attributes = VkTypeAttrs
         { comment = txt
@@ -132,11 +136,17 @@ genStruct VkTypeComposite
     (totalSize, _sfimems)
             = mapAccumL (\o m -> let fi = fieldInfo m
                                  in ( InfixApp () o
-                                      (QVarOp () (UnQual () (Symbol () "+")))
+                                      (QVarOp () (UnQual () sizeOp))
                                       (sfiSize fi)
-                                    , (o, fi))
+                                    , (offsetF o, fi))
                         ) (Lit () (Int () 0 "0"))
                         $ items tmems
+    sizeOp = if isUnion
+             then Ident () "max"
+             else Symbol () "+"
+    offsetF = if isUnion
+              then const (Lit () (Int () 0 "0"))
+              else id
     tname = toHaskellType vkTName
     tnametxt = qNameTxt tname
     rezComment = rezComment'' >>= preComment . T.unpack
@@ -145,8 +155,8 @@ genStruct VkTypeComposite
     rezComment' = if txt == mempty
                   then Nothing
                   else Just txt
-genStruct t
-  = error $ "genStruct: expected a type with members, "
+genStructOrUnion _ t
+  = error $ "genStructOrUnion: expected a type with members, "
           <> "but got: "
           <> show t
 
