@@ -52,7 +52,7 @@ generateVkSource outputDir vkXml = do
                 module A
                   () where
 
-                ttt = hee * sizeOf (undefined :: Int)
+                ttt = hee `max` sizeOf (undefined :: Int)
             |]
   putStrLn testS
   putStrLn "-----------------"

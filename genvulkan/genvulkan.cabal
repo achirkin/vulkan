@@ -34,7 +34,6 @@ library
                        Write.Types.Handle
                        Write.Types.Funcpointer
                        Write.Types.Struct
-                       Write.Types.Union
   build-depends:       base >= 4.7 && < 5
                      , path -any
                      , path-io -any

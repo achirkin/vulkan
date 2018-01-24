@@ -29,7 +29,6 @@ import           Write.Types.Enum
 import           Write.Types.Funcpointer
 import           Write.Types.Handle
 import           Write.Types.Struct
-import           Write.Types.Union
 
 
 genTypes :: Monad m => ModuleWriter m ()
