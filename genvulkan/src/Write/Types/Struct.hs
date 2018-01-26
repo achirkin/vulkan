@@ -161,9 +161,13 @@ genStructOrUnion _ t
           <> show t
 
 
+-- genStructField :: Exp -- ^ offset
+--                -> StructFieldInfo
+
 data StructFieldInfo
   = SFI
   { sfiSize        :: Exp ()
+  , sfiElemN       :: Maybe (Exp ())
   , sfiType        :: Type ()
   , sfiName        :: QName ()
   , sfiBaseNameTxt :: Text
@@ -178,16 +182,10 @@ fieldInfo tm@VkTypeMember
     , reference = [(vkt, quals)]
     }
   } = SFI
-  { sfiSize = case mvkn of
-      Just (_, [VkTypeQArrLen n]) ->
-        InfixApp () (Lit () (Int () (fromIntegral n) $ show n))
-          (QVarOp () (UnQual () (Symbol () "*")))
-          uSize
-      Just (_, [VkTypeQArrLenEnum en]) ->
-        InfixApp () (Var () (toHaskellVar en))
-          (QVarOp () (UnQual () (Symbol () "*")))
-          uSize
-      _ -> uSize
+  { sfiSize = case en of
+      Just n  -> InfixApp () n (QVarOp () (UnQual () (Symbol () "*"))) uSize
+      Nothing -> uSize
+  , sfiElemN = en
   , sfiType = t
   , sfiBaseNameTxt = case unqualify sname of
       Ident _ x -> case T.uncons $ T.pack x of
@@ -198,6 +196,12 @@ fieldInfo tm@VkTypeMember
   , sfdata  = tm
   }
   where
+    en = case mvkn of
+        Just (_, [VkTypeQArrLen n]) ->
+          Just (Lit () (Int () (fromIntegral n) $ show n))
+        Just (_, [VkTypeQArrLenEnum n]) ->
+          Just (Var () (toHaskellVar n))
+        _ -> Nothing
     sname = toHaskellVar vkn
     t = toType (fromIntegral $ length quals) $ toHaskellType
       $ VkTypeName $ unVkMemberName vkt
@@ -239,29 +243,16 @@ fieldInfo tm = error
 
 
 
---
--- data VkShaderModuleCreateInfo
---   = VkShaderModuleCreateInfo# ByteArray#
--- data VkDescriptorSetLayoutCreateInfo
---   = VkDescriptorSetLayoutCreateInfo# ByteArray#
---
---
---
--- instance Eq VkShaderModuleCreateInfo where
---   (VkShaderModuleCreateInfo# a) == (VkShaderModuleCreateInfo# b)
---     = EQ == cmpByteArrays a b
---   {-# INLINE (==) #-}
---
--- instance Ord VkShaderModuleCreateInfo where
---   (VkShaderModuleCreateInfo# a) `compare` (VkShaderModuleCreateInfo# b)
---     = cmpByteArrays a b
---   {-# INLINE compare #-}
+-- class HasVkFloat32 a where
+--   vkFloat32 :: a -> Int -> Float
+--   readVkFloat32 :: Mutable a -> Int -> IO Float
+--   writeVkFloat32 :: Mutable a -> Int -> Float -> IO ()
 --
 -- class HasVkPNext a where
 --   vkPNext :: a -> Ptr Void
 --   readVkPNext :: Mutable a -> IO (Ptr Void)
 --   writeVkPNext :: Mutable a -> Ptr Void -> IO ()
---
+
 -- instance {-# OVERLAPPABLE #-}
 --          TypeError
 --       ( 'ShowType a ':<>: 'Text " does not seem to have field \"pNext\"."
