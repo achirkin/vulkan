@@ -23,15 +23,14 @@ module Write.ModuleWriter
   , toCamelCase, toType, unqualify
   ) where
 
-import           Control.Arrow
 import           Control.Applicative
+import           Control.Arrow
 import           Control.Monad
 import           Control.Monad.Fail
 import           Control.Monad.Fix
 import           Control.Monad.IO.Class
-import           Control.Monad.Reader.Class
-import           Control.Monad.Trans.Class
 import           Control.Monad.Morph
+import           Control.Monad.Reader.Class
 import           Control.Monad.Trans.RWS.Strict       (RWST (..), gets, modify)
 import           Data.Char
 import           Data.Coerce
@@ -172,20 +171,20 @@ writeExport espec = ModuleWriter . modify $
        "" -> Nothing
        s  -> Just $ CodeComment AboveCode ' ' s
     -- take a list of one-liners as arguments
-    g [] = []
+    g []                = []
     g ((i, s):(0,t):xs) | i > 0 = (indent i ++ s):"|":t:g xs
-    g ((i,s):xs) = (indent i ++ s) : g xs
+    g ((i,s):xs)        = (indent i ++ s) : g xs
     indent lvl = if lvl <= 0 then "" else reverse $ ' ' : replicate lvl '*'
-    removeLastNewline [] = []
+    removeLastNewline []     = []
     removeLastNewline ['\n'] = []
     removeLastNewline (x:xs) = x : removeLastNewline xs
     normalize (lvl, txt) = lastWithNewline . setlvls . lines . T.unpack $ T.strip txt
       where
-        setlvls [] = []
+        setlvls []     = []
         setlvls (x:xs) = (lvl, x) : map ((,) 0) xs
-        lastWithNewline [] = []
+        lastWithNewline []      = []
         lastWithNewline [(i,s)] = [(i,s ++ "\n")]
-        lastWithNewline (x:xs) = x : lastWithNewline xs
+        lastWithNewline (x:xs)  = x : lastWithNewline xs
 
 
 -- | Add a section split to a module export list
@@ -370,12 +369,12 @@ insertDeclComment s c (x:xs)
   | otherwise
     = x : insertDeclComment s c xs
   where
-    matchName (Ident _ t) = t == s
+    matchName (Ident _ t)  = t == s
     matchName (Symbol _ t) = t == s
-    matchDHead (DHead _ t) = matchName t
+    matchDHead (DHead _ t)     = matchName t
     matchDHead (DHInfix _ _ t) = matchName t
-    matchDHead (DHParen _ t) = matchDHead t
-    matchDHead (DHApp _ t _) = matchDHead t
+    matchDHead (DHParen _ t)   = matchDHead t
+    matchDHead (DHApp _ t _)   = matchDHead t
 
 vkParseMode :: ParseMode
 vkParseMode = defaultParseMode
@@ -506,6 +505,6 @@ toType n t | t == toHaskellType (VkTypeName "void")
 
 
 unqualify :: QName a -> Name a
-unqualify (Qual _ _ n) = n
-unqualify (UnQual _ n) = n
+unqualify (Qual _ _ n)  = n
+unqualify (UnQual _ n)  = n
 unqualify (Special _ _) = error "unqualify: cannot unqualify special name."
