@@ -9,7 +9,7 @@
 module Write.ModuleWriter
   ( A, ModuleWriting (..), ModuleWriter (..)
   , runModuleWriter, genModule
-  , writeImport, writeFullImport, writeExport
+  , writeImport, writeFullImport, writeExport, isNameInScope, ExportName (..)
   , writePragma, writeDecl
   , writeSection --, writeSectionPre
     -- * Helpers
@@ -69,9 +69,15 @@ data ModuleWriting
   , mPragmas      :: Set String
   , mDecs         :: Seq (Decl A)
   , mExports      :: Seq (ExportSpec A)
+  , mNamesInScope :: Set ExportName
   , pendingSec    :: Seq (Int, Text)
   , currentSecLvl :: Int
   }
+
+data ExportName
+  = ExportTerm (Name ())
+  | ExportType (Name ())
+  deriving (Eq, Show, Ord)
 
 
 newtype ModuleWriter m a
@@ -89,7 +95,7 @@ runModuleWriter :: Functor m
 runModuleWriter vkxml mname mw
     = f <$> runRWST (unModuleWriter mw) vkxml
                     (ModuleWriting (ModuleName () mname)
-                                   mempty mempty mempty mempty mempty mempty 1)
+                                   mempty mempty mempty mempty mempty mempty mempty 1)
   where
     f (a,s,_) = (a, s)
 
@@ -164,6 +170,7 @@ writeExport espec = ModuleWriter . modify $
    \mr -> mr { mExports = mExports mr Seq.|>
                           setComment (f $ pendingSec mr) (Nothing <$ espec)
              , pendingSec = mempty
+             , mNamesInScope = foldr Set.insert (mNamesInScope mr) (espec2ename espec)
              }
   where
     -- the whole thing below is to compile comments
@@ -185,6 +192,21 @@ writeExport espec = ModuleWriter . modify $
         lastWithNewline []      = []
         lastWithNewline [(i,s)] = [(i,s ++ "\n")]
         lastWithNewline (x:xs)  = x : lastWithNewline xs
+
+isNameInScope :: Monad m => ExportName -> ModuleWriter m Bool
+isNameInScope n = ModuleWriter . gets $ Set.member n . mNamesInScope
+
+espec2ename :: ExportSpec () -> [ExportName]
+espec2ename (EVar _ qn) = [ExportTerm (unqualify qn)]
+espec2ename (EAbs _ (NoNamespace ()) qn)      = [ExportType (unqualify qn)]
+espec2ename (EAbs _ (TypeNamespace ()) qn)    = [ExportType (unqualify qn)]
+espec2ename (EAbs _ (PatternNamespace ()) qn) = [ExportTerm (unqualify qn)]
+espec2ename (EThingWith _ _ qn xs) = ExportType (unqualify qn)
+                                   : fmap f xs
+  where
+    f (VarName _ n) = ExportTerm n
+    f (ConName _ n) = ExportTerm n
+espec2ename (EModuleContents _ _) = []
 
 
 -- | Add a section split to a module export list
@@ -332,7 +354,7 @@ insertDeclComment s c (x:xs)
   --   = setComment c x : xs
   | TypeSig _ (n:_) _ <- x, matchName n
     = setComment c x : xs
-  | PatSynSig _ n _ _ _ _ <- x, matchName n
+  | PatSynSig _ (n:_) _ _ _ _ <- x, matchName n
     = setComment c x : xs
   --  FunBind l [Match l] <- x, matchDHead h
   --   = setComment c x : xs
@@ -387,6 +409,13 @@ vkParseMode = defaultParseMode
         , EnableExtension RoleAnnotations
         , EnableExtension MagicHash
         , EnableExtension UnboxedTuples
+        , EnableExtension DataKinds
+        , EnableExtension TypeOperators
+        , EnableExtension FlexibleContexts
+        , EnableExtension FlexibleInstances
+        , EnableExtension TypeFamilies
+        , EnableExtension UnliftedFFITypes
+        , EnableExtension UndecidableInstances
         , UnknownExtension "Strict"
         ]
       }

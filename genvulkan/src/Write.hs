@@ -42,17 +42,25 @@ generateVkSource outputDir vkXml = do
   let pMode = defaultParseMode
         { baseLanguage = Haskell2010
         , extensions =
-          [ EnableExtension GeneralizedNewtypeDeriving
-          , EnableExtension PatternSynonyms
-          , EnableExtension CPP
-          , UnknownExtension "Strict"
+          [
           ]
         }
       testS = T.unpack [text|
                 module A
                   () where
 
-                ttt = hee `max` sizeOf (undefined :: Int)
+                import Foreign.Ptr
+                import Data.Void
+
+                class HasVkPNext a where
+                  vkPNext :: a -> Ptr Void
+                  readVkPNext :: a -> IO (Ptr Void)
+                  writeVkPNext :: a -> Ptr Void -> IO ()
+
+                instance {-# OVERLAPPABLE #-} HasVkPNext a where
+                  vkPNext _ = error "This type does not have field \"pNext\""
+                  readVkPNext _ = error "This type does not have field \"pNext\""
+                  writeVkPNext _ _ = error "This type does not have field \"pNext\""
             |]
   putStrLn testS
   putStrLn "-----------------"
@@ -61,26 +69,51 @@ generateVkSource outputDir vkXml = do
 
 
   createDirIfMissing True (outputDir </> [reldir|Graphics|])
+  createDirIfMissing True (outputDir </> [reldir|Graphics|] </> [reldir|Vulkan|])
 
-  ((), mr) <- runModuleWriter vkXml "Graphics.Vulkan" $ do
-      genApiConstants
-      genTypes
+  do
+    ((), mr) <- runModuleWriter vkXml "Graphics.Vulkan.SimpleTypes" $ do
+        writePragma "Strict"
+        genApiConstants
+        genTypes1
 
-  let rez = uncurry exactPrint
-          . ppWithCommentsMode defaultMode
-          $ genModule mr
-  rez `deepseq` putStrLn "Done generating; now apply hfmt to reformat code..."
-  frez <- hfmt rez
-  case frez of
-    Left err -> do
-      putStrLn $ "Could not format the code:\n" <> err
-      writeFile (toFilePath $ outputDir </> [relfile|Vulkan.hs|])
-        $ fixSourceHooks rez
-    Right (ss, rez') -> do
-      forM_ ss $ \(Suggestion s) ->
-        putStrLn $ "Formatting suggestion:\n    " <> s
-      writeFile (toFilePath $ outputDir </> [relfile|Graphics/Vulkan.hs|])
-        $ fixSourceHooks rez'
+    let rez = uncurry exactPrint
+            . ppWithCommentsMode defaultMode
+            $ genModule mr
+    rez `deepseq` putStrLn "Done generating; now apply hfmt to reformat code..."
+    frez <- hfmt rez
+    case frez of
+      Left err -> do
+        putStrLn $ "Could not format the code:\n" <> err
+        writeFile (toFilePath $ outputDir </> [relfile|Graphics/Vulkan/SimpleTypes.hs|])
+          $ fixSourceHooks rez
+      Right (ss, rez') -> do
+        forM_ ss $ \(Suggestion s) ->
+          putStrLn $ "Formatting suggestion:\n    " <> s
+        writeFile (toFilePath $ outputDir </> [relfile|Graphics/Vulkan/SimpleTypes.hs|])
+          $ fixSourceHooks rez'
+
+  do
+    ((), mr) <- runModuleWriter vkXml "Graphics.Vulkan.Structures" $ do
+        writePragma "Strict"
+        writeFullImport "Graphics.Vulkan.SimpleTypes"
+        genTypes2
+
+    let rez = uncurry exactPrint
+            . ppWithCommentsMode defaultMode
+            $ genModule mr
+    rez `deepseq` putStrLn "Done generating; now apply hfmt to reformat code..."
+    frez <- hfmt rez
+    case frez of
+      Left err -> do
+        putStrLn $ "Could not format the code:\n" <> err
+        writeFile (toFilePath $ outputDir </> [relfile|Graphics/Vulkan/Structures.hs|])
+          $ fixSourceHooks rez
+      Right (ss, rez') -> do
+        forM_ ss $ \(Suggestion s) ->
+          putStrLn $ "Formatting suggestion:\n    " <> s
+        writeFile (toFilePath $ outputDir </> [relfile|Graphics/Vulkan/Structures.hs|])
+          $ fixSourceHooks rez'
 
 
 

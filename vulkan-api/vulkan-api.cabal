@@ -15,7 +15,8 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src, src-gen
-  exposed-modules:     Graphics.Vulkan
+  exposed-modules:     Graphics.Vulkan.SimpleTypes
+                       Graphics.Vulkan.Structures
                        Graphics.Vulkan.Marshal
   build-depends:       base >= 4.7 && < 5
                      , ghc-prim >= 0.4 && < 0.6

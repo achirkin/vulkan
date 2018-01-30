@@ -1,6 +1,9 @@
 {-# LANGUAGE DuplicateRecordFields #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE QuasiQuotes           #-}
+{-# LANGUAGE RecordWildCards       #-}
 {-# LANGUAGE Strict                #-}
 -- | WIP
 module Write.Types.Struct
@@ -8,7 +11,9 @@ module Write.Types.Struct
   ) where
 
 
+import           Control.Monad                        (unless)
 import           Data.Char                            (toUpper)
+import           Data.Maybe                           (isJust)
 import           Data.Semigroup
 import           Data.Text                            (Text)
 import qualified Data.Text                            as T
@@ -48,16 +53,21 @@ genStructOrUnion isUnion VkTypeComposite
     writePragma "FlexibleInstances"
     writePragma "UndecidableInstances"
     writePragma "Strict"
+    writePragma "FlexibleContexts"
 
-
-    writeImport "GHC.TypeLits" (IThingAll () (Ident () "ErrorMessage"))
-    writeImport "GHC.TypeLits" (IAbs () (NoNamespace ()) (Ident () "TypeError"))
     writeImport "Data.Void" (IAbs () (NoNamespace ()) (Ident () "Void"))
     writeImport "Foreign.Storable" (IThingAll () (Ident () "Storable"))
-    -- writeImport "Foreign.C.Types" (IThingAll ()  (Ident () "CInt"))
-    -- writeImport "Foreign.C.Types" (IThingAll ()  (Ident () "CSize"))
+    writeImport "Foreign.Ptr" (IAbs () (NoNamespace ()) (Ident () "Ptr"))
+    writeImport "Foreign.C.Types" (IAbs () (NoNamespace ()) (Ident () "CFloat"))
+    writeImport "Foreign.C.Types" (IAbs () (NoNamespace ()) (Ident () "CChar"))
+    writeImport "Foreign.C.Types" (IAbs () (NoNamespace ()) (Ident () "CSize"))
+    writeImport "Foreign.C.Types" (IAbs () (NoNamespace ()) (Ident () "CInt"))
     writeImport "GHC.Types" (IThingAll () (Ident () "IO"))
     writeImport "GHC.Types" (IThingAll () (Ident () "Int"))
+    writeImport "Data.Word" (IAbs () (NoNamespace ()) (Ident () "Word8"))
+    writeImport "Data.Word" (IAbs () (NoNamespace ()) (Ident () "Word32"))
+    writeImport "Data.Word" (IAbs () (NoNamespace ()) (Ident () "Word64"))
+    writeImport "Data.Int"  (IAbs () (NoNamespace ()) (Ident () "Int32"))
     writeImport "GHC.Ptr" (IThingAll () (Ident () "Ptr"))
     writeFullImport "GHC.Prim"
     writeFullImport "Graphics.Vulkan.Marshal"
@@ -130,10 +140,13 @@ genStructOrUnion isUnion VkTypeComposite
       . insertDeclComment (T.unpack tnametxt) rezComment
       $ ds
 
+    -- generate field setters and getters
+    mapM_ (uncurry $ genStructField tname) sfimems
+
     writeExport $ EThingWith () (EWildcard () 0) tname []
   where
     totalSizeTxt = T.pack $ prettyPrint totalSize
-    (totalSize, _sfimems)
+    (totalSize, sfimems)
             = mapAccumL (\o m -> let fi = fieldInfo m
                                  in ( InfixApp () o
                                       (QVarOp () (UnQual () sizeOp))
@@ -161,8 +174,101 @@ genStructOrUnion _ t
           <> show t
 
 
--- genStructField :: Exp -- ^ offset
---                -> StructFieldInfo
+genStructField :: Monad m
+               => QName () -- ^ struct type name
+               -> Exp () -- ^ offset
+               -> StructFieldInfo
+               -> ModuleWriter m ()
+genStructField structType offsetE SFI{..} = do
+    isMember <- isNameInScope exportName
+    unless isMember genClass
+    genInstance
+  where
+    exportName = ExportType $ unqualify className
+    VkTypeMember { name = VkMemberName origNameTxt} = sfdata
+    origNameTxtQ = "'" <> origNameTxt <> "'"
+    classNameTxt = "HasVk" <> sfiBaseNameTxt
+    className = toHaskellVar classNameTxt
+    indexFunTxt = "vk" <> sfiBaseNameTxt
+    readFunTxt = "readVk" <> sfiBaseNameTxt
+    writeFunTxt = "writeVk" <> sfiBaseNameTxt
+    offsetFunTxt = "vk" <> sfiBaseNameTxt <> "ByteOffset"
+    structTypeTxt = qNameTxt structType
+    structTypeCTxt = structTypeTxt <> "#"
+    valueOffsetTxt = T.pack $ prettyPrint offsetE
+    valueTypeTxt = T.pack $ prettyPrint sfiType
+    valueTypeIOTxt = T.pack $ prettyPrint $ TyApp ()
+           (TyCon () (UnQual () (Ident () "IO"))) sfiType
+    elemIdxArg = case sfiElemN of
+      Nothing -> ""
+      Just _  -> "Int ->"
+    elemIdxConstr = case sfiElemN of
+      Nothing -> ""
+      Just _  -> "(I# idx)"
+    elemOffsetF = case sfiElemN of
+      Nothing -> "o"
+      Just _  -> "(idx *# _n +# o)"
+
+    genInstance = do
+      writeImport "System.IO.Unsafe" (IVar () (Ident () "unsafeDupablePerformIO"))
+
+      let ds = parseDecls [text|
+            instance {-# OVERLAPPING #-} $classNameTxt $structTypeTxt where
+              $indexFunTxt ($structTypeCTxt ba) $elemIdxConstr
+                | I# _n <- sizeOf (undefined :: $valueTypeTxt)
+                , I# o <- $offsetFunTxt (undefined :: $structTypeTxt)
+                = unsafeDupablePerformIO
+                 (peek (Ptr (byteArrayContents# ba `plusAddr#` $elemOffsetF)))
+              {-# NOINLINE $indexFunTxt #-}
+              $offsetFunTxt ~_ = $valueOffsetTxt
+              {-# INLINE $offsetFunTxt #-}
+              $readFunTxt (Mutable# mba) $elemIdxConstr
+                | I# _n <- sizeOf (undefined :: $valueTypeTxt)
+                , I# o <- $offsetFunTxt (undefined :: $structTypeTxt)
+                = peek (Ptr (byteArrayContents# (unsafeCoerce# mba) `plusAddr#` $elemOffsetF))
+              {-# INLINE $readFunTxt #-}
+              $writeFunTxt (Mutable# mba) $elemIdxConstr x
+                | I# _n <- sizeOf x
+                , I# o <- $offsetFunTxt (undefined :: $structTypeTxt)
+                = poke (Ptr (byteArrayContents# (unsafeCoerce# mba) `plusAddr#` $elemOffsetF)) x
+              {-# INLINE $writeFunTxt #-}
+            |]
+
+      mapM_ writeDecl
+        -- . insertDeclComment (T.unpack tnametxt) rezComment $
+        ds
+
+    genClass = do
+      writeImport "GHC.TypeLits" (IThingAll () (Ident () "ErrorMessage"))
+      writeImport "GHC.TypeLits" (IAbs () (NoNamespace ()) (Ident () "TypeError"))
+
+      let dd = "':$$:"
+          ds = parseDecls [text|
+            class $classNameTxt a where
+              $indexFunTxt :: a -> $elemIdxArg $valueTypeTxt
+              $offsetFunTxt :: a -> Int
+              $readFunTxt :: Mutable a -> $elemIdxArg $valueTypeIOTxt
+              $writeFunTxt :: Mutable a -> $elemIdxArg $valueTypeTxt -> IO ()
+
+            instance {-# OVERLAPPABLE #-}
+                     TypeError
+                      ( 'ShowType a ':<>: 'Text " does not seem to have field $origNameTxtQ."
+                        $dd 'Text "Check Vulkan documentation for available fields of this type."
+                      ) => $classNameTxt a where
+              $indexFunTxt ~_ = error "This type does not have field $origNameTxtQ"
+              $offsetFunTxt ~_ = error "This type does not have field $origNameTxtQ"
+              $readFunTxt ~_ = error "This type does not have field $origNameTxtQ"
+              $writeFunTxt ~_ ~_ = error "This type does not have field $origNameTxtQ"
+
+            |]
+
+      mapM_ writeDecl
+        -- . insertDeclComment (T.unpack tnametxt) rezComment $
+        ds
+
+      writeExport $ EThingWith () (EWildcard () 0) className []
+
+
 
 data StructFieldInfo
   = SFI
@@ -202,7 +308,9 @@ fieldInfo tm@VkTypeMember
         Just (_, [VkTypeQArrLenEnum n]) ->
           Just (Var () (toHaskellVar n))
         _ -> Nothing
-    sname = toHaskellVar vkn
+    sname = if isJust en
+            then toHaskellVar (unVkMemberName vkn <> "Array")
+            else toHaskellVar vkn
     t = toType (fromIntegral $ length quals) $ toHaskellType
       $ VkTypeName $ unVkMemberName vkt
     uSize = App ()
@@ -216,71 +324,3 @@ fieldInfo tm@VkTypeMember
 fieldInfo tm = error
              $ "Struct fieldInfo: expected VkTypeMember with single ref"
              <> " but got: " <> show tm
-
--- _structCommon :: Monad m => ModuleWriter m ()
--- _structCommon = do
---   writePragma "MagicHash"
---   writePragma "UnboxedTuples"
---   writePragma "TypeFamilies"
---   writePragma "UnliftedFFITypes"
---   writePragma "TypeOperators"
---   writePragma "DataKinds"
---   writePragma "FlexibleInstances"
---   writePragma "UndecidableInstances"
---
---   writeImport "GHC.TypeLits" (IThingAll () (Ident () "ErrorMessage"))
---   writeImport "GHC.TypeLits" (IAbs () (NoNamespace ()) (Ident () "TypeError"))
---   writeImport "Data.Void" (IAbs () (NoNamespace ()) (Ident () "Void"))
---   writeImport "Foreign.Storable" (IThingAll () (Ident () "Storable"))
---   writeImport "Foreign.C.Types" (IThingAll ()  (Ident () "CInt"))
---   writeImport "Foreign.C.Types" (IThingAll ()  (Ident () "CSize"))
---   writeImport "GHC.Types" (IThingAll () (Ident () "IO"))
---   writeImport "GHC.Types" (IThingAll () (Ident () "Int"))
---   writeImport "GHC.Base" (IVar () (Ident () "runRW#"))
---   writeImport "GHC.Base" (IVar () (Ident () "isTrue#"))
---   writeImport "GHC.Ptr" (IThingAll () (Ident () "Ptr"))
---   writeFullImport "GHC.Prim"
-
-
-
--- class HasVkFloat32 a where
---   vkFloat32 :: a -> Int -> Float
---   readVkFloat32 :: Mutable a -> Int -> IO Float
---   writeVkFloat32 :: Mutable a -> Int -> Float -> IO ()
---
--- class HasVkPNext a where
---   vkPNext :: a -> Ptr Void
---   readVkPNext :: Mutable a -> IO (Ptr Void)
---   writeVkPNext :: Mutable a -> Ptr Void -> IO ()
-
--- instance {-# OVERLAPPABLE #-}
---          TypeError
---       ( 'ShowType a ':<>: 'Text " does not seem to have field \"pNext\"."
---   ':$$: 'Text "Check Vulkan documentation for available fields of this type."
---       ) => HasVkPNext a where
---   vkPNext _ = error "This type does not have field \"pNext\""
---   readVkPNext _ = error "This type does not have field \"pNext\""
---   writeVkPNext _ _ = error "This type does not have field \"pNext\""
---
---
---
--- -- Have to convert bytearrays to Addr# to index non-multiples of
--- -- element size.
--- -- Waiting for <https://ghc.haskell.org/trac/ghc/ticket/11143 11143>
--- instance {-# OVERLAPPING #-}
---          HasVkPNext VkShaderModuleCreateInfo where
---   vkPNext (VkShaderModuleCreateInfo# ba)
---     = Ptr (indexAddrOffAddr# (plusAddr# (byteArrayContents# ba) 4#) 0#)
---   {-# INLINE vkPNext #-}
---   readVkPNext (Mutable# mba) = IO
---     (\s -> case readAddrOffAddr#  (plusAddr#
---                   (byteArrayContents# (unsafeCoerce# mba)) 4# ) 0# s of
---       (# s', a #) -> (# s', Ptr a #)
---     )
---   {-# INLINE readVkPNext #-}
---   writeVkPNext (Mutable# mba) (Ptr a) = IO
---     (\s -> case writeAddrOffAddr#  (plusAddr#
---                   (byteArrayContents# (unsafeCoerce# mba)) 4# ) 0# a s of
---       s' -> (# s', () #)
---     )
---   {-# INLINE writeVkPNext #-}
