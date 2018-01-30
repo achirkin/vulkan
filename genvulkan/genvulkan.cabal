@@ -51,7 +51,7 @@ library
                      , deepseq -any
 
                      , neat-interpolation -any
-                     , haskell-src-exts -any
+                     , haskell-src-exts >= 1.20.0
                      , haskell-src-exts-sc -any
                      , pretty -any
                      , lens -any

@@ -1,9 +1,10 @@
 {-# LANGUAGE DuplicateRecordFields #-}
+{-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE QuasiQuotes           #-}
 {-# LANGUAGE Strict                #-}
 module Write.Types
-  ( genTypes
+  ( genTypes1, genTypes2
   ) where
 
 import           Control.Monad
@@ -13,7 +14,6 @@ import qualified Control.Monad.Trans.RWS.Strict       as RWS
 import           Control.Monad.Trans.State.Strict     (StateT)
 import qualified Control.Monad.Trans.State.Strict     as State
 import           Data.Semigroup
--- import           Data.Text                            (Text)
 import qualified Data.Text                            as T
 import           Language.Haskell.Exts.SimpleComments
 import           Language.Haskell.Exts.Syntax
@@ -31,12 +31,12 @@ import           Write.Types.Handle
 import           Write.Types.Struct
 
 
-genTypes :: Monad m => ModuleWriter m ()
-genTypes = hoist (`State.evalStateT` Nothing) genTypes'
+genTypes1 :: Monad m => ModuleWriter m ()
+genTypes1 = hoist (`State.evalStateT` Nothing) genTypes1'
 
 
-genTypes' :: Monad m => ModuleWriter (StateT (Maybe VkTypeCategory) m) ()
-genTypes' = do
+genTypes1' :: Monad m => ModuleWriter (StateT (Maybe VkTypeCategory) m) ()
+genTypes1' = do
     vkXml <- ask
     glvl <- ModuleWriter $ RWS.gets currentSecLvl
     writeSection glvl "Types and enumerations"
@@ -70,11 +70,49 @@ genTypes' = do
               VkTypeCatHandle      -> genHandle t
               VkTypeCatEnum        -> genEnum t
               VkTypeCatFuncpointer -> genFuncpointer t
-              VkTypeCatStruct      -> genStruct t
-              VkTypeCatUnion       -> genUnion t
+              VkTypeCatStruct      -> return ()
+              VkTypeCatUnion       -> return ()
           fLast [] = pure ()
           fLast cs = writeSection 0 $ T.unlines $ "|":cs
 
+
+
+genTypes2 :: Monad m => ModuleWriter m ()
+genTypes2 = hoist (`State.evalStateT` Nothing) genTypes2'
+
+
+genTypes2' :: Monad m => ModuleWriter (StateT (Maybe VkTypeCategory) m) ()
+genTypes2' = do
+    vkXml <- ask
+    glvl <- ModuleWriter $ RWS.gets currentSecLvl
+    writeSection glvl "Types and enumerations"
+    pushSecLvl $ \curlvl ->
+      foldSectionsWithComments (fItem curlvl) fLast
+                               (types . unInorder $ globTypes vkXml)
+        where
+          fItem curlvl cs t = do
+            oldcat <- lift State.get
+            let curcat = vkTypeCat t
+            when (oldcat /= Just curcat) $ do
+              lift . State.put $ Just curcat
+              writeSection curlvl $ case curcat of
+                VkTypeNoCat          -> "External types"
+                VkTypeCatInclude     -> "Include pragmas"
+                VkTypeCatDefine      -> "Define pragmas"
+                VkTypeCatBasetype    -> "Base types"
+                VkTypeCatBitmask     -> "Bitmasks"
+                VkTypeCatHandle      -> "Handles"
+                VkTypeCatEnum        -> "Enums"
+                VkTypeCatFuncpointer -> "Function pointers"
+                VkTypeCatStruct      -> "C structures"
+                VkTypeCatUnion       -> "C unions"
+            forM_ cs $ writeSection (curlvl+1)
+            case vkTypeCat t of
+              VkTypeCatStruct      -> genStruct t
+              VkTypeCatUnion       -> genUnion t
+              _                    -> return ()
+          fLast [] = pure ()
+          fLast cs = writeSection 0 $ T.unlines $ "|":cs
 
 
 
