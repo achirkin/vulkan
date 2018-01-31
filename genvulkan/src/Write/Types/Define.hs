@@ -171,7 +171,7 @@ genDefine t@VkTypeSimple
                     {-# INLINE vkNullPtr #-}
                   |]
 
-    writeExport $ EThingWith () (NoWildcard ()) (UnQual () (Ident () "VkPtr")) []
+    writeExport $ EThingWith () (EWildcard () 0) (UnQual () (Ident () "VkPtr")) []
 
 
   | vkName == VkTypeName "VK_NULL_HANDLE"

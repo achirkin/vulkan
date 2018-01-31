@@ -27,6 +27,7 @@ library
                        VkXml.Sections.Tags
                        VkXml.Sections.Extensions
                        Write
+                       Write.Commands
                        Write.ModuleWriter
                        Write.Types
                        Write.Types.Define

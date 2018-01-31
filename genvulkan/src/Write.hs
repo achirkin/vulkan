@@ -12,14 +12,10 @@ import           Control.Monad
 import           Data.Char
 import qualified Data.List                            as L
 import           Data.Semigroup
-import qualified Data.Text                            as T
 import           Language.Haskell.Exts.ExactPrint
-import           Language.Haskell.Exts.Extension
-import           Language.Haskell.Exts.Parser
 import           Language.Haskell.Exts.Pretty
 import           Language.Haskell.Exts.SimpleComments
 import           Language.Haskell.Format
-import           NeatInterpolation
 import           Path
 import           Path.IO
 import           System.IO                            (writeFile)
@@ -27,7 +23,9 @@ import           System.IO                            (writeFile)
 import           VkXml.Sections
 import           Write.ModuleWriter
 import           Write.Types
+import           Write.Commands
 import           Write.Types.Enum
+
 
 generateVkSource :: Path b Dir
                     -- ^ multiline
@@ -39,84 +37,74 @@ generateVkSource :: Path b Dir
                  -> IO ()
 generateVkSource outputDir vkXml = do
 
-  let pMode = defaultParseMode
-        { baseLanguage = Haskell2010
-        , extensions =
-          [
-          ]
-        }
-      testS = T.unpack [text|
-                module A
-                  () where
-
-                import Foreign.Ptr
-                import Data.Void
-
-                class HasVkPNext a where
-                  vkPNext :: a -> Ptr Void
-                  readVkPNext :: a -> IO (Ptr Void)
-                  writeVkPNext :: a -> Ptr Void -> IO ()
-
-                instance {-# OVERLAPPABLE #-} HasVkPNext a where
-                  vkPNext _ = error "This type does not have field \"pNext\""
-                  readVkPNext _ = error "This type does not have field \"pNext\""
-                  writeVkPNext _ _ = error "This type does not have field \"pNext\""
-            |]
-  putStrLn testS
-  putStrLn "-----------------"
-  print $ (() <$) <$> parseModuleWithMode pMode testS
-
+  -- let pMode = defaultParseMode
+  --       { baseLanguage = Haskell2010
+  --       , extensions =
+  --         [
+  --         ]
+  --       }
+  --     testS = T.unpack [text|
+  --               module A
+  --                 () where
+  --
+  --               foreign import ccall "vkCreateInstance"
+  --                 vkCreateInstance
+  --                   :: Ptr A
+  --                   -> IO VkResult
+  --           |]
+  -- putStrLn testS
+  -- putStrLn "-----------------"
+  -- print $ (() <$) <$> parseModuleWithMode pMode testS
+  -- putStrLn "-----------------"
 
 
   createDirIfMissing True (outputDir </> [reldir|Graphics|])
   createDirIfMissing True (outputDir </> [reldir|Graphics|] </> [reldir|Vulkan|])
 
-  do
-    ((), mr) <- runModuleWriter vkXml "Graphics.Vulkan.SimpleTypes" $ do
+  (>>= writeModule outputDir [relfile|Graphics/Vulkan/SimpleTypes.hs|]
+     . snd) . runModuleWriter vkXml "Graphics.Vulkan.SimpleTypes" $ do
         writePragma "Strict"
         genApiConstants
         genTypes1
 
-    let rez = uncurry exactPrint
-            . ppWithCommentsMode defaultMode
-            $ genModule mr
-    rez `deepseq` putStrLn "Done generating; now apply hfmt to reformat code..."
-    frez <- hfmt rez
-    case frez of
-      Left err -> do
-        putStrLn $ "Could not format the code:\n" <> err
-        writeFile (toFilePath $ outputDir </> [relfile|Graphics/Vulkan/SimpleTypes.hs|])
-          $ fixSourceHooks rez
-      Right (ss, rez') -> do
-        forM_ ss $ \(Suggestion s) ->
-          putStrLn $ "Formatting suggestion:\n    " <> s
-        writeFile (toFilePath $ outputDir </> [relfile|Graphics/Vulkan/SimpleTypes.hs|])
-          $ fixSourceHooks rez'
-
-  do
-    ((), mr) <- runModuleWriter vkXml "Graphics.Vulkan.Structures" $ do
+  (>>= writeModule outputDir [relfile|Graphics/Vulkan/Structures.hs|]
+     . snd) . runModuleWriter vkXml "Graphics.Vulkan.Structures" $ do
         writePragma "Strict"
+        writeFullImport "Graphics.Vulkan.Marshal"
         writeFullImport "Graphics.Vulkan.SimpleTypes"
         genTypes2
 
-    let rez = uncurry exactPrint
-            . ppWithCommentsMode defaultMode
-            $ genModule mr
+  (>>= writeModule outputDir [relfile|Graphics/Vulkan/Commands.hs|]
+     . snd) . runModuleWriter vkXml "Graphics.Vulkan.Commands" $ do
+        writePragma "Strict"
+        writeFullImport "Graphics.Vulkan.SimpleTypes"
+        writeFullImport "Graphics.Vulkan.Structures"
+        genCommands
+
+
+writeModule :: Path b Dir
+            -> Path Rel File
+            -> ModuleWriting
+            -> IO ()
+writeModule outputDir p mw = do
     rez `deepseq` putStrLn "Done generating; now apply hfmt to reformat code..."
     frez <- hfmt rez
     case frez of
       Left err -> do
         putStrLn $ "Could not format the code:\n" <> err
-        writeFile (toFilePath $ outputDir </> [relfile|Graphics/Vulkan/Structures.hs|])
+        writeFile pp
           $ fixSourceHooks rez
       Right (ss, rez') -> do
         forM_ ss $ \(Suggestion s) ->
           putStrLn $ "Formatting suggestion:\n    " <> s
-        writeFile (toFilePath $ outputDir </> [relfile|Graphics/Vulkan/Structures.hs|])
+        writeFile pp
           $ fixSourceHooks rez'
-
-
-
+    putStrLn $ "Done: " <> pp
+  where
+    pp = toFilePath $ outputDir </> p
+    rez = uncurry exactPrint
+        . ppWithCommentsMode defaultMode
+        $ genModule mw
 
 -- unfortunately, I have to disable hindent for now,
 --  because it breaks haddock:

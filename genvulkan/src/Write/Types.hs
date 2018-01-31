@@ -161,6 +161,16 @@ genNocatData VkTypeSimple
               $ IThingAll () (Ident () "CULong")
             writeDecl . setComment rezComment $ parseDecl'
               [text|type Window = CULong|]
+          "VisualID" -> do
+            writeImport "Foreign.C.Types"
+              $ IThingAll () (Ident () "CULong")
+            writeDecl . setComment rezComment $ parseDecl'
+              [text|type VisualID = CULong|]
+          "RROutput" -> do
+            writeImport "Foreign.C.Types"
+              $ IThingAll () (Ident () "CULong")
+            writeDecl . setComment rezComment $ parseDecl'
+              [text|type RROutput = CULong|]
           _ -> do
             writePragma "EmptyDataDecls"
             writeDecl . setComment rezComment $ parseDecl'
