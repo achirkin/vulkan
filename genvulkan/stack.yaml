@@ -26,3 +26,5 @@ packages:
       git: https://github.com/achirkin/hfmt
       commit: d03e4b950cf309f57bbeb55b4d2c9cee162e6de7
     extra-dep: true
+
+allow-newer: true

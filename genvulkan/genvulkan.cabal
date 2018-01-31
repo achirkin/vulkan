@@ -1,7 +1,7 @@
 name:                genvulkan
 version:             0.1.0.0
--- synopsis:
--- description:
+synopsis:            Generate vulkan-api haskell bindings
+description:         Generate vulkan-api haskell bindings based on vk.xml
 homepage:            https://github.com/achirkin/genvulkan#readme
 license:             BSD3
 license-file:        LICENSE
@@ -10,7 +10,6 @@ maintainer:          chirkin@arch.ethz.ch
 copyright:           Copyright: (c) 2018 Artem Chirkin
 category:            vulkan, bsd3, graphics, library, opengl
 build-type:          Simple
-extra-source-files:  README.md
 cabal-version:       >=1.10
 
 library
