@@ -23,11 +23,11 @@ import           Language.Haskell.Exts.SimpleComments
 import           Language.Haskell.Exts.Syntax
 import           NeatInterpolation
 
-
 import           VkXml.CommonTypes
 import           VkXml.Sections.Types
 
 import           Write.ModuleWriter
+
 
 genStruct :: Monad m => VkType -> ModuleWriter m ()
 genStruct = genStructOrUnion False
@@ -188,6 +188,7 @@ genStructField structType offsetE SFI{..} = do
     VkTypeMember { name = VkMemberName origNameTxt} = sfdata
     origNameTxtQ = "'" <> origNameTxt <> "'"
     classNameTxt = "HasVk" <> sfiBaseNameTxt
+    memberTypeTxt = "Vk" <> sfiBaseNameTxt <> "MType"
     className = toHaskellVar classNameTxt
     indexFunTxt = "vk" <> sfiBaseNameTxt
     readFunTxt = "readVk" <> sfiBaseNameTxt
@@ -197,8 +198,6 @@ genStructField structType offsetE SFI{..} = do
     structTypeCTxt = structTypeTxt <> "#"
     valueOffsetTxt = T.pack $ prettyPrint offsetE
     valueTypeTxt = T.pack $ prettyPrint sfiType
-    valueTypeIOTxt = T.pack $ prettyPrint $ TyApp ()
-           (TyCon () (UnQual () (Ident () "IO"))) sfiType
     elemIdxArg = case sfiElemN of
       Nothing -> ""
       Just _  -> "Int ->"
@@ -214,6 +213,7 @@ genStructField structType offsetE SFI{..} = do
 
       let ds = parseDecls [text|
             instance {-# OVERLAPPING #-} $classNameTxt $structTypeTxt where
+              type $memberTypeTxt $structTypeTxt = $valueTypeTxt
               $indexFunTxt ($structTypeCTxt ba) $elemIdxConstr
                 | I# _n <- sizeOf (undefined :: $valueTypeTxt)
                 , I# o <- $offsetFunTxt (undefined :: $structTypeTxt)
@@ -239,27 +239,25 @@ genStructField structType offsetE SFI{..} = do
         ds
 
     genClass = do
+      writePragma "TypeFamilies"
       writeImport "GHC.TypeLits" (IThingAll () (Ident () "ErrorMessage"))
       writeImport "GHC.TypeLits" (IAbs () (NoNamespace ()) (Ident () "TypeError"))
 
       let dd = "':$$:"
           ds = parseDecls [text|
             class $classNameTxt a where
-              $indexFunTxt :: a -> $elemIdxArg $valueTypeTxt
-              $offsetFunTxt :: a -> Int
-              $readFunTxt :: Mutable a -> $elemIdxArg $valueTypeIOTxt
-              $writeFunTxt :: Mutable a -> $elemIdxArg $valueTypeTxt -> IO ()
+                type $memberTypeTxt a :: *
+                $indexFunTxt :: a -> $elemIdxArg $memberTypeTxt a
+                $offsetFunTxt :: a -> Int
+                $readFunTxt :: Mutable a -> $elemIdxArg IO ($memberTypeTxt a)
+                $writeFunTxt :: Mutable a -> $elemIdxArg $memberTypeTxt a -> IO ()
+
 
             instance {-# OVERLAPPABLE #-}
                      TypeError
                       ( 'ShowType a ':<>: 'Text " does not seem to have field $origNameTxtQ."
                         $dd 'Text "Check Vulkan documentation for available fields of this type."
-                      ) => $classNameTxt a where
-              $indexFunTxt ~_ = error "This type does not have field $origNameTxtQ"
-              $offsetFunTxt ~_ = error "This type does not have field $origNameTxtQ"
-              $readFunTxt ~_ = error "This type does not have field $origNameTxtQ"
-              $writeFunTxt ~_ ~_ = error "This type does not have field $origNameTxtQ"
-
+                      ) => $classNameTxt a
             |]
 
       mapM_ writeDecl
@@ -267,7 +265,6 @@ genStructField structType offsetE SFI{..} = do
         ds
 
       writeExport $ EThingWith () (EWildcard () 0) className []
-
 
 
 data StructFieldInfo

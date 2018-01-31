@@ -49,17 +49,17 @@ genTypes1' = do
             let curcat = vkTypeCat t
             when (oldcat /= Just curcat) $ do
               lift . State.put $ Just curcat
-              writeSection curlvl $ case curcat of
-                VkTypeNoCat          -> "External types"
-                VkTypeCatInclude     -> "Include pragmas"
-                VkTypeCatDefine      -> "Define pragmas"
-                VkTypeCatBasetype    -> "Base types"
-                VkTypeCatBitmask     -> "Bitmasks"
-                VkTypeCatHandle      -> "Handles"
-                VkTypeCatEnum        -> "Enums"
-                VkTypeCatFuncpointer -> "Function pointers"
-                VkTypeCatStruct      -> "C structures"
-                VkTypeCatUnion       -> "C unions"
+              case curcat of
+                VkTypeNoCat          -> writeSection curlvl "External types"
+                VkTypeCatInclude     -> writeSection curlvl "Include pragmas"
+                VkTypeCatDefine      -> writeSection curlvl "Define pragmas"
+                VkTypeCatBasetype    -> writeSection curlvl "Base types"
+                VkTypeCatBitmask     -> writeSection curlvl "Bitmasks"
+                VkTypeCatHandle      -> writeSection curlvl "Handles"
+                VkTypeCatEnum        -> writeSection curlvl "Enums"
+                VkTypeCatFuncpointer -> writeSection curlvl "Function pointers"
+                VkTypeCatStruct      -> return ()
+                VkTypeCatUnion       -> return ()
             forM_ cs $ writeSection (curlvl+1)
             case vkTypeCat t of
               VkTypeNoCat          -> genNocatData t
@@ -76,43 +76,16 @@ genTypes1' = do
           fLast cs = writeSection 0 $ T.unlines $ "|":cs
 
 
-
 genTypes2 :: Monad m => ModuleWriter m ()
-genTypes2 = hoist (`State.evalStateT` Nothing) genTypes2'
-
-
-genTypes2' :: Monad m => ModuleWriter (StateT (Maybe VkTypeCategory) m) ()
-genTypes2' = do
+genTypes2 = do
     vkXml <- ask
-    glvl <- ModuleWriter $ RWS.gets currentSecLvl
-    writeSection glvl "Types and enumerations"
-    pushSecLvl $ \curlvl ->
-      foldSectionsWithComments (fItem curlvl) fLast
-                               (types . unInorder $ globTypes vkXml)
+    pushSecLvl $ \_ ->
+      mapM_ fItem (items . types . unInorder $ globTypes vkXml)
         where
-          fItem curlvl cs t = do
-            oldcat <- lift State.get
-            let curcat = vkTypeCat t
-            when (oldcat /= Just curcat) $ do
-              lift . State.put $ Just curcat
-              writeSection curlvl $ case curcat of
-                VkTypeNoCat          -> "External types"
-                VkTypeCatInclude     -> "Include pragmas"
-                VkTypeCatDefine      -> "Define pragmas"
-                VkTypeCatBasetype    -> "Base types"
-                VkTypeCatBitmask     -> "Bitmasks"
-                VkTypeCatHandle      -> "Handles"
-                VkTypeCatEnum        -> "Enums"
-                VkTypeCatFuncpointer -> "Function pointers"
-                VkTypeCatStruct      -> "C structures"
-                VkTypeCatUnion       -> "C unions"
-            forM_ cs $ writeSection (curlvl+1)
-            case vkTypeCat t of
-              VkTypeCatStruct      -> genStruct t
-              VkTypeCatUnion       -> genUnion t
-              _                    -> return ()
-          fLast [] = pure ()
-          fLast cs = writeSection 0 $ T.unlines $ "|":cs
+          fItem t = case vkTypeCat t of
+              VkTypeCatStruct -> genStruct t
+              VkTypeCatUnion  -> genUnion t
+              _               -> return ()
 
 
 

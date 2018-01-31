@@ -1,0 +1,26 @@
+name:                vulkan-examples
+version:             0.1.0.0
+synopsis:            Use cases for vulkan-api
+description:         Some examples of using vulkan-api bindings.
+homepage:            https://github.com/achirkin/genvulkan#readme
+license:             BSD3
+license-file:        LICENSE
+author:              Artem Chirkin
+maintainer:          chirkin@arch.ethz.ch
+copyright:           Copyright: (c) 2018 Artem Chirkin
+category:            vulkan, bsd3, graphics, library, opengl
+build-type:          Simple
+cabal-version:       >=1.10
+
+executable ve-01-CreateInstance
+  hs-source-dirs:      .
+  main-is:             01-CreateInstance.hs
+  ghc-options:         -Wall
+  build-depends:       base
+                     , ghc-prim
+                     , vulkan-api
+  default-language:    Haskell2010
+
+source-repository head
+  type:     git
+  location: https://github.com/achirkin/genvulkan

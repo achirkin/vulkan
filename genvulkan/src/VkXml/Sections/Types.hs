@@ -257,7 +257,7 @@ parseVkTypeData =
             Just en -> do
               leftover (EventContent (ContentText $ c <> en))
               parseQualifiers n
-    getSimpleQualifiers t = case T.uncons (T.stripStart t) of
+    getSimpleQualifiers t = case T.uncons (T.stripStart $ T.replace "const" "" t) of
       Just ('*', s) -> VkTypeQStar : getSimpleQualifiers s
       Just ('[', s) -> case decOrHex (T.stripStart s) of
         Left _       -> case T.breakOn "]" s of

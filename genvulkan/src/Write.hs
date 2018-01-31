@@ -15,16 +15,24 @@ import           Data.Semigroup
 import           Language.Haskell.Exts.ExactPrint
 import           Language.Haskell.Exts.Pretty
 import           Language.Haskell.Exts.SimpleComments
+import           Language.Haskell.Exts.Syntax
 import           Language.Haskell.Format
 import           Path
 import           Path.IO
 import           System.IO                            (writeFile)
 
 import           VkXml.Sections
+import           Write.Commands
 import           Write.ModuleWriter
 import           Write.Types
-import           Write.Commands
 import           Write.Types.Enum
+
+
+-- import qualified Data.Text                            as T
+-- import           Language.Haskell.Exts.Syntax
+-- import           Language.Haskell.Exts.Parser
+-- import           Language.Haskell.Exts.Extension
+-- import           NeatInterpolation
 
 
 generateVkSource :: Path b Dir
@@ -40,34 +48,58 @@ generateVkSource outputDir vkXml = do
   -- let pMode = defaultParseMode
   --       { baseLanguage = Haskell2010
   --       , extensions =
-  --         [
-  --         ]
+  --                 [ EnableExtension GeneralizedNewtypeDeriving
+  --                 , EnableExtension PatternSynonyms
+  --                 , EnableExtension EmptyDataDecls
+  --                 , EnableExtension ViewPatterns
+  --                 , EnableExtension RoleAnnotations
+  --                 , EnableExtension MagicHash
+  --                 , EnableExtension UnboxedTuples
+  --                 , EnableExtension DataKinds
+  --                 , EnableExtension TypeOperators
+  --                 , EnableExtension FlexibleContexts
+  --                 , EnableExtension FlexibleInstances
+  --                 , EnableExtension TypeFamilies
+  --                 , EnableExtension UnliftedFFITypes
+  --                 , EnableExtension UndecidableInstances
+  --                 , EnableExtension MultiParamTypeClasses
+  --                 , EnableExtension FunctionalDependencies
+  --                 , UnknownExtension "Strict"
+  --                 ]
   --       }
   --     testS = T.unpack [text|
   --               module A
   --                 () where
   --
-  --               foreign import ccall "vkCreateInstance"
-  --                 vkCreateInstance
-  --                   :: Ptr A
-  --                   -> IO VkResult
+  --               class HasVkTextureCompressionBC a member | a -> member where
+  --                 vkTextureCompressionBC :: a ->  member
+  --                 vkTextureCompressionBCByteOffset :: a -> Int
+  --                 readVkTextureCompressionBC :: Mutable a ->  IO member
+  --                 writeVkTextureCompressionBC :: Mutable a ->  member -> IO ()
+  --
   --           |]
   -- putStrLn testS
   -- putStrLn "-----------------"
   -- print $ (() <$) <$> parseModuleWithMode pMode testS
   -- putStrLn "-----------------"
+  -- case parseModuleWithMode pMode testS of
+  --   ParseOk a -> putStrLn $ prettyPrint a
+  --   e@ParseFailed{} -> print e
+
 
 
   createDirIfMissing True (outputDir </> [reldir|Graphics|])
   createDirIfMissing True (outputDir </> [reldir|Graphics|] </> [reldir|Vulkan|])
 
   (>>= writeModule outputDir [relfile|Graphics/Vulkan/SimpleTypes.hs|]
+       id
      . snd) . runModuleWriter vkXml "Graphics.Vulkan.SimpleTypes" $ do
         writePragma "Strict"
         genApiConstants
         genTypes1
 
   (>>= writeModule outputDir [relfile|Graphics/Vulkan/Structures.hs|]
+       (addOptionsPragma GHC "-fno-warn-missing-methods")
      . snd) . runModuleWriter vkXml "Graphics.Vulkan.Structures" $ do
         writePragma "Strict"
         writeFullImport "Graphics.Vulkan.Marshal"
@@ -75,18 +107,27 @@ generateVkSource outputDir vkXml = do
         genTypes2
 
   (>>= writeModule outputDir [relfile|Graphics/Vulkan/Commands.hs|]
+       id
      . snd) . runModuleWriter vkXml "Graphics.Vulkan.Commands" $ do
         writePragma "Strict"
         writeFullImport "Graphics.Vulkan.SimpleTypes"
         writeFullImport "Graphics.Vulkan.Structures"
         genCommands
 
+addOptionsPragma :: Tool -> String -> Module (Maybe a) -> Module (Maybe a)
+addOptionsPragma tool str (Module a h ps is ds)
+  = Module a h (OptionsPragma Nothing (Just tool) str : ps) is ds
+addOptionsPragma tool str (XmlPage a b ps c d e f)
+  = XmlPage a b (OptionsPragma Nothing (Just tool) str : ps) c d e f
+addOptionsPragma tool str (XmlHybrid a b ps c d e f g h)
+  = XmlHybrid a b (OptionsPragma Nothing (Just tool) str : ps) c d e f g h
 
 writeModule :: Path b Dir
             -> Path Rel File
+            -> (Module A -> Module A)
             -> ModuleWriting
             -> IO ()
-writeModule outputDir p mw = do
+writeModule outputDir p postF mw = do
     rez `deepseq` putStrLn "Done generating; now apply hfmt to reformat code..."
     frez <- hfmt rez
     case frez of
@@ -104,7 +145,7 @@ writeModule outputDir p mw = do
     pp = toFilePath $ outputDir </> p
     rez = uncurry exactPrint
         . ppWithCommentsMode defaultMode
-        $ genModule mw
+        . postF $ genModule mw
 
 -- unfortunately, I have to disable hindent for now,
 --  because it breaks haddock:
