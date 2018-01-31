@@ -143,6 +143,8 @@ genStructOrUnion isUnion VkTypeComposite
     -- generate field setters and getters
     mapM_ (uncurry $ genStructField tname) sfimems
 
+    genStructShow (VkTypeName tnametxt) $ map snd sfimems
+
     writeExport $ EThingWith () (EWildcard () 0) tname []
   where
     totalSizeTxt = T.pack $ prettyPrint totalSize
@@ -172,6 +174,27 @@ genStructOrUnion _ t
   = error $ "genStructOrUnion: expected a type with members, "
           <> "but got: "
           <> show t
+
+genStructShow :: Monad m => VkTypeName -> [StructFieldInfo] -> ModuleWriter m ()
+genStructShow (VkTypeName tname) xs =
+    writeDecl $ parseDecl'
+       $  [text|
+            instance Show $tname where
+              showsPrec d x = showString "$tname {"
+          |]
+       <> "       . "
+            <>  (T.intercalate " . showString \", \"  . " $ map showMem xs )
+            <> " . showChar '}'"
+  where
+    showMem SFI{..}
+      | Just en <- sfiElemN
+      , ntxt <- T.pack $ prettyPrint en
+        = T.strip [text|showString "$indexFunTxt = [" . showsPrec d (map ($indexFunTxt x) [ 1 .. $ntxt ]) . showChar ']'|]
+      | otherwise
+        = T.strip [text|showString "$indexFunTxt = " . showsPrec d ($indexFunTxt x)|]
+      where
+        indexFunTxt = "vk" <> sfiBaseNameTxt
+
 
 
 genStructField :: Monad m

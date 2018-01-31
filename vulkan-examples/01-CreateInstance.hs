@@ -48,7 +48,7 @@ withInstance action
         writeVkSType appInfoMut VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
 
         -- execute createInstance
-        VkResult vkRes <- vkCreateInstance iCreateInfoPtr nullPtr vkInstPtr
+        vkRes <- vkCreateInstance iCreateInfoPtr nullPtr vkInstPtr
         vkInst <- peek vkInstPtr
         print vkRes
         action vkInst

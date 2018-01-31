@@ -33,6 +33,7 @@ import           VkXml.Sections.Types
 
 import           Write.ModuleWriter
 
+
 genApiConstants :: Monad m => ModuleWriter m ()
 genApiConstants = do
   glvl <- ModuleWriter $ RWS.gets currentSecLvl
@@ -57,8 +58,10 @@ genEnums enum = do
     when nb $ writeImport "Data.Bits"
       $ IAbs () (NoNamespace ()) (Ident () "Bits")
 
-    unless (tname == VkTypeName "API Constants")
-      $ newInt32TypeDec tname derives tcomment
+    unless (tname == VkTypeName "API Constants") $ do
+      newInt32TypeDec tname derives tcomment
+      genEnumShow tname allPNs
+      genEnumRead tname allPNs
 
     enumPats tname enum
   where
@@ -73,6 +76,49 @@ genEnums enum = do
       = writeSections (bitmaskPattern tn) memberMasks
     enumPats _ VkConstants {..}
       = writeSections constantPattern memberConsts
+
+    allPNs = allPatNames enum
+    allPatNames VkEnums {..}    = map enumPatName . items $ memberEnums
+    allPatNames VkBitmasks {..} = map bitmaskPatName . items $ memberMasks
+    allPatNames VkConstants {}  = []
+
+
+genEnumShow :: Monad m => VkTypeName -> [Text] -> ModuleWriter m ()
+genEnumShow (VkTypeName tname) xs =
+    writeDecl $ parseDecl' $ T.unlines
+       $  [text|instance Show $tname where|]
+       : map (\x -> "  " <>
+                  [text|showsPrec _ $x = showString "$x"|]
+             ) xs
+      ++ ["  " <> [text|showsPrec p ($tname x) = showParen (p >= 11) (showString "$tname " . showsPrec 11 x)|]
+         ]
+
+
+genEnumRead :: Monad m => VkTypeName -> [Text] -> ModuleWriter m ()
+genEnumRead (VkTypeName tname) xs = do
+
+    writeImport "Text.Read.Lex" $ IThingWith () (Ident () "Lexeme") [ConName () (Ident () "Ident")]
+    writeImport "GHC.Read"      $ IVar () (Ident () "expectP")
+    writeImport "GHC.Read"      $ IVar () (Ident () "choose")
+    writeImport "Text.Read"     $ IThingAll () (Ident () "Read")
+    writeImport "Text.Read"     $ IVar () (Ident () "parens")
+    writeImport "Text.ParserCombinators.ReadPrec" $ IVar () (Ident () "prec")
+    writeImport "Text.ParserCombinators.ReadPrec" $ IVar () (Ident () "step")
+    writeImport "Text.ParserCombinators.ReadPrec" $ IVar () (Symbol () "+++")
+
+    writeDecl $ parseDecl'
+       $  [text|
+            instance Read $tname where
+              readPrec = parens ( choose [
+          |]
+       <> ( T.unlines . map ("        " <>) $ T.lines $
+           T.intercalate ", " ( map (\x -> [text|("$x", pure $x)|]) xs ) <>
+           [text|
+                                         ] +++
+                                  prec 10 (expectP (Ident "$tname") >> ($tname <$> step readPrec))
+                                )
+           |]
+          )
 
 genAlias :: Monad m => VkType -> ModuleWriter m ()
 genAlias t@VkTypeComposite{..}
@@ -206,3 +252,11 @@ enumPattern vkTName VkEnumValue {..} = do
     patval = if value < 0 then "(" <> T.pack (show value) <> ")"
                           else T.pack (show value)
     rezComment = comment >>= preComment . T.unpack
+
+
+enumPatName :: VkEnumValue -> Text
+enumPatName VkEnumValue {..} = qNameTxt (toHaskellVar name)
+
+bitmaskPatName :: VkBitmaskValue -> Text
+bitmaskPatName VkBitmaskBitpos {..} = qNameTxt (toHaskellVar name)
+bitmaskPatName VkBitmaskValue {..}  = qNameTxt (toHaskellVar name)
