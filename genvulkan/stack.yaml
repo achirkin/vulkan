@@ -11,6 +11,7 @@ extra-deps:
   - stylish-haskell-0.9.0.2
   - hindent-5.2.5
   - hlint-2.0.15
+  - regex-1.0.1.3
 
 packages:
   - .

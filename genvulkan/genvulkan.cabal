@@ -27,6 +27,7 @@ library
                        VkXml.Sections.Extensions
                        Write
                        Write.Commands
+                       Write.Feature
                        Write.ModuleWriter
                        Write.Types
                        Write.Types.Define
@@ -49,6 +50,7 @@ library
                      , exceptions -any
                      , mmorph -any
                      , deepseq -any
+                     , regex -any
 
                      , neat-interpolation -any
                      , haskell-src-exts >= 1.20.0

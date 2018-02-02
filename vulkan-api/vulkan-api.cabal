@@ -17,9 +17,9 @@ library
   hs-source-dirs:      src, src-gen
   exposed-modules:     Graphics.Vulkan
                        Graphics.Vulkan.Marshal
-                       Graphics.Vulkan.SimpleTypes
-                       Graphics.Vulkan.Structures
-                       Graphics.Vulkan.Commands
+                       Graphics.Vulkan.Common
+                       Graphics.Vulkan.Base
+                       Graphics.Vulkan.Core
   build-depends:       base >= 4.7 && < 5
                      , ghc-prim >= 0.4 && < 0.6
   default-language:    Haskell2010
