@@ -72,7 +72,9 @@ genStructOrUnion isUnion VkTypeComposite
     writeFullImport "GHC.Prim"
     writeFullImport "Graphics.Vulkan.Marshal"
 
-    let ds = parseDecls [text|
+    let sizeExtr = "HSC2HS___size___" <> structNameTxt
+        alignmentExpr = "HSC2HS___alignment___" <> structNameTxt
+        ds = parseDecls [text|
           data $tnametxt = $tnametxt# ByteArray#
 
           instance Eq $tnametxt where
@@ -86,9 +88,9 @@ genStructOrUnion isUnion VkTypeComposite
             {-# INLINE compare #-}
 
           instance Storable $tnametxt where
-            sizeOf ~_ = $totalSizeTxt
+            sizeOf ~_ = $sizeExtr
             {-# INLINE sizeOf #-}
-            alignment ~_ = sizeOf (undefined :: Ptr Void)
+            alignment ~_ = $alignmentExpr
             {-# INLINE alignment #-}
             peek (Ptr addr)
               | I# n <- sizeOf (undefined :: $tnametxt)
@@ -120,7 +122,7 @@ genStructOrUnion isUnion VkTypeComposite
               (\s -> case unsafeFreezeByteArray# mba s of
                 (# s', ba #) -> (# s', $tnametxt# ba #)
               )
-            {-# inline unsafeFreeze #-}
+            {-# INLINE unsafeFreeze #-}
             thaw ($tnametxt# ba)
               | I# n <- sizeOf (undefined :: $tnametxt)
               , I# a <- alignment (undefined :: $tnametxt)
@@ -129,11 +131,16 @@ genStructOrUnion isUnion VkTypeComposite
                 (# s1, mba #) -> (# copyByteArray# ba 0# mba 0# n s1
                                  ,  Mutable# mba #)
               )
-            {-# inline thaw #-}
+            {-# INLINE thaw #-}
             unsafeThaw ($tnametxt# ba) = IO
               (\s -> (# s,  Mutable# (unsafeCoerce# ba) #))
             {-# inline unsafeThaw #-}
 
+            touchVkData a@($tnametxt# ba) = touchImmutableContent a ba
+            {-# INLINE touchVkData #-}
+
+            addVkDataFinalizer = addImmutableContentFinalizer
+            {-# INLINE addVkDataFinalizer #-}
           |]
 
     mapM_ writeDecl
@@ -141,14 +148,14 @@ genStructOrUnion isUnion VkTypeComposite
       $ ds
 
     -- generate field setters and getters
-    mapM_ (uncurry $ genStructField tname) sfimems
+    mapM_ (uncurry $ genStructField structNameTxt tname) sfimems
 
     genStructShow (VkTypeName tnametxt) $ map snd sfimems
 
     writeExport $ EThingWith () (EWildcard () 0) tname []
   where
-    totalSizeTxt = T.pack $ prettyPrint totalSize
-    (totalSize, sfimems)
+    -- totalSizeTxt = T.pack $ prettyPrint totalSize
+    (_totalSize, sfimems)
             = mapAccumL (\o m -> let fi = fieldInfo m
                                  in ( InfixApp () o
                                       (QVarOp () (UnQual () sizeOp))
@@ -164,6 +171,7 @@ genStructOrUnion isUnion VkTypeComposite
               else id
     tname = toHaskellType vkTName
     tnametxt = qNameTxt tname
+    structNameTxt = unVkTypeName vkTName
     rezComment = rezComment'' >>= preComment . T.unpack
     rezComment'' = appendComLine rezComment'
                  $ T.unlines . map ("> " <>) $ T.lines "" -- c
@@ -183,7 +191,7 @@ genStructShow (VkTypeName tname) xs =
               showsPrec d x = showString "$tname {"
           |]
        <> "       . "
-            <>  (T.intercalate " . showString \", \"  . " $ map showMem xs )
+            <>  T.intercalate " . showString \", \"  . " ( map showMem xs )
             <> " . showChar '}'"
   where
     showMem SFI{..}
@@ -198,11 +206,12 @@ genStructShow (VkTypeName tname) xs =
 
 
 genStructField :: Monad m
-               => QName () -- ^ struct type name
+               => Text
+               -> QName () -- ^ struct type name
                -> Exp () -- ^ offset
                -> StructFieldInfo
                -> ModuleWriter m ()
-genStructField structType offsetE SFI{..} = do
+genStructField structNameTxt structType _offsetE SFI{..} = do
     isMember <- isNameInScope exportName
     unless isMember genClass
     genInstance
@@ -219,7 +228,7 @@ genStructField structType offsetE SFI{..} = do
     offsetFunTxt = "vk" <> sfiBaseNameTxt <> "ByteOffset"
     structTypeTxt = qNameTxt structType
     structTypeCTxt = structTypeTxt <> "#"
-    valueOffsetTxt = T.pack $ prettyPrint offsetE
+    -- valueOffsetTxt = T.pack $ prettyPrint offsetE
     valueTypeTxt = T.pack $ prettyPrint sfiType
     elemIdxArg = case sfiElemN of
       Nothing -> ""
@@ -234,7 +243,8 @@ genStructField structType offsetE SFI{..} = do
     genInstance = do
       writeImport "System.IO.Unsafe" (IVar () (Ident () "unsafeDupablePerformIO"))
 
-      let ds = parseDecls [text|
+      let offsetExpr = "HSC2HS___offset___" <> structNameTxt <> "___" <> origNameTxt
+          ds = parseDecls [text|
             instance {-# OVERLAPPING #-} $classNameTxt $structTypeTxt where
               type $memberTypeTxt $structTypeTxt = $valueTypeTxt
               $indexFunTxt ($structTypeCTxt ba) $elemIdxConstr
@@ -243,7 +253,7 @@ genStructField structType offsetE SFI{..} = do
                 = unsafeDupablePerformIO
                  (peek (Ptr (byteArrayContents# ba `plusAddr#` $elemOffsetF)))
               {-# NOINLINE $indexFunTxt #-}
-              $offsetFunTxt ~_ = $valueOffsetTxt
+              $offsetFunTxt ~_ = $offsetExpr
               {-# INLINE $offsetFunTxt #-}
               $readFunTxt (Mutable# mba) $elemIdxConstr
                 | I# _n <- sizeOf (undefined :: $valueTypeTxt)
@@ -266,7 +276,7 @@ genStructField structType offsetE SFI{..} = do
       writeImport "GHC.TypeLits" (IThingAll () (Ident () "ErrorMessage"))
       writeImport "GHC.TypeLits" (IAbs () (NoNamespace ()) (Ident () "TypeError"))
 
-      let dd = "':$$:"
+      let dd = ":$$:"
           ds = parseDecls [text|
             class $classNameTxt a where
                 type $memberTypeTxt a :: *
@@ -278,8 +288,8 @@ genStructField structType offsetE SFI{..} = do
 
             instance {-# OVERLAPPABLE #-}
                      TypeError
-                      ( 'ShowType a ':<>: 'Text " does not seem to have field $origNameTxtQ."
-                        $dd 'Text "Check Vulkan documentation for available fields of this type."
+                      ( ShowType a :<>: Text " does not seem to have field $origNameTxtQ."
+                        $dd Text "Check Vulkan documentation for available fields of this type."
                       ) => $classNameTxt a
             |]
 

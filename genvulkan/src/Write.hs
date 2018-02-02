@@ -20,99 +20,66 @@ import           Language.Haskell.Format
 import           Path
 import           Path.IO
 import           System.IO                            (writeFile)
+import           Text.RE.TDFA.String
 
 import           VkXml.Sections
 import           Write.Commands
+import           Write.Feature
 import           Write.ModuleWriter
 import           Write.Types
 import           Write.Types.Enum
 
 
--- import qualified Data.Text                            as T
--- import           Language.Haskell.Exts.Syntax
--- import           Language.Haskell.Exts.Parser
--- import           Language.Haskell.Exts.Extension
--- import           NeatInterpolation
-
-
 generateVkSource :: Path b Dir
-                    -- ^ multiline
-                    --     haddock!
-                    --
-                    --   >>> show 1
-                    --
                  -> VkXml ()
                  -> IO ()
 generateVkSource outputDir vkXml = do
 
-  -- let pMode = defaultParseMode
-  --       { baseLanguage = Haskell2010
-  --       , extensions =
-  --                 [ EnableExtension GeneralizedNewtypeDeriving
-  --                 , EnableExtension PatternSynonyms
-  --                 , EnableExtension EmptyDataDecls
-  --                 , EnableExtension ViewPatterns
-  --                 , EnableExtension RoleAnnotations
-  --                 , EnableExtension MagicHash
-  --                 , EnableExtension UnboxedTuples
-  --                 , EnableExtension DataKinds
-  --                 , EnableExtension TypeOperators
-  --                 , EnableExtension FlexibleContexts
-  --                 , EnableExtension FlexibleInstances
-  --                 , EnableExtension TypeFamilies
-  --                 , EnableExtension UnliftedFFITypes
-  --                 , EnableExtension UndecidableInstances
-  --                 , EnableExtension MultiParamTypeClasses
-  --                 , EnableExtension FunctionalDependencies
-  --                 , UnknownExtension "Strict"
-  --                 ]
-  --       }
-  --     testS = T.unpack [text|
-  --               module A
-  --                 () where
-  --
-  --               class HasVkTextureCompressionBC a member | a -> member where
-  --                 vkTextureCompressionBC :: a ->  member
-  --                 vkTextureCompressionBCByteOffset :: a -> Int
-  --                 readVkTextureCompressionBC :: Mutable a ->  IO member
-  --                 writeVkTextureCompressionBC :: Mutable a ->  member -> IO ()
-  --
-  --           |]
-  -- putStrLn testS
-  -- putStrLn "-----------------"
-  -- print $ (() <$) <$> parseModuleWithMode pMode testS
-  -- putStrLn "-----------------"
-  -- case parseModuleWithMode pMode testS of
-  --   ParseOk a -> putStrLn $ prettyPrint a
-  --   e@ParseFailed{} -> print e
-
-
-
   createDirIfMissing True (outputDir </> [reldir|Graphics|])
   createDirIfMissing True (outputDir </> [reldir|Graphics|] </> [reldir|Vulkan|])
 
-  (>>= writeModule outputDir [relfile|Graphics/Vulkan/SimpleTypes.hs|]
-       id
-     . snd) . runModuleWriter vkXml "Graphics.Vulkan.SimpleTypes" $ do
-        writePragma "Strict"
-        genApiConstants
-        genTypes1
 
-  (>>= writeModule outputDir [relfile|Graphics/Vulkan/Structures.hs|]
-       (addOptionsPragma GHC "-fno-warn-missing-methods")
-     . snd) . runModuleWriter vkXml "Graphics.Vulkan.Structures" $ do
-        writePragma "Strict"
-        writeFullImport "Graphics.Vulkan.Marshal"
-        writeFullImport "Graphics.Vulkan.SimpleTypes"
-        genTypes2
+  exportedNamesCommon <- do
+    (enames, mr) <- runModuleWriter vkXml "Graphics.Vulkan.Common" mempty $ do
+       writePragma "Strict"
+       writeFullImport "Graphics.Vulkan.Marshal"
+       genApiConstants
+       genBaseTypes
+       getNamesInScope
+    writeModule outputDir [relfile|Graphics/Vulkan/Common.hs|] id mr
+    pure enames
 
-  (>>= writeModule outputDir [relfile|Graphics/Vulkan/Commands.hs|]
-       id
-     . snd) . runModuleWriter vkXml "Graphics.Vulkan.Commands" $ do
-        writePragma "Strict"
-        writeFullImport "Graphics.Vulkan.SimpleTypes"
-        writeFullImport "Graphics.Vulkan.Structures"
-        genCommands
+  exportedNamesBase <- do
+    (enames, mr) <- runModuleWriter vkXml "Graphics.Vulkan.Base" exportedNamesCommon $ do
+       writePragma "Strict"
+       writeFullImport "Graphics.Vulkan.Marshal"
+       writeFullImport "Graphics.Vulkan.Common"
+       genBaseStructs
+       genBaseCommands
+       getNamesInScope
+    writeModule outputDir [relfile|Graphics/Vulkan/Base.hsc|]
+         ( addOptionsPragma GHC "-fno-warn-missing-methods"
+         . addOptionsPragma GHC "-fno-warn-unticked-promoted-constructors"
+         ) mr
+    pure enames
+
+  _ <- do
+    (enames, mr) <- runModuleWriter vkXml "Graphics.Vulkan.Core" exportedNamesBase $ do
+       writePragma "Strict"
+       writeFullImport "Graphics.Vulkan.Marshal"
+       writeFullImport "Graphics.Vulkan.Common"
+       writeFullImport "Graphics.Vulkan.Base"
+       genFeature
+       getNamesInScope
+    writeModule outputDir [relfile|Graphics/Vulkan/Core.hsc|]
+         ( addOptionsPragma GHC "-fno-warn-missing-methods"
+         . addOptionsPragma GHC "-fno-warn-unticked-promoted-constructors"
+         ) mr
+    pure enames
+
+  return ()
+
+
 
 addOptionsPragma :: Tool -> String -> Module (Maybe a) -> Module (Maybe a)
 addOptionsPragma tool str (Module a h ps is ds)
@@ -134,14 +101,15 @@ writeModule outputDir p postF mw = do
       Left err -> do
         putStrLn $ "Could not format the code:\n" <> err
         writeFile pp
-          $ fixSourceHooks rez
+          $ fixSourceHooks isHsc rez
       Right (ss, rez') -> do
         forM_ ss $ \(Suggestion s) ->
           putStrLn $ "Formatting suggestion:\n    " <> s
         writeFile pp
-          $ fixSourceHooks rez'
+          $ fixSourceHooks isHsc rez'
     putStrLn $ "Done: " <> pp
   where
+    isHsc = ".hsc" `L.isSuffixOf` pp
     pp = toFilePath $ outputDir </> p
     rez = uncurry exactPrint
         . ppWithCommentsMode defaultMode
@@ -171,8 +139,9 @@ hfmt source = do
       | otherwise = Suggestion s : removeCamelCaseSuggestions xs
 
 -- | Various small fixes to normalize haddock output, enable CPP, etc.
-fixSourceHooks :: String -> String
-fixSourceHooks = uncommentCPP . splitExportSections
+fixSourceHooks :: Bool -> String -> String
+fixSourceHooks isHsc = (if isHsc then enableHSC else id)
+                     . uncommentCPP . splitExportSections
   where
     stripBeginSpace = dropWhile isSpace
 
@@ -192,3 +161,14 @@ fixSourceHooks = uncommentCPP . splitExportSections
         go (x:xs) | "-- ##" `L.isPrefixOf` stripBeginSpace x
                   = drop 5 (stripBeginSpace x) : go xs
                   | otherwise = x : go xs
+
+    -- enable hsc expressions
+    enableHSC = unlines . ("#include \"vulkan/vulkan.h\"":) . go . lines
+      where
+        go = map goLine
+        goLine
+          = (*=~/ [edBS|HSC2HS___([0-9A-Za-z_]+)___([0-9A-Za-z_]+)///#{$1 $2}|])
+          . (*=~/ [edBS|HSC2HS___([0-9A-Za-z_]+)___([0-9A-Za-z_]+)___([0-9A-Za-z_]+)///#{$1 $2, $3}|])
+          . (*=~/ [edBS|{-##///{-#|])
+          . (*=~/ [edBS|##-}///#-}|])
+          . (*=~/ [edBS|#///##|])

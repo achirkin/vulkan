@@ -8,10 +8,14 @@ module Graphics.Vulkan.Marshal
   ( VulkanMarshal (..)
   , Mutable (..)
   , unsafeRef, newVkData, fromPtrFun, allocaVkData
+  , pokeMutable, peekMutable
+  , touchMutable, addMutableFinalizer
+  , touchImmutableContent, addImmutableContentFinalizer
   , cmpImmutableContent
   ) where
 
 import           Data.Void        (Void)
+import           GHC.Word         (Word64 (..))
 import           Foreign.C.Types  (CInt (..), CSize (..))
 import           Foreign.Storable (Storable (..))
 import           GHC.Base         (isTrue#, runRW#)
@@ -35,6 +39,10 @@ class Storable a => VulkanMarshal a where
   --   an immutable version contains an invalid data after its mutable version
   --   is updated.
   unsafeThaw   :: a -> IO (Mutable a)
+  -- | Make sure this data is alive at a given point in a sequence of IO actions.
+  touchVkData  :: a -> IO ()
+  -- | Execute an action when immutable data is garbage-collected.
+  addVkDataFinalizer :: a -> IO () -> IO ()
 
 -- | A version of Vulkan structure with `MutableByteArray#`
 --   in place of immutable `ByteArray#`.
@@ -78,6 +86,13 @@ unsafeRef (Mutable# mba) = case runRW# (unsafeFreezeByteArray# mba) of
   (# _, ba #) -> Ptr (byteArrayContents# ba)
 {-# INLINE unsafeRef #-}
 
+-- | Storable 'poke' on mutable data
+pokeMutable :: VulkanMarshal a => Ptr a -> Mutable a -> IO ()
+pokeMutable ptr = poke (unsafeCoerce# ptr)
+
+-- | Storable 'peek' on mutable data
+peekMutable :: VulkanMarshal a => Ptr a -> IO (Mutable a)
+peekMutable ptr = peek (unsafeCoerce# ptr)
 
 -- | Allocate memory for a new vulkan object using `Storable` instance
 --   to find out aligment and size.
@@ -135,11 +150,38 @@ allocaVkData' (I# size) (I# align) action = IO $ \ s0 ->
 {-# NOINLINE allocaVkData' #-}
 
 
+-- | Make sure this data is alive at a given point in a sequence of IO actions.
+--   This is a helper that should be used in VulkanMarshal instances only.
+touchImmutableContent :: a -> ByteArray# -> IO ()
+touchImmutableContent a ba = IO (\s -> (# touch# a (touch# ba s), () #) )
+{-# NOINLINE touchImmutableContent #-}
+
+-- | Execute an action when immutable data is garbage-collected.
+--   This is a helper that should be used in VulkanMarshal instances only.
+addImmutableContentFinalizer :: a -> IO () -> IO ()
+addImmutableContentFinalizer a (IO finalizer) = IO
+  (\s -> case mkWeak# a a finalizer s of (# s', _ #) -> (# s', () #))
+{-# NOINLINE addImmutableContentFinalizer #-}
+
+-- | Make sure this data is alive at a given point in a sequence of IO actions.
+touchMutable :: Mutable a -> IO ()
+touchMutable m@(Mutable# mba) = IO (\s -> (# touch# m (touch# mba s), () #) )
+{-# NOINLINE touchMutable #-}
+
+-- | Execute an action when mutable data is garbage-collected.
+addMutableFinalizer :: Mutable a -> IO () -> IO ()
+addMutableFinalizer m@(Mutable# _) (IO finalizer) = IO
+  (\s -> case mkWeak# m m finalizer s of (# s', _ #) -> (# s', () #))
+{-# NOINLINE addMutableFinalizer #-}
+
+
 -- | Internal function used to implement Eq and Ord instances for Vulkan structs.
 --
 --   Uses lexicographic ordering (c memcmp inside).
 --   Note: I assume arrays have equal size, because this is the case
 --   for all structs in the library.
+--
+--   This is a helper that should be used in VulkanMarshal instances only.
 cmpImmutableContent :: ByteArray# -> ByteArray# -> Ordering
 cmpImmutableContent a b
   | isTrue# (reallyUnsafePtrEquality#
@@ -154,3 +196,49 @@ cmpImmutableContent a b
 
 foreign import ccall unsafe "memcmp"
   c_memcmp_ba :: ByteArray# -> ByteArray# -> CSize -> CInt
+
+
+instance VulkanMarshal (Ptr a) where
+  freeze (Mutable# mba) = IO
+    (\s -> case readAddrArray# mba 0# s of (# s', a #) -> (# s', Ptr a #))
+  {-# INLINE freeze #-}
+  unsafeFreeze = freeze
+  {-# INLINE unsafeFreeze #-}
+  thaw x@(Ptr a)
+    | I# align <- alignment x
+    , I# size  <- sizeOf x
+    = IO
+    (\s -> case newAlignedPinnedByteArray# size align s of
+      (# s', mba #) -> (# writeAddrArray# mba 0# a s', Mutable# mba #)
+    )
+  {-# INLINE thaw #-}
+  unsafeThaw = thaw
+  {-# INLINE unsafeThaw #-}
+  touchVkData x = IO (\s -> (# touch# x s, () #) )
+  {-# NOINLINE touchVkData #-}
+  addVkDataFinalizer x (IO finalizer) = IO
+    (\s -> case mkWeak# x x finalizer s of (# s', _ #) -> (# s', () #))
+  {-# NOINLINE addVkDataFinalizer #-}
+
+
+instance VulkanMarshal Word64 where
+  freeze (Mutable# mba) = IO
+    (\s -> case readWord64Array# mba 0# s of (# s', a #) -> (# s', W64# a #))
+  {-# INLINE freeze #-}
+  unsafeFreeze = freeze
+  {-# INLINE unsafeFreeze #-}
+  thaw x@(W64# a)
+    | I# align <- alignment x
+    , I# size  <- sizeOf x
+    = IO
+    (\s -> case newAlignedPinnedByteArray# size align s of
+      (# s', mba #) -> (# writeWord64Array# mba 0# a s', Mutable# mba #)
+    )
+  {-# INLINE thaw #-}
+  unsafeThaw = thaw
+  {-# INLINE unsafeThaw #-}
+  touchVkData x = IO (\s -> (# touch# x s, () #) )
+  {-# NOINLINE touchVkData #-}
+  addVkDataFinalizer x (IO finalizer) = IO
+    (\s -> case mkWeak# x x finalizer s of (# s', _ #) -> (# s', () #))
+  {-# NOINLINE addVkDataFinalizer #-}

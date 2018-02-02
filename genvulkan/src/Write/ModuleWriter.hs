@@ -21,6 +21,7 @@ module Write.ModuleWriter
   , toHaskellType, toHaskellVar, qNameTxt
   , requireType, requireTypeMember, requireVar, requirePattern
   , toCamelCase, toType, unqualify
+  , getNamesInScope
   ) where
 
 import           Control.Applicative
@@ -91,11 +92,12 @@ newtype ModuleWriter m a
 runModuleWriter :: Functor m
                 => VkXml ()
                 -> String -- ^ module name
+                -> Set ExportName
                 -> ModuleWriter m a -> m (a, ModuleWriting)
-runModuleWriter vkxml mname mw
+runModuleWriter vkxml mname scopeNames mw
     = f <$> runRWST (unModuleWriter mw) vkxml
                     (ModuleWriting (ModuleName () mname)
-                                   mempty mempty mempty mempty mempty mempty mempty 1)
+                                   mempty mempty mempty mempty mempty scopeNames mempty 1)
   where
     f (a,s,_) = (a, s)
 
@@ -195,6 +197,10 @@ writeExport espec = ModuleWriter . modify $
 
 isNameInScope :: Monad m => ExportName -> ModuleWriter m Bool
 isNameInScope n = ModuleWriter . gets $ Set.member n . mNamesInScope
+
+
+getNamesInScope :: Monad m => ModuleWriter m (Set ExportName)
+getNamesInScope = ModuleWriter . gets $ mNamesInScope
 
 espec2ename :: ExportSpec () -> [ExportName]
 espec2ename (EVar _ qn) = [ExportTerm (unqualify qn)]

@@ -4,13 +4,14 @@
 {-# LANGUAGE RecordWildCards       #-}
 {-# LANGUAGE Strict                #-}
 module Write.Commands
-  ( genCommands
+  ( genBaseCommands, genCommand
   ) where
 
+import           Control.Monad                        (forM_, join)
 import           Control.Monad.Reader.Class
 import           Data.Maybe                           (isJust)
 import           Data.Semigroup
-import           Data.Text                            (Text)
+import qualified Data.Set                             as Set
 import qualified Data.Text                            as T
 import           Language.Haskell.Exts.SimpleComments
 import           Language.Haskell.Exts.Syntax
@@ -18,16 +19,32 @@ import           Language.Haskell.Exts.Syntax
 import           VkXml.CommonTypes
 import           VkXml.Sections
 import           VkXml.Sections.Commands
+import           VkXml.Sections.Extensions
+import           VkXml.Sections.Feature
 
 import           Write.ModuleWriter
 
 
+genBaseCommands :: Monad m => ModuleWriter m ()
+genBaseCommands = do
+    vkXml <- ask
+    let featureComms = Set.fromList
+                     . join
+                     . map requireComms
+                     . reqList . unInorder $ globFeature vkXml
+        selectTN (VkExtReqCommand tn) = [tn]
+        selectTN _                    = []
+        extComms = Set.fromList
+                     . join . join . join
+                     . map (map (map (selectTN . fst). items). extRequires)
+                     . extensions . unInorder $ globExtensions vkXml
+        excludedComms = Set.union featureComms extComms
 
-genCommands :: Monad m => ModuleWriter m ()
-genCommands = pushSecLvl $ \curlvl -> do
-    cmds <- asks (unInorder . globCommands)
-    writeSection curlvl $ (comment :: VkCommands -> Text) cmds
-    mapM_ genCommand $ commands cmds
+    forM_ (commands . unInorder $ globCommands vkXml) $ \c ->
+      if (name :: VkCommand -> VkCommandName) c `Set.member` excludedComms
+      then pure ()
+      else genCommand c
+
 
 
 genCommand :: Monad m => VkCommand -> ModuleWriter m ()

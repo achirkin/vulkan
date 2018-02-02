@@ -4,7 +4,8 @@
 {-# LANGUAGE QuasiQuotes           #-}
 {-# LANGUAGE Strict                #-}
 module Write.Types
-  ( genTypes1, genTypes2
+  ( genBaseTypes, genType
+  , genBaseStructs
   ) where
 
 import           Control.Monad
@@ -14,6 +15,7 @@ import qualified Control.Monad.Trans.RWS.Strict       as RWS
 import           Control.Monad.Trans.State.Strict     (StateT)
 import qualified Control.Monad.Trans.State.Strict     as State
 import           Data.Semigroup
+import qualified Data.Set as Set
 import qualified Data.Text                            as T
 import           Language.Haskell.Exts.SimpleComments
 import           Language.Haskell.Exts.Syntax
@@ -22,6 +24,8 @@ import           NeatInterpolation
 import           VkXml.CommonTypes
 import           VkXml.Sections
 import           VkXml.Sections.Types
+import           VkXml.Sections.Feature
+import           VkXml.Sections.Extensions
 
 import           Write.ModuleWriter
 import           Write.Types.Define
@@ -31,12 +35,12 @@ import           Write.Types.Handle
 import           Write.Types.Struct
 
 
-genTypes1 :: Monad m => ModuleWriter m ()
-genTypes1 = hoist (`State.evalStateT` Nothing) genTypes1'
+genBaseTypes :: Monad m => ModuleWriter m ()
+genBaseTypes = hoist (`State.evalStateT` Nothing) genBaseTypes'
 
 
-genTypes1' :: Monad m => ModuleWriter (StateT (Maybe VkTypeCategory) m) ()
-genTypes1' = do
+genBaseTypes' :: Monad m => ModuleWriter (StateT (Maybe VkTypeCategory) m) ()
+genBaseTypes' = do
     vkXml <- ask
     glvl <- ModuleWriter $ RWS.gets currentSecLvl
     writeSection glvl "Types and enumerations"
@@ -51,7 +55,7 @@ genTypes1' = do
               lift . State.put $ Just curcat
               case curcat of
                 VkTypeNoCat          -> writeSection curlvl "External types"
-                VkTypeCatInclude     -> writeSection curlvl "Include pragmas"
+                VkTypeCatInclude     -> return ()
                 VkTypeCatDefine      -> writeSection curlvl "Define pragmas"
                 VkTypeCatBasetype    -> writeSection curlvl "Base types"
                 VkTypeCatBitmask     -> writeSection curlvl "Bitmasks"
@@ -63,7 +67,7 @@ genTypes1' = do
             forM_ cs $ writeSection (curlvl+1)
             case vkTypeCat t of
               VkTypeNoCat          -> genNocatData t
-              VkTypeCatInclude     -> genInclude t
+              VkTypeCatInclude     -> return ()
               VkTypeCatDefine      -> genDefine t
               VkTypeCatBasetype    -> genBasetypeAlias t
               VkTypeCatBitmask     -> genEnum t
@@ -76,18 +80,50 @@ genTypes1' = do
           fLast cs = writeSection 0 $ T.unlines $ "|":cs
 
 
-genTypes2 :: Monad m => ModuleWriter m ()
-genTypes2 = do
+genBaseStructs :: Monad m => ModuleWriter m ()
+genBaseStructs = do
     vkXml <- ask
-    pushSecLvl $ \_ ->
-      mapM_ fItem (items . types . unInorder $ globTypes vkXml)
-        where
-          fItem t = case vkTypeCat t of
-              VkTypeCatStruct -> genStruct t
-              VkTypeCatUnion  -> genUnion t
-              _               -> return ()
+    let featureTypes = Set.fromList
+                     . join
+                     . map requireTypes
+                     . reqList . unInorder $ globFeature vkXml
+        selectTN (VkExtReqType tn) = [tn]
+        selectTN _ = []
+        extTypes = Set.fromList
+                     . join . join . join
+                     . map (map (map (selectTN . fst). items). extRequires)
+                     . extensions . unInorder $ globExtensions vkXml
+        excludedTypes = Set.union featureTypes extTypes
+
+    forM_ (items . types . unInorder $ globTypes vkXml) $ \t ->
+      if (name :: VkType -> VkTypeName) t `Set.member` excludedTypes
+      then pure ()
+      else case vkTypeCat t of
+        VkTypeNoCat          -> return ()
+        VkTypeCatInclude     -> genInclude t
+        VkTypeCatDefine      -> return ()
+        VkTypeCatBasetype    -> return ()
+        VkTypeCatBitmask     -> return ()
+        VkTypeCatHandle      -> return ()
+        VkTypeCatEnum        -> return ()
+        VkTypeCatFuncpointer -> return ()
+        VkTypeCatStruct      -> genStruct t
+        VkTypeCatUnion       -> genUnion t
 
 
+
+genType :: Monad m => VkType -> ModuleWriter m ()
+genType t = case vkTypeCat t of
+  VkTypeNoCat          -> return ()
+  VkTypeCatInclude     -> genInclude t
+  VkTypeCatDefine      -> return ()
+  VkTypeCatBasetype    -> return ()
+  VkTypeCatBitmask     -> return ()
+  VkTypeCatHandle      -> return ()
+  VkTypeCatEnum        -> return ()
+  VkTypeCatFuncpointer -> return ()
+  VkTypeCatStruct      -> genStruct t
+  VkTypeCatUnion       -> genUnion t
 
 
 -- | At this moment, just define the data type with no constructors.
