@@ -71,6 +71,9 @@ genStructOrUnion isUnion VkTypeComposite
     writeImport "GHC.Ptr" (IThingAll () (Ident () "Ptr"))
     writeFullImport "GHC.Prim"
     writeFullImport "Graphics.Vulkan.Marshal"
+    writeImport "GHC.ForeignPtr" (IThingAll () (Ident () "ForeignPtr"))
+    writeImport "GHC.ForeignPtr" (IThingAll () (Ident () "ForeignPtrContents"))
+    writeImport "GHC.ForeignPtr" (IVar () (Ident () "newForeignPtr_"))
 
     let sizeExtr = "HSC2HS___size___" <> structNameTxt
         alignmentExpr = "HSC2HS___alignment___" <> structNameTxt
@@ -108,39 +111,32 @@ genStructOrUnion isUnion VkTypeComposite
             {-# INLINE poke #-}
 
           instance VulkanMarshal $tnametxt where
-            freeze (Mutable# mba)
+            {-# INLINE newVkData #-}
+            newVkData f
               | I# n <- sizeOf (undefined :: $tnametxt)
               , I# a <- alignment (undefined :: $tnametxt)
               = IO
-              (\s -> case newAlignedPinnedByteArray# n a s of
-                (# s1, mba' #) -> case copyMutableByteArray# mba 0# mba' 0# n s1 of
-                  s2 -> case unsafeFreezeByteArray# mba' s2 of
-                    (# s3, ba #) -> (# s3, $tnametxt# ba #)
+              (\s0 -> case newAlignedPinnedByteArray# n a s0 of
+                (# s1, mba #) -> case unsafeFreezeByteArray# mba s1 of
+                  (# s2, ba #) -> case f (Ptr (byteArrayContents# ba)) of
+                    IO k -> case k s2 of
+                      (# s3, () #) -> (# s3, $tnametxt# ba #)
               )
-            {-# INLINE freeze #-}
-            unsafeFreeze (Mutable# mba) = IO
-              (\s -> case unsafeFreezeByteArray# mba s of
-                (# s', ba #) -> (# s', $tnametxt# ba #)
-              )
-            {-# INLINE unsafeFreeze #-}
-            thaw ($tnametxt# ba)
-              | I# n <- sizeOf (undefined :: $tnametxt)
-              , I# a <- alignment (undefined :: $tnametxt)
-              = IO
-              (\s -> case newAlignedPinnedByteArray# n a s of
-                (# s1, mba #) -> (# copyByteArray# ba 0# mba 0# n s1
-                                 ,  Mutable# mba #)
-              )
-            {-# INLINE thaw #-}
-            unsafeThaw ($tnametxt# ba) = IO
-              (\s -> (# s,  Mutable# (unsafeCoerce# ba) #))
-            {-# inline unsafeThaw #-}
-
-            touchVkData a@($tnametxt# ba) = touchImmutableContent a ba
+            {-# INLINE unsafePtr #-}
+            unsafePtr ($tnametxt# ba) = Ptr (byteArrayContents# ba)
+            {-# INLINE fromForeignPtr #-}
+            fromForeignPtr = fromForeignPtr# $tnametxt#
+            {-# INLINE toForeignPtr #-}
+            toForeignPtr ($tnametxt# ba) = do
+              ForeignPtr addr (PlainForeignPtr r)
+                <- newForeignPtr_ (Ptr (byteArrayContents# ba))
+              IO (\s -> (# s, ForeignPtr addr (MallocPtr (unsafeCoerce# ba) r) #))
+            {-# INLINE toPlainForeignPtr #-}
+            toPlainForeignPtr ($tnametxt# ba) = IO
+              (\s -> (# s, ForeignPtr (byteArrayContents# ba) (PlainPtr (unsafeCoerce# ba)) #))
             {-# INLINE touchVkData #-}
-
-            addVkDataFinalizer = addImmutableContentFinalizer
-            {-# INLINE addVkDataFinalizer #-}
+            touchVkData x@($tnametxt# ba)
+              = IO (\s -> (# touch# x (touch# ba s), () #))
           |]
 
     mapM_ writeDecl
@@ -227,44 +223,36 @@ genStructField structNameTxt structType _offsetE SFI{..} = do
     writeFunTxt = "writeVk" <> sfiBaseNameTxt
     offsetFunTxt = "vk" <> sfiBaseNameTxt <> "ByteOffset"
     structTypeTxt = qNameTxt structType
-    structTypeCTxt = structTypeTxt <> "#"
+    -- structTypeCTxt = structTypeTxt <> "#"
     -- valueOffsetTxt = T.pack $ prettyPrint offsetE
     valueTypeTxt = T.pack $ prettyPrint sfiType
+    offsetExpr = "HSC2HS___offset___" <> structNameTxt <> "___" <> origNameTxt
     elemIdxArg = case sfiElemN of
       Nothing -> ""
       Just _  -> "Int ->"
     elemIdxConstr = case sfiElemN of
       Nothing -> ""
-      Just _  -> "(I# idx)"
+      Just _  -> "idx"
     elemOffsetF = case sfiElemN of
-      Nothing -> "o"
-      Just _  -> "(idx *# _n +# o)"
+      Nothing -> offsetExpr
+      Just _  -> "(idx * sizeOf (undefined :: " <> valueTypeTxt <> ")"
+               <> " + " <> offsetExpr <> ")"
 
     genInstance = do
       writeImport "System.IO.Unsafe" (IVar () (Ident () "unsafeDupablePerformIO"))
 
-      let offsetExpr = "HSC2HS___offset___" <> structNameTxt <> "___" <> origNameTxt
-          ds = parseDecls [text|
+      let ds = parseDecls [text|
             instance {-# OVERLAPPING #-} $classNameTxt $structTypeTxt where
               type $memberTypeTxt $structTypeTxt = $valueTypeTxt
-              $indexFunTxt ($structTypeCTxt ba) $elemIdxConstr
-                | I# _n <- sizeOf (undefined :: $valueTypeTxt)
-                , I# o <- $offsetFunTxt (undefined :: $structTypeTxt)
-                = unsafeDupablePerformIO
-                 (peek (Ptr (byteArrayContents# ba `plusAddr#` $elemOffsetF)))
               {-# NOINLINE $indexFunTxt #-}
-              $offsetFunTxt ~_ = $offsetExpr
+              $indexFunTxt x $elemIdxConstr
+                = unsafeDupablePerformIO (peekByteOff (unsafePtr x) $elemOffsetF)
               {-# INLINE $offsetFunTxt #-}
-              $readFunTxt (Mutable# mba) $elemIdxConstr
-                | I# _n <- sizeOf (undefined :: $valueTypeTxt)
-                , I# o <- $offsetFunTxt (undefined :: $structTypeTxt)
-                = peek (Ptr (byteArrayContents# (unsafeCoerce# mba) `plusAddr#` $elemOffsetF))
+              $offsetFunTxt ~_ = $offsetExpr
               {-# INLINE $readFunTxt #-}
-              $writeFunTxt (Mutable# mba) $elemIdxConstr x
-                | I# _n <- sizeOf x
-                , I# o <- $offsetFunTxt (undefined :: $structTypeTxt)
-                = poke (Ptr (byteArrayContents# (unsafeCoerce# mba) `plusAddr#` $elemOffsetF)) x
+              $readFunTxt p $elemIdxConstr = peekByteOff p $elemOffsetF
               {-# INLINE $writeFunTxt #-}
+              $writeFunTxt p $elemIdxConstr = pokeByteOff p $elemOffsetF
             |]
 
       mapM_ writeDecl
@@ -282,8 +270,8 @@ genStructField structNameTxt structType _offsetE SFI{..} = do
                 type $memberTypeTxt a :: *
                 $indexFunTxt :: a -> $elemIdxArg $memberTypeTxt a
                 $offsetFunTxt :: a -> Int
-                $readFunTxt :: Mutable a -> $elemIdxArg IO ($memberTypeTxt a)
-                $writeFunTxt :: Mutable a -> $elemIdxArg $memberTypeTxt a -> IO ()
+                $readFunTxt :: Ptr a -> $elemIdxArg IO ($memberTypeTxt a)
+                $writeFunTxt :: Ptr a -> $elemIdxArg $memberTypeTxt a -> IO ()
 
 
             instance {-# OVERLAPPABLE #-}

@@ -157,23 +157,7 @@ genDefine t@VkTypeSimple
     writePragma "GeneralizedNewtypeDeriving"
     writePragma "RoleAnnotations"
     writeImport "Foreign.Storable" $ IThingWith () (Ident () "Storable") []
-    writeImport "Unsafe.Coerce" $ IVar () (Ident () "unsafeCoerce")
 
-    writeDecl $ parseDecl' [text|
-                  instance VulkanMarshal (VkPtr a) where
-                    freeze = fmap VkPtr . freeze . unsafeCoerce
-                    {-# INLINE freeze #-}
-                    unsafeFreeze = freeze
-                    {-# INLINE unsafeFreeze #-}
-                    thaw (VkPtr x) = unsafeCoerce <$> thaw x
-                    {-# INLINE thaw #-}
-                    unsafeThaw = thaw
-                    {-# INLINE unsafeThaw #-}
-                    touchVkData (VkPtr x) = touchVkData x
-                    {-# NOINLINE touchVkData #-}
-                    addVkDataFinalizer (VkPtr x) = addVkDataFinalizer x
-                    {-# NOINLINE addVkDataFinalizer #-}
-              |]
 
     writeDecl $ parseDecl' "type role VkPtr phantom"
 

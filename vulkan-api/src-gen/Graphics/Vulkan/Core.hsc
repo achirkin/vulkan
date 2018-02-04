@@ -129,21 +129,26 @@ module Graphics.Vulkan.Core
         VkDrawIndirectCommand(..), HasVkOldLayout(..), HasVkNewLayout(..),
         VkImageMemoryBarrier(..), VkMemoryBarrier(..))
        where
-import           Data.Int                (Int32)
-import           Data.Void               (Void)
-import           Data.Word               (Word32, Word64, Word8)
-import           Foreign.C.Types         (CChar (..), CFloat (..), CInt (..),
-                                          CSize, CSize (..), CULong (..))
-import           Foreign.Ptr             (Ptr)
-import           Foreign.Storable        (Storable (..))
+import           Data.Int                         (Int32)
+import           Data.Void                        (Void)
+import           Data.Word                        (Word32, Word64, Word8)
+import           Foreign.C.Types                  (CChar (..), CFloat (..),
+                                                   CInt (..), CSize, CSize (..),
+                                                   CULong (..))
+import           Foreign.Ptr                      (Ptr)
+import           Foreign.Storable                 (Storable (..))
+import           GHC.ForeignPtr                   (ForeignPtr (..),
+                                                   ForeignPtrContents (..),
+                                                   newForeignPtr_)
 import           GHC.Prim
-import           GHC.Ptr                 (Ptr (..))
-import           GHC.TypeLits            (ErrorMessage (..), TypeError)
-import           GHC.Types               (IO (..), Int (..))
+import           GHC.Ptr                          (Ptr (..))
+import           GHC.TypeLits                     (ErrorMessage (..), TypeError)
+import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
-import           System.IO.Unsafe        (unsafeDupablePerformIO)
+import           Graphics.Vulkan.Marshal.Internal
+import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -2999,164 +3004,135 @@ instance Storable VkBufferMemoryBarrier where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkBufferMemoryBarrier where
-        freeze (Mutable## mba)
+        {-# INLINE newVkData #-}
+        newVkData f
           | I## n <- sizeOf (undefined :: VkBufferMemoryBarrier),
             I## a <- alignment (undefined :: VkBufferMemoryBarrier) =
             IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba' ##) -> case copyMutableByteArray## mba 0## mba' 0## n s1 of
-                                           s2 -> case unsafeFreezeByteArray## mba' s2 of
-                                                     (## s3, ba ##) -> (## s3,
-                                                                        VkBufferMemoryBarrier##
-                                                                          ba ##))
+              (\ s0 ->
+                 case newAlignedPinnedByteArray## n a s0 of
+                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
+                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
+                                                              IO k -> case k s2 of
+                                                                          (## s3, () ##) -> (## s3,
+                                                                                             VkBufferMemoryBarrier##
+                                                                                               ba ##))
 
-        {-# INLINE freeze #-}
-        unsafeFreeze (Mutable## mba)
+        {-# INLINE unsafePtr #-}
+        unsafePtr (VkBufferMemoryBarrier## ba) = Ptr (byteArrayContents## ba)
+
+        {-# INLINE fromForeignPtr #-}
+        fromForeignPtr = fromForeignPtr## VkBufferMemoryBarrier##
+
+        {-# INLINE toForeignPtr #-}
+        toForeignPtr (VkBufferMemoryBarrier## ba)
+          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
+                                                        (Ptr (byteArrayContents## ba))
+               IO
+                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
+
+        {-# INLINE toPlainForeignPtr #-}
+        toPlainForeignPtr (VkBufferMemoryBarrier## ba)
           = IO
               (\ s ->
-                 case unsafeFreezeByteArray## mba s of
-                     (## s', ba ##) -> (## s', VkBufferMemoryBarrier## ba ##))
-
-        {-# INLINE unsafeFreeze #-}
-        thaw (VkBufferMemoryBarrier## ba)
-          | I## n <- sizeOf (undefined :: VkBufferMemoryBarrier),
-            I## a <- alignment (undefined :: VkBufferMemoryBarrier) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> (## copyByteArray## ba 0## mba 0## n s1,
-                                         Mutable## mba ##))
-
-        {-# INLINE thaw #-}
-        unsafeThaw (VkBufferMemoryBarrier## ba)
-          = IO (\ s -> (## s, Mutable## (unsafeCoerce## ba) ##))
-
-        {-# INLINE unsafeThaw #-}
-        touchVkData a@(VkBufferMemoryBarrier## ba)
-          = touchImmutableContent a ba
+                 (## s,
+                    ForeignPtr (byteArrayContents## ba)
+                      (PlainPtr (unsafeCoerce## ba)) ##))
 
         {-# INLINE touchVkData #-}
-        addVkDataFinalizer = addImmutableContentFinalizer
-
-        {-# INLINE addVkDataFinalizer #-}
+        touchVkData x@(VkBufferMemoryBarrier## ba)
+          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkSType VkBufferMemoryBarrier where
         type VkSTypeMType VkBufferMemoryBarrier = VkStructureType
-        vkSType (VkBufferMemoryBarrier## ba)
-          | I## _n <- sizeOf (undefined :: VkStructureType),
-            I## o <- vkSTypeByteOffset (undefined :: VkBufferMemoryBarrier) =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkSType #-}
+        vkSType x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkBufferMemoryBarrier, sType})
+
+        {-# INLINE vkSTypeByteOffset #-}
         vkSTypeByteOffset ~_
           = #{offset VkBufferMemoryBarrier, sType}
 
-        {-# INLINE vkSTypeByteOffset #-}
-        readVkSType (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: VkStructureType),
-            I## o <- vkSTypeByteOffset (undefined :: VkBufferMemoryBarrier) =
-            peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkSType #-}
-        writeVkSType (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkSTypeByteOffset (undefined :: VkBufferMemoryBarrier) =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkSType p
+          = peekByteOff p #{offset VkBufferMemoryBarrier, sType}
 
         {-# INLINE writeVkSType #-}
+        writeVkSType p
+          = pokeByteOff p #{offset VkBufferMemoryBarrier, sType}
 
 instance {-# OVERLAPPING #-} HasVkPNext VkBufferMemoryBarrier where
         type VkPNextMType VkBufferMemoryBarrier =
              Foreign.Ptr.Ptr Data.Void.Void
-        vkPNext (VkBufferMemoryBarrier## ba)
-          | I## _n <- sizeOf (undefined :: Foreign.Ptr.Ptr Data.Void.Void),
-            I## o <- vkPNextByteOffset (undefined :: VkBufferMemoryBarrier) =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkPNext #-}
+        vkPNext x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkBufferMemoryBarrier, pNext})
+
+        {-# INLINE vkPNextByteOffset #-}
         vkPNextByteOffset ~_
           = #{offset VkBufferMemoryBarrier, pNext}
 
-        {-# INLINE vkPNextByteOffset #-}
-        readVkPNext (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: Foreign.Ptr.Ptr Data.Void.Void),
-            I## o <- vkPNextByteOffset (undefined :: VkBufferMemoryBarrier) =
-            peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkPNext #-}
-        writeVkPNext (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkPNextByteOffset (undefined :: VkBufferMemoryBarrier) =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkPNext p
+          = peekByteOff p #{offset VkBufferMemoryBarrier, pNext}
 
         {-# INLINE writeVkPNext #-}
+        writeVkPNext p
+          = pokeByteOff p #{offset VkBufferMemoryBarrier, pNext}
 
 instance {-# OVERLAPPING #-}
          HasVkSrcAccessMask VkBufferMemoryBarrier where
         type VkSrcAccessMaskMType VkBufferMemoryBarrier = VkAccessFlags
-        vkSrcAccessMask (VkBufferMemoryBarrier## ba)
-          | I## _n <- sizeOf (undefined :: VkAccessFlags),
-            I## o <- vkSrcAccessMaskByteOffset
-                      (undefined :: VkBufferMemoryBarrier)
-            =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkSrcAccessMask #-}
+        vkSrcAccessMask x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkBufferMemoryBarrier, srcAccessMask})
+
+        {-# INLINE vkSrcAccessMaskByteOffset #-}
         vkSrcAccessMaskByteOffset ~_
           = #{offset VkBufferMemoryBarrier, srcAccessMask}
 
-        {-# INLINE vkSrcAccessMaskByteOffset #-}
-        readVkSrcAccessMask (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: VkAccessFlags),
-            I## o <- vkSrcAccessMaskByteOffset
-                      (undefined :: VkBufferMemoryBarrier)
-            = peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkSrcAccessMask #-}
-        writeVkSrcAccessMask (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkSrcAccessMaskByteOffset
-                      (undefined :: VkBufferMemoryBarrier)
-            =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkSrcAccessMask p
+          = peekByteOff p
+              #{offset VkBufferMemoryBarrier, srcAccessMask}
 
         {-# INLINE writeVkSrcAccessMask #-}
+        writeVkSrcAccessMask p
+          = pokeByteOff p
+              #{offset VkBufferMemoryBarrier, srcAccessMask}
 
 instance {-# OVERLAPPING #-}
          HasVkDstAccessMask VkBufferMemoryBarrier where
         type VkDstAccessMaskMType VkBufferMemoryBarrier = VkAccessFlags
-        vkDstAccessMask (VkBufferMemoryBarrier## ba)
-          | I## _n <- sizeOf (undefined :: VkAccessFlags),
-            I## o <- vkDstAccessMaskByteOffset
-                      (undefined :: VkBufferMemoryBarrier)
-            =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkDstAccessMask #-}
+        vkDstAccessMask x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkBufferMemoryBarrier, dstAccessMask})
+
+        {-# INLINE vkDstAccessMaskByteOffset #-}
         vkDstAccessMaskByteOffset ~_
           = #{offset VkBufferMemoryBarrier, dstAccessMask}
 
-        {-# INLINE vkDstAccessMaskByteOffset #-}
-        readVkDstAccessMask (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: VkAccessFlags),
-            I## o <- vkDstAccessMaskByteOffset
-                      (undefined :: VkBufferMemoryBarrier)
-            = peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkDstAccessMask #-}
-        writeVkDstAccessMask (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkDstAccessMaskByteOffset
-                      (undefined :: VkBufferMemoryBarrier)
-            =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkDstAccessMask p
+          = peekByteOff p
+              #{offset VkBufferMemoryBarrier, dstAccessMask}
 
         {-# INLINE writeVkDstAccessMask #-}
+        writeVkDstAccessMask p
+          = pokeByteOff p
+              #{offset VkBufferMemoryBarrier, dstAccessMask}
 
 class HasVkSrcQueueFamilyIndex a where
         type VkSrcQueueFamilyIndexMType a :: *
@@ -3166,10 +3142,10 @@ class HasVkSrcQueueFamilyIndex a where
         vkSrcQueueFamilyIndexByteOffset :: a -> Int
 
         readVkSrcQueueFamilyIndex ::
-                                  Mutable a -> IO (VkSrcQueueFamilyIndexMType a)
+                                  Ptr a -> IO (VkSrcQueueFamilyIndexMType a)
 
         writeVkSrcQueueFamilyIndex ::
-                                   Mutable a -> VkSrcQueueFamilyIndexMType a -> IO ()
+                                   Ptr a -> VkSrcQueueFamilyIndexMType a -> IO ()
 
 instance {-# OVERLAPPABLE #-}
          TypeError
@@ -3183,34 +3159,26 @@ instance {-# OVERLAPPING #-}
          HasVkSrcQueueFamilyIndex VkBufferMemoryBarrier where
         type VkSrcQueueFamilyIndexMType VkBufferMemoryBarrier =
              Data.Word.Word32
-        vkSrcQueueFamilyIndex (VkBufferMemoryBarrier## ba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkSrcQueueFamilyIndexByteOffset
-                      (undefined :: VkBufferMemoryBarrier)
-            =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkSrcQueueFamilyIndex #-}
+        vkSrcQueueFamilyIndex x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkBufferMemoryBarrier, srcQueueFamilyIndex})
+
+        {-# INLINE vkSrcQueueFamilyIndexByteOffset #-}
         vkSrcQueueFamilyIndexByteOffset ~_
           = #{offset VkBufferMemoryBarrier, srcQueueFamilyIndex}
 
-        {-# INLINE vkSrcQueueFamilyIndexByteOffset #-}
-        readVkSrcQueueFamilyIndex (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkSrcQueueFamilyIndexByteOffset
-                      (undefined :: VkBufferMemoryBarrier)
-            = peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkSrcQueueFamilyIndex #-}
-        writeVkSrcQueueFamilyIndex (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkSrcQueueFamilyIndexByteOffset
-                      (undefined :: VkBufferMemoryBarrier)
-            =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkSrcQueueFamilyIndex p
+          = peekByteOff p
+              #{offset VkBufferMemoryBarrier, srcQueueFamilyIndex}
 
         {-# INLINE writeVkSrcQueueFamilyIndex #-}
+        writeVkSrcQueueFamilyIndex p
+          = pokeByteOff p
+              #{offset VkBufferMemoryBarrier, srcQueueFamilyIndex}
 
 class HasVkDstQueueFamilyIndex a where
         type VkDstQueueFamilyIndexMType a :: *
@@ -3220,10 +3188,10 @@ class HasVkDstQueueFamilyIndex a where
         vkDstQueueFamilyIndexByteOffset :: a -> Int
 
         readVkDstQueueFamilyIndex ::
-                                  Mutable a -> IO (VkDstQueueFamilyIndexMType a)
+                                  Ptr a -> IO (VkDstQueueFamilyIndexMType a)
 
         writeVkDstQueueFamilyIndex ::
-                                   Mutable a -> VkDstQueueFamilyIndexMType a -> IO ()
+                                   Ptr a -> VkDstQueueFamilyIndexMType a -> IO ()
 
 instance {-# OVERLAPPABLE #-}
          TypeError
@@ -3237,114 +3205,91 @@ instance {-# OVERLAPPING #-}
          HasVkDstQueueFamilyIndex VkBufferMemoryBarrier where
         type VkDstQueueFamilyIndexMType VkBufferMemoryBarrier =
              Data.Word.Word32
-        vkDstQueueFamilyIndex (VkBufferMemoryBarrier## ba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkDstQueueFamilyIndexByteOffset
-                      (undefined :: VkBufferMemoryBarrier)
-            =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkDstQueueFamilyIndex #-}
+        vkDstQueueFamilyIndex x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkBufferMemoryBarrier, dstQueueFamilyIndex})
+
+        {-# INLINE vkDstQueueFamilyIndexByteOffset #-}
         vkDstQueueFamilyIndexByteOffset ~_
           = #{offset VkBufferMemoryBarrier, dstQueueFamilyIndex}
 
-        {-# INLINE vkDstQueueFamilyIndexByteOffset #-}
-        readVkDstQueueFamilyIndex (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkDstQueueFamilyIndexByteOffset
-                      (undefined :: VkBufferMemoryBarrier)
-            = peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkDstQueueFamilyIndex #-}
-        writeVkDstQueueFamilyIndex (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkDstQueueFamilyIndexByteOffset
-                      (undefined :: VkBufferMemoryBarrier)
-            =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkDstQueueFamilyIndex p
+          = peekByteOff p
+              #{offset VkBufferMemoryBarrier, dstQueueFamilyIndex}
 
         {-# INLINE writeVkDstQueueFamilyIndex #-}
+        writeVkDstQueueFamilyIndex p
+          = pokeByteOff p
+              #{offset VkBufferMemoryBarrier, dstQueueFamilyIndex}
 
 instance {-# OVERLAPPING #-} HasVkBuffer VkBufferMemoryBarrier
          where
         type VkBufferMType VkBufferMemoryBarrier = VkBuffer
-        vkBuffer (VkBufferMemoryBarrier## ba)
-          | I## _n <- sizeOf (undefined :: VkBuffer),
-            I## o <- vkBufferByteOffset (undefined :: VkBufferMemoryBarrier) =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkBuffer #-}
+        vkBuffer x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkBufferMemoryBarrier, buffer})
+
+        {-# INLINE vkBufferByteOffset #-}
         vkBufferByteOffset ~_
           = #{offset VkBufferMemoryBarrier, buffer}
 
-        {-# INLINE vkBufferByteOffset #-}
-        readVkBuffer (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: VkBuffer),
-            I## o <- vkBufferByteOffset (undefined :: VkBufferMemoryBarrier) =
-            peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkBuffer #-}
-        writeVkBuffer (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkBufferByteOffset (undefined :: VkBufferMemoryBarrier) =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkBuffer p
+          = peekByteOff p #{offset VkBufferMemoryBarrier, buffer}
 
         {-# INLINE writeVkBuffer #-}
+        writeVkBuffer p
+          = pokeByteOff p #{offset VkBufferMemoryBarrier, buffer}
 
 instance {-# OVERLAPPING #-} HasVkOffset VkBufferMemoryBarrier
          where
         type VkOffsetMType VkBufferMemoryBarrier = VkDeviceSize
-        vkOffset (VkBufferMemoryBarrier## ba)
-          | I## _n <- sizeOf (undefined :: VkDeviceSize),
-            I## o <- vkOffsetByteOffset (undefined :: VkBufferMemoryBarrier) =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkOffset #-}
+        vkOffset x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkBufferMemoryBarrier, offset})
+
+        {-# INLINE vkOffsetByteOffset #-}
         vkOffsetByteOffset ~_
           = #{offset VkBufferMemoryBarrier, offset}
 
-        {-# INLINE vkOffsetByteOffset #-}
-        readVkOffset (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: VkDeviceSize),
-            I## o <- vkOffsetByteOffset (undefined :: VkBufferMemoryBarrier) =
-            peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkOffset #-}
-        writeVkOffset (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkOffsetByteOffset (undefined :: VkBufferMemoryBarrier) =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkOffset p
+          = peekByteOff p #{offset VkBufferMemoryBarrier, offset}
 
         {-# INLINE writeVkOffset #-}
+        writeVkOffset p
+          = pokeByteOff p #{offset VkBufferMemoryBarrier, offset}
 
 instance {-# OVERLAPPING #-} HasVkSize VkBufferMemoryBarrier where
         type VkSizeMType VkBufferMemoryBarrier = VkDeviceSize
-        vkSize (VkBufferMemoryBarrier## ba)
-          | I## _n <- sizeOf (undefined :: VkDeviceSize),
-            I## o <- vkSizeByteOffset (undefined :: VkBufferMemoryBarrier) =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkSize #-}
+        vkSize x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkBufferMemoryBarrier, size})
+
+        {-# INLINE vkSizeByteOffset #-}
         vkSizeByteOffset ~_
           = #{offset VkBufferMemoryBarrier, size}
 
-        {-# INLINE vkSizeByteOffset #-}
-        readVkSize (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: VkDeviceSize),
-            I## o <- vkSizeByteOffset (undefined :: VkBufferMemoryBarrier) =
-            peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkSize #-}
-        writeVkSize (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkSizeByteOffset (undefined :: VkBufferMemoryBarrier) =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkSize p
+          = peekByteOff p #{offset VkBufferMemoryBarrier, size}
 
         {-# INLINE writeVkSize #-}
+        writeVkSize p
+          = pokeByteOff p #{offset VkBufferMemoryBarrier, size}
 
 instance Show VkBufferMemoryBarrier where
         showsPrec d x
@@ -3418,122 +3363,105 @@ instance Storable VkDispatchIndirectCommand where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDispatchIndirectCommand where
-        freeze (Mutable## mba)
+        {-# INLINE newVkData #-}
+        newVkData f
           | I## n <- sizeOf (undefined :: VkDispatchIndirectCommand),
             I## a <- alignment (undefined :: VkDispatchIndirectCommand) =
             IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba' ##) -> case copyMutableByteArray## mba 0## mba' 0## n s1 of
-                                           s2 -> case unsafeFreezeByteArray## mba' s2 of
-                                                     (## s3, ba ##) -> (## s3,
-                                                                        VkDispatchIndirectCommand##
-                                                                          ba ##))
+              (\ s0 ->
+                 case newAlignedPinnedByteArray## n a s0 of
+                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
+                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
+                                                              IO k -> case k s2 of
+                                                                          (## s3, () ##) -> (## s3,
+                                                                                             VkDispatchIndirectCommand##
+                                                                                               ba ##))
 
-        {-# INLINE freeze #-}
-        unsafeFreeze (Mutable## mba)
+        {-# INLINE unsafePtr #-}
+        unsafePtr (VkDispatchIndirectCommand## ba)
+          = Ptr (byteArrayContents## ba)
+
+        {-# INLINE fromForeignPtr #-}
+        fromForeignPtr = fromForeignPtr## VkDispatchIndirectCommand##
+
+        {-# INLINE toForeignPtr #-}
+        toForeignPtr (VkDispatchIndirectCommand## ba)
+          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
+                                                        (Ptr (byteArrayContents## ba))
+               IO
+                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
+
+        {-# INLINE toPlainForeignPtr #-}
+        toPlainForeignPtr (VkDispatchIndirectCommand## ba)
           = IO
               (\ s ->
-                 case unsafeFreezeByteArray## mba s of
-                     (## s', ba ##) -> (## s', VkDispatchIndirectCommand## ba ##))
-
-        {-# INLINE unsafeFreeze #-}
-        thaw (VkDispatchIndirectCommand## ba)
-          | I## n <- sizeOf (undefined :: VkDispatchIndirectCommand),
-            I## a <- alignment (undefined :: VkDispatchIndirectCommand) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> (## copyByteArray## ba 0## mba 0## n s1,
-                                         Mutable## mba ##))
-
-        {-# INLINE thaw #-}
-        unsafeThaw (VkDispatchIndirectCommand## ba)
-          = IO (\ s -> (## s, Mutable## (unsafeCoerce## ba) ##))
-
-        {-# INLINE unsafeThaw #-}
-        touchVkData a@(VkDispatchIndirectCommand## ba)
-          = touchImmutableContent a ba
+                 (## s,
+                    ForeignPtr (byteArrayContents## ba)
+                      (PlainPtr (unsafeCoerce## ba)) ##))
 
         {-# INLINE touchVkData #-}
-        addVkDataFinalizer = addImmutableContentFinalizer
-
-        {-# INLINE addVkDataFinalizer #-}
+        touchVkData x@(VkDispatchIndirectCommand## ba)
+          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkX VkDispatchIndirectCommand where
         type VkXMType VkDispatchIndirectCommand = Data.Word.Word32
-        vkX (VkDispatchIndirectCommand## ba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkXByteOffset (undefined :: VkDispatchIndirectCommand) =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkX #-}
-        vkXByteOffset ~_ = #{offset VkDispatchIndirectCommand, x}
+        vkX x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkDispatchIndirectCommand, x})
 
         {-# INLINE vkXByteOffset #-}
-        readVkX (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkXByteOffset (undefined :: VkDispatchIndirectCommand) =
-            peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
+        vkXByteOffset ~_ = #{offset VkDispatchIndirectCommand, x}
 
         {-# INLINE readVkX #-}
-        writeVkX (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkXByteOffset (undefined :: VkDispatchIndirectCommand) =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkX p
+          = peekByteOff p #{offset VkDispatchIndirectCommand, x}
 
         {-# INLINE writeVkX #-}
+        writeVkX p
+          = pokeByteOff p #{offset VkDispatchIndirectCommand, x}
 
 instance {-# OVERLAPPING #-} HasVkY VkDispatchIndirectCommand where
         type VkYMType VkDispatchIndirectCommand = Data.Word.Word32
-        vkY (VkDispatchIndirectCommand## ba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkYByteOffset (undefined :: VkDispatchIndirectCommand) =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkY #-}
-        vkYByteOffset ~_ = #{offset VkDispatchIndirectCommand, y}
+        vkY x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkDispatchIndirectCommand, y})
 
         {-# INLINE vkYByteOffset #-}
-        readVkY (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkYByteOffset (undefined :: VkDispatchIndirectCommand) =
-            peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
+        vkYByteOffset ~_ = #{offset VkDispatchIndirectCommand, y}
 
         {-# INLINE readVkY #-}
-        writeVkY (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkYByteOffset (undefined :: VkDispatchIndirectCommand) =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkY p
+          = peekByteOff p #{offset VkDispatchIndirectCommand, y}
 
         {-# INLINE writeVkY #-}
+        writeVkY p
+          = pokeByteOff p #{offset VkDispatchIndirectCommand, y}
 
 instance {-# OVERLAPPING #-} HasVkZ VkDispatchIndirectCommand where
         type VkZMType VkDispatchIndirectCommand = Data.Word.Word32
-        vkZ (VkDispatchIndirectCommand## ba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkZByteOffset (undefined :: VkDispatchIndirectCommand) =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkZ #-}
-        vkZByteOffset ~_ = #{offset VkDispatchIndirectCommand, z}
+        vkZ x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkDispatchIndirectCommand, z})
 
         {-# INLINE vkZByteOffset #-}
-        readVkZ (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkZByteOffset (undefined :: VkDispatchIndirectCommand) =
-            peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
+        vkZByteOffset ~_ = #{offset VkDispatchIndirectCommand, z}
 
         {-# INLINE readVkZ #-}
-        writeVkZ (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkZByteOffset (undefined :: VkDispatchIndirectCommand) =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkZ p
+          = peekByteOff p #{offset VkDispatchIndirectCommand, z}
 
         {-# INLINE writeVkZ #-}
+        writeVkZ p
+          = pokeByteOff p #{offset VkDispatchIndirectCommand, z}
 
 instance Show VkDispatchIndirectCommand where
         showsPrec d x
@@ -3587,47 +3515,45 @@ instance Storable VkDrawIndexedIndirectCommand where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDrawIndexedIndirectCommand where
-        freeze (Mutable## mba)
+        {-# INLINE newVkData #-}
+        newVkData f
           | I## n <- sizeOf (undefined :: VkDrawIndexedIndirectCommand),
             I## a <- alignment (undefined :: VkDrawIndexedIndirectCommand) =
             IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba' ##) -> case copyMutableByteArray## mba 0## mba' 0## n s1 of
-                                           s2 -> case unsafeFreezeByteArray## mba' s2 of
-                                                     (## s3, ba ##) -> (## s3,
-                                                                        VkDrawIndexedIndirectCommand##
-                                                                          ba ##))
+              (\ s0 ->
+                 case newAlignedPinnedByteArray## n a s0 of
+                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
+                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
+                                                              IO k -> case k s2 of
+                                                                          (## s3, () ##) -> (## s3,
+                                                                                             VkDrawIndexedIndirectCommand##
+                                                                                               ba ##))
 
-        {-# INLINE freeze #-}
-        unsafeFreeze (Mutable## mba)
+        {-# INLINE unsafePtr #-}
+        unsafePtr (VkDrawIndexedIndirectCommand## ba)
+          = Ptr (byteArrayContents## ba)
+
+        {-# INLINE fromForeignPtr #-}
+        fromForeignPtr = fromForeignPtr## VkDrawIndexedIndirectCommand##
+
+        {-# INLINE toForeignPtr #-}
+        toForeignPtr (VkDrawIndexedIndirectCommand## ba)
+          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
+                                                        (Ptr (byteArrayContents## ba))
+               IO
+                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
+
+        {-# INLINE toPlainForeignPtr #-}
+        toPlainForeignPtr (VkDrawIndexedIndirectCommand## ba)
           = IO
               (\ s ->
-                 case unsafeFreezeByteArray## mba s of
-                     (## s', ba ##) -> (## s', VkDrawIndexedIndirectCommand## ba ##))
-
-        {-# INLINE unsafeFreeze #-}
-        thaw (VkDrawIndexedIndirectCommand## ba)
-          | I## n <- sizeOf (undefined :: VkDrawIndexedIndirectCommand),
-            I## a <- alignment (undefined :: VkDrawIndexedIndirectCommand) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> (## copyByteArray## ba 0## mba 0## n s1,
-                                         Mutable## mba ##))
-
-        {-# INLINE thaw #-}
-        unsafeThaw (VkDrawIndexedIndirectCommand## ba)
-          = IO (\ s -> (## s, Mutable## (unsafeCoerce## ba) ##))
-
-        {-# INLINE unsafeThaw #-}
-        touchVkData a@(VkDrawIndexedIndirectCommand## ba)
-          = touchImmutableContent a ba
+                 (## s,
+                    ForeignPtr (byteArrayContents## ba)
+                      (PlainPtr (unsafeCoerce## ba)) ##))
 
         {-# INLINE touchVkData #-}
-        addVkDataFinalizer = addImmutableContentFinalizer
-
-        {-# INLINE addVkDataFinalizer #-}
+        touchVkData x@(VkDrawIndexedIndirectCommand## ba)
+          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 class HasVkIndexCount a where
         type VkIndexCountMType a :: *
@@ -3636,9 +3562,9 @@ class HasVkIndexCount a where
 
         vkIndexCountByteOffset :: a -> Int
 
-        readVkIndexCount :: Mutable a -> IO (VkIndexCountMType a)
+        readVkIndexCount :: Ptr a -> IO (VkIndexCountMType a)
 
-        writeVkIndexCount :: Mutable a -> VkIndexCountMType a -> IO ()
+        writeVkIndexCount :: Ptr a -> VkIndexCountMType a -> IO ()
 
 instance {-# OVERLAPPABLE #-}
          TypeError
@@ -3652,34 +3578,26 @@ instance {-# OVERLAPPING #-}
          HasVkIndexCount VkDrawIndexedIndirectCommand where
         type VkIndexCountMType VkDrawIndexedIndirectCommand =
              Data.Word.Word32
-        vkIndexCount (VkDrawIndexedIndirectCommand## ba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkIndexCountByteOffset
-                      (undefined :: VkDrawIndexedIndirectCommand)
-            =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkIndexCount #-}
+        vkIndexCount x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkDrawIndexedIndirectCommand, indexCount})
+
+        {-# INLINE vkIndexCountByteOffset #-}
         vkIndexCountByteOffset ~_
           = #{offset VkDrawIndexedIndirectCommand, indexCount}
 
-        {-# INLINE vkIndexCountByteOffset #-}
-        readVkIndexCount (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkIndexCountByteOffset
-                      (undefined :: VkDrawIndexedIndirectCommand)
-            = peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkIndexCount #-}
-        writeVkIndexCount (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkIndexCountByteOffset
-                      (undefined :: VkDrawIndexedIndirectCommand)
-            =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkIndexCount p
+          = peekByteOff p
+              #{offset VkDrawIndexedIndirectCommand, indexCount}
 
         {-# INLINE writeVkIndexCount #-}
+        writeVkIndexCount p
+          = pokeByteOff p
+              #{offset VkDrawIndexedIndirectCommand, indexCount}
 
 class HasVkInstanceCount a where
         type VkInstanceCountMType a :: *
@@ -3688,10 +3606,9 @@ class HasVkInstanceCount a where
 
         vkInstanceCountByteOffset :: a -> Int
 
-        readVkInstanceCount :: Mutable a -> IO (VkInstanceCountMType a)
+        readVkInstanceCount :: Ptr a -> IO (VkInstanceCountMType a)
 
-        writeVkInstanceCount ::
-                             Mutable a -> VkInstanceCountMType a -> IO ()
+        writeVkInstanceCount :: Ptr a -> VkInstanceCountMType a -> IO ()
 
 instance {-# OVERLAPPABLE #-}
          TypeError
@@ -3705,34 +3622,26 @@ instance {-# OVERLAPPING #-}
          HasVkInstanceCount VkDrawIndexedIndirectCommand where
         type VkInstanceCountMType VkDrawIndexedIndirectCommand =
              Data.Word.Word32
-        vkInstanceCount (VkDrawIndexedIndirectCommand## ba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkInstanceCountByteOffset
-                      (undefined :: VkDrawIndexedIndirectCommand)
-            =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkInstanceCount #-}
+        vkInstanceCount x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkDrawIndexedIndirectCommand, instanceCount})
+
+        {-# INLINE vkInstanceCountByteOffset #-}
         vkInstanceCountByteOffset ~_
           = #{offset VkDrawIndexedIndirectCommand, instanceCount}
 
-        {-# INLINE vkInstanceCountByteOffset #-}
-        readVkInstanceCount (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkInstanceCountByteOffset
-                      (undefined :: VkDrawIndexedIndirectCommand)
-            = peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkInstanceCount #-}
-        writeVkInstanceCount (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkInstanceCountByteOffset
-                      (undefined :: VkDrawIndexedIndirectCommand)
-            =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkInstanceCount p
+          = peekByteOff p
+              #{offset VkDrawIndexedIndirectCommand, instanceCount}
 
         {-# INLINE writeVkInstanceCount #-}
+        writeVkInstanceCount p
+          = pokeByteOff p
+              #{offset VkDrawIndexedIndirectCommand, instanceCount}
 
 class HasVkFirstIndex a where
         type VkFirstIndexMType a :: *
@@ -3741,9 +3650,9 @@ class HasVkFirstIndex a where
 
         vkFirstIndexByteOffset :: a -> Int
 
-        readVkFirstIndex :: Mutable a -> IO (VkFirstIndexMType a)
+        readVkFirstIndex :: Ptr a -> IO (VkFirstIndexMType a)
 
-        writeVkFirstIndex :: Mutable a -> VkFirstIndexMType a -> IO ()
+        writeVkFirstIndex :: Ptr a -> VkFirstIndexMType a -> IO ()
 
 instance {-# OVERLAPPABLE #-}
          TypeError
@@ -3757,34 +3666,26 @@ instance {-# OVERLAPPING #-}
          HasVkFirstIndex VkDrawIndexedIndirectCommand where
         type VkFirstIndexMType VkDrawIndexedIndirectCommand =
              Data.Word.Word32
-        vkFirstIndex (VkDrawIndexedIndirectCommand## ba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkFirstIndexByteOffset
-                      (undefined :: VkDrawIndexedIndirectCommand)
-            =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkFirstIndex #-}
+        vkFirstIndex x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkDrawIndexedIndirectCommand, firstIndex})
+
+        {-# INLINE vkFirstIndexByteOffset #-}
         vkFirstIndexByteOffset ~_
           = #{offset VkDrawIndexedIndirectCommand, firstIndex}
 
-        {-# INLINE vkFirstIndexByteOffset #-}
-        readVkFirstIndex (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkFirstIndexByteOffset
-                      (undefined :: VkDrawIndexedIndirectCommand)
-            = peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkFirstIndex #-}
-        writeVkFirstIndex (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkFirstIndexByteOffset
-                      (undefined :: VkDrawIndexedIndirectCommand)
-            =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkFirstIndex p
+          = peekByteOff p
+              #{offset VkDrawIndexedIndirectCommand, firstIndex}
 
         {-# INLINE writeVkFirstIndex #-}
+        writeVkFirstIndex p
+          = pokeByteOff p
+              #{offset VkDrawIndexedIndirectCommand, firstIndex}
 
 class HasVkVertexOffset a where
         type VkVertexOffsetMType a :: *
@@ -3793,9 +3694,9 @@ class HasVkVertexOffset a where
 
         vkVertexOffsetByteOffset :: a -> Int
 
-        readVkVertexOffset :: Mutable a -> IO (VkVertexOffsetMType a)
+        readVkVertexOffset :: Ptr a -> IO (VkVertexOffsetMType a)
 
-        writeVkVertexOffset :: Mutable a -> VkVertexOffsetMType a -> IO ()
+        writeVkVertexOffset :: Ptr a -> VkVertexOffsetMType a -> IO ()
 
 instance {-# OVERLAPPABLE #-}
          TypeError
@@ -3809,34 +3710,26 @@ instance {-# OVERLAPPING #-}
          HasVkVertexOffset VkDrawIndexedIndirectCommand where
         type VkVertexOffsetMType VkDrawIndexedIndirectCommand =
              Data.Int.Int32
-        vkVertexOffset (VkDrawIndexedIndirectCommand## ba)
-          | I## _n <- sizeOf (undefined :: Data.Int.Int32),
-            I## o <- vkVertexOffsetByteOffset
-                      (undefined :: VkDrawIndexedIndirectCommand)
-            =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkVertexOffset #-}
+        vkVertexOffset x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkDrawIndexedIndirectCommand, vertexOffset})
+
+        {-# INLINE vkVertexOffsetByteOffset #-}
         vkVertexOffsetByteOffset ~_
           = #{offset VkDrawIndexedIndirectCommand, vertexOffset}
 
-        {-# INLINE vkVertexOffsetByteOffset #-}
-        readVkVertexOffset (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: Data.Int.Int32),
-            I## o <- vkVertexOffsetByteOffset
-                      (undefined :: VkDrawIndexedIndirectCommand)
-            = peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkVertexOffset #-}
-        writeVkVertexOffset (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkVertexOffsetByteOffset
-                      (undefined :: VkDrawIndexedIndirectCommand)
-            =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkVertexOffset p
+          = peekByteOff p
+              #{offset VkDrawIndexedIndirectCommand, vertexOffset}
 
         {-# INLINE writeVkVertexOffset #-}
+        writeVkVertexOffset p
+          = pokeByteOff p
+              #{offset VkDrawIndexedIndirectCommand, vertexOffset}
 
 class HasVkFirstInstance a where
         type VkFirstInstanceMType a :: *
@@ -3845,10 +3738,9 @@ class HasVkFirstInstance a where
 
         vkFirstInstanceByteOffset :: a -> Int
 
-        readVkFirstInstance :: Mutable a -> IO (VkFirstInstanceMType a)
+        readVkFirstInstance :: Ptr a -> IO (VkFirstInstanceMType a)
 
-        writeVkFirstInstance ::
-                             Mutable a -> VkFirstInstanceMType a -> IO ()
+        writeVkFirstInstance :: Ptr a -> VkFirstInstanceMType a -> IO ()
 
 instance {-# OVERLAPPABLE #-}
          TypeError
@@ -3862,34 +3754,26 @@ instance {-# OVERLAPPING #-}
          HasVkFirstInstance VkDrawIndexedIndirectCommand where
         type VkFirstInstanceMType VkDrawIndexedIndirectCommand =
              Data.Word.Word32
-        vkFirstInstance (VkDrawIndexedIndirectCommand## ba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkFirstInstanceByteOffset
-                      (undefined :: VkDrawIndexedIndirectCommand)
-            =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkFirstInstance #-}
+        vkFirstInstance x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkDrawIndexedIndirectCommand, firstInstance})
+
+        {-# INLINE vkFirstInstanceByteOffset #-}
         vkFirstInstanceByteOffset ~_
           = #{offset VkDrawIndexedIndirectCommand, firstInstance}
 
-        {-# INLINE vkFirstInstanceByteOffset #-}
-        readVkFirstInstance (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkFirstInstanceByteOffset
-                      (undefined :: VkDrawIndexedIndirectCommand)
-            = peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkFirstInstance #-}
-        writeVkFirstInstance (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkFirstInstanceByteOffset
-                      (undefined :: VkDrawIndexedIndirectCommand)
-            =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkFirstInstance p
+          = peekByteOff p
+              #{offset VkDrawIndexedIndirectCommand, firstInstance}
 
         {-# INLINE writeVkFirstInstance #-}
+        writeVkFirstInstance p
+          = pokeByteOff p
+              #{offset VkDrawIndexedIndirectCommand, firstInstance}
 
 instance Show VkDrawIndexedIndirectCommand where
         showsPrec d x
@@ -3949,47 +3833,44 @@ instance Storable VkDrawIndirectCommand where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDrawIndirectCommand where
-        freeze (Mutable## mba)
+        {-# INLINE newVkData #-}
+        newVkData f
           | I## n <- sizeOf (undefined :: VkDrawIndirectCommand),
             I## a <- alignment (undefined :: VkDrawIndirectCommand) =
             IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba' ##) -> case copyMutableByteArray## mba 0## mba' 0## n s1 of
-                                           s2 -> case unsafeFreezeByteArray## mba' s2 of
-                                                     (## s3, ba ##) -> (## s3,
-                                                                        VkDrawIndirectCommand##
-                                                                          ba ##))
+              (\ s0 ->
+                 case newAlignedPinnedByteArray## n a s0 of
+                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
+                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
+                                                              IO k -> case k s2 of
+                                                                          (## s3, () ##) -> (## s3,
+                                                                                             VkDrawIndirectCommand##
+                                                                                               ba ##))
 
-        {-# INLINE freeze #-}
-        unsafeFreeze (Mutable## mba)
+        {-# INLINE unsafePtr #-}
+        unsafePtr (VkDrawIndirectCommand## ba) = Ptr (byteArrayContents## ba)
+
+        {-# INLINE fromForeignPtr #-}
+        fromForeignPtr = fromForeignPtr## VkDrawIndirectCommand##
+
+        {-# INLINE toForeignPtr #-}
+        toForeignPtr (VkDrawIndirectCommand## ba)
+          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
+                                                        (Ptr (byteArrayContents## ba))
+               IO
+                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
+
+        {-# INLINE toPlainForeignPtr #-}
+        toPlainForeignPtr (VkDrawIndirectCommand## ba)
           = IO
               (\ s ->
-                 case unsafeFreezeByteArray## mba s of
-                     (## s', ba ##) -> (## s', VkDrawIndirectCommand## ba ##))
-
-        {-# INLINE unsafeFreeze #-}
-        thaw (VkDrawIndirectCommand## ba)
-          | I## n <- sizeOf (undefined :: VkDrawIndirectCommand),
-            I## a <- alignment (undefined :: VkDrawIndirectCommand) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> (## copyByteArray## ba 0## mba 0## n s1,
-                                         Mutable## mba ##))
-
-        {-# INLINE thaw #-}
-        unsafeThaw (VkDrawIndirectCommand## ba)
-          = IO (\ s -> (## s, Mutable## (unsafeCoerce## ba) ##))
-
-        {-# INLINE unsafeThaw #-}
-        touchVkData a@(VkDrawIndirectCommand## ba)
-          = touchImmutableContent a ba
+                 (## s,
+                    ForeignPtr (byteArrayContents## ba)
+                      (PlainPtr (unsafeCoerce## ba)) ##))
 
         {-# INLINE touchVkData #-}
-        addVkDataFinalizer = addImmutableContentFinalizer
-
-        {-# INLINE addVkDataFinalizer #-}
+        touchVkData x@(VkDrawIndirectCommand## ba)
+          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 class HasVkVertexCount a where
         type VkVertexCountMType a :: *
@@ -3998,9 +3879,9 @@ class HasVkVertexCount a where
 
         vkVertexCountByteOffset :: a -> Int
 
-        readVkVertexCount :: Mutable a -> IO (VkVertexCountMType a)
+        readVkVertexCount :: Ptr a -> IO (VkVertexCountMType a)
 
-        writeVkVertexCount :: Mutable a -> VkVertexCountMType a -> IO ()
+        writeVkVertexCount :: Ptr a -> VkVertexCountMType a -> IO ()
 
 instance {-# OVERLAPPABLE #-}
          TypeError
@@ -4013,66 +3894,50 @@ instance {-# OVERLAPPABLE #-}
 instance {-# OVERLAPPING #-} HasVkVertexCount VkDrawIndirectCommand
          where
         type VkVertexCountMType VkDrawIndirectCommand = Data.Word.Word32
-        vkVertexCount (VkDrawIndirectCommand## ba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkVertexCountByteOffset
-                      (undefined :: VkDrawIndirectCommand)
-            =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkVertexCount #-}
+        vkVertexCount x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkDrawIndirectCommand, vertexCount})
+
+        {-# INLINE vkVertexCountByteOffset #-}
         vkVertexCountByteOffset ~_
           = #{offset VkDrawIndirectCommand, vertexCount}
 
-        {-# INLINE vkVertexCountByteOffset #-}
-        readVkVertexCount (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkVertexCountByteOffset
-                      (undefined :: VkDrawIndirectCommand)
-            = peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkVertexCount #-}
-        writeVkVertexCount (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkVertexCountByteOffset
-                      (undefined :: VkDrawIndirectCommand)
-            =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkVertexCount p
+          = peekByteOff p
+              #{offset VkDrawIndirectCommand, vertexCount}
 
         {-# INLINE writeVkVertexCount #-}
+        writeVkVertexCount p
+          = pokeByteOff p
+              #{offset VkDrawIndirectCommand, vertexCount}
 
 instance {-# OVERLAPPING #-}
          HasVkInstanceCount VkDrawIndirectCommand where
         type VkInstanceCountMType VkDrawIndirectCommand = Data.Word.Word32
-        vkInstanceCount (VkDrawIndirectCommand## ba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkInstanceCountByteOffset
-                      (undefined :: VkDrawIndirectCommand)
-            =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkInstanceCount #-}
+        vkInstanceCount x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkDrawIndirectCommand, instanceCount})
+
+        {-# INLINE vkInstanceCountByteOffset #-}
         vkInstanceCountByteOffset ~_
           = #{offset VkDrawIndirectCommand, instanceCount}
 
-        {-# INLINE vkInstanceCountByteOffset #-}
-        readVkInstanceCount (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkInstanceCountByteOffset
-                      (undefined :: VkDrawIndirectCommand)
-            = peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkInstanceCount #-}
-        writeVkInstanceCount (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkInstanceCountByteOffset
-                      (undefined :: VkDrawIndirectCommand)
-            =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkInstanceCount p
+          = peekByteOff p
+              #{offset VkDrawIndirectCommand, instanceCount}
 
         {-# INLINE writeVkInstanceCount #-}
+        writeVkInstanceCount p
+          = pokeByteOff p
+              #{offset VkDrawIndirectCommand, instanceCount}
 
 class HasVkFirstVertex a where
         type VkFirstVertexMType a :: *
@@ -4081,9 +3946,9 @@ class HasVkFirstVertex a where
 
         vkFirstVertexByteOffset :: a -> Int
 
-        readVkFirstVertex :: Mutable a -> IO (VkFirstVertexMType a)
+        readVkFirstVertex :: Ptr a -> IO (VkFirstVertexMType a)
 
-        writeVkFirstVertex :: Mutable a -> VkFirstVertexMType a -> IO ()
+        writeVkFirstVertex :: Ptr a -> VkFirstVertexMType a -> IO ()
 
 instance {-# OVERLAPPABLE #-}
          TypeError
@@ -4096,66 +3961,50 @@ instance {-# OVERLAPPABLE #-}
 instance {-# OVERLAPPING #-} HasVkFirstVertex VkDrawIndirectCommand
          where
         type VkFirstVertexMType VkDrawIndirectCommand = Data.Word.Word32
-        vkFirstVertex (VkDrawIndirectCommand## ba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkFirstVertexByteOffset
-                      (undefined :: VkDrawIndirectCommand)
-            =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkFirstVertex #-}
+        vkFirstVertex x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkDrawIndirectCommand, firstVertex})
+
+        {-# INLINE vkFirstVertexByteOffset #-}
         vkFirstVertexByteOffset ~_
           = #{offset VkDrawIndirectCommand, firstVertex}
 
-        {-# INLINE vkFirstVertexByteOffset #-}
-        readVkFirstVertex (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkFirstVertexByteOffset
-                      (undefined :: VkDrawIndirectCommand)
-            = peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkFirstVertex #-}
-        writeVkFirstVertex (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkFirstVertexByteOffset
-                      (undefined :: VkDrawIndirectCommand)
-            =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkFirstVertex p
+          = peekByteOff p
+              #{offset VkDrawIndirectCommand, firstVertex}
 
         {-# INLINE writeVkFirstVertex #-}
+        writeVkFirstVertex p
+          = pokeByteOff p
+              #{offset VkDrawIndirectCommand, firstVertex}
 
 instance {-# OVERLAPPING #-}
          HasVkFirstInstance VkDrawIndirectCommand where
         type VkFirstInstanceMType VkDrawIndirectCommand = Data.Word.Word32
-        vkFirstInstance (VkDrawIndirectCommand## ba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkFirstInstanceByteOffset
-                      (undefined :: VkDrawIndirectCommand)
-            =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkFirstInstance #-}
+        vkFirstInstance x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkDrawIndirectCommand, firstInstance})
+
+        {-# INLINE vkFirstInstanceByteOffset #-}
         vkFirstInstanceByteOffset ~_
           = #{offset VkDrawIndirectCommand, firstInstance}
 
-        {-# INLINE vkFirstInstanceByteOffset #-}
-        readVkFirstInstance (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkFirstInstanceByteOffset
-                      (undefined :: VkDrawIndirectCommand)
-            = peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkFirstInstance #-}
-        writeVkFirstInstance (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkFirstInstanceByteOffset
-                      (undefined :: VkDrawIndirectCommand)
-            =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkFirstInstance p
+          = peekByteOff p
+              #{offset VkDrawIndirectCommand, firstInstance}
 
         {-# INLINE writeVkFirstInstance #-}
+        writeVkFirstInstance p
+          = pokeByteOff p
+              #{offset VkDrawIndirectCommand, firstInstance}
 
 instance Show VkDrawIndirectCommand where
         showsPrec d x
@@ -4212,163 +4061,135 @@ instance Storable VkImageMemoryBarrier where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkImageMemoryBarrier where
-        freeze (Mutable## mba)
+        {-# INLINE newVkData #-}
+        newVkData f
           | I## n <- sizeOf (undefined :: VkImageMemoryBarrier),
             I## a <- alignment (undefined :: VkImageMemoryBarrier) =
             IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba' ##) -> case copyMutableByteArray## mba 0## mba' 0## n s1 of
-                                           s2 -> case unsafeFreezeByteArray## mba' s2 of
-                                                     (## s3, ba ##) -> (## s3,
-                                                                        VkImageMemoryBarrier## ba ##))
+              (\ s0 ->
+                 case newAlignedPinnedByteArray## n a s0 of
+                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
+                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
+                                                              IO k -> case k s2 of
+                                                                          (## s3, () ##) -> (## s3,
+                                                                                             VkImageMemoryBarrier##
+                                                                                               ba ##))
 
-        {-# INLINE freeze #-}
-        unsafeFreeze (Mutable## mba)
+        {-# INLINE unsafePtr #-}
+        unsafePtr (VkImageMemoryBarrier## ba) = Ptr (byteArrayContents## ba)
+
+        {-# INLINE fromForeignPtr #-}
+        fromForeignPtr = fromForeignPtr## VkImageMemoryBarrier##
+
+        {-# INLINE toForeignPtr #-}
+        toForeignPtr (VkImageMemoryBarrier## ba)
+          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
+                                                        (Ptr (byteArrayContents## ba))
+               IO
+                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
+
+        {-# INLINE toPlainForeignPtr #-}
+        toPlainForeignPtr (VkImageMemoryBarrier## ba)
           = IO
               (\ s ->
-                 case unsafeFreezeByteArray## mba s of
-                     (## s', ba ##) -> (## s', VkImageMemoryBarrier## ba ##))
-
-        {-# INLINE unsafeFreeze #-}
-        thaw (VkImageMemoryBarrier## ba)
-          | I## n <- sizeOf (undefined :: VkImageMemoryBarrier),
-            I## a <- alignment (undefined :: VkImageMemoryBarrier) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> (## copyByteArray## ba 0## mba 0## n s1,
-                                         Mutable## mba ##))
-
-        {-# INLINE thaw #-}
-        unsafeThaw (VkImageMemoryBarrier## ba)
-          = IO (\ s -> (## s, Mutable## (unsafeCoerce## ba) ##))
-
-        {-# INLINE unsafeThaw #-}
-        touchVkData a@(VkImageMemoryBarrier## ba)
-          = touchImmutableContent a ba
+                 (## s,
+                    ForeignPtr (byteArrayContents## ba)
+                      (PlainPtr (unsafeCoerce## ba)) ##))
 
         {-# INLINE touchVkData #-}
-        addVkDataFinalizer = addImmutableContentFinalizer
-
-        {-# INLINE addVkDataFinalizer #-}
+        touchVkData x@(VkImageMemoryBarrier## ba)
+          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkSType VkImageMemoryBarrier where
         type VkSTypeMType VkImageMemoryBarrier = VkStructureType
-        vkSType (VkImageMemoryBarrier## ba)
-          | I## _n <- sizeOf (undefined :: VkStructureType),
-            I## o <- vkSTypeByteOffset (undefined :: VkImageMemoryBarrier) =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkSType #-}
+        vkSType x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkImageMemoryBarrier, sType})
+
+        {-# INLINE vkSTypeByteOffset #-}
         vkSTypeByteOffset ~_
           = #{offset VkImageMemoryBarrier, sType}
 
-        {-# INLINE vkSTypeByteOffset #-}
-        readVkSType (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: VkStructureType),
-            I## o <- vkSTypeByteOffset (undefined :: VkImageMemoryBarrier) =
-            peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkSType #-}
-        writeVkSType (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkSTypeByteOffset (undefined :: VkImageMemoryBarrier) =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkSType p
+          = peekByteOff p #{offset VkImageMemoryBarrier, sType}
 
         {-# INLINE writeVkSType #-}
+        writeVkSType p
+          = pokeByteOff p #{offset VkImageMemoryBarrier, sType}
 
 instance {-# OVERLAPPING #-} HasVkPNext VkImageMemoryBarrier where
         type VkPNextMType VkImageMemoryBarrier =
              Foreign.Ptr.Ptr Data.Void.Void
-        vkPNext (VkImageMemoryBarrier## ba)
-          | I## _n <- sizeOf (undefined :: Foreign.Ptr.Ptr Data.Void.Void),
-            I## o <- vkPNextByteOffset (undefined :: VkImageMemoryBarrier) =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkPNext #-}
+        vkPNext x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkImageMemoryBarrier, pNext})
+
+        {-# INLINE vkPNextByteOffset #-}
         vkPNextByteOffset ~_
           = #{offset VkImageMemoryBarrier, pNext}
 
-        {-# INLINE vkPNextByteOffset #-}
-        readVkPNext (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: Foreign.Ptr.Ptr Data.Void.Void),
-            I## o <- vkPNextByteOffset (undefined :: VkImageMemoryBarrier) =
-            peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkPNext #-}
-        writeVkPNext (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkPNextByteOffset (undefined :: VkImageMemoryBarrier) =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkPNext p
+          = peekByteOff p #{offset VkImageMemoryBarrier, pNext}
 
         {-# INLINE writeVkPNext #-}
+        writeVkPNext p
+          = pokeByteOff p #{offset VkImageMemoryBarrier, pNext}
 
 instance {-# OVERLAPPING #-}
          HasVkSrcAccessMask VkImageMemoryBarrier where
         type VkSrcAccessMaskMType VkImageMemoryBarrier = VkAccessFlags
-        vkSrcAccessMask (VkImageMemoryBarrier## ba)
-          | I## _n <- sizeOf (undefined :: VkAccessFlags),
-            I## o <- vkSrcAccessMaskByteOffset
-                      (undefined :: VkImageMemoryBarrier)
-            =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkSrcAccessMask #-}
+        vkSrcAccessMask x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkImageMemoryBarrier, srcAccessMask})
+
+        {-# INLINE vkSrcAccessMaskByteOffset #-}
         vkSrcAccessMaskByteOffset ~_
           = #{offset VkImageMemoryBarrier, srcAccessMask}
 
-        {-# INLINE vkSrcAccessMaskByteOffset #-}
-        readVkSrcAccessMask (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: VkAccessFlags),
-            I## o <- vkSrcAccessMaskByteOffset
-                      (undefined :: VkImageMemoryBarrier)
-            = peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkSrcAccessMask #-}
-        writeVkSrcAccessMask (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkSrcAccessMaskByteOffset
-                      (undefined :: VkImageMemoryBarrier)
-            =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkSrcAccessMask p
+          = peekByteOff p
+              #{offset VkImageMemoryBarrier, srcAccessMask}
 
         {-# INLINE writeVkSrcAccessMask #-}
+        writeVkSrcAccessMask p
+          = pokeByteOff p
+              #{offset VkImageMemoryBarrier, srcAccessMask}
 
 instance {-# OVERLAPPING #-}
          HasVkDstAccessMask VkImageMemoryBarrier where
         type VkDstAccessMaskMType VkImageMemoryBarrier = VkAccessFlags
-        vkDstAccessMask (VkImageMemoryBarrier## ba)
-          | I## _n <- sizeOf (undefined :: VkAccessFlags),
-            I## o <- vkDstAccessMaskByteOffset
-                      (undefined :: VkImageMemoryBarrier)
-            =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkDstAccessMask #-}
+        vkDstAccessMask x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkImageMemoryBarrier, dstAccessMask})
+
+        {-# INLINE vkDstAccessMaskByteOffset #-}
         vkDstAccessMaskByteOffset ~_
           = #{offset VkImageMemoryBarrier, dstAccessMask}
 
-        {-# INLINE vkDstAccessMaskByteOffset #-}
-        readVkDstAccessMask (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: VkAccessFlags),
-            I## o <- vkDstAccessMaskByteOffset
-                      (undefined :: VkImageMemoryBarrier)
-            = peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkDstAccessMask #-}
-        writeVkDstAccessMask (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkDstAccessMaskByteOffset
-                      (undefined :: VkImageMemoryBarrier)
-            =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkDstAccessMask p
+          = peekByteOff p
+              #{offset VkImageMemoryBarrier, dstAccessMask}
 
         {-# INLINE writeVkDstAccessMask #-}
+        writeVkDstAccessMask p
+          = pokeByteOff p
+              #{offset VkImageMemoryBarrier, dstAccessMask}
 
 class HasVkOldLayout a where
         type VkOldLayoutMType a :: *
@@ -4377,9 +4198,9 @@ class HasVkOldLayout a where
 
         vkOldLayoutByteOffset :: a -> Int
 
-        readVkOldLayout :: Mutable a -> IO (VkOldLayoutMType a)
+        readVkOldLayout :: Ptr a -> IO (VkOldLayoutMType a)
 
-        writeVkOldLayout :: Mutable a -> VkOldLayoutMType a -> IO ()
+        writeVkOldLayout :: Ptr a -> VkOldLayoutMType a -> IO ()
 
 instance {-# OVERLAPPABLE #-}
          TypeError
@@ -4392,29 +4213,24 @@ instance {-# OVERLAPPABLE #-}
 instance {-# OVERLAPPING #-} HasVkOldLayout VkImageMemoryBarrier
          where
         type VkOldLayoutMType VkImageMemoryBarrier = VkImageLayout
-        vkOldLayout (VkImageMemoryBarrier## ba)
-          | I## _n <- sizeOf (undefined :: VkImageLayout),
-            I## o <- vkOldLayoutByteOffset (undefined :: VkImageMemoryBarrier) =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkOldLayout #-}
+        vkOldLayout x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkImageMemoryBarrier, oldLayout})
+
+        {-# INLINE vkOldLayoutByteOffset #-}
         vkOldLayoutByteOffset ~_
           = #{offset VkImageMemoryBarrier, oldLayout}
 
-        {-# INLINE vkOldLayoutByteOffset #-}
-        readVkOldLayout (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: VkImageLayout),
-            I## o <- vkOldLayoutByteOffset (undefined :: VkImageMemoryBarrier) =
-            peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkOldLayout #-}
-        writeVkOldLayout (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkOldLayoutByteOffset (undefined :: VkImageMemoryBarrier) =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkOldLayout p
+          = peekByteOff p #{offset VkImageMemoryBarrier, oldLayout}
 
         {-# INLINE writeVkOldLayout #-}
+        writeVkOldLayout p
+          = pokeByteOff p #{offset VkImageMemoryBarrier, oldLayout}
 
 class HasVkNewLayout a where
         type VkNewLayoutMType a :: *
@@ -4423,9 +4239,9 @@ class HasVkNewLayout a where
 
         vkNewLayoutByteOffset :: a -> Int
 
-        readVkNewLayout :: Mutable a -> IO (VkNewLayoutMType a)
+        readVkNewLayout :: Ptr a -> IO (VkNewLayoutMType a)
 
-        writeVkNewLayout :: Mutable a -> VkNewLayoutMType a -> IO ()
+        writeVkNewLayout :: Ptr a -> VkNewLayoutMType a -> IO ()
 
 instance {-# OVERLAPPABLE #-}
          TypeError
@@ -4438,154 +4254,120 @@ instance {-# OVERLAPPABLE #-}
 instance {-# OVERLAPPING #-} HasVkNewLayout VkImageMemoryBarrier
          where
         type VkNewLayoutMType VkImageMemoryBarrier = VkImageLayout
-        vkNewLayout (VkImageMemoryBarrier## ba)
-          | I## _n <- sizeOf (undefined :: VkImageLayout),
-            I## o <- vkNewLayoutByteOffset (undefined :: VkImageMemoryBarrier) =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkNewLayout #-}
+        vkNewLayout x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkImageMemoryBarrier, newLayout})
+
+        {-# INLINE vkNewLayoutByteOffset #-}
         vkNewLayoutByteOffset ~_
           = #{offset VkImageMemoryBarrier, newLayout}
 
-        {-# INLINE vkNewLayoutByteOffset #-}
-        readVkNewLayout (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: VkImageLayout),
-            I## o <- vkNewLayoutByteOffset (undefined :: VkImageMemoryBarrier) =
-            peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkNewLayout #-}
-        writeVkNewLayout (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkNewLayoutByteOffset (undefined :: VkImageMemoryBarrier) =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkNewLayout p
+          = peekByteOff p #{offset VkImageMemoryBarrier, newLayout}
 
         {-# INLINE writeVkNewLayout #-}
+        writeVkNewLayout p
+          = pokeByteOff p #{offset VkImageMemoryBarrier, newLayout}
 
 instance {-# OVERLAPPING #-}
          HasVkSrcQueueFamilyIndex VkImageMemoryBarrier where
         type VkSrcQueueFamilyIndexMType VkImageMemoryBarrier =
              Data.Word.Word32
-        vkSrcQueueFamilyIndex (VkImageMemoryBarrier## ba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkSrcQueueFamilyIndexByteOffset
-                      (undefined :: VkImageMemoryBarrier)
-            =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkSrcQueueFamilyIndex #-}
+        vkSrcQueueFamilyIndex x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkImageMemoryBarrier, srcQueueFamilyIndex})
+
+        {-# INLINE vkSrcQueueFamilyIndexByteOffset #-}
         vkSrcQueueFamilyIndexByteOffset ~_
           = #{offset VkImageMemoryBarrier, srcQueueFamilyIndex}
 
-        {-# INLINE vkSrcQueueFamilyIndexByteOffset #-}
-        readVkSrcQueueFamilyIndex (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkSrcQueueFamilyIndexByteOffset
-                      (undefined :: VkImageMemoryBarrier)
-            = peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkSrcQueueFamilyIndex #-}
-        writeVkSrcQueueFamilyIndex (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkSrcQueueFamilyIndexByteOffset
-                      (undefined :: VkImageMemoryBarrier)
-            =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkSrcQueueFamilyIndex p
+          = peekByteOff p
+              #{offset VkImageMemoryBarrier, srcQueueFamilyIndex}
 
         {-# INLINE writeVkSrcQueueFamilyIndex #-}
+        writeVkSrcQueueFamilyIndex p
+          = pokeByteOff p
+              #{offset VkImageMemoryBarrier, srcQueueFamilyIndex}
 
 instance {-# OVERLAPPING #-}
          HasVkDstQueueFamilyIndex VkImageMemoryBarrier where
         type VkDstQueueFamilyIndexMType VkImageMemoryBarrier =
              Data.Word.Word32
-        vkDstQueueFamilyIndex (VkImageMemoryBarrier## ba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkDstQueueFamilyIndexByteOffset
-                      (undefined :: VkImageMemoryBarrier)
-            =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkDstQueueFamilyIndex #-}
+        vkDstQueueFamilyIndex x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkImageMemoryBarrier, dstQueueFamilyIndex})
+
+        {-# INLINE vkDstQueueFamilyIndexByteOffset #-}
         vkDstQueueFamilyIndexByteOffset ~_
           = #{offset VkImageMemoryBarrier, dstQueueFamilyIndex}
 
-        {-# INLINE vkDstQueueFamilyIndexByteOffset #-}
-        readVkDstQueueFamilyIndex (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: Data.Word.Word32),
-            I## o <- vkDstQueueFamilyIndexByteOffset
-                      (undefined :: VkImageMemoryBarrier)
-            = peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkDstQueueFamilyIndex #-}
-        writeVkDstQueueFamilyIndex (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkDstQueueFamilyIndexByteOffset
-                      (undefined :: VkImageMemoryBarrier)
-            =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkDstQueueFamilyIndex p
+          = peekByteOff p
+              #{offset VkImageMemoryBarrier, dstQueueFamilyIndex}
 
         {-# INLINE writeVkDstQueueFamilyIndex #-}
+        writeVkDstQueueFamilyIndex p
+          = pokeByteOff p
+              #{offset VkImageMemoryBarrier, dstQueueFamilyIndex}
 
 instance {-# OVERLAPPING #-} HasVkImage VkImageMemoryBarrier where
         type VkImageMType VkImageMemoryBarrier = VkImage
-        vkImage (VkImageMemoryBarrier## ba)
-          | I## _n <- sizeOf (undefined :: VkImage),
-            I## o <- vkImageByteOffset (undefined :: VkImageMemoryBarrier) =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkImage #-}
+        vkImage x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkImageMemoryBarrier, image})
+
+        {-# INLINE vkImageByteOffset #-}
         vkImageByteOffset ~_
           = #{offset VkImageMemoryBarrier, image}
 
-        {-# INLINE vkImageByteOffset #-}
-        readVkImage (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: VkImage),
-            I## o <- vkImageByteOffset (undefined :: VkImageMemoryBarrier) =
-            peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkImage #-}
-        writeVkImage (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkImageByteOffset (undefined :: VkImageMemoryBarrier) =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkImage p
+          = peekByteOff p #{offset VkImageMemoryBarrier, image}
 
         {-# INLINE writeVkImage #-}
+        writeVkImage p
+          = pokeByteOff p #{offset VkImageMemoryBarrier, image}
 
 instance {-# OVERLAPPING #-}
          HasVkSubresourceRange VkImageMemoryBarrier where
         type VkSubresourceRangeMType VkImageMemoryBarrier =
              VkImageSubresourceRange
-        vkSubresourceRange (VkImageMemoryBarrier## ba)
-          | I## _n <- sizeOf (undefined :: VkImageSubresourceRange),
-            I## o <- vkSubresourceRangeByteOffset
-                      (undefined :: VkImageMemoryBarrier)
-            =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkSubresourceRange #-}
+        vkSubresourceRange x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkImageMemoryBarrier, subresourceRange})
+
+        {-# INLINE vkSubresourceRangeByteOffset #-}
         vkSubresourceRangeByteOffset ~_
           = #{offset VkImageMemoryBarrier, subresourceRange}
 
-        {-# INLINE vkSubresourceRangeByteOffset #-}
-        readVkSubresourceRange (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: VkImageSubresourceRange),
-            I## o <- vkSubresourceRangeByteOffset
-                      (undefined :: VkImageMemoryBarrier)
-            = peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkSubresourceRange #-}
-        writeVkSubresourceRange (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkSubresourceRangeByteOffset
-                      (undefined :: VkImageMemoryBarrier)
-            =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkSubresourceRange p
+          = peekByteOff p
+              #{offset VkImageMemoryBarrier, subresourceRange}
 
         {-# INLINE writeVkSubresourceRange #-}
+        writeVkSubresourceRange p
+          = pokeByteOff p
+              #{offset VkImageMemoryBarrier, subresourceRange}
 
 instance Show VkImageMemoryBarrier where
         showsPrec d x
@@ -4663,148 +4445,128 @@ instance Storable VkMemoryBarrier where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkMemoryBarrier where
-        freeze (Mutable## mba)
+        {-# INLINE newVkData #-}
+        newVkData f
           | I## n <- sizeOf (undefined :: VkMemoryBarrier),
             I## a <- alignment (undefined :: VkMemoryBarrier) =
             IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba' ##) -> case copyMutableByteArray## mba 0## mba' 0## n s1 of
-                                           s2 -> case unsafeFreezeByteArray## mba' s2 of
-                                                     (## s3, ba ##) -> (## s3, VkMemoryBarrier## ba ##))
+              (\ s0 ->
+                 case newAlignedPinnedByteArray## n a s0 of
+                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
+                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
+                                                              IO k -> case k s2 of
+                                                                          (## s3, () ##) -> (## s3,
+                                                                                             VkMemoryBarrier##
+                                                                                               ba ##))
 
-        {-# INLINE freeze #-}
-        unsafeFreeze (Mutable## mba)
+        {-# INLINE unsafePtr #-}
+        unsafePtr (VkMemoryBarrier## ba) = Ptr (byteArrayContents## ba)
+
+        {-# INLINE fromForeignPtr #-}
+        fromForeignPtr = fromForeignPtr## VkMemoryBarrier##
+
+        {-# INLINE toForeignPtr #-}
+        toForeignPtr (VkMemoryBarrier## ba)
+          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
+                                                        (Ptr (byteArrayContents## ba))
+               IO
+                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
+
+        {-# INLINE toPlainForeignPtr #-}
+        toPlainForeignPtr (VkMemoryBarrier## ba)
           = IO
               (\ s ->
-                 case unsafeFreezeByteArray## mba s of
-                     (## s', ba ##) -> (## s', VkMemoryBarrier## ba ##))
-
-        {-# INLINE unsafeFreeze #-}
-        thaw (VkMemoryBarrier## ba)
-          | I## n <- sizeOf (undefined :: VkMemoryBarrier),
-            I## a <- alignment (undefined :: VkMemoryBarrier) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> (## copyByteArray## ba 0## mba 0## n s1,
-                                         Mutable## mba ##))
-
-        {-# INLINE thaw #-}
-        unsafeThaw (VkMemoryBarrier## ba)
-          = IO (\ s -> (## s, Mutable## (unsafeCoerce## ba) ##))
-
-        {-# INLINE unsafeThaw #-}
-        touchVkData a@(VkMemoryBarrier## ba) = touchImmutableContent a ba
+                 (## s,
+                    ForeignPtr (byteArrayContents## ba)
+                      (PlainPtr (unsafeCoerce## ba)) ##))
 
         {-# INLINE touchVkData #-}
-        addVkDataFinalizer = addImmutableContentFinalizer
-
-        {-# INLINE addVkDataFinalizer #-}
+        touchVkData x@(VkMemoryBarrier## ba)
+          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkSType VkMemoryBarrier where
         type VkSTypeMType VkMemoryBarrier = VkStructureType
-        vkSType (VkMemoryBarrier## ba)
-          | I## _n <- sizeOf (undefined :: VkStructureType),
-            I## o <- vkSTypeByteOffset (undefined :: VkMemoryBarrier) =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkSType #-}
-        vkSTypeByteOffset ~_ = #{offset VkMemoryBarrier, sType}
+        vkSType x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkMemoryBarrier, sType})
 
         {-# INLINE vkSTypeByteOffset #-}
-        readVkSType (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: VkStructureType),
-            I## o <- vkSTypeByteOffset (undefined :: VkMemoryBarrier) =
-            peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
+        vkSTypeByteOffset ~_ = #{offset VkMemoryBarrier, sType}
 
         {-# INLINE readVkSType #-}
-        writeVkSType (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkSTypeByteOffset (undefined :: VkMemoryBarrier) =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkSType p
+          = peekByteOff p #{offset VkMemoryBarrier, sType}
 
         {-# INLINE writeVkSType #-}
+        writeVkSType p
+          = pokeByteOff p #{offset VkMemoryBarrier, sType}
 
 instance {-# OVERLAPPING #-} HasVkPNext VkMemoryBarrier where
         type VkPNextMType VkMemoryBarrier = Foreign.Ptr.Ptr Data.Void.Void
-        vkPNext (VkMemoryBarrier## ba)
-          | I## _n <- sizeOf (undefined :: Foreign.Ptr.Ptr Data.Void.Void),
-            I## o <- vkPNextByteOffset (undefined :: VkMemoryBarrier) =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkPNext #-}
-        vkPNextByteOffset ~_ = #{offset VkMemoryBarrier, pNext}
+        vkPNext x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkMemoryBarrier, pNext})
 
         {-# INLINE vkPNextByteOffset #-}
-        readVkPNext (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: Foreign.Ptr.Ptr Data.Void.Void),
-            I## o <- vkPNextByteOffset (undefined :: VkMemoryBarrier) =
-            peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
+        vkPNextByteOffset ~_ = #{offset VkMemoryBarrier, pNext}
 
         {-# INLINE readVkPNext #-}
-        writeVkPNext (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkPNextByteOffset (undefined :: VkMemoryBarrier) =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkPNext p
+          = peekByteOff p #{offset VkMemoryBarrier, pNext}
 
         {-# INLINE writeVkPNext #-}
+        writeVkPNext p
+          = pokeByteOff p #{offset VkMemoryBarrier, pNext}
 
 instance {-# OVERLAPPING #-} HasVkSrcAccessMask VkMemoryBarrier
          where
         type VkSrcAccessMaskMType VkMemoryBarrier = VkAccessFlags
-        vkSrcAccessMask (VkMemoryBarrier## ba)
-          | I## _n <- sizeOf (undefined :: VkAccessFlags),
-            I## o <- vkSrcAccessMaskByteOffset (undefined :: VkMemoryBarrier) =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkSrcAccessMask #-}
+        vkSrcAccessMask x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkMemoryBarrier, srcAccessMask})
+
+        {-# INLINE vkSrcAccessMaskByteOffset #-}
         vkSrcAccessMaskByteOffset ~_
           = #{offset VkMemoryBarrier, srcAccessMask}
 
-        {-# INLINE vkSrcAccessMaskByteOffset #-}
-        readVkSrcAccessMask (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: VkAccessFlags),
-            I## o <- vkSrcAccessMaskByteOffset (undefined :: VkMemoryBarrier) =
-            peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkSrcAccessMask #-}
-        writeVkSrcAccessMask (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkSrcAccessMaskByteOffset (undefined :: VkMemoryBarrier) =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkSrcAccessMask p
+          = peekByteOff p #{offset VkMemoryBarrier, srcAccessMask}
 
         {-# INLINE writeVkSrcAccessMask #-}
+        writeVkSrcAccessMask p
+          = pokeByteOff p #{offset VkMemoryBarrier, srcAccessMask}
 
 instance {-# OVERLAPPING #-} HasVkDstAccessMask VkMemoryBarrier
          where
         type VkDstAccessMaskMType VkMemoryBarrier = VkAccessFlags
-        vkDstAccessMask (VkMemoryBarrier## ba)
-          | I## _n <- sizeOf (undefined :: VkAccessFlags),
-            I## o <- vkDstAccessMaskByteOffset (undefined :: VkMemoryBarrier) =
-            unsafeDupablePerformIO
-              (peek (Ptr (byteArrayContents## ba `plusAddr##` o)))
 
         {-# NOINLINE vkDstAccessMask #-}
+        vkDstAccessMask x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x)
+                 #{offset VkMemoryBarrier, dstAccessMask})
+
+        {-# INLINE vkDstAccessMaskByteOffset #-}
         vkDstAccessMaskByteOffset ~_
           = #{offset VkMemoryBarrier, dstAccessMask}
 
-        {-# INLINE vkDstAccessMaskByteOffset #-}
-        readVkDstAccessMask (Mutable## mba)
-          | I## _n <- sizeOf (undefined :: VkAccessFlags),
-            I## o <- vkDstAccessMaskByteOffset (undefined :: VkMemoryBarrier) =
-            peek (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o))
-
         {-# INLINE readVkDstAccessMask #-}
-        writeVkDstAccessMask (Mutable## mba) x
-          | I## _n <- sizeOf x,
-            I## o <- vkDstAccessMaskByteOffset (undefined :: VkMemoryBarrier) =
-            poke (Ptr (byteArrayContents## (unsafeCoerce## mba) `plusAddr##` o)) x
+        readVkDstAccessMask p
+          = peekByteOff p #{offset VkMemoryBarrier, dstAccessMask}
 
         {-# INLINE writeVkDstAccessMask #-}
+        writeVkDstAccessMask p
+          = pokeByteOff p #{offset VkMemoryBarrier, dstAccessMask}
 
 instance Show VkMemoryBarrier where
         showsPrec d x
