@@ -51,9 +51,15 @@ withVulkanInstance
       return (vkRes, vkI)
 
     -- run a supplied action if instance creation was successful
-    if vkResult == VK_SUCCESS
-    then do
-      r <- action vkInstance
-      vkDestroyInstance vkInstance vkNullPtr
-      pure r
-    else pure vkResult
+    vkResult2 <-
+      if vkResult == VK_SUCCESS
+      then do
+        r <- action vkInstance
+        vkDestroyInstance vkInstance vkNullPtr
+        pure r
+      else pure vkResult
+
+    -- make sure our data structures exist until the end of the program.
+    touchVkData appInfo
+    touchVkData iCreateInfo
+    return vkResult2
