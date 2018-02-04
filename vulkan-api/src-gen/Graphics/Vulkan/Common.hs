@@ -936,11 +936,9 @@ import           Foreign.C.Types                 (CChar, CFloat, CInt,
 import           Foreign.Ptr                     (FunPtr, Ptr, nullPtr)
 import           Foreign.Storable                (Storable)
 import           GHC.Read                        (choose, expectP)
-import           Graphics.Vulkan.Marshal
 import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
 import           Text.Read                       (Read (..), parens)
 import           Text.Read.Lex                   (Lexeme (Ident))
-import           Unsafe.Coerce                   (unsafeCoerce)
 
 pattern VK_MAX_PHYSICAL_DEVICE_NAME_SIZE :: (Num a, Eq a) => a
 
@@ -1119,26 +1117,6 @@ instance VulkanPtr Ptr where
         vkNullPtr = nullPtr
 
         {-# INLINE vkNullPtr #-}
-
-instance VulkanMarshal (VkPtr a) where
-        freeze = fmap VkPtr . freeze . unsafeCoerce
-
-        {-# INLINE freeze #-}
-        unsafeFreeze = freeze
-
-        {-# INLINE unsafeFreeze #-}
-        thaw (VkPtr x) = unsafeCoerce <$> thaw x
-
-        {-# INLINE thaw #-}
-        unsafeThaw = thaw
-
-        {-# INLINE unsafeThaw #-}
-        touchVkData (VkPtr x) = touchVkData x
-
-        {-# NOINLINE touchVkData #-}
-        addVkDataFinalizer (VkPtr x) = addVkDataFinalizer x
-
-        {-# NOINLINE addVkDataFinalizer #-}
 
 type role VkPtr phantom
 

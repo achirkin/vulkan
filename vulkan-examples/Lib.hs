@@ -1,23 +1,23 @@
-module Main (main) where
+module Lib
+    ( withVulkanInstance
+    ) where
 
-import Graphics.Vulkan
-import Foreign.Storable
-import Foreign.Ptr
-import Foreign.Marshal.Alloc
-import Foreign.C.String
+import           Foreign.C.String
+import           Foreign.Marshal.Alloc
+import           Foreign.Ptr
+import           Foreign.Storable
+import           Graphics.Vulkan
 
-main :: IO ()
-main = do
-    res <- withVulkanInstance $ \vkInstance -> do
-      putStrLn $ "Success! " ++ show vkInstance
-      pure VK_SUCCESS
-    print res
 
 -- | Run an action with vulkan instance
-withVulkanInstance :: (VkInstance -> IO VkResult) -> IO VkResult
-withVulkanInstance action =
+withVulkanInstance :: String -- ^ program name
+                   -> (Int, Ptr CString) -- ^ required extensions
+                   -> (Int, Ptr CString) -- ^ required layers
+                   -> (VkInstance -> IO VkResult) -> IO VkResult
+withVulkanInstance
+  progName (extCount, extNames) (layerCount, layerNames) action =
   -- allocate some strings - names
-  withCString "01-CreateInstance" $ \progNamePtr ->
+  withCString progName $ \progNamePtr ->
   withCString "My Perfect Haskell Engine" $ \engineNamePtr -> do
 
     -- write VkApplicationInfo
@@ -34,10 +34,10 @@ withVulkanInstance action =
     iCreateInfo <- newVkData $ \iCreateInfoPtr -> do
       writeVkPApplicationInfo        iCreateInfoPtr
         (unsafePtr appInfo)  -- must keep appInfo alive!
-      writeVkPpEnabledExtensionNames iCreateInfoPtr vkNullPtr
-      writeVkEnabledExtensionCount   iCreateInfoPtr 0
-      writeVkPpEnabledLayerNames     iCreateInfoPtr vkNullPtr
-      writeVkEnabledLayerCount       iCreateInfoPtr 0
+      writeVkPpEnabledExtensionNames iCreateInfoPtr extNames
+      writeVkEnabledExtensionCount   iCreateInfoPtr (fromIntegral extCount)
+      writeVkPpEnabledLayerNames     iCreateInfoPtr layerNames
+      writeVkEnabledLayerCount       iCreateInfoPtr (fromIntegral layerCount)
       writeVkFlags                   iCreateInfoPtr 0
       writeVkPNext                   iCreateInfoPtr vkNullPtr
       writeVkSType                   iCreateInfoPtr VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO

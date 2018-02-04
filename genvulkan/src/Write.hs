@@ -42,7 +42,6 @@ generateVkSource outputDir vkXml = do
   exportedNamesCommon <- do
     (enames, mr) <- runModuleWriter vkXml "Graphics.Vulkan.Common" mempty $ do
        writePragma "Strict"
-       writeFullImport "Graphics.Vulkan.Marshal"
        genApiConstants
        genBaseTypes
        getNamesInScope
@@ -52,6 +51,7 @@ generateVkSource outputDir vkXml = do
   exportedNamesBase <- do
     (enames, mr) <- runModuleWriter vkXml "Graphics.Vulkan.Base" exportedNamesCommon $ do
        writePragma "Strict"
+       writeFullImport "Graphics.Vulkan.Marshal.Internal"
        writeFullImport "Graphics.Vulkan.Marshal"
        writeFullImport "Graphics.Vulkan.Common"
        genBaseStructs
@@ -66,6 +66,7 @@ generateVkSource outputDir vkXml = do
   _ <- do
     (enames, mr) <- runModuleWriter vkXml "Graphics.Vulkan.Core" exportedNamesBase $ do
        writePragma "Strict"
+       writeFullImport "Graphics.Vulkan.Marshal.Internal"
        writeFullImport "Graphics.Vulkan.Marshal"
        writeFullImport "Graphics.Vulkan.Common"
        writeFullImport "Graphics.Vulkan.Base"

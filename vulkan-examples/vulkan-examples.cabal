@@ -25,6 +25,7 @@ executable ve-01-CreateInstance
 executable ve-02-GLFWWindow
   hs-source-dirs:      .
   main-is:             02-GLFWWindow.hs
+  other-modules:       Lib
   ghc-options:         -Wall
   build-depends:       base
                      , ghc-prim

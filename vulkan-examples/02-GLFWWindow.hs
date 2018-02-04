@@ -1,19 +1,17 @@
 module Main (main) where
 
-import Control.Monad
-import Control.Monad.Trans.Except
-import Control.Monad.Trans.Class
-import Graphics.Vulkan
-import Foreign.Storable
-import Foreign.Ptr
-import Foreign.Marshal.Alloc
-import Foreign.Marshal.Array
-import Foreign.C.String
-import           Graphics.UI.GLFW (WindowHint(..), ClientAPI (..))
-import qualified Graphics.UI.GLFW as GLFW
+import           Control.Monad
+import           Control.Monad.Trans.Class
+import           Control.Monad.Trans.Except
+import           Foreign.C.String
+import           Foreign.Marshal.Alloc
+import           Foreign.Marshal.Array
+import           Foreign.Storable
+import           Graphics.UI.GLFW           (ClientAPI (..), WindowHint (..))
+import qualified Graphics.UI.GLFW           as GLFW
+import           Graphics.Vulkan
 
--- import System.Mem (performGC)
--- import Control.Concurrent (threadDelay)
+import           Lib
 
 main :: IO ()
 main = do
@@ -32,16 +30,15 @@ main = do
         case mw of
           Nothing -> putStrLn "Failed to initialize GLFW window"
           Just w  -> do
-            putStrLn $ "Initialized a window: " ++ show w
-            (vkRes, vulkanInstance) <- createInstance
+            vkRes <- withVulkanInstanceExt $ \vulkanInstance -> do
+              edev <- pickPhysicalDevice vulkanInstance
+              case edev of
+                Left err -> putStrLn err
+                Right dev -> do
+                  print dev
+                  mainLoop w
+              return VK_SUCCESS
             print vkRes
-            edev <- pickPhysicalDevice vulkanInstance
-            case edev of
-              Left err -> putStrLn err
-              Right dev ->
-                mainLoop w
-
-            destroyInstance vulkanInstance
       putStrLn "Done."
       GLFW.terminate
       putStrLn "Terminated GLFW."
@@ -57,75 +54,20 @@ main = do
         mainLoop w
 
 
-
-
-createInstance :: IO (VkResult, VkInstance)
-createInstance = alloca $ \vkInstPtr -> do
-
-    -- allocate some strings - names
-    progNamePtr <- newCString "01-CreateInstance"
-    engineNamePtr <- newCString "My Perfect Haskell Engine"
-
-    -- write VkApplicationInfo
-    appInfoMut <- newVkData
-    writeVkEngineVersion      appInfoMut (_VK_MAKE_VERSION 1 0 0)
-    writeVkPEngineName        appInfoMut engineNamePtr
-    writeVkApplicationVersion appInfoMut (_VK_MAKE_VERSION 1 0 0)
-    writeVkPApplicationName   appInfoMut progNamePtr
-    writeVkPNext              appInfoMut vkNullPtr
-    writeVkSType              appInfoMut VK_STRUCTURE_TYPE_APPLICATION_INFO
-    writeVkApiVersion         appInfoMut (_VK_MAKE_VERSION 1 0 68)
-
+withVulkanInstanceExt :: (VkInstance -> IO VkResult) -> IO VkResult
+withVulkanInstanceExt action = do
     -- get required extension names from GLFW
-    (reqExtCount, reqExtsPtr) <- GLFW.getRequiredInstanceExtensions
+    (reLength, reqExts) <- GLFW.getRequiredInstanceExtensions
+    -- get required layers
+    withCString "VK_LAYER_LUNARG_standard_validation" $ \stdValidationLayer ->
+      let vlList = [ stdValidationLayer
+                   ]
+      in withArray vlList $ \validationLayersPtr ->
+          withVulkanInstance "02-GLFWWindow"
+                             (fromIntegral reLength, reqExts)
+                             (length vlList, validationLayersPtr)
+                             action
 
-    stdValidationLayer <- newCString "VK_LAYER_LUNARG_standard_validation"
-    let vlList = [ stdValidationLayer
-                 ]
-    validationLayersPtr <- newArray vlList
-
-    -- write VkInstanceCreateInfo
-    iCreateInfoMut <- newVkData
-    writeVkPApplicationInfo        iCreateInfoMut
-      (unsafeRef appInfoMut)  -- must remember to keep appInfoMut alive!
-    writeVkPpEnabledExtensionNames iCreateInfoMut reqExtsPtr
-    writeVkEnabledExtensionCount   iCreateInfoMut (fromIntegral reqExtCount)
-    writeVkPpEnabledLayerNames     iCreateInfoMut validationLayersPtr
-    writeVkEnabledLayerCount       iCreateInfoMut (fromIntegral $ length vlList)
-    writeVkFlags                   iCreateInfoMut 0
-    writeVkPNext                   iCreateInfoMut vkNullPtr
-    writeVkSType                   iCreateInfoMut VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
-
-    -- execute createInstance
-    vkRes <- vkCreateInstance
-        (unsafeRef iCreateInfoMut) -- must remember to keep appInfoMut alive!
-        nullPtr vkInstPtr
-    vkInst <- peek vkInstPtr
-
-    -- add finalizers
-    -- the first two are added just to check if they are working
-    addMutableFinalizer appInfoMut $ putStrLn "Finalizing appInfoMut..."
-    addMutableFinalizer iCreateInfoMut $ putStrLn "Finalizing iCreateInfoMut..."
-    -- this finalizer is important, we need it to cleanup resources
-    --   after VkInstance is no longer in use
-    addVkDataFinalizer vkInst $ do
-      -- managed objects are GCed on their own, we just need to make sure
-      --  that they are alive while vkInst is alive
-      touchMutable appInfoMut
-      touchMutable iCreateInfoMut
-      -- unmanaged objects must be released explicitly
-      free progNamePtr
-      free engineNamePtr
-      free validationLayersPtr
-      free stdValidationLayer
-      putStrLn "Finalizing vkInstance..."
-
-    -- .. and, finally, return.
-    return (vkRes, vkInst)
-
-
-destroyInstance :: VkInstance -> IO ()
-destroyInstance inst = vkDestroyInstance inst nullPtr >> touchVkData inst
 
 
 pickPhysicalDevice :: VkInstance -> IO (Either String VkPhysicalDevice)
@@ -151,15 +93,6 @@ pickPhysicalDevice vkInstance = runExceptT $ do
 
 isDeviceSuitable :: VkPhysicalDevice -> IO Bool
 isDeviceSuitable _ = pure True
-
-
-
-
-
-
-
-
-
 
 
 
