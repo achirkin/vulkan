@@ -28,6 +28,7 @@ library
                        Write
                        Write.Commands
                        Write.Feature
+                       Write.Extension
                        Write.ModuleWriter
                        Write.Types
                        Write.Types.Define
