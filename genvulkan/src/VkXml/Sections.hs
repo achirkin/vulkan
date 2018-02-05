@@ -71,7 +71,7 @@ parseVkXml = fmap fixVkXml . execStateC
                 { gpTypes = gpTypes v |> inOrd (gpCurLength v) x
                 , gpCurLength = gpCurLength v + 1
                 }
-        , parseEnums >>= \case
+        , parseVkEnums >>= \case
             Nothing -> pure Nothing
             Just x  -> fmap (const $ Just ()) . modify' $ \v -> v
                 { gpEnums = gpEnums v |> inOrd (gpCurLength v) x
@@ -127,7 +127,7 @@ data VkXml l
   , globVendorIds  :: InOrder VendorIds l
   , globTags       :: InOrder VkTags l
   , globTypes      :: InOrder VkTypes l
-  , globEnums      :: Map VkTypeName (InOrder VkEnums l)
+  , globEnums      :: Map (Maybe VkTypeName) (InOrder VkEnums l)
   , globCommands   :: InOrder VkCommands l
   , globFeature    :: InOrder VkFeature l
   , globExtensions :: InOrder VkExtensions l
@@ -191,7 +191,7 @@ fixVkXml VkXmlPartial
   , globTags       = pTags
   , globTypes      = pTypes
   , globEnums      = Map.fromList
-                   . map (\e -> ( (name :: VkEnums -> VkTypeName)
+                   . map (\e -> ( _vkEnumsTypeName
                                  $ unInorder e, e)
                          )
                    $ toList pEnums

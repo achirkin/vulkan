@@ -76,7 +76,7 @@ genCommand VkCommand
 
     writeExport $ EVar () (UnQual () (Ident () cnameStr))
   where
-    cname = toHaskellVar vkname
+    cname = toHaskellName vkname
     cnameStr = T.unpack  $ qNameTxt cname
     cnameOrigStr = T.unpack $ unVkCommandName vkname
     -- funtypeTxt = T.pack $ prettyPrint funtype
