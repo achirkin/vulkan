@@ -6,6 +6,7 @@
 {-# LANGUAGE RecordWildCards       #-}
 {-# LANGUAGE Strict                #-}
 {-# LANGUAGE TemplateHaskell       #-}
+{-# LANGUAGE QuasiQuotes           #-}
 -- | Vulkan enums, as they defined in vk.xml
 module VkXml.Sections.Enums
   ( parseEnums
@@ -13,6 +14,10 @@ module VkXml.Sections.Enums
   , VkEnumValue (..)
   , VkBitmaskValue (..)
   , VkConstant (..)
+  , parseVkEnum
+  , VkEnum (..)
+  , vkEnumName, vkEnumTName, vkEnumComment
+  , vkEnumType, vkEnumValue, vkEnumRawVal
   ) where
 
 
@@ -24,10 +29,16 @@ import           Data.Conduit
 import           Data.Maybe
 import           Data.Semigroup
 import           Data.Text                    (Text)
+import qualified Data.Text                    as T
 import qualified Data.Text.Read               as T
 import           Data.XML.Types
 import           Language.Haskell.Exts.Syntax
 import           Text.XML.Stream.Parse
+import qualified Data.Text.Lazy.Builder as LT
+import qualified Data.Text.Lazy.Builder.Int as LT
+import qualified Data.Text.Lazy as LT
+import           Text.RE.TDFA.Text
+import           Data.Bits
 
 import           VkXml.CommonTypes
 import           VkXml.Parser
@@ -62,8 +73,13 @@ data VkEnum
   { _vkEnumName    :: VkEnumName
   , _vkEnumTName   :: Maybe VkTypeName
   , _vkEnumComment :: Text
-  , _vkEnumType    :: Type ()
-  , _vkEnumValue   :: Exp ()
+  , _vkEnumType    :: Text
+    -- ^ suitable for pasting into parser
+  , _vkEnumValue   :: Text
+    -- ^ suitable for pasting into parser
+  , _vkEnumRawVal  :: Text
+    -- ^ Text value of enum,
+    --   i.e. show num or raw text string
   }
 
 
@@ -78,14 +94,21 @@ parseVkEnum :: VkXmlParser m
                -- ^ extension number, 0 otherwise
             -> Maybe VkTypeName
                -- ^ Name of the type this value belongs to.
-            -> Sink Event m (Maybe VkEnum)
+            -> Sink Event m [VkEnum]
 parseVkEnum extNumber mTypeName
-    = ignoreEmptyTag "unused"
+    = fmap (^.._Just.traverse)
+    $ ignoreEmptyTag "unused"
     >> parseTagForceAttrs "enum" parseAttrs pure
   where
-    parseAttrs :: ReaderT ParseLoc AttrParser VkEnum
+    parseAttrs :: ReaderT ParseLoc AttrParser [VkEnum]
     parseAttrs = do
       _vkEnumName  <- VkEnumName <$> forceAttr "name"
+      unless (isValid _vkEnumName)
+        $ parseFailed
+        $ "parseVkEnum: invalid enum name: "
+          <> T.unpack (unVkEnumName _vkEnumName)
+          <> ". The enum name should be a valid haskell pattern synonym."
+
       mvalue       <- lift $ attr "value"
       mbitpos      <- lift $ attr "bitpos"
       mapi         <- lift $ attr "api"
@@ -99,12 +122,97 @@ parseVkEnum extNumber mTypeName
       let _vkEnumComment = comment
                        <:> maybe mempty (\s -> "bitpos = @" <> s <> "@") mbitpos
                        <:> maybe mempty (\s -> "api = @" <> s <> "@") mapi
+                       <:> maybe mempty (\s -> "type = @" <> s <> "@") mtype
 
-      (_vkEnumType, _vkEnumValue) <-
+      (_vkEnumType, _vkEnumValue, _vkEnumRawVal) <-
         case _vkEnumTName of
+
           -- if vk type name is given, we are confident the type is Int32
-          Just tname -> pure (undefined, undefined) -- TODO WIP
-      return VkEnum{..}
+          Just tname -> do
+            (pasting, raw) <- makeNumeric
+              (T.signed decOrHex <$> mvalue)
+              (decOrHex <$> mbitpos)
+              (decOrHex <$> moffset)
+              negDir
+            pure (toType 0 (toHaskellType tname), val, raw)
+
+          -- if there is no type name, we are dealing with a constant,
+          -- that can be WordXX, IntXX, Num a, Fractional a, or literal string
+          Nothing -> case mvalue of
+            Nothing -> parseFailed
+              $ "parseVkEnum: invalid enum: " <> T.unpack (unVkEnumName _vkEnumName)
+              <> ". It does not have any type or value."
+            Just val
+
+              | matched $ val ?=~ [reMultilineSensitive|"[0-9A-Za-z_]+"|]
+                -> pure
+                   ( TyCon ()
+                   $ Qual () (ModuleName () "Foreign.C.String") (Ident () "CString")
+                   , undefined
+                   )
+
+              | otherwise
+                -> parseFailed
+                $ "parseVkEnum: value " <> T.unpack val
+                <> " does not match any known enum kind."
+
+      let rEnum = VkEnum{..}
+
+      aliasEnumL <- case malias of
+        Nothing -> pure []
+        Just alias -> do
+          unless (isValid $ VkEnumName alias)
+            $ parseFailed
+            $ "parseVkEnum: invalid enum name: "
+              <> T.unpack alias
+              <> ". The enum name should be a valid haskell pattern synonym."
+          return [rEnum & vkEnumName .~ VkEnumName alias]
+
+      return $ rEnum : aliasEnumL
+
+    fromBitpos bitpos
+      | v <- shiftL 1 bitpos
+      , s <- LT.toStrict $ "0x" <>
+               LT.justifyRight 8 '0' (LT.toLazyText (LT.hexadecimal v))
+      = (s, s)
+    fromValue v
+      = ( T.pack $ if v < 0 then "(" ++ show v ++ ")"
+                            else show v
+        , v
+        )
+    -- Extending enums in extensions:
+    --  describes use of "offset" attribute
+    -- https://www.khronos.org/registry/vulkan/specs/1.0/styleguide.html#_assigning_extension_token_values
+    --
+    -- enum_offset(extension_number, offset) = base_value + (extension_number - 1) × range_size + offset
+    -- where
+    --   base_value = 1000000000
+    --   range_size = 1000
+    --
+    -- positve enum  = enum_offset(extension_number, offset)
+    -- negative enum = - enum_offset(extension_number, offset)
+    fromOffset isNegDir offset
+      | base_value <- 1000000000
+      , range_size <- 1000
+      , vAbs <- base_value + range_size * (fromIntegral extNumber - 1) + offset
+      , v <- if isNegDir then negate vAbs else vAbs
+      = fromValue v
+
+    makeNumeric (Just (Right (value,_))) _mbitpos _moffset _ndir
+      = pure $ fromValue value
+    makeNumeric _mvalue (Just (Right (bitpos,_))) _moffset _ndir
+      = pure $ fromBitpos bitpos
+    makeNumeric _mvalue _mbitpos (Just (Right (offset,_))) ndir
+      = pure $ fromOffset ndir offset
+    makeNumeric (Just (Left err)) _ _ _ = parseFailed
+              $ "Could not parse enum value: " <> err
+    makeNumeric _ (Just (Left err)) _ _ = parseFailed
+              $ "Could not parse enum bitpos: " <> err
+    makeNumeric _ _ (Just (Left err)) _ = parseFailed
+              $ "Could not parse enum offset: " <> err
+    makeNumeric Nothing Nothing Nothing _ = parseFailed
+                "Enum has neither of value, bitpos, offset."
+
 
 -- * Types
 

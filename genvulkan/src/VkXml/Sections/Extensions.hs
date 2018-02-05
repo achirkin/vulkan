@@ -30,17 +30,6 @@ import           VkXml.Parser
 -- https://www.khronos.org/registry/vulkan/specs/1.0/registry.html#tag-required
 
 
--- Extending enums in extensions:
---  describes use of "offset" attribute
--- https://www.khronos.org/registry/vulkan/specs/1.0/styleguide.html#_assigning_extension_token_values
---
--- enum_offset(extension_number, offset) = base_value + (extension_number - 1) × range_size + offset
--- where
---   base_value = 1000000000
---   range_size = 1000
---
--- positve enum  = enum_offset(extension_number, offset)
--- negative enum = - enum_offset(extension_number, offset)
 
 
 data VkExtensions
