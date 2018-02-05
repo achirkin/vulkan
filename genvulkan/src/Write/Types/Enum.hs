@@ -52,10 +52,19 @@ genEnum t = ask >>= \vk -> case unInorder <$> Map.lookup tname (globEnums vk) of
     tname = (name :: VkType -> VkTypeName) t
 
 genEnums :: Monad m => VkEnums -> ModuleWriter m ()
-genEnums enum = do
+genEnums VkEnums {..} = do
+    writePragma "GeneralizedNewtypeDeriving"
+    writePragma "DeriveDataTypeable"
+    writePragma "DeriveGeneric"
+
+    writeImport "GHC.Generics" $ IAbs () (NoNamespace ()) (Ident () "Generic")
+    writeImport "Data.Data"    $ IAbs () (NoNamespace ()) (Ident () "Typeable")
+    writeImport "Data.Data"    $ IAbs () (NoNamespace ()) (Ident () "Data")
+    writeImport "Data.Bits"    $ IAbs () (NoNamespace ()) (Ident () "Bits")
+    writeImport "Data.Bits"    $ IAbs () (NoNamespace ()) (Ident () "FiniteBits")
     writeImport "Foreign.Storable"
       $ IAbs () (NoNamespace ()) (Ident () "Storable")
-    when nb $ writeImport "Data.Bits"
+    when _vkEnumsIsBits $ writeImport "Data.Bits"
       $ IAbs () (NoNamespace ()) (Ident () "Bits")
 
     unless (tname == VkTypeName "API Constants") $ do
@@ -66,18 +75,14 @@ genEnums enum = do
     enumPats tname enum
   where
     nb = needsBits enum
-    derives = if nb then ["Eq","Ord","Bits","Storable"]
-                    else ["Eq","Ord","Storable"]
+    derives = (if _vkEnumsIsBits then ("Bits":).("FiniteBits":) else id)
+              ["Eq","Ord","Bounded","Storable","Enum", "Data", "Generic"]
     tcomment = (comment :: VkEnums -> Maybe Text) enum
     tname = (name :: VkEnums -> VkTypeName) enum
     enumPats tn VkEnums {..}
       = writeSections (enumPattern tn) memberEnums
-    enumPats tn VkBitmasks {..}
-      = writeSections (bitmaskPattern tn) memberMasks
-    enumPats _ VkConstants {..}
-      = writeSections constantPattern memberConsts
 
-    allPNs = allPatNames enum
+    allPNs =  . items $ _vkEnumsMembers
     allPatNames VkEnums {..}    = map enumPatName . items $ memberEnums
     allPatNames VkBitmasks {..} = map bitmaskPatName . items $ memberMasks
     allPatNames VkConstants {}  = []
@@ -289,9 +294,5 @@ enumPattern vkTName VkEnumValue {..} = do
     rezComment = comment >>= preComment . T.unpack
 
 
-enumPatName :: VkEnumValue -> Text
-enumPatName VkEnumValue {..} = qNameTxt (toHaskellVar name)
-
-bitmaskPatName :: VkBitmaskValue -> Text
-bitmaskPatName VkBitmaskBitpos {..} = qNameTxt (toHaskellVar name)
-bitmaskPatName VkBitmaskValue {..}  = qNameTxt (toHaskellVar name)
+enumPatName :: VkEnum -> Text
+enumPatName VkEnum {..} = qNameTxt (toHaskellVar name)

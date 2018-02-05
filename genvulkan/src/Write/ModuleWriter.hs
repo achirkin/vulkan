@@ -18,9 +18,7 @@ module Write.ModuleWriter
   , writeWithComments, vkRegistryLink
   , writeSections
   , foldSectionsWithComments, pushSecLvl
-  , toHaskellType, toHaskellVar, qNameTxt
   , requireType, requireTypeMember, requireVar, requirePattern
-  , toCamelCase, toType, unqualify
   , getNamesInScope
   ) where
 
@@ -33,8 +31,6 @@ import           Control.Monad.IO.Class
 import           Control.Monad.Morph
 import           Control.Monad.Reader.Class
 import           Control.Monad.Trans.RWS.Strict       (RWST (..), gets, modify)
-import           Data.Char
-import           Data.Coerce
 import           Data.Foldable                        (toList)
 import qualified Data.List                            as List
 import           Data.Map.Strict                      (Map)
@@ -50,7 +46,6 @@ import           Data.Traversable                     (mapAccumL)
 import           GHC.Stack                            (HasCallStack)
 import           Language.Haskell.Exts.Extension
 import           Language.Haskell.Exts.Parser
-import           Language.Haskell.Exts.Pretty         (prettyPrint)
 import           Language.Haskell.Exts.SimpleComments
 import           Language.Haskell.Exts.Syntax
 
@@ -439,13 +434,6 @@ vkRegistryLink tname = do
         <> tname <> " registry at www.khronos.org>"
 
 
-qNameTxt :: QName a -> Text
-qNameTxt (Qual _ _ (Ident _ t))  = T.pack t
-qNameTxt (Qual _ _ (Symbol _ t)) = T.pack t
-qNameTxt (UnQual _ (Ident _ t))  = T.pack t
-qNameTxt (UnQual _ (Symbol _ t)) = T.pack t
-qNameTxt (Special _ t)           = T.pack $ prettyPrint t
-
 requireType :: Monad m => QName () -> ModuleWriter m ()
 requireType (Qual _ (ModuleName _ m) n) = writeImport m (IThingWith () n [])
 requireType _                           = pure ()
@@ -464,82 +452,3 @@ requirePattern :: Monad m => QName () -> ModuleWriter m ()
 requirePattern (Qual _ (ModuleName _ m) n)
   = writeImport m (IAbs () (PatternNamespace ()) n)
 requirePattern _ = pure ()
-
-toHaskellType :: VkTypeName -> QName ()
-toHaskellType (VkTypeName "void")
-  = Special () (UnitCon ())
-toHaskellType (VkTypeName "char")
-  = Qual () (ModuleName () "Foreign.C.Types") (Ident () "CChar")
-toHaskellType (VkTypeName "float")
-  = Qual () (ModuleName () "Foreign.C.Types") (Ident () "CFloat")
-toHaskellType (VkTypeName "double")
-  = Qual () (ModuleName () "Foreign.C.Types") (Ident () "CDouble")
-toHaskellType (VkTypeName "uint8_t")
-  = Qual () (ModuleName () "Data.Word") (Ident () "Word8")
-toHaskellType (VkTypeName "uint16_t")
-  = Qual () (ModuleName () "Data.Word") (Ident () "Word16")
-toHaskellType (VkTypeName "uint32_t")
-  = Qual () (ModuleName () "Data.Word") (Ident () "Word32")
-toHaskellType (VkTypeName "uint64_t")
-  = Qual () (ModuleName () "Data.Word") (Ident () "Word64")
-toHaskellType (VkTypeName "int8_t")
-  = Qual () (ModuleName () "Data.Int") (Ident () "Int8")
-toHaskellType (VkTypeName "int16_t")
-  = Qual () (ModuleName () "Data.Int") (Ident () "Int16")
-toHaskellType (VkTypeName "int32_t")
-  = Qual () (ModuleName () "Data.Int") (Ident () "Int32")
-toHaskellType (VkTypeName "int64_t")
-  = Qual () (ModuleName () "Data.Int") (Ident () "Int64")
-toHaskellType (VkTypeName "size_t")
-  = Qual () (ModuleName () "Foreign.C.Types") (Ident () "CSize")
-toHaskellType (VkTypeName "int")
-  = Qual () (ModuleName () "Foreign.C.Types") (Ident () "CInt")
-toHaskellType (VkTypeName t)
-    = UnQual ()
-    . Ident ()
-    -- . toCamelCase
-    . firstUp
-    . dropWhile (not . isAlpha)TyCon () (
-    . filter (\x -> isAlphaNum x || x == '_' || x == '\'')
-    $ T.unpack t
-  where
-    firstUp []     = error "toHaskellType: empty type name!"
-    firstUp (x:xs) = toUpper x : xs
-
-toHaskellVar :: Coercible a Text
-             => a -> QName ()
-toHaskellVar
-    = UnQual () . Ident ()
-    . dropWhile (\x -> not (isAlpha x) && x /= '_')
-    . filter (\x -> isAlphaNum x || x == '_' || x == '\'')
-    . T.unpack . coerce
-
-
-toCamelCase :: String -> String
-toCamelCase ('_':c:cs)
-  | isLower c = toUpper c : toCamelCase cs
-toCamelCase (c:cs) = c : toCamelCase cs
-toCamelCase [] = []
-
--- | Construct a type from a qualified type name and pointer level.
---   If the type is c void and it is wrapped into a Ptr,
---     I treat it as Void.
-toType :: Word -- ^ number of times pointer
-       -> QName () -- ^ name of the type
-       -> Type ()
-toType 0 t = TyCon () t
-toType n t | t == toHaskellType (VkTypeName "void")
-             = appPtr n voidTy
-           | otherwise
-             = appPtr n $ TyCon () t
-  where
-    appPtr 0 ty = ty
-    appPtr k ty = appPtr (k-1) $ TyApp () ptrTy ty
-    voidTy = TyCon () (Qual () (ModuleName () "Data.Void") (Ident () "Void"))
-    ptrTy  = TyCon () (Qual () (ModuleName () "Foreign.Ptr") (Ident () "Ptr"))
-
-
-unqualify :: QName a -> Name a
-unqualify (Qual _ _ n)  = n
-unqualify (UnQual _ n)  = n
-unqualify (Special _ _) = error "unqualify: cannot unqualify special name."

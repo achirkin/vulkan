@@ -5,27 +5,28 @@ module VkXml.CommonTypes
   ( VkEnumValueName (..)
   , VkTypeName (..), VkMemberName (..), VkCommandName (..)
   , Sections (..), VkTagName (..), VkExtensionName (..)
-  , parseSections
+  , parseSections, parseSectionsL
   , VkEnumName (..)
   , (<:>)
   , ValidIdent (..)
   , isHaskellIdent, isHaskellLowerFirst, isHaskellUpperFirst
   , firstUp, firstDown
-  , toHaskellType, toType
-  , moduleName, unqualifyQ, unqualify
+  , toHaskellName, toType
+  , moduleName, unqualifyQ, unqualify, qNameTxt
   ) where
 
 import           Control.Monad.State.Class
 import           Control.Monad.Trans.Class
+import           Data.Char
 import           Data.Conduit
 import           Data.Conduit.Lift
-import           Data.Char
-import           Data.String               (IsString)
-import           Data.Text                 (Text)
-import qualified Data.Text                 as T
-import           Data.XML.Types            hiding (Name)
-import           Text.XML.Stream.Parse
+import           Data.String                  (IsString)
+import           Data.Text                    (Text)
+import qualified Data.Text                    as T
+import           Data.XML.Types               hiding (Name)
+import           Language.Haskell.Exts.Pretty
 import           Language.Haskell.Exts.Syntax
+import           Text.XML.Stream.Parse
 
 import           VkXml.Parser
 
@@ -72,10 +73,10 @@ data Sections a
   } deriving Show
 
 -- | Parse elements and comments in between them.
-parseSections :: VkXmlParser m
-              => Sink Event m (Maybe a) -- ^ how to parse elements
+parseSectionsL :: VkXmlParser m
+              => Sink Event m [a] -- ^ how to parse elements
               -> Sink Event m (Sections a)
-parseSections parseElem = evalStateC (0::Int) parseIt
+parseSectionsL parseElem = evalStateC (0::Int) parseIt
   where
     prepComment c ~secs@(Sections _ cs) = secs{ comments = c:cs}
     prepItem    e ~secs@(Sections es _) = secs{ items    = e:es}
@@ -83,17 +84,29 @@ parseSections parseElem = evalStateC (0::Int) parseIt
       mnewcomment <- tagIgnoreAttrs "comment" content
       me <- transPipe lift parseElem
       case (mnewcomment, me) of
-        (Nothing, Nothing) -> pure $ Sections [] []
-        (Just comment, Just e) -> do
+        (Nothing, []) -> pure $ Sections [] []
+        (Just comment, e:es) -> do
           i <- get
           modify' (+1)
-          prepComment (i,comment) . prepItem e <$> parseIt
-        (Just comment, Nothing) -> do
+          prepComment (i,comment)
+            . prepItem e
+            . flip (foldr prepItem) (reverse es) <$> parseIt
+        (Just comment, []) -> do
           i <- get
           prepComment (i,comment) <$> parseIt
-        (Nothing, Just e) -> do
+        (Nothing, e:es) -> do
           modify' (+1)
-          prepItem e <$> parseIt
+          prepItem e
+             . flip (foldr prepItem) (reverse es) <$> parseIt
+
+parseSections :: VkXmlParser m
+              => Sink Event m (Maybe a) -- ^ how to parse elements
+              -> Sink Event m (Sections a)
+parseSections parseElem = parseSectionsL (g <$> parseElem)
+  where
+    g Nothing  = []
+    g (Just a) = [a]
+
 
 -- | Combine two comments vertically
 (<:>) :: Text -> Text -> Text
@@ -115,32 +128,32 @@ instance ValidIdent VkEnumName where
 
 
 instance ValidIdent VkTypeName where
-  isValid "void" = True
-  isValid "char" = True
-  isValid "float" = True
-  isValid "double" = True
-  isValid "uint8_t" = True
-  isValid "uint16_t" = True
-  isValid "uint32_t" = True
-  isValid "uint64_t" = True
-  isValid "int8_t" = True
-  isValid "int16_t" = True
-  isValid "int32_t" = True
-  isValid "int64_t" = True
-  isValid "size_t" = True
-  isValid "int" = True
+  isValid "void"         = True
+  isValid "char"         = True
+  isValid "float"        = True
+  isValid "double"       = True
+  isValid "uint8_t"      = True
+  isValid "uint16_t"     = True
+  isValid "uint32_t"     = True
+  isValid "uint64_t"     = True
+  isValid "int8_t"       = True
+  isValid "int16_t"      = True
+  isValid "int32_t"      = True
+  isValid "int64_t"      = True
+  isValid "size_t"       = True
+  isValid "int"          = True
   isValid (VkTypeName n) = isHaskellUpperFirst n
 
 
 firstUp :: Text -> Text
 firstUp s = case T.uncons s of
   Just (a, ss) -> T.cons (toUpper a) ss
-  Nothing -> s
+  Nothing      -> s
 
 firstDown :: Text -> Text
 firstDown s = case T.uncons s of
   Just (a, ss) -> T.cons (toLower a) ss
-  Nothing -> s
+  Nothing      -> s
 
 isHaskellUpperFirst :: Text -> Bool
 isHaskellUpperFirst s = isHaskellIdent s && isUpper (T.head s)
@@ -160,36 +173,36 @@ isHaskellIdent s
     validChar c = isAscii c && (isAlphaNum c || c == '_')
     invalidChar = not . validChar
 
-toHaskellType :: VkTypeName -> QName ()
-toHaskellType (VkTypeName "void")
+toHaskellName :: VkTypeName -> QName ()
+toHaskellName (VkTypeName "void")
   = Special () (UnitCon ())
-toHaskellType (VkTypeName "char")
+toHaskellName (VkTypeName "char")
   = Qual () (ModuleName () "Foreign.C.Types") (Ident () "CChar")
-toHaskellType (VkTypeName "float")
+toHaskellName (VkTypeName "float")
   = UnQual () (Ident () "HSC2HS___ \"#{type float}\"")
-toHaskellType (VkTypeName "double")
+toHaskellName (VkTypeName "double")
   = UnQual () (Ident () "HSC2HS___ \"#{type double}\"")
-toHaskellType (VkTypeName "uint8_t")
+toHaskellName (VkTypeName "uint8_t")
   = Qual () (ModuleName () "Data.Word") (Ident () "Word8")
-toHaskellType (VkTypeName "uint16_t")
+toHaskellName (VkTypeName "uint16_t")
   = Qual () (ModuleName () "Data.Word") (Ident () "Word16")
-toHaskellType (VkTypeName "uint32_t")
+toHaskellName (VkTypeName "uint32_t")
   = Qual () (ModuleName () "Data.Word") (Ident () "Word32")
-toHaskellType (VkTypeName "uint64_t")
+toHaskellName (VkTypeName "uint64_t")
   = Qual () (ModuleName () "Data.Word") (Ident () "Word64")
-toHaskellType (VkTypeName "int8_t")
+toHaskellName (VkTypeName "int8_t")
   = Qual () (ModuleName () "Data.Int") (Ident () "Int8")
-toHaskellType (VkTypeName "int16_t")
+toHaskellName (VkTypeName "int16_t")
   = Qual () (ModuleName () "Data.Int") (Ident () "Int16")
-toHaskellType (VkTypeName "int32_t")
+toHaskellName (VkTypeName "int32_t")
   = Qual () (ModuleName () "Data.Int") (Ident () "Int32")
-toHaskellType (VkTypeName "int64_t")
+toHaskellName (VkTypeName "int64_t")
   = Qual () (ModuleName () "Data.Int") (Ident () "Int64")
-toHaskellType (VkTypeName "size_t")
+toHaskellName (VkTypeName "size_t")
   = UnQual () (Ident () "HSC2HS___ \"#{type size_t}\"")
-toHaskellType (VkTypeName "int")
+toHaskellName (VkTypeName "int")
   = UnQual () (Ident () "HSC2HS___ \"#{type int}\"")
-toHaskellType (VkTypeName t)
+toHaskellName (VkTypeName t)
   = UnQual () (Ident () (T.unpack t))
 
 
@@ -200,7 +213,7 @@ toType :: Word -- ^ number of times pointer
        -> QName () -- ^ name of the type
        -> Type ()
 toType 0 t = TyCon () t
-toType n t | t == toHaskellType (VkTypeName "void")
+toType n t | t == toHaskellName (VkTypeName "void")
              = appPtr n voidTy
            | Qual () _ (Ident () "CChar") <- t
            , n > 0
@@ -220,11 +233,19 @@ unqualify (UnQual _ n)  = n
 unqualify (Special _ _) = error "unqualify: cannot unqualify special name."
 
 unqualifyQ :: QName a -> QName a
-unqualifyQ (Qual l _ n)  = UnQual l n
-unqualifyQ x@UnQual{}  = x
-unqualifyQ x@Special{} = x
+unqualifyQ (Qual l _ n) = UnQual l n
+unqualifyQ x@UnQual{}   = x
+unqualifyQ x@Special{}  = x
 
 moduleName :: QName a -> Maybe String
 moduleName (Qual _ (ModuleName _ m) _) = Just m
-moduleName UnQual{}  = Nothing
-moduleName Special{} = Nothing
+moduleName UnQual{}                    = Nothing
+moduleName Special{}                   = Nothing
+
+
+qNameTxt :: QName a -> Text
+qNameTxt (Qual _ _ (Ident _ t))  = T.pack t
+qNameTxt (Qual _ _ (Symbol _ t)) = T.pack t
+qNameTxt (UnQual _ (Ident _ t))  = T.pack t
+qNameTxt (UnQual _ (Symbol _ t)) = T.pack t
+qNameTxt (Special _ t)           = T.pack $ prettyPrint t

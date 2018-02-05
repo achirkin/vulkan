@@ -3,21 +3,18 @@
 {-# LANGUAGE LambdaCase            #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE QuasiQuotes           #-}
 {-# LANGUAGE RecordWildCards       #-}
 {-# LANGUAGE Strict                #-}
 {-# LANGUAGE TemplateHaskell       #-}
-{-# LANGUAGE QuasiQuotes           #-}
 -- | Vulkan enums, as they defined in vk.xml
 module VkXml.Sections.Enums
-  ( parseEnums
-  , VkEnums (..)
-  , VkEnumValue (..)
-  , VkBitmaskValue (..)
-  , VkConstant (..)
-  , parseVkEnum
+  ( parseVkEnum, parseVkEnums
   , VkEnum (..)
   , vkEnumName, vkEnumTName, vkEnumComment
-  , vkEnumType, vkEnumValue, vkEnumRawVal
+  , vkEnumValue
+  , VkEnums (..)
+  , vkEnumsTypeName, vkEnumsComment, vkEnumsMembers, vkEnumsIsBits
   ) where
 
 
@@ -25,20 +22,18 @@ import           Control.Applicative
 import           Control.Lens
 import           Control.Monad.Except
 import           Control.Monad.Trans.Reader   (ReaderT (..))
+import           Data.Bits
 import           Data.Conduit
 import           Data.Maybe
 import           Data.Semigroup
 import           Data.Text                    (Text)
 import qualified Data.Text                    as T
 import qualified Data.Text.Read               as T
+import           Data.Word
 import           Data.XML.Types
-import           Language.Haskell.Exts.Syntax
-import           Text.XML.Stream.Parse
-import qualified Data.Text.Lazy.Builder as LT
-import qualified Data.Text.Lazy.Builder.Int as LT
-import qualified Data.Text.Lazy as LT
+import           Language.Haskell.Exts.Pretty
 import           Text.RE.TDFA.Text
-import           Data.Bits
+import           Text.XML.Stream.Parse
 
 import           VkXml.CommonTypes
 import           VkXml.Parser
@@ -73,17 +68,66 @@ data VkEnum
   { _vkEnumName    :: VkEnumName
   , _vkEnumTName   :: Maybe VkTypeName
   , _vkEnumComment :: Text
-  , _vkEnumType    :: Text
-    -- ^ suitable for pasting into parser
-  , _vkEnumValue   :: Text
-    -- ^ suitable for pasting into parser
-  , _vkEnumRawVal  :: Text
-    -- ^ Text value of enum,
-    --   i.e. show num or raw text string
-  }
+  , _vkEnumValue   :: VkEnumValue
+  } deriving (Eq,Ord,Show)
 
+data VkEnumValue
+  = VkEnumString Text
+    -- ^ String literal
+  | VkEnumIntegral Integer Text
+    -- ^ Value and type, i.e. "Num a => a" or "Word32" or "VkResult"
+  | VkEnumFractional Rational
+    -- ^ Value; type is assumed to be "Fractional a => a"
+  | VkEnumReference
+    -- ^ Enum with no value, assuming there is a value somewhere else.
+  deriving (Eq,Ord,Show)
+
+data VkEnums
+  = VkEnums
+    { _vkEnumsTypeName :: Maybe VkTypeName
+    , _vkEnumsComment  :: Text
+    , _vkEnumsIsBits   :: Bool
+    , _vkEnumsMembers  :: Sections VkEnum
+    } deriving Show
 
 makeLenses ''VkEnum
+makeLenses ''VkEnums
+
+-- * Parsing
+
+-- | Try to parse current tag as being enums,
+--
+--   * If tag name does not match, return events upstream as leftovers
+--   * If failed to parse tag "enums", throw an exception
+--
+--   Note: enum "VkResult" also has a member "unused",
+--    I ignore this member, because it does not seem to be useful for codegen.
+parseVkEnums :: VkXmlParser m
+           => Sink Event m (Maybe VkEnums)
+parseVkEnums = parseTagForceAttrs "enums" parseVkEnumsAttrs $
+  \case
+    VkEnums n c ib _
+      -> fmap (VkEnums n c ib)
+      . parseSectionsL $ many_ (ignoreEmptyTag "unused") >> parseVkEnum 0 n
+
+
+parseVkEnumsAttrs :: ReaderT ParseLoc AttrParser VkEnums
+parseVkEnumsAttrs = do
+  n <- VkTypeName <$> forceAttr "name"
+  c <- lift $ fromMaybe mempty <$> attr "comment"
+  met <- lift $ attr "type"
+  let _vkEnumsComment = c
+          <:> maybe mempty (\s -> "type = @" <> s <> "@") met
+      _vkEnumsMembers = Sections [] []
+      _vkEnumsTypeName =
+         if n == VkTypeName "API Constants"
+         then Nothing else Just n
+      _vkEnumsIsBits = met == Just "bitmask"
+
+  pure VkEnums {..}
+
+
+
 
 
 -- | Try to read @enum@ tag.
@@ -96,9 +140,7 @@ parseVkEnum :: VkXmlParser m
                -- ^ Name of the type this value belongs to.
             -> Sink Event m [VkEnum]
 parseVkEnum extNumber mTypeName
-    = fmap (^.._Just.traverse)
-    $ ignoreEmptyTag "unused"
-    >> parseTagForceAttrs "enum" parseAttrs pure
+    = (^.._Just.traverse) <$> parseTagForceAttrs "enum" parseAttrs pure
   where
     parseAttrs :: ReaderT ParseLoc AttrParser [VkEnum]
     parseAttrs = do
@@ -124,32 +166,46 @@ parseVkEnum extNumber mTypeName
                        <:> maybe mempty (\s -> "api = @" <> s <> "@") mapi
                        <:> maybe mempty (\s -> "type = @" <> s <> "@") mtype
 
-      (_vkEnumType, _vkEnumValue, _vkEnumRawVal) <-
+      _vkEnumValue <-
         case _vkEnumTName of
 
           -- if vk type name is given, we are confident the type is Int32
-          Just tname -> do
-            (pasting, raw) <- makeNumeric
+          Just tname -> makeNumeric
               (T.signed decOrHex <$> mvalue)
               (decOrHex <$> mbitpos)
               (decOrHex <$> moffset)
               negDir
-            pure (toType 0 (toHaskellType tname), val, raw)
+              (T.pack . prettyPrint $ toType 0 (toHaskellName tname))
 
           -- if there is no type name, we are dealing with a constant,
           -- that can be WordXX, IntXX, Num a, Fractional a, or literal string
           Nothing -> case mvalue of
-            Nothing -> parseFailed
-              $ "parseVkEnum: invalid enum: " <> T.unpack (unVkEnumName _vkEnumName)
-              <> ". It does not have any type or value."
+            -- this is a refernce to another existing constant
+            Nothing -> pure VkEnumReference
+
             Just val
 
-              | matched $ val ?=~ [reMultilineSensitive|"[0-9A-Za-z_]+"|]
-                -> pure
-                   ( TyCon ()
-                   $ Qual () (ModuleName () "Foreign.C.String") (Ident () "CString")
-                   , undefined
-                   )
+                -- this is a string literal
+              | Just s <- matchedText $ val ?=~ [reMultilineSensitive|"([0-9A-Za-z_]+)"|]
+                -> pure $ VkEnumString s
+
+                -- this is a fractional number
+              | Right (v, "f") <- T.rational val
+                -> pure $ VkEnumFractional v
+
+                -- arbitrary integral
+              | Right (v, "") <- T.signed T.decimal val
+                -> pure $ VkEnumIntegral v "(Num a, Eq a) => a"
+
+                -- special unparsed cases
+              | "(~0U)" <- val
+                -> pure $ VkEnumIntegral (toInteger (complement 0 :: Word32)) "Word32"
+              | "(~0ULL)" <- val
+                -> pure $ VkEnumIntegral (toInteger (complement 0 :: Word64)) "Word64"
+              | "(~0U-1)" <- val
+                -> pure $ VkEnumIntegral (toInteger (complement 0 - 1 :: Word32)) "Word32"
+              | "(~0U-2)" <- val
+                -> pure $ VkEnumIntegral (toInteger (complement 0 - 2 :: Word32)) "Word32"
 
               | otherwise
                 -> parseFailed
@@ -170,16 +226,8 @@ parseVkEnum extNumber mTypeName
 
       return $ rEnum : aliasEnumL
 
-    fromBitpos bitpos
-      | v <- shiftL 1 bitpos
-      , s <- LT.toStrict $ "0x" <>
-               LT.justifyRight 8 '0' (LT.toLazyText (LT.hexadecimal v))
-      = (s, s)
-    fromValue v
-      = ( T.pack $ if v < 0 then "(" ++ show v ++ ")"
-                            else show v
-        , v
-        )
+    fromBitpos = shiftL 1
+    fromValue = id
     -- Extending enums in extensions:
     --  describes use of "offset" attribute
     -- https://www.khronos.org/registry/vulkan/specs/1.0/styleguide.html#_assigning_extension_token_values
@@ -198,148 +246,146 @@ parseVkEnum extNumber mTypeName
       , v <- if isNegDir then negate vAbs else vAbs
       = fromValue v
 
-    makeNumeric (Just (Right (value,_))) _mbitpos _moffset _ndir
-      = pure $ fromValue value
-    makeNumeric _mvalue (Just (Right (bitpos,_))) _moffset _ndir
-      = pure $ fromBitpos bitpos
-    makeNumeric _mvalue _mbitpos (Just (Right (offset,_))) ndir
-      = pure $ fromOffset ndir offset
-    makeNumeric (Just (Left err)) _ _ _ = parseFailed
+    makeNumeric (Just (Right (value,_))) _mbitpos _moffset _ndir ttype
+      = pure $ VkEnumIntegral (fromValue value) ttype
+    makeNumeric _mvalue (Just (Right (bitpos,_))) _moffset _ndir ttype
+      = pure $ VkEnumIntegral (fromBitpos bitpos) ttype
+    makeNumeric _mvalue _mbitpos (Just (Right (offset,_))) ndir ttype
+      = pure $ VkEnumIntegral (fromOffset ndir offset) ttype
+    makeNumeric (Just (Left err)) _ _ _ _ = parseFailed
               $ "Could not parse enum value: " <> err
-    makeNumeric _ (Just (Left err)) _ _ = parseFailed
+    makeNumeric _ (Just (Left err)) _ _ _ = parseFailed
               $ "Could not parse enum bitpos: " <> err
-    makeNumeric _ _ (Just (Left err)) _ = parseFailed
+    makeNumeric _ _ (Just (Left err)) _ _ = parseFailed
               $ "Could not parse enum offset: " <> err
-    makeNumeric Nothing Nothing Nothing _ = parseFailed
-                "Enum has neither of value, bitpos, offset."
-
-
--- * Types
-
-
-data VkEnums
-  = VkEnums
-    { name        :: VkTypeName
-    , comment     :: Maybe Text
-    , memberEnums :: Sections VkEnumValue
-    }
-  | VkBitmasks
-    { name        :: VkTypeName
-    , comment     :: Maybe Text
-    , memberMasks :: Sections VkBitmaskValue
-    }
-  | VkConstants
-    { name         :: VkTypeName
-    , comment      :: Maybe Text
-    , memberConsts :: Sections VkConstant
-    }
-  deriving Show
-
-data VkEnumValue
-  = VkEnumValue
-    { name    :: VkEnumValueName
-    , comment :: Maybe Text
-    , value   :: Int
-    }
-  deriving Show
-
-data VkBitmaskValue
-  = VkBitmaskBitpos
-    { name    :: VkEnumValueName
-    , comment :: Maybe Text
-    , bitpos  :: Word
-    }
-  | VkBitmaskValue
-    { name    :: VkEnumValueName
-    , comment :: Maybe Text
-    , value   :: Int
-    }
-  deriving Show
-
-data VkConstant
-  = VkConstant
-    { name    :: VkEnumValueName
-    , comment :: Maybe Text
-    , value   :: Text
-    }
-  deriving Show
+    makeNumeric Nothing Nothing Nothing _ _ = pure VkEnumReference
 
 
 
-
--- * Parsing
-
--- | Try to parse current tag as being enums,
 --
---   * If tag name does not match, return events upstream as leftovers
---   * If failed to parse tag "enums", throw an exception
+-- data VkEnums
+--   = VkEnums
+--     { name        :: VkTypeName
+--     , comment     :: Maybe Text
+--     , memberEnums :: Sections VkEnumValue
+--     }
+--   | VkBitmasks
+--     { name        :: VkTypeName
+--     , comment     :: Maybe Text
+--     , memberMasks :: Sections VkBitmaskValue
+--     }
+--   | VkConstants
+--     { name         :: VkTypeName
+--     , comment      :: Maybe Text
+--     , memberConsts :: Sections VkConstant
+--     }
+--   deriving Show
 --
---   Note: enum "VkResult" also has a member "unused",
---    I ignore this member, because it does not seem to be useful for codegen.
-parseEnums :: VkXmlParser m
-           => Sink Event m (Maybe VkEnums)
-parseEnums = parseTagForceAttrs "enums" parseVkEnumsAttrs $
-  \case
-    VkEnums n c _
-      -> fmap (VkEnums n c)
-      . parseSections $ ignoreEmptyTag "unused"
-                      >> parseTagForceAttrs "enum" parseVkEnumValueAttrs pure
-
-    VkBitmasks n c _
-      -> fmap (VkBitmasks n c)
-      . parseSections $ ignoreEmptyTag "unused"
-                      >> parseTagForceAttrs "enum" parseVkBitmaskValueAttrs pure
-
-    VkConstants n c _
-      -> fmap (VkConstants n c)
-      . parseSections $ ignoreEmptyTag "unused"
-                      >> parseTagForceAttrs "enum" parseVkConstantAttrs pure
-
-
-
-
-parseVkEnumsAttrs :: ReaderT ParseLoc AttrParser VkEnums
-parseVkEnumsAttrs = do
-  n <- VkTypeName <$> forceAttr "name"
-  mc <- lift $ attr "comment"
-  met <- lift $ attr "type"
-  case met of
-    Nothing        -> pure . VkConstants n mc $ Sections [] []
-    Just "enum"    -> pure . VkEnums n mc $ Sections [] []
-    Just "bitmask" -> pure . VkBitmasks n mc $ Sections [] []
-    Just tt        -> parseFailed
-                    $ "uknown enums type " <> show tt
-
-parseVkEnumValueAttrs :: ReaderT ParseLoc AttrParser VkEnumValue
-parseVkEnumValueAttrs = do
-  n <- VkEnumValueName <$> forceAttr "name"
-  mc <- lift $ attr "comment"
-  ev <- T.signed decOrHex <$> forceAttr "value"
-  case ev of
-    Left err -> parseFailed
-              $ "could not parse enum value: " <> err
-    Right (i, _) -> pure $ VkEnumValue n mc i
-
-parseVkBitmaskValueAttrs :: ReaderT ParseLoc AttrParser VkBitmaskValue
-parseVkBitmaskValueAttrs = do
-  n <- VkEnumValueName <$> forceAttr "name"
-  mc <- lift $ attr "comment"
-  mbpv <- fmap decOrHex <$> lift (attr "bitpos")
-  mvav <- fmap (T.signed decOrHex) <$> lift (attr "value")
-  case (mbpv, mvav) of
-    (Nothing, Nothing) -> parseFailed
-                          "missing bitpos or value attribute for a bitmask."
-    (Just (Right (i, _)), _) -> pure $ VkBitmaskBitpos n mc i
-    (_, Just (Right (i, _))) -> pure $ VkBitmaskValue n mc i
-    (Just (Left err), _) -> parseFailed
-                          $ "could not parse bitmask bitpos: " <> err
-    (_, Just (Left err)) -> parseFailed
-                          $ "could not parse bitmask value: " <> err
+-- data VkEnumValue
+--   = VkEnumValue
+--     { name    :: VkEnumValueName
+--     , comment :: Maybe Text
+--     , value   :: Int
+--     }
+--   deriving Show
+--
+-- data VkBitmaskValue
+--   = VkBitmaskBitpos
+--     { name    :: VkEnumValueName
+--     , comment :: Maybe Text
+--     , bitpos  :: Word
+--     }
+--   | VkBitmaskValue
+--     { name    :: VkEnumValueName
+--     , comment :: Maybe Text
+--     , value   :: Int
+--     }
+--   deriving Show
+--
+-- data VkConstant
+--   = VkConstant
+--     { name    :: VkEnumValueName
+--     , comment :: Maybe Text
+--     , value   :: Text
+--     }
+--   deriving Show
+--
 
 
-parseVkConstantAttrs :: ReaderT ParseLoc AttrParser VkConstant
-parseVkConstantAttrs = do
-  n <- VkEnumValueName <$> forceAttr "name"
-  mc <- lift $ attr "comment"
-  v <- forceAttr "value"
-  pure $ VkConstant n mc v
+
+-- -- * Parsing
+--
+-- -- | Try to parse current tag as being enums,
+-- --
+-- --   * If tag name does not match, return events upstream as leftovers
+-- --   * If failed to parse tag "enums", throw an exception
+-- --
+-- --   Note: enum "VkResult" also has a member "unused",
+-- --    I ignore this member, because it does not seem to be useful for codegen.
+-- parseEnums :: VkXmlParser m
+--            => Sink Event m (Maybe VkEnums)
+-- parseEnums = parseTagForceAttrs "enums" parseVkEnumsAttrs $
+--   \case
+--     VkEnums n c _
+--       -> fmap (VkEnums n c)
+--       . parseSections $ ignoreEmptyTag "unused"
+--                       >> parseTagForceAttrs "enum" parseVkEnumValueAttrs pure
+--
+--     VkBitmasks n c _
+--       -> fmap (VkBitmasks n c)
+--       . parseSections $ ignoreEmptyTag "unused"
+--                       >> parseTagForceAttrs "enum" parseVkBitmaskValueAttrs pure
+--
+--     VkConstants n c _
+--       -> fmap (VkConstants n c)
+--       . parseSections $ ignoreEmptyTag "unused"
+--                       >> parseTagForceAttrs "enum" parseVkConstantAttrs pure
+--
+
+
+
+-- parseVkEnumsAttrs :: ReaderT ParseLoc AttrParser VkEnums
+-- parseVkEnumsAttrs = do
+--   n <- VkTypeName <$> forceAttr "name"
+--   mc <- lift $ attr "comment"
+--   met <- lift $ attr "type"
+--   case met of
+--     Nothing        -> pure . VkConstants n mc $ Sections [] []
+--     Just "enum"    -> pure . VkEnums n mc $ Sections [] []
+--     Just "bitmask" -> pure . VkBitmasks n mc $ Sections [] []
+--     Just tt        -> parseFailed
+--                     $ "uknown enums type " <> show tt
+--
+-- parseVkEnumValueAttrs :: ReaderT ParseLoc AttrParser VkEnumValue
+-- parseVkEnumValueAttrs = do
+--   n <- VkEnumValueName <$> forceAttr "name"
+--   mc <- lift $ attr "comment"
+--   ev <- T.signed decOrHex <$> forceAttr "value"
+--   case ev of
+--     Left err -> parseFailed
+--               $ "could not parse enum value: " <> err
+--     Right (i, _) -> pure $ VkEnumValue n mc i
+--
+-- parseVkBitmaskValueAttrs :: ReaderT ParseLoc AttrParser VkBitmaskValue
+-- parseVkBitmaskValueAttrs = do
+--   n <- VkEnumValueName <$> forceAttr "name"
+--   mc <- lift $ attr "comment"
+--   mbpv <- fmap decOrHex <$> lift (attr "bitpos")
+--   mvav <- fmap (T.signed decOrHex) <$> lift (attr "value")
+--   case (mbpv, mvav) of
+--     (Nothing, Nothing) -> parseFailed
+--                           "missing bitpos or value attribute for a bitmask."
+--     (Just (Right (i, _)), _) -> pure $ VkBitmaskBitpos n mc i
+--     (_, Just (Right (i, _))) -> pure $ VkBitmaskValue n mc i
+--     (Just (Left err), _) -> parseFailed
+--                           $ "could not parse bitmask bitpos: " <> err
+--     (_, Just (Left err)) -> parseFailed
+--                           $ "could not parse bitmask value: " <> err
+--
+--
+-- parseVkConstantAttrs :: ReaderT ParseLoc AttrParser VkConstant
+-- parseVkConstantAttrs = do
+--   n <- VkEnumValueName <$> forceAttr "name"
+--   mc <- lift $ attr "comment"
+--   v <- forceAttr "value"
+--   pure $ VkConstant n mc v
