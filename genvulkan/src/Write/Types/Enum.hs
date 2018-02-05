@@ -135,10 +135,38 @@ genAlias VkTypeSimple
        -- , code = ccode
        }
     } = do
-    writeDecl . setComment rezComment $ parseDecl'
-      [text|type $tnametxt = $treftxt|]
 
-    writeExport $ EAbs () (NoNamespace ()) tname
+
+    writePragma "GeneralizedNewtypeDeriving"
+    writePragma "DeriveDataTypeable"
+    writePragma "DeriveGeneric"
+    writeImport "Data.Coerce"  $ IVar () (Ident () "coerce")
+    writeImport "GHC.Generics" $ IAbs () (NoNamespace ()) (Ident () "Generic")
+    writeImport "Data.Data"    $ IAbs () (NoNamespace ()) (Ident () "Typeable")
+    writeImport "Data.Data"    $ IAbs () (NoNamespace ()) (Ident () "Data")
+    writeImport "Data.Bits"    $ IAbs () (NoNamespace ()) (Ident () "Bits")
+    writeImport "Data.Bits"    $ IAbs () (NoNamespace ()) (Ident () "FiniteBits")
+    writeImport "Data.Ix"      $ IAbs () (NoNamespace ()) (Ident () "Ix")
+
+    writeDecl . setComment rezComment $ parseDecl'
+      [text|
+        newtype $tnametxt = $tnametxt $treftxt
+          deriving ( Eq, Ord, Num, Bounded, Enum, Integral
+                   , Ix, Bits, FiniteBits, Storable, Real, Data, Generic)
+      |]
+
+    mapM_ writeDecl $ parseDecls
+      [text|
+        instance Show $tnametxt where
+          {-# INLINE show #-}
+          show ($tnametxt x) = show x
+
+        instance Read $tnametxt where
+          {-# INLINE readsPrec #-}
+          readsPrec = coerce (readsPrec :: Int -> ReadS $treftxt)
+      |]
+
+    writeExport $ EThingWith () (EWildcard () 0) tname []
   where
     tname = toHaskellType vkTName
     tnametxt = qNameTxt tname
@@ -178,7 +206,7 @@ newInt32TypeDec vkTName insts com = do
     writePragma "GeneralizedNewtypeDeriving"
     writeDecl . setComment rezComment $ parseDecl'
       [text|
-        newtype $tnametxt = $tnametxt VkFlags
+        newtype $tnametxt = $tnametxt Int32
           deriving ($tinsts)
       |]
 
@@ -186,6 +214,13 @@ newInt32TypeDec vkTName insts com = do
   where
     tname = toHaskellType vkTName
     tnametxt = qNameTxt tname
+
+-- language-c
+-- Prelude Language.C Language.C.Analysis.ConstEval Language.C.Analysis.TravMonad>
+--   let md = MachineDesc (const 8) (const 8) (const 8) 8 8 (const 8) (const 8) (const 8) 8 8
+-- Prelude Language.C Language.C.Analysis.ConstEval Language.C.Analysis.TravMonad>
+--   runTrav_ . constEval md mempty <$> execParser_ expressionP (inputStreamFromString "(~0U-2)") nopos
+-- Right (Right (CConst (CIntConst -3 (NodeInfo <no file> (<no file>,-1) (Name {nameId = 1}))),[]))
 
 
 constantPattern :: Monad m => VkConstant -> ModuleWriter m ()

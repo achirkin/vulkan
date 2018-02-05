@@ -6,6 +6,8 @@ module VkXml.CommonTypes
   , VkTypeName (..), VkMemberName (..), VkCommandName (..)
   , Sections (..), VkTagName (..), VkExtensionName (..)
   , parseSections
+  , VkEnumName (..)
+  , (<:>)
   ) where
 
 import           Control.Monad.State.Class
@@ -14,6 +16,7 @@ import           Data.Conduit
 import           Data.Conduit.Lift
 import           Data.String               (IsString)
 import           Data.Text                 (Text)
+import qualified Data.Text                 as T
 import           Data.XML.Types
 import           Text.XML.Stream.Parse
 
@@ -21,6 +24,10 @@ import           VkXml.Parser
 
 
 newtype VkEnumValueName = VkEnumValueName { unVkEnumValueName :: Text }
+  deriving (Eq, Ord, Show, Read, IsString)
+
+
+newtype VkEnumName = VkEnumName { unVkEnumName :: Text }
   deriving (Eq, Ord, Show, Read, IsString)
 
 -- | Type name
@@ -42,6 +49,7 @@ newtype VkTagName = VkTagName { unVkTagName :: Text }
 
 newtype VkExtensionName = VkExtensionName { unVkExtensionName :: Text }
   deriving (Eq, Ord, Show, Read, IsString)
+
 
 
 -- | Parse a list of elements interspersed with comments,
@@ -79,3 +87,11 @@ parseSections parseElem = evalStateC (0::Int) parseIt
         (Nothing, Just e) -> do
           modify' (+1)
           prepItem e <$> parseIt
+
+-- | Combine two comments vertically
+(<:>) :: Text -> Text -> Text
+a <:> b
+  | T.null (T.strip a) = b
+  | T.null (T.strip b) = a
+  | otherwise          = T.unlines [a, "", b]
+infixr 6 <:>
