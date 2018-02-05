@@ -1,4 +1,6 @@
 {-# LANGUAGE CPP                        #-}
+{-# LANGUAGE DeriveDataTypeable         #-}
+{-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE EmptyDataDecls             #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE PatternSynonyms            #-}
@@ -40,79 +42,89 @@ module Graphics.Vulkan.Common
                                           -- > #define VK_DEFINE_HANDLE(object) typedef struct object##_T* object;
                                           VkPtr(..), VulkanPtr(..),
         pattern VK_NULL_HANDLE, -- ** Base types
-                                VkSampleMask, VkBool32, VkFlags,
-        VkDeviceSize, -- ** External types
-                      --
+                                VkSampleMask(..), VkBool32(..),
+        VkFlags(..), VkDeviceSize(..), -- ** External types
+                                       --
 
-                      -- *** Basic C types, pulled in via vk_platform.h
-                      Foreign.C.Types.CChar, Foreign.C.Types.CFloat,
-        Data.Word.Word8, Data.Word.Word32, Data.Word.Word64,
-        Data.Int.Int32, Foreign.C.Types.CSize, Foreign.C.Types.CInt,
-        -- ** Bitmasks
+                                       -- *** Basic C types, pulled in via vk_platform.h
+                                       Foreign.C.Types.CChar,
+        Foreign.C.Types.CFloat, Data.Word.Word8, Data.Word.Word32,
+        Data.Word.Word64, Data.Int.Int32, Foreign.C.Types.CSize,
+        Foreign.C.Types.CInt, -- ** Bitmasks
+                              --
+
+                              -- *** Bitmask types
+                              VkFramebufferCreateFlags(..),
+        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
+        VkSamplerCreateFlags(..), VkPipelineLayoutCreateFlags(..),
+        VkPipelineCacheCreateFlags(..),
+        VkPipelineDepthStencilStateCreateFlags(..),
+        VkPipelineDynamicStateCreateFlags(..),
+        VkPipelineColorBlendStateCreateFlags(..),
+        VkPipelineMultisampleStateCreateFlags(..),
+        VkPipelineRasterizationStateCreateFlags(..),
+        VkPipelineViewportStateCreateFlags(..),
+        VkPipelineTessellationStateCreateFlags(..),
+        VkPipelineInputAssemblyStateCreateFlags(..),
+        VkPipelineVertexInputStateCreateFlags(..),
+        VkPipelineShaderStageCreateFlags(..),
+        VkDescriptorSetLayoutCreateFlags(..), VkBufferViewCreateFlags(..),
+        VkInstanceCreateFlags(..), VkDeviceCreateFlags(..),
+        VkDeviceQueueCreateFlags(..), VkQueueFlags(..),
+        VkMemoryPropertyFlags(..), VkMemoryHeapFlags(..),
+        VkAccessFlags(..), VkBufferUsageFlags(..), VkBufferCreateFlags(..),
+        VkShaderStageFlags(..), VkImageUsageFlags(..),
+        VkImageCreateFlags(..), VkImageViewCreateFlags(..),
+        VkPipelineCreateFlags(..), VkColorComponentFlags(..),
+        VkFenceCreateFlags(..), VkSemaphoreCreateFlags(..),
+        VkFormatFeatureFlags(..), VkQueryControlFlags(..),
+        VkQueryResultFlags(..), VkShaderModuleCreateFlags(..),
+        VkEventCreateFlags(..), VkCommandPoolCreateFlags(..),
+        VkCommandPoolResetFlags(..), VkCommandBufferResetFlags(..),
+        VkCommandBufferUsageFlags(..), VkQueryPipelineStatisticFlags(..),
+        VkMemoryMapFlags(..), VkImageAspectFlags(..),
+        VkSparseMemoryBindFlags(..), VkSparseImageFormatFlags(..),
+        VkSubpassDescriptionFlags(..), VkPipelineStageFlags(..),
+        VkSampleCountFlags(..), VkAttachmentDescriptionFlags(..),
+        VkStencilFaceFlags(..), VkCullModeFlags(..),
+        VkDescriptorPoolCreateFlags(..), VkDescriptorPoolResetFlags(..),
+        VkDependencyFlags(..), VkIndirectCommandsLayoutUsageFlagsNVX(..),
+        VkObjectEntryUsageFlagsNVX(..),
+        VkDescriptorUpdateTemplateCreateFlagsKHR(..),
+        -- *** WSI extensions
+        VkCompositeAlphaFlagsKHR(..), VkDisplayPlaneAlphaFlagsKHR(..),
+        VkSurfaceTransformFlagsKHR(..), VkSwapchainCreateFlagsKHR(..),
+        VkDisplayModeCreateFlagsKHR(..),
+        VkDisplaySurfaceCreateFlagsKHR(..),
+        VkAndroidSurfaceCreateFlagsKHR(..), VkMirSurfaceCreateFlagsKHR(..),
+        VkViSurfaceCreateFlagsNN(..), VkWaylandSurfaceCreateFlagsKHR(..),
+        VkWin32SurfaceCreateFlagsKHR(..), VkXlibSurfaceCreateFlagsKHR(..),
+        VkXcbSurfaceCreateFlagsKHR(..), VkIOSSurfaceCreateFlagsMVK(..),
+        VkMacOSSurfaceCreateFlagsMVK(..), VkPeerMemoryFeatureFlagsKHX(..),
+        VkMemoryAllocateFlagsKHX(..), VkDeviceGroupPresentModeFlagsKHX(..),
+        VkDebugReportFlagsEXT(..), VkCommandPoolTrimFlagsKHR(..),
+        VkExternalMemoryHandleTypeFlagsNV(..),
+        VkExternalMemoryFeatureFlagsNV(..),
+        VkExternalMemoryHandleTypeFlagsKHR(..),
+        VkExternalMemoryFeatureFlagsKHR(..),
+        VkExternalSemaphoreHandleTypeFlagsKHR(..),
+        VkExternalSemaphoreFeatureFlagsKHR(..),
+        VkSemaphoreImportFlagsKHR(..),
+        VkExternalFenceHandleTypeFlagsKHR(..),
+        VkExternalFenceFeatureFlagsKHR(..), VkFenceImportFlagsKHR(..),
+        VkSurfaceCounterFlagsEXT(..),
+        VkPipelineViewportSwizzleStateCreateFlagsNV(..),
+        VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
+        VkPipelineCoverageToColorStateCreateFlagsNV(..),
+        VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        VkValidationCacheCreateFlagsEXT(..),
+        VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        -- ** Handles
         --
 
-        -- *** Bitmask types
-        VkFramebufferCreateFlags, VkQueryPoolCreateFlags,
-        VkRenderPassCreateFlags, VkSamplerCreateFlags,
-        VkPipelineLayoutCreateFlags, VkPipelineCacheCreateFlags,
-        VkPipelineDepthStencilStateCreateFlags,
-        VkPipelineDynamicStateCreateFlags,
-        VkPipelineColorBlendStateCreateFlags,
-        VkPipelineMultisampleStateCreateFlags,
-        VkPipelineRasterizationStateCreateFlags,
-        VkPipelineViewportStateCreateFlags,
-        VkPipelineTessellationStateCreateFlags,
-        VkPipelineInputAssemblyStateCreateFlags,
-        VkPipelineVertexInputStateCreateFlags,
-        VkPipelineShaderStageCreateFlags, VkDescriptorSetLayoutCreateFlags,
-        VkBufferViewCreateFlags, VkInstanceCreateFlags,
-        VkDeviceCreateFlags, VkDeviceQueueCreateFlags, VkQueueFlags,
-        VkMemoryPropertyFlags, VkMemoryHeapFlags, VkAccessFlags,
-        VkBufferUsageFlags, VkBufferCreateFlags, VkShaderStageFlags,
-        VkImageUsageFlags, VkImageCreateFlags, VkImageViewCreateFlags,
-        VkPipelineCreateFlags, VkColorComponentFlags, VkFenceCreateFlags,
-        VkSemaphoreCreateFlags, VkFormatFeatureFlags, VkQueryControlFlags,
-        VkQueryResultFlags, VkShaderModuleCreateFlags, VkEventCreateFlags,
-        VkCommandPoolCreateFlags, VkCommandPoolResetFlags,
-        VkCommandBufferResetFlags, VkCommandBufferUsageFlags,
-        VkQueryPipelineStatisticFlags, VkMemoryMapFlags,
-        VkImageAspectFlags, VkSparseMemoryBindFlags,
-        VkSparseImageFormatFlags, VkSubpassDescriptionFlags,
-        VkPipelineStageFlags, VkSampleCountFlags,
-        VkAttachmentDescriptionFlags, VkStencilFaceFlags, VkCullModeFlags,
-        VkDescriptorPoolCreateFlags, VkDescriptorPoolResetFlags,
-        VkDependencyFlags, VkIndirectCommandsLayoutUsageFlagsNVX,
-        VkObjectEntryUsageFlagsNVX,
-        VkDescriptorUpdateTemplateCreateFlagsKHR, -- *** WSI extensions
-                                                  VkCompositeAlphaFlagsKHR,
-        VkDisplayPlaneAlphaFlagsKHR, VkSurfaceTransformFlagsKHR,
-        VkSwapchainCreateFlagsKHR, VkDisplayModeCreateFlagsKHR,
-        VkDisplaySurfaceCreateFlagsKHR, VkAndroidSurfaceCreateFlagsKHR,
-        VkMirSurfaceCreateFlagsKHR, VkViSurfaceCreateFlagsNN,
-        VkWaylandSurfaceCreateFlagsKHR, VkWin32SurfaceCreateFlagsKHR,
-        VkXlibSurfaceCreateFlagsKHR, VkXcbSurfaceCreateFlagsKHR,
-        VkIOSSurfaceCreateFlagsMVK, VkMacOSSurfaceCreateFlagsMVK,
-        VkPeerMemoryFeatureFlagsKHX, VkMemoryAllocateFlagsKHX,
-        VkDeviceGroupPresentModeFlagsKHX, VkDebugReportFlagsEXT,
-        VkCommandPoolTrimFlagsKHR, VkExternalMemoryHandleTypeFlagsNV,
-        VkExternalMemoryFeatureFlagsNV, VkExternalMemoryHandleTypeFlagsKHR,
-        VkExternalMemoryFeatureFlagsKHR,
-        VkExternalSemaphoreHandleTypeFlagsKHR,
-        VkExternalSemaphoreFeatureFlagsKHR, VkSemaphoreImportFlagsKHR,
-        VkExternalFenceHandleTypeFlagsKHR, VkExternalFenceFeatureFlagsKHR,
-        VkFenceImportFlagsKHR, VkSurfaceCounterFlagsEXT,
-        VkPipelineViewportSwizzleStateCreateFlagsNV,
-        VkPipelineDiscardRectangleStateCreateFlagsEXT,
-        VkPipelineCoverageToColorStateCreateFlagsNV,
-        VkPipelineCoverageModulationStateCreateFlagsNV,
-        VkValidationCacheCreateFlagsEXT,
-        VkPipelineRasterizationConservativeStateCreateFlagsEXT, -- ** Handles
-                                                                --
-
-                                                                -- *** Types which can be void pointers or class pointers, selected at compile time
-                                                                VkInstance,
-        VkInstance_T(), VkPhysicalDevice, VkPhysicalDevice_T(), VkDevice,
-        VkDevice_T(), VkQueue, VkQueue_T(), VkCommandBuffer,
+        -- *** Types which can be void pointers or class pointers, selected at compile time
+        VkInstance, VkInstance_T(), VkPhysicalDevice, VkPhysicalDevice_T(),
+        VkDevice, VkDevice_T(), VkQueue, VkQueue_T(), VkCommandBuffer,
         VkCommandBuffer_T(), VkDeviceMemory, VkDeviceMemory_T(),
         VkCommandPool, VkCommandPool_T(), VkBuffer, VkBuffer_T(),
         VkBufferView, VkBufferView_T(), VkImage, VkImage_T(), VkImageView,
@@ -169,24 +181,25 @@ module Graphics.Vulkan.Common
         pattern VK_BORDER_COLOR_INT_OPAQUE_BLACK,
         pattern VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE,
         pattern VK_BORDER_COLOR_INT_OPAQUE_WHITE,
-        VkFramebufferCreateFlagBits, VkQueryPoolCreateFlagBits,
-        VkRenderPassCreateFlagBits, VkSamplerCreateFlagBits,
+        VkFramebufferCreateFlagBits(..), VkQueryPoolCreateFlagBits(..),
+        VkRenderPassCreateFlagBits(..), VkSamplerCreateFlagBits(..),
         VkPipelineCacheHeaderVersion(..),
         pattern VK_PIPELINE_CACHE_HEADER_VERSION_ONE,
-        VkPipelineLayoutCreateFlagBits, VkPipelineCacheCreateFlagBits,
-        VkPipelineDepthStencilStateCreateFlagBits,
-        VkPipelineDynamicStateCreateFlagBits,
-        VkPipelineColorBlendStateCreateFlagBits,
-        VkPipelineMultisampleStateCreateFlagBits,
-        VkPipelineRasterizationStateCreateFlagBits,
-        VkPipelineViewportStateCreateFlagBits,
-        VkPipelineTessellationStateCreateFlagBits,
-        VkPipelineInputAssemblyStateCreateFlagBits,
-        VkPipelineVertexInputStateCreateFlagBits,
-        VkPipelineShaderStageCreateFlagBits,
+        VkPipelineLayoutCreateFlagBits(..),
+        VkPipelineCacheCreateFlagBits(..),
+        VkPipelineDepthStencilStateCreateFlagBits(..),
+        VkPipelineDynamicStateCreateFlagBits(..),
+        VkPipelineColorBlendStateCreateFlagBits(..),
+        VkPipelineMultisampleStateCreateFlagBits(..),
+        VkPipelineRasterizationStateCreateFlagBits(..),
+        VkPipelineViewportStateCreateFlagBits(..),
+        VkPipelineTessellationStateCreateFlagBits(..),
+        VkPipelineInputAssemblyStateCreateFlagBits(..),
+        VkPipelineVertexInputStateCreateFlagBits(..),
+        VkPipelineShaderStageCreateFlagBits(..),
         VkDescriptorSetLayoutCreateFlagBits(..),
-        VkBufferViewCreateFlagBits, VkInstanceCreateFlagBits,
-        VkDeviceQueueCreateFlagBits, VkBufferCreateFlagBits(..),
+        VkBufferViewCreateFlagBits(..), VkInstanceCreateFlagBits(..),
+        VkDeviceQueueCreateFlagBits(..), VkBufferCreateFlagBits(..),
         pattern VK_BUFFER_CREATE_SPARSE_BINDING_BIT,
         pattern VK_BUFFER_CREATE_SPARSE_RESIDENCY_BIT,
         pattern VK_BUFFER_CREATE_SPARSE_ALIASED_BIT,
@@ -239,7 +252,7 @@ module Graphics.Vulkan.Common
         pattern VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC,
         pattern VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC,
         pattern VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT,
-        VkDeviceCreateFlagBits, VkDynamicState(..),
+        VkDeviceCreateFlagBits(..), VkDynamicState(..),
         pattern VK_DYNAMIC_STATE_VIEWPORT,
         pattern VK_DYNAMIC_STATE_SCISSOR,
         pattern VK_DYNAMIC_STATE_LINE_WIDTH,
@@ -926,8 +939,12 @@ module Graphics.Vulkan.Common
         PFN_vkDebugReportCallbackEXT, HS_vkDebugReportCallbackEXT,
         newVkDebugReportCallbackEXT, unwrapVkDebugReportCallbackEXT)
        where
-import           Data.Bits                       (Bits (unsafeShiftL, unsafeShiftR, (.&.), (.|.)))
+import           Data.Bits                       (Bits (unsafeShiftL, unsafeShiftR, (.&.), (.|.)),
+                                                  FiniteBits)
+import           Data.Coerce                     (coerce)
+import           Data.Data                       (Data, Typeable)
 import           Data.Int                        (Int32)
+import           Data.Ix                         (Ix)
 import           Data.Void                       (Void)
 import           Data.Word                       (Word32, Word64, Word8)
 import           Foreign.C.Types                 (CChar, CFloat, CInt,
@@ -935,6 +952,7 @@ import           Foreign.C.Types                 (CChar, CFloat, CInt,
                                                   CULong (..), CWchar (..))
 import           Foreign.Ptr                     (FunPtr, Ptr, nullPtr)
 import           Foreign.Storable                (Storable)
+import           GHC.Generics                    (Generic)
 import           GHC.Read                        (choose, expectP)
 import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
 import           Text.Read                       (Read (..), parens)
@@ -1170,210 +1188,1267 @@ pattern VK_NULL_HANDLE :: (Eq (ptr a), VulkanPtr ptr) => ptr a
 pattern VK_NULL_HANDLE <- (isNullPtr -> True)
   where VK_NULL_HANDLE = vkNullPtr
 
-type VkSampleMask = Word32
-
-type VkBool32 = Word32
-
-type VkFlags = Word32
-
-type VkDeviceSize = Word64
-
-type VkFramebufferCreateFlags = VkFlags
-
-type VkQueryPoolCreateFlags = VkFlags
-
-type VkRenderPassCreateFlags = VkFlags
-
-type VkSamplerCreateFlags = VkFlags
-
-type VkPipelineLayoutCreateFlags = VkFlags
-
-type VkPipelineCacheCreateFlags = VkFlags
-
-type VkPipelineDepthStencilStateCreateFlags = VkFlags
-
-type VkPipelineDynamicStateCreateFlags = VkFlags
-
-type VkPipelineColorBlendStateCreateFlags = VkFlags
-
-type VkPipelineMultisampleStateCreateFlags = VkFlags
-
-type VkPipelineRasterizationStateCreateFlags = VkFlags
-
-type VkPipelineViewportStateCreateFlags = VkFlags
-
-type VkPipelineTessellationStateCreateFlags = VkFlags
-
-type VkPipelineInputAssemblyStateCreateFlags = VkFlags
-
-type VkPipelineVertexInputStateCreateFlags = VkFlags
-
-type VkPipelineShaderStageCreateFlags = VkFlags
-
-type VkDescriptorSetLayoutCreateFlags = VkFlags
-
-type VkBufferViewCreateFlags = VkFlags
-
-type VkInstanceCreateFlags = VkFlags
-
-type VkDeviceCreateFlags = VkFlags
-
-type VkDeviceQueueCreateFlags = VkFlags
-
-type VkQueueFlags = VkFlags
-
-type VkMemoryPropertyFlags = VkFlags
-
-type VkMemoryHeapFlags = VkFlags
-
-type VkAccessFlags = VkFlags
-
-type VkBufferUsageFlags = VkFlags
-
-type VkBufferCreateFlags = VkFlags
-
-type VkShaderStageFlags = VkFlags
-
-type VkImageUsageFlags = VkFlags
-
-type VkImageCreateFlags = VkFlags
-
-type VkImageViewCreateFlags = VkFlags
-
-type VkPipelineCreateFlags = VkFlags
-
-type VkColorComponentFlags = VkFlags
-
-type VkFenceCreateFlags = VkFlags
-
-type VkSemaphoreCreateFlags = VkFlags
-
-type VkFormatFeatureFlags = VkFlags
-
-type VkQueryControlFlags = VkFlags
-
-type VkQueryResultFlags = VkFlags
-
-type VkShaderModuleCreateFlags = VkFlags
-
-type VkEventCreateFlags = VkFlags
-
-type VkCommandPoolCreateFlags = VkFlags
-
-type VkCommandPoolResetFlags = VkFlags
-
-type VkCommandBufferResetFlags = VkFlags
-
-type VkCommandBufferUsageFlags = VkFlags
-
-type VkQueryPipelineStatisticFlags = VkFlags
-
-type VkMemoryMapFlags = VkFlags
-
-type VkImageAspectFlags = VkFlags
-
-type VkSparseMemoryBindFlags = VkFlags
-
-type VkSparseImageFormatFlags = VkFlags
-
-type VkSubpassDescriptionFlags = VkFlags
-
-type VkPipelineStageFlags = VkFlags
-
-type VkSampleCountFlags = VkFlags
-
-type VkAttachmentDescriptionFlags = VkFlags
-
-type VkStencilFaceFlags = VkFlags
-
-type VkCullModeFlags = VkFlags
-
-type VkDescriptorPoolCreateFlags = VkFlags
-
-type VkDescriptorPoolResetFlags = VkFlags
-
-type VkDependencyFlags = VkFlags
-
-type VkIndirectCommandsLayoutUsageFlagsNVX = VkFlags
-
-type VkObjectEntryUsageFlagsNVX = VkFlags
-
-type VkDescriptorUpdateTemplateCreateFlagsKHR = VkFlags
-
-type VkCompositeAlphaFlagsKHR = VkFlags
-
-type VkDisplayPlaneAlphaFlagsKHR = VkFlags
-
-type VkSurfaceTransformFlagsKHR = VkFlags
-
-type VkSwapchainCreateFlagsKHR = VkFlags
-
-type VkDisplayModeCreateFlagsKHR = VkFlags
-
-type VkDisplaySurfaceCreateFlagsKHR = VkFlags
-
-type VkAndroidSurfaceCreateFlagsKHR = VkFlags
-
-type VkMirSurfaceCreateFlagsKHR = VkFlags
-
-type VkViSurfaceCreateFlagsNN = VkFlags
-
-type VkWaylandSurfaceCreateFlagsKHR = VkFlags
-
-type VkWin32SurfaceCreateFlagsKHR = VkFlags
-
-type VkXlibSurfaceCreateFlagsKHR = VkFlags
-
-type VkXcbSurfaceCreateFlagsKHR = VkFlags
-
-type VkIOSSurfaceCreateFlagsMVK = VkFlags
-
-type VkMacOSSurfaceCreateFlagsMVK = VkFlags
-
-type VkPeerMemoryFeatureFlagsKHX = VkFlags
-
-type VkMemoryAllocateFlagsKHX = VkFlags
-
-type VkDeviceGroupPresentModeFlagsKHX = VkFlags
-
-type VkDebugReportFlagsEXT = VkFlags
-
-type VkCommandPoolTrimFlagsKHR = VkFlags
-
-type VkExternalMemoryHandleTypeFlagsNV = VkFlags
-
-type VkExternalMemoryFeatureFlagsNV = VkFlags
-
-type VkExternalMemoryHandleTypeFlagsKHR = VkFlags
-
-type VkExternalMemoryFeatureFlagsKHR = VkFlags
-
-type VkExternalSemaphoreHandleTypeFlagsKHR = VkFlags
-
-type VkExternalSemaphoreFeatureFlagsKHR = VkFlags
-
-type VkSemaphoreImportFlagsKHR = VkFlags
-
-type VkExternalFenceHandleTypeFlagsKHR = VkFlags
-
-type VkExternalFenceFeatureFlagsKHR = VkFlags
-
-type VkFenceImportFlagsKHR = VkFlags
-
-type VkSurfaceCounterFlagsEXT = VkFlags
-
-type VkPipelineViewportSwizzleStateCreateFlagsNV = VkFlags
-
-type VkPipelineDiscardRectangleStateCreateFlagsEXT = VkFlags
-
-type VkPipelineCoverageToColorStateCreateFlagsNV = VkFlags
-
-type VkPipelineCoverageModulationStateCreateFlagsNV = VkFlags
-
-type VkValidationCacheCreateFlagsEXT = VkFlags
-
-type VkPipelineRasterizationConservativeStateCreateFlagsEXT =
-     VkFlags
+newtype VkSampleMask = VkSampleMask Word32
+                         deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                   FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkSampleMask where
+        {-# INLINE show #-}
+        show (VkSampleMask x) = show x
+
+instance Read VkSampleMask where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS Word32)
+
+newtype VkBool32 = VkBool32 Word32
+                     deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                               FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkBool32 where
+        {-# INLINE show #-}
+        show (VkBool32 x) = show x
+
+instance Read VkBool32 where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS Word32)
+
+newtype VkFlags = VkFlags Word32
+                    deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                              FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkFlags where
+        {-# INLINE show #-}
+        show (VkFlags x) = show x
+
+instance Read VkFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS Word32)
+
+newtype VkDeviceSize = VkDeviceSize Word64
+                         deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                   FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkDeviceSize where
+        {-# INLINE show #-}
+        show (VkDeviceSize x) = show x
+
+instance Read VkDeviceSize where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS Word64)
+
+newtype VkFramebufferCreateFlags = VkFramebufferCreateFlags VkFlags
+                                     deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                               FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkFramebufferCreateFlags where
+        {-# INLINE show #-}
+        show (VkFramebufferCreateFlags x) = show x
+
+instance Read VkFramebufferCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkQueryPoolCreateFlags = VkQueryPoolCreateFlags VkFlags
+                                   deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                             FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkQueryPoolCreateFlags where
+        {-# INLINE show #-}
+        show (VkQueryPoolCreateFlags x) = show x
+
+instance Read VkQueryPoolCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkRenderPassCreateFlags = VkRenderPassCreateFlags VkFlags
+                                    deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                              FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkRenderPassCreateFlags where
+        {-# INLINE show #-}
+        show (VkRenderPassCreateFlags x) = show x
+
+instance Read VkRenderPassCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkSamplerCreateFlags = VkSamplerCreateFlags VkFlags
+                                 deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                           FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkSamplerCreateFlags where
+        {-# INLINE show #-}
+        show (VkSamplerCreateFlags x) = show x
+
+instance Read VkSamplerCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineLayoutCreateFlags = VkPipelineLayoutCreateFlags VkFlags
+                                        deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                  FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkPipelineLayoutCreateFlags where
+        {-# INLINE show #-}
+        show (VkPipelineLayoutCreateFlags x) = show x
+
+instance Read VkPipelineLayoutCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineCacheCreateFlags = VkPipelineCacheCreateFlags VkFlags
+                                       deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                 FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkPipelineCacheCreateFlags where
+        {-# INLINE show #-}
+        show (VkPipelineCacheCreateFlags x) = show x
+
+instance Read VkPipelineCacheCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineDepthStencilStateCreateFlags = VkPipelineDepthStencilStateCreateFlags VkFlags
+                                                   deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                             Ix, Bits, FiniteBits, Storable, Real,
+                                                             Data, Generic)
+
+instance Show VkPipelineDepthStencilStateCreateFlags where
+        {-# INLINE show #-}
+        show (VkPipelineDepthStencilStateCreateFlags x) = show x
+
+instance Read VkPipelineDepthStencilStateCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineDynamicStateCreateFlags = VkPipelineDynamicStateCreateFlags VkFlags
+                                              deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix,
+                                                        Bits, FiniteBits, Storable, Real, Data,
+                                                        Generic)
+
+instance Show VkPipelineDynamicStateCreateFlags where
+        {-# INLINE show #-}
+        show (VkPipelineDynamicStateCreateFlags x) = show x
+
+instance Read VkPipelineDynamicStateCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineColorBlendStateCreateFlags = VkPipelineColorBlendStateCreateFlags VkFlags
+                                                 deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                           Ix, Bits, FiniteBits, Storable, Real,
+                                                           Data, Generic)
+
+instance Show VkPipelineColorBlendStateCreateFlags where
+        {-# INLINE show #-}
+        show (VkPipelineColorBlendStateCreateFlags x) = show x
+
+instance Read VkPipelineColorBlendStateCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineMultisampleStateCreateFlags = VkPipelineMultisampleStateCreateFlags VkFlags
+                                                  deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                            Ix, Bits, FiniteBits, Storable, Real,
+                                                            Data, Generic)
+
+instance Show VkPipelineMultisampleStateCreateFlags where
+        {-# INLINE show #-}
+        show (VkPipelineMultisampleStateCreateFlags x) = show x
+
+instance Read VkPipelineMultisampleStateCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineRasterizationStateCreateFlags = VkPipelineRasterizationStateCreateFlags VkFlags
+                                                    deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                              Ix, Bits, FiniteBits, Storable, Real,
+                                                              Data, Generic)
+
+instance Show VkPipelineRasterizationStateCreateFlags where
+        {-# INLINE show #-}
+        show (VkPipelineRasterizationStateCreateFlags x) = show x
+
+instance Read VkPipelineRasterizationStateCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineViewportStateCreateFlags = VkPipelineViewportStateCreateFlags VkFlags
+                                               deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix,
+                                                         Bits, FiniteBits, Storable, Real, Data,
+                                                         Generic)
+
+instance Show VkPipelineViewportStateCreateFlags where
+        {-# INLINE show #-}
+        show (VkPipelineViewportStateCreateFlags x) = show x
+
+instance Read VkPipelineViewportStateCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineTessellationStateCreateFlags = VkPipelineTessellationStateCreateFlags VkFlags
+                                                   deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                             Ix, Bits, FiniteBits, Storable, Real,
+                                                             Data, Generic)
+
+instance Show VkPipelineTessellationStateCreateFlags where
+        {-# INLINE show #-}
+        show (VkPipelineTessellationStateCreateFlags x) = show x
+
+instance Read VkPipelineTessellationStateCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineInputAssemblyStateCreateFlags = VkPipelineInputAssemblyStateCreateFlags VkFlags
+                                                    deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                              Ix, Bits, FiniteBits, Storable, Real,
+                                                              Data, Generic)
+
+instance Show VkPipelineInputAssemblyStateCreateFlags where
+        {-# INLINE show #-}
+        show (VkPipelineInputAssemblyStateCreateFlags x) = show x
+
+instance Read VkPipelineInputAssemblyStateCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineVertexInputStateCreateFlags = VkPipelineVertexInputStateCreateFlags VkFlags
+                                                  deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                            Ix, Bits, FiniteBits, Storable, Real,
+                                                            Data, Generic)
+
+instance Show VkPipelineVertexInputStateCreateFlags where
+        {-# INLINE show #-}
+        show (VkPipelineVertexInputStateCreateFlags x) = show x
+
+instance Read VkPipelineVertexInputStateCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineShaderStageCreateFlags = VkPipelineShaderStageCreateFlags VkFlags
+                                             deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix,
+                                                       Bits, FiniteBits, Storable, Real, Data,
+                                                       Generic)
+
+instance Show VkPipelineShaderStageCreateFlags where
+        {-# INLINE show #-}
+        show (VkPipelineShaderStageCreateFlags x) = show x
+
+instance Read VkPipelineShaderStageCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkDescriptorSetLayoutCreateFlags = VkDescriptorSetLayoutCreateFlags VkFlags
+                                             deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix,
+                                                       Bits, FiniteBits, Storable, Real, Data,
+                                                       Generic)
+
+instance Show VkDescriptorSetLayoutCreateFlags where
+        {-# INLINE show #-}
+        show (VkDescriptorSetLayoutCreateFlags x) = show x
+
+instance Read VkDescriptorSetLayoutCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkBufferViewCreateFlags = VkBufferViewCreateFlags VkFlags
+                                    deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                              FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkBufferViewCreateFlags where
+        {-# INLINE show #-}
+        show (VkBufferViewCreateFlags x) = show x
+
+instance Read VkBufferViewCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkInstanceCreateFlags = VkInstanceCreateFlags VkFlags
+                                  deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                            FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkInstanceCreateFlags where
+        {-# INLINE show #-}
+        show (VkInstanceCreateFlags x) = show x
+
+instance Read VkInstanceCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkDeviceCreateFlags = VkDeviceCreateFlags VkFlags
+                                deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                          FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkDeviceCreateFlags where
+        {-# INLINE show #-}
+        show (VkDeviceCreateFlags x) = show x
+
+instance Read VkDeviceCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkDeviceQueueCreateFlags = VkDeviceQueueCreateFlags VkFlags
+                                     deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                               FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkDeviceQueueCreateFlags where
+        {-# INLINE show #-}
+        show (VkDeviceQueueCreateFlags x) = show x
+
+instance Read VkDeviceQueueCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkQueueFlags = VkQueueFlags VkFlags
+                         deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                   FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkQueueFlags where
+        {-# INLINE show #-}
+        show (VkQueueFlags x) = show x
+
+instance Read VkQueueFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkMemoryPropertyFlags = VkMemoryPropertyFlags VkFlags
+                                  deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                            FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkMemoryPropertyFlags where
+        {-# INLINE show #-}
+        show (VkMemoryPropertyFlags x) = show x
+
+instance Read VkMemoryPropertyFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkMemoryHeapFlags = VkMemoryHeapFlags VkFlags
+                              deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                        FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkMemoryHeapFlags where
+        {-# INLINE show #-}
+        show (VkMemoryHeapFlags x) = show x
+
+instance Read VkMemoryHeapFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkAccessFlags = VkAccessFlags VkFlags
+                          deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                    FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkAccessFlags where
+        {-# INLINE show #-}
+        show (VkAccessFlags x) = show x
+
+instance Read VkAccessFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkBufferUsageFlags = VkBufferUsageFlags VkFlags
+                               deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                         FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkBufferUsageFlags where
+        {-# INLINE show #-}
+        show (VkBufferUsageFlags x) = show x
+
+instance Read VkBufferUsageFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkBufferCreateFlags = VkBufferCreateFlags VkFlags
+                                deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                          FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkBufferCreateFlags where
+        {-# INLINE show #-}
+        show (VkBufferCreateFlags x) = show x
+
+instance Read VkBufferCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkShaderStageFlags = VkShaderStageFlags VkFlags
+                               deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                         FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkShaderStageFlags where
+        {-# INLINE show #-}
+        show (VkShaderStageFlags x) = show x
+
+instance Read VkShaderStageFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkImageUsageFlags = VkImageUsageFlags VkFlags
+                              deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                        FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkImageUsageFlags where
+        {-# INLINE show #-}
+        show (VkImageUsageFlags x) = show x
+
+instance Read VkImageUsageFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkImageCreateFlags = VkImageCreateFlags VkFlags
+                               deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                         FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkImageCreateFlags where
+        {-# INLINE show #-}
+        show (VkImageCreateFlags x) = show x
+
+instance Read VkImageCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkImageViewCreateFlags = VkImageViewCreateFlags VkFlags
+                                   deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                             FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkImageViewCreateFlags where
+        {-# INLINE show #-}
+        show (VkImageViewCreateFlags x) = show x
+
+instance Read VkImageViewCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineCreateFlags = VkPipelineCreateFlags VkFlags
+                                  deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                            FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkPipelineCreateFlags where
+        {-# INLINE show #-}
+        show (VkPipelineCreateFlags x) = show x
+
+instance Read VkPipelineCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkColorComponentFlags = VkColorComponentFlags VkFlags
+                                  deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                            FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkColorComponentFlags where
+        {-# INLINE show #-}
+        show (VkColorComponentFlags x) = show x
+
+instance Read VkColorComponentFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkFenceCreateFlags = VkFenceCreateFlags VkFlags
+                               deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                         FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkFenceCreateFlags where
+        {-# INLINE show #-}
+        show (VkFenceCreateFlags x) = show x
+
+instance Read VkFenceCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkSemaphoreCreateFlags = VkSemaphoreCreateFlags VkFlags
+                                   deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                             FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkSemaphoreCreateFlags where
+        {-# INLINE show #-}
+        show (VkSemaphoreCreateFlags x) = show x
+
+instance Read VkSemaphoreCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkFormatFeatureFlags = VkFormatFeatureFlags VkFlags
+                                 deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                           FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkFormatFeatureFlags where
+        {-# INLINE show #-}
+        show (VkFormatFeatureFlags x) = show x
+
+instance Read VkFormatFeatureFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkQueryControlFlags = VkQueryControlFlags VkFlags
+                                deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                          FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkQueryControlFlags where
+        {-# INLINE show #-}
+        show (VkQueryControlFlags x) = show x
+
+instance Read VkQueryControlFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkQueryResultFlags = VkQueryResultFlags VkFlags
+                               deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                         FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkQueryResultFlags where
+        {-# INLINE show #-}
+        show (VkQueryResultFlags x) = show x
+
+instance Read VkQueryResultFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkShaderModuleCreateFlags = VkShaderModuleCreateFlags VkFlags
+                                      deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkShaderModuleCreateFlags where
+        {-# INLINE show #-}
+        show (VkShaderModuleCreateFlags x) = show x
+
+instance Read VkShaderModuleCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkEventCreateFlags = VkEventCreateFlags VkFlags
+                               deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                         FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkEventCreateFlags where
+        {-# INLINE show #-}
+        show (VkEventCreateFlags x) = show x
+
+instance Read VkEventCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkCommandPoolCreateFlags = VkCommandPoolCreateFlags VkFlags
+                                     deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                               FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkCommandPoolCreateFlags where
+        {-# INLINE show #-}
+        show (VkCommandPoolCreateFlags x) = show x
+
+instance Read VkCommandPoolCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkCommandPoolResetFlags = VkCommandPoolResetFlags VkFlags
+                                    deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                              FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkCommandPoolResetFlags where
+        {-# INLINE show #-}
+        show (VkCommandPoolResetFlags x) = show x
+
+instance Read VkCommandPoolResetFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkCommandBufferResetFlags = VkCommandBufferResetFlags VkFlags
+                                      deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkCommandBufferResetFlags where
+        {-# INLINE show #-}
+        show (VkCommandBufferResetFlags x) = show x
+
+instance Read VkCommandBufferResetFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkCommandBufferUsageFlags = VkCommandBufferUsageFlags VkFlags
+                                      deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkCommandBufferUsageFlags where
+        {-# INLINE show #-}
+        show (VkCommandBufferUsageFlags x) = show x
+
+instance Read VkCommandBufferUsageFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkQueryPipelineStatisticFlags = VkQueryPipelineStatisticFlags VkFlags
+                                          deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                    FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkQueryPipelineStatisticFlags where
+        {-# INLINE show #-}
+        show (VkQueryPipelineStatisticFlags x) = show x
+
+instance Read VkQueryPipelineStatisticFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkMemoryMapFlags = VkMemoryMapFlags VkFlags
+                             deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                       FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkMemoryMapFlags where
+        {-# INLINE show #-}
+        show (VkMemoryMapFlags x) = show x
+
+instance Read VkMemoryMapFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkImageAspectFlags = VkImageAspectFlags VkFlags
+                               deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                         FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkImageAspectFlags where
+        {-# INLINE show #-}
+        show (VkImageAspectFlags x) = show x
+
+instance Read VkImageAspectFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkSparseMemoryBindFlags = VkSparseMemoryBindFlags VkFlags
+                                    deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                              FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkSparseMemoryBindFlags where
+        {-# INLINE show #-}
+        show (VkSparseMemoryBindFlags x) = show x
+
+instance Read VkSparseMemoryBindFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkSparseImageFormatFlags = VkSparseImageFormatFlags VkFlags
+                                     deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                               FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkSparseImageFormatFlags where
+        {-# INLINE show #-}
+        show (VkSparseImageFormatFlags x) = show x
+
+instance Read VkSparseImageFormatFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkSubpassDescriptionFlags = VkSubpassDescriptionFlags VkFlags
+                                      deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkSubpassDescriptionFlags where
+        {-# INLINE show #-}
+        show (VkSubpassDescriptionFlags x) = show x
+
+instance Read VkSubpassDescriptionFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineStageFlags = VkPipelineStageFlags VkFlags
+                                 deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                           FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkPipelineStageFlags where
+        {-# INLINE show #-}
+        show (VkPipelineStageFlags x) = show x
+
+instance Read VkPipelineStageFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkSampleCountFlags = VkSampleCountFlags VkFlags
+                               deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                         FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkSampleCountFlags where
+        {-# INLINE show #-}
+        show (VkSampleCountFlags x) = show x
+
+instance Read VkSampleCountFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkAttachmentDescriptionFlags = VkAttachmentDescriptionFlags VkFlags
+                                         deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                   FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkAttachmentDescriptionFlags where
+        {-# INLINE show #-}
+        show (VkAttachmentDescriptionFlags x) = show x
+
+instance Read VkAttachmentDescriptionFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkStencilFaceFlags = VkStencilFaceFlags VkFlags
+                               deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                         FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkStencilFaceFlags where
+        {-# INLINE show #-}
+        show (VkStencilFaceFlags x) = show x
+
+instance Read VkStencilFaceFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkCullModeFlags = VkCullModeFlags VkFlags
+                            deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                      FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkCullModeFlags where
+        {-# INLINE show #-}
+        show (VkCullModeFlags x) = show x
+
+instance Read VkCullModeFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkDescriptorPoolCreateFlags = VkDescriptorPoolCreateFlags VkFlags
+                                        deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                  FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkDescriptorPoolCreateFlags where
+        {-# INLINE show #-}
+        show (VkDescriptorPoolCreateFlags x) = show x
+
+instance Read VkDescriptorPoolCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkDescriptorPoolResetFlags = VkDescriptorPoolResetFlags VkFlags
+                                       deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                 FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkDescriptorPoolResetFlags where
+        {-# INLINE show #-}
+        show (VkDescriptorPoolResetFlags x) = show x
+
+instance Read VkDescriptorPoolResetFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkDependencyFlags = VkDependencyFlags VkFlags
+                              deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                        FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkDependencyFlags where
+        {-# INLINE show #-}
+        show (VkDependencyFlags x) = show x
+
+instance Read VkDependencyFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkIndirectCommandsLayoutUsageFlagsNVX = VkIndirectCommandsLayoutUsageFlagsNVX VkFlags
+                                                  deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                            Ix, Bits, FiniteBits, Storable, Real,
+                                                            Data, Generic)
+
+instance Show VkIndirectCommandsLayoutUsageFlagsNVX where
+        {-# INLINE show #-}
+        show (VkIndirectCommandsLayoutUsageFlagsNVX x) = show x
+
+instance Read VkIndirectCommandsLayoutUsageFlagsNVX where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkObjectEntryUsageFlagsNVX = VkObjectEntryUsageFlagsNVX VkFlags
+                                       deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                 FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkObjectEntryUsageFlagsNVX where
+        {-# INLINE show #-}
+        show (VkObjectEntryUsageFlagsNVX x) = show x
+
+instance Read VkObjectEntryUsageFlagsNVX where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkDescriptorUpdateTemplateCreateFlagsKHR = VkDescriptorUpdateTemplateCreateFlagsKHR VkFlags
+                                                     deriving (Eq, Ord, Num, Bounded, Enum,
+                                                               Integral, Ix, Bits, FiniteBits,
+                                                               Storable, Real, Data, Generic)
+
+instance Show VkDescriptorUpdateTemplateCreateFlagsKHR where
+        {-# INLINE show #-}
+        show (VkDescriptorUpdateTemplateCreateFlagsKHR x) = show x
+
+instance Read VkDescriptorUpdateTemplateCreateFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkCompositeAlphaFlagsKHR = VkCompositeAlphaFlagsKHR VkFlags
+                                     deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                               FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkCompositeAlphaFlagsKHR where
+        {-# INLINE show #-}
+        show (VkCompositeAlphaFlagsKHR x) = show x
+
+instance Read VkCompositeAlphaFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkDisplayPlaneAlphaFlagsKHR = VkDisplayPlaneAlphaFlagsKHR VkFlags
+                                        deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                  FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkDisplayPlaneAlphaFlagsKHR where
+        {-# INLINE show #-}
+        show (VkDisplayPlaneAlphaFlagsKHR x) = show x
+
+instance Read VkDisplayPlaneAlphaFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkSurfaceTransformFlagsKHR = VkSurfaceTransformFlagsKHR VkFlags
+                                       deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                 FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkSurfaceTransformFlagsKHR where
+        {-# INLINE show #-}
+        show (VkSurfaceTransformFlagsKHR x) = show x
+
+instance Read VkSurfaceTransformFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkSwapchainCreateFlagsKHR = VkSwapchainCreateFlagsKHR VkFlags
+                                      deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkSwapchainCreateFlagsKHR where
+        {-# INLINE show #-}
+        show (VkSwapchainCreateFlagsKHR x) = show x
+
+instance Read VkSwapchainCreateFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkDisplayModeCreateFlagsKHR = VkDisplayModeCreateFlagsKHR VkFlags
+                                        deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                  FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkDisplayModeCreateFlagsKHR where
+        {-# INLINE show #-}
+        show (VkDisplayModeCreateFlagsKHR x) = show x
+
+instance Read VkDisplayModeCreateFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkDisplaySurfaceCreateFlagsKHR = VkDisplaySurfaceCreateFlagsKHR VkFlags
+                                           deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix,
+                                                     Bits, FiniteBits, Storable, Real, Data,
+                                                     Generic)
+
+instance Show VkDisplaySurfaceCreateFlagsKHR where
+        {-# INLINE show #-}
+        show (VkDisplaySurfaceCreateFlagsKHR x) = show x
+
+instance Read VkDisplaySurfaceCreateFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkAndroidSurfaceCreateFlagsKHR = VkAndroidSurfaceCreateFlagsKHR VkFlags
+                                           deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix,
+                                                     Bits, FiniteBits, Storable, Real, Data,
+                                                     Generic)
+
+instance Show VkAndroidSurfaceCreateFlagsKHR where
+        {-# INLINE show #-}
+        show (VkAndroidSurfaceCreateFlagsKHR x) = show x
+
+instance Read VkAndroidSurfaceCreateFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkMirSurfaceCreateFlagsKHR = VkMirSurfaceCreateFlagsKHR VkFlags
+                                       deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                 FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkMirSurfaceCreateFlagsKHR where
+        {-# INLINE show #-}
+        show (VkMirSurfaceCreateFlagsKHR x) = show x
+
+instance Read VkMirSurfaceCreateFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkViSurfaceCreateFlagsNN = VkViSurfaceCreateFlagsNN VkFlags
+                                     deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                               FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkViSurfaceCreateFlagsNN where
+        {-# INLINE show #-}
+        show (VkViSurfaceCreateFlagsNN x) = show x
+
+instance Read VkViSurfaceCreateFlagsNN where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkWaylandSurfaceCreateFlagsKHR = VkWaylandSurfaceCreateFlagsKHR VkFlags
+                                           deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix,
+                                                     Bits, FiniteBits, Storable, Real, Data,
+                                                     Generic)
+
+instance Show VkWaylandSurfaceCreateFlagsKHR where
+        {-# INLINE show #-}
+        show (VkWaylandSurfaceCreateFlagsKHR x) = show x
+
+instance Read VkWaylandSurfaceCreateFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkWin32SurfaceCreateFlagsKHR = VkWin32SurfaceCreateFlagsKHR VkFlags
+                                         deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                   FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkWin32SurfaceCreateFlagsKHR where
+        {-# INLINE show #-}
+        show (VkWin32SurfaceCreateFlagsKHR x) = show x
+
+instance Read VkWin32SurfaceCreateFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkXlibSurfaceCreateFlagsKHR = VkXlibSurfaceCreateFlagsKHR VkFlags
+                                        deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                  FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkXlibSurfaceCreateFlagsKHR where
+        {-# INLINE show #-}
+        show (VkXlibSurfaceCreateFlagsKHR x) = show x
+
+instance Read VkXlibSurfaceCreateFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkXcbSurfaceCreateFlagsKHR = VkXcbSurfaceCreateFlagsKHR VkFlags
+                                       deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                 FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkXcbSurfaceCreateFlagsKHR where
+        {-# INLINE show #-}
+        show (VkXcbSurfaceCreateFlagsKHR x) = show x
+
+instance Read VkXcbSurfaceCreateFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkIOSSurfaceCreateFlagsMVK = VkIOSSurfaceCreateFlagsMVK VkFlags
+                                       deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                 FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkIOSSurfaceCreateFlagsMVK where
+        {-# INLINE show #-}
+        show (VkIOSSurfaceCreateFlagsMVK x) = show x
+
+instance Read VkIOSSurfaceCreateFlagsMVK where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkMacOSSurfaceCreateFlagsMVK = VkMacOSSurfaceCreateFlagsMVK VkFlags
+                                         deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                   FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkMacOSSurfaceCreateFlagsMVK where
+        {-# INLINE show #-}
+        show (VkMacOSSurfaceCreateFlagsMVK x) = show x
+
+instance Read VkMacOSSurfaceCreateFlagsMVK where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPeerMemoryFeatureFlagsKHX = VkPeerMemoryFeatureFlagsKHX VkFlags
+                                        deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                  FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkPeerMemoryFeatureFlagsKHX where
+        {-# INLINE show #-}
+        show (VkPeerMemoryFeatureFlagsKHX x) = show x
+
+instance Read VkPeerMemoryFeatureFlagsKHX where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkMemoryAllocateFlagsKHX = VkMemoryAllocateFlagsKHX VkFlags
+                                     deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                               FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkMemoryAllocateFlagsKHX where
+        {-# INLINE show #-}
+        show (VkMemoryAllocateFlagsKHX x) = show x
+
+instance Read VkMemoryAllocateFlagsKHX where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkDeviceGroupPresentModeFlagsKHX = VkDeviceGroupPresentModeFlagsKHX VkFlags
+                                             deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix,
+                                                       Bits, FiniteBits, Storable, Real, Data,
+                                                       Generic)
+
+instance Show VkDeviceGroupPresentModeFlagsKHX where
+        {-# INLINE show #-}
+        show (VkDeviceGroupPresentModeFlagsKHX x) = show x
+
+instance Read VkDeviceGroupPresentModeFlagsKHX where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkDebugReportFlagsEXT = VkDebugReportFlagsEXT VkFlags
+                                  deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                            FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkDebugReportFlagsEXT where
+        {-# INLINE show #-}
+        show (VkDebugReportFlagsEXT x) = show x
+
+instance Read VkDebugReportFlagsEXT where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkCommandPoolTrimFlagsKHR = VkCommandPoolTrimFlagsKHR VkFlags
+                                      deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkCommandPoolTrimFlagsKHR where
+        {-# INLINE show #-}
+        show (VkCommandPoolTrimFlagsKHR x) = show x
+
+instance Read VkCommandPoolTrimFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkExternalMemoryHandleTypeFlagsNV = VkExternalMemoryHandleTypeFlagsNV VkFlags
+                                              deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix,
+                                                        Bits, FiniteBits, Storable, Real, Data,
+                                                        Generic)
+
+instance Show VkExternalMemoryHandleTypeFlagsNV where
+        {-# INLINE show #-}
+        show (VkExternalMemoryHandleTypeFlagsNV x) = show x
+
+instance Read VkExternalMemoryHandleTypeFlagsNV where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkExternalMemoryFeatureFlagsNV = VkExternalMemoryFeatureFlagsNV VkFlags
+                                           deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix,
+                                                     Bits, FiniteBits, Storable, Real, Data,
+                                                     Generic)
+
+instance Show VkExternalMemoryFeatureFlagsNV where
+        {-# INLINE show #-}
+        show (VkExternalMemoryFeatureFlagsNV x) = show x
+
+instance Read VkExternalMemoryFeatureFlagsNV where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkExternalMemoryHandleTypeFlagsKHR = VkExternalMemoryHandleTypeFlagsKHR VkFlags
+                                               deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix,
+                                                         Bits, FiniteBits, Storable, Real, Data,
+                                                         Generic)
+
+instance Show VkExternalMemoryHandleTypeFlagsKHR where
+        {-# INLINE show #-}
+        show (VkExternalMemoryHandleTypeFlagsKHR x) = show x
+
+instance Read VkExternalMemoryHandleTypeFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkExternalMemoryFeatureFlagsKHR = VkExternalMemoryFeatureFlagsKHR VkFlags
+                                            deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix,
+                                                      Bits, FiniteBits, Storable, Real, Data,
+                                                      Generic)
+
+instance Show VkExternalMemoryFeatureFlagsKHR where
+        {-# INLINE show #-}
+        show (VkExternalMemoryFeatureFlagsKHR x) = show x
+
+instance Read VkExternalMemoryFeatureFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkExternalSemaphoreHandleTypeFlagsKHR = VkExternalSemaphoreHandleTypeFlagsKHR VkFlags
+                                                  deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                            Ix, Bits, FiniteBits, Storable, Real,
+                                                            Data, Generic)
+
+instance Show VkExternalSemaphoreHandleTypeFlagsKHR where
+        {-# INLINE show #-}
+        show (VkExternalSemaphoreHandleTypeFlagsKHR x) = show x
+
+instance Read VkExternalSemaphoreHandleTypeFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkExternalSemaphoreFeatureFlagsKHR = VkExternalSemaphoreFeatureFlagsKHR VkFlags
+                                               deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix,
+                                                         Bits, FiniteBits, Storable, Real, Data,
+                                                         Generic)
+
+instance Show VkExternalSemaphoreFeatureFlagsKHR where
+        {-# INLINE show #-}
+        show (VkExternalSemaphoreFeatureFlagsKHR x) = show x
+
+instance Read VkExternalSemaphoreFeatureFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkSemaphoreImportFlagsKHR = VkSemaphoreImportFlagsKHR VkFlags
+                                      deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkSemaphoreImportFlagsKHR where
+        {-# INLINE show #-}
+        show (VkSemaphoreImportFlagsKHR x) = show x
+
+instance Read VkSemaphoreImportFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkExternalFenceHandleTypeFlagsKHR = VkExternalFenceHandleTypeFlagsKHR VkFlags
+                                              deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix,
+                                                        Bits, FiniteBits, Storable, Real, Data,
+                                                        Generic)
+
+instance Show VkExternalFenceHandleTypeFlagsKHR where
+        {-# INLINE show #-}
+        show (VkExternalFenceHandleTypeFlagsKHR x) = show x
+
+instance Read VkExternalFenceHandleTypeFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkExternalFenceFeatureFlagsKHR = VkExternalFenceFeatureFlagsKHR VkFlags
+                                           deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix,
+                                                     Bits, FiniteBits, Storable, Real, Data,
+                                                     Generic)
+
+instance Show VkExternalFenceFeatureFlagsKHR where
+        {-# INLINE show #-}
+        show (VkExternalFenceFeatureFlagsKHR x) = show x
+
+instance Read VkExternalFenceFeatureFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkFenceImportFlagsKHR = VkFenceImportFlagsKHR VkFlags
+                                  deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                            FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkFenceImportFlagsKHR where
+        {-# INLINE show #-}
+        show (VkFenceImportFlagsKHR x) = show x
+
+instance Read VkFenceImportFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkSurfaceCounterFlagsEXT = VkSurfaceCounterFlagsEXT VkFlags
+                                     deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                               FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkSurfaceCounterFlagsEXT where
+        {-# INLINE show #-}
+        show (VkSurfaceCounterFlagsEXT x) = show x
+
+instance Read VkSurfaceCounterFlagsEXT where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineViewportSwizzleStateCreateFlagsNV = VkPipelineViewportSwizzleStateCreateFlagsNV VkFlags
+                                                        deriving (Eq, Ord, Num, Bounded, Enum,
+                                                                  Integral, Ix, Bits, FiniteBits,
+                                                                  Storable, Real, Data, Generic)
+
+instance Show VkPipelineViewportSwizzleStateCreateFlagsNV where
+        {-# INLINE show #-}
+        show (VkPipelineViewportSwizzleStateCreateFlagsNV x) = show x
+
+instance Read VkPipelineViewportSwizzleStateCreateFlagsNV where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineDiscardRectangleStateCreateFlagsEXT = VkPipelineDiscardRectangleStateCreateFlagsEXT VkFlags
+                                                          deriving (Eq, Ord, Num, Bounded, Enum,
+                                                                    Integral, Ix, Bits, FiniteBits,
+                                                                    Storable, Real, Data, Generic)
+
+instance Show VkPipelineDiscardRectangleStateCreateFlagsEXT where
+        {-# INLINE show #-}
+        show (VkPipelineDiscardRectangleStateCreateFlagsEXT x) = show x
+
+instance Read VkPipelineDiscardRectangleStateCreateFlagsEXT where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineCoverageToColorStateCreateFlagsNV = VkPipelineCoverageToColorStateCreateFlagsNV VkFlags
+                                                        deriving (Eq, Ord, Num, Bounded, Enum,
+                                                                  Integral, Ix, Bits, FiniteBits,
+                                                                  Storable, Real, Data, Generic)
+
+instance Show VkPipelineCoverageToColorStateCreateFlagsNV where
+        {-# INLINE show #-}
+        show (VkPipelineCoverageToColorStateCreateFlagsNV x) = show x
+
+instance Read VkPipelineCoverageToColorStateCreateFlagsNV where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineCoverageModulationStateCreateFlagsNV = VkPipelineCoverageModulationStateCreateFlagsNV VkFlags
+                                                           deriving (Eq, Ord, Num, Bounded, Enum,
+                                                                     Integral, Ix, Bits, FiniteBits,
+                                                                     Storable, Real, Data, Generic)
+
+instance Show VkPipelineCoverageModulationStateCreateFlagsNV where
+        {-# INLINE show #-}
+        show (VkPipelineCoverageModulationStateCreateFlagsNV x) = show x
+
+instance Read VkPipelineCoverageModulationStateCreateFlagsNV where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkValidationCacheCreateFlagsEXT = VkValidationCacheCreateFlagsEXT VkFlags
+                                            deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix,
+                                                      Bits, FiniteBits, Storable, Real, Data,
+                                                      Generic)
+
+instance Show VkValidationCacheCreateFlagsEXT where
+        {-# INLINE show #-}
+        show (VkValidationCacheCreateFlagsEXT x) = show x
+
+instance Read VkValidationCacheCreateFlagsEXT where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineRasterizationConservativeStateCreateFlagsEXT = VkPipelineRasterizationConservativeStateCreateFlagsEXT VkFlags
+                                                                   deriving (Eq, Ord, Num, Bounded,
+                                                                             Enum, Integral, Ix,
+                                                                             Bits, FiniteBits,
+                                                                             Storable, Real, Data,
+                                                                             Generic)
+
+instance Show
+           VkPipelineRasterizationConservativeStateCreateFlagsEXT
+         where
+        {-# INLINE show #-}
+        show (VkPipelineRasterizationConservativeStateCreateFlagsEXT x)
+          = show x
+
+instance Read
+           VkPipelineRasterizationConservativeStateCreateFlagsEXT
+         where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 type VkInstance = Ptr VkInstance_T
 
@@ -1554,7 +2629,7 @@ type VkDebugReportCallbackEXT = VkPtr VkDebugReportCallbackEXT_T
 data VkDebugReportCallbackEXT_T
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkAttachmentLoadOp.html VkAttachmentLoadOp registry at www.khronos.org>
-newtype VkAttachmentLoadOp = VkAttachmentLoadOp VkFlags
+newtype VkAttachmentLoadOp = VkAttachmentLoadOp Int32
                                deriving (Eq, Ord, Storable)
 
 instance Show VkAttachmentLoadOp where
@@ -1594,7 +2669,7 @@ pattern VK_ATTACHMENT_LOAD_OP_DONT_CARE :: VkAttachmentLoadOp
 pattern VK_ATTACHMENT_LOAD_OP_DONT_CARE = VkAttachmentLoadOp 2
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkAttachmentStoreOp.html VkAttachmentStoreOp registry at www.khronos.org>
-newtype VkAttachmentStoreOp = VkAttachmentStoreOp VkFlags
+newtype VkAttachmentStoreOp = VkAttachmentStoreOp Int32
                                 deriving (Eq, Ord, Storable)
 
 instance Show VkAttachmentStoreOp where
@@ -1628,7 +2703,7 @@ pattern VK_ATTACHMENT_STORE_OP_DONT_CARE :: VkAttachmentStoreOp
 pattern VK_ATTACHMENT_STORE_OP_DONT_CARE = VkAttachmentStoreOp 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBlendFactor.html VkBlendFactor registry at www.khronos.org>
-newtype VkBlendFactor = VkBlendFactor VkFlags
+newtype VkBlendFactor = VkBlendFactor Int32
                           deriving (Eq, Ord, Storable)
 
 instance Show VkBlendFactor where
@@ -1789,7 +2864,7 @@ pattern VK_BLEND_FACTOR_ONE_MINUS_SRC1_ALPHA :: VkBlendFactor
 pattern VK_BLEND_FACTOR_ONE_MINUS_SRC1_ALPHA = VkBlendFactor 18
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBlendOp.html VkBlendOp registry at www.khronos.org>
-newtype VkBlendOp = VkBlendOp VkFlags
+newtype VkBlendOp = VkBlendOp Int32
                       deriving (Eq, Ord, Storable)
 
 instance Show VkBlendOp where
@@ -1838,7 +2913,7 @@ pattern VK_BLEND_OP_MAX :: VkBlendOp
 pattern VK_BLEND_OP_MAX = VkBlendOp 4
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBorderColor.html VkBorderColor registry at www.khronos.org>
-newtype VkBorderColor = VkBorderColor VkFlags
+newtype VkBorderColor = VkBorderColor Int32
                           deriving (Eq, Ord, Storable)
 
 instance Show VkBorderColor where
@@ -1903,16 +2978,56 @@ pattern VK_BORDER_COLOR_INT_OPAQUE_WHITE :: VkBorderColor
 
 pattern VK_BORDER_COLOR_INT_OPAQUE_WHITE = VkBorderColor 5
 
-type VkFramebufferCreateFlagBits = VkFlags
+newtype VkFramebufferCreateFlagBits = VkFramebufferCreateFlagBits VkFlags
+                                        deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                  FiniteBits, Storable, Real, Data, Generic)
 
-type VkQueryPoolCreateFlagBits = VkFlags
+instance Show VkFramebufferCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkFramebufferCreateFlagBits x) = show x
 
-type VkRenderPassCreateFlagBits = VkFlags
+instance Read VkFramebufferCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
-type VkSamplerCreateFlagBits = VkFlags
+newtype VkQueryPoolCreateFlagBits = VkQueryPoolCreateFlagBits VkFlags
+                                      deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkQueryPoolCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkQueryPoolCreateFlagBits x) = show x
+
+instance Read VkQueryPoolCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkRenderPassCreateFlagBits = VkRenderPassCreateFlagBits VkFlags
+                                       deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                 FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkRenderPassCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkRenderPassCreateFlagBits x) = show x
+
+instance Read VkRenderPassCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkSamplerCreateFlagBits = VkSamplerCreateFlagBits VkFlags
+                                    deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                              FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkSamplerCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkSamplerCreateFlagBits x) = show x
+
+instance Read VkSamplerCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineCacheHeaderVersion.html VkPipelineCacheHeaderVersion registry at www.khronos.org>
-newtype VkPipelineCacheHeaderVersion = VkPipelineCacheHeaderVersion VkFlags
+newtype VkPipelineCacheHeaderVersion = VkPipelineCacheHeaderVersion Int32
                                          deriving (Eq, Ord, Storable)
 
 instance Show VkPipelineCacheHeaderVersion where
@@ -1939,32 +3054,163 @@ pattern VK_PIPELINE_CACHE_HEADER_VERSION_ONE ::
 pattern VK_PIPELINE_CACHE_HEADER_VERSION_ONE =
         VkPipelineCacheHeaderVersion 1
 
-type VkPipelineLayoutCreateFlagBits = VkFlags
+newtype VkPipelineLayoutCreateFlagBits = VkPipelineLayoutCreateFlagBits VkFlags
+                                           deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix,
+                                                     Bits, FiniteBits, Storable, Real, Data,
+                                                     Generic)
 
-type VkPipelineCacheCreateFlagBits = VkFlags
+instance Show VkPipelineLayoutCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkPipelineLayoutCreateFlagBits x) = show x
 
-type VkPipelineDepthStencilStateCreateFlagBits = VkFlags
+instance Read VkPipelineLayoutCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
-type VkPipelineDynamicStateCreateFlagBits = VkFlags
+newtype VkPipelineCacheCreateFlagBits = VkPipelineCacheCreateFlagBits VkFlags
+                                          deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                    FiniteBits, Storable, Real, Data, Generic)
 
-type VkPipelineColorBlendStateCreateFlagBits = VkFlags
+instance Show VkPipelineCacheCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkPipelineCacheCreateFlagBits x) = show x
 
-type VkPipelineMultisampleStateCreateFlagBits = VkFlags
+instance Read VkPipelineCacheCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
-type VkPipelineRasterizationStateCreateFlagBits = VkFlags
+newtype VkPipelineDepthStencilStateCreateFlagBits = VkPipelineDepthStencilStateCreateFlagBits VkFlags
+                                                      deriving (Eq, Ord, Num, Bounded, Enum,
+                                                                Integral, Ix, Bits, FiniteBits,
+                                                                Storable, Real, Data, Generic)
 
-type VkPipelineViewportStateCreateFlagBits = VkFlags
+instance Show VkPipelineDepthStencilStateCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkPipelineDepthStencilStateCreateFlagBits x) = show x
 
-type VkPipelineTessellationStateCreateFlagBits = VkFlags
+instance Read VkPipelineDepthStencilStateCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
-type VkPipelineInputAssemblyStateCreateFlagBits = VkFlags
+newtype VkPipelineDynamicStateCreateFlagBits = VkPipelineDynamicStateCreateFlagBits VkFlags
+                                                 deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                           Ix, Bits, FiniteBits, Storable, Real,
+                                                           Data, Generic)
 
-type VkPipelineVertexInputStateCreateFlagBits = VkFlags
+instance Show VkPipelineDynamicStateCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkPipelineDynamicStateCreateFlagBits x) = show x
 
-type VkPipelineShaderStageCreateFlagBits = VkFlags
+instance Read VkPipelineDynamicStateCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineColorBlendStateCreateFlagBits = VkPipelineColorBlendStateCreateFlagBits VkFlags
+                                                    deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                              Ix, Bits, FiniteBits, Storable, Real,
+                                                              Data, Generic)
+
+instance Show VkPipelineColorBlendStateCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkPipelineColorBlendStateCreateFlagBits x) = show x
+
+instance Read VkPipelineColorBlendStateCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineMultisampleStateCreateFlagBits = VkPipelineMultisampleStateCreateFlagBits VkFlags
+                                                     deriving (Eq, Ord, Num, Bounded, Enum,
+                                                               Integral, Ix, Bits, FiniteBits,
+                                                               Storable, Real, Data, Generic)
+
+instance Show VkPipelineMultisampleStateCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkPipelineMultisampleStateCreateFlagBits x) = show x
+
+instance Read VkPipelineMultisampleStateCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineRasterizationStateCreateFlagBits = VkPipelineRasterizationStateCreateFlagBits VkFlags
+                                                       deriving (Eq, Ord, Num, Bounded, Enum,
+                                                                 Integral, Ix, Bits, FiniteBits,
+                                                                 Storable, Real, Data, Generic)
+
+instance Show VkPipelineRasterizationStateCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkPipelineRasterizationStateCreateFlagBits x) = show x
+
+instance Read VkPipelineRasterizationStateCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineViewportStateCreateFlagBits = VkPipelineViewportStateCreateFlagBits VkFlags
+                                                  deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                            Ix, Bits, FiniteBits, Storable, Real,
+                                                            Data, Generic)
+
+instance Show VkPipelineViewportStateCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkPipelineViewportStateCreateFlagBits x) = show x
+
+instance Read VkPipelineViewportStateCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineTessellationStateCreateFlagBits = VkPipelineTessellationStateCreateFlagBits VkFlags
+                                                      deriving (Eq, Ord, Num, Bounded, Enum,
+                                                                Integral, Ix, Bits, FiniteBits,
+                                                                Storable, Real, Data, Generic)
+
+instance Show VkPipelineTessellationStateCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkPipelineTessellationStateCreateFlagBits x) = show x
+
+instance Read VkPipelineTessellationStateCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineInputAssemblyStateCreateFlagBits = VkPipelineInputAssemblyStateCreateFlagBits VkFlags
+                                                       deriving (Eq, Ord, Num, Bounded, Enum,
+                                                                 Integral, Ix, Bits, FiniteBits,
+                                                                 Storable, Real, Data, Generic)
+
+instance Show VkPipelineInputAssemblyStateCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkPipelineInputAssemblyStateCreateFlagBits x) = show x
+
+instance Read VkPipelineInputAssemblyStateCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineVertexInputStateCreateFlagBits = VkPipelineVertexInputStateCreateFlagBits VkFlags
+                                                     deriving (Eq, Ord, Num, Bounded, Enum,
+                                                               Integral, Ix, Bits, FiniteBits,
+                                                               Storable, Real, Data, Generic)
+
+instance Show VkPipelineVertexInputStateCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkPipelineVertexInputStateCreateFlagBits x) = show x
+
+instance Read VkPipelineVertexInputStateCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineShaderStageCreateFlagBits = VkPipelineShaderStageCreateFlagBits VkFlags
+                                                deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix,
+                                                          Bits, FiniteBits, Storable, Real, Data,
+                                                          Generic)
+
+instance Show VkPipelineShaderStageCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkPipelineShaderStageCreateFlagBits x) = show x
+
+instance Read VkPipelineShaderStageCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDescriptorSetLayoutCreateFlagBits.html VkDescriptorSetLayoutCreateFlagBits registry at www.khronos.org>
-newtype VkDescriptorSetLayoutCreateFlagBits = VkDescriptorSetLayoutCreateFlagBits VkFlags
+newtype VkDescriptorSetLayoutCreateFlagBits = VkDescriptorSetLayoutCreateFlagBits Int32
                                                 deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkDescriptorSetLayoutCreateFlagBits where
@@ -1981,14 +3227,44 @@ instance Read VkDescriptorSetLayoutCreateFlagBits where
                    (expectP (Ident "VkDescriptorSetLayoutCreateFlagBits") >>
                       (VkDescriptorSetLayoutCreateFlagBits <$> step readPrec)))
 
-type VkBufferViewCreateFlagBits = VkFlags
+newtype VkBufferViewCreateFlagBits = VkBufferViewCreateFlagBits VkFlags
+                                       deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                 FiniteBits, Storable, Real, Data, Generic)
 
-type VkInstanceCreateFlagBits = VkFlags
+instance Show VkBufferViewCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkBufferViewCreateFlagBits x) = show x
 
-type VkDeviceQueueCreateFlagBits = VkFlags
+instance Read VkBufferViewCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkInstanceCreateFlagBits = VkInstanceCreateFlagBits VkFlags
+                                     deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                               FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkInstanceCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkInstanceCreateFlagBits x) = show x
+
+instance Read VkInstanceCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkDeviceQueueCreateFlagBits = VkDeviceQueueCreateFlagBits VkFlags
+                                        deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                                  FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkDeviceQueueCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkDeviceQueueCreateFlagBits x) = show x
+
+instance Read VkDeviceQueueCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBufferCreateFlagBits.html VkBufferCreateFlagBits registry at www.khronos.org>
-newtype VkBufferCreateFlagBits = VkBufferCreateFlagBits VkFlags
+newtype VkBufferCreateFlagBits = VkBufferCreateFlagBits Int32
                                    deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkBufferCreateFlagBits where
@@ -2045,7 +3321,7 @@ pattern VK_BUFFER_CREATE_SPARSE_ALIASED_BIT =
         VkBufferCreateFlagBits 4
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBufferUsageFlagBits.html VkBufferUsageFlagBits registry at www.khronos.org>
-newtype VkBufferUsageFlagBits = VkBufferUsageFlagBits VkFlags
+newtype VkBufferUsageFlagBits = VkBufferUsageFlagBits Int32
                                   deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkBufferUsageFlagBits where
@@ -2171,7 +3447,7 @@ pattern VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT =
         VkBufferUsageFlagBits 256
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkColorComponentFlagBits.html VkColorComponentFlagBits registry at www.khronos.org>
-newtype VkColorComponentFlagBits = VkColorComponentFlagBits VkFlags
+newtype VkColorComponentFlagBits = VkColorComponentFlagBits Int32
                                      deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkColorComponentFlagBits where
@@ -2221,7 +3497,7 @@ pattern VK_COLOR_COMPONENT_A_BIT :: VkColorComponentFlagBits
 pattern VK_COLOR_COMPONENT_A_BIT = VkColorComponentFlagBits 8
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkComponentSwizzle.html VkComponentSwizzle registry at www.khronos.org>
-newtype VkComponentSwizzle = VkComponentSwizzle VkFlags
+newtype VkComponentSwizzle = VkComponentSwizzle Int32
                                deriving (Eq, Ord, Storable)
 
 instance Show VkComponentSwizzle where
@@ -2289,7 +3565,7 @@ pattern VK_COMPONENT_SWIZZLE_A :: VkComponentSwizzle
 pattern VK_COMPONENT_SWIZZLE_A = VkComponentSwizzle 6
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkCommandPoolCreateFlagBits.html VkCommandPoolCreateFlagBits registry at www.khronos.org>
-newtype VkCommandPoolCreateFlagBits = VkCommandPoolCreateFlagBits VkFlags
+newtype VkCommandPoolCreateFlagBits = VkCommandPoolCreateFlagBits Int32
                                         deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkCommandPoolCreateFlagBits where
@@ -2333,7 +3609,7 @@ pattern VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT =
         VkCommandPoolCreateFlagBits 2
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkCommandPoolResetFlagBits.html VkCommandPoolResetFlagBits registry at www.khronos.org>
-newtype VkCommandPoolResetFlagBits = VkCommandPoolResetFlagBits VkFlags
+newtype VkCommandPoolResetFlagBits = VkCommandPoolResetFlagBits Int32
                                        deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkCommandPoolResetFlagBits where
@@ -2364,7 +3640,7 @@ pattern VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT =
         VkCommandPoolResetFlagBits 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkCommandBufferResetFlagBits.html VkCommandBufferResetFlagBits registry at www.khronos.org>
-newtype VkCommandBufferResetFlagBits = VkCommandBufferResetFlagBits VkFlags
+newtype VkCommandBufferResetFlagBits = VkCommandBufferResetFlagBits Int32
                                          deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkCommandBufferResetFlagBits where
@@ -2395,7 +3671,7 @@ pattern VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT =
         VkCommandBufferResetFlagBits 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkCommandBufferLevel.html VkCommandBufferLevel registry at www.khronos.org>
-newtype VkCommandBufferLevel = VkCommandBufferLevel VkFlags
+newtype VkCommandBufferLevel = VkCommandBufferLevel Int32
                                  deriving (Eq, Ord, Storable)
 
 instance Show VkCommandBufferLevel where
@@ -2429,7 +3705,7 @@ pattern VK_COMMAND_BUFFER_LEVEL_SECONDARY :: VkCommandBufferLevel
 pattern VK_COMMAND_BUFFER_LEVEL_SECONDARY = VkCommandBufferLevel 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkCommandBufferUsageFlagBits.html VkCommandBufferUsageFlagBits registry at www.khronos.org>
-newtype VkCommandBufferUsageFlagBits = VkCommandBufferUsageFlagBits VkFlags
+newtype VkCommandBufferUsageFlagBits = VkCommandBufferUsageFlagBits Int32
                                          deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkCommandBufferUsageFlagBits where
@@ -2482,7 +3758,7 @@ pattern VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT =
         VkCommandBufferUsageFlagBits 4
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkCompareOp.html VkCompareOp registry at www.khronos.org>
-newtype VkCompareOp = VkCompareOp VkFlags
+newtype VkCompareOp = VkCompareOp Int32
                         deriving (Eq, Ord, Storable)
 
 instance Show VkCompareOp where
@@ -2552,7 +3828,7 @@ pattern VK_COMPARE_OP_ALWAYS :: VkCompareOp
 pattern VK_COMPARE_OP_ALWAYS = VkCompareOp 7
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkCullModeFlagBits.html VkCullModeFlagBits registry at www.khronos.org>
-newtype VkCullModeFlagBits = VkCullModeFlagBits VkFlags
+newtype VkCullModeFlagBits = VkCullModeFlagBits Int32
                                deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkCullModeFlagBits where
@@ -2601,7 +3877,7 @@ pattern VK_CULL_MODE_FRONT_AND_BACK :: VkCullModeFlagBits
 pattern VK_CULL_MODE_FRONT_AND_BACK = VkCullModeFlagBits 3
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDescriptorType.html VkDescriptorType registry at www.khronos.org>
-newtype VkDescriptorType = VkDescriptorType VkFlags
+newtype VkDescriptorType = VkDescriptorType Int32
                              deriving (Eq, Ord, Storable)
 
 instance Show VkDescriptorType where
@@ -2713,10 +3989,20 @@ pattern VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT :: VkDescriptorType
 
 pattern VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT = VkDescriptorType 10
 
-type VkDeviceCreateFlagBits = VkFlags
+newtype VkDeviceCreateFlagBits = VkDeviceCreateFlagBits VkFlags
+                                   deriving (Eq, Ord, Num, Bounded, Enum, Integral, Ix, Bits,
+                                             FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkDeviceCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkDeviceCreateFlagBits x) = show x
+
+instance Read VkDeviceCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDynamicState.html VkDynamicState registry at www.khronos.org>
-newtype VkDynamicState = VkDynamicState VkFlags
+newtype VkDynamicState = VkDynamicState Int32
                            deriving (Eq, Ord, Storable)
 
 instance Show VkDynamicState where
@@ -2802,7 +4088,7 @@ pattern VK_DYNAMIC_STATE_STENCIL_REFERENCE :: VkDynamicState
 pattern VK_DYNAMIC_STATE_STENCIL_REFERENCE = VkDynamicState 8
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkFenceCreateFlagBits.html VkFenceCreateFlagBits registry at www.khronos.org>
-newtype VkFenceCreateFlagBits = VkFenceCreateFlagBits VkFlags
+newtype VkFenceCreateFlagBits = VkFenceCreateFlagBits Int32
                                   deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkFenceCreateFlagBits where
@@ -2829,7 +4115,7 @@ pattern VK_FENCE_CREATE_SIGNALED_BIT :: VkFenceCreateFlagBits
 pattern VK_FENCE_CREATE_SIGNALED_BIT = VkFenceCreateFlagBits 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPolygonMode.html VkPolygonMode registry at www.khronos.org>
-newtype VkPolygonMode = VkPolygonMode VkFlags
+newtype VkPolygonMode = VkPolygonMode Int32
                           deriving (Eq, Ord, Storable)
 
 instance Show VkPolygonMode where
@@ -2870,7 +4156,7 @@ pattern VK_POLYGON_MODE_POINT = VkPolygonMode 2
 -- | Vulkan format definitions
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkFormat.html VkFormat registry at www.khronos.org>
-newtype VkFormat = VkFormat VkFlags
+newtype VkFormat = VkFormat Int32
                      deriving (Eq, Ord, Storable)
 
 instance Show VkFormat where
@@ -4241,7 +5527,7 @@ pattern VK_FORMAT_ASTC_12x12_SRGB_BLOCK :: VkFormat
 pattern VK_FORMAT_ASTC_12x12_SRGB_BLOCK = VkFormat 184
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkFormatFeatureFlagBits.html VkFormatFeatureFlagBits registry at www.khronos.org>
-newtype VkFormatFeatureFlagBits = VkFormatFeatureFlagBits VkFlags
+newtype VkFormatFeatureFlagBits = VkFormatFeatureFlagBits Int32
                                     deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkFormatFeatureFlagBits where
@@ -4426,7 +5712,7 @@ pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT =
         VkFormatFeatureFlagBits 4096
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkFrontFace.html VkFrontFace registry at www.khronos.org>
-newtype VkFrontFace = VkFrontFace VkFlags
+newtype VkFrontFace = VkFrontFace Int32
                         deriving (Eq, Ord, Storable)
 
 instance Show VkFrontFace where
@@ -4457,7 +5743,7 @@ pattern VK_FRONT_FACE_CLOCKWISE :: VkFrontFace
 pattern VK_FRONT_FACE_CLOCKWISE = VkFrontFace 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageAspectFlagBits.html VkImageAspectFlagBits registry at www.khronos.org>
-newtype VkImageAspectFlagBits = VkImageAspectFlagBits VkFlags
+newtype VkImageAspectFlagBits = VkImageAspectFlagBits Int32
                                   deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkImageAspectFlagBits where
@@ -4508,7 +5794,7 @@ pattern VK_IMAGE_ASPECT_METADATA_BIT :: VkImageAspectFlagBits
 pattern VK_IMAGE_ASPECT_METADATA_BIT = VkImageAspectFlagBits 8
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageCreateFlagBits.html VkImageCreateFlagBits registry at www.khronos.org>
-newtype VkImageCreateFlagBits = VkImageCreateFlagBits VkFlags
+newtype VkImageCreateFlagBits = VkImageCreateFlagBits Int32
                                   deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkImageCreateFlagBits where
@@ -4588,7 +5874,7 @@ pattern VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT =
         VkImageCreateFlagBits 16
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageLayout.html VkImageLayout registry at www.khronos.org>
-newtype VkImageLayout = VkImageLayout VkFlags
+newtype VkImageLayout = VkImageLayout Int32
                           deriving (Eq, Ord, Storable)
 
 instance Show VkImageLayout where
@@ -4689,7 +5975,7 @@ pattern VK_IMAGE_LAYOUT_PREINITIALIZED :: VkImageLayout
 pattern VK_IMAGE_LAYOUT_PREINITIALIZED = VkImageLayout 8
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageTiling.html VkImageTiling registry at www.khronos.org>
-newtype VkImageTiling = VkImageTiling VkFlags
+newtype VkImageTiling = VkImageTiling Int32
                           deriving (Eq, Ord, Storable)
 
 instance Show VkImageTiling where
@@ -4721,7 +6007,7 @@ pattern VK_IMAGE_TILING_LINEAR :: VkImageTiling
 pattern VK_IMAGE_TILING_LINEAR = VkImageTiling 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageType.html VkImageType registry at www.khronos.org>
-newtype VkImageType = VkImageType VkFlags
+newtype VkImageType = VkImageType Int32
                         deriving (Eq, Ord, Storable)
 
 instance Show VkImageType where
@@ -4755,7 +6041,7 @@ pattern VK_IMAGE_TYPE_3D :: VkImageType
 pattern VK_IMAGE_TYPE_3D = VkImageType 2
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageUsageFlagBits.html VkImageUsageFlagBits registry at www.khronos.org>
-newtype VkImageUsageFlagBits = VkImageUsageFlagBits VkFlags
+newtype VkImageUsageFlagBits = VkImageUsageFlagBits Int32
                                  deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkImageUsageFlagBits where
@@ -4865,7 +6151,7 @@ pattern VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT =
         VkImageUsageFlagBits 128
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageViewType.html VkImageViewType registry at www.khronos.org>
-newtype VkImageViewType = VkImageViewType VkFlags
+newtype VkImageViewType = VkImageViewType Int32
                             deriving (Eq, Ord, Storable)
 
 instance Show VkImageViewType where
@@ -4933,7 +6219,7 @@ pattern VK_IMAGE_VIEW_TYPE_CUBE_ARRAY :: VkImageViewType
 pattern VK_IMAGE_VIEW_TYPE_CUBE_ARRAY = VkImageViewType 6
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSharingMode.html VkSharingMode registry at www.khronos.org>
-newtype VkSharingMode = VkSharingMode VkFlags
+newtype VkSharingMode = VkSharingMode Int32
                           deriving (Eq, Ord, Storable)
 
 instance Show VkSharingMode where
@@ -4965,7 +6251,7 @@ pattern VK_SHARING_MODE_CONCURRENT :: VkSharingMode
 pattern VK_SHARING_MODE_CONCURRENT = VkSharingMode 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkIndexType.html VkIndexType registry at www.khronos.org>
-newtype VkIndexType = VkIndexType VkFlags
+newtype VkIndexType = VkIndexType Int32
                         deriving (Eq, Ord, Storable)
 
 instance Show VkIndexType where
@@ -4995,7 +6281,7 @@ pattern VK_INDEX_TYPE_UINT32 :: VkIndexType
 pattern VK_INDEX_TYPE_UINT32 = VkIndexType 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkLogicOp.html VkLogicOp registry at www.khronos.org>
-newtype VkLogicOp = VkLogicOp VkFlags
+newtype VkLogicOp = VkLogicOp Int32
                       deriving (Eq, Ord, Storable)
 
 instance Show VkLogicOp where
@@ -5113,7 +6399,7 @@ pattern VK_LOGIC_OP_SET :: VkLogicOp
 pattern VK_LOGIC_OP_SET = VkLogicOp 15
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryHeapFlagBits.html VkMemoryHeapFlagBits registry at www.khronos.org>
-newtype VkMemoryHeapFlagBits = VkMemoryHeapFlagBits VkFlags
+newtype VkMemoryHeapFlagBits = VkMemoryHeapFlagBits Int32
                                  deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkMemoryHeapFlagBits where
@@ -5142,7 +6428,7 @@ pattern VK_MEMORY_HEAP_DEVICE_LOCAL_BIT :: VkMemoryHeapFlagBits
 pattern VK_MEMORY_HEAP_DEVICE_LOCAL_BIT = VkMemoryHeapFlagBits 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkAccessFlagBits.html VkAccessFlagBits registry at www.khronos.org>
-newtype VkAccessFlagBits = VkAccessFlagBits VkFlags
+newtype VkAccessFlagBits = VkAccessFlagBits Int32
                              deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkAccessFlagBits where
@@ -5342,7 +6628,7 @@ pattern VK_ACCESS_MEMORY_WRITE_BIT :: VkAccessFlagBits
 pattern VK_ACCESS_MEMORY_WRITE_BIT = VkAccessFlagBits 65536
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryPropertyFlagBits.html VkMemoryPropertyFlagBits registry at www.khronos.org>
-newtype VkMemoryPropertyFlagBits = VkMemoryPropertyFlagBits VkFlags
+newtype VkMemoryPropertyFlagBits = VkMemoryPropertyFlagBits Int32
                                      deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkMemoryPropertyFlagBits where
@@ -5425,7 +6711,7 @@ pattern VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT =
         VkMemoryPropertyFlagBits 16
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceType.html VkPhysicalDeviceType registry at www.khronos.org>
-newtype VkPhysicalDeviceType = VkPhysicalDeviceType VkFlags
+newtype VkPhysicalDeviceType = VkPhysicalDeviceType Int32
                                  deriving (Eq, Ord, Storable)
 
 instance Show VkPhysicalDeviceType where
@@ -5487,7 +6773,7 @@ pattern VK_PHYSICAL_DEVICE_TYPE_CPU :: VkPhysicalDeviceType
 pattern VK_PHYSICAL_DEVICE_TYPE_CPU = VkPhysicalDeviceType 4
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineBindPoint.html VkPipelineBindPoint registry at www.khronos.org>
-newtype VkPipelineBindPoint = VkPipelineBindPoint VkFlags
+newtype VkPipelineBindPoint = VkPipelineBindPoint Int32
                                 deriving (Eq, Ord, Storable)
 
 instance Show VkPipelineBindPoint where
@@ -5521,7 +6807,7 @@ pattern VK_PIPELINE_BIND_POINT_COMPUTE :: VkPipelineBindPoint
 pattern VK_PIPELINE_BIND_POINT_COMPUTE = VkPipelineBindPoint 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineCreateFlagBits.html VkPipelineCreateFlagBits registry at www.khronos.org>
-newtype VkPipelineCreateFlagBits = VkPipelineCreateFlagBits VkFlags
+newtype VkPipelineCreateFlagBits = VkPipelineCreateFlagBits Int32
                                      deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkPipelineCreateFlagBits where
@@ -5572,7 +6858,7 @@ pattern VK_PIPELINE_CREATE_DERIVATIVE_BIT =
         VkPipelineCreateFlagBits 4
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPrimitiveTopology.html VkPrimitiveTopology registry at www.khronos.org>
-newtype VkPrimitiveTopology = VkPrimitiveTopology VkFlags
+newtype VkPrimitiveTopology = VkPrimitiveTopology Int32
                                 deriving (Eq, Ord, Storable)
 
 instance Show VkPrimitiveTopology where
@@ -5687,7 +6973,7 @@ pattern VK_PRIMITIVE_TOPOLOGY_PATCH_LIST :: VkPrimitiveTopology
 pattern VK_PRIMITIVE_TOPOLOGY_PATCH_LIST = VkPrimitiveTopology 10
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkQueryControlFlagBits.html VkQueryControlFlagBits registry at www.khronos.org>
-newtype VkQueryControlFlagBits = VkQueryControlFlagBits VkFlags
+newtype VkQueryControlFlagBits = VkQueryControlFlagBits Int32
                                    deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkQueryControlFlagBits where
@@ -5716,7 +7002,7 @@ pattern VK_QUERY_CONTROL_PRECISE_BIT :: VkQueryControlFlagBits
 pattern VK_QUERY_CONTROL_PRECISE_BIT = VkQueryControlFlagBits 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkQueryPipelineStatisticFlagBits.html VkQueryPipelineStatisticFlagBits registry at www.khronos.org>
-newtype VkQueryPipelineStatisticFlagBits = VkQueryPipelineStatisticFlagBits VkFlags
+newtype VkQueryPipelineStatisticFlagBits = VkQueryPipelineStatisticFlagBits Int32
                                              deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkQueryPipelineStatisticFlagBits where
@@ -5896,7 +7182,7 @@ pattern VK_QUERY_PIPELINE_STATISTIC_COMPUTE_SHADER_INVOCATIONS_BIT
         = VkQueryPipelineStatisticFlagBits 1024
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkQueryResultFlagBits.html VkQueryResultFlagBits registry at www.khronos.org>
-newtype VkQueryResultFlagBits = VkQueryResultFlagBits VkFlags
+newtype VkQueryResultFlagBits = VkQueryResultFlagBits Int32
                                   deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkQueryResultFlagBits where
@@ -5957,7 +7243,7 @@ pattern VK_QUERY_RESULT_PARTIAL_BIT :: VkQueryResultFlagBits
 pattern VK_QUERY_RESULT_PARTIAL_BIT = VkQueryResultFlagBits 8
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkQueryType.html VkQueryType registry at www.khronos.org>
-newtype VkQueryType = VkQueryType VkFlags
+newtype VkQueryType = VkQueryType Int32
                         deriving (Eq, Ord, Storable)
 
 instance Show VkQueryType where
@@ -5996,7 +7282,7 @@ pattern VK_QUERY_TYPE_TIMESTAMP :: VkQueryType
 pattern VK_QUERY_TYPE_TIMESTAMP = VkQueryType 2
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkQueueFlagBits.html VkQueueFlagBits registry at www.khronos.org>
-newtype VkQueueFlagBits = VkQueueFlagBits VkFlags
+newtype VkQueueFlagBits = VkQueueFlagBits Int32
                             deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkQueueFlagBits where
@@ -6054,7 +7340,7 @@ pattern VK_QUEUE_SPARSE_BINDING_BIT :: VkQueueFlagBits
 pattern VK_QUEUE_SPARSE_BINDING_BIT = VkQueueFlagBits 8
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSubpassContents.html VkSubpassContents registry at www.khronos.org>
-newtype VkSubpassContents = VkSubpassContents VkFlags
+newtype VkSubpassContents = VkSubpassContents Int32
                               deriving (Eq, Ord, Storable)
 
 instance Show VkSubpassContents where
@@ -6091,7 +7377,7 @@ pattern VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS =
 -- | API result codes
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkResult.html VkResult registry at www.khronos.org>
-newtype VkResult = VkResult VkFlags
+newtype VkResult = VkResult Int32
                      deriving (Eq, Ord, Storable)
 
 instance Show VkResult where
@@ -6251,7 +7537,7 @@ pattern VK_ERROR_FRAGMENTED_POOL :: VkResult
 pattern VK_ERROR_FRAGMENTED_POOL = VkResult (-12)
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkShaderStageFlagBits.html VkShaderStageFlagBits registry at www.khronos.org>
-newtype VkShaderStageFlagBits = VkShaderStageFlagBits VkFlags
+newtype VkShaderStageFlagBits = VkShaderStageFlagBits Int32
                                   deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkShaderStageFlagBits where
@@ -6341,7 +7627,7 @@ pattern VK_SHADER_STAGE_ALL :: VkShaderStageFlagBits
 pattern VK_SHADER_STAGE_ALL = VkShaderStageFlagBits 2147483647
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSparseMemoryBindFlagBits.html VkSparseMemoryBindFlagBits registry at www.khronos.org>
-newtype VkSparseMemoryBindFlagBits = VkSparseMemoryBindFlagBits VkFlags
+newtype VkSparseMemoryBindFlagBits = VkSparseMemoryBindFlagBits Int32
                                        deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkSparseMemoryBindFlagBits where
@@ -6372,7 +7658,7 @@ pattern VK_SPARSE_MEMORY_BIND_METADATA_BIT =
         VkSparseMemoryBindFlagBits 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkStencilFaceFlagBits.html VkStencilFaceFlagBits registry at www.khronos.org>
-newtype VkStencilFaceFlagBits = VkStencilFaceFlagBits VkFlags
+newtype VkStencilFaceFlagBits = VkStencilFaceFlagBits Int32
                                   deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkStencilFaceFlagBits where
@@ -6420,7 +7706,7 @@ pattern VK_STENCIL_FRONT_AND_BACK :: VkStencilFaceFlagBits
 pattern VK_STENCIL_FRONT_AND_BACK = VkStencilFaceFlagBits 3
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkStencilOp.html VkStencilOp registry at www.khronos.org>
-newtype VkStencilOp = VkStencilOp VkFlags
+newtype VkStencilOp = VkStencilOp Int32
                         deriving (Eq, Ord, Storable)
 
 instance Show VkStencilOp where
@@ -6496,7 +7782,7 @@ pattern VK_STENCIL_OP_DECREMENT_AND_WRAP = VkStencilOp 7
 -- | Structure type enumerant
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkStructureType.html VkStructureType registry at www.khronos.org>
-newtype VkStructureType = VkStructureType VkFlags
+newtype VkStructureType = VkStructureType Int32
                             deriving (Eq, Ord, Storable)
 
 instance Show VkStructureType where
@@ -6983,7 +8269,7 @@ pattern VK_STRUCTURE_TYPE_LOADER_DEVICE_CREATE_INFO =
         VkStructureType 48
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSystemAllocationScope.html VkSystemAllocationScope registry at www.khronos.org>
-newtype VkSystemAllocationScope = VkSystemAllocationScope VkFlags
+newtype VkSystemAllocationScope = VkSystemAllocationScope Int32
                                     deriving (Eq, Ord, Storable)
 
 instance Show VkSystemAllocationScope where
@@ -7050,7 +8336,7 @@ pattern VK_SYSTEM_ALLOCATION_SCOPE_INSTANCE =
         VkSystemAllocationScope 4
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkInternalAllocationType.html VkInternalAllocationType registry at www.khronos.org>
-newtype VkInternalAllocationType = VkInternalAllocationType VkFlags
+newtype VkInternalAllocationType = VkInternalAllocationType Int32
                                      deriving (Eq, Ord, Storable)
 
 instance Show VkInternalAllocationType where
@@ -7078,7 +8364,7 @@ pattern VK_INTERNAL_ALLOCATION_TYPE_EXECUTABLE =
         VkInternalAllocationType 0
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSamplerAddressMode.html VkSamplerAddressMode registry at www.khronos.org>
-newtype VkSamplerAddressMode = VkSamplerAddressMode VkFlags
+newtype VkSamplerAddressMode = VkSamplerAddressMode Int32
                                  deriving (Eq, Ord, Storable)
 
 instance Show VkSamplerAddressMode where
@@ -7134,7 +8420,7 @@ pattern VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER =
         VkSamplerAddressMode 3
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkFilter.html VkFilter registry at www.khronos.org>
-newtype VkFilter = VkFilter VkFlags
+newtype VkFilter = VkFilter Int32
                      deriving (Eq, Ord, Storable)
 
 instance Show VkFilter where
@@ -7162,7 +8448,7 @@ pattern VK_FILTER_LINEAR :: VkFilter
 pattern VK_FILTER_LINEAR = VkFilter 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSamplerMipmapMode.html VkSamplerMipmapMode registry at www.khronos.org>
-newtype VkSamplerMipmapMode = VkSamplerMipmapMode VkFlags
+newtype VkSamplerMipmapMode = VkSamplerMipmapMode Int32
                                 deriving (Eq, Ord, Storable)
 
 instance Show VkSamplerMipmapMode where
@@ -7198,7 +8484,7 @@ pattern VK_SAMPLER_MIPMAP_MODE_LINEAR :: VkSamplerMipmapMode
 pattern VK_SAMPLER_MIPMAP_MODE_LINEAR = VkSamplerMipmapMode 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkVertexInputRate.html VkVertexInputRate registry at www.khronos.org>
-newtype VkVertexInputRate = VkVertexInputRate VkFlags
+newtype VkVertexInputRate = VkVertexInputRate Int32
                               deriving (Eq, Ord, Storable)
 
 instance Show VkVertexInputRate where
@@ -7231,7 +8517,7 @@ pattern VK_VERTEX_INPUT_RATE_INSTANCE :: VkVertexInputRate
 pattern VK_VERTEX_INPUT_RATE_INSTANCE = VkVertexInputRate 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineStageFlagBits.html VkPipelineStageFlagBits registry at www.khronos.org>
-newtype VkPipelineStageFlagBits = VkPipelineStageFlagBits VkFlags
+newtype VkPipelineStageFlagBits = VkPipelineStageFlagBits Int32
                                     deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkPipelineStageFlagBits where
@@ -7466,7 +8752,7 @@ pattern VK_PIPELINE_STAGE_ALL_COMMANDS_BIT =
         VkPipelineStageFlagBits 65536
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSparseImageFormatFlagBits.html VkSparseImageFormatFlagBits registry at www.khronos.org>
-newtype VkSparseImageFormatFlagBits = VkSparseImageFormatFlagBits VkFlags
+newtype VkSparseImageFormatFlagBits = VkSparseImageFormatFlagBits Int32
                                         deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkSparseImageFormatFlagBits where
@@ -7523,7 +8809,7 @@ pattern VK_SPARSE_IMAGE_FORMAT_NONSTANDARD_BLOCK_SIZE_BIT =
         VkSparseImageFormatFlagBits 4
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSampleCountFlagBits.html VkSampleCountFlagBits registry at www.khronos.org>
-newtype VkSampleCountFlagBits = VkSampleCountFlagBits VkFlags
+newtype VkSampleCountFlagBits = VkSampleCountFlagBits Int32
                                   deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkSampleCountFlagBits where
@@ -7611,7 +8897,7 @@ pattern VK_SAMPLE_COUNT_64_BIT :: VkSampleCountFlagBits
 pattern VK_SAMPLE_COUNT_64_BIT = VkSampleCountFlagBits 64
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkAttachmentDescriptionFlagBits.html VkAttachmentDescriptionFlagBits registry at www.khronos.org>
-newtype VkAttachmentDescriptionFlagBits = VkAttachmentDescriptionFlagBits VkFlags
+newtype VkAttachmentDescriptionFlagBits = VkAttachmentDescriptionFlagBits Int32
                                             deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkAttachmentDescriptionFlagBits where
@@ -7642,7 +8928,7 @@ pattern VK_ATTACHMENT_DESCRIPTION_MAY_ALIAS_BIT =
         VkAttachmentDescriptionFlagBits 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDescriptorPoolCreateFlagBits.html VkDescriptorPoolCreateFlagBits registry at www.khronos.org>
-newtype VkDescriptorPoolCreateFlagBits = VkDescriptorPoolCreateFlagBits VkFlags
+newtype VkDescriptorPoolCreateFlagBits = VkDescriptorPoolCreateFlagBits Int32
                                            deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkDescriptorPoolCreateFlagBits where
@@ -7673,7 +8959,7 @@ pattern VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT =
         VkDescriptorPoolCreateFlagBits 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDependencyFlagBits.html VkDependencyFlagBits registry at www.khronos.org>
-newtype VkDependencyFlagBits = VkDependencyFlagBits VkFlags
+newtype VkDependencyFlagBits = VkDependencyFlagBits Int32
                                  deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkDependencyFlagBits where
@@ -7703,7 +8989,7 @@ pattern VK_DEPENDENCY_BY_REGION_BIT = VkDependencyFlagBits 1
 -- | Enums to track objects of various types
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkObjectType.html VkObjectType registry at www.khronos.org>
-newtype VkObjectType = VkObjectType VkFlags
+newtype VkObjectType = VkObjectType Int32
                          deriving (Eq, Ord, Storable)
 
 instance Show VkObjectType where
@@ -7936,7 +9222,7 @@ pattern VK_OBJECT_TYPE_COMMAND_POOL :: VkObjectType
 pattern VK_OBJECT_TYPE_COMMAND_POOL = VkObjectType 25
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkIndirectCommandsLayoutUsageFlagBitsNVX.html VkIndirectCommandsLayoutUsageFlagBitsNVX registry at www.khronos.org>
-newtype VkIndirectCommandsLayoutUsageFlagBitsNVX = VkIndirectCommandsLayoutUsageFlagBitsNVX VkFlags
+newtype VkIndirectCommandsLayoutUsageFlagBitsNVX = VkIndirectCommandsLayoutUsageFlagBitsNVX Int32
                                                      deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkIndirectCommandsLayoutUsageFlagBitsNVX where
@@ -8008,7 +9294,7 @@ pattern VK_INDIRECT_COMMANDS_LAYOUT_USAGE_INDEXED_SEQUENCES_BIT_NVX
         = VkIndirectCommandsLayoutUsageFlagBitsNVX 8
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkIndirectCommandsTokenTypeNVX.html VkIndirectCommandsTokenTypeNVX registry at www.khronos.org>
-newtype VkIndirectCommandsTokenTypeNVX = VkIndirectCommandsTokenTypeNVX VkFlags
+newtype VkIndirectCommandsTokenTypeNVX = VkIndirectCommandsTokenTypeNVX Int32
                                            deriving (Eq, Ord, Storable)
 
 instance Show VkIndirectCommandsTokenTypeNVX where
@@ -8106,7 +9392,7 @@ pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_DISPATCH_NVX =
         VkIndirectCommandsTokenTypeNVX 7
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkObjectEntryUsageFlagBitsNVX.html VkObjectEntryUsageFlagBitsNVX registry at www.khronos.org>
-newtype VkObjectEntryUsageFlagBitsNVX = VkObjectEntryUsageFlagBitsNVX VkFlags
+newtype VkObjectEntryUsageFlagBitsNVX = VkObjectEntryUsageFlagBitsNVX Int32
                                           deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkObjectEntryUsageFlagBitsNVX where
@@ -8146,7 +9432,7 @@ pattern VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX =
         VkObjectEntryUsageFlagBitsNVX 2
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkObjectEntryTypeNVX.html VkObjectEntryTypeNVX registry at www.khronos.org>
-newtype VkObjectEntryTypeNVX = VkObjectEntryTypeNVX VkFlags
+newtype VkObjectEntryTypeNVX = VkObjectEntryTypeNVX Int32
                                  deriving (Eq, Ord, Storable)
 
 instance Show VkObjectEntryTypeNVX where
@@ -8212,7 +9498,7 @@ pattern VK_OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX =
         VkObjectEntryTypeNVX 4
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDescriptorUpdateTemplateTypeKHR.html VkDescriptorUpdateTemplateTypeKHR registry at www.khronos.org>
-newtype VkDescriptorUpdateTemplateTypeKHR = VkDescriptorUpdateTemplateTypeKHR VkFlags
+newtype VkDescriptorUpdateTemplateTypeKHR = VkDescriptorUpdateTemplateTypeKHR Int32
                                               deriving (Eq, Ord, Storable)
 
 instance Show VkDescriptorUpdateTemplateTypeKHR where
@@ -8254,7 +9540,7 @@ pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR =
         VkDescriptorUpdateTemplateTypeKHR 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkViewportCoordinateSwizzleNV.html VkViewportCoordinateSwizzleNV registry at www.khronos.org>
-newtype VkViewportCoordinateSwizzleNV = VkViewportCoordinateSwizzleNV VkFlags
+newtype VkViewportCoordinateSwizzleNV = VkViewportCoordinateSwizzleNV Int32
                                           deriving (Eq, Ord, Storable)
 
 instance Show VkViewportCoordinateSwizzleNV where
@@ -8352,7 +9638,7 @@ pattern VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_W_NV =
         VkViewportCoordinateSwizzleNV 7
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDiscardRectangleModeEXT.html VkDiscardRectangleModeEXT registry at www.khronos.org>
-newtype VkDiscardRectangleModeEXT = VkDiscardRectangleModeEXT VkFlags
+newtype VkDiscardRectangleModeEXT = VkDiscardRectangleModeEXT Int32
                                       deriving (Eq, Ord, Storable)
 
 instance Show VkDiscardRectangleModeEXT where
@@ -8390,7 +9676,7 @@ pattern VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT =
         VkDiscardRectangleModeEXT 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSubpassDescriptionFlagBits.html VkSubpassDescriptionFlagBits registry at www.khronos.org>
-newtype VkSubpassDescriptionFlagBits = VkSubpassDescriptionFlagBits VkFlags
+newtype VkSubpassDescriptionFlagBits = VkSubpassDescriptionFlagBits Int32
                                          deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkSubpassDescriptionFlagBits where
@@ -8407,7 +9693,7 @@ instance Read VkSubpassDescriptionFlagBits where
                       (VkSubpassDescriptionFlagBits <$> step readPrec)))
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPointClippingBehaviorKHR.html VkPointClippingBehaviorKHR registry at www.khronos.org>
-newtype VkPointClippingBehaviorKHR = VkPointClippingBehaviorKHR VkFlags
+newtype VkPointClippingBehaviorKHR = VkPointClippingBehaviorKHR Int32
                                        deriving (Eq, Ord, Storable)
 
 instance Show VkPointClippingBehaviorKHR where
@@ -8445,7 +9731,7 @@ pattern VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY_KHR =
         VkPointClippingBehaviorKHR 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkCoverageModulationModeNV.html VkCoverageModulationModeNV registry at www.khronos.org>
-newtype VkCoverageModulationModeNV = VkCoverageModulationModeNV VkFlags
+newtype VkCoverageModulationModeNV = VkCoverageModulationModeNV Int32
                                        deriving (Eq, Ord, Storable)
 
 instance Show VkCoverageModulationModeNV where
@@ -8503,7 +9789,7 @@ pattern VK_COVERAGE_MODULATION_MODE_RGBA_NV =
         VkCoverageModulationModeNV 3
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkValidationCacheHeaderVersionEXT.html VkValidationCacheHeaderVersionEXT registry at www.khronos.org>
-newtype VkValidationCacheHeaderVersionEXT = VkValidationCacheHeaderVersionEXT VkFlags
+newtype VkValidationCacheHeaderVersionEXT = VkValidationCacheHeaderVersionEXT Int32
                                               deriving (Eq, Ord, Storable)
 
 instance Show VkValidationCacheHeaderVersionEXT where
@@ -8531,7 +9817,7 @@ pattern VK_VALIDATION_CACHE_HEADER_VERSION_ONE_EXT =
         VkValidationCacheHeaderVersionEXT 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkShaderInfoTypeAMD.html VkShaderInfoTypeAMD registry at www.khronos.org>
-newtype VkShaderInfoTypeAMD = VkShaderInfoTypeAMD VkFlags
+newtype VkShaderInfoTypeAMD = VkShaderInfoTypeAMD Int32
                                 deriving (Eq, Ord, Storable)
 
 instance Show VkShaderInfoTypeAMD where
@@ -8573,7 +9859,7 @@ pattern VK_SHADER_INFO_TYPE_DISASSEMBLY_AMD :: VkShaderInfoTypeAMD
 pattern VK_SHADER_INFO_TYPE_DISASSEMBLY_AMD = VkShaderInfoTypeAMD 2
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkQueueGlobalPriorityEXT.html VkQueueGlobalPriorityEXT registry at www.khronos.org>
-newtype VkQueueGlobalPriorityEXT = VkQueueGlobalPriorityEXT VkFlags
+newtype VkQueueGlobalPriorityEXT = VkQueueGlobalPriorityEXT Int32
                                      deriving (Eq, Ord, Storable)
 
 instance Show VkQueueGlobalPriorityEXT where
@@ -8631,7 +9917,7 @@ pattern VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT =
         VkQueueGlobalPriorityEXT 1024
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkConservativeRasterizationModeEXT.html VkConservativeRasterizationModeEXT registry at www.khronos.org>
-newtype VkConservativeRasterizationModeEXT = VkConservativeRasterizationModeEXT VkFlags
+newtype VkConservativeRasterizationModeEXT = VkConservativeRasterizationModeEXT Int32
                                                deriving (Eq, Ord, Storable)
 
 instance Show VkConservativeRasterizationModeEXT where
@@ -8679,7 +9965,7 @@ pattern VK_CONSERVATIVE_RASTERIZATION_MODE_UNDERESTIMATE_EXT =
         VkConservativeRasterizationModeEXT 2
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkColorSpaceKHR.html VkColorSpaceKHR registry at www.khronos.org>
-newtype VkColorSpaceKHR = VkColorSpaceKHR VkFlags
+newtype VkColorSpaceKHR = VkColorSpaceKHR Int32
                             deriving (Eq, Ord, Storable)
 
 instance Show VkColorSpaceKHR where
@@ -8705,7 +9991,7 @@ pattern VK_COLOR_SPACE_SRGB_NONLINEAR_KHR :: VkColorSpaceKHR
 pattern VK_COLOR_SPACE_SRGB_NONLINEAR_KHR = VkColorSpaceKHR 0
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkCompositeAlphaFlagBitsKHR.html VkCompositeAlphaFlagBitsKHR registry at www.khronos.org>
-newtype VkCompositeAlphaFlagBitsKHR = VkCompositeAlphaFlagBitsKHR VkFlags
+newtype VkCompositeAlphaFlagBitsKHR = VkCompositeAlphaFlagBitsKHR Int32
                                         deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkCompositeAlphaFlagBitsKHR where
@@ -8767,7 +10053,7 @@ pattern VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR =
         VkCompositeAlphaFlagBitsKHR 8
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplayPlaneAlphaFlagBitsKHR.html VkDisplayPlaneAlphaFlagBitsKHR registry at www.khronos.org>
-newtype VkDisplayPlaneAlphaFlagBitsKHR = VkDisplayPlaneAlphaFlagBitsKHR VkFlags
+newtype VkDisplayPlaneAlphaFlagBitsKHR = VkDisplayPlaneAlphaFlagBitsKHR Int32
                                            deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkDisplayPlaneAlphaFlagBitsKHR where
@@ -8830,7 +10116,7 @@ pattern VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR =
         VkDisplayPlaneAlphaFlagBitsKHR 8
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPresentModeKHR.html VkPresentModeKHR registry at www.khronos.org>
-newtype VkPresentModeKHR = VkPresentModeKHR VkFlags
+newtype VkPresentModeKHR = VkPresentModeKHR Int32
                              deriving (Eq, Ord, Storable)
 
 instance Show VkPresentModeKHR where
@@ -8878,7 +10164,7 @@ pattern VK_PRESENT_MODE_FIFO_RELAXED_KHR :: VkPresentModeKHR
 pattern VK_PRESENT_MODE_FIFO_RELAXED_KHR = VkPresentModeKHR 3
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSurfaceTransformFlagBitsKHR.html VkSurfaceTransformFlagBitsKHR registry at www.khronos.org>
-newtype VkSurfaceTransformFlagBitsKHR = VkSurfaceTransformFlagBitsKHR VkFlags
+newtype VkSurfaceTransformFlagBitsKHR = VkSurfaceTransformFlagBitsKHR Int32
                                           deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkSurfaceTransformFlagBitsKHR where
@@ -9001,7 +10287,7 @@ pattern VK_SURFACE_TRANSFORM_INHERIT_BIT_KHR =
         VkSurfaceTransformFlagBitsKHR 256
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDebugReportFlagBitsEXT.html VkDebugReportFlagBitsEXT registry at www.khronos.org>
-newtype VkDebugReportFlagBitsEXT = VkDebugReportFlagBitsEXT VkFlags
+newtype VkDebugReportFlagBitsEXT = VkDebugReportFlagBitsEXT Int32
                                      deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkDebugReportFlagBitsEXT where
@@ -9069,7 +10355,7 @@ pattern VK_DEBUG_REPORT_DEBUG_BIT_EXT :: VkDebugReportFlagBitsEXT
 pattern VK_DEBUG_REPORT_DEBUG_BIT_EXT = VkDebugReportFlagBitsEXT 16
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDebugReportObjectTypeEXT.html VkDebugReportObjectTypeEXT registry at www.khronos.org>
-newtype VkDebugReportObjectTypeEXT = VkDebugReportObjectTypeEXT VkFlags
+newtype VkDebugReportObjectTypeEXT = VkDebugReportObjectTypeEXT Int32
                                        deriving (Eq, Ord, Storable)
 
 instance Show VkDebugReportObjectTypeEXT where
@@ -9432,7 +10718,7 @@ pattern VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT =
         VkDebugReportObjectTypeEXT 33
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkRasterizationOrderAMD.html VkRasterizationOrderAMD registry at www.khronos.org>
-newtype VkRasterizationOrderAMD = VkRasterizationOrderAMD VkFlags
+newtype VkRasterizationOrderAMD = VkRasterizationOrderAMD Int32
                                     deriving (Eq, Ord, Storable)
 
 instance Show VkRasterizationOrderAMD where
@@ -9470,7 +10756,7 @@ pattern VK_RASTERIZATION_ORDER_RELAXED_AMD =
         VkRasterizationOrderAMD 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalMemoryHandleTypeFlagBitsNV.html VkExternalMemoryHandleTypeFlagBitsNV registry at www.khronos.org>
-newtype VkExternalMemoryHandleTypeFlagBitsNV = VkExternalMemoryHandleTypeFlagBitsNV VkFlags
+newtype VkExternalMemoryHandleTypeFlagBitsNV = VkExternalMemoryHandleTypeFlagBitsNV Int32
                                                  deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkExternalMemoryHandleTypeFlagBitsNV where
@@ -9535,7 +10821,7 @@ pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV =
         VkExternalMemoryHandleTypeFlagBitsNV 8
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalMemoryFeatureFlagBitsNV.html VkExternalMemoryFeatureFlagBitsNV registry at www.khronos.org>
-newtype VkExternalMemoryFeatureFlagBitsNV = VkExternalMemoryFeatureFlagBitsNV VkFlags
+newtype VkExternalMemoryFeatureFlagBitsNV = VkExternalMemoryFeatureFlagBitsNV Int32
                                               deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkExternalMemoryFeatureFlagBitsNV where
@@ -9586,7 +10872,7 @@ pattern VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV =
         VkExternalMemoryFeatureFlagBitsNV 4
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkValidationCheckEXT.html VkValidationCheckEXT registry at www.khronos.org>
-newtype VkValidationCheckEXT = VkValidationCheckEXT VkFlags
+newtype VkValidationCheckEXT = VkValidationCheckEXT Int32
                                  deriving (Eq, Ord, Storable)
 
 instance Show VkValidationCheckEXT where
@@ -9619,7 +10905,7 @@ pattern VK_VALIDATION_CHECK_SHADERS_EXT :: VkValidationCheckEXT
 pattern VK_VALIDATION_CHECK_SHADERS_EXT = VkValidationCheckEXT 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalMemoryHandleTypeFlagBitsKHR.html VkExternalMemoryHandleTypeFlagBitsKHR registry at www.khronos.org>
-newtype VkExternalMemoryHandleTypeFlagBitsKHR = VkExternalMemoryHandleTypeFlagBitsKHR VkFlags
+newtype VkExternalMemoryHandleTypeFlagBitsKHR = VkExternalMemoryHandleTypeFlagBitsKHR Int32
                                                   deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkExternalMemoryHandleTypeFlagBitsKHR where
@@ -9719,7 +11005,7 @@ pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT_KHR =
         VkExternalMemoryHandleTypeFlagBitsKHR 64
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalMemoryFeatureFlagBitsKHR.html VkExternalMemoryFeatureFlagBitsKHR registry at www.khronos.org>
-newtype VkExternalMemoryFeatureFlagBitsKHR = VkExternalMemoryFeatureFlagBitsKHR VkFlags
+newtype VkExternalMemoryFeatureFlagBitsKHR = VkExternalMemoryFeatureFlagBitsKHR Int32
                                                deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkExternalMemoryFeatureFlagBitsKHR where
@@ -9770,7 +11056,7 @@ pattern VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_KHR =
         VkExternalMemoryFeatureFlagBitsKHR 4
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalSemaphoreHandleTypeFlagBitsKHR.html VkExternalSemaphoreHandleTypeFlagBitsKHR registry at www.khronos.org>
-newtype VkExternalSemaphoreHandleTypeFlagBitsKHR = VkExternalSemaphoreHandleTypeFlagBitsKHR VkFlags
+newtype VkExternalSemaphoreHandleTypeFlagBitsKHR = VkExternalSemaphoreHandleTypeFlagBitsKHR Int32
                                                      deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkExternalSemaphoreHandleTypeFlagBitsKHR where
@@ -9848,7 +11134,7 @@ pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT_KHR =
         VkExternalSemaphoreHandleTypeFlagBitsKHR 16
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalSemaphoreFeatureFlagBitsKHR.html VkExternalSemaphoreFeatureFlagBitsKHR registry at www.khronos.org>
-newtype VkExternalSemaphoreFeatureFlagBitsKHR = VkExternalSemaphoreFeatureFlagBitsKHR VkFlags
+newtype VkExternalSemaphoreFeatureFlagBitsKHR = VkExternalSemaphoreFeatureFlagBitsKHR Int32
                                                   deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkExternalSemaphoreFeatureFlagBitsKHR where
@@ -9889,7 +11175,7 @@ pattern VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT_KHR =
         VkExternalSemaphoreFeatureFlagBitsKHR 2
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSemaphoreImportFlagBitsKHR.html VkSemaphoreImportFlagBitsKHR registry at www.khronos.org>
-newtype VkSemaphoreImportFlagBitsKHR = VkSemaphoreImportFlagBitsKHR VkFlags
+newtype VkSemaphoreImportFlagBitsKHR = VkSemaphoreImportFlagBitsKHR Int32
                                          deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkSemaphoreImportFlagBitsKHR where
@@ -9918,7 +11204,7 @@ pattern VK_SEMAPHORE_IMPORT_TEMPORARY_BIT_KHR =
         VkSemaphoreImportFlagBitsKHR 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalFenceHandleTypeFlagBitsKHR.html VkExternalFenceHandleTypeFlagBitsKHR registry at www.khronos.org>
-newtype VkExternalFenceHandleTypeFlagBitsKHR = VkExternalFenceHandleTypeFlagBitsKHR VkFlags
+newtype VkExternalFenceHandleTypeFlagBitsKHR = VkExternalFenceHandleTypeFlagBitsKHR Int32
                                                  deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkExternalFenceHandleTypeFlagBitsKHR where
@@ -9982,7 +11268,7 @@ pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT_KHR =
         VkExternalFenceHandleTypeFlagBitsKHR 8
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalFenceFeatureFlagBitsKHR.html VkExternalFenceFeatureFlagBitsKHR registry at www.khronos.org>
-newtype VkExternalFenceFeatureFlagBitsKHR = VkExternalFenceFeatureFlagBitsKHR VkFlags
+newtype VkExternalFenceFeatureFlagBitsKHR = VkExternalFenceFeatureFlagBitsKHR Int32
                                               deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkExternalFenceFeatureFlagBitsKHR where
@@ -10022,7 +11308,7 @@ pattern VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT_KHR =
         VkExternalFenceFeatureFlagBitsKHR 2
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkFenceImportFlagBitsKHR.html VkFenceImportFlagBitsKHR registry at www.khronos.org>
-newtype VkFenceImportFlagBitsKHR = VkFenceImportFlagBitsKHR VkFlags
+newtype VkFenceImportFlagBitsKHR = VkFenceImportFlagBitsKHR Int32
                                      deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkFenceImportFlagBitsKHR where
@@ -10051,7 +11337,7 @@ pattern VK_FENCE_IMPORT_TEMPORARY_BIT_KHR =
         VkFenceImportFlagBitsKHR 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSurfaceCounterFlagBitsEXT.html VkSurfaceCounterFlagBitsEXT registry at www.khronos.org>
-newtype VkSurfaceCounterFlagBitsEXT = VkSurfaceCounterFlagBitsEXT VkFlags
+newtype VkSurfaceCounterFlagBitsEXT = VkSurfaceCounterFlagBitsEXT Int32
                                         deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkSurfaceCounterFlagBitsEXT where
@@ -10080,7 +11366,7 @@ pattern VK_SURFACE_COUNTER_VBLANK_EXT =
         VkSurfaceCounterFlagBitsEXT 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplayPowerStateEXT.html VkDisplayPowerStateEXT registry at www.khronos.org>
-newtype VkDisplayPowerStateEXT = VkDisplayPowerStateEXT VkFlags
+newtype VkDisplayPowerStateEXT = VkDisplayPowerStateEXT Int32
                                    deriving (Eq, Ord, Storable)
 
 instance Show VkDisplayPowerStateEXT where
@@ -10124,7 +11410,7 @@ pattern VK_DISPLAY_POWER_STATE_ON_EXT :: VkDisplayPowerStateEXT
 pattern VK_DISPLAY_POWER_STATE_ON_EXT = VkDisplayPowerStateEXT 2
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceEventTypeEXT.html VkDeviceEventTypeEXT registry at www.khronos.org>
-newtype VkDeviceEventTypeEXT = VkDeviceEventTypeEXT VkFlags
+newtype VkDeviceEventTypeEXT = VkDeviceEventTypeEXT Int32
                                  deriving (Eq, Ord, Storable)
 
 instance Show VkDeviceEventTypeEXT where
@@ -10152,7 +11438,7 @@ pattern VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT =
         VkDeviceEventTypeEXT 0
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplayEventTypeEXT.html VkDisplayEventTypeEXT registry at www.khronos.org>
-newtype VkDisplayEventTypeEXT = VkDisplayEventTypeEXT VkFlags
+newtype VkDisplayEventTypeEXT = VkDisplayEventTypeEXT Int32
                                   deriving (Eq, Ord, Storable)
 
 instance Show VkDisplayEventTypeEXT where
@@ -10180,7 +11466,7 @@ pattern VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT =
         VkDisplayEventTypeEXT 0
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPeerMemoryFeatureFlagBitsKHX.html VkPeerMemoryFeatureFlagBitsKHX registry at www.khronos.org>
-newtype VkPeerMemoryFeatureFlagBitsKHX = VkPeerMemoryFeatureFlagBitsKHX VkFlags
+newtype VkPeerMemoryFeatureFlagBitsKHX = VkPeerMemoryFeatureFlagBitsKHX Int32
                                            deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkPeerMemoryFeatureFlagBitsKHX where
@@ -10250,7 +11536,7 @@ pattern VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT_KHX =
         VkPeerMemoryFeatureFlagBitsKHX 8
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryAllocateFlagBitsKHX.html VkMemoryAllocateFlagBitsKHX registry at www.khronos.org>
-newtype VkMemoryAllocateFlagBitsKHX = VkMemoryAllocateFlagBitsKHX VkFlags
+newtype VkMemoryAllocateFlagBitsKHX = VkMemoryAllocateFlagBitsKHX Int32
                                         deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkMemoryAllocateFlagBitsKHX where
@@ -10281,7 +11567,7 @@ pattern VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT_KHX =
         VkMemoryAllocateFlagBitsKHX 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceGroupPresentModeFlagBitsKHX.html VkDeviceGroupPresentModeFlagBitsKHX registry at www.khronos.org>
-newtype VkDeviceGroupPresentModeFlagBitsKHX = VkDeviceGroupPresentModeFlagBitsKHX VkFlags
+newtype VkDeviceGroupPresentModeFlagBitsKHX = VkDeviceGroupPresentModeFlagBitsKHX Int32
                                                 deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkDeviceGroupPresentModeFlagBitsKHX where
@@ -10353,7 +11639,7 @@ pattern VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHX =
         VkDeviceGroupPresentModeFlagBitsKHX 8
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSwapchainCreateFlagBitsKHR.html VkSwapchainCreateFlagBitsKHR registry at www.khronos.org>
-newtype VkSwapchainCreateFlagBitsKHR = VkSwapchainCreateFlagBitsKHR VkFlags
+newtype VkSwapchainCreateFlagBitsKHR = VkSwapchainCreateFlagBitsKHR Int32
                                          deriving (Eq, Ord, Bits, Storable)
 
 instance Show VkSwapchainCreateFlagBitsKHR where
@@ -10370,7 +11656,7 @@ instance Read VkSwapchainCreateFlagBitsKHR where
                       (VkSwapchainCreateFlagBitsKHR <$> step readPrec)))
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkTessellationDomainOriginKHR.html VkTessellationDomainOriginKHR registry at www.khronos.org>
-newtype VkTessellationDomainOriginKHR = VkTessellationDomainOriginKHR VkFlags
+newtype VkTessellationDomainOriginKHR = VkTessellationDomainOriginKHR Int32
                                           deriving (Eq, Ord, Storable)
 
 instance Show VkTessellationDomainOriginKHR where
@@ -10408,7 +11694,7 @@ pattern VK_TESSELLATION_DOMAIN_ORIGIN_LOWER_LEFT_KHR =
         VkTessellationDomainOriginKHR 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSamplerYcbcrModelConversionKHR.html VkSamplerYcbcrModelConversionKHR registry at www.khronos.org>
-newtype VkSamplerYcbcrModelConversionKHR = VkSamplerYcbcrModelConversionKHR VkFlags
+newtype VkSamplerYcbcrModelConversionKHR = VkSamplerYcbcrModelConversionKHR Int32
                                              deriving (Eq, Ord, Storable)
 
 instance Show VkSamplerYcbcrModelConversionKHR where
@@ -10480,7 +11766,7 @@ pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_2020_KHR =
         VkSamplerYcbcrModelConversionKHR 4
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSamplerYcbcrRangeKHR.html VkSamplerYcbcrRangeKHR registry at www.khronos.org>
-newtype VkSamplerYcbcrRangeKHR = VkSamplerYcbcrRangeKHR VkFlags
+newtype VkSamplerYcbcrRangeKHR = VkSamplerYcbcrRangeKHR Int32
                                    deriving (Eq, Ord, Storable)
 
 instance Show VkSamplerYcbcrRangeKHR where
@@ -10520,7 +11806,7 @@ pattern VK_SAMPLER_YCBCR_RANGE_ITU_NARROW_KHR =
         VkSamplerYcbcrRangeKHR 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkChromaLocationKHR.html VkChromaLocationKHR registry at www.khronos.org>
-newtype VkChromaLocationKHR = VkChromaLocationKHR VkFlags
+newtype VkChromaLocationKHR = VkChromaLocationKHR Int32
                                 deriving (Eq, Ord, Storable)
 
 instance Show VkChromaLocationKHR where
@@ -10554,7 +11840,7 @@ pattern VK_CHROMA_LOCATION_MIDPOINT_KHR :: VkChromaLocationKHR
 pattern VK_CHROMA_LOCATION_MIDPOINT_KHR = VkChromaLocationKHR 1
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSamplerReductionModeEXT.html VkSamplerReductionModeEXT registry at www.khronos.org>
-newtype VkSamplerReductionModeEXT = VkSamplerReductionModeEXT VkFlags
+newtype VkSamplerReductionModeEXT = VkSamplerReductionModeEXT Int32
                                       deriving (Eq, Ord, Storable)
 
 instance Show VkSamplerReductionModeEXT where
@@ -10602,7 +11888,7 @@ pattern VK_SAMPLER_REDUCTION_MODE_MAX_EXT =
         VkSamplerReductionModeEXT 2
 
 -- | <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBlendOverlapEXT.html VkBlendOverlapEXT registry at www.khronos.org>
-newtype VkBlendOverlapEXT = VkBlendOverlapEXT VkFlags
+newtype VkBlendOverlapEXT = VkBlendOverlapEXT Int32
                               deriving (Eq, Ord, Storable)
 
 instance Show VkBlendOverlapEXT where
