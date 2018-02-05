@@ -499,7 +499,7 @@ toHaskellType (VkTypeName t)
     . Ident ()
     -- . toCamelCase
     . firstUp
-    . dropWhile (not . isAlpha)
+    . dropWhile (not . isAlpha)TyCon () (
     . filter (\x -> isAlphaNum x || x == '_' || x == '\'')
     $ T.unpack t
   where
