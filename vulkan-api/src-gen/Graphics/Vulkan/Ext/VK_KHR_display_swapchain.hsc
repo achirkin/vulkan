@@ -1,17 +1,12 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
-{-# LANGUAGE FlexibleContexts         #-}
-{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE TypeOperators            #-}
 {-# LANGUAGE UnboxedTuples            #-}
-{-# LANGUAGE UndecidableInstances     #-}
-{-# LANGUAGE UnliftedFFITypes         #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_display_swapchain
        (-- * Vulkan extension: @VK_KHR_display_swapchain@
@@ -39,13 +34,7 @@ module Graphics.Vulkan.Ext.VK_KHR_display_swapchain
         pattern VK_STRUCTURE_TYPE_DISPLAY_PRESENT_INFO_KHR,
         pattern VK_ERROR_INCOMPATIBLE_DISPLAY_KHR)
        where
-import           Data.Int
-import           Data.Void                        (Void)
-import           Data.Word
 import           Foreign.C.String                 (CString)
-import           Foreign.C.Types                  (CChar (..), CFloat (..),
-                                                   CInt (..), CSize (..),
-                                                   CULong (..))
 import           Foreign.Storable                 (Storable (..))
 import           GHC.ForeignPtr                   (ForeignPtr (..),
                                                    ForeignPtrContents (..),
@@ -53,9 +42,14 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Base
-import           Graphics.Vulkan.Common
-import           Graphics.Vulkan.Core
+import           Graphics.Vulkan.Base             (VkAllocationCallbacks,
+                                                   VkRect2D,
+                                                   VkSwapchainCreateInfoKHR)
+import           Graphics.Vulkan.Common           (VkBool32, VkDevice, VkResult,
+                                                   VkResult (..),
+                                                   VkStructureType,
+                                                   VkStructureType (..),
+                                                   VkSwapchainKHR, Word32)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
@@ -282,8 +276,8 @@ foreign import ccall unsafe "vkCreateSharedSwapchainsKHR"
                vkCreateSharedSwapchainsKHR ::
                VkDevice -- ^ device
                         ->
-                 Data.Word.Word32 -- ^ swapchainCount
-                                  ->
+                 Word32 -- ^ swapchainCount
+                        ->
                    Ptr VkSwapchainCreateInfoKHR -- ^ pCreateInfos
                                                 ->
                      Ptr VkAllocationCallbacks -- ^ pAllocator

@@ -42,15 +42,9 @@ module Graphics.Vulkan.Ext.VK_EXT_swapchain_colorspace
         pattern VK_COLOR_SPACE_PASS_THROUGH_EXT,
         pattern VK_COLOR_SPACE_EXTENDED_SRGB_NONLINEAR_EXT)
        where
-import           Data.Int
-import           Data.Word
-import           Foreign.C.String                 (CString)
-import           GHC.Ptr                          (Ptr (..))
-import           Graphics.Vulkan.Base
-import           Graphics.Vulkan.Common
-import           Graphics.Vulkan.Core
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
+import           Foreign.C.String              (CString)
+import           GHC.Ptr                       (Ptr (..))
+import           Graphics.Vulkan.Common        (VkColorSpaceKHR (..))
 import           Graphics.Vulkan.StructMembers
 
 pattern VK_EXT_SWAPCHAIN_COLOR_SPACE_SPEC_VERSION ::

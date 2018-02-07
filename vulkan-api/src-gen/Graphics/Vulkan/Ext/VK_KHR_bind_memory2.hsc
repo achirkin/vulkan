@@ -1,17 +1,12 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
-{-# LANGUAGE FlexibleContexts         #-}
-{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE TypeOperators            #-}
 {-# LANGUAGE UnboxedTuples            #-}
-{-# LANGUAGE UndecidableInstances     #-}
-{-# LANGUAGE UnliftedFFITypes         #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_bind_memory2
        (-- * Vulkan extension: @VK_KHR_bind_memory2@
@@ -36,13 +31,7 @@ module Graphics.Vulkan.Ext.VK_KHR_bind_memory2
         pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_INFO_KHR,
         pattern VK_IMAGE_CREATE_ALIAS_BIT_KHR)
        where
-import           Data.Int
-import           Data.Void                        (Void)
-import           Data.Word
 import           Foreign.C.String                 (CString)
-import           Foreign.C.Types                  (CChar (..), CFloat (..),
-                                                   CInt (..), CSize (..),
-                                                   CULong (..))
 import           Foreign.Storable                 (Storable (..))
 import           GHC.ForeignPtr                   (ForeignPtr (..),
                                                    ForeignPtrContents (..),
@@ -50,9 +39,12 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Base
-import           Graphics.Vulkan.Common
-import           Graphics.Vulkan.Core
+import           Graphics.Vulkan.Common           (VkBuffer, VkDevice,
+                                                   VkDeviceMemory, VkDeviceSize,
+                                                   VkImage,
+                                                   VkImageCreateFlagBits (..),
+                                                   VkResult, VkStructureType,
+                                                   VkStructureType (..), Word32)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
@@ -480,8 +472,7 @@ instance Show VkBindImageMemoryInfoKHR where
 foreign import ccall unsafe "vkBindBufferMemory2KHR"
                vkBindBufferMemory2KHR ::
                VkDevice -- ^ device
-                        ->
-                 Data.Word.Word32 -- ^ bindInfoCount
+                        -> Word32 -- ^ bindInfoCount
                                   -> Ptr VkBindBufferMemoryInfoKHR -- ^ pBindInfos
                                                                    -> IO VkResult
 
@@ -499,8 +490,7 @@ foreign import ccall unsafe "vkBindBufferMemory2KHR"
 foreign import ccall unsafe "vkBindImageMemory2KHR"
                vkBindImageMemory2KHR ::
                VkDevice -- ^ device
-                        ->
-                 Data.Word.Word32 -- ^ bindInfoCount
+                        -> Word32 -- ^ bindInfoCount
                                   -> Ptr VkBindImageMemoryInfoKHR -- ^ pBindInfos
                                                                   -> IO VkResult
 

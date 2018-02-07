@@ -1,17 +1,12 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
-{-# LANGUAGE FlexibleContexts         #-}
-{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE TypeOperators            #-}
 {-# LANGUAGE UnboxedTuples            #-}
-{-# LANGUAGE UndecidableInstances     #-}
-{-# LANGUAGE UnliftedFFITypes         #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_sampler_ycbcr_conversion
        (-- * Vulkan extension: @VK_KHR_sampler_ycbcr_conversion@
@@ -97,13 +92,7 @@ module Graphics.Vulkan.Ext.VK_KHR_sampler_ycbcr_conversion
         pattern VK_FORMAT_FEATURE_DISJOINT_BIT_KHR,
         pattern VK_FORMAT_FEATURE_COSITED_CHROMA_SAMPLES_BIT_KHR)
        where
-import           Data.Int
-import           Data.Void                        (Void)
-import           Data.Word
 import           Foreign.C.String                 (CString)
-import           Foreign.C.Types                  (CChar (..), CFloat (..),
-                                                   CInt (..), CSize (..),
-                                                   CULong (..))
 import           Foreign.Storable                 (Storable (..))
 import           GHC.ForeignPtr                   (ForeignPtr (..),
                                                    ForeignPtrContents (..),
@@ -111,9 +100,23 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Base
-import           Graphics.Vulkan.Common
-import           Graphics.Vulkan.Core
+import           Graphics.Vulkan.Base             (VkAllocationCallbacks,
+                                                   VkComponentMapping)
+import           Graphics.Vulkan.Common           (VkBool32,
+                                                   VkChromaLocationKHR,
+                                                   VkDebugReportObjectTypeEXT (..),
+                                                   VkDevice, VkFilter, VkFormat,
+                                                   VkFormat (..),
+                                                   VkFormatFeatureFlagBits (..),
+                                                   VkImageAspectFlagBits,
+                                                   VkImageAspectFlagBits (..),
+                                                   VkImageCreateFlagBits (..),
+                                                   VkObjectType (..), VkResult,
+                                                   VkSamplerYcbcrConversionKHR,
+                                                   VkSamplerYcbcrModelConversionKHR,
+                                                   VkSamplerYcbcrRangeKHR,
+                                                   VkStructureType,
+                                                   VkStructureType (..), Word32)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers

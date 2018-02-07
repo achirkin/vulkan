@@ -1,17 +1,12 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
-{-# LANGUAGE FlexibleContexts         #-}
-{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE TypeOperators            #-}
 {-# LANGUAGE UnboxedTuples            #-}
-{-# LANGUAGE UndecidableInstances     #-}
-{-# LANGUAGE UnliftedFFITypes         #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_win32_surface
        (-- * Vulkan extension: @VK_KHR_win32_surface@
@@ -41,13 +36,7 @@ module Graphics.Vulkan.Ext.VK_KHR_win32_surface
         pattern VK_KHR_WIN32_SURFACE_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR)
        where
-import           Data.Int
-import           Data.Void                        (Void)
-import           Data.Word
 import           Foreign.C.String                 (CString)
-import           Foreign.C.Types                  (CChar (..), CFloat (..),
-                                                   CInt (..), CSize (..),
-                                                   CULong (..))
 import           Foreign.Storable                 (Storable (..))
 import           GHC.ForeignPtr                   (ForeignPtr (..),
                                                    ForeignPtrContents (..),
@@ -55,9 +44,14 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Base
-import           Graphics.Vulkan.Common
-import           Graphics.Vulkan.Core
+import           Graphics.Vulkan.Base             (VkAllocationCallbacks)
+import           Graphics.Vulkan.Common           (HINSTANCE, HWND, VkBool32,
+                                                   VkInstance, VkPhysicalDevice,
+                                                   VkResult, VkStructureType,
+                                                   VkStructureType (..),
+                                                   VkSurfaceKHR,
+                                                   VkWin32SurfaceCreateFlagsKHR,
+                                                   Word32)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
@@ -299,8 +293,8 @@ foreign import ccall unsafe
                "vkGetPhysicalDeviceWin32PresentationSupportKHR"
                vkGetPhysicalDeviceWin32PresentationSupportKHR ::
                VkPhysicalDevice -- ^ physicalDevice
-                                -> Data.Word.Word32 -- ^ queueFamilyIndex
-                                                    -> IO VkBool32
+                                -> Word32 -- ^ queueFamilyIndex
+                                          -> IO VkBool32
 
 pattern VK_KHR_WIN32_SURFACE_SPEC_VERSION :: (Num a, Eq a) => a
 

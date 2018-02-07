@@ -1,17 +1,12 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
-{-# LANGUAGE FlexibleContexts         #-}
-{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE TypeOperators            #-}
 {-# LANGUAGE UnboxedTuples            #-}
-{-# LANGUAGE UndecidableInstances     #-}
-{-# LANGUAGE UnliftedFFITypes         #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_EXT_debug_report
        (-- * Vulkan extension: @VK_EXT_debug_report@
@@ -38,13 +33,7 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_report
         pattern VK_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT,
         pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_EXT)
        where
-import           Data.Int
-import           Data.Void                        (Void)
-import           Data.Word
 import           Foreign.C.String                 (CString)
-import           Foreign.C.Types                  (CChar (..), CFloat (..),
-                                                   CInt (..), CSize (..),
-                                                   CULong (..))
 import           Foreign.Storable                 (Storable (..))
 import           GHC.ForeignPtr                   (ForeignPtr (..),
                                                    ForeignPtrContents (..),
@@ -52,9 +41,18 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Base
-import           Graphics.Vulkan.Common
-import           Graphics.Vulkan.Core
+import           Graphics.Vulkan.Base             (VkAllocationCallbacks)
+import           Graphics.Vulkan.Common           (CChar, Int32,
+                                                   PFN_vkDebugReportCallbackEXT,
+                                                   pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT,
+                                                   VkDebugReportCallbackEXT,
+                                                   VkDebugReportFlagsEXT,
+                                                   VkDebugReportObjectTypeEXT,
+                                                   VkInstance,
+                                                   VkObjectType (..), VkResult,
+                                                   VkResult (..),
+                                                   VkStructureType,
+                                                   VkStructureType (..), Word64)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
@@ -330,13 +328,12 @@ foreign import ccall unsafe "vkDebugReportMessageEXT"
                                        ->
                    VkDebugReportObjectTypeEXT -- ^ objectType
                                               ->
-                     Data.Word.Word64 -- ^ object
-                                      ->
-                       #{type size_t} ->
-                         Data.Int.Int32 -- ^ messageCode
-                                        -> CString -- ^ pLayerPrefix
-                                                   -> CString -- ^ pMessage
-                                                              -> IO ()
+                     Word64 -- ^ object
+                            ->
+                       #{type size_t} -> Int32 -- ^ messageCode
+                                                           -> CString -- ^ pLayerPrefix
+                                                                      -> CString -- ^ pMessage
+                                                                                 -> IO ()
 
 pattern VK_EXT_DEBUG_REPORT_SPEC_VERSION :: (Num a, Eq a) => a
 

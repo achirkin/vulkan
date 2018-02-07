@@ -31,19 +31,19 @@ module Graphics.Vulkan.Ext.VK_KHR_surface
         pattern VK_COLORSPACE_SRGB_NONLINEAR_KHR,
         pattern VK_OBJECT_TYPE_SURFACE_KHR)
        where
-import           Data.Int
-import           Data.Void                        (Void)
-import           Data.Word
-import           Foreign.C.String                 (CString)
-import           Foreign.C.Types                  (CChar (..), CFloat (..),
-                                                   CInt (..), CSize (..),
-                                                   CULong (..))
-import           GHC.Ptr                          (Ptr (..))
-import           Graphics.Vulkan.Base
-import           Graphics.Vulkan.Common
-import           Graphics.Vulkan.Core
+import           Foreign.C.String              (CString)
+import           GHC.Ptr                       (Ptr (..))
+import           Graphics.Vulkan.Base          (VkAllocationCallbacks,
+                                                VkSurfaceCapabilitiesKHR,
+                                                VkSurfaceFormatKHR)
+import           Graphics.Vulkan.Common        (pattern VK_COLOR_SPACE_SRGB_NONLINEAR_KHR,
+                                                VkBool32, VkInstance,
+                                                VkObjectType (..),
+                                                VkPhysicalDevice,
+                                                VkPresentModeKHR, VkResult,
+                                                VkResult (..), VkSurfaceKHR,
+                                                Word32)
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 
 -- | > void vkDestroySurfaceKHR
@@ -76,10 +76,10 @@ foreign import ccall unsafe "vkGetPhysicalDeviceSurfaceSupportKHR"
                vkGetPhysicalDeviceSurfaceSupportKHR ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
-                 Data.Word.Word32 -- ^ queueFamilyIndex
-                                  -> VkSurfaceKHR -- ^ surface
-                                                  -> Ptr VkBool32 -- ^ pSupported
-                                                                  -> IO VkResult
+                 Word32 -- ^ queueFamilyIndex
+                        -> VkSurfaceKHR -- ^ surface
+                                        -> Ptr VkBool32 -- ^ pSupported
+                                                        -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -118,10 +118,9 @@ foreign import ccall unsafe "vkGetPhysicalDeviceSurfaceFormatsKHR"
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  VkSurfaceKHR -- ^ surface
-                              ->
-                   Ptr Data.Word.Word32 -- ^ pSurfaceFormatCount
-                                        -> Ptr VkSurfaceFormatKHR -- ^ pSurfaceFormats
-                                                                  -> IO VkResult
+                              -> Ptr Word32 -- ^ pSurfaceFormatCount
+                                            -> Ptr VkSurfaceFormatKHR -- ^ pSurfaceFormats
+                                                                      -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
@@ -141,10 +140,9 @@ foreign import ccall unsafe
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  VkSurfaceKHR -- ^ surface
-                              ->
-                   Ptr Data.Word.Word32 -- ^ pPresentModeCount
-                                        -> Ptr VkPresentModeKHR -- ^ pPresentModes
-                                                                -> IO VkResult
+                              -> Ptr Word32 -- ^ pPresentModeCount
+                                            -> Ptr VkPresentModeKHR -- ^ pPresentModes
+                                                                    -> IO VkResult
 
 pattern VK_KHR_SURFACE_SPEC_VERSION :: (Num a, Eq a) => a
 

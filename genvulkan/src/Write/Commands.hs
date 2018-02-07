@@ -58,26 +58,22 @@ genCommand VkCommand
                  >>= preComment . T.unpack
 
     writePragma "ForeignFunctionInterface"
-    writeImport $ DIThing "CChar" DITAll
-    writeImport $ DIThing "CSize" DITAll
-    writeImport $ DIThing "CInt"  DITAll
-    writeImport $ DIThing "CULong" DITAll
-    writeImport $ DIThing "CFloat" DITAll
-    writeImport $ DIThing "Ptr" DITNo
-    writeImport $ DIThing "Int32" DITNo
-    writeImport $ DIThing "Word32" DITNo
-    writeImport $ DIThing "Word64" DITNo
-    writeImport $ DIThing "Void" DITNo
+    writeFullImport "Graphics.Vulkan.Marshal"
+
+    writeImport $ DIThing (qNameTxt . unqualifyQ . toHaskellName $ vkrt) DITNo
+    forM_ vkpams $ \p ->
+      writeImport $ DIThing (qNameTxt . unqualifyQ . toHaskellName $ paramType p) DITNo
+
     writeDecl $ ForImp rezComment (CCall Nothing) (Just (PlayRisky Nothing))
                       (Just cnameOrigStr) (Ident Nothing cnameStr) funtype
 
     writeExport $ DIVar $ qNameTxt cname
   where
-    cname = toHaskellName vkname
+    cname = unqualifyQ $ toHaskellName vkname
     cnameStr = T.unpack  $ qNameTxt cname
     cnameOrigStr = T.unpack $ unVkCommandName vkname
     -- funtypeTxt = T.pack $ prettyPrint funtype
-    rtname = toHaskellName vkrt
+    rtname = unqualifyQ $ toHaskellName vkrt
     rtype = (Nothing <$)
           $ TyApp () (TyCon () (UnQual () (Ident () "IO"))) (toType 0 rtname)
     funtype = foldr accumRefs rtype vkpams
@@ -86,7 +82,7 @@ genCommand VkCommand
                                   then 1 else 0
         in amap (const . Just . CodeComment NextToCode '^' $ T.unpack paramName)
          . (Nothing <$)
-         . toType n $ toHaskellName paramType
+         . toType n $ unqualifyQ $ toHaskellName paramType
     accumRefs vkp = TyFun Nothing (paramT vkp)
 
     c = T.unlines $

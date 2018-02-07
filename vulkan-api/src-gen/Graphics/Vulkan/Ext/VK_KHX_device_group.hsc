@@ -1,17 +1,12 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
-{-# LANGUAGE FlexibleContexts         #-}
-{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE TypeOperators            #-}
 {-# LANGUAGE UnboxedTuples            #-}
-{-# LANGUAGE UndecidableInstances     #-}
-{-# LANGUAGE UnliftedFFITypes         #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHX_device_group
        (-- * Vulkan extension: @VK_KHX_device_group@
@@ -72,13 +67,7 @@ module Graphics.Vulkan.Ext.VK_KHX_device_group
         pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHX,
         pattern VK_SWAPCHAIN_CREATE_BIND_SFR_BIT_KHX)
        where
-import           Data.Int
-import           Data.Void                        (Void)
-import           Data.Word
 import           Foreign.C.String                 (CString)
-import           Foreign.C.Types                  (CChar (..), CFloat (..),
-                                                   CInt (..), CSize (..),
-                                                   CULong (..))
 import           Foreign.Storable                 (Storable (..))
 import           GHC.ForeignPtr                   (ForeignPtr (..),
                                                    ForeignPtrContents (..),
@@ -86,9 +75,25 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Base
-import           Graphics.Vulkan.Common
-import           Graphics.Vulkan.Core
+import           Graphics.Vulkan.Base             (VkRect2D)
+import           Graphics.Vulkan.Common           (VkCommandBuffer,
+                                                   VkDependencyFlagBits (..),
+                                                   VkDevice,
+                                                   VkDeviceGroupPresentModeFlagBitsKHX,
+                                                   VkDeviceGroupPresentModeFlagsKHX,
+                                                   VkFence,
+                                                   VkImageCreateFlagBits (..),
+                                                   VkMemoryAllocateFlagsKHX,
+                                                   VkPeerMemoryFeatureFlagsKHX,
+                                                   VkPhysicalDevice,
+                                                   VkPipelineCreateFlagBits (..),
+                                                   VkResult, VkSemaphore,
+                                                   VkStructureType,
+                                                   VkStructureType (..),
+                                                   VkSurfaceKHR,
+                                                   VkSwapchainCreateFlagBitsKHR (..),
+                                                   VkSwapchainKHR, Word32,
+                                                   Word64)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
@@ -1145,13 +1150,12 @@ foreign import ccall unsafe "vkGetDeviceGroupPeerMemoryFeaturesKHX"
                vkGetDeviceGroupPeerMemoryFeaturesKHX ::
                VkDevice -- ^ device
                         ->
-                 Data.Word.Word32 -- ^ heapIndex
-                                  ->
-                   Data.Word.Word32 -- ^ localDeviceIndex
-                                    ->
-                     Data.Word.Word32 -- ^ remoteDeviceIndex
-                                      -> Ptr VkPeerMemoryFeatureFlagsKHX -- ^ pPeerMemoryFeatures
-                                                                         -> IO ()
+                 Word32 -- ^ heapIndex
+                        ->
+                   Word32 -- ^ localDeviceIndex
+                          -> Word32 -- ^ remoteDeviceIndex
+                                    -> Ptr VkPeerMemoryFeatureFlagsKHX -- ^ pPeerMemoryFeatures
+                                                                       -> IO ()
 
 -- | queues: @graphics,compute,transfer@
 --
@@ -1164,10 +1168,9 @@ foreign import ccall unsafe "vkGetDeviceGroupPeerMemoryFeaturesKHX"
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCmdSetDeviceMaskKHX.html vkCmdSetDeviceMaskKHX registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdSetDeviceMaskKHX"
-               vkCmdSetDeviceMaskKHX ::
-               VkCommandBuffer -- ^ commandBuffer
-                               -> Data.Word.Word32 -- ^ deviceMask
-                                                   -> IO ()
+               vkCmdSetDeviceMaskKHX :: VkCommandBuffer -- ^ commandBuffer
+                                                        -> Word32 -- ^ deviceMask
+                                                                  -> IO ()
 
 -- | queues: @compute@
 --
@@ -1188,16 +1191,13 @@ foreign import ccall unsafe "vkCmdDispatchBaseKHX"
                vkCmdDispatchBaseKHX ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
-                 Data.Word.Word32 -- ^ baseGroupX
-                                  ->
-                   Data.Word.Word32 -- ^ baseGroupY
-                                    ->
-                     Data.Word.Word32 -- ^ baseGroupZ
-                                      ->
-                       Data.Word.Word32 -- ^ groupCountX
-                                        -> Data.Word.Word32 -- ^ groupCountY
-                                                            -> Data.Word.Word32 -- ^ groupCountZ
-                                                                                -> IO ()
+                 Word32 -- ^ baseGroupX
+                        -> Word32 -- ^ baseGroupY
+                                  -> Word32 -- ^ baseGroupZ
+                                            -> Word32 -- ^ groupCountX
+                                                      -> Word32 -- ^ groupCountY
+                                                                -> Word32 -- ^ groupCountZ
+                                                                          -> IO ()
 
 pattern VK_KHX_DEVICE_GROUP_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -1993,9 +1993,9 @@ foreign import ccall unsafe
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  VkSurfaceKHR -- ^ surface
-                              -> Ptr Data.Word.Word32 -- ^ pRectCount
-                                                      -> Ptr VkRect2D -- ^ pRects
-                                                                      -> IO VkResult
+                              -> Ptr Word32 -- ^ pRectCount
+                                            -> Ptr VkRect2D -- ^ pRects
+                                                            -> IO VkResult
 
 pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_CAPABILITIES_KHX ::
         VkStructureType
@@ -2985,9 +2985,8 @@ foreign import ccall unsafe "vkAcquireNextImage2KHX"
                VkDevice -- ^ device
                         ->
                  Ptr VkAcquireNextImageInfoKHX -- ^ pAcquireInfo
-                                               ->
-                   Ptr Data.Word.Word32 -- ^ pImageIndex
-                                        -> IO VkResult
+                                               -> Ptr Word32 -- ^ pImageIndex
+                                                             -> IO VkResult
 
 pattern VK_STRUCTURE_TYPE_IMAGE_SWAPCHAIN_CREATE_INFO_KHX ::
         VkStructureType

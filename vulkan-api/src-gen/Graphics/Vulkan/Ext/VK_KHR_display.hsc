@@ -1,17 +1,12 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
-{-# LANGUAGE FlexibleContexts         #-}
-{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE TypeOperators            #-}
 {-# LANGUAGE UnboxedTuples            #-}
-{-# LANGUAGE UndecidableInstances     #-}
-{-# LANGUAGE UnliftedFFITypes         #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_display
        (-- * Vulkan extension: @VK_KHR_display@
@@ -48,13 +43,7 @@ module Graphics.Vulkan.Ext.VK_KHR_display
         pattern VK_OBJECT_TYPE_DISPLAY_KHR,
         pattern VK_OBJECT_TYPE_DISPLAY_MODE_KHR)
        where
-import           Data.Int
-import           Data.Void                        (Void)
-import           Data.Word
 import           Foreign.C.String                 (CString)
-import           Foreign.C.Types                  (CChar (..), CFloat (..),
-                                                   CInt (..), CSize (..),
-                                                   CULong (..))
 import           Foreign.Storable                 (Storable (..))
 import           GHC.ForeignPtr                   (ForeignPtr (..),
                                                    ForeignPtrContents (..),
@@ -62,9 +51,23 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Base
-import           Graphics.Vulkan.Common
-import           Graphics.Vulkan.Core
+import           Graphics.Vulkan.Base             (VkAllocationCallbacks,
+                                                   VkExtent2D, VkOffset2D)
+import           Graphics.Vulkan.Common           (VkBool32, VkDisplayKHR,
+                                                   VkDisplayModeCreateFlagsKHR,
+                                                   VkDisplayModeKHR,
+                                                   VkDisplayPlaneAlphaFlagBitsKHR,
+                                                   VkDisplayPlaneAlphaFlagsKHR,
+                                                   VkDisplaySurfaceCreateFlagsKHR,
+                                                   VkInstance,
+                                                   VkObjectType (..),
+                                                   VkPhysicalDevice, VkResult,
+                                                   VkStructureType,
+                                                   VkStructureType (..),
+                                                   VkSurfaceKHR,
+                                                   VkSurfaceTransformFlagBitsKHR,
+                                                   VkSurfaceTransformFlagsKHR,
+                                                   Word32)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
@@ -1559,9 +1562,9 @@ foreign import ccall unsafe
                vkGetPhysicalDeviceDisplayPropertiesKHR ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
-                 Ptr Data.Word.Word32 -- ^ pPropertyCount
-                                      -> Ptr VkDisplayPropertiesKHR -- ^ pProperties
-                                                                    -> IO VkResult
+                 Ptr Word32 -- ^ pPropertyCount
+                            -> Ptr VkDisplayPropertiesKHR -- ^ pProperties
+                                                          -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
@@ -1579,10 +1582,9 @@ foreign import ccall unsafe
                vkGetPhysicalDeviceDisplayPlanePropertiesKHR ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
-                 Ptr Data.Word.Word32 -- ^ pPropertyCount
-                                      ->
-                   Ptr VkDisplayPlanePropertiesKHR -- ^ pProperties
-                                                   -> IO VkResult
+                 Ptr Word32 -- ^ pPropertyCount
+                            -> Ptr VkDisplayPlanePropertiesKHR -- ^ pProperties
+                                                               -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
@@ -1600,11 +1602,10 @@ foreign import ccall unsafe "vkGetDisplayPlaneSupportedDisplaysKHR"
                vkGetDisplayPlaneSupportedDisplaysKHR ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
-                 Data.Word.Word32 -- ^ planeIndex
-                                  ->
-                   Ptr Data.Word.Word32 -- ^ pDisplayCount
-                                        -> Ptr VkDisplayKHR -- ^ pDisplays
-                                                            -> IO VkResult
+                 Word32 -- ^ planeIndex
+                        -> Ptr Word32 -- ^ pDisplayCount
+                                      -> Ptr VkDisplayKHR -- ^ pDisplays
+                                                          -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
@@ -1624,10 +1625,9 @@ foreign import ccall unsafe "vkGetDisplayModePropertiesKHR"
                                 ->
                  VkDisplayKHR -- ^ display
                               ->
-                   Ptr Data.Word.Word32 -- ^ pPropertyCount
-                                        ->
-                     Ptr VkDisplayModePropertiesKHR -- ^ pProperties
-                                                    -> IO VkResult
+                   Ptr Word32 -- ^ pPropertyCount
+                              -> Ptr VkDisplayModePropertiesKHR -- ^ pProperties
+                                                                -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -1672,10 +1672,9 @@ foreign import ccall unsafe "vkGetDisplayPlaneCapabilitiesKHR"
                                 ->
                  VkDisplayModeKHR -- ^ mode
                                   ->
-                   Data.Word.Word32 -- ^ planeIndex
-                                    ->
-                     Ptr VkDisplayPlaneCapabilitiesKHR -- ^ pCapabilities
-                                                       -> IO VkResult
+                   Word32 -- ^ planeIndex
+                          -> Ptr VkDisplayPlaneCapabilitiesKHR -- ^ pCapabilities
+                                                               -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS'.
 --

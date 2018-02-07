@@ -439,8 +439,8 @@ module Graphics.Vulkan.StructMembers
         HasVkYcbcrModel(..), HasVkYcbcrRange(..), HasVkYcoeff(..),
         HasVkZ(..))
        where
-import           GHC.TypeLits           (ErrorMessage (..), TypeError)
-import           Graphics.Vulkan.Common
+import           GHC.TypeLits            (ErrorMessage (..), TypeError)
+import           Graphics.Vulkan.Marshal
 
 class HasVkA a where
         type VkAMType a :: *

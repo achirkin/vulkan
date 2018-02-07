@@ -24,15 +24,9 @@ module Graphics.Vulkan.Ext.VK_NV_fill_rectangle
         pattern VK_NV_FILL_RECTANGLE_EXTENSION_NAME,
         pattern VK_POLYGON_MODE_FILL_RECTANGLE_NV)
        where
-import           Data.Int
-import           Data.Word
-import           Foreign.C.String                 (CString)
-import           GHC.Ptr                          (Ptr (..))
-import           Graphics.Vulkan.Base
-import           Graphics.Vulkan.Common
-import           Graphics.Vulkan.Core
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
+import           Foreign.C.String              (CString)
+import           GHC.Ptr                       (Ptr (..))
+import           Graphics.Vulkan.Common        (VkPolygonMode (..))
 import           Graphics.Vulkan.StructMembers
 
 pattern VK_NV_FILL_RECTANGLE_SPEC_VERSION :: (Num a, Eq a) => a

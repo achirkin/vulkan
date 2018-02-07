@@ -60,14 +60,6 @@ generateVkSource outputDir outCabalFile vkXml = do
                <> id0 "Foreign.Ptr" "FunPtr"
                <> id1 "GHC.Ptr" "Ptr"
                <> id0 "Data.Void" "Void"
-               <> id0 "Data.Word" "Word8"
-               <> id0 "Data.Word" "Word16"
-               <> id0 "Data.Word" "Word32"
-               <> id0 "Data.Word" "Word64"
-               <> id0 "Data.Int" "Int8"
-               <> id0 "Data.Int" "Int16"
-               <> id0 "Data.Int" "Int32"
-               <> id0 "Data.Int" "Int64"
                <> id0 "GHC.Generics" "Generic"
                <> id0 "Data.Data" "Data"
                <> ida "Data.Bits" "Bits"
@@ -123,31 +115,23 @@ generateVkSource outputDir outCabalFile vkXml = do
     (a, mr) <- runModuleWriter vkXml "Graphics.Vulkan.Base" exportedNamesCommon $ do
        writePragma "Strict"
        writePragma "DataKinds"
-       writeFullImport "Graphics.Vulkan.Marshal.Internal"
-       writeFullImport "Graphics.Vulkan.Marshal"
-       writeFullImport "Graphics.Vulkan.Common"
        writeFullImport "Graphics.Vulkan.StructMembers"
        cds <- genBaseStructs
        genBaseCommands
        pure cds
     writeModule outputDir [relfile|Graphics/Vulkan/Base.hsc|] id mr
-    pure $ (a, globalNames mr)
+    pure (a, globalNames mr)
 
   (classDeclsCore, exportedNamesCore) <- do
     (a, mr) <- runModuleWriter vkXml "Graphics.Vulkan.Core" exportedNamesBase $ do
        writePragma "Strict"
        writePragma "DataKinds"
-       writeFullImport "Graphics.Vulkan.Marshal.Internal"
-       writeFullImport "Graphics.Vulkan.Marshal"
-       writeFullImport "Graphics.Vulkan.Common"
-       writeFullImport "Graphics.Vulkan.Base"
-       writeFullImport "Graphics.Vulkan.StructMembers"
        genFeature
     writeModule outputDir [relfile|Graphics/Vulkan/Core.hsc|] id mr
-    pure $ (a, globalNames mr)
+    pure (a, globalNames mr)
 
 
-  (exportedNamesExts, classDeclsExts, eModules)
+  (_exportedNamesExts, classDeclsExts, eModules)
     <- aggregateExts exportedNamesCore
                   ( L.sortOn (extNumber . attributes)
                   . extensions . unInorder . globExtensions $ vkXml)
@@ -158,22 +142,15 @@ generateVkSource outputDir outCabalFile vkXml = do
     ((cds, exProtect), mr) <- runModuleWriter vkXml modName gn $ do
        writePragma "Strict"
        writePragma "DataKinds"
-       writeFullImport "Graphics.Vulkan.Marshal.Internal"
-       writeFullImport "Graphics.Vulkan.Marshal"
-       writeFullImport "Graphics.Vulkan.Common"
-       writeFullImport "Graphics.Vulkan.Base"
-       writeFullImport "Graphics.Vulkan.Core"
        writeFullImport "Graphics.Vulkan.StructMembers"
-       writeFullImport "Data.Word"
-       writeFullImport "Data.Int"
        genExtension ext
     writeModule outputDir ([reldir|Graphics/Vulkan/Ext|] </> fname) id mr
     pure (globalNames mr, cds, (T.pack modName, exProtect))
 
   do -- write classes for struct member accessors
-    ((), mr) <- runModuleWriter vkXml "Graphics.Vulkan.StructMembers" exportedNamesExts $ do
+    ((), mr) <- runModuleWriter vkXml "Graphics.Vulkan.StructMembers" exportedNamesCommon $ do
        writePragma "Strict"
-       writeFullImport "Graphics.Vulkan.Common"
+       writeFullImport "Graphics.Vulkan.Marshal"
        mapM_ genClassName
          . Map.toList
          $ classDeclsBase <> classDeclsCore <> classDeclsExts

@@ -1,15 +1,10 @@
 #include "vulkan/vulkan.h"
 
-{-# LANGUAGE DataKinds            #-}
-{-# LANGUAGE FlexibleContexts     #-}
-{-# LANGUAGE FlexibleInstances    #-}
-{-# LANGUAGE MagicHash            #-}
-{-# LANGUAGE Strict               #-}
-{-# LANGUAGE TypeFamilies         #-}
-{-# LANGUAGE TypeOperators        #-}
-{-# LANGUAGE UnboxedTuples        #-}
-{-# LANGUAGE UndecidableInstances #-}
-{-# LANGUAGE UnliftedFFITypes     #-}
+{-# LANGUAGE DataKinds     #-}
+{-# LANGUAGE MagicHash     #-}
+{-# LANGUAGE Strict        #-}
+{-# LANGUAGE TypeFamilies  #-}
+{-# LANGUAGE UnboxedTuples #-}
 module Graphics.Vulkan.Base
        (-- > ##include "vulkan.h"
         --
@@ -86,9 +81,6 @@ module Graphics.Vulkan.Base
         VkSurfaceFormatKHR(..), VkSwapchainCreateInfoKHR(..),
         VkPresentInfoKHR(..))
        where
-import           Data.Int
-import           Data.Void                        (Void)
-import           Data.Word
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.ForeignPtr                   (ForeignPtr (..),
@@ -97,7 +89,111 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Common
+import           Graphics.Vulkan.Common           (CChar, Int32,
+                                                   PFN_vkAllocationFunction,
+                                                   PFN_vkFreeFunction,
+                                                   PFN_vkInternalAllocationNotification,
+                                                   PFN_vkInternalFreeNotification,
+                                                   PFN_vkReallocationFunction,
+                                                   VkAccessFlags,
+                                                   VkAttachmentDescriptionFlags,
+                                                   VkAttachmentLoadOp,
+                                                   VkAttachmentStoreOp,
+                                                   VkBlendFactor, VkBlendOp,
+                                                   VkBool32, VkBorderColor,
+                                                   VkBuffer,
+                                                   VkBufferCreateFlags,
+                                                   VkBufferUsageFlags,
+                                                   VkBufferViewCreateFlags,
+                                                   VkColorComponentFlags,
+                                                   VkColorSpaceKHR,
+                                                   VkCommandBufferLevel,
+                                                   VkCommandBufferUsageFlags,
+                                                   VkCommandPool,
+                                                   VkCommandPoolCreateFlags,
+                                                   VkCompareOp,
+                                                   VkComponentSwizzle,
+                                                   VkCompositeAlphaFlagBitsKHR,
+                                                   VkCompositeAlphaFlagsKHR,
+                                                   VkCullModeFlags,
+                                                   VkDependencyFlags,
+                                                   VkDescriptorPool,
+                                                   VkDescriptorPoolCreateFlags,
+                                                   VkDescriptorSet,
+                                                   VkDescriptorSetLayoutCreateFlags,
+                                                   VkDescriptorType,
+                                                   VkDeviceCreateFlags,
+                                                   VkDeviceMemory,
+                                                   VkDeviceQueueCreateFlags,
+                                                   VkDeviceSize,
+                                                   VkEventCreateFlags,
+                                                   VkFenceCreateFlags, VkFilter,
+                                                   VkFormat,
+                                                   VkFormatFeatureFlags,
+                                                   VkFramebuffer,
+                                                   VkFramebufferCreateFlags,
+                                                   VkFrontFace, VkImage,
+                                                   VkImageAspectFlags,
+                                                   VkImageCreateFlags,
+                                                   VkImageLayout, VkImageTiling,
+                                                   VkImageType,
+                                                   VkImageUsageFlags,
+                                                   VkImageView,
+                                                   VkImageViewCreateFlags,
+                                                   VkImageViewType,
+                                                   VkInstanceCreateFlags,
+                                                   VkLogicOp, VkMemoryHeapFlags,
+                                                   VkMemoryPropertyFlags,
+                                                   VkPhysicalDeviceType,
+                                                   VkPipeline,
+                                                   VkPipelineBindPoint,
+                                                   VkPipelineCacheCreateFlags,
+                                                   VkPipelineColorBlendStateCreateFlags,
+                                                   VkPipelineCreateFlags,
+                                                   VkPipelineDepthStencilStateCreateFlags,
+                                                   VkPipelineDynamicStateCreateFlags,
+                                                   VkPipelineInputAssemblyStateCreateFlags,
+                                                   VkPipelineLayout,
+                                                   VkPipelineLayoutCreateFlags,
+                                                   VkPipelineMultisampleStateCreateFlags,
+                                                   VkPipelineRasterizationStateCreateFlags,
+                                                   VkPipelineShaderStageCreateFlags,
+                                                   VkPipelineStageFlags,
+                                                   VkPipelineTessellationStateCreateFlags,
+                                                   VkPipelineVertexInputStateCreateFlags,
+                                                   VkPipelineViewportStateCreateFlags,
+                                                   VkPolygonMode,
+                                                   VkPresentModeKHR,
+                                                   VkPrimitiveTopology,
+                                                   VkQueryControlFlags,
+                                                   VkQueryPipelineStatisticFlags,
+                                                   VkQueryPoolCreateFlags,
+                                                   VkQueryType, VkQueueFlags,
+                                                   VkRenderPass,
+                                                   VkRenderPassCreateFlags,
+                                                   VkSampleCountFlagBits,
+                                                   VkSampleCountFlags,
+                                                   VkSampler,
+                                                   VkSamplerAddressMode,
+                                                   VkSamplerCreateFlags,
+                                                   VkSamplerMipmapMode,
+                                                   VkSemaphoreCreateFlags,
+                                                   VkShaderModule,
+                                                   VkShaderModuleCreateFlags,
+                                                   VkShaderStageFlagBits,
+                                                   VkShaderStageFlags,
+                                                   VkSharingMode,
+                                                   VkSparseImageFormatFlags,
+                                                   VkSparseMemoryBindFlags,
+                                                   VkStencilOp, VkStructureType,
+                                                   VkSubpassDescriptionFlags,
+                                                   VkSurfaceKHR,
+                                                   VkSurfaceTransformFlagBitsKHR,
+                                                   VkSurfaceTransformFlagsKHR,
+                                                   VkSwapchainCreateFlagsKHR,
+                                                   VkSwapchainKHR,
+                                                   VkVertexInputRate, Word32,
+                                                   Word8)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers

@@ -23,15 +23,8 @@ module Graphics.Vulkan.Ext.VK_AMD_gpu_shader_half_float
         VK_AMD_GPU_SHADER_HALF_FLOAT_EXTENSION_NAME,
         pattern VK_AMD_GPU_SHADER_HALF_FLOAT_EXTENSION_NAME)
        where
-import           Data.Int
-import           Data.Word
-import           Foreign.C.String                 (CString)
-import           GHC.Ptr                          (Ptr (..))
-import           Graphics.Vulkan.Base
-import           Graphics.Vulkan.Common
-import           Graphics.Vulkan.Core
-import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
+import           Foreign.C.String              (CString)
+import           GHC.Ptr                       (Ptr (..))
 import           Graphics.Vulkan.StructMembers
 
 pattern VK_AMD_GPU_SHADER_HALF_FLOAT_SPEC_VERSION ::

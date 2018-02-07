@@ -1,17 +1,12 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
-{-# LANGUAGE FlexibleContexts         #-}
-{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE TypeOperators            #-}
 {-# LANGUAGE UnboxedTuples            #-}
-{-# LANGUAGE UndecidableInstances     #-}
-{-# LANGUAGE UnliftedFFITypes         #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_push_descriptor
        (-- * Vulkan extension: @VK_KHR_push_descriptor@
@@ -39,13 +34,7 @@ module Graphics.Vulkan.Ext.VK_KHR_push_descriptor
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES_KHR,
         pattern VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR)
        where
-import           Data.Int
-import           Data.Void                        (Void)
-import           Data.Word
 import           Foreign.C.String                 (CString)
-import           Foreign.C.Types                  (CChar (..), CFloat (..),
-                                                   CInt (..), CSize (..),
-                                                   CULong (..))
 import           Foreign.Storable                 (Storable (..))
 import           GHC.ForeignPtr                   (ForeignPtr (..),
                                                    ForeignPtrContents (..),
@@ -53,9 +42,12 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Base
-import           Graphics.Vulkan.Common
-import           Graphics.Vulkan.Core
+import           Graphics.Vulkan.Base             (VkWriteDescriptorSet)
+import           Graphics.Vulkan.Common           (VkCommandBuffer, VkDescriptorSetLayoutCreateFlagBits (..),
+                                                   VkPipelineBindPoint,
+                                                   VkPipelineLayout,
+                                                   VkStructureType,
+                                                   VkStructureType (..), Word32)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
@@ -257,11 +249,10 @@ foreign import ccall unsafe "vkCmdPushDescriptorSetKHR"
                                      ->
                    VkPipelineLayout -- ^ layout
                                     ->
-                     Data.Word.Word32 -- ^ set
-                                      ->
-                       Data.Word.Word32 -- ^ descriptorWriteCount
-                                        -> Ptr VkWriteDescriptorSet -- ^ pDescriptorWrites
-                                                                    -> IO ()
+                     Word32 -- ^ set
+                            -> Word32 -- ^ descriptorWriteCount
+                                      -> Ptr VkWriteDescriptorSet -- ^ pDescriptorWrites
+                                                                  -> IO ()
 
 pattern VK_KHR_PUSH_DESCRIPTOR_SPEC_VERSION :: (Num a, Eq a) => a
 

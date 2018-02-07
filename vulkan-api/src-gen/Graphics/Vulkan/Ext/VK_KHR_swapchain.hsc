@@ -36,19 +36,19 @@ module Graphics.Vulkan.Ext.VK_KHR_swapchain
         pattern VK_ERROR_OUT_OF_DATE_KHR,
         pattern VK_OBJECT_TYPE_SWAPCHAIN_KHR)
        where
-import           Data.Int
-import           Data.Void                        (Void)
-import           Data.Word
-import           Foreign.C.String                 (CString)
-import           Foreign.C.Types                  (CChar (..), CFloat (..),
-                                                   CInt (..), CSize (..),
-                                                   CULong (..))
-import           GHC.Ptr                          (Ptr (..))
-import           Graphics.Vulkan.Base
-import           Graphics.Vulkan.Common
-import           Graphics.Vulkan.Core
+import           Foreign.C.String              (CString)
+import           GHC.Ptr                       (Ptr (..))
+import           Graphics.Vulkan.Base          (VkAllocationCallbacks,
+                                                VkPresentInfoKHR,
+                                                VkSwapchainCreateInfoKHR)
+import           Graphics.Vulkan.Common        (VkDevice, VkFence, VkImage,
+                                                VkImageLayout (..),
+                                                VkObjectType (..), VkQueue,
+                                                VkResult, VkResult (..),
+                                                VkSemaphore,
+                                                VkStructureType (..),
+                                                VkSwapchainKHR, Word32, Word64)
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 
 -- | Success codes: 'VK_SUCCESS'.
@@ -104,10 +104,9 @@ foreign import ccall unsafe "vkGetSwapchainImagesKHR"
                VkDevice -- ^ device
                         ->
                  VkSwapchainKHR -- ^ swapchain
-                                ->
-                   Ptr Data.Word.Word32 -- ^ pSwapchainImageCount
-                                        -> Ptr VkImage -- ^ pSwapchainImages
-                                                       -> IO VkResult
+                                -> Ptr Word32 -- ^ pSwapchainImageCount
+                                              -> Ptr VkImage -- ^ pSwapchainImages
+                                                             -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
 --
@@ -129,12 +128,11 @@ foreign import ccall unsafe "vkAcquireNextImageKHR"
                         ->
                  VkSwapchainKHR -- ^ swapchain
                                 ->
-                   Data.Word.Word64 -- ^ timeout
-                                    ->
-                     VkSemaphore -- ^ semaphore
-                                 -> VkFence -- ^ fence
-                                            -> Ptr Data.Word.Word32 -- ^ pImageIndex
-                                                                    -> IO VkResult
+                   Word64 -- ^ timeout
+                          -> VkSemaphore -- ^ semaphore
+                                         -> VkFence -- ^ fence
+                                                    -> Ptr Word32 -- ^ pImageIndex
+                                                                  -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS', 'VK_SUBOPTIMAL_KHR'.
 --

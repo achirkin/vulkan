@@ -136,6 +136,7 @@ genAlias VkTypeSimple
     writeImport $ DIThing "Data" DITNo
     writeImport $ DIThing "Bits" DITNo
     writeImport $ DIThing "FiniteBits" DITNo
+    writeImport $ DIThing (qNameTxt . unqualifyQ . toHaskellName $ treftxt) DITNo
 
     writeDecl . setComment rezComment $ parseDecl'
       [text|
@@ -186,6 +187,7 @@ newInt32TypeDec vkTName insts com = do
         rezComment = preComment . T.unpack $ com <:> regLink
 
     writePragma "GeneralizedNewtypeDeriving"
+    writeFullImport "Graphics.Vulkan.Marshal"
     writeDecl . setComment rezComment $ parseDecl'
       [text|
         newtype $tnametxt = $tnametxt Int32
@@ -199,72 +201,81 @@ newInt32TypeDec vkTName insts com = do
 
 
 enumPattern :: Monad m => VkEnum -> ModuleWriter m ()
-enumPattern VkEnum {..} = do
-    writePragma "PatternSynonyms"
-    case _vkEnumValue of
-      VkEnumReference -> return ()
-      VkEnumString s
-        | tyval <- "\"" <> s <> "\""
-        , patval <- "Ptr \"" <> s <> "\0\"#"
-        , _patnametxt <- "_" <> patnametxt
-        , is_patnametxt <- "is_" <> patnametxt
+enumPattern VkEnum {..} = writePragma "PatternSynonyms" >>
+  case _vkEnumValue of
+    VkEnumReference ->
+          lookupDeclared (unVkEnumName _vkEnumName) >>= mapM_ writeExport
+          
+    VkEnumString s
+      | tyval <- "\"" <> s <> "\""
+      , patval <- "Ptr \"" <> s <> "\0\"#"
+      , _patnametxt <- "_" <> patnametxt
+      , is_patnametxt <- "is_" <> patnametxt
         -> do
-        writePragma "MagicHash"
-        writePragma "ViewPatterns"
-        writeImport $ DIThing "CString" DITNo
-        writeImport $ DIThing "Ptr" DITAll
-        mapM_ writeDecl
-          . insertDeclComment (T.unpack patnametxt) rezComment
-          $ parseDecls [text|
-              pattern $patnametxt :: CString
-              pattern $patnametxt <- ( $is_patnametxt -> True )
-                where
-                  $patnametxt = $_patnametxt
+          writePragma "MagicHash"
+          writePragma "ViewPatterns"
+          writeImport $ DIThing "CString" DITNo
+          writeImport $ DIThing "Ptr" DITAll
+          mapM_ writeDecl
+            . insertDeclComment (T.unpack patnametxt) rezComment
+            $ parseDecls [text|
+                pattern $patnametxt :: CString
+                pattern $patnametxt <- ( $is_patnametxt -> True )
+                  where
+                    $patnametxt = $_patnametxt
 
-              $_patnametxt :: CString
-              {-# INLINE $_patnametxt #-}
-              $_patnametxt = $patval
+                $_patnametxt :: CString
+                {-# INLINE $_patnametxt #-}
+                $_patnametxt = $patval
 
-              $is_patnametxt :: CString -> Bool
-              {-# INLINE $is_patnametxt #-}
-              $is_patnametxt = ( $_patnametxt == )
+                $is_patnametxt :: CString -> Bool
+                {-# INLINE $is_patnametxt #-}
+                $is_patnametxt = ( $_patnametxt == )
 
-              type $patnametxt = $tyval
-            |]
-        writeExport $ DIThing patnametxt DITNo
-      VkEnumIntegral n tnametxt
-        | Just (VkTypeName cname) <- _vkEnumTName
-        , patval <- T.pack $
-            if n < 0 then "(" ++ show n ++ ")" else show n
-         -> do
-        writeDecl . setComment rezComment
-                  $ parseDecl' [text|pattern $patnametxt :: $tnametxt|]
-        writeDecl $ parseDecl' [text|pattern $patnametxt = $cname $patval|]
-        | Nothing <- _vkEnumTName
-        , patval <- T.pack $ show n
-          -> do
-            mapM_ writeDecl
-              . insertDeclComment (T.unpack patnametxt) rezComment
-              $ parseDecls [text|
-                  pattern $patnametxt :: $tnametxt
-                  pattern $patnametxt = $patval
-                |]
-            -- For positive constants, we can make a type-level value
-            when (n >= 0) $ do
-              writeDecl $ parseDecl'
-                [text|type $patnametxt = $patval|]
-              writeExport $ DIThing patnametxt DITNo
-      VkEnumFractional r
-        | patval <- T.pack $ show (realToFrac r :: Double) -> do
-            writeDecl . setComment rezComment
-                      $ parseDecl' [text|pattern $patnametxt :: (Fractional a, Eq a) => a|]
-            writeDecl $ parseDecl' [text|pattern $patnametxt =  $patval|]
+                type $patnametxt = $tyval
+              |]
+          writeExport $ DIThing patnametxt DITNo
+          writeExport $ DIPat patnametxt
 
-      VkEnumAlias (VkEnumName aliasname) ->
+    VkEnumIntegral n tnametxt
+      | Just (VkTypeName cname) <- _vkEnumTName
+      , patval <- T.pack $
+          if n < 0 then "(" ++ show n ++ ")" else show n
+        -> do
+          writeImport $ DIThing (qNameTxt . unqualifyQ . toHaskellName $ tnametxt) DITAll
+          writeDecl . setComment rezComment
+                    $ parseDecl' [text|pattern $patnametxt :: $tnametxt|]
+          writeDecl $ parseDecl' [text|pattern $patnametxt = $cname $patval|]
+          writeExport $ DIPat patnametxt
+
+      | Nothing <- _vkEnumTName
+      , patval <- T.pack $ show n
+        -> do
+          mapM_ writeDecl
+            . insertDeclComment (T.unpack patnametxt) rezComment
+            $ parseDecls [text|
+                pattern $patnametxt :: $tnametxt
+                pattern $patnametxt = $patval
+              |]
+          -- For positive constants, we can make a type-level value
+          when (n >= 0) $ do
+            writeDecl $ parseDecl'
+              [text|type $patnametxt = $patval|]
+            writeExport $ DIThing patnametxt DITNo
+          writeExport $ DIPat patnametxt
+
+    VkEnumFractional r
+      | patval <- T.pack $ show (realToFrac r :: Double) -> do
+          writeDecl . setComment rezComment
+                    $ parseDecl' [text|pattern $patnametxt :: (Fractional a, Eq a) => a|]
+          writeDecl $ parseDecl' [text|pattern $patnametxt =  $patval|]
+          writeExport $ DIPat patnametxt
+
+    VkEnumAlias (VkEnumName aliasname) -> do
+          writeImport $ DIPat aliasname
           writeDecl . setComment rezComment
                     $ parseDecl' [text|pattern $patnametxt = $aliasname|]
-
-    writeExport $ DIPat patnametxt
+          writeExport $ DIPat patnametxt
   where
     patname = toHaskellName _vkEnumName
     patnametxt = qNameTxt patname
