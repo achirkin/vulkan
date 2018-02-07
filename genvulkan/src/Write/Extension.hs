@@ -1,73 +1,47 @@
--- {-# LANGUAGE DuplicateRecordFields #-}
--- {-# LANGUAGE FlexibleContexts      #-}
--- {-# LANGUAGE OverloadedStrings     #-}
--- {-# LANGUAGE RecordWildCards       #-}
--- {-# LANGUAGE Strict                #-}
+{-# LANGUAGE DuplicateRecordFields #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE RecordWildCards       #-}
+{-# LANGUAGE Strict                #-}
 module Write.Extension
-  ( -- genExtension
+  ( genExtension
   ) where
 
--- import           Control.Monad                        (forM_)
--- import           Control.Monad.Reader.Class
--- import qualified Data.Map                             as Map
--- import           Data.Semigroup
--- import qualified Data.Text                            as T
---
--- import           VkXml.CommonTypes
--- import           VkXml.Sections
--- import           VkXml.Sections.Types as Ts
--- import           VkXml.Sections.Commands as Cs
--- import           VkXml.Sections.Feature
--- import           VkXml.Sections.Extensions
---
--- import           Write.Commands
--- import           Write.ModuleWriter
--- import           Write.Types
+import           Control.Monad.Reader.Class
+import qualified Data.Map                             as Map
+import           Data.Semigroup
+import qualified Data.Text                            as T
+
+import           VkXml.CommonTypes
+import           VkXml.Sections
+import           VkXml.Sections.Types as Ts
+import           VkXml.Sections.Commands as Cs
+import           VkXml.Sections.Feature
+import           VkXml.Sections.Extensions
+
+import           Write.ModuleWriter
+import           Write.Feature
 
 
+genExtension :: Monad m => VkExtension -> ModuleWriter m (Maybe T.Text)
+genExtension (VkExtension VkExtAttrs{..} ereqs) = pushSecLvl $ \curlvl -> do
+    vkXml <- ask
+    let VkFeature {..} = unInorder $ globFeature vkXml
+        tps = Map.fromList
+               . map (\t -> ((Ts.name :: VkType -> VkTypeName) t, t))
+               . items . types . unInorder $ globTypes vkXml
+        cmds = Map.fromList
+               . map (\c -> ((Cs.name :: VkCommand -> VkCommandName) c, c))
+               . commands . unInorder $ globCommands vkXml
+    writeSection curlvl $ "Vulkan extension: @" <> unVkExtensionName extName <> "@"
+       <:> ("supported: @" <> extSupported <> "@")
+       <:> maybe mempty (\s -> "contact: @" <> s <> "@") extContact
+       <:> maybe mempty (\s -> "author: @" <> unVkTagName s <> "@") extAuthor
+       <:> maybe mempty (\s -> "type: @" <> s <> "@") extType
+       <:> ("Extension number: @" <> T.pack (show extNumber) <> "@")
+       <:> showExts extReqExts
+       <:> maybe mempty (\s -> "Protected by CPP ifdef: @" <> s <> "@") extProtect
 
--- genExtension :: Monad m => VkExtension -> ModuleWriter m ()
--- genExtension VkExtension {..} = pushSecLvl $ \curlvl -> do
---     vkXml <- ask
---     let VkFeature {..} = unInorder $ globFeature vkXml
---         tps = Map.fromList
---                . map (\t -> ((Ts.name :: VkType -> VkTypeName) t, t))
---                . items . types . unInorder $ globTypes vkXml
---         cmds = Map.fromList
---                . map (\c -> ((Cs.name :: VkCommand -> VkCommandName) c, c))
---                . commands . unInorder $ globCommands vkXml
---     writeSection curlvl $ T.unlines
---       [ comment
---       , ""
---       , "@api = " <> api <> "@"
---       , ""
---       , "@name = " <> name <> "@"
---       , ""
---       , "@number = " <> number <> "@"
---       ]
---     pushSecLvl $ \lvl -> mapM_ (genRequire lvl tps cmds) (baseReq:reqList)
---
---
--- genExtRequire :: Monad m
---           => Int
---           -> Map.Map VkTypeName VkType
---           -> Map.Map VkCommandName VkCommand
---           -> VkRequire
---           -> ModuleWriter m ()
--- genExtRequire curlvl tps cmds VkRequire {..} = do
---   writeSection curlvl comment
---   forM_ requireTypes $ \tname -> case Map.lookup tname tps of
---         Nothing -> pure ()
---         Just t  -> genType t
---   forM_ requireComms $ \cname -> case Map.lookup cname cmds of
---         Nothing -> pure ()
---         Just t  -> genCommand t
---
--- baseReq :: VkRequire
--- baseReq = VkRequire
---   { comment      = "Not referenced, but required definitions"
---   , requireTypes = map VkTypeName
---      [ ]
---   , requireEnums = []
---   , requireComms = []
---   }
+    pushSecLvl $ \lvl -> mapM_ (genRequire lvl tps cmds) ereqs
+
+    return extProtect

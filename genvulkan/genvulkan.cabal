@@ -66,12 +66,12 @@ library
                      , ghc-prim -any
                      , hfmt
   default-language:    Haskell2010
-  ghc-options:         -Wall
+  ghc-options:         -Wall -O2
 
 executable genvulkan
   hs-source-dirs:      app
   main-is:             Main.hs
-  ghc-options:         -Wall
+  ghc-options:         -Wall -O2
   build-depends:       base
                      , genvulkan
                      , path-io -any

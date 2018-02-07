@@ -32,12 +32,9 @@ genBaseCommands = do
                      . join
                      . map requireComms
                      . reqList . unInorder $ globFeature vkXml
-        selectTN (VkExtReqCommand tn) = [tn]
-        selectTN _                    = []
         extComms = Set.fromList
-                     . join . join . join
-                     . map (map (map (selectTN . fst). items). extRequires)
-                     . extensions . unInorder $ globExtensions vkXml
+                     $ extensions (unInorder $ globExtensions vkXml)
+                       >>= extRequires >>= requireComms
         excludedComms = Set.union featureComms extComms
 
     forM_ (commands . unInorder $ globCommands vkXml) $ \c ->
@@ -80,7 +77,7 @@ genCommand VkCommand
     cnameStr = T.unpack  $ qNameTxt cname
     cnameOrigStr = T.unpack $ unVkCommandName vkname
     -- funtypeTxt = T.pack $ prettyPrint funtype
-    rtname = toHaskellType vkrt
+    rtname = toHaskellName vkrt
     rtype = (Nothing <$)
           $ TyApp () (TyCon () (UnQual () (Ident () "IO"))) (toType 0 rtname)
     funtype = foldr accumRefs rtype vkpams
@@ -89,7 +86,7 @@ genCommand VkCommand
                                   then 1 else 0
         in amap (const . Just . CodeComment NextToCode '^' $ T.unpack paramName)
          . (Nothing <$)
-         . toType n $ toHaskellType paramType
+         . toType n $ toHaskellName paramType
     accumRefs vkp = TyFun Nothing (paramT vkp)
 
     c = T.unlines $
@@ -107,13 +104,13 @@ genCommand VkCommand
                  . al (successcodes attrs)
                       (\x -> "Success codes: "
                           <> T.intercalate ", "
-                            ( map (\t -> "'" <> unVkEnumValueName t <> "'")
+                            ( map (\t -> "'" <> unVkEnumName t <> "'")
                               x) <> "."
                       )
                  . al (errorcodes attrs)
                       (\x -> "Error codes: "
                           <> T.intercalate ", "
-                            ( map (\t -> "'" <> unVkEnumValueName t <> "'")
+                            ( map (\t -> "'" <> unVkEnumName t <> "'")
                               x) <> "."
                       )
                  . ml (queues attrs)     (\x -> "queues: @" <> x <> "@")

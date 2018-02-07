@@ -1,9 +1,9 @@
 {-# LANGUAGE FlexibleContexts           #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE MultiParamTypeClasses      #-}
 {-# LANGUAGE OverloadedStrings          #-}
 module VkXml.CommonTypes
-  ( VkEnumValueName (..)
-  , VkTypeName (..), VkMemberName (..), VkCommandName (..)
+  ( VkTypeName (..), VkMemberName (..), VkCommandName (..)
   , Sections (..), VkTagName (..), VkExtensionName (..)
   , parseSections, parseSectionsL
   , VkEnumName (..)
@@ -11,13 +11,14 @@ module VkXml.CommonTypes
   , ValidIdent (..)
   , isHaskellIdent, isHaskellLowerFirst, isHaskellUpperFirst
   , firstUp, firstDown
-  , toHaskellName, toType
+  , toHaskellName, toHaskellName', toType
   , moduleName, unqualifyQ, unqualify, qNameTxt
   ) where
 
 import           Control.Monad.State.Class
 import           Control.Monad.Trans.Class
 import           Data.Char
+import           Data.Coerce
 import           Data.Conduit
 import           Data.Conduit.Lift
 import           Data.String                  (IsString)
@@ -29,10 +30,6 @@ import           Language.Haskell.Exts.Syntax
 import           Text.XML.Stream.Parse
 
 import           VkXml.Parser
-
-
-newtype VkEnumValueName = VkEnumValueName { unVkEnumValueName :: Text }
-  deriving (Eq, Ord, Show, Read, IsString)
 
 
 newtype VkEnumName = VkEnumName { unVkEnumName :: Text }
@@ -173,37 +170,48 @@ isHaskellIdent s
     validChar c = isAscii c && (isAlphaNum c || c == '_')
     invalidChar = not . validChar
 
-toHaskellName :: VkTypeName -> QName ()
-toHaskellName (VkTypeName "void")
+toHaskellName :: Coercible a Text => a -> QName ()
+toHaskellName = toHaskellName' . coerce
+
+toHaskellName' :: Text -> QName ()
+toHaskellName' "void"
   = Special () (UnitCon ())
-toHaskellName (VkTypeName "char")
+toHaskellName' "char"
   = Qual () (ModuleName () "Foreign.C.Types") (Ident () "CChar")
-toHaskellName (VkTypeName "float")
+toHaskellName' "float"
   = UnQual () (Ident () "HSC2HS___ \"#{type float}\"")
-toHaskellName (VkTypeName "double")
+toHaskellName' "double"
   = UnQual () (Ident () "HSC2HS___ \"#{type double}\"")
-toHaskellName (VkTypeName "uint8_t")
+toHaskellName' "uint8_t"
   = Qual () (ModuleName () "Data.Word") (Ident () "Word8")
-toHaskellName (VkTypeName "uint16_t")
+toHaskellName' "uint16_t"
   = Qual () (ModuleName () "Data.Word") (Ident () "Word16")
-toHaskellName (VkTypeName "uint32_t")
+toHaskellName' "uint32_t"
   = Qual () (ModuleName () "Data.Word") (Ident () "Word32")
-toHaskellName (VkTypeName "uint64_t")
+toHaskellName' "uint64_t"
   = Qual () (ModuleName () "Data.Word") (Ident () "Word64")
-toHaskellName (VkTypeName "int8_t")
+toHaskellName' "int8_t"
   = Qual () (ModuleName () "Data.Int") (Ident () "Int8")
-toHaskellName (VkTypeName "int16_t")
+toHaskellName' "int16_t"
   = Qual () (ModuleName () "Data.Int") (Ident () "Int16")
-toHaskellName (VkTypeName "int32_t")
+toHaskellName' "int32_t"
   = Qual () (ModuleName () "Data.Int") (Ident () "Int32")
-toHaskellName (VkTypeName "int64_t")
+toHaskellName' "int64_t"
   = Qual () (ModuleName () "Data.Int") (Ident () "Int64")
-toHaskellName (VkTypeName "size_t")
+toHaskellName' "size_t"
   = UnQual () (Ident () "HSC2HS___ \"#{type size_t}\"")
-toHaskellName (VkTypeName "int")
+toHaskellName' "int"
   = UnQual () (Ident () "HSC2HS___ \"#{type int}\"")
-toHaskellName (VkTypeName t)
+
+-- exceptions **************************************************
+toHaskellName' t
+  |  "wl_" `T.isPrefixOf` t || "xcb_" `T.isPrefixOf` t
+    = toHaskellName' . firstUp . T.pack . toCamelCase $ T.unpack t
+-- *************************************************************
+
+toHaskellName' t
   = UnQual () (Ident () (T.unpack t))
+
 
 
 -- | Construct a type from a qualified type name and pointer level.
@@ -213,7 +221,7 @@ toType :: Word -- ^ number of times pointer
        -> QName () -- ^ name of the type
        -> Type ()
 toType 0 t = TyCon () t
-toType n t | t == toHaskellName (VkTypeName "void")
+toType n t | t == toHaskellName' "void"
              = appPtr n voidTy
            | Qual () _ (Ident () "CChar") <- t
            , n > 0
@@ -249,3 +257,10 @@ qNameTxt (Qual _ _ (Symbol _ t)) = T.pack t
 qNameTxt (UnQual _ (Ident _ t))  = T.pack t
 qNameTxt (UnQual _ (Symbol _ t)) = T.pack t
 qNameTxt (Special _ t)           = T.pack $ prettyPrint t
+
+
+toCamelCase :: String -> String
+toCamelCase ('_':c:cs)
+  | isLower c = toUpper c : toCamelCase cs
+toCamelCase (c:cs) = c : toCamelCase cs
+toCamelCase [] = []

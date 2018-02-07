@@ -12,6 +12,7 @@ import           Control.Monad
 import           Data.Char
 import qualified Data.List                            as L
 import           Data.Semigroup
+import qualified Data.Text                            as T
 import           Language.Haskell.Exts.ExactPrint
 import           Language.Haskell.Exts.Pretty
 import           Language.Haskell.Exts.SimpleComments
@@ -22,8 +23,11 @@ import           Path.IO
 import           System.IO                            (writeFile)
 import           Text.RE.TDFA.String
 
+import           VkXml.CommonTypes
 import           VkXml.Sections
+import           VkXml.Sections.Extensions
 import           Write.Commands
+import           Write.Extension
 import           Write.Feature
 import           Write.ModuleWriter
 import           Write.Types
@@ -37,20 +41,24 @@ generateVkSource outputDir vkXml = do
 
   createDirIfMissing True (outputDir </> [reldir|Graphics|])
   createDirIfMissing True (outputDir </> [reldir|Graphics|] </> [reldir|Vulkan|])
+  createDirIfMissing True
+    (outputDir </> [reldir|Graphics|] </> [reldir|Vulkan|] </> [reldir|Ext|])
 
 
   exportedNamesCommon <- do
     (enames, mr) <- runModuleWriter vkXml "Graphics.Vulkan.Common" mempty $ do
        writePragma "Strict"
+       writePragma "DataKinds"
        genApiConstants
        genBaseTypes
        getNamesInScope
-    writeModule outputDir [relfile|Graphics/Vulkan/Common.hs|] id mr
+    writeModule outputDir [relfile|Graphics/Vulkan/Common.hsc|] id mr
     pure enames
 
   exportedNamesBase <- do
     (enames, mr) <- runModuleWriter vkXml "Graphics.Vulkan.Base" exportedNamesCommon $ do
        writePragma "Strict"
+       writePragma "DataKinds"
        writeFullImport "Graphics.Vulkan.Marshal.Internal"
        writeFullImport "Graphics.Vulkan.Marshal"
        writeFullImport "Graphics.Vulkan.Common"
@@ -63,9 +71,10 @@ generateVkSource outputDir vkXml = do
          ) mr
     pure enames
 
-  _ <- do
+  exportedNamesCore <- do
     (enames, mr) <- runModuleWriter vkXml "Graphics.Vulkan.Core" exportedNamesBase $ do
        writePragma "Strict"
+       writePragma "DataKinds"
        writeFullImport "Graphics.Vulkan.Marshal.Internal"
        writeFullImport "Graphics.Vulkan.Marshal"
        writeFullImport "Graphics.Vulkan.Common"
@@ -73,6 +82,25 @@ generateVkSource outputDir vkXml = do
        genFeature
        getNamesInScope
     writeModule outputDir [relfile|Graphics/Vulkan/Core.hsc|]
+         ( addOptionsPragma GHC "-fno-warn-missing-methods"
+         . addOptionsPragma GHC "-fno-warn-unticked-promoted-constructors"
+         ) mr
+    pure enames
+
+  forM_ (extensions . unInorder . globExtensions $ vkXml) $ \ext -> do
+    let eName = T.unpack . unVkExtensionName . extName $ attributes ext
+    fname <- parseRelFile (eName ++ ".hsc")
+    (enames, mr) <- runModuleWriter vkXml ("Graphics.Vulkan.Ext." <> eName)
+           exportedNamesCore $ do
+       writePragma "Strict"
+       writePragma "DataKinds"
+       writeFullImport "Graphics.Vulkan.Marshal.Internal"
+       writeFullImport "Graphics.Vulkan.Marshal"
+       writeFullImport "Graphics.Vulkan.Common"
+       writeFullImport "Graphics.Vulkan.Base"
+       writeFullImport "Graphics.Vulkan.Core"
+       genExtension ext
+    writeModule outputDir ([reldir|Graphics/Vulkan/Ext|] </> fname)
          ( addOptionsPragma GHC "-fno-warn-missing-methods"
          . addOptionsPragma GHC "-fno-warn-unticked-promoted-constructors"
          ) mr
@@ -164,12 +192,19 @@ fixSourceHooks isHsc = (if isHsc then enableHSC else id)
                   | otherwise = x : go xs
 
     -- enable hsc expressions
-    enableHSC = unlines . ("#include \"vulkan/vulkan.h\"":) . go . lines
+    enableHSC
+        = unlines
+        . ("#include \"vulkan/vulkan.h\"":) . ("":)
+        . byThree (*=~/ [ed|HSC2HS___[[:space:]]+"##([^"]+)"///#$1|])
+        . map ( (*=~/ [edBS|{-##///{-#|])
+              . (*=~/ [edBS|##-}///#-}|])
+              . (*=~/ [edBS|#///##|])
+              )
+        . lines
       where
-        go = map goLine
-        goLine
-          = (*=~/ [edBS|HSC2HS___([0-9A-Za-z_]+)___([0-9A-Za-z_]+)///#{$1 $2}|])
-          . (*=~/ [edBS|HSC2HS___([0-9A-Za-z_]+)___([0-9A-Za-z_]+)___([0-9A-Za-z_]+)///#{$1 $2, $3}|])
-          . (*=~/ [edBS|{-##///{-#|])
-          . (*=~/ [edBS|##-}///#-}|])
-          . (*=~/ [edBS|#///##|])
+        byThree _ [] = []
+        byThree f [x] = [f x]
+        byThree f [x,y] = lines . f $ unlines [x,y]
+        byThree f (x:y:z:ss) = case lines . f $ unlines [x,y,z] of
+          []   -> byThree f ss
+          a:as ->  a : byThree f (as ++ ss)

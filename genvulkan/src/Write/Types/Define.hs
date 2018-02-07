@@ -97,19 +97,25 @@ genDefine t@VkTypeSimple
 
   | vkName == VkTypeName "VK_API_VERSION_1_0"
   && c == "// Vulkan 1.0 version number\n#define VK_API_VERSION_1_0 VK_MAKE_VERSION(1, 0, 0)// Patch version should always be set to 0"
-  = constantPattern VkConstant
-    { name    = VkEnumValueName "VK_API_VERSION_1_0"
-    , comment = Just . T.unlines . map ("> " <>) $ T.lines c
-    , value   = T.pack $ show (unsafeShiftL 1 22 .|. unsafeShiftL 0 12 .|. 0 :: Word32)
+  = enumPattern VkEnum
+    { _vkEnumName    = VkEnumName "VK_API_VERSION_1_0"
+    , _vkEnumTName   = Nothing
+    , _vkEnumComment = T.unlines . map ("> " <>) $ T.lines c
+    , _vkEnumValue   = VkEnumIntegral
+      (fromIntegral (unsafeShiftL 1 22 .|. unsafeShiftL 0 12 .|. 0 :: Word32))
+      "(Num a, Eq a) => a"
     }
 
   | VkTypeName "VK_HEADER_VERSION" <- vkName -- this thing changes more often, so it is better to parse it.
   , mnumber <- snd $ T.breakOnEnd "VK_HEADER_VERSION" c
   , Right (v, _) <- T.decimal $ T.stripStart mnumber
-  = constantPattern VkConstant
-    { name    = VkEnumValueName "VK_HEADER_VERSION"
-    , comment = Just . T.unlines . map ("> " <>) $ T.lines c
-    , value   = T.pack $ show (v :: Word32)
+  = enumPattern VkEnum
+    { _vkEnumName    = VkEnumName "VK_HEADER_VERSION"
+    , _vkEnumTName   = Nothing
+    , _vkEnumComment = T.unlines . map ("> " <>) $ T.lines c
+    , _vkEnumValue   = VkEnumIntegral
+      (fromIntegral (v :: Word32))
+      "(Num a, Eq a) => a"
     }
 
   | vkName == VkTypeName "VK_DEFINE_HANDLE"
