@@ -7,9 +7,10 @@
 {-# LANGUAGE Strict                     #-}
 {-# LANGUAGE UndecidableInstances       #-}
 module Write.ModuleWriter
-  ( A, ModuleWriting (..), ModuleWriter (..)
-  , runModuleWriter, genModule
-  , writeImport, writeFullImport, writeExport, isNameInScope, ExportName (..)
+  ( A, GlobalNames, ModuleWriting (..), ModuleWriter (..)
+  , DeclaredIdent (..), DIThingMembers (..)
+  , runModuleWriter, genModule, lookupDiModule, isIdentDeclared
+  , writeImport, writeFullImport, writeExport
   , writePragma, writeDecl
   , writeSection --, writeSectionPre
     -- * Helpers
@@ -18,8 +19,6 @@ module Write.ModuleWriter
   , writeWithComments, vkRegistryLink
   , writeSections
   , foldSectionsWithComments, pushSecLvl, getCurrentSecLvl
-  , requireType, requireTypeMember, requireVar, requirePattern
-  , getNamesInScope
   ) where
 
 import           Control.Applicative
@@ -35,6 +34,7 @@ import           Data.Foldable                        (toList)
 import qualified Data.List                            as List
 import           Data.Map.Strict                      (Map)
 import qualified Data.Map.Strict                      as Map
+import           Data.Maybe                           (isJust)
 import           Data.Semigroup
 import           Data.Sequence                        (Seq)
 import qualified Data.Sequence                        as Seq
@@ -55,25 +55,75 @@ import qualified VkXml.Sections.Feature               as Feature
 
 
 type A = Maybe CodeComment
+-- | I want to have unambiguous set of haskell identifiers globally for
+--   the library. Thus, it should be possible to lookup module names
+--   (for export or import) by identifiers.
+type GlobalNames = Map DeclaredIdent (ModuleName ())
+
+-- | I limit number of ways to express imports and exports to
+--    simplify further processing.
+--   I think, this is a good compromise.
+data DeclaredIdent
+  = DIVar         { diName :: Text }
+    -- ^ variable or function (starts with lower case)
+  | DIPat         { diName :: Text }
+    -- ^ pattern synonyms
+  | DIThing       { diName :: Text, diWithMembers :: DIThingMembers}
+    -- ^ Class or data or type (starts with upper case)
+  deriving (Eq, Ord, Show)
+
+data DIThingMembers = DITNo | DITEmpty | DITAll
+  deriving (Eq, Ord, Show)
+
+
+diToImportSpec :: DeclaredIdent -> ImportSpec ()
+diToImportSpec (DIVar n)
+  | T.length n >= 2 && T.head n == '(' && T.last n == ')'
+    = IVar () (Symbol () . T.unpack . T.init $ T.tail n)
+  | otherwise
+    = IVar () (Ident () $ T.unpack n)
+diToImportSpec (DIPat n)
+  = IAbs () (PatternNamespace ()) (Ident () $ T.unpack n)
+diToImportSpec (DIThing n DITNo)
+  = IAbs () (NoNamespace ()) (Ident () $ T.unpack n)
+diToImportSpec (DIThing n DITEmpty)
+  = IThingWith () (Ident () $ T.unpack n) []
+diToImportSpec (DIThing n DITAll)
+  = IThingAll () (Ident () $ T.unpack n)
+
+
+diToExportSpec :: DeclaredIdent -> ExportSpec ()
+diToExportSpec (DIVar n)
+  | T.length n >= 2 && T.head n == '(' && T.last n == ')'
+    = EVar () (UnQual () . Symbol () . T.unpack . T.init $ T.tail n)
+  | otherwise
+    = EVar () (UnQual () $ Ident () $ T.unpack n)
+diToExportSpec (DIPat n)
+  = EAbs () (PatternNamespace ())
+    (UnQual () $ Ident () $ T.unpack n)
+diToExportSpec (DIThing n DITNo)
+  = EAbs () (NoNamespace ())
+    (UnQual () $ Ident () $ T.unpack n)
+diToExportSpec (DIThing n DITEmpty)
+  = EThingWith () (NoWildcard ())
+    (UnQual () $ Ident () $ T.unpack n) []
+diToExportSpec (DIThing n DITAll)
+  = EThingWith () (EWildcard () 0)
+    (UnQual () $ Ident () $ T.unpack n) []
 
 
 data ModuleWriting
   = ModuleWriting
   { mName         :: ModuleName ()
+  , globalNames   :: GlobalNames
   , mImports      :: Map (ModuleName ()) (Set (ImportSpec ()))
   , mFullImports  :: Set (ModuleName ())
   , mPragmas      :: Set String
   , mDecs         :: Seq (Decl A)
   , mExports      :: Seq (ExportSpec A)
-  , mNamesInScope :: Set ExportName
   , pendingSec    :: Seq (Int, Text)
   , currentSecLvl :: Int
   }
-
-data ExportName
-  = ExportTerm (Name ())
-  | ExportType (Name ())
-  deriving (Eq, Show, Ord)
 
 
 newtype ModuleWriter m a
@@ -87,12 +137,12 @@ newtype ModuleWriter m a
 runModuleWriter :: Functor m
                 => VkXml ()
                 -> String -- ^ module name
-                -> Set ExportName
+                -> GlobalNames
                 -> ModuleWriter m a -> m (a, ModuleWriting)
-runModuleWriter vkxml mname scopeNames mw
+runModuleWriter vkxml mname gNames mw
     = f <$> runRWST (unModuleWriter mw) vkxml
-                    (ModuleWriting (ModuleName () mname)
-                                   mempty mempty mempty mempty mempty scopeNames mempty 1)
+                    (ModuleWriting (ModuleName () mname) gNames
+                                   mempty mempty mempty mempty mempty mempty 1)
   where
     f (a,s,_) = (a, s)
 
@@ -117,16 +167,30 @@ genModule ModuleWriting {..}
     exports = ExportSpecList Nothing $ toList mExports
 
 
+lookupDiModule :: Monad m => DeclaredIdent -> ModuleWriter m (ModuleName ())
+lookupDiModule di = do
+  mn <- ModuleWriter $ gets (Map.lookup di . globalNames)
+  case mn of
+    Nothing -> error $ "ModuleWriter: could not lookup module name for " <> show di
+    Just n  -> pure n
 
+
+isIdentDeclared :: Monad m => DeclaredIdent -> ModuleWriter m Bool
+isIdentDeclared di = ModuleWriter $ gets (isJust . Map.lookup di . globalNames)
 
 -- | Add a symbol to module imports
 writeImport :: Monad m
-            => String
-            -> ImportSpec ()
+            => DeclaredIdent
             -> ModuleWriter m ()
-writeImport mname is = ModuleWriter . modify $
-    \mr -> mr {mImports = Map.alter f (ModuleName () mname) $ mImports mr}
+writeImport di = do
+    mname <- lookupDiModule di
+    ModuleWriter . modify $
+      \mr -> mr {mImports = if mName mr /= mname
+                            then Map.alter f mname $ mImports mr
+                            else mImports mr
+                }
   where
+    is = diToImportSpec di
     f Nothing = Just $ Set.singleton is
     f (Just iss) = case mapAccumL check (Just is) $ toList iss of
         (Nothing, iss')  -> Just $ Set.fromList iss'
@@ -162,14 +226,21 @@ writePragma pname = ModuleWriter . modify $
   \mr -> mr {mPragmas = Set.insert pname $ mPragmas mr}
 
 -- | Add an export declaration to a module export list
-writeExport :: Monad m => ExportSpec () -> ModuleWriter m ()
-writeExport espec = ModuleWriter . modify $
+writeExport :: Monad m => DeclaredIdent -> ModuleWriter m ()
+writeExport di = ModuleWriter . modify $
    \mr -> mr { mExports = mExports mr Seq.|>
                           setComment (f $ pendingSec mr) (Nothing <$ espec)
              , pendingSec = mempty
-             , mNamesInScope = foldr Set.insert (mNamesInScope mr) (espec2ename espec)
+             , globalNames = foldr (`Map.insert` mName mr)
+                                   (globalNames mr) dis
              }
   where
+    espec = diToExportSpec di
+    dis = case di of
+      (DIThing n DITAll)   -> [DIThing n DITAll, DIThing n DITEmpty, DIThing n DITNo]
+      (DIThing n DITNo)    -> [DIThing n DITEmpty, DIThing n DITNo]
+      (DIThing n DITEmpty) -> [DIThing n DITEmpty, DIThing n DITNo]
+      _ -> [di]
     -- the whole thing below is to compile comments
     f txts = case removeLastNewline . unlines . g $ toList txts >>= normalize of
        "" -> Nothing
@@ -190,24 +261,6 @@ writeExport espec = ModuleWriter . modify $
         lastWithNewline [(i,s)] = [(i,s ++ "\n")]
         lastWithNewline (x:xs)  = x : lastWithNewline xs
 
-isNameInScope :: Monad m => ExportName -> ModuleWriter m Bool
-isNameInScope n = ModuleWriter . gets $ Set.member n . mNamesInScope
-
-
-getNamesInScope :: Monad m => ModuleWriter m (Set ExportName)
-getNamesInScope = ModuleWriter . gets $ mNamesInScope
-
-espec2ename :: ExportSpec () -> [ExportName]
-espec2ename (EVar _ qn) = [ExportTerm (unqualify qn)]
-espec2ename (EAbs _ (NoNamespace ()) qn)      = [ExportType (unqualify qn)]
-espec2ename (EAbs _ (TypeNamespace ()) qn)    = [ExportType (unqualify qn)]
-espec2ename (EAbs _ (PatternNamespace ()) qn) = [ExportTerm (unqualify qn)]
-espec2ename (EThingWith _ _ qn xs) = ExportType (unqualify qn)
-                                   : fmap f xs
-  where
-    f (VarName _ n) = ExportTerm n
-    f (ConName _ n) = ExportTerm n
-espec2ename (EModuleContents _ _) = []
 
 
 -- | Add a section split to a module export list
@@ -435,23 +488,3 @@ vkRegistryLink tname = do
         <> Feature.number (unInorder $ globFeature vkXml)
         <> "/man/html/" <> tname <> ".html "
         <> tname <> " registry at www.khronos.org>"
-
-
-requireType :: Monad m => QName () -> ModuleWriter m ()
-requireType (Qual _ (ModuleName _ m) n) = writeImport m (IThingWith () n [])
-requireType _                           = pure ()
-
-
-requireVar :: Monad m => QName () -> ModuleWriter m ()
-requireVar (Qual _ (ModuleName _ m) n) = writeImport m (IVar () n)
-requireVar _                           = pure ()
-
-requireTypeMember :: Monad m => QName () -> CName () -> ModuleWriter m ()
-requireTypeMember (Qual _ (ModuleName _ m) n) c
-  = writeImport m (IThingWith () n [c])
-requireTypeMember _ _ = pure ()
-
-requirePattern :: Monad m => QName () -> ModuleWriter m ()
-requirePattern (Qual _ (ModuleName _ m) n)
-  = writeImport m (IAbs () (PatternNamespace ()) n)
-requirePattern _ = pure ()

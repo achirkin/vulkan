@@ -7,12 +7,14 @@
 {-# LANGUAGE Strict                #-}
 -- | WIP
 module Write.Types.Struct
-  ( genStruct, genUnion
+  ( genStruct, genUnion, genClassName
+  , ClassDeclarations
   ) where
 
 
-import           Control.Monad                        (unless)
 import           Data.Char                            (toUpper)
+import           Data.Map                             (Map)
+import qualified Data.Map                             as Map
 import           Data.Maybe                           (isJust)
 import           Data.Semigroup
 import           Data.Text                            (Text)
@@ -29,13 +31,15 @@ import           VkXml.Sections.Types
 import           Write.ModuleWriter
 
 
-genStruct :: Monad m => VkType -> ModuleWriter m ()
+type ClassDeclarations = Map (QName ()) [Decl A]
+
+genStruct :: Monad m => VkType -> ModuleWriter m ClassDeclarations
 genStruct = genStructOrUnion False
 
-genUnion :: Monad m => VkType -> ModuleWriter m ()
+genUnion :: Monad m => VkType -> ModuleWriter m ClassDeclarations
 genUnion = genStructOrUnion True
 
-genStructOrUnion :: Monad m => Bool -> VkType -> ModuleWriter m ()
+genStructOrUnion :: Monad m => Bool -> VkType -> ModuleWriter m ClassDeclarations
 genStructOrUnion isUnion VkTypeComposite
     { name = vkTName
     , attributes = VkTypeAttrs
@@ -44,6 +48,13 @@ genStructOrUnion isUnion VkTypeComposite
     , members = tmems
     }
     = do
+  indeed <- isIdentDeclared tnameDeclared
+  if indeed
+  then do
+    writeImport tnameDeclared
+    writeExport tnameDeclared
+    return mempty
+  else do
     writePragma "MagicHash"
     writePragma "UnboxedTuples"
     writePragma "TypeFamilies"
@@ -55,21 +66,22 @@ genStructOrUnion isUnion VkTypeComposite
     writePragma "Strict"
     writePragma "FlexibleContexts"
 
-    writeImport "Data.Void" (IAbs () (NoNamespace ()) (Ident () "Void"))
-    writeImport "Foreign.Storable" (IThingAll () (Ident () "Storable"))
-    writeImport "Foreign.Ptr" (IAbs () (NoNamespace ()) (Ident () "Ptr"))
-    writeImport "GHC.Types" (IThingAll () (Ident () "IO"))
-    writeImport "GHC.Types" (IThingAll () (Ident () "Int"))
-    writeImport "GHC.Ptr" (IThingAll () (Ident () "Ptr"))
-    writeImport "Foreign.C.Types" (IAbs () (NoNamespace ()) (Ident () "CChar"))
-    writeImport "Foreign.C.String" (IAbs () (NoNamespace ()) (Ident () "CString"))
+    writeImport $ DIThing "Void" DITEmpty
+    writeImport $ DIThing "Storable" DITAll
+    writeImport $ DIThing "IO" DITAll
+    writeImport $ DIThing "Int" DITAll
+    writeImport $ DIThing "Ptr" DITAll
+    writeImport $ DIThing "CChar" DITEmpty
+    writeImport $ DIThing "CString" DITNo
+    writeImport $ DIThing "ForeignPtr" DITAll
+    writeImport $ DIThing "ForeignPtrContents" DITAll
+    writeImport $ DIVar   "newForeignPtr_"
+
+    writeFullImport "Graphics.Vulkan.StructMembers"
     writeFullImport "Data.Word"
     writeFullImport "Data.Int"
     writeFullImport "GHC.Prim"
     writeFullImport "Graphics.Vulkan.Marshal"
-    writeImport "GHC.ForeignPtr" (IThingAll () (Ident () "ForeignPtr"))
-    writeImport "GHC.ForeignPtr" (IThingAll () (Ident () "ForeignPtrContents"))
-    writeImport "GHC.ForeignPtr" (IVar () (Ident () "newForeignPtr_"))
 
     let ds = parseDecls [text|
           data $tnametxt = $tnametxt# ByteArray#
@@ -138,12 +150,15 @@ genStructOrUnion isUnion VkTypeComposite
       $ ds
 
     -- generate field setters and getters
-    mapM_ (uncurry $ genStructField structNameTxt tname) sfimems
+    classDefs <- Map.fromList
+      <$> mapM (uncurry $ genStructField structNameTxt tname) sfimems
 
     genStructShow (VkTypeName tnametxt) $ map snd sfimems
 
-    writeExport $ EThingWith () (EWildcard () 0) tname []
+    writeExport tnameDeclared
+    return classDefs
   where
+    tnameDeclared = DIThing tnametxt DITAll
     -- totalSizeTxt = T.pack $ prettyPrint totalSize
     (_totalSize, sfimems)
             = mapAccumL (\o m -> let fi = fieldInfo m
@@ -200,13 +215,11 @@ genStructField :: Monad m
                -> QName () -- ^ struct type name
                -> Exp () -- ^ offset
                -> StructFieldInfo
-               -> ModuleWriter m ()
-genStructField structNameTxt structType _offsetE SFI{..} = do
-    isMember <- isNameInScope exportName
-    unless isMember genClass
-    genInstance
+               -> ModuleWriter m (QName (), [Decl A])
+genStructField structNameTxt structType _offsetE SFI{..}
+    = genClass <$ genInstance
   where
-    exportName = ExportType $ unqualify className
+    -- exportName = ExportType $ unqualify className
     VkTypeMember { name = VkMemberName origNameTxt} = sfdata
     origNameTxtQ = "'" <> origNameTxt <> "'"
     classNameTxt = "HasVk" <> sfiBaseNameTxt
@@ -234,7 +247,7 @@ genStructField structNameTxt structType _offsetE SFI{..} = do
                <> " + " <> offsetExpr <> ")"
 
     genInstance = do
-      writeImport "System.IO.Unsafe" (IVar () (Ident () "unsafeDupablePerformIO"))
+      writeImport $ DIVar "unsafeDupablePerformIO"
 
       let ds = parseDecls [text|
             instance {-# OVERLAPPING #-} $classNameTxt $structTypeTxt where
@@ -254,13 +267,9 @@ genStructField structNameTxt structType _offsetE SFI{..} = do
         -- . insertDeclComment (T.unpack tnametxt) rezComment $
         ds
 
-    genClass = do
-      writePragma "TypeFamilies"
-      writeImport "GHC.TypeLits" (IThingAll () (Ident () "ErrorMessage"))
-      writeImport "GHC.TypeLits" (IAbs () (NoNamespace ()) (Ident () "TypeError"))
-
-      let dd = ":$$:"
-          ds = parseDecls [text|
+    genClass =
+      ( className
+      , parseDecls [text|
             class $classNameTxt a where
                 type $memberTypeTxt a :: *
                 $indexFunTxt :: a -> $elemIdxArg $memberTypeTxt a
@@ -271,22 +280,34 @@ genStructField structNameTxt structType _offsetE SFI{..} = do
 
             instance {-# OVERLAPPABLE #-}
                      TypeError
-                      ( ShowType a :<>: Text " does not seem to have field $origNameTxtQ."
-                        $dd Text "Check Vulkan documentation for available fields of this type."
+                      ( 'ShowType a ':<>: 'Text " does not seem to have field $origNameTxtQ."
+                        $dd 'Text "Check Vulkan documentation for available fields of this type."
                       ) => $classNameTxt a
             |]
-
-      mapM_ writeDecl
-        -- . insertDeclComment (T.unpack tnametxt) rezComment $
-        ds
-
-      writeExport $ EThingWith () (EWildcard () 0) className []
+      ) where dd = "':$$:"
 
 
+genClassName :: Monad m => (QName (), [Decl A]) -> ModuleWriter m ()
+genClassName (className, decls) = do
+  writePragma "TypeFamilies"
+  writePragma "FlexibleContexts"
+  writePragma "FlexibleInstances"
+  writePragma "UndecidableInstances"
+  writePragma "DataKinds"
+  writePragma "TypeOperators"
+  writeImport $ DIThing "ErrorMessage" DITAll
+  writeImport $ DIThing "TypeError" DITNo
+  mapM_ writeDecl decls
+  writeExport $ DIThing (qNameTxt className) DITAll
+
+
+-- TODO: the following needs a major rework, since I moved to use hsc2hs
+--         to determine data sizes, alignments, and offsets.
 data StructFieldInfo
   = SFI
   { sfiSize        :: Exp ()
   , sfiElemN       :: Maybe (Exp ())
+  , sfiTyElemN     :: Maybe Text
   , sfiType        :: Type ()
   , sfiName        :: QName ()
   , sfiBaseNameTxt :: Text
@@ -305,6 +326,12 @@ fieldInfo tm@VkTypeMember
       Just n  -> InfixApp () n (QVarOp () (UnQual () (Symbol () "*"))) uSize
       Nothing -> uSize
   , sfiElemN = en
+  , sfiTyElemN = case mvkn of
+      Just (_, [VkTypeQArrLen n]) ->
+        Just (T.pack $ show n)
+      Just (_, [VkTypeQArrLenEnum n]) ->
+        Just (unVkEnumName n)
+      _ -> Nothing
   , sfiType = t
   , sfiBaseNameTxt = case unqualify sname of
       Ident _ x -> case T.uncons $ T.pack x of
@@ -324,7 +351,7 @@ fieldInfo tm@VkTypeMember
     sname = if isJust en
             then toHaskellName (unVkMemberName vkn <> "Array")
             else toHaskellName vkn
-    t = toType (fromIntegral $ length quals) $ toHaskellName
+    t = toType (fromIntegral $ length quals) $ unqualifyQ $ toHaskellName
       $ VkTypeName $ unVkMemberName vkt
     uSize = App ()
         (Var () (UnQual () (Ident () "sizeOf")))

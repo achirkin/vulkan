@@ -79,7 +79,7 @@ genBaseTypes' = do
           fLast cs = writeSection 0 $ T.unlines $ "|":cs
 
 
-genBaseStructs :: Monad m => ModuleWriter m ()
+genBaseStructs :: Monad m => ModuleWriter m ClassDeclarations
 genBaseStructs = do
     vkXml <- ask
     let featureTypes = Set.fromList
@@ -91,33 +91,34 @@ genBaseStructs = do
                           >>= extRequires >>= requireTypes
         excludedTypes = Set.union featureTypes extTypes
 
-    forM_ (items . types . unInorder $ globTypes vkXml) $ \t ->
-      if (name :: VkType -> VkTypeName) t `Set.member` excludedTypes
-      then pure ()
-      else case vkTypeCat t of
-        VkTypeNoCat          -> return ()
-        VkTypeCatInclude     -> genInclude t
-        VkTypeCatDefine      -> return ()
-        VkTypeCatBasetype    -> return ()
-        VkTypeCatBitmask     -> return ()
-        VkTypeCatHandle      -> return ()
-        VkTypeCatEnum        -> return ()
-        VkTypeCatFuncpointer -> return ()
-        VkTypeCatStruct      -> genStruct t
-        VkTypeCatUnion       -> genUnion t
+    fmap mconcat
+      $ forM (items . types . unInorder $ globTypes vkXml) $ \t ->
+        if (name :: VkType -> VkTypeName) t `Set.member` excludedTypes
+        then pure mempty
+        else case vkTypeCat t of
+          VkTypeNoCat          -> return mempty
+          VkTypeCatInclude     -> mempty <$ genInclude t
+          VkTypeCatDefine      -> return mempty
+          VkTypeCatBasetype    -> return mempty
+          VkTypeCatBitmask     -> return mempty
+          VkTypeCatHandle      -> return mempty
+          VkTypeCatEnum        -> return mempty
+          VkTypeCatFuncpointer -> return mempty
+          VkTypeCatStruct      -> genStruct t
+          VkTypeCatUnion       -> genUnion t
 
 
 
-genType :: Monad m => VkType -> ModuleWriter m ()
+genType :: Monad m => VkType -> ModuleWriter m ClassDeclarations
 genType t = case vkTypeCat t of
-  VkTypeNoCat          -> return ()
-  VkTypeCatInclude     -> genInclude t
-  VkTypeCatDefine      -> return ()
-  VkTypeCatBasetype    -> return ()
-  VkTypeCatBitmask     -> return ()
-  VkTypeCatHandle      -> return ()
-  VkTypeCatEnum        -> return ()
-  VkTypeCatFuncpointer -> return ()
+  VkTypeNoCat          -> return mempty
+  VkTypeCatInclude     -> mempty <$ genInclude t
+  VkTypeCatDefine      -> return mempty
+  VkTypeCatBasetype    -> return mempty
+  VkTypeCatBitmask     -> return mempty
+  VkTypeCatHandle      -> return mempty
+  VkTypeCatEnum        -> return mempty
+  VkTypeCatFuncpointer -> return mempty
   VkTypeCatStruct      -> genStruct t
   VkTypeCatUnion       -> genUnion t
 
@@ -149,43 +150,37 @@ genNocatData VkTypeSimple
           "DDWORD" -> writeDecl . setComment rezComment $ parseDecl'
               [text|type DWORD = Word64|]
           "LPCWSTR" -> do
-            writeImport "Foreign.C.Types"
-              $ IThingAll () (Ident () "CWchar")
+            writeImport $ DIThing "CWchar" DITAll
             writeDecl . setComment rezComment $ parseDecl'
               [text|type LPCWSTR = Ptr CWchar|]
           "Xcb_window_t" -> do
-            writeImport "Foreign.C.Types"
-              $ IThingAll () (Ident () "CULong")
+            writeImport $ DIThing "CULong" DITAll
             writeDecl . setComment rezComment $ parseDecl'
               [text|type Xcb_window_t = CULong|]
           "Xcb_visualid_t" -> do
-            writeImport "Foreign.C.Types"
-              $ IThingAll () (Ident () "CULong")
+            writeImport $ DIThing "CULong" DITAll
             writeDecl . setComment rezComment $ parseDecl'
               [text|type Xcb_visualid_t = CULong|]
           "Window" -> do
-            writeImport "Foreign.C.Types"
-              $ IThingAll () (Ident () "CULong")
+            writeImport $ DIThing "CULong" DITAll
             writeDecl . setComment rezComment $ parseDecl'
               [text|type Window = CULong|]
           "VisualID" -> do
-            writeImport "Foreign.C.Types"
-              $ IThingAll () (Ident () "CULong")
+            writeImport $ DIThing "CULong" DITAll
             writeDecl . setComment rezComment $ parseDecl'
               [text|type VisualID = CULong|]
           "RROutput" -> do
-            writeImport "Foreign.C.Types"
-              $ IThingAll () (Ident () "CULong")
+            writeImport $ DIThing "CULong" DITAll
             writeDecl . setComment rezComment $ parseDecl'
               [text|type RROutput = CULong|]
           _ -> do
             writePragma "EmptyDataDecls"
             writeDecl . setComment rezComment $ parseDecl'
               [text|data $tnametxt|]
-        writeExport $ EAbs () (NoNamespace ()) tname
+        writeExport $ DIThing tnametxt DITNo
       Qual{}   -> do
-        requireType tname
-        writeExport $ EAbs () (NoNamespace ()) tname
+        writeImport $ DIThing tnametxt DITNo
+        writeExport $ DIThing tnametxt DITNo
       _        -> pure ()
   where
     tname = toHaskellName vkTName
@@ -215,7 +210,7 @@ genBasetypeAlias t@VkTypeSimple
        { reference = [(vkTRef, [])]
        }
     } = do
-  requireType $ toHaskellName vkTRef
+  writeImport $ DIThing (qNameTxt $ toHaskellName vkTRef) DITNo
   genAlias t
 genBasetypeAlias t
   = error $ "genBasetypeAlias: expected a simple basetype, but got: "

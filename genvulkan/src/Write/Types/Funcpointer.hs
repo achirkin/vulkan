@@ -45,12 +45,10 @@ genFuncpointer VkTypeSimple
     , pfuntype <- TyApp () (TyCon () (UnQual () (Ident () "FunPtr")))
                            (TyCon () tfname)
     = do
-    writeImport "Foreign.Ptr"
-      $ IAbs () (NoNamespace ()) (Ident () "Ptr")
-    writeImport "Foreign.Ptr"
-      $ IAbs () (NoNamespace ()) (Ident () "FunPtr")
-    writeImport "Data.Void"
-      $ IAbs () (NoNamespace ()) (Ident () "Void")
+    writeImport $ DIThing "Ptr" DITEmpty
+    writeImport $ DIThing "FunPtr" DITEmpty
+    writeImport $ DIThing "Void" DITEmpty
+    writeImport $ DIThing "CString" DITNo
     writeDecl . (Nothing <$) $
       TypeDecl () (DHead () $ unqualify tfname) funtype
     writeDecl . setComment rezComment
@@ -71,10 +69,10 @@ genFuncpointer VkTypeSimple
         foreign import ccall "dynamic"
             $unwrapFun :: $tnametxt -> $tfnametxt
       |]
-    writeExport $ EAbs () (NoNamespace ()) tname
-    writeExport $ EAbs () (NoNamespace ()) tfname
-    writeExport $ EVar () (UnQual () (Ident () $ T.unpack newFun))
-    writeExport $ EVar () (UnQual () (Ident () $ T.unpack unwrapFun))
+    writeExport $ DIThing tnametxt DITNo
+    writeExport $ DIThing tfnametxt DITNo
+    writeExport $ DIVar newFun
+    writeExport $ DIVar unwrapFun
   where
     tname = toHaskellName vkTName
     tnametxt = qNameTxt tname
@@ -89,7 +87,7 @@ genFuncpointer VkTypeSimple
     countStars s | "*" `T.isSuffixOf` s = second (1+) $ countStars (T.dropEnd 1 s)
                  | otherwise = (VkTypeName s, 0)
     refs = map (second length) refs'
-    accumRefs (tn, k) = TyFun () (toType (fromIntegral k) (toHaskellName tn))
+    accumRefs (tn, k) = TyFun () (toType (fromIntegral k) (unqualifyQ $ toHaskellName tn))
     rezComment = rezComment'' >>= preComment . T.unpack
     rezComment'' = appendComLine rezComment'
                  $ T.unlines . map ("> " <>) $ T.lines c

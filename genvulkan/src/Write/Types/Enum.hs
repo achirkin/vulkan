@@ -19,7 +19,6 @@ import           Data.Semigroup
 import           Data.Text                            (Text)
 import qualified Data.Text                            as T
 import           Language.Haskell.Exts.SimpleComments
-import           Language.Haskell.Exts.Syntax
 import           NeatInterpolation
 
 import           VkXml.CommonTypes
@@ -53,14 +52,13 @@ genEnums VkEnums {..} = do
     writePragma "DeriveDataTypeable"
     writePragma "DeriveGeneric"
 
-    writeImport "GHC.Generics" $ IAbs () (NoNamespace ()) (Ident () "Generic")
-    writeImport "Data.Data"    $ IAbs () (NoNamespace ()) (Ident () "Data")
-    writeImport "Data.Bits"    $ IAbs () (NoNamespace ()) (Ident () "Bits")
-    writeImport "Data.Bits"    $ IAbs () (NoNamespace ()) (Ident () "FiniteBits")
-    writeImport "Foreign.Storable"
-      $ IAbs () (NoNamespace ()) (Ident () "Storable")
-    when _vkEnumsIsBits $ writeImport "Data.Bits"
-      $ IAbs () (NoNamespace ()) (Ident () "Bits")
+
+    writeImport $ DIThing "Generic" DITNo
+    writeImport $ DIThing "Data" DITNo
+    writeImport $ DIThing "Storable" DITNo
+    when _vkEnumsIsBits $ do
+      writeImport $ DIThing "Bits" DITNo
+      writeImport $ DIThing "FiniteBits" DITNo
 
     forM_ _vkEnumsTypeName $ \tname -> do
       newInt32TypeDec tname derives _vkEnumsComment
@@ -89,14 +87,14 @@ genEnumShow (VkTypeName tname) xs =
 genEnumRead :: Monad m => VkTypeName -> [Text] -> ModuleWriter m ()
 genEnumRead (VkTypeName tname) xs = do
 
-    writeImport "Text.Read.Lex" $ IThingWith () (Ident () "Lexeme") [ConName () (Ident () "Ident")]
-    writeImport "GHC.Read"      $ IVar () (Ident () "expectP")
-    writeImport "GHC.Read"      $ IVar () (Ident () "choose")
-    writeImport "Text.Read"     $ IThingAll () (Ident () "Read")
-    writeImport "Text.Read"     $ IVar () (Ident () "parens")
-    writeImport "Text.ParserCombinators.ReadPrec" $ IVar () (Ident () "prec")
-    writeImport "Text.ParserCombinators.ReadPrec" $ IVar () (Ident () "step")
-    writeImport "Text.ParserCombinators.ReadPrec" $ IVar () (Symbol () "+++")
+    writeImport $ DIThing "Lexeme" DITAll
+    writeImport $ DIThing "Read" DITAll
+    writeImport $ DIVar "expectP"
+    writeImport $ DIVar "choose"
+    writeImport $ DIVar "parens"
+    writeImport $ DIVar "prec"
+    writeImport $ DIVar "step"
+    writeImport $ DIVar "(+++)"
 
     writeDecl $ parseDecl'
        $  [text|
@@ -132,18 +130,18 @@ genAlias VkTypeSimple
     writePragma "GeneralizedNewtypeDeriving"
     writePragma "DeriveDataTypeable"
     writePragma "DeriveGeneric"
-    writeImport "Data.Coerce"  $ IVar () (Ident () "coerce")
-    writeImport "GHC.Generics" $ IAbs () (NoNamespace ()) (Ident () "Generic")
-    writeImport "Data.Data"    $ IAbs () (NoNamespace ()) (Ident () "Data")
-    writeImport "Data.Bits"    $ IAbs () (NoNamespace ()) (Ident () "Bits")
-    writeImport "Data.Bits"    $ IAbs () (NoNamespace ()) (Ident () "FiniteBits")
-    writeImport "Data.Ix"      $ IAbs () (NoNamespace ()) (Ident () "Ix")
+
+    writeImport $ DIVar "coerce"
+    writeImport $ DIThing "Generic" DITNo
+    writeImport $ DIThing "Data" DITNo
+    writeImport $ DIThing "Bits" DITNo
+    writeImport $ DIThing "FiniteBits" DITNo
 
     writeDecl . setComment rezComment $ parseDecl'
       [text|
         newtype $tnametxt = $tnametxt $treftxt
           deriving ( Eq, Ord, Num, Bounded, Enum, Integral
-                   , Ix, Bits, FiniteBits, Storable, Real, Data, Generic)
+                   , Bits, FiniteBits, Storable, Real, Data, Generic)
       |]
 
     mapM_ writeDecl $ parseDecls
@@ -157,7 +155,7 @@ genAlias VkTypeSimple
           readsPrec = coerce (readsPrec :: Int -> ReadS $treftxt)
       |]
 
-    writeExport $ EThingWith () (EWildcard () 0) tname []
+    writeExport $ DIThing tnametxt DITAll
   where
     tname = toHaskellName vkTName
     tnametxt = qNameTxt tname
@@ -194,7 +192,7 @@ newInt32TypeDec vkTName insts com = do
           deriving ($tinsts)
       |]
 
-    writeExport $ EThingWith () (EWildcard () 0) tname []
+    writeExport $ DIThing tnametxt DITAll
   where
     tname = toHaskellName vkTName
     tnametxt = qNameTxt tname
@@ -213,8 +211,8 @@ enumPattern VkEnum {..} = do
         -> do
         writePragma "MagicHash"
         writePragma "ViewPatterns"
-        writeImport "Foreign.C.String" (IAbs () (NoNamespace ()) (Ident () "CString"))
-        writeImport "GHC.Ptr" (IThingAll () (Ident () "Ptr"))
+        writeImport $ DIThing "CString" DITNo
+        writeImport $ DIThing "Ptr" DITAll
         mapM_ writeDecl
           . insertDeclComment (T.unpack patnametxt) rezComment
           $ parseDecls [text|
@@ -233,7 +231,7 @@ enumPattern VkEnum {..} = do
 
               type $patnametxt = $tyval
             |]
-        writeExport $ EAbs () (NoNamespace ()) patname
+        writeExport $ DIThing patnametxt DITNo
       VkEnumIntegral n tnametxt
         | Just (VkTypeName cname) <- _vkEnumTName
         , patval <- T.pack $
@@ -245,8 +243,6 @@ enumPattern VkEnum {..} = do
         | Nothing <- _vkEnumTName
         , patval <- T.pack $ show n
           -> do
-            writeImport "Foreign.C.String" (IAbs () (NoNamespace ()) (Ident () "CString"))
-            writeImport "GHC.Ptr" (IThingAll () (Ident () "Ptr"))
             mapM_ writeDecl
               . insertDeclComment (T.unpack patnametxt) rezComment
               $ parseDecls [text|
@@ -257,7 +253,7 @@ enumPattern VkEnum {..} = do
             when (n >= 0) $ do
               writeDecl $ parseDecl'
                 [text|type $patnametxt = $patval|]
-              writeExport $ EAbs () (NoNamespace ()) patname
+              writeExport $ DIThing patnametxt DITNo
       VkEnumFractional r
         | patval <- T.pack $ show (realToFrac r :: Double) -> do
             writeDecl . setComment rezComment
@@ -268,7 +264,7 @@ enumPattern VkEnum {..} = do
           writeDecl . setComment rezComment
                     $ parseDecl' [text|pattern $patnametxt = $aliasname|]
 
-    writeExport $ EAbs () (PatternNamespace ()) patname
+    writeExport $ DIPat patnametxt
   where
     patname = toHaskellName _vkEnumName
     patnametxt = qNameTxt patname

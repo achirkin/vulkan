@@ -13,7 +13,6 @@ import qualified Data.Text                            as T
 import qualified Data.Text.Read                       as T
 import           Data.Word
 import           Language.Haskell.Exts.SimpleComments
-import           Language.Haskell.Exts.Syntax
 import           NeatInterpolation
 
 import           VkXml.CommonTypes
@@ -50,10 +49,7 @@ genDefine t@VkTypeSimple
 
   | vkName == VkTypeName "VK_MAKE_VERSION"
   && c == "#define VK_MAKE_VERSION(major, minor, patch) \\\n    (((major) << 22) | ((minor) << 12) | (patch))"
-  = go (writeImport "Data.Bits" $ IThingWith () (Ident () "Bits")
-            [ VarName () (Ident () "unsafeShiftL")
-            , VarName () (Symbol () ".|.")
-            ] )
+  = go (writeImport $ DIThing "Bits" DITAll)
       [text|_VK_MAKE_VERSION :: Bits a => a -> a -> a -> a|]
       [text|_VK_MAKE_VERSION major minor patch = unsafeShiftL major 22 .|. unsafeShiftL minor 12 .|. patch|]
       [text|{-# INLINE _VK_MAKE_VERSION #-}|]
@@ -62,8 +58,7 @@ genDefine t@VkTypeSimple
 
   | vkName == VkTypeName "VK_VERSION_MAJOR"
   && c == "#define VK_VERSION_MAJOR(version) ((uint32_t)(version) >> 22)"
-  = go (writeImport "Data.Bits" $ IThingWith () (Ident () "Bits")
-            [ VarName () (Ident () "unsafeShiftR") ] )
+  = go (writeImport $ DIThing "Bits" DITAll)
       [text|_VK_VERSION_MAJOR :: Bits a => a -> a|]
       [text|_VK_VERSION_MAJOR version = unsafeShiftR version 22|]
       [text|{-# INLINE _VK_VERSION_MAJOR #-}|]
@@ -72,9 +67,7 @@ genDefine t@VkTypeSimple
 
   | vkName == VkTypeName "VK_VERSION_MINOR"
   && c == "#define VK_VERSION_MINOR(version) (((uint32_t)(version) >> 12) & 0x3ff)"
-  = go (writeImport "Data.Bits" $ IThingWith () (Ident () "Bits")
-            [ VarName () (Ident () "unsafeShiftR")
-            , VarName () (Symbol () ".&.")] )
+  = go (writeImport $ DIThing "Bits" DITAll)
       [text|_VK_VERSION_MINOR :: (Bits a, Num a) => a -> a|]
       [text|_VK_VERSION_MINOR version = unsafeShiftR version 12 .&. 0x3ff|]
       [text|{-# INLINE _VK_VERSION_MINOR #-}|]
@@ -83,8 +76,7 @@ genDefine t@VkTypeSimple
 
   | vkName == VkTypeName "VK_VERSION_PATCH"
   && c == "#define VK_VERSION_PATCH(version) ((uint32_t)(version) & 0xfff)"
-  = go (writeImport "Data.Bits" $ IThingWith () (Ident () "Bits")
-            [ VarName () (Symbol () ".&.")] )
+  = go (writeImport $ DIThing "Bits" DITAll)
       [text|_VK_VERSION_PATCH :: (Bits a, Num a) => a -> a|]
       [text|_VK_VERSION_PATCH = (.&. 0xfff)|]
       [text|{-# INLINE _VK_VERSION_PATCH #-}|]
@@ -121,14 +113,14 @@ genDefine t@VkTypeSimple
   | vkName == VkTypeName "VK_DEFINE_HANDLE"
   && "#define VK_DEFINE_HANDLE(object) typedef struct object##_T* object;" `T.isInfixOf` c
   = do
-    writeImport "Foreign.Ptr" $ IThingWith () (Ident () "Ptr") []
-    writeImport "Foreign.Ptr" $ IVar () (Ident () "nullPtr")
+    writeImport $ DIThing "Ptr" DITEmpty
+    writeImport $ DIVar "nullPtr"
     writeDecl $ parseDecl' [text|
           instance VulkanPtr Ptr where
             vkNullPtr = nullPtr
             {-# INLINE vkNullPtr #-}
           |]
-    writeExport $ EThingWith () (NoWildcard ()) (UnQual () (Ident () "Ptr")) []
+    writeExport $ DIThing "Ptr" DITEmpty
     writeSection 0 . T.unlines
                  . ("| ===== @VK_DEFINE_HANDLE@":)
                  . ("Dispatchable handles are represented as `Foreign.Ptr`":)
@@ -162,7 +154,7 @@ genDefine t@VkTypeSimple
     writePragma "CPP"
     writePragma "GeneralizedNewtypeDeriving"
     writePragma "RoleAnnotations"
-    writeImport "Foreign.Storable" $ IThingWith () (Ident () "Storable") []
+    writeImport $ DIThing "Storable" DITEmpty
 
 
     writeDecl $ parseDecl' "type role VkPtr phantom"
@@ -180,7 +172,7 @@ genDefine t@VkTypeSimple
                   |]
 
 
-    writeExport $ EThingWith () (EWildcard () 0) (UnQual () (Ident () "VkPtr")) []
+    writeExport $ DIThing "VkPtr" DITAll
 
 
   | vkName == VkTypeName "VK_NULL_HANDLE"
@@ -209,10 +201,8 @@ genDefine t@VkTypeSimple
             (preComment "Unify dispatchable and non-dispatchable vulkan pointer types.")
         $ ds
 
-      writeExport $
-        EThingWith () (EWildcard () 0) (UnQual () (Ident () "VulkanPtr")) []
-      writeExport $
-        EAbs () (PatternNamespace ()) (UnQual () (Ident () "VK_NULL_HANDLE"))
+      writeExport $ DIThing "VulkanPtr" DITAll
+      writeExport $ DIPat "VK_NULL_HANDLE"
 
 
   | otherwise = error
@@ -229,7 +219,7 @@ genDefine t@VkTypeSimple
       writeDecl $ parseDecl' l2
       let commentDefine = Just $ CodeComment BelowCode ' ' $ T.unpack lcpp
       writeDecl . setComment commentDefine $ parseDecl' l3
-      writeExport $ EVar () (UnQual () (Ident () ename))
+      writeExport $ DIVar (T.pack ename)
 genDefine t = error
   $ "genInclude: expected C-style include code, but got: "
   <> show t
