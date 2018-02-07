@@ -24,7 +24,8 @@ import           Write.Feature
 
 
 genExtension :: Monad m => VkExtension -> ModuleWriter m (Maybe T.Text)
-genExtension (VkExtension VkExtAttrs{..} ereqs) = pushSecLvl $ \curlvl -> do
+genExtension (VkExtension VkExtAttrs{..} ereqs) = do
+    curlvl <- getCurrentSecLvl
     vkXml <- ask
     let VkFeature {..} = unInorder $ globFeature vkXml
         tps = Map.fromList
@@ -44,4 +45,6 @@ genExtension (VkExtension VkExtAttrs{..} ereqs) = pushSecLvl $ \curlvl -> do
 
     pushSecLvl $ \lvl -> mapM_ (genRequire lvl tps cmds) ereqs
 
-    return extProtect
+    if extSupported == "disabled"
+    then return $ Just "DISABLED_EXTENSIONS_STUB"
+    else return extProtect

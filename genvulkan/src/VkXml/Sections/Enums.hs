@@ -1,6 +1,5 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE FlexibleContexts      #-}
-{-# LANGUAGE LambdaCase            #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE QuasiQuotes           #-}
@@ -107,8 +106,7 @@ makeLenses ''VkEnums
 parseVkEnums :: VkXmlParser m
            => Sink Event m (Maybe VkEnums)
 parseVkEnums = parseTagForceAttrs "enums" parseVkEnumsAttrs $
-  \case
-    VkEnums n c ib _
+  \(VkEnums n c ib _)
       -> fmap (VkEnums n c ib)
       . parseSectionsL $ many_ (ignoreEmptyTag "unused") >> parseVkEnum 0 n
 

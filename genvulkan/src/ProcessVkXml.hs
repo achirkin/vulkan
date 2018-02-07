@@ -21,8 +21,9 @@ import           Write
 processVkXmlFile ::
        Path a File -- ^ path to vk.xml
     -> Path b Dir  -- ^ output directory for saving generated sources
+    -> Path c File -- ^ path to cabal file to generate
     -> IO ()
-processVkXmlFile vkXmlFile outputDir = do
+processVkXmlFile vkXmlFile outputDir outCabalFile = do
     doesFileExist vkXmlFile >>= flip unless
       (error $ "vk.xml file located at " <> show vkXmlFile <> " is not found!")
     createDirIfMissing True outputDir
@@ -34,7 +35,7 @@ processVkXmlFile vkXmlFile outputDir = do
       =$= Xml.parseBytesPos Xml.def
        $$ parseWithLoc initLoc parseVkXml
     putStrLn "Done parsing, start generating..."
-    y <- generateVkSource outputDir x
+    y <- generateVkSource outputDir outCabalFile x
     putStrLn "Done generating."
     return y
   where
