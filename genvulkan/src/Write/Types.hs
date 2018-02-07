@@ -34,7 +34,6 @@ import           Write.Types.Funcpointer
 import           Write.Types.Handle
 import           Write.Types.Struct
 
-
 genBaseTypes :: Monad m => ModuleWriter m ()
 genBaseTypes = hoist (`State.evalStateT` Nothing) genBaseTypes'
 
@@ -87,12 +86,9 @@ genBaseStructs = do
                      . join
                      . map requireTypes
                      . reqList . unInorder $ globFeature vkXml
-        selectTN (VkExtReqType tn) = [tn]
-        selectTN _ = []
         extTypes = Set.fromList
-                     . join . join . join
-                     . map (map (map (selectTN . fst). items). extRequires)
-                     . extensions . unInorder $ globExtensions vkXml
+                      $ extensions (unInorder $ globExtensions vkXml)
+                          >>= extRequires >>= requireTypes
         excludedTypes = Set.union featureTypes extTypes
 
     forM_ (items . types . unInorder $ globTypes vkXml) $ \t ->
@@ -135,7 +131,9 @@ genNocatData VkTypeSimple
       { requires = mreq
       }
   } = case tname of
-      UnQual () (Ident () n) -> do
+      UnQual () (Ident () n)
+        | "HSC2HS___" `T.isPrefixOf` T.pack n -> pure ()
+        | otherwise -> do
         -- Guess representation of some imported types
         -- https://github.com/haskell/win32
         -- https://github.com/xmonad/X11
@@ -190,7 +188,7 @@ genNocatData VkTypeSimple
         writeExport $ EAbs () (NoNamespace ()) tname
       _        -> pure ()
   where
-    tname = toHaskellType vkTName
+    tname = toHaskellName vkTName
     tnametxt = qNameTxt tname
     rezComment = ((\s -> "Requires @" <> s <> "@") . unVkTypeName <$> mreq)
               >>= preComment . T.unpack
@@ -217,7 +215,7 @@ genBasetypeAlias t@VkTypeSimple
        { reference = [(vkTRef, [])]
        }
     } = do
-  requireType $ toHaskellType vkTRef
+  requireType $ toHaskellName vkTRef
   genAlias t
 genBasetypeAlias t
   = error $ "genBasetypeAlias: expected a simple basetype, but got: "

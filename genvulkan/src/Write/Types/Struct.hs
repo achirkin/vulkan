@@ -58,26 +58,20 @@ genStructOrUnion isUnion VkTypeComposite
     writeImport "Data.Void" (IAbs () (NoNamespace ()) (Ident () "Void"))
     writeImport "Foreign.Storable" (IThingAll () (Ident () "Storable"))
     writeImport "Foreign.Ptr" (IAbs () (NoNamespace ()) (Ident () "Ptr"))
-    writeImport "Foreign.C.Types" (IAbs () (NoNamespace ()) (Ident () "CFloat"))
-    writeImport "Foreign.C.Types" (IAbs () (NoNamespace ()) (Ident () "CChar"))
-    writeImport "Foreign.C.Types" (IAbs () (NoNamespace ()) (Ident () "CSize"))
-    writeImport "Foreign.C.Types" (IAbs () (NoNamespace ()) (Ident () "CInt"))
     writeImport "GHC.Types" (IThingAll () (Ident () "IO"))
     writeImport "GHC.Types" (IThingAll () (Ident () "Int"))
-    writeImport "Data.Word" (IAbs () (NoNamespace ()) (Ident () "Word8"))
-    writeImport "Data.Word" (IAbs () (NoNamespace ()) (Ident () "Word32"))
-    writeImport "Data.Word" (IAbs () (NoNamespace ()) (Ident () "Word64"))
-    writeImport "Data.Int"  (IAbs () (NoNamespace ()) (Ident () "Int32"))
     writeImport "GHC.Ptr" (IThingAll () (Ident () "Ptr"))
+    writeImport "Foreign.C.Types" (IAbs () (NoNamespace ()) (Ident () "CChar"))
+    writeImport "Foreign.C.String" (IAbs () (NoNamespace ()) (Ident () "CString"))
+    writeFullImport "Data.Word"
+    writeFullImport "Data.Int"
     writeFullImport "GHC.Prim"
     writeFullImport "Graphics.Vulkan.Marshal"
     writeImport "GHC.ForeignPtr" (IThingAll () (Ident () "ForeignPtr"))
     writeImport "GHC.ForeignPtr" (IThingAll () (Ident () "ForeignPtrContents"))
     writeImport "GHC.ForeignPtr" (IVar () (Ident () "newForeignPtr_"))
 
-    let sizeExtr = "HSC2HS___size___" <> structNameTxt
-        alignmentExpr = "HSC2HS___alignment___" <> structNameTxt
-        ds = parseDecls [text|
+    let ds = parseDecls [text|
           data $tnametxt = $tnametxt# ByteArray#
 
           instance Eq $tnametxt where
@@ -91,9 +85,9 @@ genStructOrUnion isUnion VkTypeComposite
             {-# INLINE compare #-}
 
           instance Storable $tnametxt where
-            sizeOf ~_ = $sizeExtr
+            sizeOf ~_ = HSC2HS___ "#{size $structNameTxt}"
             {-# INLINE sizeOf #-}
-            alignment ~_ = $alignmentExpr
+            alignment ~_ = HSC2HS___ "#{alignment $structNameTxt}"
             {-# INLINE alignment #-}
             peek (Ptr addr)
               | I# n <- sizeOf (undefined :: $tnametxt)
@@ -165,7 +159,7 @@ genStructOrUnion isUnion VkTypeComposite
     offsetF = if isUnion
               then const (Lit () (Int () 0 "0"))
               else id
-    tname = toHaskellType vkTName
+    tname = toHaskellName vkTName
     tnametxt = qNameTxt tname
     structNameTxt = unVkTypeName vkTName
     rezComment = rezComment'' >>= preComment . T.unpack
@@ -217,7 +211,7 @@ genStructField structNameTxt structType _offsetE SFI{..} = do
     origNameTxtQ = "'" <> origNameTxt <> "'"
     classNameTxt = "HasVk" <> sfiBaseNameTxt
     memberTypeTxt = "Vk" <> sfiBaseNameTxt <> "MType"
-    className = toHaskellVar classNameTxt
+    className = toHaskellName classNameTxt
     indexFunTxt = "vk" <> sfiBaseNameTxt
     readFunTxt = "readVk" <> sfiBaseNameTxt
     writeFunTxt = "writeVk" <> sfiBaseNameTxt
@@ -226,7 +220,8 @@ genStructField structNameTxt structType _offsetE SFI{..} = do
     -- structTypeCTxt = structTypeTxt <> "#"
     -- valueOffsetTxt = T.pack $ prettyPrint offsetE
     valueTypeTxt = T.pack $ prettyPrint sfiType
-    offsetExpr = "HSC2HS___offset___" <> structNameTxt <> "___" <> origNameTxt
+    offsetExpr = "HSC2HS___ \"#{offset " <> structNameTxt
+                                 <> ", " <> origNameTxt <> "}\""
     elemIdxArg = case sfiElemN of
       Nothing -> ""
       Just _  -> "Int ->"
@@ -324,12 +319,12 @@ fieldInfo tm@VkTypeMember
         Just (_, [VkTypeQArrLen n]) ->
           Just (Lit () (Int () (fromIntegral n) $ show n))
         Just (_, [VkTypeQArrLenEnum n]) ->
-          Just (Var () (toHaskellVar n))
+          Just (Var () (toHaskellName n))
         _ -> Nothing
     sname = if isJust en
-            then toHaskellVar (unVkMemberName vkn <> "Array")
-            else toHaskellVar vkn
-    t = toType (fromIntegral $ length quals) $ toHaskellType
+            then toHaskellName (unVkMemberName vkn <> "Array")
+            else toHaskellName vkn
+    t = toType (fromIntegral $ length quals) $ toHaskellName
       $ VkTypeName $ unVkMemberName vkt
     uSize = App ()
         (Var () (UnQual () (Ident () "sizeOf")))

@@ -7,14 +7,12 @@
 
 module VkXml.Sections.Extensions
   ( parseExtensions
-  , VkExtensions (..), VkExtension (..)
-  , VkExtRequire (..), VkExtAttrs (..)
+  , VkExtensions (..), VkExtension (..), VkExtAttrs (..)
   ) where
 
 import           Control.Monad.Except
 import           Control.Monad.Trans.Reader (ReaderT (..))
 import           Data.Conduit
-import           Data.Maybe
 import           Data.Text                  (Text)
 import qualified Data.Text                  as T
 import           Data.XML.Types
@@ -22,13 +20,10 @@ import           Text.XML.Stream.Parse
 
 import           VkXml.CommonTypes
 import           VkXml.Parser
+import           VkXml.Sections.Feature
 
 -- extension naming conventions
 -- http://vulkan-spec-chunked.ahcox.com/apcs03.html
-
---  "require" tags
--- https://www.khronos.org/registry/vulkan/specs/1.0/registry.html#tag-required
-
 
 
 
@@ -41,7 +36,7 @@ data VkExtensions
 data VkExtension
   = VkExtension
   { attributes  :: VkExtAttrs
-  , extRequires :: [Sections (VkExtRequire, Maybe Text)]
+  , extRequires :: [VkRequire]
   } deriving Show
 
 data VkExtAttrs
@@ -56,37 +51,6 @@ data VkExtAttrs
   , extProtect   :: Maybe Text
   } deriving Show
 
-data VkExtRequire
-  = VkExtReqEnumEmpty
-    { enumName :: VkEnumValueName
-    }
-  | VkExtReqEnumValueNum
-    { enumName    :: VkEnumValueName
-    , enumValNum  :: Int
-    , enumExtends :: Maybe VkTypeName
-    }
-  | VkExtReqEnumBitpos
-    { enumName    :: VkEnumValueName
-    , enumBitpos  :: Word
-    , enumExtends :: Maybe VkTypeName
-    }
-  |  VkExtReqEnumValueString
-    { enumName      :: VkEnumValueName
-    , enumValString :: Text
-    }
-  | VkExtReqEnumValueRef
-    { enumName :: VkEnumValueName
-    , enumRef  :: VkEnumValueName
-    }
-  | VkExtReqEnumOffset
-    { enumName          :: VkEnumValueName
-    , offset            :: Int
-    , offsetDirNegative :: Bool
-    , offsetExtends     :: VkTypeName
-    }
-  | VkExtReqCommand { commandName :: VkCommandName }
-  | VkExtReqType { typeName :: VkTypeName }
-  deriving Show
 
 -- | Try to parse current tag as being "vendorids",
 --
@@ -101,61 +65,10 @@ parseExtensions =
 parseVkExtension :: VkXmlParser m => Sink Event m (Maybe VkExtension)
 parseVkExtension =
     parseTagForceAttrs "extension" parseVkExtAttrs $ \attributes -> do
-      extRequires <- many $ tagIgnoreAttrs "require"
-                          $ parseSections parseIt
+      extRequires <- many $ parseVkRequire
+                              (extNumber attributes)
+                              (extReqExts attributes)
       pure VkExtension {..}
-  where
-    parseIt = choose
-        [ parseTagForceAttrs "enum"
-            parseEnumReqAttrs
-            pure
-        , parseTagForceAttrs "command"
-            ((,) <$> (VkExtReqCommand . VkCommandName <$> forceAttr "name")
-                 <*> lift (attr "comment")
-            ) pure
-        , parseTagForceAttrs "type"
-            ((,) <$> (VkExtReqType . VkTypeName <$> forceAttr "name")
-                 <*> lift (attr "comment")
-            ) pure
-        ]
-
-parseEnumReqAttrs :: ReaderT ParseLoc AttrParser (VkExtRequire, Maybe Text)
-parseEnumReqAttrs = do
-  ename <- VkEnumValueName <$> forceAttr "name"
-  moff <- lift $ attr "offset"
-  mcomment <- lift $ attr "comment"
-  case decOrHex <$> moff of
-    Just (Right (off, _)) -> do
-      extends <- VkTypeName <$> forceAttr "extends"
-      negDir <- lift $ isJust <$> attr "dir"
-      return (VkExtReqEnumOffset ename off negDir extends, mcomment)
-    Just (Left err) -> parseFailed
-          $ "Could not parse extension.require.enum.offset " ++ err
-    Nothing -> do
-      mbpos <- lift $ attr "bitpos"
-      mextends <- lift $ fmap VkTypeName <$> attr "extends"
-      case decOrHex <$> mbpos of
-        Just (Right (bpos, _)) ->
-          return (VkExtReqEnumBitpos ename bpos mextends, mcomment)
-        Just (Left err) -> parseFailed
-          $ "Could not parse extension.require.enum.bitpos " ++ err
-        Nothing -> do
-          mtval <- lift $ attr "value"
-          case mtval of
-            Nothing -> pure (VkExtReqEnumEmpty ename, mcomment)
-            Just tval -> do
-              when (T.null tval) $
-                parseFailed "Empty extension.require.enum.value!"
-              case decOrHex tval of
-                Right (val, _) -> pure ( VkExtReqEnumValueNum ename val mextends
-                                       , mcomment )
-                Left _ ->
-                  if T.head tval == '"' && T.last tval == '"'
-                  then pure ( VkExtReqEnumValueString ename
-                                . T.dropEnd 1 $ T.tail tval
-                            , mcomment )
-                  else pure ( VkExtReqEnumValueRef ename $ VkEnumValueName tval
-                            , mcomment )
 
 
 parseVkExtAttrs :: ReaderT ParseLoc AttrParser VkExtAttrs

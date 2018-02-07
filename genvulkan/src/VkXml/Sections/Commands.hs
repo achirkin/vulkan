@@ -47,8 +47,8 @@ data VkCommand
 
 data VkCommandAttrs
   = VkCommandAttrs
-  { successcodes   :: [VkEnumValueName]
-  , errorcodes     :: [VkEnumValueName]
+  { successcodes   :: [VkEnumName]
+  , errorcodes     :: [VkEnumName]
   , queues         :: Maybe Text
   , renderpass     :: Maybe Text
   , cmdbufferlevel :: [Text]
@@ -117,8 +117,8 @@ parseVkCommand =
 
 parseVkCommandAttrs :: ReaderT ParseLoc AttrParser VkCommandAttrs
 parseVkCommandAttrs = lift $ do
-    successcodes     <- map VkEnumValueName . f <$> attr "successcodes"
-    errorcodes       <- map VkEnumValueName . f <$> attr "errorcodes"
+    successcodes     <- map VkEnumName . f <$> attr "successcodes"
+    errorcodes       <- map VkEnumName . f <$> attr "errorcodes"
     queues           <- attr "queues"
     renderpass       <- attr "renderpass"
     cmdbufferlevel   <- f <$> attr "cmdbufferlevel"

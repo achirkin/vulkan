@@ -44,7 +44,7 @@ data VkTypes
 data VkTypeQualifier
   = VkTypeQStar
   | VkTypeQArrLen Int
-  | VkTypeQArrLenEnum VkEnumValueName
+  | VkTypeQArrLenEnum VkEnumName
   deriving Show
 
 data VkTypeAttrs
@@ -99,7 +99,7 @@ data VkTypeMember
 
 data VkMemberAttrs
   = VkMemberAttrs
-  { values         :: Maybe VkEnumValueName
+  { values         :: Maybe VkEnumName
     -- ^ Enum value indicating a certain struct type
   , optional       :: Bool
   , len            :: Maybe Text
@@ -195,8 +195,8 @@ parseVkTypeAttrs = VkTypeAttrs <$> parseAttrVkTypeName
 
 
 
-parseAttrVkMemberValues :: ReaderT ParseLoc AttrParser (Maybe VkEnumValueName)
-parseAttrVkMemberValues = lift $ fmap VkEnumValueName <$> attr "values"
+parseAttrVkMemberValues :: ReaderT ParseLoc AttrParser (Maybe VkEnumName)
+parseAttrVkMemberValues = lift $ fmap VkEnumName <$> attr "values"
 
 
 parseAttrVkMemberOptional :: ReaderT ParseLoc AttrParser Bool
@@ -261,7 +261,7 @@ parseVkTypeData =
       Just ('*', s) -> VkTypeQStar : getSimpleQualifiers s
       Just ('[', s) -> case decOrHex (T.stripStart s) of
         Left _       -> case T.breakOn "]" s of
-           (enumname, rest) -> VkTypeQArrLenEnum (VkEnumValueName $ T.strip enumname)
+           (enumname, rest) -> VkTypeQArrLenEnum (VkEnumName $ T.strip enumname)
                                : getSimpleQualifiers (T.drop 1 rest)
         Right (i, u) -> case T.uncons (T.stripStart u) of
           Just (']', v) -> VkTypeQArrLen i : getSimpleQualifiers v
