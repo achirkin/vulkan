@@ -21,9 +21,10 @@ import           VkXml.Sections.Extensions
 
 import           Write.ModuleWriter
 import           Write.Feature
+import           Write.Types.Struct
 
 
-genExtension :: Monad m => VkExtension -> ModuleWriter m (Maybe T.Text)
+genExtension :: Monad m => VkExtension -> ModuleWriter m (ClassDeclarations, Maybe T.Text)
 genExtension (VkExtension VkExtAttrs{..} ereqs) = do
     curlvl <- getCurrentSecLvl
     vkXml <- ask
@@ -43,8 +44,9 @@ genExtension (VkExtension VkExtAttrs{..} ereqs) = do
        <:> showExts extReqExts
        <:> maybe mempty (\s -> "Protected by CPP ifdef: @" <> s <> "@") extProtect
 
-    pushSecLvl $ \lvl -> mapM_ (genRequire lvl tps cmds) ereqs
+    cds <- pushSecLvl $ \lvl -> mconcat <$> mapM (genRequire lvl tps cmds) ereqs
 
-    if extSupported == "disabled"
-    then return $ Just "DISABLED_EXTENSIONS_STUB"
-    else return extProtect
+    fmap ((,) cds) $
+      if extSupported == "disabled"
+      then return $ Just "DISABLED_EXTENSIONS_STUB"
+      else return extProtect

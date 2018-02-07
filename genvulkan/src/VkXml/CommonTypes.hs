@@ -223,7 +223,7 @@ toType :: Word -- ^ number of times pointer
 toType 0 t = TyCon () t
 toType n t | t == toHaskellName' "void"
              = appPtr n voidTy
-           | Qual () _ (Ident () "CChar") <- t
+           | Ident () "CChar" <- unqualify t
            , n > 0
              = toType (n-1) cstringQN
            | otherwise
@@ -231,9 +231,9 @@ toType n t | t == toHaskellName' "void"
   where
     appPtr 0 ty = ty
     appPtr k ty = appPtr (k-1) $ TyApp () ptrTy ty
-    voidTy = TyCon () (Qual () (ModuleName () "Data.Void") (Ident () "Void"))
-    ptrTy  = TyCon () (Qual () (ModuleName () "Foreign.Ptr") (Ident () "Ptr"))
-    cstringQN = Qual () (ModuleName () "Foreign.C.String") (Ident () "CString")
+    voidTy = TyCon () (UnQual () (Ident () "Void"))
+    ptrTy  = TyCon () (UnQual () (Ident () "Ptr"))
+    cstringQN = UnQual () (Ident () "CString")
 
 unqualify :: QName a -> Name a
 unqualify (Qual _ _ n)  = n

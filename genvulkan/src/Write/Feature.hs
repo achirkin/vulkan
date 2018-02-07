@@ -7,7 +7,7 @@ module Write.Feature
   ( genFeature, genRequire, showExts
   ) where
 
-import           Control.Monad                        (forM_)
+import           Control.Monad                        (forM_, forM)
 import           Control.Monad.Reader.Class
 import qualified Data.Map                             as Map
 import           Data.Semigroup
@@ -24,11 +24,12 @@ import           Write.Commands
 import           Write.ModuleWriter
 import           Write.Types
 import           Write.Types.Enum
+import           Write.Types.Struct
 
 
-
-genFeature :: Monad m => ModuleWriter m ()
-genFeature = pushSecLvl $ \curlvl -> do
+genFeature :: Monad m => ModuleWriter m ClassDeclarations
+genFeature = do
+    curlvl <- getCurrentSecLvl
     vkXml <- ask
     let VkFeature {..} = unInorder $ globFeature vkXml
         tps = Map.fromList
@@ -50,7 +51,7 @@ genFeature = pushSecLvl $ \curlvl -> do
       , ""
       , "@number = " <> number <> "@"
       ]
-    pushSecLvl $ \lvl -> mapM_ (genRequire lvl tps cmds) reqList
+    pushSecLvl $ \lvl -> mconcat <$> mapM (genRequire lvl tps cmds) reqList
 
 
 genRequire :: Monad m
@@ -59,17 +60,19 @@ genRequire :: Monad m
           -> Map.Map VkCommandName VkCommand
           -- -> Map.Map VkEnumName VkEnum
           -> VkRequire
-          -> ModuleWriter m ()
+          -> ModuleWriter m ClassDeclarations
 genRequire curlvl tps cmds VkRequire {..} = do
   writeSection curlvl $
     comment <:> showExts requireExts
-  forM_ requireTypes $ \tname -> case Map.lookup tname tps of
-        Nothing -> pure ()
+  cds <- fmap mconcat $
+    forM requireTypes $ \tname -> case Map.lookup tname tps of
+        Nothing -> pure mempty
         Just t  -> genType t
   forM_ requireComms $ \cname -> case Map.lookup cname cmds of
         Nothing -> pure ()
         Just t  -> genCommand t
   forM_ requireEnums enumPattern
+  return cds
 
 
 showExts :: [VkExtensionName] -> T.Text

@@ -1,11 +1,11 @@
 #include "vulkan/vulkan.h"
-{-# OPTIONS_GHC -fno-warn-missing-methods#-}
-{-# OPTIONS_GHC -fno-warn-unticked-promoted-constructors#-}
+
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE FlexibleContexts         #-}
 {-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE TypeOperators            #-}
@@ -13,7 +13,7 @@
 {-# LANGUAGE UndecidableInstances     #-}
 {-# LANGUAGE UnliftedFFITypes         #-}
 module Graphics.Vulkan.Core
-       (-- ** Vulkan core API interface definitions
+       (-- * Vulkan core API interface definitions
         -- |
         --
         -- @api = vulkan@
@@ -23,86 +23,85 @@ module Graphics.Vulkan.Core
         -- @number = 1.0@
         --
 
-        -- *** Not referenced, but required definitions
-        --
-
-        -- *** Header boilerplate
+        -- ** Header boilerplate
         --
         -- |
         -- > ##include "vk_platform.h"
         --
 
-        -- *** API version
+        -- ** API version
         --
 
-        -- *** API constants
-        --
-
-        -- *** Device initialization
+        -- ** API constants
+        pattern VK_LOD_CLAMP_NONE, pattern VK_REMAINING_MIP_LEVELS,
+        pattern VK_REMAINING_ARRAY_LAYERS, pattern VK_WHOLE_SIZE,
+        pattern VK_ATTACHMENT_UNUSED, pattern VK_TRUE, pattern VK_FALSE,
+        pattern VK_QUEUE_FAMILY_IGNORED, pattern VK_SUBPASS_EXTERNAL,
+        -- ** Device initialization
         vkCreateInstance, vkDestroyInstance, vkEnumeratePhysicalDevices,
         vkGetPhysicalDeviceFeatures, vkGetPhysicalDeviceFormatProperties,
         vkGetPhysicalDeviceImageFormatProperties,
         vkGetPhysicalDeviceProperties,
         vkGetPhysicalDeviceQueueFamilyProperties,
         vkGetPhysicalDeviceMemoryProperties, vkGetInstanceProcAddr,
-        vkGetDeviceProcAddr, -- *** Device commands
+        vkGetDeviceProcAddr, -- ** Device commands
                              vkCreateDevice, vkDestroyDevice,
-        -- *** Extension discovery commands
+        -- ** Extension discovery commands
         vkEnumerateInstanceExtensionProperties,
         vkEnumerateDeviceExtensionProperties,
-        -- *** Layer discovery commands
+        -- ** Layer discovery commands
         vkEnumerateInstanceLayerProperties,
-        vkEnumerateDeviceLayerProperties, -- *** queue commands
+        vkEnumerateDeviceLayerProperties, -- ** queue commands
                                           vkGetDeviceQueue, vkQueueSubmit,
-        vkQueueWaitIdle, vkDeviceWaitIdle, -- *** Memory commands
+        vkQueueWaitIdle, vkDeviceWaitIdle, -- ** Memory commands
                                            vkAllocateMemory, vkFreeMemory,
         vkMapMemory, vkUnmapMemory, vkFlushMappedMemoryRanges,
         vkInvalidateMappedMemoryRanges, vkGetDeviceMemoryCommitment,
-        -- *** Memory management API commands
+        -- ** Memory management API commands
         vkBindBufferMemory, vkBindImageMemory,
         vkGetBufferMemoryRequirements, vkGetImageMemoryRequirements,
-        -- *** Sparse resource memory management API commands
+        -- ** Sparse resource memory management API commands
         vkGetImageSparseMemoryRequirements,
         vkGetPhysicalDeviceSparseImageFormatProperties, vkQueueBindSparse,
-        -- *** Fence commands
+        -- ** Fence commands
         vkCreateFence, vkDestroyFence, vkResetFences, vkGetFenceStatus,
-        vkWaitForFences, -- *** Queue semaphore commands
+        vkWaitForFences, -- ** Queue semaphore commands
                          vkCreateSemaphore, vkDestroySemaphore,
-        -- *** Event commands
+        -- ** Event commands
         vkCreateEvent, vkDestroyEvent, vkGetEventStatus, vkSetEvent,
-        vkResetEvent, -- *** Query commands
+        vkResetEvent, -- ** Query commands
                       vkCreateQueryPool, vkDestroyQueryPool,
-        vkGetQueryPoolResults, -- *** Buffer commands
+        vkGetQueryPoolResults, -- ** Buffer commands
                                vkCreateBuffer, vkDestroyBuffer,
-        -- *** Buffer view commands
-        vkCreateBufferView, vkDestroyBufferView, -- *** Image commands
+        -- ** Buffer view commands
+        vkCreateBufferView, vkDestroyBufferView, -- ** Image commands
                                                  vkCreateImage,
-        vkDestroyImage, vkGetImageSubresourceLayout, -- *** Image view commands
+        vkDestroyImage, vkGetImageSubresourceLayout, -- ** Image view commands
                                                      vkCreateImageView,
-        vkDestroyImageView, -- *** Shader commands
+        vkDestroyImageView, -- ** Shader commands
                             vkCreateShaderModule, vkDestroyShaderModule,
-        -- *** Pipeline Cache commands
+        -- ** Pipeline Cache commands
         vkCreatePipelineCache, vkDestroyPipelineCache,
         vkGetPipelineCacheData, vkMergePipelineCaches,
-        -- *** Pipeline commands
+        -- ** Pipeline commands
         vkCreateGraphicsPipelines, vkCreateComputePipelines,
-        vkDestroyPipeline, -- *** Pipeline layout commands
+        vkDestroyPipeline, -- ** Pipeline layout commands
                            vkCreatePipelineLayout, vkDestroyPipelineLayout,
-        -- *** Sampler commands
-        vkCreateSampler, vkDestroySampler, -- *** Descriptor set commands
+        -- ** Sampler commands
+        vkCreateSampler, vkDestroySampler, -- ** Descriptor set commands
                                            vkCreateDescriptorSetLayout,
         vkDestroyDescriptorSetLayout, vkCreateDescriptorPool,
         vkDestroyDescriptorPool, vkResetDescriptorPool,
         vkAllocateDescriptorSets, vkFreeDescriptorSets,
-        vkUpdateDescriptorSets, -- *** Pass commands
+        vkUpdateDescriptorSets, -- ** Pass commands
                                 vkCreateFramebuffer, vkDestroyFramebuffer,
         vkCreateRenderPass, vkDestroyRenderPass,
-        vkGetRenderAreaGranularity, -- *** Command pool commands
+        vkGetRenderAreaGranularity, -- ** Command pool commands
                                     vkCreateCommandPool,
-        vkDestroyCommandPool, vkResetCommandPool, -- *** Command buffer commands
+        vkDestroyCommandPool, vkResetCommandPool, -- ** Command buffer commands
                                                   vkAllocateCommandBuffers,
         vkFreeCommandBuffers, vkBeginCommandBuffer, vkEndCommandBuffer,
-        vkResetCommandBuffer, -- *** Command buffer building commands
+        vkResetCommandBuffer, -- ** Command buffer building commands
                               vkCmdBindPipeline, vkCmdSetViewport,
         vkCmdSetScissor, vkCmdSetLineWidth, vkCmdSetDepthBias,
         vkCmdSetBlendConstants, vkCmdSetDepthBounds,
@@ -119,35 +118,31 @@ module Graphics.Vulkan.Core
         vkCmdBeginQuery, vkCmdEndQuery, vkCmdResetQueryPool,
         vkCmdWriteTimestamp, vkCmdCopyQueryPoolResults, vkCmdPushConstants,
         vkCmdBeginRenderPass, vkCmdNextSubpass, vkCmdEndRenderPass,
-        vkCmdExecuteCommands, -- *** Types not directly used by the API. Include e.g. structs that are not parameter types of commands, but still defined by the API.
-                              HasVkSrcQueueFamilyIndex(..),
-        HasVkDstQueueFamilyIndex(..), VkBufferMemoryBarrier(..),
-        VkDispatchIndirectCommand(..), HasVkIndexCount(..),
-        HasVkInstanceCount(..), HasVkFirstIndex(..), HasVkVertexOffset(..),
-        HasVkFirstInstance(..), VkDrawIndexedIndirectCommand(..),
-        HasVkVertexCount(..), HasVkFirstVertex(..),
-        VkDrawIndirectCommand(..), HasVkOldLayout(..), HasVkNewLayout(..),
-        VkImageMemoryBarrier(..), VkMemoryBarrier(..))
+        vkCmdExecuteCommands, -- ** Types not directly used by the API. Include e.g. structs that are not parameter types of commands, but still defined by the API.
+                              VkBufferMemoryBarrier(..),
+        VkDispatchIndirectCommand(..), VkDrawIndexedIndirectCommand(..),
+        VkDrawIndirectCommand(..), VkImageMemoryBarrier(..),
+        VkMemoryBarrier(..))
        where
-import           Data.Int                         (Int32)
+import           Data.Int
 import           Data.Void                        (Void)
-import           Data.Word                        (Word32, Word64, Word8)
+import           Data.Word
+import           Foreign.C.String                 (CString)
 import           Foreign.C.Types                  (CChar (..), CFloat (..),
-                                                   CInt (..), CSize, CSize (..),
+                                                   CInt (..), CSize (..),
                                                    CULong (..))
-import           Foreign.Ptr                      (Ptr)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.ForeignPtr                   (ForeignPtr (..),
                                                    ForeignPtrContents (..),
                                                    newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.TypeLits                     (ErrorMessage (..), TypeError)
 import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | Success codes: 'VK_SUCCESS'.
@@ -162,12 +157,11 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCreateInstance.html vkCreateInstance registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateInstance" vkCreateInstance ::
-               Foreign.Ptr.Ptr VkInstanceCreateInfo -- ^ pCreateInfo
-                                                    ->
-                 Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                       ->
-                   Foreign.Ptr.Ptr VkInstance -- ^ pInstance
-                                              -> IO VkResult
+               Ptr VkInstanceCreateInfo -- ^ pCreateInfo
+                                        ->
+                 Ptr VkAllocationCallbacks -- ^ pAllocator
+                                           -> Ptr VkInstance -- ^ pInstance
+                                                             -> IO VkResult
 
 -- | > void vkDestroyInstance
 --   >     ( VkInstance instance
@@ -177,8 +171,8 @@ foreign import ccall unsafe "vkCreateInstance" vkCreateInstance ::
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkDestroyInstance.html vkDestroyInstance registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyInstance" vkDestroyInstance
                :: VkInstance -- ^ instance
-                             -> Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                      -> IO ()
+                             -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                          -> IO ()
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
@@ -195,10 +189,9 @@ foreign import ccall unsafe "vkEnumeratePhysicalDevices"
                vkEnumeratePhysicalDevices ::
                VkInstance -- ^ instance
                           ->
-                 Foreign.Ptr.Ptr Data.Word.Word32 -- ^ pPhysicalDeviceCount
-                                                  ->
-                   Foreign.Ptr.Ptr VkPhysicalDevice -- ^ pPhysicalDevices
-                                                    -> IO VkResult
+                 Ptr Data.Word.Word32 -- ^ pPhysicalDeviceCount
+                                      -> Ptr VkPhysicalDevice -- ^ pPhysicalDevices
+                                                              -> IO VkResult
 
 -- | > void vkGetPhysicalDeviceFeatures
 --   >     ( VkPhysicalDevice physicalDevice
@@ -209,9 +202,8 @@ foreign import ccall unsafe "vkEnumeratePhysicalDevices"
 foreign import ccall unsafe "vkGetPhysicalDeviceFeatures"
                vkGetPhysicalDeviceFeatures ::
                VkPhysicalDevice -- ^ physicalDevice
-                                ->
-                 Foreign.Ptr.Ptr VkPhysicalDeviceFeatures -- ^ pFeatures
-                                                          -> IO ()
+                                -> Ptr VkPhysicalDeviceFeatures -- ^ pFeatures
+                                                                -> IO ()
 
 -- | > void vkGetPhysicalDeviceFormatProperties
 --   >     ( VkPhysicalDevice physicalDevice
@@ -223,10 +215,9 @@ foreign import ccall unsafe "vkGetPhysicalDeviceFeatures"
 foreign import ccall unsafe "vkGetPhysicalDeviceFormatProperties"
                vkGetPhysicalDeviceFormatProperties ::
                VkPhysicalDevice -- ^ physicalDevice
-                                ->
-                 VkFormat -- ^ format
-                          -> Foreign.Ptr.Ptr VkFormatProperties -- ^ pFormatProperties
-                                                                -> IO ()
+                                -> VkFormat -- ^ format
+                                            -> Ptr VkFormatProperties -- ^ pFormatProperties
+                                                                      -> IO ()
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -257,9 +248,8 @@ foreign import ccall unsafe
                        VkImageUsageFlags -- ^ usage
                                          ->
                          VkImageCreateFlags -- ^ flags
-                                            ->
-                           Foreign.Ptr.Ptr VkImageFormatProperties -- ^ pImageFormatProperties
-                                                                   -> IO VkResult
+                                            -> Ptr VkImageFormatProperties -- ^ pImageFormatProperties
+                                                                           -> IO VkResult
 
 -- | > void vkGetPhysicalDeviceProperties
 --   >     ( VkPhysicalDevice physicalDevice
@@ -270,9 +260,8 @@ foreign import ccall unsafe
 foreign import ccall unsafe "vkGetPhysicalDeviceProperties"
                vkGetPhysicalDeviceProperties ::
                VkPhysicalDevice -- ^ physicalDevice
-                                ->
-                 Foreign.Ptr.Ptr VkPhysicalDeviceProperties -- ^ pProperties
-                                                            -> IO ()
+                                -> Ptr VkPhysicalDeviceProperties -- ^ pProperties
+                                                                  -> IO ()
 
 -- | > void vkGetPhysicalDeviceQueueFamilyProperties
 --   >     ( VkPhysicalDevice physicalDevice
@@ -286,10 +275,9 @@ foreign import ccall unsafe
                vkGetPhysicalDeviceQueueFamilyProperties ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
-                 Foreign.Ptr.Ptr Data.Word.Word32 -- ^ pQueueFamilyPropertyCount
-                                                  ->
-                   Foreign.Ptr.Ptr VkQueueFamilyProperties -- ^ pQueueFamilyProperties
-                                                           -> IO ()
+                 Ptr Data.Word.Word32 -- ^ pQueueFamilyPropertyCount
+                                      -> Ptr VkQueueFamilyProperties -- ^ pQueueFamilyProperties
+                                                                     -> IO ()
 
 -- | > void vkGetPhysicalDeviceMemoryProperties
 --   >     ( VkPhysicalDevice physicalDevice
@@ -300,9 +288,8 @@ foreign import ccall unsafe
 foreign import ccall unsafe "vkGetPhysicalDeviceMemoryProperties"
                vkGetPhysicalDeviceMemoryProperties ::
                VkPhysicalDevice -- ^ physicalDevice
-                                ->
-                 Foreign.Ptr.Ptr VkPhysicalDeviceMemoryProperties -- ^ pMemoryProperties
-                                                                  -> IO ()
+                                -> Ptr VkPhysicalDeviceMemoryProperties -- ^ pMemoryProperties
+                                                                        -> IO ()
 
 -- | > PFN_vkVoidFunction vkGetInstanceProcAddr
 --   >     ( VkInstance instance
@@ -313,9 +300,8 @@ foreign import ccall unsafe "vkGetPhysicalDeviceMemoryProperties"
 foreign import ccall unsafe "vkGetInstanceProcAddr"
                vkGetInstanceProcAddr ::
                VkInstance -- ^ instance
-                          ->
-                 Foreign.Ptr.Ptr Foreign.C.Types.CChar -- ^ pName
-                                                       -> IO PFN_vkVoidFunction
+                          -> CString -- ^ pName
+                                     -> IO PFN_vkVoidFunction
 
 -- | > PFN_vkVoidFunction vkGetDeviceProcAddr
 --   >     ( VkDevice device
@@ -324,11 +310,9 @@ foreign import ccall unsafe "vkGetInstanceProcAddr"
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetDeviceProcAddr.html vkGetDeviceProcAddr registry at www.khronos.org>
 foreign import ccall unsafe "vkGetDeviceProcAddr"
-               vkGetDeviceProcAddr ::
-               VkDevice -- ^ device
-                        ->
-                 Foreign.Ptr.Ptr Foreign.C.Types.CChar -- ^ pName
-                                                       -> IO PFN_vkVoidFunction
+               vkGetDeviceProcAddr :: VkDevice -- ^ device
+                                               -> CString -- ^ pName
+                                                          -> IO PFN_vkVoidFunction
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -345,12 +329,11 @@ foreign import ccall unsafe "vkGetDeviceProcAddr"
 foreign import ccall unsafe "vkCreateDevice" vkCreateDevice ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
-                 Foreign.Ptr.Ptr VkDeviceCreateInfo -- ^ pCreateInfo
-                                                    ->
-                   Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                         ->
-                     Foreign.Ptr.Ptr VkDevice -- ^ pDevice
-                                              -> IO VkResult
+                 Ptr VkDeviceCreateInfo -- ^ pCreateInfo
+                                        ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkDevice -- ^ pDevice
+                                                             -> IO VkResult
 
 -- | > void vkDestroyDevice
 --   >     ( VkDevice device
@@ -360,8 +343,8 @@ foreign import ccall unsafe "vkCreateDevice" vkCreateDevice ::
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkDestroyDevice.html vkDestroyDevice registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyDevice" vkDestroyDevice ::
                VkDevice -- ^ device
-                        -> Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                 -> IO ()
+                        -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                     -> IO ()
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
@@ -377,12 +360,11 @@ foreign import ccall unsafe "vkDestroyDevice" vkDestroyDevice ::
 foreign import ccall unsafe
                "vkEnumerateInstanceExtensionProperties"
                vkEnumerateInstanceExtensionProperties ::
-               Foreign.Ptr.Ptr Foreign.C.Types.CChar -- ^ pLayerName
-                                                     ->
-                 Foreign.Ptr.Ptr Data.Word.Word32 -- ^ pPropertyCount
-                                                  ->
-                   Foreign.Ptr.Ptr VkExtensionProperties -- ^ pProperties
-                                                         -> IO VkResult
+               CString -- ^ pLayerName
+                       ->
+                 Ptr Data.Word.Word32 -- ^ pPropertyCount
+                                      -> Ptr VkExtensionProperties -- ^ pProperties
+                                                                   -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
@@ -400,12 +382,11 @@ foreign import ccall unsafe "vkEnumerateDeviceExtensionProperties"
                vkEnumerateDeviceExtensionProperties ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
-                 Foreign.Ptr.Ptr Foreign.C.Types.CChar -- ^ pLayerName
-                                                       ->
-                   Foreign.Ptr.Ptr Data.Word.Word32 -- ^ pPropertyCount
-                                                    ->
-                     Foreign.Ptr.Ptr VkExtensionProperties -- ^ pProperties
-                                                           -> IO VkResult
+                 CString -- ^ pLayerName
+                         ->
+                   Ptr Data.Word.Word32 -- ^ pPropertyCount
+                                        -> Ptr VkExtensionProperties -- ^ pProperties
+                                                                     -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
@@ -419,10 +400,9 @@ foreign import ccall unsafe "vkEnumerateDeviceExtensionProperties"
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkEnumerateInstanceLayerProperties.html vkEnumerateInstanceLayerProperties registry at www.khronos.org>
 foreign import ccall unsafe "vkEnumerateInstanceLayerProperties"
                vkEnumerateInstanceLayerProperties ::
-               Foreign.Ptr.Ptr Data.Word.Word32 -- ^ pPropertyCount
-                                                ->
-                 Foreign.Ptr.Ptr VkLayerProperties -- ^ pProperties
-                                                   -> IO VkResult
+               Ptr Data.Word.Word32 -- ^ pPropertyCount
+                                    -> Ptr VkLayerProperties -- ^ pProperties
+                                                             -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
@@ -439,10 +419,9 @@ foreign import ccall unsafe "vkEnumerateDeviceLayerProperties"
                vkEnumerateDeviceLayerProperties ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
-                 Foreign.Ptr.Ptr Data.Word.Word32 -- ^ pPropertyCount
-                                                  ->
-                   Foreign.Ptr.Ptr VkLayerProperties -- ^ pProperties
-                                                     -> IO VkResult
+                 Ptr Data.Word.Word32 -- ^ pPropertyCount
+                                      -> Ptr VkLayerProperties -- ^ pProperties
+                                                               -> IO VkResult
 
 -- | > void vkGetDeviceQueue
 --   >     ( VkDevice device
@@ -456,10 +435,9 @@ foreign import ccall unsafe "vkGetDeviceQueue" vkGetDeviceQueue ::
                VkDevice -- ^ device
                         ->
                  Data.Word.Word32 -- ^ queueFamilyIndex
-                                  ->
-                   Data.Word.Word32 -- ^ queueIndex
-                                    -> Foreign.Ptr.Ptr VkQueue -- ^ pQueue
-                                                               -> IO ()
+                                  -> Data.Word.Word32 -- ^ queueIndex
+                                                      -> Ptr VkQueue -- ^ pQueue
+                                                                     -> IO ()
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -477,10 +455,9 @@ foreign import ccall unsafe "vkQueueSubmit" vkQueueSubmit ::
                VkQueue -- ^ queue
                        ->
                  Data.Word.Word32 -- ^ submitCount
-                                  ->
-                   Foreign.Ptr.Ptr VkSubmitInfo -- ^ pSubmits
-                                                -> VkFence -- ^ fence
-                                                           -> IO VkResult
+                                  -> Ptr VkSubmitInfo -- ^ pSubmits
+                                                      -> VkFence -- ^ fence
+                                                                 -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -523,12 +500,11 @@ foreign import ccall unsafe "vkDeviceWaitIdle" vkDeviceWaitIdle ::
 foreign import ccall unsafe "vkAllocateMemory" vkAllocateMemory ::
                VkDevice -- ^ device
                         ->
-                 Foreign.Ptr.Ptr VkMemoryAllocateInfo -- ^ pAllocateInfo
-                                                      ->
-                   Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                         ->
-                     Foreign.Ptr.Ptr VkDeviceMemory -- ^ pMemory
-                                                    -> IO VkResult
+                 Ptr VkMemoryAllocateInfo -- ^ pAllocateInfo
+                                          ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkDeviceMemory -- ^ pMemory
+                                                                   -> IO VkResult
 
 -- | > void vkFreeMemory
 --   >     ( VkDevice device
@@ -539,10 +515,9 @@ foreign import ccall unsafe "vkAllocateMemory" vkAllocateMemory ::
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkFreeMemory.html vkFreeMemory registry at www.khronos.org>
 foreign import ccall unsafe "vkFreeMemory" vkFreeMemory ::
                VkDevice -- ^ device
-                        ->
-                 VkDeviceMemory -- ^ memory
-                                -> Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                         -> IO ()
+                        -> VkDeviceMemory -- ^ memory
+                                          -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                       -> IO ()
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -566,11 +541,9 @@ foreign import ccall unsafe "vkMapMemory" vkMapMemory ::
                    VkDeviceSize -- ^ offset
                                 ->
                      VkDeviceSize -- ^ size
-                                  ->
-                       VkMemoryMapFlags -- ^ flags
-                                        ->
-                         Foreign.Ptr.Ptr (Foreign.Ptr.Ptr Data.Void.Void) -- ^ ppData
-                                                                          -> IO VkResult
+                                  -> VkMemoryMapFlags -- ^ flags
+                                                      -> Ptr (Ptr Void) -- ^ ppData
+                                                                        -> IO VkResult
 
 -- | > void vkUnmapMemory
 --   >     ( VkDevice device
@@ -599,9 +572,8 @@ foreign import ccall unsafe "vkFlushMappedMemoryRanges"
                VkDevice -- ^ device
                         ->
                  Data.Word.Word32 -- ^ memoryRangeCount
-                                  ->
-                   Foreign.Ptr.Ptr VkMappedMemoryRange -- ^ pMemoryRanges
-                                                       -> IO VkResult
+                                  -> Ptr VkMappedMemoryRange -- ^ pMemoryRanges
+                                                             -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -619,9 +591,8 @@ foreign import ccall unsafe "vkInvalidateMappedMemoryRanges"
                VkDevice -- ^ device
                         ->
                  Data.Word.Word32 -- ^ memoryRangeCount
-                                  ->
-                   Foreign.Ptr.Ptr VkMappedMemoryRange -- ^ pMemoryRanges
-                                                       -> IO VkResult
+                                  -> Ptr VkMappedMemoryRange -- ^ pMemoryRanges
+                                                             -> IO VkResult
 
 -- | > void vkGetDeviceMemoryCommitment
 --   >     ( VkDevice device
@@ -634,8 +605,8 @@ foreign import ccall unsafe "vkGetDeviceMemoryCommitment"
                vkGetDeviceMemoryCommitment ::
                VkDevice -- ^ device
                         -> VkDeviceMemory -- ^ memory
-                                          -> Foreign.Ptr.Ptr VkDeviceSize -- ^ pCommittedMemoryInBytes
-                                                                          -> IO ()
+                                          -> Ptr VkDeviceSize -- ^ pCommittedMemoryInBytes
+                                                              -> IO ()
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -689,10 +660,9 @@ foreign import ccall unsafe "vkBindImageMemory" vkBindImageMemory
 foreign import ccall unsafe "vkGetBufferMemoryRequirements"
                vkGetBufferMemoryRequirements ::
                VkDevice -- ^ device
-                        ->
-                 VkBuffer -- ^ buffer
-                          -> Foreign.Ptr.Ptr VkMemoryRequirements -- ^ pMemoryRequirements
-                                                                  -> IO ()
+                        -> VkBuffer -- ^ buffer
+                                    -> Ptr VkMemoryRequirements -- ^ pMemoryRequirements
+                                                                -> IO ()
 
 -- | > void vkGetImageMemoryRequirements
 --   >     ( VkDevice device
@@ -704,10 +674,9 @@ foreign import ccall unsafe "vkGetBufferMemoryRequirements"
 foreign import ccall unsafe "vkGetImageMemoryRequirements"
                vkGetImageMemoryRequirements ::
                VkDevice -- ^ device
-                        ->
-                 VkImage -- ^ image
-                         -> Foreign.Ptr.Ptr VkMemoryRequirements -- ^ pMemoryRequirements
-                                                                 -> IO ()
+                        -> VkImage -- ^ image
+                                   -> Ptr VkMemoryRequirements -- ^ pMemoryRequirements
+                                                               -> IO ()
 
 -- | > void vkGetImageSparseMemoryRequirements
 --   >     ( VkDevice device
@@ -723,10 +692,10 @@ foreign import ccall unsafe "vkGetImageSparseMemoryRequirements"
                         ->
                  VkImage -- ^ image
                          ->
-                   Foreign.Ptr.Ptr Data.Word.Word32 -- ^ pSparseMemoryRequirementCount
-                                                    ->
-                     Foreign.Ptr.Ptr VkSparseImageMemoryRequirements -- ^ pSparseMemoryRequirements
-                                                                     -> IO ()
+                   Ptr Data.Word.Word32 -- ^ pSparseMemoryRequirementCount
+                                        ->
+                     Ptr VkSparseImageMemoryRequirements -- ^ pSparseMemoryRequirements
+                                                         -> IO ()
 
 -- | > void vkGetPhysicalDeviceSparseImageFormatProperties
 --   >     ( VkPhysicalDevice physicalDevice
@@ -755,10 +724,9 @@ foreign import ccall unsafe
                                          ->
                          VkImageTiling -- ^ tiling
                                        ->
-                           Foreign.Ptr.Ptr Data.Word.Word32 -- ^ pPropertyCount
-                                                            ->
-                             Foreign.Ptr.Ptr VkSparseImageFormatProperties -- ^ pProperties
-                                                                           -> IO ()
+                           Ptr Data.Word.Word32 -- ^ pPropertyCount
+                                                -> Ptr VkSparseImageFormatProperties -- ^ pProperties
+                                                                                     -> IO ()
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -779,10 +747,9 @@ foreign import ccall unsafe "vkQueueBindSparse" vkQueueBindSparse
                VkQueue -- ^ queue
                        ->
                  Data.Word.Word32 -- ^ bindInfoCount
-                                  ->
-                   Foreign.Ptr.Ptr VkBindSparseInfo -- ^ pBindInfo
-                                                    -> VkFence -- ^ fence
-                                                               -> IO VkResult
+                                  -> Ptr VkBindSparseInfo -- ^ pBindInfo
+                                                          -> VkFence -- ^ fence
+                                                                     -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -799,12 +766,11 @@ foreign import ccall unsafe "vkQueueBindSparse" vkQueueBindSparse
 foreign import ccall unsafe "vkCreateFence" vkCreateFence ::
                VkDevice -- ^ device
                         ->
-                 Foreign.Ptr.Ptr VkFenceCreateInfo -- ^ pCreateInfo
-                                                   ->
-                   Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                         ->
-                     Foreign.Ptr.Ptr VkFence -- ^ pFence
-                                             -> IO VkResult
+                 Ptr VkFenceCreateInfo -- ^ pCreateInfo
+                                       ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkFence -- ^ pFence
+                                                            -> IO VkResult
 
 -- | > void vkDestroyFence
 --   >     ( VkDevice device
@@ -815,10 +781,9 @@ foreign import ccall unsafe "vkCreateFence" vkCreateFence ::
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkDestroyFence.html vkDestroyFence registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyFence" vkDestroyFence ::
                VkDevice -- ^ device
-                        ->
-                 VkFence -- ^ fence
-                         -> Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                  -> IO ()
+                        -> VkFence -- ^ fence
+                                   -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                -> IO ()
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -833,10 +798,9 @@ foreign import ccall unsafe "vkDestroyFence" vkDestroyFence ::
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkResetFences.html vkResetFences registry at www.khronos.org>
 foreign import ccall unsafe "vkResetFences" vkResetFences ::
                VkDevice -- ^ device
-                        ->
-                 Data.Word.Word32 -- ^ fenceCount
-                                  -> Foreign.Ptr.Ptr VkFence -- ^ pFences
-                                                             -> IO VkResult
+                        -> Data.Word.Word32 -- ^ fenceCount
+                                            -> Ptr VkFence -- ^ pFences
+                                                           -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS', 'VK_NOT_READY'.
 --
@@ -871,11 +835,10 @@ foreign import ccall unsafe "vkWaitForFences" vkWaitForFences ::
                         ->
                  Data.Word.Word32 -- ^ fenceCount
                                   ->
-                   Foreign.Ptr.Ptr VkFence -- ^ pFences
-                                           ->
-                     VkBool32 -- ^ waitAll
-                              -> Data.Word.Word64 -- ^ timeout
-                                                  -> IO VkResult
+                   Ptr VkFence -- ^ pFences
+                               -> VkBool32 -- ^ waitAll
+                                           -> Data.Word.Word64 -- ^ timeout
+                                                               -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -893,12 +856,11 @@ foreign import ccall unsafe "vkCreateSemaphore" vkCreateSemaphore
                ::
                VkDevice -- ^ device
                         ->
-                 Foreign.Ptr.Ptr VkSemaphoreCreateInfo -- ^ pCreateInfo
-                                                       ->
-                   Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                         ->
-                     Foreign.Ptr.Ptr VkSemaphore -- ^ pSemaphore
-                                                 -> IO VkResult
+                 Ptr VkSemaphoreCreateInfo -- ^ pCreateInfo
+                                           ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkSemaphore -- ^ pSemaphore
+                                                                -> IO VkResult
 
 -- | > void vkDestroySemaphore
 --   >     ( VkDevice device
@@ -908,12 +870,10 @@ foreign import ccall unsafe "vkCreateSemaphore" vkCreateSemaphore
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkDestroySemaphore.html vkDestroySemaphore registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroySemaphore" vkDestroySemaphore
-               ::
-               VkDevice -- ^ device
-                        ->
-                 VkSemaphore -- ^ semaphore
-                             -> Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                      -> IO ()
+               :: VkDevice -- ^ device
+                           -> VkSemaphore -- ^ semaphore
+                                          -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                       -> IO ()
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -930,12 +890,11 @@ foreign import ccall unsafe "vkDestroySemaphore" vkDestroySemaphore
 foreign import ccall unsafe "vkCreateEvent" vkCreateEvent ::
                VkDevice -- ^ device
                         ->
-                 Foreign.Ptr.Ptr VkEventCreateInfo -- ^ pCreateInfo
-                                                   ->
-                   Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                         ->
-                     Foreign.Ptr.Ptr VkEvent -- ^ pEvent
-                                             -> IO VkResult
+                 Ptr VkEventCreateInfo -- ^ pCreateInfo
+                                       ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkEvent -- ^ pEvent
+                                                            -> IO VkResult
 
 -- | > void vkDestroyEvent
 --   >     ( VkDevice device
@@ -946,10 +905,9 @@ foreign import ccall unsafe "vkCreateEvent" vkCreateEvent ::
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkDestroyEvent.html vkDestroyEvent registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyEvent" vkDestroyEvent ::
                VkDevice -- ^ device
-                        ->
-                 VkEvent -- ^ event
-                         -> Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                  -> IO ()
+                        -> VkEvent -- ^ event
+                                   -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                -> IO ()
 
 -- | Success codes: 'VK_EVENT_SET', 'VK_EVENT_RESET'.
 --
@@ -1012,12 +970,11 @@ foreign import ccall unsafe "vkCreateQueryPool" vkCreateQueryPool
                ::
                VkDevice -- ^ device
                         ->
-                 Foreign.Ptr.Ptr VkQueryPoolCreateInfo -- ^ pCreateInfo
-                                                       ->
-                   Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                         ->
-                     Foreign.Ptr.Ptr VkQueryPool -- ^ pQueryPool
-                                                 -> IO VkResult
+                 Ptr VkQueryPoolCreateInfo -- ^ pCreateInfo
+                                           ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkQueryPool -- ^ pQueryPool
+                                                                -> IO VkResult
 
 -- | > void vkDestroyQueryPool
 --   >     ( VkDevice device
@@ -1027,12 +984,10 @@ foreign import ccall unsafe "vkCreateQueryPool" vkCreateQueryPool
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkDestroyQueryPool.html vkDestroyQueryPool registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyQueryPool" vkDestroyQueryPool
-               ::
-               VkDevice -- ^ device
-                        ->
-                 VkQueryPool -- ^ queryPool
-                             -> Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                      -> IO ()
+               :: VkDevice -- ^ device
+                           -> VkQueryPool -- ^ queryPool
+                                          -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                       -> IO ()
 
 -- | Success codes: 'VK_SUCCESS', 'VK_NOT_READY'.
 --
@@ -1060,13 +1015,11 @@ foreign import ccall unsafe "vkGetQueryPoolResults"
                                     ->
                      Data.Word.Word32 -- ^ queryCount
                                       ->
-                       Foreign.C.Types.CSize -- ^ dataSize
-                                             ->
-                         Foreign.Ptr.Ptr Data.Void.Void -- ^ pData
-                                                        ->
-                           VkDeviceSize -- ^ stride
-                                        -> VkQueryResultFlags -- ^ flags
-                                                              -> IO VkResult
+                       #{type size_t} ->
+                         Ptr Void -- ^ pData
+                                  -> VkDeviceSize -- ^ stride
+                                                  -> VkQueryResultFlags -- ^ flags
+                                                                        -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -1083,12 +1036,11 @@ foreign import ccall unsafe "vkGetQueryPoolResults"
 foreign import ccall unsafe "vkCreateBuffer" vkCreateBuffer ::
                VkDevice -- ^ device
                         ->
-                 Foreign.Ptr.Ptr VkBufferCreateInfo -- ^ pCreateInfo
-                                                    ->
-                   Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                         ->
-                     Foreign.Ptr.Ptr VkBuffer -- ^ pBuffer
-                                              -> IO VkResult
+                 Ptr VkBufferCreateInfo -- ^ pCreateInfo
+                                        ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkBuffer -- ^ pBuffer
+                                                             -> IO VkResult
 
 -- | > void vkDestroyBuffer
 --   >     ( VkDevice device
@@ -1099,10 +1051,9 @@ foreign import ccall unsafe "vkCreateBuffer" vkCreateBuffer ::
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkDestroyBuffer.html vkDestroyBuffer registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyBuffer" vkDestroyBuffer ::
                VkDevice -- ^ device
-                        ->
-                 VkBuffer -- ^ buffer
-                          -> Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                   -> IO ()
+                        -> VkBuffer -- ^ buffer
+                                    -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                 -> IO ()
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -1120,12 +1071,11 @@ foreign import ccall unsafe "vkCreateBufferView" vkCreateBufferView
                ::
                VkDevice -- ^ device
                         ->
-                 Foreign.Ptr.Ptr VkBufferViewCreateInfo -- ^ pCreateInfo
-                                                        ->
-                   Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                         ->
-                     Foreign.Ptr.Ptr VkBufferView -- ^ pView
-                                                  -> IO VkResult
+                 Ptr VkBufferViewCreateInfo -- ^ pCreateInfo
+                                            ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkBufferView -- ^ pView
+                                                                 -> IO VkResult
 
 -- | > void vkDestroyBufferView
 --   >     ( VkDevice device
@@ -1137,10 +1087,9 @@ foreign import ccall unsafe "vkCreateBufferView" vkCreateBufferView
 foreign import ccall unsafe "vkDestroyBufferView"
                vkDestroyBufferView ::
                VkDevice -- ^ device
-                        ->
-                 VkBufferView -- ^ bufferView
-                              -> Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                       -> IO ()
+                        -> VkBufferView -- ^ bufferView
+                                        -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                     -> IO ()
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -1157,12 +1106,11 @@ foreign import ccall unsafe "vkDestroyBufferView"
 foreign import ccall unsafe "vkCreateImage" vkCreateImage ::
                VkDevice -- ^ device
                         ->
-                 Foreign.Ptr.Ptr VkImageCreateInfo -- ^ pCreateInfo
-                                                   ->
-                   Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                         ->
-                     Foreign.Ptr.Ptr VkImage -- ^ pImage
-                                             -> IO VkResult
+                 Ptr VkImageCreateInfo -- ^ pCreateInfo
+                                       ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkImage -- ^ pImage
+                                                            -> IO VkResult
 
 -- | > void vkDestroyImage
 --   >     ( VkDevice device
@@ -1173,10 +1121,9 @@ foreign import ccall unsafe "vkCreateImage" vkCreateImage ::
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkDestroyImage.html vkDestroyImage registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyImage" vkDestroyImage ::
                VkDevice -- ^ device
-                        ->
-                 VkImage -- ^ image
-                         -> Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                  -> IO ()
+                        -> VkImage -- ^ image
+                                   -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                -> IO ()
 
 -- | > void vkGetImageSubresourceLayout
 --   >     ( VkDevice device
@@ -1192,10 +1139,9 @@ foreign import ccall unsafe "vkGetImageSubresourceLayout"
                         ->
                  VkImage -- ^ image
                          ->
-                   Foreign.Ptr.Ptr VkImageSubresource -- ^ pSubresource
-                                                      ->
-                     Foreign.Ptr.Ptr VkSubresourceLayout -- ^ pLayout
-                                                         -> IO ()
+                   Ptr VkImageSubresource -- ^ pSubresource
+                                          -> Ptr VkSubresourceLayout -- ^ pLayout
+                                                                     -> IO ()
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -1213,12 +1159,11 @@ foreign import ccall unsafe "vkCreateImageView" vkCreateImageView
                ::
                VkDevice -- ^ device
                         ->
-                 Foreign.Ptr.Ptr VkImageViewCreateInfo -- ^ pCreateInfo
-                                                       ->
-                   Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                         ->
-                     Foreign.Ptr.Ptr VkImageView -- ^ pView
-                                                 -> IO VkResult
+                 Ptr VkImageViewCreateInfo -- ^ pCreateInfo
+                                           ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkImageView -- ^ pView
+                                                                -> IO VkResult
 
 -- | > void vkDestroyImageView
 --   >     ( VkDevice device
@@ -1228,12 +1173,10 @@ foreign import ccall unsafe "vkCreateImageView" vkCreateImageView
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkDestroyImageView.html vkDestroyImageView registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyImageView" vkDestroyImageView
-               ::
-               VkDevice -- ^ device
-                        ->
-                 VkImageView -- ^ imageView
-                             -> Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                      -> IO ()
+               :: VkDevice -- ^ device
+                           -> VkImageView -- ^ imageView
+                                          -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                       -> IO ()
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -1251,12 +1194,11 @@ foreign import ccall unsafe "vkCreateShaderModule"
                vkCreateShaderModule ::
                VkDevice -- ^ device
                         ->
-                 Foreign.Ptr.Ptr VkShaderModuleCreateInfo -- ^ pCreateInfo
-                                                          ->
-                   Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                         ->
-                     Foreign.Ptr.Ptr VkShaderModule -- ^ pShaderModule
-                                                    -> IO VkResult
+                 Ptr VkShaderModuleCreateInfo -- ^ pCreateInfo
+                                              ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkShaderModule -- ^ pShaderModule
+                                                                   -> IO VkResult
 
 -- | > void vkDestroyShaderModule
 --   >     ( VkDevice device
@@ -1268,10 +1210,9 @@ foreign import ccall unsafe "vkCreateShaderModule"
 foreign import ccall unsafe "vkDestroyShaderModule"
                vkDestroyShaderModule ::
                VkDevice -- ^ device
-                        ->
-                 VkShaderModule -- ^ shaderModule
-                                -> Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                         -> IO ()
+                        -> VkShaderModule -- ^ shaderModule
+                                          -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                       -> IO ()
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -1289,12 +1230,11 @@ foreign import ccall unsafe "vkCreatePipelineCache"
                vkCreatePipelineCache ::
                VkDevice -- ^ device
                         ->
-                 Foreign.Ptr.Ptr VkPipelineCacheCreateInfo -- ^ pCreateInfo
-                                                           ->
-                   Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                         ->
-                     Foreign.Ptr.Ptr VkPipelineCache -- ^ pPipelineCache
-                                                     -> IO VkResult
+                 Ptr VkPipelineCacheCreateInfo -- ^ pCreateInfo
+                                               ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkPipelineCache -- ^ pPipelineCache
+                                                                    -> IO VkResult
 
 -- | > void vkDestroyPipelineCache
 --   >     ( VkDevice device
@@ -1306,10 +1246,9 @@ foreign import ccall unsafe "vkCreatePipelineCache"
 foreign import ccall unsafe "vkDestroyPipelineCache"
                vkDestroyPipelineCache ::
                VkDevice -- ^ device
-                        ->
-                 VkPipelineCache -- ^ pipelineCache
-                                 -> Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                          -> IO ()
+                        -> VkPipelineCache -- ^ pipelineCache
+                                           -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                        -> IO ()
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
@@ -1329,10 +1268,9 @@ foreign import ccall unsafe "vkGetPipelineCacheData"
                         ->
                  VkPipelineCache -- ^ pipelineCache
                                  ->
-                   Foreign.Ptr.Ptr Foreign.C.Types.CSize -- ^ pDataSize
-                                                         ->
-                     Foreign.Ptr.Ptr Data.Void.Void -- ^ pData
-                                                    -> IO VkResult
+                   Ptr #{type size_t} -- ^ pDataSize
+                                                  -> Ptr Void -- ^ pData
+                                                              -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -1353,8 +1291,8 @@ foreign import ccall unsafe "vkMergePipelineCaches"
                  VkPipelineCache -- ^ dstCache
                                  ->
                    Data.Word.Word32 -- ^ srcCacheCount
-                                    -> Foreign.Ptr.Ptr VkPipelineCache -- ^ pSrcCaches
-                                                                       -> IO VkResult
+                                    -> Ptr VkPipelineCache -- ^ pSrcCaches
+                                                           -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -1378,12 +1316,11 @@ foreign import ccall unsafe "vkCreateGraphicsPipelines"
                                  ->
                    Data.Word.Word32 -- ^ createInfoCount
                                     ->
-                     Foreign.Ptr.Ptr VkGraphicsPipelineCreateInfo -- ^ pCreateInfos
-                                                                  ->
-                       Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                             ->
-                         Foreign.Ptr.Ptr VkPipeline -- ^ pPipelines
-                                                    -> IO VkResult
+                     Ptr VkGraphicsPipelineCreateInfo -- ^ pCreateInfos
+                                                      ->
+                       Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                 -> Ptr VkPipeline -- ^ pPipelines
+                                                                   -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -1407,12 +1344,11 @@ foreign import ccall unsafe "vkCreateComputePipelines"
                                  ->
                    Data.Word.Word32 -- ^ createInfoCount
                                     ->
-                     Foreign.Ptr.Ptr VkComputePipelineCreateInfo -- ^ pCreateInfos
-                                                                 ->
-                       Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                             ->
-                         Foreign.Ptr.Ptr VkPipeline -- ^ pPipelines
-                                                    -> IO VkResult
+                     Ptr VkComputePipelineCreateInfo -- ^ pCreateInfos
+                                                     ->
+                       Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                 -> Ptr VkPipeline -- ^ pPipelines
+                                                                   -> IO VkResult
 
 -- | > void vkDestroyPipeline
 --   >     ( VkDevice device
@@ -1422,12 +1358,10 @@ foreign import ccall unsafe "vkCreateComputePipelines"
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkDestroyPipeline.html vkDestroyPipeline registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyPipeline" vkDestroyPipeline
-               ::
-               VkDevice -- ^ device
-                        ->
-                 VkPipeline -- ^ pipeline
-                            -> Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                     -> IO ()
+               :: VkDevice -- ^ device
+                           -> VkPipeline -- ^ pipeline
+                                         -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                      -> IO ()
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -1445,12 +1379,11 @@ foreign import ccall unsafe "vkCreatePipelineLayout"
                vkCreatePipelineLayout ::
                VkDevice -- ^ device
                         ->
-                 Foreign.Ptr.Ptr VkPipelineLayoutCreateInfo -- ^ pCreateInfo
-                                                            ->
-                   Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                         ->
-                     Foreign.Ptr.Ptr VkPipelineLayout -- ^ pPipelineLayout
-                                                      -> IO VkResult
+                 Ptr VkPipelineLayoutCreateInfo -- ^ pCreateInfo
+                                                ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkPipelineLayout -- ^ pPipelineLayout
+                                                                     -> IO VkResult
 
 -- | > void vkDestroyPipelineLayout
 --   >     ( VkDevice device
@@ -1462,10 +1395,9 @@ foreign import ccall unsafe "vkCreatePipelineLayout"
 foreign import ccall unsafe "vkDestroyPipelineLayout"
                vkDestroyPipelineLayout ::
                VkDevice -- ^ device
-                        ->
-                 VkPipelineLayout -- ^ pipelineLayout
-                                  -> Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                           -> IO ()
+                        -> VkPipelineLayout -- ^ pipelineLayout
+                                            -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                         -> IO ()
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -1482,12 +1414,11 @@ foreign import ccall unsafe "vkDestroyPipelineLayout"
 foreign import ccall unsafe "vkCreateSampler" vkCreateSampler ::
                VkDevice -- ^ device
                         ->
-                 Foreign.Ptr.Ptr VkSamplerCreateInfo -- ^ pCreateInfo
-                                                     ->
-                   Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                         ->
-                     Foreign.Ptr.Ptr VkSampler -- ^ pSampler
-                                               -> IO VkResult
+                 Ptr VkSamplerCreateInfo -- ^ pCreateInfo
+                                         ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkSampler -- ^ pSampler
+                                                              -> IO VkResult
 
 -- | > void vkDestroySampler
 --   >     ( VkDevice device
@@ -1498,10 +1429,9 @@ foreign import ccall unsafe "vkCreateSampler" vkCreateSampler ::
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkDestroySampler.html vkDestroySampler registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroySampler" vkDestroySampler ::
                VkDevice -- ^ device
-                        ->
-                 VkSampler -- ^ sampler
-                           -> Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                    -> IO ()
+                        -> VkSampler -- ^ sampler
+                                     -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                  -> IO ()
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -1519,12 +1449,12 @@ foreign import ccall unsafe "vkCreateDescriptorSetLayout"
                vkCreateDescriptorSetLayout ::
                VkDevice -- ^ device
                         ->
-                 Foreign.Ptr.Ptr VkDescriptorSetLayoutCreateInfo -- ^ pCreateInfo
-                                                                 ->
-                   Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                         ->
-                     Foreign.Ptr.Ptr VkDescriptorSetLayout -- ^ pSetLayout
-                                                           -> IO VkResult
+                 Ptr VkDescriptorSetLayoutCreateInfo -- ^ pCreateInfo
+                                                     ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             ->
+                     Ptr VkDescriptorSetLayout -- ^ pSetLayout
+                                               -> IO VkResult
 
 -- | > void vkDestroyDescriptorSetLayout
 --   >     ( VkDevice device
@@ -1538,9 +1468,8 @@ foreign import ccall unsafe "vkDestroyDescriptorSetLayout"
                VkDevice -- ^ device
                         ->
                  VkDescriptorSetLayout -- ^ descriptorSetLayout
-                                       ->
-                   Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                         -> IO ()
+                                       -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                    -> IO ()
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -1558,12 +1487,11 @@ foreign import ccall unsafe "vkCreateDescriptorPool"
                vkCreateDescriptorPool ::
                VkDevice -- ^ device
                         ->
-                 Foreign.Ptr.Ptr VkDescriptorPoolCreateInfo -- ^ pCreateInfo
-                                                            ->
-                   Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                         ->
-                     Foreign.Ptr.Ptr VkDescriptorPool -- ^ pDescriptorPool
-                                                      -> IO VkResult
+                 Ptr VkDescriptorPoolCreateInfo -- ^ pCreateInfo
+                                                ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkDescriptorPool -- ^ pDescriptorPool
+                                                                     -> IO VkResult
 
 -- | > void vkDestroyDescriptorPool
 --   >     ( VkDevice device
@@ -1575,10 +1503,9 @@ foreign import ccall unsafe "vkCreateDescriptorPool"
 foreign import ccall unsafe "vkDestroyDescriptorPool"
                vkDestroyDescriptorPool ::
                VkDevice -- ^ device
-                        ->
-                 VkDescriptorPool -- ^ descriptorPool
-                                  -> Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                           -> IO ()
+                        -> VkDescriptorPool -- ^ descriptorPool
+                                            -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                         -> IO ()
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -1614,10 +1541,10 @@ foreign import ccall unsafe "vkAllocateDescriptorSets"
                vkAllocateDescriptorSets ::
                VkDevice -- ^ device
                         ->
-                 Foreign.Ptr.Ptr VkDescriptorSetAllocateInfo -- ^ pAllocateInfo
-                                                             ->
-                   Foreign.Ptr.Ptr VkDescriptorSet -- ^ pDescriptorSets
-                                                   -> IO VkResult
+                 Ptr VkDescriptorSetAllocateInfo -- ^ pAllocateInfo
+                                                 ->
+                   Ptr VkDescriptorSet -- ^ pDescriptorSets
+                                       -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -1638,8 +1565,8 @@ foreign import ccall unsafe "vkFreeDescriptorSets"
                  VkDescriptorPool -- ^ descriptorPool
                                   ->
                    Data.Word.Word32 -- ^ descriptorSetCount
-                                    -> Foreign.Ptr.Ptr VkDescriptorSet -- ^ pDescriptorSets
-                                                                       -> IO VkResult
+                                    -> Ptr VkDescriptorSet -- ^ pDescriptorSets
+                                                           -> IO VkResult
 
 -- | > void vkUpdateDescriptorSets
 --   >     ( VkDevice device
@@ -1656,11 +1583,11 @@ foreign import ccall unsafe "vkUpdateDescriptorSets"
                         ->
                  Data.Word.Word32 -- ^ descriptorWriteCount
                                   ->
-                   Foreign.Ptr.Ptr VkWriteDescriptorSet -- ^ pDescriptorWrites
-                                                        ->
+                   Ptr VkWriteDescriptorSet -- ^ pDescriptorWrites
+                                            ->
                      Data.Word.Word32 -- ^ descriptorCopyCount
-                                      -> Foreign.Ptr.Ptr VkCopyDescriptorSet -- ^ pDescriptorCopies
-                                                                             -> IO ()
+                                      -> Ptr VkCopyDescriptorSet -- ^ pDescriptorCopies
+                                                                 -> IO ()
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -1678,12 +1605,11 @@ foreign import ccall unsafe "vkCreateFramebuffer"
                vkCreateFramebuffer ::
                VkDevice -- ^ device
                         ->
-                 Foreign.Ptr.Ptr VkFramebufferCreateInfo -- ^ pCreateInfo
-                                                         ->
-                   Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                         ->
-                     Foreign.Ptr.Ptr VkFramebuffer -- ^ pFramebuffer
-                                                   -> IO VkResult
+                 Ptr VkFramebufferCreateInfo -- ^ pCreateInfo
+                                             ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkFramebuffer -- ^ pFramebuffer
+                                                                  -> IO VkResult
 
 -- | > void vkDestroyFramebuffer
 --   >     ( VkDevice device
@@ -1695,10 +1621,9 @@ foreign import ccall unsafe "vkCreateFramebuffer"
 foreign import ccall unsafe "vkDestroyFramebuffer"
                vkDestroyFramebuffer ::
                VkDevice -- ^ device
-                        ->
-                 VkFramebuffer -- ^ framebuffer
-                               -> Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                        -> IO ()
+                        -> VkFramebuffer -- ^ framebuffer
+                                         -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                      -> IO ()
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -1716,12 +1641,11 @@ foreign import ccall unsafe "vkCreateRenderPass" vkCreateRenderPass
                ::
                VkDevice -- ^ device
                         ->
-                 Foreign.Ptr.Ptr VkRenderPassCreateInfo -- ^ pCreateInfo
-                                                        ->
-                   Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                         ->
-                     Foreign.Ptr.Ptr VkRenderPass -- ^ pRenderPass
-                                                  -> IO VkResult
+                 Ptr VkRenderPassCreateInfo -- ^ pCreateInfo
+                                            ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkRenderPass -- ^ pRenderPass
+                                                                 -> IO VkResult
 
 -- | > void vkDestroyRenderPass
 --   >     ( VkDevice device
@@ -1733,10 +1657,9 @@ foreign import ccall unsafe "vkCreateRenderPass" vkCreateRenderPass
 foreign import ccall unsafe "vkDestroyRenderPass"
                vkDestroyRenderPass ::
                VkDevice -- ^ device
-                        ->
-                 VkRenderPass -- ^ renderPass
-                              -> Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                       -> IO ()
+                        -> VkRenderPass -- ^ renderPass
+                                        -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                     -> IO ()
 
 -- | > void vkGetRenderAreaGranularity
 --   >     ( VkDevice device
@@ -1749,8 +1672,8 @@ foreign import ccall unsafe "vkGetRenderAreaGranularity"
                vkGetRenderAreaGranularity ::
                VkDevice -- ^ device
                         -> VkRenderPass -- ^ renderPass
-                                        -> Foreign.Ptr.Ptr VkExtent2D -- ^ pGranularity
-                                                                      -> IO ()
+                                        -> Ptr VkExtent2D -- ^ pGranularity
+                                                          -> IO ()
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -1768,12 +1691,11 @@ foreign import ccall unsafe "vkCreateCommandPool"
                vkCreateCommandPool ::
                VkDevice -- ^ device
                         ->
-                 Foreign.Ptr.Ptr VkCommandPoolCreateInfo -- ^ pCreateInfo
-                                                         ->
-                   Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                         ->
-                     Foreign.Ptr.Ptr VkCommandPool -- ^ pCommandPool
-                                                   -> IO VkResult
+                 Ptr VkCommandPoolCreateInfo -- ^ pCreateInfo
+                                             ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkCommandPool -- ^ pCommandPool
+                                                                  -> IO VkResult
 
 -- | > void vkDestroyCommandPool
 --   >     ( VkDevice device
@@ -1785,10 +1707,9 @@ foreign import ccall unsafe "vkCreateCommandPool"
 foreign import ccall unsafe "vkDestroyCommandPool"
                vkDestroyCommandPool ::
                VkDevice -- ^ device
-                        ->
-                 VkCommandPool -- ^ commandPool
-                               -> Foreign.Ptr.Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                        -> IO ()
+                        -> VkCommandPool -- ^ commandPool
+                                         -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                      -> IO ()
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -1823,10 +1744,10 @@ foreign import ccall unsafe "vkAllocateCommandBuffers"
                vkAllocateCommandBuffers ::
                VkDevice -- ^ device
                         ->
-                 Foreign.Ptr.Ptr VkCommandBufferAllocateInfo -- ^ pAllocateInfo
-                                                             ->
-                   Foreign.Ptr.Ptr VkCommandBuffer -- ^ pCommandBuffers
-                                                   -> IO VkResult
+                 Ptr VkCommandBufferAllocateInfo -- ^ pAllocateInfo
+                                                 ->
+                   Ptr VkCommandBuffer -- ^ pCommandBuffers
+                                       -> IO VkResult
 
 -- | > void vkFreeCommandBuffers
 --   >     ( VkDevice device
@@ -1841,10 +1762,9 @@ foreign import ccall unsafe "vkFreeCommandBuffers"
                VkDevice -- ^ device
                         ->
                  VkCommandPool -- ^ commandPool
-                               ->
-                   Data.Word.Word32 -- ^ commandBufferCount
-                                    -> Foreign.Ptr.Ptr VkCommandBuffer -- ^ pCommandBuffers
-                                                                       -> IO ()
+                               -> Data.Word.Word32 -- ^ commandBufferCount
+                                                   -> Ptr VkCommandBuffer -- ^ pCommandBuffers
+                                                                          -> IO ()
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -1859,9 +1779,8 @@ foreign import ccall unsafe "vkFreeCommandBuffers"
 foreign import ccall unsafe "vkBeginCommandBuffer"
                vkBeginCommandBuffer ::
                VkCommandBuffer -- ^ commandBuffer
-                               ->
-                 Foreign.Ptr.Ptr VkCommandBufferBeginInfo -- ^ pBeginInfo
-                                                          -> IO VkResult
+                               -> Ptr VkCommandBufferBeginInfo -- ^ pBeginInfo
+                                                               -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -1925,10 +1844,9 @@ foreign import ccall unsafe "vkCmdSetViewport" vkCmdSetViewport ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
                  Data.Word.Word32 -- ^ firstViewport
-                                  ->
-                   Data.Word.Word32 -- ^ viewportCount
-                                    -> Foreign.Ptr.Ptr VkViewport -- ^ pViewports
-                                                                  -> IO ()
+                                  -> Data.Word.Word32 -- ^ viewportCount
+                                                      -> Ptr VkViewport -- ^ pViewports
+                                                                        -> IO ()
 
 -- | queues: @graphics@
 --
@@ -1946,10 +1864,9 @@ foreign import ccall unsafe "vkCmdSetScissor" vkCmdSetScissor ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
                  Data.Word.Word32 -- ^ firstScissor
-                                  ->
-                   Data.Word.Word32 -- ^ scissorCount
-                                    -> Foreign.Ptr.Ptr VkRect2D -- ^ pScissors
-                                                                -> IO ()
+                                  -> Data.Word.Word32 -- ^ scissorCount
+                                                      -> Ptr VkRect2D -- ^ pScissors
+                                                                      -> IO ()
 
 -- | queues: @graphics@
 --
@@ -1963,8 +1880,7 @@ foreign import ccall unsafe "vkCmdSetScissor" vkCmdSetScissor ::
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCmdSetLineWidth.html vkCmdSetLineWidth registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdSetLineWidth" vkCmdSetLineWidth
                :: VkCommandBuffer -- ^ commandBuffer
-                                  -> Foreign.C.Types.CFloat -- ^ lineWidth
-                                                            -> IO ()
+                                  -> #{type float} -> IO ()
 
 -- | queues: @graphics@
 --
@@ -1982,11 +1898,8 @@ foreign import ccall unsafe "vkCmdSetDepthBias" vkCmdSetDepthBias
                ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
-                 Foreign.C.Types.CFloat -- ^ depthBiasConstantFactor
-                                        ->
-                   Foreign.C.Types.CFloat -- ^ depthBiasClamp
-                                          -> Foreign.C.Types.CFloat -- ^ depthBiasSlopeFactor
-                                                                    -> IO ()
+                 #{type float} ->
+                   #{type float} -> #{type float} -> IO ()
 
 -- | queues: @graphics@
 --
@@ -2001,8 +1914,8 @@ foreign import ccall unsafe "vkCmdSetDepthBias" vkCmdSetDepthBias
 foreign import ccall unsafe "vkCmdSetBlendConstants"
                vkCmdSetBlendConstants ::
                VkCommandBuffer -- ^ commandBuffer
-                               -> Foreign.Ptr.Ptr Foreign.C.Types.CFloat -- ^ blendConstants
-                                                                         -> IO ()
+                               -> Ptr #{type float} -- ^ blendConstants
+                                                                -> IO ()
 
 -- | queues: @graphics@
 --
@@ -2019,9 +1932,7 @@ foreign import ccall unsafe "vkCmdSetDepthBounds"
                vkCmdSetDepthBounds ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
-                 Foreign.C.Types.CFloat -- ^ minDepthBounds
-                                        -> Foreign.C.Types.CFloat -- ^ maxDepthBounds
-                                                                  -> IO ()
+                 #{type float} -> #{type float} -> IO ()
 
 -- | queues: @graphics@
 --
@@ -2105,11 +2016,11 @@ foreign import ccall unsafe "vkCmdBindDescriptorSets"
                                       ->
                        Data.Word.Word32 -- ^ descriptorSetCount
                                         ->
-                         Foreign.Ptr.Ptr VkDescriptorSet -- ^ pDescriptorSets
-                                                         ->
+                         Ptr VkDescriptorSet -- ^ pDescriptorSets
+                                             ->
                            Data.Word.Word32 -- ^ dynamicOffsetCount
-                                            -> Foreign.Ptr.Ptr Data.Word.Word32 -- ^ pDynamicOffsets
-                                                                                -> IO ()
+                                            -> Ptr Data.Word.Word32 -- ^ pDynamicOffsets
+                                                                    -> IO ()
 
 -- | queues: @graphics@
 --
@@ -2151,10 +2062,9 @@ foreign import ccall unsafe "vkCmdBindVertexBuffers"
                  Data.Word.Word32 -- ^ firstBinding
                                   ->
                    Data.Word.Word32 -- ^ bindingCount
-                                    ->
-                     Foreign.Ptr.Ptr VkBuffer -- ^ pBuffers
-                                              -> Foreign.Ptr.Ptr VkDeviceSize -- ^ pOffsets
-                                                                              -> IO ()
+                                    -> Ptr VkBuffer -- ^ pBuffers
+                                                    -> Ptr VkDeviceSize -- ^ pOffsets
+                                                                        -> IO ()
 
 -- | queues: @graphics@
 --
@@ -2324,10 +2234,9 @@ foreign import ccall unsafe "vkCmdCopyBuffer" vkCmdCopyBuffer ::
                  VkBuffer -- ^ srcBuffer
                           ->
                    VkBuffer -- ^ dstBuffer
-                            ->
-                     Data.Word.Word32 -- ^ regionCount
-                                      -> Foreign.Ptr.Ptr VkBufferCopy -- ^ pRegions
-                                                                      -> IO ()
+                            -> Data.Word.Word32 -- ^ regionCount
+                                                -> Ptr VkBufferCopy -- ^ pRegions
+                                                                    -> IO ()
 
 -- | queues: @transfer,graphics,compute@
 --
@@ -2356,10 +2265,9 @@ foreign import ccall unsafe "vkCmdCopyImage" vkCmdCopyImage ::
                      VkImage -- ^ dstImage
                              ->
                        VkImageLayout -- ^ dstImageLayout
-                                     ->
-                         Data.Word.Word32 -- ^ regionCount
-                                          -> Foreign.Ptr.Ptr VkImageCopy -- ^ pRegions
-                                                                         -> IO ()
+                                     -> Data.Word.Word32 -- ^ regionCount
+                                                         -> Ptr VkImageCopy -- ^ pRegions
+                                                                            -> IO ()
 
 -- | queues: @graphics@
 --
@@ -2391,10 +2299,9 @@ foreign import ccall unsafe "vkCmdBlitImage" vkCmdBlitImage ::
                        VkImageLayout -- ^ dstImageLayout
                                      ->
                          Data.Word.Word32 -- ^ regionCount
-                                          ->
-                           Foreign.Ptr.Ptr VkImageBlit -- ^ pRegions
-                                                       -> VkFilter -- ^ filter
-                                                                   -> IO ()
+                                          -> Ptr VkImageBlit -- ^ pRegions
+                                                             -> VkFilter -- ^ filter
+                                                                         -> IO ()
 
 -- | queues: @transfer,graphics,compute@
 --
@@ -2421,10 +2328,9 @@ foreign import ccall unsafe "vkCmdCopyBufferToImage"
                    VkImage -- ^ dstImage
                            ->
                      VkImageLayout -- ^ dstImageLayout
-                                   ->
-                       Data.Word.Word32 -- ^ regionCount
-                                        -> Foreign.Ptr.Ptr VkBufferImageCopy -- ^ pRegions
-                                                                             -> IO ()
+                                   -> Data.Word.Word32 -- ^ regionCount
+                                                       -> Ptr VkBufferImageCopy -- ^ pRegions
+                                                                                -> IO ()
 
 -- | queues: @transfer,graphics,compute@
 --
@@ -2451,10 +2357,9 @@ foreign import ccall unsafe "vkCmdCopyImageToBuffer"
                    VkImageLayout -- ^ srcImageLayout
                                  ->
                      VkBuffer -- ^ dstBuffer
-                              ->
-                       Data.Word.Word32 -- ^ regionCount
-                                        -> Foreign.Ptr.Ptr VkBufferImageCopy -- ^ pRegions
-                                                                             -> IO ()
+                              -> Data.Word.Word32 -- ^ regionCount
+                                                  -> Ptr VkBufferImageCopy -- ^ pRegions
+                                                                           -> IO ()
 
 -- | queues: @transfer,graphics,compute@
 --
@@ -2476,12 +2381,10 @@ foreign import ccall unsafe "vkCmdUpdateBuffer" vkCmdUpdateBuffer
                VkCommandBuffer -- ^ commandBuffer
                                ->
                  VkBuffer -- ^ dstBuffer
-                          ->
-                   VkDeviceSize -- ^ dstOffset
-                                ->
-                     VkDeviceSize -- ^ dataSize
-                                  -> Foreign.Ptr.Ptr Data.Void.Void -- ^ pData
-                                                                    -> IO ()
+                          -> VkDeviceSize -- ^ dstOffset
+                                          -> VkDeviceSize -- ^ dataSize
+                                                          -> Ptr Void -- ^ pData
+                                                                      -> IO ()
 
 -- | transfer support is only available when VK_KHR_maintenance1 is enabled, as documented in valid usage language in the specification
 --
@@ -2534,12 +2437,11 @@ foreign import ccall unsafe "vkCmdClearColorImage"
                          ->
                    VkImageLayout -- ^ imageLayout
                                  ->
-                     Foreign.Ptr.Ptr VkClearColorValue -- ^ pColor
-                                                       ->
+                     Ptr VkClearColorValue -- ^ pColor
+                                           ->
                        Data.Word.Word32 -- ^ rangeCount
-                                        ->
-                         Foreign.Ptr.Ptr VkImageSubresourceRange -- ^ pRanges
-                                                                 -> IO ()
+                                        -> Ptr VkImageSubresourceRange -- ^ pRanges
+                                                                       -> IO ()
 
 -- | queues: @graphics@
 --
@@ -2565,12 +2467,11 @@ foreign import ccall unsafe "vkCmdClearDepthStencilImage"
                          ->
                    VkImageLayout -- ^ imageLayout
                                  ->
-                     Foreign.Ptr.Ptr VkClearDepthStencilValue -- ^ pDepthStencil
-                                                              ->
+                     Ptr VkClearDepthStencilValue -- ^ pDepthStencil
+                                                  ->
                        Data.Word.Word32 -- ^ rangeCount
-                                        ->
-                         Foreign.Ptr.Ptr VkImageSubresourceRange -- ^ pRanges
-                                                                 -> IO ()
+                                        -> Ptr VkImageSubresourceRange -- ^ pRanges
+                                                                       -> IO ()
 
 -- | queues: @graphics@
 --
@@ -2593,11 +2494,11 @@ foreign import ccall unsafe "vkCmdClearAttachments"
                                ->
                  Data.Word.Word32 -- ^ attachmentCount
                                   ->
-                   Foreign.Ptr.Ptr VkClearAttachment -- ^ pAttachments
-                                                     ->
+                   Ptr VkClearAttachment -- ^ pAttachments
+                                         ->
                      Data.Word.Word32 -- ^ rectCount
-                                      -> Foreign.Ptr.Ptr VkClearRect -- ^ pRects
-                                                                     -> IO ()
+                                      -> Ptr VkClearRect -- ^ pRects
+                                                         -> IO ()
 
 -- | queues: @graphics@
 --
@@ -2627,10 +2528,9 @@ foreign import ccall unsafe "vkCmdResolveImage" vkCmdResolveImage
                      VkImage -- ^ dstImage
                              ->
                        VkImageLayout -- ^ dstImageLayout
-                                     ->
-                         Data.Word.Word32 -- ^ regionCount
-                                          -> Foreign.Ptr.Ptr VkImageResolve -- ^ pRegions
-                                                                            -> IO ()
+                                     -> Data.Word.Word32 -- ^ regionCount
+                                                         -> Ptr VkImageResolve -- ^ pRegions
+                                                                               -> IO ()
 
 -- | queues: @graphics,compute@
 --
@@ -2690,23 +2590,23 @@ foreign import ccall unsafe "vkCmdWaitEvents" vkCmdWaitEvents ::
                                ->
                  Data.Word.Word32 -- ^ eventCount
                                   ->
-                   Foreign.Ptr.Ptr VkEvent -- ^ pEvents
-                                           ->
+                   Ptr VkEvent -- ^ pEvents
+                               ->
                      VkPipelineStageFlags -- ^ srcStageMask
                                           ->
                        VkPipelineStageFlags -- ^ dstStageMask
                                             ->
                          Data.Word.Word32 -- ^ memoryBarrierCount
                                           ->
-                           Foreign.Ptr.Ptr VkMemoryBarrier -- ^ pMemoryBarriers
-                                                           ->
+                           Ptr VkMemoryBarrier -- ^ pMemoryBarriers
+                                               ->
                              Data.Word.Word32 -- ^ bufferMemoryBarrierCount
                                               ->
-                               Foreign.Ptr.Ptr VkBufferMemoryBarrier -- ^ pBufferMemoryBarriers
-                                                                     ->
+                               Ptr VkBufferMemoryBarrier -- ^ pBufferMemoryBarriers
+                                                         ->
                                  Data.Word.Word32 -- ^ imageMemoryBarrierCount
-                                                  -> Foreign.Ptr.Ptr VkImageMemoryBarrier -- ^ pImageMemoryBarriers
-                                                                                          -> IO ()
+                                                  -> Ptr VkImageMemoryBarrier -- ^ pImageMemoryBarriers
+                                                                              -> IO ()
 
 -- | queues: @transfer,graphics,compute@
 --
@@ -2738,15 +2638,15 @@ foreign import ccall unsafe "vkCmdPipelineBarrier"
                                        ->
                        Data.Word.Word32 -- ^ memoryBarrierCount
                                         ->
-                         Foreign.Ptr.Ptr VkMemoryBarrier -- ^ pMemoryBarriers
-                                                         ->
+                         Ptr VkMemoryBarrier -- ^ pMemoryBarriers
+                                             ->
                            Data.Word.Word32 -- ^ bufferMemoryBarrierCount
                                             ->
-                             Foreign.Ptr.Ptr VkBufferMemoryBarrier -- ^ pBufferMemoryBarriers
-                                                                   ->
+                             Ptr VkBufferMemoryBarrier -- ^ pBufferMemoryBarriers
+                                                       ->
                                Data.Word.Word32 -- ^ imageMemoryBarrierCount
-                                                -> Foreign.Ptr.Ptr VkImageMemoryBarrier -- ^ pImageMemoryBarriers
-                                                                                        -> IO ()
+                                                -> Ptr VkImageMemoryBarrier -- ^ pImageMemoryBarriers
+                                                                            -> IO ()
 
 -- | queues: @graphics,compute@
 --
@@ -2887,10 +2787,9 @@ foreign import ccall unsafe "vkCmdPushConstants" vkCmdPushConstants
                    VkShaderStageFlags -- ^ stageFlags
                                       ->
                      Data.Word.Word32 -- ^ offset
-                                      ->
-                       Data.Word.Word32 -- ^ size
-                                        -> Foreign.Ptr.Ptr Data.Void.Void -- ^ pValues
-                                                                          -> IO ()
+                                      -> Data.Word.Word32 -- ^ size
+                                                          -> Ptr Void -- ^ pValues
+                                                                      -> IO ()
 
 -- | queues: @graphics@
 --
@@ -2909,9 +2808,9 @@ foreign import ccall unsafe "vkCmdBeginRenderPass"
                vkCmdBeginRenderPass ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
-                 Foreign.Ptr.Ptr VkRenderPassBeginInfo -- ^ pRenderPassBegin
-                                                       -> VkSubpassContents -- ^ contents
-                                                                            -> IO ()
+                 Ptr VkRenderPassBeginInfo -- ^ pRenderPassBegin
+                                           -> VkSubpassContents -- ^ contents
+                                                                -> IO ()
 
 -- | queues: @graphics@
 --
@@ -2959,10 +2858,9 @@ foreign import ccall unsafe "vkCmdEndRenderPass" vkCmdEndRenderPass
 foreign import ccall unsafe "vkCmdExecuteCommands"
                vkCmdExecuteCommands ::
                VkCommandBuffer -- ^ commandBuffer
-                               ->
-                 Data.Word.Word32 -- ^ commandBufferCount
-                                  -> Foreign.Ptr.Ptr VkCommandBuffer -- ^ pCommandBuffers
-                                                                     -> IO ()
+                               -> Data.Word.Word32 -- ^ commandBufferCount
+                                                   -> Ptr VkCommandBuffer -- ^ pCommandBuffers
+                                                                          -> IO ()
 
 data VkBufferMemoryBarrier = VkBufferMemoryBarrier## ByteArray##
 
@@ -3049,8 +2947,7 @@ instance {-# OVERLAPPING #-} HasVkSType VkBufferMemoryBarrier where
         {-# NOINLINE vkSType #-}
         vkSType x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkBufferMemoryBarrier, sType})
+              (peekByteOff (unsafePtr x) #{offset VkBufferMemoryBarrier, sType})
 
         {-# INLINE vkSTypeByteOffset #-}
         vkSTypeByteOffset ~_
@@ -3065,14 +2962,12 @@ instance {-# OVERLAPPING #-} HasVkSType VkBufferMemoryBarrier where
           = pokeByteOff p #{offset VkBufferMemoryBarrier, sType}
 
 instance {-# OVERLAPPING #-} HasVkPNext VkBufferMemoryBarrier where
-        type VkPNextMType VkBufferMemoryBarrier =
-             Foreign.Ptr.Ptr Data.Void.Void
+        type VkPNextMType VkBufferMemoryBarrier = Ptr Void
 
         {-# NOINLINE vkPNext #-}
         vkPNext x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkBufferMemoryBarrier, pNext})
+              (peekByteOff (unsafePtr x) #{offset VkBufferMemoryBarrier, pNext})
 
         {-# INLINE vkPNextByteOffset #-}
         vkPNextByteOffset ~_
@@ -3093,8 +2988,7 @@ instance {-# OVERLAPPING #-}
         {-# NOINLINE vkSrcAccessMask #-}
         vkSrcAccessMask x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkBufferMemoryBarrier, srcAccessMask})
+              (peekByteOff (unsafePtr x) #{offset VkBufferMemoryBarrier, srcAccessMask})
 
         {-# INLINE vkSrcAccessMaskByteOffset #-}
         vkSrcAccessMaskByteOffset ~_
@@ -3102,13 +2996,11 @@ instance {-# OVERLAPPING #-}
 
         {-# INLINE readVkSrcAccessMask #-}
         readVkSrcAccessMask p
-          = peekByteOff p
-              #{offset VkBufferMemoryBarrier, srcAccessMask}
+          = peekByteOff p #{offset VkBufferMemoryBarrier, srcAccessMask}
 
         {-# INLINE writeVkSrcAccessMask #-}
         writeVkSrcAccessMask p
-          = pokeByteOff p
-              #{offset VkBufferMemoryBarrier, srcAccessMask}
+          = pokeByteOff p #{offset VkBufferMemoryBarrier, srcAccessMask}
 
 instance {-# OVERLAPPING #-}
          HasVkDstAccessMask VkBufferMemoryBarrier where
@@ -3117,8 +3009,7 @@ instance {-# OVERLAPPING #-}
         {-# NOINLINE vkDstAccessMask #-}
         vkDstAccessMask x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkBufferMemoryBarrier, dstAccessMask})
+              (peekByteOff (unsafePtr x) #{offset VkBufferMemoryBarrier, dstAccessMask})
 
         {-# INLINE vkDstAccessMaskByteOffset #-}
         vkDstAccessMaskByteOffset ~_
@@ -3126,45 +3017,20 @@ instance {-# OVERLAPPING #-}
 
         {-# INLINE readVkDstAccessMask #-}
         readVkDstAccessMask p
-          = peekByteOff p
-              #{offset VkBufferMemoryBarrier, dstAccessMask}
+          = peekByteOff p #{offset VkBufferMemoryBarrier, dstAccessMask}
 
         {-# INLINE writeVkDstAccessMask #-}
         writeVkDstAccessMask p
-          = pokeByteOff p
-              #{offset VkBufferMemoryBarrier, dstAccessMask}
-
-class HasVkSrcQueueFamilyIndex a where
-        type VkSrcQueueFamilyIndexMType a :: *
-
-        vkSrcQueueFamilyIndex :: a -> VkSrcQueueFamilyIndexMType a
-
-        vkSrcQueueFamilyIndexByteOffset :: a -> Int
-
-        readVkSrcQueueFamilyIndex ::
-                                  Ptr a -> IO (VkSrcQueueFamilyIndexMType a)
-
-        writeVkSrcQueueFamilyIndex ::
-                                   Ptr a -> VkSrcQueueFamilyIndexMType a -> IO ()
-
-instance {-# OVERLAPPABLE #-}
-         TypeError
-           (ShowType a :<>:
-              Text " does not seem to have field 'srcQueueFamilyIndex'." :$$:
-                Text
-                  "Check Vulkan documentation for available fields of this type.") =>
-         HasVkSrcQueueFamilyIndex a
+          = pokeByteOff p #{offset VkBufferMemoryBarrier, dstAccessMask}
 
 instance {-# OVERLAPPING #-}
          HasVkSrcQueueFamilyIndex VkBufferMemoryBarrier where
-        type VkSrcQueueFamilyIndexMType VkBufferMemoryBarrier =
-             Data.Word.Word32
+        type VkSrcQueueFamilyIndexMType VkBufferMemoryBarrier = Word32
 
         {-# NOINLINE vkSrcQueueFamilyIndex #-}
         vkSrcQueueFamilyIndex x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkBufferMemoryBarrier, srcQueueFamilyIndex})
+              (peekByteOff (unsafePtr x) #{offset VkBufferMemoryBarrier, srcQueueFamilyIndex})
 
         {-# INLINE vkSrcQueueFamilyIndexByteOffset #-}
         vkSrcQueueFamilyIndexByteOffset ~_
@@ -3172,45 +3038,20 @@ instance {-# OVERLAPPING #-}
 
         {-# INLINE readVkSrcQueueFamilyIndex #-}
         readVkSrcQueueFamilyIndex p
-          = peekByteOff p
-              #{offset VkBufferMemoryBarrier, srcQueueFamilyIndex}
+          = peekByteOff p #{offset VkBufferMemoryBarrier, srcQueueFamilyIndex}
 
         {-# INLINE writeVkSrcQueueFamilyIndex #-}
         writeVkSrcQueueFamilyIndex p
-          = pokeByteOff p
-              #{offset VkBufferMemoryBarrier, srcQueueFamilyIndex}
-
-class HasVkDstQueueFamilyIndex a where
-        type VkDstQueueFamilyIndexMType a :: *
-
-        vkDstQueueFamilyIndex :: a -> VkDstQueueFamilyIndexMType a
-
-        vkDstQueueFamilyIndexByteOffset :: a -> Int
-
-        readVkDstQueueFamilyIndex ::
-                                  Ptr a -> IO (VkDstQueueFamilyIndexMType a)
-
-        writeVkDstQueueFamilyIndex ::
-                                   Ptr a -> VkDstQueueFamilyIndexMType a -> IO ()
-
-instance {-# OVERLAPPABLE #-}
-         TypeError
-           (ShowType a :<>:
-              Text " does not seem to have field 'dstQueueFamilyIndex'." :$$:
-                Text
-                  "Check Vulkan documentation for available fields of this type.") =>
-         HasVkDstQueueFamilyIndex a
+          = pokeByteOff p #{offset VkBufferMemoryBarrier, srcQueueFamilyIndex}
 
 instance {-# OVERLAPPING #-}
          HasVkDstQueueFamilyIndex VkBufferMemoryBarrier where
-        type VkDstQueueFamilyIndexMType VkBufferMemoryBarrier =
-             Data.Word.Word32
+        type VkDstQueueFamilyIndexMType VkBufferMemoryBarrier = Word32
 
         {-# NOINLINE vkDstQueueFamilyIndex #-}
         vkDstQueueFamilyIndex x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkBufferMemoryBarrier, dstQueueFamilyIndex})
+              (peekByteOff (unsafePtr x) #{offset VkBufferMemoryBarrier, dstQueueFamilyIndex})
 
         {-# INLINE vkDstQueueFamilyIndexByteOffset #-}
         vkDstQueueFamilyIndexByteOffset ~_
@@ -3218,13 +3059,11 @@ instance {-# OVERLAPPING #-}
 
         {-# INLINE readVkDstQueueFamilyIndex #-}
         readVkDstQueueFamilyIndex p
-          = peekByteOff p
-              #{offset VkBufferMemoryBarrier, dstQueueFamilyIndex}
+          = peekByteOff p #{offset VkBufferMemoryBarrier, dstQueueFamilyIndex}
 
         {-# INLINE writeVkDstQueueFamilyIndex #-}
         writeVkDstQueueFamilyIndex p
-          = pokeByteOff p
-              #{offset VkBufferMemoryBarrier, dstQueueFamilyIndex}
+          = pokeByteOff p #{offset VkBufferMemoryBarrier, dstQueueFamilyIndex}
 
 instance {-# OVERLAPPING #-} HasVkBuffer VkBufferMemoryBarrier
          where
@@ -3233,8 +3072,7 @@ instance {-# OVERLAPPING #-} HasVkBuffer VkBufferMemoryBarrier
         {-# NOINLINE vkBuffer #-}
         vkBuffer x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkBufferMemoryBarrier, buffer})
+              (peekByteOff (unsafePtr x) #{offset VkBufferMemoryBarrier, buffer})
 
         {-# INLINE vkBufferByteOffset #-}
         vkBufferByteOffset ~_
@@ -3255,8 +3093,7 @@ instance {-# OVERLAPPING #-} HasVkOffset VkBufferMemoryBarrier
         {-# NOINLINE vkOffset #-}
         vkOffset x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkBufferMemoryBarrier, offset})
+              (peekByteOff (unsafePtr x) #{offset VkBufferMemoryBarrier, offset})
 
         {-# INLINE vkOffsetByteOffset #-}
         vkOffsetByteOffset ~_
@@ -3276,8 +3113,7 @@ instance {-# OVERLAPPING #-} HasVkSize VkBufferMemoryBarrier where
         {-# NOINLINE vkSize #-}
         vkSize x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkBufferMemoryBarrier, size})
+              (peekByteOff (unsafePtr x) #{offset VkBufferMemoryBarrier, size})
 
         {-# INLINE vkSizeByteOffset #-}
         vkSizeByteOffset ~_
@@ -3404,16 +3240,16 @@ instance VulkanMarshal VkDispatchIndirectCommand where
           = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkX VkDispatchIndirectCommand where
-        type VkXMType VkDispatchIndirectCommand = Data.Word.Word32
+        type VkXMType VkDispatchIndirectCommand = Word32
 
         {-# NOINLINE vkX #-}
         vkX x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkDispatchIndirectCommand, x})
+              (peekByteOff (unsafePtr x) #{offset VkDispatchIndirectCommand, x})
 
         {-# INLINE vkXByteOffset #-}
-        vkXByteOffset ~_ = #{offset VkDispatchIndirectCommand, x}
+        vkXByteOffset ~_
+          = #{offset VkDispatchIndirectCommand, x}
 
         {-# INLINE readVkX #-}
         readVkX p
@@ -3424,16 +3260,16 @@ instance {-# OVERLAPPING #-} HasVkX VkDispatchIndirectCommand where
           = pokeByteOff p #{offset VkDispatchIndirectCommand, x}
 
 instance {-# OVERLAPPING #-} HasVkY VkDispatchIndirectCommand where
-        type VkYMType VkDispatchIndirectCommand = Data.Word.Word32
+        type VkYMType VkDispatchIndirectCommand = Word32
 
         {-# NOINLINE vkY #-}
         vkY x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkDispatchIndirectCommand, y})
+              (peekByteOff (unsafePtr x) #{offset VkDispatchIndirectCommand, y})
 
         {-# INLINE vkYByteOffset #-}
-        vkYByteOffset ~_ = #{offset VkDispatchIndirectCommand, y}
+        vkYByteOffset ~_
+          = #{offset VkDispatchIndirectCommand, y}
 
         {-# INLINE readVkY #-}
         readVkY p
@@ -3444,16 +3280,16 @@ instance {-# OVERLAPPING #-} HasVkY VkDispatchIndirectCommand where
           = pokeByteOff p #{offset VkDispatchIndirectCommand, y}
 
 instance {-# OVERLAPPING #-} HasVkZ VkDispatchIndirectCommand where
-        type VkZMType VkDispatchIndirectCommand = Data.Word.Word32
+        type VkZMType VkDispatchIndirectCommand = Word32
 
         {-# NOINLINE vkZ #-}
         vkZ x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkDispatchIndirectCommand, z})
+              (peekByteOff (unsafePtr x) #{offset VkDispatchIndirectCommand, z})
 
         {-# INLINE vkZByteOffset #-}
-        vkZByteOffset ~_ = #{offset VkDispatchIndirectCommand, z}
+        vkZByteOffset ~_
+          = #{offset VkDispatchIndirectCommand, z}
 
         {-# INLINE readVkZ #-}
         readVkZ p
@@ -3492,7 +3328,8 @@ instance Storable VkDrawIndexedIndirectCommand where
         sizeOf ~_ = #{size VkDrawIndexedIndirectCommand}
 
         {-# INLINE sizeOf #-}
-        alignment ~_ = #{alignment VkDrawIndexedIndirectCommand}
+        alignment ~_
+          = #{alignment VkDrawIndexedIndirectCommand}
 
         {-# INLINE alignment #-}
         peek (Ptr addr)
@@ -3555,35 +3392,14 @@ instance VulkanMarshal VkDrawIndexedIndirectCommand where
         touchVkData x@(VkDrawIndexedIndirectCommand## ba)
           = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
-class HasVkIndexCount a where
-        type VkIndexCountMType a :: *
-
-        vkIndexCount :: a -> VkIndexCountMType a
-
-        vkIndexCountByteOffset :: a -> Int
-
-        readVkIndexCount :: Ptr a -> IO (VkIndexCountMType a)
-
-        writeVkIndexCount :: Ptr a -> VkIndexCountMType a -> IO ()
-
-instance {-# OVERLAPPABLE #-}
-         TypeError
-           (ShowType a :<>:
-              Text " does not seem to have field 'indexCount'." :$$:
-                Text
-                  "Check Vulkan documentation for available fields of this type.") =>
-         HasVkIndexCount a
-
 instance {-# OVERLAPPING #-}
          HasVkIndexCount VkDrawIndexedIndirectCommand where
-        type VkIndexCountMType VkDrawIndexedIndirectCommand =
-             Data.Word.Word32
+        type VkIndexCountMType VkDrawIndexedIndirectCommand = Word32
 
         {-# NOINLINE vkIndexCount #-}
         vkIndexCount x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkDrawIndexedIndirectCommand, indexCount})
+              (peekByteOff (unsafePtr x) #{offset VkDrawIndexedIndirectCommand, indexCount})
 
         {-# INLINE vkIndexCountByteOffset #-}
         vkIndexCountByteOffset ~_
@@ -3591,43 +3407,20 @@ instance {-# OVERLAPPING #-}
 
         {-# INLINE readVkIndexCount #-}
         readVkIndexCount p
-          = peekByteOff p
-              #{offset VkDrawIndexedIndirectCommand, indexCount}
+          = peekByteOff p #{offset VkDrawIndexedIndirectCommand, indexCount}
 
         {-# INLINE writeVkIndexCount #-}
         writeVkIndexCount p
-          = pokeByteOff p
-              #{offset VkDrawIndexedIndirectCommand, indexCount}
-
-class HasVkInstanceCount a where
-        type VkInstanceCountMType a :: *
-
-        vkInstanceCount :: a -> VkInstanceCountMType a
-
-        vkInstanceCountByteOffset :: a -> Int
-
-        readVkInstanceCount :: Ptr a -> IO (VkInstanceCountMType a)
-
-        writeVkInstanceCount :: Ptr a -> VkInstanceCountMType a -> IO ()
-
-instance {-# OVERLAPPABLE #-}
-         TypeError
-           (ShowType a :<>:
-              Text " does not seem to have field 'instanceCount'." :$$:
-                Text
-                  "Check Vulkan documentation for available fields of this type.") =>
-         HasVkInstanceCount a
+          = pokeByteOff p #{offset VkDrawIndexedIndirectCommand, indexCount}
 
 instance {-# OVERLAPPING #-}
          HasVkInstanceCount VkDrawIndexedIndirectCommand where
-        type VkInstanceCountMType VkDrawIndexedIndirectCommand =
-             Data.Word.Word32
+        type VkInstanceCountMType VkDrawIndexedIndirectCommand = Word32
 
         {-# NOINLINE vkInstanceCount #-}
         vkInstanceCount x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkDrawIndexedIndirectCommand, instanceCount})
+              (peekByteOff (unsafePtr x) #{offset VkDrawIndexedIndirectCommand, instanceCount})
 
         {-# INLINE vkInstanceCountByteOffset #-}
         vkInstanceCountByteOffset ~_
@@ -3635,43 +3428,20 @@ instance {-# OVERLAPPING #-}
 
         {-# INLINE readVkInstanceCount #-}
         readVkInstanceCount p
-          = peekByteOff p
-              #{offset VkDrawIndexedIndirectCommand, instanceCount}
+          = peekByteOff p #{offset VkDrawIndexedIndirectCommand, instanceCount}
 
         {-# INLINE writeVkInstanceCount #-}
         writeVkInstanceCount p
-          = pokeByteOff p
-              #{offset VkDrawIndexedIndirectCommand, instanceCount}
-
-class HasVkFirstIndex a where
-        type VkFirstIndexMType a :: *
-
-        vkFirstIndex :: a -> VkFirstIndexMType a
-
-        vkFirstIndexByteOffset :: a -> Int
-
-        readVkFirstIndex :: Ptr a -> IO (VkFirstIndexMType a)
-
-        writeVkFirstIndex :: Ptr a -> VkFirstIndexMType a -> IO ()
-
-instance {-# OVERLAPPABLE #-}
-         TypeError
-           (ShowType a :<>:
-              Text " does not seem to have field 'firstIndex'." :$$:
-                Text
-                  "Check Vulkan documentation for available fields of this type.") =>
-         HasVkFirstIndex a
+          = pokeByteOff p #{offset VkDrawIndexedIndirectCommand, instanceCount}
 
 instance {-# OVERLAPPING #-}
          HasVkFirstIndex VkDrawIndexedIndirectCommand where
-        type VkFirstIndexMType VkDrawIndexedIndirectCommand =
-             Data.Word.Word32
+        type VkFirstIndexMType VkDrawIndexedIndirectCommand = Word32
 
         {-# NOINLINE vkFirstIndex #-}
         vkFirstIndex x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkDrawIndexedIndirectCommand, firstIndex})
+              (peekByteOff (unsafePtr x) #{offset VkDrawIndexedIndirectCommand, firstIndex})
 
         {-# INLINE vkFirstIndexByteOffset #-}
         vkFirstIndexByteOffset ~_
@@ -3679,43 +3449,20 @@ instance {-# OVERLAPPING #-}
 
         {-# INLINE readVkFirstIndex #-}
         readVkFirstIndex p
-          = peekByteOff p
-              #{offset VkDrawIndexedIndirectCommand, firstIndex}
+          = peekByteOff p #{offset VkDrawIndexedIndirectCommand, firstIndex}
 
         {-# INLINE writeVkFirstIndex #-}
         writeVkFirstIndex p
-          = pokeByteOff p
-              #{offset VkDrawIndexedIndirectCommand, firstIndex}
-
-class HasVkVertexOffset a where
-        type VkVertexOffsetMType a :: *
-
-        vkVertexOffset :: a -> VkVertexOffsetMType a
-
-        vkVertexOffsetByteOffset :: a -> Int
-
-        readVkVertexOffset :: Ptr a -> IO (VkVertexOffsetMType a)
-
-        writeVkVertexOffset :: Ptr a -> VkVertexOffsetMType a -> IO ()
-
-instance {-# OVERLAPPABLE #-}
-         TypeError
-           (ShowType a :<>:
-              Text " does not seem to have field 'vertexOffset'." :$$:
-                Text
-                  "Check Vulkan documentation for available fields of this type.") =>
-         HasVkVertexOffset a
+          = pokeByteOff p #{offset VkDrawIndexedIndirectCommand, firstIndex}
 
 instance {-# OVERLAPPING #-}
          HasVkVertexOffset VkDrawIndexedIndirectCommand where
-        type VkVertexOffsetMType VkDrawIndexedIndirectCommand =
-             Data.Int.Int32
+        type VkVertexOffsetMType VkDrawIndexedIndirectCommand = Int32
 
         {-# NOINLINE vkVertexOffset #-}
         vkVertexOffset x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkDrawIndexedIndirectCommand, vertexOffset})
+              (peekByteOff (unsafePtr x) #{offset VkDrawIndexedIndirectCommand, vertexOffset})
 
         {-# INLINE vkVertexOffsetByteOffset #-}
         vkVertexOffsetByteOffset ~_
@@ -3723,43 +3470,20 @@ instance {-# OVERLAPPING #-}
 
         {-# INLINE readVkVertexOffset #-}
         readVkVertexOffset p
-          = peekByteOff p
-              #{offset VkDrawIndexedIndirectCommand, vertexOffset}
+          = peekByteOff p #{offset VkDrawIndexedIndirectCommand, vertexOffset}
 
         {-# INLINE writeVkVertexOffset #-}
         writeVkVertexOffset p
-          = pokeByteOff p
-              #{offset VkDrawIndexedIndirectCommand, vertexOffset}
-
-class HasVkFirstInstance a where
-        type VkFirstInstanceMType a :: *
-
-        vkFirstInstance :: a -> VkFirstInstanceMType a
-
-        vkFirstInstanceByteOffset :: a -> Int
-
-        readVkFirstInstance :: Ptr a -> IO (VkFirstInstanceMType a)
-
-        writeVkFirstInstance :: Ptr a -> VkFirstInstanceMType a -> IO ()
-
-instance {-# OVERLAPPABLE #-}
-         TypeError
-           (ShowType a :<>:
-              Text " does not seem to have field 'firstInstance'." :$$:
-                Text
-                  "Check Vulkan documentation for available fields of this type.") =>
-         HasVkFirstInstance a
+          = pokeByteOff p #{offset VkDrawIndexedIndirectCommand, vertexOffset}
 
 instance {-# OVERLAPPING #-}
          HasVkFirstInstance VkDrawIndexedIndirectCommand where
-        type VkFirstInstanceMType VkDrawIndexedIndirectCommand =
-             Data.Word.Word32
+        type VkFirstInstanceMType VkDrawIndexedIndirectCommand = Word32
 
         {-# NOINLINE vkFirstInstance #-}
         vkFirstInstance x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkDrawIndexedIndirectCommand, firstInstance})
+              (peekByteOff (unsafePtr x) #{offset VkDrawIndexedIndirectCommand, firstInstance})
 
         {-# INLINE vkFirstInstanceByteOffset #-}
         vkFirstInstanceByteOffset ~_
@@ -3767,13 +3491,11 @@ instance {-# OVERLAPPING #-}
 
         {-# INLINE readVkFirstInstance #-}
         readVkFirstInstance p
-          = peekByteOff p
-              #{offset VkDrawIndexedIndirectCommand, firstInstance}
+          = peekByteOff p #{offset VkDrawIndexedIndirectCommand, firstInstance}
 
         {-# INLINE writeVkFirstInstance #-}
         writeVkFirstInstance p
-          = pokeByteOff p
-              #{offset VkDrawIndexedIndirectCommand, firstInstance}
+          = pokeByteOff p #{offset VkDrawIndexedIndirectCommand, firstInstance}
 
 instance Show VkDrawIndexedIndirectCommand where
         showsPrec d x
@@ -3872,34 +3594,14 @@ instance VulkanMarshal VkDrawIndirectCommand where
         touchVkData x@(VkDrawIndirectCommand## ba)
           = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
-class HasVkVertexCount a where
-        type VkVertexCountMType a :: *
-
-        vkVertexCount :: a -> VkVertexCountMType a
-
-        vkVertexCountByteOffset :: a -> Int
-
-        readVkVertexCount :: Ptr a -> IO (VkVertexCountMType a)
-
-        writeVkVertexCount :: Ptr a -> VkVertexCountMType a -> IO ()
-
-instance {-# OVERLAPPABLE #-}
-         TypeError
-           (ShowType a :<>:
-              Text " does not seem to have field 'vertexCount'." :$$:
-                Text
-                  "Check Vulkan documentation for available fields of this type.") =>
-         HasVkVertexCount a
-
 instance {-# OVERLAPPING #-} HasVkVertexCount VkDrawIndirectCommand
          where
-        type VkVertexCountMType VkDrawIndirectCommand = Data.Word.Word32
+        type VkVertexCountMType VkDrawIndirectCommand = Word32
 
         {-# NOINLINE vkVertexCount #-}
         vkVertexCount x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkDrawIndirectCommand, vertexCount})
+              (peekByteOff (unsafePtr x) #{offset VkDrawIndirectCommand, vertexCount})
 
         {-# INLINE vkVertexCountByteOffset #-}
         vkVertexCountByteOffset ~_
@@ -3907,23 +3609,20 @@ instance {-# OVERLAPPING #-} HasVkVertexCount VkDrawIndirectCommand
 
         {-# INLINE readVkVertexCount #-}
         readVkVertexCount p
-          = peekByteOff p
-              #{offset VkDrawIndirectCommand, vertexCount}
+          = peekByteOff p #{offset VkDrawIndirectCommand, vertexCount}
 
         {-# INLINE writeVkVertexCount #-}
         writeVkVertexCount p
-          = pokeByteOff p
-              #{offset VkDrawIndirectCommand, vertexCount}
+          = pokeByteOff p #{offset VkDrawIndirectCommand, vertexCount}
 
 instance {-# OVERLAPPING #-}
          HasVkInstanceCount VkDrawIndirectCommand where
-        type VkInstanceCountMType VkDrawIndirectCommand = Data.Word.Word32
+        type VkInstanceCountMType VkDrawIndirectCommand = Word32
 
         {-# NOINLINE vkInstanceCount #-}
         vkInstanceCount x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkDrawIndirectCommand, instanceCount})
+              (peekByteOff (unsafePtr x) #{offset VkDrawIndirectCommand, instanceCount})
 
         {-# INLINE vkInstanceCountByteOffset #-}
         vkInstanceCountByteOffset ~_
@@ -3931,42 +3630,20 @@ instance {-# OVERLAPPING #-}
 
         {-# INLINE readVkInstanceCount #-}
         readVkInstanceCount p
-          = peekByteOff p
-              #{offset VkDrawIndirectCommand, instanceCount}
+          = peekByteOff p #{offset VkDrawIndirectCommand, instanceCount}
 
         {-# INLINE writeVkInstanceCount #-}
         writeVkInstanceCount p
-          = pokeByteOff p
-              #{offset VkDrawIndirectCommand, instanceCount}
-
-class HasVkFirstVertex a where
-        type VkFirstVertexMType a :: *
-
-        vkFirstVertex :: a -> VkFirstVertexMType a
-
-        vkFirstVertexByteOffset :: a -> Int
-
-        readVkFirstVertex :: Ptr a -> IO (VkFirstVertexMType a)
-
-        writeVkFirstVertex :: Ptr a -> VkFirstVertexMType a -> IO ()
-
-instance {-# OVERLAPPABLE #-}
-         TypeError
-           (ShowType a :<>:
-              Text " does not seem to have field 'firstVertex'." :$$:
-                Text
-                  "Check Vulkan documentation for available fields of this type.") =>
-         HasVkFirstVertex a
+          = pokeByteOff p #{offset VkDrawIndirectCommand, instanceCount}
 
 instance {-# OVERLAPPING #-} HasVkFirstVertex VkDrawIndirectCommand
          where
-        type VkFirstVertexMType VkDrawIndirectCommand = Data.Word.Word32
+        type VkFirstVertexMType VkDrawIndirectCommand = Word32
 
         {-# NOINLINE vkFirstVertex #-}
         vkFirstVertex x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkDrawIndirectCommand, firstVertex})
+              (peekByteOff (unsafePtr x) #{offset VkDrawIndirectCommand, firstVertex})
 
         {-# INLINE vkFirstVertexByteOffset #-}
         vkFirstVertexByteOffset ~_
@@ -3974,23 +3651,20 @@ instance {-# OVERLAPPING #-} HasVkFirstVertex VkDrawIndirectCommand
 
         {-# INLINE readVkFirstVertex #-}
         readVkFirstVertex p
-          = peekByteOff p
-              #{offset VkDrawIndirectCommand, firstVertex}
+          = peekByteOff p #{offset VkDrawIndirectCommand, firstVertex}
 
         {-# INLINE writeVkFirstVertex #-}
         writeVkFirstVertex p
-          = pokeByteOff p
-              #{offset VkDrawIndirectCommand, firstVertex}
+          = pokeByteOff p #{offset VkDrawIndirectCommand, firstVertex}
 
 instance {-# OVERLAPPING #-}
          HasVkFirstInstance VkDrawIndirectCommand where
-        type VkFirstInstanceMType VkDrawIndirectCommand = Data.Word.Word32
+        type VkFirstInstanceMType VkDrawIndirectCommand = Word32
 
         {-# NOINLINE vkFirstInstance #-}
         vkFirstInstance x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkDrawIndirectCommand, firstInstance})
+              (peekByteOff (unsafePtr x) #{offset VkDrawIndirectCommand, firstInstance})
 
         {-# INLINE vkFirstInstanceByteOffset #-}
         vkFirstInstanceByteOffset ~_
@@ -3998,13 +3672,11 @@ instance {-# OVERLAPPING #-}
 
         {-# INLINE readVkFirstInstance #-}
         readVkFirstInstance p
-          = peekByteOff p
-              #{offset VkDrawIndirectCommand, firstInstance}
+          = peekByteOff p #{offset VkDrawIndirectCommand, firstInstance}
 
         {-# INLINE writeVkFirstInstance #-}
         writeVkFirstInstance p
-          = pokeByteOff p
-              #{offset VkDrawIndirectCommand, firstInstance}
+          = pokeByteOff p #{offset VkDrawIndirectCommand, firstInstance}
 
 instance Show VkDrawIndirectCommand where
         showsPrec d x
@@ -4106,8 +3778,7 @@ instance {-# OVERLAPPING #-} HasVkSType VkImageMemoryBarrier where
         {-# NOINLINE vkSType #-}
         vkSType x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkImageMemoryBarrier, sType})
+              (peekByteOff (unsafePtr x) #{offset VkImageMemoryBarrier, sType})
 
         {-# INLINE vkSTypeByteOffset #-}
         vkSTypeByteOffset ~_
@@ -4122,14 +3793,12 @@ instance {-# OVERLAPPING #-} HasVkSType VkImageMemoryBarrier where
           = pokeByteOff p #{offset VkImageMemoryBarrier, sType}
 
 instance {-# OVERLAPPING #-} HasVkPNext VkImageMemoryBarrier where
-        type VkPNextMType VkImageMemoryBarrier =
-             Foreign.Ptr.Ptr Data.Void.Void
+        type VkPNextMType VkImageMemoryBarrier = Ptr Void
 
         {-# NOINLINE vkPNext #-}
         vkPNext x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkImageMemoryBarrier, pNext})
+              (peekByteOff (unsafePtr x) #{offset VkImageMemoryBarrier, pNext})
 
         {-# INLINE vkPNextByteOffset #-}
         vkPNextByteOffset ~_
@@ -4150,8 +3819,7 @@ instance {-# OVERLAPPING #-}
         {-# NOINLINE vkSrcAccessMask #-}
         vkSrcAccessMask x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkImageMemoryBarrier, srcAccessMask})
+              (peekByteOff (unsafePtr x) #{offset VkImageMemoryBarrier, srcAccessMask})
 
         {-# INLINE vkSrcAccessMaskByteOffset #-}
         vkSrcAccessMaskByteOffset ~_
@@ -4159,13 +3827,11 @@ instance {-# OVERLAPPING #-}
 
         {-# INLINE readVkSrcAccessMask #-}
         readVkSrcAccessMask p
-          = peekByteOff p
-              #{offset VkImageMemoryBarrier, srcAccessMask}
+          = peekByteOff p #{offset VkImageMemoryBarrier, srcAccessMask}
 
         {-# INLINE writeVkSrcAccessMask #-}
         writeVkSrcAccessMask p
-          = pokeByteOff p
-              #{offset VkImageMemoryBarrier, srcAccessMask}
+          = pokeByteOff p #{offset VkImageMemoryBarrier, srcAccessMask}
 
 instance {-# OVERLAPPING #-}
          HasVkDstAccessMask VkImageMemoryBarrier where
@@ -4174,8 +3840,7 @@ instance {-# OVERLAPPING #-}
         {-# NOINLINE vkDstAccessMask #-}
         vkDstAccessMask x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkImageMemoryBarrier, dstAccessMask})
+              (peekByteOff (unsafePtr x) #{offset VkImageMemoryBarrier, dstAccessMask})
 
         {-# INLINE vkDstAccessMaskByteOffset #-}
         vkDstAccessMaskByteOffset ~_
@@ -4183,32 +3848,11 @@ instance {-# OVERLAPPING #-}
 
         {-# INLINE readVkDstAccessMask #-}
         readVkDstAccessMask p
-          = peekByteOff p
-              #{offset VkImageMemoryBarrier, dstAccessMask}
+          = peekByteOff p #{offset VkImageMemoryBarrier, dstAccessMask}
 
         {-# INLINE writeVkDstAccessMask #-}
         writeVkDstAccessMask p
-          = pokeByteOff p
-              #{offset VkImageMemoryBarrier, dstAccessMask}
-
-class HasVkOldLayout a where
-        type VkOldLayoutMType a :: *
-
-        vkOldLayout :: a -> VkOldLayoutMType a
-
-        vkOldLayoutByteOffset :: a -> Int
-
-        readVkOldLayout :: Ptr a -> IO (VkOldLayoutMType a)
-
-        writeVkOldLayout :: Ptr a -> VkOldLayoutMType a -> IO ()
-
-instance {-# OVERLAPPABLE #-}
-         TypeError
-           (ShowType a :<>:
-              Text " does not seem to have field 'oldLayout'." :$$:
-                Text
-                  "Check Vulkan documentation for available fields of this type.") =>
-         HasVkOldLayout a
+          = pokeByteOff p #{offset VkImageMemoryBarrier, dstAccessMask}
 
 instance {-# OVERLAPPING #-} HasVkOldLayout VkImageMemoryBarrier
          where
@@ -4217,8 +3861,7 @@ instance {-# OVERLAPPING #-} HasVkOldLayout VkImageMemoryBarrier
         {-# NOINLINE vkOldLayout #-}
         vkOldLayout x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkImageMemoryBarrier, oldLayout})
+              (peekByteOff (unsafePtr x) #{offset VkImageMemoryBarrier, oldLayout})
 
         {-# INLINE vkOldLayoutByteOffset #-}
         vkOldLayoutByteOffset ~_
@@ -4232,25 +3875,6 @@ instance {-# OVERLAPPING #-} HasVkOldLayout VkImageMemoryBarrier
         writeVkOldLayout p
           = pokeByteOff p #{offset VkImageMemoryBarrier, oldLayout}
 
-class HasVkNewLayout a where
-        type VkNewLayoutMType a :: *
-
-        vkNewLayout :: a -> VkNewLayoutMType a
-
-        vkNewLayoutByteOffset :: a -> Int
-
-        readVkNewLayout :: Ptr a -> IO (VkNewLayoutMType a)
-
-        writeVkNewLayout :: Ptr a -> VkNewLayoutMType a -> IO ()
-
-instance {-# OVERLAPPABLE #-}
-         TypeError
-           (ShowType a :<>:
-              Text " does not seem to have field 'newLayout'." :$$:
-                Text
-                  "Check Vulkan documentation for available fields of this type.") =>
-         HasVkNewLayout a
-
 instance {-# OVERLAPPING #-} HasVkNewLayout VkImageMemoryBarrier
          where
         type VkNewLayoutMType VkImageMemoryBarrier = VkImageLayout
@@ -4258,8 +3882,7 @@ instance {-# OVERLAPPING #-} HasVkNewLayout VkImageMemoryBarrier
         {-# NOINLINE vkNewLayout #-}
         vkNewLayout x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkImageMemoryBarrier, newLayout})
+              (peekByteOff (unsafePtr x) #{offset VkImageMemoryBarrier, newLayout})
 
         {-# INLINE vkNewLayoutByteOffset #-}
         vkNewLayoutByteOffset ~_
@@ -4275,14 +3898,12 @@ instance {-# OVERLAPPING #-} HasVkNewLayout VkImageMemoryBarrier
 
 instance {-# OVERLAPPING #-}
          HasVkSrcQueueFamilyIndex VkImageMemoryBarrier where
-        type VkSrcQueueFamilyIndexMType VkImageMemoryBarrier =
-             Data.Word.Word32
+        type VkSrcQueueFamilyIndexMType VkImageMemoryBarrier = Word32
 
         {-# NOINLINE vkSrcQueueFamilyIndex #-}
         vkSrcQueueFamilyIndex x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkImageMemoryBarrier, srcQueueFamilyIndex})
+              (peekByteOff (unsafePtr x) #{offset VkImageMemoryBarrier, srcQueueFamilyIndex})
 
         {-# INLINE vkSrcQueueFamilyIndexByteOffset #-}
         vkSrcQueueFamilyIndexByteOffset ~_
@@ -4290,24 +3911,20 @@ instance {-# OVERLAPPING #-}
 
         {-# INLINE readVkSrcQueueFamilyIndex #-}
         readVkSrcQueueFamilyIndex p
-          = peekByteOff p
-              #{offset VkImageMemoryBarrier, srcQueueFamilyIndex}
+          = peekByteOff p #{offset VkImageMemoryBarrier, srcQueueFamilyIndex}
 
         {-# INLINE writeVkSrcQueueFamilyIndex #-}
         writeVkSrcQueueFamilyIndex p
-          = pokeByteOff p
-              #{offset VkImageMemoryBarrier, srcQueueFamilyIndex}
+          = pokeByteOff p #{offset VkImageMemoryBarrier, srcQueueFamilyIndex}
 
 instance {-# OVERLAPPING #-}
          HasVkDstQueueFamilyIndex VkImageMemoryBarrier where
-        type VkDstQueueFamilyIndexMType VkImageMemoryBarrier =
-             Data.Word.Word32
+        type VkDstQueueFamilyIndexMType VkImageMemoryBarrier = Word32
 
         {-# NOINLINE vkDstQueueFamilyIndex #-}
         vkDstQueueFamilyIndex x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkImageMemoryBarrier, dstQueueFamilyIndex})
+              (peekByteOff (unsafePtr x) #{offset VkImageMemoryBarrier, dstQueueFamilyIndex})
 
         {-# INLINE vkDstQueueFamilyIndexByteOffset #-}
         vkDstQueueFamilyIndexByteOffset ~_
@@ -4315,13 +3932,11 @@ instance {-# OVERLAPPING #-}
 
         {-# INLINE readVkDstQueueFamilyIndex #-}
         readVkDstQueueFamilyIndex p
-          = peekByteOff p
-              #{offset VkImageMemoryBarrier, dstQueueFamilyIndex}
+          = peekByteOff p #{offset VkImageMemoryBarrier, dstQueueFamilyIndex}
 
         {-# INLINE writeVkDstQueueFamilyIndex #-}
         writeVkDstQueueFamilyIndex p
-          = pokeByteOff p
-              #{offset VkImageMemoryBarrier, dstQueueFamilyIndex}
+          = pokeByteOff p #{offset VkImageMemoryBarrier, dstQueueFamilyIndex}
 
 instance {-# OVERLAPPING #-} HasVkImage VkImageMemoryBarrier where
         type VkImageMType VkImageMemoryBarrier = VkImage
@@ -4329,8 +3944,7 @@ instance {-# OVERLAPPING #-} HasVkImage VkImageMemoryBarrier where
         {-# NOINLINE vkImage #-}
         vkImage x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkImageMemoryBarrier, image})
+              (peekByteOff (unsafePtr x) #{offset VkImageMemoryBarrier, image})
 
         {-# INLINE vkImageByteOffset #-}
         vkImageByteOffset ~_
@@ -4352,8 +3966,7 @@ instance {-# OVERLAPPING #-}
         {-# NOINLINE vkSubresourceRange #-}
         vkSubresourceRange x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkImageMemoryBarrier, subresourceRange})
+              (peekByteOff (unsafePtr x) #{offset VkImageMemoryBarrier, subresourceRange})
 
         {-# INLINE vkSubresourceRangeByteOffset #-}
         vkSubresourceRangeByteOffset ~_
@@ -4361,13 +3974,11 @@ instance {-# OVERLAPPING #-}
 
         {-# INLINE readVkSubresourceRange #-}
         readVkSubresourceRange p
-          = peekByteOff p
-              #{offset VkImageMemoryBarrier, subresourceRange}
+          = peekByteOff p #{offset VkImageMemoryBarrier, subresourceRange}
 
         {-# INLINE writeVkSubresourceRange #-}
         writeVkSubresourceRange p
-          = pokeByteOff p
-              #{offset VkImageMemoryBarrier, subresourceRange}
+          = pokeByteOff p #{offset VkImageMemoryBarrier, subresourceRange}
 
 instance Show VkImageMemoryBarrier where
         showsPrec d x
@@ -4490,8 +4101,7 @@ instance {-# OVERLAPPING #-} HasVkSType VkMemoryBarrier where
         {-# NOINLINE vkSType #-}
         vkSType x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkMemoryBarrier, sType})
+              (peekByteOff (unsafePtr x) #{offset VkMemoryBarrier, sType})
 
         {-# INLINE vkSTypeByteOffset #-}
         vkSTypeByteOffset ~_ = #{offset VkMemoryBarrier, sType}
@@ -4505,13 +4115,12 @@ instance {-# OVERLAPPING #-} HasVkSType VkMemoryBarrier where
           = pokeByteOff p #{offset VkMemoryBarrier, sType}
 
 instance {-# OVERLAPPING #-} HasVkPNext VkMemoryBarrier where
-        type VkPNextMType VkMemoryBarrier = Foreign.Ptr.Ptr Data.Void.Void
+        type VkPNextMType VkMemoryBarrier = Ptr Void
 
         {-# NOINLINE vkPNext #-}
         vkPNext x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkMemoryBarrier, pNext})
+              (peekByteOff (unsafePtr x) #{offset VkMemoryBarrier, pNext})
 
         {-# INLINE vkPNextByteOffset #-}
         vkPNextByteOffset ~_ = #{offset VkMemoryBarrier, pNext}
@@ -4531,8 +4140,7 @@ instance {-# OVERLAPPING #-} HasVkSrcAccessMask VkMemoryBarrier
         {-# NOINLINE vkSrcAccessMask #-}
         vkSrcAccessMask x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkMemoryBarrier, srcAccessMask})
+              (peekByteOff (unsafePtr x) #{offset VkMemoryBarrier, srcAccessMask})
 
         {-# INLINE vkSrcAccessMaskByteOffset #-}
         vkSrcAccessMaskByteOffset ~_
@@ -4553,8 +4161,7 @@ instance {-# OVERLAPPING #-} HasVkDstAccessMask VkMemoryBarrier
         {-# NOINLINE vkDstAccessMask #-}
         vkDstAccessMask x
           = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 #{offset VkMemoryBarrier, dstAccessMask})
+              (peekByteOff (unsafePtr x) #{offset VkMemoryBarrier, dstAccessMask})
 
         {-# INLINE vkDstAccessMaskByteOffset #-}
         vkDstAccessMaskByteOffset ~_

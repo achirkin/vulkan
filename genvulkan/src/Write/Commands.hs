@@ -58,20 +58,20 @@ genCommand VkCommand
                  >>= preComment . T.unpack
 
     writePragma "ForeignFunctionInterface"
-    writeImport "Foreign.C.Types" $ IThingAll () (Ident () "CChar")
-    writeImport "Foreign.C.Types" $ IThingAll () (Ident () "CSize")
-    writeImport "Foreign.C.Types" $ IThingAll () (Ident () "CInt")
-    writeImport "Foreign.C.Types" $ IThingAll () (Ident () "CULong")
-    writeImport "Foreign.C.Types" $ IThingAll () (Ident () "CFloat")
-    writeImport "Foreign.Ptr"     $ IAbs () (NoNamespace ()) (Ident () "Ptr")
-    writeImport "Data.Int"        $ IAbs () (NoNamespace ()) (Ident () "Int32")
-    writeImport "Data.Word"       $ IAbs () (NoNamespace ()) (Ident () "Word32")
-    writeImport "Data.Word"       $ IAbs () (NoNamespace ()) (Ident () "Word64")
-    writeImport "Data.Void"       $ IAbs () (NoNamespace ()) (Ident () "Void")
+    writeImport $ DIThing "CChar" DITAll
+    writeImport $ DIThing "CSize" DITAll
+    writeImport $ DIThing "CInt"  DITAll
+    writeImport $ DIThing "CULong" DITAll
+    writeImport $ DIThing "CFloat" DITAll
+    writeImport $ DIThing "Ptr" DITNo
+    writeImport $ DIThing "Int32" DITNo
+    writeImport $ DIThing "Word32" DITNo
+    writeImport $ DIThing "Word64" DITNo
+    writeImport $ DIThing "Void" DITNo
     writeDecl $ ForImp rezComment (CCall Nothing) (Just (PlayRisky Nothing))
                       (Just cnameOrigStr) (Ident Nothing cnameStr) funtype
 
-    writeExport $ EVar () (UnQual () (Ident () cnameStr))
+    writeExport $ DIVar $ qNameTxt cname
   where
     cname = toHaskellName vkname
     cnameStr = T.unpack  $ qNameTxt cname

@@ -10,7 +10,6 @@ module Write.Types.Handle
 import           Data.Semigroup
 import qualified Data.Text                            as T
 import           Language.Haskell.Exts.SimpleComments
-import           Language.Haskell.Exts.Syntax
 import           NeatInterpolation
 
 import           VkXml.CommonTypes
@@ -52,7 +51,7 @@ genHandle VkTypeSimple
           (preComment $ T.unpack [text|Opaque data type referenced by $tnametxt|])
         $ parseDecl'
         [text|data $tnametxtT|]
-      writeExport $ EAbs () (NoNamespace ()) tname
-      writeExport $ EThingWith () (NoWildcard ()) tnameT []
+      writeExport $ DIThing tnametxt DITNo
+      writeExport $ DIThing tnametxtT DITEmpty
 genHandle t = error $ "genHandle: expected a simple handle type, but got: "
                   <> show t

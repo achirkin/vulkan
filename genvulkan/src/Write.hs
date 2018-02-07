@@ -11,6 +11,7 @@ import           Control.DeepSeq
 import           Control.Monad
 import           Data.Char
 import qualified Data.List                            as L
+import qualified Data.Map                             as Map
 import           Data.Maybe                           (fromMaybe)
 import           Data.Semigroup
 import           Data.Text                            (Text)
@@ -35,6 +36,7 @@ import           Write.Feature
 import           Write.ModuleWriter
 import           Write.Types
 import           Write.Types.Enum
+import           Write.Types.Struct
 
 
 generateVkSource :: Path b Dir
@@ -44,58 +46,116 @@ generateVkSource :: Path b Dir
 generateVkSource outputDir outCabalFile vkXml = do
 
   createDirIfMissing True (outputDir </> [reldir|Graphics|])
-  createDirIfMissing True (outputDir </> [reldir|Graphics|] </> [reldir|Vulkan|])
-  createDirIfMissing True
-    (outputDir </> [reldir|Graphics|] </> [reldir|Vulkan|] </> [reldir|Ext|])
+  createDirIfMissing True (outputDir </> [reldir|Graphics/Vulkan|])
+  createDirIfMissing True (outputDir </> [reldir|Graphics/Vulkan/Ext|])
+
+  let initialDI = ida "Foreign.C.Types" "CChar"
+               <> ida "Foreign.C.Types" "CSize"
+               <> ida "Foreign.C.Types" "CInt"
+               <> ida "Foreign.C.Types" "CULong"
+               <> ida "Foreign.C.Types" "CFloat"
+               <> ida "Foreign.C.Types" "CWchar"
+               <> id0 "Foreign.Ptr" "Ptr"
+               <> iva "Foreign.Ptr" "nullPtr"
+               <> id0 "Foreign.Ptr" "FunPtr"
+               <> id1 "GHC.Ptr" "Ptr"
+               <> id0 "Data.Void" "Void"
+               <> id0 "Data.Word" "Word8"
+               <> id0 "Data.Word" "Word16"
+               <> id0 "Data.Word" "Word32"
+               <> id0 "Data.Word" "Word64"
+               <> id0 "Data.Int" "Int8"
+               <> id0 "Data.Int" "Int16"
+               <> id0 "Data.Int" "Int32"
+               <> id0 "Data.Int" "Int64"
+               <> id0 "GHC.Generics" "Generic"
+               <> id0 "Data.Data" "Data"
+               <> ida "Data.Bits" "Bits"
+               <> ida "Data.Bits" "FiniteBits"
+               <> ida "Foreign.Storable" "Storable"
+               <> iva "Text.ParserCombinators.ReadPrec" "(+++)"
+               <> iva "Text.ParserCombinators.ReadPrec" "step"
+               <> iva "Text.ParserCombinators.ReadPrec" "prec"
+               <> iva "Text.Read" "parens"
+               <> ida "Text.Read" "Read"
+               <> iva "GHC.Read" "choose"
+               <> iva "GHC.Read" "expectP"
+               <> ida "Text.Read.Lex" "Lexeme"
+               <> iva "Data.Coerce" "coerce"
+               <> ida "Foreign.C.String" "CString"
+               <> ida "GHC.Types" "IO"
+               <> ida "GHC.Types" "Int"
+               <> ida "GHC.Types" "Word"
+               <> ida "GHC.ForeignPtr" "ForeignPtr"
+               <> ida "GHC.ForeignPtr" "ForeignPtrContents"
+               <> iva "GHC.ForeignPtr" "newForeignPtr_"
+               <> iva "System.IO.Unsafe" "unsafeDupablePerformIO"
+               <> ida "GHC.TypeLits" "ErrorMessage"
+               <> id0 "GHC.TypeLits" "TypeError"
+
+      ida m t = Map.fromList
+        [ (DIThing t DITAll ,  ModuleName () m)
+        , (DIThing t DITEmpty, ModuleName () m)
+        , (DIThing t DITNo,    ModuleName () m)
+        ]
+      id0 m t = Map.fromList
+        [ (DIThing t DITEmpty, ModuleName () m)
+        , (DIThing t DITNo,    ModuleName () m)
+        ]
+      id1 m t = Map.fromList
+        [ (DIThing t DITAll,   ModuleName () m)
+        ]
+      -- ity m t x = Map.fromList [ (DIThing t x, ModuleName () m) ]
+      iva m t = Map.fromList [ (DIVar t, ModuleName () m) ]
+      -- ipa m t = Map.fromList [ (DIPat t, ModuleName () m) ]
 
 
   exportedNamesCommon <- do
-    (enames, mr) <- runModuleWriter vkXml "Graphics.Vulkan.Common" mempty $ do
+    ((), mr) <- runModuleWriter vkXml "Graphics.Vulkan.Common" initialDI $ do
        writePragma "Strict"
        writePragma "DataKinds"
        genApiConstants
        genBaseTypes
-       getNamesInScope
     writeModule outputDir [relfile|Graphics/Vulkan/Common.hsc|] id mr
-    pure enames
+    pure $ globalNames mr
 
-  exportedNamesBase <- do
-    (enames, mr) <- runModuleWriter vkXml "Graphics.Vulkan.Base" exportedNamesCommon $ do
+  (classDeclsBase, exportedNamesBase) <- do
+    (a, mr) <- runModuleWriter vkXml "Graphics.Vulkan.Base" exportedNamesCommon $ do
        writePragma "Strict"
        writePragma "DataKinds"
        writeFullImport "Graphics.Vulkan.Marshal.Internal"
        writeFullImport "Graphics.Vulkan.Marshal"
        writeFullImport "Graphics.Vulkan.Common"
-       genBaseStructs
+       writeFullImport "Graphics.Vulkan.StructMembers"
+       cds <- genBaseStructs
        genBaseCommands
-       getNamesInScope
-    writeModule outputDir [relfile|Graphics/Vulkan/Base.hsc|]
-         ( addOptionsPragma GHC "-fno-warn-missing-methods"
-         . addOptionsPragma GHC "-fno-warn-unticked-promoted-constructors"
-         ) mr
-    pure enames
+       pure cds
+    writeModule outputDir [relfile|Graphics/Vulkan/Base.hsc|] id mr
+    pure $ (a, globalNames mr)
 
-  exportedNamesCore <- do
-    (enames, mr) <- runModuleWriter vkXml "Graphics.Vulkan.Core" exportedNamesBase $ do
+  (classDeclsCore, exportedNamesCore) <- do
+    (a, mr) <- runModuleWriter vkXml "Graphics.Vulkan.Core" exportedNamesBase $ do
        writePragma "Strict"
        writePragma "DataKinds"
        writeFullImport "Graphics.Vulkan.Marshal.Internal"
        writeFullImport "Graphics.Vulkan.Marshal"
        writeFullImport "Graphics.Vulkan.Common"
        writeFullImport "Graphics.Vulkan.Base"
+       writeFullImport "Graphics.Vulkan.StructMembers"
        genFeature
-       getNamesInScope
-    writeModule outputDir [relfile|Graphics/Vulkan/Core.hsc|]
-         ( addOptionsPragma GHC "-fno-warn-missing-methods"
-         . addOptionsPragma GHC "-fno-warn-unticked-promoted-constructors"
-         ) mr
-    pure enames
+    writeModule outputDir [relfile|Graphics/Vulkan/Core.hsc|] id mr
+    pure $ (a, globalNames mr)
 
-  eModules <- forM (extensions . unInorder . globExtensions $ vkXml) $ \ext -> do
+
+  (exportedNamesExts, classDeclsExts, eModules)
+    <- aggregateExts exportedNamesCore
+                  ( L.sortOn (extNumber . attributes)
+                  . extensions . unInorder . globExtensions $ vkXml)
+                  $ \gn ext -> do
     let eName = T.unpack . unVkExtensionName . extName $ attributes ext
         modName = "Graphics.Vulkan.Ext." <> eName
     fname <- parseRelFile (eName ++ ".hsc")
-    (exProtect, mr) <- runModuleWriter vkXml modName exportedNamesCore $ do
+    ((cds, exProtect), mr) <- runModuleWriter vkXml modName gn $ do
        writePragma "Strict"
        writePragma "DataKinds"
        writeFullImport "Graphics.Vulkan.Marshal.Internal"
@@ -103,12 +163,24 @@ generateVkSource outputDir outCabalFile vkXml = do
        writeFullImport "Graphics.Vulkan.Common"
        writeFullImport "Graphics.Vulkan.Base"
        writeFullImport "Graphics.Vulkan.Core"
+       writeFullImport "Graphics.Vulkan.StructMembers"
+       writeFullImport "Data.Word"
+       writeFullImport "Data.Int"
        genExtension ext
-    writeModule outputDir ([reldir|Graphics/Vulkan/Ext|] </> fname)
+    writeModule outputDir ([reldir|Graphics/Vulkan/Ext|] </> fname) id mr
+    pure (globalNames mr, cds, (T.pack modName, exProtect))
+
+  do -- write classes for struct member accessors
+    ((), mr) <- runModuleWriter vkXml "Graphics.Vulkan.StructMembers" exportedNamesExts $ do
+       writePragma "Strict"
+       writeFullImport "Graphics.Vulkan.Common"
+       mapM_ genClassName
+         . Map.toList
+         $ classDeclsBase <> classDeclsCore <> classDeclsExts
+    writeModule outputDir [relfile|Graphics/Vulkan/StructMembers.hs|]
          ( addOptionsPragma GHC "-fno-warn-missing-methods"
-         . addOptionsPragma GHC "-fno-warn-unticked-promoted-constructors"
          ) mr
-    pure (T.pack modName, exProtect)
+    pure ()
 
   writeFile (toFilePath $ outputDir </> [relfile|Graphics/Vulkan/Ext.hs|])
       $ T.unpack $ T.unlines $
@@ -122,8 +194,22 @@ generateVkSource outputDir outCabalFile vkXml = do
         ]
      <> map importLine eModules
 
+
+
   writeFile (toFilePath outCabalFile) . T.unpack $ genCabalFile eModules
 
+
+aggregateExts :: GlobalNames
+              -> [VkExtension]
+              -> (GlobalNames -> VkExtension
+                   -> IO (GlobalNames,ClassDeclarations, (Text, Maybe Text))
+                 )
+              -> IO (GlobalNames,ClassDeclarations, [(Text, Maybe Text)])
+aggregateExts gn [] _ = pure (gn, mempty, [])
+aggregateExts gn (x:xs) f = do
+  (gn', cd', mp) <- f gn x
+  (gn'', cd'', mps) <- aggregateExts gn' xs f
+  pure (gn'', cd' <> cd'', mp:mps)
 
 importLine :: (Text, Maybe Text) -> Text
 importLine (mname, Nothing) = "import " <> mname
@@ -172,6 +258,7 @@ genCabalFile eModules = T.unlines $
                   Graphics.Vulkan.Common
                   Graphics.Vulkan.Base
                   Graphics.Vulkan.Core
+                  Graphics.Vulkan.StructMembers
                   Graphics.Vulkan.Ext
         |]
       : map (spaces <>) unprotected
