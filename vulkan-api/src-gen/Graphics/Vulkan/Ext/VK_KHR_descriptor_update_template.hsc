@@ -1,17 +1,12 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
-{-# LANGUAGE FlexibleContexts         #-}
-{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE TypeOperators            #-}
 {-# LANGUAGE UnboxedTuples            #-}
-{-# LANGUAGE UndecidableInstances     #-}
-{-# LANGUAGE UnliftedFFITypes         #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_descriptor_update_template
        (-- * Vulkan extension: @VK_KHR_descriptor_update_template@
@@ -40,13 +35,7 @@ module Graphics.Vulkan.Ext.VK_KHR_descriptor_update_template
         pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_KHR_EXT,
         pattern VK_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_KHR)
        where
-import           Data.Int
-import           Data.Void                        (Void)
-import           Data.Word
 import           Foreign.C.String                 (CString)
-import           Foreign.C.Types                  (CChar (..), CFloat (..),
-                                                   CInt (..), CSize (..),
-                                                   CULong (..))
 import           Foreign.Storable                 (Storable (..))
 import           GHC.ForeignPtr                   (ForeignPtr (..),
                                                    ForeignPtrContents (..),
@@ -54,9 +43,19 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Base
-import           Graphics.Vulkan.Common
-import           Graphics.Vulkan.Core
+import           Graphics.Vulkan.Base             (VkAllocationCallbacks)
+import           Graphics.Vulkan.Common           (VkCommandBuffer, VkDebugReportObjectTypeEXT (..),
+                                                   VkDescriptorSet,
+                                                   VkDescriptorSetLayout,
+                                                   VkDescriptorType,
+                                                   VkDescriptorUpdateTemplateCreateFlagsKHR,
+                                                   VkDescriptorUpdateTemplateKHR,
+                                                   VkDescriptorUpdateTemplateTypeKHR,
+                                                   VkDevice, VkObjectType (..),
+                                                   VkPipelineBindPoint,
+                                                   VkPipelineLayout, VkResult,
+                                                   VkStructureType,
+                                                   VkStructureType (..), Word32)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
@@ -733,9 +732,9 @@ foreign import ccall unsafe "vkCmdPushDescriptorSetWithTemplateKHR"
                  VkDescriptorUpdateTemplateKHR -- ^ descriptorUpdateTemplate
                                                ->
                    VkPipelineLayout -- ^ layout
-                                    -> Data.Word.Word32 -- ^ set
-                                                        -> Ptr Void -- ^ pData
-                                                                    -> IO ()
+                                    -> Word32 -- ^ set
+                                              -> Ptr Void -- ^ pData
+                                                          -> IO ()
 
 pattern VK_KHR_DESCRIPTOR_UPDATE_TEMPLATE_SPEC_VERSION ::
         (Num a, Eq a) => a

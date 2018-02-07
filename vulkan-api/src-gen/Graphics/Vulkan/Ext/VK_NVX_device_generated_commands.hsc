@@ -1,17 +1,12 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
-{-# LANGUAGE FlexibleContexts         #-}
-{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE TypeOperators            #-}
 {-# LANGUAGE UnboxedTuples            #-}
-{-# LANGUAGE UndecidableInstances     #-}
-{-# LANGUAGE UnliftedFFITypes         #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_NVX_device_generated_commands
        (-- * Vulkan extension: @VK_NVX_device_generated_commands@
@@ -60,13 +55,7 @@ module Graphics.Vulkan.Ext.VK_NVX_device_generated_commands
         pattern VK_OBJECT_TYPE_OBJECT_TABLE_NVX,
         pattern VK_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX)
        where
-import           Data.Int
-import           Data.Void                        (Void)
-import           Data.Word
 import           Foreign.C.String                 (CString)
-import           Foreign.C.Types                  (CChar (..), CFloat (..),
-                                                   CInt (..), CSize (..),
-                                                   CULong (..))
 import           Foreign.Storable                 (Storable (..))
 import           GHC.ForeignPtr                   (ForeignPtr (..),
                                                    ForeignPtrContents (..),
@@ -74,9 +63,26 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Base
-import           Graphics.Vulkan.Common
-import           Graphics.Vulkan.Core
+import           Graphics.Vulkan.Base             (VkAllocationCallbacks)
+import           Graphics.Vulkan.Common           (VkAccessFlagBits (..),
+                                                   VkBool32, VkBuffer,
+                                                   VkCommandBuffer,
+                                                   VkDescriptorSet, VkDevice,
+                                                   VkDeviceSize, VkIndexType,
+                                                   VkIndirectCommandsLayoutNVX,
+                                                   VkIndirectCommandsLayoutUsageFlagsNVX,
+                                                   VkIndirectCommandsTokenTypeNVX,
+                                                   VkObjectEntryTypeNVX,
+                                                   VkObjectEntryUsageFlagsNVX,
+                                                   VkObjectTableNVX,
+                                                   VkObjectType (..),
+                                                   VkPhysicalDevice, VkPipeline,
+                                                   VkPipelineBindPoint,
+                                                   VkPipelineLayout,
+                                                   VkPipelineStageFlagBits (..),
+                                                   VkResult, VkShaderStageFlags,
+                                                   VkStructureType,
+                                                   VkStructureType (..), Word32)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
@@ -3253,12 +3259,11 @@ foreign import ccall unsafe "vkRegisterObjectsNVX"
                         ->
                  VkObjectTableNVX -- ^ objectTable
                                   ->
-                   Data.Word.Word32 -- ^ objectCount
-                                    ->
+                   Word32 -- ^ objectCount
+                          ->
                      Ptr (Ptr VkObjectTableEntryNVX) -- ^ ppObjectTableEntries
-                                                     ->
-                       Ptr Data.Word.Word32 -- ^ pObjectIndices
-                                            -> IO VkResult
+                                                     -> Ptr Word32 -- ^ pObjectIndices
+                                                                   -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -3279,11 +3284,10 @@ foreign import ccall unsafe "vkUnregisterObjectsNVX"
                         ->
                  VkObjectTableNVX -- ^ objectTable
                                   ->
-                   Data.Word.Word32 -- ^ objectCount
-                                    ->
-                     Ptr VkObjectEntryTypeNVX -- ^ pObjectEntryTypes
-                                              -> Ptr Data.Word.Word32 -- ^ pObjectIndices
-                                                                      -> IO VkResult
+                   Word32 -- ^ objectCount
+                          -> Ptr VkObjectEntryTypeNVX -- ^ pObjectEntryTypes
+                                                      -> Ptr Word32 -- ^ pObjectIndices
+                                                                    -> IO VkResult
 
 -- | > void vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
 --   >     ( VkPhysicalDevice physicalDevice

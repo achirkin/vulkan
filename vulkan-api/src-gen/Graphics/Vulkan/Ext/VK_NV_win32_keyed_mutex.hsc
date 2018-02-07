@@ -1,17 +1,12 @@
 #include "vulkan/vulkan.h"
 
-{-# LANGUAGE DataKinds            #-}
-{-# LANGUAGE FlexibleContexts     #-}
-{-# LANGUAGE FlexibleInstances    #-}
-{-# LANGUAGE MagicHash            #-}
-{-# LANGUAGE PatternSynonyms      #-}
-{-# LANGUAGE Strict               #-}
-{-# LANGUAGE TypeFamilies         #-}
-{-# LANGUAGE TypeOperators        #-}
-{-# LANGUAGE UnboxedTuples        #-}
-{-# LANGUAGE UndecidableInstances #-}
-{-# LANGUAGE UnliftedFFITypes     #-}
-{-# LANGUAGE ViewPatterns         #-}
+{-# LANGUAGE DataKinds       #-}
+{-# LANGUAGE MagicHash       #-}
+{-# LANGUAGE PatternSynonyms #-}
+{-# LANGUAGE Strict          #-}
+{-# LANGUAGE TypeFamilies    #-}
+{-# LANGUAGE UnboxedTuples   #-}
+{-# LANGUAGE ViewPatterns    #-}
 module Graphics.Vulkan.Ext.VK_NV_win32_keyed_mutex
        (-- * Vulkan extension: @VK_NV_win32_keyed_mutex@
         -- |
@@ -39,9 +34,6 @@ module Graphics.Vulkan.Ext.VK_NV_win32_keyed_mutex
         pattern VK_NV_WIN32_KEYED_MUTEX_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_NV)
        where
-import           Data.Int
-import           Data.Void                        (Void)
-import           Data.Word
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.ForeignPtr                   (ForeignPtr (..),
@@ -50,9 +42,7 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Base
-import           Graphics.Vulkan.Common
-import           Graphics.Vulkan.Core
+import           Graphics.Vulkan.Common           (VkStructureType (..), Word32)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers

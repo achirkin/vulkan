@@ -1,17 +1,12 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
-{-# LANGUAGE FlexibleContexts         #-}
-{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE TypeOperators            #-}
 {-# LANGUAGE UnboxedTuples            #-}
-{-# LANGUAGE UndecidableInstances     #-}
-{-# LANGUAGE UnliftedFFITypes         #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
        (-- * Vulkan extension: @VK_KHR_get_physical_device_properties2@
@@ -54,13 +49,7 @@ module Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
         pattern VK_STRUCTURE_TYPE_SPARSE_IMAGE_FORMAT_PROPERTIES_2_KHR,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2_KHR)
        where
-import           Data.Int
-import           Data.Void                        (Void)
-import           Data.Word
 import           Foreign.C.String                 (CString)
-import           Foreign.C.Types                  (CChar (..), CFloat (..),
-                                                   CInt (..), CSize (..),
-                                                   CULong (..))
 import           Foreign.Storable                 (Storable (..))
 import           GHC.ForeignPtr                   (ForeignPtr (..),
                                                    ForeignPtrContents (..),
@@ -68,9 +57,20 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Base
-import           Graphics.Vulkan.Common
-import           Graphics.Vulkan.Core
+import           Graphics.Vulkan.Base             (VkFormatProperties,
+                                                   VkImageFormatProperties,
+                                                   VkPhysicalDeviceFeatures,
+                                                   VkPhysicalDeviceMemoryProperties,
+                                                   VkPhysicalDeviceProperties,
+                                                   VkQueueFamilyProperties,
+                                                   VkSparseImageFormatProperties)
+import           Graphics.Vulkan.Common           (VkFormat, VkImageCreateFlags,
+                                                   VkImageTiling, VkImageType,
+                                                   VkImageUsageFlags,
+                                                   VkPhysicalDevice, VkResult,
+                                                   VkSampleCountFlagBits,
+                                                   VkStructureType,
+                                                   VkStructureType (..), Word32)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
@@ -1803,9 +1803,9 @@ foreign import ccall unsafe
                vkGetPhysicalDeviceQueueFamilyProperties2KHR ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
-                 Ptr Data.Word.Word32 -- ^ pQueueFamilyPropertyCount
-                                      -> Ptr VkQueueFamilyProperties2KHR -- ^ pQueueFamilyProperties
-                                                                         -> IO ()
+                 Ptr Word32 -- ^ pQueueFamilyPropertyCount
+                            -> Ptr VkQueueFamilyProperties2KHR -- ^ pQueueFamilyProperties
+                                                               -> IO ()
 
 -- | > void vkGetPhysicalDeviceMemoryProperties2KHR
 --   >     ( VkPhysicalDevice physicalDevice
@@ -1836,10 +1836,9 @@ foreign import ccall unsafe
                                 ->
                  Ptr VkPhysicalDeviceSparseImageFormatInfo2KHR -- ^ pFormatInfo
                                                                ->
-                   Ptr Data.Word.Word32 -- ^ pPropertyCount
-                                        ->
-                     Ptr VkSparseImageFormatProperties2KHR -- ^ pProperties
-                                                           -> IO ()
+                   Ptr Word32 -- ^ pPropertyCount
+                              -> Ptr VkSparseImageFormatProperties2KHR -- ^ pProperties
+                                                                       -> IO ()
 
 pattern VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_SPEC_VERSION ::
         (Num a, Eq a) => a

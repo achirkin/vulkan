@@ -1,17 +1,12 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
-{-# LANGUAGE FlexibleContexts         #-}
-{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE TypeOperators            #-}
 {-# LANGUAGE UnboxedTuples            #-}
-{-# LANGUAGE UndecidableInstances     #-}
-{-# LANGUAGE UnliftedFFITypes         #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_GOOGLE_display_timing
        (-- * Vulkan extension: @VK_GOOGLE_display_timing@
@@ -41,13 +36,7 @@ module Graphics.Vulkan.Ext.VK_GOOGLE_display_timing
         pattern VK_GOOGLE_DISPLAY_TIMING_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PRESENT_TIMES_INFO_GOOGLE)
        where
-import           Data.Int
-import           Data.Void                        (Void)
-import           Data.Word
 import           Foreign.C.String                 (CString)
-import           Foreign.C.Types                  (CChar (..), CFloat (..),
-                                                   CInt (..), CSize (..),
-                                                   CULong (..))
 import           Foreign.Storable                 (Storable (..))
 import           GHC.ForeignPtr                   (ForeignPtr (..),
                                                    ForeignPtrContents (..),
@@ -55,9 +44,11 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Base
-import           Graphics.Vulkan.Common
-import           Graphics.Vulkan.Core
+import           Graphics.Vulkan.Common           (VkDevice, VkResult,
+                                                   VkStructureType,
+                                                   VkStructureType (..),
+                                                   VkSwapchainKHR, Word32,
+                                                   Word64)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
@@ -727,10 +718,9 @@ foreign import ccall unsafe "vkGetPastPresentationTimingGOOGLE"
                         ->
                  VkSwapchainKHR -- ^ swapchain
                                 ->
-                   Ptr Data.Word.Word32 -- ^ pPresentationTimingCount
-                                        ->
-                     Ptr VkPastPresentationTimingGOOGLE -- ^ pPresentationTimings
-                                                        -> IO VkResult
+                   Ptr Word32 -- ^ pPresentationTimingCount
+                              -> Ptr VkPastPresentationTimingGOOGLE -- ^ pPresentationTimings
+                                                                    -> IO VkResult
 
 pattern VK_GOOGLE_DISPLAY_TIMING_SPEC_VERSION :: (Num a, Eq a) => a
 

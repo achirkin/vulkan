@@ -57,31 +57,19 @@ genStructOrUnion isUnion VkTypeComposite
   else do
     writePragma "MagicHash"
     writePragma "UnboxedTuples"
-    writePragma "TypeFamilies"
-    writePragma "UnliftedFFITypes"
-    writePragma "TypeOperators"
-    writePragma "DataKinds"
-    writePragma "FlexibleInstances"
-    writePragma "UndecidableInstances"
-    writePragma "Strict"
-    writePragma "FlexibleContexts"
 
-    writeImport $ DIThing "Void" DITEmpty
     writeImport $ DIThing "Storable" DITAll
     writeImport $ DIThing "IO" DITAll
     writeImport $ DIThing "Int" DITAll
     writeImport $ DIThing "Ptr" DITAll
-    writeImport $ DIThing "CChar" DITEmpty
-    writeImport $ DIThing "CString" DITNo
     writeImport $ DIThing "ForeignPtr" DITAll
     writeImport $ DIThing "ForeignPtrContents" DITAll
     writeImport $ DIVar   "newForeignPtr_"
 
     writeFullImport "Graphics.Vulkan.StructMembers"
-    writeFullImport "Data.Word"
-    writeFullImport "Data.Int"
     writeFullImport "GHC.Prim"
     writeFullImport "Graphics.Vulkan.Marshal"
+    writeFullImport "Graphics.Vulkan.Marshal.Internal"
 
     let ds = parseDecls [text|
           data $tnametxt = $tnametxt# ByteArray#
@@ -247,7 +235,10 @@ genStructField structNameTxt structType _offsetE SFI{..}
                <> " + " <> offsetExpr <> ")"
 
     genInstance = do
+      writePragma "TypeFamilies"
       writeImport $ DIVar "unsafeDupablePerformIO"
+      writeImport $ DIThing valueTypeTxt DITNo
+      writeImport $ DIThing structTypeTxt DITAll
 
       let ds = parseDecls [text|
             instance {-# OVERLAPPING #-} $classNameTxt $structTypeTxt where

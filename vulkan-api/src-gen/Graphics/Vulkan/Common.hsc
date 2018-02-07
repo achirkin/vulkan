@@ -951,9 +951,7 @@ module Graphics.Vulkan.Common
 import           Data.Bits                       (Bits (..), FiniteBits)
 import           Data.Coerce                     (coerce)
 import           Data.Data                       (Data)
-import           Data.Int                        (Int32)
 import           Data.Void                       (Void)
-import           Data.Word                       (Word32, Word64, Word8)
 import           Foreign.C.String                (CString)
 import           Foreign.C.Types                 (CChar, CULong (..),
                                                   CWchar (..))
@@ -961,6 +959,7 @@ import           Foreign.Ptr                     (FunPtr, Ptr, nullPtr)
 import           Foreign.Storable                (Storable)
 import           GHC.Generics                    (Generic)
 import           GHC.Read                        (choose, expectP)
+import           Graphics.Vulkan.Marshal
 import           Text.ParserCombinators.ReadPrec (prec, step, (+++))
 import           Text.Read                       (Read (..), parens)
 import           Text.Read.Lex                   (Lexeme (..))

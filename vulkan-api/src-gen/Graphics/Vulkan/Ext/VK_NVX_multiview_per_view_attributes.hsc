@@ -1,17 +1,12 @@
 #include "vulkan/vulkan.h"
 
-{-# LANGUAGE DataKinds            #-}
-{-# LANGUAGE FlexibleContexts     #-}
-{-# LANGUAGE FlexibleInstances    #-}
-{-# LANGUAGE MagicHash            #-}
-{-# LANGUAGE PatternSynonyms      #-}
-{-# LANGUAGE Strict               #-}
-{-# LANGUAGE TypeFamilies         #-}
-{-# LANGUAGE TypeOperators        #-}
-{-# LANGUAGE UnboxedTuples        #-}
-{-# LANGUAGE UndecidableInstances #-}
-{-# LANGUAGE UnliftedFFITypes     #-}
-{-# LANGUAGE ViewPatterns         #-}
+{-# LANGUAGE DataKinds       #-}
+{-# LANGUAGE MagicHash       #-}
+{-# LANGUAGE PatternSynonyms #-}
+{-# LANGUAGE Strict          #-}
+{-# LANGUAGE TypeFamilies    #-}
+{-# LANGUAGE UnboxedTuples   #-}
+{-# LANGUAGE ViewPatterns    #-}
 module Graphics.Vulkan.Ext.VK_NVX_multiview_per_view_attributes
        (-- * Vulkan extension: @VK_NVX_multiview_per_view_attributes@
         -- |
@@ -39,9 +34,6 @@ module Graphics.Vulkan.Ext.VK_NVX_multiview_per_view_attributes
         pattern VK_SUBPASS_DESCRIPTION_PER_VIEW_ATTRIBUTES_BIT_NVX,
         pattern VK_SUBPASS_DESCRIPTION_PER_VIEW_POSITION_X_ONLY_BIT_NVX)
        where
-import           Data.Int
-import           Data.Void                        (Void)
-import           Data.Word
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.ForeignPtr                   (ForeignPtr (..),
@@ -50,9 +42,9 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Base
-import           Graphics.Vulkan.Common
-import           Graphics.Vulkan.Core
+import           Graphics.Vulkan.Common           (VkBool32,
+                                                   VkStructureType (..),
+                                                   VkSubpassDescriptionFlagBits (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers

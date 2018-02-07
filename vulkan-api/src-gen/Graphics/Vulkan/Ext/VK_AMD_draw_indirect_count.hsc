@@ -25,19 +25,11 @@ module Graphics.Vulkan.Ext.VK_AMD_draw_indirect_count
         VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME,
         pattern VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME)
        where
-import           Data.Int
-import           Data.Void                        (Void)
-import           Data.Word
-import           Foreign.C.String                 (CString)
-import           Foreign.C.Types                  (CChar (..), CFloat (..),
-                                                   CInt (..), CSize (..),
-                                                   CULong (..))
-import           GHC.Ptr                          (Ptr (..))
-import           Graphics.Vulkan.Base
-import           Graphics.Vulkan.Common
-import           Graphics.Vulkan.Core
+import           Foreign.C.String              (CString)
+import           GHC.Ptr                       (Ptr (..))
+import           Graphics.Vulkan.Common        (VkBuffer, VkCommandBuffer,
+                                                VkDeviceSize, Word32)
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 
 -- | queues: @graphics@
@@ -66,11 +58,10 @@ foreign import ccall unsafe "vkCmdDrawIndirectCountAMD"
                    VkDeviceSize -- ^ offset
                                 ->
                      VkBuffer -- ^ countBuffer
-                              ->
-                       VkDeviceSize -- ^ countBufferOffset
-                                    -> Data.Word.Word32 -- ^ maxDrawCount
-                                                        -> Data.Word.Word32 -- ^ stride
-                                                                            -> IO ()
+                              -> VkDeviceSize -- ^ countBufferOffset
+                                              -> Word32 -- ^ maxDrawCount
+                                                        -> Word32 -- ^ stride
+                                                                  -> IO ()
 
 -- | queues: @graphics@
 --
@@ -98,11 +89,10 @@ foreign import ccall unsafe "vkCmdDrawIndexedIndirectCountAMD"
                    VkDeviceSize -- ^ offset
                                 ->
                      VkBuffer -- ^ countBuffer
-                              ->
-                       VkDeviceSize -- ^ countBufferOffset
-                                    -> Data.Word.Word32 -- ^ maxDrawCount
-                                                        -> Data.Word.Word32 -- ^ stride
-                                                                            -> IO ()
+                              -> VkDeviceSize -- ^ countBufferOffset
+                                              -> Word32 -- ^ maxDrawCount
+                                                        -> Word32 -- ^ stride
+                                                                  -> IO ()
 
 pattern VK_AMD_DRAW_INDIRECT_COUNT_SPEC_VERSION :: (Num a, Eq a) =>
         a

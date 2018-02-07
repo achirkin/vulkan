@@ -32,19 +32,11 @@ module Graphics.Vulkan.Ext.VK_EXT_acquire_xlib_display
         VK_EXT_ACQUIRE_XLIB_DISPLAY_EXTENSION_NAME,
         pattern VK_EXT_ACQUIRE_XLIB_DISPLAY_EXTENSION_NAME)
        where
-import           Data.Int
-import           Data.Void                        (Void)
-import           Data.Word
-import           Foreign.C.String                 (CString)
-import           Foreign.C.Types                  (CChar (..), CFloat (..),
-                                                   CInt (..), CSize (..),
-                                                   CULong (..))
-import           GHC.Ptr                          (Ptr (..))
-import           Graphics.Vulkan.Base
-import           Graphics.Vulkan.Common
-import           Graphics.Vulkan.Core
+import           Foreign.C.String              (CString)
+import           GHC.Ptr                       (Ptr (..))
+import           Graphics.Vulkan.Common        (Display, RROutput, VkDisplayKHR,
+                                                VkPhysicalDevice, VkResult)
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 
 -- | Success codes: 'VK_SUCCESS'.

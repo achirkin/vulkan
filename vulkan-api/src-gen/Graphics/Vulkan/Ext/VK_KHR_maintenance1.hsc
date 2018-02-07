@@ -28,19 +28,15 @@ module Graphics.Vulkan.Ext.VK_KHR_maintenance1
         pattern VK_FORMAT_FEATURE_TRANSFER_DST_BIT_KHR,
         pattern VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT_KHR)
        where
-import           Data.Int
-import           Data.Void                        (Void)
-import           Data.Word
-import           Foreign.C.String                 (CString)
-import           Foreign.C.Types                  (CChar (..), CFloat (..),
-                                                   CInt (..), CSize (..),
-                                                   CULong (..))
-import           GHC.Ptr                          (Ptr (..))
-import           Graphics.Vulkan.Base
-import           Graphics.Vulkan.Common
-import           Graphics.Vulkan.Core
+import           Foreign.C.String              (CString)
+import           GHC.Ptr                       (Ptr (..))
+import           Graphics.Vulkan.Common        (VkCommandPool,
+                                                VkCommandPoolTrimFlagsKHR,
+                                                VkDevice,
+                                                VkFormatFeatureFlagBits (..),
+                                                VkImageCreateFlagBits (..),
+                                                VkResult (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 
 -- | > void vkTrimCommandPoolKHR

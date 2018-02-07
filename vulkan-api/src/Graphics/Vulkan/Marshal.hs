@@ -5,8 +5,16 @@ module Graphics.Vulkan.Marshal
   ( VulkanMarshal (..)
     -- * Re-exported functions from 'Foreign.ForeignPtr'
   , mallocForeignPtr, withForeignPtr, addForeignPtrFinalizer
+    -- * Re-exported common types
+  , Int8, Int16, Int32, Int64
+  , Word8, Word16, Word32, Word64
+  , Ptr, Void, CString
   ) where
 
+import           Data.Int           (Int16, Int32, Int64, Int8)
+import           Data.Void          (Void)
+import           Data.Word          (Word16, Word32, Word64, Word8)
+import           Foreign.C.String   (CString)
 import           Foreign.ForeignPtr (ForeignPtr, addForeignPtrFinalizer,
                                      mallocForeignPtr, withForeignPtr)
 import           Foreign.Ptr        (Ptr)

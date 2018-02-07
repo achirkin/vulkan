@@ -1,17 +1,12 @@
 #include "vulkan/vulkan.h"
 
-{-# LANGUAGE DataKinds            #-}
-{-# LANGUAGE FlexibleContexts     #-}
-{-# LANGUAGE FlexibleInstances    #-}
-{-# LANGUAGE MagicHash            #-}
-{-# LANGUAGE PatternSynonyms      #-}
-{-# LANGUAGE Strict               #-}
-{-# LANGUAGE TypeFamilies         #-}
-{-# LANGUAGE TypeOperators        #-}
-{-# LANGUAGE UnboxedTuples        #-}
-{-# LANGUAGE UndecidableInstances #-}
-{-# LANGUAGE UnliftedFFITypes     #-}
-{-# LANGUAGE ViewPatterns         #-}
+{-# LANGUAGE DataKinds       #-}
+{-# LANGUAGE MagicHash       #-}
+{-# LANGUAGE PatternSynonyms #-}
+{-# LANGUAGE Strict          #-}
+{-# LANGUAGE TypeFamilies    #-}
+{-# LANGUAGE UnboxedTuples   #-}
+{-# LANGUAGE ViewPatterns    #-}
 module Graphics.Vulkan.Ext.VK_KHR_external_memory
        (-- * Vulkan extension: @VK_KHR_external_memory@
         -- |
@@ -41,11 +36,9 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory
         pattern VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMAGE_CREATE_INFO_KHR,
         pattern VK_STRUCTURE_TYPE_EXPORT_MEMORY_ALLOCATE_INFO_KHR,
         pattern VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR,
-        pattern VK_QUEUE_FAMILY_EXTERNAL_KHR)
+        pattern VK_QUEUE_FAMILY_EXTERNAL_KHR,
+        VK_QUEUE_FAMILY_EXTERNAL_KHR())
        where
-import           Data.Int
-import           Data.Void                        (Void)
-import           Data.Word
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.ForeignPtr                   (ForeignPtr (..),
@@ -54,9 +47,10 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Base
-import           Graphics.Vulkan.Common
-import           Graphics.Vulkan.Core
+import           Graphics.Vulkan.Common           (VkExternalMemoryHandleTypeFlagsKHR,
+                                                   VkResult (..),
+                                                   VkStructureType,
+                                                   VkStructureType (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers

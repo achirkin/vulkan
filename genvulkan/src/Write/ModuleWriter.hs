@@ -9,7 +9,8 @@
 module Write.ModuleWriter
   ( A, GlobalNames, ModuleWriting (..), ModuleWriter (..)
   , DeclaredIdent (..), DIThingMembers (..)
-  , runModuleWriter, genModule, lookupDiModule, isIdentDeclared
+  , runModuleWriter, genModule
+  , lookupDiModule, isIdentDeclared, lookupDeclared
   , writeImport, writeFullImport, writeExport
   , writePragma, writeDecl
   , writeSection --, writeSectionPre
@@ -30,11 +31,12 @@ import           Control.Monad.IO.Class
 import           Control.Monad.Morph
 import           Control.Monad.Reader.Class
 import           Control.Monad.Trans.RWS.Strict       (RWST (..), gets, modify)
+import           Data.Coerce
 import           Data.Foldable                        (toList)
 import qualified Data.List                            as List
 import           Data.Map.Strict                      (Map)
 import qualified Data.Map.Strict                      as Map
-import           Data.Maybe                           (isJust)
+import           Data.Maybe                           (isJust, maybeToList)
 import           Data.Semigroup
 import           Data.Sequence                        (Seq)
 import qualified Data.Sequence                        as Seq
@@ -167,28 +169,42 @@ genModule ModuleWriting {..}
     exports = ExportSpecList Nothing $ toList mExports
 
 
-lookupDiModule :: Monad m => DeclaredIdent -> ModuleWriter m (ModuleName ())
-lookupDiModule di = do
-  mn <- ModuleWriter $ gets (Map.lookup di . globalNames)
-  case mn of
-    Nothing -> error $ "ModuleWriter: could not lookup module name for " <> show di
-    Just n  -> pure n
+lookupDiModule :: Monad m => DeclaredIdent -> ModuleWriter m (Maybe (ModuleName ()))
+lookupDiModule di = ModuleWriter $ gets (Map.lookup di . globalNames)
+
 
 
 isIdentDeclared :: Monad m => DeclaredIdent -> ModuleWriter m Bool
 isIdentDeclared di = ModuleWriter $ gets (isJust . Map.lookup di . globalNames)
+
+lookupDeclared :: (Monad m, Coercible a Text)
+               => a -> ModuleWriter m [DeclaredIdent]
+lookupDeclared a = do
+    gn <- ModuleWriter $ gets globalNames
+    let mb2l x = [ x | isJust (Map.lookup x gn) ]
+        mb2m x = x <$ Map.lookup x gn
+    return $
+         mb2l (DIVar n)
+      <> mb2l (DIPat n)
+      <> maybeToList ( mb2m (DIThing n DITAll)
+                   <|> mb2m (DIThing n DITEmpty)
+                   <|> mb2m (DIThing n DITNo)
+                      )
+  where
+    n = coerce a
 
 -- | Add a symbol to module imports
 writeImport :: Monad m
             => DeclaredIdent
             -> ModuleWriter m ()
 writeImport di = do
-    mname <- lookupDiModule di
-    ModuleWriter . modify $
-      \mr -> mr {mImports = if mName mr /= mname
-                            then Map.alter f mname $ mImports mr
-                            else mImports mr
-                }
+    mmname <- lookupDiModule di
+    forM_ mmname $ \mname ->
+      ModuleWriter . modify $
+        \mr -> mr {mImports = if mName mr /= mname
+                              then Map.alter f mname $ mImports mr
+                              else mImports mr
+                  }
   where
     is = diToImportSpec di
     f Nothing = Just $ Set.singleton is
