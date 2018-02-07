@@ -207,15 +207,29 @@ enumPattern VkEnum {..} = do
       VkEnumReference -> return ()
       VkEnumString s
         | tyval <- "\"" <> s <> "\""
-        , patval <- "Ptr \"" <> s <> "\0\"#" -> do
+        , patval <- "Ptr \"" <> s <> "\0\"#"
+        , _patnametxt <- "_" <> patnametxt
+        , is_patnametxt <- "is_" <> patnametxt
+        -> do
         writePragma "MagicHash"
+        writePragma "ViewPatterns"
         writeImport "Foreign.C.String" (IAbs () (NoNamespace ()) (Ident () "CString"))
         writeImport "GHC.Ptr" (IThingAll () (Ident () "Ptr"))
         mapM_ writeDecl
           . insertDeclComment (T.unpack patnametxt) rezComment
           $ parseDecls [text|
               pattern $patnametxt :: CString
-              pattern $patnametxt = $patval
+              pattern $patnametxt <- ( $is_patnametxt -> True )
+                where
+                  $patnametxt = $_patnametxt
+
+              $_patnametxt :: CString
+              {-# INLINE $_patnametxt #-}
+              $_patnametxt = $patval
+
+              $is_patnametxt :: CString -> Bool
+              {-# INLINE $is_patnametxt #-}
+              $is_patnametxt = ( $_patnametxt == )
 
               type $patnametxt = $tyval
             |]

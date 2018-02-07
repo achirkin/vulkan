@@ -6,18 +6,21 @@ module Write
   ( generateVkSource
   ) where
 
-import           Control.Arrow                        (first)
+import           Control.Arrow                        (first, second)
 import           Control.DeepSeq
 import           Control.Monad
 import           Data.Char
 import qualified Data.List                            as L
+import           Data.Maybe                           (fromMaybe)
 import           Data.Semigroup
+import           Data.Text                            (Text)
 import qualified Data.Text                            as T
 import           Language.Haskell.Exts.ExactPrint
 import           Language.Haskell.Exts.Pretty
 import           Language.Haskell.Exts.SimpleComments
 import           Language.Haskell.Exts.Syntax
 import           Language.Haskell.Format
+import           NeatInterpolation
 import           Path
 import           Path.IO
 import           System.IO                            (writeFile)
@@ -35,9 +38,10 @@ import           Write.Types.Enum
 
 
 generateVkSource :: Path b Dir
+                 -> Path c File
                  -> VkXml ()
                  -> IO ()
-generateVkSource outputDir vkXml = do
+generateVkSource outputDir outCabalFile vkXml = do
 
   createDirIfMissing True (outputDir </> [reldir|Graphics|])
   createDirIfMissing True (outputDir </> [reldir|Graphics|] </> [reldir|Vulkan|])
@@ -87,11 +91,11 @@ generateVkSource outputDir vkXml = do
          ) mr
     pure enames
 
-  forM_ (extensions . unInorder . globExtensions $ vkXml) $ \ext -> do
+  eModules <- forM (extensions . unInorder . globExtensions $ vkXml) $ \ext -> do
     let eName = T.unpack . unVkExtensionName . extName $ attributes ext
+        modName = "Graphics.Vulkan.Ext." <> eName
     fname <- parseRelFile (eName ++ ".hsc")
-    (enames, mr) <- runModuleWriter vkXml ("Graphics.Vulkan.Ext." <> eName)
-           exportedNamesCore $ do
+    (exProtect, mr) <- runModuleWriter vkXml modName exportedNamesCore $ do
        writePragma "Strict"
        writePragma "DataKinds"
        writeFullImport "Graphics.Vulkan.Marshal.Internal"
@@ -104,9 +108,131 @@ generateVkSource outputDir vkXml = do
          ( addOptionsPragma GHC "-fno-warn-missing-methods"
          . addOptionsPragma GHC "-fno-warn-unticked-promoted-constructors"
          ) mr
-    pure enames
+    pure (T.pack modName, exProtect)
 
-  return ()
+  writeFile (toFilePath $ outputDir </> [relfile|Graphics/Vulkan/Ext.hs|])
+      $ T.unpack $ T.unlines $
+        [ "{-# LANGUAGE CPP #-}"
+        , "module Graphics.Vulkan.Ext"
+        , "    ("
+        ]
+     <> zipWith exportLine (' ' : repeat ',') eModules
+     <> [ "    ) where"
+        , ""
+        ]
+     <> map importLine eModules
+
+  writeFile (toFilePath outCabalFile) . T.unpack $ genCabalFile eModules
+
+
+importLine :: (Text, Maybe Text) -> Text
+importLine (mname, Nothing) = "import " <> mname
+importLine (mname, Just p)  = T.unlines
+  [ "#ifdef " <> p
+  , "import " <> mname
+  , "#endif"
+  ]
+
+
+exportLine :: Char -> (Text, Maybe Text) -> Text
+exportLine c (mname, Nothing) = "    " <> T.cons c (" module " <> mname)
+exportLine c (mname, Just p)  = T.unlines
+  [ "#ifdef " <> p
+  , "    " <> T.cons c (" module " <> mname)
+  , "#endif"
+  ]
+
+
+genCabalFile :: [(Text, Maybe Text)] -> Text
+genCabalFile eModules = T.unlines $
+      ( [text|
+          name:                vulkan-api
+          version:             0.1.0.0
+          synopsis:            Low-level low-overhead vulkan api bindings
+          description:         Haskell bindings for vulkan api as described in vk.xml.
+          homepage:            https://github.com/achirkin/genvulkan#readme
+          license:             BSD3
+          license-file:        LICENSE
+          author:              Artem Chirkin
+          maintainer:          chirkin@arch.ethz.ch
+          copyright:           Copyright: (c) 2018 Artem Chirkin
+          category:            vulkan, bsd3, graphics, library, opengl
+          build-type:          Simple
+          cabal-version:       >=1.10
+
+        |]
+      : map mkFlagDef protectedGroups
+      )
+   <> ( [text|
+          library
+              hs-source-dirs:      src, src-gen
+              exposed-modules:
+                  Graphics.Vulkan
+                  Graphics.Vulkan.Marshal
+                  Graphics.Vulkan.Common
+                  Graphics.Vulkan.Base
+                  Graphics.Vulkan.Core
+                  Graphics.Vulkan.Ext
+        |]
+      : map (spaces <>) unprotected
+      )
+   <> map mkModules protectedGroups
+   <> ( tail $ T.lines
+        [text|
+          DUMMY (have to keep it here for NeatInterpolation to work properly)
+              other-modules:
+                  Graphics.Vulkan.Marshal.Internal
+              build-depends:
+                  base >= 4.7 && < 5
+                , ghc-prim >= 0.4 && < 0.6
+              default-language:    Haskell2010
+              ghc-options:         -Wall
+              extra-libraries:     vulkan
+              include-dirs:        include
+
+          source-repository head
+              type:     git
+              location: https://github.com/achirkin/genvulkan
+        |]
+      )
+  where
+    spaces = "        "
+    mkGroup []           = []
+    mkGroup xs@((_,g):_) = [(g, map fst xs)]
+    (unprotected, protectedGroups)
+       = splitThem
+       . (>>= mkGroup)
+       . L.groupBy (\(_, a) (_, b) -> a == b)
+       $ L.sortOn snd eModules
+    splitThem []                 = ([], [])
+    splitThem ((Nothing, xs):ms) = first (xs ++)     $ splitThem ms
+    splitThem ((Just g , xs):ms) = second ((g, xs):) $ splitThem ms
+
+    mkFlagName
+      = firstDown
+      . T.pack
+      . toCamelCase
+      . T.unpack
+      . T.toLower
+      . removeVk
+    removeVk g = fromMaybe g $ T.stripPrefix "VK_" g
+
+    mkFlagDef (g, _)
+      | f <- mkFlagName g
+      = [text|
+          flag $f
+              description:
+                Enable platform-specific extensions protected by CPP macros $g
+              default: False
+        |]
+
+    mkModules (g,ms)
+      | f <- mkFlagName g
+      = T.unlines
+      $ ("    if flag(" <> f <> ")")
+      : ("      cpp-options: -D" <> g)
+      :  "      exposed-modules:"
+      : map (spaces <>) ms
 
 
 

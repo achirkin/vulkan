@@ -10,7 +10,7 @@ module VkXml.CommonTypes
   , (<:>)
   , ValidIdent (..)
   , isHaskellIdent, isHaskellLowerFirst, isHaskellUpperFirst
-  , firstUp, firstDown
+  , firstUp, firstDown, toCamelCase
   , toHaskellName, toHaskellName', toType
   , moduleName, unqualifyQ, unqualify, qNameTxt
   ) where

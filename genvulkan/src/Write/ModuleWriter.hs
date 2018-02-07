@@ -17,7 +17,7 @@ module Write.ModuleWriter
   , parseDecls, insertDeclComment
   , writeWithComments, vkRegistryLink
   , writeSections
-  , foldSectionsWithComments, pushSecLvl
+  , foldSectionsWithComments, pushSecLvl, getCurrentSecLvl
   , requireType, requireTypeMember, requireVar, requirePattern
   , getNamesInScope
   ) where
@@ -259,6 +259,9 @@ pushSecLvl f = do
   r <- f (slvl + 1)
   ModuleWriter . modify $ \mr -> mr { currentSecLvl = slvl}
   return r
+
+getCurrentSecLvl :: Monad m => ModuleWriter m Int
+getCurrentSecLvl = ModuleWriter $ gets currentSecLvl
 
 
 -- | Write section elements interspersed with comments as section delimers
