@@ -1,10 +1,27 @@
-# genvulkan
+The aim of this project is to provide low-level low-overhead haskell bindings to vulkan api.
+Features of the bindings:
 
-Generate haskell vulkan sources using vk.xml file.
+  * Keep as close as possible to vulkan naming conventions unless they violate
+    haskell syntax. This involves heavy usage of `PatternSynonyms` extension,
+    and occasional violation of camel case.
+  * Provide as much as possible information at type level, but allow avoiding
+    any overheads related to it.
+    Compile-time constants are duplicated at type level, but it is not necessary
+    to use them.
+  * Do not introduce type marshalling overheads.
+    All vulkan structures have `ByteArray#` runtime representation,
+    allowing zero-copy conversion to and from pointers.
+    Moreover, it is not necessary to convert them at all, if one prefers to
+    manage corresponding memory manually.
 
 # vulkan-api
 
 Generated haskell bindings for vulkan api.
+
+# genvulkan
+
+Generate haskell vulkan sources using vk.xml file.
+
 
 # bulkan-examples
 

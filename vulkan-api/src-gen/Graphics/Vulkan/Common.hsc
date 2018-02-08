@@ -44,7 +44,24 @@ module Graphics.Vulkan.Common
                            -- > // DEPRECATED: This define has been removed. Specific version defines (e.g. VK_API_VERSION_1_0), or the VK_MAKE_VERSION macro, should be used instead.
                            -- > //##define VK_API_VERSION VK_MAKE_VERSION(1, 0, 0) // Patch version should always be set to 0
                            VK_API_VERSION_1_0, pattern VK_API_VERSION_1_0,
-        VK_HEADER_VERSION, pattern VK_HEADER_VERSION, VkPtr(..),
+        VK_HEADER_VERSION, pattern VK_HEADER_VERSION, Ptr(), -- | ===== @VK_DEFINE_HANDLE@
+                                                             -- Dispatchable handles are represented as `Foreign.Ptr`
+                                                             --
+                                                             -- >
+                                                             -- > ##define VK_DEFINE_HANDLE(object) typedef struct object####_T* object;
+                                                             VkPtr(..),
+        -- | ===== @VK_DEFINE_NON_DISPATCHABLE_HANDLE@
+        -- Non-dispatchable handles are represented as `VkPtr`
+        --
+        -- >
+        -- > ##if !defined(VK_DEFINE_NON_DISPATCHABLE_HANDLE)
+        -- > ##if defined(__LP64__) || defined(_WIN64) || (defined(__x86_64__) && !defined(__ILP32__) ) || defined(_M_X64) || defined(__ia64) || defined (_M_IA64) || defined(__aarch64__) || defined(__powerpc64__)
+        -- >         ##define VK_DEFINE_NON_DISPATCHABLE_HANDLE(object) typedef struct object####_T *object;
+        -- > ##else
+        -- >         ##define VK_DEFINE_NON_DISPATCHABLE_HANDLE(object) typedef uint64_t object;
+        -- > ##endif
+        -- > ##endif
+        -- >
         VulkanPtr(..), pattern VK_NULL_HANDLE, -- ** Base types
                                                VkSampleMask(..),
         VkBool32(..), VkFlags(..), VkDeviceSize(..), -- ** External types

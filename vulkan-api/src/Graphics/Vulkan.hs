@@ -6,9 +6,11 @@ module Graphics.Vulkan
   , module Graphics.Vulkan.Common
   , module Graphics.Vulkan.Base
   , module Graphics.Vulkan.Core
+  , module Graphics.Vulkan.StructMembers
   ) where
 
 import Graphics.Vulkan.Marshal
 import Graphics.Vulkan.Common
 import Graphics.Vulkan.Base
 import Graphics.Vulkan.Core
+import Graphics.Vulkan.StructMembers

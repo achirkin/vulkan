@@ -42,18 +42,7 @@ import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..))
-import           Graphics.Vulkan.Common           (CChar, Int32,
-                                                   PFN_vkDebugReportCallbackEXT,
-                                                   pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT,
-                                                   VkDebugReportCallbackEXT,
-                                                   VkDebugReportFlagsEXT,
-                                                   VkDebugReportFlagsEXT (..),
-                                                   VkDebugReportObjectTypeEXT (..),
-                                                   VkInstance,
-                                                   VkObjectType (..),
-                                                   VkResult (..),
-                                                   VkStructureType,
-                                                   VkStructureType (..), Word64)
+import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers

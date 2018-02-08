@@ -47,13 +47,7 @@ import           GHC.Prim
 import           GHC.Ptr                                                 (Ptr (..))
 import           GHC.Types                                               (IO (..),
                                                                           Int (..))
-import           Graphics.Vulkan.Common                                  (VK_LUID_SIZE_KHR,
-                                                                          pattern VK_LUID_SIZE_KHR,
-                                                                          VkExternalFenceFeatureFlagsKHR,
-                                                                          VkExternalFenceHandleTypeFlagBitsKHR,
-                                                                          VkExternalFenceHandleTypeFlagsKHR,
-                                                                          VkPhysicalDevice,
-                                                                          VkStructureType (..))
+import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Ext.VK_KHR_external_memory_capabilities (VkPhysicalDeviceIDPropertiesKHR (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal

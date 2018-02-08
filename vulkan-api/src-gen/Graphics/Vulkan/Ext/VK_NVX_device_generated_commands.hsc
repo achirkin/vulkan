@@ -64,27 +64,7 @@ import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..))
-import           Graphics.Vulkan.Common           (VkAccessFlagBits (..),
-                                                   VkBool32, VkBuffer,
-                                                   VkCommandBuffer,
-                                                   VkDescriptorSet, VkDevice,
-                                                   VkDeviceSize, VkIndexType,
-                                                   VkIndirectCommandsLayoutNVX,
-                                                   VkIndirectCommandsLayoutUsageFlagsNVX,
-                                                   VkIndirectCommandsTokenTypeNVX,
-                                                   VkObjectEntryTypeNVX,
-                                                   VkObjectEntryTypeNVX (..),
-                                                   VkObjectEntryUsageFlagsNVX,
-                                                   VkObjectTableNVX,
-                                                   VkObjectType (..),
-                                                   VkPhysicalDevice, VkPipeline,
-                                                   VkPipelineBindPoint,
-                                                   VkPipelineLayout,
-                                                   VkPipelineStageFlagBits (..),
-                                                   VkResult (..),
-                                                   VkShaderStageFlags,
-                                                   VkStructureType,
-                                                   VkStructureType (..), Word32)
+import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers

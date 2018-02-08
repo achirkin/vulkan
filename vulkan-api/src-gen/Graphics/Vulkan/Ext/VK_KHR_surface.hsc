@@ -31,17 +31,12 @@ module Graphics.Vulkan.Ext.VK_KHR_surface
         pattern VK_COLORSPACE_SRGB_NONLINEAR_KHR,
         pattern VK_OBJECT_TYPE_SURFACE_KHR)
        where
-import           Foreign.C.String        (CString)
-import           GHC.Ptr                 (Ptr (..))
-import           Graphics.Vulkan.Base    (VkAllocationCallbacks (..),
-                                          VkSurfaceCapabilitiesKHR (..),
-                                          VkSurfaceFormatKHR (..))
-import           Graphics.Vulkan.Common  (pattern VK_COLOR_SPACE_SRGB_NONLINEAR_KHR,
-                                          VkBool32 (..), VkInstance,
-                                          VkObjectType (..), VkPhysicalDevice,
-                                          VkPresentModeKHR (..), VkResult (..),
-                                          VkSurfaceKHR, Word32)
-import           Graphics.Vulkan.Marshal
+import           Foreign.C.String       (CString)
+import           GHC.Ptr                (Ptr (..))
+import           Graphics.Vulkan.Base   (VkAllocationCallbacks (..),
+                                         VkSurfaceCapabilitiesKHR (..),
+                                         VkSurfaceFormatKHR (..))
+import           Graphics.Vulkan.Common
 
 -- | > void vkDestroySurfaceKHR
 --   >     ( VkInstance instance

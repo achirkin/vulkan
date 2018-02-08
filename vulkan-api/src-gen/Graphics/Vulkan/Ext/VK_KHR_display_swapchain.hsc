@@ -45,11 +45,7 @@ import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..),
                                                    VkRect2D,
                                                    VkSwapchainCreateInfoKHR (..))
-import           Graphics.Vulkan.Common           (VkBool32, VkDevice,
-                                                   VkResult (..),
-                                                   VkStructureType,
-                                                   VkStructureType (..),
-                                                   VkSwapchainKHR, Word32)
+import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers

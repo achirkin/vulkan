@@ -43,11 +43,7 @@ import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base             (VkWriteDescriptorSet (..))
-import           Graphics.Vulkan.Common           (VkCommandBuffer, VkDescriptorSetLayoutCreateFlagBits (..),
-                                                   VkPipelineBindPoint (..),
-                                                   VkPipelineLayout,
-                                                   VkStructureType,
-                                                   VkStructureType (..), Word32)
+import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
