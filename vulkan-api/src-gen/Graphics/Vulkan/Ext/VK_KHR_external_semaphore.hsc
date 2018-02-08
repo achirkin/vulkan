@@ -48,6 +48,13 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkExportSemaphoreCreateInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkExternalSemaphoreHandleTypeFlagsKHR handleTypes;
+--   > } VkExportSemaphoreCreateInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExportSemaphoreCreateInfoKHR.html VkExportSemaphoreCreateInfoKHR registry at www.khronos.org>
 data VkExportSemaphoreCreateInfoKHR = VkExportSemaphoreCreateInfoKHR## ByteArray##
 
 instance Eq VkExportSemaphoreCreateInfoKHR where

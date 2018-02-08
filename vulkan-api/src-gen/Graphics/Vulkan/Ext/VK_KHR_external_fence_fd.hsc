@@ -49,6 +49,16 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkImportFenceFdInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                            pNext;
+--   >     VkFence              fence;
+--   >     VkFenceImportFlagsKHR  flags;
+--   >     VkExternalFenceHandleTypeFlagBitsKHR   handleType;
+--   >     int                                    fd;
+--   > } VkImportFenceFdInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImportFenceFdInfoKHR.html VkImportFenceFdInfoKHR registry at www.khronos.org>
 data VkImportFenceFdInfoKHR = VkImportFenceFdInfoKHR## ByteArray##
 
 instance Eq VkImportFenceFdInfoKHR where
@@ -277,6 +287,14 @@ instance Show VkImportFenceFdInfoKHR where
                                             showString "vkFd = " .
                                               showsPrec d (vkFd x) . showChar '}'
 
+-- | > typedef struct VkFenceGetFdInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                            pNext;
+--   >     VkFence                                fence;
+--   >     VkExternalFenceHandleTypeFlagBitsKHR   handleType;
+--   > } VkFenceGetFdInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkFenceGetFdInfoKHR.html VkFenceGetFdInfoKHR registry at www.khronos.org>
 data VkFenceGetFdInfoKHR = VkFenceGetFdInfoKHR## ByteArray##
 
 instance Eq VkFenceGetFdInfoKHR where

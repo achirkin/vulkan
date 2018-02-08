@@ -45,6 +45,12 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkViewportWScalingNV {
+--   >     float          xcoeff;
+--   >     float          ycoeff;
+--   > } VkViewportWScalingNV;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkViewportWScalingNV.html VkViewportWScalingNV registry at www.khronos.org>
 data VkViewportWScalingNV = VkViewportWScalingNV## ByteArray##
 
 instance Eq VkViewportWScalingNV where
@@ -172,6 +178,15 @@ instance Show VkViewportWScalingNV where
                   showString ", " .
                     showString "vkYcoeff = " . showsPrec d (vkYcoeff x) . showChar '}'
 
+-- | > typedef struct VkPipelineViewportWScalingStateCreateInfoNV {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkBool32               viewportWScalingEnable;
+--   >     uint32_t               viewportCount;
+--   >     const VkViewportWScalingNV*      pViewportWScalings;
+--   > } VkPipelineViewportWScalingStateCreateInfoNV;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineViewportWScalingStateCreateInfoNV.html VkPipelineViewportWScalingStateCreateInfoNV registry at www.khronos.org>
 data VkPipelineViewportWScalingStateCreateInfoNV = VkPipelineViewportWScalingStateCreateInfoNV## ByteArray##
 
 instance Eq VkPipelineViewportWScalingStateCreateInfoNV where

@@ -60,6 +60,13 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkPhysicalDevicePointClippingPropertiesKHR {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     VkPointClippingBehaviorKHR      pointClippingBehavior;
+--   > } VkPhysicalDevicePointClippingPropertiesKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDevicePointClippingPropertiesKHR.html VkPhysicalDevicePointClippingPropertiesKHR registry at www.khronos.org>
 data VkPhysicalDevicePointClippingPropertiesKHR = VkPhysicalDevicePointClippingPropertiesKHR## ByteArray##
 
 instance Eq VkPhysicalDevicePointClippingPropertiesKHR where
@@ -235,6 +242,14 @@ instance Show VkPhysicalDevicePointClippingPropertiesKHR where
                           showString "vkPointClippingBehavior = " .
                             showsPrec d (vkPointClippingBehavior x) . showChar '}'
 
+-- | > typedef struct VkRenderPassInputAttachmentAspectCreateInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                     pNext;
+--   >     uint32_t                        aspectReferenceCount;
+--   >     const VkInputAttachmentAspectReferenceKHR* pAspectReferences;
+--   > } VkRenderPassInputAttachmentAspectCreateInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkRenderPassInputAttachmentAspectCreateInfoKHR.html VkRenderPassInputAttachmentAspectCreateInfoKHR registry at www.khronos.org>
 data VkRenderPassInputAttachmentAspectCreateInfoKHR = VkRenderPassInputAttachmentAspectCreateInfoKHR## ByteArray##
 
 instance Eq VkRenderPassInputAttachmentAspectCreateInfoKHR where
@@ -442,6 +457,13 @@ instance Show VkRenderPassInputAttachmentAspectCreateInfoKHR where
                                 showString "vkPAspectReferences = " .
                                   showsPrec d (vkPAspectReferences x) . showChar '}'
 
+-- | > typedef struct VkInputAttachmentAspectReferenceKHR {
+--   >     uint32_t                        subpass;
+--   >     uint32_t                        inputAttachmentIndex;
+--   >     VkImageAspectFlags              aspectMask;
+--   > } VkInputAttachmentAspectReferenceKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkInputAttachmentAspectReferenceKHR.html VkInputAttachmentAspectReferenceKHR registry at www.khronos.org>
 data VkInputAttachmentAspectReferenceKHR = VkInputAttachmentAspectReferenceKHR## ByteArray##
 
 instance Eq VkInputAttachmentAspectReferenceKHR where
@@ -610,6 +632,13 @@ instance Show VkInputAttachmentAspectReferenceKHR where
                           showString "vkAspectMask = " .
                             showsPrec d (vkAspectMask x) . showChar '}'
 
+-- | > typedef struct VkImageViewUsageCreateInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void* pNext;
+--   >     VkImageUsageFlags usage;
+--   > } VkImageViewUsageCreateInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageViewUsageCreateInfoKHR.html VkImageViewUsageCreateInfoKHR registry at www.khronos.org>
 data VkImageViewUsageCreateInfoKHR = VkImageViewUsageCreateInfoKHR## ByteArray##
 
 instance Eq VkImageViewUsageCreateInfoKHR where
@@ -766,6 +795,13 @@ instance Show VkImageViewUsageCreateInfoKHR where
                         showString ", " .
                           showString "vkUsage = " . showsPrec d (vkUsage x) . showChar '}'
 
+-- | > typedef struct VkPipelineTessellationDomainOriginStateCreateInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkTessellationDomainOriginKHR    domainOrigin;
+--   > } VkPipelineTessellationDomainOriginStateCreateInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineTessellationDomainOriginStateCreateInfoKHR.html VkPipelineTessellationDomainOriginStateCreateInfoKHR registry at www.khronos.org>
 data VkPipelineTessellationDomainOriginStateCreateInfoKHR = VkPipelineTessellationDomainOriginStateCreateInfoKHR## ByteArray##
 
 instance Eq VkPipelineTessellationDomainOriginStateCreateInfoKHR

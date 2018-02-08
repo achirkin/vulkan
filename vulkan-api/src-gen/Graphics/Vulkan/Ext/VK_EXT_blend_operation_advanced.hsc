@@ -82,6 +82,13 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     VkBool32                         advancedBlendCoherentOperations;
+--   > } VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT.html VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT registry at www.khronos.org>
 data VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT = VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT## ByteArray##
 
 instance Eq VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT where
@@ -267,6 +274,18 @@ instance Show VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
                           showString "vkAdvancedBlendCoherentOperations = " .
                             showsPrec d (vkAdvancedBlendCoherentOperations x) . showChar '}'
 
+-- | > typedef struct VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     uint32_t                         advancedBlendMaxColorAttachments;
+--   >     VkBool32                         advancedBlendIndependentBlend;
+--   >     VkBool32                         advancedBlendNonPremultipliedSrcColor;
+--   >     VkBool32                         advancedBlendNonPremultipliedDstColor;
+--   >     VkBool32                         advancedBlendCorrelatedOverlap;
+--   >     VkBool32                         advancedBlendAllOperations;
+--   > } VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT.html VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT registry at www.khronos.org>
 data VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT = VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT## ByteArray##
 
 instance Eq VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
@@ -606,6 +625,15 @@ instance Show VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
                                                             (vkAdvancedBlendAllOperations x)
                                                             . showChar '}'
 
+-- | > typedef struct VkPipelineColorBlendAdvancedStateCreateInfoEXT {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkBool32               srcPremultiplied;
+--   >     VkBool32               dstPremultiplied;
+--   >     VkBlendOverlapEXT      blendOverlap;
+--   > } VkPipelineColorBlendAdvancedStateCreateInfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineColorBlendAdvancedStateCreateInfoEXT.html VkPipelineColorBlendAdvancedStateCreateInfoEXT registry at www.khronos.org>
 data VkPipelineColorBlendAdvancedStateCreateInfoEXT = VkPipelineColorBlendAdvancedStateCreateInfoEXT## ByteArray##
 
 instance Eq VkPipelineColorBlendAdvancedStateCreateInfoEXT where

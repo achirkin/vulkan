@@ -45,6 +45,15 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkBindBufferMemoryInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkBuffer                         buffer;
+--   >     VkDeviceMemory                   memory;
+--   >     VkDeviceSize                     memoryOffset;
+--   > } VkBindBufferMemoryInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBindBufferMemoryInfoKHR.html VkBindBufferMemoryInfoKHR registry at www.khronos.org>
 data VkBindBufferMemoryInfoKHR = VkBindBufferMemoryInfoKHR## ByteArray##
 
 instance Eq VkBindBufferMemoryInfoKHR where
@@ -249,6 +258,15 @@ instance Show VkBindBufferMemoryInfoKHR where
                                       showString "vkMemoryOffset = " .
                                         showsPrec d (vkMemoryOffset x) . showChar '}'
 
+-- | > typedef struct VkBindImageMemoryInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkImage                          image;
+--   >     VkDeviceMemory                   memory;
+--   >     VkDeviceSize                     memoryOffset;
+--   > } VkBindImageMemoryInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBindImageMemoryInfoKHR.html VkBindImageMemoryInfoKHR registry at www.khronos.org>
 data VkBindImageMemoryInfoKHR = VkBindImageMemoryInfoKHR## ByteArray##
 
 instance Eq VkBindImageMemoryInfoKHR where

@@ -49,6 +49,19 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkWin32KeyedMutexAcquireReleaseInfoNV {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     uint32_t                         acquireCount;
+--   >     const VkDeviceMemory*            pAcquireSyncs;
+--   >     const uint64_t*                  pAcquireKeys;
+--   >     const uint32_t*                  pAcquireTimeoutMilliseconds;
+--   >     uint32_t                         releaseCount;
+--   >     const VkDeviceMemory*            pReleaseSyncs;
+--   >     const uint64_t*                  pReleaseKeys;
+--   > } VkWin32KeyedMutexAcquireReleaseInfoNV;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkWin32KeyedMutexAcquireReleaseInfoNV.html VkWin32KeyedMutexAcquireReleaseInfoNV registry at www.khronos.org>
 data VkWin32KeyedMutexAcquireReleaseInfoNV = VkWin32KeyedMutexAcquireReleaseInfoNV## ByteArray##
 
 instance Eq VkWin32KeyedMutexAcquireReleaseInfoNV where

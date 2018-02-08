@@ -54,6 +54,14 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkImportMemoryHostPointerInfoEXT {
+--   >     VkStructureType sType;
+--   >     const void* pNext;
+--   >     VkExternalMemoryHandleTypeFlagBitsKHR handleType;
+--   >     void* pHostPointer;
+--   > } VkImportMemoryHostPointerInfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImportMemoryHostPointerInfoEXT.html VkImportMemoryHostPointerInfoEXT registry at www.khronos.org>
 data VkImportMemoryHostPointerInfoEXT = VkImportMemoryHostPointerInfoEXT## ByteArray##
 
 instance Eq VkImportMemoryHostPointerInfoEXT where
@@ -239,6 +247,13 @@ instance Show VkImportMemoryHostPointerInfoEXT where
                                 showString "vkPHostPointer = " .
                                   showsPrec d (vkPHostPointer x) . showChar '}'
 
+-- | > typedef struct VkMemoryHostPointerPropertiesEXT {
+--   >     VkStructureType sType;
+--   >     void* pNext;
+--   >     uint32_t memoryTypeBits;
+--   > } VkMemoryHostPointerPropertiesEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryHostPointerPropertiesEXT.html VkMemoryHostPointerPropertiesEXT registry at www.khronos.org>
 data VkMemoryHostPointerPropertiesEXT = VkMemoryHostPointerPropertiesEXT## ByteArray##
 
 instance Eq VkMemoryHostPointerPropertiesEXT where
@@ -399,6 +414,13 @@ instance Show VkMemoryHostPointerPropertiesEXT where
                           showString "vkMemoryTypeBits = " .
                             showsPrec d (vkMemoryTypeBits x) . showChar '}'
 
+-- | > typedef struct VkPhysicalDeviceExternalMemoryHostPropertiesEXT {
+--   >     VkStructureType sType;
+--   >     void* pNext;
+--   >     VkDeviceSize minImportedHostPointerAlignment;
+--   > } VkPhysicalDeviceExternalMemoryHostPropertiesEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceExternalMemoryHostPropertiesEXT.html VkPhysicalDeviceExternalMemoryHostPropertiesEXT registry at www.khronos.org>
 data VkPhysicalDeviceExternalMemoryHostPropertiesEXT = VkPhysicalDeviceExternalMemoryHostPropertiesEXT## ByteArray##
 
 instance Eq VkPhysicalDeviceExternalMemoryHostPropertiesEXT where

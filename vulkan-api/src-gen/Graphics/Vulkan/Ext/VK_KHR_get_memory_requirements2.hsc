@@ -54,6 +54,13 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkBufferMemoryRequirementsInfo2KHR {
+--   >     VkStructureType sType;
+--   >     const void*                                                          pNext;
+--   >     VkBuffer                                                             buffer;
+--   > } VkBufferMemoryRequirementsInfo2KHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBufferMemoryRequirementsInfo2KHR.html VkBufferMemoryRequirementsInfo2KHR registry at www.khronos.org>
 data VkBufferMemoryRequirementsInfo2KHR = VkBufferMemoryRequirementsInfo2KHR## ByteArray##
 
 instance Eq VkBufferMemoryRequirementsInfo2KHR where
@@ -215,6 +222,13 @@ instance Show VkBufferMemoryRequirementsInfo2KHR where
                         showString ", " .
                           showString "vkBuffer = " . showsPrec d (vkBuffer x) . showChar '}'
 
+-- | > typedef struct VkImageMemoryRequirementsInfo2KHR {
+--   >     VkStructureType sType;
+--   >     const void*                                                          pNext;
+--   >     VkImage                                                              image;
+--   > } VkImageMemoryRequirementsInfo2KHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageMemoryRequirementsInfo2KHR.html VkImageMemoryRequirementsInfo2KHR registry at www.khronos.org>
 data VkImageMemoryRequirementsInfo2KHR = VkImageMemoryRequirementsInfo2KHR## ByteArray##
 
 instance Eq VkImageMemoryRequirementsInfo2KHR where
@@ -375,6 +389,13 @@ instance Show VkImageMemoryRequirementsInfo2KHR where
                         showString ", " .
                           showString "vkImage = " . showsPrec d (vkImage x) . showChar '}'
 
+-- | > typedef struct VkImageSparseMemoryRequirementsInfo2KHR {
+--   >     VkStructureType sType;
+--   >     const void*                                                          pNext;
+--   >     VkImage                                                              image;
+--   > } VkImageSparseMemoryRequirementsInfo2KHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageSparseMemoryRequirementsInfo2KHR.html VkImageSparseMemoryRequirementsInfo2KHR registry at www.khronos.org>
 data VkImageSparseMemoryRequirementsInfo2KHR = VkImageSparseMemoryRequirementsInfo2KHR## ByteArray##
 
 instance Eq VkImageSparseMemoryRequirementsInfo2KHR where
@@ -545,6 +566,13 @@ instance Show VkImageSparseMemoryRequirementsInfo2KHR where
                         showString ", " .
                           showString "vkImage = " . showsPrec d (vkImage x) . showChar '}'
 
+-- | > typedef struct VkMemoryRequirements2KHR {
+--   >     VkStructureType sType;
+--   >     void* pNext;
+--   >     VkMemoryRequirements                                                 memoryRequirements;
+--   > } VkMemoryRequirements2KHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryRequirements2KHR.html VkMemoryRequirements2KHR registry at www.khronos.org>
 data VkMemoryRequirements2KHR = VkMemoryRequirements2KHR## ByteArray##
 
 instance Eq VkMemoryRequirements2KHR where
@@ -702,6 +730,13 @@ instance Show VkMemoryRequirements2KHR where
                           showString "vkMemoryRequirements = " .
                             showsPrec d (vkMemoryRequirements x) . showChar '}'
 
+-- | > typedef struct VkSparseImageMemoryRequirements2KHR {
+--   >     VkStructureType sType;
+--   >     void*                                       pNext;
+--   >     VkSparseImageMemoryRequirements                                      memoryRequirements;
+--   > } VkSparseImageMemoryRequirements2KHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSparseImageMemoryRequirements2KHR.html VkSparseImageMemoryRequirements2KHR registry at www.khronos.org>
 data VkSparseImageMemoryRequirements2KHR = VkSparseImageMemoryRequirements2KHR## ByteArray##
 
 instance Eq VkSparseImageMemoryRequirements2KHR where

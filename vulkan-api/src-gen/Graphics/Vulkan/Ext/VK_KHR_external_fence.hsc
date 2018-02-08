@@ -48,6 +48,13 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkExportFenceCreateInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkExternalFenceHandleTypeFlagsKHR handleTypes;
+--   > } VkExportFenceCreateInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExportFenceCreateInfoKHR.html VkExportFenceCreateInfoKHR registry at www.khronos.org>
 data VkExportFenceCreateInfoKHR = VkExportFenceCreateInfoKHR## ByteArray##
 
 instance Eq VkExportFenceCreateInfoKHR where

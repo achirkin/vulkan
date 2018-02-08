@@ -51,6 +51,15 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkDisplayPresentInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*  pNext;
+--   >     VkRect2D                         srcRect;
+--   >     VkRect2D                         dstRect;
+--   >     VkBool32                         persistent;
+--   > } VkDisplayPresentInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplayPresentInfoKHR.html VkDisplayPresentInfoKHR registry at www.khronos.org>
 data VkDisplayPresentInfoKHR = VkDisplayPresentInfoKHR## ByteArray##
 
 instance Eq VkDisplayPresentInfoKHR where

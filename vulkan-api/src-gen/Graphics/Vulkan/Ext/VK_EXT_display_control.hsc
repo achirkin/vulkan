@@ -54,6 +54,13 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkDisplayPowerInfoEXT {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkDisplayPowerStateEXT           powerState;
+--   > } VkDisplayPowerInfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplayPowerInfoEXT.html VkDisplayPowerInfoEXT registry at www.khronos.org>
 data VkDisplayPowerInfoEXT = VkDisplayPowerInfoEXT## ByteArray##
 
 instance Eq VkDisplayPowerInfoEXT where
@@ -207,6 +214,13 @@ instance Show VkDisplayPowerInfoEXT where
                           showString "vkPowerState = " .
                             showsPrec d (vkPowerState x) . showChar '}'
 
+-- | > typedef struct VkDeviceEventInfoEXT {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkDeviceEventTypeEXT             deviceEvent;
+--   > } VkDeviceEventInfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceEventInfoEXT.html VkDeviceEventInfoEXT registry at www.khronos.org>
 data VkDeviceEventInfoEXT = VkDeviceEventInfoEXT## ByteArray##
 
 instance Eq VkDeviceEventInfoEXT where
@@ -359,6 +373,13 @@ instance Show VkDeviceEventInfoEXT where
                           showString "vkDeviceEvent = " .
                             showsPrec d (vkDeviceEvent x) . showChar '}'
 
+-- | > typedef struct VkDisplayEventInfoEXT {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkDisplayEventTypeEXT            displayEvent;
+--   > } VkDisplayEventInfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplayEventInfoEXT.html VkDisplayEventInfoEXT registry at www.khronos.org>
 data VkDisplayEventInfoEXT = VkDisplayEventInfoEXT## ByteArray##
 
 instance Eq VkDisplayEventInfoEXT where
@@ -512,6 +533,13 @@ instance Show VkDisplayEventInfoEXT where
                           showString "vkDisplayEvent = " .
                             showsPrec d (vkDisplayEvent x) . showChar '}'
 
+-- | > typedef struct VkSwapchainCounterCreateInfoEXT {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkSurfaceCounterFlagsEXT         surfaceCounters;
+--   > } VkSwapchainCounterCreateInfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSwapchainCounterCreateInfoEXT.html VkSwapchainCounterCreateInfoEXT registry at www.khronos.org>
 data VkSwapchainCounterCreateInfoEXT = VkSwapchainCounterCreateInfoEXT## ByteArray##
 
 instance Eq VkSwapchainCounterCreateInfoEXT where

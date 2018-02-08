@@ -52,6 +52,15 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkDebugMarkerObjectNameInfoEXT {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkDebugReportObjectTypeEXT       objectType;
+--   >     uint64_t                         object;
+--   >     const char* pObjectName;
+--   > } VkDebugMarkerObjectNameInfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDebugMarkerObjectNameInfoEXT.html VkDebugMarkerObjectNameInfoEXT registry at www.khronos.org>
 data VkDebugMarkerObjectNameInfoEXT = VkDebugMarkerObjectNameInfoEXT## ByteArray##
 
 instance Eq VkDebugMarkerObjectNameInfoEXT where
@@ -258,6 +267,17 @@ instance Show VkDebugMarkerObjectNameInfoEXT where
                                       showString "vkPObjectName = " .
                                         showsPrec d (vkPObjectName x) . showChar '}'
 
+-- | > typedef struct VkDebugMarkerObjectTagInfoEXT {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkDebugReportObjectTypeEXT       objectType;
+--   >     uint64_t                         object;
+--   >     uint64_t                         tagName;
+--   >     size_t                           tagSize;
+--   >     const void*        pTag;
+--   > } VkDebugMarkerObjectTagInfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDebugMarkerObjectTagInfoEXT.html VkDebugMarkerObjectTagInfoEXT registry at www.khronos.org>
 data VkDebugMarkerObjectTagInfoEXT = VkDebugMarkerObjectTagInfoEXT## ByteArray##
 
 instance Eq VkDebugMarkerObjectTagInfoEXT where
@@ -513,6 +533,14 @@ instance Show VkDebugMarkerObjectTagInfoEXT where
                                                   showString "vkPTag = " .
                                                     showsPrec d (vkPTag x) . showChar '}'
 
+-- | > typedef struct VkDebugMarkerMarkerInfoEXT {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     const char* pMarkerName;
+--   >     float            color[4];
+--   > } VkDebugMarkerMarkerInfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDebugMarkerMarkerInfoEXT.html VkDebugMarkerMarkerInfoEXT registry at www.khronos.org>
 data VkDebugMarkerMarkerInfoEXT = VkDebugMarkerMarkerInfoEXT## ByteArray##
 
 instance Eq VkDebugMarkerMarkerInfoEXT where

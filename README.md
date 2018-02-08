@@ -13,6 +13,7 @@ Features of the bindings:
     allowing zero-copy conversion to and from pointers.
     Moreover, it is not necessary to convert them at all, if one prefers to
     manage corresponding memory manually.
+  * Document generated code as much as possible with references to vulkan registry.
 
 # vulkan-api
 
@@ -23,7 +24,7 @@ Generated haskell bindings for vulkan api.
 Generate haskell vulkan sources using vk.xml file.
 
 
-# bulkan-examples
+# vulkan-examples
 
 Examples of programs using vulkan-api bindings.
 

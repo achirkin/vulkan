@@ -46,6 +46,13 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkDedicatedAllocationImageCreateInfoNV {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkBool32                         dedicatedAllocation;
+--   > } VkDedicatedAllocationImageCreateInfoNV;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDedicatedAllocationImageCreateInfoNV.html VkDedicatedAllocationImageCreateInfoNV registry at www.khronos.org>
 data VkDedicatedAllocationImageCreateInfoNV = VkDedicatedAllocationImageCreateInfoNV## ByteArray##
 
 instance Eq VkDedicatedAllocationImageCreateInfoNV where
@@ -218,6 +225,13 @@ instance Show VkDedicatedAllocationImageCreateInfoNV where
                           showString "vkDedicatedAllocation = " .
                             showsPrec d (vkDedicatedAllocation x) . showChar '}'
 
+-- | > typedef struct VkDedicatedAllocationBufferCreateInfoNV {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkBool32                         dedicatedAllocation;
+--   > } VkDedicatedAllocationBufferCreateInfoNV;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDedicatedAllocationBufferCreateInfoNV.html VkDedicatedAllocationBufferCreateInfoNV registry at www.khronos.org>
 data VkDedicatedAllocationBufferCreateInfoNV = VkDedicatedAllocationBufferCreateInfoNV## ByteArray##
 
 instance Eq VkDedicatedAllocationBufferCreateInfoNV where
@@ -392,6 +406,14 @@ instance Show VkDedicatedAllocationBufferCreateInfoNV where
                           showString "vkDedicatedAllocation = " .
                             showsPrec d (vkDedicatedAllocation x) . showChar '}'
 
+-- | > typedef struct VkDedicatedAllocationMemoryAllocateInfoNV {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkImage          image;
+--   >     VkBuffer         buffer;
+--   > } VkDedicatedAllocationMemoryAllocateInfoNV;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDedicatedAllocationMemoryAllocateInfoNV.html VkDedicatedAllocationMemoryAllocateInfoNV registry at www.khronos.org>
 data VkDedicatedAllocationMemoryAllocateInfoNV = VkDedicatedAllocationMemoryAllocateInfoNV## ByteArray##
 
 instance Eq VkDedicatedAllocationMemoryAllocateInfoNV where

@@ -52,6 +52,13 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkPhysicalDeviceDiscardRectanglePropertiesEXT {
+--   >     VkStructureType sType;
+--   >     void*                  pNext;
+--   >     uint32_t               maxDiscardRectangles;
+--   > } VkPhysicalDeviceDiscardRectanglePropertiesEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceDiscardRectanglePropertiesEXT.html VkPhysicalDeviceDiscardRectanglePropertiesEXT registry at www.khronos.org>
 data VkPhysicalDeviceDiscardRectanglePropertiesEXT = VkPhysicalDeviceDiscardRectanglePropertiesEXT## ByteArray##
 
 instance Eq VkPhysicalDeviceDiscardRectanglePropertiesEXT where
@@ -230,6 +237,16 @@ instance Show VkPhysicalDeviceDiscardRectanglePropertiesEXT where
                           showString "vkMaxDiscardRectangles = " .
                             showsPrec d (vkMaxDiscardRectangles x) . showChar '}'
 
+-- | > typedef struct VkPipelineDiscardRectangleStateCreateInfoEXT {
+--   >     VkStructureType sType;
+--   >     const void*                                                                      pNext;
+--   >     VkPipelineDiscardRectangleStateCreateFlagsEXT                    flags;
+--   >     VkDiscardRectangleModeEXT                                                        discardRectangleMode;
+--   >     uint32_t                                                         discardRectangleCount;
+--   >     const VkRect2D* pDiscardRectangles;
+--   > } VkPipelineDiscardRectangleStateCreateInfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineDiscardRectangleStateCreateInfoEXT.html VkPipelineDiscardRectangleStateCreateInfoEXT registry at www.khronos.org>
 data VkPipelineDiscardRectangleStateCreateInfoEXT = VkPipelineDiscardRectangleStateCreateInfoEXT## ByteArray##
 
 instance Eq VkPipelineDiscardRectangleStateCreateInfoEXT where

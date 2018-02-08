@@ -70,6 +70,13 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkDeviceGeneratedCommandsFeaturesNVX {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkBool32                         computeBindingPointSupport;
+--   > } VkDeviceGeneratedCommandsFeaturesNVX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceGeneratedCommandsFeaturesNVX.html VkDeviceGeneratedCommandsFeaturesNVX registry at www.khronos.org>
 data VkDeviceGeneratedCommandsFeaturesNVX = VkDeviceGeneratedCommandsFeaturesNVX## ByteArray##
 
 instance Eq VkDeviceGeneratedCommandsFeaturesNVX where
@@ -242,6 +249,17 @@ instance Show VkDeviceGeneratedCommandsFeaturesNVX where
                           showString "vkComputeBindingPointSupport = " .
                             showsPrec d (vkComputeBindingPointSupport x) . showChar '}'
 
+-- | > typedef struct VkDeviceGeneratedCommandsLimitsNVX {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     uint32_t                         maxIndirectCommandsLayoutTokenCount;
+--   >     uint32_t                         maxObjectEntryCounts;
+--   >     uint32_t                         minSequenceCountBufferOffsetAlignment;
+--   >     uint32_t                         minSequenceIndexBufferOffsetAlignment;
+--   >     uint32_t                         minCommandsTokenBufferOffsetAlignment;
+--   > } VkDeviceGeneratedCommandsLimitsNVX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceGeneratedCommandsLimitsNVX.html VkDeviceGeneratedCommandsLimitsNVX registry at www.khronos.org>
 data VkDeviceGeneratedCommandsLimitsNVX = VkDeviceGeneratedCommandsLimitsNVX## ByteArray##
 
 instance Eq VkDeviceGeneratedCommandsLimitsNVX where
@@ -524,6 +542,13 @@ instance Show VkDeviceGeneratedCommandsLimitsNVX where
                                                       (vkMinCommandsTokenBufferOffsetAlignment x)
                                                       . showChar '}'
 
+-- | > typedef struct VkIndirectCommandsTokenNVX {
+--   >     VkIndirectCommandsTokenTypeNVX      tokenType;
+--   >     VkBuffer                         buffer;
+--   >     VkDeviceSize                     offset;
+--   > } VkIndirectCommandsTokenNVX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkIndirectCommandsTokenNVX.html VkIndirectCommandsTokenNVX registry at www.khronos.org>
 data VkIndirectCommandsTokenNVX = VkIndirectCommandsTokenNVX## ByteArray##
 
 instance Eq VkIndirectCommandsTokenNVX where
@@ -680,6 +705,14 @@ instance Show VkIndirectCommandsTokenNVX where
                         showString ", " .
                           showString "vkOffset = " . showsPrec d (vkOffset x) . showChar '}'
 
+-- | > typedef struct VkIndirectCommandsLayoutTokenNVX {
+--   >     VkIndirectCommandsTokenTypeNVX      tokenType;
+--   >     uint32_t                         bindingUnit;
+--   >     uint32_t                         dynamicCount;
+--   >     uint32_t                         divisor;
+--   > } VkIndirectCommandsLayoutTokenNVX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkIndirectCommandsLayoutTokenNVX.html VkIndirectCommandsLayoutTokenNVX registry at www.khronos.org>
 data VkIndirectCommandsLayoutTokenNVX = VkIndirectCommandsLayoutTokenNVX## ByteArray##
 
 instance Eq VkIndirectCommandsLayoutTokenNVX where
@@ -863,6 +896,16 @@ instance Show VkIndirectCommandsLayoutTokenNVX where
                                 showString "vkDivisor = " .
                                   showsPrec d (vkDivisor x) . showChar '}'
 
+-- | > typedef struct VkIndirectCommandsLayoutCreateInfoNVX {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkPipelineBindPoint                      pipelineBindPoint;
+--   >     VkIndirectCommandsLayoutUsageFlagsNVX    flags;
+--   >     uint32_t                                 tokenCount;
+--   >     const VkIndirectCommandsLayoutTokenNVX*  pTokens;
+--   > } VkIndirectCommandsLayoutCreateInfoNVX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkIndirectCommandsLayoutCreateInfoNVX.html VkIndirectCommandsLayoutCreateInfoNVX registry at www.khronos.org>
 data VkIndirectCommandsLayoutCreateInfoNVX = VkIndirectCommandsLayoutCreateInfoNVX## ByteArray##
 
 instance Eq VkIndirectCommandsLayoutCreateInfoNVX where
@@ -1108,6 +1151,22 @@ instance Show VkIndirectCommandsLayoutCreateInfoNVX where
                                             showString "vkPTokens = " .
                                               showsPrec d (vkPTokens x) . showChar '}'
 
+-- | > typedef struct VkCmdProcessCommandsInfoNVX {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkObjectTableNVX                                         objectTable;
+--   >     VkIndirectCommandsLayoutNVX                              indirectCommandsLayout;
+--   >     uint32_t                                                 indirectCommandsTokenCount;
+--   >     const VkIndirectCommandsTokenNVX*       pIndirectCommandsTokens;
+--   >     uint32_t                                                 maxSequencesCount;
+--   >     VkCommandBuffer                          targetCommandBuffer;
+--   >     VkBuffer                                 sequencesCountBuffer;
+--   >     VkDeviceSize                             sequencesCountOffset;
+--   >     VkBuffer                                 sequencesIndexBuffer;
+--   >     VkDeviceSize                             sequencesIndexOffset;
+--   > } VkCmdProcessCommandsInfoNVX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkCmdProcessCommandsInfoNVX.html VkCmdProcessCommandsInfoNVX registry at www.khronos.org>
 data VkCmdProcessCommandsInfoNVX = VkCmdProcessCommandsInfoNVX## ByteArray##
 
 instance Eq VkCmdProcessCommandsInfoNVX where
@@ -1506,6 +1565,15 @@ instance Show VkCmdProcessCommandsInfoNVX where
                                                                                        x)
                                                                                     . showChar '}'
 
+-- | > typedef struct VkCmdReserveSpaceForCommandsInfoNVX {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkObjectTableNVX                                         objectTable;
+--   >     VkIndirectCommandsLayoutNVX                              indirectCommandsLayout;
+--   >     uint32_t                                                 maxSequencesCount;
+--   > } VkCmdReserveSpaceForCommandsInfoNVX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkCmdReserveSpaceForCommandsInfoNVX.html VkCmdReserveSpaceForCommandsInfoNVX registry at www.khronos.org>
 data VkCmdReserveSpaceForCommandsInfoNVX = VkCmdReserveSpaceForCommandsInfoNVX## ByteArray##
 
 instance Eq VkCmdReserveSpaceForCommandsInfoNVX where
@@ -1725,6 +1793,21 @@ instance Show VkCmdReserveSpaceForCommandsInfoNVX where
                                       showString "vkMaxSequencesCount = " .
                                         showsPrec d (vkMaxSequencesCount x) . showChar '}'
 
+-- | > typedef struct VkObjectTableCreateInfoNVX {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     uint32_t                                          objectCount;
+--   >     const VkObjectEntryTypeNVX*       pObjectEntryTypes;
+--   >     const uint32_t*                   pObjectEntryCounts;
+--   >     const VkObjectEntryUsageFlagsNVX* pObjectEntryUsageFlags;
+--   >     uint32_t maxUniformBuffersPerDescriptor;
+--   >     uint32_t maxStorageBuffersPerDescriptor;
+--   >     uint32_t maxStorageImagesPerDescriptor;
+--   >     uint32_t maxSampledImagesPerDescriptor;
+--   >     uint32_t maxPipelineLayouts;
+--   > } VkObjectTableCreateInfoNVX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkObjectTableCreateInfoNVX.html VkObjectTableCreateInfoNVX registry at www.khronos.org>
 data VkObjectTableCreateInfoNVX = VkObjectTableCreateInfoNVX## ByteArray##
 
 instance Eq VkObjectTableCreateInfoNVX where
@@ -2106,6 +2189,12 @@ instance Show VkObjectTableCreateInfoNVX where
                                                                                  x)
                                                                               . showChar '}'
 
+-- | > typedef struct VkObjectTableEntryNVX {
+--   >     VkObjectEntryTypeNVX         type;
+--   >     VkObjectEntryUsageFlagsNVX   flags;
+--   > } VkObjectTableEntryNVX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkObjectTableEntryNVX.html VkObjectTableEntryNVX registry at www.khronos.org>
 data VkObjectTableEntryNVX = VkObjectTableEntryNVX## ByteArray##
 
 instance Eq VkObjectTableEntryNVX where
@@ -2234,6 +2323,13 @@ instance Show VkObjectTableEntryNVX where
                   showString ", " .
                     showString "vkFlags = " . showsPrec d (vkFlags x) . showChar '}'
 
+-- | > typedef struct VkObjectTablePipelineEntryNVX {
+--   >     VkObjectEntryTypeNVX         type;
+--   >     VkObjectEntryUsageFlagsNVX   flags;
+--   >     VkPipeline                   pipeline;
+--   > } VkObjectTablePipelineEntryNVX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkObjectTablePipelineEntryNVX.html VkObjectTablePipelineEntryNVX registry at www.khronos.org>
 data VkObjectTablePipelineEntryNVX = VkObjectTablePipelineEntryNVX## ByteArray##
 
 instance Eq VkObjectTablePipelineEntryNVX where
@@ -2393,6 +2489,14 @@ instance Show VkObjectTablePipelineEntryNVX where
                           showString "vkPipeline = " .
                             showsPrec d (vkPipeline x) . showChar '}'
 
+-- | > typedef struct VkObjectTableDescriptorSetEntryNVX {
+--   >     VkObjectEntryTypeNVX         type;
+--   >     VkObjectEntryUsageFlagsNVX   flags;
+--   >     VkPipelineLayout             pipelineLayout;
+--   >     VkDescriptorSet              descriptorSet;
+--   > } VkObjectTableDescriptorSetEntryNVX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkObjectTableDescriptorSetEntryNVX.html VkObjectTableDescriptorSetEntryNVX registry at www.khronos.org>
 data VkObjectTableDescriptorSetEntryNVX = VkObjectTableDescriptorSetEntryNVX## ByteArray##
 
 instance Eq VkObjectTableDescriptorSetEntryNVX where
@@ -2582,6 +2686,13 @@ instance Show VkObjectTableDescriptorSetEntryNVX where
                                 showString "vkDescriptorSet = " .
                                   showsPrec d (vkDescriptorSet x) . showChar '}'
 
+-- | > typedef struct VkObjectTableVertexBufferEntryNVX {
+--   >     VkObjectEntryTypeNVX         type;
+--   >     VkObjectEntryUsageFlagsNVX   flags;
+--   >     VkBuffer                     buffer;
+--   > } VkObjectTableVertexBufferEntryNVX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkObjectTableVertexBufferEntryNVX.html VkObjectTableVertexBufferEntryNVX registry at www.khronos.org>
 data VkObjectTableVertexBufferEntryNVX = VkObjectTableVertexBufferEntryNVX## ByteArray##
 
 instance Eq VkObjectTableVertexBufferEntryNVX where
@@ -2743,6 +2854,14 @@ instance Show VkObjectTableVertexBufferEntryNVX where
                         showString ", " .
                           showString "vkBuffer = " . showsPrec d (vkBuffer x) . showChar '}'
 
+-- | > typedef struct VkObjectTableIndexBufferEntryNVX {
+--   >     VkObjectEntryTypeNVX         type;
+--   >     VkObjectEntryUsageFlagsNVX   flags;
+--   >     VkBuffer                     buffer;
+--   >     VkIndexType                  indexType;
+--   > } VkObjectTableIndexBufferEntryNVX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkObjectTableIndexBufferEntryNVX.html VkObjectTableIndexBufferEntryNVX registry at www.khronos.org>
 data VkObjectTableIndexBufferEntryNVX = VkObjectTableIndexBufferEntryNVX## ByteArray##
 
 instance Eq VkObjectTableIndexBufferEntryNVX where
@@ -2928,6 +3047,14 @@ instance Show VkObjectTableIndexBufferEntryNVX where
                                 showString "vkIndexType = " .
                                   showsPrec d (vkIndexType x) . showChar '}'
 
+-- | > typedef struct VkObjectTablePushConstantEntryNVX {
+--   >     VkObjectEntryTypeNVX         type;
+--   >     VkObjectEntryUsageFlagsNVX   flags;
+--   >     VkPipelineLayout             pipelineLayout;
+--   >     VkShaderStageFlags           stageFlags;
+--   > } VkObjectTablePushConstantEntryNVX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkObjectTablePushConstantEntryNVX.html VkObjectTablePushConstantEntryNVX registry at www.khronos.org>
 data VkObjectTablePushConstantEntryNVX = VkObjectTablePushConstantEntryNVX## ByteArray##
 
 instance Eq VkObjectTablePushConstantEntryNVX where

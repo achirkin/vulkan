@@ -49,6 +49,14 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkMemoryDedicatedRequirementsKHR {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     VkBool32                         prefersDedicatedAllocation;
+--   >     VkBool32                         requiresDedicatedAllocation;
+--   > } VkMemoryDedicatedRequirementsKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryDedicatedRequirementsKHR.html VkMemoryDedicatedRequirementsKHR registry at www.khronos.org>
 data VkMemoryDedicatedRequirementsKHR = VkMemoryDedicatedRequirementsKHR## ByteArray##
 
 instance Eq VkMemoryDedicatedRequirementsKHR where
@@ -238,6 +246,14 @@ instance Show VkMemoryDedicatedRequirementsKHR where
                                 showString "vkRequiresDedicatedAllocation = " .
                                   showsPrec d (vkRequiresDedicatedAllocation x) . showChar '}'
 
+-- | > typedef struct VkMemoryDedicatedAllocateInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkImage          image;
+--   >     VkBuffer         buffer;
+--   > } VkMemoryDedicatedAllocateInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryDedicatedAllocateInfoKHR.html VkMemoryDedicatedAllocateInfoKHR registry at www.khronos.org>
 data VkMemoryDedicatedAllocateInfoKHR = VkMemoryDedicatedAllocateInfoKHR## ByteArray##
 
 instance Eq VkMemoryDedicatedAllocateInfoKHR where

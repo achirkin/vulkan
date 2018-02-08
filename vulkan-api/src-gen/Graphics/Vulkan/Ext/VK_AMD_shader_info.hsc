@@ -41,6 +41,15 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkShaderResourceUsageAMD {
+--   >     uint32_t numUsedVgprs;
+--   >     uint32_t numUsedSgprs;
+--   >     uint32_t ldsSizePerLocalWorkGroup;
+--   >     size_t ldsUsageSizeInBytes;
+--   >     size_t scratchMemUsageInBytes;
+--   > } VkShaderResourceUsageAMD;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkShaderResourceUsageAMD.html VkShaderResourceUsageAMD registry at www.khronos.org>
 data VkShaderResourceUsageAMD = VkShaderResourceUsageAMD## ByteArray##
 
 instance Eq VkShaderResourceUsageAMD where
@@ -248,6 +257,17 @@ instance Show VkShaderResourceUsageAMD where
                                       showString "vkScratchMemUsageInBytes = " .
                                         showsPrec d (vkScratchMemUsageInBytes x) . showChar '}'
 
+-- | > typedef struct VkShaderStatisticsInfoAMD {
+--   >     VkShaderStageFlags shaderStageMask;
+--   >     VkShaderResourceUsageAMD resourceUsage;
+--   >     uint32_t numPhysicalVgprs;
+--   >     uint32_t numPhysicalSgprs;
+--   >     uint32_t numAvailableVgprs;
+--   >     uint32_t numAvailableSgprs;
+--   >     uint32_t computeWorkGroupSize[3];
+--   > } VkShaderStatisticsInfoAMD;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkShaderStatisticsInfoAMD.html VkShaderStatisticsInfoAMD registry at www.khronos.org>
 data VkShaderStatisticsInfoAMD = VkShaderStatisticsInfoAMD## ByteArray##
 
 instance Eq VkShaderStatisticsInfoAMD where

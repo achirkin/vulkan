@@ -108,6 +108,20 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkSamplerYcbcrConversionCreateInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkFormat                         format;
+--   >     VkSamplerYcbcrModelConversionKHR ycbcrModel;
+--   >     VkSamplerYcbcrRangeKHR           ycbcrRange;
+--   >     VkComponentMapping               components;
+--   >     VkChromaLocationKHR              xChromaOffset;
+--   >     VkChromaLocationKHR              yChromaOffset;
+--   >     VkFilter                         chromaFilter;
+--   >     VkBool32                         forceExplicitReconstruction;
+--   > } VkSamplerYcbcrConversionCreateInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSamplerYcbcrConversionCreateInfoKHR.html VkSamplerYcbcrConversionCreateInfoKHR registry at www.khronos.org>
 data VkSamplerYcbcrConversionCreateInfoKHR = VkSamplerYcbcrConversionCreateInfoKHR## ByteArray##
 
 instance Eq VkSamplerYcbcrConversionCreateInfoKHR where
@@ -460,6 +474,13 @@ instance Show VkSamplerYcbcrConversionCreateInfoKHR where
                                                                            x)
                                                                         . showChar '}'
 
+-- | > typedef struct VkSamplerYcbcrConversionInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkSamplerYcbcrConversionKHR      conversion;
+--   > } VkSamplerYcbcrConversionInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSamplerYcbcrConversionInfoKHR.html VkSamplerYcbcrConversionInfoKHR registry at www.khronos.org>
 data VkSamplerYcbcrConversionInfoKHR = VkSamplerYcbcrConversionInfoKHR## ByteArray##
 
 instance Eq VkSamplerYcbcrConversionInfoKHR where
@@ -619,6 +640,13 @@ instance Show VkSamplerYcbcrConversionInfoKHR where
                           showString "vkConversion = " .
                             showsPrec d (vkConversion x) . showChar '}'
 
+-- | > typedef struct VkBindImagePlaneMemoryInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkImageAspectFlagBits            planeAspect;
+--   > } VkBindImagePlaneMemoryInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBindImagePlaneMemoryInfoKHR.html VkBindImagePlaneMemoryInfoKHR registry at www.khronos.org>
 data VkBindImagePlaneMemoryInfoKHR = VkBindImagePlaneMemoryInfoKHR## ByteArray##
 
 instance Eq VkBindImagePlaneMemoryInfoKHR where
@@ -777,6 +805,13 @@ instance Show VkBindImagePlaneMemoryInfoKHR where
                           showString "vkPlaneAspect = " .
                             showsPrec d (vkPlaneAspect x) . showChar '}'
 
+-- | > typedef struct VkImagePlaneMemoryRequirementsInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkImageAspectFlagBits            planeAspect;
+--   > } VkImagePlaneMemoryRequirementsInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImagePlaneMemoryRequirementsInfoKHR.html VkImagePlaneMemoryRequirementsInfoKHR registry at www.khronos.org>
 data VkImagePlaneMemoryRequirementsInfoKHR = VkImagePlaneMemoryRequirementsInfoKHR## ByteArray##
 
 instance Eq VkImagePlaneMemoryRequirementsInfoKHR where
@@ -947,6 +982,13 @@ instance Show VkImagePlaneMemoryRequirementsInfoKHR where
                           showString "vkPlaneAspect = " .
                             showsPrec d (vkPlaneAspect x) . showChar '}'
 
+-- | > typedef struct VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR {
+--   >     VkStructureType sType;
+--   >     void*      pNext;
+--   >     VkBool32                         samplerYcbcrConversion;
+--   > } VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR.html VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR registry at www.khronos.org>
 data VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR = VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR## ByteArray##
 
 instance Eq VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR where
@@ -1132,6 +1174,13 @@ instance Show VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
                           showString "vkSamplerYcbcrConversion = " .
                             showsPrec d (vkSamplerYcbcrConversion x) . showChar '}'
 
+-- | > typedef struct VkSamplerYcbcrConversionImageFormatPropertiesKHR {
+--   >     VkStructureType sType;
+--   >     void*      pNext;
+--   >     uint32_t                         combinedImageSamplerDescriptorCount;
+--   > } VkSamplerYcbcrConversionImageFormatPropertiesKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSamplerYcbcrConversionImageFormatPropertiesKHR.html VkSamplerYcbcrConversionImageFormatPropertiesKHR registry at www.khronos.org>
 data VkSamplerYcbcrConversionImageFormatPropertiesKHR = VkSamplerYcbcrConversionImageFormatPropertiesKHR## ByteArray##
 
 instance Eq VkSamplerYcbcrConversionImageFormatPropertiesKHR where

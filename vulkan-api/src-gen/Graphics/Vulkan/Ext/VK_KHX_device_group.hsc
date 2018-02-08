@@ -82,6 +82,14 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkMemoryAllocateFlagsInfoKHX {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkMemoryAllocateFlagsKHX flags;
+--   >     uint32_t                         deviceMask;
+--   > } VkMemoryAllocateFlagsInfoKHX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryAllocateFlagsInfoKHX.html VkMemoryAllocateFlagsInfoKHX registry at www.khronos.org>
 data VkMemoryAllocateFlagsInfoKHX = VkMemoryAllocateFlagsInfoKHX## ByteArray##
 
 instance Eq VkMemoryAllocateFlagsInfoKHX where
@@ -264,6 +272,15 @@ instance Show VkMemoryAllocateFlagsInfoKHX where
                                 showString "vkDeviceMask = " .
                                   showsPrec d (vkDeviceMask x) . showChar '}'
 
+-- | > typedef struct VkDeviceGroupRenderPassBeginInfoKHX {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     uint32_t                         deviceMask;
+--   >     uint32_t         deviceRenderAreaCount;
+--   >     const VkRect2D*  pDeviceRenderAreas;
+--   > } VkDeviceGroupRenderPassBeginInfoKHX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceGroupRenderPassBeginInfoKHX.html VkDeviceGroupRenderPassBeginInfoKHX registry at www.khronos.org>
 data VkDeviceGroupRenderPassBeginInfoKHX = VkDeviceGroupRenderPassBeginInfoKHX## ByteArray##
 
 instance Eq VkDeviceGroupRenderPassBeginInfoKHX where
@@ -482,6 +499,13 @@ instance Show VkDeviceGroupRenderPassBeginInfoKHX where
                                       showString "vkPDeviceRenderAreas = " .
                                         showsPrec d (vkPDeviceRenderAreas x) . showChar '}'
 
+-- | > typedef struct VkDeviceGroupCommandBufferBeginInfoKHX {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     uint32_t                         deviceMask;
+--   > } VkDeviceGroupCommandBufferBeginInfoKHX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceGroupCommandBufferBeginInfoKHX.html VkDeviceGroupCommandBufferBeginInfoKHX registry at www.khronos.org>
 data VkDeviceGroupCommandBufferBeginInfoKHX = VkDeviceGroupCommandBufferBeginInfoKHX## ByteArray##
 
 instance Eq VkDeviceGroupCommandBufferBeginInfoKHX where
@@ -652,6 +676,18 @@ instance Show VkDeviceGroupCommandBufferBeginInfoKHX where
                           showString "vkDeviceMask = " .
                             showsPrec d (vkDeviceMask x) . showChar '}'
 
+-- | > typedef struct VkDeviceGroupSubmitInfoKHX {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     uint32_t         waitSemaphoreCount;
+--   >     const uint32_t*    pWaitSemaphoreDeviceIndices;
+--   >     uint32_t         commandBufferCount;
+--   >     const uint32_t*    pCommandBufferDeviceMasks;
+--   >     uint32_t         signalSemaphoreCount;
+--   >     const uint32_t*  pSignalSemaphoreDeviceIndices;
+--   > } VkDeviceGroupSubmitInfoKHX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceGroupSubmitInfoKHX.html VkDeviceGroupSubmitInfoKHX registry at www.khronos.org>
 data VkDeviceGroupSubmitInfoKHX = VkDeviceGroupSubmitInfoKHX## ByteArray##
 
 instance Eq VkDeviceGroupSubmitInfoKHX where
@@ -937,6 +973,14 @@ instance Show VkDeviceGroupSubmitInfoKHX where
                                                             (vkPSignalSemaphoreDeviceIndices x)
                                                             . showChar '}'
 
+-- | > typedef struct VkDeviceGroupBindSparseInfoKHX {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     uint32_t                         resourceDeviceIndex;
+--   >     uint32_t                         memoryDeviceIndex;
+--   > } VkDeviceGroupBindSparseInfoKHX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceGroupBindSparseInfoKHX.html VkDeviceGroupBindSparseInfoKHX registry at www.khronos.org>
 data VkDeviceGroupBindSparseInfoKHX = VkDeviceGroupBindSparseInfoKHX## ByteArray##
 
 instance Eq VkDeviceGroupBindSparseInfoKHX where
@@ -1266,6 +1310,14 @@ pattern VK_DEPENDENCY_DEVICE_GROUP_BIT_KHX :: VkDependencyFlagBits
 
 pattern VK_DEPENDENCY_DEVICE_GROUP_BIT_KHX = VkDependencyFlagBits 4
 
+-- | > typedef struct VkBindBufferMemoryDeviceGroupInfoKHX {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     uint32_t         deviceIndexCount;
+--   >     const uint32_t*  pDeviceIndices;
+--   > } VkBindBufferMemoryDeviceGroupInfoKHX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBindBufferMemoryDeviceGroupInfoKHX.html VkBindBufferMemoryDeviceGroupInfoKHX registry at www.khronos.org>
 data VkBindBufferMemoryDeviceGroupInfoKHX = VkBindBufferMemoryDeviceGroupInfoKHX## ByteArray##
 
 instance Eq VkBindBufferMemoryDeviceGroupInfoKHX where
@@ -1460,6 +1512,16 @@ instance Show VkBindBufferMemoryDeviceGroupInfoKHX where
                                 showString "vkPDeviceIndices = " .
                                   showsPrec d (vkPDeviceIndices x) . showChar '}'
 
+-- | > typedef struct VkBindImageMemoryDeviceGroupInfoKHX {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     uint32_t         deviceIndexCount;
+--   >     const uint32_t*  pDeviceIndices;
+--   >     uint32_t         SFRRectCount;
+--   >     const VkRect2D*  pSFRRects;
+--   > } VkBindImageMemoryDeviceGroupInfoKHX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBindImageMemoryDeviceGroupInfoKHX.html VkBindImageMemoryDeviceGroupInfoKHX registry at www.khronos.org>
 data VkBindImageMemoryDeviceGroupInfoKHX = VkBindImageMemoryDeviceGroupInfoKHX## ByteArray##
 
 instance Eq VkBindImageMemoryDeviceGroupInfoKHX where
@@ -1721,6 +1783,14 @@ pattern VK_IMAGE_CREATE_BIND_SFR_BIT_KHX :: VkImageCreateFlagBits
 
 pattern VK_IMAGE_CREATE_BIND_SFR_BIT_KHX = VkImageCreateFlagBits 64
 
+-- | > typedef struct VkDeviceGroupPresentCapabilitiesKHX {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     uint32_t                         presentMask[VK_MAX_DEVICE_GROUP_SIZE_KHX];
+--   >     VkDeviceGroupPresentModeFlagsKHX modes;
+--   > } VkDeviceGroupPresentCapabilitiesKHX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceGroupPresentCapabilitiesKHX.html VkDeviceGroupPresentCapabilitiesKHX registry at www.khronos.org>
 data VkDeviceGroupPresentCapabilitiesKHX = VkDeviceGroupPresentCapabilitiesKHX## ByteArray##
 
 instance Eq VkDeviceGroupPresentCapabilitiesKHX where
@@ -1986,6 +2056,13 @@ pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_CAPABILITIES_KHX ::
 pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_CAPABILITIES_KHX =
         VkStructureType 1000060007
 
+-- | > typedef struct VkImageSwapchainCreateInfoKHX {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkSwapchainKHR   swapchain;
+--   > } VkImageSwapchainCreateInfoKHX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageSwapchainCreateInfoKHX.html VkImageSwapchainCreateInfoKHX registry at www.khronos.org>
 data VkImageSwapchainCreateInfoKHX = VkImageSwapchainCreateInfoKHX## ByteArray##
 
 instance Eq VkImageSwapchainCreateInfoKHX where
@@ -2144,6 +2221,14 @@ instance Show VkImageSwapchainCreateInfoKHX where
                           showString "vkSwapchain = " .
                             showsPrec d (vkSwapchain x) . showChar '}'
 
+-- | > typedef struct VkBindImageMemorySwapchainInfoKHX {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkSwapchainKHR swapchain;
+--   >     uint32_t                         imageIndex;
+--   > } VkBindImageMemorySwapchainInfoKHX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBindImageMemorySwapchainInfoKHX.html VkBindImageMemorySwapchainInfoKHX registry at www.khronos.org>
 data VkBindImageMemorySwapchainInfoKHX = VkBindImageMemorySwapchainInfoKHX## ByteArray##
 
 instance Eq VkBindImageMemorySwapchainInfoKHX where
@@ -2330,6 +2415,17 @@ instance Show VkBindImageMemorySwapchainInfoKHX where
                                 showString "vkImageIndex = " .
                                   showsPrec d (vkImageIndex x) . showChar '}'
 
+-- | > typedef struct VkAcquireNextImageInfoKHX {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkSwapchainKHR swapchain;
+--   >     uint64_t                         timeout;
+--   >     VkSemaphore semaphore;
+--   >     VkFence fence;
+--   >     uint32_t                         deviceMask;
+--   > } VkAcquireNextImageInfoKHX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkAcquireNextImageInfoKHX.html VkAcquireNextImageInfoKHX registry at www.khronos.org>
 data VkAcquireNextImageInfoKHX = VkAcquireNextImageInfoKHX## ByteArray##
 
 instance Eq VkAcquireNextImageInfoKHX where
@@ -2582,6 +2678,15 @@ instance Show VkAcquireNextImageInfoKHX where
                                                   showString "vkDeviceMask = " .
                                                     showsPrec d (vkDeviceMask x) . showChar '}'
 
+-- | > typedef struct VkDeviceGroupPresentInfoKHX {
+--   >     VkStructureType sType;
+--   >     const void*  pNext;
+--   >     uint32_t         swapchainCount;
+--   >     const uint32_t* pDeviceMasks;
+--   >     VkDeviceGroupPresentModeFlagBitsKHX mode;
+--   > } VkDeviceGroupPresentInfoKHX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceGroupPresentInfoKHX.html VkDeviceGroupPresentInfoKHX registry at www.khronos.org>
 data VkDeviceGroupPresentInfoKHX = VkDeviceGroupPresentInfoKHX## ByteArray##
 
 instance Eq VkDeviceGroupPresentInfoKHX where
@@ -2786,6 +2891,13 @@ instance Show VkDeviceGroupPresentInfoKHX where
                                     showString ", " .
                                       showString "vkMode = " . showsPrec d (vkMode x) . showChar '}'
 
+-- | > typedef struct VkDeviceGroupSwapchainCreateInfoKHX {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkDeviceGroupPresentModeFlagsKHX                         modes;
+--   > } VkDeviceGroupSwapchainCreateInfoKHX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceGroupSwapchainCreateInfoKHX.html VkDeviceGroupSwapchainCreateInfoKHX registry at www.khronos.org>
 data VkDeviceGroupSwapchainCreateInfoKHX = VkDeviceGroupSwapchainCreateInfoKHX## ByteArray##
 
 instance Eq VkDeviceGroupSwapchainCreateInfoKHX where

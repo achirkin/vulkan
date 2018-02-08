@@ -42,6 +42,13 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkPipelineRasterizationStateRasterizationOrderAMD {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkRasterizationOrderAMD          rasterizationOrder;
+--   > } VkPipelineRasterizationStateRasterizationOrderAMD;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineRasterizationStateRasterizationOrderAMD.html VkPipelineRasterizationStateRasterizationOrderAMD registry at www.khronos.org>
 data VkPipelineRasterizationStateRasterizationOrderAMD = VkPipelineRasterizationStateRasterizationOrderAMD## ByteArray##
 
 instance Eq VkPipelineRasterizationStateRasterizationOrderAMD where

@@ -49,6 +49,13 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkPhysicalDevicePushDescriptorPropertiesKHR {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     uint32_t                         maxPushDescriptors;
+--   > } VkPhysicalDevicePushDescriptorPropertiesKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDevicePushDescriptorPropertiesKHR.html VkPhysicalDevicePushDescriptorPropertiesKHR registry at www.khronos.org>
 data VkPhysicalDevicePushDescriptorPropertiesKHR = VkPhysicalDevicePushDescriptorPropertiesKHR## ByteArray##
 
 instance Eq VkPhysicalDevicePushDescriptorPropertiesKHR where

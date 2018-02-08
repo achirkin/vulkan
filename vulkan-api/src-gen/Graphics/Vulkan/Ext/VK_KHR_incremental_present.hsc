@@ -47,6 +47,14 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkPresentRegionsKHR {
+--   >     VkStructureType sType;
+--   >     const void*  pNext;
+--   >     uint32_t                         swapchainCount;
+--   >     const VkPresentRegionKHR*   pRegions;
+--   > } VkPresentRegionsKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPresentRegionsKHR.html VkPresentRegionsKHR registry at www.khronos.org>
 data VkPresentRegionsKHR = VkPresentRegionsKHR## ByteArray##
 
 instance Eq VkPresentRegionsKHR where
@@ -223,6 +231,12 @@ instance Show VkPresentRegionsKHR where
                                 showString "vkPRegions = " .
                                   showsPrec d (vkPRegions x) . showChar '}'
 
+-- | > typedef struct VkPresentRegionKHR {
+--   >     uint32_t         rectangleCount;
+--   >     const VkRectLayerKHR*   pRectangles;
+--   > } VkPresentRegionKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPresentRegionKHR.html VkPresentRegionKHR registry at www.khronos.org>
 data VkPresentRegionKHR = VkPresentRegionKHR## ByteArray##
 
 instance Eq VkPresentRegionKHR where
@@ -353,6 +367,13 @@ instance Show VkPresentRegionKHR where
                     showString "vkPRectangles = " .
                       showsPrec d (vkPRectangles x) . showChar '}'
 
+-- | > typedef struct VkRectLayerKHR {
+--   >     VkOffset2D                       offset;
+--   >     VkExtent2D                       extent;
+--   >     uint32_t                         layer;
+--   > } VkRectLayerKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkRectLayerKHR.html VkRectLayerKHR registry at www.khronos.org>
 data VkRectLayerKHR = VkRectLayerKHR## ByteArray##
 
 instance Eq VkRectLayerKHR where

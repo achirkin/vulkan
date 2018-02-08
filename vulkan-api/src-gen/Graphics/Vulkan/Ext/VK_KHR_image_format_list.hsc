@@ -42,6 +42,14 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkImageFormatListCreateInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     uint32_t               viewFormatCount;
+--   >     const VkFormat*      pViewFormats;
+--   > } VkImageFormatListCreateInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageFormatListCreateInfoKHR.html VkImageFormatListCreateInfoKHR registry at www.khronos.org>
 data VkImageFormatListCreateInfoKHR = VkImageFormatListCreateInfoKHR## ByteArray##
 
 instance Eq VkImageFormatListCreateInfoKHR where

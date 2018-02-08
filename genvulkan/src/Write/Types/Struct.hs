@@ -133,6 +133,11 @@ genStructOrUnion isUnion VkTypeComposite
               = IO (\s -> (# touch# x (touch# ba s), () #))
           |]
 
+
+    regLink <- vkRegistryLink tnametxt
+    let rezComment = appendComLine rezComment'' regLink
+                 >>= preComment . T.unpack
+
     mapM_ writeDecl
       . insertDeclComment (T.unpack tnametxt) rezComment
       $ ds
@@ -165,16 +170,26 @@ genStructOrUnion isUnion VkTypeComposite
     tname = toHaskellName vkTName
     tnametxt = qNameTxt tname
     structNameTxt = unVkTypeName vkTName
-    rezComment = rezComment'' >>= preComment . T.unpack
     rezComment'' = appendComLine rezComment'
-                 $ T.unlines . map ("> " <>) $ T.lines "" -- c
+                 $ T.unlines . map ("> " <>) $ T.lines ccode
     rezComment' = if txt == mempty
                   then Nothing
                   else Just txt
+    ccode = cstype <> tnametxt <> " {"
+        <> T.unlines (("":) . map (\x -> "    " <> code (memberData x) <> ";")
+                     $ items tmems)
+        <> "} " <> tnametxt <> ";"
+      where
+        cstype = if isUnion
+                 then "typedef union "
+                 else "typedef struct "
+
 genStructOrUnion _ t
   = error $ "genStructOrUnion: expected a type with members, "
           <> "but got: "
           <> show t
+
+
 
 genStructShow :: Monad m => VkTypeName -> [StructFieldInfo] -> ModuleWriter m ()
 genStructShow (VkTypeName tname) xs = do

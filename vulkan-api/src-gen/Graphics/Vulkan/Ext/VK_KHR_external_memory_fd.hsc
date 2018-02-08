@@ -50,6 +50,14 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkImportMemoryFdInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkExternalMemoryHandleTypeFlagBitsKHR handleType;
+--   >     int                              fd;
+--   > } VkImportMemoryFdInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImportMemoryFdInfoKHR.html VkImportMemoryFdInfoKHR registry at www.khronos.org>
 data VkImportMemoryFdInfoKHR = VkImportMemoryFdInfoKHR## ByteArray##
 
 instance Eq VkImportMemoryFdInfoKHR where
@@ -229,6 +237,13 @@ instance Show VkImportMemoryFdInfoKHR where
                               showString ", " .
                                 showString "vkFd = " . showsPrec d (vkFd x) . showChar '}'
 
+-- | > typedef struct VkMemoryFdPropertiesKHR {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     uint32_t                         memoryTypeBits;
+--   > } VkMemoryFdPropertiesKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryFdPropertiesKHR.html VkMemoryFdPropertiesKHR registry at www.khronos.org>
 data VkMemoryFdPropertiesKHR = VkMemoryFdPropertiesKHR## ByteArray##
 
 instance Eq VkMemoryFdPropertiesKHR where
@@ -385,6 +400,14 @@ instance Show VkMemoryFdPropertiesKHR where
                           showString "vkMemoryTypeBits = " .
                             showsPrec d (vkMemoryTypeBits x) . showChar '}'
 
+-- | > typedef struct VkMemoryGetFdInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkDeviceMemory                   memory;
+--   >     VkExternalMemoryHandleTypeFlagBitsKHR handleType;
+--   > } VkMemoryGetFdInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryGetFdInfoKHR.html VkMemoryGetFdInfoKHR registry at www.khronos.org>
 data VkMemoryGetFdInfoKHR = VkMemoryGetFdInfoKHR## ByteArray##
 
 instance Eq VkMemoryGetFdInfoKHR where

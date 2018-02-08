@@ -50,6 +50,14 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkMacOSSurfaceCreateInfoMVK {
+--   >     VkStructureType sType;
+--   >     const void*                                    pNext;
+--   >     VkMacOSSurfaceCreateFlagsMVK   flags;
+--   >     const void*                                    pView;
+--   > } VkMacOSSurfaceCreateInfoMVK;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMacOSSurfaceCreateInfoMVK.html VkMacOSSurfaceCreateInfoMVK registry at www.khronos.org>
 data VkMacOSSurfaceCreateInfoMVK = VkMacOSSurfaceCreateInfoMVK## ByteArray##
 
 instance Eq VkMacOSSurfaceCreateInfoMVK where

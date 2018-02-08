@@ -50,6 +50,13 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkExternalMemoryImageCreateInfoNV {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkExternalMemoryHandleTypeFlagsNV handleTypes;
+--   > } VkExternalMemoryImageCreateInfoNV;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalMemoryImageCreateInfoNV.html VkExternalMemoryImageCreateInfoNV registry at www.khronos.org>
 data VkExternalMemoryImageCreateInfoNV = VkExternalMemoryImageCreateInfoNV## ByteArray##
 
 instance Eq VkExternalMemoryImageCreateInfoNV where
@@ -212,6 +219,13 @@ instance Show VkExternalMemoryImageCreateInfoNV where
                           showString "vkHandleTypes = " .
                             showsPrec d (vkHandleTypes x) . showChar '}'
 
+-- | > typedef struct VkExportMemoryAllocateInfoNV {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkExternalMemoryHandleTypeFlagsNV handleTypes;
+--   > } VkExportMemoryAllocateInfoNV;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExportMemoryAllocateInfoNV.html VkExportMemoryAllocateInfoNV registry at www.khronos.org>
 data VkExportMemoryAllocateInfoNV = VkExportMemoryAllocateInfoNV## ByteArray##
 
 instance Eq VkExportMemoryAllocateInfoNV where

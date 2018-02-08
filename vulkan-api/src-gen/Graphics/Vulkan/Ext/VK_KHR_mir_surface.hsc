@@ -51,6 +51,15 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkMirSurfaceCreateInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkMirSurfaceCreateFlagsKHR   flags;
+--   >     MirConnection*                   connection;
+--   >     MirSurface*                      mirSurface;
+--   > } VkMirSurfaceCreateInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMirSurfaceCreateInfoKHR.html VkMirSurfaceCreateInfoKHR registry at www.khronos.org>
 data VkMirSurfaceCreateInfoKHR = VkMirSurfaceCreateInfoKHR## ByteArray##
 
 instance Eq VkMirSurfaceCreateInfoKHR where
