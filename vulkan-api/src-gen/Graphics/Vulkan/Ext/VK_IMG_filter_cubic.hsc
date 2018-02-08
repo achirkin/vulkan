@@ -25,11 +25,10 @@ module Graphics.Vulkan.Ext.VK_IMG_filter_cubic
         pattern VK_FILTER_CUBIC_IMG,
         pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_IMG)
        where
-import           Foreign.C.String              (CString)
-import           GHC.Ptr                       (Ptr (..))
-import           Graphics.Vulkan.Common        (VkFilter (..),
-                                                VkFormatFeatureFlagBits (..))
-import           Graphics.Vulkan.StructMembers
+import           Foreign.C.String       (CString)
+import           GHC.Ptr                (Ptr (..))
+import           Graphics.Vulkan.Common (VkFilter (..),
+                                         VkFormatFeatureFlagBits (..))
 
 pattern VK_IMG_FILTER_CUBIC_SPEC_VERSION :: (Num a, Eq a) => a
 

@@ -29,12 +29,11 @@ module Graphics.Vulkan.Ext.VK_EXT_direct_mode_display
         VK_EXT_DIRECT_MODE_DISPLAY_EXTENSION_NAME,
         pattern VK_EXT_DIRECT_MODE_DISPLAY_EXTENSION_NAME)
        where
-import           Foreign.C.String              (CString)
-import           GHC.Ptr                       (Ptr (..))
-import           Graphics.Vulkan.Common        (VkDisplayKHR, VkPhysicalDevice,
-                                                VkResult)
+import           Foreign.C.String        (CString)
+import           GHC.Ptr                 (Ptr (..))
+import           Graphics.Vulkan.Common  (VkDisplayKHR, VkPhysicalDevice,
+                                          VkResult (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.StructMembers
 
 -- | Success codes: 'VK_SUCCESS'.
 --

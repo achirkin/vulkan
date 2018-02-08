@@ -36,8 +36,7 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory
         pattern VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMAGE_CREATE_INFO_KHR,
         pattern VK_STRUCTURE_TYPE_EXPORT_MEMORY_ALLOCATE_INFO_KHR,
         pattern VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR,
-        pattern VK_QUEUE_FAMILY_EXTERNAL_KHR,
-        VK_QUEUE_FAMILY_EXTERNAL_KHR())
+        pattern VK_QUEUE_FAMILY_EXTERNAL_KHR, VK_QUEUE_FAMILY_EXTERNAL_KHR)
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
@@ -47,7 +46,8 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Common           (VkExternalMemoryHandleTypeFlagsKHR,
+import           Graphics.Vulkan.Common           (VK_QUEUE_FAMILY_EXTERNAL_KHR, pattern VK_QUEUE_FAMILY_EXTERNAL_KHR,
+                                                   VkExternalMemoryHandleTypeFlagsKHR,
                                                    VkResult (..),
                                                    VkStructureType,
                                                    VkStructureType (..))

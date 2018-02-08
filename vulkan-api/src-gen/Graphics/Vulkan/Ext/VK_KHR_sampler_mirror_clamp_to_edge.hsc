@@ -24,10 +24,9 @@ module Graphics.Vulkan.Ext.VK_KHR_sampler_mirror_clamp_to_edge
         pattern VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_EXTENSION_NAME,
         pattern VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE)
        where
-import           Foreign.C.String              (CString)
-import           GHC.Ptr                       (Ptr (..))
-import           Graphics.Vulkan.Common        (VkSamplerAddressMode (..))
-import           Graphics.Vulkan.StructMembers
+import           Foreign.C.String       (CString)
+import           GHC.Ptr                (Ptr (..))
+import           Graphics.Vulkan.Common (VkSamplerAddressMode (..))
 
 pattern VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_SPEC_VERSION ::
         (Num a, Eq a) => a

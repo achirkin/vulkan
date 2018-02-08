@@ -44,7 +44,7 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Common           (VkDevice, VkResult,
+import           Graphics.Vulkan.Common           (VkDevice, VkResult (..),
                                                    VkStructureType,
                                                    VkStructureType (..),
                                                    VkSwapchainKHR, Word32,

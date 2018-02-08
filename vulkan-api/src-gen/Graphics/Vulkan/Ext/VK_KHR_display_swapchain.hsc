@@ -42,10 +42,10 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Base             (VkAllocationCallbacks,
+import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..),
                                                    VkRect2D,
-                                                   VkSwapchainCreateInfoKHR)
-import           Graphics.Vulkan.Common           (VkBool32, VkDevice, VkResult,
+                                                   VkSwapchainCreateInfoKHR (..))
+import           Graphics.Vulkan.Common           (VkBool32, VkDevice,
                                                    VkResult (..),
                                                    VkStructureType,
                                                    VkStructureType (..),

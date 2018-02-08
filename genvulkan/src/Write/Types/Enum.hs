@@ -203,9 +203,11 @@ newInt32TypeDec vkTName insts com = do
 enumPattern :: Monad m => VkEnum -> ModuleWriter m ()
 enumPattern VkEnum {..} = writePragma "PatternSynonyms" >>
   case _vkEnumValue of
-    VkEnumReference ->
-          lookupDeclared (unVkEnumName _vkEnumName) >>= mapM_ writeExport
-          
+    VkEnumReference -> do
+          enames <- lookupDeclared (unVkEnumName _vkEnumName)
+          mapM_ writeImport enames
+          mapM_ writeExportNoScope enames
+
     VkEnumString s
       | tyval <- "\"" <> s <> "\""
       , patval <- "Ptr \"" <> s <> "\0\"#"

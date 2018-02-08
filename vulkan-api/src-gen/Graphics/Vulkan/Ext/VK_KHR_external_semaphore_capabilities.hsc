@@ -36,7 +36,7 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_capabilities
         pattern VK_KHR_EXTERNAL_SEMAPHORE_CAPABILITIES_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO_KHR,
         pattern VK_STRUCTURE_TYPE_EXTERNAL_SEMAPHORE_PROPERTIES_KHR,
-        pattern VK_LUID_SIZE_KHR, VK_LUID_SIZE_KHR())
+        pattern VK_LUID_SIZE_KHR, VK_LUID_SIZE_KHR)
        where
 import           Foreign.C.String                                        (CString)
 import           Foreign.Storable                                        (Storable (..))
@@ -47,7 +47,9 @@ import           GHC.Prim
 import           GHC.Ptr                                                 (Ptr (..))
 import           GHC.Types                                               (IO (..),
                                                                           Int (..))
-import           Graphics.Vulkan.Common                                  (VkExternalSemaphoreFeatureFlagsKHR,
+import           Graphics.Vulkan.Common                                  (VK_LUID_SIZE_KHR,
+                                                                          pattern VK_LUID_SIZE_KHR,
+                                                                          VkExternalSemaphoreFeatureFlagsKHR,
                                                                           VkExternalSemaphoreHandleTypeFlagBitsKHR,
                                                                           VkExternalSemaphoreHandleTypeFlagsKHR,
                                                                           VkPhysicalDevice,

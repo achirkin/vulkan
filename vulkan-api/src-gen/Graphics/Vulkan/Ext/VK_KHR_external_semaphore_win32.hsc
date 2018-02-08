@@ -51,9 +51,10 @@ import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common           (DWORD, HANDLE, LPCWSTR,
+                                                   SECURITY_ATTRIBUTES,
                                                    VkDevice,
                                                    VkExternalSemaphoreHandleTypeFlagBitsKHR,
-                                                   VkResult, VkSemaphore,
+                                                   VkResult (..), VkSemaphore,
                                                    VkSemaphoreImportFlagsKHR,
                                                    VkStructureType,
                                                    VkStructureType (..), Word32)

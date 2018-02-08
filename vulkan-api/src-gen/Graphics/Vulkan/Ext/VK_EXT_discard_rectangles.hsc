@@ -45,7 +45,7 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Base             (VkRect2D)
+import           Graphics.Vulkan.Base             (VkRect2D (..))
 import           Graphics.Vulkan.Common           (VkCommandBuffer,
                                                    VkDiscardRectangleModeEXT,
                                                    VkDynamicState (..),

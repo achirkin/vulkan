@@ -43,7 +43,8 @@ import           Graphics.Vulkan.Common           (VkBuffer, VkDevice,
                                                    VkDeviceMemory, VkDeviceSize,
                                                    VkImage,
                                                    VkImageCreateFlagBits (..),
-                                                   VkResult, VkStructureType,
+                                                   VkResult (..),
+                                                   VkStructureType,
                                                    VkStructureType (..), Word32)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal

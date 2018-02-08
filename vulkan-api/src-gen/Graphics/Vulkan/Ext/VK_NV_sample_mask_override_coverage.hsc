@@ -23,9 +23,8 @@ module Graphics.Vulkan.Ext.VK_NV_sample_mask_override_coverage
         VK_NV_SAMPLE_MASK_OVERRIDE_COVERAGE_EXTENSION_NAME,
         pattern VK_NV_SAMPLE_MASK_OVERRIDE_COVERAGE_EXTENSION_NAME)
        where
-import           Foreign.C.String              (CString)
-import           GHC.Ptr                       (Ptr (..))
-import           Graphics.Vulkan.StructMembers
+import           Foreign.C.String (CString)
+import           GHC.Ptr          (Ptr (..))
 
 pattern VK_NV_SAMPLE_MASK_OVERRIDE_COVERAGE_SPEC_VERSION ::
         (Num a, Eq a) => a

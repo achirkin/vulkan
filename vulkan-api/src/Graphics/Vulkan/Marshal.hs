@@ -1,23 +1,35 @@
-{-# LANGUAGE Strict #-}
+{-# LANGUAGE DeriveDataTypeable         #-}
+{-# LANGUAGE DeriveGeneric              #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE PatternSynonyms            #-}
+{-# LANGUAGE RoleAnnotations            #-}
+{-# LANGUAGE Strict                     #-}
+{-# LANGUAGE ViewPatterns               #-}
 -- | This module is not part of auto-generated code based on vk.xml.
 --   Instead, it is hand-written to provide common types and classes.
 module Graphics.Vulkan.Marshal
   ( VulkanMarshal (..)
+  , VulkanPtr (..)
+  , VkPtr (..)
+  , pattern VK_NULL_HANDLE
     -- * Re-exported functions from 'Foreign.ForeignPtr'
   , mallocForeignPtr, withForeignPtr, addForeignPtrFinalizer
     -- * Re-exported common types
   , Int8, Int16, Int32, Int64
   , Word8, Word16, Word32, Word64
-  , Ptr, Void, CString
+  , Ptr, FunPtr, Void, CString
   ) where
 
+import           Data.Data          (Data)
 import           Data.Int           (Int16, Int32, Int64, Int8)
 import           Data.Void          (Void)
 import           Data.Word          (Word16, Word32, Word64, Word8)
 import           Foreign.C.String   (CString)
 import           Foreign.ForeignPtr (ForeignPtr, addForeignPtrFinalizer,
                                      mallocForeignPtr, withForeignPtr)
-import           Foreign.Ptr        (Ptr)
+import           Foreign.Ptr        (FunPtr, Ptr, nullPtr)
+import           Foreign.Storable   (Storable)
+import           GHC.Generics       (Generic)
 
 -- | All Vulkan structures are stored as-is in byte arrays to avoid any overheads
 --   for wrapping and unwrapping haskell values.
@@ -56,3 +68,53 @@ class VulkanMarshal a where
   toPlainForeignPtr :: a -> IO (ForeignPtr a)
   -- | Make sure this data is alive at a given point in a sequence of IO actions.
   touchVkData  :: a -> IO ()
+
+
+
+-- | ===== @VK_DEFINE_NON_DISPATCHABLE_HANDLE@
+-- Non-dispatchable handles are represented as `VkPtr`
+--
+-- Represented as `Word64`
+--
+-- >
+-- > #if !defined(VK_DEFINE_NON_DISPATCHABLE_HANDLE)
+-- > #if defined(__LP64__) || defined(_WIN64) || (defined(__x86_64__) && !defined(__ILP32__) ) || defined(_M_X64) || defined(__ia64) || defined (_M_IA64) || defined(__aarch64__) || defined(__powerpc64__)
+-- >         #define VK_DEFINE_NON_DISPATCHABLE_HANDLE(object) typedef struct object##_T *object;
+-- > #else
+-- >         #define VK_DEFINE_NON_DISPATCHABLE_HANDLE(object) typedef uint64_t object;
+-- > #endif
+-- > #endif
+-- >
+--
+newtype VkPtr a = VkPtr Word64
+  deriving (Eq, Ord, Show, Storable, Generic, Data)
+type role VkPtr phantom
+
+
+-- | Unify dispatchable and non-dispatchable vulkan pointer types.
+--
+--  Dispatchable handles are represented as `Ptr`.
+--
+--  Non-dispatchable handles are represented as `VkPtr`.
+--
+class VulkanPtr ptr where
+  vkNullPtr :: ptr a
+
+instance VulkanPtr Ptr where
+  vkNullPtr = nullPtr
+  {-# INLINE vkNullPtr #-}
+
+instance VulkanPtr VkPtr where
+  vkNullPtr = VkPtr 0
+  {-# INLINE vkNullPtr #-}
+
+isNullPtr :: (Eq (ptr a), VulkanPtr ptr) => ptr a -> Bool
+isNullPtr = (vkNullPtr ==)
+{-# INLINE isNullPtr #-}
+
+-- | >
+--   > #define VK_NULL_HANDLE 0
+--   >
+pattern VK_NULL_HANDLE :: (Eq (ptr a), VulkanPtr ptr) => ptr a
+pattern VK_NULL_HANDLE <- (isNullPtr -> True)
+  where VK_NULL_HANDLE = vkNullPtr

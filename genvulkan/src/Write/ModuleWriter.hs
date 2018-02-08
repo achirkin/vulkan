@@ -11,7 +11,7 @@ module Write.ModuleWriter
   , DeclaredIdent (..), DIThingMembers (..)
   , runModuleWriter, genModule
   , lookupDiModule, isIdentDeclared, lookupDeclared
-  , writeImport, writeFullImport, writeExport
+  , writeImport, writeFullImport, writeExport, writeExportNoScope
   , writePragma, writeDecl
   , writeSection --, writeSectionPre
     -- * Helpers
@@ -198,13 +198,23 @@ writeImport :: Monad m
             => DeclaredIdent
             -> ModuleWriter m ()
 writeImport di = do
-    mmname <- lookupDiModule di
-    forM_ mmname $ \mname ->
-      ModuleWriter . modify $
-        \mr -> mr {mImports = if mName mr /= mname
-                              then Map.alter f mname $ mImports mr
-                              else mImports mr
-                  }
+    mmname <- fmap ((,) di) <$> lookupDiModule di
+    mmnameNo <- fmap ((,) diNo) <$> lookupDiModule diNo
+    mapM_  (uncurry writeImport') (mmname <|> mmnameNo)
+  where
+    diNo = case di of
+      DIThing n _ -> DIThing n DITNo
+      _           -> di
+
+writeImport' :: Monad m
+            => DeclaredIdent
+            -> ModuleName ()
+            -> ModuleWriter m ()
+writeImport' di mname = ModuleWriter . modify $
+      \mr -> mr {mImports = if mName mr /= mname
+                            then Map.alter f mname $ mImports mr
+                            else mImports mr
+                }
   where
     is = diToImportSpec di
     f Nothing = Just $ Set.singleton is
@@ -243,20 +253,28 @@ writePragma pname = ModuleWriter . modify $
 
 -- | Add an export declaration to a module export list
 writeExport :: Monad m => DeclaredIdent -> ModuleWriter m ()
-writeExport di = ModuleWriter . modify $
-   \mr -> mr { mExports = mExports mr Seq.|>
-                          setComment (f $ pendingSec mr) (Nothing <$ espec)
-             , pendingSec = mempty
-             , globalNames = foldr (`Map.insert` mName mr)
+writeExport di = do
+  writeExportNoScope di
+  ModuleWriter . modify $
+   \mr -> mr { globalNames = foldr (`Map.insert` mName mr)
                                    (globalNames mr) dis
              }
   where
-    espec = diToExportSpec di
     dis = case di of
       (DIThing n DITAll)   -> [DIThing n DITAll, DIThing n DITEmpty, DIThing n DITNo]
-      (DIThing n DITNo)    -> [DIThing n DITEmpty, DIThing n DITNo]
       (DIThing n DITEmpty) -> [DIThing n DITEmpty, DIThing n DITNo]
+      (DIThing n DITNo)    -> [DIThing n DITNo]
       _ -> [di]
+
+-- | Add an export declaration to a module export list
+writeExportNoScope :: Monad m => DeclaredIdent -> ModuleWriter m ()
+writeExportNoScope di = ModuleWriter . modify $
+   \mr -> mr { mExports = mExports mr Seq.|>
+                          setComment (f $ pendingSec mr) (Nothing <$ espec)
+             , pendingSec = mempty
+             }
+  where
+    espec = diToExportSpec di
     -- the whole thing below is to compile comments
     f txts = case removeLastNewline . unlines . g $ toList txts >>= normalize of
        "" -> Nothing

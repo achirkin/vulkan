@@ -48,7 +48,8 @@ import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base             (VkSurfaceCapabilitiesKHR,
                                                    VkSurfaceFormatKHR)
-import           Graphics.Vulkan.Common           (VkPhysicalDevice, VkResult,
+import           Graphics.Vulkan.Common           (VkPhysicalDevice,
+                                                   VkResult (..),
                                                    VkStructureType,
                                                    VkStructureType (..),
                                                    VkSurfaceKHR, Word32)

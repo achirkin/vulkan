@@ -46,7 +46,8 @@ import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base             (VkExtent2D)
 import           Graphics.Vulkan.Common           (VkCompositeAlphaFlagsKHR,
                                                    VkImageUsageFlags,
-                                                   VkPhysicalDevice, VkResult,
+                                                   VkPhysicalDevice,
+                                                   VkResult (..),
                                                    VkStructureType,
                                                    VkStructureType (..),
                                                    VkSurfaceCounterFlagsEXT,

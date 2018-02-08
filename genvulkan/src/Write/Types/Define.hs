@@ -6,7 +6,7 @@ module Write.Types.Define
   ( genDefine
   ) where
 
-import           Control.Arrow                        ((***))
+-- import           Control.Arrow                        ((***))
 import           Data.Bits
 import           Data.Semigroup
 import qualified Data.Text                            as T
@@ -112,97 +112,104 @@ genDefine t@VkTypeSimple
 
   | vkName == VkTypeName "VK_DEFINE_HANDLE"
   && "#define VK_DEFINE_HANDLE(object) typedef struct object##_T* object;" `T.isInfixOf` c
-  = do
-    writeImport $ DIThing "Ptr" DITEmpty
-    writeImport $ DIVar "nullPtr"
-    writeDecl $ parseDecl' [text|
-          instance VulkanPtr Ptr where
-            vkNullPtr = nullPtr
-            {-# INLINE vkNullPtr #-}
-          |]
-    writeExport $ DIThing "Ptr" DITEmpty
-    writeSection 0 . T.unlines
-                 . ("| ===== @VK_DEFINE_HANDLE@":)
-                 . ("Dispatchable handles are represented as `Foreign.Ptr`":)
-                 . ("":)
-                 . map ("> " <>) $ T.lines c
+  = pure ()
+    -- writeImport $ DIThing "Ptr" DITEmpty
+    -- writeImport $ DIVar "nullPtr"
+    -- writeDecl $ parseDecl' [text|
+    --       instance VulkanPtr Ptr where
+    --         vkNullPtr = nullPtr
+    --         {-# INLINE vkNullPtr #-}
+    --       |]
+    -- writeExport $ DIThing "Ptr" DITEmpty
+    -- writeSection 0 . T.unlines
+    --              . ("| ===== @VK_DEFINE_HANDLE@":)
+    --              . ("Dispatchable handles are represented as `Foreign.Ptr`":)
+    --              . ("":)
+    --              . map ("> " <>) $ T.lines c
 
 
   | VkTypeName "VK_DEFINE_NON_DISPATCHABLE_HANDLE" <- vkName
-  , defA <- "#define VK_DEFINE_NON_DISPATCHABLE_HANDLE(object) typedef struct object##_T *object;"
-  , defB <- "#define VK_DEFINE_NON_DISPATCHABLE_HANDLE(object) typedef uint64_t object;"
-  , (part1, rem1) <- (T.strip *** T.strip . T.drop (T.length defA)) $ T.breakOn defA c
-  , (part2, part3) <- (T.strip *** T.strip . T.drop (T.length defB)) $ T.breakOn defB rem1
-  , altDef <- [text|
-      newtype VkPtr a = VkPtr (Ptr a)
-         deriving (Eq, Ord, Show, Storable)
-      instance VulkanPtr VkPtr where
-         vkNullPtr = VkPtr vkNullPtr
-         {-# INLINE vkNullPtr #-}
-     |]
-  , preComm <- Just $ CodeComment AboveCode ' ' . T.unpack . T.unlines $
-      [ "| ===== @VK_DEFINE_NON_DISPATCHABLE_HANDLE@"
-      , "Non-dispatchable handles are represented as `VkPtr`"
-      , ""
-      , T.unlines . map ("> " <>) $ T.lines c
-      , T.unlines . map ("##"<>) $
-          T.lines part1 ++ T.lines altDef ++ T.lines part2
-      ]
-  , postComm <- Just $ CodeComment BelowCode ' ' . T.unpack . T.unlines $
-      map ("##"<>) $ T.lines part3
   = do
-    writePragma "CPP"
-    writePragma "GeneralizedNewtypeDeriving"
-    writePragma "RoleAnnotations"
-    writeImport $ DIThing "Storable" DITEmpty
-
-
-    writeDecl $ parseDecl' "type role VkPtr phantom"
-
-    writeDecl . setComment preComm
-              $ parseDecl' [text|
-                  newtype VkPtr a = VkPtr Word64
-                    deriving (Eq, Ord, Show, Storable)
-                  |]
-    writeDecl . setComment postComm
-              $ parseDecl' [text|
-                  instance VulkanPtr VkPtr where
-                    vkNullPtr = VkPtr 0
-                    {-# INLINE vkNullPtr #-}
-                  |]
-
-
+    writeFullImport "Graphics.Vulkan.Marshal"
     writeExport $ DIThing "VkPtr" DITAll
+  -- , defA <- "#define VK_DEFINE_NON_DISPATCHABLE_HANDLE(object) typedef struct object##_T *object;"
+  -- , defB <- "#define VK_DEFINE_NON_DISPATCHABLE_HANDLE(object) typedef uint64_t object;"
+  -- , (part1, rem1) <- (T.strip *** T.strip . T.drop (T.length defA)) $ T.breakOn defA c
+  -- , (part2, part3) <- (T.strip *** T.strip . T.drop (T.length defB)) $ T.breakOn defB rem1
+  -- , altDef <- [text|
+  --     newtype VkPtr a = VkPtr (Ptr a)
+  --        deriving (Eq, Ord, Show, Storable)
+  --     instance VulkanPtr VkPtr where
+  --        vkNullPtr = VkPtr vkNullPtr
+  --        {-# INLINE vkNullPtr #-}
+  --    |]
+  -- , preComm <- Just $ CodeComment AboveCode ' ' . T.unpack . T.unlines $
+  --     [ "| ===== @VK_DEFINE_NON_DISPATCHABLE_HANDLE@"
+  --     , "Non-dispatchable handles are represented as `VkPtr`"
+  --     , ""
+  --     , T.unlines . map ("> " <>) $ T.lines c
+  --     , T.unlines . map ("##"<>) $
+  --         T.lines part1 ++ T.lines altDef ++ T.lines part2
+  --     ]
+  -- , postComm <- Just $ CodeComment BelowCode ' ' . T.unpack . T.unlines $
+  --     map ("##"<>) $ T.lines part3
+  -- = do
+  --   writePragma "CPP"
+  --   writePragma "GeneralizedNewtypeDeriving"
+  --   writePragma "RoleAnnotations"
+  --   writeImport $ DIThing "Storable" DITEmpty
+  --
+  --
+  --   writeDecl $ parseDecl' "type role VkPtr phantom"
+  --
+  --   writeDecl . setComment preComm
+  --             $ parseDecl' [text|
+  --                 newtype VkPtr a = VkPtr Word64
+  --                   deriving (Eq, Ord, Show, Storable)
+  --                 |]
+  --   writeDecl . setComment postComm
+  --             $ parseDecl' [text|
+  --                 instance VulkanPtr VkPtr where
+  --                   vkNullPtr = VkPtr 0
+  --                   {-# INLINE vkNullPtr #-}
+  --                 |]
+  --
+  --
+  --   writeExport $ DIThing "VkPtr" DITAll
 
 
   | vkName == VkTypeName "VK_NULL_HANDLE"
-  = if not $ "#define VK_NULL_HANDLE 0" `T.isInfixOf` c
-    then error $ "Broken assertion VK_NULL_HANDLE == 0 when parsing" <> show t
-    else do
-      writePragma "PatternSynonyms"
-      writePragma "ViewPatterns"
-      let ds = parseDecls [text|
-            class VulkanPtr ptr where
-              vkNullPtr :: ptr a
-
-            isNullPtr :: (Eq (ptr a), VulkanPtr ptr) => ptr a -> Bool
-            isNullPtr = (vkNullPtr ==)
-            {-# INLINE isNullPtr #-}
-
-            pattern VK_NULL_HANDLE :: (Eq (ptr a), VulkanPtr ptr) => ptr a
-            pattern VK_NULL_HANDLE <- (isNullPtr -> True)
-              where
-                VK_NULL_HANDLE = vkNullPtr
-            |]
-
-      mapM_ writeDecl
-        . insertDeclComment "VK_NULL_HANDLE" rezComment
-        . insertDeclComment "VulkanPtr"
-            (preComment "Unify dispatchable and non-dispatchable vulkan pointer types.")
-        $ ds
-
-      writeExport $ DIThing "VulkanPtr" DITAll
-      writeExport $ DIPat "VK_NULL_HANDLE"
+  = do
+    writeFullImport "Graphics.Vulkan.Marshal"
+    writeExport $ DIThing "VulkanPtr" DITAll
+    writeExport $ DIPat "VK_NULL_HANDLE"
+  -- = if not $ "#define VK_NULL_HANDLE 0" `T.isInfixOf` c
+  --   then error $ "Broken assertion VK_NULL_HANDLE == 0 when parsing" <> show t
+  --   else do
+  --     writePragma "PatternSynonyms"
+  --     writePragma "ViewPatterns"
+  --     let ds = parseDecls [text|
+  --           class VulkanPtr ptr where
+  --             vkNullPtr :: ptr a
+  --
+  --           isNullPtr :: (Eq (ptr a), VulkanPtr ptr) => ptr a -> Bool
+  --           isNullPtr = (vkNullPtr ==)
+  --           {-# INLINE isNullPtr #-}
+  --
+  --           pattern VK_NULL_HANDLE :: (Eq (ptr a), VulkanPtr ptr) => ptr a
+  --           pattern VK_NULL_HANDLE <- (isNullPtr -> True)
+  --             where
+  --               VK_NULL_HANDLE = vkNullPtr
+  --           |]
+  --
+  --     mapM_ writeDecl
+  --       . insertDeclComment "VK_NULL_HANDLE" rezComment
+  --       . insertDeclComment "VulkanPtr"
+  --           (preComment "Unify dispatchable and non-dispatchable vulkan pointer types.")
+  --       $ ds
+  --
+  --     writeExport $ DIThing "VulkanPtr" DITAll
+  --     writeExport $ DIPat "VK_NULL_HANDLE"
 
 
   | otherwise = error

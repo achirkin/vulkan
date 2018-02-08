@@ -55,6 +55,7 @@ import           Graphics.Vulkan.Common           (VkBool32, VkCommandBuffer,
                                                    VkImageCreateFlagBits (..),
                                                    VkPhysicalDevice,
                                                    VkSampleCountFlagBits,
+                                                   VkSampleCountFlagBits (..),
                                                    VkSampleCountFlags,
                                                    VkStructureType,
                                                    VkStructureType (..), Word32)

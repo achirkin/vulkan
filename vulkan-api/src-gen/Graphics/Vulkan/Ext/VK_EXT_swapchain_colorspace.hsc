@@ -42,10 +42,9 @@ module Graphics.Vulkan.Ext.VK_EXT_swapchain_colorspace
         pattern VK_COLOR_SPACE_PASS_THROUGH_EXT,
         pattern VK_COLOR_SPACE_EXTENDED_SRGB_NONLINEAR_EXT)
        where
-import           Foreign.C.String              (CString)
-import           GHC.Ptr                       (Ptr (..))
-import           Graphics.Vulkan.Common        (VkColorSpaceKHR (..))
-import           Graphics.Vulkan.StructMembers
+import           Foreign.C.String       (CString)
+import           GHC.Ptr                (Ptr (..))
+import           Graphics.Vulkan.Common (VkColorSpaceKHR (..))
 
 pattern VK_EXT_SWAPCHAIN_COLOR_SPACE_SPEC_VERSION ::
         (Num a, Eq a) => a

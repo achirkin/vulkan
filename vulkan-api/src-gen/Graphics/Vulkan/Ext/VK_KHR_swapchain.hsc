@@ -36,20 +36,17 @@ module Graphics.Vulkan.Ext.VK_KHR_swapchain
         pattern VK_ERROR_OUT_OF_DATE_KHR,
         pattern VK_OBJECT_TYPE_SWAPCHAIN_KHR)
        where
-import           Foreign.C.String              (CString)
-import           GHC.Ptr                       (Ptr (..))
-import           Graphics.Vulkan.Base          (VkAllocationCallbacks,
-                                                VkPresentInfoKHR,
-                                                VkSwapchainCreateInfoKHR)
-import           Graphics.Vulkan.Common        (VkDevice, VkFence, VkImage,
-                                                VkImageLayout (..),
-                                                VkObjectType (..), VkQueue,
-                                                VkResult, VkResult (..),
-                                                VkSemaphore,
-                                                VkStructureType (..),
-                                                VkSwapchainKHR, Word32, Word64)
+import           Foreign.C.String        (CString)
+import           GHC.Ptr                 (Ptr (..))
+import           Graphics.Vulkan.Base    (VkAllocationCallbacks (..),
+                                          VkPresentInfoKHR (..),
+                                          VkSwapchainCreateInfoKHR (..))
+import           Graphics.Vulkan.Common  (VkDevice, VkFence, VkImage,
+                                          VkImageLayout (..), VkObjectType (..),
+                                          VkQueue, VkResult (..), VkSemaphore,
+                                          VkStructureType (..), VkSwapchainKHR,
+                                          Word32, Word64)
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.StructMembers
 
 -- | Success codes: 'VK_SUCCESS'.
 --

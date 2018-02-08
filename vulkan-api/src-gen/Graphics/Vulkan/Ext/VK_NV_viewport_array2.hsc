@@ -23,9 +23,8 @@ module Graphics.Vulkan.Ext.VK_NV_viewport_array2
         VK_NV_VIEWPORT_ARRAY2_EXTENSION_NAME,
         pattern VK_NV_VIEWPORT_ARRAY2_EXTENSION_NAME)
        where
-import           Foreign.C.String              (CString)
-import           GHC.Ptr                       (Ptr (..))
-import           Graphics.Vulkan.StructMembers
+import           Foreign.C.String (CString)
+import           GHC.Ptr          (Ptr (..))
 
 pattern VK_NV_VIEWPORT_ARRAY2_SPEC_VERSION :: (Num a, Eq a) => a
 
