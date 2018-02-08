@@ -102,22 +102,7 @@ import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..),
                                                    VkComponentMapping)
-import           Graphics.Vulkan.Common           (VkBool32,
-                                                   VkChromaLocationKHR,
-                                                   VkDebugReportObjectTypeEXT (..),
-                                                   VkDevice, VkFilter, VkFormat,
-                                                   VkFormat (..),
-                                                   VkFormatFeatureFlagBits (..),
-                                                   VkImageAspectFlagBits,
-                                                   VkImageAspectFlagBits (..),
-                                                   VkImageCreateFlagBits (..),
-                                                   VkObjectType (..),
-                                                   VkResult (..),
-                                                   VkSamplerYcbcrConversionKHR,
-                                                   VkSamplerYcbcrModelConversionKHR,
-                                                   VkSamplerYcbcrRangeKHR,
-                                                   VkStructureType,
-                                                   VkStructureType (..), Word32)
+import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers

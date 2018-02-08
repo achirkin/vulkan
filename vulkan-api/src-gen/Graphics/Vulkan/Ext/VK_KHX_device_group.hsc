@@ -76,26 +76,7 @@ import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base             (VkRect2D (..))
-import           Graphics.Vulkan.Common           (pattern VK_MAX_DEVICE_GROUP_SIZE_KHX,
-                                                   VkCommandBuffer,
-                                                   VkDependencyFlagBits (..),
-                                                   VkDevice,
-                                                   VkDeviceGroupPresentModeFlagBitsKHX,
-                                                   VkDeviceGroupPresentModeFlagsKHX,
-                                                   VkDeviceGroupPresentModeFlagsKHX (..),
-                                                   VkFence,
-                                                   VkImageCreateFlagBits (..),
-                                                   VkMemoryAllocateFlagsKHX,
-                                                   VkPeerMemoryFeatureFlagsKHX (..),
-                                                   VkPhysicalDevice,
-                                                   VkPipelineCreateFlagBits (..),
-                                                   VkResult (..), VkSemaphore,
-                                                   VkStructureType,
-                                                   VkStructureType (..),
-                                                   VkSurfaceKHR,
-                                                   VkSwapchainCreateFlagBitsKHR (..),
-                                                   VkSwapchainKHR, Word32,
-                                                   Word64)
+import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers

@@ -25,11 +25,9 @@ module Graphics.Vulkan.Ext.VK_AMD_draw_indirect_count
         VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME,
         pattern VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME)
        where
-import           Foreign.C.String        (CString)
-import           GHC.Ptr                 (Ptr (..))
-import           Graphics.Vulkan.Common  (VkBuffer, VkCommandBuffer,
-                                          VkDeviceSize (..), Word32)
-import           Graphics.Vulkan.Marshal
+import           Foreign.C.String       (CString)
+import           GHC.Ptr                (Ptr (..))
+import           Graphics.Vulkan.Common
 
 -- | queues: @graphics@
 --

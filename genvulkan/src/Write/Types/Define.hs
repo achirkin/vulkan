@@ -112,26 +112,31 @@ genDefine t@VkTypeSimple
 
   | vkName == VkTypeName "VK_DEFINE_HANDLE"
   && "#define VK_DEFINE_HANDLE(object) typedef struct object##_T* object;" `T.isInfixOf` c
-  = pure ()
-    -- writeImport $ DIThing "Ptr" DITEmpty
+  = do
+    writeImport $ DIThing "Ptr" DITEmpty
     -- writeImport $ DIVar "nullPtr"
     -- writeDecl $ parseDecl' [text|
     --       instance VulkanPtr Ptr where
     --         vkNullPtr = nullPtr
     --         {-# INLINE vkNullPtr #-}
     --       |]
-    -- writeExport $ DIThing "Ptr" DITEmpty
-    -- writeSection 0 . T.unlines
-    --              . ("| ===== @VK_DEFINE_HANDLE@":)
-    --              . ("Dispatchable handles are represented as `Foreign.Ptr`":)
-    --              . ("":)
-    --              . map ("> " <>) $ T.lines c
+    writeExport $ DIThing "Ptr" DITEmpty
+    writeSection 0 . T.unlines
+                 . ("| ===== @VK_DEFINE_HANDLE@":)
+                 . ("Dispatchable handles are represented as `Foreign.Ptr`":)
+                 . ("":)
+                 . map ("> " <>) $ T.lines c
 
 
   | VkTypeName "VK_DEFINE_NON_DISPATCHABLE_HANDLE" <- vkName
   = do
     writeFullImport "Graphics.Vulkan.Marshal"
     writeExport $ DIThing "VkPtr" DITAll
+    writeSection 0 . T.unlines
+                 . ("| ===== @VK_DEFINE_NON_DISPATCHABLE_HANDLE@":)
+                 . ("Non-dispatchable handles are represented as `VkPtr`":)
+                 . ("":)
+                 . map ("> " <>) $ T.lines c
   -- , defA <- "#define VK_DEFINE_NON_DISPATCHABLE_HANDLE(object) typedef struct object##_T *object;"
   -- , defB <- "#define VK_DEFINE_NON_DISPATCHABLE_HANDLE(object) typedef uint64_t object;"
   -- , (part1, rem1) <- (T.strip *** T.strip . T.drop (T.length defA)) $ T.breakOn defA c

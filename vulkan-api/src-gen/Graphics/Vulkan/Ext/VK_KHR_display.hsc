@@ -53,22 +53,7 @@ import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..),
                                                    VkExtent2D, VkOffset2D)
-import           Graphics.Vulkan.Common           (VkBool32, VkDisplayKHR,
-                                                   VkDisplayModeCreateFlagsKHR,
-                                                   VkDisplayModeKHR,
-                                                   VkDisplayPlaneAlphaFlagBitsKHR,
-                                                   VkDisplayPlaneAlphaFlagsKHR,
-                                                   VkDisplaySurfaceCreateFlagsKHR,
-                                                   VkInstance,
-                                                   VkObjectType (..),
-                                                   VkPhysicalDevice,
-                                                   VkResult (..),
-                                                   VkStructureType,
-                                                   VkStructureType (..),
-                                                   VkSurfaceKHR,
-                                                   VkSurfaceTransformFlagBitsKHR,
-                                                   VkSurfaceTransformFlagsKHR,
-                                                   Word32)
+import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers

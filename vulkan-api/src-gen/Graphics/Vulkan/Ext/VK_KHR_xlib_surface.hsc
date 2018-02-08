@@ -45,15 +45,7 @@ import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..))
-import           Graphics.Vulkan.Common           (Display, VisualID,
-                                                   VkBool32 (..), VkInstance,
-                                                   VkPhysicalDevice,
-                                                   VkResult (..),
-                                                   VkStructureType,
-                                                   VkStructureType (..),
-                                                   VkSurfaceKHR,
-                                                   VkXlibSurfaceCreateFlagsKHR,
-                                                   Window, Word32)
+import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers

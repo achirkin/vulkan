@@ -58,8 +58,8 @@ genCommand VkCommand
                  >>= preComment . T.unpack
 
     writePragma "ForeignFunctionInterface"
-    writeFullImport "Graphics.Vulkan.Marshal"
-
+    -- writeFullImport "Graphics.Vulkan.Marshal"
+    writeFullImport "Graphics.Vulkan.Common"
     forM_ (vkrt : map paramType vkpams) $ \p ->
       let t = qNameTxt . unqualifyQ $ toHaskellName p
           dit = if "Vk" `T.isPrefixOf` t

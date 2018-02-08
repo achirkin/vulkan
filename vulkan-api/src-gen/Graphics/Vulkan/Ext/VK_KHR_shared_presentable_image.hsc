@@ -45,13 +45,7 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Common           (VkDevice, VkImageLayout (..),
-                                                   VkImageUsageFlags,
-                                                   VkPresentModeKHR (..),
-                                                   VkResult (..),
-                                                   VkStructureType,
-                                                   VkStructureType (..),
-                                                   VkSwapchainKHR)
+import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers

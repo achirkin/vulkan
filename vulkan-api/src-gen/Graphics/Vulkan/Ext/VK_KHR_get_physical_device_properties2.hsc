@@ -64,15 +64,7 @@ import           Graphics.Vulkan.Base             (VkFormatProperties,
                                                    VkPhysicalDeviceProperties,
                                                    VkQueueFamilyProperties,
                                                    VkSparseImageFormatProperties)
-import           Graphics.Vulkan.Common           (VkFormat, VkFormat (..),
-                                                   VkImageCreateFlags,
-                                                   VkImageTiling, VkImageType,
-                                                   VkImageUsageFlags,
-                                                   VkPhysicalDevice,
-                                                   VkResult (..),
-                                                   VkSampleCountFlagBits,
-                                                   VkStructureType,
-                                                   VkStructureType (..), Word32)
+import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers

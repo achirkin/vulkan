@@ -52,19 +52,7 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Common           (VK_LUID_SIZE_KHR,
-                                                   pattern VK_LUID_SIZE_KHR,
-                                                   pattern VK_UUID_SIZE,
-                                                   VkBool32,
-                                                   VkBufferCreateFlags,
-                                                   VkBufferUsageFlags,
-                                                   VkExternalMemoryFeatureFlagsKHR,
-                                                   VkExternalMemoryHandleTypeFlagBitsKHR,
-                                                   VkExternalMemoryHandleTypeFlagsKHR,
-                                                   VkPhysicalDevice,
-                                                   VkStructureType,
-                                                   VkStructureType (..), Word32,
-                                                   Word8)
+import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers

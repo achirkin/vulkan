@@ -37,16 +37,7 @@ import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base             (VkImageFormatProperties)
-import           Graphics.Vulkan.Common           (VkExternalMemoryFeatureFlagsNV,
-                                                   VkExternalMemoryHandleTypeFlagsNV,
-                                                   VkExternalMemoryHandleTypeFlagsNV (..),
-                                                   VkFormat (..),
-                                                   VkImageCreateFlags (..),
-                                                   VkImageTiling (..),
-                                                   VkImageType (..),
-                                                   VkImageUsageFlags (..),
-                                                   VkPhysicalDevice,
-                                                   VkResult (..))
+import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
