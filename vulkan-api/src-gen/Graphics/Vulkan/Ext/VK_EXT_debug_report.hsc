@@ -1,8 +1,10 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
@@ -166,6 +168,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDebugReportCallbackCreateInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkDebugReportCallbackCreateInfoEXT where
+        type FieldType "sType" VkDebugReportCallbackCreateInfoEXT =
+             VkStructureType
+        type FieldOptional "sType" VkDebugReportCallbackCreateInfoEXT =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkDebugReportCallbackCreateInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkDebugReportCallbackCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkDebugReportCallbackCreateInfoEXT where
         type VkPNextMType VkDebugReportCallbackCreateInfoEXT = Ptr Void
 
@@ -185,6 +207,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkDebugReportCallbackCreateInfoEXT, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkDebugReportCallbackCreateInfoEXT where
+        type FieldType "pNext" VkDebugReportCallbackCreateInfoEXT =
+             Ptr Void
+        type FieldOptional "pNext" VkDebugReportCallbackCreateInfoEXT =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkDebugReportCallbackCreateInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkDebugReportCallbackCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkFlags VkDebugReportCallbackCreateInfoEXT where
@@ -209,6 +251,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDebugReportCallbackCreateInfoEXT, flags}
 
 instance {-# OVERLAPPING #-}
+         HasField "flags" VkDebugReportCallbackCreateInfoEXT where
+        type FieldType "flags" VkDebugReportCallbackCreateInfoEXT =
+             VkDebugReportFlagsEXT
+        type FieldOptional "flags" VkDebugReportCallbackCreateInfoEXT =
+             'True -- ' closing tick for hsc2hs
+
+instance CanReadField "flags" VkDebugReportCallbackCreateInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkFlags
+
+        {-# INLINE readField #-}
+        readField = readVkFlags
+
+instance CanWriteField "flags" VkDebugReportCallbackCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkFlags
+
+instance {-# OVERLAPPING #-}
          HasVkPfnCallback VkDebugReportCallbackCreateInfoEXT where
         type VkPfnCallbackMType VkDebugReportCallbackCreateInfoEXT =
              PFN_vkDebugReportCallbackEXT
@@ -231,6 +293,28 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDebugReportCallbackCreateInfoEXT, pfnCallback}
 
 instance {-# OVERLAPPING #-}
+         HasField "pfnCallback" VkDebugReportCallbackCreateInfoEXT where
+        type FieldType "pfnCallback" VkDebugReportCallbackCreateInfoEXT =
+             PFN_vkDebugReportCallbackEXT
+        type FieldOptional "pfnCallback" VkDebugReportCallbackCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pfnCallback"
+           VkDebugReportCallbackCreateInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkPfnCallback
+
+        {-# INLINE readField #-}
+        readField = readVkPfnCallback
+
+instance CanWriteField "pfnCallback"
+           VkDebugReportCallbackCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPfnCallback
+
+instance {-# OVERLAPPING #-}
          HasVkPUserData VkDebugReportCallbackCreateInfoEXT where
         type VkPUserDataMType VkDebugReportCallbackCreateInfoEXT = Ptr Void
 
@@ -250,6 +334,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPUserData #-}
         writeVkPUserData p
           = pokeByteOff p #{offset VkDebugReportCallbackCreateInfoEXT, pUserData}
+
+instance {-# OVERLAPPING #-}
+         HasField "pUserData" VkDebugReportCallbackCreateInfoEXT where
+        type FieldType "pUserData" VkDebugReportCallbackCreateInfoEXT =
+             Ptr Void
+        type FieldOptional "pUserData" VkDebugReportCallbackCreateInfoEXT =
+             'True -- ' closing tick for hsc2hs
+
+instance CanReadField "pUserData"
+           VkDebugReportCallbackCreateInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkPUserData
+
+        {-# INLINE readField #-}
+        readField = readVkPUserData
+
+instance CanWriteField "pUserData"
+           VkDebugReportCallbackCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPUserData
 
 instance Show VkDebugReportCallbackCreateInfoEXT where
         showsPrec d x

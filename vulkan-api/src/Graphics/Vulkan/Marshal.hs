@@ -1,9 +1,21 @@
+{-# OPTIONS_GHC -fno-warn-missing-methods #-}
+{-# LANGUAGE AllowAmbiguousTypes        #-}
+{-# LANGUAGE ConstraintKinds            #-}
+{-# LANGUAGE DataKinds                  #-}
 {-# LANGUAGE DeriveDataTypeable         #-}
 {-# LANGUAGE DeriveGeneric              #-}
+{-# LANGUAGE FlexibleContexts           #-}
+{-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE KindSignatures             #-}
+{-# LANGUAGE MultiParamTypeClasses      #-}
 {-# LANGUAGE PatternSynonyms            #-}
 {-# LANGUAGE RoleAnnotations            #-}
 {-# LANGUAGE Strict                     #-}
+{-# LANGUAGE TypeFamilies               #-}
+{-# LANGUAGE TypeOperators              #-}
+{-# LANGUAGE UndecidableInstances       #-}
+{-# LANGUAGE UndecidableSuperClasses    #-}
 {-# LANGUAGE ViewPatterns               #-}
 -- | This module is not part of auto-generated code based on vk.xml.
 --   Instead, it is hand-written to provide common types and classes.
@@ -12,6 +24,9 @@ module Graphics.Vulkan.Marshal
   , VulkanPtr (..)
   , VkPtr (..)
   , pattern VK_NULL_HANDLE
+    -- * Type-indexed access to struct members
+  , HasField (..), CanReadField (..), CanWriteField (..)
+  , CanReadFieldArray (..), CanWriteFieldArray (..), IndexInBounds
     -- * Re-exported functions from 'Foreign.ForeignPtr'
   , mallocForeignPtr, withForeignPtr, addForeignPtrFinalizer
     -- * Re-exported common types
@@ -22,6 +37,7 @@ module Graphics.Vulkan.Marshal
 
 import           Data.Data          (Data)
 import           Data.Int           (Int16, Int32, Int64, Int8)
+import           Data.Kind          (Constraint)
 import           Data.Void          (Void)
 import           Data.Word          (Word16, Word32, Word64, Word8)
 import           Foreign.C.String   (CString)
@@ -30,6 +46,7 @@ import           Foreign.ForeignPtr (ForeignPtr, addForeignPtrFinalizer,
 import           Foreign.Ptr        (FunPtr, Ptr, nullPtr)
 import           Foreign.Storable   (Storable)
 import           GHC.Generics       (Generic)
+import           GHC.TypeLits
 
 -- | All Vulkan structures are stored as-is in byte arrays to avoid any overheads
 --   for wrapping and unwrapping haskell values.
@@ -118,3 +135,60 @@ isNullPtr = (vkNullPtr ==)
 pattern VK_NULL_HANDLE :: (Eq (ptr a), VulkanPtr ptr) => ptr a
 pattern VK_NULL_HANDLE <- (isNullPtr -> True)
   where VK_NULL_HANDLE = vkNullPtr
+
+
+class HasField (fname :: Symbol) (a :: *) where
+  type FieldType fname a     :: *
+  type FieldOptional fname a :: Bool
+
+class HasField fname a => CanReadField (fname :: Symbol) (a :: *) where
+  getField :: a -> FieldType fname a
+  readField :: Ptr a -> IO (FieldType fname a)
+
+class CanReadField fname a => CanWriteField (fname :: Symbol) (a :: *) where
+  writeField :: Ptr a -> FieldType fname a -> IO ()
+
+class ( HasField fname a
+      , IndexInBounds fname idx a
+      ) => CanReadFieldArray (fname :: Symbol) (idx :: Nat) (a :: *) where
+  type FieldArrayLength fname a :: Nat
+  getFieldArray :: a -> FieldType fname a
+  readFieldArray :: Ptr a -> IO (FieldType fname a)
+
+class CanReadFieldArray fname idx a
+      => CanWriteFieldArray (fname :: Symbol) (idx :: Nat) (a :: *) where
+  writeFieldArray :: Ptr a -> FieldType fname a -> IO ()
+
+instance {-# OVERLAPPABLE #-}
+         TypeError (NoField fname a) => HasField fname a where
+instance {-# OVERLAPPABLE #-}
+         TypeError (NoField fname a) => CanReadField fname a where
+instance {-# OVERLAPPABLE #-}
+         TypeError (NoField fname a) => CanWriteField fname a where
+instance {-# OVERLAPPABLE #-}
+         ( TypeError (NoField fname a)
+         , IndexInBounds fname idx a
+         ) => CanReadFieldArray fname idx a where
+instance {-# OVERLAPPABLE #-}
+         ( TypeError (NoField fname a)
+         , IndexInBounds fname idx a
+         ) => CanWriteFieldArray fname idx a where
+
+type NoField s a = 'Text "Structure " ':<>: 'ShowType a
+  ':<>: 'Text " does not have field '" ':<>: 'Text s ':<>: 'Text "'."
+
+type IndexInBounds (s :: Symbol) (i :: Nat) (a :: *)
+  = IndexInBounds' s i a (CmpNat i (FieldArrayLength s a))
+
+type family IndexInBounds' (s :: Symbol)
+                           (i :: Nat)
+                           (a :: *) (r :: Ordering) :: Constraint where
+  IndexInBounds' _ _ _ 'LT = ()
+  IndexInBounds' s i a _ = TypeError
+    ( 'Text "Index " ':<>: 'ShowType i
+     ':<>: 'Text " is out of bounds for an array member '"
+     ':<>: 'Text s ':<>: 'Text "' of type "
+     ':<>: 'ShowType a ':<>: 'Text "."
+     ':$$: 'Text "Note: the array size is "
+        ':<>: 'ShowType (FieldArrayLength s a) ':<>: 'Text "."
+    )

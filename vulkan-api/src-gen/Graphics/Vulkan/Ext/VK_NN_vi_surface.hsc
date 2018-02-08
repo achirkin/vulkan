@@ -1,8 +1,10 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
@@ -160,6 +162,22 @@ instance {-# OVERLAPPING #-} HasVkSType VkViSurfaceCreateInfoNN
         writeVkSType p
           = pokeByteOff p #{offset VkViSurfaceCreateInfoNN, sType}
 
+instance {-# OVERLAPPING #-}
+         HasField "sType" VkViSurfaceCreateInfoNN where
+        type FieldType "sType" VkViSurfaceCreateInfoNN = VkStructureType
+        type FieldOptional "sType" VkViSurfaceCreateInfoNN = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkViSurfaceCreateInfoNN where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkViSurfaceCreateInfoNN where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkViSurfaceCreateInfoNN
          where
         type VkPNextMType VkViSurfaceCreateInfoNN = Ptr Void
@@ -180,6 +198,22 @@ instance {-# OVERLAPPING #-} HasVkPNext VkViSurfaceCreateInfoNN
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkViSurfaceCreateInfoNN, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkViSurfaceCreateInfoNN where
+        type FieldType "pNext" VkViSurfaceCreateInfoNN = Ptr Void
+        type FieldOptional "pNext" VkViSurfaceCreateInfoNN = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkViSurfaceCreateInfoNN where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkViSurfaceCreateInfoNN where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-} HasVkFlags VkViSurfaceCreateInfoNN
          where
@@ -203,6 +237,23 @@ instance {-# OVERLAPPING #-} HasVkFlags VkViSurfaceCreateInfoNN
         writeVkFlags p
           = pokeByteOff p #{offset VkViSurfaceCreateInfoNN, flags}
 
+instance {-# OVERLAPPING #-}
+         HasField "flags" VkViSurfaceCreateInfoNN where
+        type FieldType "flags" VkViSurfaceCreateInfoNN =
+             VkViSurfaceCreateFlagsNN
+        type FieldOptional "flags" VkViSurfaceCreateInfoNN = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "flags" VkViSurfaceCreateInfoNN where
+        {-# INLINE getField #-}
+        getField = vkFlags
+
+        {-# INLINE readField #-}
+        readField = readVkFlags
+
+instance CanWriteField "flags" VkViSurfaceCreateInfoNN where
+        {-# INLINE writeField #-}
+        writeField = writeVkFlags
+
 instance {-# OVERLAPPING #-} HasVkWindow VkViSurfaceCreateInfoNN
          where
         type VkWindowMType VkViSurfaceCreateInfoNN = Ptr Void
@@ -223,6 +274,22 @@ instance {-# OVERLAPPING #-} HasVkWindow VkViSurfaceCreateInfoNN
         {-# INLINE writeVkWindow #-}
         writeVkWindow p
           = pokeByteOff p #{offset VkViSurfaceCreateInfoNN, window}
+
+instance {-# OVERLAPPING #-}
+         HasField "window" VkViSurfaceCreateInfoNN where
+        type FieldType "window" VkViSurfaceCreateInfoNN = Ptr Void
+        type FieldOptional "window" VkViSurfaceCreateInfoNN = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "window" VkViSurfaceCreateInfoNN where
+        {-# INLINE getField #-}
+        getField = vkWindow
+
+        {-# INLINE readField #-}
+        readField = readVkWindow
+
+instance CanWriteField "window" VkViSurfaceCreateInfoNN where
+        {-# INLINE writeField #-}
+        writeField = writeVkWindow
 
 instance Show VkViSurfaceCreateInfoNN where
         showsPrec d x

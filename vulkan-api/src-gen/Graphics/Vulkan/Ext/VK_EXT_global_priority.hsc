@@ -1,12 +1,14 @@
 #include "vulkan/vulkan.h"
 
-{-# LANGUAGE DataKinds       #-}
-{-# LANGUAGE MagicHash       #-}
-{-# LANGUAGE PatternSynonyms #-}
-{-# LANGUAGE Strict          #-}
-{-# LANGUAGE TypeFamilies    #-}
-{-# LANGUAGE UnboxedTuples   #-}
-{-# LANGUAGE ViewPatterns    #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MagicHash             #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE PatternSynonyms       #-}
+{-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeFamilies          #-}
+{-# LANGUAGE UnboxedTuples         #-}
+{-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_EXT_global_priority
        (-- * Vulkan extension: @VK_EXT_global_priority@
         -- |
@@ -169,6 +171,28 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkDeviceQueueGlobalPriorityCreateInfoEXT where
+        type FieldType "sType" VkDeviceQueueGlobalPriorityCreateInfoEXT =
+             VkStructureType
+        type FieldOptional "sType" VkDeviceQueueGlobalPriorityCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType"
+           VkDeviceQueueGlobalPriorityCreateInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType"
+           VkDeviceQueueGlobalPriorityCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkDeviceQueueGlobalPriorityCreateInfoEXT where
         type VkPNextMType VkDeviceQueueGlobalPriorityCreateInfoEXT =
              Ptr Void
@@ -191,6 +215,28 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
+         HasField "pNext" VkDeviceQueueGlobalPriorityCreateInfoEXT where
+        type FieldType "pNext" VkDeviceQueueGlobalPriorityCreateInfoEXT =
+             Ptr Void
+        type FieldOptional "pNext" VkDeviceQueueGlobalPriorityCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext"
+           VkDeviceQueueGlobalPriorityCreateInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkDeviceQueueGlobalPriorityCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
+
+instance {-# OVERLAPPING #-}
          HasVkGlobalPriority VkDeviceQueueGlobalPriorityCreateInfoEXT where
         type VkGlobalPriorityMType VkDeviceQueueGlobalPriorityCreateInfoEXT
              = VkQueueGlobalPriorityEXT
@@ -211,6 +257,31 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkGlobalPriority #-}
         writeVkGlobalPriority p
           = pokeByteOff p #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, globalPriority}
+
+instance {-# OVERLAPPING #-}
+         HasField "globalPriority" VkDeviceQueueGlobalPriorityCreateInfoEXT
+         where
+        type FieldType "globalPriority"
+               VkDeviceQueueGlobalPriorityCreateInfoEXT
+             = VkQueueGlobalPriorityEXT
+        type FieldOptional "globalPriority"
+               VkDeviceQueueGlobalPriorityCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "globalPriority"
+           VkDeviceQueueGlobalPriorityCreateInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkGlobalPriority
+
+        {-# INLINE readField #-}
+        readField = readVkGlobalPriority
+
+instance CanWriteField "globalPriority"
+           VkDeviceQueueGlobalPriorityCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkGlobalPriority
 
 instance Show VkDeviceQueueGlobalPriorityCreateInfoEXT where
         showsPrec d x

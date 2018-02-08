@@ -1,8 +1,10 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
@@ -150,6 +152,23 @@ instance {-# OVERLAPPING #-} HasVkXcoeff VkViewportWScalingNV where
         writeVkXcoeff p
           = pokeByteOff p #{offset VkViewportWScalingNV, xcoeff}
 
+instance {-# OVERLAPPING #-} HasField "xcoeff" VkViewportWScalingNV
+         where
+        type FieldType "xcoeff" VkViewportWScalingNV =
+             #{type float}
+        type FieldOptional "xcoeff" VkViewportWScalingNV = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "xcoeff" VkViewportWScalingNV where
+        {-# INLINE getField #-}
+        getField = vkXcoeff
+
+        {-# INLINE readField #-}
+        readField = readVkXcoeff
+
+instance CanWriteField "xcoeff" VkViewportWScalingNV where
+        {-# INLINE writeField #-}
+        writeField = writeVkXcoeff
+
 instance {-# OVERLAPPING #-} HasVkYcoeff VkViewportWScalingNV where
         type VkYcoeffMType VkViewportWScalingNV = #{type float}
 
@@ -169,6 +188,23 @@ instance {-# OVERLAPPING #-} HasVkYcoeff VkViewportWScalingNV where
         {-# INLINE writeVkYcoeff #-}
         writeVkYcoeff p
           = pokeByteOff p #{offset VkViewportWScalingNV, ycoeff}
+
+instance {-# OVERLAPPING #-} HasField "ycoeff" VkViewportWScalingNV
+         where
+        type FieldType "ycoeff" VkViewportWScalingNV =
+             #{type float}
+        type FieldOptional "ycoeff" VkViewportWScalingNV = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "ycoeff" VkViewportWScalingNV where
+        {-# INLINE getField #-}
+        getField = vkYcoeff
+
+        {-# INLINE readField #-}
+        readField = readVkYcoeff
+
+instance CanWriteField "ycoeff" VkViewportWScalingNV where
+        {-# INLINE writeField #-}
+        writeField = writeVkYcoeff
 
 instance Show VkViewportWScalingNV where
         showsPrec d x
@@ -304,6 +340,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPipelineViewportWScalingStateCreateInfoNV, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkPipelineViewportWScalingStateCreateInfoNV where
+        type FieldType "sType" VkPipelineViewportWScalingStateCreateInfoNV
+             = VkStructureType
+        type FieldOptional "sType"
+               VkPipelineViewportWScalingStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType"
+           VkPipelineViewportWScalingStateCreateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType"
+           VkPipelineViewportWScalingStateCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkPipelineViewportWScalingStateCreateInfoNV where
         type VkPNextMType VkPipelineViewportWScalingStateCreateInfoNV =
              Ptr Void
@@ -324,6 +383,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkPipelineViewportWScalingStateCreateInfoNV, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkPipelineViewportWScalingStateCreateInfoNV where
+        type FieldType "pNext" VkPipelineViewportWScalingStateCreateInfoNV
+             = Ptr Void
+        type FieldOptional "pNext"
+               VkPipelineViewportWScalingStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext"
+           VkPipelineViewportWScalingStateCreateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkPipelineViewportWScalingStateCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkViewportWScalingEnable
@@ -351,6 +433,32 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPipelineViewportWScalingStateCreateInfoNV, viewportWScalingEnable}
 
 instance {-# OVERLAPPING #-}
+         HasField "viewportWScalingEnable"
+           VkPipelineViewportWScalingStateCreateInfoNV
+         where
+        type FieldType "viewportWScalingEnable"
+               VkPipelineViewportWScalingStateCreateInfoNV
+             = VkBool32
+        type FieldOptional "viewportWScalingEnable"
+               VkPipelineViewportWScalingStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "viewportWScalingEnable"
+           VkPipelineViewportWScalingStateCreateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkViewportWScalingEnable
+
+        {-# INLINE readField #-}
+        readField = readVkViewportWScalingEnable
+
+instance CanWriteField "viewportWScalingEnable"
+           VkPipelineViewportWScalingStateCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkViewportWScalingEnable
+
+instance {-# OVERLAPPING #-}
          HasVkViewportCount VkPipelineViewportWScalingStateCreateInfoNV
          where
         type VkViewportCountMType
@@ -375,6 +483,32 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPipelineViewportWScalingStateCreateInfoNV, viewportCount}
 
 instance {-# OVERLAPPING #-}
+         HasField "viewportCount"
+           VkPipelineViewportWScalingStateCreateInfoNV
+         where
+        type FieldType "viewportCount"
+               VkPipelineViewportWScalingStateCreateInfoNV
+             = Word32
+        type FieldOptional "viewportCount"
+               VkPipelineViewportWScalingStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "viewportCount"
+           VkPipelineViewportWScalingStateCreateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkViewportCount
+
+        {-# INLINE readField #-}
+        readField = readVkViewportCount
+
+instance CanWriteField "viewportCount"
+           VkPipelineViewportWScalingStateCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkViewportCount
+
+instance {-# OVERLAPPING #-}
          HasVkPViewportWScalings VkPipelineViewportWScalingStateCreateInfoNV
          where
         type VkPViewportWScalingsMType
@@ -397,6 +531,32 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPViewportWScalings #-}
         writeVkPViewportWScalings p
           = pokeByteOff p #{offset VkPipelineViewportWScalingStateCreateInfoNV, pViewportWScalings}
+
+instance {-# OVERLAPPING #-}
+         HasField "pViewportWScalings"
+           VkPipelineViewportWScalingStateCreateInfoNV
+         where
+        type FieldType "pViewportWScalings"
+               VkPipelineViewportWScalingStateCreateInfoNV
+             = Ptr VkViewportWScalingNV
+        type FieldOptional "pViewportWScalings"
+               VkPipelineViewportWScalingStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pViewportWScalings"
+           VkPipelineViewportWScalingStateCreateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkPViewportWScalings
+
+        {-# INLINE readField #-}
+        readField = readVkPViewportWScalings
+
+instance CanWriteField "pViewportWScalings"
+           VkPipelineViewportWScalingStateCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPViewportWScalings
 
 instance Show VkPipelineViewportWScalingStateCreateInfoNV where
         showsPrec d x

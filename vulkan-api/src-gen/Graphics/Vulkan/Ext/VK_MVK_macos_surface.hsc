@@ -1,8 +1,10 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
@@ -160,6 +162,23 @@ instance {-# OVERLAPPING #-} HasVkSType VkMacOSSurfaceCreateInfoMVK
         writeVkSType p
           = pokeByteOff p #{offset VkMacOSSurfaceCreateInfoMVK, sType}
 
+instance {-# OVERLAPPING #-}
+         HasField "sType" VkMacOSSurfaceCreateInfoMVK where
+        type FieldType "sType" VkMacOSSurfaceCreateInfoMVK =
+             VkStructureType
+        type FieldOptional "sType" VkMacOSSurfaceCreateInfoMVK = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkMacOSSurfaceCreateInfoMVK where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkMacOSSurfaceCreateInfoMVK where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkMacOSSurfaceCreateInfoMVK
          where
         type VkPNextMType VkMacOSSurfaceCreateInfoMVK = Ptr Void
@@ -180,6 +199,22 @@ instance {-# OVERLAPPING #-} HasVkPNext VkMacOSSurfaceCreateInfoMVK
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkMacOSSurfaceCreateInfoMVK, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkMacOSSurfaceCreateInfoMVK where
+        type FieldType "pNext" VkMacOSSurfaceCreateInfoMVK = Ptr Void
+        type FieldOptional "pNext" VkMacOSSurfaceCreateInfoMVK = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkMacOSSurfaceCreateInfoMVK where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkMacOSSurfaceCreateInfoMVK where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-} HasVkFlags VkMacOSSurfaceCreateInfoMVK
          where
@@ -203,6 +238,23 @@ instance {-# OVERLAPPING #-} HasVkFlags VkMacOSSurfaceCreateInfoMVK
         writeVkFlags p
           = pokeByteOff p #{offset VkMacOSSurfaceCreateInfoMVK, flags}
 
+instance {-# OVERLAPPING #-}
+         HasField "flags" VkMacOSSurfaceCreateInfoMVK where
+        type FieldType "flags" VkMacOSSurfaceCreateInfoMVK =
+             VkMacOSSurfaceCreateFlagsMVK
+        type FieldOptional "flags" VkMacOSSurfaceCreateInfoMVK = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "flags" VkMacOSSurfaceCreateInfoMVK where
+        {-# INLINE getField #-}
+        getField = vkFlags
+
+        {-# INLINE readField #-}
+        readField = readVkFlags
+
+instance CanWriteField "flags" VkMacOSSurfaceCreateInfoMVK where
+        {-# INLINE writeField #-}
+        writeField = writeVkFlags
+
 instance {-# OVERLAPPING #-} HasVkPView VkMacOSSurfaceCreateInfoMVK
          where
         type VkPViewMType VkMacOSSurfaceCreateInfoMVK = Ptr Void
@@ -223,6 +275,22 @@ instance {-# OVERLAPPING #-} HasVkPView VkMacOSSurfaceCreateInfoMVK
         {-# INLINE writeVkPView #-}
         writeVkPView p
           = pokeByteOff p #{offset VkMacOSSurfaceCreateInfoMVK, pView}
+
+instance {-# OVERLAPPING #-}
+         HasField "pView" VkMacOSSurfaceCreateInfoMVK where
+        type FieldType "pView" VkMacOSSurfaceCreateInfoMVK = Ptr Void
+        type FieldOptional "pView" VkMacOSSurfaceCreateInfoMVK = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pView" VkMacOSSurfaceCreateInfoMVK where
+        {-# INLINE getField #-}
+        getField = vkPView
+
+        {-# INLINE readField #-}
+        readField = readVkPView
+
+instance CanWriteField "pView" VkMacOSSurfaceCreateInfoMVK where
+        {-# INLINE writeField #-}
+        writeField = writeVkPView
 
 instance Show VkMacOSSurfaceCreateInfoMVK where
         showsPrec d x

@@ -1,8 +1,10 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
@@ -162,6 +164,23 @@ instance {-# OVERLAPPING #-} HasVkSType VkWin32SurfaceCreateInfoKHR
         writeVkSType p
           = pokeByteOff p #{offset VkWin32SurfaceCreateInfoKHR, sType}
 
+instance {-# OVERLAPPING #-}
+         HasField "sType" VkWin32SurfaceCreateInfoKHR where
+        type FieldType "sType" VkWin32SurfaceCreateInfoKHR =
+             VkStructureType
+        type FieldOptional "sType" VkWin32SurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkWin32SurfaceCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkWin32SurfaceCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkWin32SurfaceCreateInfoKHR
          where
         type VkPNextMType VkWin32SurfaceCreateInfoKHR = Ptr Void
@@ -182,6 +201,22 @@ instance {-# OVERLAPPING #-} HasVkPNext VkWin32SurfaceCreateInfoKHR
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkWin32SurfaceCreateInfoKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkWin32SurfaceCreateInfoKHR where
+        type FieldType "pNext" VkWin32SurfaceCreateInfoKHR = Ptr Void
+        type FieldOptional "pNext" VkWin32SurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkWin32SurfaceCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkWin32SurfaceCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-} HasVkFlags VkWin32SurfaceCreateInfoKHR
          where
@@ -206,6 +241,23 @@ instance {-# OVERLAPPING #-} HasVkFlags VkWin32SurfaceCreateInfoKHR
           = pokeByteOff p #{offset VkWin32SurfaceCreateInfoKHR, flags}
 
 instance {-# OVERLAPPING #-}
+         HasField "flags" VkWin32SurfaceCreateInfoKHR where
+        type FieldType "flags" VkWin32SurfaceCreateInfoKHR =
+             VkWin32SurfaceCreateFlagsKHR
+        type FieldOptional "flags" VkWin32SurfaceCreateInfoKHR = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "flags" VkWin32SurfaceCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkFlags
+
+        {-# INLINE readField #-}
+        readField = readVkFlags
+
+instance CanWriteField "flags" VkWin32SurfaceCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkFlags
+
+instance {-# OVERLAPPING #-}
          HasVkHinstance VkWin32SurfaceCreateInfoKHR where
         type VkHinstanceMType VkWin32SurfaceCreateInfoKHR = HINSTANCE
 
@@ -225,6 +277,23 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkHinstance #-}
         writeVkHinstance p
           = pokeByteOff p #{offset VkWin32SurfaceCreateInfoKHR, hinstance}
+
+instance {-# OVERLAPPING #-}
+         HasField "hinstance" VkWin32SurfaceCreateInfoKHR where
+        type FieldType "hinstance" VkWin32SurfaceCreateInfoKHR = HINSTANCE
+        type FieldOptional "hinstance" VkWin32SurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "hinstance" VkWin32SurfaceCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkHinstance
+
+        {-# INLINE readField #-}
+        readField = readVkHinstance
+
+instance CanWriteField "hinstance" VkWin32SurfaceCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkHinstance
 
 instance {-# OVERLAPPING #-} HasVkHwnd VkWin32SurfaceCreateInfoKHR
          where
@@ -246,6 +315,22 @@ instance {-# OVERLAPPING #-} HasVkHwnd VkWin32SurfaceCreateInfoKHR
         {-# INLINE writeVkHwnd #-}
         writeVkHwnd p
           = pokeByteOff p #{offset VkWin32SurfaceCreateInfoKHR, hwnd}
+
+instance {-# OVERLAPPING #-}
+         HasField "hwnd" VkWin32SurfaceCreateInfoKHR where
+        type FieldType "hwnd" VkWin32SurfaceCreateInfoKHR = HWND
+        type FieldOptional "hwnd" VkWin32SurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "hwnd" VkWin32SurfaceCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkHwnd
+
+        {-# INLINE readField #-}
+        readField = readVkHwnd
+
+instance CanWriteField "hwnd" VkWin32SurfaceCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkHwnd
 
 instance Show VkWin32SurfaceCreateInfoKHR where
         showsPrec d x

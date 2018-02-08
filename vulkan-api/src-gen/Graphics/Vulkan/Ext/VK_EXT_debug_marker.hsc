@@ -1,12 +1,17 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleContexts         #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
+{-# LANGUAGE ScopedTypeVariables      #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE UnboxedTuples            #-}
+{-# LANGUAGE UndecidableInstances     #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_EXT_debug_marker
        (-- * Vulkan extension: @VK_EXT_debug_marker@
@@ -45,6 +50,7 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
                                                    newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
+import           GHC.TypeLits                     (CmpNat, KnownNat, natVal') -- ' closing tick for hsc2hs
 import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
@@ -165,6 +171,23 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDebugMarkerObjectNameInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkDebugMarkerObjectNameInfoEXT where
+        type FieldType "sType" VkDebugMarkerObjectNameInfoEXT =
+             VkStructureType
+        type FieldOptional "sType" VkDebugMarkerObjectNameInfoEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkDebugMarkerObjectNameInfoEXT where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkDebugMarkerObjectNameInfoEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkDebugMarkerObjectNameInfoEXT where
         type VkPNextMType VkDebugMarkerObjectNameInfoEXT = Ptr Void
 
@@ -184,6 +207,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkDebugMarkerObjectNameInfoEXT, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkDebugMarkerObjectNameInfoEXT where
+        type FieldType "pNext" VkDebugMarkerObjectNameInfoEXT = Ptr Void
+        type FieldOptional "pNext" VkDebugMarkerObjectNameInfoEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkDebugMarkerObjectNameInfoEXT where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkDebugMarkerObjectNameInfoEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkObjectType VkDebugMarkerObjectNameInfoEXT where
@@ -208,6 +247,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDebugMarkerObjectNameInfoEXT, objectType}
 
 instance {-# OVERLAPPING #-}
+         HasField "objectType" VkDebugMarkerObjectNameInfoEXT where
+        type FieldType "objectType" VkDebugMarkerObjectNameInfoEXT =
+             VkDebugReportObjectTypeEXT
+        type FieldOptional "objectType" VkDebugMarkerObjectNameInfoEXT =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "objectType" VkDebugMarkerObjectNameInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkObjectType
+
+        {-# INLINE readField #-}
+        readField = readVkObjectType
+
+instance CanWriteField "objectType" VkDebugMarkerObjectNameInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkObjectType
+
+instance {-# OVERLAPPING #-}
          HasVkObject VkDebugMarkerObjectNameInfoEXT where
         type VkObjectMType VkDebugMarkerObjectNameInfoEXT = Word64
 
@@ -229,6 +288,23 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDebugMarkerObjectNameInfoEXT, object}
 
 instance {-# OVERLAPPING #-}
+         HasField "object" VkDebugMarkerObjectNameInfoEXT where
+        type FieldType "object" VkDebugMarkerObjectNameInfoEXT = Word64
+        type FieldOptional "object" VkDebugMarkerObjectNameInfoEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "object" VkDebugMarkerObjectNameInfoEXT where
+        {-# INLINE getField #-}
+        getField = vkObject
+
+        {-# INLINE readField #-}
+        readField = readVkObject
+
+instance CanWriteField "object" VkDebugMarkerObjectNameInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkObject
+
+instance {-# OVERLAPPING #-}
          HasVkPObjectName VkDebugMarkerObjectNameInfoEXT where
         type VkPObjectNameMType VkDebugMarkerObjectNameInfoEXT = CString
 
@@ -248,6 +324,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPObjectName #-}
         writeVkPObjectName p
           = pokeByteOff p #{offset VkDebugMarkerObjectNameInfoEXT, pObjectName}
+
+instance {-# OVERLAPPING #-}
+         HasField "pObjectName" VkDebugMarkerObjectNameInfoEXT where
+        type FieldType "pObjectName" VkDebugMarkerObjectNameInfoEXT =
+             CString
+        type FieldOptional "pObjectName" VkDebugMarkerObjectNameInfoEXT =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pObjectName" VkDebugMarkerObjectNameInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkPObjectName
+
+        {-# INLINE readField #-}
+        readField = readVkPObjectName
+
+instance CanWriteField "pObjectName" VkDebugMarkerObjectNameInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPObjectName
 
 instance Show VkDebugMarkerObjectNameInfoEXT where
         showsPrec d x
@@ -382,6 +478,23 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkDebugMarkerObjectTagInfoEXT where
+        type FieldType "sType" VkDebugMarkerObjectTagInfoEXT =
+             VkStructureType
+        type FieldOptional "sType" VkDebugMarkerObjectTagInfoEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkDebugMarkerObjectTagInfoEXT where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkDebugMarkerObjectTagInfoEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkDebugMarkerObjectTagInfoEXT where
         type VkPNextMType VkDebugMarkerObjectTagInfoEXT = Ptr Void
 
@@ -401,6 +514,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkDebugMarkerObjectTagInfoEXT where
+        type FieldType "pNext" VkDebugMarkerObjectTagInfoEXT = Ptr Void
+        type FieldOptional "pNext" VkDebugMarkerObjectTagInfoEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkDebugMarkerObjectTagInfoEXT where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkDebugMarkerObjectTagInfoEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkObjectType VkDebugMarkerObjectTagInfoEXT where
@@ -425,6 +554,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, objectType}
 
 instance {-# OVERLAPPING #-}
+         HasField "objectType" VkDebugMarkerObjectTagInfoEXT where
+        type FieldType "objectType" VkDebugMarkerObjectTagInfoEXT =
+             VkDebugReportObjectTypeEXT
+        type FieldOptional "objectType" VkDebugMarkerObjectTagInfoEXT =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "objectType" VkDebugMarkerObjectTagInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkObjectType
+
+        {-# INLINE readField #-}
+        readField = readVkObjectType
+
+instance CanWriteField "objectType" VkDebugMarkerObjectTagInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkObjectType
+
+instance {-# OVERLAPPING #-}
          HasVkObject VkDebugMarkerObjectTagInfoEXT where
         type VkObjectMType VkDebugMarkerObjectTagInfoEXT = Word64
 
@@ -446,6 +595,22 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, object}
 
 instance {-# OVERLAPPING #-}
+         HasField "object" VkDebugMarkerObjectTagInfoEXT where
+        type FieldType "object" VkDebugMarkerObjectTagInfoEXT = Word64
+        type FieldOptional "object" VkDebugMarkerObjectTagInfoEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "object" VkDebugMarkerObjectTagInfoEXT where
+        {-# INLINE getField #-}
+        getField = vkObject
+
+        {-# INLINE readField #-}
+        readField = readVkObject
+
+instance CanWriteField "object" VkDebugMarkerObjectTagInfoEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkObject
+
+instance {-# OVERLAPPING #-}
          HasVkTagName VkDebugMarkerObjectTagInfoEXT where
         type VkTagNameMType VkDebugMarkerObjectTagInfoEXT = Word64
 
@@ -465,6 +630,23 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkTagName #-}
         writeVkTagName p
           = pokeByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, tagName}
+
+instance {-# OVERLAPPING #-}
+         HasField "tagName" VkDebugMarkerObjectTagInfoEXT where
+        type FieldType "tagName" VkDebugMarkerObjectTagInfoEXT = Word64
+        type FieldOptional "tagName" VkDebugMarkerObjectTagInfoEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "tagName" VkDebugMarkerObjectTagInfoEXT where
+        {-# INLINE getField #-}
+        getField = vkTagName
+
+        {-# INLINE readField #-}
+        readField = readVkTagName
+
+instance CanWriteField "tagName" VkDebugMarkerObjectTagInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkTagName
 
 instance {-# OVERLAPPING #-}
          HasVkTagSize VkDebugMarkerObjectTagInfoEXT where
@@ -489,6 +671,24 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, tagSize}
 
 instance {-# OVERLAPPING #-}
+         HasField "tagSize" VkDebugMarkerObjectTagInfoEXT where
+        type FieldType "tagSize" VkDebugMarkerObjectTagInfoEXT =
+             #{type size_t}
+        type FieldOptional "tagSize" VkDebugMarkerObjectTagInfoEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "tagSize" VkDebugMarkerObjectTagInfoEXT where
+        {-# INLINE getField #-}
+        getField = vkTagSize
+
+        {-# INLINE readField #-}
+        readField = readVkTagSize
+
+instance CanWriteField "tagSize" VkDebugMarkerObjectTagInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkTagSize
+
+instance {-# OVERLAPPING #-}
          HasVkPTag VkDebugMarkerObjectTagInfoEXT where
         type VkPTagMType VkDebugMarkerObjectTagInfoEXT = Ptr Void
 
@@ -508,6 +708,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPTag #-}
         writeVkPTag p
           = pokeByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, pTag}
+
+instance {-# OVERLAPPING #-}
+         HasField "pTag" VkDebugMarkerObjectTagInfoEXT where
+        type FieldType "pTag" VkDebugMarkerObjectTagInfoEXT = Ptr Void
+        type FieldOptional "pTag" VkDebugMarkerObjectTagInfoEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pTag" VkDebugMarkerObjectTagInfoEXT where
+        {-# INLINE getField #-}
+        getField = vkPTag
+
+        {-# INLINE readField #-}
+        readField = readVkPTag
+
+instance CanWriteField "pTag" VkDebugMarkerObjectTagInfoEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkPTag
 
 instance Show VkDebugMarkerObjectTagInfoEXT where
         showsPrec d x
@@ -643,6 +859,22 @@ instance {-# OVERLAPPING #-} HasVkSType VkDebugMarkerMarkerInfoEXT
         writeVkSType p
           = pokeByteOff p #{offset VkDebugMarkerMarkerInfoEXT, sType}
 
+instance {-# OVERLAPPING #-}
+         HasField "sType" VkDebugMarkerMarkerInfoEXT where
+        type FieldType "sType" VkDebugMarkerMarkerInfoEXT = VkStructureType
+        type FieldOptional "sType" VkDebugMarkerMarkerInfoEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkDebugMarkerMarkerInfoEXT where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkDebugMarkerMarkerInfoEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkDebugMarkerMarkerInfoEXT
          where
         type VkPNextMType VkDebugMarkerMarkerInfoEXT = Ptr Void
@@ -665,6 +897,22 @@ instance {-# OVERLAPPING #-} HasVkPNext VkDebugMarkerMarkerInfoEXT
           = pokeByteOff p #{offset VkDebugMarkerMarkerInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
+         HasField "pNext" VkDebugMarkerMarkerInfoEXT where
+        type FieldType "pNext" VkDebugMarkerMarkerInfoEXT = Ptr Void
+        type FieldOptional "pNext" VkDebugMarkerMarkerInfoEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkDebugMarkerMarkerInfoEXT where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkDebugMarkerMarkerInfoEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
+
+instance {-# OVERLAPPING #-}
          HasVkPMarkerName VkDebugMarkerMarkerInfoEXT where
         type VkPMarkerNameMType VkDebugMarkerMarkerInfoEXT = CString
 
@@ -684,6 +932,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPMarkerName #-}
         writeVkPMarkerName p
           = pokeByteOff p #{offset VkDebugMarkerMarkerInfoEXT, pMarkerName}
+
+instance {-# OVERLAPPING #-}
+         HasField "pMarkerName" VkDebugMarkerMarkerInfoEXT where
+        type FieldType "pMarkerName" VkDebugMarkerMarkerInfoEXT = CString
+        type FieldOptional "pMarkerName" VkDebugMarkerMarkerInfoEXT =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pMarkerName" VkDebugMarkerMarkerInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkPMarkerName
+
+        {-# INLINE readField #-}
+        readField = readVkPMarkerName
+
+instance CanWriteField "pMarkerName" VkDebugMarkerMarkerInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPMarkerName
 
 instance {-# OVERLAPPING #-}
          HasVkColorArray VkDebugMarkerMarkerInfoEXT where
@@ -712,6 +979,58 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p
               (idx * sizeOf (undefined :: #{type float}) +
                  #{offset VkDebugMarkerMarkerInfoEXT, color})
+
+instance {-# OVERLAPPING #-}
+         HasField "color" VkDebugMarkerMarkerInfoEXT where
+        type FieldType "color" VkDebugMarkerMarkerInfoEXT =
+             #{type float}
+        type FieldOptional "color" VkDebugMarkerMarkerInfoEXT = 'True -- ' closing tick for hsc2hs
+
+instance (KnownNat idx,
+          IndexInBounds "color" idx VkDebugMarkerMarkerInfoEXT) =>
+         CanReadFieldArray "color" idx VkDebugMarkerMarkerInfoEXT
+         where
+        {-# SPECIALISE instance
+                       CanReadFieldArray "color" 0 VkDebugMarkerMarkerInfoEXT #-}
+
+        {-# SPECIALISE instance
+                       CanReadFieldArray "color" 1 VkDebugMarkerMarkerInfoEXT #-}
+
+        {-# SPECIALISE instance
+                       CanReadFieldArray "color" 2 VkDebugMarkerMarkerInfoEXT #-}
+
+        {-# SPECIALISE instance
+                       CanReadFieldArray "color" 3 VkDebugMarkerMarkerInfoEXT #-}
+        type FieldArrayLength "color" VkDebugMarkerMarkerInfoEXT = 4
+
+        {-# INLINE getFieldArray #-}
+        getFieldArray x
+          = vkColorArray x (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
+        {-# INLINE readFieldArray #-}
+        readFieldArray x
+          = readVkColorArray x (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
+instance (KnownNat idx,
+          IndexInBounds "color" idx VkDebugMarkerMarkerInfoEXT) =>
+         CanWriteFieldArray "color" idx VkDebugMarkerMarkerInfoEXT
+         where
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "color" 0 VkDebugMarkerMarkerInfoEXT #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "color" 1 VkDebugMarkerMarkerInfoEXT #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "color" 2 VkDebugMarkerMarkerInfoEXT #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "color" 3 VkDebugMarkerMarkerInfoEXT #-}
+
+        {-# INLINE writeFieldArray #-}
+        writeFieldArray x
+          = writeVkColorArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
 instance Show VkDebugMarkerMarkerInfoEXT where
         showsPrec d x

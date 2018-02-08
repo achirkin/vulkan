@@ -1,8 +1,10 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
@@ -178,6 +180,28 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkPhysicalDeviceExternalSemaphoreInfoKHR where
+        type FieldType "sType" VkPhysicalDeviceExternalSemaphoreInfoKHR =
+             VkStructureType
+        type FieldOptional "sType" VkPhysicalDeviceExternalSemaphoreInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType"
+           VkPhysicalDeviceExternalSemaphoreInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType"
+           VkPhysicalDeviceExternalSemaphoreInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkPhysicalDeviceExternalSemaphoreInfoKHR where
         type VkPNextMType VkPhysicalDeviceExternalSemaphoreInfoKHR =
              Ptr Void
@@ -200,6 +224,28 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
+         HasField "pNext" VkPhysicalDeviceExternalSemaphoreInfoKHR where
+        type FieldType "pNext" VkPhysicalDeviceExternalSemaphoreInfoKHR =
+             Ptr Void
+        type FieldOptional "pNext" VkPhysicalDeviceExternalSemaphoreInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext"
+           VkPhysicalDeviceExternalSemaphoreInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkPhysicalDeviceExternalSemaphoreInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
+
+instance {-# OVERLAPPING #-}
          HasVkHandleType VkPhysicalDeviceExternalSemaphoreInfoKHR where
         type VkHandleTypeMType VkPhysicalDeviceExternalSemaphoreInfoKHR =
              VkExternalSemaphoreHandleTypeFlagBitsKHR
@@ -220,6 +266,31 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkHandleType #-}
         writeVkHandleType p
           = pokeByteOff p #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, handleType}
+
+instance {-# OVERLAPPING #-}
+         HasField "handleType" VkPhysicalDeviceExternalSemaphoreInfoKHR
+         where
+        type FieldType "handleType"
+               VkPhysicalDeviceExternalSemaphoreInfoKHR
+             = VkExternalSemaphoreHandleTypeFlagBitsKHR
+        type FieldOptional "handleType"
+               VkPhysicalDeviceExternalSemaphoreInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "handleType"
+           VkPhysicalDeviceExternalSemaphoreInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkHandleType
+
+        {-# INLINE readField #-}
+        readField = readVkHandleType
+
+instance CanWriteField "handleType"
+           VkPhysicalDeviceExternalSemaphoreInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkHandleType
 
 instance Show VkPhysicalDeviceExternalSemaphoreInfoKHR where
         showsPrec d x
@@ -348,6 +419,21 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkExternalSemaphorePropertiesKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkExternalSemaphorePropertiesKHR where
+        type FieldType "sType" VkExternalSemaphorePropertiesKHR =
+             VkStructureType
+        type FieldOptional "sType" VkExternalSemaphorePropertiesKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkExternalSemaphorePropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkExternalSemaphorePropertiesKHR where
         type VkPNextMType VkExternalSemaphorePropertiesKHR = Ptr Void
 
@@ -367,6 +453,20 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkExternalSemaphorePropertiesKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkExternalSemaphorePropertiesKHR where
+        type FieldType "pNext" VkExternalSemaphorePropertiesKHR = Ptr Void
+        type FieldOptional "pNext" VkExternalSemaphorePropertiesKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkExternalSemaphorePropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkExportFromImportedHandleTypes VkExternalSemaphorePropertiesKHR
@@ -393,6 +493,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkExternalSemaphorePropertiesKHR, exportFromImportedHandleTypes}
 
 instance {-# OVERLAPPING #-}
+         HasField "exportFromImportedHandleTypes"
+           VkExternalSemaphorePropertiesKHR
+         where
+        type FieldType "exportFromImportedHandleTypes"
+               VkExternalSemaphorePropertiesKHR
+             = VkExternalSemaphoreHandleTypeFlagsKHR
+        type FieldOptional "exportFromImportedHandleTypes"
+               VkExternalSemaphorePropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "exportFromImportedHandleTypes"
+           VkExternalSemaphorePropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkExportFromImportedHandleTypes
+
+        {-# INLINE readField #-}
+        readField = readVkExportFromImportedHandleTypes
+
+instance {-# OVERLAPPING #-}
          HasVkCompatibleHandleTypes VkExternalSemaphorePropertiesKHR where
         type VkCompatibleHandleTypesMType VkExternalSemaphorePropertiesKHR
              = VkExternalSemaphoreHandleTypeFlagsKHR
@@ -413,6 +533,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkCompatibleHandleTypes #-}
         writeVkCompatibleHandleTypes p
           = pokeByteOff p #{offset VkExternalSemaphorePropertiesKHR, compatibleHandleTypes}
+
+instance {-# OVERLAPPING #-}
+         HasField "compatibleHandleTypes" VkExternalSemaphorePropertiesKHR
+         where
+        type FieldType "compatibleHandleTypes"
+               VkExternalSemaphorePropertiesKHR
+             = VkExternalSemaphoreHandleTypeFlagsKHR
+        type FieldOptional "compatibleHandleTypes"
+               VkExternalSemaphorePropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "compatibleHandleTypes"
+           VkExternalSemaphorePropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkCompatibleHandleTypes
+
+        {-# INLINE readField #-}
+        readField = readVkCompatibleHandleTypes
 
 instance {-# OVERLAPPING #-}
          HasVkExternalSemaphoreFeatures VkExternalSemaphorePropertiesKHR
@@ -437,6 +576,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkExternalSemaphoreFeatures #-}
         writeVkExternalSemaphoreFeatures p
           = pokeByteOff p #{offset VkExternalSemaphorePropertiesKHR, externalSemaphoreFeatures}
+
+instance {-# OVERLAPPING #-}
+         HasField "externalSemaphoreFeatures"
+           VkExternalSemaphorePropertiesKHR
+         where
+        type FieldType "externalSemaphoreFeatures"
+               VkExternalSemaphorePropertiesKHR
+             = VkExternalSemaphoreFeatureFlagsKHR
+        type FieldOptional "externalSemaphoreFeatures"
+               VkExternalSemaphorePropertiesKHR
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "externalSemaphoreFeatures"
+           VkExternalSemaphorePropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkExternalSemaphoreFeatures
+
+        {-# INLINE readField #-}
+        readField = readVkExternalSemaphoreFeatures
 
 instance Show VkExternalSemaphorePropertiesKHR where
         showsPrec d x

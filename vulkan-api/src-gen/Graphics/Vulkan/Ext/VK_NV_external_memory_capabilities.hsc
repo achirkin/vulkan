@@ -1,8 +1,10 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
@@ -159,6 +161,25 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkExternalImageFormatPropertiesNV, imageFormatProperties}
 
 instance {-# OVERLAPPING #-}
+         HasField "imageFormatProperties" VkExternalImageFormatPropertiesNV
+         where
+        type FieldType "imageFormatProperties"
+               VkExternalImageFormatPropertiesNV
+             = VkImageFormatProperties
+        type FieldOptional "imageFormatProperties"
+               VkExternalImageFormatPropertiesNV
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "imageFormatProperties"
+           VkExternalImageFormatPropertiesNV
+         where
+        {-# INLINE getField #-}
+        getField = vkImageFormatProperties
+
+        {-# INLINE readField #-}
+        readField = readVkImageFormatProperties
+
+instance {-# OVERLAPPING #-}
          HasVkExternalMemoryFeatures VkExternalImageFormatPropertiesNV where
         type VkExternalMemoryFeaturesMType
                VkExternalImageFormatPropertiesNV
@@ -180,6 +201,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkExternalMemoryFeatures #-}
         writeVkExternalMemoryFeatures p
           = pokeByteOff p #{offset VkExternalImageFormatPropertiesNV, externalMemoryFeatures}
+
+instance {-# OVERLAPPING #-}
+         HasField "externalMemoryFeatures" VkExternalImageFormatPropertiesNV
+         where
+        type FieldType "externalMemoryFeatures"
+               VkExternalImageFormatPropertiesNV
+             = VkExternalMemoryFeatureFlagsNV
+        type FieldOptional "externalMemoryFeatures"
+               VkExternalImageFormatPropertiesNV
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "externalMemoryFeatures"
+           VkExternalImageFormatPropertiesNV
+         where
+        {-# INLINE getField #-}
+        getField = vkExternalMemoryFeatures
+
+        {-# INLINE readField #-}
+        readField = readVkExternalMemoryFeatures
 
 instance {-# OVERLAPPING #-}
          HasVkExportFromImportedHandleTypes
@@ -207,6 +247,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkExternalImageFormatPropertiesNV, exportFromImportedHandleTypes}
 
 instance {-# OVERLAPPING #-}
+         HasField "exportFromImportedHandleTypes"
+           VkExternalImageFormatPropertiesNV
+         where
+        type FieldType "exportFromImportedHandleTypes"
+               VkExternalImageFormatPropertiesNV
+             = VkExternalMemoryHandleTypeFlagsNV
+        type FieldOptional "exportFromImportedHandleTypes"
+               VkExternalImageFormatPropertiesNV
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "exportFromImportedHandleTypes"
+           VkExternalImageFormatPropertiesNV
+         where
+        {-# INLINE getField #-}
+        getField = vkExportFromImportedHandleTypes
+
+        {-# INLINE readField #-}
+        readField = readVkExportFromImportedHandleTypes
+
+instance {-# OVERLAPPING #-}
          HasVkCompatibleHandleTypes VkExternalImageFormatPropertiesNV where
         type VkCompatibleHandleTypesMType VkExternalImageFormatPropertiesNV
              = VkExternalMemoryHandleTypeFlagsNV
@@ -227,6 +287,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkCompatibleHandleTypes #-}
         writeVkCompatibleHandleTypes p
           = pokeByteOff p #{offset VkExternalImageFormatPropertiesNV, compatibleHandleTypes}
+
+instance {-# OVERLAPPING #-}
+         HasField "compatibleHandleTypes" VkExternalImageFormatPropertiesNV
+         where
+        type FieldType "compatibleHandleTypes"
+               VkExternalImageFormatPropertiesNV
+             = VkExternalMemoryHandleTypeFlagsNV
+        type FieldOptional "compatibleHandleTypes"
+               VkExternalImageFormatPropertiesNV
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "compatibleHandleTypes"
+           VkExternalImageFormatPropertiesNV
+         where
+        {-# INLINE getField #-}
+        getField = vkCompatibleHandleTypes
+
+        {-# INLINE readField #-}
+        readField = readVkCompatibleHandleTypes
 
 instance Show VkExternalImageFormatPropertiesNV where
         showsPrec d x

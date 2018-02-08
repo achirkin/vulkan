@@ -1,12 +1,14 @@
 #include "vulkan/vulkan.h"
 
-{-# LANGUAGE DataKinds       #-}
-{-# LANGUAGE MagicHash       #-}
-{-# LANGUAGE PatternSynonyms #-}
-{-# LANGUAGE Strict          #-}
-{-# LANGUAGE TypeFamilies    #-}
-{-# LANGUAGE UnboxedTuples   #-}
-{-# LANGUAGE ViewPatterns    #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MagicHash             #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE PatternSynonyms       #-}
+{-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeFamilies          #-}
+{-# LANGUAGE UnboxedTuples         #-}
+{-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_NV_win32_keyed_mutex
        (-- * Vulkan extension: @VK_NV_win32_keyed_mutex@
         -- |
@@ -178,6 +180,27 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoNV, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkWin32KeyedMutexAcquireReleaseInfoNV where
+        type FieldType "sType" VkWin32KeyedMutexAcquireReleaseInfoNV =
+             VkStructureType
+        type FieldOptional "sType" VkWin32KeyedMutexAcquireReleaseInfoNV =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkWin32KeyedMutexAcquireReleaseInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType"
+           VkWin32KeyedMutexAcquireReleaseInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkWin32KeyedMutexAcquireReleaseInfoNV where
         type VkPNextMType VkWin32KeyedMutexAcquireReleaseInfoNV = Ptr Void
 
@@ -197,6 +220,27 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoNV, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkWin32KeyedMutexAcquireReleaseInfoNV where
+        type FieldType "pNext" VkWin32KeyedMutexAcquireReleaseInfoNV =
+             Ptr Void
+        type FieldOptional "pNext" VkWin32KeyedMutexAcquireReleaseInfoNV =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkWin32KeyedMutexAcquireReleaseInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkWin32KeyedMutexAcquireReleaseInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkAcquireCount VkWin32KeyedMutexAcquireReleaseInfoNV where
@@ -221,6 +265,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoNV, acquireCount}
 
 instance {-# OVERLAPPING #-}
+         HasField "acquireCount" VkWin32KeyedMutexAcquireReleaseInfoNV where
+        type FieldType "acquireCount" VkWin32KeyedMutexAcquireReleaseInfoNV
+             = Word32
+        type FieldOptional "acquireCount"
+               VkWin32KeyedMutexAcquireReleaseInfoNV
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "acquireCount"
+           VkWin32KeyedMutexAcquireReleaseInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkAcquireCount
+
+        {-# INLINE readField #-}
+        readField = readVkAcquireCount
+
+instance CanWriteField "acquireCount"
+           VkWin32KeyedMutexAcquireReleaseInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkAcquireCount
+
+instance {-# OVERLAPPING #-}
          HasVkPAcquireSyncs VkWin32KeyedMutexAcquireReleaseInfoNV where
         type VkPAcquireSyncsMType VkWin32KeyedMutexAcquireReleaseInfoNV =
              Ptr VkDeviceMemory
@@ -243,6 +310,31 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoNV, pAcquireSyncs}
 
 instance {-# OVERLAPPING #-}
+         HasField "pAcquireSyncs" VkWin32KeyedMutexAcquireReleaseInfoNV
+         where
+        type FieldType "pAcquireSyncs"
+               VkWin32KeyedMutexAcquireReleaseInfoNV
+             = Ptr VkDeviceMemory
+        type FieldOptional "pAcquireSyncs"
+               VkWin32KeyedMutexAcquireReleaseInfoNV
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pAcquireSyncs"
+           VkWin32KeyedMutexAcquireReleaseInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkPAcquireSyncs
+
+        {-# INLINE readField #-}
+        readField = readVkPAcquireSyncs
+
+instance CanWriteField "pAcquireSyncs"
+           VkWin32KeyedMutexAcquireReleaseInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPAcquireSyncs
+
+instance {-# OVERLAPPING #-}
          HasVkPAcquireKeys VkWin32KeyedMutexAcquireReleaseInfoNV where
         type VkPAcquireKeysMType VkWin32KeyedMutexAcquireReleaseInfoNV =
              Ptr Word64
@@ -263,6 +355,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPAcquireKeys #-}
         writeVkPAcquireKeys p
           = pokeByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoNV, pAcquireKeys}
+
+instance {-# OVERLAPPING #-}
+         HasField "pAcquireKeys" VkWin32KeyedMutexAcquireReleaseInfoNV where
+        type FieldType "pAcquireKeys" VkWin32KeyedMutexAcquireReleaseInfoNV
+             = Ptr Word64
+        type FieldOptional "pAcquireKeys"
+               VkWin32KeyedMutexAcquireReleaseInfoNV
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pAcquireKeys"
+           VkWin32KeyedMutexAcquireReleaseInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkPAcquireKeys
+
+        {-# INLINE readField #-}
+        readField = readVkPAcquireKeys
+
+instance CanWriteField "pAcquireKeys"
+           VkWin32KeyedMutexAcquireReleaseInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPAcquireKeys
 
 instance {-# OVERLAPPING #-}
          HasVkPAcquireTimeoutMilliseconds
@@ -290,6 +405,32 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoNV, pAcquireTimeoutMilliseconds}
 
 instance {-# OVERLAPPING #-}
+         HasField "pAcquireTimeoutMilliseconds"
+           VkWin32KeyedMutexAcquireReleaseInfoNV
+         where
+        type FieldType "pAcquireTimeoutMilliseconds"
+               VkWin32KeyedMutexAcquireReleaseInfoNV
+             = Ptr Word32
+        type FieldOptional "pAcquireTimeoutMilliseconds"
+               VkWin32KeyedMutexAcquireReleaseInfoNV
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pAcquireTimeoutMilliseconds"
+           VkWin32KeyedMutexAcquireReleaseInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkPAcquireTimeoutMilliseconds
+
+        {-# INLINE readField #-}
+        readField = readVkPAcquireTimeoutMilliseconds
+
+instance CanWriteField "pAcquireTimeoutMilliseconds"
+           VkWin32KeyedMutexAcquireReleaseInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPAcquireTimeoutMilliseconds
+
+instance {-# OVERLAPPING #-}
          HasVkReleaseCount VkWin32KeyedMutexAcquireReleaseInfoNV where
         type VkReleaseCountMType VkWin32KeyedMutexAcquireReleaseInfoNV =
              Word32
@@ -310,6 +451,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkReleaseCount #-}
         writeVkReleaseCount p
           = pokeByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoNV, releaseCount}
+
+instance {-# OVERLAPPING #-}
+         HasField "releaseCount" VkWin32KeyedMutexAcquireReleaseInfoNV where
+        type FieldType "releaseCount" VkWin32KeyedMutexAcquireReleaseInfoNV
+             = Word32
+        type FieldOptional "releaseCount"
+               VkWin32KeyedMutexAcquireReleaseInfoNV
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "releaseCount"
+           VkWin32KeyedMutexAcquireReleaseInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkReleaseCount
+
+        {-# INLINE readField #-}
+        readField = readVkReleaseCount
+
+instance CanWriteField "releaseCount"
+           VkWin32KeyedMutexAcquireReleaseInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkReleaseCount
 
 instance {-# OVERLAPPING #-}
          HasVkPReleaseSyncs VkWin32KeyedMutexAcquireReleaseInfoNV where
@@ -334,6 +498,31 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoNV, pReleaseSyncs}
 
 instance {-# OVERLAPPING #-}
+         HasField "pReleaseSyncs" VkWin32KeyedMutexAcquireReleaseInfoNV
+         where
+        type FieldType "pReleaseSyncs"
+               VkWin32KeyedMutexAcquireReleaseInfoNV
+             = Ptr VkDeviceMemory
+        type FieldOptional "pReleaseSyncs"
+               VkWin32KeyedMutexAcquireReleaseInfoNV
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pReleaseSyncs"
+           VkWin32KeyedMutexAcquireReleaseInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkPReleaseSyncs
+
+        {-# INLINE readField #-}
+        readField = readVkPReleaseSyncs
+
+instance CanWriteField "pReleaseSyncs"
+           VkWin32KeyedMutexAcquireReleaseInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPReleaseSyncs
+
+instance {-# OVERLAPPING #-}
          HasVkPReleaseKeys VkWin32KeyedMutexAcquireReleaseInfoNV where
         type VkPReleaseKeysMType VkWin32KeyedMutexAcquireReleaseInfoNV =
              Ptr Word64
@@ -354,6 +543,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPReleaseKeys #-}
         writeVkPReleaseKeys p
           = pokeByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoNV, pReleaseKeys}
+
+instance {-# OVERLAPPING #-}
+         HasField "pReleaseKeys" VkWin32KeyedMutexAcquireReleaseInfoNV where
+        type FieldType "pReleaseKeys" VkWin32KeyedMutexAcquireReleaseInfoNV
+             = Ptr Word64
+        type FieldOptional "pReleaseKeys"
+               VkWin32KeyedMutexAcquireReleaseInfoNV
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pReleaseKeys"
+           VkWin32KeyedMutexAcquireReleaseInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkPReleaseKeys
+
+        {-# INLINE readField #-}
+        readField = readVkPReleaseKeys
+
+instance CanWriteField "pReleaseKeys"
+           VkWin32KeyedMutexAcquireReleaseInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPReleaseKeys
 
 instance Show VkWin32KeyedMutexAcquireReleaseInfoNV where
         showsPrec d x

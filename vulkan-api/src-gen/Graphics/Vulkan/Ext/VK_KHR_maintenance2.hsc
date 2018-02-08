@@ -1,12 +1,14 @@
 #include "vulkan/vulkan.h"
 
-{-# LANGUAGE DataKinds       #-}
-{-# LANGUAGE MagicHash       #-}
-{-# LANGUAGE PatternSynonyms #-}
-{-# LANGUAGE Strict          #-}
-{-# LANGUAGE TypeFamilies    #-}
-{-# LANGUAGE UnboxedTuples   #-}
-{-# LANGUAGE ViewPatterns    #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MagicHash             #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE PatternSynonyms       #-}
+{-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeFamilies          #-}
+{-# LANGUAGE UnboxedTuples         #-}
+{-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_KHR_maintenance2
        (-- * Vulkan extension: @VK_KHR_maintenance2@
         -- |
@@ -184,6 +186,23 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDevicePointClippingPropertiesKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkPhysicalDevicePointClippingPropertiesKHR where
+        type FieldType "sType" VkPhysicalDevicePointClippingPropertiesKHR =
+             VkStructureType
+        type FieldOptional "sType"
+               VkPhysicalDevicePointClippingPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType"
+           VkPhysicalDevicePointClippingPropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkPhysicalDevicePointClippingPropertiesKHR where
         type VkPNextMType VkPhysicalDevicePointClippingPropertiesKHR =
              Ptr Void
@@ -204,6 +223,23 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkPhysicalDevicePointClippingPropertiesKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkPhysicalDevicePointClippingPropertiesKHR where
+        type FieldType "pNext" VkPhysicalDevicePointClippingPropertiesKHR =
+             Ptr Void
+        type FieldOptional "pNext"
+               VkPhysicalDevicePointClippingPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext"
+           VkPhysicalDevicePointClippingPropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkPointClippingBehavior
@@ -229,6 +265,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPointClippingBehavior #-}
         writeVkPointClippingBehavior p
           = pokeByteOff p #{offset VkPhysicalDevicePointClippingPropertiesKHR, pointClippingBehavior}
+
+instance {-# OVERLAPPING #-}
+         HasField "pointClippingBehavior"
+           VkPhysicalDevicePointClippingPropertiesKHR
+         where
+        type FieldType "pointClippingBehavior"
+               VkPhysicalDevicePointClippingPropertiesKHR
+             = VkPointClippingBehaviorKHR
+        type FieldOptional "pointClippingBehavior"
+               VkPhysicalDevicePointClippingPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pointClippingBehavior"
+           VkPhysicalDevicePointClippingPropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPointClippingBehavior
+
+        {-# INLINE readField #-}
+        readField = readVkPointClippingBehavior
 
 instance Show VkPhysicalDevicePointClippingPropertiesKHR where
         showsPrec d x
@@ -371,6 +427,31 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkRenderPassInputAttachmentAspectCreateInfoKHR
+         where
+        type FieldType "sType"
+               VkRenderPassInputAttachmentAspectCreateInfoKHR
+             = VkStructureType
+        type FieldOptional "sType"
+               VkRenderPassInputAttachmentAspectCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType"
+           VkRenderPassInputAttachmentAspectCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType"
+           VkRenderPassInputAttachmentAspectCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkRenderPassInputAttachmentAspectCreateInfoKHR where
         type VkPNextMType VkRenderPassInputAttachmentAspectCreateInfoKHR =
              Ptr Void
@@ -391,6 +472,31 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkRenderPassInputAttachmentAspectCreateInfoKHR
+         where
+        type FieldType "pNext"
+               VkRenderPassInputAttachmentAspectCreateInfoKHR
+             = Ptr Void
+        type FieldOptional "pNext"
+               VkRenderPassInputAttachmentAspectCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext"
+           VkRenderPassInputAttachmentAspectCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkRenderPassInputAttachmentAspectCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkAspectReferenceCount
@@ -418,6 +524,32 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, aspectReferenceCount}
 
 instance {-# OVERLAPPING #-}
+         HasField "aspectReferenceCount"
+           VkRenderPassInputAttachmentAspectCreateInfoKHR
+         where
+        type FieldType "aspectReferenceCount"
+               VkRenderPassInputAttachmentAspectCreateInfoKHR
+             = Word32
+        type FieldOptional "aspectReferenceCount"
+               VkRenderPassInputAttachmentAspectCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "aspectReferenceCount"
+           VkRenderPassInputAttachmentAspectCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkAspectReferenceCount
+
+        {-# INLINE readField #-}
+        readField = readVkAspectReferenceCount
+
+instance CanWriteField "aspectReferenceCount"
+           VkRenderPassInputAttachmentAspectCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkAspectReferenceCount
+
+instance {-# OVERLAPPING #-}
          HasVkPAspectReferences
            VkRenderPassInputAttachmentAspectCreateInfoKHR
          where
@@ -441,6 +573,32 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPAspectReferences #-}
         writeVkPAspectReferences p
           = pokeByteOff p #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, pAspectReferences}
+
+instance {-# OVERLAPPING #-}
+         HasField "pAspectReferences"
+           VkRenderPassInputAttachmentAspectCreateInfoKHR
+         where
+        type FieldType "pAspectReferences"
+               VkRenderPassInputAttachmentAspectCreateInfoKHR
+             = Ptr VkInputAttachmentAspectReferenceKHR
+        type FieldOptional "pAspectReferences"
+               VkRenderPassInputAttachmentAspectCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pAspectReferences"
+           VkRenderPassInputAttachmentAspectCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPAspectReferences
+
+        {-# INLINE readField #-}
+        readField = readVkPAspectReferences
+
+instance CanWriteField "pAspectReferences"
+           VkRenderPassInputAttachmentAspectCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPAspectReferences
 
 instance Show VkRenderPassInputAttachmentAspectCreateInfoKHR where
         showsPrec d x
@@ -576,6 +734,27 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkInputAttachmentAspectReferenceKHR, subpass}
 
 instance {-# OVERLAPPING #-}
+         HasField "subpass" VkInputAttachmentAspectReferenceKHR where
+        type FieldType "subpass" VkInputAttachmentAspectReferenceKHR =
+             Word32
+        type FieldOptional "subpass" VkInputAttachmentAspectReferenceKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "subpass" VkInputAttachmentAspectReferenceKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSubpass
+
+        {-# INLINE readField #-}
+        readField = readVkSubpass
+
+instance CanWriteField "subpass"
+           VkInputAttachmentAspectReferenceKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSubpass
+
+instance {-# OVERLAPPING #-}
          HasVkInputAttachmentIndex VkInputAttachmentAspectReferenceKHR where
         type VkInputAttachmentIndexMType
                VkInputAttachmentAspectReferenceKHR
@@ -599,6 +778,31 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkInputAttachmentAspectReferenceKHR, inputAttachmentIndex}
 
 instance {-# OVERLAPPING #-}
+         HasField "inputAttachmentIndex" VkInputAttachmentAspectReferenceKHR
+         where
+        type FieldType "inputAttachmentIndex"
+               VkInputAttachmentAspectReferenceKHR
+             = Word32
+        type FieldOptional "inputAttachmentIndex"
+               VkInputAttachmentAspectReferenceKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "inputAttachmentIndex"
+           VkInputAttachmentAspectReferenceKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkInputAttachmentIndex
+
+        {-# INLINE readField #-}
+        readField = readVkInputAttachmentIndex
+
+instance CanWriteField "inputAttachmentIndex"
+           VkInputAttachmentAspectReferenceKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkInputAttachmentIndex
+
+instance {-# OVERLAPPING #-}
          HasVkAspectMask VkInputAttachmentAspectReferenceKHR where
         type VkAspectMaskMType VkInputAttachmentAspectReferenceKHR =
              VkImageAspectFlags
@@ -619,6 +823,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkAspectMask #-}
         writeVkAspectMask p
           = pokeByteOff p #{offset VkInputAttachmentAspectReferenceKHR, aspectMask}
+
+instance {-# OVERLAPPING #-}
+         HasField "aspectMask" VkInputAttachmentAspectReferenceKHR where
+        type FieldType "aspectMask" VkInputAttachmentAspectReferenceKHR =
+             VkImageAspectFlags
+        type FieldOptional "aspectMask" VkInputAttachmentAspectReferenceKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "aspectMask"
+           VkInputAttachmentAspectReferenceKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkAspectMask
+
+        {-# INLINE readField #-}
+        readField = readVkAspectMask
+
+instance CanWriteField "aspectMask"
+           VkInputAttachmentAspectReferenceKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkAspectMask
 
 instance Show VkInputAttachmentAspectReferenceKHR where
         showsPrec d x
@@ -743,6 +969,23 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkImageViewUsageCreateInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkImageViewUsageCreateInfoKHR where
+        type FieldType "sType" VkImageViewUsageCreateInfoKHR =
+             VkStructureType
+        type FieldOptional "sType" VkImageViewUsageCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkImageViewUsageCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkImageViewUsageCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkImageViewUsageCreateInfoKHR where
         type VkPNextMType VkImageViewUsageCreateInfoKHR = Ptr Void
 
@@ -764,6 +1007,22 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkImageViewUsageCreateInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
+         HasField "pNext" VkImageViewUsageCreateInfoKHR where
+        type FieldType "pNext" VkImageViewUsageCreateInfoKHR = Ptr Void
+        type FieldOptional "pNext" VkImageViewUsageCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkImageViewUsageCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkImageViewUsageCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
+
+instance {-# OVERLAPPING #-}
          HasVkUsage VkImageViewUsageCreateInfoKHR where
         type VkUsageMType VkImageViewUsageCreateInfoKHR = VkImageUsageFlags
 
@@ -783,6 +1042,23 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkUsage #-}
         writeVkUsage p
           = pokeByteOff p #{offset VkImageViewUsageCreateInfoKHR, usage}
+
+instance {-# OVERLAPPING #-}
+         HasField "usage" VkImageViewUsageCreateInfoKHR where
+        type FieldType "usage" VkImageViewUsageCreateInfoKHR =
+             VkImageUsageFlags
+        type FieldOptional "usage" VkImageViewUsageCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "usage" VkImageViewUsageCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkUsage
+
+        {-# INLINE readField #-}
+        readField = readVkUsage
+
+instance CanWriteField "usage" VkImageViewUsageCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkUsage
 
 instance Show VkImageViewUsageCreateInfoKHR where
         showsPrec d x
@@ -934,6 +1210,32 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType"
+           VkPipelineTessellationDomainOriginStateCreateInfoKHR
+         where
+        type FieldType "sType"
+               VkPipelineTessellationDomainOriginStateCreateInfoKHR
+             = VkStructureType
+        type FieldOptional "sType"
+               VkPipelineTessellationDomainOriginStateCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType"
+           VkPipelineTessellationDomainOriginStateCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType"
+           VkPipelineTessellationDomainOriginStateCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkPipelineTessellationDomainOriginStateCreateInfoKHR
          where
         type VkPNextMType
@@ -956,6 +1258,32 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext"
+           VkPipelineTessellationDomainOriginStateCreateInfoKHR
+         where
+        type FieldType "pNext"
+               VkPipelineTessellationDomainOriginStateCreateInfoKHR
+             = Ptr Void
+        type FieldOptional "pNext"
+               VkPipelineTessellationDomainOriginStateCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext"
+           VkPipelineTessellationDomainOriginStateCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkPipelineTessellationDomainOriginStateCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkDomainOrigin
@@ -981,6 +1309,32 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkDomainOrigin #-}
         writeVkDomainOrigin p
           = pokeByteOff p #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, domainOrigin}
+
+instance {-# OVERLAPPING #-}
+         HasField "domainOrigin"
+           VkPipelineTessellationDomainOriginStateCreateInfoKHR
+         where
+        type FieldType "domainOrigin"
+               VkPipelineTessellationDomainOriginStateCreateInfoKHR
+             = VkTessellationDomainOriginKHR
+        type FieldOptional "domainOrigin"
+               VkPipelineTessellationDomainOriginStateCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "domainOrigin"
+           VkPipelineTessellationDomainOriginStateCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkDomainOrigin
+
+        {-# INLINE readField #-}
+        readField = readVkDomainOrigin
+
+instance CanWriteField "domainOrigin"
+           VkPipelineTessellationDomainOriginStateCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkDomainOrigin
 
 instance Show VkPipelineTessellationDomainOriginStateCreateInfoKHR
          where

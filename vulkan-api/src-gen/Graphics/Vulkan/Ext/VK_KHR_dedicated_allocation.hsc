@@ -1,12 +1,14 @@
 #include "vulkan/vulkan.h"
 
-{-# LANGUAGE DataKinds       #-}
-{-# LANGUAGE MagicHash       #-}
-{-# LANGUAGE PatternSynonyms #-}
-{-# LANGUAGE Strict          #-}
-{-# LANGUAGE TypeFamilies    #-}
-{-# LANGUAGE UnboxedTuples   #-}
-{-# LANGUAGE ViewPatterns    #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MagicHash             #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE PatternSynonyms       #-}
+{-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeFamilies          #-}
+{-# LANGUAGE UnboxedTuples         #-}
+{-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_KHR_dedicated_allocation
        (-- * Vulkan extension: @VK_KHR_dedicated_allocation@
         -- |
@@ -163,6 +165,21 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkMemoryDedicatedRequirementsKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkMemoryDedicatedRequirementsKHR where
+        type FieldType "sType" VkMemoryDedicatedRequirementsKHR =
+             VkStructureType
+        type FieldOptional "sType" VkMemoryDedicatedRequirementsKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkMemoryDedicatedRequirementsKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkMemoryDedicatedRequirementsKHR where
         type VkPNextMType VkMemoryDedicatedRequirementsKHR = Ptr Void
 
@@ -182,6 +199,20 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkMemoryDedicatedRequirementsKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkMemoryDedicatedRequirementsKHR where
+        type FieldType "pNext" VkMemoryDedicatedRequirementsKHR = Ptr Void
+        type FieldOptional "pNext" VkMemoryDedicatedRequirementsKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkMemoryDedicatedRequirementsKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkPrefersDedicatedAllocation VkMemoryDedicatedRequirementsKHR
@@ -208,6 +239,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkMemoryDedicatedRequirementsKHR, prefersDedicatedAllocation}
 
 instance {-# OVERLAPPING #-}
+         HasField "prefersDedicatedAllocation"
+           VkMemoryDedicatedRequirementsKHR
+         where
+        type FieldType "prefersDedicatedAllocation"
+               VkMemoryDedicatedRequirementsKHR
+             = VkBool32
+        type FieldOptional "prefersDedicatedAllocation"
+               VkMemoryDedicatedRequirementsKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "prefersDedicatedAllocation"
+           VkMemoryDedicatedRequirementsKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPrefersDedicatedAllocation
+
+        {-# INLINE readField #-}
+        readField = readVkPrefersDedicatedAllocation
+
+instance {-# OVERLAPPING #-}
          HasVkRequiresDedicatedAllocation VkMemoryDedicatedRequirementsKHR
          where
         type VkRequiresDedicatedAllocationMType
@@ -230,6 +281,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkRequiresDedicatedAllocation #-}
         writeVkRequiresDedicatedAllocation p
           = pokeByteOff p #{offset VkMemoryDedicatedRequirementsKHR, requiresDedicatedAllocation}
+
+instance {-# OVERLAPPING #-}
+         HasField "requiresDedicatedAllocation"
+           VkMemoryDedicatedRequirementsKHR
+         where
+        type FieldType "requiresDedicatedAllocation"
+               VkMemoryDedicatedRequirementsKHR
+             = VkBool32
+        type FieldOptional "requiresDedicatedAllocation"
+               VkMemoryDedicatedRequirementsKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "requiresDedicatedAllocation"
+           VkMemoryDedicatedRequirementsKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkRequiresDedicatedAllocation
+
+        {-# INLINE readField #-}
+        readField = readVkRequiresDedicatedAllocation
 
 instance Show VkMemoryDedicatedRequirementsKHR where
         showsPrec d x
@@ -360,6 +431,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkMemoryDedicatedAllocateInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkMemoryDedicatedAllocateInfoKHR where
+        type FieldType "sType" VkMemoryDedicatedAllocateInfoKHR =
+             VkStructureType
+        type FieldOptional "sType" VkMemoryDedicatedAllocateInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkMemoryDedicatedAllocateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkMemoryDedicatedAllocateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkMemoryDedicatedAllocateInfoKHR where
         type VkPNextMType VkMemoryDedicatedAllocateInfoKHR = Ptr Void
 
@@ -379,6 +470,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkMemoryDedicatedAllocateInfoKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkMemoryDedicatedAllocateInfoKHR where
+        type FieldType "pNext" VkMemoryDedicatedAllocateInfoKHR = Ptr Void
+        type FieldOptional "pNext" VkMemoryDedicatedAllocateInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkMemoryDedicatedAllocateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkMemoryDedicatedAllocateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkImage VkMemoryDedicatedAllocateInfoKHR where
@@ -402,6 +512,24 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkMemoryDedicatedAllocateInfoKHR, image}
 
 instance {-# OVERLAPPING #-}
+         HasField "image" VkMemoryDedicatedAllocateInfoKHR where
+        type FieldType "image" VkMemoryDedicatedAllocateInfoKHR = VkImage
+        type FieldOptional "image" VkMemoryDedicatedAllocateInfoKHR = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "image" VkMemoryDedicatedAllocateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkImage
+
+        {-# INLINE readField #-}
+        readField = readVkImage
+
+instance CanWriteField "image" VkMemoryDedicatedAllocateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkImage
+
+instance {-# OVERLAPPING #-}
          HasVkBuffer VkMemoryDedicatedAllocateInfoKHR where
         type VkBufferMType VkMemoryDedicatedAllocateInfoKHR = VkBuffer
 
@@ -421,6 +549,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkBuffer #-}
         writeVkBuffer p
           = pokeByteOff p #{offset VkMemoryDedicatedAllocateInfoKHR, buffer}
+
+instance {-# OVERLAPPING #-}
+         HasField "buffer" VkMemoryDedicatedAllocateInfoKHR where
+        type FieldType "buffer" VkMemoryDedicatedAllocateInfoKHR = VkBuffer
+        type FieldOptional "buffer" VkMemoryDedicatedAllocateInfoKHR =
+             'True -- ' closing tick for hsc2hs
+
+instance CanReadField "buffer" VkMemoryDedicatedAllocateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkBuffer
+
+        {-# INLINE readField #-}
+        readField = readVkBuffer
+
+instance CanWriteField "buffer" VkMemoryDedicatedAllocateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkBuffer
 
 instance Show VkMemoryDedicatedAllocateInfoKHR where
         showsPrec d x

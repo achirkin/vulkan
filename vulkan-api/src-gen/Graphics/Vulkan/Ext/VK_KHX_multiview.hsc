@@ -1,12 +1,14 @@
 #include "vulkan/vulkan.h"
 
-{-# LANGUAGE DataKinds       #-}
-{-# LANGUAGE MagicHash       #-}
-{-# LANGUAGE PatternSynonyms #-}
-{-# LANGUAGE Strict          #-}
-{-# LANGUAGE TypeFamilies    #-}
-{-# LANGUAGE UnboxedTuples   #-}
-{-# LANGUAGE ViewPatterns    #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MagicHash             #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE PatternSynonyms       #-}
+{-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeFamilies          #-}
+{-# LANGUAGE UnboxedTuples         #-}
+{-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_KHX_multiview
        (-- * Vulkan extension: @VK_KHX_multiview@
         -- |
@@ -175,6 +177,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkRenderPassMultiviewCreateInfoKHX where
+        type FieldType "sType" VkRenderPassMultiviewCreateInfoKHX =
+             VkStructureType
+        type FieldOptional "sType" VkRenderPassMultiviewCreateInfoKHX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkRenderPassMultiviewCreateInfoKHX
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkRenderPassMultiviewCreateInfoKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkRenderPassMultiviewCreateInfoKHX where
         type VkPNextMType VkRenderPassMultiviewCreateInfoKHX = Ptr Void
 
@@ -194,6 +216,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkRenderPassMultiviewCreateInfoKHX where
+        type FieldType "pNext" VkRenderPassMultiviewCreateInfoKHX =
+             Ptr Void
+        type FieldOptional "pNext" VkRenderPassMultiviewCreateInfoKHX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkRenderPassMultiviewCreateInfoKHX
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkRenderPassMultiviewCreateInfoKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkSubpassCount VkRenderPassMultiviewCreateInfoKHX where
@@ -218,6 +260,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, subpassCount}
 
 instance {-# OVERLAPPING #-}
+         HasField "subpassCount" VkRenderPassMultiviewCreateInfoKHX where
+        type FieldType "subpassCount" VkRenderPassMultiviewCreateInfoKHX =
+             Word32
+        type FieldOptional "subpassCount"
+               VkRenderPassMultiviewCreateInfoKHX
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "subpassCount"
+           VkRenderPassMultiviewCreateInfoKHX
+         where
+        {-# INLINE getField #-}
+        getField = vkSubpassCount
+
+        {-# INLINE readField #-}
+        readField = readVkSubpassCount
+
+instance CanWriteField "subpassCount"
+           VkRenderPassMultiviewCreateInfoKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSubpassCount
+
+instance {-# OVERLAPPING #-}
          HasVkPViewMasks VkRenderPassMultiviewCreateInfoKHX where
         type VkPViewMasksMType VkRenderPassMultiviewCreateInfoKHX =
              Ptr Word32
@@ -238,6 +303,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPViewMasks #-}
         writeVkPViewMasks p
           = pokeByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, pViewMasks}
+
+instance {-# OVERLAPPING #-}
+         HasField "pViewMasks" VkRenderPassMultiviewCreateInfoKHX where
+        type FieldType "pViewMasks" VkRenderPassMultiviewCreateInfoKHX =
+             Ptr Word32
+        type FieldOptional "pViewMasks" VkRenderPassMultiviewCreateInfoKHX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pViewMasks"
+           VkRenderPassMultiviewCreateInfoKHX
+         where
+        {-# INLINE getField #-}
+        getField = vkPViewMasks
+
+        {-# INLINE readField #-}
+        readField = readVkPViewMasks
+
+instance CanWriteField "pViewMasks"
+           VkRenderPassMultiviewCreateInfoKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPViewMasks
 
 instance {-# OVERLAPPING #-}
          HasVkDependencyCount VkRenderPassMultiviewCreateInfoKHX where
@@ -262,6 +349,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, dependencyCount}
 
 instance {-# OVERLAPPING #-}
+         HasField "dependencyCount" VkRenderPassMultiviewCreateInfoKHX where
+        type FieldType "dependencyCount" VkRenderPassMultiviewCreateInfoKHX
+             = Word32
+        type FieldOptional "dependencyCount"
+               VkRenderPassMultiviewCreateInfoKHX
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "dependencyCount"
+           VkRenderPassMultiviewCreateInfoKHX
+         where
+        {-# INLINE getField #-}
+        getField = vkDependencyCount
+
+        {-# INLINE readField #-}
+        readField = readVkDependencyCount
+
+instance CanWriteField "dependencyCount"
+           VkRenderPassMultiviewCreateInfoKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkDependencyCount
+
+instance {-# OVERLAPPING #-}
          HasVkPViewOffsets VkRenderPassMultiviewCreateInfoKHX where
         type VkPViewOffsetsMType VkRenderPassMultiviewCreateInfoKHX =
              Ptr Int32
@@ -282,6 +392,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPViewOffsets #-}
         writeVkPViewOffsets p
           = pokeByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, pViewOffsets}
+
+instance {-# OVERLAPPING #-}
+         HasField "pViewOffsets" VkRenderPassMultiviewCreateInfoKHX where
+        type FieldType "pViewOffsets" VkRenderPassMultiviewCreateInfoKHX =
+             Ptr Int32
+        type FieldOptional "pViewOffsets"
+               VkRenderPassMultiviewCreateInfoKHX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pViewOffsets"
+           VkRenderPassMultiviewCreateInfoKHX
+         where
+        {-# INLINE getField #-}
+        getField = vkPViewOffsets
+
+        {-# INLINE readField #-}
+        readField = readVkPViewOffsets
+
+instance CanWriteField "pViewOffsets"
+           VkRenderPassMultiviewCreateInfoKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPViewOffsets
 
 instance {-# OVERLAPPING #-}
          HasVkCorrelationMaskCount VkRenderPassMultiviewCreateInfoKHX where
@@ -306,6 +439,31 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, correlationMaskCount}
 
 instance {-# OVERLAPPING #-}
+         HasField "correlationMaskCount" VkRenderPassMultiviewCreateInfoKHX
+         where
+        type FieldType "correlationMaskCount"
+               VkRenderPassMultiviewCreateInfoKHX
+             = Word32
+        type FieldOptional "correlationMaskCount"
+               VkRenderPassMultiviewCreateInfoKHX
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "correlationMaskCount"
+           VkRenderPassMultiviewCreateInfoKHX
+         where
+        {-# INLINE getField #-}
+        getField = vkCorrelationMaskCount
+
+        {-# INLINE readField #-}
+        readField = readVkCorrelationMaskCount
+
+instance CanWriteField "correlationMaskCount"
+           VkRenderPassMultiviewCreateInfoKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkCorrelationMaskCount
+
+instance {-# OVERLAPPING #-}
          HasVkPCorrelationMasks VkRenderPassMultiviewCreateInfoKHX where
         type VkPCorrelationMasksMType VkRenderPassMultiviewCreateInfoKHX =
              Ptr Word32
@@ -326,6 +484,31 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPCorrelationMasks #-}
         writeVkPCorrelationMasks p
           = pokeByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, pCorrelationMasks}
+
+instance {-# OVERLAPPING #-}
+         HasField "pCorrelationMasks" VkRenderPassMultiviewCreateInfoKHX
+         where
+        type FieldType "pCorrelationMasks"
+               VkRenderPassMultiviewCreateInfoKHX
+             = Ptr Word32
+        type FieldOptional "pCorrelationMasks"
+               VkRenderPassMultiviewCreateInfoKHX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pCorrelationMasks"
+           VkRenderPassMultiviewCreateInfoKHX
+         where
+        {-# INLINE getField #-}
+        getField = vkPCorrelationMasks
+
+        {-# INLINE readField #-}
+        readField = readVkPCorrelationMasks
+
+instance CanWriteField "pCorrelationMasks"
+           VkRenderPassMultiviewCreateInfoKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPCorrelationMasks
 
 instance Show VkRenderPassMultiviewCreateInfoKHX where
         showsPrec d x
@@ -479,6 +662,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDeviceMultiviewFeaturesKHX, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkPhysicalDeviceMultiviewFeaturesKHX where
+        type FieldType "sType" VkPhysicalDeviceMultiviewFeaturesKHX =
+             VkStructureType
+        type FieldOptional "sType" VkPhysicalDeviceMultiviewFeaturesKHX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkPhysicalDeviceMultiviewFeaturesKHX
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkPhysicalDeviceMultiviewFeaturesKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkPhysicalDeviceMultiviewFeaturesKHX where
         type VkPNextMType VkPhysicalDeviceMultiviewFeaturesKHX = Ptr Void
 
@@ -498,6 +701,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkPhysicalDeviceMultiviewFeaturesKHX, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkPhysicalDeviceMultiviewFeaturesKHX where
+        type FieldType "pNext" VkPhysicalDeviceMultiviewFeaturesKHX =
+             Ptr Void
+        type FieldOptional "pNext" VkPhysicalDeviceMultiviewFeaturesKHX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkPhysicalDeviceMultiviewFeaturesKHX
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkPhysicalDeviceMultiviewFeaturesKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkMultiview VkPhysicalDeviceMultiviewFeaturesKHX where
@@ -520,6 +743,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkMultiview #-}
         writeVkMultiview p
           = pokeByteOff p #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiview}
+
+instance {-# OVERLAPPING #-}
+         HasField "multiview" VkPhysicalDeviceMultiviewFeaturesKHX where
+        type FieldType "multiview" VkPhysicalDeviceMultiviewFeaturesKHX =
+             VkBool32
+        type FieldOptional "multiview" VkPhysicalDeviceMultiviewFeaturesKHX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "multiview"
+           VkPhysicalDeviceMultiviewFeaturesKHX
+         where
+        {-# INLINE getField #-}
+        getField = vkMultiview
+
+        {-# INLINE readField #-}
+        readField = readVkMultiview
+
+instance CanWriteField "multiview"
+           VkPhysicalDeviceMultiviewFeaturesKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMultiview
 
 instance {-# OVERLAPPING #-}
          HasVkMultiviewGeometryShader VkPhysicalDeviceMultiviewFeaturesKHX
@@ -546,6 +791,32 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiviewGeometryShader}
 
 instance {-# OVERLAPPING #-}
+         HasField "multiviewGeometryShader"
+           VkPhysicalDeviceMultiviewFeaturesKHX
+         where
+        type FieldType "multiviewGeometryShader"
+               VkPhysicalDeviceMultiviewFeaturesKHX
+             = VkBool32
+        type FieldOptional "multiviewGeometryShader"
+               VkPhysicalDeviceMultiviewFeaturesKHX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "multiviewGeometryShader"
+           VkPhysicalDeviceMultiviewFeaturesKHX
+         where
+        {-# INLINE getField #-}
+        getField = vkMultiviewGeometryShader
+
+        {-# INLINE readField #-}
+        readField = readVkMultiviewGeometryShader
+
+instance CanWriteField "multiviewGeometryShader"
+           VkPhysicalDeviceMultiviewFeaturesKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMultiviewGeometryShader
+
+instance {-# OVERLAPPING #-}
          HasVkMultiviewTessellationShader
            VkPhysicalDeviceMultiviewFeaturesKHX
          where
@@ -569,6 +840,32 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkMultiviewTessellationShader #-}
         writeVkMultiviewTessellationShader p
           = pokeByteOff p #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiviewTessellationShader}
+
+instance {-# OVERLAPPING #-}
+         HasField "multiviewTessellationShader"
+           VkPhysicalDeviceMultiviewFeaturesKHX
+         where
+        type FieldType "multiviewTessellationShader"
+               VkPhysicalDeviceMultiviewFeaturesKHX
+             = VkBool32
+        type FieldOptional "multiviewTessellationShader"
+               VkPhysicalDeviceMultiviewFeaturesKHX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "multiviewTessellationShader"
+           VkPhysicalDeviceMultiviewFeaturesKHX
+         where
+        {-# INLINE getField #-}
+        getField = vkMultiviewTessellationShader
+
+        {-# INLINE readField #-}
+        readField = readVkMultiviewTessellationShader
+
+instance CanWriteField "multiviewTessellationShader"
+           VkPhysicalDeviceMultiviewFeaturesKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMultiviewTessellationShader
 
 instance Show VkPhysicalDeviceMultiviewFeaturesKHX where
         showsPrec d x
@@ -712,6 +1009,22 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDeviceMultiviewPropertiesKHX, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkPhysicalDeviceMultiviewPropertiesKHX where
+        type FieldType "sType" VkPhysicalDeviceMultiviewPropertiesKHX =
+             VkStructureType
+        type FieldOptional "sType" VkPhysicalDeviceMultiviewPropertiesKHX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType"
+           VkPhysicalDeviceMultiviewPropertiesKHX
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkPhysicalDeviceMultiviewPropertiesKHX where
         type VkPNextMType VkPhysicalDeviceMultiviewPropertiesKHX = Ptr Void
 
@@ -731,6 +1044,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkPhysicalDeviceMultiviewPropertiesKHX, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkPhysicalDeviceMultiviewPropertiesKHX where
+        type FieldType "pNext" VkPhysicalDeviceMultiviewPropertiesKHX =
+             Ptr Void
+        type FieldOptional "pNext" VkPhysicalDeviceMultiviewPropertiesKHX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext"
+           VkPhysicalDeviceMultiviewPropertiesKHX
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkMaxMultiviewViewCount VkPhysicalDeviceMultiviewPropertiesKHX
@@ -757,6 +1086,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDeviceMultiviewPropertiesKHX, maxMultiviewViewCount}
 
 instance {-# OVERLAPPING #-}
+         HasField "maxMultiviewViewCount"
+           VkPhysicalDeviceMultiviewPropertiesKHX
+         where
+        type FieldType "maxMultiviewViewCount"
+               VkPhysicalDeviceMultiviewPropertiesKHX
+             = Word32
+        type FieldOptional "maxMultiviewViewCount"
+               VkPhysicalDeviceMultiviewPropertiesKHX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "maxMultiviewViewCount"
+           VkPhysicalDeviceMultiviewPropertiesKHX
+         where
+        {-# INLINE getField #-}
+        getField = vkMaxMultiviewViewCount
+
+        {-# INLINE readField #-}
+        readField = readVkMaxMultiviewViewCount
+
+instance {-# OVERLAPPING #-}
          HasVkMaxMultiviewInstanceIndex
            VkPhysicalDeviceMultiviewPropertiesKHX
          where
@@ -780,6 +1129,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkMaxMultiviewInstanceIndex #-}
         writeVkMaxMultiviewInstanceIndex p
           = pokeByteOff p #{offset VkPhysicalDeviceMultiviewPropertiesKHX, maxMultiviewInstanceIndex}
+
+instance {-# OVERLAPPING #-}
+         HasField "maxMultiviewInstanceIndex"
+           VkPhysicalDeviceMultiviewPropertiesKHX
+         where
+        type FieldType "maxMultiviewInstanceIndex"
+               VkPhysicalDeviceMultiviewPropertiesKHX
+             = Word32
+        type FieldOptional "maxMultiviewInstanceIndex"
+               VkPhysicalDeviceMultiviewPropertiesKHX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "maxMultiviewInstanceIndex"
+           VkPhysicalDeviceMultiviewPropertiesKHX
+         where
+        {-# INLINE getField #-}
+        getField = vkMaxMultiviewInstanceIndex
+
+        {-# INLINE readField #-}
+        readField = readVkMaxMultiviewInstanceIndex
 
 instance Show VkPhysicalDeviceMultiviewPropertiesKHX where
         showsPrec d x

@@ -1,8 +1,10 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
@@ -173,6 +175,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkPhysicalDevicePushDescriptorPropertiesKHR where
+        type FieldType "sType" VkPhysicalDevicePushDescriptorPropertiesKHR
+             = VkStructureType
+        type FieldOptional "sType"
+               VkPhysicalDevicePushDescriptorPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType"
+           VkPhysicalDevicePushDescriptorPropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType"
+           VkPhysicalDevicePushDescriptorPropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkPhysicalDevicePushDescriptorPropertiesKHR where
         type VkPNextMType VkPhysicalDevicePushDescriptorPropertiesKHR =
              Ptr Void
@@ -193,6 +218,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkPhysicalDevicePushDescriptorPropertiesKHR where
+        type FieldType "pNext" VkPhysicalDevicePushDescriptorPropertiesKHR
+             = Ptr Void
+        type FieldOptional "pNext"
+               VkPhysicalDevicePushDescriptorPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext"
+           VkPhysicalDevicePushDescriptorPropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkPhysicalDevicePushDescriptorPropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkMaxPushDescriptors VkPhysicalDevicePushDescriptorPropertiesKHR
@@ -217,6 +265,32 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkMaxPushDescriptors #-}
         writeVkMaxPushDescriptors p
           = pokeByteOff p #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, maxPushDescriptors}
+
+instance {-# OVERLAPPING #-}
+         HasField "maxPushDescriptors"
+           VkPhysicalDevicePushDescriptorPropertiesKHR
+         where
+        type FieldType "maxPushDescriptors"
+               VkPhysicalDevicePushDescriptorPropertiesKHR
+             = Word32
+        type FieldOptional "maxPushDescriptors"
+               VkPhysicalDevicePushDescriptorPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "maxPushDescriptors"
+           VkPhysicalDevicePushDescriptorPropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkMaxPushDescriptors
+
+        {-# INLINE readField #-}
+        readField = readVkMaxPushDescriptors
+
+instance CanWriteField "maxPushDescriptors"
+           VkPhysicalDevicePushDescriptorPropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxPushDescriptors
 
 instance Show VkPhysicalDevicePushDescriptorPropertiesKHR where
         showsPrec d x

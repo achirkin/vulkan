@@ -1,8 +1,10 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
@@ -148,6 +150,22 @@ instance {-# OVERLAPPING #-} HasVkSType VkNativeBufferANDROID where
         writeVkSType p
           = pokeByteOff p #{offset VkNativeBufferANDROID, sType}
 
+instance {-# OVERLAPPING #-} HasField "sType" VkNativeBufferANDROID
+         where
+        type FieldType "sType" VkNativeBufferANDROID = VkStructureType
+        type FieldOptional "sType" VkNativeBufferANDROID = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkNativeBufferANDROID where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkNativeBufferANDROID where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkNativeBufferANDROID where
         type VkPNextMType VkNativeBufferANDROID = Ptr Void
 
@@ -167,6 +185,22 @@ instance {-# OVERLAPPING #-} HasVkPNext VkNativeBufferANDROID where
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkNativeBufferANDROID, pNext}
+
+instance {-# OVERLAPPING #-} HasField "pNext" VkNativeBufferANDROID
+         where
+        type FieldType "pNext" VkNativeBufferANDROID = Ptr Void
+        type FieldOptional "pNext" VkNativeBufferANDROID = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkNativeBufferANDROID where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkNativeBufferANDROID where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-} HasVkHandle VkNativeBufferANDROID
          where
@@ -189,6 +223,22 @@ instance {-# OVERLAPPING #-} HasVkHandle VkNativeBufferANDROID
         writeVkHandle p
           = pokeByteOff p #{offset VkNativeBufferANDROID, handle}
 
+instance {-# OVERLAPPING #-}
+         HasField "handle" VkNativeBufferANDROID where
+        type FieldType "handle" VkNativeBufferANDROID = Ptr Void
+        type FieldOptional "handle" VkNativeBufferANDROID = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "handle" VkNativeBufferANDROID where
+        {-# INLINE getField #-}
+        getField = vkHandle
+
+        {-# INLINE readField #-}
+        readField = readVkHandle
+
+instance CanWriteField "handle" VkNativeBufferANDROID where
+        {-# INLINE writeField #-}
+        writeField = writeVkHandle
+
 instance {-# OVERLAPPING #-} HasVkStride VkNativeBufferANDROID
          where
         type VkStrideMType VkNativeBufferANDROID = #{type int}
@@ -209,6 +259,23 @@ instance {-# OVERLAPPING #-} HasVkStride VkNativeBufferANDROID
         {-# INLINE writeVkStride #-}
         writeVkStride p
           = pokeByteOff p #{offset VkNativeBufferANDROID, stride}
+
+instance {-# OVERLAPPING #-}
+         HasField "stride" VkNativeBufferANDROID where
+        type FieldType "stride" VkNativeBufferANDROID =
+             #{type int}
+        type FieldOptional "stride" VkNativeBufferANDROID = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "stride" VkNativeBufferANDROID where
+        {-# INLINE getField #-}
+        getField = vkStride
+
+        {-# INLINE readField #-}
+        readField = readVkStride
+
+instance CanWriteField "stride" VkNativeBufferANDROID where
+        {-# INLINE writeField #-}
+        writeField = writeVkStride
 
 instance {-# OVERLAPPING #-} HasVkFormat VkNativeBufferANDROID
          where
@@ -231,6 +298,23 @@ instance {-# OVERLAPPING #-} HasVkFormat VkNativeBufferANDROID
         writeVkFormat p
           = pokeByteOff p #{offset VkNativeBufferANDROID, format}
 
+instance {-# OVERLAPPING #-}
+         HasField "format" VkNativeBufferANDROID where
+        type FieldType "format" VkNativeBufferANDROID =
+             #{type int}
+        type FieldOptional "format" VkNativeBufferANDROID = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "format" VkNativeBufferANDROID where
+        {-# INLINE getField #-}
+        getField = vkFormat
+
+        {-# INLINE readField #-}
+        readField = readVkFormat
+
+instance CanWriteField "format" VkNativeBufferANDROID where
+        {-# INLINE writeField #-}
+        writeField = writeVkFormat
+
 instance {-# OVERLAPPING #-} HasVkUsage VkNativeBufferANDROID where
         type VkUsageMType VkNativeBufferANDROID = #{type int}
 
@@ -250,6 +334,23 @@ instance {-# OVERLAPPING #-} HasVkUsage VkNativeBufferANDROID where
         {-# INLINE writeVkUsage #-}
         writeVkUsage p
           = pokeByteOff p #{offset VkNativeBufferANDROID, usage}
+
+instance {-# OVERLAPPING #-} HasField "usage" VkNativeBufferANDROID
+         where
+        type FieldType "usage" VkNativeBufferANDROID =
+             #{type int}
+        type FieldOptional "usage" VkNativeBufferANDROID = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "usage" VkNativeBufferANDROID where
+        {-# INLINE getField #-}
+        getField = vkUsage
+
+        {-# INLINE readField #-}
+        readField = readVkUsage
+
+instance CanWriteField "usage" VkNativeBufferANDROID where
+        {-# INLINE writeField #-}
+        writeField = writeVkUsage
 
 instance Show VkNativeBufferANDROID where
         showsPrec d x

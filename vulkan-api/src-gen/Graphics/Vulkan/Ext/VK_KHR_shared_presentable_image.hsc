@@ -1,8 +1,10 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
@@ -174,6 +176,21 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkSharedPresentSurfaceCapabilitiesKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkSharedPresentSurfaceCapabilitiesKHR where
+        type FieldType "sType" VkSharedPresentSurfaceCapabilitiesKHR =
+             VkStructureType
+        type FieldOptional "sType" VkSharedPresentSurfaceCapabilitiesKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkSharedPresentSurfaceCapabilitiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkSharedPresentSurfaceCapabilitiesKHR where
         type VkPNextMType VkSharedPresentSurfaceCapabilitiesKHR = Ptr Void
 
@@ -193,6 +210,21 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkSharedPresentSurfaceCapabilitiesKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkSharedPresentSurfaceCapabilitiesKHR where
+        type FieldType "pNext" VkSharedPresentSurfaceCapabilitiesKHR =
+             Ptr Void
+        type FieldOptional "pNext" VkSharedPresentSurfaceCapabilitiesKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkSharedPresentSurfaceCapabilitiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkSharedPresentSupportedUsageFlags
@@ -218,6 +250,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkSharedPresentSupportedUsageFlags #-}
         writeVkSharedPresentSupportedUsageFlags p
           = pokeByteOff p #{offset VkSharedPresentSurfaceCapabilitiesKHR, sharedPresentSupportedUsageFlags}
+
+instance {-# OVERLAPPING #-}
+         HasField "sharedPresentSupportedUsageFlags"
+           VkSharedPresentSurfaceCapabilitiesKHR
+         where
+        type FieldType "sharedPresentSupportedUsageFlags"
+               VkSharedPresentSurfaceCapabilitiesKHR
+             = VkImageUsageFlags
+        type FieldOptional "sharedPresentSupportedUsageFlags"
+               VkSharedPresentSurfaceCapabilitiesKHR
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "sharedPresentSupportedUsageFlags"
+           VkSharedPresentSurfaceCapabilitiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSharedPresentSupportedUsageFlags
+
+        {-# INLINE readField #-}
+        readField = readVkSharedPresentSupportedUsageFlags
 
 instance Show VkSharedPresentSurfaceCapabilitiesKHR where
         showsPrec d x

@@ -1,8 +1,10 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
@@ -176,6 +178,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDeviceExternalFenceInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkPhysicalDeviceExternalFenceInfoKHR where
+        type FieldType "sType" VkPhysicalDeviceExternalFenceInfoKHR =
+             VkStructureType
+        type FieldOptional "sType" VkPhysicalDeviceExternalFenceInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkPhysicalDeviceExternalFenceInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkPhysicalDeviceExternalFenceInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkPhysicalDeviceExternalFenceInfoKHR where
         type VkPNextMType VkPhysicalDeviceExternalFenceInfoKHR = Ptr Void
 
@@ -195,6 +217,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkPhysicalDeviceExternalFenceInfoKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkPhysicalDeviceExternalFenceInfoKHR where
+        type FieldType "pNext" VkPhysicalDeviceExternalFenceInfoKHR =
+             Ptr Void
+        type FieldOptional "pNext" VkPhysicalDeviceExternalFenceInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkPhysicalDeviceExternalFenceInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkPhysicalDeviceExternalFenceInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkHandleType VkPhysicalDeviceExternalFenceInfoKHR where
@@ -217,6 +259,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkHandleType #-}
         writeVkHandleType p
           = pokeByteOff p #{offset VkPhysicalDeviceExternalFenceInfoKHR, handleType}
+
+instance {-# OVERLAPPING #-}
+         HasField "handleType" VkPhysicalDeviceExternalFenceInfoKHR where
+        type FieldType "handleType" VkPhysicalDeviceExternalFenceInfoKHR =
+             VkExternalFenceHandleTypeFlagBitsKHR
+        type FieldOptional "handleType"
+               VkPhysicalDeviceExternalFenceInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "handleType"
+           VkPhysicalDeviceExternalFenceInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkHandleType
+
+        {-# INLINE readField #-}
+        readField = readVkHandleType
+
+instance CanWriteField "handleType"
+           VkPhysicalDeviceExternalFenceInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkHandleType
 
 instance Show VkPhysicalDeviceExternalFenceInfoKHR where
         showsPrec d x
@@ -343,6 +408,19 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkExternalFencePropertiesKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkExternalFencePropertiesKHR where
+        type FieldType "sType" VkExternalFencePropertiesKHR =
+             VkStructureType
+        type FieldOptional "sType" VkExternalFencePropertiesKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkExternalFencePropertiesKHR where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkExternalFencePropertiesKHR where
         type VkPNextMType VkExternalFencePropertiesKHR = Ptr Void
 
@@ -362,6 +440,18 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkExternalFencePropertiesKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkExternalFencePropertiesKHR where
+        type FieldType "pNext" VkExternalFencePropertiesKHR = Ptr Void
+        type FieldOptional "pNext" VkExternalFencePropertiesKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkExternalFencePropertiesKHR where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkExportFromImportedHandleTypes VkExternalFencePropertiesKHR
@@ -388,6 +478,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkExternalFencePropertiesKHR, exportFromImportedHandleTypes}
 
 instance {-# OVERLAPPING #-}
+         HasField "exportFromImportedHandleTypes"
+           VkExternalFencePropertiesKHR
+         where
+        type FieldType "exportFromImportedHandleTypes"
+               VkExternalFencePropertiesKHR
+             = VkExternalFenceHandleTypeFlagsKHR
+        type FieldOptional "exportFromImportedHandleTypes"
+               VkExternalFencePropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "exportFromImportedHandleTypes"
+           VkExternalFencePropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkExportFromImportedHandleTypes
+
+        {-# INLINE readField #-}
+        readField = readVkExportFromImportedHandleTypes
+
+instance {-# OVERLAPPING #-}
          HasVkCompatibleHandleTypes VkExternalFencePropertiesKHR where
         type VkCompatibleHandleTypesMType VkExternalFencePropertiesKHR =
              VkExternalFenceHandleTypeFlagsKHR
@@ -410,6 +520,23 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkExternalFencePropertiesKHR, compatibleHandleTypes}
 
 instance {-# OVERLAPPING #-}
+         HasField "compatibleHandleTypes" VkExternalFencePropertiesKHR where
+        type FieldType "compatibleHandleTypes" VkExternalFencePropertiesKHR
+             = VkExternalFenceHandleTypeFlagsKHR
+        type FieldOptional "compatibleHandleTypes"
+               VkExternalFencePropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "compatibleHandleTypes"
+           VkExternalFencePropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkCompatibleHandleTypes
+
+        {-# INLINE readField #-}
+        readField = readVkCompatibleHandleTypes
+
+instance {-# OVERLAPPING #-}
          HasVkExternalFenceFeatures VkExternalFencePropertiesKHR where
         type VkExternalFenceFeaturesMType VkExternalFencePropertiesKHR =
              VkExternalFenceFeatureFlagsKHR
@@ -430,6 +557,23 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkExternalFenceFeatures #-}
         writeVkExternalFenceFeatures p
           = pokeByteOff p #{offset VkExternalFencePropertiesKHR, externalFenceFeatures}
+
+instance {-# OVERLAPPING #-}
+         HasField "externalFenceFeatures" VkExternalFencePropertiesKHR where
+        type FieldType "externalFenceFeatures" VkExternalFencePropertiesKHR
+             = VkExternalFenceFeatureFlagsKHR
+        type FieldOptional "externalFenceFeatures"
+               VkExternalFencePropertiesKHR
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "externalFenceFeatures"
+           VkExternalFencePropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkExternalFenceFeatures
+
+        {-# INLINE readField #-}
+        readField = readVkExternalFenceFeatures
 
 instance Show VkExternalFencePropertiesKHR where
         showsPrec d x

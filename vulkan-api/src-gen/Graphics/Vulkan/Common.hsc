@@ -7634,7 +7634,7 @@ pattern VK_ERROR_FORMAT_NOT_SUPPORTED :: VkResult
 
 pattern VK_ERROR_FORMAT_NOT_SUPPORTED = VkResult (-11)
 
--- | A requested pool allocation has failed due to fragmentation of the pool's memory
+-- | A requested pool allocation has failed due to fragmentation of the pool's memory -- ' closing tick for hsc2hs
 pattern VK_ERROR_FRAGMENTED_POOL :: VkResult
 
 pattern VK_ERROR_FRAGMENTED_POOL = VkResult (-12)

@@ -1,8 +1,10 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
@@ -171,6 +173,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkImportMemoryWin32HandleInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkImportMemoryWin32HandleInfoKHR where
+        type FieldType "sType" VkImportMemoryWin32HandleInfoKHR =
+             VkStructureType
+        type FieldOptional "sType" VkImportMemoryWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkImportMemoryWin32HandleInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkImportMemoryWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkImportMemoryWin32HandleInfoKHR where
         type VkPNextMType VkImportMemoryWin32HandleInfoKHR = Ptr Void
 
@@ -190,6 +212,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkImportMemoryWin32HandleInfoKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkImportMemoryWin32HandleInfoKHR where
+        type FieldType "pNext" VkImportMemoryWin32HandleInfoKHR = Ptr Void
+        type FieldOptional "pNext" VkImportMemoryWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkImportMemoryWin32HandleInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkImportMemoryWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkHandleType VkImportMemoryWin32HandleInfoKHR where
@@ -214,6 +255,27 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkImportMemoryWin32HandleInfoKHR, handleType}
 
 instance {-# OVERLAPPING #-}
+         HasField "handleType" VkImportMemoryWin32HandleInfoKHR where
+        type FieldType "handleType" VkImportMemoryWin32HandleInfoKHR =
+             VkExternalMemoryHandleTypeFlagBitsKHR
+        type FieldOptional "handleType" VkImportMemoryWin32HandleInfoKHR =
+             'True -- ' closing tick for hsc2hs
+
+instance CanReadField "handleType" VkImportMemoryWin32HandleInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkHandleType
+
+        {-# INLINE readField #-}
+        readField = readVkHandleType
+
+instance CanWriteField "handleType"
+           VkImportMemoryWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkHandleType
+
+instance {-# OVERLAPPING #-}
          HasVkHandle VkImportMemoryWin32HandleInfoKHR where
         type VkHandleMType VkImportMemoryWin32HandleInfoKHR = HANDLE
 
@@ -235,6 +297,25 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkImportMemoryWin32HandleInfoKHR, handle}
 
 instance {-# OVERLAPPING #-}
+         HasField "handle" VkImportMemoryWin32HandleInfoKHR where
+        type FieldType "handle" VkImportMemoryWin32HandleInfoKHR = HANDLE
+        type FieldOptional "handle" VkImportMemoryWin32HandleInfoKHR =
+             'True -- ' closing tick for hsc2hs
+
+instance CanReadField "handle" VkImportMemoryWin32HandleInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkHandle
+
+        {-# INLINE readField #-}
+        readField = readVkHandle
+
+instance CanWriteField "handle" VkImportMemoryWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkHandle
+
+instance {-# OVERLAPPING #-}
          HasVkName VkImportMemoryWin32HandleInfoKHR where
         type VkNameMType VkImportMemoryWin32HandleInfoKHR = LPCWSTR
 
@@ -254,6 +335,23 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkName #-}
         writeVkName p
           = pokeByteOff p #{offset VkImportMemoryWin32HandleInfoKHR, name}
+
+instance {-# OVERLAPPING #-}
+         HasField "name" VkImportMemoryWin32HandleInfoKHR where
+        type FieldType "name" VkImportMemoryWin32HandleInfoKHR = LPCWSTR
+        type FieldOptional "name" VkImportMemoryWin32HandleInfoKHR = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "name" VkImportMemoryWin32HandleInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkName
+
+        {-# INLINE readField #-}
+        readField = readVkName
+
+instance CanWriteField "name" VkImportMemoryWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkName
 
 instance Show VkImportMemoryWin32HandleInfoKHR where
         showsPrec d x
@@ -387,6 +485,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkExportMemoryWin32HandleInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkExportMemoryWin32HandleInfoKHR where
+        type FieldType "sType" VkExportMemoryWin32HandleInfoKHR =
+             VkStructureType
+        type FieldOptional "sType" VkExportMemoryWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkExportMemoryWin32HandleInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkExportMemoryWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkExportMemoryWin32HandleInfoKHR where
         type VkPNextMType VkExportMemoryWin32HandleInfoKHR = Ptr Void
 
@@ -406,6 +524,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkExportMemoryWin32HandleInfoKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkExportMemoryWin32HandleInfoKHR where
+        type FieldType "pNext" VkExportMemoryWin32HandleInfoKHR = Ptr Void
+        type FieldOptional "pNext" VkExportMemoryWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkExportMemoryWin32HandleInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkExportMemoryWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkPAttributes VkExportMemoryWin32HandleInfoKHR where
@@ -430,6 +567,28 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkExportMemoryWin32HandleInfoKHR, pAttributes}
 
 instance {-# OVERLAPPING #-}
+         HasField "pAttributes" VkExportMemoryWin32HandleInfoKHR where
+        type FieldType "pAttributes" VkExportMemoryWin32HandleInfoKHR =
+             Ptr SECURITY_ATTRIBUTES
+        type FieldOptional "pAttributes" VkExportMemoryWin32HandleInfoKHR =
+             'True -- ' closing tick for hsc2hs
+
+instance CanReadField "pAttributes"
+           VkExportMemoryWin32HandleInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPAttributes
+
+        {-# INLINE readField #-}
+        readField = readVkPAttributes
+
+instance CanWriteField "pAttributes"
+           VkExportMemoryWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPAttributes
+
+instance {-# OVERLAPPING #-}
          HasVkDwAccess VkExportMemoryWin32HandleInfoKHR where
         type VkDwAccessMType VkExportMemoryWin32HandleInfoKHR = DWORD
 
@@ -451,6 +610,25 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkExportMemoryWin32HandleInfoKHR, dwAccess}
 
 instance {-# OVERLAPPING #-}
+         HasField "dwAccess" VkExportMemoryWin32HandleInfoKHR where
+        type FieldType "dwAccess" VkExportMemoryWin32HandleInfoKHR = DWORD
+        type FieldOptional "dwAccess" VkExportMemoryWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "dwAccess" VkExportMemoryWin32HandleInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkDwAccess
+
+        {-# INLINE readField #-}
+        readField = readVkDwAccess
+
+instance CanWriteField "dwAccess" VkExportMemoryWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkDwAccess
+
+instance {-# OVERLAPPING #-}
          HasVkName VkExportMemoryWin32HandleInfoKHR where
         type VkNameMType VkExportMemoryWin32HandleInfoKHR = LPCWSTR
 
@@ -470,6 +648,23 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkName #-}
         writeVkName p
           = pokeByteOff p #{offset VkExportMemoryWin32HandleInfoKHR, name}
+
+instance {-# OVERLAPPING #-}
+         HasField "name" VkExportMemoryWin32HandleInfoKHR where
+        type FieldType "name" VkExportMemoryWin32HandleInfoKHR = LPCWSTR
+        type FieldOptional "name" VkExportMemoryWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "name" VkExportMemoryWin32HandleInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkName
+
+        {-# INLINE readField #-}
+        readField = readVkName
+
+instance CanWriteField "name" VkExportMemoryWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkName
 
 instance Show VkExportMemoryWin32HandleInfoKHR where
         showsPrec d x
@@ -601,6 +796,21 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkMemoryWin32HandlePropertiesKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkMemoryWin32HandlePropertiesKHR where
+        type FieldType "sType" VkMemoryWin32HandlePropertiesKHR =
+             VkStructureType
+        type FieldOptional "sType" VkMemoryWin32HandlePropertiesKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkMemoryWin32HandlePropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkMemoryWin32HandlePropertiesKHR where
         type VkPNextMType VkMemoryWin32HandlePropertiesKHR = Ptr Void
 
@@ -620,6 +830,20 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkMemoryWin32HandlePropertiesKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkMemoryWin32HandlePropertiesKHR where
+        type FieldType "pNext" VkMemoryWin32HandlePropertiesKHR = Ptr Void
+        type FieldOptional "pNext" VkMemoryWin32HandlePropertiesKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkMemoryWin32HandlePropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkMemoryTypeBits VkMemoryWin32HandlePropertiesKHR where
@@ -642,6 +866,23 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkMemoryTypeBits #-}
         writeVkMemoryTypeBits p
           = pokeByteOff p #{offset VkMemoryWin32HandlePropertiesKHR, memoryTypeBits}
+
+instance {-# OVERLAPPING #-}
+         HasField "memoryTypeBits" VkMemoryWin32HandlePropertiesKHR where
+        type FieldType "memoryTypeBits" VkMemoryWin32HandlePropertiesKHR =
+             Word32
+        type FieldOptional "memoryTypeBits"
+               VkMemoryWin32HandlePropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "memoryTypeBits"
+           VkMemoryWin32HandlePropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkMemoryTypeBits
+
+        {-# INLINE readField #-}
+        readField = readVkMemoryTypeBits
 
 instance Show VkMemoryWin32HandlePropertiesKHR where
         showsPrec d x
@@ -767,6 +1008,23 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkMemoryGetWin32HandleInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkMemoryGetWin32HandleInfoKHR where
+        type FieldType "sType" VkMemoryGetWin32HandleInfoKHR =
+             VkStructureType
+        type FieldOptional "sType" VkMemoryGetWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkMemoryGetWin32HandleInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkMemoryGetWin32HandleInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkMemoryGetWin32HandleInfoKHR where
         type VkPNextMType VkMemoryGetWin32HandleInfoKHR = Ptr Void
 
@@ -786,6 +1044,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkMemoryGetWin32HandleInfoKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkMemoryGetWin32HandleInfoKHR where
+        type FieldType "pNext" VkMemoryGetWin32HandleInfoKHR = Ptr Void
+        type FieldOptional "pNext" VkMemoryGetWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkMemoryGetWin32HandleInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkMemoryGetWin32HandleInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkMemory VkMemoryGetWin32HandleInfoKHR where
@@ -809,6 +1083,23 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkMemoryGetWin32HandleInfoKHR, memory}
 
 instance {-# OVERLAPPING #-}
+         HasField "memory" VkMemoryGetWin32HandleInfoKHR where
+        type FieldType "memory" VkMemoryGetWin32HandleInfoKHR =
+             VkDeviceMemory
+        type FieldOptional "memory" VkMemoryGetWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "memory" VkMemoryGetWin32HandleInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkMemory
+
+        {-# INLINE readField #-}
+        readField = readVkMemory
+
+instance CanWriteField "memory" VkMemoryGetWin32HandleInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkMemory
+
+instance {-# OVERLAPPING #-}
          HasVkHandleType VkMemoryGetWin32HandleInfoKHR where
         type VkHandleTypeMType VkMemoryGetWin32HandleInfoKHR =
              VkExternalMemoryHandleTypeFlagBitsKHR
@@ -829,6 +1120,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkHandleType #-}
         writeVkHandleType p
           = pokeByteOff p #{offset VkMemoryGetWin32HandleInfoKHR, handleType}
+
+instance {-# OVERLAPPING #-}
+         HasField "handleType" VkMemoryGetWin32HandleInfoKHR where
+        type FieldType "handleType" VkMemoryGetWin32HandleInfoKHR =
+             VkExternalMemoryHandleTypeFlagBitsKHR
+        type FieldOptional "handleType" VkMemoryGetWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "handleType" VkMemoryGetWin32HandleInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkHandleType
+
+        {-# INLINE readField #-}
+        readField = readVkHandleType
+
+instance CanWriteField "handleType" VkMemoryGetWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkHandleType
 
 instance Show VkMemoryGetWin32HandleInfoKHR where
         showsPrec d x

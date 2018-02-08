@@ -1,8 +1,10 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
@@ -180,6 +182,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkImportSemaphoreWin32HandleInfoKHR where
+        type FieldType "sType" VkImportSemaphoreWin32HandleInfoKHR =
+             VkStructureType
+        type FieldOptional "sType" VkImportSemaphoreWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkImportSemaphoreWin32HandleInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkImportSemaphoreWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkImportSemaphoreWin32HandleInfoKHR where
         type VkPNextMType VkImportSemaphoreWin32HandleInfoKHR = Ptr Void
 
@@ -199,6 +221,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkImportSemaphoreWin32HandleInfoKHR where
+        type FieldType "pNext" VkImportSemaphoreWin32HandleInfoKHR =
+             Ptr Void
+        type FieldOptional "pNext" VkImportSemaphoreWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkImportSemaphoreWin32HandleInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkImportSemaphoreWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkSemaphore VkImportSemaphoreWin32HandleInfoKHR where
@@ -223,6 +265,28 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, semaphore}
 
 instance {-# OVERLAPPING #-}
+         HasField "semaphore" VkImportSemaphoreWin32HandleInfoKHR where
+        type FieldType "semaphore" VkImportSemaphoreWin32HandleInfoKHR =
+             VkSemaphore
+        type FieldOptional "semaphore" VkImportSemaphoreWin32HandleInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "semaphore"
+           VkImportSemaphoreWin32HandleInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSemaphore
+
+        {-# INLINE readField #-}
+        readField = readVkSemaphore
+
+instance CanWriteField "semaphore"
+           VkImportSemaphoreWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSemaphore
+
+instance {-# OVERLAPPING #-}
          HasVkFlags VkImportSemaphoreWin32HandleInfoKHR where
         type VkFlagsMType VkImportSemaphoreWin32HandleInfoKHR =
              VkSemaphoreImportFlagsKHR
@@ -243,6 +307,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkFlags #-}
         writeVkFlags p
           = pokeByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, flags}
+
+instance {-# OVERLAPPING #-}
+         HasField "flags" VkImportSemaphoreWin32HandleInfoKHR where
+        type FieldType "flags" VkImportSemaphoreWin32HandleInfoKHR =
+             VkSemaphoreImportFlagsKHR
+        type FieldOptional "flags" VkImportSemaphoreWin32HandleInfoKHR =
+             'True -- ' closing tick for hsc2hs
+
+instance CanReadField "flags" VkImportSemaphoreWin32HandleInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkFlags
+
+        {-# INLINE readField #-}
+        readField = readVkFlags
+
+instance CanWriteField "flags" VkImportSemaphoreWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkFlags
 
 instance {-# OVERLAPPING #-}
          HasVkHandleType VkImportSemaphoreWin32HandleInfoKHR where
@@ -267,6 +351,28 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, handleType}
 
 instance {-# OVERLAPPING #-}
+         HasField "handleType" VkImportSemaphoreWin32HandleInfoKHR where
+        type FieldType "handleType" VkImportSemaphoreWin32HandleInfoKHR =
+             VkExternalSemaphoreHandleTypeFlagBitsKHR
+        type FieldOptional "handleType" VkImportSemaphoreWin32HandleInfoKHR
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "handleType"
+           VkImportSemaphoreWin32HandleInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkHandleType
+
+        {-# INLINE readField #-}
+        readField = readVkHandleType
+
+instance CanWriteField "handleType"
+           VkImportSemaphoreWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkHandleType
+
+instance {-# OVERLAPPING #-}
          HasVkHandle VkImportSemaphoreWin32HandleInfoKHR where
         type VkHandleMType VkImportSemaphoreWin32HandleInfoKHR = HANDLE
 
@@ -288,6 +394,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, handle}
 
 instance {-# OVERLAPPING #-}
+         HasField "handle" VkImportSemaphoreWin32HandleInfoKHR where
+        type FieldType "handle" VkImportSemaphoreWin32HandleInfoKHR =
+             HANDLE
+        type FieldOptional "handle" VkImportSemaphoreWin32HandleInfoKHR =
+             'True -- ' closing tick for hsc2hs
+
+instance CanReadField "handle" VkImportSemaphoreWin32HandleInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkHandle
+
+        {-# INLINE readField #-}
+        readField = readVkHandle
+
+instance CanWriteField "handle" VkImportSemaphoreWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkHandle
+
+instance {-# OVERLAPPING #-}
          HasVkName VkImportSemaphoreWin32HandleInfoKHR where
         type VkNameMType VkImportSemaphoreWin32HandleInfoKHR = LPCWSTR
 
@@ -307,6 +433,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkName #-}
         writeVkName p
           = pokeByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, name}
+
+instance {-# OVERLAPPING #-}
+         HasField "name" VkImportSemaphoreWin32HandleInfoKHR where
+        type FieldType "name" VkImportSemaphoreWin32HandleInfoKHR = LPCWSTR
+        type FieldOptional "name" VkImportSemaphoreWin32HandleInfoKHR =
+             'True -- ' closing tick for hsc2hs
+
+instance CanReadField "name" VkImportSemaphoreWin32HandleInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkName
+
+        {-# INLINE readField #-}
+        readField = readVkName
+
+instance CanWriteField "name" VkImportSemaphoreWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkName
 
 instance Show VkImportSemaphoreWin32HandleInfoKHR where
         showsPrec d x
@@ -454,6 +599,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkExportSemaphoreWin32HandleInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkExportSemaphoreWin32HandleInfoKHR where
+        type FieldType "sType" VkExportSemaphoreWin32HandleInfoKHR =
+             VkStructureType
+        type FieldOptional "sType" VkExportSemaphoreWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkExportSemaphoreWin32HandleInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkExportSemaphoreWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkExportSemaphoreWin32HandleInfoKHR where
         type VkPNextMType VkExportSemaphoreWin32HandleInfoKHR = Ptr Void
 
@@ -473,6 +638,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkExportSemaphoreWin32HandleInfoKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkExportSemaphoreWin32HandleInfoKHR where
+        type FieldType "pNext" VkExportSemaphoreWin32HandleInfoKHR =
+             Ptr Void
+        type FieldOptional "pNext" VkExportSemaphoreWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkExportSemaphoreWin32HandleInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkExportSemaphoreWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkPAttributes VkExportSemaphoreWin32HandleInfoKHR where
@@ -497,6 +682,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkExportSemaphoreWin32HandleInfoKHR, pAttributes}
 
 instance {-# OVERLAPPING #-}
+         HasField "pAttributes" VkExportSemaphoreWin32HandleInfoKHR where
+        type FieldType "pAttributes" VkExportSemaphoreWin32HandleInfoKHR =
+             Ptr SECURITY_ATTRIBUTES
+        type FieldOptional "pAttributes"
+               VkExportSemaphoreWin32HandleInfoKHR
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "pAttributes"
+           VkExportSemaphoreWin32HandleInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPAttributes
+
+        {-# INLINE readField #-}
+        readField = readVkPAttributes
+
+instance CanWriteField "pAttributes"
+           VkExportSemaphoreWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPAttributes
+
+instance {-# OVERLAPPING #-}
          HasVkDwAccess VkExportSemaphoreWin32HandleInfoKHR where
         type VkDwAccessMType VkExportSemaphoreWin32HandleInfoKHR = DWORD
 
@@ -518,6 +726,28 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkExportSemaphoreWin32HandleInfoKHR, dwAccess}
 
 instance {-# OVERLAPPING #-}
+         HasField "dwAccess" VkExportSemaphoreWin32HandleInfoKHR where
+        type FieldType "dwAccess" VkExportSemaphoreWin32HandleInfoKHR =
+             DWORD
+        type FieldOptional "dwAccess" VkExportSemaphoreWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "dwAccess"
+           VkExportSemaphoreWin32HandleInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkDwAccess
+
+        {-# INLINE readField #-}
+        readField = readVkDwAccess
+
+instance CanWriteField "dwAccess"
+           VkExportSemaphoreWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkDwAccess
+
+instance {-# OVERLAPPING #-}
          HasVkName VkExportSemaphoreWin32HandleInfoKHR where
         type VkNameMType VkExportSemaphoreWin32HandleInfoKHR = LPCWSTR
 
@@ -537,6 +767,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkName #-}
         writeVkName p
           = pokeByteOff p #{offset VkExportSemaphoreWin32HandleInfoKHR, name}
+
+instance {-# OVERLAPPING #-}
+         HasField "name" VkExportSemaphoreWin32HandleInfoKHR where
+        type FieldType "name" VkExportSemaphoreWin32HandleInfoKHR = LPCWSTR
+        type FieldOptional "name" VkExportSemaphoreWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "name" VkExportSemaphoreWin32HandleInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkName
+
+        {-# INLINE readField #-}
+        readField = readVkName
+
+instance CanWriteField "name" VkExportSemaphoreWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkName
 
 instance Show VkExportSemaphoreWin32HandleInfoKHR where
         showsPrec d x
@@ -667,6 +916,22 @@ instance {-# OVERLAPPING #-} HasVkSType VkD3D12FenceSubmitInfoKHR
         writeVkSType p
           = pokeByteOff p #{offset VkD3D12FenceSubmitInfoKHR, sType}
 
+instance {-# OVERLAPPING #-}
+         HasField "sType" VkD3D12FenceSubmitInfoKHR where
+        type FieldType "sType" VkD3D12FenceSubmitInfoKHR = VkStructureType
+        type FieldOptional "sType" VkD3D12FenceSubmitInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkD3D12FenceSubmitInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkD3D12FenceSubmitInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkD3D12FenceSubmitInfoKHR
          where
         type VkPNextMType VkD3D12FenceSubmitInfoKHR = Ptr Void
@@ -687,6 +952,22 @@ instance {-# OVERLAPPING #-} HasVkPNext VkD3D12FenceSubmitInfoKHR
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkD3D12FenceSubmitInfoKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkD3D12FenceSubmitInfoKHR where
+        type FieldType "pNext" VkD3D12FenceSubmitInfoKHR = Ptr Void
+        type FieldOptional "pNext" VkD3D12FenceSubmitInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkD3D12FenceSubmitInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkD3D12FenceSubmitInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkWaitSemaphoreValuesCount VkD3D12FenceSubmitInfoKHR where
@@ -711,6 +992,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkD3D12FenceSubmitInfoKHR, waitSemaphoreValuesCount}
 
 instance {-# OVERLAPPING #-}
+         HasField "waitSemaphoreValuesCount" VkD3D12FenceSubmitInfoKHR where
+        type FieldType "waitSemaphoreValuesCount" VkD3D12FenceSubmitInfoKHR
+             = Word32
+        type FieldOptional "waitSemaphoreValuesCount"
+               VkD3D12FenceSubmitInfoKHR
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "waitSemaphoreValuesCount"
+           VkD3D12FenceSubmitInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkWaitSemaphoreValuesCount
+
+        {-# INLINE readField #-}
+        readField = readVkWaitSemaphoreValuesCount
+
+instance CanWriteField "waitSemaphoreValuesCount"
+           VkD3D12FenceSubmitInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkWaitSemaphoreValuesCount
+
+instance {-# OVERLAPPING #-}
          HasVkPWaitSemaphoreValues VkD3D12FenceSubmitInfoKHR where
         type VkPWaitSemaphoreValuesMType VkD3D12FenceSubmitInfoKHR =
              Ptr Word64
@@ -731,6 +1035,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPWaitSemaphoreValues #-}
         writeVkPWaitSemaphoreValues p
           = pokeByteOff p #{offset VkD3D12FenceSubmitInfoKHR, pWaitSemaphoreValues}
+
+instance {-# OVERLAPPING #-}
+         HasField "pWaitSemaphoreValues" VkD3D12FenceSubmitInfoKHR where
+        type FieldType "pWaitSemaphoreValues" VkD3D12FenceSubmitInfoKHR =
+             Ptr Word64
+        type FieldOptional "pWaitSemaphoreValues" VkD3D12FenceSubmitInfoKHR
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "pWaitSemaphoreValues"
+           VkD3D12FenceSubmitInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPWaitSemaphoreValues
+
+        {-# INLINE readField #-}
+        readField = readVkPWaitSemaphoreValues
+
+instance CanWriteField "pWaitSemaphoreValues"
+           VkD3D12FenceSubmitInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPWaitSemaphoreValues
 
 instance {-# OVERLAPPING #-}
          HasVkSignalSemaphoreValuesCount VkD3D12FenceSubmitInfoKHR where
@@ -755,6 +1081,31 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkD3D12FenceSubmitInfoKHR, signalSemaphoreValuesCount}
 
 instance {-# OVERLAPPING #-}
+         HasField "signalSemaphoreValuesCount" VkD3D12FenceSubmitInfoKHR
+         where
+        type FieldType "signalSemaphoreValuesCount"
+               VkD3D12FenceSubmitInfoKHR
+             = Word32
+        type FieldOptional "signalSemaphoreValuesCount"
+               VkD3D12FenceSubmitInfoKHR
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "signalSemaphoreValuesCount"
+           VkD3D12FenceSubmitInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSignalSemaphoreValuesCount
+
+        {-# INLINE readField #-}
+        readField = readVkSignalSemaphoreValuesCount
+
+instance CanWriteField "signalSemaphoreValuesCount"
+           VkD3D12FenceSubmitInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSignalSemaphoreValuesCount
+
+instance {-# OVERLAPPING #-}
          HasVkPSignalSemaphoreValues VkD3D12FenceSubmitInfoKHR where
         type VkPSignalSemaphoreValuesMType VkD3D12FenceSubmitInfoKHR =
              Ptr Word64
@@ -775,6 +1126,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPSignalSemaphoreValues #-}
         writeVkPSignalSemaphoreValues p
           = pokeByteOff p #{offset VkD3D12FenceSubmitInfoKHR, pSignalSemaphoreValues}
+
+instance {-# OVERLAPPING #-}
+         HasField "pSignalSemaphoreValues" VkD3D12FenceSubmitInfoKHR where
+        type FieldType "pSignalSemaphoreValues" VkD3D12FenceSubmitInfoKHR =
+             Ptr Word64
+        type FieldOptional "pSignalSemaphoreValues"
+               VkD3D12FenceSubmitInfoKHR
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "pSignalSemaphoreValues"
+           VkD3D12FenceSubmitInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPSignalSemaphoreValues
+
+        {-# INLINE readField #-}
+        readField = readVkPSignalSemaphoreValues
+
+instance CanWriteField "pSignalSemaphoreValues"
+           VkD3D12FenceSubmitInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPSignalSemaphoreValues
 
 instance Show VkD3D12FenceSubmitInfoKHR where
         showsPrec d x
@@ -912,6 +1286,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkSemaphoreGetWin32HandleInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkSemaphoreGetWin32HandleInfoKHR where
+        type FieldType "sType" VkSemaphoreGetWin32HandleInfoKHR =
+             VkStructureType
+        type FieldOptional "sType" VkSemaphoreGetWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkSemaphoreGetWin32HandleInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkSemaphoreGetWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkSemaphoreGetWin32HandleInfoKHR where
         type VkPNextMType VkSemaphoreGetWin32HandleInfoKHR = Ptr Void
 
@@ -931,6 +1325,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkSemaphoreGetWin32HandleInfoKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkSemaphoreGetWin32HandleInfoKHR where
+        type FieldType "pNext" VkSemaphoreGetWin32HandleInfoKHR = Ptr Void
+        type FieldOptional "pNext" VkSemaphoreGetWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkSemaphoreGetWin32HandleInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkSemaphoreGetWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkSemaphore VkSemaphoreGetWin32HandleInfoKHR where
@@ -955,6 +1368,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkSemaphoreGetWin32HandleInfoKHR, semaphore}
 
 instance {-# OVERLAPPING #-}
+         HasField "semaphore" VkSemaphoreGetWin32HandleInfoKHR where
+        type FieldType "semaphore" VkSemaphoreGetWin32HandleInfoKHR =
+             VkSemaphore
+        type FieldOptional "semaphore" VkSemaphoreGetWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "semaphore" VkSemaphoreGetWin32HandleInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSemaphore
+
+        {-# INLINE readField #-}
+        readField = readVkSemaphore
+
+instance CanWriteField "semaphore" VkSemaphoreGetWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSemaphore
+
+instance {-# OVERLAPPING #-}
          HasVkHandleType VkSemaphoreGetWin32HandleInfoKHR where
         type VkHandleTypeMType VkSemaphoreGetWin32HandleInfoKHR =
              VkExternalSemaphoreHandleTypeFlagBitsKHR
@@ -975,6 +1408,27 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkHandleType #-}
         writeVkHandleType p
           = pokeByteOff p #{offset VkSemaphoreGetWin32HandleInfoKHR, handleType}
+
+instance {-# OVERLAPPING #-}
+         HasField "handleType" VkSemaphoreGetWin32HandleInfoKHR where
+        type FieldType "handleType" VkSemaphoreGetWin32HandleInfoKHR =
+             VkExternalSemaphoreHandleTypeFlagBitsKHR
+        type FieldOptional "handleType" VkSemaphoreGetWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "handleType" VkSemaphoreGetWin32HandleInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkHandleType
+
+        {-# INLINE readField #-}
+        readField = readVkHandleType
+
+instance CanWriteField "handleType"
+           VkSemaphoreGetWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkHandleType
 
 instance Show VkSemaphoreGetWin32HandleInfoKHR where
         showsPrec d x

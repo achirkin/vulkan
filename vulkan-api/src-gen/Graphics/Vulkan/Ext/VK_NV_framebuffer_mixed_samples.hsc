@@ -1,12 +1,14 @@
 #include "vulkan/vulkan.h"
 
-{-# LANGUAGE DataKinds       #-}
-{-# LANGUAGE MagicHash       #-}
-{-# LANGUAGE PatternSynonyms #-}
-{-# LANGUAGE Strict          #-}
-{-# LANGUAGE TypeFamilies    #-}
-{-# LANGUAGE UnboxedTuples   #-}
-{-# LANGUAGE ViewPatterns    #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MagicHash             #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE PatternSynonyms       #-}
+{-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeFamilies          #-}
+{-# LANGUAGE UnboxedTuples         #-}
+{-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_NV_framebuffer_mixed_samples
        (-- * Vulkan extension: @VK_NV_framebuffer_mixed_samples@
         -- |
@@ -176,6 +178,31 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPipelineCoverageModulationStateCreateInfoNV, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkPipelineCoverageModulationStateCreateInfoNV
+         where
+        type FieldType "sType"
+               VkPipelineCoverageModulationStateCreateInfoNV
+             = VkStructureType
+        type FieldOptional "sType"
+               VkPipelineCoverageModulationStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType"
+           VkPipelineCoverageModulationStateCreateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType"
+           VkPipelineCoverageModulationStateCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkPipelineCoverageModulationStateCreateInfoNV where
         type VkPNextMType VkPipelineCoverageModulationStateCreateInfoNV =
              Ptr Void
@@ -198,6 +225,31 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPipelineCoverageModulationStateCreateInfoNV, pNext}
 
 instance {-# OVERLAPPING #-}
+         HasField "pNext" VkPipelineCoverageModulationStateCreateInfoNV
+         where
+        type FieldType "pNext"
+               VkPipelineCoverageModulationStateCreateInfoNV
+             = Ptr Void
+        type FieldOptional "pNext"
+               VkPipelineCoverageModulationStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext"
+           VkPipelineCoverageModulationStateCreateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkPipelineCoverageModulationStateCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
+
+instance {-# OVERLAPPING #-}
          HasVkFlags VkPipelineCoverageModulationStateCreateInfoNV where
         type VkFlagsMType VkPipelineCoverageModulationStateCreateInfoNV =
              VkPipelineCoverageModulationStateCreateFlagsNV
@@ -218,6 +270,31 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkFlags #-}
         writeVkFlags p
           = pokeByteOff p #{offset VkPipelineCoverageModulationStateCreateInfoNV, flags}
+
+instance {-# OVERLAPPING #-}
+         HasField "flags" VkPipelineCoverageModulationStateCreateInfoNV
+         where
+        type FieldType "flags"
+               VkPipelineCoverageModulationStateCreateInfoNV
+             = VkPipelineCoverageModulationStateCreateFlagsNV
+        type FieldOptional "flags"
+               VkPipelineCoverageModulationStateCreateInfoNV
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "flags"
+           VkPipelineCoverageModulationStateCreateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkFlags
+
+        {-# INLINE readField #-}
+        readField = readVkFlags
+
+instance CanWriteField "flags"
+           VkPipelineCoverageModulationStateCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkFlags
 
 instance {-# OVERLAPPING #-}
          HasVkCoverageModulationMode
@@ -245,6 +322,32 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPipelineCoverageModulationStateCreateInfoNV, coverageModulationMode}
 
 instance {-# OVERLAPPING #-}
+         HasField "coverageModulationMode"
+           VkPipelineCoverageModulationStateCreateInfoNV
+         where
+        type FieldType "coverageModulationMode"
+               VkPipelineCoverageModulationStateCreateInfoNV
+             = VkCoverageModulationModeNV
+        type FieldOptional "coverageModulationMode"
+               VkPipelineCoverageModulationStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "coverageModulationMode"
+           VkPipelineCoverageModulationStateCreateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkCoverageModulationMode
+
+        {-# INLINE readField #-}
+        readField = readVkCoverageModulationMode
+
+instance CanWriteField "coverageModulationMode"
+           VkPipelineCoverageModulationStateCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkCoverageModulationMode
+
+instance {-# OVERLAPPING #-}
          HasVkCoverageModulationTableEnable
            VkPipelineCoverageModulationStateCreateInfoNV
          where
@@ -268,6 +371,32 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkCoverageModulationTableEnable #-}
         writeVkCoverageModulationTableEnable p
           = pokeByteOff p #{offset VkPipelineCoverageModulationStateCreateInfoNV, coverageModulationTableEnable}
+
+instance {-# OVERLAPPING #-}
+         HasField "coverageModulationTableEnable"
+           VkPipelineCoverageModulationStateCreateInfoNV
+         where
+        type FieldType "coverageModulationTableEnable"
+               VkPipelineCoverageModulationStateCreateInfoNV
+             = VkBool32
+        type FieldOptional "coverageModulationTableEnable"
+               VkPipelineCoverageModulationStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "coverageModulationTableEnable"
+           VkPipelineCoverageModulationStateCreateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkCoverageModulationTableEnable
+
+        {-# INLINE readField #-}
+        readField = readVkCoverageModulationTableEnable
+
+instance CanWriteField "coverageModulationTableEnable"
+           VkPipelineCoverageModulationStateCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkCoverageModulationTableEnable
 
 instance {-# OVERLAPPING #-}
          HasVkCoverageModulationTableCount
@@ -295,6 +424,32 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPipelineCoverageModulationStateCreateInfoNV, coverageModulationTableCount}
 
 instance {-# OVERLAPPING #-}
+         HasField "coverageModulationTableCount"
+           VkPipelineCoverageModulationStateCreateInfoNV
+         where
+        type FieldType "coverageModulationTableCount"
+               VkPipelineCoverageModulationStateCreateInfoNV
+             = Word32
+        type FieldOptional "coverageModulationTableCount"
+               VkPipelineCoverageModulationStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "coverageModulationTableCount"
+           VkPipelineCoverageModulationStateCreateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkCoverageModulationTableCount
+
+        {-# INLINE readField #-}
+        readField = readVkCoverageModulationTableCount
+
+instance CanWriteField "coverageModulationTableCount"
+           VkPipelineCoverageModulationStateCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkCoverageModulationTableCount
+
+instance {-# OVERLAPPING #-}
          HasVkPCoverageModulationTable
            VkPipelineCoverageModulationStateCreateInfoNV
          where
@@ -318,6 +473,32 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPCoverageModulationTable #-}
         writeVkPCoverageModulationTable p
           = pokeByteOff p #{offset VkPipelineCoverageModulationStateCreateInfoNV, pCoverageModulationTable}
+
+instance {-# OVERLAPPING #-}
+         HasField "pCoverageModulationTable"
+           VkPipelineCoverageModulationStateCreateInfoNV
+         where
+        type FieldType "pCoverageModulationTable"
+               VkPipelineCoverageModulationStateCreateInfoNV
+             = Ptr #{type float}
+        type FieldOptional "pCoverageModulationTable"
+               VkPipelineCoverageModulationStateCreateInfoNV
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "pCoverageModulationTable"
+           VkPipelineCoverageModulationStateCreateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkPCoverageModulationTable
+
+        {-# INLINE readField #-}
+        readField = readVkPCoverageModulationTable
+
+instance CanWriteField "pCoverageModulationTable"
+           VkPipelineCoverageModulationStateCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPCoverageModulationTable
 
 instance Show VkPipelineCoverageModulationStateCreateInfoNV where
         showsPrec d x

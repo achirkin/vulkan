@@ -1,12 +1,14 @@
 #include "vulkan/vulkan.h"
 
-{-# LANGUAGE DataKinds       #-}
-{-# LANGUAGE MagicHash       #-}
-{-# LANGUAGE PatternSynonyms #-}
-{-# LANGUAGE Strict          #-}
-{-# LANGUAGE TypeFamilies    #-}
-{-# LANGUAGE UnboxedTuples   #-}
-{-# LANGUAGE ViewPatterns    #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MagicHash             #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE PatternSynonyms       #-}
+{-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeFamilies          #-}
+{-# LANGUAGE UnboxedTuples         #-}
+{-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_KHR_external_semaphore
        (-- * Vulkan extension: @VK_KHR_external_semaphore@
         -- |
@@ -159,6 +161,23 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkExportSemaphoreCreateInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkExportSemaphoreCreateInfoKHR where
+        type FieldType "sType" VkExportSemaphoreCreateInfoKHR =
+             VkStructureType
+        type FieldOptional "sType" VkExportSemaphoreCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkExportSemaphoreCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkExportSemaphoreCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkExportSemaphoreCreateInfoKHR where
         type VkPNextMType VkExportSemaphoreCreateInfoKHR = Ptr Void
 
@@ -178,6 +197,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkExportSemaphoreCreateInfoKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkExportSemaphoreCreateInfoKHR where
+        type FieldType "pNext" VkExportSemaphoreCreateInfoKHR = Ptr Void
+        type FieldOptional "pNext" VkExportSemaphoreCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkExportSemaphoreCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkExportSemaphoreCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkHandleTypes VkExportSemaphoreCreateInfoKHR where
@@ -200,6 +235,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkHandleTypes #-}
         writeVkHandleTypes p
           = pokeByteOff p #{offset VkExportSemaphoreCreateInfoKHR, handleTypes}
+
+instance {-# OVERLAPPING #-}
+         HasField "handleTypes" VkExportSemaphoreCreateInfoKHR where
+        type FieldType "handleTypes" VkExportSemaphoreCreateInfoKHR =
+             VkExternalSemaphoreHandleTypeFlagsKHR
+        type FieldOptional "handleTypes" VkExportSemaphoreCreateInfoKHR =
+             'True -- ' closing tick for hsc2hs
+
+instance CanReadField "handleTypes" VkExportSemaphoreCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkHandleTypes
+
+        {-# INLINE readField #-}
+        readField = readVkHandleTypes
+
+instance CanWriteField "handleTypes" VkExportSemaphoreCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkHandleTypes
 
 instance Show VkExportSemaphoreCreateInfoKHR where
         showsPrec d x

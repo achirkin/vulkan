@@ -1,12 +1,14 @@
 #include "vulkan/vulkan.h"
 
-{-# LANGUAGE DataKinds       #-}
-{-# LANGUAGE MagicHash       #-}
-{-# LANGUAGE PatternSynonyms #-}
-{-# LANGUAGE Strict          #-}
-{-# LANGUAGE TypeFamilies    #-}
-{-# LANGUAGE UnboxedTuples   #-}
-{-# LANGUAGE ViewPatterns    #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MagicHash             #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE PatternSynonyms       #-}
+{-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeFamilies          #-}
+{-# LANGUAGE UnboxedTuples         #-}
+{-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_KHR_image_format_list
        (-- * Vulkan extension: @VK_KHR_image_format_list@
         -- |
@@ -154,6 +156,23 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkImageFormatListCreateInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkImageFormatListCreateInfoKHR where
+        type FieldType "sType" VkImageFormatListCreateInfoKHR =
+             VkStructureType
+        type FieldOptional "sType" VkImageFormatListCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkImageFormatListCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkImageFormatListCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkImageFormatListCreateInfoKHR where
         type VkPNextMType VkImageFormatListCreateInfoKHR = Ptr Void
 
@@ -173,6 +192,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkImageFormatListCreateInfoKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkImageFormatListCreateInfoKHR where
+        type FieldType "pNext" VkImageFormatListCreateInfoKHR = Ptr Void
+        type FieldOptional "pNext" VkImageFormatListCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkImageFormatListCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkImageFormatListCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkViewFormatCount VkImageFormatListCreateInfoKHR where
@@ -196,6 +231,28 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkImageFormatListCreateInfoKHR, viewFormatCount}
 
 instance {-# OVERLAPPING #-}
+         HasField "viewFormatCount" VkImageFormatListCreateInfoKHR where
+        type FieldType "viewFormatCount" VkImageFormatListCreateInfoKHR =
+             Word32
+        type FieldOptional "viewFormatCount" VkImageFormatListCreateInfoKHR
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "viewFormatCount"
+           VkImageFormatListCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkViewFormatCount
+
+        {-# INLINE readField #-}
+        readField = readVkViewFormatCount
+
+instance CanWriteField "viewFormatCount"
+           VkImageFormatListCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkViewFormatCount
+
+instance {-# OVERLAPPING #-}
          HasVkPViewFormats VkImageFormatListCreateInfoKHR where
         type VkPViewFormatsMType VkImageFormatListCreateInfoKHR =
              Ptr VkFormat
@@ -216,6 +273,27 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPViewFormats #-}
         writeVkPViewFormats p
           = pokeByteOff p #{offset VkImageFormatListCreateInfoKHR, pViewFormats}
+
+instance {-# OVERLAPPING #-}
+         HasField "pViewFormats" VkImageFormatListCreateInfoKHR where
+        type FieldType "pViewFormats" VkImageFormatListCreateInfoKHR =
+             Ptr VkFormat
+        type FieldOptional "pViewFormats" VkImageFormatListCreateInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pViewFormats" VkImageFormatListCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPViewFormats
+
+        {-# INLINE readField #-}
+        readField = readVkPViewFormats
+
+instance CanWriteField "pViewFormats"
+           VkImageFormatListCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPViewFormats
 
 instance Show VkImageFormatListCreateInfoKHR where
         showsPrec d x

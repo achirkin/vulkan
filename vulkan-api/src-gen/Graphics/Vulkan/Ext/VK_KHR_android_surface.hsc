@@ -1,8 +1,10 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
@@ -162,6 +164,23 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkAndroidSurfaceCreateInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkAndroidSurfaceCreateInfoKHR where
+        type FieldType "sType" VkAndroidSurfaceCreateInfoKHR =
+             VkStructureType
+        type FieldOptional "sType" VkAndroidSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkAndroidSurfaceCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkAndroidSurfaceCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkAndroidSurfaceCreateInfoKHR where
         type VkPNextMType VkAndroidSurfaceCreateInfoKHR = Ptr Void
 
@@ -181,6 +200,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkAndroidSurfaceCreateInfoKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkAndroidSurfaceCreateInfoKHR where
+        type FieldType "pNext" VkAndroidSurfaceCreateInfoKHR = Ptr Void
+        type FieldOptional "pNext" VkAndroidSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkAndroidSurfaceCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkAndroidSurfaceCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkFlags VkAndroidSurfaceCreateInfoKHR where
@@ -205,6 +240,23 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkAndroidSurfaceCreateInfoKHR, flags}
 
 instance {-# OVERLAPPING #-}
+         HasField "flags" VkAndroidSurfaceCreateInfoKHR where
+        type FieldType "flags" VkAndroidSurfaceCreateInfoKHR =
+             VkAndroidSurfaceCreateFlagsKHR
+        type FieldOptional "flags" VkAndroidSurfaceCreateInfoKHR = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "flags" VkAndroidSurfaceCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkFlags
+
+        {-# INLINE readField #-}
+        readField = readVkFlags
+
+instance CanWriteField "flags" VkAndroidSurfaceCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkFlags
+
+instance {-# OVERLAPPING #-}
          HasVkWindow VkAndroidSurfaceCreateInfoKHR where
         type VkWindowMType VkAndroidSurfaceCreateInfoKHR =
              Ptr ANativeWindow
@@ -225,6 +277,23 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkWindow #-}
         writeVkWindow p
           = pokeByteOff p #{offset VkAndroidSurfaceCreateInfoKHR, window}
+
+instance {-# OVERLAPPING #-}
+         HasField "window" VkAndroidSurfaceCreateInfoKHR where
+        type FieldType "window" VkAndroidSurfaceCreateInfoKHR =
+             Ptr ANativeWindow
+        type FieldOptional "window" VkAndroidSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "window" VkAndroidSurfaceCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkWindow
+
+        {-# INLINE readField #-}
+        readField = readVkWindow
+
+instance CanWriteField "window" VkAndroidSurfaceCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkWindow
 
 instance Show VkAndroidSurfaceCreateInfoKHR where
         showsPrec d x

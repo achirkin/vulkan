@@ -1,12 +1,14 @@
 #include "vulkan/vulkan.h"
 
-{-# LANGUAGE DataKinds       #-}
-{-# LANGUAGE MagicHash       #-}
-{-# LANGUAGE PatternSynonyms #-}
-{-# LANGUAGE Strict          #-}
-{-# LANGUAGE TypeFamilies    #-}
-{-# LANGUAGE UnboxedTuples   #-}
-{-# LANGUAGE ViewPatterns    #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MagicHash             #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE PatternSynonyms       #-}
+{-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeFamilies          #-}
+{-# LANGUAGE UnboxedTuples         #-}
+{-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_NV_viewport_swizzle
        (-- * Vulkan extension: @VK_NV_viewport_swizzle@
         -- |
@@ -152,6 +154,22 @@ instance {-# OVERLAPPING #-} HasVkX VkViewportSwizzleNV where
         writeVkX p
           = pokeByteOff p #{offset VkViewportSwizzleNV, x}
 
+instance {-# OVERLAPPING #-} HasField "x" VkViewportSwizzleNV where
+        type FieldType "x" VkViewportSwizzleNV =
+             VkViewportCoordinateSwizzleNV
+        type FieldOptional "x" VkViewportSwizzleNV = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "x" VkViewportSwizzleNV where
+        {-# INLINE getField #-}
+        getField = vkX
+
+        {-# INLINE readField #-}
+        readField = readVkX
+
+instance CanWriteField "x" VkViewportSwizzleNV where
+        {-# INLINE writeField #-}
+        writeField = writeVkX
+
 instance {-# OVERLAPPING #-} HasVkY VkViewportSwizzleNV where
         type VkYMType VkViewportSwizzleNV = VkViewportCoordinateSwizzleNV
 
@@ -170,6 +188,22 @@ instance {-# OVERLAPPING #-} HasVkY VkViewportSwizzleNV where
         {-# INLINE writeVkY #-}
         writeVkY p
           = pokeByteOff p #{offset VkViewportSwizzleNV, y}
+
+instance {-# OVERLAPPING #-} HasField "y" VkViewportSwizzleNV where
+        type FieldType "y" VkViewportSwizzleNV =
+             VkViewportCoordinateSwizzleNV
+        type FieldOptional "y" VkViewportSwizzleNV = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "y" VkViewportSwizzleNV where
+        {-# INLINE getField #-}
+        getField = vkY
+
+        {-# INLINE readField #-}
+        readField = readVkY
+
+instance CanWriteField "y" VkViewportSwizzleNV where
+        {-# INLINE writeField #-}
+        writeField = writeVkY
 
 instance {-# OVERLAPPING #-} HasVkZ VkViewportSwizzleNV where
         type VkZMType VkViewportSwizzleNV = VkViewportCoordinateSwizzleNV
@@ -190,6 +224,22 @@ instance {-# OVERLAPPING #-} HasVkZ VkViewportSwizzleNV where
         writeVkZ p
           = pokeByteOff p #{offset VkViewportSwizzleNV, z}
 
+instance {-# OVERLAPPING #-} HasField "z" VkViewportSwizzleNV where
+        type FieldType "z" VkViewportSwizzleNV =
+             VkViewportCoordinateSwizzleNV
+        type FieldOptional "z" VkViewportSwizzleNV = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "z" VkViewportSwizzleNV where
+        {-# INLINE getField #-}
+        getField = vkZ
+
+        {-# INLINE readField #-}
+        readField = readVkZ
+
+instance CanWriteField "z" VkViewportSwizzleNV where
+        {-# INLINE writeField #-}
+        writeField = writeVkZ
+
 instance {-# OVERLAPPING #-} HasVkW VkViewportSwizzleNV where
         type VkWMType VkViewportSwizzleNV = VkViewportCoordinateSwizzleNV
 
@@ -208,6 +258,22 @@ instance {-# OVERLAPPING #-} HasVkW VkViewportSwizzleNV where
         {-# INLINE writeVkW #-}
         writeVkW p
           = pokeByteOff p #{offset VkViewportSwizzleNV, w}
+
+instance {-# OVERLAPPING #-} HasField "w" VkViewportSwizzleNV where
+        type FieldType "w" VkViewportSwizzleNV =
+             VkViewportCoordinateSwizzleNV
+        type FieldOptional "w" VkViewportSwizzleNV = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "w" VkViewportSwizzleNV where
+        {-# INLINE getField #-}
+        getField = vkW
+
+        {-# INLINE readField #-}
+        readField = readVkW
+
+instance CanWriteField "w" VkViewportSwizzleNV where
+        {-# INLINE writeField #-}
+        writeField = writeVkW
 
 instance Show VkViewportSwizzleNV where
         showsPrec d x
@@ -349,6 +415,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPipelineViewportSwizzleStateCreateInfoNV, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkPipelineViewportSwizzleStateCreateInfoNV where
+        type FieldType "sType" VkPipelineViewportSwizzleStateCreateInfoNV =
+             VkStructureType
+        type FieldOptional "sType"
+               VkPipelineViewportSwizzleStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType"
+           VkPipelineViewportSwizzleStateCreateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType"
+           VkPipelineViewportSwizzleStateCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkPipelineViewportSwizzleStateCreateInfoNV where
         type VkPNextMType VkPipelineViewportSwizzleStateCreateInfoNV =
              Ptr Void
@@ -371,6 +460,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPipelineViewportSwizzleStateCreateInfoNV, pNext}
 
 instance {-# OVERLAPPING #-}
+         HasField "pNext" VkPipelineViewportSwizzleStateCreateInfoNV where
+        type FieldType "pNext" VkPipelineViewportSwizzleStateCreateInfoNV =
+             Ptr Void
+        type FieldOptional "pNext"
+               VkPipelineViewportSwizzleStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext"
+           VkPipelineViewportSwizzleStateCreateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkPipelineViewportSwizzleStateCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
+
+instance {-# OVERLAPPING #-}
          HasVkFlags VkPipelineViewportSwizzleStateCreateInfoNV where
         type VkFlagsMType VkPipelineViewportSwizzleStateCreateInfoNV =
              VkPipelineViewportSwizzleStateCreateFlagsNV
@@ -391,6 +503,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkFlags #-}
         writeVkFlags p
           = pokeByteOff p #{offset VkPipelineViewportSwizzleStateCreateInfoNV, flags}
+
+instance {-# OVERLAPPING #-}
+         HasField "flags" VkPipelineViewportSwizzleStateCreateInfoNV where
+        type FieldType "flags" VkPipelineViewportSwizzleStateCreateInfoNV =
+             VkPipelineViewportSwizzleStateCreateFlagsNV
+        type FieldOptional "flags"
+               VkPipelineViewportSwizzleStateCreateInfoNV
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "flags"
+           VkPipelineViewportSwizzleStateCreateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkFlags
+
+        {-# INLINE readField #-}
+        readField = readVkFlags
+
+instance CanWriteField "flags"
+           VkPipelineViewportSwizzleStateCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkFlags
 
 instance {-# OVERLAPPING #-}
          HasVkViewportCount VkPipelineViewportSwizzleStateCreateInfoNV where
@@ -416,6 +551,31 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPipelineViewportSwizzleStateCreateInfoNV, viewportCount}
 
 instance {-# OVERLAPPING #-}
+         HasField "viewportCount" VkPipelineViewportSwizzleStateCreateInfoNV
+         where
+        type FieldType "viewportCount"
+               VkPipelineViewportSwizzleStateCreateInfoNV
+             = Word32
+        type FieldOptional "viewportCount"
+               VkPipelineViewportSwizzleStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "viewportCount"
+           VkPipelineViewportSwizzleStateCreateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkViewportCount
+
+        {-# INLINE readField #-}
+        readField = readVkViewportCount
+
+instance CanWriteField "viewportCount"
+           VkPipelineViewportSwizzleStateCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkViewportCount
+
+instance {-# OVERLAPPING #-}
          HasVkPViewportSwizzles VkPipelineViewportSwizzleStateCreateInfoNV
          where
         type VkPViewportSwizzlesMType
@@ -438,6 +598,32 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPViewportSwizzles #-}
         writeVkPViewportSwizzles p
           = pokeByteOff p #{offset VkPipelineViewportSwizzleStateCreateInfoNV, pViewportSwizzles}
+
+instance {-# OVERLAPPING #-}
+         HasField "pViewportSwizzles"
+           VkPipelineViewportSwizzleStateCreateInfoNV
+         where
+        type FieldType "pViewportSwizzles"
+               VkPipelineViewportSwizzleStateCreateInfoNV
+             = Ptr VkViewportSwizzleNV
+        type FieldOptional "pViewportSwizzles"
+               VkPipelineViewportSwizzleStateCreateInfoNV
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "pViewportSwizzles"
+           VkPipelineViewportSwizzleStateCreateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkPViewportSwizzles
+
+        {-# INLINE readField #-}
+        readField = readVkPViewportSwizzles
+
+instance CanWriteField "pViewportSwizzles"
+           VkPipelineViewportSwizzleStateCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPViewportSwizzles
 
 instance Show VkPipelineViewportSwizzleStateCreateInfoNV where
         showsPrec d x

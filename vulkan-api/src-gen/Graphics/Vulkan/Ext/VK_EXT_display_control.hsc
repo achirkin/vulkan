@@ -1,8 +1,10 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
@@ -160,6 +162,22 @@ instance {-# OVERLAPPING #-} HasVkSType VkDisplayPowerInfoEXT where
         writeVkSType p
           = pokeByteOff p #{offset VkDisplayPowerInfoEXT, sType}
 
+instance {-# OVERLAPPING #-} HasField "sType" VkDisplayPowerInfoEXT
+         where
+        type FieldType "sType" VkDisplayPowerInfoEXT = VkStructureType
+        type FieldOptional "sType" VkDisplayPowerInfoEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkDisplayPowerInfoEXT where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkDisplayPowerInfoEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkDisplayPowerInfoEXT where
         type VkPNextMType VkDisplayPowerInfoEXT = Ptr Void
 
@@ -179,6 +197,22 @@ instance {-# OVERLAPPING #-} HasVkPNext VkDisplayPowerInfoEXT where
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkDisplayPowerInfoEXT, pNext}
+
+instance {-# OVERLAPPING #-} HasField "pNext" VkDisplayPowerInfoEXT
+         where
+        type FieldType "pNext" VkDisplayPowerInfoEXT = Ptr Void
+        type FieldOptional "pNext" VkDisplayPowerInfoEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkDisplayPowerInfoEXT where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkDisplayPowerInfoEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-} HasVkPowerState VkDisplayPowerInfoEXT
          where
@@ -201,6 +235,23 @@ instance {-# OVERLAPPING #-} HasVkPowerState VkDisplayPowerInfoEXT
         {-# INLINE writeVkPowerState #-}
         writeVkPowerState p
           = pokeByteOff p #{offset VkDisplayPowerInfoEXT, powerState}
+
+instance {-# OVERLAPPING #-}
+         HasField "powerState" VkDisplayPowerInfoEXT where
+        type FieldType "powerState" VkDisplayPowerInfoEXT =
+             VkDisplayPowerStateEXT
+        type FieldOptional "powerState" VkDisplayPowerInfoEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "powerState" VkDisplayPowerInfoEXT where
+        {-# INLINE getField #-}
+        getField = vkPowerState
+
+        {-# INLINE readField #-}
+        readField = readVkPowerState
+
+instance CanWriteField "powerState" VkDisplayPowerInfoEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkPowerState
 
 instance Show VkDisplayPowerInfoEXT where
         showsPrec d x
@@ -320,6 +371,22 @@ instance {-# OVERLAPPING #-} HasVkSType VkDeviceEventInfoEXT where
         writeVkSType p
           = pokeByteOff p #{offset VkDeviceEventInfoEXT, sType}
 
+instance {-# OVERLAPPING #-} HasField "sType" VkDeviceEventInfoEXT
+         where
+        type FieldType "sType" VkDeviceEventInfoEXT = VkStructureType
+        type FieldOptional "sType" VkDeviceEventInfoEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkDeviceEventInfoEXT where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkDeviceEventInfoEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkDeviceEventInfoEXT where
         type VkPNextMType VkDeviceEventInfoEXT = Ptr Void
 
@@ -339,6 +406,22 @@ instance {-# OVERLAPPING #-} HasVkPNext VkDeviceEventInfoEXT where
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkDeviceEventInfoEXT, pNext}
+
+instance {-# OVERLAPPING #-} HasField "pNext" VkDeviceEventInfoEXT
+         where
+        type FieldType "pNext" VkDeviceEventInfoEXT = Ptr Void
+        type FieldOptional "pNext" VkDeviceEventInfoEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkDeviceEventInfoEXT where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkDeviceEventInfoEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-} HasVkDeviceEvent VkDeviceEventInfoEXT
          where
@@ -360,6 +443,23 @@ instance {-# OVERLAPPING #-} HasVkDeviceEvent VkDeviceEventInfoEXT
         {-# INLINE writeVkDeviceEvent #-}
         writeVkDeviceEvent p
           = pokeByteOff p #{offset VkDeviceEventInfoEXT, deviceEvent}
+
+instance {-# OVERLAPPING #-}
+         HasField "deviceEvent" VkDeviceEventInfoEXT where
+        type FieldType "deviceEvent" VkDeviceEventInfoEXT =
+             VkDeviceEventTypeEXT
+        type FieldOptional "deviceEvent" VkDeviceEventInfoEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "deviceEvent" VkDeviceEventInfoEXT where
+        {-# INLINE getField #-}
+        getField = vkDeviceEvent
+
+        {-# INLINE readField #-}
+        readField = readVkDeviceEvent
+
+instance CanWriteField "deviceEvent" VkDeviceEventInfoEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkDeviceEvent
 
 instance Show VkDeviceEventInfoEXT where
         showsPrec d x
@@ -479,6 +579,22 @@ instance {-# OVERLAPPING #-} HasVkSType VkDisplayEventInfoEXT where
         writeVkSType p
           = pokeByteOff p #{offset VkDisplayEventInfoEXT, sType}
 
+instance {-# OVERLAPPING #-} HasField "sType" VkDisplayEventInfoEXT
+         where
+        type FieldType "sType" VkDisplayEventInfoEXT = VkStructureType
+        type FieldOptional "sType" VkDisplayEventInfoEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkDisplayEventInfoEXT where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkDisplayEventInfoEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkDisplayEventInfoEXT where
         type VkPNextMType VkDisplayEventInfoEXT = Ptr Void
 
@@ -498,6 +614,22 @@ instance {-# OVERLAPPING #-} HasVkPNext VkDisplayEventInfoEXT where
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkDisplayEventInfoEXT, pNext}
+
+instance {-# OVERLAPPING #-} HasField "pNext" VkDisplayEventInfoEXT
+         where
+        type FieldType "pNext" VkDisplayEventInfoEXT = Ptr Void
+        type FieldOptional "pNext" VkDisplayEventInfoEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkDisplayEventInfoEXT where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkDisplayEventInfoEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkDisplayEvent VkDisplayEventInfoEXT where
@@ -520,6 +652,23 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkDisplayEvent #-}
         writeVkDisplayEvent p
           = pokeByteOff p #{offset VkDisplayEventInfoEXT, displayEvent}
+
+instance {-# OVERLAPPING #-}
+         HasField "displayEvent" VkDisplayEventInfoEXT where
+        type FieldType "displayEvent" VkDisplayEventInfoEXT =
+             VkDisplayEventTypeEXT
+        type FieldOptional "displayEvent" VkDisplayEventInfoEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "displayEvent" VkDisplayEventInfoEXT where
+        {-# INLINE getField #-}
+        getField = vkDisplayEvent
+
+        {-# INLINE readField #-}
+        readField = readVkDisplayEvent
+
+instance CanWriteField "displayEvent" VkDisplayEventInfoEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkDisplayEvent
 
 instance Show VkDisplayEventInfoEXT where
         showsPrec d x
@@ -645,6 +794,24 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkSwapchainCounterCreateInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkSwapchainCounterCreateInfoEXT where
+        type FieldType "sType" VkSwapchainCounterCreateInfoEXT =
+             VkStructureType
+        type FieldOptional "sType" VkSwapchainCounterCreateInfoEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkSwapchainCounterCreateInfoEXT where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkSwapchainCounterCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkSwapchainCounterCreateInfoEXT where
         type VkPNextMType VkSwapchainCounterCreateInfoEXT = Ptr Void
 
@@ -664,6 +831,23 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkSwapchainCounterCreateInfoEXT, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkSwapchainCounterCreateInfoEXT where
+        type FieldType "pNext" VkSwapchainCounterCreateInfoEXT = Ptr Void
+        type FieldOptional "pNext" VkSwapchainCounterCreateInfoEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkSwapchainCounterCreateInfoEXT where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkSwapchainCounterCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkSurfaceCounters VkSwapchainCounterCreateInfoEXT where
@@ -686,6 +870,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkSurfaceCounters #-}
         writeVkSurfaceCounters p
           = pokeByteOff p #{offset VkSwapchainCounterCreateInfoEXT, surfaceCounters}
+
+instance {-# OVERLAPPING #-}
+         HasField "surfaceCounters" VkSwapchainCounterCreateInfoEXT where
+        type FieldType "surfaceCounters" VkSwapchainCounterCreateInfoEXT =
+             VkSurfaceCounterFlagsEXT
+        type FieldOptional "surfaceCounters"
+               VkSwapchainCounterCreateInfoEXT
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "surfaceCounters"
+           VkSwapchainCounterCreateInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkSurfaceCounters
+
+        {-# INLINE readField #-}
+        readField = readVkSurfaceCounters
+
+instance CanWriteField "surfaceCounters"
+           VkSwapchainCounterCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSurfaceCounters
 
 instance Show VkSwapchainCounterCreateInfoEXT where
         showsPrec d x
