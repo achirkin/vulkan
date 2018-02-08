@@ -26,7 +26,7 @@ withVulkanInstance
       writeVkPEngineName        appInfoPtr engineNamePtr
       writeVkApplicationVersion appInfoPtr (_VK_MAKE_VERSION 1 0 0)
       writeVkPApplicationName   appInfoPtr progNamePtr
-      writeVkPNext              appInfoPtr vkNullPtr
+      writeVkPNext              appInfoPtr VK_NULL_HANDLE
       writeVkSType              appInfoPtr VK_STRUCTURE_TYPE_APPLICATION_INFO
       writeVkApiVersion         appInfoPtr (_VK_MAKE_VERSION 1 0 68)
 
@@ -39,14 +39,14 @@ withVulkanInstance
       writeVkPpEnabledLayerNames     iCreateInfoPtr layerNames
       writeVkEnabledLayerCount       iCreateInfoPtr (fromIntegral layerCount)
       writeVkFlags                   iCreateInfoPtr 0
-      writeVkPNext                   iCreateInfoPtr vkNullPtr
+      writeVkPNext                   iCreateInfoPtr VK_NULL_HANDLE
       writeVkSType                   iCreateInfoPtr VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
 
     -- execute createInstance
     (vkResult, vkInstance) <- alloca $ \vkInstPtr -> do
       vkRes <- vkCreateInstance
         (unsafePtr iCreateInfo) -- must keep iCreateInfo alive!
-        nullPtr vkInstPtr
+        VK_NULL_HANDLE vkInstPtr
       vkI <- peek vkInstPtr
       return (vkRes, vkI)
 
@@ -55,7 +55,7 @@ withVulkanInstance
       if vkResult == VK_SUCCESS
       then do
         r <- action vkInstance
-        vkDestroyInstance vkInstance vkNullPtr
+        vkDestroyInstance vkInstance VK_NULL_HANDLE
         pure r
       else pure vkResult
 
