@@ -47,6 +47,16 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkPhysicalDevice16BitStorageFeaturesKHR {
+--   >     VkStructureType sType;
+--   >     void*      pNext;
+--   >     VkBool32                         storageBuffer16BitAccess;
+--   >     VkBool32                         uniformAndStorageBuffer16BitAccess;
+--   >     VkBool32                         storagePushConstant16;
+--   >     VkBool32                         storageInputOutput16;
+--   > } VkPhysicalDevice16BitStorageFeaturesKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDevice16BitStorageFeaturesKHR.html VkPhysicalDevice16BitStorageFeaturesKHR registry at www.khronos.org>
 data VkPhysicalDevice16BitStorageFeaturesKHR = VkPhysicalDevice16BitStorageFeaturesKHR## ByteArray##
 
 instance Eq VkPhysicalDevice16BitStorageFeaturesKHR where

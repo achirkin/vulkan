@@ -39,6 +39,16 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkNativeBufferANDROID {
+--   >     VkStructureType sType;
+--   >     const void* pNext;
+--   >     const void* handle;
+--   >     int stride;
+--   >     int format;
+--   >     int usage;
+--   > } VkNativeBufferANDROID;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkNativeBufferANDROID.html VkNativeBufferANDROID registry at www.khronos.org>
 data VkNativeBufferANDROID = VkNativeBufferANDROID## ByteArray##
 
 instance Eq VkNativeBufferANDROID where

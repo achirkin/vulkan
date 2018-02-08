@@ -47,6 +47,13 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkTextureLODGatherFormatPropertiesAMD {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     VkBool32                         supportsTextureGatherLODBiasAMD;
+--   > } VkTextureLODGatherFormatPropertiesAMD;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkTextureLODGatherFormatPropertiesAMD.html VkTextureLODGatherFormatPropertiesAMD registry at www.khronos.org>
 data VkTextureLODGatherFormatPropertiesAMD = VkTextureLODGatherFormatPropertiesAMD## ByteArray##
 
 instance Eq VkTextureLODGatherFormatPropertiesAMD where

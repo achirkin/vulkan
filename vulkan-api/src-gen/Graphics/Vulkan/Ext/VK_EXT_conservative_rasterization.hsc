@@ -50,6 +50,21 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkPhysicalDeviceConservativeRasterizationPropertiesEXT {
+--   >     VkStructureType sType;
+--   >     void*                  pNext;
+--   >     float                  primitiveOverestimationSize;
+--   >     float                  maxExtraPrimitiveOverestimationSize;
+--   >     float                  extraPrimitiveOverestimationSizeGranularity;
+--   >     VkBool32               primitiveUnderestimation;
+--   >     VkBool32               conservativePointAndLineRasterization;
+--   >     VkBool32               degenerateTrianglesRasterized;
+--   >     VkBool32               degenerateLinesRasterized;
+--   >     VkBool32               fullyCoveredFragmentShaderInputVariable;
+--   >     VkBool32               conservativeRasterizationPostDepthCoverage;
+--   > } VkPhysicalDeviceConservativeRasterizationPropertiesEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceConservativeRasterizationPropertiesEXT.html VkPhysicalDeviceConservativeRasterizationPropertiesEXT registry at www.khronos.org>
 data VkPhysicalDeviceConservativeRasterizationPropertiesEXT = VkPhysicalDeviceConservativeRasterizationPropertiesEXT## ByteArray##
 
 instance Eq VkPhysicalDeviceConservativeRasterizationPropertiesEXT
@@ -501,6 +516,15 @@ instance Show
                                                                                  x)
                                                                               . showChar '}'
 
+-- | > typedef struct VkPipelineRasterizationConservativeStateCreateInfoEXT {
+--   >     VkStructureType sType;
+--   >     const void*                                                                      pNext;
+--   >     VkPipelineRasterizationConservativeStateCreateFlagsEXT           flags;
+--   >     VkConservativeRasterizationModeEXT                                               conservativeRasterizationMode;
+--   >     float                                                                            extraPrimitiveOverestimationSize;
+--   > } VkPipelineRasterizationConservativeStateCreateInfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineRasterizationConservativeStateCreateInfoEXT.html VkPipelineRasterizationConservativeStateCreateInfoEXT registry at www.khronos.org>
 data VkPipelineRasterizationConservativeStateCreateInfoEXT = VkPipelineRasterizationConservativeStateCreateInfoEXT## ByteArray##
 
 instance Eq VkPipelineRasterizationConservativeStateCreateInfoEXT

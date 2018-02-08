@@ -50,6 +50,16 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkDescriptorUpdateTemplateEntryKHR {
+--   >     uint32_t                         dstBinding;
+--   >     uint32_t                         dstArrayElement;
+--   >     uint32_t                         descriptorCount;
+--   >     VkDescriptorType                 descriptorType;
+--   >     size_t                           offset;
+--   >     size_t                           stride;
+--   > } VkDescriptorUpdateTemplateEntryKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDescriptorUpdateTemplateEntryKHR.html VkDescriptorUpdateTemplateEntryKHR registry at www.khronos.org>
 data VkDescriptorUpdateTemplateEntryKHR = VkDescriptorUpdateTemplateEntryKHR## ByteArray##
 
 instance Eq VkDescriptorUpdateTemplateEntryKHR where
@@ -288,6 +298,20 @@ instance Show VkDescriptorUpdateTemplateEntryKHR where
                                             showString "vkStride = " .
                                               showsPrec d (vkStride x) . showChar '}'
 
+-- | > typedef struct VkDescriptorUpdateTemplateCreateInfoKHR {
+--   >     VkStructureType sType;
+--   >     void*                                   pNext;
+--   >     VkDescriptorUpdateTemplateCreateFlagsKHR    flags;
+--   >     uint32_t                 descriptorUpdateEntryCount;
+--   >     const VkDescriptorUpdateTemplateEntryKHR* pDescriptorUpdateEntries;
+--   >     VkDescriptorUpdateTemplateTypeKHR templateType;
+--   >     VkDescriptorSetLayout descriptorSetLayout;
+--   >     VkPipelineBindPoint pipelineBindPoint;
+--   >     VkPipelineLayoutpipelineLayout;
+--   >     uint32_t set;
+--   > } VkDescriptorUpdateTemplateCreateInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDescriptorUpdateTemplateCreateInfoKHR.html VkDescriptorUpdateTemplateCreateInfoKHR registry at www.khronos.org>
 data VkDescriptorUpdateTemplateCreateInfoKHR = VkDescriptorUpdateTemplateCreateInfoKHR## ByteArray##
 
 instance Eq VkDescriptorUpdateTemplateCreateInfoKHR where

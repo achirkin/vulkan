@@ -54,6 +54,13 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                                        (unsafeDupablePerformIO)
 
+-- | > typedef struct VkPhysicalDeviceExternalSemaphoreInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkExternalSemaphoreHandleTypeFlagBitsKHR handleType;
+--   > } VkPhysicalDeviceExternalSemaphoreInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceExternalSemaphoreInfoKHR.html VkPhysicalDeviceExternalSemaphoreInfoKHR registry at www.khronos.org>
 data VkPhysicalDeviceExternalSemaphoreInfoKHR = VkPhysicalDeviceExternalSemaphoreInfoKHR## ByteArray##
 
 instance Eq VkPhysicalDeviceExternalSemaphoreInfoKHR where
@@ -226,6 +233,15 @@ instance Show VkPhysicalDeviceExternalSemaphoreInfoKHR where
                           showString "vkHandleType = " .
                             showsPrec d (vkHandleType x) . showChar '}'
 
+-- | > typedef struct VkExternalSemaphorePropertiesKHR {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     VkExternalSemaphoreHandleTypeFlagsKHR exportFromImportedHandleTypes;
+--   >     VkExternalSemaphoreHandleTypeFlagsKHR compatibleHandleTypes;
+--   >     VkExternalSemaphoreFeatureFlagsKHR externalSemaphoreFeatures;
+--   > } VkExternalSemaphorePropertiesKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalSemaphorePropertiesKHR.html VkExternalSemaphorePropertiesKHR registry at www.khronos.org>
 data VkExternalSemaphorePropertiesKHR = VkExternalSemaphorePropertiesKHR## ByteArray##
 
 instance Eq VkExternalSemaphorePropertiesKHR where

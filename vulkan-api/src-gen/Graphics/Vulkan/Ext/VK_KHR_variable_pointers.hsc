@@ -47,6 +47,14 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkPhysicalDeviceVariablePointerFeaturesKHR {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     VkBool32                         variablePointersStorageBuffer;
+--   >     VkBool32                         variablePointers;
+--   > } VkPhysicalDeviceVariablePointerFeaturesKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceVariablePointerFeaturesKHR.html VkPhysicalDeviceVariablePointerFeaturesKHR registry at www.khronos.org>
 data VkPhysicalDeviceVariablePointerFeaturesKHR = VkPhysicalDeviceVariablePointerFeaturesKHR## ByteArray##
 
 instance Eq VkPhysicalDeviceVariablePointerFeaturesKHR where

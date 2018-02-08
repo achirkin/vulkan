@@ -58,6 +58,13 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkExternalMemoryPropertiesKHR {
+--   >     VkExternalMemoryFeatureFlagsKHR  externalMemoryFeatures;
+--   >     VkExternalMemoryHandleTypeFlagsKHR exportFromImportedHandleTypes;
+--   >     VkExternalMemoryHandleTypeFlagsKHR compatibleHandleTypes;
+--   > } VkExternalMemoryPropertiesKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalMemoryPropertiesKHR.html VkExternalMemoryPropertiesKHR registry at www.khronos.org>
 data VkExternalMemoryPropertiesKHR = VkExternalMemoryPropertiesKHR## ByteArray##
 
 instance Eq VkExternalMemoryPropertiesKHR where
@@ -220,6 +227,13 @@ instance Show VkExternalMemoryPropertiesKHR where
                           showString "vkCompatibleHandleTypes = " .
                             showsPrec d (vkCompatibleHandleTypes x) . showChar '}'
 
+-- | > typedef struct VkPhysicalDeviceExternalImageFormatInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkExternalMemoryHandleTypeFlagBitsKHR handleType;
+--   > } VkPhysicalDeviceExternalImageFormatInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceExternalImageFormatInfoKHR.html VkPhysicalDeviceExternalImageFormatInfoKHR registry at www.khronos.org>
 data VkPhysicalDeviceExternalImageFormatInfoKHR = VkPhysicalDeviceExternalImageFormatInfoKHR## ByteArray##
 
 instance Eq VkPhysicalDeviceExternalImageFormatInfoKHR where
@@ -392,6 +406,13 @@ instance Show VkPhysicalDeviceExternalImageFormatInfoKHR where
                           showString "vkHandleType = " .
                             showsPrec d (vkHandleType x) . showChar '}'
 
+-- | > typedef struct VkExternalImageFormatPropertiesKHR {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     VkExternalMemoryPropertiesKHR externalMemoryProperties;
+--   > } VkExternalImageFormatPropertiesKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalImageFormatPropertiesKHR.html VkExternalImageFormatPropertiesKHR registry at www.khronos.org>
 data VkExternalImageFormatPropertiesKHR = VkExternalImageFormatPropertiesKHR## ByteArray##
 
 instance Eq VkExternalImageFormatPropertiesKHR where
@@ -557,6 +578,15 @@ instance Show VkExternalImageFormatPropertiesKHR where
                           showString "vkExternalMemoryProperties = " .
                             showsPrec d (vkExternalMemoryProperties x) . showChar '}'
 
+-- | > typedef struct VkPhysicalDeviceExternalBufferInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkBufferCreateFlags flags;
+--   >     VkBufferUsageFlags               usage;
+--   >     VkExternalMemoryHandleTypeFlagBitsKHR handleType;
+--   > } VkPhysicalDeviceExternalBufferInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceExternalBufferInfoKHR.html VkPhysicalDeviceExternalBufferInfoKHR registry at www.khronos.org>
 data VkPhysicalDeviceExternalBufferInfoKHR = VkPhysicalDeviceExternalBufferInfoKHR## ByteArray##
 
 instance Eq VkPhysicalDeviceExternalBufferInfoKHR where
@@ -777,6 +807,13 @@ instance Show VkPhysicalDeviceExternalBufferInfoKHR where
                                       showString "vkHandleType = " .
                                         showsPrec d (vkHandleType x) . showChar '}'
 
+-- | > typedef struct VkExternalBufferPropertiesKHR {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     VkExternalMemoryPropertiesKHR    externalMemoryProperties;
+--   > } VkExternalBufferPropertiesKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalBufferPropertiesKHR.html VkExternalBufferPropertiesKHR registry at www.khronos.org>
 data VkExternalBufferPropertiesKHR = VkExternalBufferPropertiesKHR## ByteArray##
 
 instance Eq VkExternalBufferPropertiesKHR where
@@ -935,6 +972,17 @@ instance Show VkExternalBufferPropertiesKHR where
                           showString "vkExternalMemoryProperties = " .
                             showsPrec d (vkExternalMemoryProperties x) . showChar '}'
 
+-- | > typedef struct VkPhysicalDeviceIDPropertiesKHR {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     uint8_t                          deviceUUID[VK_UUID_SIZE];
+--   >     uint8_t                          driverUUID[VK_UUID_SIZE];
+--   >     uint8_t                          deviceLUID[VK_LUID_SIZE_KHR];
+--   >     uint32_t                         deviceNodeMask;
+--   >     VkBool32                         deviceLUIDValid;
+--   > } VkPhysicalDeviceIDPropertiesKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceIDPropertiesKHR.html VkPhysicalDeviceIDPropertiesKHR registry at www.khronos.org>
 data VkPhysicalDeviceIDPropertiesKHR = VkPhysicalDeviceIDPropertiesKHR## ByteArray##
 
 instance Eq VkPhysicalDeviceIDPropertiesKHR where

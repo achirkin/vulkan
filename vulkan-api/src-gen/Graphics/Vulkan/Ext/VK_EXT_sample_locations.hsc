@@ -56,6 +56,12 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkSampleLocationEXT {
+--   >     float                            x;
+--   >     float                            y;
+--   > } VkSampleLocationEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSampleLocationEXT.html VkSampleLocationEXT registry at www.khronos.org>
 data VkSampleLocationEXT = VkSampleLocationEXT## ByteArray##
 
 instance Eq VkSampleLocationEXT where
@@ -181,6 +187,16 @@ instance Show VkSampleLocationEXT where
                   showString ", " .
                     showString "vkY = " . showsPrec d (vkY x) . showChar '}'
 
+-- | > typedef struct VkSampleLocationsInfoEXT {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkSampleCountFlagBits            sampleLocationsPerPixel;
+--   >     VkExtent2D                       sampleLocationGridSize;
+--   >     uint32_t                         sampleLocationsCount;
+--   >     const VkSampleLocationEXT* pSampleLocations;
+--   > } VkSampleLocationsInfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSampleLocationsInfoEXT.html VkSampleLocationsInfoEXT registry at www.khronos.org>
 data VkSampleLocationsInfoEXT = VkSampleLocationsInfoEXT## ByteArray##
 
 instance Eq VkSampleLocationsInfoEXT where
@@ -412,6 +428,12 @@ instance Show VkSampleLocationsInfoEXT where
                                             showString "vkPSampleLocations = " .
                                               showsPrec d (vkPSampleLocations x) . showChar '}'
 
+-- | > typedef struct VkAttachmentSampleLocationsEXT {
+--   >     uint32_t                         attachmentIndex;
+--   >     VkSampleLocationsInfoEXT         sampleLocationsInfo;
+--   > } VkAttachmentSampleLocationsEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkAttachmentSampleLocationsEXT.html VkAttachmentSampleLocationsEXT registry at www.khronos.org>
 data VkAttachmentSampleLocationsEXT = VkAttachmentSampleLocationsEXT## ByteArray##
 
 instance Eq VkAttachmentSampleLocationsEXT where
@@ -546,6 +568,12 @@ instance Show VkAttachmentSampleLocationsEXT where
                     showString "vkSampleLocationsInfo = " .
                       showsPrec d (vkSampleLocationsInfo x) . showChar '}'
 
+-- | > typedef struct VkSubpassSampleLocationsEXT {
+--   >     uint32_t                         subpassIndex;
+--   >     VkSampleLocationsInfoEXT         sampleLocationsInfo;
+--   > } VkSubpassSampleLocationsEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSubpassSampleLocationsEXT.html VkSubpassSampleLocationsEXT registry at www.khronos.org>
 data VkSubpassSampleLocationsEXT = VkSubpassSampleLocationsEXT## ByteArray##
 
 instance Eq VkSubpassSampleLocationsEXT where
@@ -679,6 +707,16 @@ instance Show VkSubpassSampleLocationsEXT where
                     showString "vkSampleLocationsInfo = " .
                       showsPrec d (vkSampleLocationsInfo x) . showChar '}'
 
+-- | > typedef struct VkRenderPassSampleLocationsBeginInfoEXT {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     uint32_t         attachmentInitialSampleLocationsCount;
+--   >     const VkAttachmentSampleLocationsEXT* pAttachmentInitialSampleLocations;
+--   >     uint32_t         postSubpassSampleLocationsCount;
+--   >     const VkSubpassSampleLocationsEXT* pPostSubpassSampleLocations;
+--   > } VkRenderPassSampleLocationsBeginInfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkRenderPassSampleLocationsBeginInfoEXT.html VkRenderPassSampleLocationsBeginInfoEXT registry at www.khronos.org>
 data VkRenderPassSampleLocationsBeginInfoEXT = VkRenderPassSampleLocationsBeginInfoEXT## ByteArray##
 
 instance Eq VkRenderPassSampleLocationsBeginInfoEXT where
@@ -939,6 +977,14 @@ instance Show VkRenderPassSampleLocationsBeginInfoEXT where
                                               showsPrec d (vkPPostSubpassSampleLocations x) .
                                                 showChar '}'
 
+-- | > typedef struct VkPipelineSampleLocationsStateCreateInfoEXT {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkBool32                         sampleLocationsEnable;
+--   >     VkSampleLocationsInfoEXT         sampleLocationsInfo;
+--   > } VkPipelineSampleLocationsStateCreateInfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineSampleLocationsStateCreateInfoEXT.html VkPipelineSampleLocationsStateCreateInfoEXT registry at www.khronos.org>
 data VkPipelineSampleLocationsStateCreateInfoEXT = VkPipelineSampleLocationsStateCreateInfoEXT## ByteArray##
 
 instance Eq VkPipelineSampleLocationsStateCreateInfoEXT where
@@ -1142,6 +1188,17 @@ instance Show VkPipelineSampleLocationsStateCreateInfoEXT where
                                 showString "vkSampleLocationsInfo = " .
                                   showsPrec d (vkSampleLocationsInfo x) . showChar '}'
 
+-- | > typedef struct VkPhysicalDeviceSampleLocationsPropertiesEXT {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     VkSampleCountFlags               sampleLocationSampleCounts;
+--   >     VkExtent2D                       maxSampleLocationGridSize;
+--   >     float                            sampleLocationCoordinateRange[2];
+--   >     uint32_t                         sampleLocationSubPixelBits;
+--   >     VkBool32                         variableSampleLocations;
+--   > } VkPhysicalDeviceSampleLocationsPropertiesEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceSampleLocationsPropertiesEXT.html VkPhysicalDeviceSampleLocationsPropertiesEXT registry at www.khronos.org>
 data VkPhysicalDeviceSampleLocationsPropertiesEXT = VkPhysicalDeviceSampleLocationsPropertiesEXT## ByteArray##
 
 instance Eq VkPhysicalDeviceSampleLocationsPropertiesEXT where
@@ -1441,6 +1498,13 @@ instance Show VkPhysicalDeviceSampleLocationsPropertiesEXT where
                                                       showsPrec d (vkVariableSampleLocations x) .
                                                         showChar '}'
 
+-- | > typedef struct VkMultisamplePropertiesEXT {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     VkExtent2D                       maxSampleLocationGridSize;
+--   > } VkMultisamplePropertiesEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMultisamplePropertiesEXT.html VkMultisamplePropertiesEXT registry at www.khronos.org>
 data VkMultisamplePropertiesEXT = VkMultisamplePropertiesEXT## ByteArray##
 
 instance Eq VkMultisamplePropertiesEXT where

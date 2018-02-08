@@ -50,6 +50,14 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkViSurfaceCreateInfoNN {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkViSurfaceCreateFlagsNN   flags;
+--   >     void*                            window;
+--   > } VkViSurfaceCreateInfoNN;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkViSurfaceCreateInfoNN.html VkViSurfaceCreateInfoNN registry at www.khronos.org>
 data VkViSurfaceCreateInfoNN = VkViSurfaceCreateInfoNN## ByteArray##
 
 instance Eq VkViSurfaceCreateInfoNN where

@@ -50,6 +50,13 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     VkBool32                         perViewPositionAllComponents;
+--   > } VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX.html VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX registry at www.khronos.org>
 data VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX = VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX## ByteArray##
 
 instance Eq VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX

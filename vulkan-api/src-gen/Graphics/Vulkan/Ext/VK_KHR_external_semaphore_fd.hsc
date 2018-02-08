@@ -49,6 +49,16 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkImportSemaphoreFdInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkSemaphore    semaphore;
+--   >     VkSemaphoreImportFlagsKHR flags;
+--   >     VkExternalSemaphoreHandleTypeFlagBitsKHR handleType;
+--   >     int                              fd;
+--   > } VkImportSemaphoreFdInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImportSemaphoreFdInfoKHR.html VkImportSemaphoreFdInfoKHR registry at www.khronos.org>
 data VkImportSemaphoreFdInfoKHR = VkImportSemaphoreFdInfoKHR## ByteArray##
 
 instance Eq VkImportSemaphoreFdInfoKHR where
@@ -279,6 +289,14 @@ instance Show VkImportSemaphoreFdInfoKHR where
                                             showString "vkFd = " .
                                               showsPrec d (vkFd x) . showChar '}'
 
+-- | > typedef struct VkSemaphoreGetFdInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkSemaphore                      semaphore;
+--   >     VkExternalSemaphoreHandleTypeFlagBitsKHR handleType;
+--   > } VkSemaphoreGetFdInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSemaphoreGetFdInfoKHR.html VkSemaphoreGetFdInfoKHR registry at www.khronos.org>
 data VkSemaphoreGetFdInfoKHR = VkSemaphoreGetFdInfoKHR## ByteArray##
 
 instance Eq VkSemaphoreGetFdInfoKHR where

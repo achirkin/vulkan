@@ -50,6 +50,11 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkRefreshCycleDurationGOOGLE {
+--   >     uint64_t                         refreshDuration;
+--   > } VkRefreshCycleDurationGOOGLE;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkRefreshCycleDurationGOOGLE.html VkRefreshCycleDurationGOOGLE registry at www.khronos.org>
 data VkRefreshCycleDurationGOOGLE = VkRefreshCycleDurationGOOGLE## ByteArray##
 
 instance Eq VkRefreshCycleDurationGOOGLE where
@@ -159,6 +164,15 @@ instance Show VkRefreshCycleDurationGOOGLE where
               showString "vkRefreshDuration = " .
                 showsPrec d (vkRefreshDuration x) . showChar '}'
 
+-- | > typedef struct VkPastPresentationTimingGOOGLE {
+--   >     uint32_t                         presentID;
+--   >     uint64_t                         desiredPresentTime;
+--   >     uint64_t                         actualPresentTime;
+--   >     uint64_t                         earliestPresentTime;
+--   >     uint64_t                         presentMargin;
+--   > } VkPastPresentationTimingGOOGLE;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPastPresentationTimingGOOGLE.html VkPastPresentationTimingGOOGLE registry at www.khronos.org>
 data VkPastPresentationTimingGOOGLE = VkPastPresentationTimingGOOGLE## ByteArray##
 
 instance Eq VkPastPresentationTimingGOOGLE where
@@ -367,6 +381,14 @@ instance Show VkPastPresentationTimingGOOGLE where
                                       showString "vkPresentMargin = " .
                                         showsPrec d (vkPresentMargin x) . showChar '}'
 
+-- | > typedef struct VkPresentTimesInfoGOOGLE {
+--   >     VkStructureType sType;
+--   >     const void*  pNext;
+--   >     uint32_t                         swapchainCount;
+--   >     const VkPresentTimeGOOGLE*   pTimes;
+--   > } VkPresentTimesInfoGOOGLE;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPresentTimesInfoGOOGLE.html VkPresentTimesInfoGOOGLE registry at www.khronos.org>
 data VkPresentTimesInfoGOOGLE = VkPresentTimesInfoGOOGLE## ByteArray##
 
 instance Eq VkPresentTimesInfoGOOGLE where
@@ -547,6 +569,12 @@ instance Show VkPresentTimesInfoGOOGLE where
                               showString ", " .
                                 showString "vkPTimes = " . showsPrec d (vkPTimes x) . showChar '}'
 
+-- | > typedef struct VkPresentTimeGOOGLE {
+--   >     uint32_t                         presentID;
+--   >     uint64_t                         desiredPresentTime;
+--   > } VkPresentTimeGOOGLE;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPresentTimeGOOGLE.html VkPresentTimeGOOGLE registry at www.khronos.org>
 data VkPresentTimeGOOGLE = VkPresentTimeGOOGLE## ByteArray##
 
 instance Eq VkPresentTimeGOOGLE where

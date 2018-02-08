@@ -50,6 +50,14 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkAndroidSurfaceCreateInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkAndroidSurfaceCreateFlagsKHR   flags;
+--   >     ANativeWindow*                   window;
+--   > } VkAndroidSurfaceCreateInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkAndroidSurfaceCreateInfoKHR.html VkAndroidSurfaceCreateInfoKHR registry at www.khronos.org>
 data VkAndroidSurfaceCreateInfoKHR = VkAndroidSurfaceCreateInfoKHR## ByteArray##
 
 instance Eq VkAndroidSurfaceCreateInfoKHR where

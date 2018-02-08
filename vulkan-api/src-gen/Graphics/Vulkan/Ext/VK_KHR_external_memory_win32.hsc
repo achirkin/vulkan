@@ -56,6 +56,15 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkImportMemoryWin32HandleInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkExternalMemoryHandleTypeFlagBitsKHR handleType;
+--   >     HANDLE           handle;
+--   >     LPCWSTR          name;
+--   > } VkImportMemoryWin32HandleInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImportMemoryWin32HandleInfoKHR.html VkImportMemoryWin32HandleInfoKHR registry at www.khronos.org>
 data VkImportMemoryWin32HandleInfoKHR = VkImportMemoryWin32HandleInfoKHR## ByteArray##
 
 instance Eq VkImportMemoryWin32HandleInfoKHR where
@@ -263,6 +272,15 @@ instance Show VkImportMemoryWin32HandleInfoKHR where
                                     showString ", " .
                                       showString "vkName = " . showsPrec d (vkName x) . showChar '}'
 
+-- | > typedef struct VkExportMemoryWin32HandleInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     const SECURITY_ATTRIBUTES* pAttributes;
+--   >     DWORD                            dwAccess;
+--   >     LPCWSTR                          name;
+--   > } VkExportMemoryWin32HandleInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExportMemoryWin32HandleInfoKHR.html VkExportMemoryWin32HandleInfoKHR registry at www.khronos.org>
 data VkExportMemoryWin32HandleInfoKHR = VkExportMemoryWin32HandleInfoKHR## ByteArray##
 
 instance Eq VkExportMemoryWin32HandleInfoKHR where
@@ -470,6 +488,13 @@ instance Show VkExportMemoryWin32HandleInfoKHR where
                                     showString ", " .
                                       showString "vkName = " . showsPrec d (vkName x) . showChar '}'
 
+-- | > typedef struct VkMemoryWin32HandlePropertiesKHR {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     uint32_t                         memoryTypeBits;
+--   > } VkMemoryWin32HandlePropertiesKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryWin32HandlePropertiesKHR.html VkMemoryWin32HandlePropertiesKHR registry at www.khronos.org>
 data VkMemoryWin32HandlePropertiesKHR = VkMemoryWin32HandlePropertiesKHR## ByteArray##
 
 instance Eq VkMemoryWin32HandlePropertiesKHR where
@@ -630,6 +655,14 @@ instance Show VkMemoryWin32HandlePropertiesKHR where
                           showString "vkMemoryTypeBits = " .
                             showsPrec d (vkMemoryTypeBits x) . showChar '}'
 
+-- | > typedef struct VkMemoryGetWin32HandleInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkDeviceMemory                   memory;
+--   >     VkExternalMemoryHandleTypeFlagBitsKHR handleType;
+--   > } VkMemoryGetWin32HandleInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryGetWin32HandleInfoKHR.html VkMemoryGetWin32HandleInfoKHR registry at www.khronos.org>
 data VkMemoryGetWin32HandleInfoKHR = VkMemoryGetWin32HandleInfoKHR## ByteArray##
 
 instance Eq VkMemoryGetWin32HandleInfoKHR where

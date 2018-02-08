@@ -45,6 +45,13 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkDeviceQueueGlobalPriorityCreateInfoEXT {
+--   >     VkStructureType sType;
+--   >     const void*                    pNext;
+--   >     VkQueueGlobalPriorityEXT       globalPriority;
+--   > } VkDeviceQueueGlobalPriorityCreateInfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceQueueGlobalPriorityCreateInfoEXT.html VkDeviceQueueGlobalPriorityCreateInfoEXT registry at www.khronos.org>
 data VkDeviceQueueGlobalPriorityCreateInfoEXT = VkDeviceQueueGlobalPriorityCreateInfoEXT## ByteArray##
 
 instance Eq VkDeviceQueueGlobalPriorityCreateInfoEXT where

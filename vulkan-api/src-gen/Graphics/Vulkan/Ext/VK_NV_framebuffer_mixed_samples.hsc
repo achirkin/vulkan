@@ -45,6 +45,17 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkPipelineCoverageModulationStateCreateInfoNV {
+--   >     VkStructureType sType;
+--   >     const void*                                                                      pNext;
+--   >     VkPipelineCoverageModulationStateCreateFlagsNV                   flags;
+--   >     VkCoverageModulationModeNV                                                       coverageModulationMode;
+--   >     VkBool32                                                                         coverageModulationTableEnable;
+--   >     uint32_t                                                                         coverageModulationTableCount;
+--   >     const float* pCoverageModulationTable;
+--   > } VkPipelineCoverageModulationStateCreateInfoNV;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineCoverageModulationStateCreateInfoNV.html VkPipelineCoverageModulationStateCreateInfoNV registry at www.khronos.org>
 data VkPipelineCoverageModulationStateCreateInfoNV = VkPipelineCoverageModulationStateCreateInfoNV## ByteArray##
 
 instance Eq VkPipelineCoverageModulationStateCreateInfoNV where

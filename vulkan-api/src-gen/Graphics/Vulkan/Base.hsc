@@ -211,6 +211,12 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkOffset2D {
+--   >     int32_t        x;
+--   >     int32_t        y;
+--   > } VkOffset2D;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkOffset2D.html VkOffset2D registry at www.khronos.org>
 data VkOffset2D = VkOffset2D## ByteArray##
 
 instance Eq VkOffset2D where
@@ -329,6 +335,13 @@ instance Show VkOffset2D where
                   showString ", " .
                     showString "vkY = " . showsPrec d (vkY x) . showChar '}'
 
+-- | > typedef struct VkOffset3D {
+--   >     int32_t        x;
+--   >     int32_t        y;
+--   >     int32_t        z;
+--   > } VkOffset3D;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkOffset3D.html VkOffset3D registry at www.khronos.org>
 data VkOffset3D = VkOffset3D## ByteArray##
 
 instance Eq VkOffset3D where
@@ -467,6 +480,12 @@ instance Show VkOffset3D where
                         showString ", " .
                           showString "vkZ = " . showsPrec d (vkZ x) . showChar '}'
 
+-- | > typedef struct VkExtent2D {
+--   >     uint32_t        width;
+--   >     uint32_t        height;
+--   > } VkExtent2D;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExtent2D.html VkExtent2D registry at www.khronos.org>
 data VkExtent2D = VkExtent2D## ByteArray##
 
 instance Eq VkExtent2D where
@@ -589,6 +608,13 @@ instance Show VkExtent2D where
                   showString ", " .
                     showString "vkHeight = " . showsPrec d (vkHeight x) . showChar '}'
 
+-- | > typedef struct VkExtent3D {
+--   >     uint32_t        width;
+--   >     uint32_t        height;
+--   >     uint32_t        depth;
+--   > } VkExtent3D;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExtent3D.html VkExtent3D registry at www.khronos.org>
 data VkExtent3D = VkExtent3D## ByteArray##
 
 instance Eq VkExtent3D where
@@ -733,6 +759,16 @@ instance Show VkExtent3D where
                         showString ", " .
                           showString "vkDepth = " . showsPrec d (vkDepth x) . showChar '}'
 
+-- | > typedef struct VkViewport {
+--   >     float          x;
+--   >     float          y;
+--   >     float          width;
+--   >     float          height;
+--   >     float          minDepth;
+--   >     float          maxDepth;
+--   > } VkViewport;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkViewport.html VkViewport registry at www.khronos.org>
 data VkViewport = VkViewport## ByteArray##
 
 instance Eq VkViewport where
@@ -942,6 +978,12 @@ instance Show VkViewport where
                                             showString "vkMaxDepth = " .
                                               showsPrec d (vkMaxDepth x) . showChar '}'
 
+-- | > typedef struct VkRect2D {
+--   >     VkOffset2D     offset;
+--   >     VkExtent2D     extent;
+--   > } VkRect2D;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkRect2D.html VkRect2D registry at www.khronos.org>
 data VkRect2D = VkRect2D## ByteArray##
 
 instance Eq VkRect2D where
@@ -1064,6 +1106,13 @@ instance Show VkRect2D where
                   showString ", " .
                     showString "vkExtent = " . showsPrec d (vkExtent x) . showChar '}'
 
+-- | > typedef struct VkClearRect {
+--   >     VkRect2D       rect;
+--   >     uint32_t       baseArrayLayer;
+--   >     uint32_t       layerCount;
+--   > } VkClearRect;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkClearRect.html VkClearRect registry at www.khronos.org>
 data VkClearRect = VkClearRect## ByteArray##
 
 instance Eq VkClearRect where
@@ -1213,6 +1262,14 @@ instance Show VkClearRect where
                           showString "vkLayerCount = " .
                             showsPrec d (vkLayerCount x) . showChar '}'
 
+-- | > typedef struct VkComponentMapping {
+--   >     VkComponentSwizzle r;
+--   >     VkComponentSwizzle g;
+--   >     VkComponentSwizzle b;
+--   >     VkComponentSwizzle a;
+--   > } VkComponentMapping;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkComponentMapping.html VkComponentMapping registry at www.khronos.org>
 data VkComponentMapping = VkComponentMapping## ByteArray##
 
 instance Eq VkComponentMapping where
@@ -1382,6 +1439,19 @@ instance Show VkComponentMapping where
                               showString ", " .
                                 showString "vkA = " . showsPrec d (vkA x) . showChar '}'
 
+-- | > typedef struct VkPhysicalDeviceProperties {
+--   >     uint32_t       apiVersion;
+--   >     uint32_t       driverVersion;
+--   >     uint32_t       vendorID;
+--   >     uint32_t       deviceID;
+--   >     VkPhysicalDeviceType deviceType;
+--   >     char           deviceName[VK_MAX_PHYSICAL_DEVICE_NAME_SIZE];
+--   >     uint8_t        pipelineCacheUUID[VK_UUID_SIZE];
+--   >     VkPhysicalDeviceLimits limits;
+--   >     VkPhysicalDeviceSparseProperties sparseProperties;
+--   > } VkPhysicalDeviceProperties;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceProperties.html VkPhysicalDeviceProperties registry at www.khronos.org>
 data VkPhysicalDeviceProperties = VkPhysicalDeviceProperties## ByteArray##
 
 instance Eq VkPhysicalDeviceProperties where
@@ -1709,6 +1779,12 @@ instance Show VkPhysicalDeviceProperties where
                                                                       (vkSparseProperties x)
                                                                       . showChar '}'
 
+-- | > typedef struct VkExtensionProperties {
+--   >     char            extensionName[VK_MAX_EXTENSION_NAME_SIZE];
+--   >     uint32_t        specVersion;
+--   > } VkExtensionProperties;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExtensionProperties.html VkExtensionProperties registry at www.khronos.org>
 data VkExtensionProperties = VkExtensionProperties## ByteArray##
 
 instance Eq VkExtensionProperties where
@@ -1848,6 +1924,14 @@ instance Show VkExtensionProperties where
                       showString "vkSpecVersion = " .
                         showsPrec d (vkSpecVersion x) . showChar '}'
 
+-- | > typedef struct VkLayerProperties {
+--   >     char            layerName[VK_MAX_EXTENSION_NAME_SIZE];
+--   >     uint32_t        specVersion;
+--   >     uint32_t        implementationVersion;
+--   >     char            description[VK_MAX_DESCRIPTION_SIZE];
+--   > } VkLayerProperties;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkLayerProperties.html VkLayerProperties registry at www.khronos.org>
 data VkLayerProperties = VkLayerProperties## ByteArray##
 
 instance Eq VkLayerProperties where
@@ -2042,6 +2126,17 @@ instance Show VkLayerProperties where
                                       (map (vkDescriptionArray x) [1 .. VK_MAX_DESCRIPTION_SIZE])
                                       . showChar ']' . showChar '}'
 
+-- | > typedef struct VkApplicationInfo {
+--   >     VkStructureType sType;
+--   >     const void*     pNext;
+--   >     const char*     pApplicationName;
+--   >     uint32_t        applicationVersion;
+--   >     const char*     pEngineName;
+--   >     uint32_t        engineVersion;
+--   >     uint32_t        apiVersion;
+--   > } VkApplicationInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkApplicationInfo.html VkApplicationInfo registry at www.khronos.org>
 data VkApplicationInfo = VkApplicationInfo## ByteArray##
 
 instance Eq VkApplicationInfo where
@@ -2289,6 +2384,16 @@ instance Show VkApplicationInfo where
                                                   showString "vkApiVersion = " .
                                                     showsPrec d (vkApiVersion x) . showChar '}'
 
+-- | > typedef struct VkAllocationCallbacks {
+--   >     void*           pUserData;
+--   >     PFN_vkAllocationFunction   pfnAllocation;
+--   >     PFN_vkReallocationFunction pfnReallocation;
+--   >     PFN_vkFreeFunction    pfnFree;
+--   >     PFN_vkInternalAllocationNotification pfnInternalAllocation;
+--   >     PFN_vkInternalFreeNotification pfnInternalFree;
+--   > } VkAllocationCallbacks;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkAllocationCallbacks.html VkAllocationCallbacks registry at www.khronos.org>
 data VkAllocationCallbacks = VkAllocationCallbacks## ByteArray##
 
 instance Eq VkAllocationCallbacks where
@@ -2519,6 +2624,16 @@ instance Show VkAllocationCallbacks where
                                             showString "vkPfnInternalFree = " .
                                               showsPrec d (vkPfnInternalFree x) . showChar '}'
 
+-- | > typedef struct VkDeviceQueueCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*     pNext;
+--   >     VkDeviceQueueCreateFlags    flags;
+--   >     uint32_t        queueFamilyIndex;
+--   >     uint32_t        queueCount;
+--   >     const float*    pQueuePriorities;
+--   > } VkDeviceQueueCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceQueueCreateInfo.html VkDeviceQueueCreateInfo registry at www.khronos.org>
 data VkDeviceQueueCreateInfo = VkDeviceQueueCreateInfo## ByteArray##
 
 instance Eq VkDeviceQueueCreateInfo where
@@ -2749,6 +2864,20 @@ instance Show VkDeviceQueueCreateInfo where
                                             showString "vkPQueuePriorities = " .
                                               showsPrec d (vkPQueuePriorities x) . showChar '}'
 
+-- | > typedef struct VkDeviceCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*     pNext;
+--   >     VkDeviceCreateFlags    flags;
+--   >     uint32_t        queueCreateInfoCount;
+--   >     const VkDeviceQueueCreateInfo* pQueueCreateInfos;
+--   >     uint32_t               enabledLayerCount;
+--   >     const char* const*      ppEnabledLayerNames;
+--   >     uint32_t               enabledExtensionCount;
+--   >     const char* const*      ppEnabledExtensionNames;
+--   >     const VkPhysicalDeviceFeatures* pEnabledFeatures;
+--   > } VkDeviceCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceCreateInfo.html VkDeviceCreateInfo registry at www.khronos.org>
 data VkDeviceCreateInfo = VkDeviceCreateInfo## ByteArray##
 
 instance Eq VkDeviceCreateInfo where
@@ -3079,6 +3208,18 @@ instance Show VkDeviceCreateInfo where
                                                                         (vkPEnabledFeatures x)
                                                                         . showChar '}'
 
+-- | > typedef struct VkInstanceCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*     pNext;
+--   >     VkInstanceCreateFlags  flags;
+--   >     const VkApplicationInfo* pApplicationInfo;
+--   >     uint32_t               enabledLayerCount;
+--   >     const char* const*      ppEnabledLayerNames;
+--   >     uint32_t               enabledExtensionCount;
+--   >     const char* const*      ppEnabledExtensionNames;
+--   > } VkInstanceCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkInstanceCreateInfo.html VkInstanceCreateInfo registry at www.khronos.org>
 data VkInstanceCreateInfo = VkInstanceCreateInfo## ByteArray##
 
 instance Eq VkInstanceCreateInfo where
@@ -3353,6 +3494,14 @@ instance Show VkInstanceCreateInfo where
                                                           showsPrec d (vkPpEnabledExtensionNames x)
                                                             . showChar '}'
 
+-- | > typedef struct VkQueueFamilyProperties {
+--   >     VkQueueFlags           queueFlags;
+--   >     uint32_t               queueCount;
+--   >     uint32_t               timestampValidBits;
+--   >     VkExtent3D             minImageTransferGranularity;
+--   > } VkQueueFamilyProperties;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkQueueFamilyProperties.html VkQueueFamilyProperties registry at www.khronos.org>
 data VkQueueFamilyProperties = VkQueueFamilyProperties## ByteArray##
 
 instance Eq VkQueueFamilyProperties where
@@ -3534,6 +3683,14 @@ instance Show VkQueueFamilyProperties where
                                 showString "vkMinImageTransferGranularity = " .
                                   showsPrec d (vkMinImageTransferGranularity x) . showChar '}'
 
+-- | > typedef struct VkPhysicalDeviceMemoryProperties {
+--   >     uint32_t               memoryTypeCount;
+--   >     VkMemoryType           memoryTypes[VK_MAX_MEMORY_TYPES];
+--   >     uint32_t               memoryHeapCount;
+--   >     VkMemoryHeap           memoryHeaps[VK_MAX_MEMORY_HEAPS];
+--   > } VkPhysicalDeviceMemoryProperties;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceMemoryProperties.html VkPhysicalDeviceMemoryProperties registry at www.khronos.org>
 data VkPhysicalDeviceMemoryProperties = VkPhysicalDeviceMemoryProperties## ByteArray##
 
 instance Eq VkPhysicalDeviceMemoryProperties where
@@ -3736,6 +3893,14 @@ instance Show VkPhysicalDeviceMemoryProperties where
                                       (map (vkMemoryHeapsArray x) [1 .. VK_MAX_MEMORY_HEAPS])
                                       . showChar ']' . showChar '}'
 
+-- | > typedef struct VkMemoryAllocateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkDeviceSize           allocationSize;
+--   >     uint32_t               memoryTypeIndex;
+--   > } VkMemoryAllocateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryAllocateInfo.html VkMemoryAllocateInfo registry at www.khronos.org>
 data VkMemoryAllocateInfo = VkMemoryAllocateInfo## ByteArray##
 
 instance Eq VkMemoryAllocateInfo where
@@ -3912,6 +4077,13 @@ instance Show VkMemoryAllocateInfo where
                                 showString "vkMemoryTypeIndex = " .
                                   showsPrec d (vkMemoryTypeIndex x) . showChar '}'
 
+-- | > typedef struct VkMemoryRequirements {
+--   >     VkDeviceSize           size;
+--   >     VkDeviceSize           alignment;
+--   >     uint32_t               memoryTypeBits;
+--   > } VkMemoryRequirements;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryRequirements.html VkMemoryRequirements registry at www.khronos.org>
 data VkMemoryRequirements = VkMemoryRequirements## ByteArray##
 
 instance Eq VkMemoryRequirements where
@@ -4065,6 +4237,13 @@ instance Show VkMemoryRequirements where
                           showString "vkMemoryTypeBits = " .
                             showsPrec d (vkMemoryTypeBits x) . showChar '}'
 
+-- | > typedef struct VkSparseImageFormatProperties {
+--   >     VkImageAspectFlags     aspectMask;
+--   >     VkExtent3D             imageGranularity;
+--   >     VkSparseImageFormatFlags flags;
+--   > } VkSparseImageFormatProperties;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSparseImageFormatProperties.html VkSparseImageFormatProperties registry at www.khronos.org>
 data VkSparseImageFormatProperties = VkSparseImageFormatProperties## ByteArray##
 
 instance Eq VkSparseImageFormatProperties where
@@ -4224,6 +4403,15 @@ instance Show VkSparseImageFormatProperties where
                         showString ", " .
                           showString "vkFlags = " . showsPrec d (vkFlags x) . showChar '}'
 
+-- | > typedef struct VkSparseImageMemoryRequirements {
+--   >     VkSparseImageFormatProperties formatProperties;
+--   >     uint32_t               imageMipTailFirstLod;
+--   >     VkDeviceSize           imageMipTailSize;
+--   >     VkDeviceSize           imageMipTailOffset;
+--   >     VkDeviceSize           imageMipTailStride;
+--   > } VkSparseImageMemoryRequirements;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSparseImageMemoryRequirements.html VkSparseImageMemoryRequirements registry at www.khronos.org>
 data VkSparseImageMemoryRequirements = VkSparseImageMemoryRequirements## ByteArray##
 
 instance Eq VkSparseImageMemoryRequirements where
@@ -4435,6 +4623,12 @@ instance Show VkSparseImageMemoryRequirements where
                                       showString "vkImageMipTailStride = " .
                                         showsPrec d (vkImageMipTailStride x) . showChar '}'
 
+-- | > typedef struct VkMemoryType {
+--   >     VkMemoryPropertyFlags  propertyFlags;
+--   >     uint32_t               heapIndex;
+--   > } VkMemoryType;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryType.html VkMemoryType registry at www.khronos.org>
 data VkMemoryType = VkMemoryType## ByteArray##
 
 instance Eq VkMemoryType where
@@ -4562,6 +4756,12 @@ instance Show VkMemoryType where
                     showString "vkHeapIndex = " .
                       showsPrec d (vkHeapIndex x) . showChar '}'
 
+-- | > typedef struct VkMemoryHeap {
+--   >     VkDeviceSize           size;
+--   >     VkMemoryHeapFlags      flags;
+--   > } VkMemoryHeap;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryHeap.html VkMemoryHeap registry at www.khronos.org>
 data VkMemoryHeap = VkMemoryHeap## ByteArray##
 
 instance Eq VkMemoryHeap where
@@ -4686,6 +4886,15 @@ instance Show VkMemoryHeap where
                   showString ", " .
                     showString "vkFlags = " . showsPrec d (vkFlags x) . showChar '}'
 
+-- | > typedef struct VkMappedMemoryRange {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkDeviceMemory         memory;
+--   >     VkDeviceSize           offset;
+--   >     VkDeviceSize           size;
+--   > } VkMappedMemoryRange;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMappedMemoryRange.html VkMappedMemoryRange registry at www.khronos.org>
 data VkMappedMemoryRange = VkMappedMemoryRange## ByteArray##
 
 instance Eq VkMappedMemoryRange where
@@ -4882,6 +5091,13 @@ instance Show VkMappedMemoryRange where
                                     showString ", " .
                                       showString "vkSize = " . showsPrec d (vkSize x) . showChar '}'
 
+-- | > typedef struct VkFormatProperties {
+--   >     VkFormatFeatureFlags   linearTilingFeatures;
+--   >     VkFormatFeatureFlags   optimalTilingFeatures;
+--   >     VkFormatFeatureFlags   bufferFeatures;
+--   > } VkFormatProperties;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkFormatProperties.html VkFormatProperties registry at www.khronos.org>
 data VkFormatProperties = VkFormatProperties## ByteArray##
 
 instance Eq VkFormatProperties where
@@ -5039,6 +5255,15 @@ instance Show VkFormatProperties where
                           showString "vkBufferFeatures = " .
                             showsPrec d (vkBufferFeatures x) . showChar '}'
 
+-- | > typedef struct VkImageFormatProperties {
+--   >     VkExtent3D             maxExtent;
+--   >     uint32_t               maxMipLevels;
+--   >     uint32_t               maxArrayLayers;
+--   >     VkSampleCountFlags     sampleCounts;
+--   >     VkDeviceSize           maxResourceSize;
+--   > } VkImageFormatProperties;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageFormatProperties.html VkImageFormatProperties registry at www.khronos.org>
 data VkImageFormatProperties = VkImageFormatProperties## ByteArray##
 
 instance Eq VkImageFormatProperties where
@@ -5244,6 +5469,13 @@ instance Show VkImageFormatProperties where
                                       showString "vkMaxResourceSize = " .
                                         showsPrec d (vkMaxResourceSize x) . showChar '}'
 
+-- | > typedef struct VkDescriptorBufferInfo {
+--   >     VkBuffer               buffer;
+--   >     VkDeviceSize           offset;
+--   >     VkDeviceSize           range;
+--   > } VkDescriptorBufferInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDescriptorBufferInfo.html VkDescriptorBufferInfo registry at www.khronos.org>
 data VkDescriptorBufferInfo = VkDescriptorBufferInfo## ByteArray##
 
 instance Eq VkDescriptorBufferInfo where
@@ -5399,6 +5631,13 @@ instance Show VkDescriptorBufferInfo where
                         showString ", " .
                           showString "vkRange = " . showsPrec d (vkRange x) . showChar '}'
 
+-- | > typedef struct VkDescriptorImageInfo {
+--   >     VkSampler       sampler;
+--   >     VkImageView     imageView;
+--   >     VkImageLayout   imageLayout;
+--   > } VkDescriptorImageInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDescriptorImageInfo.html VkDescriptorImageInfo registry at www.khronos.org>
 data VkDescriptorImageInfo = VkDescriptorImageInfo## ByteArray##
 
 instance Eq VkDescriptorImageInfo where
@@ -5553,6 +5792,20 @@ instance Show VkDescriptorImageInfo where
                           showString "vkImageLayout = " .
                             showsPrec d (vkImageLayout x) . showChar '}'
 
+-- | > typedef struct VkWriteDescriptorSet {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkDescriptorSet        dstSet;
+--   >     uint32_t               dstBinding;
+--   >     uint32_t               dstArrayElement;
+--   >     uint32_t               descriptorCount;
+--   >     VkDescriptorType       descriptorType;
+--   >     const VkDescriptorImageInfo* pImageInfo;
+--   >     const VkDescriptorBufferInfo* pBufferInfo;
+--   >     const VkBufferView*    pTexelBufferView;
+--   > } VkWriteDescriptorSet;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkWriteDescriptorSet.html VkWriteDescriptorSet registry at www.khronos.org>
 data VkWriteDescriptorSet = VkWriteDescriptorSet## ByteArray##
 
 instance Eq VkWriteDescriptorSet where
@@ -5879,6 +6132,19 @@ instance Show VkWriteDescriptorSet where
                                                                         (vkPTexelBufferView x)
                                                                         . showChar '}'
 
+-- | > typedef struct VkCopyDescriptorSet {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkDescriptorSet        srcSet;
+--   >     uint32_t               srcBinding;
+--   >     uint32_t               srcArrayElement;
+--   >     VkDescriptorSet        dstSet;
+--   >     uint32_t               dstBinding;
+--   >     uint32_t               dstArrayElement;
+--   >     uint32_t               descriptorCount;
+--   > } VkCopyDescriptorSet;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkCopyDescriptorSet.html VkCopyDescriptorSet registry at www.khronos.org>
 data VkCopyDescriptorSet = VkCopyDescriptorSet## ByteArray##
 
 instance Eq VkCopyDescriptorSet where
@@ -6174,6 +6440,18 @@ instance Show VkCopyDescriptorSet where
                                                                 showsPrec d (vkDescriptorCount x) .
                                                                   showChar '}'
 
+-- | > typedef struct VkBufferCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkBufferCreateFlags    flags;
+--   >     VkDeviceSize           size;
+--   >     VkBufferUsageFlags     usage;
+--   >     VkSharingMode          sharingMode;
+--   >     uint32_t               queueFamilyIndexCount;
+--   >     const uint32_t*        pQueueFamilyIndices;
+--   > } VkBufferCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBufferCreateInfo.html VkBufferCreateInfo registry at www.khronos.org>
 data VkBufferCreateInfo = VkBufferCreateInfo## ByteArray##
 
 instance Eq VkBufferCreateInfo where
@@ -6444,6 +6722,17 @@ instance Show VkBufferCreateInfo where
                                                           showsPrec d (vkPQueueFamilyIndices x) .
                                                             showChar '}'
 
+-- | > typedef struct VkBufferViewCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkBufferViewCreateFlagsflags;
+--   >     VkBuffer               buffer;
+--   >     VkFormat               format;
+--   >     VkDeviceSize           offset;
+--   >     VkDeviceSize           range;
+--   > } VkBufferViewCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBufferViewCreateInfo.html VkBufferViewCreateInfo registry at www.khronos.org>
 data VkBufferViewCreateInfo = VkBufferViewCreateInfo## ByteArray##
 
 instance Eq VkBufferViewCreateInfo where
@@ -6696,6 +6985,13 @@ instance Show VkBufferViewCreateInfo where
                                                   showString "vkRange = " .
                                                     showsPrec d (vkRange x) . showChar '}'
 
+-- | > typedef struct VkImageSubresource {
+--   >     VkImageAspectFlags     aspectMask;
+--   >     uint32_t               mipLevel;
+--   >     uint32_t               arrayLayer;
+--   > } VkImageSubresource;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageSubresource.html VkImageSubresource registry at www.khronos.org>
 data VkImageSubresource = VkImageSubresource## ByteArray##
 
 instance Eq VkImageSubresource where
@@ -6849,6 +7145,14 @@ instance Show VkImageSubresource where
                           showString "vkArrayLayer = " .
                             showsPrec d (vkArrayLayer x) . showChar '}'
 
+-- | > typedef struct VkImageSubresourceLayers {
+--   >     VkImageAspectFlags     aspectMask;
+--   >     uint32_t               mipLevel;
+--   >     uint32_t               baseArrayLayer;
+--   >     uint32_t               layerCount;
+--   > } VkImageSubresourceLayers;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageSubresourceLayers.html VkImageSubresourceLayers registry at www.khronos.org>
 data VkImageSubresourceLayers = VkImageSubresourceLayers## ByteArray##
 
 instance Eq VkImageSubresourceLayers where
@@ -7030,6 +7334,15 @@ instance Show VkImageSubresourceLayers where
                                 showString "vkLayerCount = " .
                                   showsPrec d (vkLayerCount x) . showChar '}'
 
+-- | > typedef struct VkImageSubresourceRange {
+--   >     VkImageAspectFlags     aspectMask;
+--   >     uint32_t               baseMipLevel;
+--   >     uint32_t               levelCount;
+--   >     uint32_t               baseArrayLayer;
+--   >     uint32_t               layerCount;
+--   > } VkImageSubresourceRange;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageSubresourceRange.html VkImageSubresourceRange registry at www.khronos.org>
 data VkImageSubresourceRange = VkImageSubresourceRange## ByteArray##
 
 instance Eq VkImageSubresourceRange where
@@ -7234,6 +7547,25 @@ instance Show VkImageSubresourceRange where
                                       showString "vkLayerCount = " .
                                         showsPrec d (vkLayerCount x) . showChar '}'
 
+-- | > typedef struct VkImageCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkImageCreateFlags     flags;
+--   >     VkImageType            imageType;
+--   >     VkFormat               format;
+--   >     VkExtent3D             extent;
+--   >     uint32_t               mipLevels;
+--   >     uint32_t               arrayLayers;
+--   >     VkSampleCountFlagBits  samples;
+--   >     VkImageTiling          tiling;
+--   >     VkImageUsageFlags      usage;
+--   >     VkSharingMode          sharingMode;
+--   >     uint32_t               queueFamilyIndexCount;
+--   >     const uint32_t*        pQueueFamilyIndices;
+--   >     VkImageLayout          initialLayout;
+--   > } VkImageCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageCreateInfo.html VkImageCreateInfo registry at www.khronos.org>
 data VkImageCreateInfo = VkImageCreateInfo## ByteArray##
 
 instance Eq VkImageCreateInfo where
@@ -7695,6 +8027,15 @@ instance Show VkImageCreateInfo where
                                                                                                       showChar
                                                                                                         '}'
 
+-- | > typedef struct VkSubresourceLayout {
+--   >     VkDeviceSize           offset;
+--   >     VkDeviceSize           size;
+--   >     VkDeviceSize           rowPitch;
+--   >     VkDeviceSize           arrayPitch;
+--   >     VkDeviceSize           depthPitch;
+--   > } VkSubresourceLayout;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSubresourceLayout.html VkSubresourceLayout registry at www.khronos.org>
 data VkSubresourceLayout = VkSubresourceLayout## ByteArray##
 
 instance Eq VkSubresourceLayout where
@@ -7895,6 +8236,18 @@ instance Show VkSubresourceLayout where
                                       showString "vkDepthPitch = " .
                                         showsPrec d (vkDepthPitch x) . showChar '}'
 
+-- | > typedef struct VkImageViewCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkImageViewCreateFlags flags;
+--   >     VkImage                image;
+--   >     VkImageViewType        viewType;
+--   >     VkFormat               format;
+--   >     VkComponentMapping     components;
+--   >     VkImageSubresourceRange subresourceRange;
+--   > } VkImageViewCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageViewCreateInfo.html VkImageViewCreateInfo registry at www.khronos.org>
 data VkImageViewCreateInfo = VkImageViewCreateInfo## ByteArray##
 
 instance Eq VkImageViewCreateInfo where
@@ -8167,6 +8520,13 @@ instance Show VkImageViewCreateInfo where
                                                           showsPrec d (vkSubresourceRange x) .
                                                             showChar '}'
 
+-- | > typedef struct VkBufferCopy {
+--   >     VkDeviceSize           srcOffset;
+--   >     VkDeviceSize           dstOffset;
+--   >     VkDeviceSize           size;
+--   > } VkBufferCopy;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBufferCopy.html VkBufferCopy registry at www.khronos.org>
 data VkBufferCopy = VkBufferCopy## ByteArray##
 
 instance Eq VkBufferCopy where
@@ -8315,6 +8675,15 @@ instance Show VkBufferCopy where
                         showString ", " .
                           showString "vkSize = " . showsPrec d (vkSize x) . showChar '}'
 
+-- | > typedef struct VkSparseMemoryBind {
+--   >     VkDeviceSize           resourceOffset;
+--   >     VkDeviceSize           size;
+--   >     VkDeviceMemory         memory;
+--   >     VkDeviceSize           memoryOffset;
+--   >     VkSparseMemoryBindFlagsflags;
+--   > } VkSparseMemoryBind;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSparseMemoryBind.html VkSparseMemoryBind registry at www.khronos.org>
 data VkSparseMemoryBind = VkSparseMemoryBind## ByteArray##
 
 instance Eq VkSparseMemoryBind where
@@ -8514,6 +8883,16 @@ instance Show VkSparseMemoryBind where
                                       showString "vkFlags = " .
                                         showsPrec d (vkFlags x) . showChar '}'
 
+-- | > typedef struct VkSparseImageMemoryBind {
+--   >     VkImageSubresource     subresource;
+--   >     VkOffset3D             offset;
+--   >     VkExtent3D             extent;
+--   >     VkDeviceMemory         memory;
+--   >     VkDeviceSize           memoryOffset;
+--   >     VkSparseMemoryBindFlagsflags;
+--   > } VkSparseImageMemoryBind;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSparseImageMemoryBind.html VkSparseImageMemoryBind registry at www.khronos.org>
 data VkSparseImageMemoryBind = VkSparseImageMemoryBind## ByteArray##
 
 instance Eq VkSparseImageMemoryBind where
@@ -8743,6 +9122,13 @@ instance Show VkSparseImageMemoryBind where
                                             showString "vkFlags = " .
                                               showsPrec d (vkFlags x) . showChar '}'
 
+-- | > typedef struct VkSparseBufferMemoryBindInfo {
+--   >     VkBuffer buffer;
+--   >     uint32_t               bindCount;
+--   >     const VkSparseMemoryBind* pBinds;
+--   > } VkSparseBufferMemoryBindInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSparseBufferMemoryBindInfo.html VkSparseBufferMemoryBindInfo registry at www.khronos.org>
 data VkSparseBufferMemoryBindInfo = VkSparseBufferMemoryBindInfo## ByteArray##
 
 instance Eq VkSparseBufferMemoryBindInfo where
@@ -8900,6 +9286,13 @@ instance Show VkSparseBufferMemoryBindInfo where
                         showString ", " .
                           showString "vkPBinds = " . showsPrec d (vkPBinds x) . showChar '}'
 
+-- | > typedef struct VkSparseImageOpaqueMemoryBindInfo {
+--   >     VkImage image;
+--   >     uint32_t               bindCount;
+--   >     const VkSparseMemoryBind* pBinds;
+--   > } VkSparseImageOpaqueMemoryBindInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSparseImageOpaqueMemoryBindInfo.html VkSparseImageOpaqueMemoryBindInfo registry at www.khronos.org>
 data VkSparseImageOpaqueMemoryBindInfo = VkSparseImageOpaqueMemoryBindInfo## ByteArray##
 
 instance Eq VkSparseImageOpaqueMemoryBindInfo where
@@ -9060,6 +9453,13 @@ instance Show VkSparseImageOpaqueMemoryBindInfo where
                         showString ", " .
                           showString "vkPBinds = " . showsPrec d (vkPBinds x) . showChar '}'
 
+-- | > typedef struct VkSparseImageMemoryBindInfo {
+--   >     VkImage image;
+--   >     uint32_t               bindCount;
+--   >     const VkSparseImageMemoryBind* pBinds;
+--   > } VkSparseImageMemoryBindInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSparseImageMemoryBindInfo.html VkSparseImageMemoryBindInfo registry at www.khronos.org>
 data VkSparseImageMemoryBindInfo = VkSparseImageMemoryBindInfo## ByteArray##
 
 instance Eq VkSparseImageMemoryBindInfo where
@@ -9216,6 +9616,22 @@ instance Show VkSparseImageMemoryBindInfo where
                         showString ", " .
                           showString "vkPBinds = " . showsPrec d (vkPBinds x) . showChar '}'
 
+-- | > typedef struct VkBindSparseInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     uint32_t               waitSemaphoreCount;
+--   >     const VkSemaphore*     pWaitSemaphores;
+--   >     uint32_t               bufferBindCount;
+--   >     const VkSparseBufferMemoryBindInfo* pBufferBinds;
+--   >     uint32_t               imageOpaqueBindCount;
+--   >     const VkSparseImageOpaqueMemoryBindInfo* pImageOpaqueBinds;
+--   >     uint32_t               imageBindCount;
+--   >     const VkSparseImageMemoryBindInfo* pImageBinds;
+--   >     uint32_t               signalSemaphoreCount;
+--   >     const VkSemaphore*     pSignalSemaphores;
+--   > } VkBindSparseInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBindSparseInfo.html VkBindSparseInfo registry at www.khronos.org>
 data VkBindSparseInfo = VkBindSparseInfo## ByteArray##
 
 instance Eq VkBindSparseInfo where
@@ -9597,6 +10013,15 @@ instance Show VkBindSparseInfo where
                                                                                        x)
                                                                                     . showChar '}'
 
+-- | > typedef struct VkImageCopy {
+--   >     VkImageSubresourceLayers srcSubresource;
+--   >     VkOffset3D             srcOffset;
+--   >     VkImageSubresourceLayers dstSubresource;
+--   >     VkOffset3D             dstOffset;
+--   >     VkExtent3D             extent;
+--   > } VkImageCopy;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageCopy.html VkImageCopy registry at www.khronos.org>
 data VkImageCopy = VkImageCopy## ByteArray##
 
 instance Eq VkImageCopy where
@@ -9792,6 +10217,14 @@ instance Show VkImageCopy where
                                       showString "vkExtent = " .
                                         showsPrec d (vkExtent x) . showChar '}'
 
+-- | > typedef struct VkImageBlit {
+--   >     VkImageSubresourceLayers srcSubresource;
+--   >     VkOffset3D             srcOffsets[2];
+--   >     VkImageSubresourceLayers dstSubresource;
+--   >     VkOffset3D             dstOffsets[2];
+--   > } VkImageBlit;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageBlit.html VkImageBlit registry at www.khronos.org>
 data VkImageBlit = VkImageBlit## ByteArray##
 
 instance Eq VkImageBlit where
@@ -9979,6 +10412,16 @@ instance Show VkImageBlit where
                                     showsPrec d (map (vkDstOffsetsArray x) [1 .. 2]) .
                                       showChar ']' . showChar '}'
 
+-- | > typedef struct VkBufferImageCopy {
+--   >     VkDeviceSize           bufferOffset;
+--   >     uint32_t               bufferRowLength;
+--   >     uint32_t               bufferImageHeight;
+--   >     VkImageSubresourceLayers imageSubresource;
+--   >     VkOffset3D             imageOffset;
+--   >     VkExtent3D             imageExtent;
+--   > } VkBufferImageCopy;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBufferImageCopy.html VkBufferImageCopy registry at www.khronos.org>
 data VkBufferImageCopy = VkBufferImageCopy## ByteArray##
 
 instance Eq VkBufferImageCopy where
@@ -10205,6 +10648,15 @@ instance Show VkBufferImageCopy where
                                             showString "vkImageExtent = " .
                                               showsPrec d (vkImageExtent x) . showChar '}'
 
+-- | > typedef struct VkImageResolve {
+--   >     VkImageSubresourceLayers srcSubresource;
+--   >     VkOffset3D             srcOffset;
+--   >     VkImageSubresourceLayers dstSubresource;
+--   >     VkOffset3D             dstOffset;
+--   >     VkExtent3D             extent;
+--   > } VkImageResolve;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageResolve.html VkImageResolve registry at www.khronos.org>
 data VkImageResolve = VkImageResolve## ByteArray##
 
 instance Eq VkImageResolve where
@@ -10405,6 +10857,15 @@ instance Show VkImageResolve where
                                       showString "vkExtent = " .
                                         showsPrec d (vkExtent x) . showChar '}'
 
+-- | > typedef struct VkShaderModuleCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkShaderModuleCreateFlags flags;
+--   >     size_t                 codeSize;
+--   >     const uint32_t*            pCode;
+--   > } VkShaderModuleCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkShaderModuleCreateInfo.html VkShaderModuleCreateInfo registry at www.khronos.org>
 data VkShaderModuleCreateInfo = VkShaderModuleCreateInfo## ByteArray##
 
 instance Eq VkShaderModuleCreateInfo where
@@ -10611,6 +11072,15 @@ instance Show VkShaderModuleCreateInfo where
                                       showString "vkPCode = " .
                                         showsPrec d (vkPCode x) . showChar '}'
 
+-- | > typedef struct VkDescriptorSetLayoutBinding {
+--   >     uint32_t               binding;
+--   >     VkDescriptorType       descriptorType;
+--   >     uint32_t descriptorCount;
+--   >     VkShaderStageFlags     stageFlags;
+--   >     const VkSampler*       pImmutableSamplers;
+--   > } VkDescriptorSetLayoutBinding;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDescriptorSetLayoutBinding.html VkDescriptorSetLayoutBinding registry at www.khronos.org>
 data VkDescriptorSetLayoutBinding = VkDescriptorSetLayoutBinding## ByteArray##
 
 instance Eq VkDescriptorSetLayoutBinding where
@@ -10819,6 +11289,15 @@ instance Show VkDescriptorSetLayoutBinding where
                                       showString "vkPImmutableSamplers = " .
                                         showsPrec d (vkPImmutableSamplers x) . showChar '}'
 
+-- | > typedef struct VkDescriptorSetLayoutCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkDescriptorSetLayoutCreateFlags    flags;
+--   >     uint32_t               bindingCount;
+--   >     const VkDescriptorSetLayoutBinding* pBindings;
+--   > } VkDescriptorSetLayoutCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDescriptorSetLayoutCreateInfo.html VkDescriptorSetLayoutCreateInfo registry at www.khronos.org>
 data VkDescriptorSetLayoutCreateInfo = VkDescriptorSetLayoutCreateInfo## ByteArray##
 
 instance Eq VkDescriptorSetLayoutCreateInfo where
@@ -11027,6 +11506,12 @@ instance Show VkDescriptorSetLayoutCreateInfo where
                                       showString "vkPBindings = " .
                                         showsPrec d (vkPBindings x) . showChar '}'
 
+-- | > typedef struct VkDescriptorPoolSize {
+--   >     VkDescriptorType       type;
+--   >     uint32_t               descriptorCount;
+--   > } VkDescriptorPoolSize;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDescriptorPoolSize.html VkDescriptorPoolSize registry at www.khronos.org>
 data VkDescriptorPoolSize = VkDescriptorPoolSize## ByteArray##
 
 instance Eq VkDescriptorPoolSize where
@@ -11156,6 +11641,16 @@ instance Show VkDescriptorPoolSize where
                     showString "vkDescriptorCount = " .
                       showsPrec d (vkDescriptorCount x) . showChar '}'
 
+-- | > typedef struct VkDescriptorPoolCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkDescriptorPoolCreateFlags  flags;
+--   >     uint32_t               maxSets;
+--   >     uint32_t               poolSizeCount;
+--   >     const VkDescriptorPoolSize* pPoolSizes;
+--   > } VkDescriptorPoolCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDescriptorPoolCreateInfo.html VkDescriptorPoolCreateInfo registry at www.khronos.org>
 data VkDescriptorPoolCreateInfo = VkDescriptorPoolCreateInfo## ByteArray##
 
 instance Eq VkDescriptorPoolCreateInfo where
@@ -11386,6 +11881,15 @@ instance Show VkDescriptorPoolCreateInfo where
                                             showString "vkPPoolSizes = " .
                                               showsPrec d (vkPPoolSizes x) . showChar '}'
 
+-- | > typedef struct VkDescriptorSetAllocateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkDescriptorPool       descriptorPool;
+--   >     uint32_t               descriptorSetCount;
+--   >     const VkDescriptorSetLayout* pSetLayouts;
+--   > } VkDescriptorSetAllocateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDescriptorSetAllocateInfo.html VkDescriptorSetAllocateInfo registry at www.khronos.org>
 data VkDescriptorSetAllocateInfo = VkDescriptorSetAllocateInfo## ByteArray##
 
 instance Eq VkDescriptorSetAllocateInfo where
@@ -11592,6 +12096,13 @@ instance Show VkDescriptorSetAllocateInfo where
                                       showString "vkPSetLayouts = " .
                                         showsPrec d (vkPSetLayouts x) . showChar '}'
 
+-- | > typedef struct VkSpecializationMapEntry {
+--   >     uint32_t               constantID;
+--   >     uint32_t               offset;
+--   >     size_t                 size;
+--   > } VkSpecializationMapEntry;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSpecializationMapEntry.html VkSpecializationMapEntry registry at www.khronos.org>
 data VkSpecializationMapEntry = VkSpecializationMapEntry## ByteArray##
 
 instance Eq VkSpecializationMapEntry where
@@ -11748,6 +12259,14 @@ instance Show VkSpecializationMapEntry where
                         showString ", " .
                           showString "vkSize = " . showsPrec d (vkSize x) . showChar '}'
 
+-- | > typedef struct VkSpecializationInfo {
+--   >     uint32_t               mapEntryCount;
+--   >     const VkSpecializationMapEntry* pMapEntries;
+--   >     size_t                 dataSize;
+--   >     const void*            pData;
+--   > } VkSpecializationInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSpecializationInfo.html VkSpecializationInfo registry at www.khronos.org>
 data VkSpecializationInfo = VkSpecializationInfo## ByteArray##
 
 instance Eq VkSpecializationInfo where
@@ -11926,6 +12445,17 @@ instance Show VkSpecializationInfo where
                               showString ", " .
                                 showString "vkPData = " . showsPrec d (vkPData x) . showChar '}'
 
+-- | > typedef struct VkPipelineShaderStageCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkPipelineShaderStageCreateFlags    flags;
+--   >     VkShaderStageFlagBits  stage;
+--   >     VkShaderModule         module;
+--   >     const char*            pName;
+--   >     const VkSpecializationInfo* pSpecializationInfo;
+--   > } VkPipelineShaderStageCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineShaderStageCreateInfo.html VkPipelineShaderStageCreateInfo registry at www.khronos.org>
 data VkPipelineShaderStageCreateInfo = VkPipelineShaderStageCreateInfo## ByteArray##
 
 instance Eq VkPipelineShaderStageCreateInfo where
@@ -12184,6 +12714,17 @@ instance Show VkPipelineShaderStageCreateInfo where
                                                     showsPrec d (vkPSpecializationInfo x) .
                                                       showChar '}'
 
+-- | > typedef struct VkComputePipelineCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkPipelineCreateFlags  flags;
+--   >     VkPipelineShaderStageCreateInfo stage;
+--   >     VkPipelineLayout       layout;
+--   >     VkPipeline      basePipelineHandle;
+--   >     int32_t                basePipelineIndex;
+--   > } VkComputePipelineCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkComputePipelineCreateInfo.html VkComputePipelineCreateInfo registry at www.khronos.org>
 data VkComputePipelineCreateInfo = VkComputePipelineCreateInfo## ByteArray##
 
 instance Eq VkComputePipelineCreateInfo where
@@ -12440,6 +12981,13 @@ instance Show VkComputePipelineCreateInfo where
                                                     showsPrec d (vkBasePipelineIndex x) .
                                                       showChar '}'
 
+-- | > typedef struct VkVertexInputBindingDescription {
+--   >     uint32_t               binding;
+--   >     uint32_t               stride;
+--   >     VkVertexInputRate      inputRate;
+--   > } VkVertexInputBindingDescription;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkVertexInputBindingDescription.html VkVertexInputBindingDescription registry at www.khronos.org>
 data VkVertexInputBindingDescription = VkVertexInputBindingDescription## ByteArray##
 
 instance Eq VkVertexInputBindingDescription where
@@ -12599,6 +13147,14 @@ instance Show VkVertexInputBindingDescription where
                           showString "vkInputRate = " .
                             showsPrec d (vkInputRate x) . showChar '}'
 
+-- | > typedef struct VkVertexInputAttributeDescription {
+--   >     uint32_t               location;
+--   >     uint32_t               binding;
+--   >     VkFormat               format;
+--   >     uint32_t               offset;
+--   > } VkVertexInputAttributeDescription;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkVertexInputAttributeDescription.html VkVertexInputAttributeDescription registry at www.khronos.org>
 data VkVertexInputAttributeDescription = VkVertexInputAttributeDescription## ByteArray##
 
 instance Eq VkVertexInputAttributeDescription where
@@ -12782,6 +13338,17 @@ instance Show VkVertexInputAttributeDescription where
                               showString ", " .
                                 showString "vkOffset = " . showsPrec d (vkOffset x) . showChar '}'
 
+-- | > typedef struct VkPipelineVertexInputStateCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkPipelineVertexInputStateCreateFlags    flags;
+--   >     uint32_t               vertexBindingDescriptionCount;
+--   >     const VkVertexInputBindingDescription* pVertexBindingDescriptions;
+--   >     uint32_t               vertexAttributeDescriptionCount;
+--   >     const VkVertexInputAttributeDescription* pVertexAttributeDescriptions;
+--   > } VkPipelineVertexInputStateCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineVertexInputStateCreateInfo.html VkPipelineVertexInputStateCreateInfo registry at www.khronos.org>
 data VkPipelineVertexInputStateCreateInfo = VkPipelineVertexInputStateCreateInfo## ByteArray##
 
 instance Eq VkPipelineVertexInputStateCreateInfo where
@@ -13064,6 +13631,15 @@ instance Show VkPipelineVertexInputStateCreateInfo where
                                                     showsPrec d (vkPVertexAttributeDescriptions x) .
                                                       showChar '}'
 
+-- | > typedef struct VkPipelineInputAssemblyStateCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkPipelineInputAssemblyStateCreateFlags    flags;
+--   >     VkPrimitiveTopology    topology;
+--   >     VkBool32               primitiveRestartEnable;
+--   > } VkPipelineInputAssemblyStateCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineInputAssemblyStateCreateInfo.html VkPipelineInputAssemblyStateCreateInfo registry at www.khronos.org>
 data VkPipelineInputAssemblyStateCreateInfo = VkPipelineInputAssemblyStateCreateInfo## ByteArray##
 
 instance Eq VkPipelineInputAssemblyStateCreateInfo where
@@ -13286,6 +13862,14 @@ instance Show VkPipelineInputAssemblyStateCreateInfo where
                                       showString "vkPrimitiveRestartEnable = " .
                                         showsPrec d (vkPrimitiveRestartEnable x) . showChar '}'
 
+-- | > typedef struct VkPipelineTessellationStateCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkPipelineTessellationStateCreateFlags    flags;
+--   >     uint32_t               patchControlPoints;
+--   > } VkPipelineTessellationStateCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineTessellationStateCreateInfo.html VkPipelineTessellationStateCreateInfo registry at www.khronos.org>
 data VkPipelineTessellationStateCreateInfo = VkPipelineTessellationStateCreateInfo## ByteArray##
 
 instance Eq VkPipelineTessellationStateCreateInfo where
@@ -13482,6 +14066,17 @@ instance Show VkPipelineTessellationStateCreateInfo where
                                 showString "vkPatchControlPoints = " .
                                   showsPrec d (vkPatchControlPoints x) . showChar '}'
 
+-- | > typedef struct VkPipelineViewportStateCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkPipelineViewportStateCreateFlags    flags;
+--   >     uint32_t               viewportCount;
+--   >     const VkViewport*      pViewports;
+--   >     uint32_t               scissorCount;
+--   >     const VkRect2D*        pScissors;
+--   > } VkPipelineViewportStateCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineViewportStateCreateInfo.html VkPipelineViewportStateCreateInfo registry at www.khronos.org>
 data VkPipelineViewportStateCreateInfo = VkPipelineViewportStateCreateInfo## ByteArray##
 
 instance Eq VkPipelineViewportStateCreateInfo where
@@ -13743,6 +14338,23 @@ instance Show VkPipelineViewportStateCreateInfo where
                                                   showString "vkPScissors = " .
                                                     showsPrec d (vkPScissors x) . showChar '}'
 
+-- | > typedef struct VkPipelineRasterizationStateCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void* pNext;
+--   >     VkPipelineRasterizationStateCreateFlags    flags;
+--   >     VkBool32               depthClampEnable;
+--   >     VkBool32               rasterizerDiscardEnable;
+--   >     VkPolygonMode          polygonMode;
+--   >     VkCullModeFlags        cullMode;
+--   >     VkFrontFace            frontFace;
+--   >     VkBool32               depthBiasEnable;
+--   >     float                  depthBiasConstantFactor;
+--   >     float                  depthBiasClamp;
+--   >     float                  depthBiasSlopeFactor;
+--   >     float                  lineWidth;
+--   > } VkPipelineRasterizationStateCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineRasterizationStateCreateInfo.html VkPipelineRasterizationStateCreateInfo registry at www.khronos.org>
 data VkPipelineRasterizationStateCreateInfo = VkPipelineRasterizationStateCreateInfo## ByteArray##
 
 instance Eq VkPipelineRasterizationStateCreateInfo where
@@ -14191,6 +14803,19 @@ instance Show VkPipelineRasterizationStateCreateInfo where
                                                                                           showChar
                                                                                             '}'
 
+-- | > typedef struct VkPipelineMultisampleStateCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkPipelineMultisampleStateCreateFlags    flags;
+--   >     VkSampleCountFlagBits  rasterizationSamples;
+--   >     VkBool32               sampleShadingEnable;
+--   >     float                  minSampleShading;
+--   >     const VkSampleMask*    pSampleMask;
+--   >     VkBool32               alphaToCoverageEnable;
+--   >     VkBool32               alphaToOneEnable;
+--   > } VkPipelineMultisampleStateCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineMultisampleStateCreateInfo.html VkPipelineMultisampleStateCreateInfo registry at www.khronos.org>
 data VkPipelineMultisampleStateCreateInfo = VkPipelineMultisampleStateCreateInfo## ByteArray##
 
 instance Eq VkPipelineMultisampleStateCreateInfo where
@@ -14516,6 +15141,18 @@ instance Show VkPipelineMultisampleStateCreateInfo where
                                                                 showsPrec d (vkAlphaToOneEnable x) .
                                                                   showChar '}'
 
+-- | > typedef struct VkPipelineColorBlendAttachmentState {
+--   >     VkBool32               blendEnable;
+--   >     VkBlendFactor          srcColorBlendFactor;
+--   >     VkBlendFactor          dstColorBlendFactor;
+--   >     VkBlendOp              colorBlendOp;
+--   >     VkBlendFactor          srcAlphaBlendFactor;
+--   >     VkBlendFactor          dstAlphaBlendFactor;
+--   >     VkBlendOp              alphaBlendOp;
+--   >     VkColorComponentFlags  colorWriteMask;
+--   > } VkPipelineColorBlendAttachmentState;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineColorBlendAttachmentState.html VkPipelineColorBlendAttachmentState registry at www.khronos.org>
 data VkPipelineColorBlendAttachmentState = VkPipelineColorBlendAttachmentState## ByteArray##
 
 instance Eq VkPipelineColorBlendAttachmentState where
@@ -14810,6 +15447,18 @@ instance Show VkPipelineColorBlendAttachmentState where
                                                           showsPrec d (vkColorWriteMask x) .
                                                             showChar '}'
 
+-- | > typedef struct VkPipelineColorBlendStateCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkPipelineColorBlendStateCreateFlags    flags;
+--   >     VkBool32               logicOpEnable;
+--   >     VkLogicOp              logicOp;
+--   >     uint32_t               attachmentCount;
+--   >     const VkPipelineColorBlendAttachmentState* pAttachments;
+--   >     float                  blendConstants[4];
+--   > } VkPipelineColorBlendStateCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineColorBlendStateCreateInfo.html VkPipelineColorBlendStateCreateInfo registry at www.khronos.org>
 data VkPipelineColorBlendStateCreateInfo = VkPipelineColorBlendStateCreateInfo## ByteArray##
 
 instance Eq VkPipelineColorBlendStateCreateInfo where
@@ -15109,6 +15758,15 @@ instance Show VkPipelineColorBlendStateCreateInfo where
                                                             (map (vkBlendConstantsArray x) [1 .. 4])
                                                             . showChar ']' . showChar '}'
 
+-- | > typedef struct VkPipelineDynamicStateCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkPipelineDynamicStateCreateFlags    flags;
+--   >     uint32_t               dynamicStateCount;
+--   >     const VkDynamicState*  pDynamicStates;
+--   > } VkPipelineDynamicStateCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineDynamicStateCreateInfo.html VkPipelineDynamicStateCreateInfo registry at www.khronos.org>
 data VkPipelineDynamicStateCreateInfo = VkPipelineDynamicStateCreateInfo## ByteArray##
 
 instance Eq VkPipelineDynamicStateCreateInfo where
@@ -15319,6 +15977,17 @@ instance Show VkPipelineDynamicStateCreateInfo where
                                       showString "vkPDynamicStates = " .
                                         showsPrec d (vkPDynamicStates x) . showChar '}'
 
+-- | > typedef struct VkStencilOpState {
+--   >     VkStencilOp            failOp;
+--   >     VkStencilOp            passOp;
+--   >     VkStencilOp            depthFailOp;
+--   >     VkCompareOp            compareOp;
+--   >     uint32_t               compareMask;
+--   >     uint32_t               writeMask;
+--   >     uint32_t               reference;
+--   > } VkStencilOpState;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkStencilOpState.html VkStencilOpState registry at www.khronos.org>
 data VkStencilOpState = VkStencilOpState## ByteArray##
 
 instance Eq VkStencilOpState where
@@ -15563,6 +16232,22 @@ instance Show VkStencilOpState where
                                                   showString "vkReference = " .
                                                     showsPrec d (vkReference x) . showChar '}'
 
+-- | > typedef struct VkPipelineDepthStencilStateCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkPipelineDepthStencilStateCreateFlags    flags;
+--   >     VkBool32               depthTestEnable;
+--   >     VkBool32               depthWriteEnable;
+--   >     VkCompareOp            depthCompareOp;
+--   >     VkBool32               depthBoundsTestEnable;
+--   >     VkBool32               stencilTestEnable;
+--   >     VkStencilOpState       front;
+--   >     VkStencilOpState       back;
+--   >     float                  minDepthBounds;
+--   >     float                  maxDepthBounds;
+--   > } VkPipelineDepthStencilStateCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineDepthStencilStateCreateInfo.html VkPipelineDepthStencilStateCreateInfo registry at www.khronos.org>
 data VkPipelineDepthStencilStateCreateInfo = VkPipelineDepthStencilStateCreateInfo## ByteArray##
 
 instance Eq VkPipelineDepthStencilStateCreateInfo where
@@ -15969,6 +16654,29 @@ instance Show VkPipelineDepthStencilStateCreateInfo where
                                                                                        x)
                                                                                     . showChar '}'
 
+-- | > typedef struct VkGraphicsPipelineCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkPipelineCreateFlags  flags;
+--   >     uint32_t               stageCount;
+--   >     const VkPipelineShaderStageCreateInfo* pStages;
+--   >     const VkPipelineVertexInputStateCreateInfo* pVertexInputState;
+--   >     const VkPipelineInputAssemblyStateCreateInfo* pInputAssemblyState;
+--   >     const VkPipelineTessellationStateCreateInfo* pTessellationState;
+--   >     const VkPipelineViewportStateCreateInfo* pViewportState;
+--   >     const VkPipelineRasterizationStateCreateInfo* pRasterizationState;
+--   >     const VkPipelineMultisampleStateCreateInfo* pMultisampleState;
+--   >     const VkPipelineDepthStencilStateCreateInfo* pDepthStencilState;
+--   >     const VkPipelineColorBlendStateCreateInfo* pColorBlendState;
+--   >     const VkPipelineDynamicStateCreateInfo* pDynamicState;
+--   >     VkPipelineLayout       layout;
+--   >     VkRenderPass           renderPass;
+--   >     uint32_t               subpass;
+--   >     VkPipeline      basePipelineHandle;
+--   >     int32_t                basePipelineIndex;
+--   > } VkGraphicsPipelineCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkGraphicsPipelineCreateInfo.html VkGraphicsPipelineCreateInfo registry at www.khronos.org>
 data VkGraphicsPipelineCreateInfo = VkGraphicsPipelineCreateInfo## ByteArray##
 
 instance Eq VkGraphicsPipelineCreateInfo where
@@ -16592,6 +17300,15 @@ instance Show VkGraphicsPipelineCreateInfo where
                                                                                                                               showChar
                                                                                                                                 '}'
 
+-- | > typedef struct VkPipelineCacheCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkPipelineCacheCreateFlags    flags;
+--   >     size_t                 initialDataSize;
+--   >     const void*            pInitialData;
+--   > } VkPipelineCacheCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineCacheCreateInfo.html VkPipelineCacheCreateInfo registry at www.khronos.org>
 data VkPipelineCacheCreateInfo = VkPipelineCacheCreateInfo## ByteArray##
 
 instance Eq VkPipelineCacheCreateInfo where
@@ -16798,6 +17515,13 @@ instance Show VkPipelineCacheCreateInfo where
                                       showString "vkPInitialData = " .
                                         showsPrec d (vkPInitialData x) . showChar '}'
 
+-- | > typedef struct VkPushConstantRange {
+--   >     VkShaderStageFlags     stageFlags;
+--   >     uint32_t               offset;
+--   >     uint32_t               size;
+--   > } VkPushConstantRange;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPushConstantRange.html VkPushConstantRange registry at www.khronos.org>
 data VkPushConstantRange = VkPushConstantRange## ByteArray##
 
 instance Eq VkPushConstantRange where
@@ -16949,6 +17673,17 @@ instance Show VkPushConstantRange where
                         showString ", " .
                           showString "vkSize = " . showsPrec d (vkSize x) . showChar '}'
 
+-- | > typedef struct VkPipelineLayoutCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkPipelineLayoutCreateFlags    flags;
+--   >     uint32_t               setLayoutCount;
+--   >     const VkDescriptorSetLayout* pSetLayouts;
+--   >     uint32_t               pushConstantRangeCount;
+--   >     const VkPushConstantRange* pPushConstantRanges;
+--   > } VkPipelineLayoutCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineLayoutCreateInfo.html VkPipelineLayoutCreateInfo registry at www.khronos.org>
 data VkPipelineLayoutCreateInfo = VkPipelineLayoutCreateInfo## ByteArray##
 
 instance Eq VkPipelineLayoutCreateInfo where
@@ -17206,6 +17941,28 @@ instance Show VkPipelineLayoutCreateInfo where
                                                     showsPrec d (vkPPushConstantRanges x) .
                                                       showChar '}'
 
+-- | > typedef struct VkSamplerCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkSamplerCreateFlags   flags;
+--   >     VkFilter               magFilter;
+--   >     VkFilter               minFilter;
+--   >     VkSamplerMipmapMode    mipmapMode;
+--   >     VkSamplerAddressMode   addressModeU;
+--   >     VkSamplerAddressMode   addressModeV;
+--   >     VkSamplerAddressMode   addressModeW;
+--   >     float                  mipLodBias;
+--   >     VkBool32               anisotropyEnable;
+--   >     float                  maxAnisotropy;
+--   >     VkBool32               compareEnable;
+--   >     VkCompareOp            compareOp;
+--   >     float                  minLod;
+--   >     float                  maxLod;
+--   >     VkBorderColor          borderColor;
+--   >     VkBool32               unnormalizedCoordinates;
+--   > } VkSamplerCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSamplerCreateInfo.html VkSamplerCreateInfo registry at www.khronos.org>
 data VkSamplerCreateInfo = VkSamplerCreateInfo## ByteArray##
 
 instance Eq VkSamplerCreateInfo where
@@ -17774,6 +18531,14 @@ instance Show VkSamplerCreateInfo where
                                                                                                                         showChar
                                                                                                                           '}'
 
+-- | > typedef struct VkCommandPoolCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkCommandPoolCreateFlags   flags;
+--   >     uint32_t               queueFamilyIndex;
+--   > } VkCommandPoolCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkCommandPoolCreateInfo.html VkCommandPoolCreateInfo registry at www.khronos.org>
 data VkCommandPoolCreateInfo = VkCommandPoolCreateInfo## ByteArray##
 
 instance Eq VkCommandPoolCreateInfo where
@@ -17955,6 +18720,15 @@ instance Show VkCommandPoolCreateInfo where
                                 showString "vkQueueFamilyIndex = " .
                                   showsPrec d (vkQueueFamilyIndex x) . showChar '}'
 
+-- | > typedef struct VkCommandBufferAllocateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkCommandPool          commandPool;
+--   >     VkCommandBufferLevel   level;
+--   >     uint32_t               commandBufferCount;
+--   > } VkCommandBufferAllocateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkCommandBufferAllocateInfo.html VkCommandBufferAllocateInfo registry at www.khronos.org>
 data VkCommandBufferAllocateInfo = VkCommandBufferAllocateInfo## ByteArray##
 
 instance Eq VkCommandBufferAllocateInfo where
@@ -18160,6 +18934,18 @@ instance Show VkCommandBufferAllocateInfo where
                                       showString "vkCommandBufferCount = " .
                                         showsPrec d (vkCommandBufferCount x) . showChar '}'
 
+-- | > typedef struct VkCommandBufferInheritanceInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkRenderPass    renderPass;
+--   >     uint32_t               subpass;
+--   >     VkFramebuffer   framebuffer;
+--   >     VkBool32               occlusionQueryEnable;
+--   >     VkQueryControlFlags    queryFlags;
+--   >     VkQueryPipelineStatisticFlags pipelineStatistics;
+--   > } VkCommandBufferInheritanceInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkCommandBufferInheritanceInfo.html VkCommandBufferInheritanceInfo registry at www.khronos.org>
 data VkCommandBufferInheritanceInfo = VkCommandBufferInheritanceInfo## ByteArray##
 
 instance Eq VkCommandBufferInheritanceInfo where
@@ -18443,6 +19229,14 @@ instance Show VkCommandBufferInheritanceInfo where
                                                           showsPrec d (vkPipelineStatistics x) .
                                                             showChar '}'
 
+-- | > typedef struct VkCommandBufferBeginInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkCommandBufferUsageFlags  flags;
+--   >     const VkCommandBufferInheritanceInfo*       pInheritanceInfo;
+--   > } VkCommandBufferBeginInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkCommandBufferBeginInfo.html VkCommandBufferBeginInfo registry at www.khronos.org>
 data VkCommandBufferBeginInfo = VkCommandBufferBeginInfo## ByteArray##
 
 instance Eq VkCommandBufferBeginInfo where
@@ -18625,6 +19419,17 @@ instance Show VkCommandBufferBeginInfo where
                                 showString "vkPInheritanceInfo = " .
                                   showsPrec d (vkPInheritanceInfo x) . showChar '}'
 
+-- | > typedef struct VkRenderPassBeginInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkRenderPass           renderPass;
+--   >     VkFramebuffer          framebuffer;
+--   >     VkRect2D               renderArea;
+--   >     uint32_t               clearValueCount;
+--   >     const VkClearValue*    pClearValues;
+--   > } VkRenderPassBeginInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkRenderPassBeginInfo.html VkRenderPassBeginInfo registry at www.khronos.org>
 data VkRenderPassBeginInfo = VkRenderPassBeginInfo## ByteArray##
 
 instance Eq VkRenderPassBeginInfo where
@@ -18875,6 +19680,13 @@ instance Show VkRenderPassBeginInfo where
 
 -- | // Union allowing specification of floating point, integer, or unsigned integer color data. Actual value selected is based on image/attachment being cleared.
 --
+--   > typedef union VkClearColorValue {
+--   >     float                  float32[4];
+--   >     int32_t                int32[4];
+--   >     uint32_t               uint32[4];
+--   > } VkClearColorValue;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkClearColorValue.html VkClearColorValue registry at www.khronos.org>
 data VkClearColorValue = VkClearColorValue## ByteArray##
 
 instance Eq VkClearColorValue where
@@ -19050,6 +19862,12 @@ instance Show VkClearColorValue where
                                 showsPrec d (map (vkUint32Array x) [1 .. 4]) .
                                   showChar ']' . showChar '}'
 
+-- | > typedef struct VkClearDepthStencilValue {
+--   >     float                  depth;
+--   >     uint32_t               stencil;
+--   > } VkClearDepthStencilValue;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkClearDepthStencilValue.html VkClearDepthStencilValue registry at www.khronos.org>
 data VkClearDepthStencilValue = VkClearDepthStencilValue## ByteArray##
 
 instance Eq VkClearDepthStencilValue where
@@ -19185,6 +20003,12 @@ instance Show VkClearDepthStencilValue where
 
 -- | // Union allowing specification of color or depth and stencil values. Actual value selected is based on attachment being cleared.
 --
+--   > typedef union VkClearValue {
+--   >     VkClearColorValue      color;
+--   >     VkClearDepthStencilValue depthStencil;
+--   > } VkClearValue;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkClearValue.html VkClearValue registry at www.khronos.org>
 data VkClearValue = VkClearValue## ByteArray##
 
 instance Eq VkClearValue where
@@ -19311,6 +20135,13 @@ instance Show VkClearValue where
                     showString "vkDepthStencil = " .
                       showsPrec d (vkDepthStencil x) . showChar '}'
 
+-- | > typedef struct VkClearAttachment {
+--   >     VkImageAspectFlags     aspectMask;
+--   >     uint32_t               colorAttachment;
+--   >     VkClearValue           clearValue;
+--   > } VkClearAttachment;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkClearAttachment.html VkClearAttachment registry at www.khronos.org>
 data VkClearAttachment = VkClearAttachment## ByteArray##
 
 instance Eq VkClearAttachment where
@@ -19464,6 +20295,19 @@ instance Show VkClearAttachment where
                           showString "vkClearValue = " .
                             showsPrec d (vkClearValue x) . showChar '}'
 
+-- | > typedef struct VkAttachmentDescription {
+--   >     VkAttachmentDescriptionFlags flags;
+--   >     VkFormat               format;
+--   >     VkSampleCountFlagBits  samples;
+--   >     VkAttachmentLoadOp     loadOp;
+--   >     VkAttachmentStoreOp    storeOp;
+--   >     VkAttachmentLoadOp     stencilLoadOp;
+--   >     VkAttachmentStoreOp    stencilStoreOp;
+--   >     VkImageLayout          initialLayout;
+--   >     VkImageLayout          finalLayout;
+--   > } VkAttachmentDescription;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkAttachmentDescription.html VkAttachmentDescription registry at www.khronos.org>
 data VkAttachmentDescription = VkAttachmentDescription## ByteArray##
 
 instance Eq VkAttachmentDescription where
@@ -19768,6 +20612,12 @@ instance Show VkAttachmentDescription where
                                                                 showsPrec d (vkFinalLayout x) .
                                                                   showChar '}'
 
+-- | > typedef struct VkAttachmentReference {
+--   >     uint32_t               attachment;
+--   >     VkImageLayout          layout;
+--   > } VkAttachmentReference;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkAttachmentReference.html VkAttachmentReference registry at www.khronos.org>
 data VkAttachmentReference = VkAttachmentReference## ByteArray##
 
 instance Eq VkAttachmentReference where
@@ -19897,6 +20747,20 @@ instance Show VkAttachmentReference where
                   showString ", " .
                     showString "vkLayout = " . showsPrec d (vkLayout x) . showChar '}'
 
+-- | > typedef struct VkSubpassDescription {
+--   >     VkSubpassDescriptionFlags flags;
+--   >     VkPipelineBindPoint    pipelineBindPoint;
+--   >     uint32_t               inputAttachmentCount;
+--   >     const VkAttachmentReference* pInputAttachments;
+--   >     uint32_t               colorAttachmentCount;
+--   >     const VkAttachmentReference* pColorAttachments;
+--   >     const VkAttachmentReference* pResolveAttachments;
+--   >     const VkAttachmentReference* pDepthStencilAttachment;
+--   >     uint32_t               preserveAttachmentCount;
+--   >     const uint32_t* pPreserveAttachments;
+--   > } VkSubpassDescription;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSubpassDescription.html VkSubpassDescription registry at www.khronos.org>
 data VkSubpassDescription = VkSubpassDescription## ByteArray##
 
 instance Eq VkSubpassDescription where
@@ -20232,6 +21096,17 @@ instance Show VkSubpassDescription where
                                                                         (vkPPreserveAttachments x)
                                                                         . showChar '}'
 
+-- | > typedef struct VkSubpassDependency {
+--   >     uint32_t               srcSubpass;
+--   >     uint32_t               dstSubpass;
+--   >     VkPipelineStageFlags   srcStageMask;
+--   >     VkPipelineStageFlags   dstStageMask;
+--   >     VkAccessFlags          srcAccessMask;
+--   >     VkAccessFlags          dstAccessMask;
+--   >     VkDependencyFlags      dependencyFlags;
+--   > } VkSubpassDependency;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSubpassDependency.html VkSubpassDependency registry at www.khronos.org>
 data VkSubpassDependency = VkSubpassDependency## ByteArray##
 
 instance Eq VkSubpassDependency where
@@ -20482,6 +21357,19 @@ instance Show VkSubpassDependency where
                                                   showString "vkDependencyFlags = " .
                                                     showsPrec d (vkDependencyFlags x) . showChar '}'
 
+-- | > typedef struct VkRenderPassCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkRenderPassCreateFlags    flags;
+--   >     uint32_t   attachmentCount;
+--   >     const VkAttachmentDescription* pAttachments;
+--   >     uint32_t               subpassCount;
+--   >     const VkSubpassDescription* pSubpasses;
+--   >     uint32_t       dependencyCount;
+--   >     const VkSubpassDependency* pDependencies;
+--   > } VkRenderPassCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkRenderPassCreateInfo.html VkRenderPassCreateInfo registry at www.khronos.org>
 data VkRenderPassCreateInfo = VkRenderPassCreateInfo## ByteArray##
 
 instance Eq VkRenderPassCreateInfo where
@@ -20786,6 +21674,13 @@ instance Show VkRenderPassCreateInfo where
                                                                 showsPrec d (vkPDependencies x) .
                                                                   showChar '}'
 
+-- | > typedef struct VkEventCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkEventCreateFlags     flags;
+--   > } VkEventCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkEventCreateInfo.html VkEventCreateInfo registry at www.khronos.org>
 data VkEventCreateInfo = VkEventCreateInfo## ByteArray##
 
 instance Eq VkEventCreateInfo where
@@ -20935,6 +21830,13 @@ instance Show VkEventCreateInfo where
                         showString ", " .
                           showString "vkFlags = " . showsPrec d (vkFlags x) . showChar '}'
 
+-- | > typedef struct VkFenceCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkFenceCreateFlags     flags;
+--   > } VkFenceCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkFenceCreateInfo.html VkFenceCreateInfo registry at www.khronos.org>
 data VkFenceCreateInfo = VkFenceCreateInfo## ByteArray##
 
 instance Eq VkFenceCreateInfo where
@@ -21084,6 +21986,65 @@ instance Show VkFenceCreateInfo where
                         showString ", " .
                           showString "vkFlags = " . showsPrec d (vkFlags x) . showChar '}'
 
+-- | > typedef struct VkPhysicalDeviceFeatures {
+--   >     VkBool32               robustBufferAccess;
+--   >     VkBool32               fullDrawIndexUint32;
+--   >     VkBool32               imageCubeArray;
+--   >     VkBool32               independentBlend;
+--   >     VkBool32               geometryShader;
+--   >     VkBool32               tessellationShader;
+--   >     VkBool32               sampleRateShading;
+--   >     VkBool32               dualSrcBlend;
+--   >     VkBool32               logicOp;
+--   >     VkBool32               multiDrawIndirect;
+--   >     VkBool32               drawIndirectFirstInstance;
+--   >     VkBool32               depthClamp;
+--   >     VkBool32               depthBiasClamp;
+--   >     VkBool32               fillModeNonSolid;
+--   >     VkBool32               depthBounds;
+--   >     VkBool32               wideLines;
+--   >     VkBool32               largePoints;
+--   >     VkBool32               alphaToOne;
+--   >     VkBool32               multiViewport;
+--   >     VkBool32               samplerAnisotropy;
+--   >     VkBool32               textureCompressionETC2;
+--   >     VkBool32               textureCompressionASTC_LDR;
+--   >     VkBool32               textureCompressionBC;
+--   >     VkBool32               occlusionQueryPrecise;
+--   >     VkBool32               pipelineStatisticsQuery;
+--   >     VkBool32               vertexPipelineStoresAndAtomics;
+--   >     VkBool32               fragmentStoresAndAtomics;
+--   >     VkBool32               shaderTessellationAndGeometryPointSize;
+--   >     VkBool32               shaderImageGatherExtended;
+--   >     VkBool32               shaderStorageImageExtendedFormats;
+--   >     VkBool32               shaderStorageImageMultisample;
+--   >     VkBool32               shaderStorageImageReadWithoutFormat;
+--   >     VkBool32               shaderStorageImageWriteWithoutFormat;
+--   >     VkBool32               shaderUniformBufferArrayDynamicIndexing;
+--   >     VkBool32               shaderSampledImageArrayDynamicIndexing;
+--   >     VkBool32               shaderStorageBufferArrayDynamicIndexing;
+--   >     VkBool32               shaderStorageImageArrayDynamicIndexing;
+--   >     VkBool32               shaderClipDistance;
+--   >     VkBool32               shaderCullDistance;
+--   >     VkBool32               shaderFloat64;
+--   >     VkBool32               shaderInt64;
+--   >     VkBool32               shaderInt16;
+--   >     VkBool32               shaderResourceResidency;
+--   >     VkBool32               shaderResourceMinLod;
+--   >     VkBool32               sparseBinding;
+--   >     VkBool32               sparseResidencyBuffer;
+--   >     VkBool32               sparseResidencyImage2D;
+--   >     VkBool32               sparseResidencyImage3D;
+--   >     VkBool32               sparseResidency2Samples;
+--   >     VkBool32               sparseResidency4Samples;
+--   >     VkBool32               sparseResidency8Samples;
+--   >     VkBool32               sparseResidency16Samples;
+--   >     VkBool32               sparseResidencyAliased;
+--   >     VkBool32               variableMultisampleRate;
+--   >     VkBool32               inheritedQueries;
+--   > } VkPhysicalDeviceFeatures;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceFeatures.html VkPhysicalDeviceFeatures registry at www.khronos.org>
 data VkPhysicalDeviceFeatures = VkPhysicalDeviceFeatures## ByteArray##
 
 instance Eq VkPhysicalDeviceFeatures where
@@ -22895,6 +23856,15 @@ instance Show VkPhysicalDeviceFeatures where
                                                                                                                                                                                                                                                                                                                                                       showChar
                                                                                                                                                                                                                                                                                                                                                         '}'
 
+-- | > typedef struct VkPhysicalDeviceSparseProperties {
+--   >     VkBool32               residencyStandard2DBlockShape;
+--   >     VkBool32               residencyStandard2DMultisampleBlockShape;
+--   >     VkBool32               residencyStandard3DBlockShape;
+--   >     VkBool32               residencyAlignedMipSize;
+--   >     VkBool32               residencyNonResidentStrict;
+--   > } VkPhysicalDeviceSparseProperties;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceSparseProperties.html VkPhysicalDeviceSparseProperties registry at www.khronos.org>
 data VkPhysicalDeviceSparseProperties = VkPhysicalDeviceSparseProperties## ByteArray##
 
 instance Eq VkPhysicalDeviceSparseProperties where
@@ -23116,6 +24086,116 @@ instance Show VkPhysicalDeviceSparseProperties where
                                       showString "vkResidencyNonResidentStrict = " .
                                         showsPrec d (vkResidencyNonResidentStrict x) . showChar '}'
 
+-- | > typedef struct VkPhysicalDeviceLimits {
+--   >     uint32_t               maxImageDimension1D;
+--   >     uint32_t               maxImageDimension2D;
+--   >     uint32_t               maxImageDimension3D;
+--   >     uint32_t               maxImageDimensionCube;
+--   >     uint32_t               maxImageArrayLayers;
+--   >     uint32_t               maxTexelBufferElements;
+--   >     uint32_t               maxUniformBufferRange;
+--   >     uint32_t               maxStorageBufferRange;
+--   >     uint32_t               maxPushConstantsSize;
+--   >     uint32_t               maxMemoryAllocationCount;
+--   >     uint32_t               maxSamplerAllocationCount;
+--   >     VkDeviceSize           bufferImageGranularity;
+--   >     VkDeviceSize           sparseAddressSpaceSize;
+--   >     uint32_t               maxBoundDescriptorSets;
+--   >     uint32_t               maxPerStageDescriptorSamplers;
+--   >     uint32_t               maxPerStageDescriptorUniformBuffers;
+--   >     uint32_t               maxPerStageDescriptorStorageBuffers;
+--   >     uint32_t               maxPerStageDescriptorSampledImages;
+--   >     uint32_t               maxPerStageDescriptorStorageImages;
+--   >     uint32_t               maxPerStageDescriptorInputAttachments;
+--   >     uint32_t               maxPerStageResources;
+--   >     uint32_t               maxDescriptorSetSamplers;
+--   >     uint32_t               maxDescriptorSetUniformBuffers;
+--   >     uint32_t               maxDescriptorSetUniformBuffersDynamic;
+--   >     uint32_t               maxDescriptorSetStorageBuffers;
+--   >     uint32_t               maxDescriptorSetStorageBuffersDynamic;
+--   >     uint32_t               maxDescriptorSetSampledImages;
+--   >     uint32_t               maxDescriptorSetStorageImages;
+--   >     uint32_t               maxDescriptorSetInputAttachments;
+--   >     uint32_t               maxVertexInputAttributes;
+--   >     uint32_t               maxVertexInputBindings;
+--   >     uint32_t               maxVertexInputAttributeOffset;
+--   >     uint32_t               maxVertexInputBindingStride;
+--   >     uint32_t               maxVertexOutputComponents;
+--   >     uint32_t               maxTessellationGenerationLevel;
+--   >     uint32_t               maxTessellationPatchSize;
+--   >     uint32_t               maxTessellationControlPerVertexInputComponents;
+--   >     uint32_t               maxTessellationControlPerVertexOutputComponents;
+--   >     uint32_t               maxTessellationControlPerPatchOutputComponents;
+--   >     uint32_t               maxTessellationControlTotalOutputComponents;
+--   >     uint32_t               maxTessellationEvaluationInputComponents;
+--   >     uint32_t               maxTessellationEvaluationOutputComponents;
+--   >     uint32_t               maxGeometryShaderInvocations;
+--   >     uint32_t               maxGeometryInputComponents;
+--   >     uint32_t               maxGeometryOutputComponents;
+--   >     uint32_t               maxGeometryOutputVertices;
+--   >     uint32_t               maxGeometryTotalOutputComponents;
+--   >     uint32_t               maxFragmentInputComponents;
+--   >     uint32_t               maxFragmentOutputAttachments;
+--   >     uint32_t               maxFragmentDualSrcAttachments;
+--   >     uint32_t               maxFragmentCombinedOutputResources;
+--   >     uint32_t               maxComputeSharedMemorySize;
+--   >     uint32_t               maxComputeWorkGroupCount[3];
+--   >     uint32_t               maxComputeWorkGroupInvocations;
+--   >     uint32_t               maxComputeWorkGroupSize[3];
+--   >     uint32_t               subPixelPrecisionBits;
+--   >     uint32_t               subTexelPrecisionBits;
+--   >     uint32_t               mipmapPrecisionBits;
+--   >     uint32_t               maxDrawIndexedIndexValue;
+--   >     uint32_t               maxDrawIndirectCount;
+--   >     float                  maxSamplerLodBias;
+--   >     float                  maxSamplerAnisotropy;
+--   >     uint32_t               maxViewports;
+--   >     uint32_t               maxViewportDimensions[2];
+--   >     float                  viewportBoundsRange[2];
+--   >     uint32_t               viewportSubPixelBits;
+--   >     size_t                 minMemoryMapAlignment;
+--   >     VkDeviceSize           minTexelBufferOffsetAlignment;
+--   >     VkDeviceSize           minUniformBufferOffsetAlignment;
+--   >     VkDeviceSize           minStorageBufferOffsetAlignment;
+--   >     int32_t                minTexelOffset;
+--   >     uint32_t               maxTexelOffset;
+--   >     int32_t                minTexelGatherOffset;
+--   >     uint32_t               maxTexelGatherOffset;
+--   >     float                  minInterpolationOffset;
+--   >     float                  maxInterpolationOffset;
+--   >     uint32_t               subPixelInterpolationOffsetBits;
+--   >     uint32_t               maxFramebufferWidth;
+--   >     uint32_t               maxFramebufferHeight;
+--   >     uint32_t               maxFramebufferLayers;
+--   >     VkSampleCountFlags     framebufferColorSampleCounts;
+--   >     VkSampleCountFlags     framebufferDepthSampleCounts;
+--   >     VkSampleCountFlags     framebufferStencilSampleCounts;
+--   >     VkSampleCountFlags     framebufferNoAttachmentsSampleCounts;
+--   >     uint32_t               maxColorAttachments;
+--   >     VkSampleCountFlags     sampledImageColorSampleCounts;
+--   >     VkSampleCountFlags     sampledImageIntegerSampleCounts;
+--   >     VkSampleCountFlags     sampledImageDepthSampleCounts;
+--   >     VkSampleCountFlags     sampledImageStencilSampleCounts;
+--   >     VkSampleCountFlags     storageImageSampleCounts;
+--   >     uint32_t               maxSampleMaskWords;
+--   >     VkBool32               timestampComputeAndGraphics;
+--   >     float                  timestampPeriod;
+--   >     uint32_t               maxClipDistances;
+--   >     uint32_t               maxCullDistances;
+--   >     uint32_t               maxCombinedClipAndCullDistances;
+--   >     uint32_t               discreteQueuePriorities;
+--   >     float                  pointSizeRange[2];
+--   >     float                  lineWidthRange[2];
+--   >     float                  pointSizeGranularity;
+--   >     float                  lineWidthGranularity;
+--   >     VkBool32               strictLines;
+--   >     VkBool32               standardSampleLocations;
+--   >     VkDeviceSize           optimalBufferCopyOffsetAlignment;
+--   >     VkDeviceSize           optimalBufferCopyRowPitchAlignment;
+--   >     VkDeviceSize           nonCoherentAtomSize;
+--   > } VkPhysicalDeviceLimits;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceLimits.html VkPhysicalDeviceLimits registry at www.khronos.org>
 data VkPhysicalDeviceLimits = VkPhysicalDeviceLimits## ByteArray##
 
 instance Eq VkPhysicalDeviceLimits where
@@ -26714,6 +27794,13 @@ instance Show VkPhysicalDeviceLimits where
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     showChar
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       '}'
 
+-- | > typedef struct VkSemaphoreCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkSemaphoreCreateFlags flags;
+--   > } VkSemaphoreCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSemaphoreCreateInfo.html VkSemaphoreCreateInfo registry at www.khronos.org>
 data VkSemaphoreCreateInfo = VkSemaphoreCreateInfo## ByteArray##
 
 instance Eq VkSemaphoreCreateInfo where
@@ -26864,6 +27951,16 @@ instance Show VkSemaphoreCreateInfo where
                         showString ", " .
                           showString "vkFlags = " . showsPrec d (vkFlags x) . showChar '}'
 
+-- | > typedef struct VkQueryPoolCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkQueryPoolCreateFlags flags;
+--   >     VkQueryType            queryType;
+--   >     uint32_t               queryCount;
+--   >     VkQueryPipelineStatisticFlags pipelineStatistics;
+--   > } VkQueryPoolCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkQueryPoolCreateInfo.html VkQueryPoolCreateInfo registry at www.khronos.org>
 data VkQueryPoolCreateInfo = VkQueryPoolCreateInfo## ByteArray##
 
 instance Eq VkQueryPoolCreateInfo where
@@ -27088,6 +28185,19 @@ instance Show VkQueryPoolCreateInfo where
                                             showString "vkPipelineStatistics = " .
                                               showsPrec d (vkPipelineStatistics x) . showChar '}'
 
+-- | > typedef struct VkFramebufferCreateInfo {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkFramebufferCreateFlags    flags;
+--   >     VkRenderPass           renderPass;
+--   >     uint32_t               attachmentCount;
+--   >     const VkImageView*     pAttachments;
+--   >     uint32_t               width;
+--   >     uint32_t               height;
+--   >     uint32_t               layers;
+--   > } VkFramebufferCreateInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkFramebufferCreateInfo.html VkFramebufferCreateInfo registry at www.khronos.org>
 data VkFramebufferCreateInfo = VkFramebufferCreateInfo## ByteArray##
 
 instance Eq VkFramebufferCreateInfo where
@@ -27390,6 +28500,19 @@ instance Show VkFramebufferCreateInfo where
                                                                 showsPrec d (vkLayers x) .
                                                                   showChar '}'
 
+-- | > typedef struct VkSubmitInfo {
+--   >     VkStructureType sType;
+--   >     const void* pNext;
+--   >     uint32_t       waitSemaphoreCount;
+--   >     const VkSemaphore*     pWaitSemaphores;
+--   >     const VkPipelineStageFlags*           pWaitDstStageMask;
+--   >     uint32_t       commandBufferCount;
+--   >     const VkCommandBuffer*     pCommandBuffers;
+--   >     uint32_t       signalSemaphoreCount;
+--   >     const VkSemaphore*     pSignalSemaphores;
+--   > } VkSubmitInfo;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSubmitInfo.html VkSubmitInfo registry at www.khronos.org>
 data VkSubmitInfo = VkSubmitInfo## ByteArray##
 
 instance Eq VkSubmitInfo where
@@ -27685,6 +28808,20 @@ instance Show VkSubmitInfo where
                                                                 showsPrec d (vkPSignalSemaphores x)
                                                                   . showChar '}'
 
+-- | > typedef struct VkSurfaceCapabilitiesKHR {
+--   >     uint32_t                         minImageCount;
+--   >     uint32_t                         maxImageCount;
+--   >     VkExtent2D                       currentExtent;
+--   >     VkExtent2D                       minImageExtent;
+--   >     VkExtent2D                       maxImageExtent;
+--   >     uint32_t                         maxImageArrayLayers;
+--   >     VkSurfaceTransformFlagsKHR       supportedTransforms;
+--   >     VkSurfaceTransformFlagBitsKHR    currentTransform;
+--   >     VkCompositeAlphaFlagsKHR         supportedCompositeAlpha;
+--   >     VkImageUsageFlags                supportedUsageFlags;
+--   > } VkSurfaceCapabilitiesKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSurfaceCapabilitiesKHR.html VkSurfaceCapabilitiesKHR registry at www.khronos.org>
 data VkSurfaceCapabilitiesKHR = VkSurfaceCapabilitiesKHR## ByteArray##
 
 instance Eq VkSurfaceCapabilitiesKHR where
@@ -28021,6 +29158,12 @@ instance Show VkSurfaceCapabilitiesKHR where
                                                                         (vkSupportedUsageFlags x)
                                                                         . showChar '}'
 
+-- | > typedef struct VkSurfaceFormatKHR {
+--   >     VkFormat                         format;
+--   >     VkColorSpaceKHR                  colorSpace;
+--   > } VkSurfaceFormatKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSurfaceFormatKHR.html VkSurfaceFormatKHR registry at www.khronos.org>
 data VkSurfaceFormatKHR = VkSurfaceFormatKHR## ByteArray##
 
 instance Eq VkSurfaceFormatKHR where
@@ -28150,6 +29293,28 @@ instance Show VkSurfaceFormatKHR where
                     showString "vkColorSpace = " .
                       showsPrec d (vkColorSpace x) . showChar '}'
 
+-- | > typedef struct VkSwapchainCreateInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkSwapchainCreateFlagsKHR        flags;
+--   >     VkSurfaceKHR                     surface;
+--   >     uint32_t                         minImageCount;
+--   >     VkFormat                         imageFormat;
+--   >     VkColorSpaceKHR                  imageColorSpace;
+--   >     VkExtent2D                       imageExtent;
+--   >     uint32_t                         imageArrayLayers;
+--   >     VkImageUsageFlags                imageUsage;
+--   >     VkSharingMode                    imageSharingMode;
+--   >     uint32_t         queueFamilyIndexCount;
+--   >     const uint32_t*                  pQueueFamilyIndices;
+--   >     VkSurfaceTransformFlagBitsKHR    preTransform;
+--   >     VkCompositeAlphaFlagBitsKHR      compositeAlpha;
+--   >     VkPresentModeKHR                 presentMode;
+--   >     VkBool32                         clipped;
+--   >     VkSwapchainKHR   oldSwapchain;
+--   > } VkSwapchainCreateInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSwapchainCreateInfoKHR.html VkSwapchainCreateInfoKHR registry at www.khronos.org>
 data VkSwapchainCreateInfoKHR = VkSwapchainCreateInfoKHR## ByteArray##
 
 instance Eq VkSwapchainCreateInfoKHR where
@@ -28729,6 +29894,18 @@ instance Show VkSwapchainCreateInfoKHR where
                                                                                                                         showChar
                                                                                                                           '}'
 
+-- | > typedef struct VkPresentInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*  pNext;
+--   >     uint32_t         waitSemaphoreCount;
+--   >     const VkSemaphore* pWaitSemaphores;
+--   >     uint32_t                         swapchainCount;
+--   >     const VkSwapchainKHR* pSwapchains;
+--   >     const uint32_t* pImageIndices;
+--   >     VkResult* pResults;
+--   > } VkPresentInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPresentInfoKHR.html VkPresentInfoKHR registry at www.khronos.org>
 data VkPresentInfoKHR = VkPresentInfoKHR## ByteArray##
 
 instance Eq VkPresentInfoKHR where

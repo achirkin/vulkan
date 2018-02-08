@@ -53,6 +53,13 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkSamplerReductionModeCreateInfoEXT {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkSamplerReductionModeEXT reductionMode;
+--   > } VkSamplerReductionModeCreateInfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSamplerReductionModeCreateInfoEXT.html VkSamplerReductionModeCreateInfoEXT registry at www.khronos.org>
 data VkSamplerReductionModeCreateInfoEXT = VkSamplerReductionModeCreateInfoEXT## ByteArray##
 
 instance Eq VkSamplerReductionModeCreateInfoEXT where
@@ -220,6 +227,14 @@ instance Show VkSamplerReductionModeCreateInfoEXT where
                           showString "vkReductionMode = " .
                             showsPrec d (vkReductionMode x) . showChar '}'
 
+-- | > typedef struct VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT {
+--   >     VkStructureType sType;
+--   >     void*                  pNext;
+--   >     VkBool32               filterMinmaxSingleComponentFormats;
+--   >     VkBool32               filterMinmaxImageComponentMapping;
+--   > } VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT.html VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT registry at www.khronos.org>
 data VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT = VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT## ByteArray##
 
 instance Eq VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT where

@@ -47,6 +47,15 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkPhysicalDeviceGroupPropertiesKHX {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     uint32_t                         physicalDeviceCount;
+--   >     VkPhysicalDevice                 physicalDevices[VK_MAX_DEVICE_GROUP_SIZE_KHX];
+--   >     VkBool32                         subsetAllocation;
+--   > } VkPhysicalDeviceGroupPropertiesKHX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceGroupPropertiesKHX.html VkPhysicalDeviceGroupPropertiesKHX registry at www.khronos.org>
 data VkPhysicalDeviceGroupPropertiesKHX = VkPhysicalDeviceGroupPropertiesKHX## ByteArray##
 
 instance Eq VkPhysicalDeviceGroupPropertiesKHX where
@@ -270,6 +279,14 @@ instance Show VkPhysicalDeviceGroupPropertiesKHX where
                                         showString "vkSubsetAllocation = " .
                                           showsPrec d (vkSubsetAllocation x) . showChar '}'
 
+-- | > typedef struct VkDeviceGroupDeviceCreateInfoKHX {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     uint32_t                         physicalDeviceCount;
+--   >     const VkPhysicalDevice*  pPhysicalDevices;
+--   > } VkDeviceGroupDeviceCreateInfoKHX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceGroupDeviceCreateInfoKHX.html VkDeviceGroupDeviceCreateInfoKHX registry at www.khronos.org>
 data VkDeviceGroupDeviceCreateInfoKHX = VkDeviceGroupDeviceCreateInfoKHX## ByteArray##
 
 instance Eq VkDeviceGroupDeviceCreateInfoKHX where

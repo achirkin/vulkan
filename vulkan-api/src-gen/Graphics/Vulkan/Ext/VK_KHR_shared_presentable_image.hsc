@@ -51,6 +51,13 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkSharedPresentSurfaceCapabilitiesKHR {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     VkImageUsageFlags sharedPresentSupportedUsageFlags;
+--   > } VkSharedPresentSurfaceCapabilitiesKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSharedPresentSurfaceCapabilitiesKHR.html VkSharedPresentSurfaceCapabilitiesKHR registry at www.khronos.org>
 data VkSharedPresentSurfaceCapabilitiesKHR = VkSharedPresentSurfaceCapabilitiesKHR## ByteArray##
 
 instance Eq VkSharedPresentSurfaceCapabilitiesKHR where

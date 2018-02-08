@@ -51,6 +51,14 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkImportMemoryWin32HandleInfoNV {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkExternalMemoryHandleTypeFlagsNV handleType;
+--   >     HANDLE                           handle;
+--   > } VkImportMemoryWin32HandleInfoNV;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImportMemoryWin32HandleInfoNV.html VkImportMemoryWin32HandleInfoNV registry at www.khronos.org>
 data VkImportMemoryWin32HandleInfoNV = VkImportMemoryWin32HandleInfoNV## ByteArray##
 
 instance Eq VkImportMemoryWin32HandleInfoNV where
@@ -233,6 +241,14 @@ instance Show VkImportMemoryWin32HandleInfoNV where
                               showString ", " .
                                 showString "vkHandle = " . showsPrec d (vkHandle x) . showChar '}'
 
+-- | > typedef struct VkExportMemoryWin32HandleInfoNV {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     const SECURITY_ATTRIBUTES*       pAttributes;
+--   >     DWORD                            dwAccess;
+--   > } VkExportMemoryWin32HandleInfoNV;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExportMemoryWin32HandleInfoNV.html VkExportMemoryWin32HandleInfoNV registry at www.khronos.org>
 data VkExportMemoryWin32HandleInfoNV = VkExportMemoryWin32HandleInfoNV## ByteArray##
 
 instance Eq VkExportMemoryWin32HandleInfoNV where

@@ -56,6 +56,17 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkImportSemaphoreWin32HandleInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkSemaphore    semaphore;
+--   >     VkSemaphoreImportFlagsKHR flags;
+--   >     VkExternalSemaphoreHandleTypeFlagBitsKHR handleType;
+--   >     HANDLE           handle;
+--   >     LPCWSTR          name;
+--   > } VkImportSemaphoreWin32HandleInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImportSemaphoreWin32HandleInfoKHR.html VkImportSemaphoreWin32HandleInfoKHR registry at www.khronos.org>
 data VkImportSemaphoreWin32HandleInfoKHR = VkImportSemaphoreWin32HandleInfoKHR## ByteArray##
 
 instance Eq VkImportSemaphoreWin32HandleInfoKHR where
@@ -321,6 +332,15 @@ instance Show VkImportSemaphoreWin32HandleInfoKHR where
                                                   showString "vkName = " .
                                                     showsPrec d (vkName x) . showChar '}'
 
+-- | > typedef struct VkExportSemaphoreWin32HandleInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     const SECURITY_ATTRIBUTES*       pAttributes;
+--   >     DWORD                            dwAccess;
+--   >     LPCWSTR                          name;
+--   > } VkExportSemaphoreWin32HandleInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExportSemaphoreWin32HandleInfoKHR.html VkExportSemaphoreWin32HandleInfoKHR registry at www.khronos.org>
 data VkExportSemaphoreWin32HandleInfoKHR = VkExportSemaphoreWin32HandleInfoKHR## ByteArray##
 
 instance Eq VkExportSemaphoreWin32HandleInfoKHR where
@@ -535,6 +555,16 @@ instance Show VkExportSemaphoreWin32HandleInfoKHR where
                                     showString ", " .
                                       showString "vkName = " . showsPrec d (vkName x) . showChar '}'
 
+-- | > typedef struct VkD3D12FenceSubmitInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     uint32_t         waitSemaphoreValuesCount;
+--   >     const uint64_t* pWaitSemaphoreValues;
+--   >     uint32_t         signalSemaphoreValuesCount;
+--   >     const uint64_t* pSignalSemaphoreValues;
+--   > } VkD3D12FenceSubmitInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkD3D12FenceSubmitInfoKHR.html VkD3D12FenceSubmitInfoKHR registry at www.khronos.org>
 data VkD3D12FenceSubmitInfoKHR = VkD3D12FenceSubmitInfoKHR## ByteArray##
 
 instance Eq VkD3D12FenceSubmitInfoKHR where
@@ -768,6 +798,14 @@ instance Show VkD3D12FenceSubmitInfoKHR where
                                               showsPrec d (vkPSignalSemaphoreValues x) .
                                                 showChar '}'
 
+-- | > typedef struct VkSemaphoreGetWin32HandleInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkSemaphore                      semaphore;
+--   >     VkExternalSemaphoreHandleTypeFlagBitsKHR handleType;
+--   > } VkSemaphoreGetWin32HandleInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSemaphoreGetWin32HandleInfoKHR.html VkSemaphoreGetWin32HandleInfoKHR registry at www.khronos.org>
 data VkSemaphoreGetWin32HandleInfoKHR = VkSemaphoreGetWin32HandleInfoKHR## ByteArray##
 
 instance Eq VkSemaphoreGetWin32HandleInfoKHR where

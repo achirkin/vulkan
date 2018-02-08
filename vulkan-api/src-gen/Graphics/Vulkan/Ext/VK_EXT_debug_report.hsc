@@ -48,6 +48,15 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkDebugReportCallbackCreateInfoEXT {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkDebugReportFlagsEXT            flags;
+--   >     PFN_vkDebugReportCallbackEXT     pfnCallback;
+--   >     void*            pUserData;
+--   > } VkDebugReportCallbackCreateInfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDebugReportCallbackCreateInfoEXT.html VkDebugReportCallbackCreateInfoEXT registry at www.khronos.org>
 data VkDebugReportCallbackCreateInfoEXT = VkDebugReportCallbackCreateInfoEXT## ByteArray##
 
 instance Eq VkDebugReportCallbackCreateInfoEXT where

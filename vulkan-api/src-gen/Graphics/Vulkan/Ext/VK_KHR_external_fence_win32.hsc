@@ -53,6 +53,17 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkImportFenceWin32HandleInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                                        pNext;
+--   >     VkFence                          fence;
+--   >     VkFenceImportFlagsKHR              flags;
+--   >     VkExternalFenceHandleTypeFlagBitsKHR  handleType;
+--   >     HANDLE                             handle;
+--   >     LPCWSTR                            name;
+--   > } VkImportFenceWin32HandleInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImportFenceWin32HandleInfoKHR.html VkImportFenceWin32HandleInfoKHR registry at www.khronos.org>
 data VkImportFenceWin32HandleInfoKHR = VkImportFenceWin32HandleInfoKHR## ByteArray##
 
 instance Eq VkImportFenceWin32HandleInfoKHR where
@@ -309,6 +320,15 @@ instance Show VkImportFenceWin32HandleInfoKHR where
                                                   showString "vkName = " .
                                                     showsPrec d (vkName x) . showChar '}'
 
+-- | > typedef struct VkExportFenceWin32HandleInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                                pNext;
+--   >     const SECURITY_ATTRIBUTES* pAttributes;
+--   >     DWORD                                      dwAccess;
+--   >     LPCWSTR                                    name;
+--   > } VkExportFenceWin32HandleInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExportFenceWin32HandleInfoKHR.html VkExportFenceWin32HandleInfoKHR registry at www.khronos.org>
 data VkExportFenceWin32HandleInfoKHR = VkExportFenceWin32HandleInfoKHR## ByteArray##
 
 instance Eq VkExportFenceWin32HandleInfoKHR where
@@ -515,6 +535,14 @@ instance Show VkExportFenceWin32HandleInfoKHR where
                                     showString ", " .
                                       showString "vkName = " . showsPrec d (vkName x) . showChar '}'
 
+-- | > typedef struct VkFenceGetWin32HandleInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                            pNext;
+--   >     VkFence                                fence;
+--   >     VkExternalFenceHandleTypeFlagBitsKHR   handleType;
+--   > } VkFenceGetWin32HandleInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkFenceGetWin32HandleInfoKHR.html VkFenceGetWin32HandleInfoKHR registry at www.khronos.org>
 data VkFenceGetWin32HandleInfoKHR = VkFenceGetWin32HandleInfoKHR## ByteArray##
 
 instance Eq VkFenceGetWin32HandleInfoKHR where

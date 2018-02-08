@@ -59,6 +59,17 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkDisplayPropertiesKHR {
+--   >     VkDisplayKHR                     display;
+--   >     const char*                      displayName;
+--   >     VkExtent2D                       physicalDimensions;
+--   >     VkExtent2D                       physicalResolution;
+--   >     VkSurfaceTransformFlagsKHR       supportedTransforms;
+--   >     VkBool32                         planeReorderPossible;
+--   >     VkBool32                         persistentContent;
+--   > } VkDisplayPropertiesKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplayPropertiesKHR.html VkDisplayPropertiesKHR registry at www.khronos.org>
 data VkDisplayPropertiesKHR = VkDisplayPropertiesKHR## ByteArray##
 
 instance Eq VkDisplayPropertiesKHR where
@@ -313,6 +324,12 @@ instance Show VkDisplayPropertiesKHR where
                                                     showsPrec d (vkPersistentContent x) .
                                                       showChar '}'
 
+-- | > typedef struct VkDisplayModeParametersKHR {
+--   >     VkExtent2D                       visibleRegion;
+--   >     uint32_t                         refreshRate;
+--   > } VkDisplayModeParametersKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplayModeParametersKHR.html VkDisplayModeParametersKHR registry at www.khronos.org>
 data VkDisplayModeParametersKHR = VkDisplayModeParametersKHR## ByteArray##
 
 instance Eq VkDisplayModeParametersKHR where
@@ -445,6 +462,12 @@ instance Show VkDisplayModeParametersKHR where
                     showString "vkRefreshRate = " .
                       showsPrec d (vkRefreshRate x) . showChar '}'
 
+-- | > typedef struct VkDisplayModePropertiesKHR {
+--   >     VkDisplayModeKHR                 displayMode;
+--   >     VkDisplayModeParametersKHR       parameters;
+--   > } VkDisplayModePropertiesKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplayModePropertiesKHR.html VkDisplayModePropertiesKHR registry at www.khronos.org>
 data VkDisplayModePropertiesKHR = VkDisplayModePropertiesKHR## ByteArray##
 
 instance Eq VkDisplayModePropertiesKHR where
@@ -579,6 +602,14 @@ instance Show VkDisplayModePropertiesKHR where
                     showString "vkParameters = " .
                       showsPrec d (vkParameters x) . showChar '}'
 
+-- | > typedef struct VkDisplayModeCreateInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkDisplayModeCreateFlagsKHR      flags;
+--   >     VkDisplayModeParametersKHR       parameters;
+--   > } VkDisplayModeCreateInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplayModeCreateInfoKHR.html VkDisplayModeCreateInfoKHR registry at www.khronos.org>
 data VkDisplayModeCreateInfoKHR = VkDisplayModeCreateInfoKHR## ByteArray##
 
 instance Eq VkDisplayModeCreateInfoKHR where
@@ -761,6 +792,19 @@ instance Show VkDisplayModeCreateInfoKHR where
                                 showString "vkParameters = " .
                                   showsPrec d (vkParameters x) . showChar '}'
 
+-- | > typedef struct VkDisplayPlaneCapabilitiesKHR {
+--   >     VkDisplayPlaneAlphaFlagsKHR      supportedAlpha;
+--   >     VkOffset2D                       minSrcPosition;
+--   >     VkOffset2D                       maxSrcPosition;
+--   >     VkExtent2D                       minSrcExtent;
+--   >     VkExtent2D                       maxSrcExtent;
+--   >     VkOffset2D                       minDstPosition;
+--   >     VkOffset2D                       maxDstPosition;
+--   >     VkExtent2D                       minDstExtent;
+--   >     VkExtent2D                       maxDstExtent;
+--   > } VkDisplayPlaneCapabilitiesKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplayPlaneCapabilitiesKHR.html VkDisplayPlaneCapabilitiesKHR registry at www.khronos.org>
 data VkDisplayPlaneCapabilitiesKHR = VkDisplayPlaneCapabilitiesKHR## ByteArray##
 
 instance Eq VkDisplayPlaneCapabilitiesKHR where
@@ -1068,6 +1112,12 @@ instance Show VkDisplayPlaneCapabilitiesKHR where
                                                                 showsPrec d (vkMaxDstExtent x) .
                                                                   showChar '}'
 
+-- | > typedef struct VkDisplayPlanePropertiesKHR {
+--   >     VkDisplayKHR                     currentDisplay;
+--   >     uint32_t                         currentStackIndex;
+--   > } VkDisplayPlanePropertiesKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplayPlanePropertiesKHR.html VkDisplayPlanePropertiesKHR registry at www.khronos.org>
 data VkDisplayPlanePropertiesKHR = VkDisplayPlanePropertiesKHR## ByteArray##
 
 instance Eq VkDisplayPlanePropertiesKHR where
@@ -1201,6 +1251,20 @@ instance Show VkDisplayPlanePropertiesKHR where
                     showString "vkCurrentStackIndex = " .
                       showsPrec d (vkCurrentStackIndex x) . showChar '}'
 
+-- | > typedef struct VkDisplaySurfaceCreateInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkDisplaySurfaceCreateFlagsKHR   flags;
+--   >     VkDisplayModeKHR                 displayMode;
+--   >     uint32_t                         planeIndex;
+--   >     uint32_t                         planeStackIndex;
+--   >     VkSurfaceTransformFlagBitsKHR    transform;
+--   >     float                            globalAlpha;
+--   >     VkDisplayPlaneAlphaFlagBitsKHR   alphaMode;
+--   >     VkExtent2D                       imageExtent;
+--   > } VkDisplaySurfaceCreateInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplaySurfaceCreateInfoKHR.html VkDisplaySurfaceCreateInfoKHR registry at www.khronos.org>
 data VkDisplaySurfaceCreateInfoKHR = VkDisplaySurfaceCreateInfoKHR## ByteArray##
 
 instance Eq VkDisplaySurfaceCreateInfoKHR where

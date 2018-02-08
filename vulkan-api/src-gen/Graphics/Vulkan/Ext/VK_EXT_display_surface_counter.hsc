@@ -50,6 +50,23 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkSurfaceCapabilities2EXT {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     uint32_t                         minImageCount;
+--   >     uint32_t                         maxImageCount;
+--   >     VkExtent2D                       currentExtent;
+--   >     VkExtent2D                       minImageExtent;
+--   >     VkExtent2D                       maxImageExtent;
+--   >     uint32_t                         maxImageArrayLayers;
+--   >     VkSurfaceTransformFlagsKHR       supportedTransforms;
+--   >     VkSurfaceTransformFlagBitsKHR    currentTransform;
+--   >     VkCompositeAlphaFlagsKHR         supportedCompositeAlpha;
+--   >     VkImageUsageFlags                supportedUsageFlags;
+--   >     VkSurfaceCounterFlagsEXT supportedSurfaceCounters;
+--   > } VkSurfaceCapabilities2EXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSurfaceCapabilities2EXT.html VkSurfaceCapabilities2EXT registry at www.khronos.org>
 data VkSurfaceCapabilities2EXT = VkSurfaceCapabilities2EXT## ByteArray##
 
 instance Eq VkSurfaceCapabilities2EXT where

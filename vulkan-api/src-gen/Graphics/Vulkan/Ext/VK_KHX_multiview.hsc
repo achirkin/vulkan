@@ -54,6 +54,18 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkRenderPassMultiviewCreateInfoKHX {
+--   >     VkStructureType        sType;
+--   >     const void*            pNext;
+--   >     uint32_t               subpassCount;
+--   >     const uint32_t*     pViewMasks;
+--   >     uint32_t               dependencyCount;
+--   >     const int32_t*   pViewOffsets;
+--   >     uint32_t               correlationMaskCount;
+--   >     const uint32_t* pCorrelationMasks;
+--   > } VkRenderPassMultiviewCreateInfoKHX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkRenderPassMultiviewCreateInfoKHX.html VkRenderPassMultiviewCreateInfoKHX registry at www.khronos.org>
 data VkRenderPassMultiviewCreateInfoKHX = VkRenderPassMultiviewCreateInfoKHX## ByteArray##
 
 instance Eq VkRenderPassMultiviewCreateInfoKHX where
@@ -343,6 +355,15 @@ instance Show VkRenderPassMultiviewCreateInfoKHX where
                                                           showsPrec d (vkPCorrelationMasks x) .
                                                             showChar '}'
 
+-- | > typedef struct VkPhysicalDeviceMultiviewFeaturesKHX {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     VkBool32                         multiview;
+--   >     VkBool32                         multiviewGeometryShader;
+--   >     VkBool32                         multiviewTessellationShader;
+--   > } VkPhysicalDeviceMultiviewFeaturesKHX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceMultiviewFeaturesKHX.html VkPhysicalDeviceMultiviewFeaturesKHX registry at www.khronos.org>
 data VkPhysicalDeviceMultiviewFeaturesKHX = VkPhysicalDeviceMultiviewFeaturesKHX## ByteArray##
 
 instance Eq VkPhysicalDeviceMultiviewFeaturesKHX where
@@ -567,6 +588,14 @@ instance Show VkPhysicalDeviceMultiviewFeaturesKHX where
                                       showString "vkMultiviewTessellationShader = " .
                                         showsPrec d (vkMultiviewTessellationShader x) . showChar '}'
 
+-- | > typedef struct VkPhysicalDeviceMultiviewPropertiesKHX {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     uint32_t                         maxMultiviewViewCount;
+--   >     uint32_t                         maxMultiviewInstanceIndex;
+--   > } VkPhysicalDeviceMultiviewPropertiesKHX;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceMultiviewPropertiesKHX.html VkPhysicalDeviceMultiviewPropertiesKHX registry at www.khronos.org>
 data VkPhysicalDeviceMultiviewPropertiesKHX = VkPhysicalDeviceMultiviewPropertiesKHX## ByteArray##
 
 instance Eq VkPhysicalDeviceMultiviewPropertiesKHX where

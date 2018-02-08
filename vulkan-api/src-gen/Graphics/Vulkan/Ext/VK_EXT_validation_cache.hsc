@@ -48,6 +48,15 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkValidationCacheCreateInfoEXT {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkValidationCacheCreateFlagsEXT    flags;
+--   >     size_t                 initialDataSize;
+--   >     const void*            pInitialData;
+--   > } VkValidationCacheCreateInfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkValidationCacheCreateInfoEXT.html VkValidationCacheCreateInfoEXT registry at www.khronos.org>
 data VkValidationCacheCreateInfoEXT = VkValidationCacheCreateInfoEXT## ByteArray##
 
 instance Eq VkValidationCacheCreateInfoEXT where
@@ -255,6 +264,13 @@ instance Show VkValidationCacheCreateInfoEXT where
                                       showString "vkPInitialData = " .
                                         showsPrec d (vkPInitialData x) . showChar '}'
 
+-- | > typedef struct VkShaderModuleValidationCacheCreateInfoEXT {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkValidationCacheEXT    validationCache;
+--   > } VkShaderModuleValidationCacheCreateInfoEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkShaderModuleValidationCacheCreateInfoEXT.html VkShaderModuleValidationCacheCreateInfoEXT registry at www.khronos.org>
 data VkShaderModuleValidationCacheCreateInfoEXT = VkShaderModuleValidationCacheCreateInfoEXT## ByteArray##
 
 instance Eq VkShaderModuleValidationCacheCreateInfoEXT where

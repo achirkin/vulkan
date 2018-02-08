@@ -46,6 +46,14 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkViewportSwizzleNV {
+--   >     VkViewportCoordinateSwizzleNV          x;
+--   >     VkViewportCoordinateSwizzleNV          y;
+--   >     VkViewportCoordinateSwizzleNV          z;
+--   >     VkViewportCoordinateSwizzleNV          w;
+--   > } VkViewportSwizzleNV;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkViewportSwizzleNV.html VkViewportSwizzleNV registry at www.khronos.org>
 data VkViewportSwizzleNV = VkViewportSwizzleNV## ByteArray##
 
 instance Eq VkViewportSwizzleNV where
@@ -215,6 +223,15 @@ instance Show VkViewportSwizzleNV where
                               showString ", " .
                                 showString "vkW = " . showsPrec d (vkW x) . showChar '}'
 
+-- | > typedef struct VkPipelineViewportSwizzleStateCreateInfoNV {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkPipelineViewportSwizzleStateCreateFlagsNV    flags;
+--   >     uint32_t               viewportCount;
+--   >     const VkViewportSwizzleNV*      pViewportSwizzles;
+--   > } VkPipelineViewportSwizzleStateCreateInfoNV;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineViewportSwizzleStateCreateInfoNV.html VkPipelineViewportSwizzleStateCreateInfoNV registry at www.khronos.org>
 data VkPipelineViewportSwizzleStateCreateInfoNV = VkPipelineViewportSwizzleStateCreateInfoNV## ByteArray##
 
 instance Eq VkPipelineViewportSwizzleStateCreateInfoNV where

@@ -54,6 +54,13 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkPhysicalDeviceSurfaceInfo2KHR {
+--   >     VkStructureType sType;
+--   >     const void* pNext;
+--   >     VkSurfaceKHR surface;
+--   > } VkPhysicalDeviceSurfaceInfo2KHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceSurfaceInfo2KHR.html VkPhysicalDeviceSurfaceInfo2KHR registry at www.khronos.org>
 data VkPhysicalDeviceSurfaceInfo2KHR = VkPhysicalDeviceSurfaceInfo2KHR## ByteArray##
 
 instance Eq VkPhysicalDeviceSurfaceInfo2KHR where
@@ -212,6 +219,13 @@ instance Show VkPhysicalDeviceSurfaceInfo2KHR where
                           showString "vkSurface = " .
                             showsPrec d (vkSurface x) . showChar '}'
 
+-- | > typedef struct VkSurfaceCapabilities2KHR {
+--   >     VkStructureType sType;
+--   >     void*   pNext;
+--   >     VkSurfaceCapabilitiesKHR surfaceCapabilities;
+--   > } VkSurfaceCapabilities2KHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSurfaceCapabilities2KHR.html VkSurfaceCapabilities2KHR registry at www.khronos.org>
 data VkSurfaceCapabilities2KHR = VkSurfaceCapabilities2KHR## ByteArray##
 
 instance Eq VkSurfaceCapabilities2KHR where
@@ -369,6 +383,13 @@ instance Show VkSurfaceCapabilities2KHR where
                           showString "vkSurfaceCapabilities = " .
                             showsPrec d (vkSurfaceCapabilities x) . showChar '}'
 
+-- | > typedef struct VkSurfaceFormat2KHR {
+--   >     VkStructureType sType;
+--   >     void* pNext;
+--   >     VkSurfaceFormatKHR surfaceFormat;
+--   > } VkSurfaceFormat2KHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSurfaceFormat2KHR.html VkSurfaceFormat2KHR registry at www.khronos.org>
 data VkSurfaceFormat2KHR = VkSurfaceFormat2KHR## ByteArray##
 
 instance Eq VkSurfaceFormat2KHR where

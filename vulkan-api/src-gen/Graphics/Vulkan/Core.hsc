@@ -2878,6 +2878,19 @@ foreign import ccall unsafe "vkCmdExecuteCommands"
                                          -> Ptr VkCommandBuffer -- ^ pCommandBuffers
                                                                 -> IO ()
 
+-- | > typedef struct VkBufferMemoryBarrier {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkAccessFlags          srcAccessMask;
+--   >     VkAccessFlags          dstAccessMask;
+--   >     uint32_t               srcQueueFamilyIndex;
+--   >     uint32_t               dstQueueFamilyIndex;
+--   >     VkBuffer               buffer;
+--   >     VkDeviceSize           offset;
+--   >     VkDeviceSize           size;
+--   > } VkBufferMemoryBarrier;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBufferMemoryBarrier.html VkBufferMemoryBarrier registry at www.khronos.org>
 data VkBufferMemoryBarrier = VkBufferMemoryBarrier## ByteArray##
 
 instance Eq VkBufferMemoryBarrier where
@@ -3174,6 +3187,13 @@ instance Show VkBufferMemoryBarrier where
                                                                 showsPrec d (vkSize x) .
                                                                   showChar '}'
 
+-- | > typedef struct VkDispatchIndirectCommand {
+--   >     uint32_t               x;
+--   >     uint32_t               y;
+--   >     uint32_t               z;
+--   > } VkDispatchIndirectCommand;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDispatchIndirectCommand.html VkDispatchIndirectCommand registry at www.khronos.org>
 data VkDispatchIndirectCommand = VkDispatchIndirectCommand## ByteArray##
 
 instance Eq VkDispatchIndirectCommand where
@@ -3326,6 +3346,15 @@ instance Show VkDispatchIndirectCommand where
                         showString ", " .
                           showString "vkZ = " . showsPrec d (vkZ x) . showChar '}'
 
+-- | > typedef struct VkDrawIndexedIndirectCommand {
+--   >     uint32_t               indexCount;
+--   >     uint32_t               instanceCount;
+--   >     uint32_t               firstIndex;
+--   >     int32_t                vertexOffset;
+--   >     uint32_t               firstInstance;
+--   > } VkDrawIndexedIndirectCommand;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDrawIndexedIndirectCommand.html VkDrawIndexedIndirectCommand registry at www.khronos.org>
 data VkDrawIndexedIndirectCommand = VkDrawIndexedIndirectCommand## ByteArray##
 
 instance Eq VkDrawIndexedIndirectCommand where
@@ -3531,6 +3560,14 @@ instance Show VkDrawIndexedIndirectCommand where
                                       showString "vkFirstInstance = " .
                                         showsPrec d (vkFirstInstance x) . showChar '}'
 
+-- | > typedef struct VkDrawIndirectCommand {
+--   >     uint32_t               vertexCount;
+--   >     uint32_t               instanceCount;
+--   >     uint32_t               firstVertex;
+--   >     uint32_t               firstInstance;
+--   > } VkDrawIndirectCommand;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDrawIndirectCommand.html VkDrawIndirectCommand registry at www.khronos.org>
 data VkDrawIndirectCommand = VkDrawIndirectCommand## ByteArray##
 
 instance Eq VkDrawIndirectCommand where
@@ -3709,6 +3746,20 @@ instance Show VkDrawIndirectCommand where
                                 showString "vkFirstInstance = " .
                                   showsPrec d (vkFirstInstance x) . showChar '}'
 
+-- | > typedef struct VkImageMemoryBarrier {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkAccessFlags          srcAccessMask;
+--   >     VkAccessFlags          dstAccessMask;
+--   >     VkImageLayout          oldLayout;
+--   >     VkImageLayout          newLayout;
+--   >     uint32_t               srcQueueFamilyIndex;
+--   >     uint32_t               dstQueueFamilyIndex;
+--   >     VkImage                image;
+--   >     VkImageSubresourceRange subresourceRange;
+--   > } VkImageMemoryBarrier;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageMemoryBarrier.html VkImageMemoryBarrier registry at www.khronos.org>
 data VkImageMemoryBarrier = VkImageMemoryBarrier## ByteArray##
 
 instance Eq VkImageMemoryBarrier where
@@ -4033,6 +4084,14 @@ instance Show VkImageMemoryBarrier where
                                                                         (vkSubresourceRange x)
                                                                         . showChar '}'
 
+-- | > typedef struct VkMemoryBarrier {
+--   >     VkStructureType sType;
+--   >     const void*            pNext;
+--   >     VkAccessFlags          srcAccessMask;
+--   >     VkAccessFlags          dstAccessMask;
+--   > } VkMemoryBarrier;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryBarrier.html VkMemoryBarrier registry at www.khronos.org>
 data VkMemoryBarrier = VkMemoryBarrier## ByteArray##
 
 instance Eq VkMemoryBarrier where

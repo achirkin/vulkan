@@ -42,6 +42,14 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkValidationFlagsEXT {
+--   >     VkStructureType                  sType;
+--   >     const void*                      pNext;
+--   >     uint32_t                         disabledValidationCheckCount;
+--   >     VkValidationCheckEXT* pDisabledValidationChecks;
+--   > } VkValidationFlagsEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkValidationFlagsEXT.html VkValidationFlagsEXT registry at www.khronos.org>
 data VkValidationFlagsEXT = VkValidationFlagsEXT## ByteArray##
 
 instance Eq VkValidationFlagsEXT where

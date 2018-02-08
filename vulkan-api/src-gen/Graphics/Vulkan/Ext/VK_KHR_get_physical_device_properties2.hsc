@@ -70,6 +70,13 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkPhysicalDeviceFeatures2KHR {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     VkPhysicalDeviceFeatures         features;
+--   > } VkPhysicalDeviceFeatures2KHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceFeatures2KHR.html VkPhysicalDeviceFeatures2KHR registry at www.khronos.org>
 data VkPhysicalDeviceFeatures2KHR = VkPhysicalDeviceFeatures2KHR## ByteArray##
 
 instance Eq VkPhysicalDeviceFeatures2KHR where
@@ -228,6 +235,13 @@ instance Show VkPhysicalDeviceFeatures2KHR where
                           showString "vkFeatures = " .
                             showsPrec d (vkFeatures x) . showChar '}'
 
+-- | > typedef struct VkPhysicalDeviceProperties2KHR {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     VkPhysicalDeviceProperties       properties;
+--   > } VkPhysicalDeviceProperties2KHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceProperties2KHR.html VkPhysicalDeviceProperties2KHR registry at www.khronos.org>
 data VkPhysicalDeviceProperties2KHR = VkPhysicalDeviceProperties2KHR## ByteArray##
 
 instance Eq VkPhysicalDeviceProperties2KHR where
@@ -386,6 +400,13 @@ instance Show VkPhysicalDeviceProperties2KHR where
                           showString "vkProperties = " .
                             showsPrec d (vkProperties x) . showChar '}'
 
+-- | > typedef struct VkFormatProperties2KHR {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     VkFormatProperties               formatProperties;
+--   > } VkFormatProperties2KHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkFormatProperties2KHR.html VkFormatProperties2KHR registry at www.khronos.org>
 data VkFormatProperties2KHR = VkFormatProperties2KHR## ByteArray##
 
 instance Eq VkFormatProperties2KHR where
@@ -543,6 +564,13 @@ instance Show VkFormatProperties2KHR where
                           showString "vkFormatProperties = " .
                             showsPrec d (vkFormatProperties x) . showChar '}'
 
+-- | > typedef struct VkImageFormatProperties2KHR {
+--   >     VkStructureType sType;
+--   >     void* pNext;
+--   >     VkImageFormatProperties          imageFormatProperties;
+--   > } VkImageFormatProperties2KHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageFormatProperties2KHR.html VkImageFormatProperties2KHR registry at www.khronos.org>
 data VkImageFormatProperties2KHR = VkImageFormatProperties2KHR## ByteArray##
 
 instance Eq VkImageFormatProperties2KHR where
@@ -700,6 +728,17 @@ instance Show VkImageFormatProperties2KHR where
                           showString "vkImageFormatProperties = " .
                             showsPrec d (vkImageFormatProperties x) . showChar '}'
 
+-- | > typedef struct VkPhysicalDeviceImageFormatInfo2KHR {
+--   >     VkStructureType sType;
+--   >     const void* pNext;
+--   >     VkFormat                         format;
+--   >     VkImageType                      type;
+--   >     VkImageTiling                    tiling;
+--   >     VkImageUsageFlags                usage;
+--   >     VkImageCreateFlags flags;
+--   > } VkPhysicalDeviceImageFormatInfo2KHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceImageFormatInfo2KHR.html VkPhysicalDeviceImageFormatInfo2KHR registry at www.khronos.org>
 data VkPhysicalDeviceImageFormatInfo2KHR = VkPhysicalDeviceImageFormatInfo2KHR## ByteArray##
 
 instance Eq VkPhysicalDeviceImageFormatInfo2KHR where
@@ -965,6 +1004,13 @@ instance Show VkPhysicalDeviceImageFormatInfo2KHR where
                                                   showString "vkFlags = " .
                                                     showsPrec d (vkFlags x) . showChar '}'
 
+-- | > typedef struct VkQueueFamilyProperties2KHR {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     VkQueueFamilyProperties          queueFamilyProperties;
+--   > } VkQueueFamilyProperties2KHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkQueueFamilyProperties2KHR.html VkQueueFamilyProperties2KHR registry at www.khronos.org>
 data VkQueueFamilyProperties2KHR = VkQueueFamilyProperties2KHR## ByteArray##
 
 instance Eq VkQueueFamilyProperties2KHR where
@@ -1122,6 +1168,13 @@ instance Show VkQueueFamilyProperties2KHR where
                           showString "vkQueueFamilyProperties = " .
                             showsPrec d (vkQueueFamilyProperties x) . showChar '}'
 
+-- | > typedef struct VkPhysicalDeviceMemoryProperties2KHR {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     VkPhysicalDeviceMemoryProperties memoryProperties;
+--   > } VkPhysicalDeviceMemoryProperties2KHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceMemoryProperties2KHR.html VkPhysicalDeviceMemoryProperties2KHR registry at www.khronos.org>
 data VkPhysicalDeviceMemoryProperties2KHR = VkPhysicalDeviceMemoryProperties2KHR## ByteArray##
 
 instance Eq VkPhysicalDeviceMemoryProperties2KHR where
@@ -1291,6 +1344,13 @@ instance Show VkPhysicalDeviceMemoryProperties2KHR where
                           showString "vkMemoryProperties = " .
                             showsPrec d (vkMemoryProperties x) . showChar '}'
 
+-- | > typedef struct VkSparseImageFormatProperties2KHR {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     VkSparseImageFormatProperties    properties;
+--   > } VkSparseImageFormatProperties2KHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSparseImageFormatProperties2KHR.html VkSparseImageFormatProperties2KHR registry at www.khronos.org>
 data VkSparseImageFormatProperties2KHR = VkSparseImageFormatProperties2KHR## ByteArray##
 
 instance Eq VkSparseImageFormatProperties2KHR where
@@ -1453,6 +1513,17 @@ instance Show VkSparseImageFormatProperties2KHR where
                           showString "vkProperties = " .
                             showsPrec d (vkProperties x) . showChar '}'
 
+-- | > typedef struct VkPhysicalDeviceSparseImageFormatInfo2KHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkFormat                         format;
+--   >     VkImageType                      type;
+--   >     VkSampleCountFlagBits            samples;
+--   >     VkImageUsageFlags                usage;
+--   >     VkImageTiling                    tiling;
+--   > } VkPhysicalDeviceSparseImageFormatInfo2KHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceSparseImageFormatInfo2KHR.html VkPhysicalDeviceSparseImageFormatInfo2KHR registry at www.khronos.org>
 data VkPhysicalDeviceSparseImageFormatInfo2KHR = VkPhysicalDeviceSparseImageFormatInfo2KHR## ByteArray##
 
 instance Eq VkPhysicalDeviceSparseImageFormatInfo2KHR where

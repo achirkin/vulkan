@@ -47,6 +47,20 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkHdrMetadataEXT {
+--   >     VkStructureType sType;
+--   >     const void*    pNext;
+--   >     VkXYColorEXT   displayPrimaryRed;
+--   >     VkXYColorEXT   displayPrimaryGreen;
+--   >     VkXYColorEXT   displayPrimaryBlue;
+--   >     VkXYColorEXT   whitePoint;
+--   >     float          maxLuminance;
+--   >     float          minLuminance;
+--   >     float          maxContentLightLevel;
+--   >     float          maxFrameAverageLightLevel;
+--   > } VkHdrMetadataEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkHdrMetadataEXT.html VkHdrMetadataEXT registry at www.khronos.org>
 data VkHdrMetadataEXT = VkHdrMetadataEXT## ByteArray##
 
 instance Eq VkHdrMetadataEXT where
@@ -379,6 +393,12 @@ instance Show VkHdrMetadataEXT where
 
 -- | Chromaticity coordinate
 --
+--   > typedef struct VkXYColorEXT {
+--   >     float   x;
+--   >     float   y;
+--   > } VkXYColorEXT;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkXYColorEXT.html VkXYColorEXT registry at www.khronos.org>
 data VkXYColorEXT = VkXYColorEXT## ByteArray##
 
 instance Eq VkXYColorEXT where

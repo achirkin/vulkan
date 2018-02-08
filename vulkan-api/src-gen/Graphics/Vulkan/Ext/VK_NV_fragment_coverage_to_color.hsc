@@ -42,6 +42,15 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkPipelineCoverageToColorStateCreateInfoNV {
+--   >     VkStructureType sType;
+--   >     const void*                                                                      pNext;
+--   >     VkPipelineCoverageToColorStateCreateFlagsNV                    flags;
+--   >     VkBool32                         coverageToColorEnable;
+--   >     uint32_t         coverageToColorLocation;
+--   > } VkPipelineCoverageToColorStateCreateInfoNV;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineCoverageToColorStateCreateInfoNV.html VkPipelineCoverageToColorStateCreateInfoNV registry at www.khronos.org>
 data VkPipelineCoverageToColorStateCreateInfoNV = VkPipelineCoverageToColorStateCreateInfoNV## ByteArray##
 
 instance Eq VkPipelineCoverageToColorStateCreateInfoNV where

@@ -43,6 +43,14 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+-- | > typedef struct VkExternalImageFormatPropertiesNV {
+--   >     VkImageFormatProperties          imageFormatProperties;
+--   >     VkExternalMemoryFeatureFlagsNV   externalMemoryFeatures;
+--   >     VkExternalMemoryHandleTypeFlagsNV exportFromImportedHandleTypes;
+--   >     VkExternalMemoryHandleTypeFlagsNV compatibleHandleTypes;
+--   > } VkExternalImageFormatPropertiesNV;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalImageFormatPropertiesNV.html VkExternalImageFormatPropertiesNV registry at www.khronos.org>
 data VkExternalImageFormatPropertiesNV = VkExternalImageFormatPropertiesNV## ByteArray##
 
 instance Eq VkExternalImageFormatPropertiesNV where

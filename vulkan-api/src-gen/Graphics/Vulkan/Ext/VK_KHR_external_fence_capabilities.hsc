@@ -54,6 +54,13 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                                        (unsafeDupablePerformIO)
 
+-- | > typedef struct VkPhysicalDeviceExternalFenceInfoKHR {
+--   >     VkStructureType sType;
+--   >     const void*                      pNext;
+--   >     VkExternalFenceHandleTypeFlagBitsKHR handleType;
+--   > } VkPhysicalDeviceExternalFenceInfoKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceExternalFenceInfoKHR.html VkPhysicalDeviceExternalFenceInfoKHR registry at www.khronos.org>
 data VkPhysicalDeviceExternalFenceInfoKHR = VkPhysicalDeviceExternalFenceInfoKHR## ByteArray##
 
 instance Eq VkPhysicalDeviceExternalFenceInfoKHR where
@@ -223,6 +230,15 @@ instance Show VkPhysicalDeviceExternalFenceInfoKHR where
                           showString "vkHandleType = " .
                             showsPrec d (vkHandleType x) . showChar '}'
 
+-- | > typedef struct VkExternalFencePropertiesKHR {
+--   >     VkStructureType sType;
+--   >     void*                            pNext;
+--   >     VkExternalFenceHandleTypeFlagsKHR exportFromImportedHandleTypes;
+--   >     VkExternalFenceHandleTypeFlagsKHR compatibleHandleTypes;
+--   >     VkExternalFenceFeatureFlagsKHR externalFenceFeatures;
+--   > } VkExternalFencePropertiesKHR;
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalFencePropertiesKHR.html VkExternalFencePropertiesKHR registry at www.khronos.org>
 data VkExternalFencePropertiesKHR = VkExternalFencePropertiesKHR## ByteArray##
 
 instance Eq VkExternalFencePropertiesKHR where
