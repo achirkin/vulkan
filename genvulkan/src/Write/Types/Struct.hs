@@ -364,7 +364,6 @@ genStructField structAttrs structNameTxt structType VkTypeMember{..} _offsetE SF
 
       when (isJust sfiTyElemN) $ do
         writeImport $ DIThing "KnownNat" DITEmpty
-        writeImport $ DIThing "CmpNat" DITNo
         writeImport $ DIVar "natVal'"
         writePragma "ScopedTypeVariables"
         writePragma "FlexibleContexts"

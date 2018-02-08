@@ -185,9 +185,9 @@ type family IndexInBounds' (s :: Symbol)
                            (a :: *) (r :: Ordering) :: Constraint where
   IndexInBounds' _ _ _ 'LT = ()
   IndexInBounds' s i a _ = TypeError
-    ( 'Text "Index " ':<>: 'ShowType i
-     ':<>: 'Text " is out of bounds for an array member '"
-     ':<>: 'Text s ':<>: 'Text "' of type "
+    ( 'Text "Array index " ':<>: 'ShowType i
+     ':<>: 'Text " is out of bounds for '"
+     ':<>: 'Text s ':<>: 'Text "',  member of type "
      ':<>: 'ShowType a ':<>: 'Text "."
      ':$$: 'Text "Note: the array size is "
         ':<>: 'ShowType (FieldArrayLength s a) ':<>: 'Text "."
