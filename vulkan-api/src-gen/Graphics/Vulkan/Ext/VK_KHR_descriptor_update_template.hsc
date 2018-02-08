@@ -1,8 +1,10 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
@@ -168,6 +170,28 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, dstBinding}
 
 instance {-# OVERLAPPING #-}
+         HasField "dstBinding" VkDescriptorUpdateTemplateEntryKHR where
+        type FieldType "dstBinding" VkDescriptorUpdateTemplateEntryKHR =
+             Word32
+        type FieldOptional "dstBinding" VkDescriptorUpdateTemplateEntryKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "dstBinding"
+           VkDescriptorUpdateTemplateEntryKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkDstBinding
+
+        {-# INLINE readField #-}
+        readField = readVkDstBinding
+
+instance CanWriteField "dstBinding"
+           VkDescriptorUpdateTemplateEntryKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkDstBinding
+
+instance {-# OVERLAPPING #-}
          HasVkDstArrayElement VkDescriptorUpdateTemplateEntryKHR where
         type VkDstArrayElementMType VkDescriptorUpdateTemplateEntryKHR =
              Word32
@@ -188,6 +212,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkDstArrayElement #-}
         writeVkDstArrayElement p
           = pokeByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, dstArrayElement}
+
+instance {-# OVERLAPPING #-}
+         HasField "dstArrayElement" VkDescriptorUpdateTemplateEntryKHR where
+        type FieldType "dstArrayElement" VkDescriptorUpdateTemplateEntryKHR
+             = Word32
+        type FieldOptional "dstArrayElement"
+               VkDescriptorUpdateTemplateEntryKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "dstArrayElement"
+           VkDescriptorUpdateTemplateEntryKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkDstArrayElement
+
+        {-# INLINE readField #-}
+        readField = readVkDstArrayElement
+
+instance CanWriteField "dstArrayElement"
+           VkDescriptorUpdateTemplateEntryKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkDstArrayElement
 
 instance {-# OVERLAPPING #-}
          HasVkDescriptorCount VkDescriptorUpdateTemplateEntryKHR where
@@ -212,6 +259,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, descriptorCount}
 
 instance {-# OVERLAPPING #-}
+         HasField "descriptorCount" VkDescriptorUpdateTemplateEntryKHR where
+        type FieldType "descriptorCount" VkDescriptorUpdateTemplateEntryKHR
+             = Word32
+        type FieldOptional "descriptorCount"
+               VkDescriptorUpdateTemplateEntryKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "descriptorCount"
+           VkDescriptorUpdateTemplateEntryKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkDescriptorCount
+
+        {-# INLINE readField #-}
+        readField = readVkDescriptorCount
+
+instance CanWriteField "descriptorCount"
+           VkDescriptorUpdateTemplateEntryKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkDescriptorCount
+
+instance {-# OVERLAPPING #-}
          HasVkDescriptorType VkDescriptorUpdateTemplateEntryKHR where
         type VkDescriptorTypeMType VkDescriptorUpdateTemplateEntryKHR =
              VkDescriptorType
@@ -232,6 +302,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkDescriptorType #-}
         writeVkDescriptorType p
           = pokeByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, descriptorType}
+
+instance {-# OVERLAPPING #-}
+         HasField "descriptorType" VkDescriptorUpdateTemplateEntryKHR where
+        type FieldType "descriptorType" VkDescriptorUpdateTemplateEntryKHR
+             = VkDescriptorType
+        type FieldOptional "descriptorType"
+               VkDescriptorUpdateTemplateEntryKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "descriptorType"
+           VkDescriptorUpdateTemplateEntryKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkDescriptorType
+
+        {-# INLINE readField #-}
+        readField = readVkDescriptorType
+
+instance CanWriteField "descriptorType"
+           VkDescriptorUpdateTemplateEntryKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkDescriptorType
 
 instance {-# OVERLAPPING #-}
          HasVkOffset VkDescriptorUpdateTemplateEntryKHR where
@@ -256,6 +349,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, offset}
 
 instance {-# OVERLAPPING #-}
+         HasField "offset" VkDescriptorUpdateTemplateEntryKHR where
+        type FieldType "offset" VkDescriptorUpdateTemplateEntryKHR =
+             #{type size_t}
+        type FieldOptional "offset" VkDescriptorUpdateTemplateEntryKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "offset" VkDescriptorUpdateTemplateEntryKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkOffset
+
+        {-# INLINE readField #-}
+        readField = readVkOffset
+
+instance CanWriteField "offset" VkDescriptorUpdateTemplateEntryKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkOffset
+
+instance {-# OVERLAPPING #-}
          HasVkStride VkDescriptorUpdateTemplateEntryKHR where
         type VkStrideMType VkDescriptorUpdateTemplateEntryKHR =
              #{type size_t}
@@ -276,6 +389,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkStride #-}
         writeVkStride p
           = pokeByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, stride}
+
+instance {-# OVERLAPPING #-}
+         HasField "stride" VkDescriptorUpdateTemplateEntryKHR where
+        type FieldType "stride" VkDescriptorUpdateTemplateEntryKHR =
+             #{type size_t}
+        type FieldOptional "stride" VkDescriptorUpdateTemplateEntryKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "stride" VkDescriptorUpdateTemplateEntryKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkStride
+
+        {-# INLINE readField #-}
+        readField = readVkStride
+
+instance CanWriteField "stride" VkDescriptorUpdateTemplateEntryKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkStride
 
 instance Show VkDescriptorUpdateTemplateEntryKHR where
         showsPrec d x
@@ -429,6 +562,28 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDescriptorUpdateTemplateCreateInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkDescriptorUpdateTemplateCreateInfoKHR where
+        type FieldType "sType" VkDescriptorUpdateTemplateCreateInfoKHR =
+             VkStructureType
+        type FieldOptional "sType" VkDescriptorUpdateTemplateCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType"
+           VkDescriptorUpdateTemplateCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType"
+           VkDescriptorUpdateTemplateCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkDescriptorUpdateTemplateCreateInfoKHR where
         type VkPNextMType VkDescriptorUpdateTemplateCreateInfoKHR =
              Ptr Void
@@ -451,6 +606,28 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDescriptorUpdateTemplateCreateInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
+         HasField "pNext" VkDescriptorUpdateTemplateCreateInfoKHR where
+        type FieldType "pNext" VkDescriptorUpdateTemplateCreateInfoKHR =
+             Ptr Void
+        type FieldOptional "pNext" VkDescriptorUpdateTemplateCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext"
+           VkDescriptorUpdateTemplateCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkDescriptorUpdateTemplateCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
+
+instance {-# OVERLAPPING #-}
          HasVkFlags VkDescriptorUpdateTemplateCreateInfoKHR where
         type VkFlagsMType VkDescriptorUpdateTemplateCreateInfoKHR =
              VkDescriptorUpdateTemplateCreateFlagsKHR
@@ -471,6 +648,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkFlags #-}
         writeVkFlags p
           = pokeByteOff p #{offset VkDescriptorUpdateTemplateCreateInfoKHR, flags}
+
+instance {-# OVERLAPPING #-}
+         HasField "flags" VkDescriptorUpdateTemplateCreateInfoKHR where
+        type FieldType "flags" VkDescriptorUpdateTemplateCreateInfoKHR =
+             VkDescriptorUpdateTemplateCreateFlagsKHR
+        type FieldOptional "flags" VkDescriptorUpdateTemplateCreateInfoKHR
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "flags"
+           VkDescriptorUpdateTemplateCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkFlags
+
+        {-# INLINE readField #-}
+        readField = readVkFlags
+
+instance CanWriteField "flags"
+           VkDescriptorUpdateTemplateCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkFlags
 
 instance {-# OVERLAPPING #-}
          HasVkDescriptorUpdateEntryCount
@@ -498,6 +697,32 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDescriptorUpdateTemplateCreateInfoKHR, descriptorUpdateEntryCount}
 
 instance {-# OVERLAPPING #-}
+         HasField "descriptorUpdateEntryCount"
+           VkDescriptorUpdateTemplateCreateInfoKHR
+         where
+        type FieldType "descriptorUpdateEntryCount"
+               VkDescriptorUpdateTemplateCreateInfoKHR
+             = Word32
+        type FieldOptional "descriptorUpdateEntryCount"
+               VkDescriptorUpdateTemplateCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "descriptorUpdateEntryCount"
+           VkDescriptorUpdateTemplateCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkDescriptorUpdateEntryCount
+
+        {-# INLINE readField #-}
+        readField = readVkDescriptorUpdateEntryCount
+
+instance CanWriteField "descriptorUpdateEntryCount"
+           VkDescriptorUpdateTemplateCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkDescriptorUpdateEntryCount
+
+instance {-# OVERLAPPING #-}
          HasVkPDescriptorUpdateEntries
            VkDescriptorUpdateTemplateCreateInfoKHR
          where
@@ -523,6 +748,32 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDescriptorUpdateTemplateCreateInfoKHR, pDescriptorUpdateEntries}
 
 instance {-# OVERLAPPING #-}
+         HasField "pDescriptorUpdateEntries"
+           VkDescriptorUpdateTemplateCreateInfoKHR
+         where
+        type FieldType "pDescriptorUpdateEntries"
+               VkDescriptorUpdateTemplateCreateInfoKHR
+             = Ptr VkDescriptorUpdateTemplateEntryKHR
+        type FieldOptional "pDescriptorUpdateEntries"
+               VkDescriptorUpdateTemplateCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pDescriptorUpdateEntries"
+           VkDescriptorUpdateTemplateCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPDescriptorUpdateEntries
+
+        {-# INLINE readField #-}
+        readField = readVkPDescriptorUpdateEntries
+
+instance CanWriteField "pDescriptorUpdateEntries"
+           VkDescriptorUpdateTemplateCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPDescriptorUpdateEntries
+
+instance {-# OVERLAPPING #-}
          HasVkTemplateType VkDescriptorUpdateTemplateCreateInfoKHR where
         type VkTemplateTypeMType VkDescriptorUpdateTemplateCreateInfoKHR =
              VkDescriptorUpdateTemplateTypeKHR
@@ -543,6 +794,31 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkTemplateType #-}
         writeVkTemplateType p
           = pokeByteOff p #{offset VkDescriptorUpdateTemplateCreateInfoKHR, templateType}
+
+instance {-# OVERLAPPING #-}
+         HasField "templateType" VkDescriptorUpdateTemplateCreateInfoKHR
+         where
+        type FieldType "templateType"
+               VkDescriptorUpdateTemplateCreateInfoKHR
+             = VkDescriptorUpdateTemplateTypeKHR
+        type FieldOptional "templateType"
+               VkDescriptorUpdateTemplateCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "templateType"
+           VkDescriptorUpdateTemplateCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkTemplateType
+
+        {-# INLINE readField #-}
+        readField = readVkTemplateType
+
+instance CanWriteField "templateType"
+           VkDescriptorUpdateTemplateCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkTemplateType
 
 instance {-# OVERLAPPING #-}
          HasVkDescriptorSetLayout VkDescriptorUpdateTemplateCreateInfoKHR
@@ -569,6 +845,32 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDescriptorUpdateTemplateCreateInfoKHR, descriptorSetLayout}
 
 instance {-# OVERLAPPING #-}
+         HasField "descriptorSetLayout"
+           VkDescriptorUpdateTemplateCreateInfoKHR
+         where
+        type FieldType "descriptorSetLayout"
+               VkDescriptorUpdateTemplateCreateInfoKHR
+             = VkDescriptorSetLayout
+        type FieldOptional "descriptorSetLayout"
+               VkDescriptorUpdateTemplateCreateInfoKHR
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "descriptorSetLayout"
+           VkDescriptorUpdateTemplateCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkDescriptorSetLayout
+
+        {-# INLINE readField #-}
+        readField = readVkDescriptorSetLayout
+
+instance CanWriteField "descriptorSetLayout"
+           VkDescriptorUpdateTemplateCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkDescriptorSetLayout
+
+instance {-# OVERLAPPING #-}
          HasVkPipelineBindPoint VkDescriptorUpdateTemplateCreateInfoKHR
          where
         type VkPipelineBindPointMType
@@ -593,6 +895,32 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDescriptorUpdateTemplateCreateInfoKHR, pipelineBindPoint}
 
 instance {-# OVERLAPPING #-}
+         HasField "pipelineBindPoint"
+           VkDescriptorUpdateTemplateCreateInfoKHR
+         where
+        type FieldType "pipelineBindPoint"
+               VkDescriptorUpdateTemplateCreateInfoKHR
+             = VkPipelineBindPoint
+        type FieldOptional "pipelineBindPoint"
+               VkDescriptorUpdateTemplateCreateInfoKHR
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "pipelineBindPoint"
+           VkDescriptorUpdateTemplateCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPipelineBindPoint
+
+        {-# INLINE readField #-}
+        readField = readVkPipelineBindPoint
+
+instance CanWriteField "pipelineBindPoint"
+           VkDescriptorUpdateTemplateCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPipelineBindPoint
+
+instance {-# OVERLAPPING #-}
          HasVkPipelineLayout VkDescriptorUpdateTemplateCreateInfoKHR where
         type VkPipelineLayoutMType VkDescriptorUpdateTemplateCreateInfoKHR
              = VkPipelineLayout
@@ -615,6 +943,31 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDescriptorUpdateTemplateCreateInfoKHR, pipelineLayout}
 
 instance {-# OVERLAPPING #-}
+         HasField "pipelineLayout" VkDescriptorUpdateTemplateCreateInfoKHR
+         where
+        type FieldType "pipelineLayout"
+               VkDescriptorUpdateTemplateCreateInfoKHR
+             = VkPipelineLayout
+        type FieldOptional "pipelineLayout"
+               VkDescriptorUpdateTemplateCreateInfoKHR
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "pipelineLayout"
+           VkDescriptorUpdateTemplateCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPipelineLayout
+
+        {-# INLINE readField #-}
+        readField = readVkPipelineLayout
+
+instance CanWriteField "pipelineLayout"
+           VkDescriptorUpdateTemplateCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPipelineLayout
+
+instance {-# OVERLAPPING #-}
          HasVkSet VkDescriptorUpdateTemplateCreateInfoKHR where
         type VkSetMType VkDescriptorUpdateTemplateCreateInfoKHR = Word32
 
@@ -634,6 +987,27 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkSet #-}
         writeVkSet p
           = pokeByteOff p #{offset VkDescriptorUpdateTemplateCreateInfoKHR, set}
+
+instance {-# OVERLAPPING #-}
+         HasField "set" VkDescriptorUpdateTemplateCreateInfoKHR where
+        type FieldType "set" VkDescriptorUpdateTemplateCreateInfoKHR =
+             Word32
+        type FieldOptional "set" VkDescriptorUpdateTemplateCreateInfoKHR =
+             'True -- ' closing tick for hsc2hs
+
+instance CanReadField "set" VkDescriptorUpdateTemplateCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSet
+
+        {-# INLINE readField #-}
+        readField = readVkSet
+
+instance CanWriteField "set"
+           VkDescriptorUpdateTemplateCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSet
 
 instance Show VkDescriptorUpdateTemplateCreateInfoKHR where
         showsPrec d x

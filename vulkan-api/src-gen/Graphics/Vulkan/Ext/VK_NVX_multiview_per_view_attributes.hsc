@@ -1,12 +1,14 @@
 #include "vulkan/vulkan.h"
 
-{-# LANGUAGE DataKinds       #-}
-{-# LANGUAGE MagicHash       #-}
-{-# LANGUAGE PatternSynonyms #-}
-{-# LANGUAGE Strict          #-}
-{-# LANGUAGE TypeFamilies    #-}
-{-# LANGUAGE UnboxedTuples   #-}
-{-# LANGUAGE ViewPatterns    #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MagicHash             #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE PatternSynonyms       #-}
+{-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeFamilies          #-}
+{-# LANGUAGE UnboxedTuples         #-}
+{-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_NVX_multiview_per_view_attributes
        (-- * Vulkan extension: @VK_NVX_multiview_per_view_attributes@
         -- |
@@ -194,6 +196,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType"
+           VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
+         where
+        type FieldType "sType"
+               VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
+             = VkStructureType
+        type FieldOptional "sType"
+               VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType"
+           VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
          where
         type VkPNextMType
@@ -216,6 +238,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext"
+           VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
+         where
+        type FieldType "pNext"
+               VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
+             = Ptr Void
+        type FieldOptional "pNext"
+               VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext"
+           VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkPerViewPositionAllComponents
@@ -241,6 +283,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPerViewPositionAllComponents #-}
         writeVkPerViewPositionAllComponents p
           = pokeByteOff p #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, perViewPositionAllComponents}
+
+instance {-# OVERLAPPING #-}
+         HasField "perViewPositionAllComponents"
+           VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
+         where
+        type FieldType "perViewPositionAllComponents"
+               VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
+             = VkBool32
+        type FieldOptional "perViewPositionAllComponents"
+               VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "perViewPositionAllComponents"
+           VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkPerViewPositionAllComponents
+
+        {-# INLINE readField #-}
+        readField = readVkPerViewPositionAllComponents
 
 instance Show
            VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX

@@ -1,12 +1,14 @@
 #include "vulkan/vulkan.h"
 
-{-# LANGUAGE DataKinds       #-}
-{-# LANGUAGE MagicHash       #-}
-{-# LANGUAGE PatternSynonyms #-}
-{-# LANGUAGE Strict          #-}
-{-# LANGUAGE TypeFamilies    #-}
-{-# LANGUAGE UnboxedTuples   #-}
-{-# LANGUAGE ViewPatterns    #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MagicHash             #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE PatternSynonyms       #-}
+{-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeFamilies          #-}
+{-# LANGUAGE UnboxedTuples         #-}
+{-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_EXT_sampler_filter_minmax
        (-- * Vulkan extension: @VK_EXT_sampler_filter_minmax@
         -- |
@@ -173,6 +175,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkSamplerReductionModeCreateInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkSamplerReductionModeCreateInfoEXT where
+        type FieldType "sType" VkSamplerReductionModeCreateInfoEXT =
+             VkStructureType
+        type FieldOptional "sType" VkSamplerReductionModeCreateInfoEXT =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkSamplerReductionModeCreateInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkSamplerReductionModeCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkSamplerReductionModeCreateInfoEXT where
         type VkPNextMType VkSamplerReductionModeCreateInfoEXT = Ptr Void
 
@@ -192,6 +214,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkSamplerReductionModeCreateInfoEXT, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkSamplerReductionModeCreateInfoEXT where
+        type FieldType "pNext" VkSamplerReductionModeCreateInfoEXT =
+             Ptr Void
+        type FieldOptional "pNext" VkSamplerReductionModeCreateInfoEXT =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkSamplerReductionModeCreateInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkSamplerReductionModeCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkReductionMode VkSamplerReductionModeCreateInfoEXT where
@@ -214,6 +256,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkReductionMode #-}
         writeVkReductionMode p
           = pokeByteOff p #{offset VkSamplerReductionModeCreateInfoEXT, reductionMode}
+
+instance {-# OVERLAPPING #-}
+         HasField "reductionMode" VkSamplerReductionModeCreateInfoEXT where
+        type FieldType "reductionMode" VkSamplerReductionModeCreateInfoEXT
+             = VkSamplerReductionModeEXT
+        type FieldOptional "reductionMode"
+               VkSamplerReductionModeCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "reductionMode"
+           VkSamplerReductionModeCreateInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkReductionMode
+
+        {-# INLINE readField #-}
+        readField = readVkReductionMode
+
+instance CanWriteField "reductionMode"
+           VkSamplerReductionModeCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkReductionMode
 
 instance Show VkSamplerReductionModeCreateInfoEXT where
         showsPrec d x
@@ -357,6 +422,25 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+         where
+        type FieldType "sType"
+               VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+             = VkStructureType
+        type FieldOptional "sType"
+               VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType"
+           VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT where
         type VkPNextMType VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
              = Ptr Void
@@ -377,6 +461,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+         where
+        type FieldType "pNext"
+               VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+             = Ptr Void
+        type FieldOptional "pNext"
+               VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext"
+           VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkFilterMinmaxSingleComponentFormats
@@ -404,6 +507,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, filterMinmaxSingleComponentFormats}
 
 instance {-# OVERLAPPING #-}
+         HasField "filterMinmaxSingleComponentFormats"
+           VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+         where
+        type FieldType "filterMinmaxSingleComponentFormats"
+               VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+             = VkBool32
+        type FieldOptional "filterMinmaxSingleComponentFormats"
+               VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "filterMinmaxSingleComponentFormats"
+           VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkFilterMinmaxSingleComponentFormats
+
+        {-# INLINE readField #-}
+        readField = readVkFilterMinmaxSingleComponentFormats
+
+instance {-# OVERLAPPING #-}
          HasVkFilterMinmaxImageComponentMapping
            VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
          where
@@ -427,6 +550,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkFilterMinmaxImageComponentMapping #-}
         writeVkFilterMinmaxImageComponentMapping p
           = pokeByteOff p #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, filterMinmaxImageComponentMapping}
+
+instance {-# OVERLAPPING #-}
+         HasField "filterMinmaxImageComponentMapping"
+           VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+         where
+        type FieldType "filterMinmaxImageComponentMapping"
+               VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+             = VkBool32
+        type FieldOptional "filterMinmaxImageComponentMapping"
+               VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "filterMinmaxImageComponentMapping"
+           VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkFilterMinmaxImageComponentMapping
+
+        {-# INLINE readField #-}
+        readField = readVkFilterMinmaxImageComponentMapping
 
 instance Show VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
          where

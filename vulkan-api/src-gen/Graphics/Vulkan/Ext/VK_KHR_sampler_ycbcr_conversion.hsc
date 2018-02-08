@@ -1,8 +1,10 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
@@ -238,6 +240,27 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkSamplerYcbcrConversionCreateInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkSamplerYcbcrConversionCreateInfoKHR where
+        type FieldType "sType" VkSamplerYcbcrConversionCreateInfoKHR =
+             VkStructureType
+        type FieldOptional "sType" VkSamplerYcbcrConversionCreateInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkSamplerYcbcrConversionCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType"
+           VkSamplerYcbcrConversionCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkSamplerYcbcrConversionCreateInfoKHR where
         type VkPNextMType VkSamplerYcbcrConversionCreateInfoKHR = Ptr Void
 
@@ -259,6 +282,27 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkSamplerYcbcrConversionCreateInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
+         HasField "pNext" VkSamplerYcbcrConversionCreateInfoKHR where
+        type FieldType "pNext" VkSamplerYcbcrConversionCreateInfoKHR =
+             Ptr Void
+        type FieldOptional "pNext" VkSamplerYcbcrConversionCreateInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkSamplerYcbcrConversionCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkSamplerYcbcrConversionCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
+
+instance {-# OVERLAPPING #-}
          HasVkFormat VkSamplerYcbcrConversionCreateInfoKHR where
         type VkFormatMType VkSamplerYcbcrConversionCreateInfoKHR = VkFormat
 
@@ -278,6 +322,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkFormat #-}
         writeVkFormat p
           = pokeByteOff p #{offset VkSamplerYcbcrConversionCreateInfoKHR, format}
+
+instance {-# OVERLAPPING #-}
+         HasField "format" VkSamplerYcbcrConversionCreateInfoKHR where
+        type FieldType "format" VkSamplerYcbcrConversionCreateInfoKHR =
+             VkFormat
+        type FieldOptional "format" VkSamplerYcbcrConversionCreateInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "format"
+           VkSamplerYcbcrConversionCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkFormat
+
+        {-# INLINE readField #-}
+        readField = readVkFormat
+
+instance CanWriteField "format"
+           VkSamplerYcbcrConversionCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkFormat
 
 instance {-# OVERLAPPING #-}
          HasVkYcbcrModel VkSamplerYcbcrConversionCreateInfoKHR where
@@ -302,6 +368,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkSamplerYcbcrConversionCreateInfoKHR, ycbcrModel}
 
 instance {-# OVERLAPPING #-}
+         HasField "ycbcrModel" VkSamplerYcbcrConversionCreateInfoKHR where
+        type FieldType "ycbcrModel" VkSamplerYcbcrConversionCreateInfoKHR =
+             VkSamplerYcbcrModelConversionKHR
+        type FieldOptional "ycbcrModel"
+               VkSamplerYcbcrConversionCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "ycbcrModel"
+           VkSamplerYcbcrConversionCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkYcbcrModel
+
+        {-# INLINE readField #-}
+        readField = readVkYcbcrModel
+
+instance CanWriteField "ycbcrModel"
+           VkSamplerYcbcrConversionCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkYcbcrModel
+
+instance {-# OVERLAPPING #-}
          HasVkYcbcrRange VkSamplerYcbcrConversionCreateInfoKHR where
         type VkYcbcrRangeMType VkSamplerYcbcrConversionCreateInfoKHR =
              VkSamplerYcbcrRangeKHR
@@ -322,6 +411,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkYcbcrRange #-}
         writeVkYcbcrRange p
           = pokeByteOff p #{offset VkSamplerYcbcrConversionCreateInfoKHR, ycbcrRange}
+
+instance {-# OVERLAPPING #-}
+         HasField "ycbcrRange" VkSamplerYcbcrConversionCreateInfoKHR where
+        type FieldType "ycbcrRange" VkSamplerYcbcrConversionCreateInfoKHR =
+             VkSamplerYcbcrRangeKHR
+        type FieldOptional "ycbcrRange"
+               VkSamplerYcbcrConversionCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "ycbcrRange"
+           VkSamplerYcbcrConversionCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkYcbcrRange
+
+        {-# INLINE readField #-}
+        readField = readVkYcbcrRange
+
+instance CanWriteField "ycbcrRange"
+           VkSamplerYcbcrConversionCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkYcbcrRange
 
 instance {-# OVERLAPPING #-}
          HasVkComponents VkSamplerYcbcrConversionCreateInfoKHR where
@@ -346,6 +458,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkSamplerYcbcrConversionCreateInfoKHR, components}
 
 instance {-# OVERLAPPING #-}
+         HasField "components" VkSamplerYcbcrConversionCreateInfoKHR where
+        type FieldType "components" VkSamplerYcbcrConversionCreateInfoKHR =
+             VkComponentMapping
+        type FieldOptional "components"
+               VkSamplerYcbcrConversionCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "components"
+           VkSamplerYcbcrConversionCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkComponents
+
+        {-# INLINE readField #-}
+        readField = readVkComponents
+
+instance CanWriteField "components"
+           VkSamplerYcbcrConversionCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkComponents
+
+instance {-# OVERLAPPING #-}
          HasVkXChromaOffset VkSamplerYcbcrConversionCreateInfoKHR where
         type VkXChromaOffsetMType VkSamplerYcbcrConversionCreateInfoKHR =
              VkChromaLocationKHR
@@ -366,6 +501,31 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkXChromaOffset #-}
         writeVkXChromaOffset p
           = pokeByteOff p #{offset VkSamplerYcbcrConversionCreateInfoKHR, xChromaOffset}
+
+instance {-# OVERLAPPING #-}
+         HasField "xChromaOffset" VkSamplerYcbcrConversionCreateInfoKHR
+         where
+        type FieldType "xChromaOffset"
+               VkSamplerYcbcrConversionCreateInfoKHR
+             = VkChromaLocationKHR
+        type FieldOptional "xChromaOffset"
+               VkSamplerYcbcrConversionCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "xChromaOffset"
+           VkSamplerYcbcrConversionCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkXChromaOffset
+
+        {-# INLINE readField #-}
+        readField = readVkXChromaOffset
+
+instance CanWriteField "xChromaOffset"
+           VkSamplerYcbcrConversionCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkXChromaOffset
 
 instance {-# OVERLAPPING #-}
          HasVkYChromaOffset VkSamplerYcbcrConversionCreateInfoKHR where
@@ -390,6 +550,31 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkSamplerYcbcrConversionCreateInfoKHR, yChromaOffset}
 
 instance {-# OVERLAPPING #-}
+         HasField "yChromaOffset" VkSamplerYcbcrConversionCreateInfoKHR
+         where
+        type FieldType "yChromaOffset"
+               VkSamplerYcbcrConversionCreateInfoKHR
+             = VkChromaLocationKHR
+        type FieldOptional "yChromaOffset"
+               VkSamplerYcbcrConversionCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "yChromaOffset"
+           VkSamplerYcbcrConversionCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkYChromaOffset
+
+        {-# INLINE readField #-}
+        readField = readVkYChromaOffset
+
+instance CanWriteField "yChromaOffset"
+           VkSamplerYcbcrConversionCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkYChromaOffset
+
+instance {-# OVERLAPPING #-}
          HasVkChromaFilter VkSamplerYcbcrConversionCreateInfoKHR where
         type VkChromaFilterMType VkSamplerYcbcrConversionCreateInfoKHR =
              VkFilter
@@ -410,6 +595,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkChromaFilter #-}
         writeVkChromaFilter p
           = pokeByteOff p #{offset VkSamplerYcbcrConversionCreateInfoKHR, chromaFilter}
+
+instance {-# OVERLAPPING #-}
+         HasField "chromaFilter" VkSamplerYcbcrConversionCreateInfoKHR where
+        type FieldType "chromaFilter" VkSamplerYcbcrConversionCreateInfoKHR
+             = VkFilter
+        type FieldOptional "chromaFilter"
+               VkSamplerYcbcrConversionCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "chromaFilter"
+           VkSamplerYcbcrConversionCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkChromaFilter
+
+        {-# INLINE readField #-}
+        readField = readVkChromaFilter
+
+instance CanWriteField "chromaFilter"
+           VkSamplerYcbcrConversionCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkChromaFilter
 
 instance {-# OVERLAPPING #-}
          HasVkForceExplicitReconstruction
@@ -435,6 +643,32 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkForceExplicitReconstruction #-}
         writeVkForceExplicitReconstruction p
           = pokeByteOff p #{offset VkSamplerYcbcrConversionCreateInfoKHR, forceExplicitReconstruction}
+
+instance {-# OVERLAPPING #-}
+         HasField "forceExplicitReconstruction"
+           VkSamplerYcbcrConversionCreateInfoKHR
+         where
+        type FieldType "forceExplicitReconstruction"
+               VkSamplerYcbcrConversionCreateInfoKHR
+             = VkBool32
+        type FieldOptional "forceExplicitReconstruction"
+               VkSamplerYcbcrConversionCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "forceExplicitReconstruction"
+           VkSamplerYcbcrConversionCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkForceExplicitReconstruction
+
+        {-# INLINE readField #-}
+        readField = readVkForceExplicitReconstruction
+
+instance CanWriteField "forceExplicitReconstruction"
+           VkSamplerYcbcrConversionCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkForceExplicitReconstruction
 
 instance Show VkSamplerYcbcrConversionCreateInfoKHR where
         showsPrec d x
@@ -586,6 +820,24 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkSamplerYcbcrConversionInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkSamplerYcbcrConversionInfoKHR where
+        type FieldType "sType" VkSamplerYcbcrConversionInfoKHR =
+             VkStructureType
+        type FieldOptional "sType" VkSamplerYcbcrConversionInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkSamplerYcbcrConversionInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkSamplerYcbcrConversionInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkSamplerYcbcrConversionInfoKHR where
         type VkPNextMType VkSamplerYcbcrConversionInfoKHR = Ptr Void
 
@@ -605,6 +857,23 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkSamplerYcbcrConversionInfoKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkSamplerYcbcrConversionInfoKHR where
+        type FieldType "pNext" VkSamplerYcbcrConversionInfoKHR = Ptr Void
+        type FieldOptional "pNext" VkSamplerYcbcrConversionInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkSamplerYcbcrConversionInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkSamplerYcbcrConversionInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkConversion VkSamplerYcbcrConversionInfoKHR where
@@ -627,6 +896,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkConversion #-}
         writeVkConversion p
           = pokeByteOff p #{offset VkSamplerYcbcrConversionInfoKHR, conversion}
+
+instance {-# OVERLAPPING #-}
+         HasField "conversion" VkSamplerYcbcrConversionInfoKHR where
+        type FieldType "conversion" VkSamplerYcbcrConversionInfoKHR =
+             VkSamplerYcbcrConversionKHR
+        type FieldOptional "conversion" VkSamplerYcbcrConversionInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "conversion" VkSamplerYcbcrConversionInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkConversion
+
+        {-# INLINE readField #-}
+        readField = readVkConversion
+
+instance CanWriteField "conversion" VkSamplerYcbcrConversionInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkConversion
 
 instance Show VkSamplerYcbcrConversionInfoKHR where
         showsPrec d x
@@ -751,6 +1040,23 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkBindImagePlaneMemoryInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkBindImagePlaneMemoryInfoKHR where
+        type FieldType "sType" VkBindImagePlaneMemoryInfoKHR =
+             VkStructureType
+        type FieldOptional "sType" VkBindImagePlaneMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkBindImagePlaneMemoryInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkBindImagePlaneMemoryInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkBindImagePlaneMemoryInfoKHR where
         type VkPNextMType VkBindImagePlaneMemoryInfoKHR = Ptr Void
 
@@ -770,6 +1076,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkBindImagePlaneMemoryInfoKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkBindImagePlaneMemoryInfoKHR where
+        type FieldType "pNext" VkBindImagePlaneMemoryInfoKHR = Ptr Void
+        type FieldOptional "pNext" VkBindImagePlaneMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkBindImagePlaneMemoryInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkBindImagePlaneMemoryInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkPlaneAspect VkBindImagePlaneMemoryInfoKHR where
@@ -792,6 +1114,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPlaneAspect #-}
         writeVkPlaneAspect p
           = pokeByteOff p #{offset VkBindImagePlaneMemoryInfoKHR, planeAspect}
+
+instance {-# OVERLAPPING #-}
+         HasField "planeAspect" VkBindImagePlaneMemoryInfoKHR where
+        type FieldType "planeAspect" VkBindImagePlaneMemoryInfoKHR =
+             VkImageAspectFlagBits
+        type FieldOptional "planeAspect" VkBindImagePlaneMemoryInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "planeAspect" VkBindImagePlaneMemoryInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPlaneAspect
+
+        {-# INLINE readField #-}
+        readField = readVkPlaneAspect
+
+instance CanWriteField "planeAspect" VkBindImagePlaneMemoryInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPlaneAspect
 
 instance Show VkBindImagePlaneMemoryInfoKHR where
         showsPrec d x
@@ -928,6 +1270,27 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkImagePlaneMemoryRequirementsInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkImagePlaneMemoryRequirementsInfoKHR where
+        type FieldType "sType" VkImagePlaneMemoryRequirementsInfoKHR =
+             VkStructureType
+        type FieldOptional "sType" VkImagePlaneMemoryRequirementsInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkImagePlaneMemoryRequirementsInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType"
+           VkImagePlaneMemoryRequirementsInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkImagePlaneMemoryRequirementsInfoKHR where
         type VkPNextMType VkImagePlaneMemoryRequirementsInfoKHR = Ptr Void
 
@@ -947,6 +1310,27 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkImagePlaneMemoryRequirementsInfoKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkImagePlaneMemoryRequirementsInfoKHR where
+        type FieldType "pNext" VkImagePlaneMemoryRequirementsInfoKHR =
+             Ptr Void
+        type FieldOptional "pNext" VkImagePlaneMemoryRequirementsInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkImagePlaneMemoryRequirementsInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkImagePlaneMemoryRequirementsInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkPlaneAspect VkImagePlaneMemoryRequirementsInfoKHR where
@@ -969,6 +1353,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPlaneAspect #-}
         writeVkPlaneAspect p
           = pokeByteOff p #{offset VkImagePlaneMemoryRequirementsInfoKHR, planeAspect}
+
+instance {-# OVERLAPPING #-}
+         HasField "planeAspect" VkImagePlaneMemoryRequirementsInfoKHR where
+        type FieldType "planeAspect" VkImagePlaneMemoryRequirementsInfoKHR
+             = VkImageAspectFlagBits
+        type FieldOptional "planeAspect"
+               VkImagePlaneMemoryRequirementsInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "planeAspect"
+           VkImagePlaneMemoryRequirementsInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPlaneAspect
+
+        {-# INLINE readField #-}
+        readField = readVkPlaneAspect
+
+instance CanWriteField "planeAspect"
+           VkImagePlaneMemoryRequirementsInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPlaneAspect
 
 instance Show VkImagePlaneMemoryRequirementsInfoKHR where
         showsPrec d x
@@ -1114,6 +1521,31 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
+         where
+        type FieldType "sType"
+               VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
+             = VkStructureType
+        type FieldOptional "sType"
+               VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType"
+           VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType"
+           VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR where
         type VkPNextMType VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
              = Ptr Void
@@ -1134,6 +1566,31 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
+         where
+        type FieldType "pNext"
+               VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
+             = Ptr Void
+        type FieldOptional "pNext"
+               VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext"
+           VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkSamplerYcbcrConversion
@@ -1159,6 +1616,32 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkSamplerYcbcrConversion #-}
         writeVkSamplerYcbcrConversion p
           = pokeByteOff p #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, samplerYcbcrConversion}
+
+instance {-# OVERLAPPING #-}
+         HasField "samplerYcbcrConversion"
+           VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
+         where
+        type FieldType "samplerYcbcrConversion"
+               VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
+             = VkBool32
+        type FieldOptional "samplerYcbcrConversion"
+               VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "samplerYcbcrConversion"
+           VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSamplerYcbcrConversion
+
+        {-# INLINE readField #-}
+        readField = readVkSamplerYcbcrConversion
+
+instance CanWriteField "samplerYcbcrConversion"
+           VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSamplerYcbcrConversion
 
 instance Show VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
          where
@@ -1303,6 +1786,25 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkSamplerYcbcrConversionImageFormatPropertiesKHR
+         where
+        type FieldType "sType"
+               VkSamplerYcbcrConversionImageFormatPropertiesKHR
+             = VkStructureType
+        type FieldOptional "sType"
+               VkSamplerYcbcrConversionImageFormatPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType"
+           VkSamplerYcbcrConversionImageFormatPropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkSamplerYcbcrConversionImageFormatPropertiesKHR where
         type VkPNextMType VkSamplerYcbcrConversionImageFormatPropertiesKHR
              = Ptr Void
@@ -1323,6 +1825,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkSamplerYcbcrConversionImageFormatPropertiesKHR
+         where
+        type FieldType "pNext"
+               VkSamplerYcbcrConversionImageFormatPropertiesKHR
+             = Ptr Void
+        type FieldOptional "pNext"
+               VkSamplerYcbcrConversionImageFormatPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext"
+           VkSamplerYcbcrConversionImageFormatPropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkCombinedImageSamplerDescriptorCount
@@ -1348,6 +1869,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkCombinedImageSamplerDescriptorCount #-}
         writeVkCombinedImageSamplerDescriptorCount p
           = pokeByteOff p #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, combinedImageSamplerDescriptorCount}
+
+instance {-# OVERLAPPING #-}
+         HasField "combinedImageSamplerDescriptorCount"
+           VkSamplerYcbcrConversionImageFormatPropertiesKHR
+         where
+        type FieldType "combinedImageSamplerDescriptorCount"
+               VkSamplerYcbcrConversionImageFormatPropertiesKHR
+             = Word32
+        type FieldOptional "combinedImageSamplerDescriptorCount"
+               VkSamplerYcbcrConversionImageFormatPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "combinedImageSamplerDescriptorCount"
+           VkSamplerYcbcrConversionImageFormatPropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkCombinedImageSamplerDescriptorCount
+
+        {-# INLINE readField #-}
+        readField = readVkCombinedImageSamplerDescriptorCount
 
 instance Show VkSamplerYcbcrConversionImageFormatPropertiesKHR
          where

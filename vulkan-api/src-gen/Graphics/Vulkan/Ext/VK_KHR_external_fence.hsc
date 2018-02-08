@@ -1,12 +1,14 @@
 #include "vulkan/vulkan.h"
 
-{-# LANGUAGE DataKinds       #-}
-{-# LANGUAGE MagicHash       #-}
-{-# LANGUAGE PatternSynonyms #-}
-{-# LANGUAGE Strict          #-}
-{-# LANGUAGE TypeFamilies    #-}
-{-# LANGUAGE UnboxedTuples   #-}
-{-# LANGUAGE ViewPatterns    #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MagicHash             #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE PatternSynonyms       #-}
+{-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeFamilies          #-}
+{-# LANGUAGE UnboxedTuples         #-}
+{-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_KHR_external_fence
        (-- * Vulkan extension: @VK_KHR_external_fence@
         -- |
@@ -157,6 +159,22 @@ instance {-# OVERLAPPING #-} HasVkSType VkExportFenceCreateInfoKHR
         writeVkSType p
           = pokeByteOff p #{offset VkExportFenceCreateInfoKHR, sType}
 
+instance {-# OVERLAPPING #-}
+         HasField "sType" VkExportFenceCreateInfoKHR where
+        type FieldType "sType" VkExportFenceCreateInfoKHR = VkStructureType
+        type FieldOptional "sType" VkExportFenceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkExportFenceCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkExportFenceCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkExportFenceCreateInfoKHR
          where
         type VkPNextMType VkExportFenceCreateInfoKHR = Ptr Void
@@ -179,6 +197,22 @@ instance {-# OVERLAPPING #-} HasVkPNext VkExportFenceCreateInfoKHR
           = pokeByteOff p #{offset VkExportFenceCreateInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
+         HasField "pNext" VkExportFenceCreateInfoKHR where
+        type FieldType "pNext" VkExportFenceCreateInfoKHR = Ptr Void
+        type FieldOptional "pNext" VkExportFenceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkExportFenceCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkExportFenceCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
+
+instance {-# OVERLAPPING #-}
          HasVkHandleTypes VkExportFenceCreateInfoKHR where
         type VkHandleTypesMType VkExportFenceCreateInfoKHR =
              VkExternalFenceHandleTypeFlagsKHR
@@ -199,6 +233,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkHandleTypes #-}
         writeVkHandleTypes p
           = pokeByteOff p #{offset VkExportFenceCreateInfoKHR, handleTypes}
+
+instance {-# OVERLAPPING #-}
+         HasField "handleTypes" VkExportFenceCreateInfoKHR where
+        type FieldType "handleTypes" VkExportFenceCreateInfoKHR =
+             VkExternalFenceHandleTypeFlagsKHR
+        type FieldOptional "handleTypes" VkExportFenceCreateInfoKHR = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "handleTypes" VkExportFenceCreateInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkHandleTypes
+
+        {-# INLINE readField #-}
+        readField = readVkHandleTypes
+
+instance CanWriteField "handleTypes" VkExportFenceCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkHandleTypes
 
 instance Show VkExportFenceCreateInfoKHR where
         showsPrec d x

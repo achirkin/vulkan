@@ -1,12 +1,17 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleContexts         #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
+{-# LANGUAGE ScopedTypeVariables      #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE UnboxedTuples            #-}
+{-# LANGUAGE UndecidableInstances     #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHX_device_group_creation
        (-- * Vulkan extension: @VK_KHX_device_group_creation@
@@ -40,6 +45,7 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
                                                    newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
+import           GHC.TypeLits                     (CmpNat, KnownNat, natVal') -- ' closing tick for hsc2hs
 import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
@@ -165,6 +171,21 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDeviceGroupPropertiesKHX, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkPhysicalDeviceGroupPropertiesKHX where
+        type FieldType "sType" VkPhysicalDeviceGroupPropertiesKHX =
+             VkStructureType
+        type FieldOptional "sType" VkPhysicalDeviceGroupPropertiesKHX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkPhysicalDeviceGroupPropertiesKHX
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkPhysicalDeviceGroupPropertiesKHX where
         type VkPNextMType VkPhysicalDeviceGroupPropertiesKHX = Ptr Void
 
@@ -184,6 +205,21 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkPhysicalDeviceGroupPropertiesKHX, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkPhysicalDeviceGroupPropertiesKHX where
+        type FieldType "pNext" VkPhysicalDeviceGroupPropertiesKHX =
+             Ptr Void
+        type FieldOptional "pNext" VkPhysicalDeviceGroupPropertiesKHX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkPhysicalDeviceGroupPropertiesKHX
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkPhysicalDeviceCount VkPhysicalDeviceGroupPropertiesKHX where
@@ -206,6 +242,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPhysicalDeviceCount #-}
         writeVkPhysicalDeviceCount p
           = pokeByteOff p #{offset VkPhysicalDeviceGroupPropertiesKHX, physicalDeviceCount}
+
+instance {-# OVERLAPPING #-}
+         HasField "physicalDeviceCount" VkPhysicalDeviceGroupPropertiesKHX
+         where
+        type FieldType "physicalDeviceCount"
+               VkPhysicalDeviceGroupPropertiesKHX
+             = Word32
+        type FieldOptional "physicalDeviceCount"
+               VkPhysicalDeviceGroupPropertiesKHX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "physicalDeviceCount"
+           VkPhysicalDeviceGroupPropertiesKHX
+         where
+        {-# INLINE getField #-}
+        getField = vkPhysicalDeviceCount
+
+        {-# INLINE readField #-}
+        readField = readVkPhysicalDeviceCount
 
 instance {-# OVERLAPPING #-}
          HasVkPhysicalDevicesArray VkPhysicalDeviceGroupPropertiesKHX where
@@ -236,6 +291,53 @@ instance {-# OVERLAPPING #-}
                  #{offset VkPhysicalDeviceGroupPropertiesKHX, physicalDevices})
 
 instance {-# OVERLAPPING #-}
+         HasField "physicalDevices" VkPhysicalDeviceGroupPropertiesKHX where
+        type FieldType "physicalDevices" VkPhysicalDeviceGroupPropertiesKHX
+             = VkPhysicalDevice
+        type FieldOptional "physicalDevices"
+               VkPhysicalDeviceGroupPropertiesKHX
+             = 'False -- ' closing tick for hsc2hs
+
+instance (KnownNat idx,
+          IndexInBounds "physicalDevices" idx
+            VkPhysicalDeviceGroupPropertiesKHX) =>
+         CanReadFieldArray "physicalDevices" idx
+           VkPhysicalDeviceGroupPropertiesKHX
+         where
+        {-# SPECIALISE instance
+                       CanReadFieldArray "physicalDevices" 0
+                         VkPhysicalDeviceGroupPropertiesKHX
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanReadFieldArray "physicalDevices" 1
+                         VkPhysicalDeviceGroupPropertiesKHX
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanReadFieldArray "physicalDevices" 2
+                         VkPhysicalDeviceGroupPropertiesKHX
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanReadFieldArray "physicalDevices" 3
+                         VkPhysicalDeviceGroupPropertiesKHX
+                       #-}
+        type FieldArrayLength "physicalDevices"
+               VkPhysicalDeviceGroupPropertiesKHX
+             = VK_MAX_DEVICE_GROUP_SIZE_KHX
+
+        {-# INLINE getFieldArray #-}
+        getFieldArray x
+          = vkPhysicalDevicesArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
+        {-# INLINE readFieldArray #-}
+        readFieldArray x
+          = readVkPhysicalDevicesArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
+instance {-# OVERLAPPING #-}
          HasVkSubsetAllocation VkPhysicalDeviceGroupPropertiesKHX where
         type VkSubsetAllocationMType VkPhysicalDeviceGroupPropertiesKHX =
              VkBool32
@@ -256,6 +358,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkSubsetAllocation #-}
         writeVkSubsetAllocation p
           = pokeByteOff p #{offset VkPhysicalDeviceGroupPropertiesKHX, subsetAllocation}
+
+instance {-# OVERLAPPING #-}
+         HasField "subsetAllocation" VkPhysicalDeviceGroupPropertiesKHX
+         where
+        type FieldType "subsetAllocation"
+               VkPhysicalDeviceGroupPropertiesKHX
+             = VkBool32
+        type FieldOptional "subsetAllocation"
+               VkPhysicalDeviceGroupPropertiesKHX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "subsetAllocation"
+           VkPhysicalDeviceGroupPropertiesKHX
+         where
+        {-# INLINE getField #-}
+        getField = vkSubsetAllocation
+
+        {-# INLINE readField #-}
+        readField = readVkSubsetAllocation
 
 instance Show VkPhysicalDeviceGroupPropertiesKHX where
         showsPrec d x
@@ -393,6 +514,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDeviceGroupDeviceCreateInfoKHX, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkDeviceGroupDeviceCreateInfoKHX where
+        type FieldType "sType" VkDeviceGroupDeviceCreateInfoKHX =
+             VkStructureType
+        type FieldOptional "sType" VkDeviceGroupDeviceCreateInfoKHX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkDeviceGroupDeviceCreateInfoKHX
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkDeviceGroupDeviceCreateInfoKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkDeviceGroupDeviceCreateInfoKHX where
         type VkPNextMType VkDeviceGroupDeviceCreateInfoKHX = Ptr Void
 
@@ -412,6 +553,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkDeviceGroupDeviceCreateInfoKHX, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkDeviceGroupDeviceCreateInfoKHX where
+        type FieldType "pNext" VkDeviceGroupDeviceCreateInfoKHX = Ptr Void
+        type FieldOptional "pNext" VkDeviceGroupDeviceCreateInfoKHX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkDeviceGroupDeviceCreateInfoKHX
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkDeviceGroupDeviceCreateInfoKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkPhysicalDeviceCount VkDeviceGroupDeviceCreateInfoKHX where
@@ -436,6 +596,31 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDeviceGroupDeviceCreateInfoKHX, physicalDeviceCount}
 
 instance {-# OVERLAPPING #-}
+         HasField "physicalDeviceCount" VkDeviceGroupDeviceCreateInfoKHX
+         where
+        type FieldType "physicalDeviceCount"
+               VkDeviceGroupDeviceCreateInfoKHX
+             = Word32
+        type FieldOptional "physicalDeviceCount"
+               VkDeviceGroupDeviceCreateInfoKHX
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "physicalDeviceCount"
+           VkDeviceGroupDeviceCreateInfoKHX
+         where
+        {-# INLINE getField #-}
+        getField = vkPhysicalDeviceCount
+
+        {-# INLINE readField #-}
+        readField = readVkPhysicalDeviceCount
+
+instance CanWriteField "physicalDeviceCount"
+           VkDeviceGroupDeviceCreateInfoKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPhysicalDeviceCount
+
+instance {-# OVERLAPPING #-}
          HasVkPPhysicalDevices VkDeviceGroupDeviceCreateInfoKHX where
         type VkPPhysicalDevicesMType VkDeviceGroupDeviceCreateInfoKHX =
              Ptr VkPhysicalDevice
@@ -456,6 +641,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPPhysicalDevices #-}
         writeVkPPhysicalDevices p
           = pokeByteOff p #{offset VkDeviceGroupDeviceCreateInfoKHX, pPhysicalDevices}
+
+instance {-# OVERLAPPING #-}
+         HasField "pPhysicalDevices" VkDeviceGroupDeviceCreateInfoKHX where
+        type FieldType "pPhysicalDevices" VkDeviceGroupDeviceCreateInfoKHX
+             = Ptr VkPhysicalDevice
+        type FieldOptional "pPhysicalDevices"
+               VkDeviceGroupDeviceCreateInfoKHX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pPhysicalDevices"
+           VkDeviceGroupDeviceCreateInfoKHX
+         where
+        {-# INLINE getField #-}
+        getField = vkPPhysicalDevices
+
+        {-# INLINE readField #-}
+        readField = readVkPPhysicalDevices
+
+instance CanWriteField "pPhysicalDevices"
+           VkDeviceGroupDeviceCreateInfoKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPPhysicalDevices
 
 instance Show VkDeviceGroupDeviceCreateInfoKHX where
         showsPrec d x

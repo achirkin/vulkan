@@ -1,12 +1,14 @@
 #include "vulkan/vulkan.h"
 
-{-# LANGUAGE DataKinds       #-}
-{-# LANGUAGE MagicHash       #-}
-{-# LANGUAGE PatternSynonyms #-}
-{-# LANGUAGE Strict          #-}
-{-# LANGUAGE TypeFamilies    #-}
-{-# LANGUAGE UnboxedTuples   #-}
-{-# LANGUAGE ViewPatterns    #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MagicHash             #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE PatternSynonyms       #-}
+{-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeFamilies          #-}
+{-# LANGUAGE UnboxedTuples         #-}
+{-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_EXT_validation_flags
        (-- * Vulkan extension: @VK_EXT_validation_flags@
         -- |
@@ -149,6 +151,22 @@ instance {-# OVERLAPPING #-} HasVkSType VkValidationFlagsEXT where
         writeVkSType p
           = pokeByteOff p #{offset VkValidationFlagsEXT, sType}
 
+instance {-# OVERLAPPING #-} HasField "sType" VkValidationFlagsEXT
+         where
+        type FieldType "sType" VkValidationFlagsEXT = VkStructureType
+        type FieldOptional "sType" VkValidationFlagsEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkValidationFlagsEXT where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkValidationFlagsEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkValidationFlagsEXT where
         type VkPNextMType VkValidationFlagsEXT = Ptr Void
 
@@ -168,6 +186,22 @@ instance {-# OVERLAPPING #-} HasVkPNext VkValidationFlagsEXT where
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkValidationFlagsEXT, pNext}
+
+instance {-# OVERLAPPING #-} HasField "pNext" VkValidationFlagsEXT
+         where
+        type FieldType "pNext" VkValidationFlagsEXT = Ptr Void
+        type FieldOptional "pNext" VkValidationFlagsEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkValidationFlagsEXT where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkValidationFlagsEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkDisabledValidationCheckCount VkValidationFlagsEXT where
@@ -192,6 +226,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkValidationFlagsEXT, disabledValidationCheckCount}
 
 instance {-# OVERLAPPING #-}
+         HasField "disabledValidationCheckCount" VkValidationFlagsEXT where
+        type FieldType "disabledValidationCheckCount" VkValidationFlagsEXT
+             = Word32
+        type FieldOptional "disabledValidationCheckCount"
+               VkValidationFlagsEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "disabledValidationCheckCount"
+           VkValidationFlagsEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkDisabledValidationCheckCount
+
+        {-# INLINE readField #-}
+        readField = readVkDisabledValidationCheckCount
+
+instance CanWriteField "disabledValidationCheckCount"
+           VkValidationFlagsEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkDisabledValidationCheckCount
+
+instance {-# OVERLAPPING #-}
          HasVkPDisabledValidationChecks VkValidationFlagsEXT where
         type VkPDisabledValidationChecksMType VkValidationFlagsEXT =
              Ptr VkValidationCheckEXT
@@ -212,6 +269,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPDisabledValidationChecks #-}
         writeVkPDisabledValidationChecks p
           = pokeByteOff p #{offset VkValidationFlagsEXT, pDisabledValidationChecks}
+
+instance {-# OVERLAPPING #-}
+         HasField "pDisabledValidationChecks" VkValidationFlagsEXT where
+        type FieldType "pDisabledValidationChecks" VkValidationFlagsEXT =
+             Ptr VkValidationCheckEXT
+        type FieldOptional "pDisabledValidationChecks" VkValidationFlagsEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pDisabledValidationChecks"
+           VkValidationFlagsEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkPDisabledValidationChecks
+
+        {-# INLINE readField #-}
+        readField = readVkPDisabledValidationChecks
+
+instance CanWriteField "pDisabledValidationChecks"
+           VkValidationFlagsEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPDisabledValidationChecks
 
 instance Show VkValidationFlagsEXT where
         showsPrec d x

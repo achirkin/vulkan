@@ -1,12 +1,14 @@
 #include "vulkan/vulkan.h"
 
-{-# LANGUAGE DataKinds       #-}
-{-# LANGUAGE MagicHash       #-}
-{-# LANGUAGE PatternSynonyms #-}
-{-# LANGUAGE Strict          #-}
-{-# LANGUAGE TypeFamilies    #-}
-{-# LANGUAGE UnboxedTuples   #-}
-{-# LANGUAGE ViewPatterns    #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MagicHash             #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE PatternSynonyms       #-}
+{-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeFamilies          #-}
+{-# LANGUAGE UnboxedTuples         #-}
+{-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_AMD_texture_gather_bias_lod
        (-- * Vulkan extension: @VK_AMD_texture_gather_bias_lod@
         -- |
@@ -170,6 +172,21 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkTextureLODGatherFormatPropertiesAMD, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkTextureLODGatherFormatPropertiesAMD where
+        type FieldType "sType" VkTextureLODGatherFormatPropertiesAMD =
+             VkStructureType
+        type FieldOptional "sType" VkTextureLODGatherFormatPropertiesAMD =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkTextureLODGatherFormatPropertiesAMD
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkTextureLODGatherFormatPropertiesAMD where
         type VkPNextMType VkTextureLODGatherFormatPropertiesAMD = Ptr Void
 
@@ -189,6 +206,21 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkTextureLODGatherFormatPropertiesAMD, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkTextureLODGatherFormatPropertiesAMD where
+        type FieldType "pNext" VkTextureLODGatherFormatPropertiesAMD =
+             Ptr Void
+        type FieldOptional "pNext" VkTextureLODGatherFormatPropertiesAMD =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkTextureLODGatherFormatPropertiesAMD
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkSupportsTextureGatherLODBiasAMD
@@ -214,6 +246,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkSupportsTextureGatherLODBiasAMD #-}
         writeVkSupportsTextureGatherLODBiasAMD p
           = pokeByteOff p #{offset VkTextureLODGatherFormatPropertiesAMD, supportsTextureGatherLODBiasAMD}
+
+instance {-# OVERLAPPING #-}
+         HasField "supportsTextureGatherLODBiasAMD"
+           VkTextureLODGatherFormatPropertiesAMD
+         where
+        type FieldType "supportsTextureGatherLODBiasAMD"
+               VkTextureLODGatherFormatPropertiesAMD
+             = VkBool32
+        type FieldOptional "supportsTextureGatherLODBiasAMD"
+               VkTextureLODGatherFormatPropertiesAMD
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "supportsTextureGatherLODBiasAMD"
+           VkTextureLODGatherFormatPropertiesAMD
+         where
+        {-# INLINE getField #-}
+        getField = vkSupportsTextureGatherLODBiasAMD
+
+        {-# INLINE readField #-}
+        readField = readVkSupportsTextureGatherLODBiasAMD
 
 instance Show VkTextureLODGatherFormatPropertiesAMD where
         showsPrec d x

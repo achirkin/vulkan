@@ -1,8 +1,10 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
@@ -166,6 +168,24 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDeviceSurfaceInfo2KHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkPhysicalDeviceSurfaceInfo2KHR where
+        type FieldType "sType" VkPhysicalDeviceSurfaceInfo2KHR =
+             VkStructureType
+        type FieldOptional "sType" VkPhysicalDeviceSurfaceInfo2KHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkPhysicalDeviceSurfaceInfo2KHR where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkPhysicalDeviceSurfaceInfo2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkPhysicalDeviceSurfaceInfo2KHR where
         type VkPNextMType VkPhysicalDeviceSurfaceInfo2KHR = Ptr Void
 
@@ -187,6 +207,23 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDeviceSurfaceInfo2KHR, pNext}
 
 instance {-# OVERLAPPING #-}
+         HasField "pNext" VkPhysicalDeviceSurfaceInfo2KHR where
+        type FieldType "pNext" VkPhysicalDeviceSurfaceInfo2KHR = Ptr Void
+        type FieldOptional "pNext" VkPhysicalDeviceSurfaceInfo2KHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkPhysicalDeviceSurfaceInfo2KHR where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkPhysicalDeviceSurfaceInfo2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
+
+instance {-# OVERLAPPING #-}
          HasVkSurface VkPhysicalDeviceSurfaceInfo2KHR where
         type VkSurfaceMType VkPhysicalDeviceSurfaceInfo2KHR = VkSurfaceKHR
 
@@ -206,6 +243,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkSurface #-}
         writeVkSurface p
           = pokeByteOff p #{offset VkPhysicalDeviceSurfaceInfo2KHR, surface}
+
+instance {-# OVERLAPPING #-}
+         HasField "surface" VkPhysicalDeviceSurfaceInfo2KHR where
+        type FieldType "surface" VkPhysicalDeviceSurfaceInfo2KHR =
+             VkSurfaceKHR
+        type FieldOptional "surface" VkPhysicalDeviceSurfaceInfo2KHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "surface" VkPhysicalDeviceSurfaceInfo2KHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSurface
+
+        {-# INLINE readField #-}
+        readField = readVkSurface
+
+instance CanWriteField "surface" VkPhysicalDeviceSurfaceInfo2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSurface
 
 instance Show VkPhysicalDeviceSurfaceInfo2KHR where
         showsPrec d x
@@ -328,6 +385,18 @@ instance {-# OVERLAPPING #-} HasVkSType VkSurfaceCapabilities2KHR
         writeVkSType p
           = pokeByteOff p #{offset VkSurfaceCapabilities2KHR, sType}
 
+instance {-# OVERLAPPING #-}
+         HasField "sType" VkSurfaceCapabilities2KHR where
+        type FieldType "sType" VkSurfaceCapabilities2KHR = VkStructureType
+        type FieldOptional "sType" VkSurfaceCapabilities2KHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkSurfaceCapabilities2KHR where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkSurfaceCapabilities2KHR
          where
         type VkPNextMType VkSurfaceCapabilities2KHR = Ptr Void
@@ -350,6 +419,18 @@ instance {-# OVERLAPPING #-} HasVkPNext VkSurfaceCapabilities2KHR
           = pokeByteOff p #{offset VkSurfaceCapabilities2KHR, pNext}
 
 instance {-# OVERLAPPING #-}
+         HasField "pNext" VkSurfaceCapabilities2KHR where
+        type FieldType "pNext" VkSurfaceCapabilities2KHR = Ptr Void
+        type FieldOptional "pNext" VkSurfaceCapabilities2KHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkSurfaceCapabilities2KHR where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance {-# OVERLAPPING #-}
          HasVkSurfaceCapabilities VkSurfaceCapabilities2KHR where
         type VkSurfaceCapabilitiesMType VkSurfaceCapabilities2KHR =
              VkSurfaceCapabilitiesKHR
@@ -370,6 +451,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkSurfaceCapabilities #-}
         writeVkSurfaceCapabilities p
           = pokeByteOff p #{offset VkSurfaceCapabilities2KHR, surfaceCapabilities}
+
+instance {-# OVERLAPPING #-}
+         HasField "surfaceCapabilities" VkSurfaceCapabilities2KHR where
+        type FieldType "surfaceCapabilities" VkSurfaceCapabilities2KHR =
+             VkSurfaceCapabilitiesKHR
+        type FieldOptional "surfaceCapabilities" VkSurfaceCapabilities2KHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "surfaceCapabilities"
+           VkSurfaceCapabilities2KHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSurfaceCapabilities
+
+        {-# INLINE readField #-}
+        readField = readVkSurfaceCapabilities
 
 instance Show VkSurfaceCapabilities2KHR where
         showsPrec d x
@@ -489,6 +586,18 @@ instance {-# OVERLAPPING #-} HasVkSType VkSurfaceFormat2KHR where
         writeVkSType p
           = pokeByteOff p #{offset VkSurfaceFormat2KHR, sType}
 
+instance {-# OVERLAPPING #-} HasField "sType" VkSurfaceFormat2KHR
+         where
+        type FieldType "sType" VkSurfaceFormat2KHR = VkStructureType
+        type FieldOptional "sType" VkSurfaceFormat2KHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkSurfaceFormat2KHR where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkSurfaceFormat2KHR where
         type VkPNextMType VkSurfaceFormat2KHR = Ptr Void
 
@@ -508,6 +617,18 @@ instance {-# OVERLAPPING #-} HasVkPNext VkSurfaceFormat2KHR where
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkSurfaceFormat2KHR, pNext}
+
+instance {-# OVERLAPPING #-} HasField "pNext" VkSurfaceFormat2KHR
+         where
+        type FieldType "pNext" VkSurfaceFormat2KHR = Ptr Void
+        type FieldOptional "pNext" VkSurfaceFormat2KHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkSurfaceFormat2KHR where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
 
 instance {-# OVERLAPPING #-} HasVkSurfaceFormat VkSurfaceFormat2KHR
          where
@@ -529,6 +650,19 @@ instance {-# OVERLAPPING #-} HasVkSurfaceFormat VkSurfaceFormat2KHR
         {-# INLINE writeVkSurfaceFormat #-}
         writeVkSurfaceFormat p
           = pokeByteOff p #{offset VkSurfaceFormat2KHR, surfaceFormat}
+
+instance {-# OVERLAPPING #-}
+         HasField "surfaceFormat" VkSurfaceFormat2KHR where
+        type FieldType "surfaceFormat" VkSurfaceFormat2KHR =
+             VkSurfaceFormatKHR
+        type FieldOptional "surfaceFormat" VkSurfaceFormat2KHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "surfaceFormat" VkSurfaceFormat2KHR where
+        {-# INLINE getField #-}
+        getField = vkSurfaceFormat
+
+        {-# INLINE readField #-}
+        readField = readVkSurfaceFormat
 
 instance Show VkSurfaceFormat2KHR where
         showsPrec d x

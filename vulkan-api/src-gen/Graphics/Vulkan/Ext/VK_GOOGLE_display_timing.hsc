@@ -1,8 +1,10 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
@@ -158,6 +160,28 @@ instance {-# OVERLAPPING #-}
         writeVkRefreshDuration p
           = pokeByteOff p #{offset VkRefreshCycleDurationGOOGLE, refreshDuration}
 
+instance {-# OVERLAPPING #-}
+         HasField "refreshDuration" VkRefreshCycleDurationGOOGLE where
+        type FieldType "refreshDuration" VkRefreshCycleDurationGOOGLE =
+             Word64
+        type FieldOptional "refreshDuration" VkRefreshCycleDurationGOOGLE =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "refreshDuration"
+           VkRefreshCycleDurationGOOGLE
+         where
+        {-# INLINE getField #-}
+        getField = vkRefreshDuration
+
+        {-# INLINE readField #-}
+        readField = readVkRefreshDuration
+
+instance CanWriteField "refreshDuration"
+           VkRefreshCycleDurationGOOGLE
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkRefreshDuration
+
 instance Show VkRefreshCycleDurationGOOGLE where
         showsPrec d x
           = showString "VkRefreshCycleDurationGOOGLE {" .
@@ -277,6 +301,25 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPastPresentationTimingGOOGLE, presentID}
 
 instance {-# OVERLAPPING #-}
+         HasField "presentID" VkPastPresentationTimingGOOGLE where
+        type FieldType "presentID" VkPastPresentationTimingGOOGLE = Word32
+        type FieldOptional "presentID" VkPastPresentationTimingGOOGLE =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "presentID" VkPastPresentationTimingGOOGLE
+         where
+        {-# INLINE getField #-}
+        getField = vkPresentID
+
+        {-# INLINE readField #-}
+        readField = readVkPresentID
+
+instance CanWriteField "presentID" VkPastPresentationTimingGOOGLE
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPresentID
+
+instance {-# OVERLAPPING #-}
          HasVkDesiredPresentTime VkPastPresentationTimingGOOGLE where
         type VkDesiredPresentTimeMType VkPastPresentationTimingGOOGLE =
              Word64
@@ -297,6 +340,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkDesiredPresentTime #-}
         writeVkDesiredPresentTime p
           = pokeByteOff p #{offset VkPastPresentationTimingGOOGLE, desiredPresentTime}
+
+instance {-# OVERLAPPING #-}
+         HasField "desiredPresentTime" VkPastPresentationTimingGOOGLE where
+        type FieldType "desiredPresentTime" VkPastPresentationTimingGOOGLE
+             = Word64
+        type FieldOptional "desiredPresentTime"
+               VkPastPresentationTimingGOOGLE
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "desiredPresentTime"
+           VkPastPresentationTimingGOOGLE
+         where
+        {-# INLINE getField #-}
+        getField = vkDesiredPresentTime
+
+        {-# INLINE readField #-}
+        readField = readVkDesiredPresentTime
+
+instance CanWriteField "desiredPresentTime"
+           VkPastPresentationTimingGOOGLE
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkDesiredPresentTime
 
 instance {-# OVERLAPPING #-}
          HasVkActualPresentTime VkPastPresentationTimingGOOGLE where
@@ -321,6 +387,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPastPresentationTimingGOOGLE, actualPresentTime}
 
 instance {-# OVERLAPPING #-}
+         HasField "actualPresentTime" VkPastPresentationTimingGOOGLE where
+        type FieldType "actualPresentTime" VkPastPresentationTimingGOOGLE =
+             Word64
+        type FieldOptional "actualPresentTime"
+               VkPastPresentationTimingGOOGLE
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "actualPresentTime"
+           VkPastPresentationTimingGOOGLE
+         where
+        {-# INLINE getField #-}
+        getField = vkActualPresentTime
+
+        {-# INLINE readField #-}
+        readField = readVkActualPresentTime
+
+instance CanWriteField "actualPresentTime"
+           VkPastPresentationTimingGOOGLE
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkActualPresentTime
+
+instance {-# OVERLAPPING #-}
          HasVkEarliestPresentTime VkPastPresentationTimingGOOGLE where
         type VkEarliestPresentTimeMType VkPastPresentationTimingGOOGLE =
              Word64
@@ -343,6 +432,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPastPresentationTimingGOOGLE, earliestPresentTime}
 
 instance {-# OVERLAPPING #-}
+         HasField "earliestPresentTime" VkPastPresentationTimingGOOGLE where
+        type FieldType "earliestPresentTime" VkPastPresentationTimingGOOGLE
+             = Word64
+        type FieldOptional "earliestPresentTime"
+               VkPastPresentationTimingGOOGLE
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "earliestPresentTime"
+           VkPastPresentationTimingGOOGLE
+         where
+        {-# INLINE getField #-}
+        getField = vkEarliestPresentTime
+
+        {-# INLINE readField #-}
+        readField = readVkEarliestPresentTime
+
+instance CanWriteField "earliestPresentTime"
+           VkPastPresentationTimingGOOGLE
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkEarliestPresentTime
+
+instance {-# OVERLAPPING #-}
          HasVkPresentMargin VkPastPresentationTimingGOOGLE where
         type VkPresentMarginMType VkPastPresentationTimingGOOGLE = Word64
 
@@ -362,6 +474,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPresentMargin #-}
         writeVkPresentMargin p
           = pokeByteOff p #{offset VkPastPresentationTimingGOOGLE, presentMargin}
+
+instance {-# OVERLAPPING #-}
+         HasField "presentMargin" VkPastPresentationTimingGOOGLE where
+        type FieldType "presentMargin" VkPastPresentationTimingGOOGLE =
+             Word64
+        type FieldOptional "presentMargin" VkPastPresentationTimingGOOGLE =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "presentMargin"
+           VkPastPresentationTimingGOOGLE
+         where
+        {-# INLINE getField #-}
+        getField = vkPresentMargin
+
+        {-# INLINE readField #-}
+        readField = readVkPresentMargin
+
+instance CanWriteField "presentMargin"
+           VkPastPresentationTimingGOOGLE
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPresentMargin
 
 instance Show VkPastPresentationTimingGOOGLE where
         showsPrec d x
@@ -491,6 +625,22 @@ instance {-# OVERLAPPING #-} HasVkSType VkPresentTimesInfoGOOGLE
         writeVkSType p
           = pokeByteOff p #{offset VkPresentTimesInfoGOOGLE, sType}
 
+instance {-# OVERLAPPING #-}
+         HasField "sType" VkPresentTimesInfoGOOGLE where
+        type FieldType "sType" VkPresentTimesInfoGOOGLE = VkStructureType
+        type FieldOptional "sType" VkPresentTimesInfoGOOGLE = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkPresentTimesInfoGOOGLE where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkPresentTimesInfoGOOGLE where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkPresentTimesInfoGOOGLE
          where
         type VkPNextMType VkPresentTimesInfoGOOGLE = Ptr Void
@@ -513,6 +663,22 @@ instance {-# OVERLAPPING #-} HasVkPNext VkPresentTimesInfoGOOGLE
           = pokeByteOff p #{offset VkPresentTimesInfoGOOGLE, pNext}
 
 instance {-# OVERLAPPING #-}
+         HasField "pNext" VkPresentTimesInfoGOOGLE where
+        type FieldType "pNext" VkPresentTimesInfoGOOGLE = Ptr Void
+        type FieldOptional "pNext" VkPresentTimesInfoGOOGLE = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkPresentTimesInfoGOOGLE where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkPresentTimesInfoGOOGLE where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
+
+instance {-# OVERLAPPING #-}
          HasVkSwapchainCount VkPresentTimesInfoGOOGLE where
         type VkSwapchainCountMType VkPresentTimesInfoGOOGLE = Word32
 
@@ -532,6 +698,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkSwapchainCount #-}
         writeVkSwapchainCount p
           = pokeByteOff p #{offset VkPresentTimesInfoGOOGLE, swapchainCount}
+
+instance {-# OVERLAPPING #-}
+         HasField "swapchainCount" VkPresentTimesInfoGOOGLE where
+        type FieldType "swapchainCount" VkPresentTimesInfoGOOGLE = Word32
+        type FieldOptional "swapchainCount" VkPresentTimesInfoGOOGLE =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "swapchainCount" VkPresentTimesInfoGOOGLE
+         where
+        {-# INLINE getField #-}
+        getField = vkSwapchainCount
+
+        {-# INLINE readField #-}
+        readField = readVkSwapchainCount
+
+instance CanWriteField "swapchainCount" VkPresentTimesInfoGOOGLE
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSwapchainCount
 
 instance {-# OVERLAPPING #-} HasVkPTimes VkPresentTimesInfoGOOGLE
          where
@@ -554,6 +739,23 @@ instance {-# OVERLAPPING #-} HasVkPTimes VkPresentTimesInfoGOOGLE
         {-# INLINE writeVkPTimes #-}
         writeVkPTimes p
           = pokeByteOff p #{offset VkPresentTimesInfoGOOGLE, pTimes}
+
+instance {-# OVERLAPPING #-}
+         HasField "pTimes" VkPresentTimesInfoGOOGLE where
+        type FieldType "pTimes" VkPresentTimesInfoGOOGLE =
+             Ptr VkPresentTimeGOOGLE
+        type FieldOptional "pTimes" VkPresentTimesInfoGOOGLE = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "pTimes" VkPresentTimesInfoGOOGLE where
+        {-# INLINE getField #-}
+        getField = vkPTimes
+
+        {-# INLINE readField #-}
+        readField = readVkPTimes
+
+instance CanWriteField "pTimes" VkPresentTimesInfoGOOGLE where
+        {-# INLINE writeField #-}
+        writeField = writeVkPTimes
 
 instance Show VkPresentTimesInfoGOOGLE where
         showsPrec d x
@@ -676,6 +878,22 @@ instance {-# OVERLAPPING #-} HasVkPresentID VkPresentTimeGOOGLE
           = pokeByteOff p #{offset VkPresentTimeGOOGLE, presentID}
 
 instance {-# OVERLAPPING #-}
+         HasField "presentID" VkPresentTimeGOOGLE where
+        type FieldType "presentID" VkPresentTimeGOOGLE = Word32
+        type FieldOptional "presentID" VkPresentTimeGOOGLE = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "presentID" VkPresentTimeGOOGLE where
+        {-# INLINE getField #-}
+        getField = vkPresentID
+
+        {-# INLINE readField #-}
+        readField = readVkPresentID
+
+instance CanWriteField "presentID" VkPresentTimeGOOGLE where
+        {-# INLINE writeField #-}
+        writeField = writeVkPresentID
+
+instance {-# OVERLAPPING #-}
          HasVkDesiredPresentTime VkPresentTimeGOOGLE where
         type VkDesiredPresentTimeMType VkPresentTimeGOOGLE = Word64
 
@@ -695,6 +913,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkDesiredPresentTime #-}
         writeVkDesiredPresentTime p
           = pokeByteOff p #{offset VkPresentTimeGOOGLE, desiredPresentTime}
+
+instance {-# OVERLAPPING #-}
+         HasField "desiredPresentTime" VkPresentTimeGOOGLE where
+        type FieldType "desiredPresentTime" VkPresentTimeGOOGLE = Word64
+        type FieldOptional "desiredPresentTime" VkPresentTimeGOOGLE =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "desiredPresentTime" VkPresentTimeGOOGLE
+         where
+        {-# INLINE getField #-}
+        getField = vkDesiredPresentTime
+
+        {-# INLINE readField #-}
+        readField = readVkDesiredPresentTime
+
+instance CanWriteField "desiredPresentTime" VkPresentTimeGOOGLE
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkDesiredPresentTime
 
 instance Show VkPresentTimeGOOGLE where
         showsPrec d x

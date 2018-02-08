@@ -1,8 +1,10 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
@@ -168,6 +170,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkImportMemoryHostPointerInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkImportMemoryHostPointerInfoEXT where
+        type FieldType "sType" VkImportMemoryHostPointerInfoEXT =
+             VkStructureType
+        type FieldOptional "sType" VkImportMemoryHostPointerInfoEXT =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkImportMemoryHostPointerInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkImportMemoryHostPointerInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkImportMemoryHostPointerInfoEXT where
         type VkPNextMType VkImportMemoryHostPointerInfoEXT = Ptr Void
 
@@ -187,6 +209,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkImportMemoryHostPointerInfoEXT, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkImportMemoryHostPointerInfoEXT where
+        type FieldType "pNext" VkImportMemoryHostPointerInfoEXT = Ptr Void
+        type FieldOptional "pNext" VkImportMemoryHostPointerInfoEXT =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkImportMemoryHostPointerInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkImportMemoryHostPointerInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkHandleType VkImportMemoryHostPointerInfoEXT where
@@ -211,6 +252,27 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkImportMemoryHostPointerInfoEXT, handleType}
 
 instance {-# OVERLAPPING #-}
+         HasField "handleType" VkImportMemoryHostPointerInfoEXT where
+        type FieldType "handleType" VkImportMemoryHostPointerInfoEXT =
+             VkExternalMemoryHandleTypeFlagBitsKHR
+        type FieldOptional "handleType" VkImportMemoryHostPointerInfoEXT =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "handleType" VkImportMemoryHostPointerInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkHandleType
+
+        {-# INLINE readField #-}
+        readField = readVkHandleType
+
+instance CanWriteField "handleType"
+           VkImportMemoryHostPointerInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkHandleType
+
+instance {-# OVERLAPPING #-}
          HasVkPHostPointer VkImportMemoryHostPointerInfoEXT where
         type VkPHostPointerMType VkImportMemoryHostPointerInfoEXT =
              Ptr Void
@@ -231,6 +293,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPHostPointer #-}
         writeVkPHostPointer p
           = pokeByteOff p #{offset VkImportMemoryHostPointerInfoEXT, pHostPointer}
+
+instance {-# OVERLAPPING #-}
+         HasField "pHostPointer" VkImportMemoryHostPointerInfoEXT where
+        type FieldType "pHostPointer" VkImportMemoryHostPointerInfoEXT =
+             Ptr Void
+        type FieldOptional "pHostPointer" VkImportMemoryHostPointerInfoEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pHostPointer"
+           VkImportMemoryHostPointerInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkPHostPointer
+
+        {-# INLINE readField #-}
+        readField = readVkPHostPointer
+
+instance CanWriteField "pHostPointer"
+           VkImportMemoryHostPointerInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPHostPointer
 
 instance Show VkImportMemoryHostPointerInfoEXT where
         showsPrec d x
@@ -360,6 +444,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkMemoryHostPointerPropertiesEXT, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkMemoryHostPointerPropertiesEXT where
+        type FieldType "sType" VkMemoryHostPointerPropertiesEXT =
+             VkStructureType
+        type FieldOptional "sType" VkMemoryHostPointerPropertiesEXT =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkMemoryHostPointerPropertiesEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkMemoryHostPointerPropertiesEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkMemoryHostPointerPropertiesEXT where
         type VkPNextMType VkMemoryHostPointerPropertiesEXT = Ptr Void
 
@@ -379,6 +483,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkMemoryHostPointerPropertiesEXT, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkMemoryHostPointerPropertiesEXT where
+        type FieldType "pNext" VkMemoryHostPointerPropertiesEXT = Ptr Void
+        type FieldOptional "pNext" VkMemoryHostPointerPropertiesEXT =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkMemoryHostPointerPropertiesEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkMemoryHostPointerPropertiesEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkMemoryTypeBits VkMemoryHostPointerPropertiesEXT where
@@ -401,6 +524,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkMemoryTypeBits #-}
         writeVkMemoryTypeBits p
           = pokeByteOff p #{offset VkMemoryHostPointerPropertiesEXT, memoryTypeBits}
+
+instance {-# OVERLAPPING #-}
+         HasField "memoryTypeBits" VkMemoryHostPointerPropertiesEXT where
+        type FieldType "memoryTypeBits" VkMemoryHostPointerPropertiesEXT =
+             Word32
+        type FieldOptional "memoryTypeBits"
+               VkMemoryHostPointerPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "memoryTypeBits"
+           VkMemoryHostPointerPropertiesEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkMemoryTypeBits
+
+        {-# INLINE readField #-}
+        readField = readVkMemoryTypeBits
+
+instance CanWriteField "memoryTypeBits"
+           VkMemoryHostPointerPropertiesEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMemoryTypeBits
 
 instance Show VkMemoryHostPointerPropertiesEXT where
         showsPrec d x
@@ -542,6 +688,31 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkPhysicalDeviceExternalMemoryHostPropertiesEXT
+         where
+        type FieldType "sType"
+               VkPhysicalDeviceExternalMemoryHostPropertiesEXT
+             = VkStructureType
+        type FieldOptional "sType"
+               VkPhysicalDeviceExternalMemoryHostPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType"
+           VkPhysicalDeviceExternalMemoryHostPropertiesEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType"
+           VkPhysicalDeviceExternalMemoryHostPropertiesEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkPhysicalDeviceExternalMemoryHostPropertiesEXT where
         type VkPNextMType VkPhysicalDeviceExternalMemoryHostPropertiesEXT =
              Ptr Void
@@ -562,6 +733,31 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkPhysicalDeviceExternalMemoryHostPropertiesEXT
+         where
+        type FieldType "pNext"
+               VkPhysicalDeviceExternalMemoryHostPropertiesEXT
+             = Ptr Void
+        type FieldOptional "pNext"
+               VkPhysicalDeviceExternalMemoryHostPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext"
+           VkPhysicalDeviceExternalMemoryHostPropertiesEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkPhysicalDeviceExternalMemoryHostPropertiesEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkMinImportedHostPointerAlignment
@@ -587,6 +783,32 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkMinImportedHostPointerAlignment #-}
         writeVkMinImportedHostPointerAlignment p
           = pokeByteOff p #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, minImportedHostPointerAlignment}
+
+instance {-# OVERLAPPING #-}
+         HasField "minImportedHostPointerAlignment"
+           VkPhysicalDeviceExternalMemoryHostPropertiesEXT
+         where
+        type FieldType "minImportedHostPointerAlignment"
+               VkPhysicalDeviceExternalMemoryHostPropertiesEXT
+             = VkDeviceSize
+        type FieldOptional "minImportedHostPointerAlignment"
+               VkPhysicalDeviceExternalMemoryHostPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "minImportedHostPointerAlignment"
+           VkPhysicalDeviceExternalMemoryHostPropertiesEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkMinImportedHostPointerAlignment
+
+        {-# INLINE readField #-}
+        readField = readVkMinImportedHostPointerAlignment
+
+instance CanWriteField "minImportedHostPointerAlignment"
+           VkPhysicalDeviceExternalMemoryHostPropertiesEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMinImportedHostPointerAlignment
 
 instance Show VkPhysicalDeviceExternalMemoryHostPropertiesEXT where
         showsPrec d x

@@ -12,6 +12,7 @@ module Write.Types.Struct
   ) where
 
 
+import           Control.Monad                        (when)
 import           Data.Char                            (toUpper)
 import           Data.Map                             (Map)
 import qualified Data.Map                             as Map
@@ -42,7 +43,7 @@ genUnion = genStructOrUnion True
 genStructOrUnion :: Monad m => Bool -> VkType -> ModuleWriter m ClassDeclarations
 genStructOrUnion isUnion VkTypeComposite
     { name = vkTName
-    , attributes = VkTypeAttrs
+    , attributes = attrs@VkTypeAttrs
         { comment = txt
         }
     , members = tmems
@@ -143,8 +144,9 @@ genStructOrUnion isUnion VkTypeComposite
       $ ds
 
     -- generate field setters and getters
-    classDefs <- Map.fromList
-      <$> mapM (uncurry $ genStructField structNameTxt tname) sfimems
+    classDefs <- fmap Map.fromList
+          . mapM (\(m, (a,b)) -> genStructField attrs structNameTxt tname m a b)
+          . zip (items tmems) $  sfimems
 
     genStructShow (VkTypeName tnametxt) $ map snd sfimems
 
@@ -220,17 +222,20 @@ genStructShow (VkTypeName tname) xs = do
 
 
 genStructField :: Monad m
-               => Text
+               => VkTypeAttrs
+               -> Text
                -> QName () -- ^ struct type name
+               -> VkTypeMember
                -> Exp () -- ^ offset
                -> StructFieldInfo
                -> ModuleWriter m (QName (), [Decl A])
-genStructField structNameTxt structType _offsetE SFI{..}
+genStructField structAttrs structNameTxt structType VkTypeMember{..} _offsetE SFI{..}
     = genClass <$ genInstance
   where
     -- exportName = ExportType $ unqualify className
     VkTypeMember { name = VkMemberName origNameTxt} = sfdata
     origNameTxtQ = "'" <> origNameTxt <> "'"
+    origNameTxtQQ = "\"" <> origNameTxt <> "\""
     classNameTxt = "HasVk" <> sfiBaseNameTxt
     memberTypeTxt = "Vk" <> sfiBaseNameTxt <> "MType"
     className = toHaskellName classNameTxt
@@ -254,13 +259,43 @@ genStructField structNameTxt structType _offsetE SFI{..}
       Nothing -> offsetExpr
       Just _  -> "(idx * sizeOf (undefined :: " <> valueTypeTxt <> ")"
                <> " + " <> offsetExpr <> ")"
+    fieldOptional = T.pack . ('\'':) . show $ optional attributes
+
+    specMax = case memberData of
+          VkTypeData { name = Just (_, [VkTypeQArrLen n]) } -> n
+          _ -> 4
+    specStart t = "{-# SPECIALIZE instance " <> t <> " " <> origNameTxtQQ <> " "
+    specEnd   = structTypeTxt <> " #-}"
+    spec0r = if 0 >= specMax then ""
+            else specStart "CanReadFieldArray" <> "0" <> specEnd
+    spec1r = if 1 >= specMax then ""
+            else specStart "CanReadFieldArray" <> "1" <> specEnd
+    spec2r = if 2 >= specMax then ""
+            else specStart "CanReadFieldArray" <> "2" <> specEnd
+    spec3r = if 3 >= specMax then ""
+            else specStart "CanReadFieldArray" <> "3" <> specEnd
+    spec0w = if 0 >= specMax then ""
+            else specStart "CanWriteFieldArray" <> "0" <> specEnd
+    spec1w = if 1 >= specMax then ""
+            else specStart "CanWriteFieldArray" <> "1" <> specEnd
+    spec2w = if 2 >= specMax then ""
+            else specStart "CanWriteFieldArray" <> "2" <> specEnd
+    spec3w = if 3 >= specMax then ""
+            else specStart "CanWriteFieldArray" <> "3" <> specEnd
 
     genInstance = do
       writePragma "TypeFamilies"
+      writePragma "MultiParamTypeClasses"
+      writePragma "FlexibleInstances"
+      writePragma "DataKinds"
       writeImport $ DIVar "unsafeDupablePerformIO"
       writeImport $ DIThing valueTypeTxt DITNo
       writeImport $ DIThing sfiRTypeTxt DITNo
       writeImport $ DIThing structTypeTxt DITAll
+      case memberData of
+            VkTypeData { name = Just (_, [VkTypeQArrLenEnum n]) }
+              -> writeImport $ DIThing (unVkEnumName n) DITNo
+            _ -> pure ()
 
       let ds = parseDecls [text|
             instance {-# OVERLAPPING #-} $classNameTxt $structTypeTxt where
@@ -274,11 +309,71 @@ genStructField structNameTxt structType _offsetE SFI{..}
               $readFunTxt p $elemIdxConstr = peekByteOff p $elemOffsetF
               {-# INLINE $writeFunTxt #-}
               $writeFunTxt p $elemIdxConstr = pokeByteOff p $elemOffsetF
-            |]
 
-      mapM_ writeDecl
-        -- . insertDeclComment (T.unpack tnametxt) rezComment $
-        ds
+            instance {-# OVERLAPPING #-} HasField $origNameTxtQQ $structTypeTxt where
+              type FieldType $origNameTxtQQ $structTypeTxt = $valueTypeTxt
+              type FieldOptional $origNameTxtQQ $structTypeTxt = $fieldOptional
+            |]
+          dsRead = case sfiTyElemN of
+            Nothing -> parseDecls [text|
+              instance CanReadField $origNameTxtQQ $structTypeTxt where
+                {-# INLINE getField #-}
+                getField = $indexFunTxt
+                {-# INLINE readField #-}
+                readField = $readFunTxt
+              |]
+            Just lentxt -> parseDecls [text|
+              instance ( KnownNat idx
+                       , IndexInBounds $origNameTxtQQ idx $structTypeTxt
+                       )
+                    => CanReadFieldArray $origNameTxtQQ idx $structTypeTxt where
+                $spec0r
+                $spec1r
+                $spec2r
+                $spec3r
+                type FieldArrayLength $origNameTxtQQ $structTypeTxt = $lentxt
+                {-# INLINE getFieldArray #-}
+                getFieldArray x = $indexFunTxt x
+                  (fromInteger $ natVal' (proxy# :: Proxy# idx) )
+                {-# INLINE readFieldArray #-}
+                readFieldArray x = $readFunTxt x
+                  (fromInteger $ natVal' (proxy# :: Proxy# idx) )
+              |]
+          dsWrite =
+            if returnedonly structAttrs
+            then []
+            else case sfiTyElemN of
+              Nothing -> parseDecls [text|
+                instance CanWriteField $origNameTxtQQ $structTypeTxt where
+                  {-# INLINE writeField #-}
+                  writeField = $writeFunTxt
+                |]
+              Just _ -> parseDecls [text|
+                instance ( KnownNat idx
+                         , IndexInBounds $origNameTxtQQ idx $structTypeTxt
+                         )
+                      => CanWriteFieldArray $origNameTxtQQ idx $structTypeTxt where
+                  $spec0w
+                  $spec1w
+                  $spec2w
+                  $spec3w
+                  {-# INLINE writeFieldArray #-}
+                  writeFieldArray x = $writeFunTxt x
+                    (fromInteger $ natVal' (proxy# :: Proxy# idx) )
+                |]
+
+      when (isJust sfiTyElemN) $ do
+        writeImport $ DIThing "KnownNat" DITEmpty
+        writeImport $ DIThing "CmpNat" DITNo
+        writeImport $ DIVar "natVal'"
+        writePragma "ScopedTypeVariables"
+        writePragma "FlexibleContexts"
+        writePragma "UndecidableInstances"
+
+      mapM_ writeDecl ds
+      mapM_ writeDecl dsRead
+      mapM_ writeDecl dsWrite
+
 
     genClass =
       ( className

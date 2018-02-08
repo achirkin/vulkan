@@ -1,12 +1,14 @@
 #include "vulkan/vulkan.h"
 
-{-# LANGUAGE DataKinds       #-}
-{-# LANGUAGE MagicHash       #-}
-{-# LANGUAGE PatternSynonyms #-}
-{-# LANGUAGE Strict          #-}
-{-# LANGUAGE TypeFamilies    #-}
-{-# LANGUAGE UnboxedTuples   #-}
-{-# LANGUAGE ViewPatterns    #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MagicHash             #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE PatternSynonyms       #-}
+{-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeFamilies          #-}
+{-# LANGUAGE UnboxedTuples         #-}
+{-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_NV_dedicated_allocation
        (-- * Vulkan extension: @VK_NV_dedicated_allocation@
         -- |
@@ -169,6 +171,28 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDedicatedAllocationImageCreateInfoNV, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkDedicatedAllocationImageCreateInfoNV where
+        type FieldType "sType" VkDedicatedAllocationImageCreateInfoNV =
+             VkStructureType
+        type FieldOptional "sType" VkDedicatedAllocationImageCreateInfoNV =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType"
+           VkDedicatedAllocationImageCreateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType"
+           VkDedicatedAllocationImageCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkDedicatedAllocationImageCreateInfoNV where
         type VkPNextMType VkDedicatedAllocationImageCreateInfoNV = Ptr Void
 
@@ -188,6 +212,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkDedicatedAllocationImageCreateInfoNV, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkDedicatedAllocationImageCreateInfoNV where
+        type FieldType "pNext" VkDedicatedAllocationImageCreateInfoNV =
+             Ptr Void
+        type FieldOptional "pNext" VkDedicatedAllocationImageCreateInfoNV =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext"
+           VkDedicatedAllocationImageCreateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkDedicatedAllocationImageCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkDedicatedAllocation VkDedicatedAllocationImageCreateInfoNV
@@ -212,6 +258,32 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkDedicatedAllocation #-}
         writeVkDedicatedAllocation p
           = pokeByteOff p #{offset VkDedicatedAllocationImageCreateInfoNV, dedicatedAllocation}
+
+instance {-# OVERLAPPING #-}
+         HasField "dedicatedAllocation"
+           VkDedicatedAllocationImageCreateInfoNV
+         where
+        type FieldType "dedicatedAllocation"
+               VkDedicatedAllocationImageCreateInfoNV
+             = VkBool32
+        type FieldOptional "dedicatedAllocation"
+               VkDedicatedAllocationImageCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "dedicatedAllocation"
+           VkDedicatedAllocationImageCreateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkDedicatedAllocation
+
+        {-# INLINE readField #-}
+        readField = readVkDedicatedAllocation
+
+instance CanWriteField "dedicatedAllocation"
+           VkDedicatedAllocationImageCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkDedicatedAllocation
 
 instance Show VkDedicatedAllocationImageCreateInfoNV where
         showsPrec d x
@@ -349,6 +421,28 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDedicatedAllocationBufferCreateInfoNV, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkDedicatedAllocationBufferCreateInfoNV where
+        type FieldType "sType" VkDedicatedAllocationBufferCreateInfoNV =
+             VkStructureType
+        type FieldOptional "sType" VkDedicatedAllocationBufferCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType"
+           VkDedicatedAllocationBufferCreateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType"
+           VkDedicatedAllocationBufferCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkDedicatedAllocationBufferCreateInfoNV where
         type VkPNextMType VkDedicatedAllocationBufferCreateInfoNV =
              Ptr Void
@@ -369,6 +463,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkDedicatedAllocationBufferCreateInfoNV, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkDedicatedAllocationBufferCreateInfoNV where
+        type FieldType "pNext" VkDedicatedAllocationBufferCreateInfoNV =
+             Ptr Void
+        type FieldOptional "pNext" VkDedicatedAllocationBufferCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext"
+           VkDedicatedAllocationBufferCreateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkDedicatedAllocationBufferCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkDedicatedAllocation VkDedicatedAllocationBufferCreateInfoNV
@@ -393,6 +509,32 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkDedicatedAllocation #-}
         writeVkDedicatedAllocation p
           = pokeByteOff p #{offset VkDedicatedAllocationBufferCreateInfoNV, dedicatedAllocation}
+
+instance {-# OVERLAPPING #-}
+         HasField "dedicatedAllocation"
+           VkDedicatedAllocationBufferCreateInfoNV
+         where
+        type FieldType "dedicatedAllocation"
+               VkDedicatedAllocationBufferCreateInfoNV
+             = VkBool32
+        type FieldOptional "dedicatedAllocation"
+               VkDedicatedAllocationBufferCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "dedicatedAllocation"
+           VkDedicatedAllocationBufferCreateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkDedicatedAllocation
+
+        {-# INLINE readField #-}
+        readField = readVkDedicatedAllocation
+
+instance CanWriteField "dedicatedAllocation"
+           VkDedicatedAllocationBufferCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkDedicatedAllocation
 
 instance Show VkDedicatedAllocationBufferCreateInfoNV where
         showsPrec d x
@@ -531,6 +673,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDedicatedAllocationMemoryAllocateInfoNV, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkDedicatedAllocationMemoryAllocateInfoNV where
+        type FieldType "sType" VkDedicatedAllocationMemoryAllocateInfoNV =
+             VkStructureType
+        type FieldOptional "sType"
+               VkDedicatedAllocationMemoryAllocateInfoNV
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType"
+           VkDedicatedAllocationMemoryAllocateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType"
+           VkDedicatedAllocationMemoryAllocateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkDedicatedAllocationMemoryAllocateInfoNV where
         type VkPNextMType VkDedicatedAllocationMemoryAllocateInfoNV =
              Ptr Void
@@ -551,6 +716,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkDedicatedAllocationMemoryAllocateInfoNV, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkDedicatedAllocationMemoryAllocateInfoNV where
+        type FieldType "pNext" VkDedicatedAllocationMemoryAllocateInfoNV =
+             Ptr Void
+        type FieldOptional "pNext"
+               VkDedicatedAllocationMemoryAllocateInfoNV
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext"
+           VkDedicatedAllocationMemoryAllocateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkDedicatedAllocationMemoryAllocateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkImage VkDedicatedAllocationMemoryAllocateInfoNV where
@@ -575,6 +763,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDedicatedAllocationMemoryAllocateInfoNV, image}
 
 instance {-# OVERLAPPING #-}
+         HasField "image" VkDedicatedAllocationMemoryAllocateInfoNV where
+        type FieldType "image" VkDedicatedAllocationMemoryAllocateInfoNV =
+             VkImage
+        type FieldOptional "image"
+               VkDedicatedAllocationMemoryAllocateInfoNV
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "image"
+           VkDedicatedAllocationMemoryAllocateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkImage
+
+        {-# INLINE readField #-}
+        readField = readVkImage
+
+instance CanWriteField "image"
+           VkDedicatedAllocationMemoryAllocateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkImage
+
+instance {-# OVERLAPPING #-}
          HasVkBuffer VkDedicatedAllocationMemoryAllocateInfoNV where
         type VkBufferMType VkDedicatedAllocationMemoryAllocateInfoNV =
              VkBuffer
@@ -595,6 +806,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkBuffer #-}
         writeVkBuffer p
           = pokeByteOff p #{offset VkDedicatedAllocationMemoryAllocateInfoNV, buffer}
+
+instance {-# OVERLAPPING #-}
+         HasField "buffer" VkDedicatedAllocationMemoryAllocateInfoNV where
+        type FieldType "buffer" VkDedicatedAllocationMemoryAllocateInfoNV =
+             VkBuffer
+        type FieldOptional "buffer"
+               VkDedicatedAllocationMemoryAllocateInfoNV
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "buffer"
+           VkDedicatedAllocationMemoryAllocateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkBuffer
+
+        {-# INLINE readField #-}
+        readField = readVkBuffer
+
+instance CanWriteField "buffer"
+           VkDedicatedAllocationMemoryAllocateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkBuffer
 
 instance Show VkDedicatedAllocationMemoryAllocateInfoNV where
         showsPrec d x

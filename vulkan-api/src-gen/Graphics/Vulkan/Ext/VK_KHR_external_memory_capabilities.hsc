@@ -1,12 +1,17 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleContexts         #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
+{-# LANGUAGE ScopedTypeVariables      #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE UnboxedTuples            #-}
+{-# LANGUAGE UndecidableInstances     #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_external_memory_capabilities
        (-- * Vulkan extension: @VK_KHR_external_memory_capabilities@
@@ -51,6 +56,7 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
                                                    newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
+import           GHC.TypeLits                     (CmpNat, KnownNat, natVal') -- ' closing tick for hsc2hs
 import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
@@ -170,6 +176,25 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkExternalMemoryPropertiesKHR, externalMemoryFeatures}
 
 instance {-# OVERLAPPING #-}
+         HasField "externalMemoryFeatures" VkExternalMemoryPropertiesKHR
+         where
+        type FieldType "externalMemoryFeatures"
+               VkExternalMemoryPropertiesKHR
+             = VkExternalMemoryFeatureFlagsKHR
+        type FieldOptional "externalMemoryFeatures"
+               VkExternalMemoryPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "externalMemoryFeatures"
+           VkExternalMemoryPropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkExternalMemoryFeatures
+
+        {-# INLINE readField #-}
+        readField = readVkExternalMemoryFeatures
+
+instance {-# OVERLAPPING #-}
          HasVkExportFromImportedHandleTypes VkExternalMemoryPropertiesKHR
          where
         type VkExportFromImportedHandleTypesMType
@@ -194,6 +219,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkExternalMemoryPropertiesKHR, exportFromImportedHandleTypes}
 
 instance {-# OVERLAPPING #-}
+         HasField "exportFromImportedHandleTypes"
+           VkExternalMemoryPropertiesKHR
+         where
+        type FieldType "exportFromImportedHandleTypes"
+               VkExternalMemoryPropertiesKHR
+             = VkExternalMemoryHandleTypeFlagsKHR
+        type FieldOptional "exportFromImportedHandleTypes"
+               VkExternalMemoryPropertiesKHR
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "exportFromImportedHandleTypes"
+           VkExternalMemoryPropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkExportFromImportedHandleTypes
+
+        {-# INLINE readField #-}
+        readField = readVkExportFromImportedHandleTypes
+
+instance {-# OVERLAPPING #-}
          HasVkCompatibleHandleTypes VkExternalMemoryPropertiesKHR where
         type VkCompatibleHandleTypesMType VkExternalMemoryPropertiesKHR =
              VkExternalMemoryHandleTypeFlagsKHR
@@ -214,6 +259,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkCompatibleHandleTypes #-}
         writeVkCompatibleHandleTypes p
           = pokeByteOff p #{offset VkExternalMemoryPropertiesKHR, compatibleHandleTypes}
+
+instance {-# OVERLAPPING #-}
+         HasField "compatibleHandleTypes" VkExternalMemoryPropertiesKHR
+         where
+        type FieldType "compatibleHandleTypes"
+               VkExternalMemoryPropertiesKHR
+             = VkExternalMemoryHandleTypeFlagsKHR
+        type FieldOptional "compatibleHandleTypes"
+               VkExternalMemoryPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "compatibleHandleTypes"
+           VkExternalMemoryPropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkCompatibleHandleTypes
+
+        {-# INLINE readField #-}
+        readField = readVkCompatibleHandleTypes
 
 instance Show VkExternalMemoryPropertiesKHR where
         showsPrec d x
@@ -351,6 +415,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkPhysicalDeviceExternalImageFormatInfoKHR where
+        type FieldType "sType" VkPhysicalDeviceExternalImageFormatInfoKHR =
+             VkStructureType
+        type FieldOptional "sType"
+               VkPhysicalDeviceExternalImageFormatInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType"
+           VkPhysicalDeviceExternalImageFormatInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType"
+           VkPhysicalDeviceExternalImageFormatInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkPhysicalDeviceExternalImageFormatInfoKHR where
         type VkPNextMType VkPhysicalDeviceExternalImageFormatInfoKHR =
              Ptr Void
@@ -373,6 +460,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
+         HasField "pNext" VkPhysicalDeviceExternalImageFormatInfoKHR where
+        type FieldType "pNext" VkPhysicalDeviceExternalImageFormatInfoKHR =
+             Ptr Void
+        type FieldOptional "pNext"
+               VkPhysicalDeviceExternalImageFormatInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext"
+           VkPhysicalDeviceExternalImageFormatInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkPhysicalDeviceExternalImageFormatInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
+
+instance {-# OVERLAPPING #-}
          HasVkHandleType VkPhysicalDeviceExternalImageFormatInfoKHR where
         type VkHandleTypeMType VkPhysicalDeviceExternalImageFormatInfoKHR =
              VkExternalMemoryHandleTypeFlagBitsKHR
@@ -393,6 +503,31 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkHandleType #-}
         writeVkHandleType p
           = pokeByteOff p #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, handleType}
+
+instance {-# OVERLAPPING #-}
+         HasField "handleType" VkPhysicalDeviceExternalImageFormatInfoKHR
+         where
+        type FieldType "handleType"
+               VkPhysicalDeviceExternalImageFormatInfoKHR
+             = VkExternalMemoryHandleTypeFlagBitsKHR
+        type FieldOptional "handleType"
+               VkPhysicalDeviceExternalImageFormatInfoKHR
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "handleType"
+           VkPhysicalDeviceExternalImageFormatInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkHandleType
+
+        {-# INLINE readField #-}
+        readField = readVkHandleType
+
+instance CanWriteField "handleType"
+           VkPhysicalDeviceExternalImageFormatInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkHandleType
 
 instance Show VkPhysicalDeviceExternalImageFormatInfoKHR where
         showsPrec d x
@@ -522,6 +657,21 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkExternalImageFormatPropertiesKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkExternalImageFormatPropertiesKHR where
+        type FieldType "sType" VkExternalImageFormatPropertiesKHR =
+             VkStructureType
+        type FieldOptional "sType" VkExternalImageFormatPropertiesKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkExternalImageFormatPropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkExternalImageFormatPropertiesKHR where
         type VkPNextMType VkExternalImageFormatPropertiesKHR = Ptr Void
 
@@ -541,6 +691,21 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkExternalImageFormatPropertiesKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkExternalImageFormatPropertiesKHR where
+        type FieldType "pNext" VkExternalImageFormatPropertiesKHR =
+             Ptr Void
+        type FieldOptional "pNext" VkExternalImageFormatPropertiesKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkExternalImageFormatPropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkExternalMemoryProperties VkExternalImageFormatPropertiesKHR
@@ -565,6 +730,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkExternalMemoryProperties #-}
         writeVkExternalMemoryProperties p
           = pokeByteOff p #{offset VkExternalImageFormatPropertiesKHR, externalMemoryProperties}
+
+instance {-# OVERLAPPING #-}
+         HasField "externalMemoryProperties"
+           VkExternalImageFormatPropertiesKHR
+         where
+        type FieldType "externalMemoryProperties"
+               VkExternalImageFormatPropertiesKHR
+             = VkExternalMemoryPropertiesKHR
+        type FieldOptional "externalMemoryProperties"
+               VkExternalImageFormatPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "externalMemoryProperties"
+           VkExternalImageFormatPropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkExternalMemoryProperties
+
+        {-# INLINE readField #-}
+        readField = readVkExternalMemoryProperties
 
 instance Show VkExternalImageFormatPropertiesKHR where
         showsPrec d x
@@ -703,6 +888,27 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDeviceExternalBufferInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkPhysicalDeviceExternalBufferInfoKHR where
+        type FieldType "sType" VkPhysicalDeviceExternalBufferInfoKHR =
+             VkStructureType
+        type FieldOptional "sType" VkPhysicalDeviceExternalBufferInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkPhysicalDeviceExternalBufferInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType"
+           VkPhysicalDeviceExternalBufferInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkPhysicalDeviceExternalBufferInfoKHR where
         type VkPNextMType VkPhysicalDeviceExternalBufferInfoKHR = Ptr Void
 
@@ -722,6 +928,27 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkPhysicalDeviceExternalBufferInfoKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkPhysicalDeviceExternalBufferInfoKHR where
+        type FieldType "pNext" VkPhysicalDeviceExternalBufferInfoKHR =
+             Ptr Void
+        type FieldOptional "pNext" VkPhysicalDeviceExternalBufferInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkPhysicalDeviceExternalBufferInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkPhysicalDeviceExternalBufferInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkFlags VkPhysicalDeviceExternalBufferInfoKHR where
@@ -746,6 +973,27 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDeviceExternalBufferInfoKHR, flags}
 
 instance {-# OVERLAPPING #-}
+         HasField "flags" VkPhysicalDeviceExternalBufferInfoKHR where
+        type FieldType "flags" VkPhysicalDeviceExternalBufferInfoKHR =
+             VkBufferCreateFlags
+        type FieldOptional "flags" VkPhysicalDeviceExternalBufferInfoKHR =
+             'True -- ' closing tick for hsc2hs
+
+instance CanReadField "flags" VkPhysicalDeviceExternalBufferInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkFlags
+
+        {-# INLINE readField #-}
+        readField = readVkFlags
+
+instance CanWriteField "flags"
+           VkPhysicalDeviceExternalBufferInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkFlags
+
+instance {-# OVERLAPPING #-}
          HasVkUsage VkPhysicalDeviceExternalBufferInfoKHR where
         type VkUsageMType VkPhysicalDeviceExternalBufferInfoKHR =
              VkBufferUsageFlags
@@ -768,6 +1016,27 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDeviceExternalBufferInfoKHR, usage}
 
 instance {-# OVERLAPPING #-}
+         HasField "usage" VkPhysicalDeviceExternalBufferInfoKHR where
+        type FieldType "usage" VkPhysicalDeviceExternalBufferInfoKHR =
+             VkBufferUsageFlags
+        type FieldOptional "usage" VkPhysicalDeviceExternalBufferInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "usage" VkPhysicalDeviceExternalBufferInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkUsage
+
+        {-# INLINE readField #-}
+        readField = readVkUsage
+
+instance CanWriteField "usage"
+           VkPhysicalDeviceExternalBufferInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkUsage
+
+instance {-# OVERLAPPING #-}
          HasVkHandleType VkPhysicalDeviceExternalBufferInfoKHR where
         type VkHandleTypeMType VkPhysicalDeviceExternalBufferInfoKHR =
              VkExternalMemoryHandleTypeFlagBitsKHR
@@ -788,6 +1057,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkHandleType #-}
         writeVkHandleType p
           = pokeByteOff p #{offset VkPhysicalDeviceExternalBufferInfoKHR, handleType}
+
+instance {-# OVERLAPPING #-}
+         HasField "handleType" VkPhysicalDeviceExternalBufferInfoKHR where
+        type FieldType "handleType" VkPhysicalDeviceExternalBufferInfoKHR =
+             VkExternalMemoryHandleTypeFlagBitsKHR
+        type FieldOptional "handleType"
+               VkPhysicalDeviceExternalBufferInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "handleType"
+           VkPhysicalDeviceExternalBufferInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkHandleType
+
+        {-# INLINE readField #-}
+        readField = readVkHandleType
+
+instance CanWriteField "handleType"
+           VkPhysicalDeviceExternalBufferInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkHandleType
 
 instance Show VkPhysicalDeviceExternalBufferInfoKHR where
         showsPrec d x
@@ -918,6 +1210,19 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkExternalBufferPropertiesKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkExternalBufferPropertiesKHR where
+        type FieldType "sType" VkExternalBufferPropertiesKHR =
+             VkStructureType
+        type FieldOptional "sType" VkExternalBufferPropertiesKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkExternalBufferPropertiesKHR where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkExternalBufferPropertiesKHR where
         type VkPNextMType VkExternalBufferPropertiesKHR = Ptr Void
 
@@ -937,6 +1242,18 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkExternalBufferPropertiesKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkExternalBufferPropertiesKHR where
+        type FieldType "pNext" VkExternalBufferPropertiesKHR = Ptr Void
+        type FieldOptional "pNext" VkExternalBufferPropertiesKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkExternalBufferPropertiesKHR where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkExternalMemoryProperties VkExternalBufferPropertiesKHR where
@@ -959,6 +1276,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkExternalMemoryProperties #-}
         writeVkExternalMemoryProperties p
           = pokeByteOff p #{offset VkExternalBufferPropertiesKHR, externalMemoryProperties}
+
+instance {-# OVERLAPPING #-}
+         HasField "externalMemoryProperties" VkExternalBufferPropertiesKHR
+         where
+        type FieldType "externalMemoryProperties"
+               VkExternalBufferPropertiesKHR
+             = VkExternalMemoryPropertiesKHR
+        type FieldOptional "externalMemoryProperties"
+               VkExternalBufferPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "externalMemoryProperties"
+           VkExternalBufferPropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkExternalMemoryProperties
+
+        {-# INLINE readField #-}
+        readField = readVkExternalMemoryProperties
 
 instance Show VkExternalBufferPropertiesKHR where
         showsPrec d x
@@ -1088,6 +1424,19 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDeviceIDPropertiesKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkPhysicalDeviceIDPropertiesKHR where
+        type FieldType "sType" VkPhysicalDeviceIDPropertiesKHR =
+             VkStructureType
+        type FieldOptional "sType" VkPhysicalDeviceIDPropertiesKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkPhysicalDeviceIDPropertiesKHR where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkPhysicalDeviceIDPropertiesKHR where
         type VkPNextMType VkPhysicalDeviceIDPropertiesKHR = Ptr Void
 
@@ -1107,6 +1456,18 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkPhysicalDeviceIDPropertiesKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkPhysicalDeviceIDPropertiesKHR where
+        type FieldType "pNext" VkPhysicalDeviceIDPropertiesKHR = Ptr Void
+        type FieldOptional "pNext" VkPhysicalDeviceIDPropertiesKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkPhysicalDeviceIDPropertiesKHR where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkDeviceUUIDArray VkPhysicalDeviceIDPropertiesKHR where
@@ -1136,6 +1497,44 @@ instance {-# OVERLAPPING #-}
                  #{offset VkPhysicalDeviceIDPropertiesKHR, deviceUUID})
 
 instance {-# OVERLAPPING #-}
+         HasField "deviceUUID" VkPhysicalDeviceIDPropertiesKHR where
+        type FieldType "deviceUUID" VkPhysicalDeviceIDPropertiesKHR = Word8
+        type FieldOptional "deviceUUID" VkPhysicalDeviceIDPropertiesKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance (KnownNat idx,
+          IndexInBounds "deviceUUID" idx VkPhysicalDeviceIDPropertiesKHR) =>
+         CanReadFieldArray "deviceUUID" idx VkPhysicalDeviceIDPropertiesKHR
+         where
+        {-# SPECIALISE instance
+                       CanReadFieldArray "deviceUUID" 0 VkPhysicalDeviceIDPropertiesKHR
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanReadFieldArray "deviceUUID" 1 VkPhysicalDeviceIDPropertiesKHR
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanReadFieldArray "deviceUUID" 2 VkPhysicalDeviceIDPropertiesKHR
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanReadFieldArray "deviceUUID" 3 VkPhysicalDeviceIDPropertiesKHR
+                       #-}
+        type FieldArrayLength "deviceUUID" VkPhysicalDeviceIDPropertiesKHR
+             = VK_UUID_SIZE
+
+        {-# INLINE getFieldArray #-}
+        getFieldArray x
+          = vkDeviceUUIDArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
+        {-# INLINE readFieldArray #-}
+        readFieldArray x
+          = readVkDeviceUUIDArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
+instance {-# OVERLAPPING #-}
          HasVkDriverUUIDArray VkPhysicalDeviceIDPropertiesKHR where
         type VkDriverUUIDArrayMType VkPhysicalDeviceIDPropertiesKHR = Word8
 
@@ -1161,6 +1560,44 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p
               (idx * sizeOf (undefined :: Word8) +
                  #{offset VkPhysicalDeviceIDPropertiesKHR, driverUUID})
+
+instance {-# OVERLAPPING #-}
+         HasField "driverUUID" VkPhysicalDeviceIDPropertiesKHR where
+        type FieldType "driverUUID" VkPhysicalDeviceIDPropertiesKHR = Word8
+        type FieldOptional "driverUUID" VkPhysicalDeviceIDPropertiesKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance (KnownNat idx,
+          IndexInBounds "driverUUID" idx VkPhysicalDeviceIDPropertiesKHR) =>
+         CanReadFieldArray "driverUUID" idx VkPhysicalDeviceIDPropertiesKHR
+         where
+        {-# SPECIALISE instance
+                       CanReadFieldArray "driverUUID" 0 VkPhysicalDeviceIDPropertiesKHR
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanReadFieldArray "driverUUID" 1 VkPhysicalDeviceIDPropertiesKHR
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanReadFieldArray "driverUUID" 2 VkPhysicalDeviceIDPropertiesKHR
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanReadFieldArray "driverUUID" 3 VkPhysicalDeviceIDPropertiesKHR
+                       #-}
+        type FieldArrayLength "driverUUID" VkPhysicalDeviceIDPropertiesKHR
+             = VK_UUID_SIZE
+
+        {-# INLINE getFieldArray #-}
+        getFieldArray x
+          = vkDriverUUIDArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
+        {-# INLINE readFieldArray #-}
+        readFieldArray x
+          = readVkDriverUUIDArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkDeviceLUIDArray VkPhysicalDeviceIDPropertiesKHR where
@@ -1190,6 +1627,44 @@ instance {-# OVERLAPPING #-}
                  #{offset VkPhysicalDeviceIDPropertiesKHR, deviceLUID})
 
 instance {-# OVERLAPPING #-}
+         HasField "deviceLUID" VkPhysicalDeviceIDPropertiesKHR where
+        type FieldType "deviceLUID" VkPhysicalDeviceIDPropertiesKHR = Word8
+        type FieldOptional "deviceLUID" VkPhysicalDeviceIDPropertiesKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance (KnownNat idx,
+          IndexInBounds "deviceLUID" idx VkPhysicalDeviceIDPropertiesKHR) =>
+         CanReadFieldArray "deviceLUID" idx VkPhysicalDeviceIDPropertiesKHR
+         where
+        {-# SPECIALISE instance
+                       CanReadFieldArray "deviceLUID" 0 VkPhysicalDeviceIDPropertiesKHR
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanReadFieldArray "deviceLUID" 1 VkPhysicalDeviceIDPropertiesKHR
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanReadFieldArray "deviceLUID" 2 VkPhysicalDeviceIDPropertiesKHR
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanReadFieldArray "deviceLUID" 3 VkPhysicalDeviceIDPropertiesKHR
+                       #-}
+        type FieldArrayLength "deviceLUID" VkPhysicalDeviceIDPropertiesKHR
+             = VK_LUID_SIZE_KHR
+
+        {-# INLINE getFieldArray #-}
+        getFieldArray x
+          = vkDeviceLUIDArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
+        {-# INLINE readFieldArray #-}
+        readFieldArray x
+          = readVkDeviceLUIDArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
+instance {-# OVERLAPPING #-}
          HasVkDeviceNodeMask VkPhysicalDeviceIDPropertiesKHR where
         type VkDeviceNodeMaskMType VkPhysicalDeviceIDPropertiesKHR = Word32
 
@@ -1209,6 +1684,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkDeviceNodeMask #-}
         writeVkDeviceNodeMask p
           = pokeByteOff p #{offset VkPhysicalDeviceIDPropertiesKHR, deviceNodeMask}
+
+instance {-# OVERLAPPING #-}
+         HasField "deviceNodeMask" VkPhysicalDeviceIDPropertiesKHR where
+        type FieldType "deviceNodeMask" VkPhysicalDeviceIDPropertiesKHR =
+             Word32
+        type FieldOptional "deviceNodeMask" VkPhysicalDeviceIDPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "deviceNodeMask"
+           VkPhysicalDeviceIDPropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkDeviceNodeMask
+
+        {-# INLINE readField #-}
+        readField = readVkDeviceNodeMask
 
 instance {-# OVERLAPPING #-}
          HasVkDeviceLUIDValid VkPhysicalDeviceIDPropertiesKHR where
@@ -1231,6 +1722,23 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkDeviceLUIDValid #-}
         writeVkDeviceLUIDValid p
           = pokeByteOff p #{offset VkPhysicalDeviceIDPropertiesKHR, deviceLUIDValid}
+
+instance {-# OVERLAPPING #-}
+         HasField "deviceLUIDValid" VkPhysicalDeviceIDPropertiesKHR where
+        type FieldType "deviceLUIDValid" VkPhysicalDeviceIDPropertiesKHR =
+             VkBool32
+        type FieldOptional "deviceLUIDValid"
+               VkPhysicalDeviceIDPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "deviceLUIDValid"
+           VkPhysicalDeviceIDPropertiesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkDeviceLUIDValid
+
+        {-# INLINE readField #-}
+        readField = readVkDeviceLUIDValid
 
 instance Show VkPhysicalDeviceIDPropertiesKHR where
         showsPrec d x

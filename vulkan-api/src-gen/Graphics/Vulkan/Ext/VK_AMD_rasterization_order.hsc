@@ -1,12 +1,14 @@
 #include "vulkan/vulkan.h"
 
-{-# LANGUAGE DataKinds       #-}
-{-# LANGUAGE MagicHash       #-}
-{-# LANGUAGE PatternSynonyms #-}
-{-# LANGUAGE Strict          #-}
-{-# LANGUAGE TypeFamilies    #-}
-{-# LANGUAGE UnboxedTuples   #-}
-{-# LANGUAGE ViewPatterns    #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MagicHash             #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE PatternSynonyms       #-}
+{-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeFamilies          #-}
+{-# LANGUAGE UnboxedTuples         #-}
+{-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_AMD_rasterization_order
        (-- * Vulkan extension: @VK_AMD_rasterization_order@
         -- |
@@ -174,6 +176,31 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPipelineRasterizationStateRasterizationOrderAMD, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkPipelineRasterizationStateRasterizationOrderAMD
+         where
+        type FieldType "sType"
+               VkPipelineRasterizationStateRasterizationOrderAMD
+             = VkStructureType
+        type FieldOptional "sType"
+               VkPipelineRasterizationStateRasterizationOrderAMD
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType"
+           VkPipelineRasterizationStateRasterizationOrderAMD
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType"
+           VkPipelineRasterizationStateRasterizationOrderAMD
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkPipelineRasterizationStateRasterizationOrderAMD where
         type VkPNextMType VkPipelineRasterizationStateRasterizationOrderAMD
              = Ptr Void
@@ -194,6 +221,31 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkPipelineRasterizationStateRasterizationOrderAMD, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkPipelineRasterizationStateRasterizationOrderAMD
+         where
+        type FieldType "pNext"
+               VkPipelineRasterizationStateRasterizationOrderAMD
+             = Ptr Void
+        type FieldOptional "pNext"
+               VkPipelineRasterizationStateRasterizationOrderAMD
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext"
+           VkPipelineRasterizationStateRasterizationOrderAMD
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkPipelineRasterizationStateRasterizationOrderAMD
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkRasterizationOrder
@@ -219,6 +271,32 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkRasterizationOrder #-}
         writeVkRasterizationOrder p
           = pokeByteOff p #{offset VkPipelineRasterizationStateRasterizationOrderAMD, rasterizationOrder}
+
+instance {-# OVERLAPPING #-}
+         HasField "rasterizationOrder"
+           VkPipelineRasterizationStateRasterizationOrderAMD
+         where
+        type FieldType "rasterizationOrder"
+               VkPipelineRasterizationStateRasterizationOrderAMD
+             = VkRasterizationOrderAMD
+        type FieldOptional "rasterizationOrder"
+               VkPipelineRasterizationStateRasterizationOrderAMD
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "rasterizationOrder"
+           VkPipelineRasterizationStateRasterizationOrderAMD
+         where
+        {-# INLINE getField #-}
+        getField = vkRasterizationOrder
+
+        {-# INLINE readField #-}
+        readField = readVkRasterizationOrder
+
+instance CanWriteField "rasterizationOrder"
+           VkPipelineRasterizationStateRasterizationOrderAMD
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkRasterizationOrder
 
 instance Show VkPipelineRasterizationStateRasterizationOrderAMD
          where

@@ -1,8 +1,10 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
@@ -161,6 +163,23 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkValidationCacheCreateInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkValidationCacheCreateInfoEXT where
+        type FieldType "sType" VkValidationCacheCreateInfoEXT =
+             VkStructureType
+        type FieldOptional "sType" VkValidationCacheCreateInfoEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkValidationCacheCreateInfoEXT where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkValidationCacheCreateInfoEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkValidationCacheCreateInfoEXT where
         type VkPNextMType VkValidationCacheCreateInfoEXT = Ptr Void
 
@@ -180,6 +199,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkValidationCacheCreateInfoEXT, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkValidationCacheCreateInfoEXT where
+        type FieldType "pNext" VkValidationCacheCreateInfoEXT = Ptr Void
+        type FieldOptional "pNext" VkValidationCacheCreateInfoEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkValidationCacheCreateInfoEXT where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkValidationCacheCreateInfoEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkFlags VkValidationCacheCreateInfoEXT where
@@ -204,6 +239,23 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkValidationCacheCreateInfoEXT, flags}
 
 instance {-# OVERLAPPING #-}
+         HasField "flags" VkValidationCacheCreateInfoEXT where
+        type FieldType "flags" VkValidationCacheCreateInfoEXT =
+             VkValidationCacheCreateFlagsEXT
+        type FieldOptional "flags" VkValidationCacheCreateInfoEXT = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "flags" VkValidationCacheCreateInfoEXT where
+        {-# INLINE getField #-}
+        getField = vkFlags
+
+        {-# INLINE readField #-}
+        readField = readVkFlags
+
+instance CanWriteField "flags" VkValidationCacheCreateInfoEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkFlags
+
+instance {-# OVERLAPPING #-}
          HasVkInitialDataSize VkValidationCacheCreateInfoEXT where
         type VkInitialDataSizeMType VkValidationCacheCreateInfoEXT =
              #{type size_t}
@@ -226,6 +278,28 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkValidationCacheCreateInfoEXT, initialDataSize}
 
 instance {-# OVERLAPPING #-}
+         HasField "initialDataSize" VkValidationCacheCreateInfoEXT where
+        type FieldType "initialDataSize" VkValidationCacheCreateInfoEXT =
+             #{type size_t}
+        type FieldOptional "initialDataSize" VkValidationCacheCreateInfoEXT
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "initialDataSize"
+           VkValidationCacheCreateInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkInitialDataSize
+
+        {-# INLINE readField #-}
+        readField = readVkInitialDataSize
+
+instance CanWriteField "initialDataSize"
+           VkValidationCacheCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkInitialDataSize
+
+instance {-# OVERLAPPING #-}
          HasVkPInitialData VkValidationCacheCreateInfoEXT where
         type VkPInitialDataMType VkValidationCacheCreateInfoEXT = Ptr Void
 
@@ -245,6 +319,27 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPInitialData #-}
         writeVkPInitialData p
           = pokeByteOff p #{offset VkValidationCacheCreateInfoEXT, pInitialData}
+
+instance {-# OVERLAPPING #-}
+         HasField "pInitialData" VkValidationCacheCreateInfoEXT where
+        type FieldType "pInitialData" VkValidationCacheCreateInfoEXT =
+             Ptr Void
+        type FieldOptional "pInitialData" VkValidationCacheCreateInfoEXT =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pInitialData" VkValidationCacheCreateInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkPInitialData
+
+        {-# INLINE readField #-}
+        readField = readVkPInitialData
+
+instance CanWriteField "pInitialData"
+           VkValidationCacheCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPInitialData
 
 instance Show VkValidationCacheCreateInfoEXT where
         showsPrec d x
@@ -388,6 +483,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkShaderModuleValidationCacheCreateInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkShaderModuleValidationCacheCreateInfoEXT where
+        type FieldType "sType" VkShaderModuleValidationCacheCreateInfoEXT =
+             VkStructureType
+        type FieldOptional "sType"
+               VkShaderModuleValidationCacheCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType"
+           VkShaderModuleValidationCacheCreateInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType"
+           VkShaderModuleValidationCacheCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkShaderModuleValidationCacheCreateInfoEXT where
         type VkPNextMType VkShaderModuleValidationCacheCreateInfoEXT =
              Ptr Void
@@ -408,6 +526,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkShaderModuleValidationCacheCreateInfoEXT, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkShaderModuleValidationCacheCreateInfoEXT where
+        type FieldType "pNext" VkShaderModuleValidationCacheCreateInfoEXT =
+             Ptr Void
+        type FieldOptional "pNext"
+               VkShaderModuleValidationCacheCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext"
+           VkShaderModuleValidationCacheCreateInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkShaderModuleValidationCacheCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkValidationCache VkShaderModuleValidationCacheCreateInfoEXT
@@ -432,6 +573,32 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkValidationCache #-}
         writeVkValidationCache p
           = pokeByteOff p #{offset VkShaderModuleValidationCacheCreateInfoEXT, validationCache}
+
+instance {-# OVERLAPPING #-}
+         HasField "validationCache"
+           VkShaderModuleValidationCacheCreateInfoEXT
+         where
+        type FieldType "validationCache"
+               VkShaderModuleValidationCacheCreateInfoEXT
+             = VkValidationCacheEXT
+        type FieldOptional "validationCache"
+               VkShaderModuleValidationCacheCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "validationCache"
+           VkShaderModuleValidationCacheCreateInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkValidationCache
+
+        {-# INLINE readField #-}
+        readField = readVkValidationCache
+
+instance CanWriteField "validationCache"
+           VkShaderModuleValidationCacheCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkValidationCache
 
 instance Show VkShaderModuleValidationCacheCreateInfoEXT where
         showsPrec d x

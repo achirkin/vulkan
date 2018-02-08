@@ -1,12 +1,17 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleContexts         #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
+{-# LANGUAGE ScopedTypeVariables      #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE UnboxedTuples            #-}
+{-# LANGUAGE UndecidableInstances     #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_EXT_sample_locations
        (-- * Vulkan extension: @VK_EXT_sample_locations@
@@ -48,6 +53,7 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
                                                    newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
+import           GHC.TypeLits                     (CmpNat, KnownNat, natVal') -- ' closing tick for hsc2hs
 import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base             (VkExtent2D)
 import           Graphics.Vulkan.Common
@@ -160,6 +166,21 @@ instance {-# OVERLAPPING #-} HasVkX VkSampleLocationEXT where
         writeVkX p
           = pokeByteOff p #{offset VkSampleLocationEXT, x}
 
+instance {-# OVERLAPPING #-} HasField "x" VkSampleLocationEXT where
+        type FieldType "x" VkSampleLocationEXT = #{type float}
+        type FieldOptional "x" VkSampleLocationEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "x" VkSampleLocationEXT where
+        {-# INLINE getField #-}
+        getField = vkX
+
+        {-# INLINE readField #-}
+        readField = readVkX
+
+instance CanWriteField "x" VkSampleLocationEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkX
+
 instance {-# OVERLAPPING #-} HasVkY VkSampleLocationEXT where
         type VkYMType VkSampleLocationEXT = #{type float}
 
@@ -178,6 +199,21 @@ instance {-# OVERLAPPING #-} HasVkY VkSampleLocationEXT where
         {-# INLINE writeVkY #-}
         writeVkY p
           = pokeByteOff p #{offset VkSampleLocationEXT, y}
+
+instance {-# OVERLAPPING #-} HasField "y" VkSampleLocationEXT where
+        type FieldType "y" VkSampleLocationEXT = #{type float}
+        type FieldOptional "y" VkSampleLocationEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "y" VkSampleLocationEXT where
+        {-# INLINE getField #-}
+        getField = vkY
+
+        {-# INLINE readField #-}
+        readField = readVkY
+
+instance CanWriteField "y" VkSampleLocationEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkY
 
 instance Show VkSampleLocationEXT where
         showsPrec d x
@@ -299,6 +335,22 @@ instance {-# OVERLAPPING #-} HasVkSType VkSampleLocationsInfoEXT
         writeVkSType p
           = pokeByteOff p #{offset VkSampleLocationsInfoEXT, sType}
 
+instance {-# OVERLAPPING #-}
+         HasField "sType" VkSampleLocationsInfoEXT where
+        type FieldType "sType" VkSampleLocationsInfoEXT = VkStructureType
+        type FieldOptional "sType" VkSampleLocationsInfoEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkSampleLocationsInfoEXT where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkSampleLocationsInfoEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkSampleLocationsInfoEXT
          where
         type VkPNextMType VkSampleLocationsInfoEXT = Ptr Void
@@ -319,6 +371,22 @@ instance {-# OVERLAPPING #-} HasVkPNext VkSampleLocationsInfoEXT
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkSampleLocationsInfoEXT, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkSampleLocationsInfoEXT where
+        type FieldType "pNext" VkSampleLocationsInfoEXT = Ptr Void
+        type FieldOptional "pNext" VkSampleLocationsInfoEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkSampleLocationsInfoEXT where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkSampleLocationsInfoEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkSampleLocationsPerPixel VkSampleLocationsInfoEXT where
@@ -343,6 +411,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkSampleLocationsInfoEXT, sampleLocationsPerPixel}
 
 instance {-# OVERLAPPING #-}
+         HasField "sampleLocationsPerPixel" VkSampleLocationsInfoEXT where
+        type FieldType "sampleLocationsPerPixel" VkSampleLocationsInfoEXT =
+             VkSampleCountFlagBits
+        type FieldOptional "sampleLocationsPerPixel"
+               VkSampleLocationsInfoEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sampleLocationsPerPixel"
+           VkSampleLocationsInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkSampleLocationsPerPixel
+
+        {-# INLINE readField #-}
+        readField = readVkSampleLocationsPerPixel
+
+instance CanWriteField "sampleLocationsPerPixel"
+           VkSampleLocationsInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSampleLocationsPerPixel
+
+instance {-# OVERLAPPING #-}
          HasVkSampleLocationGridSize VkSampleLocationsInfoEXT where
         type VkSampleLocationGridSizeMType VkSampleLocationsInfoEXT =
              VkExtent2D
@@ -363,6 +454,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkSampleLocationGridSize #-}
         writeVkSampleLocationGridSize p
           = pokeByteOff p #{offset VkSampleLocationsInfoEXT, sampleLocationGridSize}
+
+instance {-# OVERLAPPING #-}
+         HasField "sampleLocationGridSize" VkSampleLocationsInfoEXT where
+        type FieldType "sampleLocationGridSize" VkSampleLocationsInfoEXT =
+             VkExtent2D
+        type FieldOptional "sampleLocationGridSize"
+               VkSampleLocationsInfoEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sampleLocationGridSize"
+           VkSampleLocationsInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkSampleLocationGridSize
+
+        {-# INLINE readField #-}
+        readField = readVkSampleLocationGridSize
+
+instance CanWriteField "sampleLocationGridSize"
+           VkSampleLocationsInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSampleLocationGridSize
 
 instance {-# OVERLAPPING #-}
          HasVkSampleLocationsCount VkSampleLocationsInfoEXT where
@@ -386,6 +500,28 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkSampleLocationsInfoEXT, sampleLocationsCount}
 
 instance {-# OVERLAPPING #-}
+         HasField "sampleLocationsCount" VkSampleLocationsInfoEXT where
+        type FieldType "sampleLocationsCount" VkSampleLocationsInfoEXT =
+             Word32
+        type FieldOptional "sampleLocationsCount" VkSampleLocationsInfoEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sampleLocationsCount"
+           VkSampleLocationsInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkSampleLocationsCount
+
+        {-# INLINE readField #-}
+        readField = readVkSampleLocationsCount
+
+instance CanWriteField "sampleLocationsCount"
+           VkSampleLocationsInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSampleLocationsCount
+
+instance {-# OVERLAPPING #-}
          HasVkPSampleLocations VkSampleLocationsInfoEXT where
         type VkPSampleLocationsMType VkSampleLocationsInfoEXT =
              Ptr VkSampleLocationEXT
@@ -406,6 +542,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPSampleLocations #-}
         writeVkPSampleLocations p
           = pokeByteOff p #{offset VkSampleLocationsInfoEXT, pSampleLocations}
+
+instance {-# OVERLAPPING #-}
+         HasField "pSampleLocations" VkSampleLocationsInfoEXT where
+        type FieldType "pSampleLocations" VkSampleLocationsInfoEXT =
+             Ptr VkSampleLocationEXT
+        type FieldOptional "pSampleLocations" VkSampleLocationsInfoEXT =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pSampleLocations" VkSampleLocationsInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkPSampleLocations
+
+        {-# INLINE readField #-}
+        readField = readVkPSampleLocations
+
+instance CanWriteField "pSampleLocations" VkSampleLocationsInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPSampleLocations
 
 instance Show VkSampleLocationsInfoEXT where
         showsPrec d x
@@ -538,6 +694,28 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkAttachmentSampleLocationsEXT, attachmentIndex}
 
 instance {-# OVERLAPPING #-}
+         HasField "attachmentIndex" VkAttachmentSampleLocationsEXT where
+        type FieldType "attachmentIndex" VkAttachmentSampleLocationsEXT =
+             Word32
+        type FieldOptional "attachmentIndex" VkAttachmentSampleLocationsEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "attachmentIndex"
+           VkAttachmentSampleLocationsEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkAttachmentIndex
+
+        {-# INLINE readField #-}
+        readField = readVkAttachmentIndex
+
+instance CanWriteField "attachmentIndex"
+           VkAttachmentSampleLocationsEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkAttachmentIndex
+
+instance {-# OVERLAPPING #-}
          HasVkSampleLocationsInfo VkAttachmentSampleLocationsEXT where
         type VkSampleLocationsInfoMType VkAttachmentSampleLocationsEXT =
              VkSampleLocationsInfoEXT
@@ -558,6 +736,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkSampleLocationsInfo #-}
         writeVkSampleLocationsInfo p
           = pokeByteOff p #{offset VkAttachmentSampleLocationsEXT, sampleLocationsInfo}
+
+instance {-# OVERLAPPING #-}
+         HasField "sampleLocationsInfo" VkAttachmentSampleLocationsEXT where
+        type FieldType "sampleLocationsInfo" VkAttachmentSampleLocationsEXT
+             = VkSampleLocationsInfoEXT
+        type FieldOptional "sampleLocationsInfo"
+               VkAttachmentSampleLocationsEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sampleLocationsInfo"
+           VkAttachmentSampleLocationsEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkSampleLocationsInfo
+
+        {-# INLINE readField #-}
+        readField = readVkSampleLocationsInfo
+
+instance CanWriteField "sampleLocationsInfo"
+           VkAttachmentSampleLocationsEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSampleLocationsInfo
 
 instance Show VkAttachmentSampleLocationsEXT where
         showsPrec d x
@@ -677,6 +878,25 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkSubpassSampleLocationsEXT, subpassIndex}
 
 instance {-# OVERLAPPING #-}
+         HasField "subpassIndex" VkSubpassSampleLocationsEXT where
+        type FieldType "subpassIndex" VkSubpassSampleLocationsEXT = Word32
+        type FieldOptional "subpassIndex" VkSubpassSampleLocationsEXT =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "subpassIndex" VkSubpassSampleLocationsEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkSubpassIndex
+
+        {-# INLINE readField #-}
+        readField = readVkSubpassIndex
+
+instance CanWriteField "subpassIndex" VkSubpassSampleLocationsEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSubpassIndex
+
+instance {-# OVERLAPPING #-}
          HasVkSampleLocationsInfo VkSubpassSampleLocationsEXT where
         type VkSampleLocationsInfoMType VkSubpassSampleLocationsEXT =
              VkSampleLocationsInfoEXT
@@ -697,6 +917,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkSampleLocationsInfo #-}
         writeVkSampleLocationsInfo p
           = pokeByteOff p #{offset VkSubpassSampleLocationsEXT, sampleLocationsInfo}
+
+instance {-# OVERLAPPING #-}
+         HasField "sampleLocationsInfo" VkSubpassSampleLocationsEXT where
+        type FieldType "sampleLocationsInfo" VkSubpassSampleLocationsEXT =
+             VkSampleLocationsInfoEXT
+        type FieldOptional "sampleLocationsInfo"
+               VkSubpassSampleLocationsEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sampleLocationsInfo"
+           VkSubpassSampleLocationsEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkSampleLocationsInfo
+
+        {-# INLINE readField #-}
+        readField = readVkSampleLocationsInfo
+
+instance CanWriteField "sampleLocationsInfo"
+           VkSubpassSampleLocationsEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSampleLocationsInfo
 
 instance Show VkSubpassSampleLocationsEXT where
         showsPrec d x
@@ -834,6 +1077,28 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkRenderPassSampleLocationsBeginInfoEXT where
+        type FieldType "sType" VkRenderPassSampleLocationsBeginInfoEXT =
+             VkStructureType
+        type FieldOptional "sType" VkRenderPassSampleLocationsBeginInfoEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType"
+           VkRenderPassSampleLocationsBeginInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType"
+           VkRenderPassSampleLocationsBeginInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkRenderPassSampleLocationsBeginInfoEXT where
         type VkPNextMType VkRenderPassSampleLocationsBeginInfoEXT =
              Ptr Void
@@ -854,6 +1119,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkRenderPassSampleLocationsBeginInfoEXT where
+        type FieldType "pNext" VkRenderPassSampleLocationsBeginInfoEXT =
+             Ptr Void
+        type FieldOptional "pNext" VkRenderPassSampleLocationsBeginInfoEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext"
+           VkRenderPassSampleLocationsBeginInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkRenderPassSampleLocationsBeginInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkAttachmentInitialSampleLocationsCount
@@ -881,6 +1168,32 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, attachmentInitialSampleLocationsCount}
 
 instance {-# OVERLAPPING #-}
+         HasField "attachmentInitialSampleLocationsCount"
+           VkRenderPassSampleLocationsBeginInfoEXT
+         where
+        type FieldType "attachmentInitialSampleLocationsCount"
+               VkRenderPassSampleLocationsBeginInfoEXT
+             = Word32
+        type FieldOptional "attachmentInitialSampleLocationsCount"
+               VkRenderPassSampleLocationsBeginInfoEXT
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "attachmentInitialSampleLocationsCount"
+           VkRenderPassSampleLocationsBeginInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkAttachmentInitialSampleLocationsCount
+
+        {-# INLINE readField #-}
+        readField = readVkAttachmentInitialSampleLocationsCount
+
+instance CanWriteField "attachmentInitialSampleLocationsCount"
+           VkRenderPassSampleLocationsBeginInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkAttachmentInitialSampleLocationsCount
+
+instance {-# OVERLAPPING #-}
          HasVkPAttachmentInitialSampleLocations
            VkRenderPassSampleLocationsBeginInfoEXT
          where
@@ -904,6 +1217,32 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPAttachmentInitialSampleLocations #-}
         writeVkPAttachmentInitialSampleLocations p
           = pokeByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, pAttachmentInitialSampleLocations}
+
+instance {-# OVERLAPPING #-}
+         HasField "pAttachmentInitialSampleLocations"
+           VkRenderPassSampleLocationsBeginInfoEXT
+         where
+        type FieldType "pAttachmentInitialSampleLocations"
+               VkRenderPassSampleLocationsBeginInfoEXT
+             = Ptr VkAttachmentSampleLocationsEXT
+        type FieldOptional "pAttachmentInitialSampleLocations"
+               VkRenderPassSampleLocationsBeginInfoEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pAttachmentInitialSampleLocations"
+           VkRenderPassSampleLocationsBeginInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkPAttachmentInitialSampleLocations
+
+        {-# INLINE readField #-}
+        readField = readVkPAttachmentInitialSampleLocations
+
+instance CanWriteField "pAttachmentInitialSampleLocations"
+           VkRenderPassSampleLocationsBeginInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPAttachmentInitialSampleLocations
 
 instance {-# OVERLAPPING #-}
          HasVkPostSubpassSampleLocationsCount
@@ -931,6 +1270,32 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, postSubpassSampleLocationsCount}
 
 instance {-# OVERLAPPING #-}
+         HasField "postSubpassSampleLocationsCount"
+           VkRenderPassSampleLocationsBeginInfoEXT
+         where
+        type FieldType "postSubpassSampleLocationsCount"
+               VkRenderPassSampleLocationsBeginInfoEXT
+             = Word32
+        type FieldOptional "postSubpassSampleLocationsCount"
+               VkRenderPassSampleLocationsBeginInfoEXT
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "postSubpassSampleLocationsCount"
+           VkRenderPassSampleLocationsBeginInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkPostSubpassSampleLocationsCount
+
+        {-# INLINE readField #-}
+        readField = readVkPostSubpassSampleLocationsCount
+
+instance CanWriteField "postSubpassSampleLocationsCount"
+           VkRenderPassSampleLocationsBeginInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPostSubpassSampleLocationsCount
+
+instance {-# OVERLAPPING #-}
          HasVkPPostSubpassSampleLocations
            VkRenderPassSampleLocationsBeginInfoEXT
          where
@@ -954,6 +1319,32 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPPostSubpassSampleLocations #-}
         writeVkPPostSubpassSampleLocations p
           = pokeByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, pPostSubpassSampleLocations}
+
+instance {-# OVERLAPPING #-}
+         HasField "pPostSubpassSampleLocations"
+           VkRenderPassSampleLocationsBeginInfoEXT
+         where
+        type FieldType "pPostSubpassSampleLocations"
+               VkRenderPassSampleLocationsBeginInfoEXT
+             = Ptr VkSubpassSampleLocationsEXT
+        type FieldOptional "pPostSubpassSampleLocations"
+               VkRenderPassSampleLocationsBeginInfoEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pPostSubpassSampleLocations"
+           VkRenderPassSampleLocationsBeginInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkPPostSubpassSampleLocations
+
+        {-# INLINE readField #-}
+        readField = readVkPPostSubpassSampleLocations
+
+instance CanWriteField "pPostSubpassSampleLocations"
+           VkRenderPassSampleLocationsBeginInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPPostSubpassSampleLocations
 
 instance Show VkRenderPassSampleLocationsBeginInfoEXT where
         showsPrec d x
@@ -1102,6 +1493,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkPipelineSampleLocationsStateCreateInfoEXT where
+        type FieldType "sType" VkPipelineSampleLocationsStateCreateInfoEXT
+             = VkStructureType
+        type FieldOptional "sType"
+               VkPipelineSampleLocationsStateCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType"
+           VkPipelineSampleLocationsStateCreateInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType"
+           VkPipelineSampleLocationsStateCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkPipelineSampleLocationsStateCreateInfoEXT where
         type VkPNextMType VkPipelineSampleLocationsStateCreateInfoEXT =
              Ptr Void
@@ -1122,6 +1536,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkPipelineSampleLocationsStateCreateInfoEXT, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkPipelineSampleLocationsStateCreateInfoEXT where
+        type FieldType "pNext" VkPipelineSampleLocationsStateCreateInfoEXT
+             = Ptr Void
+        type FieldOptional "pNext"
+               VkPipelineSampleLocationsStateCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext"
+           VkPipelineSampleLocationsStateCreateInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkPipelineSampleLocationsStateCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkSampleLocationsEnable
@@ -1149,6 +1586,32 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sampleLocationsEnable}
 
 instance {-# OVERLAPPING #-}
+         HasField "sampleLocationsEnable"
+           VkPipelineSampleLocationsStateCreateInfoEXT
+         where
+        type FieldType "sampleLocationsEnable"
+               VkPipelineSampleLocationsStateCreateInfoEXT
+             = VkBool32
+        type FieldOptional "sampleLocationsEnable"
+               VkPipelineSampleLocationsStateCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sampleLocationsEnable"
+           VkPipelineSampleLocationsStateCreateInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkSampleLocationsEnable
+
+        {-# INLINE readField #-}
+        readField = readVkSampleLocationsEnable
+
+instance CanWriteField "sampleLocationsEnable"
+           VkPipelineSampleLocationsStateCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSampleLocationsEnable
+
+instance {-# OVERLAPPING #-}
          HasVkSampleLocationsInfo
            VkPipelineSampleLocationsStateCreateInfoEXT
          where
@@ -1172,6 +1635,32 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkSampleLocationsInfo #-}
         writeVkSampleLocationsInfo p
           = pokeByteOff p #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sampleLocationsInfo}
+
+instance {-# OVERLAPPING #-}
+         HasField "sampleLocationsInfo"
+           VkPipelineSampleLocationsStateCreateInfoEXT
+         where
+        type FieldType "sampleLocationsInfo"
+               VkPipelineSampleLocationsStateCreateInfoEXT
+             = VkSampleLocationsInfoEXT
+        type FieldOptional "sampleLocationsInfo"
+               VkPipelineSampleLocationsStateCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sampleLocationsInfo"
+           VkPipelineSampleLocationsStateCreateInfoEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkSampleLocationsInfo
+
+        {-# INLINE readField #-}
+        readField = readVkSampleLocationsInfo
+
+instance CanWriteField "sampleLocationsInfo"
+           VkPipelineSampleLocationsStateCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSampleLocationsInfo
 
 instance Show VkPipelineSampleLocationsStateCreateInfoEXT where
         showsPrec d x
@@ -1318,6 +1807,23 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkPhysicalDeviceSampleLocationsPropertiesEXT where
+        type FieldType "sType" VkPhysicalDeviceSampleLocationsPropertiesEXT
+             = VkStructureType
+        type FieldOptional "sType"
+               VkPhysicalDeviceSampleLocationsPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType"
+           VkPhysicalDeviceSampleLocationsPropertiesEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkPhysicalDeviceSampleLocationsPropertiesEXT where
         type VkPNextMType VkPhysicalDeviceSampleLocationsPropertiesEXT =
              Ptr Void
@@ -1338,6 +1844,23 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkPhysicalDeviceSampleLocationsPropertiesEXT where
+        type FieldType "pNext" VkPhysicalDeviceSampleLocationsPropertiesEXT
+             = Ptr Void
+        type FieldOptional "pNext"
+               VkPhysicalDeviceSampleLocationsPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext"
+           VkPhysicalDeviceSampleLocationsPropertiesEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkSampleLocationSampleCounts
@@ -1365,6 +1888,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationSampleCounts}
 
 instance {-# OVERLAPPING #-}
+         HasField "sampleLocationSampleCounts"
+           VkPhysicalDeviceSampleLocationsPropertiesEXT
+         where
+        type FieldType "sampleLocationSampleCounts"
+               VkPhysicalDeviceSampleLocationsPropertiesEXT
+             = VkSampleCountFlags
+        type FieldOptional "sampleLocationSampleCounts"
+               VkPhysicalDeviceSampleLocationsPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sampleLocationSampleCounts"
+           VkPhysicalDeviceSampleLocationsPropertiesEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkSampleLocationSampleCounts
+
+        {-# INLINE readField #-}
+        readField = readVkSampleLocationSampleCounts
+
+instance {-# OVERLAPPING #-}
          HasVkMaxSampleLocationGridSize
            VkPhysicalDeviceSampleLocationsPropertiesEXT
          where
@@ -1388,6 +1931,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkMaxSampleLocationGridSize #-}
         writeVkMaxSampleLocationGridSize p
           = pokeByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, maxSampleLocationGridSize}
+
+instance {-# OVERLAPPING #-}
+         HasField "maxSampleLocationGridSize"
+           VkPhysicalDeviceSampleLocationsPropertiesEXT
+         where
+        type FieldType "maxSampleLocationGridSize"
+               VkPhysicalDeviceSampleLocationsPropertiesEXT
+             = VkExtent2D
+        type FieldOptional "maxSampleLocationGridSize"
+               VkPhysicalDeviceSampleLocationsPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "maxSampleLocationGridSize"
+           VkPhysicalDeviceSampleLocationsPropertiesEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkMaxSampleLocationGridSize
+
+        {-# INLINE readField #-}
+        readField = readVkMaxSampleLocationGridSize
 
 instance {-# OVERLAPPING #-}
          HasVkSampleLocationCoordinateRangeArray
@@ -1421,6 +1984,46 @@ instance {-# OVERLAPPING #-}
                  #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationCoordinateRange})
 
 instance {-# OVERLAPPING #-}
+         HasField "sampleLocationCoordinateRange"
+           VkPhysicalDeviceSampleLocationsPropertiesEXT
+         where
+        type FieldType "sampleLocationCoordinateRange"
+               VkPhysicalDeviceSampleLocationsPropertiesEXT
+             = #{type float}
+        type FieldOptional "sampleLocationCoordinateRange"
+               VkPhysicalDeviceSampleLocationsPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance (KnownNat idx,
+          IndexInBounds "sampleLocationCoordinateRange" idx
+            VkPhysicalDeviceSampleLocationsPropertiesEXT) =>
+         CanReadFieldArray "sampleLocationCoordinateRange" idx
+           VkPhysicalDeviceSampleLocationsPropertiesEXT
+         where
+        {-# SPECIALISE instance
+                       CanReadFieldArray "sampleLocationCoordinateRange" 0
+                         VkPhysicalDeviceSampleLocationsPropertiesEXT
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanReadFieldArray "sampleLocationCoordinateRange" 1
+                         VkPhysicalDeviceSampleLocationsPropertiesEXT
+                       #-}
+        type FieldArrayLength "sampleLocationCoordinateRange"
+               VkPhysicalDeviceSampleLocationsPropertiesEXT
+             = 2
+
+        {-# INLINE getFieldArray #-}
+        getFieldArray x
+          = vkSampleLocationCoordinateRangeArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
+        {-# INLINE readFieldArray #-}
+        readFieldArray x
+          = readVkSampleLocationCoordinateRangeArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
+instance {-# OVERLAPPING #-}
          HasVkSampleLocationSubPixelBits
            VkPhysicalDeviceSampleLocationsPropertiesEXT
          where
@@ -1446,6 +2049,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationSubPixelBits}
 
 instance {-# OVERLAPPING #-}
+         HasField "sampleLocationSubPixelBits"
+           VkPhysicalDeviceSampleLocationsPropertiesEXT
+         where
+        type FieldType "sampleLocationSubPixelBits"
+               VkPhysicalDeviceSampleLocationsPropertiesEXT
+             = Word32
+        type FieldOptional "sampleLocationSubPixelBits"
+               VkPhysicalDeviceSampleLocationsPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sampleLocationSubPixelBits"
+           VkPhysicalDeviceSampleLocationsPropertiesEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkSampleLocationSubPixelBits
+
+        {-# INLINE readField #-}
+        readField = readVkSampleLocationSubPixelBits
+
+instance {-# OVERLAPPING #-}
          HasVkVariableSampleLocations
            VkPhysicalDeviceSampleLocationsPropertiesEXT
          where
@@ -1469,6 +2092,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkVariableSampleLocations #-}
         writeVkVariableSampleLocations p
           = pokeByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, variableSampleLocations}
+
+instance {-# OVERLAPPING #-}
+         HasField "variableSampleLocations"
+           VkPhysicalDeviceSampleLocationsPropertiesEXT
+         where
+        type FieldType "variableSampleLocations"
+               VkPhysicalDeviceSampleLocationsPropertiesEXT
+             = VkBool32
+        type FieldOptional "variableSampleLocations"
+               VkPhysicalDeviceSampleLocationsPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "variableSampleLocations"
+           VkPhysicalDeviceSampleLocationsPropertiesEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkVariableSampleLocations
+
+        {-# INLINE readField #-}
+        readField = readVkVariableSampleLocations
 
 instance Show VkPhysicalDeviceSampleLocationsPropertiesEXT where
         showsPrec d x
@@ -1607,6 +2250,18 @@ instance {-# OVERLAPPING #-} HasVkSType VkMultisamplePropertiesEXT
         writeVkSType p
           = pokeByteOff p #{offset VkMultisamplePropertiesEXT, sType}
 
+instance {-# OVERLAPPING #-}
+         HasField "sType" VkMultisamplePropertiesEXT where
+        type FieldType "sType" VkMultisamplePropertiesEXT = VkStructureType
+        type FieldOptional "sType" VkMultisamplePropertiesEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkMultisamplePropertiesEXT where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkMultisamplePropertiesEXT
          where
         type VkPNextMType VkMultisamplePropertiesEXT = Ptr Void
@@ -1629,6 +2284,18 @@ instance {-# OVERLAPPING #-} HasVkPNext VkMultisamplePropertiesEXT
           = pokeByteOff p #{offset VkMultisamplePropertiesEXT, pNext}
 
 instance {-# OVERLAPPING #-}
+         HasField "pNext" VkMultisamplePropertiesEXT where
+        type FieldType "pNext" VkMultisamplePropertiesEXT = Ptr Void
+        type FieldOptional "pNext" VkMultisamplePropertiesEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkMultisamplePropertiesEXT where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance {-# OVERLAPPING #-}
          HasVkMaxSampleLocationGridSize VkMultisamplePropertiesEXT where
         type VkMaxSampleLocationGridSizeMType VkMultisamplePropertiesEXT =
              VkExtent2D
@@ -1649,6 +2316,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkMaxSampleLocationGridSize #-}
         writeVkMaxSampleLocationGridSize p
           = pokeByteOff p #{offset VkMultisamplePropertiesEXT, maxSampleLocationGridSize}
+
+instance {-# OVERLAPPING #-}
+         HasField "maxSampleLocationGridSize" VkMultisamplePropertiesEXT
+         where
+        type FieldType "maxSampleLocationGridSize"
+               VkMultisamplePropertiesEXT
+             = VkExtent2D
+        type FieldOptional "maxSampleLocationGridSize"
+               VkMultisamplePropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "maxSampleLocationGridSize"
+           VkMultisamplePropertiesEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkMaxSampleLocationGridSize
+
+        {-# INLINE readField #-}
+        readField = readVkMaxSampleLocationGridSize
 
 instance Show VkMultisamplePropertiesEXT where
         showsPrec d x

@@ -1,8 +1,10 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
@@ -192,6 +194,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDeviceGeneratedCommandsFeaturesNVX, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkDeviceGeneratedCommandsFeaturesNVX where
+        type FieldType "sType" VkDeviceGeneratedCommandsFeaturesNVX =
+             VkStructureType
+        type FieldOptional "sType" VkDeviceGeneratedCommandsFeaturesNVX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkDeviceGeneratedCommandsFeaturesNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkDeviceGeneratedCommandsFeaturesNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkDeviceGeneratedCommandsFeaturesNVX where
         type VkPNextMType VkDeviceGeneratedCommandsFeaturesNVX = Ptr Void
 
@@ -211,6 +233,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkDeviceGeneratedCommandsFeaturesNVX, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkDeviceGeneratedCommandsFeaturesNVX where
+        type FieldType "pNext" VkDeviceGeneratedCommandsFeaturesNVX =
+             Ptr Void
+        type FieldOptional "pNext" VkDeviceGeneratedCommandsFeaturesNVX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkDeviceGeneratedCommandsFeaturesNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkDeviceGeneratedCommandsFeaturesNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkComputeBindingPointSupport
@@ -236,6 +278,32 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkComputeBindingPointSupport #-}
         writeVkComputeBindingPointSupport p
           = pokeByteOff p #{offset VkDeviceGeneratedCommandsFeaturesNVX, computeBindingPointSupport}
+
+instance {-# OVERLAPPING #-}
+         HasField "computeBindingPointSupport"
+           VkDeviceGeneratedCommandsFeaturesNVX
+         where
+        type FieldType "computeBindingPointSupport"
+               VkDeviceGeneratedCommandsFeaturesNVX
+             = VkBool32
+        type FieldOptional "computeBindingPointSupport"
+               VkDeviceGeneratedCommandsFeaturesNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "computeBindingPointSupport"
+           VkDeviceGeneratedCommandsFeaturesNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkComputeBindingPointSupport
+
+        {-# INLINE readField #-}
+        readField = readVkComputeBindingPointSupport
+
+instance CanWriteField "computeBindingPointSupport"
+           VkDeviceGeneratedCommandsFeaturesNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkComputeBindingPointSupport
 
 instance Show VkDeviceGeneratedCommandsFeaturesNVX where
         showsPrec d x
@@ -369,6 +437,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkDeviceGeneratedCommandsLimitsNVX where
+        type FieldType "sType" VkDeviceGeneratedCommandsLimitsNVX =
+             VkStructureType
+        type FieldOptional "sType" VkDeviceGeneratedCommandsLimitsNVX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkDeviceGeneratedCommandsLimitsNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkDeviceGeneratedCommandsLimitsNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkDeviceGeneratedCommandsLimitsNVX where
         type VkPNextMType VkDeviceGeneratedCommandsLimitsNVX = Ptr Void
 
@@ -388,6 +476,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkDeviceGeneratedCommandsLimitsNVX where
+        type FieldType "pNext" VkDeviceGeneratedCommandsLimitsNVX =
+             Ptr Void
+        type FieldOptional "pNext" VkDeviceGeneratedCommandsLimitsNVX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkDeviceGeneratedCommandsLimitsNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkDeviceGeneratedCommandsLimitsNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkMaxIndirectCommandsLayoutTokenCount
@@ -415,6 +523,32 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, maxIndirectCommandsLayoutTokenCount}
 
 instance {-# OVERLAPPING #-}
+         HasField "maxIndirectCommandsLayoutTokenCount"
+           VkDeviceGeneratedCommandsLimitsNVX
+         where
+        type FieldType "maxIndirectCommandsLayoutTokenCount"
+               VkDeviceGeneratedCommandsLimitsNVX
+             = Word32
+        type FieldOptional "maxIndirectCommandsLayoutTokenCount"
+               VkDeviceGeneratedCommandsLimitsNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "maxIndirectCommandsLayoutTokenCount"
+           VkDeviceGeneratedCommandsLimitsNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkMaxIndirectCommandsLayoutTokenCount
+
+        {-# INLINE readField #-}
+        readField = readVkMaxIndirectCommandsLayoutTokenCount
+
+instance CanWriteField "maxIndirectCommandsLayoutTokenCount"
+           VkDeviceGeneratedCommandsLimitsNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxIndirectCommandsLayoutTokenCount
+
+instance {-# OVERLAPPING #-}
          HasVkMaxObjectEntryCounts VkDeviceGeneratedCommandsLimitsNVX where
         type VkMaxObjectEntryCountsMType VkDeviceGeneratedCommandsLimitsNVX
              = Word32
@@ -435,6 +569,31 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkMaxObjectEntryCounts #-}
         writeVkMaxObjectEntryCounts p
           = pokeByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, maxObjectEntryCounts}
+
+instance {-# OVERLAPPING #-}
+         HasField "maxObjectEntryCounts" VkDeviceGeneratedCommandsLimitsNVX
+         where
+        type FieldType "maxObjectEntryCounts"
+               VkDeviceGeneratedCommandsLimitsNVX
+             = Word32
+        type FieldOptional "maxObjectEntryCounts"
+               VkDeviceGeneratedCommandsLimitsNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "maxObjectEntryCounts"
+           VkDeviceGeneratedCommandsLimitsNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkMaxObjectEntryCounts
+
+        {-# INLINE readField #-}
+        readField = readVkMaxObjectEntryCounts
+
+instance CanWriteField "maxObjectEntryCounts"
+           VkDeviceGeneratedCommandsLimitsNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxObjectEntryCounts
 
 instance {-# OVERLAPPING #-}
          HasVkMinSequenceCountBufferOffsetAlignment
@@ -462,6 +621,32 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, minSequenceCountBufferOffsetAlignment}
 
 instance {-# OVERLAPPING #-}
+         HasField "minSequenceCountBufferOffsetAlignment"
+           VkDeviceGeneratedCommandsLimitsNVX
+         where
+        type FieldType "minSequenceCountBufferOffsetAlignment"
+               VkDeviceGeneratedCommandsLimitsNVX
+             = Word32
+        type FieldOptional "minSequenceCountBufferOffsetAlignment"
+               VkDeviceGeneratedCommandsLimitsNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "minSequenceCountBufferOffsetAlignment"
+           VkDeviceGeneratedCommandsLimitsNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkMinSequenceCountBufferOffsetAlignment
+
+        {-# INLINE readField #-}
+        readField = readVkMinSequenceCountBufferOffsetAlignment
+
+instance CanWriteField "minSequenceCountBufferOffsetAlignment"
+           VkDeviceGeneratedCommandsLimitsNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMinSequenceCountBufferOffsetAlignment
+
+instance {-# OVERLAPPING #-}
          HasVkMinSequenceIndexBufferOffsetAlignment
            VkDeviceGeneratedCommandsLimitsNVX
          where
@@ -487,6 +672,32 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, minSequenceIndexBufferOffsetAlignment}
 
 instance {-# OVERLAPPING #-}
+         HasField "minSequenceIndexBufferOffsetAlignment"
+           VkDeviceGeneratedCommandsLimitsNVX
+         where
+        type FieldType "minSequenceIndexBufferOffsetAlignment"
+               VkDeviceGeneratedCommandsLimitsNVX
+             = Word32
+        type FieldOptional "minSequenceIndexBufferOffsetAlignment"
+               VkDeviceGeneratedCommandsLimitsNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "minSequenceIndexBufferOffsetAlignment"
+           VkDeviceGeneratedCommandsLimitsNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkMinSequenceIndexBufferOffsetAlignment
+
+        {-# INLINE readField #-}
+        readField = readVkMinSequenceIndexBufferOffsetAlignment
+
+instance CanWriteField "minSequenceIndexBufferOffsetAlignment"
+           VkDeviceGeneratedCommandsLimitsNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMinSequenceIndexBufferOffsetAlignment
+
+instance {-# OVERLAPPING #-}
          HasVkMinCommandsTokenBufferOffsetAlignment
            VkDeviceGeneratedCommandsLimitsNVX
          where
@@ -510,6 +721,32 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkMinCommandsTokenBufferOffsetAlignment #-}
         writeVkMinCommandsTokenBufferOffsetAlignment p
           = pokeByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, minCommandsTokenBufferOffsetAlignment}
+
+instance {-# OVERLAPPING #-}
+         HasField "minCommandsTokenBufferOffsetAlignment"
+           VkDeviceGeneratedCommandsLimitsNVX
+         where
+        type FieldType "minCommandsTokenBufferOffsetAlignment"
+               VkDeviceGeneratedCommandsLimitsNVX
+             = Word32
+        type FieldOptional "minCommandsTokenBufferOffsetAlignment"
+               VkDeviceGeneratedCommandsLimitsNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "minCommandsTokenBufferOffsetAlignment"
+           VkDeviceGeneratedCommandsLimitsNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkMinCommandsTokenBufferOffsetAlignment
+
+        {-# INLINE readField #-}
+        readField = readVkMinCommandsTokenBufferOffsetAlignment
+
+instance CanWriteField "minCommandsTokenBufferOffsetAlignment"
+           VkDeviceGeneratedCommandsLimitsNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMinCommandsTokenBufferOffsetAlignment
 
 instance Show VkDeviceGeneratedCommandsLimitsNVX where
         showsPrec d x
@@ -652,6 +889,23 @@ instance {-# OVERLAPPING #-}
         writeVkTokenType p
           = pokeByteOff p #{offset VkIndirectCommandsTokenNVX, tokenType}
 
+instance {-# OVERLAPPING #-}
+         HasField "tokenType" VkIndirectCommandsTokenNVX where
+        type FieldType "tokenType" VkIndirectCommandsTokenNVX =
+             VkIndirectCommandsTokenTypeNVX
+        type FieldOptional "tokenType" VkIndirectCommandsTokenNVX = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "tokenType" VkIndirectCommandsTokenNVX where
+        {-# INLINE getField #-}
+        getField = vkTokenType
+
+        {-# INLINE readField #-}
+        readField = readVkTokenType
+
+instance CanWriteField "tokenType" VkIndirectCommandsTokenNVX where
+        {-# INLINE writeField #-}
+        writeField = writeVkTokenType
+
 instance {-# OVERLAPPING #-} HasVkBuffer VkIndirectCommandsTokenNVX
          where
         type VkBufferMType VkIndirectCommandsTokenNVX = VkBuffer
@@ -673,6 +927,22 @@ instance {-# OVERLAPPING #-} HasVkBuffer VkIndirectCommandsTokenNVX
         writeVkBuffer p
           = pokeByteOff p #{offset VkIndirectCommandsTokenNVX, buffer}
 
+instance {-# OVERLAPPING #-}
+         HasField "buffer" VkIndirectCommandsTokenNVX where
+        type FieldType "buffer" VkIndirectCommandsTokenNVX = VkBuffer
+        type FieldOptional "buffer" VkIndirectCommandsTokenNVX = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "buffer" VkIndirectCommandsTokenNVX where
+        {-# INLINE getField #-}
+        getField = vkBuffer
+
+        {-# INLINE readField #-}
+        readField = readVkBuffer
+
+instance CanWriteField "buffer" VkIndirectCommandsTokenNVX where
+        {-# INLINE writeField #-}
+        writeField = writeVkBuffer
+
 instance {-# OVERLAPPING #-} HasVkOffset VkIndirectCommandsTokenNVX
          where
         type VkOffsetMType VkIndirectCommandsTokenNVX = VkDeviceSize
@@ -693,6 +963,22 @@ instance {-# OVERLAPPING #-} HasVkOffset VkIndirectCommandsTokenNVX
         {-# INLINE writeVkOffset #-}
         writeVkOffset p
           = pokeByteOff p #{offset VkIndirectCommandsTokenNVX, offset}
+
+instance {-# OVERLAPPING #-}
+         HasField "offset" VkIndirectCommandsTokenNVX where
+        type FieldType "offset" VkIndirectCommandsTokenNVX = VkDeviceSize
+        type FieldOptional "offset" VkIndirectCommandsTokenNVX = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "offset" VkIndirectCommandsTokenNVX where
+        {-# INLINE getField #-}
+        getField = vkOffset
+
+        {-# INLINE readField #-}
+        readField = readVkOffset
+
+instance CanWriteField "offset" VkIndirectCommandsTokenNVX where
+        {-# INLINE writeField #-}
+        writeField = writeVkOffset
 
 instance Show VkIndirectCommandsTokenNVX where
         showsPrec d x
@@ -819,6 +1105,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkIndirectCommandsLayoutTokenNVX, tokenType}
 
 instance {-# OVERLAPPING #-}
+         HasField "tokenType" VkIndirectCommandsLayoutTokenNVX where
+        type FieldType "tokenType" VkIndirectCommandsLayoutTokenNVX =
+             VkIndirectCommandsTokenTypeNVX
+        type FieldOptional "tokenType" VkIndirectCommandsLayoutTokenNVX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "tokenType" VkIndirectCommandsLayoutTokenNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkTokenType
+
+        {-# INLINE readField #-}
+        readField = readVkTokenType
+
+instance CanWriteField "tokenType" VkIndirectCommandsLayoutTokenNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkTokenType
+
+instance {-# OVERLAPPING #-}
          HasVkBindingUnit VkIndirectCommandsLayoutTokenNVX where
         type VkBindingUnitMType VkIndirectCommandsLayoutTokenNVX = Word32
 
@@ -838,6 +1144,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkBindingUnit #-}
         writeVkBindingUnit p
           = pokeByteOff p #{offset VkIndirectCommandsLayoutTokenNVX, bindingUnit}
+
+instance {-# OVERLAPPING #-}
+         HasField "bindingUnit" VkIndirectCommandsLayoutTokenNVX where
+        type FieldType "bindingUnit" VkIndirectCommandsLayoutTokenNVX =
+             Word32
+        type FieldOptional "bindingUnit" VkIndirectCommandsLayoutTokenNVX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "bindingUnit"
+           VkIndirectCommandsLayoutTokenNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkBindingUnit
+
+        {-# INLINE readField #-}
+        readField = readVkBindingUnit
+
+instance CanWriteField "bindingUnit"
+           VkIndirectCommandsLayoutTokenNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkBindingUnit
 
 instance {-# OVERLAPPING #-}
          HasVkDynamicCount VkIndirectCommandsLayoutTokenNVX where
@@ -861,6 +1189,28 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkIndirectCommandsLayoutTokenNVX, dynamicCount}
 
 instance {-# OVERLAPPING #-}
+         HasField "dynamicCount" VkIndirectCommandsLayoutTokenNVX where
+        type FieldType "dynamicCount" VkIndirectCommandsLayoutTokenNVX =
+             Word32
+        type FieldOptional "dynamicCount" VkIndirectCommandsLayoutTokenNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "dynamicCount"
+           VkIndirectCommandsLayoutTokenNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkDynamicCount
+
+        {-# INLINE readField #-}
+        readField = readVkDynamicCount
+
+instance CanWriteField "dynamicCount"
+           VkIndirectCommandsLayoutTokenNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkDynamicCount
+
+instance {-# OVERLAPPING #-}
          HasVkDivisor VkIndirectCommandsLayoutTokenNVX where
         type VkDivisorMType VkIndirectCommandsLayoutTokenNVX = Word32
 
@@ -880,6 +1230,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkDivisor #-}
         writeVkDivisor p
           = pokeByteOff p #{offset VkIndirectCommandsLayoutTokenNVX, divisor}
+
+instance {-# OVERLAPPING #-}
+         HasField "divisor" VkIndirectCommandsLayoutTokenNVX where
+        type FieldType "divisor" VkIndirectCommandsLayoutTokenNVX = Word32
+        type FieldOptional "divisor" VkIndirectCommandsLayoutTokenNVX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "divisor" VkIndirectCommandsLayoutTokenNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkDivisor
+
+        {-# INLINE readField #-}
+        readField = readVkDivisor
+
+instance CanWriteField "divisor" VkIndirectCommandsLayoutTokenNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkDivisor
 
 instance Show VkIndirectCommandsLayoutTokenNVX where
         showsPrec d x
@@ -1022,6 +1391,27 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkIndirectCommandsLayoutCreateInfoNVX where
+        type FieldType "sType" VkIndirectCommandsLayoutCreateInfoNVX =
+             VkStructureType
+        type FieldOptional "sType" VkIndirectCommandsLayoutCreateInfoNVX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkIndirectCommandsLayoutCreateInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType"
+           VkIndirectCommandsLayoutCreateInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkIndirectCommandsLayoutCreateInfoNVX where
         type VkPNextMType VkIndirectCommandsLayoutCreateInfoNVX = Ptr Void
 
@@ -1041,6 +1431,27 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkIndirectCommandsLayoutCreateInfoNVX where
+        type FieldType "pNext" VkIndirectCommandsLayoutCreateInfoNVX =
+             Ptr Void
+        type FieldOptional "pNext" VkIndirectCommandsLayoutCreateInfoNVX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkIndirectCommandsLayoutCreateInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkIndirectCommandsLayoutCreateInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkPipelineBindPoint VkIndirectCommandsLayoutCreateInfoNVX where
@@ -1065,6 +1476,31 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, pipelineBindPoint}
 
 instance {-# OVERLAPPING #-}
+         HasField "pipelineBindPoint" VkIndirectCommandsLayoutCreateInfoNVX
+         where
+        type FieldType "pipelineBindPoint"
+               VkIndirectCommandsLayoutCreateInfoNVX
+             = VkPipelineBindPoint
+        type FieldOptional "pipelineBindPoint"
+               VkIndirectCommandsLayoutCreateInfoNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pipelineBindPoint"
+           VkIndirectCommandsLayoutCreateInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkPipelineBindPoint
+
+        {-# INLINE readField #-}
+        readField = readVkPipelineBindPoint
+
+instance CanWriteField "pipelineBindPoint"
+           VkIndirectCommandsLayoutCreateInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPipelineBindPoint
+
+instance {-# OVERLAPPING #-}
          HasVkFlags VkIndirectCommandsLayoutCreateInfoNVX where
         type VkFlagsMType VkIndirectCommandsLayoutCreateInfoNVX =
              VkIndirectCommandsLayoutUsageFlagsNVX
@@ -1085,6 +1521,27 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkFlags #-}
         writeVkFlags p
           = pokeByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, flags}
+
+instance {-# OVERLAPPING #-}
+         HasField "flags" VkIndirectCommandsLayoutCreateInfoNVX where
+        type FieldType "flags" VkIndirectCommandsLayoutCreateInfoNVX =
+             VkIndirectCommandsLayoutUsageFlagsNVX
+        type FieldOptional "flags" VkIndirectCommandsLayoutCreateInfoNVX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "flags" VkIndirectCommandsLayoutCreateInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkFlags
+
+        {-# INLINE readField #-}
+        readField = readVkFlags
+
+instance CanWriteField "flags"
+           VkIndirectCommandsLayoutCreateInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkFlags
 
 instance {-# OVERLAPPING #-}
          HasVkTokenCount VkIndirectCommandsLayoutCreateInfoNVX where
@@ -1109,6 +1566,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, tokenCount}
 
 instance {-# OVERLAPPING #-}
+         HasField "tokenCount" VkIndirectCommandsLayoutCreateInfoNVX where
+        type FieldType "tokenCount" VkIndirectCommandsLayoutCreateInfoNVX =
+             Word32
+        type FieldOptional "tokenCount"
+               VkIndirectCommandsLayoutCreateInfoNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "tokenCount"
+           VkIndirectCommandsLayoutCreateInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkTokenCount
+
+        {-# INLINE readField #-}
+        readField = readVkTokenCount
+
+instance CanWriteField "tokenCount"
+           VkIndirectCommandsLayoutCreateInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkTokenCount
+
+instance {-# OVERLAPPING #-}
          HasVkPTokens VkIndirectCommandsLayoutCreateInfoNVX where
         type VkPTokensMType VkIndirectCommandsLayoutCreateInfoNVX =
              Ptr VkIndirectCommandsLayoutTokenNVX
@@ -1129,6 +1609,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPTokens #-}
         writeVkPTokens p
           = pokeByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, pTokens}
+
+instance {-# OVERLAPPING #-}
+         HasField "pTokens" VkIndirectCommandsLayoutCreateInfoNVX where
+        type FieldType "pTokens" VkIndirectCommandsLayoutCreateInfoNVX =
+             Ptr VkIndirectCommandsLayoutTokenNVX
+        type FieldOptional "pTokens" VkIndirectCommandsLayoutCreateInfoNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pTokens"
+           VkIndirectCommandsLayoutCreateInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkPTokens
+
+        {-# INLINE readField #-}
+        readField = readVkPTokens
+
+instance CanWriteField "pTokens"
+           VkIndirectCommandsLayoutCreateInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPTokens
 
 instance Show VkIndirectCommandsLayoutCreateInfoNVX where
         showsPrec d x
@@ -1269,6 +1771,23 @@ instance {-# OVERLAPPING #-} HasVkSType VkCmdProcessCommandsInfoNVX
         writeVkSType p
           = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, sType}
 
+instance {-# OVERLAPPING #-}
+         HasField "sType" VkCmdProcessCommandsInfoNVX where
+        type FieldType "sType" VkCmdProcessCommandsInfoNVX =
+             VkStructureType
+        type FieldOptional "sType" VkCmdProcessCommandsInfoNVX = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkCmdProcessCommandsInfoNVX where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkCmdProcessCommandsInfoNVX where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkCmdProcessCommandsInfoNVX
          where
         type VkPNextMType VkCmdProcessCommandsInfoNVX = Ptr Void
@@ -1289,6 +1808,22 @@ instance {-# OVERLAPPING #-} HasVkPNext VkCmdProcessCommandsInfoNVX
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkCmdProcessCommandsInfoNVX where
+        type FieldType "pNext" VkCmdProcessCommandsInfoNVX = Ptr Void
+        type FieldOptional "pNext" VkCmdProcessCommandsInfoNVX = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkCmdProcessCommandsInfoNVX where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkCmdProcessCommandsInfoNVX where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkObjectTable VkCmdProcessCommandsInfoNVX where
@@ -1313,6 +1848,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, objectTable}
 
 instance {-# OVERLAPPING #-}
+         HasField "objectTable" VkCmdProcessCommandsInfoNVX where
+        type FieldType "objectTable" VkCmdProcessCommandsInfoNVX =
+             VkObjectTableNVX
+        type FieldOptional "objectTable" VkCmdProcessCommandsInfoNVX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "objectTable" VkCmdProcessCommandsInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkObjectTable
+
+        {-# INLINE readField #-}
+        readField = readVkObjectTable
+
+instance CanWriteField "objectTable" VkCmdProcessCommandsInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkObjectTable
+
+instance {-# OVERLAPPING #-}
          HasVkIndirectCommandsLayout VkCmdProcessCommandsInfoNVX where
         type VkIndirectCommandsLayoutMType VkCmdProcessCommandsInfoNVX =
              VkIndirectCommandsLayoutNVX
@@ -1333,6 +1888,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkIndirectCommandsLayout #-}
         writeVkIndirectCommandsLayout p
           = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, indirectCommandsLayout}
+
+instance {-# OVERLAPPING #-}
+         HasField "indirectCommandsLayout" VkCmdProcessCommandsInfoNVX where
+        type FieldType "indirectCommandsLayout" VkCmdProcessCommandsInfoNVX
+             = VkIndirectCommandsLayoutNVX
+        type FieldOptional "indirectCommandsLayout"
+               VkCmdProcessCommandsInfoNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "indirectCommandsLayout"
+           VkCmdProcessCommandsInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkIndirectCommandsLayout
+
+        {-# INLINE readField #-}
+        readField = readVkIndirectCommandsLayout
+
+instance CanWriteField "indirectCommandsLayout"
+           VkCmdProcessCommandsInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkIndirectCommandsLayout
 
 instance {-# OVERLAPPING #-}
          HasVkIndirectCommandsTokenCount VkCmdProcessCommandsInfoNVX where
@@ -1357,6 +1935,31 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, indirectCommandsTokenCount}
 
 instance {-# OVERLAPPING #-}
+         HasField "indirectCommandsTokenCount" VkCmdProcessCommandsInfoNVX
+         where
+        type FieldType "indirectCommandsTokenCount"
+               VkCmdProcessCommandsInfoNVX
+             = Word32
+        type FieldOptional "indirectCommandsTokenCount"
+               VkCmdProcessCommandsInfoNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "indirectCommandsTokenCount"
+           VkCmdProcessCommandsInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkIndirectCommandsTokenCount
+
+        {-# INLINE readField #-}
+        readField = readVkIndirectCommandsTokenCount
+
+instance CanWriteField "indirectCommandsTokenCount"
+           VkCmdProcessCommandsInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkIndirectCommandsTokenCount
+
+instance {-# OVERLAPPING #-}
          HasVkPIndirectCommandsTokens VkCmdProcessCommandsInfoNVX where
         type VkPIndirectCommandsTokensMType VkCmdProcessCommandsInfoNVX =
              Ptr VkIndirectCommandsTokenNVX
@@ -1379,6 +1982,31 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, pIndirectCommandsTokens}
 
 instance {-# OVERLAPPING #-}
+         HasField "pIndirectCommandsTokens" VkCmdProcessCommandsInfoNVX
+         where
+        type FieldType "pIndirectCommandsTokens"
+               VkCmdProcessCommandsInfoNVX
+             = Ptr VkIndirectCommandsTokenNVX
+        type FieldOptional "pIndirectCommandsTokens"
+               VkCmdProcessCommandsInfoNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pIndirectCommandsTokens"
+           VkCmdProcessCommandsInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkPIndirectCommandsTokens
+
+        {-# INLINE readField #-}
+        readField = readVkPIndirectCommandsTokens
+
+instance CanWriteField "pIndirectCommandsTokens"
+           VkCmdProcessCommandsInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPIndirectCommandsTokens
+
+instance {-# OVERLAPPING #-}
          HasVkMaxSequencesCount VkCmdProcessCommandsInfoNVX where
         type VkMaxSequencesCountMType VkCmdProcessCommandsInfoNVX = Word32
 
@@ -1398,6 +2026,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkMaxSequencesCount #-}
         writeVkMaxSequencesCount p
           = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, maxSequencesCount}
+
+instance {-# OVERLAPPING #-}
+         HasField "maxSequencesCount" VkCmdProcessCommandsInfoNVX where
+        type FieldType "maxSequencesCount" VkCmdProcessCommandsInfoNVX =
+             Word32
+        type FieldOptional "maxSequencesCount" VkCmdProcessCommandsInfoNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "maxSequencesCount"
+           VkCmdProcessCommandsInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkMaxSequencesCount
+
+        {-# INLINE readField #-}
+        readField = readVkMaxSequencesCount
+
+instance CanWriteField "maxSequencesCount"
+           VkCmdProcessCommandsInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxSequencesCount
 
 instance {-# OVERLAPPING #-}
          HasVkTargetCommandBuffer VkCmdProcessCommandsInfoNVX where
@@ -1422,6 +2072,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, targetCommandBuffer}
 
 instance {-# OVERLAPPING #-}
+         HasField "targetCommandBuffer" VkCmdProcessCommandsInfoNVX where
+        type FieldType "targetCommandBuffer" VkCmdProcessCommandsInfoNVX =
+             VkCommandBuffer
+        type FieldOptional "targetCommandBuffer"
+               VkCmdProcessCommandsInfoNVX
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "targetCommandBuffer"
+           VkCmdProcessCommandsInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkTargetCommandBuffer
+
+        {-# INLINE readField #-}
+        readField = readVkTargetCommandBuffer
+
+instance CanWriteField "targetCommandBuffer"
+           VkCmdProcessCommandsInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkTargetCommandBuffer
+
+instance {-# OVERLAPPING #-}
          HasVkSequencesCountBuffer VkCmdProcessCommandsInfoNVX where
         type VkSequencesCountBufferMType VkCmdProcessCommandsInfoNVX =
              VkBuffer
@@ -1442,6 +2115,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkSequencesCountBuffer #-}
         writeVkSequencesCountBuffer p
           = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, sequencesCountBuffer}
+
+instance {-# OVERLAPPING #-}
+         HasField "sequencesCountBuffer" VkCmdProcessCommandsInfoNVX where
+        type FieldType "sequencesCountBuffer" VkCmdProcessCommandsInfoNVX =
+             VkBuffer
+        type FieldOptional "sequencesCountBuffer"
+               VkCmdProcessCommandsInfoNVX
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "sequencesCountBuffer"
+           VkCmdProcessCommandsInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkSequencesCountBuffer
+
+        {-# INLINE readField #-}
+        readField = readVkSequencesCountBuffer
+
+instance CanWriteField "sequencesCountBuffer"
+           VkCmdProcessCommandsInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSequencesCountBuffer
 
 instance {-# OVERLAPPING #-}
          HasVkSequencesCountOffset VkCmdProcessCommandsInfoNVX where
@@ -1466,6 +2162,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, sequencesCountOffset}
 
 instance {-# OVERLAPPING #-}
+         HasField "sequencesCountOffset" VkCmdProcessCommandsInfoNVX where
+        type FieldType "sequencesCountOffset" VkCmdProcessCommandsInfoNVX =
+             VkDeviceSize
+        type FieldOptional "sequencesCountOffset"
+               VkCmdProcessCommandsInfoNVX
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "sequencesCountOffset"
+           VkCmdProcessCommandsInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkSequencesCountOffset
+
+        {-# INLINE readField #-}
+        readField = readVkSequencesCountOffset
+
+instance CanWriteField "sequencesCountOffset"
+           VkCmdProcessCommandsInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSequencesCountOffset
+
+instance {-# OVERLAPPING #-}
          HasVkSequencesIndexBuffer VkCmdProcessCommandsInfoNVX where
         type VkSequencesIndexBufferMType VkCmdProcessCommandsInfoNVX =
              VkBuffer
@@ -1488,6 +2207,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, sequencesIndexBuffer}
 
 instance {-# OVERLAPPING #-}
+         HasField "sequencesIndexBuffer" VkCmdProcessCommandsInfoNVX where
+        type FieldType "sequencesIndexBuffer" VkCmdProcessCommandsInfoNVX =
+             VkBuffer
+        type FieldOptional "sequencesIndexBuffer"
+               VkCmdProcessCommandsInfoNVX
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "sequencesIndexBuffer"
+           VkCmdProcessCommandsInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkSequencesIndexBuffer
+
+        {-# INLINE readField #-}
+        readField = readVkSequencesIndexBuffer
+
+instance CanWriteField "sequencesIndexBuffer"
+           VkCmdProcessCommandsInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSequencesIndexBuffer
+
+instance {-# OVERLAPPING #-}
          HasVkSequencesIndexOffset VkCmdProcessCommandsInfoNVX where
         type VkSequencesIndexOffsetMType VkCmdProcessCommandsInfoNVX =
              VkDeviceSize
@@ -1508,6 +2250,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkSequencesIndexOffset #-}
         writeVkSequencesIndexOffset p
           = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, sequencesIndexOffset}
+
+instance {-# OVERLAPPING #-}
+         HasField "sequencesIndexOffset" VkCmdProcessCommandsInfoNVX where
+        type FieldType "sequencesIndexOffset" VkCmdProcessCommandsInfoNVX =
+             VkDeviceSize
+        type FieldOptional "sequencesIndexOffset"
+               VkCmdProcessCommandsInfoNVX
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "sequencesIndexOffset"
+           VkCmdProcessCommandsInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkSequencesIndexOffset
+
+        {-# INLINE readField #-}
+        readField = readVkSequencesIndexOffset
+
+instance CanWriteField "sequencesIndexOffset"
+           VkCmdProcessCommandsInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSequencesIndexOffset
 
 instance Show VkCmdProcessCommandsInfoNVX where
         showsPrec d x
@@ -1687,6 +2452,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkCmdReserveSpaceForCommandsInfoNVX, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkCmdReserveSpaceForCommandsInfoNVX where
+        type FieldType "sType" VkCmdReserveSpaceForCommandsInfoNVX =
+             VkStructureType
+        type FieldOptional "sType" VkCmdReserveSpaceForCommandsInfoNVX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkCmdReserveSpaceForCommandsInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkCmdReserveSpaceForCommandsInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkCmdReserveSpaceForCommandsInfoNVX where
         type VkPNextMType VkCmdReserveSpaceForCommandsInfoNVX = Ptr Void
 
@@ -1706,6 +2491,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkCmdReserveSpaceForCommandsInfoNVX, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkCmdReserveSpaceForCommandsInfoNVX where
+        type FieldType "pNext" VkCmdReserveSpaceForCommandsInfoNVX =
+             Ptr Void
+        type FieldOptional "pNext" VkCmdReserveSpaceForCommandsInfoNVX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkCmdReserveSpaceForCommandsInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkCmdReserveSpaceForCommandsInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkObjectTable VkCmdReserveSpaceForCommandsInfoNVX where
@@ -1728,6 +2533,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkObjectTable #-}
         writeVkObjectTable p
           = pokeByteOff p #{offset VkCmdReserveSpaceForCommandsInfoNVX, objectTable}
+
+instance {-# OVERLAPPING #-}
+         HasField "objectTable" VkCmdReserveSpaceForCommandsInfoNVX where
+        type FieldType "objectTable" VkCmdReserveSpaceForCommandsInfoNVX =
+             VkObjectTableNVX
+        type FieldOptional "objectTable"
+               VkCmdReserveSpaceForCommandsInfoNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "objectTable"
+           VkCmdReserveSpaceForCommandsInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkObjectTable
+
+        {-# INLINE readField #-}
+        readField = readVkObjectTable
+
+instance CanWriteField "objectTable"
+           VkCmdReserveSpaceForCommandsInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkObjectTable
 
 instance {-# OVERLAPPING #-}
          HasVkIndirectCommandsLayout VkCmdReserveSpaceForCommandsInfoNVX
@@ -1754,6 +2582,32 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkCmdReserveSpaceForCommandsInfoNVX, indirectCommandsLayout}
 
 instance {-# OVERLAPPING #-}
+         HasField "indirectCommandsLayout"
+           VkCmdReserveSpaceForCommandsInfoNVX
+         where
+        type FieldType "indirectCommandsLayout"
+               VkCmdReserveSpaceForCommandsInfoNVX
+             = VkIndirectCommandsLayoutNVX
+        type FieldOptional "indirectCommandsLayout"
+               VkCmdReserveSpaceForCommandsInfoNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "indirectCommandsLayout"
+           VkCmdReserveSpaceForCommandsInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkIndirectCommandsLayout
+
+        {-# INLINE readField #-}
+        readField = readVkIndirectCommandsLayout
+
+instance CanWriteField "indirectCommandsLayout"
+           VkCmdReserveSpaceForCommandsInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkIndirectCommandsLayout
+
+instance {-# OVERLAPPING #-}
          HasVkMaxSequencesCount VkCmdReserveSpaceForCommandsInfoNVX where
         type VkMaxSequencesCountMType VkCmdReserveSpaceForCommandsInfoNVX =
              Word32
@@ -1774,6 +2628,31 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkMaxSequencesCount #-}
         writeVkMaxSequencesCount p
           = pokeByteOff p #{offset VkCmdReserveSpaceForCommandsInfoNVX, maxSequencesCount}
+
+instance {-# OVERLAPPING #-}
+         HasField "maxSequencesCount" VkCmdReserveSpaceForCommandsInfoNVX
+         where
+        type FieldType "maxSequencesCount"
+               VkCmdReserveSpaceForCommandsInfoNVX
+             = Word32
+        type FieldOptional "maxSequencesCount"
+               VkCmdReserveSpaceForCommandsInfoNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "maxSequencesCount"
+           VkCmdReserveSpaceForCommandsInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkMaxSequencesCount
+
+        {-# INLINE readField #-}
+        readField = readVkMaxSequencesCount
+
+instance CanWriteField "maxSequencesCount"
+           VkCmdReserveSpaceForCommandsInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxSequencesCount
 
 instance Show VkCmdReserveSpaceForCommandsInfoNVX where
         showsPrec d x
@@ -1910,6 +2789,22 @@ instance {-# OVERLAPPING #-} HasVkSType VkObjectTableCreateInfoNVX
         writeVkSType p
           = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, sType}
 
+instance {-# OVERLAPPING #-}
+         HasField "sType" VkObjectTableCreateInfoNVX where
+        type FieldType "sType" VkObjectTableCreateInfoNVX = VkStructureType
+        type FieldOptional "sType" VkObjectTableCreateInfoNVX = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkObjectTableCreateInfoNVX where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkObjectTableCreateInfoNVX where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkObjectTableCreateInfoNVX
          where
         type VkPNextMType VkObjectTableCreateInfoNVX = Ptr Void
@@ -1932,6 +2827,22 @@ instance {-# OVERLAPPING #-} HasVkPNext VkObjectTableCreateInfoNVX
           = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, pNext}
 
 instance {-# OVERLAPPING #-}
+         HasField "pNext" VkObjectTableCreateInfoNVX where
+        type FieldType "pNext" VkObjectTableCreateInfoNVX = Ptr Void
+        type FieldOptional "pNext" VkObjectTableCreateInfoNVX = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkObjectTableCreateInfoNVX where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkObjectTableCreateInfoNVX where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
+
+instance {-# OVERLAPPING #-}
          HasVkObjectCount VkObjectTableCreateInfoNVX where
         type VkObjectCountMType VkObjectTableCreateInfoNVX = Word32
 
@@ -1951,6 +2862,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkObjectCount #-}
         writeVkObjectCount p
           = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, objectCount}
+
+instance {-# OVERLAPPING #-}
+         HasField "objectCount" VkObjectTableCreateInfoNVX where
+        type FieldType "objectCount" VkObjectTableCreateInfoNVX = Word32
+        type FieldOptional "objectCount" VkObjectTableCreateInfoNVX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "objectCount" VkObjectTableCreateInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkObjectCount
+
+        {-# INLINE readField #-}
+        readField = readVkObjectCount
+
+instance CanWriteField "objectCount" VkObjectTableCreateInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkObjectCount
 
 instance {-# OVERLAPPING #-}
          HasVkPObjectEntryTypes VkObjectTableCreateInfoNVX where
@@ -1975,6 +2905,28 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, pObjectEntryTypes}
 
 instance {-# OVERLAPPING #-}
+         HasField "pObjectEntryTypes" VkObjectTableCreateInfoNVX where
+        type FieldType "pObjectEntryTypes" VkObjectTableCreateInfoNVX =
+             Ptr VkObjectEntryTypeNVX
+        type FieldOptional "pObjectEntryTypes" VkObjectTableCreateInfoNVX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pObjectEntryTypes"
+           VkObjectTableCreateInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkPObjectEntryTypes
+
+        {-# INLINE readField #-}
+        readField = readVkPObjectEntryTypes
+
+instance CanWriteField "pObjectEntryTypes"
+           VkObjectTableCreateInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPObjectEntryTypes
+
+instance {-# OVERLAPPING #-}
          HasVkPObjectEntryCounts VkObjectTableCreateInfoNVX where
         type VkPObjectEntryCountsMType VkObjectTableCreateInfoNVX =
              Ptr Word32
@@ -1997,6 +2949,28 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, pObjectEntryCounts}
 
 instance {-# OVERLAPPING #-}
+         HasField "pObjectEntryCounts" VkObjectTableCreateInfoNVX where
+        type FieldType "pObjectEntryCounts" VkObjectTableCreateInfoNVX =
+             Ptr Word32
+        type FieldOptional "pObjectEntryCounts" VkObjectTableCreateInfoNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pObjectEntryCounts"
+           VkObjectTableCreateInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkPObjectEntryCounts
+
+        {-# INLINE readField #-}
+        readField = readVkPObjectEntryCounts
+
+instance CanWriteField "pObjectEntryCounts"
+           VkObjectTableCreateInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPObjectEntryCounts
+
+instance {-# OVERLAPPING #-}
          HasVkPObjectEntryUsageFlags VkObjectTableCreateInfoNVX where
         type VkPObjectEntryUsageFlagsMType VkObjectTableCreateInfoNVX =
              Ptr VkObjectEntryUsageFlagsNVX
@@ -2017,6 +2991,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPObjectEntryUsageFlags #-}
         writeVkPObjectEntryUsageFlags p
           = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, pObjectEntryUsageFlags}
+
+instance {-# OVERLAPPING #-}
+         HasField "pObjectEntryUsageFlags" VkObjectTableCreateInfoNVX where
+        type FieldType "pObjectEntryUsageFlags" VkObjectTableCreateInfoNVX
+             = Ptr VkObjectEntryUsageFlagsNVX
+        type FieldOptional "pObjectEntryUsageFlags"
+               VkObjectTableCreateInfoNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pObjectEntryUsageFlags"
+           VkObjectTableCreateInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkPObjectEntryUsageFlags
+
+        {-# INLINE readField #-}
+        readField = readVkPObjectEntryUsageFlags
+
+instance CanWriteField "pObjectEntryUsageFlags"
+           VkObjectTableCreateInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPObjectEntryUsageFlags
 
 instance {-# OVERLAPPING #-}
          HasVkMaxUniformBuffersPerDescriptor VkObjectTableCreateInfoNVX
@@ -2043,6 +3040,32 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, maxUniformBuffersPerDescriptor}
 
 instance {-# OVERLAPPING #-}
+         HasField "maxUniformBuffersPerDescriptor"
+           VkObjectTableCreateInfoNVX
+         where
+        type FieldType "maxUniformBuffersPerDescriptor"
+               VkObjectTableCreateInfoNVX
+             = Word32
+        type FieldOptional "maxUniformBuffersPerDescriptor"
+               VkObjectTableCreateInfoNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "maxUniformBuffersPerDescriptor"
+           VkObjectTableCreateInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkMaxUniformBuffersPerDescriptor
+
+        {-# INLINE readField #-}
+        readField = readVkMaxUniformBuffersPerDescriptor
+
+instance CanWriteField "maxUniformBuffersPerDescriptor"
+           VkObjectTableCreateInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxUniformBuffersPerDescriptor
+
+instance {-# OVERLAPPING #-}
          HasVkMaxStorageBuffersPerDescriptor VkObjectTableCreateInfoNVX
          where
         type VkMaxStorageBuffersPerDescriptorMType
@@ -2065,6 +3088,32 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkMaxStorageBuffersPerDescriptor #-}
         writeVkMaxStorageBuffersPerDescriptor p
           = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, maxStorageBuffersPerDescriptor}
+
+instance {-# OVERLAPPING #-}
+         HasField "maxStorageBuffersPerDescriptor"
+           VkObjectTableCreateInfoNVX
+         where
+        type FieldType "maxStorageBuffersPerDescriptor"
+               VkObjectTableCreateInfoNVX
+             = Word32
+        type FieldOptional "maxStorageBuffersPerDescriptor"
+               VkObjectTableCreateInfoNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "maxStorageBuffersPerDescriptor"
+           VkObjectTableCreateInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkMaxStorageBuffersPerDescriptor
+
+        {-# INLINE readField #-}
+        readField = readVkMaxStorageBuffersPerDescriptor
+
+instance CanWriteField "maxStorageBuffersPerDescriptor"
+           VkObjectTableCreateInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxStorageBuffersPerDescriptor
 
 instance {-# OVERLAPPING #-}
          HasVkMaxStorageImagesPerDescriptor VkObjectTableCreateInfoNVX where
@@ -2090,6 +3139,31 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, maxStorageImagesPerDescriptor}
 
 instance {-# OVERLAPPING #-}
+         HasField "maxStorageImagesPerDescriptor" VkObjectTableCreateInfoNVX
+         where
+        type FieldType "maxStorageImagesPerDescriptor"
+               VkObjectTableCreateInfoNVX
+             = Word32
+        type FieldOptional "maxStorageImagesPerDescriptor"
+               VkObjectTableCreateInfoNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "maxStorageImagesPerDescriptor"
+           VkObjectTableCreateInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkMaxStorageImagesPerDescriptor
+
+        {-# INLINE readField #-}
+        readField = readVkMaxStorageImagesPerDescriptor
+
+instance CanWriteField "maxStorageImagesPerDescriptor"
+           VkObjectTableCreateInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxStorageImagesPerDescriptor
+
+instance {-# OVERLAPPING #-}
          HasVkMaxSampledImagesPerDescriptor VkObjectTableCreateInfoNVX where
         type VkMaxSampledImagesPerDescriptorMType
                VkObjectTableCreateInfoNVX
@@ -2113,6 +3187,31 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, maxSampledImagesPerDescriptor}
 
 instance {-# OVERLAPPING #-}
+         HasField "maxSampledImagesPerDescriptor" VkObjectTableCreateInfoNVX
+         where
+        type FieldType "maxSampledImagesPerDescriptor"
+               VkObjectTableCreateInfoNVX
+             = Word32
+        type FieldOptional "maxSampledImagesPerDescriptor"
+               VkObjectTableCreateInfoNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "maxSampledImagesPerDescriptor"
+           VkObjectTableCreateInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkMaxSampledImagesPerDescriptor
+
+        {-# INLINE readField #-}
+        readField = readVkMaxSampledImagesPerDescriptor
+
+instance CanWriteField "maxSampledImagesPerDescriptor"
+           VkObjectTableCreateInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxSampledImagesPerDescriptor
+
+instance {-# OVERLAPPING #-}
          HasVkMaxPipelineLayouts VkObjectTableCreateInfoNVX where
         type VkMaxPipelineLayoutsMType VkObjectTableCreateInfoNVX = Word32
 
@@ -2132,6 +3231,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkMaxPipelineLayouts #-}
         writeVkMaxPipelineLayouts p
           = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, maxPipelineLayouts}
+
+instance {-# OVERLAPPING #-}
+         HasField "maxPipelineLayouts" VkObjectTableCreateInfoNVX where
+        type FieldType "maxPipelineLayouts" VkObjectTableCreateInfoNVX =
+             Word32
+        type FieldOptional "maxPipelineLayouts" VkObjectTableCreateInfoNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "maxPipelineLayouts"
+           VkObjectTableCreateInfoNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkMaxPipelineLayouts
+
+        {-# INLINE readField #-}
+        readField = readVkMaxPipelineLayouts
+
+instance CanWriteField "maxPipelineLayouts"
+           VkObjectTableCreateInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxPipelineLayouts
 
 instance Show VkObjectTableCreateInfoNVX where
         showsPrec d x
@@ -2294,6 +3415,22 @@ instance {-# OVERLAPPING #-} HasVkType VkObjectTableEntryNVX where
         writeVkType p
           = pokeByteOff p #{offset VkObjectTableEntryNVX, type}
 
+instance {-# OVERLAPPING #-} HasField "type" VkObjectTableEntryNVX
+         where
+        type FieldType "type" VkObjectTableEntryNVX = VkObjectEntryTypeNVX
+        type FieldOptional "type" VkObjectTableEntryNVX = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "type" VkObjectTableEntryNVX where
+        {-# INLINE getField #-}
+        getField = vkType
+
+        {-# INLINE readField #-}
+        readField = readVkType
+
+instance CanWriteField "type" VkObjectTableEntryNVX where
+        {-# INLINE writeField #-}
+        writeField = writeVkType
+
 instance {-# OVERLAPPING #-} HasVkFlags VkObjectTableEntryNVX where
         type VkFlagsMType VkObjectTableEntryNVX =
              VkObjectEntryUsageFlagsNVX
@@ -2314,6 +3451,23 @@ instance {-# OVERLAPPING #-} HasVkFlags VkObjectTableEntryNVX where
         {-# INLINE writeVkFlags #-}
         writeVkFlags p
           = pokeByteOff p #{offset VkObjectTableEntryNVX, flags}
+
+instance {-# OVERLAPPING #-} HasField "flags" VkObjectTableEntryNVX
+         where
+        type FieldType "flags" VkObjectTableEntryNVX =
+             VkObjectEntryUsageFlagsNVX
+        type FieldOptional "flags" VkObjectTableEntryNVX = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "flags" VkObjectTableEntryNVX where
+        {-# INLINE getField #-}
+        getField = vkFlags
+
+        {-# INLINE readField #-}
+        readField = readVkFlags
+
+instance CanWriteField "flags" VkObjectTableEntryNVX where
+        {-# INLINE writeField #-}
+        writeField = writeVkFlags
 
 instance Show VkObjectTableEntryNVX where
         showsPrec d x
@@ -2435,6 +3589,23 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkObjectTablePipelineEntryNVX, type}
 
 instance {-# OVERLAPPING #-}
+         HasField "type" VkObjectTablePipelineEntryNVX where
+        type FieldType "type" VkObjectTablePipelineEntryNVX =
+             VkObjectEntryTypeNVX
+        type FieldOptional "type" VkObjectTablePipelineEntryNVX = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "type" VkObjectTablePipelineEntryNVX where
+        {-# INLINE getField #-}
+        getField = vkType
+
+        {-# INLINE readField #-}
+        readField = readVkType
+
+instance CanWriteField "type" VkObjectTablePipelineEntryNVX where
+        {-# INLINE writeField #-}
+        writeField = writeVkType
+
+instance {-# OVERLAPPING #-}
          HasVkFlags VkObjectTablePipelineEntryNVX where
         type VkFlagsMType VkObjectTablePipelineEntryNVX =
              VkObjectEntryUsageFlagsNVX
@@ -2457,6 +3628,23 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkObjectTablePipelineEntryNVX, flags}
 
 instance {-# OVERLAPPING #-}
+         HasField "flags" VkObjectTablePipelineEntryNVX where
+        type FieldType "flags" VkObjectTablePipelineEntryNVX =
+             VkObjectEntryUsageFlagsNVX
+        type FieldOptional "flags" VkObjectTablePipelineEntryNVX = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "flags" VkObjectTablePipelineEntryNVX where
+        {-# INLINE getField #-}
+        getField = vkFlags
+
+        {-# INLINE readField #-}
+        readField = readVkFlags
+
+instance CanWriteField "flags" VkObjectTablePipelineEntryNVX where
+        {-# INLINE writeField #-}
+        writeField = writeVkFlags
+
+instance {-# OVERLAPPING #-}
          HasVkPipeline VkObjectTablePipelineEntryNVX where
         type VkPipelineMType VkObjectTablePipelineEntryNVX = VkPipeline
 
@@ -2476,6 +3664,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPipeline #-}
         writeVkPipeline p
           = pokeByteOff p #{offset VkObjectTablePipelineEntryNVX, pipeline}
+
+instance {-# OVERLAPPING #-}
+         HasField "pipeline" VkObjectTablePipelineEntryNVX where
+        type FieldType "pipeline" VkObjectTablePipelineEntryNVX =
+             VkPipeline
+        type FieldOptional "pipeline" VkObjectTablePipelineEntryNVX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pipeline" VkObjectTablePipelineEntryNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkPipeline
+
+        {-# INLINE readField #-}
+        readField = readVkPipeline
+
+instance CanWriteField "pipeline" VkObjectTablePipelineEntryNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPipeline
 
 instance Show VkObjectTablePipelineEntryNVX where
         showsPrec d x
@@ -2606,6 +3814,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkObjectTableDescriptorSetEntryNVX, type}
 
 instance {-# OVERLAPPING #-}
+         HasField "type" VkObjectTableDescriptorSetEntryNVX where
+        type FieldType "type" VkObjectTableDescriptorSetEntryNVX =
+             VkObjectEntryTypeNVX
+        type FieldOptional "type" VkObjectTableDescriptorSetEntryNVX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "type" VkObjectTableDescriptorSetEntryNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkType
+
+        {-# INLINE readField #-}
+        readField = readVkType
+
+instance CanWriteField "type" VkObjectTableDescriptorSetEntryNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkType
+
+instance {-# OVERLAPPING #-}
          HasVkFlags VkObjectTableDescriptorSetEntryNVX where
         type VkFlagsMType VkObjectTableDescriptorSetEntryNVX =
              VkObjectEntryUsageFlagsNVX
@@ -2626,6 +3854,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkFlags #-}
         writeVkFlags p
           = pokeByteOff p #{offset VkObjectTableDescriptorSetEntryNVX, flags}
+
+instance {-# OVERLAPPING #-}
+         HasField "flags" VkObjectTableDescriptorSetEntryNVX where
+        type FieldType "flags" VkObjectTableDescriptorSetEntryNVX =
+             VkObjectEntryUsageFlagsNVX
+        type FieldOptional "flags" VkObjectTableDescriptorSetEntryNVX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "flags" VkObjectTableDescriptorSetEntryNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkFlags
+
+        {-# INLINE readField #-}
+        readField = readVkFlags
+
+instance CanWriteField "flags" VkObjectTableDescriptorSetEntryNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkFlags
 
 instance {-# OVERLAPPING #-}
          HasVkPipelineLayout VkObjectTableDescriptorSetEntryNVX where
@@ -2650,6 +3898,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkObjectTableDescriptorSetEntryNVX, pipelineLayout}
 
 instance {-# OVERLAPPING #-}
+         HasField "pipelineLayout" VkObjectTableDescriptorSetEntryNVX where
+        type FieldType "pipelineLayout" VkObjectTableDescriptorSetEntryNVX
+             = VkPipelineLayout
+        type FieldOptional "pipelineLayout"
+               VkObjectTableDescriptorSetEntryNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pipelineLayout"
+           VkObjectTableDescriptorSetEntryNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkPipelineLayout
+
+        {-# INLINE readField #-}
+        readField = readVkPipelineLayout
+
+instance CanWriteField "pipelineLayout"
+           VkObjectTableDescriptorSetEntryNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPipelineLayout
+
+instance {-# OVERLAPPING #-}
          HasVkDescriptorSet VkObjectTableDescriptorSetEntryNVX where
         type VkDescriptorSetMType VkObjectTableDescriptorSetEntryNVX =
              VkDescriptorSet
@@ -2670,6 +3941,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkDescriptorSet #-}
         writeVkDescriptorSet p
           = pokeByteOff p #{offset VkObjectTableDescriptorSetEntryNVX, descriptorSet}
+
+instance {-# OVERLAPPING #-}
+         HasField "descriptorSet" VkObjectTableDescriptorSetEntryNVX where
+        type FieldType "descriptorSet" VkObjectTableDescriptorSetEntryNVX =
+             VkDescriptorSet
+        type FieldOptional "descriptorSet"
+               VkObjectTableDescriptorSetEntryNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "descriptorSet"
+           VkObjectTableDescriptorSetEntryNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkDescriptorSet
+
+        {-# INLINE readField #-}
+        readField = readVkDescriptorSet
+
+instance CanWriteField "descriptorSet"
+           VkObjectTableDescriptorSetEntryNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkDescriptorSet
 
 instance Show VkObjectTableDescriptorSetEntryNVX where
         showsPrec d x
@@ -2801,6 +4095,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkObjectTableVertexBufferEntryNVX, type}
 
 instance {-# OVERLAPPING #-}
+         HasField "type" VkObjectTableVertexBufferEntryNVX where
+        type FieldType "type" VkObjectTableVertexBufferEntryNVX =
+             VkObjectEntryTypeNVX
+        type FieldOptional "type" VkObjectTableVertexBufferEntryNVX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "type" VkObjectTableVertexBufferEntryNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkType
+
+        {-# INLINE readField #-}
+        readField = readVkType
+
+instance CanWriteField "type" VkObjectTableVertexBufferEntryNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkType
+
+instance {-# OVERLAPPING #-}
          HasVkFlags VkObjectTableVertexBufferEntryNVX where
         type VkFlagsMType VkObjectTableVertexBufferEntryNVX =
              VkObjectEntryUsageFlagsNVX
@@ -2823,6 +4137,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkObjectTableVertexBufferEntryNVX, flags}
 
 instance {-# OVERLAPPING #-}
+         HasField "flags" VkObjectTableVertexBufferEntryNVX where
+        type FieldType "flags" VkObjectTableVertexBufferEntryNVX =
+             VkObjectEntryUsageFlagsNVX
+        type FieldOptional "flags" VkObjectTableVertexBufferEntryNVX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "flags" VkObjectTableVertexBufferEntryNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkFlags
+
+        {-# INLINE readField #-}
+        readField = readVkFlags
+
+instance CanWriteField "flags" VkObjectTableVertexBufferEntryNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkFlags
+
+instance {-# OVERLAPPING #-}
          HasVkBuffer VkObjectTableVertexBufferEntryNVX where
         type VkBufferMType VkObjectTableVertexBufferEntryNVX = VkBuffer
 
@@ -2842,6 +4176,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkBuffer #-}
         writeVkBuffer p
           = pokeByteOff p #{offset VkObjectTableVertexBufferEntryNVX, buffer}
+
+instance {-# OVERLAPPING #-}
+         HasField "buffer" VkObjectTableVertexBufferEntryNVX where
+        type FieldType "buffer" VkObjectTableVertexBufferEntryNVX =
+             VkBuffer
+        type FieldOptional "buffer" VkObjectTableVertexBufferEntryNVX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "buffer" VkObjectTableVertexBufferEntryNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkBuffer
+
+        {-# INLINE readField #-}
+        readField = readVkBuffer
+
+instance CanWriteField "buffer" VkObjectTableVertexBufferEntryNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkBuffer
 
 instance Show VkObjectTableVertexBufferEntryNVX where
         showsPrec d x
@@ -2968,6 +4322,24 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkObjectTableIndexBufferEntryNVX, type}
 
 instance {-# OVERLAPPING #-}
+         HasField "type" VkObjectTableIndexBufferEntryNVX where
+        type FieldType "type" VkObjectTableIndexBufferEntryNVX =
+             VkObjectEntryTypeNVX
+        type FieldOptional "type" VkObjectTableIndexBufferEntryNVX = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "type" VkObjectTableIndexBufferEntryNVX where
+        {-# INLINE getField #-}
+        getField = vkType
+
+        {-# INLINE readField #-}
+        readField = readVkType
+
+instance CanWriteField "type" VkObjectTableIndexBufferEntryNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkType
+
+instance {-# OVERLAPPING #-}
          HasVkFlags VkObjectTableIndexBufferEntryNVX where
         type VkFlagsMType VkObjectTableIndexBufferEntryNVX =
              VkObjectEntryUsageFlagsNVX
@@ -2988,6 +4360,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkFlags #-}
         writeVkFlags p
           = pokeByteOff p #{offset VkObjectTableIndexBufferEntryNVX, flags}
+
+instance {-# OVERLAPPING #-}
+         HasField "flags" VkObjectTableIndexBufferEntryNVX where
+        type FieldType "flags" VkObjectTableIndexBufferEntryNVX =
+             VkObjectEntryUsageFlagsNVX
+        type FieldOptional "flags" VkObjectTableIndexBufferEntryNVX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "flags" VkObjectTableIndexBufferEntryNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkFlags
+
+        {-# INLINE readField #-}
+        readField = readVkFlags
+
+instance CanWriteField "flags" VkObjectTableIndexBufferEntryNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkFlags
 
 instance {-# OVERLAPPING #-}
          HasVkBuffer VkObjectTableIndexBufferEntryNVX where
@@ -3011,6 +4403,25 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkObjectTableIndexBufferEntryNVX, buffer}
 
 instance {-# OVERLAPPING #-}
+         HasField "buffer" VkObjectTableIndexBufferEntryNVX where
+        type FieldType "buffer" VkObjectTableIndexBufferEntryNVX = VkBuffer
+        type FieldOptional "buffer" VkObjectTableIndexBufferEntryNVX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "buffer" VkObjectTableIndexBufferEntryNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkBuffer
+
+        {-# INLINE readField #-}
+        readField = readVkBuffer
+
+instance CanWriteField "buffer" VkObjectTableIndexBufferEntryNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkBuffer
+
+instance {-# OVERLAPPING #-}
          HasVkIndexType VkObjectTableIndexBufferEntryNVX where
         type VkIndexTypeMType VkObjectTableIndexBufferEntryNVX =
              VkIndexType
@@ -3031,6 +4442,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkIndexType #-}
         writeVkIndexType p
           = pokeByteOff p #{offset VkObjectTableIndexBufferEntryNVX, indexType}
+
+instance {-# OVERLAPPING #-}
+         HasField "indexType" VkObjectTableIndexBufferEntryNVX where
+        type FieldType "indexType" VkObjectTableIndexBufferEntryNVX =
+             VkIndexType
+        type FieldOptional "indexType" VkObjectTableIndexBufferEntryNVX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "indexType" VkObjectTableIndexBufferEntryNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkIndexType
+
+        {-# INLINE readField #-}
+        readField = readVkIndexType
+
+instance CanWriteField "indexType" VkObjectTableIndexBufferEntryNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkIndexType
 
 instance Show VkObjectTableIndexBufferEntryNVX where
         showsPrec d x
@@ -3163,6 +4594,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkObjectTablePushConstantEntryNVX, type}
 
 instance {-# OVERLAPPING #-}
+         HasField "type" VkObjectTablePushConstantEntryNVX where
+        type FieldType "type" VkObjectTablePushConstantEntryNVX =
+             VkObjectEntryTypeNVX
+        type FieldOptional "type" VkObjectTablePushConstantEntryNVX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "type" VkObjectTablePushConstantEntryNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkType
+
+        {-# INLINE readField #-}
+        readField = readVkType
+
+instance CanWriteField "type" VkObjectTablePushConstantEntryNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkType
+
+instance {-# OVERLAPPING #-}
          HasVkFlags VkObjectTablePushConstantEntryNVX where
         type VkFlagsMType VkObjectTablePushConstantEntryNVX =
              VkObjectEntryUsageFlagsNVX
@@ -3183,6 +4634,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkFlags #-}
         writeVkFlags p
           = pokeByteOff p #{offset VkObjectTablePushConstantEntryNVX, flags}
+
+instance {-# OVERLAPPING #-}
+         HasField "flags" VkObjectTablePushConstantEntryNVX where
+        type FieldType "flags" VkObjectTablePushConstantEntryNVX =
+             VkObjectEntryUsageFlagsNVX
+        type FieldOptional "flags" VkObjectTablePushConstantEntryNVX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "flags" VkObjectTablePushConstantEntryNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkFlags
+
+        {-# INLINE readField #-}
+        readField = readVkFlags
+
+instance CanWriteField "flags" VkObjectTablePushConstantEntryNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkFlags
 
 instance {-# OVERLAPPING #-}
          HasVkPipelineLayout VkObjectTablePushConstantEntryNVX where
@@ -3207,6 +4678,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkObjectTablePushConstantEntryNVX, pipelineLayout}
 
 instance {-# OVERLAPPING #-}
+         HasField "pipelineLayout" VkObjectTablePushConstantEntryNVX where
+        type FieldType "pipelineLayout" VkObjectTablePushConstantEntryNVX =
+             VkPipelineLayout
+        type FieldOptional "pipelineLayout"
+               VkObjectTablePushConstantEntryNVX
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pipelineLayout"
+           VkObjectTablePushConstantEntryNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkPipelineLayout
+
+        {-# INLINE readField #-}
+        readField = readVkPipelineLayout
+
+instance CanWriteField "pipelineLayout"
+           VkObjectTablePushConstantEntryNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPipelineLayout
+
+instance {-# OVERLAPPING #-}
          HasVkStageFlags VkObjectTablePushConstantEntryNVX where
         type VkStageFlagsMType VkObjectTablePushConstantEntryNVX =
              VkShaderStageFlags
@@ -3227,6 +4721,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkStageFlags #-}
         writeVkStageFlags p
           = pokeByteOff p #{offset VkObjectTablePushConstantEntryNVX, stageFlags}
+
+instance {-# OVERLAPPING #-}
+         HasField "stageFlags" VkObjectTablePushConstantEntryNVX where
+        type FieldType "stageFlags" VkObjectTablePushConstantEntryNVX =
+             VkShaderStageFlags
+        type FieldOptional "stageFlags" VkObjectTablePushConstantEntryNVX =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "stageFlags"
+           VkObjectTablePushConstantEntryNVX
+         where
+        {-# INLINE getField #-}
+        getField = vkStageFlags
+
+        {-# INLINE readField #-}
+        readField = readVkStageFlags
+
+instance CanWriteField "stageFlags"
+           VkObjectTablePushConstantEntryNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkStageFlags
 
 instance Show VkObjectTablePushConstantEntryNVX where
         showsPrec d x

@@ -1,8 +1,10 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
@@ -156,6 +158,22 @@ instance {-# OVERLAPPING #-} HasVkSType VkBindBufferMemoryInfoKHR
         writeVkSType p
           = pokeByteOff p #{offset VkBindBufferMemoryInfoKHR, sType}
 
+instance {-# OVERLAPPING #-}
+         HasField "sType" VkBindBufferMemoryInfoKHR where
+        type FieldType "sType" VkBindBufferMemoryInfoKHR = VkStructureType
+        type FieldOptional "sType" VkBindBufferMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkBindBufferMemoryInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkBindBufferMemoryInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkBindBufferMemoryInfoKHR
          where
         type VkPNextMType VkBindBufferMemoryInfoKHR = Ptr Void
@@ -177,6 +195,22 @@ instance {-# OVERLAPPING #-} HasVkPNext VkBindBufferMemoryInfoKHR
         writeVkPNext p
           = pokeByteOff p #{offset VkBindBufferMemoryInfoKHR, pNext}
 
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkBindBufferMemoryInfoKHR where
+        type FieldType "pNext" VkBindBufferMemoryInfoKHR = Ptr Void
+        type FieldOptional "pNext" VkBindBufferMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkBindBufferMemoryInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkBindBufferMemoryInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
+
 instance {-# OVERLAPPING #-} HasVkBuffer VkBindBufferMemoryInfoKHR
          where
         type VkBufferMType VkBindBufferMemoryInfoKHR = VkBuffer
@@ -197,6 +231,22 @@ instance {-# OVERLAPPING #-} HasVkBuffer VkBindBufferMemoryInfoKHR
         {-# INLINE writeVkBuffer #-}
         writeVkBuffer p
           = pokeByteOff p #{offset VkBindBufferMemoryInfoKHR, buffer}
+
+instance {-# OVERLAPPING #-}
+         HasField "buffer" VkBindBufferMemoryInfoKHR where
+        type FieldType "buffer" VkBindBufferMemoryInfoKHR = VkBuffer
+        type FieldOptional "buffer" VkBindBufferMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "buffer" VkBindBufferMemoryInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkBuffer
+
+        {-# INLINE readField #-}
+        readField = readVkBuffer
+
+instance CanWriteField "buffer" VkBindBufferMemoryInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkBuffer
 
 instance {-# OVERLAPPING #-} HasVkMemory VkBindBufferMemoryInfoKHR
          where
@@ -220,6 +270,22 @@ instance {-# OVERLAPPING #-} HasVkMemory VkBindBufferMemoryInfoKHR
           = pokeByteOff p #{offset VkBindBufferMemoryInfoKHR, memory}
 
 instance {-# OVERLAPPING #-}
+         HasField "memory" VkBindBufferMemoryInfoKHR where
+        type FieldType "memory" VkBindBufferMemoryInfoKHR = VkDeviceMemory
+        type FieldOptional "memory" VkBindBufferMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "memory" VkBindBufferMemoryInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkMemory
+
+        {-# INLINE readField #-}
+        readField = readVkMemory
+
+instance CanWriteField "memory" VkBindBufferMemoryInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkMemory
+
+instance {-# OVERLAPPING #-}
          HasVkMemoryOffset VkBindBufferMemoryInfoKHR where
         type VkMemoryOffsetMType VkBindBufferMemoryInfoKHR = VkDeviceSize
 
@@ -239,6 +305,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkMemoryOffset #-}
         writeVkMemoryOffset p
           = pokeByteOff p #{offset VkBindBufferMemoryInfoKHR, memoryOffset}
+
+instance {-# OVERLAPPING #-}
+         HasField "memoryOffset" VkBindBufferMemoryInfoKHR where
+        type FieldType "memoryOffset" VkBindBufferMemoryInfoKHR =
+             VkDeviceSize
+        type FieldOptional "memoryOffset" VkBindBufferMemoryInfoKHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "memoryOffset" VkBindBufferMemoryInfoKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkMemoryOffset
+
+        {-# INLINE readField #-}
+        readField = readVkMemoryOffset
+
+instance CanWriteField "memoryOffset" VkBindBufferMemoryInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMemoryOffset
 
 instance Show VkBindBufferMemoryInfoKHR where
         showsPrec d x
@@ -369,6 +455,22 @@ instance {-# OVERLAPPING #-} HasVkSType VkBindImageMemoryInfoKHR
         writeVkSType p
           = pokeByteOff p #{offset VkBindImageMemoryInfoKHR, sType}
 
+instance {-# OVERLAPPING #-}
+         HasField "sType" VkBindImageMemoryInfoKHR where
+        type FieldType "sType" VkBindImageMemoryInfoKHR = VkStructureType
+        type FieldOptional "sType" VkBindImageMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkBindImageMemoryInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkBindImageMemoryInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkBindImageMemoryInfoKHR
          where
         type VkPNextMType VkBindImageMemoryInfoKHR = Ptr Void
@@ -390,6 +492,22 @@ instance {-# OVERLAPPING #-} HasVkPNext VkBindImageMemoryInfoKHR
         writeVkPNext p
           = pokeByteOff p #{offset VkBindImageMemoryInfoKHR, pNext}
 
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkBindImageMemoryInfoKHR where
+        type FieldType "pNext" VkBindImageMemoryInfoKHR = Ptr Void
+        type FieldOptional "pNext" VkBindImageMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkBindImageMemoryInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkBindImageMemoryInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
+
 instance {-# OVERLAPPING #-} HasVkImage VkBindImageMemoryInfoKHR
          where
         type VkImageMType VkBindImageMemoryInfoKHR = VkImage
@@ -410,6 +528,22 @@ instance {-# OVERLAPPING #-} HasVkImage VkBindImageMemoryInfoKHR
         {-# INLINE writeVkImage #-}
         writeVkImage p
           = pokeByteOff p #{offset VkBindImageMemoryInfoKHR, image}
+
+instance {-# OVERLAPPING #-}
+         HasField "image" VkBindImageMemoryInfoKHR where
+        type FieldType "image" VkBindImageMemoryInfoKHR = VkImage
+        type FieldOptional "image" VkBindImageMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "image" VkBindImageMemoryInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkImage
+
+        {-# INLINE readField #-}
+        readField = readVkImage
+
+instance CanWriteField "image" VkBindImageMemoryInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkImage
 
 instance {-# OVERLAPPING #-} HasVkMemory VkBindImageMemoryInfoKHR
          where
@@ -433,6 +567,22 @@ instance {-# OVERLAPPING #-} HasVkMemory VkBindImageMemoryInfoKHR
           = pokeByteOff p #{offset VkBindImageMemoryInfoKHR, memory}
 
 instance {-# OVERLAPPING #-}
+         HasField "memory" VkBindImageMemoryInfoKHR where
+        type FieldType "memory" VkBindImageMemoryInfoKHR = VkDeviceMemory
+        type FieldOptional "memory" VkBindImageMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "memory" VkBindImageMemoryInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkMemory
+
+        {-# INLINE readField #-}
+        readField = readVkMemory
+
+instance CanWriteField "memory" VkBindImageMemoryInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkMemory
+
+instance {-# OVERLAPPING #-}
          HasVkMemoryOffset VkBindImageMemoryInfoKHR where
         type VkMemoryOffsetMType VkBindImageMemoryInfoKHR = VkDeviceSize
 
@@ -452,6 +602,24 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkMemoryOffset #-}
         writeVkMemoryOffset p
           = pokeByteOff p #{offset VkBindImageMemoryInfoKHR, memoryOffset}
+
+instance {-# OVERLAPPING #-}
+         HasField "memoryOffset" VkBindImageMemoryInfoKHR where
+        type FieldType "memoryOffset" VkBindImageMemoryInfoKHR =
+             VkDeviceSize
+        type FieldOptional "memoryOffset" VkBindImageMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "memoryOffset" VkBindImageMemoryInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkMemoryOffset
+
+        {-# INLINE readField #-}
+        readField = readVkMemoryOffset
+
+instance CanWriteField "memoryOffset" VkBindImageMemoryInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMemoryOffset
 
 instance Show VkBindImageMemoryInfoKHR where
         showsPrec d x

@@ -1,8 +1,10 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
@@ -159,6 +161,22 @@ instance {-# OVERLAPPING #-} HasVkSType VkHdrMetadataEXT where
         writeVkSType p
           = pokeByteOff p #{offset VkHdrMetadataEXT, sType}
 
+instance {-# OVERLAPPING #-} HasField "sType" VkHdrMetadataEXT
+         where
+        type FieldType "sType" VkHdrMetadataEXT = VkStructureType
+        type FieldOptional "sType" VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkHdrMetadataEXT where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkHdrMetadataEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkHdrMetadataEXT where
         type VkPNextMType VkHdrMetadataEXT = Ptr Void
 
@@ -178,6 +196,22 @@ instance {-# OVERLAPPING #-} HasVkPNext VkHdrMetadataEXT where
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkHdrMetadataEXT, pNext}
+
+instance {-# OVERLAPPING #-} HasField "pNext" VkHdrMetadataEXT
+         where
+        type FieldType "pNext" VkHdrMetadataEXT = Ptr Void
+        type FieldOptional "pNext" VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkHdrMetadataEXT where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkHdrMetadataEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkDisplayPrimaryRed VkHdrMetadataEXT where
@@ -201,6 +235,22 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkHdrMetadataEXT, displayPrimaryRed}
 
 instance {-# OVERLAPPING #-}
+         HasField "displayPrimaryRed" VkHdrMetadataEXT where
+        type FieldType "displayPrimaryRed" VkHdrMetadataEXT = VkXYColorEXT
+        type FieldOptional "displayPrimaryRed" VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "displayPrimaryRed" VkHdrMetadataEXT where
+        {-# INLINE getField #-}
+        getField = vkDisplayPrimaryRed
+
+        {-# INLINE readField #-}
+        readField = readVkDisplayPrimaryRed
+
+instance CanWriteField "displayPrimaryRed" VkHdrMetadataEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkDisplayPrimaryRed
+
+instance {-# OVERLAPPING #-}
          HasVkDisplayPrimaryGreen VkHdrMetadataEXT where
         type VkDisplayPrimaryGreenMType VkHdrMetadataEXT = VkXYColorEXT
 
@@ -220,6 +270,23 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkDisplayPrimaryGreen #-}
         writeVkDisplayPrimaryGreen p
           = pokeByteOff p #{offset VkHdrMetadataEXT, displayPrimaryGreen}
+
+instance {-# OVERLAPPING #-}
+         HasField "displayPrimaryGreen" VkHdrMetadataEXT where
+        type FieldType "displayPrimaryGreen" VkHdrMetadataEXT =
+             VkXYColorEXT
+        type FieldOptional "displayPrimaryGreen" VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "displayPrimaryGreen" VkHdrMetadataEXT where
+        {-# INLINE getField #-}
+        getField = vkDisplayPrimaryGreen
+
+        {-# INLINE readField #-}
+        readField = readVkDisplayPrimaryGreen
+
+instance CanWriteField "displayPrimaryGreen" VkHdrMetadataEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkDisplayPrimaryGreen
 
 instance {-# OVERLAPPING #-}
          HasVkDisplayPrimaryBlue VkHdrMetadataEXT where
@@ -242,6 +309,22 @@ instance {-# OVERLAPPING #-}
         writeVkDisplayPrimaryBlue p
           = pokeByteOff p #{offset VkHdrMetadataEXT, displayPrimaryBlue}
 
+instance {-# OVERLAPPING #-}
+         HasField "displayPrimaryBlue" VkHdrMetadataEXT where
+        type FieldType "displayPrimaryBlue" VkHdrMetadataEXT = VkXYColorEXT
+        type FieldOptional "displayPrimaryBlue" VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "displayPrimaryBlue" VkHdrMetadataEXT where
+        {-# INLINE getField #-}
+        getField = vkDisplayPrimaryBlue
+
+        {-# INLINE readField #-}
+        readField = readVkDisplayPrimaryBlue
+
+instance CanWriteField "displayPrimaryBlue" VkHdrMetadataEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkDisplayPrimaryBlue
+
 instance {-# OVERLAPPING #-} HasVkWhitePoint VkHdrMetadataEXT where
         type VkWhitePointMType VkHdrMetadataEXT = VkXYColorEXT
 
@@ -261,6 +344,22 @@ instance {-# OVERLAPPING #-} HasVkWhitePoint VkHdrMetadataEXT where
         {-# INLINE writeVkWhitePoint #-}
         writeVkWhitePoint p
           = pokeByteOff p #{offset VkHdrMetadataEXT, whitePoint}
+
+instance {-# OVERLAPPING #-} HasField "whitePoint" VkHdrMetadataEXT
+         where
+        type FieldType "whitePoint" VkHdrMetadataEXT = VkXYColorEXT
+        type FieldOptional "whitePoint" VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "whitePoint" VkHdrMetadataEXT where
+        {-# INLINE getField #-}
+        getField = vkWhitePoint
+
+        {-# INLINE readField #-}
+        readField = readVkWhitePoint
+
+instance CanWriteField "whitePoint" VkHdrMetadataEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkWhitePoint
 
 instance {-# OVERLAPPING #-} HasVkMaxLuminance VkHdrMetadataEXT
          where
@@ -283,6 +382,23 @@ instance {-# OVERLAPPING #-} HasVkMaxLuminance VkHdrMetadataEXT
         {-# INLINE writeVkMaxLuminance #-}
         writeVkMaxLuminance p
           = pokeByteOff p #{offset VkHdrMetadataEXT, maxLuminance}
+
+instance {-# OVERLAPPING #-}
+         HasField "maxLuminance" VkHdrMetadataEXT where
+        type FieldType "maxLuminance" VkHdrMetadataEXT =
+             #{type float}
+        type FieldOptional "maxLuminance" VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "maxLuminance" VkHdrMetadataEXT where
+        {-# INLINE getField #-}
+        getField = vkMaxLuminance
+
+        {-# INLINE readField #-}
+        readField = readVkMaxLuminance
+
+instance CanWriteField "maxLuminance" VkHdrMetadataEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxLuminance
 
 instance {-# OVERLAPPING #-} HasVkMinLuminance VkHdrMetadataEXT
          where
@@ -307,6 +423,23 @@ instance {-# OVERLAPPING #-} HasVkMinLuminance VkHdrMetadataEXT
           = pokeByteOff p #{offset VkHdrMetadataEXT, minLuminance}
 
 instance {-# OVERLAPPING #-}
+         HasField "minLuminance" VkHdrMetadataEXT where
+        type FieldType "minLuminance" VkHdrMetadataEXT =
+             #{type float}
+        type FieldOptional "minLuminance" VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "minLuminance" VkHdrMetadataEXT where
+        {-# INLINE getField #-}
+        getField = vkMinLuminance
+
+        {-# INLINE readField #-}
+        readField = readVkMinLuminance
+
+instance CanWriteField "minLuminance" VkHdrMetadataEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkMinLuminance
+
+instance {-# OVERLAPPING #-}
          HasVkMaxContentLightLevel VkHdrMetadataEXT where
         type VkMaxContentLightLevelMType VkHdrMetadataEXT =
              #{type float}
@@ -329,6 +462,24 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkHdrMetadataEXT, maxContentLightLevel}
 
 instance {-# OVERLAPPING #-}
+         HasField "maxContentLightLevel" VkHdrMetadataEXT where
+        type FieldType "maxContentLightLevel" VkHdrMetadataEXT =
+             #{type float}
+        type FieldOptional "maxContentLightLevel" VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "maxContentLightLevel" VkHdrMetadataEXT where
+        {-# INLINE getField #-}
+        getField = vkMaxContentLightLevel
+
+        {-# INLINE readField #-}
+        readField = readVkMaxContentLightLevel
+
+instance CanWriteField "maxContentLightLevel" VkHdrMetadataEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxContentLightLevel
+
+instance {-# OVERLAPPING #-}
          HasVkMaxFrameAverageLightLevel VkHdrMetadataEXT where
         type VkMaxFrameAverageLightLevelMType VkHdrMetadataEXT =
              #{type float}
@@ -349,6 +500,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkMaxFrameAverageLightLevel #-}
         writeVkMaxFrameAverageLightLevel p
           = pokeByteOff p #{offset VkHdrMetadataEXT, maxFrameAverageLightLevel}
+
+instance {-# OVERLAPPING #-}
+         HasField "maxFrameAverageLightLevel" VkHdrMetadataEXT where
+        type FieldType "maxFrameAverageLightLevel" VkHdrMetadataEXT =
+             #{type float}
+        type FieldOptional "maxFrameAverageLightLevel" VkHdrMetadataEXT =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "maxFrameAverageLightLevel" VkHdrMetadataEXT
+         where
+        {-# INLINE getField #-}
+        getField = vkMaxFrameAverageLightLevel
+
+        {-# INLINE readField #-}
+        readField = readVkMaxFrameAverageLightLevel
+
+instance CanWriteField "maxFrameAverageLightLevel" VkHdrMetadataEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxFrameAverageLightLevel
 
 instance Show VkHdrMetadataEXT where
         showsPrec d x
@@ -494,6 +665,21 @@ instance {-# OVERLAPPING #-} HasVkX VkXYColorEXT where
         {-# INLINE writeVkX #-}
         writeVkX p = pokeByteOff p #{offset VkXYColorEXT, x}
 
+instance {-# OVERLAPPING #-} HasField "x" VkXYColorEXT where
+        type FieldType "x" VkXYColorEXT = #{type float}
+        type FieldOptional "x" VkXYColorEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "x" VkXYColorEXT where
+        {-# INLINE getField #-}
+        getField = vkX
+
+        {-# INLINE readField #-}
+        readField = readVkX
+
+instance CanWriteField "x" VkXYColorEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkX
+
 instance {-# OVERLAPPING #-} HasVkY VkXYColorEXT where
         type VkYMType VkXYColorEXT = #{type float}
 
@@ -510,6 +696,21 @@ instance {-# OVERLAPPING #-} HasVkY VkXYColorEXT where
 
         {-# INLINE writeVkY #-}
         writeVkY p = pokeByteOff p #{offset VkXYColorEXT, y}
+
+instance {-# OVERLAPPING #-} HasField "y" VkXYColorEXT where
+        type FieldType "y" VkXYColorEXT = #{type float}
+        type FieldOptional "y" VkXYColorEXT = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "y" VkXYColorEXT where
+        {-# INLINE getField #-}
+        getField = vkY
+
+        {-# INLINE readField #-}
+        readField = readVkY
+
+instance CanWriteField "y" VkXYColorEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkY
 
 instance Show VkXYColorEXT where
         showsPrec d x

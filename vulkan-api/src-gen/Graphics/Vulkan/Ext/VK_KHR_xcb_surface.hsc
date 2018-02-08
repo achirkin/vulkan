@@ -1,8 +1,10 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
@@ -162,6 +164,22 @@ instance {-# OVERLAPPING #-} HasVkSType VkXcbSurfaceCreateInfoKHR
         writeVkSType p
           = pokeByteOff p #{offset VkXcbSurfaceCreateInfoKHR, sType}
 
+instance {-# OVERLAPPING #-}
+         HasField "sType" VkXcbSurfaceCreateInfoKHR where
+        type FieldType "sType" VkXcbSurfaceCreateInfoKHR = VkStructureType
+        type FieldOptional "sType" VkXcbSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkXcbSurfaceCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkXcbSurfaceCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkXcbSurfaceCreateInfoKHR
          where
         type VkPNextMType VkXcbSurfaceCreateInfoKHR = Ptr Void
@@ -182,6 +200,22 @@ instance {-# OVERLAPPING #-} HasVkPNext VkXcbSurfaceCreateInfoKHR
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkXcbSurfaceCreateInfoKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkXcbSurfaceCreateInfoKHR where
+        type FieldType "pNext" VkXcbSurfaceCreateInfoKHR = Ptr Void
+        type FieldOptional "pNext" VkXcbSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkXcbSurfaceCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkXcbSurfaceCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-} HasVkFlags VkXcbSurfaceCreateInfoKHR
          where
@@ -206,6 +240,23 @@ instance {-# OVERLAPPING #-} HasVkFlags VkXcbSurfaceCreateInfoKHR
           = pokeByteOff p #{offset VkXcbSurfaceCreateInfoKHR, flags}
 
 instance {-# OVERLAPPING #-}
+         HasField "flags" VkXcbSurfaceCreateInfoKHR where
+        type FieldType "flags" VkXcbSurfaceCreateInfoKHR =
+             VkXcbSurfaceCreateFlagsKHR
+        type FieldOptional "flags" VkXcbSurfaceCreateInfoKHR = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "flags" VkXcbSurfaceCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkFlags
+
+        {-# INLINE readField #-}
+        readField = readVkFlags
+
+instance CanWriteField "flags" VkXcbSurfaceCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkFlags
+
+instance {-# OVERLAPPING #-}
          HasVkConnection VkXcbSurfaceCreateInfoKHR where
         type VkConnectionMType VkXcbSurfaceCreateInfoKHR =
              Ptr XcbConnectionT
@@ -227,6 +278,23 @@ instance {-# OVERLAPPING #-}
         writeVkConnection p
           = pokeByteOff p #{offset VkXcbSurfaceCreateInfoKHR, connection}
 
+instance {-# OVERLAPPING #-}
+         HasField "connection" VkXcbSurfaceCreateInfoKHR where
+        type FieldType "connection" VkXcbSurfaceCreateInfoKHR =
+             Ptr XcbConnectionT
+        type FieldOptional "connection" VkXcbSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "connection" VkXcbSurfaceCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkConnection
+
+        {-# INLINE readField #-}
+        readField = readVkConnection
+
+instance CanWriteField "connection" VkXcbSurfaceCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkConnection
+
 instance {-# OVERLAPPING #-} HasVkWindow VkXcbSurfaceCreateInfoKHR
          where
         type VkWindowMType VkXcbSurfaceCreateInfoKHR = XcbWindowT
@@ -247,6 +315,22 @@ instance {-# OVERLAPPING #-} HasVkWindow VkXcbSurfaceCreateInfoKHR
         {-# INLINE writeVkWindow #-}
         writeVkWindow p
           = pokeByteOff p #{offset VkXcbSurfaceCreateInfoKHR, window}
+
+instance {-# OVERLAPPING #-}
+         HasField "window" VkXcbSurfaceCreateInfoKHR where
+        type FieldType "window" VkXcbSurfaceCreateInfoKHR = XcbWindowT
+        type FieldOptional "window" VkXcbSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "window" VkXcbSurfaceCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkWindow
+
+        {-# INLINE readField #-}
+        readField = readVkWindow
+
+instance CanWriteField "window" VkXcbSurfaceCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkWindow
 
 instance Show VkXcbSurfaceCreateInfoKHR where
         showsPrec d x

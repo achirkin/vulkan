@@ -1,12 +1,14 @@
 #include "vulkan/vulkan.h"
 
-{-# LANGUAGE DataKinds       #-}
-{-# LANGUAGE MagicHash       #-}
-{-# LANGUAGE PatternSynonyms #-}
-{-# LANGUAGE Strict          #-}
-{-# LANGUAGE TypeFamilies    #-}
-{-# LANGUAGE UnboxedTuples   #-}
-{-# LANGUAGE ViewPatterns    #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MagicHash             #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE PatternSynonyms       #-}
+{-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeFamilies          #-}
+{-# LANGUAGE UnboxedTuples         #-}
+{-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_NV_external_memory
        (-- * Vulkan extension: @VK_NV_external_memory@
         -- |
@@ -165,6 +167,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkExternalMemoryImageCreateInfoNV, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkExternalMemoryImageCreateInfoNV where
+        type FieldType "sType" VkExternalMemoryImageCreateInfoNV =
+             VkStructureType
+        type FieldOptional "sType" VkExternalMemoryImageCreateInfoNV =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkExternalMemoryImageCreateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkExternalMemoryImageCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkExternalMemoryImageCreateInfoNV where
         type VkPNextMType VkExternalMemoryImageCreateInfoNV = Ptr Void
 
@@ -184,6 +206,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkExternalMemoryImageCreateInfoNV, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkExternalMemoryImageCreateInfoNV where
+        type FieldType "pNext" VkExternalMemoryImageCreateInfoNV = Ptr Void
+        type FieldOptional "pNext" VkExternalMemoryImageCreateInfoNV =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkExternalMemoryImageCreateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkExternalMemoryImageCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkHandleTypes VkExternalMemoryImageCreateInfoNV where
@@ -206,6 +247,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkHandleTypes #-}
         writeVkHandleTypes p
           = pokeByteOff p #{offset VkExternalMemoryImageCreateInfoNV, handleTypes}
+
+instance {-# OVERLAPPING #-}
+         HasField "handleTypes" VkExternalMemoryImageCreateInfoNV where
+        type FieldType "handleTypes" VkExternalMemoryImageCreateInfoNV =
+             VkExternalMemoryHandleTypeFlagsNV
+        type FieldOptional "handleTypes" VkExternalMemoryImageCreateInfoNV
+             = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "handleTypes"
+           VkExternalMemoryImageCreateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkHandleTypes
+
+        {-# INLINE readField #-}
+        readField = readVkHandleTypes
+
+instance CanWriteField "handleTypes"
+           VkExternalMemoryImageCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkHandleTypes
 
 instance Show VkExternalMemoryImageCreateInfoNV where
         showsPrec d x
@@ -330,6 +393,23 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkExportMemoryAllocateInfoNV, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkExportMemoryAllocateInfoNV where
+        type FieldType "sType" VkExportMemoryAllocateInfoNV =
+             VkStructureType
+        type FieldOptional "sType" VkExportMemoryAllocateInfoNV = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkExportMemoryAllocateInfoNV where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkExportMemoryAllocateInfoNV where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkExportMemoryAllocateInfoNV where
         type VkPNextMType VkExportMemoryAllocateInfoNV = Ptr Void
 
@@ -349,6 +429,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkExportMemoryAllocateInfoNV, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkExportMemoryAllocateInfoNV where
+        type FieldType "pNext" VkExportMemoryAllocateInfoNV = Ptr Void
+        type FieldOptional "pNext" VkExportMemoryAllocateInfoNV = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkExportMemoryAllocateInfoNV where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkExportMemoryAllocateInfoNV where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkHandleTypes VkExportMemoryAllocateInfoNV where
@@ -371,6 +467,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkHandleTypes #-}
         writeVkHandleTypes p
           = pokeByteOff p #{offset VkExportMemoryAllocateInfoNV, handleTypes}
+
+instance {-# OVERLAPPING #-}
+         HasField "handleTypes" VkExportMemoryAllocateInfoNV where
+        type FieldType "handleTypes" VkExportMemoryAllocateInfoNV =
+             VkExternalMemoryHandleTypeFlagsNV
+        type FieldOptional "handleTypes" VkExportMemoryAllocateInfoNV =
+             'True -- ' closing tick for hsc2hs
+
+instance CanReadField "handleTypes" VkExportMemoryAllocateInfoNV
+         where
+        {-# INLINE getField #-}
+        getField = vkHandleTypes
+
+        {-# INLINE readField #-}
+        readField = readVkHandleTypes
+
+instance CanWriteField "handleTypes" VkExportMemoryAllocateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkHandleTypes
 
 instance Show VkExportMemoryAllocateInfoNV where
         showsPrec d x

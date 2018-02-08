@@ -1,12 +1,14 @@
 #include "vulkan/vulkan.h"
 
-{-# LANGUAGE DataKinds       #-}
-{-# LANGUAGE MagicHash       #-}
-{-# LANGUAGE PatternSynonyms #-}
-{-# LANGUAGE Strict          #-}
-{-# LANGUAGE TypeFamilies    #-}
-{-# LANGUAGE UnboxedTuples   #-}
-{-# LANGUAGE ViewPatterns    #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MagicHash             #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE PatternSynonyms       #-}
+{-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeFamilies          #-}
+{-# LANGUAGE UnboxedTuples         #-}
+{-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_KHR_incremental_present
        (-- * Vulkan extension: @VK_KHR_incremental_present@
         -- |
@@ -154,6 +156,22 @@ instance {-# OVERLAPPING #-} HasVkSType VkPresentRegionsKHR where
         writeVkSType p
           = pokeByteOff p #{offset VkPresentRegionsKHR, sType}
 
+instance {-# OVERLAPPING #-} HasField "sType" VkPresentRegionsKHR
+         where
+        type FieldType "sType" VkPresentRegionsKHR = VkStructureType
+        type FieldOptional "sType" VkPresentRegionsKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkPresentRegionsKHR where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkPresentRegionsKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkPresentRegionsKHR where
         type VkPNextMType VkPresentRegionsKHR = Ptr Void
 
@@ -173,6 +191,22 @@ instance {-# OVERLAPPING #-} HasVkPNext VkPresentRegionsKHR where
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkPresentRegionsKHR, pNext}
+
+instance {-# OVERLAPPING #-} HasField "pNext" VkPresentRegionsKHR
+         where
+        type FieldType "pNext" VkPresentRegionsKHR = Ptr Void
+        type FieldOptional "pNext" VkPresentRegionsKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkPresentRegionsKHR where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkPresentRegionsKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkSwapchainCount VkPresentRegionsKHR where
@@ -195,6 +229,22 @@ instance {-# OVERLAPPING #-}
         writeVkSwapchainCount p
           = pokeByteOff p #{offset VkPresentRegionsKHR, swapchainCount}
 
+instance {-# OVERLAPPING #-}
+         HasField "swapchainCount" VkPresentRegionsKHR where
+        type FieldType "swapchainCount" VkPresentRegionsKHR = Word32
+        type FieldOptional "swapchainCount" VkPresentRegionsKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "swapchainCount" VkPresentRegionsKHR where
+        {-# INLINE getField #-}
+        getField = vkSwapchainCount
+
+        {-# INLINE readField #-}
+        readField = readVkSwapchainCount
+
+instance CanWriteField "swapchainCount" VkPresentRegionsKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkSwapchainCount
+
 instance {-# OVERLAPPING #-} HasVkPRegions VkPresentRegionsKHR
          where
         type VkPRegionsMType VkPresentRegionsKHR = Ptr VkPresentRegionKHR
@@ -215,6 +265,23 @@ instance {-# OVERLAPPING #-} HasVkPRegions VkPresentRegionsKHR
         {-# INLINE writeVkPRegions #-}
         writeVkPRegions p
           = pokeByteOff p #{offset VkPresentRegionsKHR, pRegions}
+
+instance {-# OVERLAPPING #-}
+         HasField "pRegions" VkPresentRegionsKHR where
+        type FieldType "pRegions" VkPresentRegionsKHR =
+             Ptr VkPresentRegionKHR
+        type FieldOptional "pRegions" VkPresentRegionsKHR = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "pRegions" VkPresentRegionsKHR where
+        {-# INLINE getField #-}
+        getField = vkPRegions
+
+        {-# INLINE readField #-}
+        readField = readVkPRegions
+
+instance CanWriteField "pRegions" VkPresentRegionsKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkPRegions
 
 instance Show VkPresentRegionsKHR where
         showsPrec d x
@@ -337,6 +404,22 @@ instance {-# OVERLAPPING #-} HasVkRectangleCount VkPresentRegionKHR
         writeVkRectangleCount p
           = pokeByteOff p #{offset VkPresentRegionKHR, rectangleCount}
 
+instance {-# OVERLAPPING #-}
+         HasField "rectangleCount" VkPresentRegionKHR where
+        type FieldType "rectangleCount" VkPresentRegionKHR = Word32
+        type FieldOptional "rectangleCount" VkPresentRegionKHR = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "rectangleCount" VkPresentRegionKHR where
+        {-# INLINE getField #-}
+        getField = vkRectangleCount
+
+        {-# INLINE readField #-}
+        readField = readVkRectangleCount
+
+instance CanWriteField "rectangleCount" VkPresentRegionKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkRectangleCount
+
 instance {-# OVERLAPPING #-} HasVkPRectangles VkPresentRegionKHR
          where
         type VkPRectanglesMType VkPresentRegionKHR = Ptr VkRectLayerKHR
@@ -357,6 +440,23 @@ instance {-# OVERLAPPING #-} HasVkPRectangles VkPresentRegionKHR
         {-# INLINE writeVkPRectangles #-}
         writeVkPRectangles p
           = pokeByteOff p #{offset VkPresentRegionKHR, pRectangles}
+
+instance {-# OVERLAPPING #-}
+         HasField "pRectangles" VkPresentRegionKHR where
+        type FieldType "pRectangles" VkPresentRegionKHR =
+             Ptr VkRectLayerKHR
+        type FieldOptional "pRectangles" VkPresentRegionKHR = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "pRectangles" VkPresentRegionKHR where
+        {-# INLINE getField #-}
+        getField = vkPRectangles
+
+        {-# INLINE readField #-}
+        readField = readVkPRectangles
+
+instance CanWriteField "pRectangles" VkPresentRegionKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkPRectangles
 
 instance Show VkPresentRegionKHR where
         showsPrec d x
@@ -472,6 +572,21 @@ instance {-# OVERLAPPING #-} HasVkOffset VkRectLayerKHR where
         writeVkOffset p
           = pokeByteOff p #{offset VkRectLayerKHR, offset}
 
+instance {-# OVERLAPPING #-} HasField "offset" VkRectLayerKHR where
+        type FieldType "offset" VkRectLayerKHR = VkOffset2D
+        type FieldOptional "offset" VkRectLayerKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "offset" VkRectLayerKHR where
+        {-# INLINE getField #-}
+        getField = vkOffset
+
+        {-# INLINE readField #-}
+        readField = readVkOffset
+
+instance CanWriteField "offset" VkRectLayerKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkOffset
+
 instance {-# OVERLAPPING #-} HasVkExtent VkRectLayerKHR where
         type VkExtentMType VkRectLayerKHR = VkExtent2D
 
@@ -492,6 +607,21 @@ instance {-# OVERLAPPING #-} HasVkExtent VkRectLayerKHR where
         writeVkExtent p
           = pokeByteOff p #{offset VkRectLayerKHR, extent}
 
+instance {-# OVERLAPPING #-} HasField "extent" VkRectLayerKHR where
+        type FieldType "extent" VkRectLayerKHR = VkExtent2D
+        type FieldOptional "extent" VkRectLayerKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "extent" VkRectLayerKHR where
+        {-# INLINE getField #-}
+        getField = vkExtent
+
+        {-# INLINE readField #-}
+        readField = readVkExtent
+
+instance CanWriteField "extent" VkRectLayerKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkExtent
+
 instance {-# OVERLAPPING #-} HasVkLayer VkRectLayerKHR where
         type VkLayerMType VkRectLayerKHR = Word32
 
@@ -510,6 +640,21 @@ instance {-# OVERLAPPING #-} HasVkLayer VkRectLayerKHR where
         {-# INLINE writeVkLayer #-}
         writeVkLayer p
           = pokeByteOff p #{offset VkRectLayerKHR, layer}
+
+instance {-# OVERLAPPING #-} HasField "layer" VkRectLayerKHR where
+        type FieldType "layer" VkRectLayerKHR = Word32
+        type FieldOptional "layer" VkRectLayerKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "layer" VkRectLayerKHR where
+        {-# INLINE getField #-}
+        getField = vkLayer
+
+        {-# INLINE readField #-}
+        readField = readVkLayer
+
+instance CanWriteField "layer" VkRectLayerKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkLayer
 
 instance Show VkRectLayerKHR where
         showsPrec d x

@@ -1,8 +1,10 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
@@ -162,6 +164,22 @@ instance {-# OVERLAPPING #-} HasVkSType VkMirSurfaceCreateInfoKHR
         writeVkSType p
           = pokeByteOff p #{offset VkMirSurfaceCreateInfoKHR, sType}
 
+instance {-# OVERLAPPING #-}
+         HasField "sType" VkMirSurfaceCreateInfoKHR where
+        type FieldType "sType" VkMirSurfaceCreateInfoKHR = VkStructureType
+        type FieldOptional "sType" VkMirSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkMirSurfaceCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkMirSurfaceCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkMirSurfaceCreateInfoKHR
          where
         type VkPNextMType VkMirSurfaceCreateInfoKHR = Ptr Void
@@ -182,6 +200,22 @@ instance {-# OVERLAPPING #-} HasVkPNext VkMirSurfaceCreateInfoKHR
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkMirSurfaceCreateInfoKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkMirSurfaceCreateInfoKHR where
+        type FieldType "pNext" VkMirSurfaceCreateInfoKHR = Ptr Void
+        type FieldOptional "pNext" VkMirSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkMirSurfaceCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkMirSurfaceCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-} HasVkFlags VkMirSurfaceCreateInfoKHR
          where
@@ -206,6 +240,23 @@ instance {-# OVERLAPPING #-} HasVkFlags VkMirSurfaceCreateInfoKHR
           = pokeByteOff p #{offset VkMirSurfaceCreateInfoKHR, flags}
 
 instance {-# OVERLAPPING #-}
+         HasField "flags" VkMirSurfaceCreateInfoKHR where
+        type FieldType "flags" VkMirSurfaceCreateInfoKHR =
+             VkMirSurfaceCreateFlagsKHR
+        type FieldOptional "flags" VkMirSurfaceCreateInfoKHR = 'True -- ' closing tick for hsc2hs
+
+instance CanReadField "flags" VkMirSurfaceCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkFlags
+
+        {-# INLINE readField #-}
+        readField = readVkFlags
+
+instance CanWriteField "flags" VkMirSurfaceCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkFlags
+
+instance {-# OVERLAPPING #-}
          HasVkConnection VkMirSurfaceCreateInfoKHR where
         type VkConnectionMType VkMirSurfaceCreateInfoKHR =
              Ptr MirConnection
@@ -228,6 +279,23 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkMirSurfaceCreateInfoKHR, connection}
 
 instance {-# OVERLAPPING #-}
+         HasField "connection" VkMirSurfaceCreateInfoKHR where
+        type FieldType "connection" VkMirSurfaceCreateInfoKHR =
+             Ptr MirConnection
+        type FieldOptional "connection" VkMirSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "connection" VkMirSurfaceCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkConnection
+
+        {-# INLINE readField #-}
+        readField = readVkConnection
+
+instance CanWriteField "connection" VkMirSurfaceCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkConnection
+
+instance {-# OVERLAPPING #-}
          HasVkMirSurface VkMirSurfaceCreateInfoKHR where
         type VkMirSurfaceMType VkMirSurfaceCreateInfoKHR = Ptr MirSurface
 
@@ -247,6 +315,23 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkMirSurface #-}
         writeVkMirSurface p
           = pokeByteOff p #{offset VkMirSurfaceCreateInfoKHR, mirSurface}
+
+instance {-# OVERLAPPING #-}
+         HasField "mirSurface" VkMirSurfaceCreateInfoKHR where
+        type FieldType "mirSurface" VkMirSurfaceCreateInfoKHR =
+             Ptr MirSurface
+        type FieldOptional "mirSurface" VkMirSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "mirSurface" VkMirSurfaceCreateInfoKHR where
+        {-# INLINE getField #-}
+        getField = vkMirSurface
+
+        {-# INLINE readField #-}
+        readField = readVkMirSurface
+
+instance CanWriteField "mirSurface" VkMirSurfaceCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkMirSurface
 
 instance Show VkMirSurfaceCreateInfoKHR where
         showsPrec d x

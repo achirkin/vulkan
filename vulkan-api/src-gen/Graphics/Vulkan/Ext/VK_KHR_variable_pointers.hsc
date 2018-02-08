@@ -1,12 +1,14 @@
 #include "vulkan/vulkan.h"
 
-{-# LANGUAGE DataKinds       #-}
-{-# LANGUAGE MagicHash       #-}
-{-# LANGUAGE PatternSynonyms #-}
-{-# LANGUAGE Strict          #-}
-{-# LANGUAGE TypeFamilies    #-}
-{-# LANGUAGE UnboxedTuples   #-}
-{-# LANGUAGE ViewPatterns    #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MagicHash             #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE PatternSynonyms       #-}
+{-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeFamilies          #-}
+{-# LANGUAGE UnboxedTuples         #-}
+{-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_KHR_variable_pointers
        (-- * Vulkan extension: @VK_KHR_variable_pointers@
         -- |
@@ -172,6 +174,29 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkPhysicalDeviceVariablePointerFeaturesKHR where
+        type FieldType "sType" VkPhysicalDeviceVariablePointerFeaturesKHR =
+             VkStructureType
+        type FieldOptional "sType"
+               VkPhysicalDeviceVariablePointerFeaturesKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType"
+           VkPhysicalDeviceVariablePointerFeaturesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType"
+           VkPhysicalDeviceVariablePointerFeaturesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkPhysicalDeviceVariablePointerFeaturesKHR where
         type VkPNextMType VkPhysicalDeviceVariablePointerFeaturesKHR =
              Ptr Void
@@ -192,6 +217,29 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkPhysicalDeviceVariablePointerFeaturesKHR where
+        type FieldType "pNext" VkPhysicalDeviceVariablePointerFeaturesKHR =
+             Ptr Void
+        type FieldOptional "pNext"
+               VkPhysicalDeviceVariablePointerFeaturesKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext"
+           VkPhysicalDeviceVariablePointerFeaturesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkPhysicalDeviceVariablePointerFeaturesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkVariablePointersStorageBuffer
@@ -219,6 +267,32 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, variablePointersStorageBuffer}
 
 instance {-# OVERLAPPING #-}
+         HasField "variablePointersStorageBuffer"
+           VkPhysicalDeviceVariablePointerFeaturesKHR
+         where
+        type FieldType "variablePointersStorageBuffer"
+               VkPhysicalDeviceVariablePointerFeaturesKHR
+             = VkBool32
+        type FieldOptional "variablePointersStorageBuffer"
+               VkPhysicalDeviceVariablePointerFeaturesKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "variablePointersStorageBuffer"
+           VkPhysicalDeviceVariablePointerFeaturesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkVariablePointersStorageBuffer
+
+        {-# INLINE readField #-}
+        readField = readVkVariablePointersStorageBuffer
+
+instance CanWriteField "variablePointersStorageBuffer"
+           VkPhysicalDeviceVariablePointerFeaturesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkVariablePointersStorageBuffer
+
+instance {-# OVERLAPPING #-}
          HasVkVariablePointers VkPhysicalDeviceVariablePointerFeaturesKHR
          where
         type VkVariablePointersMType
@@ -241,6 +315,32 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkVariablePointers #-}
         writeVkVariablePointers p
           = pokeByteOff p #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, variablePointers}
+
+instance {-# OVERLAPPING #-}
+         HasField "variablePointers"
+           VkPhysicalDeviceVariablePointerFeaturesKHR
+         where
+        type FieldType "variablePointers"
+               VkPhysicalDeviceVariablePointerFeaturesKHR
+             = VkBool32
+        type FieldOptional "variablePointers"
+               VkPhysicalDeviceVariablePointerFeaturesKHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "variablePointers"
+           VkPhysicalDeviceVariablePointerFeaturesKHR
+         where
+        {-# INLINE getField #-}
+        getField = vkVariablePointers
+
+        {-# INLINE readField #-}
+        readField = readVkVariablePointers
+
+instance CanWriteField "variablePointers"
+           VkPhysicalDeviceVariablePointerFeaturesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkVariablePointers
 
 instance Show VkPhysicalDeviceVariablePointerFeaturesKHR where
         showsPrec d x

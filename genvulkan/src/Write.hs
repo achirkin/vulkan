@@ -84,6 +84,9 @@ generateVkSource outputDir outCabalFile vkXml = do
                <> iva "System.IO.Unsafe" "unsafeDupablePerformIO"
                <> ida "GHC.TypeLits" "ErrorMessage"
                <> id0 "GHC.TypeLits" "TypeError"
+               <> id0 "GHC.TypeLits" "KnownNat"
+               <> id0 "GHC.TypeLits" "CmpNat"
+               <> iva "GHC.TypeLits" "natVal'"
 
       ida m t = Map.fromList
         [ (DIThing t DITAll ,  ModuleName () m)
@@ -388,6 +391,7 @@ fixSourceHooks isHsc = (if isHsc then enableHSC else id)
         . map ( (*=~/ [edBS|{-##///{-#|])
               . (*=~/ [edBS|##-}///#-}|])
               . (*=~/ [edBS|#///##|])
+              . (*=~/ [edBS|^([^']*'[^']*)$///$1 -- ' closing tick for hsc2hs|])
               )
         . lines
       where

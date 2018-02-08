@@ -1,8 +1,10 @@
 #include "vulkan/vulkan.h"
 
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
+{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
@@ -170,6 +172,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkBufferMemoryRequirementsInfo2KHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkBufferMemoryRequirementsInfo2KHR where
+        type FieldType "sType" VkBufferMemoryRequirementsInfo2KHR =
+             VkStructureType
+        type FieldOptional "sType" VkBufferMemoryRequirementsInfo2KHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkBufferMemoryRequirementsInfo2KHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkBufferMemoryRequirementsInfo2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkBufferMemoryRequirementsInfo2KHR where
         type VkPNextMType VkBufferMemoryRequirementsInfo2KHR = Ptr Void
 
@@ -191,6 +213,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkBufferMemoryRequirementsInfo2KHR, pNext}
 
 instance {-# OVERLAPPING #-}
+         HasField "pNext" VkBufferMemoryRequirementsInfo2KHR where
+        type FieldType "pNext" VkBufferMemoryRequirementsInfo2KHR =
+             Ptr Void
+        type FieldOptional "pNext" VkBufferMemoryRequirementsInfo2KHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkBufferMemoryRequirementsInfo2KHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkBufferMemoryRequirementsInfo2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
+
+instance {-# OVERLAPPING #-}
          HasVkBuffer VkBufferMemoryRequirementsInfo2KHR where
         type VkBufferMType VkBufferMemoryRequirementsInfo2KHR = VkBuffer
 
@@ -210,6 +252,26 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkBuffer #-}
         writeVkBuffer p
           = pokeByteOff p #{offset VkBufferMemoryRequirementsInfo2KHR, buffer}
+
+instance {-# OVERLAPPING #-}
+         HasField "buffer" VkBufferMemoryRequirementsInfo2KHR where
+        type FieldType "buffer" VkBufferMemoryRequirementsInfo2KHR =
+             VkBuffer
+        type FieldOptional "buffer" VkBufferMemoryRequirementsInfo2KHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "buffer" VkBufferMemoryRequirementsInfo2KHR
+         where
+        {-# INLINE getField #-}
+        getField = vkBuffer
+
+        {-# INLINE readField #-}
+        readField = readVkBuffer
+
+instance CanWriteField "buffer" VkBufferMemoryRequirementsInfo2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkBuffer
 
 instance Show VkBufferMemoryRequirementsInfo2KHR where
         showsPrec d x
@@ -337,6 +399,26 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkImageMemoryRequirementsInfo2KHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkImageMemoryRequirementsInfo2KHR where
+        type FieldType "sType" VkImageMemoryRequirementsInfo2KHR =
+             VkStructureType
+        type FieldOptional "sType" VkImageMemoryRequirementsInfo2KHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkImageMemoryRequirementsInfo2KHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType" VkImageMemoryRequirementsInfo2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkImageMemoryRequirementsInfo2KHR where
         type VkPNextMType VkImageMemoryRequirementsInfo2KHR = Ptr Void
 
@@ -358,6 +440,25 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkImageMemoryRequirementsInfo2KHR, pNext}
 
 instance {-# OVERLAPPING #-}
+         HasField "pNext" VkImageMemoryRequirementsInfo2KHR where
+        type FieldType "pNext" VkImageMemoryRequirementsInfo2KHR = Ptr Void
+        type FieldOptional "pNext" VkImageMemoryRequirementsInfo2KHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkImageMemoryRequirementsInfo2KHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext" VkImageMemoryRequirementsInfo2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
+
+instance {-# OVERLAPPING #-}
          HasVkImage VkImageMemoryRequirementsInfo2KHR where
         type VkImageMType VkImageMemoryRequirementsInfo2KHR = VkImage
 
@@ -377,6 +478,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkImage #-}
         writeVkImage p
           = pokeByteOff p #{offset VkImageMemoryRequirementsInfo2KHR, image}
+
+instance {-# OVERLAPPING #-}
+         HasField "image" VkImageMemoryRequirementsInfo2KHR where
+        type FieldType "image" VkImageMemoryRequirementsInfo2KHR = VkImage
+        type FieldOptional "image" VkImageMemoryRequirementsInfo2KHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "image" VkImageMemoryRequirementsInfo2KHR
+         where
+        {-# INLINE getField #-}
+        getField = vkImage
+
+        {-# INLINE readField #-}
+        readField = readVkImage
+
+instance CanWriteField "image" VkImageMemoryRequirementsInfo2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkImage
 
 instance Show VkImageMemoryRequirementsInfo2KHR where
         showsPrec d x
@@ -513,6 +633,28 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkImageSparseMemoryRequirementsInfo2KHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkImageSparseMemoryRequirementsInfo2KHR where
+        type FieldType "sType" VkImageSparseMemoryRequirementsInfo2KHR =
+             VkStructureType
+        type FieldOptional "sType" VkImageSparseMemoryRequirementsInfo2KHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType"
+           VkImageSparseMemoryRequirementsInfo2KHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance CanWriteField "sType"
+           VkImageSparseMemoryRequirementsInfo2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkImageSparseMemoryRequirementsInfo2KHR where
         type VkPNextMType VkImageSparseMemoryRequirementsInfo2KHR =
              Ptr Void
@@ -535,6 +677,28 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkImageSparseMemoryRequirementsInfo2KHR, pNext}
 
 instance {-# OVERLAPPING #-}
+         HasField "pNext" VkImageSparseMemoryRequirementsInfo2KHR where
+        type FieldType "pNext" VkImageSparseMemoryRequirementsInfo2KHR =
+             Ptr Void
+        type FieldOptional "pNext" VkImageSparseMemoryRequirementsInfo2KHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext"
+           VkImageSparseMemoryRequirementsInfo2KHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkImageSparseMemoryRequirementsInfo2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
+
+instance {-# OVERLAPPING #-}
          HasVkImage VkImageSparseMemoryRequirementsInfo2KHR where
         type VkImageMType VkImageSparseMemoryRequirementsInfo2KHR = VkImage
 
@@ -554,6 +718,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkImage #-}
         writeVkImage p
           = pokeByteOff p #{offset VkImageSparseMemoryRequirementsInfo2KHR, image}
+
+instance {-# OVERLAPPING #-}
+         HasField "image" VkImageSparseMemoryRequirementsInfo2KHR where
+        type FieldType "image" VkImageSparseMemoryRequirementsInfo2KHR =
+             VkImage
+        type FieldOptional "image" VkImageSparseMemoryRequirementsInfo2KHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "image"
+           VkImageSparseMemoryRequirementsInfo2KHR
+         where
+        {-# INLINE getField #-}
+        getField = vkImage
+
+        {-# INLINE readField #-}
+        readField = readVkImage
+
+instance CanWriteField "image"
+           VkImageSparseMemoryRequirementsInfo2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkImage
 
 instance Show VkImageSparseMemoryRequirementsInfo2KHR where
         showsPrec d x
@@ -675,6 +861,18 @@ instance {-# OVERLAPPING #-} HasVkSType VkMemoryRequirements2KHR
         writeVkSType p
           = pokeByteOff p #{offset VkMemoryRequirements2KHR, sType}
 
+instance {-# OVERLAPPING #-}
+         HasField "sType" VkMemoryRequirements2KHR where
+        type FieldType "sType" VkMemoryRequirements2KHR = VkStructureType
+        type FieldOptional "sType" VkMemoryRequirements2KHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkMemoryRequirements2KHR where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkMemoryRequirements2KHR
          where
         type VkPNextMType VkMemoryRequirements2KHR = Ptr Void
@@ -697,6 +895,18 @@ instance {-# OVERLAPPING #-} HasVkPNext VkMemoryRequirements2KHR
           = pokeByteOff p #{offset VkMemoryRequirements2KHR, pNext}
 
 instance {-# OVERLAPPING #-}
+         HasField "pNext" VkMemoryRequirements2KHR where
+        type FieldType "pNext" VkMemoryRequirements2KHR = Ptr Void
+        type FieldOptional "pNext" VkMemoryRequirements2KHR = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkMemoryRequirements2KHR where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
+
+instance {-# OVERLAPPING #-}
          HasVkMemoryRequirements VkMemoryRequirements2KHR where
         type VkMemoryRequirementsMType VkMemoryRequirements2KHR =
              VkMemoryRequirements
@@ -717,6 +927,21 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkMemoryRequirements #-}
         writeVkMemoryRequirements p
           = pokeByteOff p #{offset VkMemoryRequirements2KHR, memoryRequirements}
+
+instance {-# OVERLAPPING #-}
+         HasField "memoryRequirements" VkMemoryRequirements2KHR where
+        type FieldType "memoryRequirements" VkMemoryRequirements2KHR =
+             VkMemoryRequirements
+        type FieldOptional "memoryRequirements" VkMemoryRequirements2KHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "memoryRequirements" VkMemoryRequirements2KHR
+         where
+        {-# INLINE getField #-}
+        getField = vkMemoryRequirements
+
+        {-# INLINE readField #-}
+        readField = readVkMemoryRequirements
 
 instance Show VkMemoryRequirements2KHR where
         showsPrec d x
@@ -850,6 +1075,21 @@ instance {-# OVERLAPPING #-}
           = pokeByteOff p #{offset VkSparseImageMemoryRequirements2KHR, sType}
 
 instance {-# OVERLAPPING #-}
+         HasField "sType" VkSparseImageMemoryRequirements2KHR where
+        type FieldType "sType" VkSparseImageMemoryRequirements2KHR =
+             VkStructureType
+        type FieldOptional "sType" VkSparseImageMemoryRequirements2KHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "sType" VkSparseImageMemoryRequirements2KHR
+         where
+        {-# INLINE getField #-}
+        getField = vkSType
+
+        {-# INLINE readField #-}
+        readField = readVkSType
+
+instance {-# OVERLAPPING #-}
          HasVkPNext VkSparseImageMemoryRequirements2KHR where
         type VkPNextMType VkSparseImageMemoryRequirements2KHR = Ptr Void
 
@@ -869,6 +1109,21 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkPNext #-}
         writeVkPNext p
           = pokeByteOff p #{offset VkSparseImageMemoryRequirements2KHR, pNext}
+
+instance {-# OVERLAPPING #-}
+         HasField "pNext" VkSparseImageMemoryRequirements2KHR where
+        type FieldType "pNext" VkSparseImageMemoryRequirements2KHR =
+             Ptr Void
+        type FieldOptional "pNext" VkSparseImageMemoryRequirements2KHR =
+             'False -- ' closing tick for hsc2hs
+
+instance CanReadField "pNext" VkSparseImageMemoryRequirements2KHR
+         where
+        {-# INLINE getField #-}
+        getField = vkPNext
+
+        {-# INLINE readField #-}
+        readField = readVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkMemoryRequirements VkSparseImageMemoryRequirements2KHR where
@@ -891,6 +1146,25 @@ instance {-# OVERLAPPING #-}
         {-# INLINE writeVkMemoryRequirements #-}
         writeVkMemoryRequirements p
           = pokeByteOff p #{offset VkSparseImageMemoryRequirements2KHR, memoryRequirements}
+
+instance {-# OVERLAPPING #-}
+         HasField "memoryRequirements" VkSparseImageMemoryRequirements2KHR
+         where
+        type FieldType "memoryRequirements"
+               VkSparseImageMemoryRequirements2KHR
+             = VkSparseImageMemoryRequirements
+        type FieldOptional "memoryRequirements"
+               VkSparseImageMemoryRequirements2KHR
+             = 'False -- ' closing tick for hsc2hs
+
+instance CanReadField "memoryRequirements"
+           VkSparseImageMemoryRequirements2KHR
+         where
+        {-# INLINE getField #-}
+        getField = vkMemoryRequirements
+
+        {-# INLINE readField #-}
+        readField = readVkMemoryRequirements
 
 instance Show VkSparseImageMemoryRequirements2KHR where
         showsPrec d x
