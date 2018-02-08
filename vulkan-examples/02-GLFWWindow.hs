@@ -74,7 +74,7 @@ pickPhysicalDevice :: VkInstance -> IO (Either String VkPhysicalDevice)
 pickPhysicalDevice vkInstance = runExceptT $ do
     devs <- ExceptT $ alloca $ \deviceCountPtr -> runExceptT $ do
       throwingVK "pickPhysicalDevice: Failed to enumerate physical devices"
-                $ vkEnumeratePhysicalDevices vkInstance deviceCountPtr vkNullPtr
+                $ vkEnumeratePhysicalDevices vkInstance deviceCountPtr VK_NULL_HANDLE
       devCount <- lift $ fromIntegral <$> peek deviceCountPtr
       when (devCount <= 0) $ throwE "Zero device count!"
       devices <- ExceptT $ allocaArray devCount $ \devicesPtr -> runExceptT $ do
