@@ -31,10 +31,9 @@ module Graphics.Vulkan.Ext.VK_IMG_format_pvrtc
         pattern VK_FORMAT_PVRTC2_2BPP_SRGB_BLOCK_IMG,
         pattern VK_FORMAT_PVRTC2_4BPP_SRGB_BLOCK_IMG)
        where
-import           Foreign.C.String              (CString)
-import           GHC.Ptr                       (Ptr (..))
-import           Graphics.Vulkan.Common        (VkFormat (..))
-import           Graphics.Vulkan.StructMembers
+import           Foreign.C.String       (CString)
+import           GHC.Ptr                (Ptr (..))
+import           Graphics.Vulkan.Common (VkFormat (..))
 
 pattern VK_IMG_FORMAT_PVRTC_SPEC_VERSION :: (Num a, Eq a) => a
 

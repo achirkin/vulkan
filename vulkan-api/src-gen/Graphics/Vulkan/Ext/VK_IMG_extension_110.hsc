@@ -21,9 +21,8 @@ module Graphics.Vulkan.Ext.VK_IMG_extension_110
         VK_IMG_EXTENSION_110_EXTENSION_NAME,
         pattern VK_IMG_EXTENSION_110_EXTENSION_NAME)
        where
-import           Foreign.C.String              (CString)
-import           GHC.Ptr                       (Ptr (..))
-import           Graphics.Vulkan.StructMembers
+import           Foreign.C.String (CString)
+import           GHC.Ptr          (Ptr (..))
 
 pattern VK_IMG_EXTENSION_110_SPEC_VERSION :: (Num a, Eq a) => a
 

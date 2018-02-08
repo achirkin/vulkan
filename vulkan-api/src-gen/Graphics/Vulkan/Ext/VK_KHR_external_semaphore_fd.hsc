@@ -44,7 +44,7 @@ import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common           (VkDevice, VkExternalSemaphoreHandleTypeFlagBitsKHR,
-                                                   VkResult, VkSemaphore,
+                                                   VkResult (..), VkSemaphore,
                                                    VkSemaphoreImportFlagsKHR,
                                                    VkStructureType,
                                                    VkStructureType (..))

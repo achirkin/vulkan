@@ -100,7 +100,7 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Base             (VkAllocationCallbacks,
+import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..),
                                                    VkComponentMapping)
 import           Graphics.Vulkan.Common           (VkBool32,
                                                    VkChromaLocationKHR,
@@ -111,7 +111,8 @@ import           Graphics.Vulkan.Common           (VkBool32,
                                                    VkImageAspectFlagBits,
                                                    VkImageAspectFlagBits (..),
                                                    VkImageCreateFlagBits (..),
-                                                   VkObjectType (..), VkResult,
+                                                   VkObjectType (..),
+                                                   VkResult (..),
                                                    VkSamplerYcbcrConversionKHR,
                                                    VkSamplerYcbcrModelConversionKHR,
                                                    VkSamplerYcbcrRangeKHR,

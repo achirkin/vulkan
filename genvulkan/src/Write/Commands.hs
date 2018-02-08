@@ -60,9 +60,11 @@ genCommand VkCommand
     writePragma "ForeignFunctionInterface"
     writeFullImport "Graphics.Vulkan.Marshal"
 
-    writeImport $ DIThing (qNameTxt . unqualifyQ . toHaskellName $ vkrt) DITNo
-    forM_ vkpams $ \p ->
-      writeImport $ DIThing (qNameTxt . unqualifyQ . toHaskellName $ paramType p) DITNo
+    forM_ (vkrt : map paramType vkpams) $ \p ->
+      let t = qNameTxt . unqualifyQ $ toHaskellName p
+          dit = if "Vk" `T.isPrefixOf` t
+                then DITAll else DITNo
+      in writeImport $ DIThing t dit
 
     writeDecl $ ForImp rezComment (CCall Nothing) (Just (PlayRisky Nothing))
                       (Just cnameOrigStr) (Ident Nothing cnameStr) funtype

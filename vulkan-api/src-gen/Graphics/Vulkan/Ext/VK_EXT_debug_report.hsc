@@ -41,15 +41,16 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Base             (VkAllocationCallbacks)
+import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..))
 import           Graphics.Vulkan.Common           (CChar, Int32,
                                                    PFN_vkDebugReportCallbackEXT,
                                                    pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT,
                                                    VkDebugReportCallbackEXT,
                                                    VkDebugReportFlagsEXT,
-                                                   VkDebugReportObjectTypeEXT,
+                                                   VkDebugReportFlagsEXT (..),
+                                                   VkDebugReportObjectTypeEXT (..),
                                                    VkInstance,
-                                                   VkObjectType (..), VkResult,
+                                                   VkObjectType (..),
                                                    VkResult (..),
                                                    VkStructureType,
                                                    VkStructureType (..), Word64)

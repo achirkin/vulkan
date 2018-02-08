@@ -23,9 +23,8 @@ module Graphics.Vulkan.Ext.VK_KHR_shader_draw_parameters
         VK_KHR_SHADER_DRAW_PARAMETERS_EXTENSION_NAME,
         pattern VK_KHR_SHADER_DRAW_PARAMETERS_EXTENSION_NAME)
        where
-import           Foreign.C.String              (CString)
-import           GHC.Ptr                       (Ptr (..))
-import           Graphics.Vulkan.StructMembers
+import           Foreign.C.String (CString)
+import           GHC.Ptr          (Ptr (..))
 
 pattern VK_KHR_SHADER_DRAW_PARAMETERS_SPEC_VERSION ::
         (Num a, Eq a) => a

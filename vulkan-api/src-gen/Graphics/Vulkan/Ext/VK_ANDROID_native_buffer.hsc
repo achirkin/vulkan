@@ -33,9 +33,10 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Common           (VkDevice, VkFence, VkFormat,
-                                                   VkImage, VkImageUsageFlags,
-                                                   VkQueue, VkResult,
+import           Graphics.Vulkan.Common           (VkDevice, VkFence,
+                                                   VkFormat (..), VkImage,
+                                                   VkImageUsageFlags (..),
+                                                   VkQueue, VkResult (..),
                                                    VkSemaphore, VkStructureType,
                                                    VkStructureType (..), Word32)
 import           Graphics.Vulkan.Marshal

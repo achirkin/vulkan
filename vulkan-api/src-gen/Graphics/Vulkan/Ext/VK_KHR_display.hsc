@@ -51,7 +51,7 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Base             (VkAllocationCallbacks,
+import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..),
                                                    VkExtent2D, VkOffset2D)
 import           Graphics.Vulkan.Common           (VkBool32, VkDisplayKHR,
                                                    VkDisplayModeCreateFlagsKHR,
@@ -61,7 +61,8 @@ import           Graphics.Vulkan.Common           (VkBool32, VkDisplayKHR,
                                                    VkDisplaySurfaceCreateFlagsKHR,
                                                    VkInstance,
                                                    VkObjectType (..),
-                                                   VkPhysicalDevice, VkResult,
+                                                   VkPhysicalDevice,
+                                                   VkResult (..),
                                                    VkStructureType,
                                                    VkStructureType (..),
                                                    VkSurfaceKHR,

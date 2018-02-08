@@ -55,9 +55,9 @@ generateVkSource outputDir outCabalFile vkXml = do
                <> ida "Foreign.C.Types" "CULong"
                <> ida "Foreign.C.Types" "CFloat"
                <> ida "Foreign.C.Types" "CWchar"
-               <> id0 "Foreign.Ptr" "Ptr"
+               <> id0 "Graphics.Vulkan.Marshal" "Ptr"
                <> iva "Foreign.Ptr" "nullPtr"
-               <> id0 "Foreign.Ptr" "FunPtr"
+               <> id0 "Graphics.Vulkan.Marshal" "FunPtr"
                <> id1 "GHC.Ptr" "Ptr"
                <> id0 "Data.Void" "Void"
                <> id0 "GHC.Generics" "Generic"
@@ -142,7 +142,6 @@ generateVkSource outputDir outCabalFile vkXml = do
     ((cds, exProtect), mr) <- runModuleWriter vkXml modName gn $ do
        writePragma "Strict"
        writePragma "DataKinds"
-       writeFullImport "Graphics.Vulkan.StructMembers"
        genExtension ext
     writeModule outputDir ([reldir|Graphics/Vulkan/Ext|] </> fname) id mr
     pure (globalNames mr, cds, (T.pack modName, exProtect))

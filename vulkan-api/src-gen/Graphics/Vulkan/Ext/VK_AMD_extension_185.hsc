@@ -21,9 +21,8 @@ module Graphics.Vulkan.Ext.VK_AMD_extension_185
         VK_KHR_EXTENSION_185_EXTENSION_NAME,
         pattern VK_KHR_EXTENSION_185_EXTENSION_NAME)
        where
-import           Foreign.C.String              (CString)
-import           GHC.Ptr                       (Ptr (..))
-import           Graphics.Vulkan.StructMembers
+import           Foreign.C.String (CString)
+import           GHC.Ptr          (Ptr (..))
 
 pattern VK_KHR_EXTENSION_185_SPEC_VERSION :: (Num a, Eq a) => a
 

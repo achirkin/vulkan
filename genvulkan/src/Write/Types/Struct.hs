@@ -52,7 +52,7 @@ genStructOrUnion isUnion VkTypeComposite
   if indeed
   then do
     writeImport tnameDeclared
-    writeExport tnameDeclared
+    writeExportNoScope tnameDeclared
     return mempty
   else do
     writePragma "MagicHash"
@@ -177,7 +177,8 @@ genStructOrUnion _ t
           <> show t
 
 genStructShow :: Monad m => VkTypeName -> [StructFieldInfo] -> ModuleWriter m ()
-genStructShow (VkTypeName tname) xs =
+genStructShow (VkTypeName tname) xs = do
+    mapM_ importEnums xs
     writeDecl $ parseDecl'
        $  [text|
             instance Show $tname where
@@ -187,6 +188,11 @@ genStructShow (VkTypeName tname) xs =
             <>  T.intercalate " . showString \", \"  . " ( map showMem xs )
             <> " . showChar '}'"
   where
+    importEnums SFI { sfiTyElemN = Just en }
+      = do
+        writePragma "PatternSynonyms"
+        writeImport $ DIPat en
+    importEnums _ = pure ()
     showMem SFI{..}
       | Just en <- sfiElemN
       , ntxt <- T.pack $ prettyPrint en
@@ -238,6 +244,7 @@ genStructField structNameTxt structType _offsetE SFI{..}
       writePragma "TypeFamilies"
       writeImport $ DIVar "unsafeDupablePerformIO"
       writeImport $ DIThing valueTypeTxt DITNo
+      writeImport $ DIThing sfiRTypeTxt DITNo
       writeImport $ DIThing structTypeTxt DITAll
 
       let ds = parseDecls [text|
@@ -300,6 +307,7 @@ data StructFieldInfo
   , sfiElemN       :: Maybe (Exp ())
   , sfiTyElemN     :: Maybe Text
   , sfiType        :: Type ()
+  , sfiRTypeTxt    :: Text
   , sfiName        :: QName ()
   , sfiBaseNameTxt :: Text
   , sfdata         :: VkTypeMember
@@ -324,6 +332,7 @@ fieldInfo tm@VkTypeMember
         Just (unVkEnumName n)
       _ -> Nothing
   , sfiType = t
+  , sfiRTypeTxt = unVkMemberName vkt
   , sfiBaseNameTxt = case unqualify sname of
       Ident _ x -> case T.uncons $ T.pack x of
          Just (s, ss) -> T.cons (toUpper s) ss

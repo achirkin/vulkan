@@ -30,8 +30,7 @@ module Graphics.Vulkan.Ext.VK_KHX_device_group_creation
         pattern VK_KHX_DEVICE_GROUP_CREATION_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_GROUP_PROPERTIES_KHX,
         pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_DEVICE_CREATE_INFO_KHX,
-        pattern VK_MAX_DEVICE_GROUP_SIZE_KHX,
-        VK_MAX_DEVICE_GROUP_SIZE_KHX(),
+        pattern VK_MAX_DEVICE_GROUP_SIZE_KHX, VK_MAX_DEVICE_GROUP_SIZE_KHX,
         pattern VK_MEMORY_HEAP_MULTI_INSTANCE_BIT_KHX)
        where
 import           Foreign.C.String                 (CString)
@@ -42,9 +41,11 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Common           (VkBool32, VkInstance,
+import           Graphics.Vulkan.Common           (VK_MAX_DEVICE_GROUP_SIZE_KHX, pattern VK_MAX_DEVICE_GROUP_SIZE_KHX,
+                                                   VkBool32, VkInstance,
                                                    VkMemoryHeapFlagBits (..),
-                                                   VkPhysicalDevice, VkResult,
+                                                   VkPhysicalDevice,
+                                                   VkResult (..),
                                                    VkStructureType,
                                                    VkStructureType (..), Word32)
 import           Graphics.Vulkan.Marshal

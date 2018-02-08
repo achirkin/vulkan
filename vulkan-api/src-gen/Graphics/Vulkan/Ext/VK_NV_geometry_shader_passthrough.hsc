@@ -23,9 +23,8 @@ module Graphics.Vulkan.Ext.VK_NV_geometry_shader_passthrough
         VK_NV_GEOMETRY_SHADER_PASSTHROUGH_EXTENSION_NAME,
         pattern VK_NV_GEOMETRY_SHADER_PASSTHROUGH_EXTENSION_NAME)
        where
-import           Foreign.C.String              (CString)
-import           GHC.Ptr                       (Ptr (..))
-import           Graphics.Vulkan.StructMembers
+import           Foreign.C.String (CString)
+import           GHC.Ptr          (Ptr (..))
 
 pattern VK_NV_GEOMETRY_SHADER_PASSTHROUGH_SPEC_VERSION ::
         (Num a, Eq a) => a

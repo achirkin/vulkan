@@ -1,10 +1,11 @@
 #include "vulkan/vulkan.h"
 
-{-# LANGUAGE DataKinds     #-}
-{-# LANGUAGE MagicHash     #-}
-{-# LANGUAGE Strict        #-}
-{-# LANGUAGE TypeFamilies  #-}
-{-# LANGUAGE UnboxedTuples #-}
+{-# LANGUAGE DataKinds       #-}
+{-# LANGUAGE MagicHash       #-}
+{-# LANGUAGE PatternSynonyms #-}
+{-# LANGUAGE Strict          #-}
+{-# LANGUAGE TypeFamilies    #-}
+{-# LANGUAGE UnboxedTuples   #-}
 module Graphics.Vulkan.Base
        (-- > ##include "vulkan.h"
         --
@@ -95,6 +96,12 @@ import           Graphics.Vulkan.Common           (CChar, Int32,
                                                    PFN_vkInternalAllocationNotification,
                                                    PFN_vkInternalFreeNotification,
                                                    PFN_vkReallocationFunction,
+                                                   pattern VK_MAX_DESCRIPTION_SIZE,
+                                                   pattern VK_MAX_EXTENSION_NAME_SIZE,
+                                                   pattern VK_MAX_MEMORY_HEAPS,
+                                                   pattern VK_MAX_MEMORY_TYPES,
+                                                   pattern VK_MAX_PHYSICAL_DEVICE_NAME_SIZE,
+                                                   pattern VK_UUID_SIZE,
                                                    VkAccessFlags,
                                                    VkAttachmentDescriptionFlags,
                                                    VkAttachmentLoadOp,
@@ -104,9 +111,11 @@ import           Graphics.Vulkan.Common           (CChar, Int32,
                                                    VkBuffer,
                                                    VkBufferCreateFlags,
                                                    VkBufferUsageFlags,
+                                                   VkBufferView,
                                                    VkBufferViewCreateFlags,
                                                    VkColorComponentFlags,
                                                    VkColorSpaceKHR,
+                                                   VkCommandBuffer,
                                                    VkCommandBufferLevel,
                                                    VkCommandBufferUsageFlags,
                                                    VkCommandPool,
@@ -120,12 +129,13 @@ import           Graphics.Vulkan.Common           (CChar, Int32,
                                                    VkDescriptorPool,
                                                    VkDescriptorPoolCreateFlags,
                                                    VkDescriptorSet,
+                                                   VkDescriptorSetLayout,
                                                    VkDescriptorSetLayoutCreateFlags,
                                                    VkDescriptorType,
                                                    VkDeviceCreateFlags,
                                                    VkDeviceMemory,
                                                    VkDeviceQueueCreateFlags,
-                                                   VkDeviceSize,
+                                                   VkDeviceSize, VkDynamicState,
                                                    VkEventCreateFlags,
                                                    VkFenceCreateFlags, VkFilter,
                                                    VkFormat,
@@ -171,12 +181,14 @@ import           Graphics.Vulkan.Common           (CChar, Int32,
                                                    VkQueryType, VkQueueFlags,
                                                    VkRenderPass,
                                                    VkRenderPassCreateFlags,
+                                                   VkResult,
                                                    VkSampleCountFlagBits,
                                                    VkSampleCountFlags,
-                                                   VkSampler,
+                                                   VkSampleMask, VkSampler,
                                                    VkSamplerAddressMode,
                                                    VkSamplerCreateFlags,
                                                    VkSamplerMipmapMode,
+                                                   VkSemaphore,
                                                    VkSemaphoreCreateFlags,
                                                    VkShaderModule,
                                                    VkShaderModuleCreateFlags,

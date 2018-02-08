@@ -75,19 +75,21 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Base             (VkRect2D)
-import           Graphics.Vulkan.Common           (VkCommandBuffer,
+import           Graphics.Vulkan.Base             (VkRect2D (..))
+import           Graphics.Vulkan.Common           (pattern VK_MAX_DEVICE_GROUP_SIZE_KHX,
+                                                   VkCommandBuffer,
                                                    VkDependencyFlagBits (..),
                                                    VkDevice,
                                                    VkDeviceGroupPresentModeFlagBitsKHX,
                                                    VkDeviceGroupPresentModeFlagsKHX,
+                                                   VkDeviceGroupPresentModeFlagsKHX (..),
                                                    VkFence,
                                                    VkImageCreateFlagBits (..),
                                                    VkMemoryAllocateFlagsKHX,
-                                                   VkPeerMemoryFeatureFlagsKHX,
+                                                   VkPeerMemoryFeatureFlagsKHX (..),
                                                    VkPhysicalDevice,
                                                    VkPipelineCreateFlagBits (..),
-                                                   VkResult, VkSemaphore,
+                                                   VkResult (..), VkSemaphore,
                                                    VkStructureType,
                                                    VkStructureType (..),
                                                    VkSurfaceKHR,

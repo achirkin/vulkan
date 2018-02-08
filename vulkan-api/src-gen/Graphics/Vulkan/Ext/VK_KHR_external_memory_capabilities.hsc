@@ -42,7 +42,7 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_capabilities
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_BUFFER_INFO_KHR,
         pattern VK_STRUCTURE_TYPE_EXTERNAL_BUFFER_PROPERTIES_KHR,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ID_PROPERTIES_KHR,
-        pattern VK_LUID_SIZE_KHR, VK_LUID_SIZE_KHR())
+        pattern VK_LUID_SIZE_KHR, VK_LUID_SIZE_KHR)
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
@@ -52,13 +52,17 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Common           (VkBool32,
+import           Graphics.Vulkan.Common           (VK_LUID_SIZE_KHR,
+                                                   pattern VK_LUID_SIZE_KHR,
+                                                   pattern VK_UUID_SIZE,
+                                                   VkBool32,
                                                    VkBufferCreateFlags,
                                                    VkBufferUsageFlags,
                                                    VkExternalMemoryFeatureFlagsKHR,
                                                    VkExternalMemoryHandleTypeFlagBitsKHR,
                                                    VkExternalMemoryHandleTypeFlagsKHR,
                                                    VkPhysicalDevice,
+                                                   VkStructureType,
                                                    VkStructureType (..), Word32,
                                                    Word8)
 import           Graphics.Vulkan.Marshal

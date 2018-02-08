@@ -46,7 +46,8 @@ import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common           (VkDevice, VkExternalFenceHandleTypeFlagBitsKHR,
                                                    VkFence,
                                                    VkFenceImportFlagsKHR,
-                                                   VkResult, VkStructureType,
+                                                   VkResult (..),
+                                                   VkStructureType,
                                                    VkStructureType (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal

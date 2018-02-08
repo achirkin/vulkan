@@ -48,7 +48,8 @@ import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common           (VkDevice, VkImageLayout (..),
                                                    VkImageUsageFlags,
                                                    VkPresentModeKHR (..),
-                                                   VkResult, VkStructureType,
+                                                   VkResult (..),
+                                                   VkStructureType,
                                                    VkStructureType (..),
                                                    VkSwapchainKHR)
 import           Graphics.Vulkan.Marshal

@@ -41,9 +41,10 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Base             (VkAllocationCallbacks)
+import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..))
 import           Graphics.Vulkan.Common           (VkDevice, VkObjectType (..),
-                                                   VkResult, VkStructureType,
+                                                   VkResult (..),
+                                                   VkStructureType,
                                                    VkStructureType (..),
                                                    VkValidationCacheCreateFlagsEXT,
                                                    VkValidationCacheEXT, Word32)

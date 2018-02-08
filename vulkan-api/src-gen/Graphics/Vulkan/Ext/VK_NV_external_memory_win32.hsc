@@ -45,10 +45,13 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Common           (DWORD, HANDLE, VkDevice,
-                                                   VkDeviceMemory,
+import           Graphics.Vulkan.Common           (DWORD, HANDLE,
+                                                   SECURITY_ATTRIBUTES,
+                                                   VkDevice, VkDeviceMemory,
                                                    VkExternalMemoryHandleTypeFlagsNV,
-                                                   VkResult, VkStructureType,
+                                                   VkExternalMemoryHandleTypeFlagsNV (..),
+                                                   VkResult (..),
+                                                   VkStructureType,
                                                    VkStructureType (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal

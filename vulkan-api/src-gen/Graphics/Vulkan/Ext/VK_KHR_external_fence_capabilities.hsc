@@ -36,27 +36,29 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_capabilities
         pattern VK_KHR_EXTERNAL_FENCE_CAPABILITIES_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO_KHR,
         pattern VK_STRUCTURE_TYPE_EXTERNAL_FENCE_PROPERTIES_KHR,
-        pattern VK_LUID_SIZE_KHR, VK_LUID_SIZE_KHR())
+        pattern VK_LUID_SIZE_KHR, VK_LUID_SIZE_KHR)
        where
-import           Foreign.C.String                                           (CString)
-import           Foreign.Storable                                           (Storable (..))
-import           GHC.ForeignPtr                                             (ForeignPtr (..),
-                                                                             ForeignPtrContents (..),
-                                                                             newForeignPtr_)
+import           Foreign.C.String                                        (CString)
+import           Foreign.Storable                                        (Storable (..))
+import           GHC.ForeignPtr                                          (ForeignPtr (..),
+                                                                          ForeignPtrContents (..),
+                                                                          newForeignPtr_)
 import           GHC.Prim
-import           GHC.Ptr                                                    (Ptr (..))
-import           GHC.Types                                                  (IO (..),
-                                                                             Int (..))
-import           Graphics.Vulkan.Common                                     (VkExternalFenceFeatureFlagsKHR,
-                                                                             VkExternalFenceHandleTypeFlagBitsKHR,
-                                                                             VkExternalFenceHandleTypeFlagsKHR,
-                                                                             VkPhysicalDevice,
-                                                                             VkStructureType (..))
-import           Graphics.Vulkan.Ext.VK_KHR_external_semaphore_capabilities (VkPhysicalDeviceIDPropertiesKHR (..))
+import           GHC.Ptr                                                 (Ptr (..))
+import           GHC.Types                                               (IO (..),
+                                                                          Int (..))
+import           Graphics.Vulkan.Common                                  (VK_LUID_SIZE_KHR,
+                                                                          pattern VK_LUID_SIZE_KHR,
+                                                                          VkExternalFenceFeatureFlagsKHR,
+                                                                          VkExternalFenceHandleTypeFlagBitsKHR,
+                                                                          VkExternalFenceHandleTypeFlagsKHR,
+                                                                          VkPhysicalDevice,
+                                                                          VkStructureType (..))
+import           Graphics.Vulkan.Ext.VK_KHR_external_memory_capabilities (VkPhysicalDeviceIDPropertiesKHR (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
-import           System.IO.Unsafe                                           (unsafeDupablePerformIO)
+import           System.IO.Unsafe                                        (unsafeDupablePerformIO)
 
 data VkPhysicalDeviceExternalFenceInfoKHR = VkPhysicalDeviceExternalFenceInfoKHR## ByteArray##
 

@@ -47,16 +47,16 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Base             (VkAllocationCallbacks)
+import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..))
 import           Graphics.Vulkan.Common           (VkDevice,
                                                    VkDeviceEventTypeEXT,
                                                    VkDisplayEventTypeEXT,
                                                    VkDisplayKHR,
                                                    VkDisplayPowerStateEXT,
-                                                   VkFence, VkResult,
+                                                   VkFence, VkResult (..),
                                                    VkStructureType,
                                                    VkStructureType (..),
-                                                   VkSurfaceCounterFlagBitsEXT,
+                                                   VkSurfaceCounterFlagBitsEXT (..),
                                                    VkSurfaceCounterFlagsEXT,
                                                    VkSwapchainKHR, Word64)
 import           Graphics.Vulkan.Marshal

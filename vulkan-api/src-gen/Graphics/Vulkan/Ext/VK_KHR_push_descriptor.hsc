@@ -42,9 +42,9 @@ import           GHC.ForeignPtr                   (ForeignPtr (..),
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
-import           Graphics.Vulkan.Base             (VkWriteDescriptorSet)
+import           Graphics.Vulkan.Base             (VkWriteDescriptorSet (..))
 import           Graphics.Vulkan.Common           (VkCommandBuffer, VkDescriptorSetLayoutCreateFlagBits (..),
-                                                   VkPipelineBindPoint,
+                                                   VkPipelineBindPoint (..),
                                                    VkPipelineLayout,
                                                    VkStructureType,
                                                    VkStructureType (..), Word32)

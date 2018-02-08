@@ -45,7 +45,9 @@ import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common           (VkDevice, VkDeviceMemory, VkExternalMemoryHandleTypeFlagBitsKHR,
-                                                   VkResult,
+                                                   VkExternalMemoryHandleTypeFlagBitsKHR (..),
+                                                   VkResult (..),
+                                                   VkStructureType,
                                                    VkStructureType (..), Word32)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
