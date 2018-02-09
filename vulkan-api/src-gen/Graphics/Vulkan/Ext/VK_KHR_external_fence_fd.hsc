@@ -167,6 +167,14 @@ instance {-# OVERLAPPING #-}
          HasField "sType" VkImportFenceFdInfoKHR where
         type FieldType "sType" VkImportFenceFdInfoKHR = VkStructureType
         type FieldOptional "sType" VkImportFenceFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkImportFenceFdInfoKHR =
+             #{offset VkImportFenceFdInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkImportFenceFdInfoKHR, sType}
 
 instance CanReadField "sType" VkImportFenceFdInfoKHR where
         {-# INLINE getField #-}
@@ -204,6 +212,14 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkImportFenceFdInfoKHR where
         type FieldType "pNext" VkImportFenceFdInfoKHR = Ptr Void
         type FieldOptional "pNext" VkImportFenceFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkImportFenceFdInfoKHR =
+             #{offset VkImportFenceFdInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkImportFenceFdInfoKHR, pNext}
 
 instance CanReadField "pNext" VkImportFenceFdInfoKHR where
         {-# INLINE getField #-}
@@ -241,6 +257,14 @@ instance {-# OVERLAPPING #-}
          HasField "fence" VkImportFenceFdInfoKHR where
         type FieldType "fence" VkImportFenceFdInfoKHR = VkFence
         type FieldOptional "fence" VkImportFenceFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "fence" VkImportFenceFdInfoKHR =
+             #{offset VkImportFenceFdInfoKHR, fence}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkImportFenceFdInfoKHR, fence}
 
 instance CanReadField "fence" VkImportFenceFdInfoKHR where
         {-# INLINE getField #-}
@@ -279,6 +303,14 @@ instance {-# OVERLAPPING #-}
         type FieldType "flags" VkImportFenceFdInfoKHR =
              VkFenceImportFlagsKHR
         type FieldOptional "flags" VkImportFenceFdInfoKHR = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "flags" VkImportFenceFdInfoKHR =
+             #{offset VkImportFenceFdInfoKHR, flags}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkImportFenceFdInfoKHR, flags}
 
 instance CanReadField "flags" VkImportFenceFdInfoKHR where
         {-# INLINE getField #-}
@@ -318,6 +350,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "handleType" VkImportFenceFdInfoKHR =
              VkExternalFenceHandleTypeFlagBitsKHR
         type FieldOptional "handleType" VkImportFenceFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "handleType" VkImportFenceFdInfoKHR =
+             #{offset VkImportFenceFdInfoKHR, handleType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImportFenceFdInfoKHR, handleType}
 
 instance CanReadField "handleType" VkImportFenceFdInfoKHR where
         {-# INLINE getField #-}
@@ -355,6 +396,14 @@ instance {-# OVERLAPPING #-} HasField "fd" VkImportFenceFdInfoKHR
         type FieldType "fd" VkImportFenceFdInfoKHR =
              #{type int}
         type FieldOptional "fd" VkImportFenceFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "fd" VkImportFenceFdInfoKHR =
+             #{offset VkImportFenceFdInfoKHR, fd}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkImportFenceFdInfoKHR, fd}
 
 instance CanReadField "fd" VkImportFenceFdInfoKHR where
         {-# INLINE getField #-}
@@ -499,6 +548,14 @@ instance {-# OVERLAPPING #-} HasField "sType" VkFenceGetFdInfoKHR
          where
         type FieldType "sType" VkFenceGetFdInfoKHR = VkStructureType
         type FieldOptional "sType" VkFenceGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkFenceGetFdInfoKHR =
+             #{offset VkFenceGetFdInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkFenceGetFdInfoKHR, sType}
 
 instance CanReadField "sType" VkFenceGetFdInfoKHR where
         {-# INLINE getField #-}
@@ -535,6 +592,14 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkFenceGetFdInfoKHR
          where
         type FieldType "pNext" VkFenceGetFdInfoKHR = Ptr Void
         type FieldOptional "pNext" VkFenceGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkFenceGetFdInfoKHR =
+             #{offset VkFenceGetFdInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkFenceGetFdInfoKHR, pNext}
 
 instance CanReadField "pNext" VkFenceGetFdInfoKHR where
         {-# INLINE getField #-}
@@ -571,6 +636,14 @@ instance {-# OVERLAPPING #-} HasField "fence" VkFenceGetFdInfoKHR
          where
         type FieldType "fence" VkFenceGetFdInfoKHR = VkFence
         type FieldOptional "fence" VkFenceGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "fence" VkFenceGetFdInfoKHR =
+             #{offset VkFenceGetFdInfoKHR, fence}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkFenceGetFdInfoKHR, fence}
 
 instance CanReadField "fence" VkFenceGetFdInfoKHR where
         {-# INLINE getField #-}
@@ -610,6 +683,14 @@ instance {-# OVERLAPPING #-}
         type FieldType "handleType" VkFenceGetFdInfoKHR =
              VkExternalFenceHandleTypeFlagBitsKHR
         type FieldOptional "handleType" VkFenceGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "handleType" VkFenceGetFdInfoKHR =
+             #{offset VkFenceGetFdInfoKHR, handleType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkFenceGetFdInfoKHR, handleType}
 
 instance CanReadField "handleType" VkFenceGetFdInfoKHR where
         {-# INLINE getField #-}

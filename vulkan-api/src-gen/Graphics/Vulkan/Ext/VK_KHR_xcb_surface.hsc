@@ -168,6 +168,15 @@ instance {-# OVERLAPPING #-}
          HasField "sType" VkXcbSurfaceCreateInfoKHR where
         type FieldType "sType" VkXcbSurfaceCreateInfoKHR = VkStructureType
         type FieldOptional "sType" VkXcbSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkXcbSurfaceCreateInfoKHR =
+             #{offset VkXcbSurfaceCreateInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkXcbSurfaceCreateInfoKHR, sType}
 
 instance CanReadField "sType" VkXcbSurfaceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -205,6 +214,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkXcbSurfaceCreateInfoKHR where
         type FieldType "pNext" VkXcbSurfaceCreateInfoKHR = Ptr Void
         type FieldOptional "pNext" VkXcbSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkXcbSurfaceCreateInfoKHR =
+             #{offset VkXcbSurfaceCreateInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkXcbSurfaceCreateInfoKHR, pNext}
 
 instance CanReadField "pNext" VkXcbSurfaceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -244,6 +262,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "flags" VkXcbSurfaceCreateInfoKHR =
              VkXcbSurfaceCreateFlagsKHR
         type FieldOptional "flags" VkXcbSurfaceCreateInfoKHR = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "flags" VkXcbSurfaceCreateInfoKHR =
+             #{offset VkXcbSurfaceCreateInfoKHR, flags}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkXcbSurfaceCreateInfoKHR, flags}
 
 instance CanReadField "flags" VkXcbSurfaceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -283,6 +310,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "connection" VkXcbSurfaceCreateInfoKHR =
              Ptr XcbConnectionT
         type FieldOptional "connection" VkXcbSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "connection" VkXcbSurfaceCreateInfoKHR =
+             #{offset VkXcbSurfaceCreateInfoKHR, connection}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkXcbSurfaceCreateInfoKHR, connection}
 
 instance CanReadField "connection" VkXcbSurfaceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -320,6 +356,15 @@ instance {-# OVERLAPPING #-}
          HasField "window" VkXcbSurfaceCreateInfoKHR where
         type FieldType "window" VkXcbSurfaceCreateInfoKHR = XcbWindowT
         type FieldOptional "window" VkXcbSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "window" VkXcbSurfaceCreateInfoKHR =
+             #{offset VkXcbSurfaceCreateInfoKHR, window}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkXcbSurfaceCreateInfoKHR, window}
 
 instance CanReadField "window" VkXcbSurfaceCreateInfoKHR where
         {-# INLINE getField #-}

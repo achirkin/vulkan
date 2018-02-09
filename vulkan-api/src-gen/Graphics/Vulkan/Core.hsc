@@ -2996,6 +2996,14 @@ instance {-# OVERLAPPING #-} HasField "sType" VkBufferMemoryBarrier
          where
         type FieldType "sType" VkBufferMemoryBarrier = VkStructureType
         type FieldOptional "sType" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkBufferMemoryBarrier =
+             #{offset VkBufferMemoryBarrier, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkBufferMemoryBarrier, sType}
 
 instance CanReadField "sType" VkBufferMemoryBarrier where
         {-# INLINE getField #-}
@@ -3032,6 +3040,14 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkBufferMemoryBarrier
          where
         type FieldType "pNext" VkBufferMemoryBarrier = Ptr Void
         type FieldOptional "pNext" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkBufferMemoryBarrier =
+             #{offset VkBufferMemoryBarrier, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkBufferMemoryBarrier, pNext}
 
 instance CanReadField "pNext" VkBufferMemoryBarrier where
         {-# INLINE getField #-}
@@ -3070,6 +3086,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "srcAccessMask" VkBufferMemoryBarrier =
              VkAccessFlags
         type FieldOptional "srcAccessMask" VkBufferMemoryBarrier = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "srcAccessMask" VkBufferMemoryBarrier =
+             #{offset VkBufferMemoryBarrier, srcAccessMask}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBufferMemoryBarrier, srcAccessMask}
 
 instance CanReadField "srcAccessMask" VkBufferMemoryBarrier where
         {-# INLINE getField #-}
@@ -3108,6 +3133,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "dstAccessMask" VkBufferMemoryBarrier =
              VkAccessFlags
         type FieldOptional "dstAccessMask" VkBufferMemoryBarrier = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "dstAccessMask" VkBufferMemoryBarrier =
+             #{offset VkBufferMemoryBarrier, dstAccessMask}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBufferMemoryBarrier, dstAccessMask}
 
 instance CanReadField "dstAccessMask" VkBufferMemoryBarrier where
         {-# INLINE getField #-}
@@ -3146,6 +3180,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "srcQueueFamilyIndex" VkBufferMemoryBarrier = Word32
         type FieldOptional "srcQueueFamilyIndex" VkBufferMemoryBarrier =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "srcQueueFamilyIndex" VkBufferMemoryBarrier =
+             #{offset VkBufferMemoryBarrier, srcQueueFamilyIndex}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBufferMemoryBarrier, srcQueueFamilyIndex}
 
 instance CanReadField "srcQueueFamilyIndex" VkBufferMemoryBarrier
          where
@@ -3186,6 +3229,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "dstQueueFamilyIndex" VkBufferMemoryBarrier = Word32
         type FieldOptional "dstQueueFamilyIndex" VkBufferMemoryBarrier =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "dstQueueFamilyIndex" VkBufferMemoryBarrier =
+             #{offset VkBufferMemoryBarrier, dstQueueFamilyIndex}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBufferMemoryBarrier, dstQueueFamilyIndex}
 
 instance CanReadField "dstQueueFamilyIndex" VkBufferMemoryBarrier
          where
@@ -3225,6 +3277,14 @@ instance {-# OVERLAPPING #-}
          HasField "buffer" VkBufferMemoryBarrier where
         type FieldType "buffer" VkBufferMemoryBarrier = VkBuffer
         type FieldOptional "buffer" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "buffer" VkBufferMemoryBarrier =
+             #{offset VkBufferMemoryBarrier, buffer}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkBufferMemoryBarrier, buffer}
 
 instance CanReadField "buffer" VkBufferMemoryBarrier where
         {-# INLINE getField #-}
@@ -3262,6 +3322,14 @@ instance {-# OVERLAPPING #-}
          HasField "offset" VkBufferMemoryBarrier where
         type FieldType "offset" VkBufferMemoryBarrier = VkDeviceSize
         type FieldOptional "offset" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "offset" VkBufferMemoryBarrier =
+             #{offset VkBufferMemoryBarrier, offset}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkBufferMemoryBarrier, offset}
 
 instance CanReadField "offset" VkBufferMemoryBarrier where
         {-# INLINE getField #-}
@@ -3298,6 +3366,14 @@ instance {-# OVERLAPPING #-} HasField "size" VkBufferMemoryBarrier
          where
         type FieldType "size" VkBufferMemoryBarrier = VkDeviceSize
         type FieldOptional "size" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "size" VkBufferMemoryBarrier =
+             #{offset VkBufferMemoryBarrier, size}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkBufferMemoryBarrier, size}
 
 instance CanReadField "size" VkBufferMemoryBarrier where
         {-# INLINE getField #-}
@@ -3453,6 +3529,14 @@ instance {-# OVERLAPPING #-} HasField "x" VkDispatchIndirectCommand
          where
         type FieldType "x" VkDispatchIndirectCommand = Word32
         type FieldOptional "x" VkDispatchIndirectCommand = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "x" VkDispatchIndirectCommand =
+             #{offset VkDispatchIndirectCommand, x}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkDispatchIndirectCommand, x}
 
 instance CanReadField "x" VkDispatchIndirectCommand where
         {-# INLINE getField #-}
@@ -3489,6 +3573,14 @@ instance {-# OVERLAPPING #-} HasField "y" VkDispatchIndirectCommand
          where
         type FieldType "y" VkDispatchIndirectCommand = Word32
         type FieldOptional "y" VkDispatchIndirectCommand = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "y" VkDispatchIndirectCommand =
+             #{offset VkDispatchIndirectCommand, y}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkDispatchIndirectCommand, y}
 
 instance CanReadField "y" VkDispatchIndirectCommand where
         {-# INLINE getField #-}
@@ -3525,6 +3617,14 @@ instance {-# OVERLAPPING #-} HasField "z" VkDispatchIndirectCommand
          where
         type FieldType "z" VkDispatchIndirectCommand = Word32
         type FieldOptional "z" VkDispatchIndirectCommand = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "z" VkDispatchIndirectCommand =
+             #{offset VkDispatchIndirectCommand, z}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkDispatchIndirectCommand, z}
 
 instance CanReadField "z" VkDispatchIndirectCommand where
         {-# INLINE getField #-}
@@ -3665,6 +3765,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "indexCount" VkDrawIndexedIndirectCommand = Word32
         type FieldOptional "indexCount" VkDrawIndexedIndirectCommand =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "indexCount" VkDrawIndexedIndirectCommand =
+             #{offset VkDrawIndexedIndirectCommand, indexCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDrawIndexedIndirectCommand, indexCount}
 
 instance CanReadField "indexCount" VkDrawIndexedIndirectCommand
          where
@@ -3706,6 +3815,15 @@ instance {-# OVERLAPPING #-}
              Word32
         type FieldOptional "instanceCount" VkDrawIndexedIndirectCommand =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "instanceCount" VkDrawIndexedIndirectCommand =
+             #{offset VkDrawIndexedIndirectCommand, instanceCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDrawIndexedIndirectCommand, instanceCount}
 
 instance CanReadField "instanceCount" VkDrawIndexedIndirectCommand
          where
@@ -3746,6 +3864,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "firstIndex" VkDrawIndexedIndirectCommand = Word32
         type FieldOptional "firstIndex" VkDrawIndexedIndirectCommand =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "firstIndex" VkDrawIndexedIndirectCommand =
+             #{offset VkDrawIndexedIndirectCommand, firstIndex}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDrawIndexedIndirectCommand, firstIndex}
 
 instance CanReadField "firstIndex" VkDrawIndexedIndirectCommand
          where
@@ -3786,6 +3913,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "vertexOffset" VkDrawIndexedIndirectCommand = Int32
         type FieldOptional "vertexOffset" VkDrawIndexedIndirectCommand =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "vertexOffset" VkDrawIndexedIndirectCommand =
+             #{offset VkDrawIndexedIndirectCommand, vertexOffset}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDrawIndexedIndirectCommand, vertexOffset}
 
 instance CanReadField "vertexOffset" VkDrawIndexedIndirectCommand
          where
@@ -3827,6 +3963,15 @@ instance {-# OVERLAPPING #-}
              Word32
         type FieldOptional "firstInstance" VkDrawIndexedIndirectCommand =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "firstInstance" VkDrawIndexedIndirectCommand =
+             #{offset VkDrawIndexedIndirectCommand, firstInstance}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDrawIndexedIndirectCommand, firstInstance}
 
 instance CanReadField "firstInstance" VkDrawIndexedIndirectCommand
          where
@@ -3971,6 +4116,15 @@ instance {-# OVERLAPPING #-}
          HasField "vertexCount" VkDrawIndirectCommand where
         type FieldType "vertexCount" VkDrawIndirectCommand = Word32
         type FieldOptional "vertexCount" VkDrawIndirectCommand = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "vertexCount" VkDrawIndirectCommand =
+             #{offset VkDrawIndirectCommand, vertexCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDrawIndirectCommand, vertexCount}
 
 instance CanReadField "vertexCount" VkDrawIndirectCommand where
         {-# INLINE getField #-}
@@ -4008,6 +4162,15 @@ instance {-# OVERLAPPING #-}
          HasField "instanceCount" VkDrawIndirectCommand where
         type FieldType "instanceCount" VkDrawIndirectCommand = Word32
         type FieldOptional "instanceCount" VkDrawIndirectCommand = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "instanceCount" VkDrawIndirectCommand =
+             #{offset VkDrawIndirectCommand, instanceCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDrawIndirectCommand, instanceCount}
 
 instance CanReadField "instanceCount" VkDrawIndirectCommand where
         {-# INLINE getField #-}
@@ -4045,6 +4208,15 @@ instance {-# OVERLAPPING #-}
          HasField "firstVertex" VkDrawIndirectCommand where
         type FieldType "firstVertex" VkDrawIndirectCommand = Word32
         type FieldOptional "firstVertex" VkDrawIndirectCommand = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "firstVertex" VkDrawIndirectCommand =
+             #{offset VkDrawIndirectCommand, firstVertex}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDrawIndirectCommand, firstVertex}
 
 instance CanReadField "firstVertex" VkDrawIndirectCommand where
         {-# INLINE getField #-}
@@ -4082,6 +4254,15 @@ instance {-# OVERLAPPING #-}
          HasField "firstInstance" VkDrawIndirectCommand where
         type FieldType "firstInstance" VkDrawIndirectCommand = Word32
         type FieldOptional "firstInstance" VkDrawIndirectCommand = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "firstInstance" VkDrawIndirectCommand =
+             #{offset VkDrawIndirectCommand, firstInstance}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDrawIndirectCommand, firstInstance}
 
 instance CanReadField "firstInstance" VkDrawIndirectCommand where
         {-# INLINE getField #-}
@@ -4226,6 +4407,14 @@ instance {-# OVERLAPPING #-} HasField "sType" VkImageMemoryBarrier
          where
         type FieldType "sType" VkImageMemoryBarrier = VkStructureType
         type FieldOptional "sType" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkImageMemoryBarrier =
+             #{offset VkImageMemoryBarrier, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkImageMemoryBarrier, sType}
 
 instance CanReadField "sType" VkImageMemoryBarrier where
         {-# INLINE getField #-}
@@ -4262,6 +4451,14 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkImageMemoryBarrier
          where
         type FieldType "pNext" VkImageMemoryBarrier = Ptr Void
         type FieldOptional "pNext" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkImageMemoryBarrier =
+             #{offset VkImageMemoryBarrier, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkImageMemoryBarrier, pNext}
 
 instance CanReadField "pNext" VkImageMemoryBarrier where
         {-# INLINE getField #-}
@@ -4299,6 +4496,15 @@ instance {-# OVERLAPPING #-}
          HasField "srcAccessMask" VkImageMemoryBarrier where
         type FieldType "srcAccessMask" VkImageMemoryBarrier = VkAccessFlags
         type FieldOptional "srcAccessMask" VkImageMemoryBarrier = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "srcAccessMask" VkImageMemoryBarrier =
+             #{offset VkImageMemoryBarrier, srcAccessMask}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImageMemoryBarrier, srcAccessMask}
 
 instance CanReadField "srcAccessMask" VkImageMemoryBarrier where
         {-# INLINE getField #-}
@@ -4336,6 +4542,15 @@ instance {-# OVERLAPPING #-}
          HasField "dstAccessMask" VkImageMemoryBarrier where
         type FieldType "dstAccessMask" VkImageMemoryBarrier = VkAccessFlags
         type FieldOptional "dstAccessMask" VkImageMemoryBarrier = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "dstAccessMask" VkImageMemoryBarrier =
+             #{offset VkImageMemoryBarrier, dstAccessMask}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImageMemoryBarrier, dstAccessMask}
 
 instance CanReadField "dstAccessMask" VkImageMemoryBarrier where
         {-# INLINE getField #-}
@@ -4373,6 +4588,14 @@ instance {-# OVERLAPPING #-}
          HasField "oldLayout" VkImageMemoryBarrier where
         type FieldType "oldLayout" VkImageMemoryBarrier = VkImageLayout
         type FieldOptional "oldLayout" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "oldLayout" VkImageMemoryBarrier =
+             #{offset VkImageMemoryBarrier, oldLayout}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkImageMemoryBarrier, oldLayout}
 
 instance CanReadField "oldLayout" VkImageMemoryBarrier where
         {-# INLINE getField #-}
@@ -4410,6 +4633,14 @@ instance {-# OVERLAPPING #-}
          HasField "newLayout" VkImageMemoryBarrier where
         type FieldType "newLayout" VkImageMemoryBarrier = VkImageLayout
         type FieldOptional "newLayout" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "newLayout" VkImageMemoryBarrier =
+             #{offset VkImageMemoryBarrier, newLayout}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkImageMemoryBarrier, newLayout}
 
 instance CanReadField "newLayout" VkImageMemoryBarrier where
         {-# INLINE getField #-}
@@ -4448,6 +4679,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "srcQueueFamilyIndex" VkImageMemoryBarrier = Word32
         type FieldOptional "srcQueueFamilyIndex" VkImageMemoryBarrier =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "srcQueueFamilyIndex" VkImageMemoryBarrier =
+             #{offset VkImageMemoryBarrier, srcQueueFamilyIndex}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImageMemoryBarrier, srcQueueFamilyIndex}
 
 instance CanReadField "srcQueueFamilyIndex" VkImageMemoryBarrier
          where
@@ -4488,6 +4728,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "dstQueueFamilyIndex" VkImageMemoryBarrier = Word32
         type FieldOptional "dstQueueFamilyIndex" VkImageMemoryBarrier =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "dstQueueFamilyIndex" VkImageMemoryBarrier =
+             #{offset VkImageMemoryBarrier, dstQueueFamilyIndex}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImageMemoryBarrier, dstQueueFamilyIndex}
 
 instance CanReadField "dstQueueFamilyIndex" VkImageMemoryBarrier
          where
@@ -4526,6 +4775,14 @@ instance {-# OVERLAPPING #-} HasField "image" VkImageMemoryBarrier
          where
         type FieldType "image" VkImageMemoryBarrier = VkImage
         type FieldOptional "image" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "image" VkImageMemoryBarrier =
+             #{offset VkImageMemoryBarrier, image}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkImageMemoryBarrier, image}
 
 instance CanReadField "image" VkImageMemoryBarrier where
         {-# INLINE getField #-}
@@ -4565,6 +4822,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "subresourceRange" VkImageMemoryBarrier =
              VkImageSubresourceRange
         type FieldOptional "subresourceRange" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "subresourceRange" VkImageMemoryBarrier =
+             #{offset VkImageMemoryBarrier, subresourceRange}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImageMemoryBarrier, subresourceRange}
 
 instance CanReadField "subresourceRange" VkImageMemoryBarrier where
         {-# INLINE getField #-}
@@ -4723,6 +4989,14 @@ instance {-# OVERLAPPING #-} HasVkSType VkMemoryBarrier where
 instance {-# OVERLAPPING #-} HasField "sType" VkMemoryBarrier where
         type FieldType "sType" VkMemoryBarrier = VkStructureType
         type FieldOptional "sType" VkMemoryBarrier = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkMemoryBarrier =
+             #{offset VkMemoryBarrier, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkMemoryBarrier, sType}
 
 instance CanReadField "sType" VkMemoryBarrier where
         {-# INLINE getField #-}
@@ -4757,6 +5031,14 @@ instance {-# OVERLAPPING #-} HasVkPNext VkMemoryBarrier where
 instance {-# OVERLAPPING #-} HasField "pNext" VkMemoryBarrier where
         type FieldType "pNext" VkMemoryBarrier = Ptr Void
         type FieldOptional "pNext" VkMemoryBarrier = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkMemoryBarrier =
+             #{offset VkMemoryBarrier, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkMemoryBarrier, pNext}
 
 instance CanReadField "pNext" VkMemoryBarrier where
         {-# INLINE getField #-}
@@ -4794,6 +5076,14 @@ instance {-# OVERLAPPING #-}
          HasField "srcAccessMask" VkMemoryBarrier where
         type FieldType "srcAccessMask" VkMemoryBarrier = VkAccessFlags
         type FieldOptional "srcAccessMask" VkMemoryBarrier = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "srcAccessMask" VkMemoryBarrier =
+             #{offset VkMemoryBarrier, srcAccessMask}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkMemoryBarrier, srcAccessMask}
 
 instance CanReadField "srcAccessMask" VkMemoryBarrier where
         {-# INLINE getField #-}
@@ -4831,6 +5121,14 @@ instance {-# OVERLAPPING #-}
          HasField "dstAccessMask" VkMemoryBarrier where
         type FieldType "dstAccessMask" VkMemoryBarrier = VkAccessFlags
         type FieldOptional "dstAccessMask" VkMemoryBarrier = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "dstAccessMask" VkMemoryBarrier =
+             #{offset VkMemoryBarrier, dstAccessMask}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkMemoryBarrier, dstAccessMask}
 
 instance CanReadField "dstAccessMask" VkMemoryBarrier where
         {-# INLINE getField #-}

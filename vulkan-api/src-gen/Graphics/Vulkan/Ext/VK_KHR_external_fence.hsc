@@ -163,6 +163,15 @@ instance {-# OVERLAPPING #-}
          HasField "sType" VkExportFenceCreateInfoKHR where
         type FieldType "sType" VkExportFenceCreateInfoKHR = VkStructureType
         type FieldOptional "sType" VkExportFenceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkExportFenceCreateInfoKHR =
+             #{offset VkExportFenceCreateInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExportFenceCreateInfoKHR, sType}
 
 instance CanReadField "sType" VkExportFenceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -200,6 +209,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkExportFenceCreateInfoKHR where
         type FieldType "pNext" VkExportFenceCreateInfoKHR = Ptr Void
         type FieldOptional "pNext" VkExportFenceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkExportFenceCreateInfoKHR =
+             #{offset VkExportFenceCreateInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExportFenceCreateInfoKHR, pNext}
 
 instance CanReadField "pNext" VkExportFenceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -239,6 +257,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "handleTypes" VkExportFenceCreateInfoKHR =
              VkExternalFenceHandleTypeFlagsKHR
         type FieldOptional "handleTypes" VkExportFenceCreateInfoKHR = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "handleTypes" VkExportFenceCreateInfoKHR =
+             #{offset VkExportFenceCreateInfoKHR, handleTypes}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExportFenceCreateInfoKHR, handleTypes}
 
 instance CanReadField "handleTypes" VkExportFenceCreateInfoKHR
          where

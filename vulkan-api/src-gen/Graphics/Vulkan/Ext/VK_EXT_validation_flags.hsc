@@ -155,6 +155,14 @@ instance {-# OVERLAPPING #-} HasField "sType" VkValidationFlagsEXT
          where
         type FieldType "sType" VkValidationFlagsEXT = VkStructureType
         type FieldOptional "sType" VkValidationFlagsEXT = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkValidationFlagsEXT =
+             #{offset VkValidationFlagsEXT, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkValidationFlagsEXT, sType}
 
 instance CanReadField "sType" VkValidationFlagsEXT where
         {-# INLINE getField #-}
@@ -191,6 +199,14 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkValidationFlagsEXT
          where
         type FieldType "pNext" VkValidationFlagsEXT = Ptr Void
         type FieldOptional "pNext" VkValidationFlagsEXT = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkValidationFlagsEXT =
+             #{offset VkValidationFlagsEXT, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkValidationFlagsEXT, pNext}
 
 instance CanReadField "pNext" VkValidationFlagsEXT where
         {-# INLINE getField #-}
@@ -232,6 +248,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "disabledValidationCheckCount"
                VkValidationFlagsEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "disabledValidationCheckCount"
+               VkValidationFlagsEXT
+             =
+             #{offset VkValidationFlagsEXT, disabledValidationCheckCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkValidationFlagsEXT, disabledValidationCheckCount}
 
 instance CanReadField "disabledValidationCheckCount"
            VkValidationFlagsEXT
@@ -276,6 +303,15 @@ instance {-# OVERLAPPING #-}
              Ptr VkValidationCheckEXT
         type FieldOptional "pDisabledValidationChecks" VkValidationFlagsEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pDisabledValidationChecks" VkValidationFlagsEXT =
+             #{offset VkValidationFlagsEXT, pDisabledValidationChecks}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkValidationFlagsEXT, pDisabledValidationChecks}
 
 instance CanReadField "pDisabledValidationChecks"
            VkValidationFlagsEXT

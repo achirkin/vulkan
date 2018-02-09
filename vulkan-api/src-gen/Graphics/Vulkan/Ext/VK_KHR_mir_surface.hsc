@@ -168,6 +168,15 @@ instance {-# OVERLAPPING #-}
          HasField "sType" VkMirSurfaceCreateInfoKHR where
         type FieldType "sType" VkMirSurfaceCreateInfoKHR = VkStructureType
         type FieldOptional "sType" VkMirSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkMirSurfaceCreateInfoKHR =
+             #{offset VkMirSurfaceCreateInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkMirSurfaceCreateInfoKHR, sType}
 
 instance CanReadField "sType" VkMirSurfaceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -205,6 +214,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkMirSurfaceCreateInfoKHR where
         type FieldType "pNext" VkMirSurfaceCreateInfoKHR = Ptr Void
         type FieldOptional "pNext" VkMirSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkMirSurfaceCreateInfoKHR =
+             #{offset VkMirSurfaceCreateInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkMirSurfaceCreateInfoKHR, pNext}
 
 instance CanReadField "pNext" VkMirSurfaceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -244,6 +262,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "flags" VkMirSurfaceCreateInfoKHR =
              VkMirSurfaceCreateFlagsKHR
         type FieldOptional "flags" VkMirSurfaceCreateInfoKHR = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "flags" VkMirSurfaceCreateInfoKHR =
+             #{offset VkMirSurfaceCreateInfoKHR, flags}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkMirSurfaceCreateInfoKHR, flags}
 
 instance CanReadField "flags" VkMirSurfaceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -283,6 +310,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "connection" VkMirSurfaceCreateInfoKHR =
              Ptr MirConnection
         type FieldOptional "connection" VkMirSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "connection" VkMirSurfaceCreateInfoKHR =
+             #{offset VkMirSurfaceCreateInfoKHR, connection}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkMirSurfaceCreateInfoKHR, connection}
 
 instance CanReadField "connection" VkMirSurfaceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -321,6 +357,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "mirSurface" VkMirSurfaceCreateInfoKHR =
              Ptr MirSurface
         type FieldOptional "mirSurface" VkMirSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "mirSurface" VkMirSurfaceCreateInfoKHR =
+             #{offset VkMirSurfaceCreateInfoKHR, mirSurface}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkMirSurfaceCreateInfoKHR, mirSurface}
 
 instance CanReadField "mirSurface" VkMirSurfaceCreateInfoKHR where
         {-# INLINE getField #-}

@@ -173,6 +173,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkDebugReportCallbackCreateInfoEXT =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkDebugReportCallbackCreateInfoEXT =
+             #{offset VkDebugReportCallbackCreateInfoEXT, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDebugReportCallbackCreateInfoEXT, sType}
 
 instance CanReadField "sType" VkDebugReportCallbackCreateInfoEXT
          where
@@ -214,6 +223,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkDebugReportCallbackCreateInfoEXT =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkDebugReportCallbackCreateInfoEXT =
+             #{offset VkDebugReportCallbackCreateInfoEXT, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDebugReportCallbackCreateInfoEXT, pNext}
 
 instance CanReadField "pNext" VkDebugReportCallbackCreateInfoEXT
          where
@@ -256,6 +274,15 @@ instance {-# OVERLAPPING #-}
              VkDebugReportFlagsEXT
         type FieldOptional "flags" VkDebugReportCallbackCreateInfoEXT =
              'True -- ' closing tick for hsc2hs
+        type FieldOffset "flags" VkDebugReportCallbackCreateInfoEXT =
+             #{offset VkDebugReportCallbackCreateInfoEXT, flags}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDebugReportCallbackCreateInfoEXT, flags}
 
 instance CanReadField "flags" VkDebugReportCallbackCreateInfoEXT
          where
@@ -298,6 +325,15 @@ instance {-# OVERLAPPING #-}
              PFN_vkDebugReportCallbackEXT
         type FieldOptional "pfnCallback" VkDebugReportCallbackCreateInfoEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pfnCallback" VkDebugReportCallbackCreateInfoEXT =
+             #{offset VkDebugReportCallbackCreateInfoEXT, pfnCallback}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDebugReportCallbackCreateInfoEXT, pfnCallback}
 
 instance CanReadField "pfnCallback"
            VkDebugReportCallbackCreateInfoEXT
@@ -341,6 +377,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pUserData" VkDebugReportCallbackCreateInfoEXT =
              'True -- ' closing tick for hsc2hs
+        type FieldOffset "pUserData" VkDebugReportCallbackCreateInfoEXT =
+             #{offset VkDebugReportCallbackCreateInfoEXT, pUserData}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDebugReportCallbackCreateInfoEXT, pUserData}
 
 instance CanReadField "pUserData"
            VkDebugReportCallbackCreateInfoEXT

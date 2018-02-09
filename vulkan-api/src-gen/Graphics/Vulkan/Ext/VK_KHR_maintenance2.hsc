@@ -192,6 +192,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType"
                VkPhysicalDevicePointClippingPropertiesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkPhysicalDevicePointClippingPropertiesKHR
+             =
+             #{offset VkPhysicalDevicePointClippingPropertiesKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDevicePointClippingPropertiesKHR, sType}
 
 instance CanReadField "sType"
            VkPhysicalDevicePointClippingPropertiesKHR
@@ -231,6 +241,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext"
                VkPhysicalDevicePointClippingPropertiesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkPhysicalDevicePointClippingPropertiesKHR
+             =
+             #{offset VkPhysicalDevicePointClippingPropertiesKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDevicePointClippingPropertiesKHR, pNext}
 
 instance CanReadField "pNext"
            VkPhysicalDevicePointClippingPropertiesKHR
@@ -276,6 +296,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pointClippingBehavior"
                VkPhysicalDevicePointClippingPropertiesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pointClippingBehavior"
+               VkPhysicalDevicePointClippingPropertiesKHR
+             =
+             #{offset VkPhysicalDevicePointClippingPropertiesKHR, pointClippingBehavior}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDevicePointClippingPropertiesKHR, pointClippingBehavior}
 
 instance CanReadField "pointClippingBehavior"
            VkPhysicalDevicePointClippingPropertiesKHR
@@ -435,6 +466,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType"
                VkRenderPassInputAttachmentAspectCreateInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType"
+               VkRenderPassInputAttachmentAspectCreateInfoKHR
+             =
+             #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, sType}
 
 instance CanReadField "sType"
            VkRenderPassInputAttachmentAspectCreateInfoKHR
@@ -482,6 +524,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext"
                VkRenderPassInputAttachmentAspectCreateInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext"
+               VkRenderPassInputAttachmentAspectCreateInfoKHR
+             =
+             #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, pNext}
 
 instance CanReadField "pNext"
            VkRenderPassInputAttachmentAspectCreateInfoKHR
@@ -533,6 +586,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "aspectReferenceCount"
                VkRenderPassInputAttachmentAspectCreateInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "aspectReferenceCount"
+               VkRenderPassInputAttachmentAspectCreateInfoKHR
+             =
+             #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, aspectReferenceCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, aspectReferenceCount}
 
 instance CanReadField "aspectReferenceCount"
            VkRenderPassInputAttachmentAspectCreateInfoKHR
@@ -584,6 +648,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pAspectReferences"
                VkRenderPassInputAttachmentAspectCreateInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pAspectReferences"
+               VkRenderPassInputAttachmentAspectCreateInfoKHR
+             =
+             #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, pAspectReferences}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, pAspectReferences}
 
 instance CanReadField "pAspectReferences"
            VkRenderPassInputAttachmentAspectCreateInfoKHR
@@ -739,6 +814,15 @@ instance {-# OVERLAPPING #-}
              Word32
         type FieldOptional "subpass" VkInputAttachmentAspectReferenceKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "subpass" VkInputAttachmentAspectReferenceKHR =
+             #{offset VkInputAttachmentAspectReferenceKHR, subpass}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkInputAttachmentAspectReferenceKHR, subpass}
 
 instance CanReadField "subpass" VkInputAttachmentAspectReferenceKHR
          where
@@ -786,6 +870,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "inputAttachmentIndex"
                VkInputAttachmentAspectReferenceKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "inputAttachmentIndex"
+               VkInputAttachmentAspectReferenceKHR
+             =
+             #{offset VkInputAttachmentAspectReferenceKHR, inputAttachmentIndex}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkInputAttachmentAspectReferenceKHR, inputAttachmentIndex}
 
 instance CanReadField "inputAttachmentIndex"
            VkInputAttachmentAspectReferenceKHR
@@ -830,6 +925,15 @@ instance {-# OVERLAPPING #-}
              VkImageAspectFlags
         type FieldOptional "aspectMask" VkInputAttachmentAspectReferenceKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "aspectMask" VkInputAttachmentAspectReferenceKHR =
+             #{offset VkInputAttachmentAspectReferenceKHR, aspectMask}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkInputAttachmentAspectReferenceKHR, aspectMask}
 
 instance CanReadField "aspectMask"
            VkInputAttachmentAspectReferenceKHR
@@ -973,6 +1077,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "sType" VkImageViewUsageCreateInfoKHR =
              VkStructureType
         type FieldOptional "sType" VkImageViewUsageCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkImageViewUsageCreateInfoKHR =
+             #{offset VkImageViewUsageCreateInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImageViewUsageCreateInfoKHR, sType}
 
 instance CanReadField "sType" VkImageViewUsageCreateInfoKHR where
         {-# INLINE getField #-}
@@ -1010,6 +1123,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkImageViewUsageCreateInfoKHR where
         type FieldType "pNext" VkImageViewUsageCreateInfoKHR = Ptr Void
         type FieldOptional "pNext" VkImageViewUsageCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkImageViewUsageCreateInfoKHR =
+             #{offset VkImageViewUsageCreateInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImageViewUsageCreateInfoKHR, pNext}
 
 instance CanReadField "pNext" VkImageViewUsageCreateInfoKHR where
         {-# INLINE getField #-}
@@ -1048,6 +1170,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "usage" VkImageViewUsageCreateInfoKHR =
              VkImageUsageFlags
         type FieldOptional "usage" VkImageViewUsageCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "usage" VkImageViewUsageCreateInfoKHR =
+             #{offset VkImageViewUsageCreateInfoKHR, usage}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImageViewUsageCreateInfoKHR, usage}
 
 instance CanReadField "usage" VkImageViewUsageCreateInfoKHR where
         {-# INLINE getField #-}
@@ -1219,6 +1350,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType"
                VkPipelineTessellationDomainOriginStateCreateInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType"
+               VkPipelineTessellationDomainOriginStateCreateInfoKHR
+             =
+             #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, sType}
 
 instance CanReadField "sType"
            VkPipelineTessellationDomainOriginStateCreateInfoKHR
@@ -1269,6 +1411,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext"
                VkPipelineTessellationDomainOriginStateCreateInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext"
+               VkPipelineTessellationDomainOriginStateCreateInfoKHR
+             =
+             #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, pNext}
 
 instance CanReadField "pNext"
            VkPipelineTessellationDomainOriginStateCreateInfoKHR
@@ -1320,6 +1473,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "domainOrigin"
                VkPipelineTessellationDomainOriginStateCreateInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "domainOrigin"
+               VkPipelineTessellationDomainOriginStateCreateInfoKHR
+             =
+             #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, domainOrigin}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, domainOrigin}
 
 instance CanReadField "domainOrigin"
            VkPipelineTessellationDomainOriginStateCreateInfoKHR

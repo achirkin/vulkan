@@ -168,6 +168,15 @@ instance {-# OVERLAPPING #-}
          HasField "sType" VkXlibSurfaceCreateInfoKHR where
         type FieldType "sType" VkXlibSurfaceCreateInfoKHR = VkStructureType
         type FieldOptional "sType" VkXlibSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkXlibSurfaceCreateInfoKHR =
+             #{offset VkXlibSurfaceCreateInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkXlibSurfaceCreateInfoKHR, sType}
 
 instance CanReadField "sType" VkXlibSurfaceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -205,6 +214,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkXlibSurfaceCreateInfoKHR where
         type FieldType "pNext" VkXlibSurfaceCreateInfoKHR = Ptr Void
         type FieldOptional "pNext" VkXlibSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkXlibSurfaceCreateInfoKHR =
+             #{offset VkXlibSurfaceCreateInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkXlibSurfaceCreateInfoKHR, pNext}
 
 instance CanReadField "pNext" VkXlibSurfaceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -244,6 +262,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "flags" VkXlibSurfaceCreateInfoKHR =
              VkXlibSurfaceCreateFlagsKHR
         type FieldOptional "flags" VkXlibSurfaceCreateInfoKHR = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "flags" VkXlibSurfaceCreateInfoKHR =
+             #{offset VkXlibSurfaceCreateInfoKHR, flags}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkXlibSurfaceCreateInfoKHR, flags}
 
 instance CanReadField "flags" VkXlibSurfaceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -281,6 +308,14 @@ instance {-# OVERLAPPING #-}
          HasField "dpy" VkXlibSurfaceCreateInfoKHR where
         type FieldType "dpy" VkXlibSurfaceCreateInfoKHR = Ptr Display
         type FieldOptional "dpy" VkXlibSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "dpy" VkXlibSurfaceCreateInfoKHR =
+             #{offset VkXlibSurfaceCreateInfoKHR, dpy}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkXlibSurfaceCreateInfoKHR, dpy}
 
 instance CanReadField "dpy" VkXlibSurfaceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -318,6 +353,15 @@ instance {-# OVERLAPPING #-}
          HasField "window" VkXlibSurfaceCreateInfoKHR where
         type FieldType "window" VkXlibSurfaceCreateInfoKHR = Window
         type FieldOptional "window" VkXlibSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "window" VkXlibSurfaceCreateInfoKHR =
+             #{offset VkXlibSurfaceCreateInfoKHR, window}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkXlibSurfaceCreateInfoKHR, window}
 
 instance CanReadField "window" VkXlibSurfaceCreateInfoKHR where
         {-# INLINE getField #-}

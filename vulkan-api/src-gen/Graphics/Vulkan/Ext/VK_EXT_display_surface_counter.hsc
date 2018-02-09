@@ -175,6 +175,15 @@ instance {-# OVERLAPPING #-}
          HasField "sType" VkSurfaceCapabilities2EXT where
         type FieldType "sType" VkSurfaceCapabilities2EXT = VkStructureType
         type FieldOptional "sType" VkSurfaceCapabilities2EXT = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkSurfaceCapabilities2EXT =
+             #{offset VkSurfaceCapabilities2EXT, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSurfaceCapabilities2EXT, sType}
 
 instance CanReadField "sType" VkSurfaceCapabilities2EXT where
         {-# INLINE getField #-}
@@ -208,6 +217,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkSurfaceCapabilities2EXT where
         type FieldType "pNext" VkSurfaceCapabilities2EXT = Ptr Void
         type FieldOptional "pNext" VkSurfaceCapabilities2EXT = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkSurfaceCapabilities2EXT =
+             #{offset VkSurfaceCapabilities2EXT, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSurfaceCapabilities2EXT, pNext}
 
 instance CanReadField "pNext" VkSurfaceCapabilities2EXT where
         {-# INLINE getField #-}
@@ -242,6 +260,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "minImageCount" VkSurfaceCapabilities2EXT = Word32
         type FieldOptional "minImageCount" VkSurfaceCapabilities2EXT =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "minImageCount" VkSurfaceCapabilities2EXT =
+             #{offset VkSurfaceCapabilities2EXT, minImageCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSurfaceCapabilities2EXT, minImageCount}
 
 instance CanReadField "minImageCount" VkSurfaceCapabilities2EXT
          where
@@ -277,6 +304,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "maxImageCount" VkSurfaceCapabilities2EXT = Word32
         type FieldOptional "maxImageCount" VkSurfaceCapabilities2EXT =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "maxImageCount" VkSurfaceCapabilities2EXT =
+             #{offset VkSurfaceCapabilities2EXT, maxImageCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSurfaceCapabilities2EXT, maxImageCount}
 
 instance CanReadField "maxImageCount" VkSurfaceCapabilities2EXT
          where
@@ -313,6 +349,15 @@ instance {-# OVERLAPPING #-}
              VkExtent2D
         type FieldOptional "currentExtent" VkSurfaceCapabilities2EXT =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "currentExtent" VkSurfaceCapabilities2EXT =
+             #{offset VkSurfaceCapabilities2EXT, currentExtent}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSurfaceCapabilities2EXT, currentExtent}
 
 instance CanReadField "currentExtent" VkSurfaceCapabilities2EXT
          where
@@ -349,6 +394,15 @@ instance {-# OVERLAPPING #-}
              VkExtent2D
         type FieldOptional "minImageExtent" VkSurfaceCapabilities2EXT =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "minImageExtent" VkSurfaceCapabilities2EXT =
+             #{offset VkSurfaceCapabilities2EXT, minImageExtent}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSurfaceCapabilities2EXT, minImageExtent}
 
 instance CanReadField "minImageExtent" VkSurfaceCapabilities2EXT
          where
@@ -385,6 +439,15 @@ instance {-# OVERLAPPING #-}
              VkExtent2D
         type FieldOptional "maxImageExtent" VkSurfaceCapabilities2EXT =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "maxImageExtent" VkSurfaceCapabilities2EXT =
+             #{offset VkSurfaceCapabilities2EXT, maxImageExtent}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSurfaceCapabilities2EXT, maxImageExtent}
 
 instance CanReadField "maxImageExtent" VkSurfaceCapabilities2EXT
          where
@@ -421,6 +484,15 @@ instance {-# OVERLAPPING #-}
              Word32
         type FieldOptional "maxImageArrayLayers" VkSurfaceCapabilities2EXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "maxImageArrayLayers" VkSurfaceCapabilities2EXT =
+             #{offset VkSurfaceCapabilities2EXT, maxImageArrayLayers}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSurfaceCapabilities2EXT, maxImageArrayLayers}
 
 instance CanReadField "maxImageArrayLayers"
            VkSurfaceCapabilities2EXT
@@ -459,6 +531,15 @@ instance {-# OVERLAPPING #-}
              VkSurfaceTransformFlagsKHR
         type FieldOptional "supportedTransforms" VkSurfaceCapabilities2EXT
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "supportedTransforms" VkSurfaceCapabilities2EXT =
+             #{offset VkSurfaceCapabilities2EXT, supportedTransforms}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSurfaceCapabilities2EXT, supportedTransforms}
 
 instance CanReadField "supportedTransforms"
            VkSurfaceCapabilities2EXT
@@ -497,6 +578,15 @@ instance {-# OVERLAPPING #-}
              VkSurfaceTransformFlagBitsKHR
         type FieldOptional "currentTransform" VkSurfaceCapabilities2EXT =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "currentTransform" VkSurfaceCapabilities2EXT =
+             #{offset VkSurfaceCapabilities2EXT, currentTransform}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSurfaceCapabilities2EXT, currentTransform}
 
 instance CanReadField "currentTransform" VkSurfaceCapabilities2EXT
          where
@@ -535,6 +625,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "supportedCompositeAlpha"
                VkSurfaceCapabilities2EXT
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "supportedCompositeAlpha"
+               VkSurfaceCapabilities2EXT
+             =
+             #{offset VkSurfaceCapabilities2EXT, supportedCompositeAlpha}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSurfaceCapabilities2EXT, supportedCompositeAlpha}
 
 instance CanReadField "supportedCompositeAlpha"
            VkSurfaceCapabilities2EXT
@@ -573,6 +674,15 @@ instance {-# OVERLAPPING #-}
              VkImageUsageFlags
         type FieldOptional "supportedUsageFlags" VkSurfaceCapabilities2EXT
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "supportedUsageFlags" VkSurfaceCapabilities2EXT =
+             #{offset VkSurfaceCapabilities2EXT, supportedUsageFlags}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSurfaceCapabilities2EXT, supportedUsageFlags}
 
 instance CanReadField "supportedUsageFlags"
            VkSurfaceCapabilities2EXT
@@ -612,6 +722,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "supportedSurfaceCounters"
                VkSurfaceCapabilities2EXT
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "supportedSurfaceCounters"
+               VkSurfaceCapabilities2EXT
+             =
+             #{offset VkSurfaceCapabilities2EXT, supportedSurfaceCounters}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSurfaceCapabilities2EXT, supportedSurfaceCounters}
 
 instance CanReadField "supportedSurfaceCounters"
            VkSurfaceCapabilities2EXT

@@ -160,6 +160,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "sType" VkImageFormatListCreateInfoKHR =
              VkStructureType
         type FieldOptional "sType" VkImageFormatListCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkImageFormatListCreateInfoKHR =
+             #{offset VkImageFormatListCreateInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImageFormatListCreateInfoKHR, sType}
 
 instance CanReadField "sType" VkImageFormatListCreateInfoKHR where
         {-# INLINE getField #-}
@@ -197,6 +206,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkImageFormatListCreateInfoKHR where
         type FieldType "pNext" VkImageFormatListCreateInfoKHR = Ptr Void
         type FieldOptional "pNext" VkImageFormatListCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkImageFormatListCreateInfoKHR =
+             #{offset VkImageFormatListCreateInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImageFormatListCreateInfoKHR, pNext}
 
 instance CanReadField "pNext" VkImageFormatListCreateInfoKHR where
         {-# INLINE getField #-}
@@ -236,6 +254,15 @@ instance {-# OVERLAPPING #-}
              Word32
         type FieldOptional "viewFormatCount" VkImageFormatListCreateInfoKHR
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "viewFormatCount" VkImageFormatListCreateInfoKHR =
+             #{offset VkImageFormatListCreateInfoKHR, viewFormatCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImageFormatListCreateInfoKHR, viewFormatCount}
 
 instance CanReadField "viewFormatCount"
            VkImageFormatListCreateInfoKHR
@@ -280,6 +307,15 @@ instance {-# OVERLAPPING #-}
              Ptr VkFormat
         type FieldOptional "pViewFormats" VkImageFormatListCreateInfoKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pViewFormats" VkImageFormatListCreateInfoKHR =
+             #{offset VkImageFormatListCreateInfoKHR, pViewFormats}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImageFormatListCreateInfoKHR, pViewFormats}
 
 instance CanReadField "pViewFormats" VkImageFormatListCreateInfoKHR
          where

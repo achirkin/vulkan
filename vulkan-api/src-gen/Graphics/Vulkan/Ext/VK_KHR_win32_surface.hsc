@@ -169,6 +169,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "sType" VkWin32SurfaceCreateInfoKHR =
              VkStructureType
         type FieldOptional "sType" VkWin32SurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkWin32SurfaceCreateInfoKHR =
+             #{offset VkWin32SurfaceCreateInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkWin32SurfaceCreateInfoKHR, sType}
 
 instance CanReadField "sType" VkWin32SurfaceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -206,6 +215,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkWin32SurfaceCreateInfoKHR where
         type FieldType "pNext" VkWin32SurfaceCreateInfoKHR = Ptr Void
         type FieldOptional "pNext" VkWin32SurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkWin32SurfaceCreateInfoKHR =
+             #{offset VkWin32SurfaceCreateInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkWin32SurfaceCreateInfoKHR, pNext}
 
 instance CanReadField "pNext" VkWin32SurfaceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -245,6 +263,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "flags" VkWin32SurfaceCreateInfoKHR =
              VkWin32SurfaceCreateFlagsKHR
         type FieldOptional "flags" VkWin32SurfaceCreateInfoKHR = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "flags" VkWin32SurfaceCreateInfoKHR =
+             #{offset VkWin32SurfaceCreateInfoKHR, flags}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkWin32SurfaceCreateInfoKHR, flags}
 
 instance CanReadField "flags" VkWin32SurfaceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -282,6 +309,15 @@ instance {-# OVERLAPPING #-}
          HasField "hinstance" VkWin32SurfaceCreateInfoKHR where
         type FieldType "hinstance" VkWin32SurfaceCreateInfoKHR = HINSTANCE
         type FieldOptional "hinstance" VkWin32SurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "hinstance" VkWin32SurfaceCreateInfoKHR =
+             #{offset VkWin32SurfaceCreateInfoKHR, hinstance}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkWin32SurfaceCreateInfoKHR, hinstance}
 
 instance CanReadField "hinstance" VkWin32SurfaceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -320,6 +356,15 @@ instance {-# OVERLAPPING #-}
          HasField "hwnd" VkWin32SurfaceCreateInfoKHR where
         type FieldType "hwnd" VkWin32SurfaceCreateInfoKHR = HWND
         type FieldOptional "hwnd" VkWin32SurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "hwnd" VkWin32SurfaceCreateInfoKHR =
+             #{offset VkWin32SurfaceCreateInfoKHR, hwnd}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkWin32SurfaceCreateInfoKHR, hwnd}
 
 instance CanReadField "hwnd" VkWin32SurfaceCreateInfoKHR where
         {-# INLINE getField #-}

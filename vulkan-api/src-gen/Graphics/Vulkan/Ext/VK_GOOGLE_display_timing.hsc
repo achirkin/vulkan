@@ -166,6 +166,15 @@ instance {-# OVERLAPPING #-}
              Word64
         type FieldOptional "refreshDuration" VkRefreshCycleDurationGOOGLE =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "refreshDuration" VkRefreshCycleDurationGOOGLE =
+             #{offset VkRefreshCycleDurationGOOGLE, refreshDuration}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkRefreshCycleDurationGOOGLE, refreshDuration}
 
 instance CanReadField "refreshDuration"
            VkRefreshCycleDurationGOOGLE
@@ -305,6 +314,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "presentID" VkPastPresentationTimingGOOGLE = Word32
         type FieldOptional "presentID" VkPastPresentationTimingGOOGLE =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "presentID" VkPastPresentationTimingGOOGLE =
+             #{offset VkPastPresentationTimingGOOGLE, presentID}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPastPresentationTimingGOOGLE, presentID}
 
 instance CanReadField "presentID" VkPastPresentationTimingGOOGLE
          where
@@ -348,6 +366,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "desiredPresentTime"
                VkPastPresentationTimingGOOGLE
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "desiredPresentTime"
+               VkPastPresentationTimingGOOGLE
+             =
+             #{offset VkPastPresentationTimingGOOGLE, desiredPresentTime}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPastPresentationTimingGOOGLE, desiredPresentTime}
 
 instance CanReadField "desiredPresentTime"
            VkPastPresentationTimingGOOGLE
@@ -393,6 +422,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "actualPresentTime"
                VkPastPresentationTimingGOOGLE
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "actualPresentTime" VkPastPresentationTimingGOOGLE
+             =
+             #{offset VkPastPresentationTimingGOOGLE, actualPresentTime}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPastPresentationTimingGOOGLE, actualPresentTime}
 
 instance CanReadField "actualPresentTime"
            VkPastPresentationTimingGOOGLE
@@ -438,6 +477,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "earliestPresentTime"
                VkPastPresentationTimingGOOGLE
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "earliestPresentTime"
+               VkPastPresentationTimingGOOGLE
+             =
+             #{offset VkPastPresentationTimingGOOGLE, earliestPresentTime}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPastPresentationTimingGOOGLE, earliestPresentTime}
 
 instance CanReadField "earliestPresentTime"
            VkPastPresentationTimingGOOGLE
@@ -481,6 +531,15 @@ instance {-# OVERLAPPING #-}
              Word64
         type FieldOptional "presentMargin" VkPastPresentationTimingGOOGLE =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "presentMargin" VkPastPresentationTimingGOOGLE =
+             #{offset VkPastPresentationTimingGOOGLE, presentMargin}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPastPresentationTimingGOOGLE, presentMargin}
 
 instance CanReadField "presentMargin"
            VkPastPresentationTimingGOOGLE
@@ -629,6 +688,14 @@ instance {-# OVERLAPPING #-}
          HasField "sType" VkPresentTimesInfoGOOGLE where
         type FieldType "sType" VkPresentTimesInfoGOOGLE = VkStructureType
         type FieldOptional "sType" VkPresentTimesInfoGOOGLE = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkPresentTimesInfoGOOGLE =
+             #{offset VkPresentTimesInfoGOOGLE, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkPresentTimesInfoGOOGLE, sType}
 
 instance CanReadField "sType" VkPresentTimesInfoGOOGLE where
         {-# INLINE getField #-}
@@ -666,6 +733,14 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkPresentTimesInfoGOOGLE where
         type FieldType "pNext" VkPresentTimesInfoGOOGLE = Ptr Void
         type FieldOptional "pNext" VkPresentTimesInfoGOOGLE = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkPresentTimesInfoGOOGLE =
+             #{offset VkPresentTimesInfoGOOGLE, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkPresentTimesInfoGOOGLE, pNext}
 
 instance CanReadField "pNext" VkPresentTimesInfoGOOGLE where
         {-# INLINE getField #-}
@@ -704,6 +779,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "swapchainCount" VkPresentTimesInfoGOOGLE = Word32
         type FieldOptional "swapchainCount" VkPresentTimesInfoGOOGLE =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "swapchainCount" VkPresentTimesInfoGOOGLE =
+             #{offset VkPresentTimesInfoGOOGLE, swapchainCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPresentTimesInfoGOOGLE, swapchainCount}
 
 instance CanReadField "swapchainCount" VkPresentTimesInfoGOOGLE
          where
@@ -745,6 +829,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "pTimes" VkPresentTimesInfoGOOGLE =
              Ptr VkPresentTimeGOOGLE
         type FieldOptional "pTimes" VkPresentTimesInfoGOOGLE = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "pTimes" VkPresentTimesInfoGOOGLE =
+             #{offset VkPresentTimesInfoGOOGLE, pTimes}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPresentTimesInfoGOOGLE, pTimes}
 
 instance CanReadField "pTimes" VkPresentTimesInfoGOOGLE where
         {-# INLINE getField #-}
@@ -881,6 +974,14 @@ instance {-# OVERLAPPING #-}
          HasField "presentID" VkPresentTimeGOOGLE where
         type FieldType "presentID" VkPresentTimeGOOGLE = Word32
         type FieldOptional "presentID" VkPresentTimeGOOGLE = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "presentID" VkPresentTimeGOOGLE =
+             #{offset VkPresentTimeGOOGLE, presentID}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkPresentTimeGOOGLE, presentID}
 
 instance CanReadField "presentID" VkPresentTimeGOOGLE where
         {-# INLINE getField #-}
@@ -919,6 +1020,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "desiredPresentTime" VkPresentTimeGOOGLE = Word64
         type FieldOptional "desiredPresentTime" VkPresentTimeGOOGLE =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "desiredPresentTime" VkPresentTimeGOOGLE =
+             #{offset VkPresentTimeGOOGLE, desiredPresentTime}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPresentTimeGOOGLE, desiredPresentTime}
 
 instance CanReadField "desiredPresentTime" VkPresentTimeGOOGLE
          where

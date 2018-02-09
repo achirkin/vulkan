@@ -170,6 +170,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "sType" VkWaylandSurfaceCreateInfoKHR =
              VkStructureType
         type FieldOptional "sType" VkWaylandSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkWaylandSurfaceCreateInfoKHR =
+             #{offset VkWaylandSurfaceCreateInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkWaylandSurfaceCreateInfoKHR, sType}
 
 instance CanReadField "sType" VkWaylandSurfaceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -207,6 +216,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkWaylandSurfaceCreateInfoKHR where
         type FieldType "pNext" VkWaylandSurfaceCreateInfoKHR = Ptr Void
         type FieldOptional "pNext" VkWaylandSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkWaylandSurfaceCreateInfoKHR =
+             #{offset VkWaylandSurfaceCreateInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkWaylandSurfaceCreateInfoKHR, pNext}
 
 instance CanReadField "pNext" VkWaylandSurfaceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -246,6 +264,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "flags" VkWaylandSurfaceCreateInfoKHR =
              VkWaylandSurfaceCreateFlagsKHR
         type FieldOptional "flags" VkWaylandSurfaceCreateInfoKHR = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "flags" VkWaylandSurfaceCreateInfoKHR =
+             #{offset VkWaylandSurfaceCreateInfoKHR, flags}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkWaylandSurfaceCreateInfoKHR, flags}
 
 instance CanReadField "flags" VkWaylandSurfaceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -284,6 +311,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "display" VkWaylandSurfaceCreateInfoKHR =
              Ptr WlDisplay
         type FieldOptional "display" VkWaylandSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "display" VkWaylandSurfaceCreateInfoKHR =
+             #{offset VkWaylandSurfaceCreateInfoKHR, display}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkWaylandSurfaceCreateInfoKHR, display}
 
 instance CanReadField "display" VkWaylandSurfaceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -323,6 +359,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "surface" VkWaylandSurfaceCreateInfoKHR =
              Ptr WlSurface
         type FieldOptional "surface" VkWaylandSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "surface" VkWaylandSurfaceCreateInfoKHR =
+             #{offset VkWaylandSurfaceCreateInfoKHR, surface}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkWaylandSurfaceCreateInfoKHR, surface}
 
 instance CanReadField "surface" VkWaylandSurfaceCreateInfoKHR where
         {-# INLINE getField #-}

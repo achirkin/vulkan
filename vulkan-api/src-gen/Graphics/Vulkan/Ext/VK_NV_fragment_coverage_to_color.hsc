@@ -176,6 +176,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType"
                VkPipelineCoverageToColorStateCreateInfoNV
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkPipelineCoverageToColorStateCreateInfoNV
+             =
+             #{offset VkPipelineCoverageToColorStateCreateInfoNV, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineCoverageToColorStateCreateInfoNV, sType}
 
 instance CanReadField "sType"
            VkPipelineCoverageToColorStateCreateInfoNV
@@ -221,6 +231,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext"
                VkPipelineCoverageToColorStateCreateInfoNV
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkPipelineCoverageToColorStateCreateInfoNV
+             =
+             #{offset VkPipelineCoverageToColorStateCreateInfoNV, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineCoverageToColorStateCreateInfoNV, pNext}
 
 instance CanReadField "pNext"
            VkPipelineCoverageToColorStateCreateInfoNV
@@ -266,6 +286,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "flags"
                VkPipelineCoverageToColorStateCreateInfoNV
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "flags" VkPipelineCoverageToColorStateCreateInfoNV
+             =
+             #{offset VkPipelineCoverageToColorStateCreateInfoNV, flags}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineCoverageToColorStateCreateInfoNV, flags}
 
 instance CanReadField "flags"
            VkPipelineCoverageToColorStateCreateInfoNV
@@ -317,6 +347,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "coverageToColorEnable"
                VkPipelineCoverageToColorStateCreateInfoNV
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "coverageToColorEnable"
+               VkPipelineCoverageToColorStateCreateInfoNV
+             =
+             #{offset VkPipelineCoverageToColorStateCreateInfoNV, coverageToColorEnable}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineCoverageToColorStateCreateInfoNV, coverageToColorEnable}
 
 instance CanReadField "coverageToColorEnable"
            VkPipelineCoverageToColorStateCreateInfoNV
@@ -368,6 +409,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "coverageToColorLocation"
                VkPipelineCoverageToColorStateCreateInfoNV
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "coverageToColorLocation"
+               VkPipelineCoverageToColorStateCreateInfoNV
+             =
+             #{offset VkPipelineCoverageToColorStateCreateInfoNV, coverageToColorLocation}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineCoverageToColorStateCreateInfoNV, coverageToColorLocation}
 
 instance CanReadField "coverageToColorLocation"
            VkPipelineCoverageToColorStateCreateInfoNV

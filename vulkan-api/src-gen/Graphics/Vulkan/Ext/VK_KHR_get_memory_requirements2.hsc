@@ -177,6 +177,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkBufferMemoryRequirementsInfo2KHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkBufferMemoryRequirementsInfo2KHR =
+             #{offset VkBufferMemoryRequirementsInfo2KHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBufferMemoryRequirementsInfo2KHR, sType}
 
 instance CanReadField "sType" VkBufferMemoryRequirementsInfo2KHR
          where
@@ -218,6 +227,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkBufferMemoryRequirementsInfo2KHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkBufferMemoryRequirementsInfo2KHR =
+             #{offset VkBufferMemoryRequirementsInfo2KHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBufferMemoryRequirementsInfo2KHR, pNext}
 
 instance CanReadField "pNext" VkBufferMemoryRequirementsInfo2KHR
          where
@@ -259,6 +277,15 @@ instance {-# OVERLAPPING #-}
              VkBuffer
         type FieldOptional "buffer" VkBufferMemoryRequirementsInfo2KHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "buffer" VkBufferMemoryRequirementsInfo2KHR =
+             #{offset VkBufferMemoryRequirementsInfo2KHR, buffer}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBufferMemoryRequirementsInfo2KHR, buffer}
 
 instance CanReadField "buffer" VkBufferMemoryRequirementsInfo2KHR
          where
@@ -404,6 +431,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkImageMemoryRequirementsInfo2KHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkImageMemoryRequirementsInfo2KHR =
+             #{offset VkImageMemoryRequirementsInfo2KHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImageMemoryRequirementsInfo2KHR, sType}
 
 instance CanReadField "sType" VkImageMemoryRequirementsInfo2KHR
          where
@@ -444,6 +480,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "pNext" VkImageMemoryRequirementsInfo2KHR = Ptr Void
         type FieldOptional "pNext" VkImageMemoryRequirementsInfo2KHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkImageMemoryRequirementsInfo2KHR =
+             #{offset VkImageMemoryRequirementsInfo2KHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImageMemoryRequirementsInfo2KHR, pNext}
 
 instance CanReadField "pNext" VkImageMemoryRequirementsInfo2KHR
          where
@@ -484,6 +529,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "image" VkImageMemoryRequirementsInfo2KHR = VkImage
         type FieldOptional "image" VkImageMemoryRequirementsInfo2KHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "image" VkImageMemoryRequirementsInfo2KHR =
+             #{offset VkImageMemoryRequirementsInfo2KHR, image}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImageMemoryRequirementsInfo2KHR, image}
 
 instance CanReadField "image" VkImageMemoryRequirementsInfo2KHR
          where
@@ -638,6 +692,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkImageSparseMemoryRequirementsInfo2KHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkImageSparseMemoryRequirementsInfo2KHR =
+             #{offset VkImageSparseMemoryRequirementsInfo2KHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImageSparseMemoryRequirementsInfo2KHR, sType}
 
 instance CanReadField "sType"
            VkImageSparseMemoryRequirementsInfo2KHR
@@ -682,6 +745,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkImageSparseMemoryRequirementsInfo2KHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkImageSparseMemoryRequirementsInfo2KHR =
+             #{offset VkImageSparseMemoryRequirementsInfo2KHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImageSparseMemoryRequirementsInfo2KHR, pNext}
 
 instance CanReadField "pNext"
            VkImageSparseMemoryRequirementsInfo2KHR
@@ -725,6 +797,15 @@ instance {-# OVERLAPPING #-}
              VkImage
         type FieldOptional "image" VkImageSparseMemoryRequirementsInfo2KHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "image" VkImageSparseMemoryRequirementsInfo2KHR =
+             #{offset VkImageSparseMemoryRequirementsInfo2KHR, image}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImageSparseMemoryRequirementsInfo2KHR, image}
 
 instance CanReadField "image"
            VkImageSparseMemoryRequirementsInfo2KHR
@@ -865,6 +946,14 @@ instance {-# OVERLAPPING #-}
          HasField "sType" VkMemoryRequirements2KHR where
         type FieldType "sType" VkMemoryRequirements2KHR = VkStructureType
         type FieldOptional "sType" VkMemoryRequirements2KHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkMemoryRequirements2KHR =
+             #{offset VkMemoryRequirements2KHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkMemoryRequirements2KHR, sType}
 
 instance CanReadField "sType" VkMemoryRequirements2KHR where
         {-# INLINE getField #-}
@@ -898,6 +987,14 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkMemoryRequirements2KHR where
         type FieldType "pNext" VkMemoryRequirements2KHR = Ptr Void
         type FieldOptional "pNext" VkMemoryRequirements2KHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkMemoryRequirements2KHR =
+             #{offset VkMemoryRequirements2KHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkMemoryRequirements2KHR, pNext}
 
 instance CanReadField "pNext" VkMemoryRequirements2KHR where
         {-# INLINE getField #-}
@@ -934,6 +1031,15 @@ instance {-# OVERLAPPING #-}
              VkMemoryRequirements
         type FieldOptional "memoryRequirements" VkMemoryRequirements2KHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "memoryRequirements" VkMemoryRequirements2KHR =
+             #{offset VkMemoryRequirements2KHR, memoryRequirements}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkMemoryRequirements2KHR, memoryRequirements}
 
 instance CanReadField "memoryRequirements" VkMemoryRequirements2KHR
          where
@@ -1080,6 +1186,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkSparseImageMemoryRequirements2KHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkSparseImageMemoryRequirements2KHR =
+             #{offset VkSparseImageMemoryRequirements2KHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSparseImageMemoryRequirements2KHR, sType}
 
 instance CanReadField "sType" VkSparseImageMemoryRequirements2KHR
          where
@@ -1116,6 +1231,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkSparseImageMemoryRequirements2KHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkSparseImageMemoryRequirements2KHR =
+             #{offset VkSparseImageMemoryRequirements2KHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSparseImageMemoryRequirements2KHR, pNext}
 
 instance CanReadField "pNext" VkSparseImageMemoryRequirements2KHR
          where
@@ -1156,6 +1280,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "memoryRequirements"
                VkSparseImageMemoryRequirements2KHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "memoryRequirements"
+               VkSparseImageMemoryRequirements2KHR
+             =
+             #{offset VkSparseImageMemoryRequirements2KHR, memoryRequirements}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSparseImageMemoryRequirements2KHR, memoryRequirements}
 
 instance CanReadField "memoryRequirements"
            VkSparseImageMemoryRequirements2KHR

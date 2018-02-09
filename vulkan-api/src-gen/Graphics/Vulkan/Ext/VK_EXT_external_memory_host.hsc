@@ -175,6 +175,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkImportMemoryHostPointerInfoEXT =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkImportMemoryHostPointerInfoEXT =
+             #{offset VkImportMemoryHostPointerInfoEXT, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImportMemoryHostPointerInfoEXT, sType}
 
 instance CanReadField "sType" VkImportMemoryHostPointerInfoEXT
          where
@@ -215,6 +224,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "pNext" VkImportMemoryHostPointerInfoEXT = Ptr Void
         type FieldOptional "pNext" VkImportMemoryHostPointerInfoEXT =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkImportMemoryHostPointerInfoEXT =
+             #{offset VkImportMemoryHostPointerInfoEXT, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImportMemoryHostPointerInfoEXT, pNext}
 
 instance CanReadField "pNext" VkImportMemoryHostPointerInfoEXT
          where
@@ -257,6 +275,15 @@ instance {-# OVERLAPPING #-}
              VkExternalMemoryHandleTypeFlagBitsKHR
         type FieldOptional "handleType" VkImportMemoryHostPointerInfoEXT =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "handleType" VkImportMemoryHostPointerInfoEXT =
+             #{offset VkImportMemoryHostPointerInfoEXT, handleType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImportMemoryHostPointerInfoEXT, handleType}
 
 instance CanReadField "handleType" VkImportMemoryHostPointerInfoEXT
          where
@@ -300,6 +327,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pHostPointer" VkImportMemoryHostPointerInfoEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pHostPointer" VkImportMemoryHostPointerInfoEXT =
+             #{offset VkImportMemoryHostPointerInfoEXT, pHostPointer}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImportMemoryHostPointerInfoEXT, pHostPointer}
 
 instance CanReadField "pHostPointer"
            VkImportMemoryHostPointerInfoEXT
@@ -449,6 +485,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkMemoryHostPointerPropertiesEXT =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkMemoryHostPointerPropertiesEXT =
+             #{offset VkMemoryHostPointerPropertiesEXT, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkMemoryHostPointerPropertiesEXT, sType}
 
 instance CanReadField "sType" VkMemoryHostPointerPropertiesEXT
          where
@@ -489,6 +534,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "pNext" VkMemoryHostPointerPropertiesEXT = Ptr Void
         type FieldOptional "pNext" VkMemoryHostPointerPropertiesEXT =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkMemoryHostPointerPropertiesEXT =
+             #{offset VkMemoryHostPointerPropertiesEXT, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkMemoryHostPointerPropertiesEXT, pNext}
 
 instance CanReadField "pNext" VkMemoryHostPointerPropertiesEXT
          where
@@ -532,6 +586,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "memoryTypeBits"
                VkMemoryHostPointerPropertiesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "memoryTypeBits" VkMemoryHostPointerPropertiesEXT
+             =
+             #{offset VkMemoryHostPointerPropertiesEXT, memoryTypeBits}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkMemoryHostPointerPropertiesEXT, memoryTypeBits}
 
 instance CanReadField "memoryTypeBits"
            VkMemoryHostPointerPropertiesEXT
@@ -696,6 +760,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType"
                VkPhysicalDeviceExternalMemoryHostPropertiesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType"
+               VkPhysicalDeviceExternalMemoryHostPropertiesEXT
+             =
+             #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, sType}
 
 instance CanReadField "sType"
            VkPhysicalDeviceExternalMemoryHostPropertiesEXT
@@ -743,6 +818,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext"
                VkPhysicalDeviceExternalMemoryHostPropertiesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext"
+               VkPhysicalDeviceExternalMemoryHostPropertiesEXT
+             =
+             #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, pNext}
 
 instance CanReadField "pNext"
            VkPhysicalDeviceExternalMemoryHostPropertiesEXT
@@ -794,6 +880,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "minImportedHostPointerAlignment"
                VkPhysicalDeviceExternalMemoryHostPropertiesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "minImportedHostPointerAlignment"
+               VkPhysicalDeviceExternalMemoryHostPropertiesEXT
+             =
+             #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, minImportedHostPointerAlignment}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, minImportedHostPointerAlignment}
 
 instance CanReadField "minImportedHostPointerAlignment"
            VkPhysicalDeviceExternalMemoryHostPropertiesEXT

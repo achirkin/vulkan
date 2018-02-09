@@ -182,6 +182,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkRenderPassMultiviewCreateInfoKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkRenderPassMultiviewCreateInfoKHX =
+             #{offset VkRenderPassMultiviewCreateInfoKHX, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkRenderPassMultiviewCreateInfoKHX, sType}
 
 instance CanReadField "sType" VkRenderPassMultiviewCreateInfoKHX
          where
@@ -223,6 +232,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkRenderPassMultiviewCreateInfoKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkRenderPassMultiviewCreateInfoKHX =
+             #{offset VkRenderPassMultiviewCreateInfoKHX, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkRenderPassMultiviewCreateInfoKHX, pNext}
 
 instance CanReadField "pNext" VkRenderPassMultiviewCreateInfoKHX
          where
@@ -266,6 +284,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "subpassCount"
                VkRenderPassMultiviewCreateInfoKHX
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "subpassCount" VkRenderPassMultiviewCreateInfoKHX
+             =
+             #{offset VkRenderPassMultiviewCreateInfoKHX, subpassCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkRenderPassMultiviewCreateInfoKHX, subpassCount}
 
 instance CanReadField "subpassCount"
            VkRenderPassMultiviewCreateInfoKHX
@@ -310,6 +338,15 @@ instance {-# OVERLAPPING #-}
              Ptr Word32
         type FieldOptional "pViewMasks" VkRenderPassMultiviewCreateInfoKHX
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pViewMasks" VkRenderPassMultiviewCreateInfoKHX =
+             #{offset VkRenderPassMultiviewCreateInfoKHX, pViewMasks}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkRenderPassMultiviewCreateInfoKHX, pViewMasks}
 
 instance CanReadField "pViewMasks"
            VkRenderPassMultiviewCreateInfoKHX
@@ -355,6 +392,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "dependencyCount"
                VkRenderPassMultiviewCreateInfoKHX
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "dependencyCount"
+               VkRenderPassMultiviewCreateInfoKHX
+             =
+             #{offset VkRenderPassMultiviewCreateInfoKHX, dependencyCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkRenderPassMultiviewCreateInfoKHX, dependencyCount}
 
 instance CanReadField "dependencyCount"
            VkRenderPassMultiviewCreateInfoKHX
@@ -400,6 +448,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pViewOffsets"
                VkRenderPassMultiviewCreateInfoKHX
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pViewOffsets" VkRenderPassMultiviewCreateInfoKHX
+             =
+             #{offset VkRenderPassMultiviewCreateInfoKHX, pViewOffsets}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkRenderPassMultiviewCreateInfoKHX, pViewOffsets}
 
 instance CanReadField "pViewOffsets"
            VkRenderPassMultiviewCreateInfoKHX
@@ -447,6 +505,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "correlationMaskCount"
                VkRenderPassMultiviewCreateInfoKHX
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "correlationMaskCount"
+               VkRenderPassMultiviewCreateInfoKHX
+             =
+             #{offset VkRenderPassMultiviewCreateInfoKHX, correlationMaskCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkRenderPassMultiviewCreateInfoKHX, correlationMaskCount}
 
 instance CanReadField "correlationMaskCount"
            VkRenderPassMultiviewCreateInfoKHX
@@ -494,6 +563,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pCorrelationMasks"
                VkRenderPassMultiviewCreateInfoKHX
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pCorrelationMasks"
+               VkRenderPassMultiviewCreateInfoKHX
+             =
+             #{offset VkRenderPassMultiviewCreateInfoKHX, pCorrelationMasks}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkRenderPassMultiviewCreateInfoKHX, pCorrelationMasks}
 
 instance CanReadField "pCorrelationMasks"
            VkRenderPassMultiviewCreateInfoKHX
@@ -667,6 +747,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkPhysicalDeviceMultiviewFeaturesKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkPhysicalDeviceMultiviewFeaturesKHX =
+             #{offset VkPhysicalDeviceMultiviewFeaturesKHX, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceMultiviewFeaturesKHX, sType}
 
 instance CanReadField "sType" VkPhysicalDeviceMultiviewFeaturesKHX
          where
@@ -708,6 +797,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkPhysicalDeviceMultiviewFeaturesKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkPhysicalDeviceMultiviewFeaturesKHX =
+             #{offset VkPhysicalDeviceMultiviewFeaturesKHX, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceMultiviewFeaturesKHX, pNext}
 
 instance CanReadField "pNext" VkPhysicalDeviceMultiviewFeaturesKHX
          where
@@ -750,6 +848,15 @@ instance {-# OVERLAPPING #-}
              VkBool32
         type FieldOptional "multiview" VkPhysicalDeviceMultiviewFeaturesKHX
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "multiview" VkPhysicalDeviceMultiviewFeaturesKHX =
+             #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiview}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiview}
 
 instance CanReadField "multiview"
            VkPhysicalDeviceMultiviewFeaturesKHX
@@ -800,6 +907,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "multiviewGeometryShader"
                VkPhysicalDeviceMultiviewFeaturesKHX
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "multiviewGeometryShader"
+               VkPhysicalDeviceMultiviewFeaturesKHX
+             =
+             #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiviewGeometryShader}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiviewGeometryShader}
 
 instance CanReadField "multiviewGeometryShader"
            VkPhysicalDeviceMultiviewFeaturesKHX
@@ -851,6 +969,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "multiviewTessellationShader"
                VkPhysicalDeviceMultiviewFeaturesKHX
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "multiviewTessellationShader"
+               VkPhysicalDeviceMultiviewFeaturesKHX
+             =
+             #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiviewTessellationShader}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiviewTessellationShader}
 
 instance CanReadField "multiviewTessellationShader"
            VkPhysicalDeviceMultiviewFeaturesKHX
@@ -1014,6 +1143,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkPhysicalDeviceMultiviewPropertiesKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkPhysicalDeviceMultiviewPropertiesKHX =
+             #{offset VkPhysicalDeviceMultiviewPropertiesKHX, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceMultiviewPropertiesKHX, sType}
 
 instance CanReadField "sType"
            VkPhysicalDeviceMultiviewPropertiesKHX
@@ -1051,6 +1189,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkPhysicalDeviceMultiviewPropertiesKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkPhysicalDeviceMultiviewPropertiesKHX =
+             #{offset VkPhysicalDeviceMultiviewPropertiesKHX, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceMultiviewPropertiesKHX, pNext}
 
 instance CanReadField "pNext"
            VkPhysicalDeviceMultiviewPropertiesKHX
@@ -1095,6 +1242,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "maxMultiviewViewCount"
                VkPhysicalDeviceMultiviewPropertiesKHX
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "maxMultiviewViewCount"
+               VkPhysicalDeviceMultiviewPropertiesKHX
+             =
+             #{offset VkPhysicalDeviceMultiviewPropertiesKHX, maxMultiviewViewCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceMultiviewPropertiesKHX, maxMultiviewViewCount}
 
 instance CanReadField "maxMultiviewViewCount"
            VkPhysicalDeviceMultiviewPropertiesKHX
@@ -1140,6 +1298,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "maxMultiviewInstanceIndex"
                VkPhysicalDeviceMultiviewPropertiesKHX
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "maxMultiviewInstanceIndex"
+               VkPhysicalDeviceMultiviewPropertiesKHX
+             =
+             #{offset VkPhysicalDeviceMultiviewPropertiesKHX, maxMultiviewInstanceIndex}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceMultiviewPropertiesKHX, maxMultiviewInstanceIndex}
 
 instance CanReadField "maxMultiviewInstanceIndex"
            VkPhysicalDeviceMultiviewPropertiesKHX

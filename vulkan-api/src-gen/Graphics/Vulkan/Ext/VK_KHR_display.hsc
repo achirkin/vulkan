@@ -178,6 +178,14 @@ instance {-# OVERLAPPING #-}
          HasField "display" VkDisplayPropertiesKHR where
         type FieldType "display" VkDisplayPropertiesKHR = VkDisplayKHR
         type FieldOptional "display" VkDisplayPropertiesKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "display" VkDisplayPropertiesKHR =
+             #{offset VkDisplayPropertiesKHR, display}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkDisplayPropertiesKHR, display}
 
 instance CanReadField "display" VkDisplayPropertiesKHR where
         {-# INLINE getField #-}
@@ -211,6 +219,15 @@ instance {-# OVERLAPPING #-}
          HasField "displayName" VkDisplayPropertiesKHR where
         type FieldType "displayName" VkDisplayPropertiesKHR = CString
         type FieldOptional "displayName" VkDisplayPropertiesKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "displayName" VkDisplayPropertiesKHR =
+             #{offset VkDisplayPropertiesKHR, displayName}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayPropertiesKHR, displayName}
 
 instance CanReadField "displayName" VkDisplayPropertiesKHR where
         {-# INLINE getField #-}
@@ -246,6 +263,15 @@ instance {-# OVERLAPPING #-}
              VkExtent2D
         type FieldOptional "physicalDimensions" VkDisplayPropertiesKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "physicalDimensions" VkDisplayPropertiesKHR =
+             #{offset VkDisplayPropertiesKHR, physicalDimensions}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayPropertiesKHR, physicalDimensions}
 
 instance CanReadField "physicalDimensions" VkDisplayPropertiesKHR
          where
@@ -282,6 +308,15 @@ instance {-# OVERLAPPING #-}
              VkExtent2D
         type FieldOptional "physicalResolution" VkDisplayPropertiesKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "physicalResolution" VkDisplayPropertiesKHR =
+             #{offset VkDisplayPropertiesKHR, physicalResolution}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayPropertiesKHR, physicalResolution}
 
 instance CanReadField "physicalResolution" VkDisplayPropertiesKHR
          where
@@ -319,6 +354,15 @@ instance {-# OVERLAPPING #-}
              VkSurfaceTransformFlagsKHR
         type FieldOptional "supportedTransforms" VkDisplayPropertiesKHR =
              'True -- ' closing tick for hsc2hs
+        type FieldOffset "supportedTransforms" VkDisplayPropertiesKHR =
+             #{offset VkDisplayPropertiesKHR, supportedTransforms}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayPropertiesKHR, supportedTransforms}
 
 instance CanReadField "supportedTransforms" VkDisplayPropertiesKHR
          where
@@ -355,6 +399,15 @@ instance {-# OVERLAPPING #-}
              VkBool32
         type FieldOptional "planeReorderPossible" VkDisplayPropertiesKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "planeReorderPossible" VkDisplayPropertiesKHR =
+             #{offset VkDisplayPropertiesKHR, planeReorderPossible}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayPropertiesKHR, planeReorderPossible}
 
 instance CanReadField "planeReorderPossible" VkDisplayPropertiesKHR
          where
@@ -391,6 +444,15 @@ instance {-# OVERLAPPING #-}
              VkBool32
         type FieldOptional "persistentContent" VkDisplayPropertiesKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "persistentContent" VkDisplayPropertiesKHR =
+             #{offset VkDisplayPropertiesKHR, persistentContent}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayPropertiesKHR, persistentContent}
 
 instance CanReadField "persistentContent" VkDisplayPropertiesKHR
          where
@@ -539,6 +601,15 @@ instance {-# OVERLAPPING #-}
              VkExtent2D
         type FieldOptional "visibleRegion" VkDisplayModeParametersKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "visibleRegion" VkDisplayModeParametersKHR =
+             #{offset VkDisplayModeParametersKHR, visibleRegion}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayModeParametersKHR, visibleRegion}
 
 instance CanReadField "visibleRegion" VkDisplayModeParametersKHR
          where
@@ -579,6 +650,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "refreshRate" VkDisplayModeParametersKHR = Word32
         type FieldOptional "refreshRate" VkDisplayModeParametersKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "refreshRate" VkDisplayModeParametersKHR =
+             #{offset VkDisplayModeParametersKHR, refreshRate}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayModeParametersKHR, refreshRate}
 
 instance CanReadField "refreshRate" VkDisplayModeParametersKHR
          where
@@ -717,6 +797,15 @@ instance {-# OVERLAPPING #-}
              VkDisplayModeKHR
         type FieldOptional "displayMode" VkDisplayModePropertiesKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "displayMode" VkDisplayModePropertiesKHR =
+             #{offset VkDisplayModePropertiesKHR, displayMode}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayModePropertiesKHR, displayMode}
 
 instance CanReadField "displayMode" VkDisplayModePropertiesKHR
          where
@@ -753,6 +842,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "parameters" VkDisplayModePropertiesKHR =
              VkDisplayModeParametersKHR
         type FieldOptional "parameters" VkDisplayModePropertiesKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "parameters" VkDisplayModePropertiesKHR =
+             #{offset VkDisplayModePropertiesKHR, parameters}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayModePropertiesKHR, parameters}
 
 instance CanReadField "parameters" VkDisplayModePropertiesKHR where
         {-# INLINE getField #-}
@@ -884,6 +982,15 @@ instance {-# OVERLAPPING #-}
          HasField "sType" VkDisplayModeCreateInfoKHR where
         type FieldType "sType" VkDisplayModeCreateInfoKHR = VkStructureType
         type FieldOptional "sType" VkDisplayModeCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkDisplayModeCreateInfoKHR =
+             #{offset VkDisplayModeCreateInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayModeCreateInfoKHR, sType}
 
 instance CanReadField "sType" VkDisplayModeCreateInfoKHR where
         {-# INLINE getField #-}
@@ -921,6 +1028,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkDisplayModeCreateInfoKHR where
         type FieldType "pNext" VkDisplayModeCreateInfoKHR = Ptr Void
         type FieldOptional "pNext" VkDisplayModeCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkDisplayModeCreateInfoKHR =
+             #{offset VkDisplayModeCreateInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayModeCreateInfoKHR, pNext}
 
 instance CanReadField "pNext" VkDisplayModeCreateInfoKHR where
         {-# INLINE getField #-}
@@ -960,6 +1076,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "flags" VkDisplayModeCreateInfoKHR =
              VkDisplayModeCreateFlagsKHR
         type FieldOptional "flags" VkDisplayModeCreateInfoKHR = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "flags" VkDisplayModeCreateInfoKHR =
+             #{offset VkDisplayModeCreateInfoKHR, flags}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayModeCreateInfoKHR, flags}
 
 instance CanReadField "flags" VkDisplayModeCreateInfoKHR where
         {-# INLINE getField #-}
@@ -999,6 +1124,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "parameters" VkDisplayModeCreateInfoKHR =
              VkDisplayModeParametersKHR
         type FieldOptional "parameters" VkDisplayModeCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "parameters" VkDisplayModeCreateInfoKHR =
+             #{offset VkDisplayModeCreateInfoKHR, parameters}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayModeCreateInfoKHR, parameters}
 
 instance CanReadField "parameters" VkDisplayModeCreateInfoKHR where
         {-# INLINE getField #-}
@@ -1150,6 +1284,15 @@ instance {-# OVERLAPPING #-}
              VkDisplayPlaneAlphaFlagsKHR
         type FieldOptional "supportedAlpha" VkDisplayPlaneCapabilitiesKHR =
              'True -- ' closing tick for hsc2hs
+        type FieldOffset "supportedAlpha" VkDisplayPlaneCapabilitiesKHR =
+             #{offset VkDisplayPlaneCapabilitiesKHR, supportedAlpha}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayPlaneCapabilitiesKHR, supportedAlpha}
 
 instance CanReadField "supportedAlpha"
            VkDisplayPlaneCapabilitiesKHR
@@ -1188,6 +1331,15 @@ instance {-# OVERLAPPING #-}
              VkOffset2D
         type FieldOptional "minSrcPosition" VkDisplayPlaneCapabilitiesKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "minSrcPosition" VkDisplayPlaneCapabilitiesKHR =
+             #{offset VkDisplayPlaneCapabilitiesKHR, minSrcPosition}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayPlaneCapabilitiesKHR, minSrcPosition}
 
 instance CanReadField "minSrcPosition"
            VkDisplayPlaneCapabilitiesKHR
@@ -1226,6 +1378,15 @@ instance {-# OVERLAPPING #-}
              VkOffset2D
         type FieldOptional "maxSrcPosition" VkDisplayPlaneCapabilitiesKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "maxSrcPosition" VkDisplayPlaneCapabilitiesKHR =
+             #{offset VkDisplayPlaneCapabilitiesKHR, maxSrcPosition}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayPlaneCapabilitiesKHR, maxSrcPosition}
 
 instance CanReadField "maxSrcPosition"
            VkDisplayPlaneCapabilitiesKHR
@@ -1263,6 +1424,15 @@ instance {-# OVERLAPPING #-}
              VkExtent2D
         type FieldOptional "minSrcExtent" VkDisplayPlaneCapabilitiesKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "minSrcExtent" VkDisplayPlaneCapabilitiesKHR =
+             #{offset VkDisplayPlaneCapabilitiesKHR, minSrcExtent}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayPlaneCapabilitiesKHR, minSrcExtent}
 
 instance CanReadField "minSrcExtent" VkDisplayPlaneCapabilitiesKHR
          where
@@ -1299,6 +1469,15 @@ instance {-# OVERLAPPING #-}
              VkExtent2D
         type FieldOptional "maxSrcExtent" VkDisplayPlaneCapabilitiesKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "maxSrcExtent" VkDisplayPlaneCapabilitiesKHR =
+             #{offset VkDisplayPlaneCapabilitiesKHR, maxSrcExtent}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayPlaneCapabilitiesKHR, maxSrcExtent}
 
 instance CanReadField "maxSrcExtent" VkDisplayPlaneCapabilitiesKHR
          where
@@ -1336,6 +1515,15 @@ instance {-# OVERLAPPING #-}
              VkOffset2D
         type FieldOptional "minDstPosition" VkDisplayPlaneCapabilitiesKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "minDstPosition" VkDisplayPlaneCapabilitiesKHR =
+             #{offset VkDisplayPlaneCapabilitiesKHR, minDstPosition}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayPlaneCapabilitiesKHR, minDstPosition}
 
 instance CanReadField "minDstPosition"
            VkDisplayPlaneCapabilitiesKHR
@@ -1374,6 +1562,15 @@ instance {-# OVERLAPPING #-}
              VkOffset2D
         type FieldOptional "maxDstPosition" VkDisplayPlaneCapabilitiesKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "maxDstPosition" VkDisplayPlaneCapabilitiesKHR =
+             #{offset VkDisplayPlaneCapabilitiesKHR, maxDstPosition}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayPlaneCapabilitiesKHR, maxDstPosition}
 
 instance CanReadField "maxDstPosition"
            VkDisplayPlaneCapabilitiesKHR
@@ -1411,6 +1608,15 @@ instance {-# OVERLAPPING #-}
              VkExtent2D
         type FieldOptional "minDstExtent" VkDisplayPlaneCapabilitiesKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "minDstExtent" VkDisplayPlaneCapabilitiesKHR =
+             #{offset VkDisplayPlaneCapabilitiesKHR, minDstExtent}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayPlaneCapabilitiesKHR, minDstExtent}
 
 instance CanReadField "minDstExtent" VkDisplayPlaneCapabilitiesKHR
          where
@@ -1447,6 +1653,15 @@ instance {-# OVERLAPPING #-}
              VkExtent2D
         type FieldOptional "maxDstExtent" VkDisplayPlaneCapabilitiesKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "maxDstExtent" VkDisplayPlaneCapabilitiesKHR =
+             #{offset VkDisplayPlaneCapabilitiesKHR, maxDstExtent}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayPlaneCapabilitiesKHR, maxDstExtent}
 
 instance CanReadField "maxDstExtent" VkDisplayPlaneCapabilitiesKHR
          where
@@ -1602,6 +1817,15 @@ instance {-# OVERLAPPING #-}
              VkDisplayKHR
         type FieldOptional "currentDisplay" VkDisplayPlanePropertiesKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "currentDisplay" VkDisplayPlanePropertiesKHR =
+             #{offset VkDisplayPlanePropertiesKHR, currentDisplay}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayPlanePropertiesKHR, currentDisplay}
 
 instance CanReadField "currentDisplay" VkDisplayPlanePropertiesKHR
          where
@@ -1638,6 +1862,15 @@ instance {-# OVERLAPPING #-}
              Word32
         type FieldOptional "currentStackIndex" VkDisplayPlanePropertiesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "currentStackIndex" VkDisplayPlanePropertiesKHR =
+             #{offset VkDisplayPlanePropertiesKHR, currentStackIndex}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayPlanePropertiesKHR, currentStackIndex}
 
 instance CanReadField "currentStackIndex"
            VkDisplayPlanePropertiesKHR
@@ -1779,6 +2012,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "sType" VkDisplaySurfaceCreateInfoKHR =
              VkStructureType
         type FieldOptional "sType" VkDisplaySurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkDisplaySurfaceCreateInfoKHR =
+             #{offset VkDisplaySurfaceCreateInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplaySurfaceCreateInfoKHR, sType}
 
 instance CanReadField "sType" VkDisplaySurfaceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -1816,6 +2058,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkDisplaySurfaceCreateInfoKHR where
         type FieldType "pNext" VkDisplaySurfaceCreateInfoKHR = Ptr Void
         type FieldOptional "pNext" VkDisplaySurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkDisplaySurfaceCreateInfoKHR =
+             #{offset VkDisplaySurfaceCreateInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplaySurfaceCreateInfoKHR, pNext}
 
 instance CanReadField "pNext" VkDisplaySurfaceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -1855,6 +2106,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "flags" VkDisplaySurfaceCreateInfoKHR =
              VkDisplaySurfaceCreateFlagsKHR
         type FieldOptional "flags" VkDisplaySurfaceCreateInfoKHR = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "flags" VkDisplaySurfaceCreateInfoKHR =
+             #{offset VkDisplaySurfaceCreateInfoKHR, flags}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplaySurfaceCreateInfoKHR, flags}
 
 instance CanReadField "flags" VkDisplaySurfaceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -1895,6 +2155,15 @@ instance {-# OVERLAPPING #-}
              VkDisplayModeKHR
         type FieldOptional "displayMode" VkDisplaySurfaceCreateInfoKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "displayMode" VkDisplaySurfaceCreateInfoKHR =
+             #{offset VkDisplaySurfaceCreateInfoKHR, displayMode}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplaySurfaceCreateInfoKHR, displayMode}
 
 instance CanReadField "displayMode" VkDisplaySurfaceCreateInfoKHR
          where
@@ -1935,6 +2204,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "planeIndex" VkDisplaySurfaceCreateInfoKHR = Word32
         type FieldOptional "planeIndex" VkDisplaySurfaceCreateInfoKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "planeIndex" VkDisplaySurfaceCreateInfoKHR =
+             #{offset VkDisplaySurfaceCreateInfoKHR, planeIndex}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplaySurfaceCreateInfoKHR, planeIndex}
 
 instance CanReadField "planeIndex" VkDisplaySurfaceCreateInfoKHR
          where
@@ -1976,6 +2254,15 @@ instance {-# OVERLAPPING #-}
              Word32
         type FieldOptional "planeStackIndex" VkDisplaySurfaceCreateInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "planeStackIndex" VkDisplaySurfaceCreateInfoKHR =
+             #{offset VkDisplaySurfaceCreateInfoKHR, planeStackIndex}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplaySurfaceCreateInfoKHR, planeStackIndex}
 
 instance CanReadField "planeStackIndex"
            VkDisplaySurfaceCreateInfoKHR
@@ -2020,6 +2307,15 @@ instance {-# OVERLAPPING #-}
              VkSurfaceTransformFlagBitsKHR
         type FieldOptional "transform" VkDisplaySurfaceCreateInfoKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "transform" VkDisplaySurfaceCreateInfoKHR =
+             #{offset VkDisplaySurfaceCreateInfoKHR, transform}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplaySurfaceCreateInfoKHR, transform}
 
 instance CanReadField "transform" VkDisplaySurfaceCreateInfoKHR
          where
@@ -2062,6 +2358,15 @@ instance {-# OVERLAPPING #-}
              #{type float}
         type FieldOptional "globalAlpha" VkDisplaySurfaceCreateInfoKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "globalAlpha" VkDisplaySurfaceCreateInfoKHR =
+             #{offset VkDisplaySurfaceCreateInfoKHR, globalAlpha}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplaySurfaceCreateInfoKHR, globalAlpha}
 
 instance CanReadField "globalAlpha" VkDisplaySurfaceCreateInfoKHR
          where
@@ -2104,6 +2409,15 @@ instance {-# OVERLAPPING #-}
              VkDisplayPlaneAlphaFlagBitsKHR
         type FieldOptional "alphaMode" VkDisplaySurfaceCreateInfoKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "alphaMode" VkDisplaySurfaceCreateInfoKHR =
+             #{offset VkDisplaySurfaceCreateInfoKHR, alphaMode}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplaySurfaceCreateInfoKHR, alphaMode}
 
 instance CanReadField "alphaMode" VkDisplaySurfaceCreateInfoKHR
          where
@@ -2145,6 +2459,15 @@ instance {-# OVERLAPPING #-}
              VkExtent2D
         type FieldOptional "imageExtent" VkDisplaySurfaceCreateInfoKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "imageExtent" VkDisplaySurfaceCreateInfoKHR =
+             #{offset VkDisplaySurfaceCreateInfoKHR, imageExtent}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplaySurfaceCreateInfoKHR, imageExtent}
 
 instance CanReadField "imageExtent" VkDisplaySurfaceCreateInfoKHR
          where

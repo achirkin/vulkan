@@ -204,6 +204,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "sType" VkMemoryAllocateFlagsInfoKHX =
              VkStructureType
         type FieldOptional "sType" VkMemoryAllocateFlagsInfoKHX = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkMemoryAllocateFlagsInfoKHX =
+             #{offset VkMemoryAllocateFlagsInfoKHX, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkMemoryAllocateFlagsInfoKHX, sType}
 
 instance CanReadField "sType" VkMemoryAllocateFlagsInfoKHX where
         {-# INLINE getField #-}
@@ -241,6 +250,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkMemoryAllocateFlagsInfoKHX where
         type FieldType "pNext" VkMemoryAllocateFlagsInfoKHX = Ptr Void
         type FieldOptional "pNext" VkMemoryAllocateFlagsInfoKHX = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkMemoryAllocateFlagsInfoKHX =
+             #{offset VkMemoryAllocateFlagsInfoKHX, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkMemoryAllocateFlagsInfoKHX, pNext}
 
 instance CanReadField "pNext" VkMemoryAllocateFlagsInfoKHX where
         {-# INLINE getField #-}
@@ -280,6 +298,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "flags" VkMemoryAllocateFlagsInfoKHX =
              VkMemoryAllocateFlagsKHX
         type FieldOptional "flags" VkMemoryAllocateFlagsInfoKHX = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "flags" VkMemoryAllocateFlagsInfoKHX =
+             #{offset VkMemoryAllocateFlagsInfoKHX, flags}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkMemoryAllocateFlagsInfoKHX, flags}
 
 instance CanReadField "flags" VkMemoryAllocateFlagsInfoKHX where
         {-# INLINE getField #-}
@@ -318,6 +345,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "deviceMask" VkMemoryAllocateFlagsInfoKHX = Word32
         type FieldOptional "deviceMask" VkMemoryAllocateFlagsInfoKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "deviceMask" VkMemoryAllocateFlagsInfoKHX =
+             #{offset VkMemoryAllocateFlagsInfoKHX, deviceMask}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkMemoryAllocateFlagsInfoKHX, deviceMask}
 
 instance CanReadField "deviceMask" VkMemoryAllocateFlagsInfoKHX
          where
@@ -474,6 +510,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkDeviceGroupRenderPassBeginInfoKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkDeviceGroupRenderPassBeginInfoKHX =
+             #{offset VkDeviceGroupRenderPassBeginInfoKHX, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupRenderPassBeginInfoKHX, sType}
 
 instance CanReadField "sType" VkDeviceGroupRenderPassBeginInfoKHX
          where
@@ -515,6 +560,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkDeviceGroupRenderPassBeginInfoKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkDeviceGroupRenderPassBeginInfoKHX =
+             #{offset VkDeviceGroupRenderPassBeginInfoKHX, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupRenderPassBeginInfoKHX, pNext}
 
 instance CanReadField "pNext" VkDeviceGroupRenderPassBeginInfoKHX
          where
@@ -556,6 +610,15 @@ instance {-# OVERLAPPING #-}
              Word32
         type FieldOptional "deviceMask" VkDeviceGroupRenderPassBeginInfoKHX
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "deviceMask" VkDeviceGroupRenderPassBeginInfoKHX =
+             #{offset VkDeviceGroupRenderPassBeginInfoKHX, deviceMask}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupRenderPassBeginInfoKHX, deviceMask}
 
 instance CanReadField "deviceMask"
            VkDeviceGroupRenderPassBeginInfoKHX
@@ -606,6 +669,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "deviceRenderAreaCount"
                VkDeviceGroupRenderPassBeginInfoKHX
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "deviceRenderAreaCount"
+               VkDeviceGroupRenderPassBeginInfoKHX
+             =
+             #{offset VkDeviceGroupRenderPassBeginInfoKHX, deviceRenderAreaCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupRenderPassBeginInfoKHX, deviceRenderAreaCount}
 
 instance CanReadField "deviceRenderAreaCount"
            VkDeviceGroupRenderPassBeginInfoKHX
@@ -653,6 +727,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pDeviceRenderAreas"
                VkDeviceGroupRenderPassBeginInfoKHX
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pDeviceRenderAreas"
+               VkDeviceGroupRenderPassBeginInfoKHX
+             =
+             #{offset VkDeviceGroupRenderPassBeginInfoKHX, pDeviceRenderAreas}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupRenderPassBeginInfoKHX, pDeviceRenderAreas}
 
 instance CanReadField "pDeviceRenderAreas"
            VkDeviceGroupRenderPassBeginInfoKHX
@@ -815,6 +900,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkDeviceGroupCommandBufferBeginInfoKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkDeviceGroupCommandBufferBeginInfoKHX =
+             #{offset VkDeviceGroupCommandBufferBeginInfoKHX, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupCommandBufferBeginInfoKHX, sType}
 
 instance CanReadField "sType"
            VkDeviceGroupCommandBufferBeginInfoKHX
@@ -858,6 +952,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkDeviceGroupCommandBufferBeginInfoKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkDeviceGroupCommandBufferBeginInfoKHX =
+             #{offset VkDeviceGroupCommandBufferBeginInfoKHX, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupCommandBufferBeginInfoKHX, pNext}
 
 instance CanReadField "pNext"
            VkDeviceGroupCommandBufferBeginInfoKHX
@@ -903,6 +1006,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "deviceMask"
                VkDeviceGroupCommandBufferBeginInfoKHX
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "deviceMask"
+               VkDeviceGroupCommandBufferBeginInfoKHX
+             =
+             #{offset VkDeviceGroupCommandBufferBeginInfoKHX, deviceMask}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupCommandBufferBeginInfoKHX, deviceMask}
 
 instance CanReadField "deviceMask"
            VkDeviceGroupCommandBufferBeginInfoKHX
@@ -1049,6 +1163,15 @@ instance {-# OVERLAPPING #-}
          HasField "sType" VkDeviceGroupSubmitInfoKHX where
         type FieldType "sType" VkDeviceGroupSubmitInfoKHX = VkStructureType
         type FieldOptional "sType" VkDeviceGroupSubmitInfoKHX = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkDeviceGroupSubmitInfoKHX =
+             #{offset VkDeviceGroupSubmitInfoKHX, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupSubmitInfoKHX, sType}
 
 instance CanReadField "sType" VkDeviceGroupSubmitInfoKHX where
         {-# INLINE getField #-}
@@ -1086,6 +1209,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkDeviceGroupSubmitInfoKHX where
         type FieldType "pNext" VkDeviceGroupSubmitInfoKHX = Ptr Void
         type FieldOptional "pNext" VkDeviceGroupSubmitInfoKHX = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkDeviceGroupSubmitInfoKHX =
+             #{offset VkDeviceGroupSubmitInfoKHX, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupSubmitInfoKHX, pNext}
 
 instance CanReadField "pNext" VkDeviceGroupSubmitInfoKHX where
         {-# INLINE getField #-}
@@ -1125,6 +1257,15 @@ instance {-# OVERLAPPING #-}
              Word32
         type FieldOptional "waitSemaphoreCount" VkDeviceGroupSubmitInfoKHX
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "waitSemaphoreCount" VkDeviceGroupSubmitInfoKHX =
+             #{offset VkDeviceGroupSubmitInfoKHX, waitSemaphoreCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupSubmitInfoKHX, waitSemaphoreCount}
 
 instance CanReadField "waitSemaphoreCount"
            VkDeviceGroupSubmitInfoKHX
@@ -1172,6 +1313,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pWaitSemaphoreDeviceIndices"
                VkDeviceGroupSubmitInfoKHX
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pWaitSemaphoreDeviceIndices"
+               VkDeviceGroupSubmitInfoKHX
+             =
+             #{offset VkDeviceGroupSubmitInfoKHX, pWaitSemaphoreDeviceIndices}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupSubmitInfoKHX, pWaitSemaphoreDeviceIndices}
 
 instance CanReadField "pWaitSemaphoreDeviceIndices"
            VkDeviceGroupSubmitInfoKHX
@@ -1215,6 +1367,15 @@ instance {-# OVERLAPPING #-}
              Word32
         type FieldOptional "commandBufferCount" VkDeviceGroupSubmitInfoKHX
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "commandBufferCount" VkDeviceGroupSubmitInfoKHX =
+             #{offset VkDeviceGroupSubmitInfoKHX, commandBufferCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupSubmitInfoKHX, commandBufferCount}
 
 instance CanReadField "commandBufferCount"
            VkDeviceGroupSubmitInfoKHX
@@ -1262,6 +1423,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pCommandBufferDeviceMasks"
                VkDeviceGroupSubmitInfoKHX
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pCommandBufferDeviceMasks"
+               VkDeviceGroupSubmitInfoKHX
+             =
+             #{offset VkDeviceGroupSubmitInfoKHX, pCommandBufferDeviceMasks}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupSubmitInfoKHX, pCommandBufferDeviceMasks}
 
 instance CanReadField "pCommandBufferDeviceMasks"
            VkDeviceGroupSubmitInfoKHX
@@ -1307,6 +1479,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "signalSemaphoreCount"
                VkDeviceGroupSubmitInfoKHX
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "signalSemaphoreCount" VkDeviceGroupSubmitInfoKHX
+             =
+             #{offset VkDeviceGroupSubmitInfoKHX, signalSemaphoreCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupSubmitInfoKHX, signalSemaphoreCount}
 
 instance CanReadField "signalSemaphoreCount"
            VkDeviceGroupSubmitInfoKHX
@@ -1355,6 +1537,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pSignalSemaphoreDeviceIndices"
                VkDeviceGroupSubmitInfoKHX
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pSignalSemaphoreDeviceIndices"
+               VkDeviceGroupSubmitInfoKHX
+             =
+             #{offset VkDeviceGroupSubmitInfoKHX, pSignalSemaphoreDeviceIndices}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupSubmitInfoKHX, pSignalSemaphoreDeviceIndices}
 
 instance CanReadField "pSignalSemaphoreDeviceIndices"
            VkDeviceGroupSubmitInfoKHX
@@ -1518,6 +1711,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "sType" VkDeviceGroupBindSparseInfoKHX =
              VkStructureType
         type FieldOptional "sType" VkDeviceGroupBindSparseInfoKHX = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkDeviceGroupBindSparseInfoKHX =
+             #{offset VkDeviceGroupBindSparseInfoKHX, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupBindSparseInfoKHX, sType}
 
 instance CanReadField "sType" VkDeviceGroupBindSparseInfoKHX where
         {-# INLINE getField #-}
@@ -1555,6 +1757,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkDeviceGroupBindSparseInfoKHX where
         type FieldType "pNext" VkDeviceGroupBindSparseInfoKHX = Ptr Void
         type FieldOptional "pNext" VkDeviceGroupBindSparseInfoKHX = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkDeviceGroupBindSparseInfoKHX =
+             #{offset VkDeviceGroupBindSparseInfoKHX, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupBindSparseInfoKHX, pNext}
 
 instance CanReadField "pNext" VkDeviceGroupBindSparseInfoKHX where
         {-# INLINE getField #-}
@@ -1596,6 +1807,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "resourceDeviceIndex"
                VkDeviceGroupBindSparseInfoKHX
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "resourceDeviceIndex"
+               VkDeviceGroupBindSparseInfoKHX
+             =
+             #{offset VkDeviceGroupBindSparseInfoKHX, resourceDeviceIndex}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupBindSparseInfoKHX, resourceDeviceIndex}
 
 instance CanReadField "resourceDeviceIndex"
            VkDeviceGroupBindSparseInfoKHX
@@ -1641,6 +1863,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "memoryDeviceIndex"
                VkDeviceGroupBindSparseInfoKHX
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "memoryDeviceIndex" VkDeviceGroupBindSparseInfoKHX
+             =
+             #{offset VkDeviceGroupBindSparseInfoKHX, memoryDeviceIndex}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupBindSparseInfoKHX, memoryDeviceIndex}
 
 instance CanReadField "memoryDeviceIndex"
            VkDeviceGroupBindSparseInfoKHX
@@ -1946,6 +2178,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkBindBufferMemoryDeviceGroupInfoKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkBindBufferMemoryDeviceGroupInfoKHX =
+             #{offset VkBindBufferMemoryDeviceGroupInfoKHX, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBindBufferMemoryDeviceGroupInfoKHX, sType}
 
 instance CanReadField "sType" VkBindBufferMemoryDeviceGroupInfoKHX
          where
@@ -1987,6 +2228,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkBindBufferMemoryDeviceGroupInfoKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkBindBufferMemoryDeviceGroupInfoKHX =
+             #{offset VkBindBufferMemoryDeviceGroupInfoKHX, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBindBufferMemoryDeviceGroupInfoKHX, pNext}
 
 instance CanReadField "pNext" VkBindBufferMemoryDeviceGroupInfoKHX
          where
@@ -2032,6 +2282,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "deviceIndexCount"
                VkBindBufferMemoryDeviceGroupInfoKHX
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "deviceIndexCount"
+               VkBindBufferMemoryDeviceGroupInfoKHX
+             =
+             #{offset VkBindBufferMemoryDeviceGroupInfoKHX, deviceIndexCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBindBufferMemoryDeviceGroupInfoKHX, deviceIndexCount}
 
 instance CanReadField "deviceIndexCount"
            VkBindBufferMemoryDeviceGroupInfoKHX
@@ -2079,6 +2340,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pDeviceIndices"
                VkBindBufferMemoryDeviceGroupInfoKHX
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pDeviceIndices"
+               VkBindBufferMemoryDeviceGroupInfoKHX
+             =
+             #{offset VkBindBufferMemoryDeviceGroupInfoKHX, pDeviceIndices}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBindBufferMemoryDeviceGroupInfoKHX, pDeviceIndices}
 
 instance CanReadField "pDeviceIndices"
            VkBindBufferMemoryDeviceGroupInfoKHX
@@ -2238,6 +2510,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkBindImageMemoryDeviceGroupInfoKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkBindImageMemoryDeviceGroupInfoKHX =
+             #{offset VkBindImageMemoryDeviceGroupInfoKHX, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBindImageMemoryDeviceGroupInfoKHX, sType}
 
 instance CanReadField "sType" VkBindImageMemoryDeviceGroupInfoKHX
          where
@@ -2279,6 +2560,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkBindImageMemoryDeviceGroupInfoKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkBindImageMemoryDeviceGroupInfoKHX =
+             #{offset VkBindImageMemoryDeviceGroupInfoKHX, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBindImageMemoryDeviceGroupInfoKHX, pNext}
 
 instance CanReadField "pNext" VkBindImageMemoryDeviceGroupInfoKHX
          where
@@ -2324,6 +2614,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "deviceIndexCount"
                VkBindImageMemoryDeviceGroupInfoKHX
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "deviceIndexCount"
+               VkBindImageMemoryDeviceGroupInfoKHX
+             =
+             #{offset VkBindImageMemoryDeviceGroupInfoKHX, deviceIndexCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBindImageMemoryDeviceGroupInfoKHX, deviceIndexCount}
 
 instance CanReadField "deviceIndexCount"
            VkBindImageMemoryDeviceGroupInfoKHX
@@ -2369,6 +2670,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pDeviceIndices"
                VkBindImageMemoryDeviceGroupInfoKHX
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pDeviceIndices"
+               VkBindImageMemoryDeviceGroupInfoKHX
+             =
+             #{offset VkBindImageMemoryDeviceGroupInfoKHX, pDeviceIndices}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBindImageMemoryDeviceGroupInfoKHX, pDeviceIndices}
 
 instance CanReadField "pDeviceIndices"
            VkBindImageMemoryDeviceGroupInfoKHX
@@ -2414,6 +2726,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "SFRRectCount"
                VkBindImageMemoryDeviceGroupInfoKHX
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "SFRRectCount" VkBindImageMemoryDeviceGroupInfoKHX
+             =
+             #{offset VkBindImageMemoryDeviceGroupInfoKHX, SFRRectCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBindImageMemoryDeviceGroupInfoKHX, SFRRectCount}
 
 instance CanReadField "SFRRectCount"
            VkBindImageMemoryDeviceGroupInfoKHX
@@ -2458,6 +2780,15 @@ instance {-# OVERLAPPING #-}
              Ptr VkRect2D
         type FieldOptional "pSFRRects" VkBindImageMemoryDeviceGroupInfoKHX
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pSFRRects" VkBindImageMemoryDeviceGroupInfoKHX =
+             #{offset VkBindImageMemoryDeviceGroupInfoKHX, pSFRRects}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBindImageMemoryDeviceGroupInfoKHX, pSFRRects}
 
 instance CanReadField "pSFRRects"
            VkBindImageMemoryDeviceGroupInfoKHX
@@ -2640,6 +2971,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkDeviceGroupPresentCapabilitiesKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkDeviceGroupPresentCapabilitiesKHX =
+             #{offset VkDeviceGroupPresentCapabilitiesKHX, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupPresentCapabilitiesKHX, sType}
 
 instance CanReadField "sType" VkDeviceGroupPresentCapabilitiesKHX
          where
@@ -2676,6 +3016,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkDeviceGroupPresentCapabilitiesKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkDeviceGroupPresentCapabilitiesKHX =
+             #{offset VkDeviceGroupPresentCapabilitiesKHX, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupPresentCapabilitiesKHX, pNext}
 
 instance CanReadField "pNext" VkDeviceGroupPresentCapabilitiesKHX
          where
@@ -2720,6 +3069,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "presentMask"
                VkDeviceGroupPresentCapabilitiesKHX
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "presentMask" VkDeviceGroupPresentCapabilitiesKHX
+             =
+             #{offset VkDeviceGroupPresentCapabilitiesKHX, presentMask}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupPresentCapabilitiesKHX, presentMask}
 
 instance (KnownNat idx,
           IndexInBounds "presentMask" idx
@@ -2749,6 +3108,9 @@ instance (KnownNat idx,
         type FieldArrayLength "presentMask"
                VkDeviceGroupPresentCapabilitiesKHX
              = VK_MAX_DEVICE_GROUP_SIZE_KHX
+
+        {-# INLINE fieldArrayLength #-}
+        fieldArrayLength = VK_MAX_DEVICE_GROUP_SIZE_KHX
 
         {-# INLINE getFieldArray #-}
         getFieldArray x
@@ -2788,6 +3150,15 @@ instance {-# OVERLAPPING #-}
              VkDeviceGroupPresentModeFlagsKHX
         type FieldOptional "modes" VkDeviceGroupPresentCapabilitiesKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "modes" VkDeviceGroupPresentCapabilitiesKHX =
+             #{offset VkDeviceGroupPresentCapabilitiesKHX, modes}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupPresentCapabilitiesKHX, modes}
 
 instance CanReadField "modes" VkDeviceGroupPresentCapabilitiesKHX
          where
@@ -2994,6 +3365,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "sType" VkImageSwapchainCreateInfoKHX =
              VkStructureType
         type FieldOptional "sType" VkImageSwapchainCreateInfoKHX = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkImageSwapchainCreateInfoKHX =
+             #{offset VkImageSwapchainCreateInfoKHX, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImageSwapchainCreateInfoKHX, sType}
 
 instance CanReadField "sType" VkImageSwapchainCreateInfoKHX where
         {-# INLINE getField #-}
@@ -3031,6 +3411,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkImageSwapchainCreateInfoKHX where
         type FieldType "pNext" VkImageSwapchainCreateInfoKHX = Ptr Void
         type FieldOptional "pNext" VkImageSwapchainCreateInfoKHX = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkImageSwapchainCreateInfoKHX =
+             #{offset VkImageSwapchainCreateInfoKHX, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImageSwapchainCreateInfoKHX, pNext}
 
 instance CanReadField "pNext" VkImageSwapchainCreateInfoKHX where
         {-# INLINE getField #-}
@@ -3071,6 +3460,15 @@ instance {-# OVERLAPPING #-}
              VkSwapchainKHR
         type FieldOptional "swapchain" VkImageSwapchainCreateInfoKHX =
              'True -- ' closing tick for hsc2hs
+        type FieldOffset "swapchain" VkImageSwapchainCreateInfoKHX =
+             #{offset VkImageSwapchainCreateInfoKHX, swapchain}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImageSwapchainCreateInfoKHX, swapchain}
 
 instance CanReadField "swapchain" VkImageSwapchainCreateInfoKHX
          where
@@ -3218,6 +3616,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkBindImageMemorySwapchainInfoKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkBindImageMemorySwapchainInfoKHX =
+             #{offset VkBindImageMemorySwapchainInfoKHX, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBindImageMemorySwapchainInfoKHX, sType}
 
 instance CanReadField "sType" VkBindImageMemorySwapchainInfoKHX
          where
@@ -3258,6 +3665,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "pNext" VkBindImageMemorySwapchainInfoKHX = Ptr Void
         type FieldOptional "pNext" VkBindImageMemorySwapchainInfoKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkBindImageMemorySwapchainInfoKHX =
+             #{offset VkBindImageMemorySwapchainInfoKHX, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBindImageMemorySwapchainInfoKHX, pNext}
 
 instance CanReadField "pNext" VkBindImageMemorySwapchainInfoKHX
          where
@@ -3300,6 +3716,15 @@ instance {-# OVERLAPPING #-}
              VkSwapchainKHR
         type FieldOptional "swapchain" VkBindImageMemorySwapchainInfoKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "swapchain" VkBindImageMemorySwapchainInfoKHX =
+             #{offset VkBindImageMemorySwapchainInfoKHX, swapchain}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBindImageMemorySwapchainInfoKHX, swapchain}
 
 instance CanReadField "swapchain" VkBindImageMemorySwapchainInfoKHX
          where
@@ -3342,6 +3767,15 @@ instance {-# OVERLAPPING #-}
              Word32
         type FieldOptional "imageIndex" VkBindImageMemorySwapchainInfoKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "imageIndex" VkBindImageMemorySwapchainInfoKHX =
+             #{offset VkBindImageMemorySwapchainInfoKHX, imageIndex}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBindImageMemorySwapchainInfoKHX, imageIndex}
 
 instance CanReadField "imageIndex"
            VkBindImageMemorySwapchainInfoKHX
@@ -3490,6 +3924,15 @@ instance {-# OVERLAPPING #-}
          HasField "sType" VkAcquireNextImageInfoKHX where
         type FieldType "sType" VkAcquireNextImageInfoKHX = VkStructureType
         type FieldOptional "sType" VkAcquireNextImageInfoKHX = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkAcquireNextImageInfoKHX =
+             #{offset VkAcquireNextImageInfoKHX, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkAcquireNextImageInfoKHX, sType}
 
 instance CanReadField "sType" VkAcquireNextImageInfoKHX where
         {-# INLINE getField #-}
@@ -3527,6 +3970,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkAcquireNextImageInfoKHX where
         type FieldType "pNext" VkAcquireNextImageInfoKHX = Ptr Void
         type FieldOptional "pNext" VkAcquireNextImageInfoKHX = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkAcquireNextImageInfoKHX =
+             #{offset VkAcquireNextImageInfoKHX, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkAcquireNextImageInfoKHX, pNext}
 
 instance CanReadField "pNext" VkAcquireNextImageInfoKHX where
         {-# INLINE getField #-}
@@ -3565,6 +4017,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "swapchain" VkAcquireNextImageInfoKHX =
              VkSwapchainKHR
         type FieldOptional "swapchain" VkAcquireNextImageInfoKHX = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "swapchain" VkAcquireNextImageInfoKHX =
+             #{offset VkAcquireNextImageInfoKHX, swapchain}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkAcquireNextImageInfoKHX, swapchain}
 
 instance CanReadField "swapchain" VkAcquireNextImageInfoKHX where
         {-# INLINE getField #-}
@@ -3602,6 +4063,15 @@ instance {-# OVERLAPPING #-}
          HasField "timeout" VkAcquireNextImageInfoKHX where
         type FieldType "timeout" VkAcquireNextImageInfoKHX = Word64
         type FieldOptional "timeout" VkAcquireNextImageInfoKHX = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "timeout" VkAcquireNextImageInfoKHX =
+             #{offset VkAcquireNextImageInfoKHX, timeout}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkAcquireNextImageInfoKHX, timeout}
 
 instance CanReadField "timeout" VkAcquireNextImageInfoKHX where
         {-# INLINE getField #-}
@@ -3639,6 +4109,15 @@ instance {-# OVERLAPPING #-}
          HasField "semaphore" VkAcquireNextImageInfoKHX where
         type FieldType "semaphore" VkAcquireNextImageInfoKHX = VkSemaphore
         type FieldOptional "semaphore" VkAcquireNextImageInfoKHX = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "semaphore" VkAcquireNextImageInfoKHX =
+             #{offset VkAcquireNextImageInfoKHX, semaphore}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkAcquireNextImageInfoKHX, semaphore}
 
 instance CanReadField "semaphore" VkAcquireNextImageInfoKHX where
         {-# INLINE getField #-}
@@ -3676,6 +4155,15 @@ instance {-# OVERLAPPING #-}
          HasField "fence" VkAcquireNextImageInfoKHX where
         type FieldType "fence" VkAcquireNextImageInfoKHX = VkFence
         type FieldOptional "fence" VkAcquireNextImageInfoKHX = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "fence" VkAcquireNextImageInfoKHX =
+             #{offset VkAcquireNextImageInfoKHX, fence}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkAcquireNextImageInfoKHX, fence}
 
 instance CanReadField "fence" VkAcquireNextImageInfoKHX where
         {-# INLINE getField #-}
@@ -3713,6 +4201,15 @@ instance {-# OVERLAPPING #-}
          HasField "deviceMask" VkAcquireNextImageInfoKHX where
         type FieldType "deviceMask" VkAcquireNextImageInfoKHX = Word32
         type FieldOptional "deviceMask" VkAcquireNextImageInfoKHX = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "deviceMask" VkAcquireNextImageInfoKHX =
+             #{offset VkAcquireNextImageInfoKHX, deviceMask}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkAcquireNextImageInfoKHX, deviceMask}
 
 instance CanReadField "deviceMask" VkAcquireNextImageInfoKHX where
         {-# INLINE getField #-}
@@ -3865,6 +4362,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "sType" VkDeviceGroupPresentInfoKHX =
              VkStructureType
         type FieldOptional "sType" VkDeviceGroupPresentInfoKHX = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkDeviceGroupPresentInfoKHX =
+             #{offset VkDeviceGroupPresentInfoKHX, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupPresentInfoKHX, sType}
 
 instance CanReadField "sType" VkDeviceGroupPresentInfoKHX where
         {-# INLINE getField #-}
@@ -3902,6 +4408,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkDeviceGroupPresentInfoKHX where
         type FieldType "pNext" VkDeviceGroupPresentInfoKHX = Ptr Void
         type FieldOptional "pNext" VkDeviceGroupPresentInfoKHX = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkDeviceGroupPresentInfoKHX =
+             #{offset VkDeviceGroupPresentInfoKHX, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupPresentInfoKHX, pNext}
 
 instance CanReadField "pNext" VkDeviceGroupPresentInfoKHX where
         {-# INLINE getField #-}
@@ -3941,6 +4456,15 @@ instance {-# OVERLAPPING #-}
              Word32
         type FieldOptional "swapchainCount" VkDeviceGroupPresentInfoKHX =
              'True -- ' closing tick for hsc2hs
+        type FieldOffset "swapchainCount" VkDeviceGroupPresentInfoKHX =
+             #{offset VkDeviceGroupPresentInfoKHX, swapchainCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupPresentInfoKHX, swapchainCount}
 
 instance CanReadField "swapchainCount" VkDeviceGroupPresentInfoKHX
          where
@@ -3982,6 +4506,15 @@ instance {-# OVERLAPPING #-}
              Ptr Word32
         type FieldOptional "pDeviceMasks" VkDeviceGroupPresentInfoKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pDeviceMasks" VkDeviceGroupPresentInfoKHX =
+             #{offset VkDeviceGroupPresentInfoKHX, pDeviceMasks}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupPresentInfoKHX, pDeviceMasks}
 
 instance CanReadField "pDeviceMasks" VkDeviceGroupPresentInfoKHX
          where
@@ -4023,6 +4556,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "mode" VkDeviceGroupPresentInfoKHX =
              VkDeviceGroupPresentModeFlagBitsKHX
         type FieldOptional "mode" VkDeviceGroupPresentInfoKHX = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "mode" VkDeviceGroupPresentInfoKHX =
+             #{offset VkDeviceGroupPresentInfoKHX, mode}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupPresentInfoKHX, mode}
 
 instance CanReadField "mode" VkDeviceGroupPresentInfoKHX where
         {-# INLINE getField #-}
@@ -4177,6 +4719,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkDeviceGroupSwapchainCreateInfoKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkDeviceGroupSwapchainCreateInfoKHX =
+             #{offset VkDeviceGroupSwapchainCreateInfoKHX, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupSwapchainCreateInfoKHX, sType}
 
 instance CanReadField "sType" VkDeviceGroupSwapchainCreateInfoKHX
          where
@@ -4218,6 +4769,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkDeviceGroupSwapchainCreateInfoKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkDeviceGroupSwapchainCreateInfoKHX =
+             #{offset VkDeviceGroupSwapchainCreateInfoKHX, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupSwapchainCreateInfoKHX, pNext}
 
 instance CanReadField "pNext" VkDeviceGroupSwapchainCreateInfoKHX
          where
@@ -4260,6 +4820,15 @@ instance {-# OVERLAPPING #-}
              VkDeviceGroupPresentModeFlagsKHX
         type FieldOptional "modes" VkDeviceGroupSwapchainCreateInfoKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "modes" VkDeviceGroupSwapchainCreateInfoKHX =
+             #{offset VkDeviceGroupSwapchainCreateInfoKHX, modes}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupSwapchainCreateInfoKHX, modes}
 
 instance CanReadField "modes" VkDeviceGroupSwapchainCreateInfoKHX
          where

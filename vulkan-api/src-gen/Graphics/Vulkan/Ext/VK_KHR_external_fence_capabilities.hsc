@@ -183,6 +183,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkPhysicalDeviceExternalFenceInfoKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkPhysicalDeviceExternalFenceInfoKHR =
+             #{offset VkPhysicalDeviceExternalFenceInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceExternalFenceInfoKHR, sType}
 
 instance CanReadField "sType" VkPhysicalDeviceExternalFenceInfoKHR
          where
@@ -224,6 +233,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkPhysicalDeviceExternalFenceInfoKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkPhysicalDeviceExternalFenceInfoKHR =
+             #{offset VkPhysicalDeviceExternalFenceInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceExternalFenceInfoKHR, pNext}
 
 instance CanReadField "pNext" VkPhysicalDeviceExternalFenceInfoKHR
          where
@@ -267,6 +285,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "handleType"
                VkPhysicalDeviceExternalFenceInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "handleType" VkPhysicalDeviceExternalFenceInfoKHR
+             =
+             #{offset VkPhysicalDeviceExternalFenceInfoKHR, handleType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceExternalFenceInfoKHR, handleType}
 
 instance CanReadField "handleType"
            VkPhysicalDeviceExternalFenceInfoKHR
@@ -412,6 +440,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "sType" VkExternalFencePropertiesKHR =
              VkStructureType
         type FieldOptional "sType" VkExternalFencePropertiesKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkExternalFencePropertiesKHR =
+             #{offset VkExternalFencePropertiesKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExternalFencePropertiesKHR, sType}
 
 instance CanReadField "sType" VkExternalFencePropertiesKHR where
         {-# INLINE getField #-}
@@ -445,6 +482,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkExternalFencePropertiesKHR where
         type FieldType "pNext" VkExternalFencePropertiesKHR = Ptr Void
         type FieldOptional "pNext" VkExternalFencePropertiesKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkExternalFencePropertiesKHR =
+             #{offset VkExternalFencePropertiesKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExternalFencePropertiesKHR, pNext}
 
 instance CanReadField "pNext" VkExternalFencePropertiesKHR where
         {-# INLINE getField #-}
@@ -487,6 +533,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "exportFromImportedHandleTypes"
                VkExternalFencePropertiesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "exportFromImportedHandleTypes"
+               VkExternalFencePropertiesKHR
+             =
+             #{offset VkExternalFencePropertiesKHR, exportFromImportedHandleTypes}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExternalFencePropertiesKHR, exportFromImportedHandleTypes}
 
 instance CanReadField "exportFromImportedHandleTypes"
            VkExternalFencePropertiesKHR
@@ -526,6 +583,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "compatibleHandleTypes"
                VkExternalFencePropertiesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "compatibleHandleTypes"
+               VkExternalFencePropertiesKHR
+             =
+             #{offset VkExternalFencePropertiesKHR, compatibleHandleTypes}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExternalFencePropertiesKHR, compatibleHandleTypes}
 
 instance CanReadField "compatibleHandleTypes"
            VkExternalFencePropertiesKHR
@@ -565,6 +633,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "externalFenceFeatures"
                VkExternalFencePropertiesKHR
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "externalFenceFeatures"
+               VkExternalFencePropertiesKHR
+             =
+             #{offset VkExternalFencePropertiesKHR, externalFenceFeatures}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExternalFencePropertiesKHR, externalFenceFeatures}
 
 instance CanReadField "externalFenceFeatures"
            VkExternalFencePropertiesKHR

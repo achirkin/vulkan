@@ -185,6 +185,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkWin32KeyedMutexAcquireReleaseInfoNV =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkWin32KeyedMutexAcquireReleaseInfoNV =
+             #{offset VkWin32KeyedMutexAcquireReleaseInfoNV, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkWin32KeyedMutexAcquireReleaseInfoNV, sType}
 
 instance CanReadField "sType" VkWin32KeyedMutexAcquireReleaseInfoNV
          where
@@ -227,6 +236,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkWin32KeyedMutexAcquireReleaseInfoNV =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkWin32KeyedMutexAcquireReleaseInfoNV =
+             #{offset VkWin32KeyedMutexAcquireReleaseInfoNV, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkWin32KeyedMutexAcquireReleaseInfoNV, pNext}
 
 instance CanReadField "pNext" VkWin32KeyedMutexAcquireReleaseInfoNV
          where
@@ -271,6 +289,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "acquireCount"
                VkWin32KeyedMutexAcquireReleaseInfoNV
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "acquireCount"
+               VkWin32KeyedMutexAcquireReleaseInfoNV
+             =
+             #{offset VkWin32KeyedMutexAcquireReleaseInfoNV, acquireCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkWin32KeyedMutexAcquireReleaseInfoNV, acquireCount}
 
 instance CanReadField "acquireCount"
            VkWin32KeyedMutexAcquireReleaseInfoNV
@@ -318,6 +347,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pAcquireSyncs"
                VkWin32KeyedMutexAcquireReleaseInfoNV
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pAcquireSyncs"
+               VkWin32KeyedMutexAcquireReleaseInfoNV
+             =
+             #{offset VkWin32KeyedMutexAcquireReleaseInfoNV, pAcquireSyncs}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkWin32KeyedMutexAcquireReleaseInfoNV, pAcquireSyncs}
 
 instance CanReadField "pAcquireSyncs"
            VkWin32KeyedMutexAcquireReleaseInfoNV
@@ -363,6 +403,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pAcquireKeys"
                VkWin32KeyedMutexAcquireReleaseInfoNV
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pAcquireKeys"
+               VkWin32KeyedMutexAcquireReleaseInfoNV
+             =
+             #{offset VkWin32KeyedMutexAcquireReleaseInfoNV, pAcquireKeys}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkWin32KeyedMutexAcquireReleaseInfoNV, pAcquireKeys}
 
 instance CanReadField "pAcquireKeys"
            VkWin32KeyedMutexAcquireReleaseInfoNV
@@ -414,6 +465,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pAcquireTimeoutMilliseconds"
                VkWin32KeyedMutexAcquireReleaseInfoNV
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pAcquireTimeoutMilliseconds"
+               VkWin32KeyedMutexAcquireReleaseInfoNV
+             =
+             #{offset VkWin32KeyedMutexAcquireReleaseInfoNV, pAcquireTimeoutMilliseconds}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkWin32KeyedMutexAcquireReleaseInfoNV, pAcquireTimeoutMilliseconds}
 
 instance CanReadField "pAcquireTimeoutMilliseconds"
            VkWin32KeyedMutexAcquireReleaseInfoNV
@@ -459,6 +521,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "releaseCount"
                VkWin32KeyedMutexAcquireReleaseInfoNV
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "releaseCount"
+               VkWin32KeyedMutexAcquireReleaseInfoNV
+             =
+             #{offset VkWin32KeyedMutexAcquireReleaseInfoNV, releaseCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkWin32KeyedMutexAcquireReleaseInfoNV, releaseCount}
 
 instance CanReadField "releaseCount"
            VkWin32KeyedMutexAcquireReleaseInfoNV
@@ -506,6 +579,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pReleaseSyncs"
                VkWin32KeyedMutexAcquireReleaseInfoNV
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pReleaseSyncs"
+               VkWin32KeyedMutexAcquireReleaseInfoNV
+             =
+             #{offset VkWin32KeyedMutexAcquireReleaseInfoNV, pReleaseSyncs}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkWin32KeyedMutexAcquireReleaseInfoNV, pReleaseSyncs}
 
 instance CanReadField "pReleaseSyncs"
            VkWin32KeyedMutexAcquireReleaseInfoNV
@@ -551,6 +635,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pReleaseKeys"
                VkWin32KeyedMutexAcquireReleaseInfoNV
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pReleaseKeys"
+               VkWin32KeyedMutexAcquireReleaseInfoNV
+             =
+             #{offset VkWin32KeyedMutexAcquireReleaseInfoNV, pReleaseKeys}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkWin32KeyedMutexAcquireReleaseInfoNV, pReleaseKeys}
 
 instance CanReadField "pReleaseKeys"
            VkWin32KeyedMutexAcquireReleaseInfoNV

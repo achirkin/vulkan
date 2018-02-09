@@ -169,6 +169,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "imageFormatProperties"
                VkExternalImageFormatPropertiesNV
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "imageFormatProperties"
+               VkExternalImageFormatPropertiesNV
+             =
+             #{offset VkExternalImageFormatPropertiesNV, imageFormatProperties}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExternalImageFormatPropertiesNV, imageFormatProperties}
 
 instance CanReadField "imageFormatProperties"
            VkExternalImageFormatPropertiesNV
@@ -211,6 +222,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "externalMemoryFeatures"
                VkExternalImageFormatPropertiesNV
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "externalMemoryFeatures"
+               VkExternalImageFormatPropertiesNV
+             =
+             #{offset VkExternalImageFormatPropertiesNV, externalMemoryFeatures}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExternalImageFormatPropertiesNV, externalMemoryFeatures}
 
 instance CanReadField "externalMemoryFeatures"
            VkExternalImageFormatPropertiesNV
@@ -256,6 +278,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "exportFromImportedHandleTypes"
                VkExternalImageFormatPropertiesNV
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "exportFromImportedHandleTypes"
+               VkExternalImageFormatPropertiesNV
+             =
+             #{offset VkExternalImageFormatPropertiesNV, exportFromImportedHandleTypes}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExternalImageFormatPropertiesNV, exportFromImportedHandleTypes}
 
 instance CanReadField "exportFromImportedHandleTypes"
            VkExternalImageFormatPropertiesNV
@@ -297,6 +330,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "compatibleHandleTypes"
                VkExternalImageFormatPropertiesNV
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "compatibleHandleTypes"
+               VkExternalImageFormatPropertiesNV
+             =
+             #{offset VkExternalImageFormatPropertiesNV, compatibleHandleTypes}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExternalImageFormatPropertiesNV, compatibleHandleTypes}
 
 instance CanReadField "compatibleHandleTypes"
            VkExternalImageFormatPropertiesNV

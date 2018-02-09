@@ -224,6 +224,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType"
                VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType"
+               VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
+             =
+             #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, sType}
 
 instance CanReadField "sType"
            VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
@@ -271,6 +282,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext"
                VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext"
+               VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
+             =
+             #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, pNext}
 
 instance CanReadField "pNext"
            VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
@@ -322,6 +344,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "advancedBlendCoherentOperations"
                VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "advancedBlendCoherentOperations"
+               VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
+             =
+             #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, advancedBlendCoherentOperations}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, advancedBlendCoherentOperations}
 
 instance CanReadField "advancedBlendCoherentOperations"
            VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
@@ -502,6 +535,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType"
                VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType"
+               VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+             =
+             #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, sType}
 
 instance CanReadField "sType"
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
@@ -546,6 +590,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext"
                VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext"
+               VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+             =
+             #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, pNext}
 
 instance CanReadField "pNext"
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
@@ -591,6 +646,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "advancedBlendMaxColorAttachments"
                VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "advancedBlendMaxColorAttachments"
+               VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+             =
+             #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendMaxColorAttachments}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendMaxColorAttachments}
 
 instance CanReadField "advancedBlendMaxColorAttachments"
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
@@ -636,6 +702,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "advancedBlendIndependentBlend"
                VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "advancedBlendIndependentBlend"
+               VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+             =
+             #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendIndependentBlend}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendIndependentBlend}
 
 instance CanReadField "advancedBlendIndependentBlend"
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
@@ -681,6 +758,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "advancedBlendNonPremultipliedSrcColor"
                VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "advancedBlendNonPremultipliedSrcColor"
+               VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+             =
+             #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendNonPremultipliedSrcColor}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendNonPremultipliedSrcColor}
 
 instance CanReadField "advancedBlendNonPremultipliedSrcColor"
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
@@ -726,6 +814,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "advancedBlendNonPremultipliedDstColor"
                VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "advancedBlendNonPremultipliedDstColor"
+               VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+             =
+             #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendNonPremultipliedDstColor}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendNonPremultipliedDstColor}
 
 instance CanReadField "advancedBlendNonPremultipliedDstColor"
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
@@ -771,6 +870,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "advancedBlendCorrelatedOverlap"
                VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "advancedBlendCorrelatedOverlap"
+               VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+             =
+             #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendCorrelatedOverlap}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendCorrelatedOverlap}
 
 instance CanReadField "advancedBlendCorrelatedOverlap"
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
@@ -816,6 +926,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "advancedBlendAllOperations"
                VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "advancedBlendAllOperations"
+               VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+             =
+             #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendAllOperations}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendAllOperations}
 
 instance CanReadField "advancedBlendAllOperations"
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
@@ -1001,6 +1122,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType"
                VkPipelineColorBlendAdvancedStateCreateInfoEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType"
+               VkPipelineColorBlendAdvancedStateCreateInfoEXT
+             =
+             #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, sType}
 
 instance CanReadField "sType"
            VkPipelineColorBlendAdvancedStateCreateInfoEXT
@@ -1048,6 +1180,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext"
                VkPipelineColorBlendAdvancedStateCreateInfoEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext"
+               VkPipelineColorBlendAdvancedStateCreateInfoEXT
+             =
+             #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, pNext}
 
 instance CanReadField "pNext"
            VkPipelineColorBlendAdvancedStateCreateInfoEXT
@@ -1099,6 +1242,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "srcPremultiplied"
                VkPipelineColorBlendAdvancedStateCreateInfoEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "srcPremultiplied"
+               VkPipelineColorBlendAdvancedStateCreateInfoEXT
+             =
+             #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, srcPremultiplied}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, srcPremultiplied}
 
 instance CanReadField "srcPremultiplied"
            VkPipelineColorBlendAdvancedStateCreateInfoEXT
@@ -1150,6 +1304,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "dstPremultiplied"
                VkPipelineColorBlendAdvancedStateCreateInfoEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "dstPremultiplied"
+               VkPipelineColorBlendAdvancedStateCreateInfoEXT
+             =
+             #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, dstPremultiplied}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, dstPremultiplied}
 
 instance CanReadField "dstPremultiplied"
            VkPipelineColorBlendAdvancedStateCreateInfoEXT
@@ -1200,6 +1365,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "blendOverlap"
                VkPipelineColorBlendAdvancedStateCreateInfoEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "blendOverlap"
+               VkPipelineColorBlendAdvancedStateCreateInfoEXT
+             =
+             #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, blendOverlap}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, blendOverlap}
 
 instance CanReadField "blendOverlap"
            VkPipelineColorBlendAdvancedStateCreateInfoEXT

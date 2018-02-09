@@ -166,6 +166,15 @@ instance {-# OVERLAPPING #-}
          HasField "sType" VkIOSSurfaceCreateInfoMVK where
         type FieldType "sType" VkIOSSurfaceCreateInfoMVK = VkStructureType
         type FieldOptional "sType" VkIOSSurfaceCreateInfoMVK = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkIOSSurfaceCreateInfoMVK =
+             #{offset VkIOSSurfaceCreateInfoMVK, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkIOSSurfaceCreateInfoMVK, sType}
 
 instance CanReadField "sType" VkIOSSurfaceCreateInfoMVK where
         {-# INLINE getField #-}
@@ -203,6 +212,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkIOSSurfaceCreateInfoMVK where
         type FieldType "pNext" VkIOSSurfaceCreateInfoMVK = Ptr Void
         type FieldOptional "pNext" VkIOSSurfaceCreateInfoMVK = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkIOSSurfaceCreateInfoMVK =
+             #{offset VkIOSSurfaceCreateInfoMVK, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkIOSSurfaceCreateInfoMVK, pNext}
 
 instance CanReadField "pNext" VkIOSSurfaceCreateInfoMVK where
         {-# INLINE getField #-}
@@ -242,6 +260,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "flags" VkIOSSurfaceCreateInfoMVK =
              VkIOSSurfaceCreateFlagsMVK
         type FieldOptional "flags" VkIOSSurfaceCreateInfoMVK = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "flags" VkIOSSurfaceCreateInfoMVK =
+             #{offset VkIOSSurfaceCreateInfoMVK, flags}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkIOSSurfaceCreateInfoMVK, flags}
 
 instance CanReadField "flags" VkIOSSurfaceCreateInfoMVK where
         {-# INLINE getField #-}
@@ -279,6 +306,15 @@ instance {-# OVERLAPPING #-}
          HasField "pView" VkIOSSurfaceCreateInfoMVK where
         type FieldType "pView" VkIOSSurfaceCreateInfoMVK = Ptr Void
         type FieldOptional "pView" VkIOSSurfaceCreateInfoMVK = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pView" VkIOSSurfaceCreateInfoMVK =
+             #{offset VkIOSSurfaceCreateInfoMVK, pView}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkIOSSurfaceCreateInfoMVK, pView}
 
 instance CanReadField "pView" VkIOSSurfaceCreateInfoMVK where
         {-# INLINE getField #-}

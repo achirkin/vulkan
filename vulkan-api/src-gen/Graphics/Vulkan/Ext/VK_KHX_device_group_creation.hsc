@@ -176,6 +176,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkPhysicalDeviceGroupPropertiesKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkPhysicalDeviceGroupPropertiesKHX =
+             #{offset VkPhysicalDeviceGroupPropertiesKHX, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceGroupPropertiesKHX, sType}
 
 instance CanReadField "sType" VkPhysicalDeviceGroupPropertiesKHX
          where
@@ -212,6 +221,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkPhysicalDeviceGroupPropertiesKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkPhysicalDeviceGroupPropertiesKHX =
+             #{offset VkPhysicalDeviceGroupPropertiesKHX, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceGroupPropertiesKHX, pNext}
 
 instance CanReadField "pNext" VkPhysicalDeviceGroupPropertiesKHX
          where
@@ -252,6 +270,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "physicalDeviceCount"
                VkPhysicalDeviceGroupPropertiesKHX
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "physicalDeviceCount"
+               VkPhysicalDeviceGroupPropertiesKHX
+             =
+             #{offset VkPhysicalDeviceGroupPropertiesKHX, physicalDeviceCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceGroupPropertiesKHX, physicalDeviceCount}
 
 instance CanReadField "physicalDeviceCount"
            VkPhysicalDeviceGroupPropertiesKHX
@@ -297,6 +326,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "physicalDevices"
                VkPhysicalDeviceGroupPropertiesKHX
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "physicalDevices"
+               VkPhysicalDeviceGroupPropertiesKHX
+             =
+             #{offset VkPhysicalDeviceGroupPropertiesKHX, physicalDevices}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceGroupPropertiesKHX, physicalDevices}
 
 instance (KnownNat idx,
           IndexInBounds "physicalDevices" idx
@@ -326,6 +366,9 @@ instance (KnownNat idx,
         type FieldArrayLength "physicalDevices"
                VkPhysicalDeviceGroupPropertiesKHX
              = VK_MAX_DEVICE_GROUP_SIZE_KHX
+
+        {-# INLINE fieldArrayLength #-}
+        fieldArrayLength = VK_MAX_DEVICE_GROUP_SIZE_KHX
 
         {-# INLINE getFieldArray #-}
         getFieldArray x
@@ -368,6 +411,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "subsetAllocation"
                VkPhysicalDeviceGroupPropertiesKHX
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "subsetAllocation"
+               VkPhysicalDeviceGroupPropertiesKHX
+             =
+             #{offset VkPhysicalDeviceGroupPropertiesKHX, subsetAllocation}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceGroupPropertiesKHX, subsetAllocation}
 
 instance CanReadField "subsetAllocation"
            VkPhysicalDeviceGroupPropertiesKHX
@@ -519,6 +573,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkDeviceGroupDeviceCreateInfoKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkDeviceGroupDeviceCreateInfoKHX =
+             #{offset VkDeviceGroupDeviceCreateInfoKHX, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupDeviceCreateInfoKHX, sType}
 
 instance CanReadField "sType" VkDeviceGroupDeviceCreateInfoKHX
          where
@@ -559,6 +622,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "pNext" VkDeviceGroupDeviceCreateInfoKHX = Ptr Void
         type FieldOptional "pNext" VkDeviceGroupDeviceCreateInfoKHX =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkDeviceGroupDeviceCreateInfoKHX =
+             #{offset VkDeviceGroupDeviceCreateInfoKHX, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupDeviceCreateInfoKHX, pNext}
 
 instance CanReadField "pNext" VkDeviceGroupDeviceCreateInfoKHX
          where
@@ -604,6 +676,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "physicalDeviceCount"
                VkDeviceGroupDeviceCreateInfoKHX
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "physicalDeviceCount"
+               VkDeviceGroupDeviceCreateInfoKHX
+             =
+             #{offset VkDeviceGroupDeviceCreateInfoKHX, physicalDeviceCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupDeviceCreateInfoKHX, physicalDeviceCount}
 
 instance CanReadField "physicalDeviceCount"
            VkDeviceGroupDeviceCreateInfoKHX
@@ -649,6 +732,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pPhysicalDevices"
                VkDeviceGroupDeviceCreateInfoKHX
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pPhysicalDevices"
+               VkDeviceGroupDeviceCreateInfoKHX
+             =
+             #{offset VkDeviceGroupDeviceCreateInfoKHX, pPhysicalDevices}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceGroupDeviceCreateInfoKHX, pPhysicalDevices}
 
 instance CanReadField "pPhysicalDevices"
            VkDeviceGroupDeviceCreateInfoKHX

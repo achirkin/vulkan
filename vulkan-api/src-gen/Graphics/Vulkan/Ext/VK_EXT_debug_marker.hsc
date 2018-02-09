@@ -175,6 +175,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "sType" VkDebugMarkerObjectNameInfoEXT =
              VkStructureType
         type FieldOptional "sType" VkDebugMarkerObjectNameInfoEXT = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkDebugMarkerObjectNameInfoEXT =
+             #{offset VkDebugMarkerObjectNameInfoEXT, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDebugMarkerObjectNameInfoEXT, sType}
 
 instance CanReadField "sType" VkDebugMarkerObjectNameInfoEXT where
         {-# INLINE getField #-}
@@ -212,6 +221,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkDebugMarkerObjectNameInfoEXT where
         type FieldType "pNext" VkDebugMarkerObjectNameInfoEXT = Ptr Void
         type FieldOptional "pNext" VkDebugMarkerObjectNameInfoEXT = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkDebugMarkerObjectNameInfoEXT =
+             #{offset VkDebugMarkerObjectNameInfoEXT, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDebugMarkerObjectNameInfoEXT, pNext}
 
 instance CanReadField "pNext" VkDebugMarkerObjectNameInfoEXT where
         {-# INLINE getField #-}
@@ -252,6 +270,15 @@ instance {-# OVERLAPPING #-}
              VkDebugReportObjectTypeEXT
         type FieldOptional "objectType" VkDebugMarkerObjectNameInfoEXT =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "objectType" VkDebugMarkerObjectNameInfoEXT =
+             #{offset VkDebugMarkerObjectNameInfoEXT, objectType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDebugMarkerObjectNameInfoEXT, objectType}
 
 instance CanReadField "objectType" VkDebugMarkerObjectNameInfoEXT
          where
@@ -291,6 +318,15 @@ instance {-# OVERLAPPING #-}
          HasField "object" VkDebugMarkerObjectNameInfoEXT where
         type FieldType "object" VkDebugMarkerObjectNameInfoEXT = Word64
         type FieldOptional "object" VkDebugMarkerObjectNameInfoEXT = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "object" VkDebugMarkerObjectNameInfoEXT =
+             #{offset VkDebugMarkerObjectNameInfoEXT, object}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDebugMarkerObjectNameInfoEXT, object}
 
 instance CanReadField "object" VkDebugMarkerObjectNameInfoEXT where
         {-# INLINE getField #-}
@@ -331,6 +367,15 @@ instance {-# OVERLAPPING #-}
              CString
         type FieldOptional "pObjectName" VkDebugMarkerObjectNameInfoEXT =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pObjectName" VkDebugMarkerObjectNameInfoEXT =
+             #{offset VkDebugMarkerObjectNameInfoEXT, pObjectName}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDebugMarkerObjectNameInfoEXT, pObjectName}
 
 instance CanReadField "pObjectName" VkDebugMarkerObjectNameInfoEXT
          where
@@ -482,6 +527,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "sType" VkDebugMarkerObjectTagInfoEXT =
              VkStructureType
         type FieldOptional "sType" VkDebugMarkerObjectTagInfoEXT = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkDebugMarkerObjectTagInfoEXT =
+             #{offset VkDebugMarkerObjectTagInfoEXT, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDebugMarkerObjectTagInfoEXT, sType}
 
 instance CanReadField "sType" VkDebugMarkerObjectTagInfoEXT where
         {-# INLINE getField #-}
@@ -519,6 +573,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkDebugMarkerObjectTagInfoEXT where
         type FieldType "pNext" VkDebugMarkerObjectTagInfoEXT = Ptr Void
         type FieldOptional "pNext" VkDebugMarkerObjectTagInfoEXT = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkDebugMarkerObjectTagInfoEXT =
+             #{offset VkDebugMarkerObjectTagInfoEXT, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDebugMarkerObjectTagInfoEXT, pNext}
 
 instance CanReadField "pNext" VkDebugMarkerObjectTagInfoEXT where
         {-# INLINE getField #-}
@@ -559,6 +622,15 @@ instance {-# OVERLAPPING #-}
              VkDebugReportObjectTypeEXT
         type FieldOptional "objectType" VkDebugMarkerObjectTagInfoEXT =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "objectType" VkDebugMarkerObjectTagInfoEXT =
+             #{offset VkDebugMarkerObjectTagInfoEXT, objectType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDebugMarkerObjectTagInfoEXT, objectType}
 
 instance CanReadField "objectType" VkDebugMarkerObjectTagInfoEXT
          where
@@ -598,6 +670,15 @@ instance {-# OVERLAPPING #-}
          HasField "object" VkDebugMarkerObjectTagInfoEXT where
         type FieldType "object" VkDebugMarkerObjectTagInfoEXT = Word64
         type FieldOptional "object" VkDebugMarkerObjectTagInfoEXT = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "object" VkDebugMarkerObjectTagInfoEXT =
+             #{offset VkDebugMarkerObjectTagInfoEXT, object}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDebugMarkerObjectTagInfoEXT, object}
 
 instance CanReadField "object" VkDebugMarkerObjectTagInfoEXT where
         {-# INLINE getField #-}
@@ -635,6 +716,15 @@ instance {-# OVERLAPPING #-}
          HasField "tagName" VkDebugMarkerObjectTagInfoEXT where
         type FieldType "tagName" VkDebugMarkerObjectTagInfoEXT = Word64
         type FieldOptional "tagName" VkDebugMarkerObjectTagInfoEXT = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "tagName" VkDebugMarkerObjectTagInfoEXT =
+             #{offset VkDebugMarkerObjectTagInfoEXT, tagName}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDebugMarkerObjectTagInfoEXT, tagName}
 
 instance CanReadField "tagName" VkDebugMarkerObjectTagInfoEXT where
         {-# INLINE getField #-}
@@ -675,6 +765,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "tagSize" VkDebugMarkerObjectTagInfoEXT =
              #{type size_t}
         type FieldOptional "tagSize" VkDebugMarkerObjectTagInfoEXT = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "tagSize" VkDebugMarkerObjectTagInfoEXT =
+             #{offset VkDebugMarkerObjectTagInfoEXT, tagSize}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDebugMarkerObjectTagInfoEXT, tagSize}
 
 instance CanReadField "tagSize" VkDebugMarkerObjectTagInfoEXT where
         {-# INLINE getField #-}
@@ -713,6 +812,15 @@ instance {-# OVERLAPPING #-}
          HasField "pTag" VkDebugMarkerObjectTagInfoEXT where
         type FieldType "pTag" VkDebugMarkerObjectTagInfoEXT = Ptr Void
         type FieldOptional "pTag" VkDebugMarkerObjectTagInfoEXT = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pTag" VkDebugMarkerObjectTagInfoEXT =
+             #{offset VkDebugMarkerObjectTagInfoEXT, pTag}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDebugMarkerObjectTagInfoEXT, pTag}
 
 instance CanReadField "pTag" VkDebugMarkerObjectTagInfoEXT where
         {-# INLINE getField #-}
@@ -863,6 +971,15 @@ instance {-# OVERLAPPING #-}
          HasField "sType" VkDebugMarkerMarkerInfoEXT where
         type FieldType "sType" VkDebugMarkerMarkerInfoEXT = VkStructureType
         type FieldOptional "sType" VkDebugMarkerMarkerInfoEXT = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkDebugMarkerMarkerInfoEXT =
+             #{offset VkDebugMarkerMarkerInfoEXT, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDebugMarkerMarkerInfoEXT, sType}
 
 instance CanReadField "sType" VkDebugMarkerMarkerInfoEXT where
         {-# INLINE getField #-}
@@ -900,6 +1017,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkDebugMarkerMarkerInfoEXT where
         type FieldType "pNext" VkDebugMarkerMarkerInfoEXT = Ptr Void
         type FieldOptional "pNext" VkDebugMarkerMarkerInfoEXT = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkDebugMarkerMarkerInfoEXT =
+             #{offset VkDebugMarkerMarkerInfoEXT, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDebugMarkerMarkerInfoEXT, pNext}
 
 instance CanReadField "pNext" VkDebugMarkerMarkerInfoEXT where
         {-# INLINE getField #-}
@@ -938,6 +1064,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "pMarkerName" VkDebugMarkerMarkerInfoEXT = CString
         type FieldOptional "pMarkerName" VkDebugMarkerMarkerInfoEXT =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pMarkerName" VkDebugMarkerMarkerInfoEXT =
+             #{offset VkDebugMarkerMarkerInfoEXT, pMarkerName}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDebugMarkerMarkerInfoEXT, pMarkerName}
 
 instance CanReadField "pMarkerName" VkDebugMarkerMarkerInfoEXT
          where
@@ -985,6 +1120,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "color" VkDebugMarkerMarkerInfoEXT =
              #{type float}
         type FieldOptional "color" VkDebugMarkerMarkerInfoEXT = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "color" VkDebugMarkerMarkerInfoEXT =
+             #{offset VkDebugMarkerMarkerInfoEXT, color}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDebugMarkerMarkerInfoEXT, color}
 
 instance (KnownNat idx,
           IndexInBounds "color" idx VkDebugMarkerMarkerInfoEXT) =>
@@ -1002,6 +1146,9 @@ instance (KnownNat idx,
         {-# SPECIALISE instance
                        CanReadFieldArray "color" 3 VkDebugMarkerMarkerInfoEXT #-}
         type FieldArrayLength "color" VkDebugMarkerMarkerInfoEXT = 4
+
+        {-# INLINE fieldArrayLength #-}
+        fieldArrayLength = 4
 
         {-# INLINE getFieldArray #-}
         getFieldArray x

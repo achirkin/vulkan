@@ -180,6 +180,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType"
                VkPhysicalDeviceVariablePointerFeaturesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkPhysicalDeviceVariablePointerFeaturesKHR
+             =
+             #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, sType}
 
 instance CanReadField "sType"
            VkPhysicalDeviceVariablePointerFeaturesKHR
@@ -225,6 +235,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext"
                VkPhysicalDeviceVariablePointerFeaturesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkPhysicalDeviceVariablePointerFeaturesKHR
+             =
+             #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, pNext}
 
 instance CanReadField "pNext"
            VkPhysicalDeviceVariablePointerFeaturesKHR
@@ -276,6 +296,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "variablePointersStorageBuffer"
                VkPhysicalDeviceVariablePointerFeaturesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "variablePointersStorageBuffer"
+               VkPhysicalDeviceVariablePointerFeaturesKHR
+             =
+             #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, variablePointersStorageBuffer}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, variablePointersStorageBuffer}
 
 instance CanReadField "variablePointersStorageBuffer"
            VkPhysicalDeviceVariablePointerFeaturesKHR
@@ -326,6 +357,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "variablePointers"
                VkPhysicalDeviceVariablePointerFeaturesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "variablePointers"
+               VkPhysicalDeviceVariablePointerFeaturesKHR
+             =
+             #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, variablePointers}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, variablePointers}
 
 instance CanReadField "variablePointers"
            VkPhysicalDeviceVariablePointerFeaturesKHR

@@ -136,10 +136,22 @@ pattern VK_NULL_HANDLE :: (Eq (ptr a), VulkanPtr ptr) => ptr a
 pattern VK_NULL_HANDLE <- (isNullPtr -> True)
   where VK_NULL_HANDLE = vkNullPtr
 
-
+-- | Describe fields of a vulkan structure or union.
 class HasField (fname :: Symbol) (a :: *) where
+  -- | Type of a field in a vulkan structure or union.
   type FieldType fname a     :: *
+  -- | Whether this field marked optional in vulkan specification.
+  --   Usually, this means that `VK_NULL_HANDLE` can be written in place
+  --   of this field.
   type FieldOptional fname a :: Bool
+  -- | Offset of a field in bytes.
+  type FieldOffset fname a :: Nat
+  -- | Whether this field marked optional in vulkan specification.
+  --   Usually, this means that `VK_NULL_HANDLE` can be written in place
+  --   of this field.
+  fieldOptional :: Bool
+  -- | Offset of a field in bytes.
+  fieldOffset :: Int
 
 class HasField fname a => CanReadField (fname :: Symbol) (a :: *) where
   getField :: a -> FieldType fname a
@@ -151,7 +163,10 @@ class CanReadField fname a => CanWriteField (fname :: Symbol) (a :: *) where
 class ( HasField fname a
       , IndexInBounds fname idx a
       ) => CanReadFieldArray (fname :: Symbol) (idx :: Nat) (a :: *) where
+  -- | Length of an array that is a field of a structure or union
   type FieldArrayLength fname a :: Nat
+  -- | Length of an array that is a field of a structure or union
+  fieldArrayLength :: Int
   getFieldArray :: a -> FieldType fname a
   readFieldArray :: Ptr a -> IO (FieldType fname a)
 

@@ -185,6 +185,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkPhysicalDeviceExternalSemaphoreInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkPhysicalDeviceExternalSemaphoreInfoKHR =
+             #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, sType}
 
 instance CanReadField "sType"
            VkPhysicalDeviceExternalSemaphoreInfoKHR
@@ -229,6 +238,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkPhysicalDeviceExternalSemaphoreInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkPhysicalDeviceExternalSemaphoreInfoKHR =
+             #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, pNext}
 
 instance CanReadField "pNext"
            VkPhysicalDeviceExternalSemaphoreInfoKHR
@@ -276,6 +294,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "handleType"
                VkPhysicalDeviceExternalSemaphoreInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "handleType"
+               VkPhysicalDeviceExternalSemaphoreInfoKHR
+             =
+             #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, handleType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, handleType}
 
 instance CanReadField "handleType"
            VkPhysicalDeviceExternalSemaphoreInfoKHR
@@ -424,6 +453,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkExternalSemaphorePropertiesKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkExternalSemaphorePropertiesKHR =
+             #{offset VkExternalSemaphorePropertiesKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExternalSemaphorePropertiesKHR, sType}
 
 instance CanReadField "sType" VkExternalSemaphorePropertiesKHR
          where
@@ -459,6 +497,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "pNext" VkExternalSemaphorePropertiesKHR = Ptr Void
         type FieldOptional "pNext" VkExternalSemaphorePropertiesKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkExternalSemaphorePropertiesKHR =
+             #{offset VkExternalSemaphorePropertiesKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExternalSemaphorePropertiesKHR, pNext}
 
 instance CanReadField "pNext" VkExternalSemaphorePropertiesKHR
          where
@@ -502,6 +549,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "exportFromImportedHandleTypes"
                VkExternalSemaphorePropertiesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "exportFromImportedHandleTypes"
+               VkExternalSemaphorePropertiesKHR
+             =
+             #{offset VkExternalSemaphorePropertiesKHR, exportFromImportedHandleTypes}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExternalSemaphorePropertiesKHR, exportFromImportedHandleTypes}
 
 instance CanReadField "exportFromImportedHandleTypes"
            VkExternalSemaphorePropertiesKHR
@@ -543,6 +601,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "compatibleHandleTypes"
                VkExternalSemaphorePropertiesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "compatibleHandleTypes"
+               VkExternalSemaphorePropertiesKHR
+             =
+             #{offset VkExternalSemaphorePropertiesKHR, compatibleHandleTypes}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExternalSemaphorePropertiesKHR, compatibleHandleTypes}
 
 instance CanReadField "compatibleHandleTypes"
            VkExternalSemaphorePropertiesKHR
@@ -587,6 +656,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "externalSemaphoreFeatures"
                VkExternalSemaphorePropertiesKHR
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "externalSemaphoreFeatures"
+               VkExternalSemaphorePropertiesKHR
+             =
+             #{offset VkExternalSemaphorePropertiesKHR, externalSemaphoreFeatures}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExternalSemaphorePropertiesKHR, externalSemaphoreFeatures}
 
 instance CanReadField "externalSemaphoreFeatures"
            VkExternalSemaphorePropertiesKHR
