@@ -56,6 +56,7 @@ executable ve-04-Presentation
   build-depends:       base
                      , vulkan-api
                      , GLFW-b
+                     , containers
   default-language:    Haskell2010
 
 
