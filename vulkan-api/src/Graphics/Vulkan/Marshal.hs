@@ -24,6 +24,7 @@ module Graphics.Vulkan.Marshal
   , VulkanPtr (..)
   , VkPtr (..)
   , pattern VK_NULL_HANDLE
+  , clearStorable
     -- * Type-indexed access to struct members
   , HasField (..), CanReadField (..), CanWriteField (..)
   , CanReadFieldArray (..), CanWriteFieldArray (..), IndexInBounds
@@ -35,17 +36,18 @@ module Graphics.Vulkan.Marshal
   , Ptr, FunPtr, Void, CString
   ) where
 
-import           Data.Data          (Data)
-import           Data.Int           (Int16, Int32, Int64, Int8)
-import           Data.Kind          (Constraint)
-import           Data.Void          (Void)
-import           Data.Word          (Word16, Word32, Word64, Word8)
-import           Foreign.C.String   (CString)
-import           Foreign.ForeignPtr (ForeignPtr, addForeignPtrFinalizer,
-                                     mallocForeignPtr, withForeignPtr)
-import           Foreign.Ptr        (FunPtr, Ptr, nullPtr)
-import           Foreign.Storable   (Storable)
-import           GHC.Generics       (Generic)
+import           Data.Data             (Data)
+import           Data.Int              (Int16, Int32, Int64, Int8)
+import           Data.Kind             (Constraint)
+import           Data.Void             (Void)
+import           Data.Word             (Word16, Word32, Word64, Word8)
+import           Foreign.C.String      (CString)
+import           Foreign.ForeignPtr    (ForeignPtr, addForeignPtrFinalizer,
+                                        mallocForeignPtr, withForeignPtr)
+import           Foreign.Marshal.Utils (fillBytes)
+import           Foreign.Ptr           (FunPtr, Ptr, nullPtr)
+import           Foreign.Storable      (Storable(sizeOf))
+import           GHC.Generics          (Generic)
 import           GHC.TypeLits
 
 -- | All Vulkan structures are stored as-is in byte arrays to avoid any overheads
@@ -58,6 +60,10 @@ class VulkanMarshal a where
   type StructFields a :: [Symbol]
   -- | Allocate a pinned aligned byte array to keep vulkan data structure
   --   and fill it using a foreign function.
+  --
+  --   Note, the function is supposed to use `newAlignedPinnedByteArray#`
+  --   and does not guarantee to fill memory with zeroes.
+  --   Use `clearStorable` to make sure all bytes are set to zero.
   newVkData :: (Ptr a -> IO ()) -> IO a
   -- | Get pointer to vulkan structure.
   --   Note, the address is only valid as long as a given vulkan structure exists.
@@ -90,6 +96,12 @@ class VulkanMarshal a where
   touchVkData  :: a -> IO ()
 
 
+-- | Fill all bytes to zero getting data size from `Storable` instance.
+clearStorable :: Storable a => Ptr a -> IO ()
+clearStorable p = fillBytes p 0 (sizeOf $ unptr p)
+  where
+    unptr :: Ptr b -> b
+    unptr ~_ = undefined
 
 -- | ===== @VK_DEFINE_NON_DISPATCHABLE_HANDLE@
 -- Non-dispatchable handles are represented as `VkPtr`

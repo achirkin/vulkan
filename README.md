@@ -51,3 +51,10 @@ sudo apt-get install libvulkan-dev
        mark those calls that have to be safe (all calls are unsafe currently).
  * [ ] Check if it is possible to hide `VkPtr` constructor.
  * [ ] Find the best way to represent pairs of `Vk**Flags` and `Vk**FlagBits` types.
+       One way to go:
+
+       1. Find all pairs of `Vk**Flags` and `Vk**FlagBits` types.
+       2. Define type parameters `data VkFlagType = Bit | Mask`.
+       3. Define a common `newtype Vk**FB (a :: VkFlagType) = Vk**FB VkFlags`
+       3. Make all patterns parameter-polymorphic.
+       4. Optionally, make converting functions.

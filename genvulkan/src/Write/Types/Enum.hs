@@ -68,7 +68,7 @@ genEnums VkEnums {..} = do
     writeSections enumPattern _vkEnumsMembers
   where
     derives = (if _vkEnumsIsBits then ("Bits":).("FiniteBits":) else id)
-              ["Eq","Ord","Bounded","Storable","Enum", "Data", "Generic"]
+              ["Eq","Ord","Num","Bounded","Storable","Enum", "Data", "Generic"]
 
     allPNs = map (unVkEnumName . _vkEnumName) . items $ _vkEnumsMembers
 
@@ -111,6 +111,27 @@ genEnumRead (VkTypeName tname) xs = do
           )
 
 genAlias :: Monad m => VkType -> ModuleWriter m ()
+genAlias VkTypeSimple
+    { name = VkTypeName s
+    , attributes = VkTypeAttrs
+      { requires = Just (VkTypeName refname)
+      , comment = txt
+      }
+    , typeData = VkTypeData
+       { reference = [("VkFlags", [])] }
+    }
+    | tnameDeclared <- DIThing s DITNo
+    = do
+  indeed <- isIdentDeclared tnameDeclared
+  if indeed
+  then do
+    writeImport tnameDeclared
+    writeExportNoScope tnameDeclared
+  else do
+    writeImport $ DIThing refname DITNo
+    writeDecl . setComment (preComment $ T.unpack txt) $ parseDecl'
+      [text|type $s = $refname|]
+    writeExport tnameDeclared
 genAlias t@VkTypeComposite{..}
     = error $ "genAlias: did not expect "
            <> show (vkTypeCat t) <> " being a composite type (VkTypeComposite)!"
