@@ -5,23 +5,22 @@ sudo: false
 
 matrix:
   include:
-    - compiler: "ghc-7.10.3"
+    - env: CABALVER=1.22 GHCVER=7.10.3
       addons: {apt: {packages: [cabal-install-1.22,ghc-7.10.3], sources: [hvr-ghc]}}
-    - compiler: "ghc-8.0.2"
+    - env: CABALVER=head GHCVER=8.0.2
       addons: {apt: {packages: [cabal-install-head,ghc-8.0.2], sources: [hvr-ghc]}}
-    - compiler: "ghc-8.2.2"
+    - env: CABALVER=head GHCVER=8.2.2
       addons: {apt: {packages: [cabal-install-head,ghc-8.2.2], sources: [hvr-ghc]}}
-    - compiler: "ghc-8.4.1"
+    - env: CABALVER=head GHCVER=8.4.1
       addons: {apt: {packages: [cabal-install-head,ghc-8.4.1], sources: [hvr-ghc]}}
-    - compiler: "ghc-head"
+    - env: CABALVER=head GHCVER=head
       addons: {apt: {packages: [cabal-install-head,ghc-head], sources: [hvr-ghc]}}
 
   allow_failures:
-    - compiler: "ghc-7.10.3"
-#    - compiler: "ghc-head"
+    - env: CABALVER=1.22 GHCVER=7.10.3
 
 before_install:
-  - cd vulkan-api
+  - cd vulkan-api && export PATH=/opt/ghc/$GHCVER/bin:/opt/cabal/$CABALVER/bin:$PATH
 
 script:
  - cabal configure --enable-tests --enable-benchmarks -v2
