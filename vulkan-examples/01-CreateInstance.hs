@@ -1,3 +1,11 @@
+{- |
+
+In this minimal example, I create Vulkan instance using no vulkan extensions,
+no haskell language extensions, and no libraries other than base and vulkan-api.
+
+Just plain haskell; c-like simple and verbose.
+
+-}
 module Main (main) where
 
 import Graphics.Vulkan
