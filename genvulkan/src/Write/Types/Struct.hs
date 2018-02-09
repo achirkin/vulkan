@@ -259,7 +259,8 @@ genStructField structAttrs structNameTxt structType VkTypeMember{..} _offsetE SF
       Nothing -> offsetExpr
       Just _  -> "(idx * sizeOf (undefined :: " <> valueTypeTxt <> ")"
                <> " + " <> offsetExpr <> ")"
-    fieldOptional = T.pack . ('\'':) . show $ optional attributes
+    fieldOptionalT = "'" <> fieldOptional
+    fieldOptional = T.pack . show $ optional attributes
 
     specMax = case memberData of
           VkTypeData { name = Just (_, [VkTypeQArrLen n]) } -> n
@@ -312,7 +313,12 @@ genStructField structAttrs structNameTxt structType VkTypeMember{..} _offsetE SF
 
             instance {-# OVERLAPPING #-} HasField $origNameTxtQQ $structTypeTxt where
               type FieldType $origNameTxtQQ $structTypeTxt = $valueTypeTxt
-              type FieldOptional $origNameTxtQQ $structTypeTxt = $fieldOptional
+              type FieldOptional $origNameTxtQQ $structTypeTxt = $fieldOptionalT
+              type FieldOffset $origNameTxtQQ $structTypeTxt = $offsetExpr
+              {-# INLINE fieldOptional #-}
+              fieldOptional = $fieldOptional
+              {-# INLINE fieldOffset #-}
+              fieldOffset = $offsetExpr
             |]
           dsRead = case sfiTyElemN of
             Nothing -> parseDecls [text|
@@ -332,6 +338,8 @@ genStructField structAttrs structNameTxt structType VkTypeMember{..} _offsetE SF
                 $spec2r
                 $spec3r
                 type FieldArrayLength $origNameTxtQQ $structTypeTxt = $lentxt
+                {-# INLINE fieldArrayLength #-}
+                fieldArrayLength = $lentxt
                 {-# INLINE getFieldArray #-}
                 getFieldArray x = $indexFunTxt x
                   (fromInteger $ natVal' (proxy# :: Proxy# idx) )

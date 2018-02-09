@@ -181,6 +181,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkPhysicalDevice16BitStorageFeaturesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkPhysicalDevice16BitStorageFeaturesKHR =
+             #{offset VkPhysicalDevice16BitStorageFeaturesKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDevice16BitStorageFeaturesKHR, sType}
 
 instance CanReadField "sType"
            VkPhysicalDevice16BitStorageFeaturesKHR
@@ -225,6 +234,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkPhysicalDevice16BitStorageFeaturesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkPhysicalDevice16BitStorageFeaturesKHR =
+             #{offset VkPhysicalDevice16BitStorageFeaturesKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDevice16BitStorageFeaturesKHR, pNext}
 
 instance CanReadField "pNext"
            VkPhysicalDevice16BitStorageFeaturesKHR
@@ -276,6 +294,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "storageBuffer16BitAccess"
                VkPhysicalDevice16BitStorageFeaturesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "storageBuffer16BitAccess"
+               VkPhysicalDevice16BitStorageFeaturesKHR
+             =
+             #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storageBuffer16BitAccess}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storageBuffer16BitAccess}
 
 instance CanReadField "storageBuffer16BitAccess"
            VkPhysicalDevice16BitStorageFeaturesKHR
@@ -327,6 +356,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "uniformAndStorageBuffer16BitAccess"
                VkPhysicalDevice16BitStorageFeaturesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "uniformAndStorageBuffer16BitAccess"
+               VkPhysicalDevice16BitStorageFeaturesKHR
+             =
+             #{offset VkPhysicalDevice16BitStorageFeaturesKHR, uniformAndStorageBuffer16BitAccess}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDevice16BitStorageFeaturesKHR, uniformAndStorageBuffer16BitAccess}
 
 instance CanReadField "uniformAndStorageBuffer16BitAccess"
            VkPhysicalDevice16BitStorageFeaturesKHR
@@ -377,6 +417,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "storagePushConstant16"
                VkPhysicalDevice16BitStorageFeaturesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "storagePushConstant16"
+               VkPhysicalDevice16BitStorageFeaturesKHR
+             =
+             #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storagePushConstant16}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storagePushConstant16}
 
 instance CanReadField "storagePushConstant16"
            VkPhysicalDevice16BitStorageFeaturesKHR
@@ -427,6 +478,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "storageInputOutput16"
                VkPhysicalDevice16BitStorageFeaturesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "storageInputOutput16"
+               VkPhysicalDevice16BitStorageFeaturesKHR
+             =
+             #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storageInputOutput16}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storageInputOutput16}
 
 instance CanReadField "storageInputOutput16"
            VkPhysicalDevice16BitStorageFeaturesKHR

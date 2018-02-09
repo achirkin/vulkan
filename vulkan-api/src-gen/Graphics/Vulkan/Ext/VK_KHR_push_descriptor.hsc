@@ -181,6 +181,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType"
                VkPhysicalDevicePushDescriptorPropertiesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType"
+               VkPhysicalDevicePushDescriptorPropertiesKHR
+             =
+             #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, sType}
 
 instance CanReadField "sType"
            VkPhysicalDevicePushDescriptorPropertiesKHR
@@ -226,6 +237,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext"
                VkPhysicalDevicePushDescriptorPropertiesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext"
+               VkPhysicalDevicePushDescriptorPropertiesKHR
+             =
+             #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, pNext}
 
 instance CanReadField "pNext"
            VkPhysicalDevicePushDescriptorPropertiesKHR
@@ -276,6 +298,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "maxPushDescriptors"
                VkPhysicalDevicePushDescriptorPropertiesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "maxPushDescriptors"
+               VkPhysicalDevicePushDescriptorPropertiesKHR
+             =
+             #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, maxPushDescriptors}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, maxPushDescriptors}
 
 instance CanReadField "maxPushDescriptors"
            VkPhysicalDevicePushDescriptorPropertiesKHR

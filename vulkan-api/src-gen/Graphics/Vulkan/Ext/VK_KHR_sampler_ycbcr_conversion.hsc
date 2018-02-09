@@ -245,6 +245,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkSamplerYcbcrConversionCreateInfoKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkSamplerYcbcrConversionCreateInfoKHR =
+             #{offset VkSamplerYcbcrConversionCreateInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSamplerYcbcrConversionCreateInfoKHR, sType}
 
 instance CanReadField "sType" VkSamplerYcbcrConversionCreateInfoKHR
          where
@@ -287,6 +296,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkSamplerYcbcrConversionCreateInfoKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkSamplerYcbcrConversionCreateInfoKHR =
+             #{offset VkSamplerYcbcrConversionCreateInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSamplerYcbcrConversionCreateInfoKHR, pNext}
 
 instance CanReadField "pNext" VkSamplerYcbcrConversionCreateInfoKHR
          where
@@ -329,6 +347,15 @@ instance {-# OVERLAPPING #-}
              VkFormat
         type FieldOptional "format" VkSamplerYcbcrConversionCreateInfoKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "format" VkSamplerYcbcrConversionCreateInfoKHR =
+             #{offset VkSamplerYcbcrConversionCreateInfoKHR, format}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSamplerYcbcrConversionCreateInfoKHR, format}
 
 instance CanReadField "format"
            VkSamplerYcbcrConversionCreateInfoKHR
@@ -374,6 +401,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "ycbcrModel"
                VkSamplerYcbcrConversionCreateInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "ycbcrModel" VkSamplerYcbcrConversionCreateInfoKHR
+             =
+             #{offset VkSamplerYcbcrConversionCreateInfoKHR, ycbcrModel}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSamplerYcbcrConversionCreateInfoKHR, ycbcrModel}
 
 instance CanReadField "ycbcrModel"
            VkSamplerYcbcrConversionCreateInfoKHR
@@ -419,6 +456,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "ycbcrRange"
                VkSamplerYcbcrConversionCreateInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "ycbcrRange" VkSamplerYcbcrConversionCreateInfoKHR
+             =
+             #{offset VkSamplerYcbcrConversionCreateInfoKHR, ycbcrRange}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSamplerYcbcrConversionCreateInfoKHR, ycbcrRange}
 
 instance CanReadField "ycbcrRange"
            VkSamplerYcbcrConversionCreateInfoKHR
@@ -464,6 +511,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "components"
                VkSamplerYcbcrConversionCreateInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "components" VkSamplerYcbcrConversionCreateInfoKHR
+             =
+             #{offset VkSamplerYcbcrConversionCreateInfoKHR, components}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSamplerYcbcrConversionCreateInfoKHR, components}
 
 instance CanReadField "components"
            VkSamplerYcbcrConversionCreateInfoKHR
@@ -511,6 +568,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "xChromaOffset"
                VkSamplerYcbcrConversionCreateInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "xChromaOffset"
+               VkSamplerYcbcrConversionCreateInfoKHR
+             =
+             #{offset VkSamplerYcbcrConversionCreateInfoKHR, xChromaOffset}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSamplerYcbcrConversionCreateInfoKHR, xChromaOffset}
 
 instance CanReadField "xChromaOffset"
            VkSamplerYcbcrConversionCreateInfoKHR
@@ -558,6 +626,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "yChromaOffset"
                VkSamplerYcbcrConversionCreateInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "yChromaOffset"
+               VkSamplerYcbcrConversionCreateInfoKHR
+             =
+             #{offset VkSamplerYcbcrConversionCreateInfoKHR, yChromaOffset}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSamplerYcbcrConversionCreateInfoKHR, yChromaOffset}
 
 instance CanReadField "yChromaOffset"
            VkSamplerYcbcrConversionCreateInfoKHR
@@ -603,6 +682,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "chromaFilter"
                VkSamplerYcbcrConversionCreateInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "chromaFilter"
+               VkSamplerYcbcrConversionCreateInfoKHR
+             =
+             #{offset VkSamplerYcbcrConversionCreateInfoKHR, chromaFilter}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSamplerYcbcrConversionCreateInfoKHR, chromaFilter}
 
 instance CanReadField "chromaFilter"
            VkSamplerYcbcrConversionCreateInfoKHR
@@ -654,6 +744,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "forceExplicitReconstruction"
                VkSamplerYcbcrConversionCreateInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "forceExplicitReconstruction"
+               VkSamplerYcbcrConversionCreateInfoKHR
+             =
+             #{offset VkSamplerYcbcrConversionCreateInfoKHR, forceExplicitReconstruction}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSamplerYcbcrConversionCreateInfoKHR, forceExplicitReconstruction}
 
 instance CanReadField "forceExplicitReconstruction"
            VkSamplerYcbcrConversionCreateInfoKHR
@@ -824,6 +925,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "sType" VkSamplerYcbcrConversionInfoKHR =
              VkStructureType
         type FieldOptional "sType" VkSamplerYcbcrConversionInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkSamplerYcbcrConversionInfoKHR =
+             #{offset VkSamplerYcbcrConversionInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSamplerYcbcrConversionInfoKHR, sType}
 
 instance CanReadField "sType" VkSamplerYcbcrConversionInfoKHR where
         {-# INLINE getField #-}
@@ -862,6 +972,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkSamplerYcbcrConversionInfoKHR where
         type FieldType "pNext" VkSamplerYcbcrConversionInfoKHR = Ptr Void
         type FieldOptional "pNext" VkSamplerYcbcrConversionInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkSamplerYcbcrConversionInfoKHR =
+             #{offset VkSamplerYcbcrConversionInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSamplerYcbcrConversionInfoKHR, pNext}
 
 instance CanReadField "pNext" VkSamplerYcbcrConversionInfoKHR where
         {-# INLINE getField #-}
@@ -903,6 +1022,15 @@ instance {-# OVERLAPPING #-}
              VkSamplerYcbcrConversionKHR
         type FieldOptional "conversion" VkSamplerYcbcrConversionInfoKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "conversion" VkSamplerYcbcrConversionInfoKHR =
+             #{offset VkSamplerYcbcrConversionInfoKHR, conversion}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSamplerYcbcrConversionInfoKHR, conversion}
 
 instance CanReadField "conversion" VkSamplerYcbcrConversionInfoKHR
          where
@@ -1044,6 +1172,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "sType" VkBindImagePlaneMemoryInfoKHR =
              VkStructureType
         type FieldOptional "sType" VkBindImagePlaneMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkBindImagePlaneMemoryInfoKHR =
+             #{offset VkBindImagePlaneMemoryInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBindImagePlaneMemoryInfoKHR, sType}
 
 instance CanReadField "sType" VkBindImagePlaneMemoryInfoKHR where
         {-# INLINE getField #-}
@@ -1081,6 +1218,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkBindImagePlaneMemoryInfoKHR where
         type FieldType "pNext" VkBindImagePlaneMemoryInfoKHR = Ptr Void
         type FieldOptional "pNext" VkBindImagePlaneMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkBindImagePlaneMemoryInfoKHR =
+             #{offset VkBindImagePlaneMemoryInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBindImagePlaneMemoryInfoKHR, pNext}
 
 instance CanReadField "pNext" VkBindImagePlaneMemoryInfoKHR where
         {-# INLINE getField #-}
@@ -1121,6 +1267,15 @@ instance {-# OVERLAPPING #-}
              VkImageAspectFlagBits
         type FieldOptional "planeAspect" VkBindImagePlaneMemoryInfoKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "planeAspect" VkBindImagePlaneMemoryInfoKHR =
+             #{offset VkBindImagePlaneMemoryInfoKHR, planeAspect}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBindImagePlaneMemoryInfoKHR, planeAspect}
 
 instance CanReadField "planeAspect" VkBindImagePlaneMemoryInfoKHR
          where
@@ -1275,6 +1430,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkImagePlaneMemoryRequirementsInfoKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkImagePlaneMemoryRequirementsInfoKHR =
+             #{offset VkImagePlaneMemoryRequirementsInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImagePlaneMemoryRequirementsInfoKHR, sType}
 
 instance CanReadField "sType" VkImagePlaneMemoryRequirementsInfoKHR
          where
@@ -1317,6 +1481,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkImagePlaneMemoryRequirementsInfoKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkImagePlaneMemoryRequirementsInfoKHR =
+             #{offset VkImagePlaneMemoryRequirementsInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImagePlaneMemoryRequirementsInfoKHR, pNext}
 
 instance CanReadField "pNext" VkImagePlaneMemoryRequirementsInfoKHR
          where
@@ -1361,6 +1534,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "planeAspect"
                VkImagePlaneMemoryRequirementsInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "planeAspect"
+               VkImagePlaneMemoryRequirementsInfoKHR
+             =
+             #{offset VkImagePlaneMemoryRequirementsInfoKHR, planeAspect}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImagePlaneMemoryRequirementsInfoKHR, planeAspect}
 
 instance CanReadField "planeAspect"
            VkImagePlaneMemoryRequirementsInfoKHR
@@ -1529,6 +1713,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType"
                VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType"
+               VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
+             =
+             #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, sType}
 
 instance CanReadField "sType"
            VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
@@ -1576,6 +1771,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext"
                VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext"
+               VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
+             =
+             #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, pNext}
 
 instance CanReadField "pNext"
            VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
@@ -1627,6 +1833,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "samplerYcbcrConversion"
                VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "samplerYcbcrConversion"
+               VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
+             =
+             #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, samplerYcbcrConversion}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, samplerYcbcrConversion}
 
 instance CanReadField "samplerYcbcrConversion"
            VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
@@ -1794,6 +2011,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType"
                VkSamplerYcbcrConversionImageFormatPropertiesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType"
+               VkSamplerYcbcrConversionImageFormatPropertiesKHR
+             =
+             #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, sType}
 
 instance CanReadField "sType"
            VkSamplerYcbcrConversionImageFormatPropertiesKHR
@@ -1835,6 +2063,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext"
                VkSamplerYcbcrConversionImageFormatPropertiesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext"
+               VkSamplerYcbcrConversionImageFormatPropertiesKHR
+             =
+             #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, pNext}
 
 instance CanReadField "pNext"
            VkSamplerYcbcrConversionImageFormatPropertiesKHR
@@ -1880,6 +2119,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "combinedImageSamplerDescriptorCount"
                VkSamplerYcbcrConversionImageFormatPropertiesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "combinedImageSamplerDescriptorCount"
+               VkSamplerYcbcrConversionImageFormatPropertiesKHR
+             =
+             #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, combinedImageSamplerDescriptorCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, combinedImageSamplerDescriptorCount}
 
 instance CanReadField "combinedImageSamplerDescriptorCount"
            VkSamplerYcbcrConversionImageFormatPropertiesKHR

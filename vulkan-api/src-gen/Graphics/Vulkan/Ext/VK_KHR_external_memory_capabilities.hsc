@@ -184,6 +184,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "externalMemoryFeatures"
                VkExternalMemoryPropertiesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "externalMemoryFeatures"
+               VkExternalMemoryPropertiesKHR
+             =
+             #{offset VkExternalMemoryPropertiesKHR, externalMemoryFeatures}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExternalMemoryPropertiesKHR, externalMemoryFeatures}
 
 instance CanReadField "externalMemoryFeatures"
            VkExternalMemoryPropertiesKHR
@@ -228,6 +239,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "exportFromImportedHandleTypes"
                VkExternalMemoryPropertiesKHR
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "exportFromImportedHandleTypes"
+               VkExternalMemoryPropertiesKHR
+             =
+             #{offset VkExternalMemoryPropertiesKHR, exportFromImportedHandleTypes}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExternalMemoryPropertiesKHR, exportFromImportedHandleTypes}
 
 instance CanReadField "exportFromImportedHandleTypes"
            VkExternalMemoryPropertiesKHR
@@ -269,6 +291,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "compatibleHandleTypes"
                VkExternalMemoryPropertiesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "compatibleHandleTypes"
+               VkExternalMemoryPropertiesKHR
+             =
+             #{offset VkExternalMemoryPropertiesKHR, compatibleHandleTypes}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExternalMemoryPropertiesKHR, compatibleHandleTypes}
 
 instance CanReadField "compatibleHandleTypes"
            VkExternalMemoryPropertiesKHR
@@ -421,6 +454,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType"
                VkPhysicalDeviceExternalImageFormatInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkPhysicalDeviceExternalImageFormatInfoKHR
+             =
+             #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, sType}
 
 instance CanReadField "sType"
            VkPhysicalDeviceExternalImageFormatInfoKHR
@@ -466,6 +509,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext"
                VkPhysicalDeviceExternalImageFormatInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkPhysicalDeviceExternalImageFormatInfoKHR
+             =
+             #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, pNext}
 
 instance CanReadField "pNext"
            VkPhysicalDeviceExternalImageFormatInfoKHR
@@ -513,6 +566,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "handleType"
                VkPhysicalDeviceExternalImageFormatInfoKHR
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "handleType"
+               VkPhysicalDeviceExternalImageFormatInfoKHR
+             =
+             #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, handleType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, handleType}
 
 instance CanReadField "handleType"
            VkPhysicalDeviceExternalImageFormatInfoKHR
@@ -662,6 +726,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkExternalImageFormatPropertiesKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkExternalImageFormatPropertiesKHR =
+             #{offset VkExternalImageFormatPropertiesKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExternalImageFormatPropertiesKHR, sType}
 
 instance CanReadField "sType" VkExternalImageFormatPropertiesKHR
          where
@@ -698,6 +771,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkExternalImageFormatPropertiesKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkExternalImageFormatPropertiesKHR =
+             #{offset VkExternalImageFormatPropertiesKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExternalImageFormatPropertiesKHR, pNext}
 
 instance CanReadField "pNext" VkExternalImageFormatPropertiesKHR
          where
@@ -741,6 +823,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "externalMemoryProperties"
                VkExternalImageFormatPropertiesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "externalMemoryProperties"
+               VkExternalImageFormatPropertiesKHR
+             =
+             #{offset VkExternalImageFormatPropertiesKHR, externalMemoryProperties}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExternalImageFormatPropertiesKHR, externalMemoryProperties}
 
 instance CanReadField "externalMemoryProperties"
            VkExternalImageFormatPropertiesKHR
@@ -893,6 +986,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkPhysicalDeviceExternalBufferInfoKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkPhysicalDeviceExternalBufferInfoKHR =
+             #{offset VkPhysicalDeviceExternalBufferInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceExternalBufferInfoKHR, sType}
 
 instance CanReadField "sType" VkPhysicalDeviceExternalBufferInfoKHR
          where
@@ -935,6 +1037,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkPhysicalDeviceExternalBufferInfoKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkPhysicalDeviceExternalBufferInfoKHR =
+             #{offset VkPhysicalDeviceExternalBufferInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceExternalBufferInfoKHR, pNext}
 
 instance CanReadField "pNext" VkPhysicalDeviceExternalBufferInfoKHR
          where
@@ -978,6 +1089,15 @@ instance {-# OVERLAPPING #-}
              VkBufferCreateFlags
         type FieldOptional "flags" VkPhysicalDeviceExternalBufferInfoKHR =
              'True -- ' closing tick for hsc2hs
+        type FieldOffset "flags" VkPhysicalDeviceExternalBufferInfoKHR =
+             #{offset VkPhysicalDeviceExternalBufferInfoKHR, flags}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceExternalBufferInfoKHR, flags}
 
 instance CanReadField "flags" VkPhysicalDeviceExternalBufferInfoKHR
          where
@@ -1021,6 +1141,15 @@ instance {-# OVERLAPPING #-}
              VkBufferUsageFlags
         type FieldOptional "usage" VkPhysicalDeviceExternalBufferInfoKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "usage" VkPhysicalDeviceExternalBufferInfoKHR =
+             #{offset VkPhysicalDeviceExternalBufferInfoKHR, usage}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceExternalBufferInfoKHR, usage}
 
 instance CanReadField "usage" VkPhysicalDeviceExternalBufferInfoKHR
          where
@@ -1065,6 +1194,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "handleType"
                VkPhysicalDeviceExternalBufferInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "handleType" VkPhysicalDeviceExternalBufferInfoKHR
+             =
+             #{offset VkPhysicalDeviceExternalBufferInfoKHR, handleType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceExternalBufferInfoKHR, handleType}
 
 instance CanReadField "handleType"
            VkPhysicalDeviceExternalBufferInfoKHR
@@ -1214,6 +1353,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "sType" VkExternalBufferPropertiesKHR =
              VkStructureType
         type FieldOptional "sType" VkExternalBufferPropertiesKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkExternalBufferPropertiesKHR =
+             #{offset VkExternalBufferPropertiesKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExternalBufferPropertiesKHR, sType}
 
 instance CanReadField "sType" VkExternalBufferPropertiesKHR where
         {-# INLINE getField #-}
@@ -1247,6 +1395,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkExternalBufferPropertiesKHR where
         type FieldType "pNext" VkExternalBufferPropertiesKHR = Ptr Void
         type FieldOptional "pNext" VkExternalBufferPropertiesKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkExternalBufferPropertiesKHR =
+             #{offset VkExternalBufferPropertiesKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExternalBufferPropertiesKHR, pNext}
 
 instance CanReadField "pNext" VkExternalBufferPropertiesKHR where
         {-# INLINE getField #-}
@@ -1286,6 +1443,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "externalMemoryProperties"
                VkExternalBufferPropertiesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "externalMemoryProperties"
+               VkExternalBufferPropertiesKHR
+             =
+             #{offset VkExternalBufferPropertiesKHR, externalMemoryProperties}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExternalBufferPropertiesKHR, externalMemoryProperties}
 
 instance CanReadField "externalMemoryProperties"
            VkExternalBufferPropertiesKHR
@@ -1428,6 +1596,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "sType" VkPhysicalDeviceIDPropertiesKHR =
              VkStructureType
         type FieldOptional "sType" VkPhysicalDeviceIDPropertiesKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkPhysicalDeviceIDPropertiesKHR =
+             #{offset VkPhysicalDeviceIDPropertiesKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceIDPropertiesKHR, sType}
 
 instance CanReadField "sType" VkPhysicalDeviceIDPropertiesKHR where
         {-# INLINE getField #-}
@@ -1461,6 +1638,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkPhysicalDeviceIDPropertiesKHR where
         type FieldType "pNext" VkPhysicalDeviceIDPropertiesKHR = Ptr Void
         type FieldOptional "pNext" VkPhysicalDeviceIDPropertiesKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkPhysicalDeviceIDPropertiesKHR =
+             #{offset VkPhysicalDeviceIDPropertiesKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceIDPropertiesKHR, pNext}
 
 instance CanReadField "pNext" VkPhysicalDeviceIDPropertiesKHR where
         {-# INLINE getField #-}
@@ -1501,6 +1687,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "deviceUUID" VkPhysicalDeviceIDPropertiesKHR = Word8
         type FieldOptional "deviceUUID" VkPhysicalDeviceIDPropertiesKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "deviceUUID" VkPhysicalDeviceIDPropertiesKHR =
+             #{offset VkPhysicalDeviceIDPropertiesKHR, deviceUUID}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceIDPropertiesKHR, deviceUUID}
 
 instance (KnownNat idx,
           IndexInBounds "deviceUUID" idx VkPhysicalDeviceIDPropertiesKHR) =>
@@ -1523,6 +1718,9 @@ instance (KnownNat idx,
                        #-}
         type FieldArrayLength "deviceUUID" VkPhysicalDeviceIDPropertiesKHR
              = VK_UUID_SIZE
+
+        {-# INLINE fieldArrayLength #-}
+        fieldArrayLength = VK_UUID_SIZE
 
         {-# INLINE getFieldArray #-}
         getFieldArray x
@@ -1566,6 +1764,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "driverUUID" VkPhysicalDeviceIDPropertiesKHR = Word8
         type FieldOptional "driverUUID" VkPhysicalDeviceIDPropertiesKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "driverUUID" VkPhysicalDeviceIDPropertiesKHR =
+             #{offset VkPhysicalDeviceIDPropertiesKHR, driverUUID}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceIDPropertiesKHR, driverUUID}
 
 instance (KnownNat idx,
           IndexInBounds "driverUUID" idx VkPhysicalDeviceIDPropertiesKHR) =>
@@ -1588,6 +1795,9 @@ instance (KnownNat idx,
                        #-}
         type FieldArrayLength "driverUUID" VkPhysicalDeviceIDPropertiesKHR
              = VK_UUID_SIZE
+
+        {-# INLINE fieldArrayLength #-}
+        fieldArrayLength = VK_UUID_SIZE
 
         {-# INLINE getFieldArray #-}
         getFieldArray x
@@ -1631,6 +1841,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "deviceLUID" VkPhysicalDeviceIDPropertiesKHR = Word8
         type FieldOptional "deviceLUID" VkPhysicalDeviceIDPropertiesKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "deviceLUID" VkPhysicalDeviceIDPropertiesKHR =
+             #{offset VkPhysicalDeviceIDPropertiesKHR, deviceLUID}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceIDPropertiesKHR, deviceLUID}
 
 instance (KnownNat idx,
           IndexInBounds "deviceLUID" idx VkPhysicalDeviceIDPropertiesKHR) =>
@@ -1653,6 +1872,9 @@ instance (KnownNat idx,
                        #-}
         type FieldArrayLength "deviceLUID" VkPhysicalDeviceIDPropertiesKHR
              = VK_LUID_SIZE_KHR
+
+        {-# INLINE fieldArrayLength #-}
+        fieldArrayLength = VK_LUID_SIZE_KHR
 
         {-# INLINE getFieldArray #-}
         getFieldArray x
@@ -1691,6 +1913,15 @@ instance {-# OVERLAPPING #-}
              Word32
         type FieldOptional "deviceNodeMask" VkPhysicalDeviceIDPropertiesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "deviceNodeMask" VkPhysicalDeviceIDPropertiesKHR =
+             #{offset VkPhysicalDeviceIDPropertiesKHR, deviceNodeMask}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceIDPropertiesKHR, deviceNodeMask}
 
 instance CanReadField "deviceNodeMask"
            VkPhysicalDeviceIDPropertiesKHR
@@ -1730,6 +1961,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "deviceLUIDValid"
                VkPhysicalDeviceIDPropertiesKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "deviceLUIDValid" VkPhysicalDeviceIDPropertiesKHR
+             =
+             #{offset VkPhysicalDeviceIDPropertiesKHR, deviceLUIDValid}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceIDPropertiesKHR, deviceLUIDValid}
 
 instance CanReadField "deviceLUIDValid"
            VkPhysicalDeviceIDPropertiesKHR

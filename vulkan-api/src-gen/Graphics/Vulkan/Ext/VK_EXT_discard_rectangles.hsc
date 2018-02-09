@@ -189,6 +189,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType"
                VkPhysicalDeviceDiscardRectanglePropertiesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType"
+               VkPhysicalDeviceDiscardRectanglePropertiesEXT
+             =
+             #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, sType}
 
 instance CanReadField "sType"
            VkPhysicalDeviceDiscardRectanglePropertiesEXT
@@ -236,6 +247,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext"
                VkPhysicalDeviceDiscardRectanglePropertiesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext"
+               VkPhysicalDeviceDiscardRectanglePropertiesEXT
+             =
+             #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, pNext}
 
 instance CanReadField "pNext"
            VkPhysicalDeviceDiscardRectanglePropertiesEXT
@@ -287,6 +309,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "maxDiscardRectangles"
                VkPhysicalDeviceDiscardRectanglePropertiesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "maxDiscardRectangles"
+               VkPhysicalDeviceDiscardRectanglePropertiesEXT
+             =
+             #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, maxDiscardRectangles}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, maxDiscardRectangles}
 
 instance CanReadField "maxDiscardRectangles"
            VkPhysicalDeviceDiscardRectanglePropertiesEXT
@@ -450,6 +483,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType"
                VkPipelineDiscardRectangleStateCreateInfoEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType"
+               VkPipelineDiscardRectangleStateCreateInfoEXT
+             =
+             #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, sType}
 
 instance CanReadField "sType"
            VkPipelineDiscardRectangleStateCreateInfoEXT
@@ -495,6 +539,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext"
                VkPipelineDiscardRectangleStateCreateInfoEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext"
+               VkPipelineDiscardRectangleStateCreateInfoEXT
+             =
+             #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, pNext}
 
 instance CanReadField "pNext"
            VkPipelineDiscardRectangleStateCreateInfoEXT
@@ -540,6 +595,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "flags"
                VkPipelineDiscardRectangleStateCreateInfoEXT
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "flags"
+               VkPipelineDiscardRectangleStateCreateInfoEXT
+             =
+             #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, flags}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, flags}
 
 instance CanReadField "flags"
            VkPipelineDiscardRectangleStateCreateInfoEXT
@@ -591,6 +657,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "discardRectangleMode"
                VkPipelineDiscardRectangleStateCreateInfoEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "discardRectangleMode"
+               VkPipelineDiscardRectangleStateCreateInfoEXT
+             =
+             #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, discardRectangleMode}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, discardRectangleMode}
 
 instance CanReadField "discardRectangleMode"
            VkPipelineDiscardRectangleStateCreateInfoEXT
@@ -642,6 +719,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "discardRectangleCount"
                VkPipelineDiscardRectangleStateCreateInfoEXT
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "discardRectangleCount"
+               VkPipelineDiscardRectangleStateCreateInfoEXT
+             =
+             #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, discardRectangleCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, discardRectangleCount}
 
 instance CanReadField "discardRectangleCount"
            VkPipelineDiscardRectangleStateCreateInfoEXT
@@ -693,6 +781,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pDiscardRectangles"
                VkPipelineDiscardRectangleStateCreateInfoEXT
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "pDiscardRectangles"
+               VkPipelineDiscardRectangleStateCreateInfoEXT
+             =
+             #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, pDiscardRectangles}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, pDiscardRectangles}
 
 instance CanReadField "pDiscardRectangles"
            VkPipelineDiscardRectangleStateCreateInfoEXT

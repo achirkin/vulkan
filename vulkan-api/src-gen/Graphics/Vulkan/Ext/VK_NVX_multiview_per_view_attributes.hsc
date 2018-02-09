@@ -205,6 +205,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType"
                VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType"
+               VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
+             =
+             #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, sType}
 
 instance CanReadField "sType"
            VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
@@ -249,6 +260,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext"
                VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext"
+               VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
+             =
+             #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, pNext}
 
 instance CanReadField "pNext"
            VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
@@ -294,6 +316,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "perViewPositionAllComponents"
                VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "perViewPositionAllComponents"
+               VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
+             =
+             #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, perViewPositionAllComponents}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, perViewPositionAllComponents}
 
 instance CanReadField "perViewPositionAllComponents"
            VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX

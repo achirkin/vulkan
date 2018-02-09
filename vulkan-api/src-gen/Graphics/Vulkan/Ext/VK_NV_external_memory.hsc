@@ -172,6 +172,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkExternalMemoryImageCreateInfoNV =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkExternalMemoryImageCreateInfoNV =
+             #{offset VkExternalMemoryImageCreateInfoNV, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExternalMemoryImageCreateInfoNV, sType}
 
 instance CanReadField "sType" VkExternalMemoryImageCreateInfoNV
          where
@@ -212,6 +221,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "pNext" VkExternalMemoryImageCreateInfoNV = Ptr Void
         type FieldOptional "pNext" VkExternalMemoryImageCreateInfoNV =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkExternalMemoryImageCreateInfoNV =
+             #{offset VkExternalMemoryImageCreateInfoNV, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExternalMemoryImageCreateInfoNV, pNext}
 
 instance CanReadField "pNext" VkExternalMemoryImageCreateInfoNV
          where
@@ -254,6 +272,15 @@ instance {-# OVERLAPPING #-}
              VkExternalMemoryHandleTypeFlagsNV
         type FieldOptional "handleTypes" VkExternalMemoryImageCreateInfoNV
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "handleTypes" VkExternalMemoryImageCreateInfoNV =
+             #{offset VkExternalMemoryImageCreateInfoNV, handleTypes}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExternalMemoryImageCreateInfoNV, handleTypes}
 
 instance CanReadField "handleTypes"
            VkExternalMemoryImageCreateInfoNV
@@ -397,6 +424,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "sType" VkExportMemoryAllocateInfoNV =
              VkStructureType
         type FieldOptional "sType" VkExportMemoryAllocateInfoNV = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkExportMemoryAllocateInfoNV =
+             #{offset VkExportMemoryAllocateInfoNV, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExportMemoryAllocateInfoNV, sType}
 
 instance CanReadField "sType" VkExportMemoryAllocateInfoNV where
         {-# INLINE getField #-}
@@ -434,6 +470,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkExportMemoryAllocateInfoNV where
         type FieldType "pNext" VkExportMemoryAllocateInfoNV = Ptr Void
         type FieldOptional "pNext" VkExportMemoryAllocateInfoNV = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkExportMemoryAllocateInfoNV =
+             #{offset VkExportMemoryAllocateInfoNV, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExportMemoryAllocateInfoNV, pNext}
 
 instance CanReadField "pNext" VkExportMemoryAllocateInfoNV where
         {-# INLINE getField #-}
@@ -474,6 +519,15 @@ instance {-# OVERLAPPING #-}
              VkExternalMemoryHandleTypeFlagsNV
         type FieldOptional "handleTypes" VkExportMemoryAllocateInfoNV =
              'True -- ' closing tick for hsc2hs
+        type FieldOffset "handleTypes" VkExportMemoryAllocateInfoNV =
+             #{offset VkExportMemoryAllocateInfoNV, handleTypes}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExportMemoryAllocateInfoNV, handleTypes}
 
 instance CanReadField "handleTypes" VkExportMemoryAllocateInfoNV
          where

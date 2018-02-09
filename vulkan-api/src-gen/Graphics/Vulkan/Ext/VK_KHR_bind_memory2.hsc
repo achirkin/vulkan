@@ -162,6 +162,15 @@ instance {-# OVERLAPPING #-}
          HasField "sType" VkBindBufferMemoryInfoKHR where
         type FieldType "sType" VkBindBufferMemoryInfoKHR = VkStructureType
         type FieldOptional "sType" VkBindBufferMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkBindBufferMemoryInfoKHR =
+             #{offset VkBindBufferMemoryInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBindBufferMemoryInfoKHR, sType}
 
 instance CanReadField "sType" VkBindBufferMemoryInfoKHR where
         {-# INLINE getField #-}
@@ -199,6 +208,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkBindBufferMemoryInfoKHR where
         type FieldType "pNext" VkBindBufferMemoryInfoKHR = Ptr Void
         type FieldOptional "pNext" VkBindBufferMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkBindBufferMemoryInfoKHR =
+             #{offset VkBindBufferMemoryInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBindBufferMemoryInfoKHR, pNext}
 
 instance CanReadField "pNext" VkBindBufferMemoryInfoKHR where
         {-# INLINE getField #-}
@@ -236,6 +254,15 @@ instance {-# OVERLAPPING #-}
          HasField "buffer" VkBindBufferMemoryInfoKHR where
         type FieldType "buffer" VkBindBufferMemoryInfoKHR = VkBuffer
         type FieldOptional "buffer" VkBindBufferMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "buffer" VkBindBufferMemoryInfoKHR =
+             #{offset VkBindBufferMemoryInfoKHR, buffer}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBindBufferMemoryInfoKHR, buffer}
 
 instance CanReadField "buffer" VkBindBufferMemoryInfoKHR where
         {-# INLINE getField #-}
@@ -273,6 +300,15 @@ instance {-# OVERLAPPING #-}
          HasField "memory" VkBindBufferMemoryInfoKHR where
         type FieldType "memory" VkBindBufferMemoryInfoKHR = VkDeviceMemory
         type FieldOptional "memory" VkBindBufferMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "memory" VkBindBufferMemoryInfoKHR =
+             #{offset VkBindBufferMemoryInfoKHR, memory}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBindBufferMemoryInfoKHR, memory}
 
 instance CanReadField "memory" VkBindBufferMemoryInfoKHR where
         {-# INLINE getField #-}
@@ -312,6 +348,15 @@ instance {-# OVERLAPPING #-}
              VkDeviceSize
         type FieldOptional "memoryOffset" VkBindBufferMemoryInfoKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "memoryOffset" VkBindBufferMemoryInfoKHR =
+             #{offset VkBindBufferMemoryInfoKHR, memoryOffset}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBindBufferMemoryInfoKHR, memoryOffset}
 
 instance CanReadField "memoryOffset" VkBindBufferMemoryInfoKHR
          where
@@ -459,6 +504,14 @@ instance {-# OVERLAPPING #-}
          HasField "sType" VkBindImageMemoryInfoKHR where
         type FieldType "sType" VkBindImageMemoryInfoKHR = VkStructureType
         type FieldOptional "sType" VkBindImageMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkBindImageMemoryInfoKHR =
+             #{offset VkBindImageMemoryInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkBindImageMemoryInfoKHR, sType}
 
 instance CanReadField "sType" VkBindImageMemoryInfoKHR where
         {-# INLINE getField #-}
@@ -496,6 +549,14 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkBindImageMemoryInfoKHR where
         type FieldType "pNext" VkBindImageMemoryInfoKHR = Ptr Void
         type FieldOptional "pNext" VkBindImageMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkBindImageMemoryInfoKHR =
+             #{offset VkBindImageMemoryInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkBindImageMemoryInfoKHR, pNext}
 
 instance CanReadField "pNext" VkBindImageMemoryInfoKHR where
         {-# INLINE getField #-}
@@ -533,6 +594,14 @@ instance {-# OVERLAPPING #-}
          HasField "image" VkBindImageMemoryInfoKHR where
         type FieldType "image" VkBindImageMemoryInfoKHR = VkImage
         type FieldOptional "image" VkBindImageMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "image" VkBindImageMemoryInfoKHR =
+             #{offset VkBindImageMemoryInfoKHR, image}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkBindImageMemoryInfoKHR, image}
 
 instance CanReadField "image" VkBindImageMemoryInfoKHR where
         {-# INLINE getField #-}
@@ -570,6 +639,15 @@ instance {-# OVERLAPPING #-}
          HasField "memory" VkBindImageMemoryInfoKHR where
         type FieldType "memory" VkBindImageMemoryInfoKHR = VkDeviceMemory
         type FieldOptional "memory" VkBindImageMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "memory" VkBindImageMemoryInfoKHR =
+             #{offset VkBindImageMemoryInfoKHR, memory}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBindImageMemoryInfoKHR, memory}
 
 instance CanReadField "memory" VkBindImageMemoryInfoKHR where
         {-# INLINE getField #-}
@@ -608,6 +686,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "memoryOffset" VkBindImageMemoryInfoKHR =
              VkDeviceSize
         type FieldOptional "memoryOffset" VkBindImageMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "memoryOffset" VkBindImageMemoryInfoKHR =
+             #{offset VkBindImageMemoryInfoKHR, memoryOffset}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkBindImageMemoryInfoKHR, memoryOffset}
 
 instance CanReadField "memoryOffset" VkBindImageMemoryInfoKHR where
         {-# INLINE getField #-}

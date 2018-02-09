@@ -184,6 +184,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType"
                VkPipelineRasterizationStateRasterizationOrderAMD
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType"
+               VkPipelineRasterizationStateRasterizationOrderAMD
+             =
+             #{offset VkPipelineRasterizationStateRasterizationOrderAMD, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineRasterizationStateRasterizationOrderAMD, sType}
 
 instance CanReadField "sType"
            VkPipelineRasterizationStateRasterizationOrderAMD
@@ -231,6 +242,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext"
                VkPipelineRasterizationStateRasterizationOrderAMD
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext"
+               VkPipelineRasterizationStateRasterizationOrderAMD
+             =
+             #{offset VkPipelineRasterizationStateRasterizationOrderAMD, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineRasterizationStateRasterizationOrderAMD, pNext}
 
 instance CanReadField "pNext"
            VkPipelineRasterizationStateRasterizationOrderAMD
@@ -282,6 +304,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "rasterizationOrder"
                VkPipelineRasterizationStateRasterizationOrderAMD
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "rasterizationOrder"
+               VkPipelineRasterizationStateRasterizationOrderAMD
+             =
+             #{offset VkPipelineRasterizationStateRasterizationOrderAMD, rasterizationOrder}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineRasterizationStateRasterizationOrderAMD, rasterizationOrder}
 
 instance CanReadField "rasterizationOrder"
            VkPipelineRasterizationStateRasterizationOrderAMD

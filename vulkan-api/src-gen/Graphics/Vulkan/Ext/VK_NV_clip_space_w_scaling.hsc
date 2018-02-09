@@ -157,6 +157,14 @@ instance {-# OVERLAPPING #-} HasField "xcoeff" VkViewportWScalingNV
         type FieldType "xcoeff" VkViewportWScalingNV =
              #{type float}
         type FieldOptional "xcoeff" VkViewportWScalingNV = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "xcoeff" VkViewportWScalingNV =
+             #{offset VkViewportWScalingNV, xcoeff}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkViewportWScalingNV, xcoeff}
 
 instance CanReadField "xcoeff" VkViewportWScalingNV where
         {-# INLINE getField #-}
@@ -194,6 +202,14 @@ instance {-# OVERLAPPING #-} HasField "ycoeff" VkViewportWScalingNV
         type FieldType "ycoeff" VkViewportWScalingNV =
              #{type float}
         type FieldOptional "ycoeff" VkViewportWScalingNV = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "ycoeff" VkViewportWScalingNV =
+             #{offset VkViewportWScalingNV, ycoeff}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkViewportWScalingNV, ycoeff}
 
 instance CanReadField "ycoeff" VkViewportWScalingNV where
         {-# INLINE getField #-}
@@ -346,6 +362,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType"
                VkPipelineViewportWScalingStateCreateInfoNV
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType"
+               VkPipelineViewportWScalingStateCreateInfoNV
+             =
+             #{offset VkPipelineViewportWScalingStateCreateInfoNV, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineViewportWScalingStateCreateInfoNV, sType}
 
 instance CanReadField "sType"
            VkPipelineViewportWScalingStateCreateInfoNV
@@ -391,6 +418,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext"
                VkPipelineViewportWScalingStateCreateInfoNV
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext"
+               VkPipelineViewportWScalingStateCreateInfoNV
+             =
+             #{offset VkPipelineViewportWScalingStateCreateInfoNV, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineViewportWScalingStateCreateInfoNV, pNext}
 
 instance CanReadField "pNext"
            VkPipelineViewportWScalingStateCreateInfoNV
@@ -442,6 +480,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "viewportWScalingEnable"
                VkPipelineViewportWScalingStateCreateInfoNV
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "viewportWScalingEnable"
+               VkPipelineViewportWScalingStateCreateInfoNV
+             =
+             #{offset VkPipelineViewportWScalingStateCreateInfoNV, viewportWScalingEnable}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineViewportWScalingStateCreateInfoNV, viewportWScalingEnable}
 
 instance CanReadField "viewportWScalingEnable"
            VkPipelineViewportWScalingStateCreateInfoNV
@@ -492,6 +541,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "viewportCount"
                VkPipelineViewportWScalingStateCreateInfoNV
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "viewportCount"
+               VkPipelineViewportWScalingStateCreateInfoNV
+             =
+             #{offset VkPipelineViewportWScalingStateCreateInfoNV, viewportCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineViewportWScalingStateCreateInfoNV, viewportCount}
 
 instance CanReadField "viewportCount"
            VkPipelineViewportWScalingStateCreateInfoNV
@@ -542,6 +602,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pViewportWScalings"
                VkPipelineViewportWScalingStateCreateInfoNV
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pViewportWScalings"
+               VkPipelineViewportWScalingStateCreateInfoNV
+             =
+             #{offset VkPipelineViewportWScalingStateCreateInfoNV, pViewportWScalings}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineViewportWScalingStateCreateInfoNV, pViewportWScalings}
 
 instance CanReadField "pViewportWScalings"
            VkPipelineViewportWScalingStateCreateInfoNV

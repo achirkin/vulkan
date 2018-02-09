@@ -166,6 +166,14 @@ instance {-# OVERLAPPING #-}
          HasField "sType" VkViSurfaceCreateInfoNN where
         type FieldType "sType" VkViSurfaceCreateInfoNN = VkStructureType
         type FieldOptional "sType" VkViSurfaceCreateInfoNN = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkViSurfaceCreateInfoNN =
+             #{offset VkViSurfaceCreateInfoNN, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkViSurfaceCreateInfoNN, sType}
 
 instance CanReadField "sType" VkViSurfaceCreateInfoNN where
         {-# INLINE getField #-}
@@ -203,6 +211,14 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkViSurfaceCreateInfoNN where
         type FieldType "pNext" VkViSurfaceCreateInfoNN = Ptr Void
         type FieldOptional "pNext" VkViSurfaceCreateInfoNN = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkViSurfaceCreateInfoNN =
+             #{offset VkViSurfaceCreateInfoNN, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkViSurfaceCreateInfoNN, pNext}
 
 instance CanReadField "pNext" VkViSurfaceCreateInfoNN where
         {-# INLINE getField #-}
@@ -242,6 +258,14 @@ instance {-# OVERLAPPING #-}
         type FieldType "flags" VkViSurfaceCreateInfoNN =
              VkViSurfaceCreateFlagsNN
         type FieldOptional "flags" VkViSurfaceCreateInfoNN = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "flags" VkViSurfaceCreateInfoNN =
+             #{offset VkViSurfaceCreateInfoNN, flags}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkViSurfaceCreateInfoNN, flags}
 
 instance CanReadField "flags" VkViSurfaceCreateInfoNN where
         {-# INLINE getField #-}
@@ -279,6 +303,14 @@ instance {-# OVERLAPPING #-}
          HasField "window" VkViSurfaceCreateInfoNN where
         type FieldType "window" VkViSurfaceCreateInfoNN = Ptr Void
         type FieldOptional "window" VkViSurfaceCreateInfoNN = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "window" VkViSurfaceCreateInfoNN =
+             #{offset VkViSurfaceCreateInfoNN, window}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkViSurfaceCreateInfoNN, window}
 
 instance CanReadField "window" VkViSurfaceCreateInfoNN where
         {-# INLINE getField #-}

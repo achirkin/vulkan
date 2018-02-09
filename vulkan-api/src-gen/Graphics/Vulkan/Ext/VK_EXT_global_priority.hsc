@@ -176,6 +176,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkDeviceQueueGlobalPriorityCreateInfoEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkDeviceQueueGlobalPriorityCreateInfoEXT =
+             #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, sType}
 
 instance CanReadField "sType"
            VkDeviceQueueGlobalPriorityCreateInfoEXT
@@ -220,6 +229,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkDeviceQueueGlobalPriorityCreateInfoEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkDeviceQueueGlobalPriorityCreateInfoEXT =
+             #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, pNext}
 
 instance CanReadField "pNext"
            VkDeviceQueueGlobalPriorityCreateInfoEXT
@@ -267,6 +285,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "globalPriority"
                VkDeviceQueueGlobalPriorityCreateInfoEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "globalPriority"
+               VkDeviceQueueGlobalPriorityCreateInfoEXT
+             =
+             #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, globalPriority}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, globalPriority}
 
 instance CanReadField "globalPriority"
            VkDeviceQueueGlobalPriorityCreateInfoEXT

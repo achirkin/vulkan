@@ -167,6 +167,15 @@ instance {-# OVERLAPPING #-}
          HasField "sType" VkImportSemaphoreFdInfoKHR where
         type FieldType "sType" VkImportSemaphoreFdInfoKHR = VkStructureType
         type FieldOptional "sType" VkImportSemaphoreFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkImportSemaphoreFdInfoKHR =
+             #{offset VkImportSemaphoreFdInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImportSemaphoreFdInfoKHR, sType}
 
 instance CanReadField "sType" VkImportSemaphoreFdInfoKHR where
         {-# INLINE getField #-}
@@ -204,6 +213,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkImportSemaphoreFdInfoKHR where
         type FieldType "pNext" VkImportSemaphoreFdInfoKHR = Ptr Void
         type FieldOptional "pNext" VkImportSemaphoreFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkImportSemaphoreFdInfoKHR =
+             #{offset VkImportSemaphoreFdInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImportSemaphoreFdInfoKHR, pNext}
 
 instance CanReadField "pNext" VkImportSemaphoreFdInfoKHR where
         {-# INLINE getField #-}
@@ -241,6 +259,15 @@ instance {-# OVERLAPPING #-}
          HasField "semaphore" VkImportSemaphoreFdInfoKHR where
         type FieldType "semaphore" VkImportSemaphoreFdInfoKHR = VkSemaphore
         type FieldOptional "semaphore" VkImportSemaphoreFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "semaphore" VkImportSemaphoreFdInfoKHR =
+             #{offset VkImportSemaphoreFdInfoKHR, semaphore}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImportSemaphoreFdInfoKHR, semaphore}
 
 instance CanReadField "semaphore" VkImportSemaphoreFdInfoKHR where
         {-# INLINE getField #-}
@@ -280,6 +307,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "flags" VkImportSemaphoreFdInfoKHR =
              VkSemaphoreImportFlagsKHR
         type FieldOptional "flags" VkImportSemaphoreFdInfoKHR = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "flags" VkImportSemaphoreFdInfoKHR =
+             #{offset VkImportSemaphoreFdInfoKHR, flags}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImportSemaphoreFdInfoKHR, flags}
 
 instance CanReadField "flags" VkImportSemaphoreFdInfoKHR where
         {-# INLINE getField #-}
@@ -319,6 +355,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "handleType" VkImportSemaphoreFdInfoKHR =
              VkExternalSemaphoreHandleTypeFlagBitsKHR
         type FieldOptional "handleType" VkImportSemaphoreFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "handleType" VkImportSemaphoreFdInfoKHR =
+             #{offset VkImportSemaphoreFdInfoKHR, handleType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkImportSemaphoreFdInfoKHR, handleType}
 
 instance CanReadField "handleType" VkImportSemaphoreFdInfoKHR where
         {-# INLINE getField #-}
@@ -358,6 +403,14 @@ instance {-# OVERLAPPING #-}
         type FieldType "fd" VkImportSemaphoreFdInfoKHR =
              #{type int}
         type FieldOptional "fd" VkImportSemaphoreFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "fd" VkImportSemaphoreFdInfoKHR =
+             #{offset VkImportSemaphoreFdInfoKHR, fd}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkImportSemaphoreFdInfoKHR, fd}
 
 instance CanReadField "fd" VkImportSemaphoreFdInfoKHR where
         {-# INLINE getField #-}
@@ -505,6 +558,14 @@ instance {-# OVERLAPPING #-}
          HasField "sType" VkSemaphoreGetFdInfoKHR where
         type FieldType "sType" VkSemaphoreGetFdInfoKHR = VkStructureType
         type FieldOptional "sType" VkSemaphoreGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkSemaphoreGetFdInfoKHR =
+             #{offset VkSemaphoreGetFdInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkSemaphoreGetFdInfoKHR, sType}
 
 instance CanReadField "sType" VkSemaphoreGetFdInfoKHR where
         {-# INLINE getField #-}
@@ -542,6 +603,14 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkSemaphoreGetFdInfoKHR where
         type FieldType "pNext" VkSemaphoreGetFdInfoKHR = Ptr Void
         type FieldOptional "pNext" VkSemaphoreGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkSemaphoreGetFdInfoKHR =
+             #{offset VkSemaphoreGetFdInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkSemaphoreGetFdInfoKHR, pNext}
 
 instance CanReadField "pNext" VkSemaphoreGetFdInfoKHR where
         {-# INLINE getField #-}
@@ -579,6 +648,15 @@ instance {-# OVERLAPPING #-}
          HasField "semaphore" VkSemaphoreGetFdInfoKHR where
         type FieldType "semaphore" VkSemaphoreGetFdInfoKHR = VkSemaphore
         type FieldOptional "semaphore" VkSemaphoreGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "semaphore" VkSemaphoreGetFdInfoKHR =
+             #{offset VkSemaphoreGetFdInfoKHR, semaphore}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSemaphoreGetFdInfoKHR, semaphore}
 
 instance CanReadField "semaphore" VkSemaphoreGetFdInfoKHR where
         {-# INLINE getField #-}
@@ -618,6 +696,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "handleType" VkSemaphoreGetFdInfoKHR =
              VkExternalSemaphoreHandleTypeFlagBitsKHR
         type FieldOptional "handleType" VkSemaphoreGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "handleType" VkSemaphoreGetFdInfoKHR =
+             #{offset VkSemaphoreGetFdInfoKHR, handleType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSemaphoreGetFdInfoKHR, handleType}
 
 instance CanReadField "handleType" VkSemaphoreGetFdInfoKHR where
         {-# INLINE getField #-}

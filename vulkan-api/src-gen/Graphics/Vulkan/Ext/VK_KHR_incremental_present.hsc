@@ -160,6 +160,14 @@ instance {-# OVERLAPPING #-} HasField "sType" VkPresentRegionsKHR
          where
         type FieldType "sType" VkPresentRegionsKHR = VkStructureType
         type FieldOptional "sType" VkPresentRegionsKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkPresentRegionsKHR =
+             #{offset VkPresentRegionsKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkPresentRegionsKHR, sType}
 
 instance CanReadField "sType" VkPresentRegionsKHR where
         {-# INLINE getField #-}
@@ -196,6 +204,14 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkPresentRegionsKHR
          where
         type FieldType "pNext" VkPresentRegionsKHR = Ptr Void
         type FieldOptional "pNext" VkPresentRegionsKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkPresentRegionsKHR =
+             #{offset VkPresentRegionsKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkPresentRegionsKHR, pNext}
 
 instance CanReadField "pNext" VkPresentRegionsKHR where
         {-# INLINE getField #-}
@@ -233,6 +249,15 @@ instance {-# OVERLAPPING #-}
          HasField "swapchainCount" VkPresentRegionsKHR where
         type FieldType "swapchainCount" VkPresentRegionsKHR = Word32
         type FieldOptional "swapchainCount" VkPresentRegionsKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "swapchainCount" VkPresentRegionsKHR =
+             #{offset VkPresentRegionsKHR, swapchainCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPresentRegionsKHR, swapchainCount}
 
 instance CanReadField "swapchainCount" VkPresentRegionsKHR where
         {-# INLINE getField #-}
@@ -271,6 +296,14 @@ instance {-# OVERLAPPING #-}
         type FieldType "pRegions" VkPresentRegionsKHR =
              Ptr VkPresentRegionKHR
         type FieldOptional "pRegions" VkPresentRegionsKHR = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "pRegions" VkPresentRegionsKHR =
+             #{offset VkPresentRegionsKHR, pRegions}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkPresentRegionsKHR, pRegions}
 
 instance CanReadField "pRegions" VkPresentRegionsKHR where
         {-# INLINE getField #-}
@@ -408,6 +441,15 @@ instance {-# OVERLAPPING #-}
          HasField "rectangleCount" VkPresentRegionKHR where
         type FieldType "rectangleCount" VkPresentRegionKHR = Word32
         type FieldOptional "rectangleCount" VkPresentRegionKHR = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "rectangleCount" VkPresentRegionKHR =
+             #{offset VkPresentRegionKHR, rectangleCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPresentRegionKHR, rectangleCount}
 
 instance CanReadField "rectangleCount" VkPresentRegionKHR where
         {-# INLINE getField #-}
@@ -446,6 +488,14 @@ instance {-# OVERLAPPING #-}
         type FieldType "pRectangles" VkPresentRegionKHR =
              Ptr VkRectLayerKHR
         type FieldOptional "pRectangles" VkPresentRegionKHR = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "pRectangles" VkPresentRegionKHR =
+             #{offset VkPresentRegionKHR, pRectangles}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkPresentRegionKHR, pRectangles}
 
 instance CanReadField "pRectangles" VkPresentRegionKHR where
         {-# INLINE getField #-}
@@ -575,6 +625,14 @@ instance {-# OVERLAPPING #-} HasVkOffset VkRectLayerKHR where
 instance {-# OVERLAPPING #-} HasField "offset" VkRectLayerKHR where
         type FieldType "offset" VkRectLayerKHR = VkOffset2D
         type FieldOptional "offset" VkRectLayerKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "offset" VkRectLayerKHR =
+             #{offset VkRectLayerKHR, offset}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkRectLayerKHR, offset}
 
 instance CanReadField "offset" VkRectLayerKHR where
         {-# INLINE getField #-}
@@ -610,6 +668,14 @@ instance {-# OVERLAPPING #-} HasVkExtent VkRectLayerKHR where
 instance {-# OVERLAPPING #-} HasField "extent" VkRectLayerKHR where
         type FieldType "extent" VkRectLayerKHR = VkExtent2D
         type FieldOptional "extent" VkRectLayerKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "extent" VkRectLayerKHR =
+             #{offset VkRectLayerKHR, extent}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkRectLayerKHR, extent}
 
 instance CanReadField "extent" VkRectLayerKHR where
         {-# INLINE getField #-}
@@ -644,6 +710,14 @@ instance {-# OVERLAPPING #-} HasVkLayer VkRectLayerKHR where
 instance {-# OVERLAPPING #-} HasField "layer" VkRectLayerKHR where
         type FieldType "layer" VkRectLayerKHR = Word32
         type FieldOptional "layer" VkRectLayerKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "layer" VkRectLayerKHR =
+             #{offset VkRectLayerKHR, layer}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkRectLayerKHR, layer}
 
 instance CanReadField "layer" VkRectLayerKHR where
         {-# INLINE getField #-}

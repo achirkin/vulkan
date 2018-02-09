@@ -168,6 +168,14 @@ instance {-# OVERLAPPING #-}
          HasField "sType" VkDisplayPresentInfoKHR where
         type FieldType "sType" VkDisplayPresentInfoKHR = VkStructureType
         type FieldOptional "sType" VkDisplayPresentInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkDisplayPresentInfoKHR =
+             #{offset VkDisplayPresentInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkDisplayPresentInfoKHR, sType}
 
 instance CanReadField "sType" VkDisplayPresentInfoKHR where
         {-# INLINE getField #-}
@@ -205,6 +213,14 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkDisplayPresentInfoKHR where
         type FieldType "pNext" VkDisplayPresentInfoKHR = Ptr Void
         type FieldOptional "pNext" VkDisplayPresentInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkDisplayPresentInfoKHR =
+             #{offset VkDisplayPresentInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkDisplayPresentInfoKHR, pNext}
 
 instance CanReadField "pNext" VkDisplayPresentInfoKHR where
         {-# INLINE getField #-}
@@ -242,6 +258,15 @@ instance {-# OVERLAPPING #-}
          HasField "srcRect" VkDisplayPresentInfoKHR where
         type FieldType "srcRect" VkDisplayPresentInfoKHR = VkRect2D
         type FieldOptional "srcRect" VkDisplayPresentInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "srcRect" VkDisplayPresentInfoKHR =
+             #{offset VkDisplayPresentInfoKHR, srcRect}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayPresentInfoKHR, srcRect}
 
 instance CanReadField "srcRect" VkDisplayPresentInfoKHR where
         {-# INLINE getField #-}
@@ -279,6 +304,15 @@ instance {-# OVERLAPPING #-}
          HasField "dstRect" VkDisplayPresentInfoKHR where
         type FieldType "dstRect" VkDisplayPresentInfoKHR = VkRect2D
         type FieldOptional "dstRect" VkDisplayPresentInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "dstRect" VkDisplayPresentInfoKHR =
+             #{offset VkDisplayPresentInfoKHR, dstRect}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayPresentInfoKHR, dstRect}
 
 instance CanReadField "dstRect" VkDisplayPresentInfoKHR where
         {-# INLINE getField #-}
@@ -316,6 +350,15 @@ instance {-# OVERLAPPING #-}
          HasField "persistent" VkDisplayPresentInfoKHR where
         type FieldType "persistent" VkDisplayPresentInfoKHR = VkBool32
         type FieldOptional "persistent" VkDisplayPresentInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "persistent" VkDisplayPresentInfoKHR =
+             #{offset VkDisplayPresentInfoKHR, persistent}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDisplayPresentInfoKHR, persistent}
 
 instance CanReadField "persistent" VkDisplayPresentInfoKHR where
         {-# INLINE getField #-}

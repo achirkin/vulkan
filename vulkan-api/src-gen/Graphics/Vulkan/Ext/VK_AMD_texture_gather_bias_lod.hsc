@@ -177,6 +177,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkTextureLODGatherFormatPropertiesAMD =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkTextureLODGatherFormatPropertiesAMD =
+             #{offset VkTextureLODGatherFormatPropertiesAMD, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkTextureLODGatherFormatPropertiesAMD, sType}
 
 instance CanReadField "sType" VkTextureLODGatherFormatPropertiesAMD
          where
@@ -213,6 +222,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkTextureLODGatherFormatPropertiesAMD =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkTextureLODGatherFormatPropertiesAMD =
+             #{offset VkTextureLODGatherFormatPropertiesAMD, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkTextureLODGatherFormatPropertiesAMD, pNext}
 
 instance CanReadField "pNext" VkTextureLODGatherFormatPropertiesAMD
          where
@@ -257,6 +275,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "supportsTextureGatherLODBiasAMD"
                VkTextureLODGatherFormatPropertiesAMD
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "supportsTextureGatherLODBiasAMD"
+               VkTextureLODGatherFormatPropertiesAMD
+             =
+             #{offset VkTextureLODGatherFormatPropertiesAMD, supportsTextureGatherLODBiasAMD}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkTextureLODGatherFormatPropertiesAMD, supportsTextureGatherLODBiasAMD}
 
 instance CanReadField "supportsTextureGatherLODBiasAMD"
            VkTextureLODGatherFormatPropertiesAMD

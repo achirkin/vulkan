@@ -181,6 +181,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkSharedPresentSurfaceCapabilitiesKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkSharedPresentSurfaceCapabilitiesKHR =
+             #{offset VkSharedPresentSurfaceCapabilitiesKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSharedPresentSurfaceCapabilitiesKHR, sType}
 
 instance CanReadField "sType" VkSharedPresentSurfaceCapabilitiesKHR
          where
@@ -217,6 +226,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkSharedPresentSurfaceCapabilitiesKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkSharedPresentSurfaceCapabilitiesKHR =
+             #{offset VkSharedPresentSurfaceCapabilitiesKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSharedPresentSurfaceCapabilitiesKHR, pNext}
 
 instance CanReadField "pNext" VkSharedPresentSurfaceCapabilitiesKHR
          where
@@ -261,6 +279,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sharedPresentSupportedUsageFlags"
                VkSharedPresentSurfaceCapabilitiesKHR
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "sharedPresentSupportedUsageFlags"
+               VkSharedPresentSurfaceCapabilitiesKHR
+             =
+             #{offset VkSharedPresentSurfaceCapabilitiesKHR, sharedPresentSupportedUsageFlags}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSharedPresentSurfaceCapabilitiesKHR, sharedPresentSupportedUsageFlags}
 
 instance CanReadField "sharedPresentSupportedUsageFlags"
            VkSharedPresentSurfaceCapabilitiesKHR

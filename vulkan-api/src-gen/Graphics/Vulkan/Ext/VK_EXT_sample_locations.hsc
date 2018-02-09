@@ -169,6 +169,14 @@ instance {-# OVERLAPPING #-} HasVkX VkSampleLocationEXT where
 instance {-# OVERLAPPING #-} HasField "x" VkSampleLocationEXT where
         type FieldType "x" VkSampleLocationEXT = #{type float}
         type FieldOptional "x" VkSampleLocationEXT = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "x" VkSampleLocationEXT =
+             #{offset VkSampleLocationEXT, x}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkSampleLocationEXT, x}
 
 instance CanReadField "x" VkSampleLocationEXT where
         {-# INLINE getField #-}
@@ -203,6 +211,14 @@ instance {-# OVERLAPPING #-} HasVkY VkSampleLocationEXT where
 instance {-# OVERLAPPING #-} HasField "y" VkSampleLocationEXT where
         type FieldType "y" VkSampleLocationEXT = #{type float}
         type FieldOptional "y" VkSampleLocationEXT = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "y" VkSampleLocationEXT =
+             #{offset VkSampleLocationEXT, y}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkSampleLocationEXT, y}
 
 instance CanReadField "y" VkSampleLocationEXT where
         {-# INLINE getField #-}
@@ -339,6 +355,14 @@ instance {-# OVERLAPPING #-}
          HasField "sType" VkSampleLocationsInfoEXT where
         type FieldType "sType" VkSampleLocationsInfoEXT = VkStructureType
         type FieldOptional "sType" VkSampleLocationsInfoEXT = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkSampleLocationsInfoEXT =
+             #{offset VkSampleLocationsInfoEXT, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkSampleLocationsInfoEXT, sType}
 
 instance CanReadField "sType" VkSampleLocationsInfoEXT where
         {-# INLINE getField #-}
@@ -376,6 +400,14 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkSampleLocationsInfoEXT where
         type FieldType "pNext" VkSampleLocationsInfoEXT = Ptr Void
         type FieldOptional "pNext" VkSampleLocationsInfoEXT = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkSampleLocationsInfoEXT =
+             #{offset VkSampleLocationsInfoEXT, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkSampleLocationsInfoEXT, pNext}
 
 instance CanReadField "pNext" VkSampleLocationsInfoEXT where
         {-# INLINE getField #-}
@@ -417,6 +449,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sampleLocationsPerPixel"
                VkSampleLocationsInfoEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sampleLocationsPerPixel" VkSampleLocationsInfoEXT
+             =
+             #{offset VkSampleLocationsInfoEXT, sampleLocationsPerPixel}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSampleLocationsInfoEXT, sampleLocationsPerPixel}
 
 instance CanReadField "sampleLocationsPerPixel"
            VkSampleLocationsInfoEXT
@@ -462,6 +504,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sampleLocationGridSize"
                VkSampleLocationsInfoEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sampleLocationGridSize" VkSampleLocationsInfoEXT
+             =
+             #{offset VkSampleLocationsInfoEXT, sampleLocationGridSize}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSampleLocationsInfoEXT, sampleLocationGridSize}
 
 instance CanReadField "sampleLocationGridSize"
            VkSampleLocationsInfoEXT
@@ -505,6 +557,15 @@ instance {-# OVERLAPPING #-}
              Word32
         type FieldOptional "sampleLocationsCount" VkSampleLocationsInfoEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sampleLocationsCount" VkSampleLocationsInfoEXT =
+             #{offset VkSampleLocationsInfoEXT, sampleLocationsCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSampleLocationsInfoEXT, sampleLocationsCount}
 
 instance CanReadField "sampleLocationsCount"
            VkSampleLocationsInfoEXT
@@ -549,6 +610,15 @@ instance {-# OVERLAPPING #-}
              Ptr VkSampleLocationEXT
         type FieldOptional "pSampleLocations" VkSampleLocationsInfoEXT =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pSampleLocations" VkSampleLocationsInfoEXT =
+             #{offset VkSampleLocationsInfoEXT, pSampleLocations}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSampleLocationsInfoEXT, pSampleLocations}
 
 instance CanReadField "pSampleLocations" VkSampleLocationsInfoEXT
          where
@@ -699,6 +769,15 @@ instance {-# OVERLAPPING #-}
              Word32
         type FieldOptional "attachmentIndex" VkAttachmentSampleLocationsEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "attachmentIndex" VkAttachmentSampleLocationsEXT =
+             #{offset VkAttachmentSampleLocationsEXT, attachmentIndex}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkAttachmentSampleLocationsEXT, attachmentIndex}
 
 instance CanReadField "attachmentIndex"
            VkAttachmentSampleLocationsEXT
@@ -744,6 +823,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sampleLocationsInfo"
                VkAttachmentSampleLocationsEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sampleLocationsInfo"
+               VkAttachmentSampleLocationsEXT
+             =
+             #{offset VkAttachmentSampleLocationsEXT, sampleLocationsInfo}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkAttachmentSampleLocationsEXT, sampleLocationsInfo}
 
 instance CanReadField "sampleLocationsInfo"
            VkAttachmentSampleLocationsEXT
@@ -882,6 +972,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "subpassIndex" VkSubpassSampleLocationsEXT = Word32
         type FieldOptional "subpassIndex" VkSubpassSampleLocationsEXT =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "subpassIndex" VkSubpassSampleLocationsEXT =
+             #{offset VkSubpassSampleLocationsEXT, subpassIndex}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSubpassSampleLocationsEXT, subpassIndex}
 
 instance CanReadField "subpassIndex" VkSubpassSampleLocationsEXT
          where
@@ -925,6 +1024,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sampleLocationsInfo"
                VkSubpassSampleLocationsEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sampleLocationsInfo" VkSubpassSampleLocationsEXT
+             =
+             #{offset VkSubpassSampleLocationsEXT, sampleLocationsInfo}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSubpassSampleLocationsEXT, sampleLocationsInfo}
 
 instance CanReadField "sampleLocationsInfo"
            VkSubpassSampleLocationsEXT
@@ -1082,6 +1191,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkRenderPassSampleLocationsBeginInfoEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkRenderPassSampleLocationsBeginInfoEXT =
+             #{offset VkRenderPassSampleLocationsBeginInfoEXT, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkRenderPassSampleLocationsBeginInfoEXT, sType}
 
 instance CanReadField "sType"
            VkRenderPassSampleLocationsBeginInfoEXT
@@ -1126,6 +1244,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkRenderPassSampleLocationsBeginInfoEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkRenderPassSampleLocationsBeginInfoEXT =
+             #{offset VkRenderPassSampleLocationsBeginInfoEXT, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkRenderPassSampleLocationsBeginInfoEXT, pNext}
 
 instance CanReadField "pNext"
            VkRenderPassSampleLocationsBeginInfoEXT
@@ -1177,6 +1304,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "attachmentInitialSampleLocationsCount"
                VkRenderPassSampleLocationsBeginInfoEXT
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "attachmentInitialSampleLocationsCount"
+               VkRenderPassSampleLocationsBeginInfoEXT
+             =
+             #{offset VkRenderPassSampleLocationsBeginInfoEXT, attachmentInitialSampleLocationsCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkRenderPassSampleLocationsBeginInfoEXT, attachmentInitialSampleLocationsCount}
 
 instance CanReadField "attachmentInitialSampleLocationsCount"
            VkRenderPassSampleLocationsBeginInfoEXT
@@ -1228,6 +1366,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pAttachmentInitialSampleLocations"
                VkRenderPassSampleLocationsBeginInfoEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pAttachmentInitialSampleLocations"
+               VkRenderPassSampleLocationsBeginInfoEXT
+             =
+             #{offset VkRenderPassSampleLocationsBeginInfoEXT, pAttachmentInitialSampleLocations}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkRenderPassSampleLocationsBeginInfoEXT, pAttachmentInitialSampleLocations}
 
 instance CanReadField "pAttachmentInitialSampleLocations"
            VkRenderPassSampleLocationsBeginInfoEXT
@@ -1279,6 +1428,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "postSubpassSampleLocationsCount"
                VkRenderPassSampleLocationsBeginInfoEXT
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "postSubpassSampleLocationsCount"
+               VkRenderPassSampleLocationsBeginInfoEXT
+             =
+             #{offset VkRenderPassSampleLocationsBeginInfoEXT, postSubpassSampleLocationsCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkRenderPassSampleLocationsBeginInfoEXT, postSubpassSampleLocationsCount}
 
 instance CanReadField "postSubpassSampleLocationsCount"
            VkRenderPassSampleLocationsBeginInfoEXT
@@ -1330,6 +1490,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pPostSubpassSampleLocations"
                VkRenderPassSampleLocationsBeginInfoEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pPostSubpassSampleLocations"
+               VkRenderPassSampleLocationsBeginInfoEXT
+             =
+             #{offset VkRenderPassSampleLocationsBeginInfoEXT, pPostSubpassSampleLocations}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkRenderPassSampleLocationsBeginInfoEXT, pPostSubpassSampleLocations}
 
 instance CanReadField "pPostSubpassSampleLocations"
            VkRenderPassSampleLocationsBeginInfoEXT
@@ -1499,6 +1670,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType"
                VkPipelineSampleLocationsStateCreateInfoEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType"
+               VkPipelineSampleLocationsStateCreateInfoEXT
+             =
+             #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sType}
 
 instance CanReadField "sType"
            VkPipelineSampleLocationsStateCreateInfoEXT
@@ -1544,6 +1726,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext"
                VkPipelineSampleLocationsStateCreateInfoEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext"
+               VkPipelineSampleLocationsStateCreateInfoEXT
+             =
+             #{offset VkPipelineSampleLocationsStateCreateInfoEXT, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineSampleLocationsStateCreateInfoEXT, pNext}
 
 instance CanReadField "pNext"
            VkPipelineSampleLocationsStateCreateInfoEXT
@@ -1595,6 +1788,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sampleLocationsEnable"
                VkPipelineSampleLocationsStateCreateInfoEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sampleLocationsEnable"
+               VkPipelineSampleLocationsStateCreateInfoEXT
+             =
+             #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sampleLocationsEnable}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sampleLocationsEnable}
 
 instance CanReadField "sampleLocationsEnable"
            VkPipelineSampleLocationsStateCreateInfoEXT
@@ -1646,6 +1850,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sampleLocationsInfo"
                VkPipelineSampleLocationsStateCreateInfoEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sampleLocationsInfo"
+               VkPipelineSampleLocationsStateCreateInfoEXT
+             =
+             #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sampleLocationsInfo}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sampleLocationsInfo}
 
 instance CanReadField "sampleLocationsInfo"
            VkPipelineSampleLocationsStateCreateInfoEXT
@@ -1813,6 +2028,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType"
                VkPhysicalDeviceSampleLocationsPropertiesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType"
+               VkPhysicalDeviceSampleLocationsPropertiesEXT
+             =
+             #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sType}
 
 instance CanReadField "sType"
            VkPhysicalDeviceSampleLocationsPropertiesEXT
@@ -1852,6 +2078,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext"
                VkPhysicalDeviceSampleLocationsPropertiesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext"
+               VkPhysicalDeviceSampleLocationsPropertiesEXT
+             =
+             #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, pNext}
 
 instance CanReadField "pNext"
            VkPhysicalDeviceSampleLocationsPropertiesEXT
@@ -1897,6 +2134,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sampleLocationSampleCounts"
                VkPhysicalDeviceSampleLocationsPropertiesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sampleLocationSampleCounts"
+               VkPhysicalDeviceSampleLocationsPropertiesEXT
+             =
+             #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationSampleCounts}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationSampleCounts}
 
 instance CanReadField "sampleLocationSampleCounts"
            VkPhysicalDeviceSampleLocationsPropertiesEXT
@@ -1942,6 +2190,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "maxSampleLocationGridSize"
                VkPhysicalDeviceSampleLocationsPropertiesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "maxSampleLocationGridSize"
+               VkPhysicalDeviceSampleLocationsPropertiesEXT
+             =
+             #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, maxSampleLocationGridSize}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, maxSampleLocationGridSize}
 
 instance CanReadField "maxSampleLocationGridSize"
            VkPhysicalDeviceSampleLocationsPropertiesEXT
@@ -1993,6 +2252,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sampleLocationCoordinateRange"
                VkPhysicalDeviceSampleLocationsPropertiesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sampleLocationCoordinateRange"
+               VkPhysicalDeviceSampleLocationsPropertiesEXT
+             =
+             #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationCoordinateRange}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationCoordinateRange}
 
 instance (KnownNat idx,
           IndexInBounds "sampleLocationCoordinateRange" idx
@@ -2012,6 +2282,9 @@ instance (KnownNat idx,
         type FieldArrayLength "sampleLocationCoordinateRange"
                VkPhysicalDeviceSampleLocationsPropertiesEXT
              = 2
+
+        {-# INLINE fieldArrayLength #-}
+        fieldArrayLength = 2
 
         {-# INLINE getFieldArray #-}
         getFieldArray x
@@ -2058,6 +2331,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sampleLocationSubPixelBits"
                VkPhysicalDeviceSampleLocationsPropertiesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sampleLocationSubPixelBits"
+               VkPhysicalDeviceSampleLocationsPropertiesEXT
+             =
+             #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationSubPixelBits}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationSubPixelBits}
 
 instance CanReadField "sampleLocationSubPixelBits"
            VkPhysicalDeviceSampleLocationsPropertiesEXT
@@ -2103,6 +2387,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "variableSampleLocations"
                VkPhysicalDeviceSampleLocationsPropertiesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "variableSampleLocations"
+               VkPhysicalDeviceSampleLocationsPropertiesEXT
+             =
+             #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, variableSampleLocations}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, variableSampleLocations}
 
 instance CanReadField "variableSampleLocations"
            VkPhysicalDeviceSampleLocationsPropertiesEXT
@@ -2254,6 +2549,15 @@ instance {-# OVERLAPPING #-}
          HasField "sType" VkMultisamplePropertiesEXT where
         type FieldType "sType" VkMultisamplePropertiesEXT = VkStructureType
         type FieldOptional "sType" VkMultisamplePropertiesEXT = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkMultisamplePropertiesEXT =
+             #{offset VkMultisamplePropertiesEXT, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkMultisamplePropertiesEXT, sType}
 
 instance CanReadField "sType" VkMultisamplePropertiesEXT where
         {-# INLINE getField #-}
@@ -2287,6 +2591,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkMultisamplePropertiesEXT where
         type FieldType "pNext" VkMultisamplePropertiesEXT = Ptr Void
         type FieldOptional "pNext" VkMultisamplePropertiesEXT = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkMultisamplePropertiesEXT =
+             #{offset VkMultisamplePropertiesEXT, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkMultisamplePropertiesEXT, pNext}
 
 instance CanReadField "pNext" VkMultisamplePropertiesEXT where
         {-# INLINE getField #-}
@@ -2326,6 +2639,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "maxSampleLocationGridSize"
                VkMultisamplePropertiesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "maxSampleLocationGridSize"
+               VkMultisamplePropertiesEXT
+             =
+             #{offset VkMultisamplePropertiesEXT, maxSampleLocationGridSize}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkMultisamplePropertiesEXT, maxSampleLocationGridSize}
 
 instance CanReadField "maxSampleLocationGridSize"
            VkMultisamplePropertiesEXT

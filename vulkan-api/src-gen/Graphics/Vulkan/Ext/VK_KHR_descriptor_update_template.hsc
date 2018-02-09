@@ -175,6 +175,15 @@ instance {-# OVERLAPPING #-}
              Word32
         type FieldOptional "dstBinding" VkDescriptorUpdateTemplateEntryKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "dstBinding" VkDescriptorUpdateTemplateEntryKHR =
+             #{offset VkDescriptorUpdateTemplateEntryKHR, dstBinding}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDescriptorUpdateTemplateEntryKHR, dstBinding}
 
 instance CanReadField "dstBinding"
            VkDescriptorUpdateTemplateEntryKHR
@@ -220,6 +229,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "dstArrayElement"
                VkDescriptorUpdateTemplateEntryKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "dstArrayElement"
+               VkDescriptorUpdateTemplateEntryKHR
+             =
+             #{offset VkDescriptorUpdateTemplateEntryKHR, dstArrayElement}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDescriptorUpdateTemplateEntryKHR, dstArrayElement}
 
 instance CanReadField "dstArrayElement"
            VkDescriptorUpdateTemplateEntryKHR
@@ -265,6 +285,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "descriptorCount"
                VkDescriptorUpdateTemplateEntryKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "descriptorCount"
+               VkDescriptorUpdateTemplateEntryKHR
+             =
+             #{offset VkDescriptorUpdateTemplateEntryKHR, descriptorCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDescriptorUpdateTemplateEntryKHR, descriptorCount}
 
 instance CanReadField "descriptorCount"
            VkDescriptorUpdateTemplateEntryKHR
@@ -310,6 +341,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "descriptorType"
                VkDescriptorUpdateTemplateEntryKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "descriptorType"
+               VkDescriptorUpdateTemplateEntryKHR
+             =
+             #{offset VkDescriptorUpdateTemplateEntryKHR, descriptorType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDescriptorUpdateTemplateEntryKHR, descriptorType}
 
 instance CanReadField "descriptorType"
            VkDescriptorUpdateTemplateEntryKHR
@@ -354,6 +396,15 @@ instance {-# OVERLAPPING #-}
              #{type size_t}
         type FieldOptional "offset" VkDescriptorUpdateTemplateEntryKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "offset" VkDescriptorUpdateTemplateEntryKHR =
+             #{offset VkDescriptorUpdateTemplateEntryKHR, offset}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDescriptorUpdateTemplateEntryKHR, offset}
 
 instance CanReadField "offset" VkDescriptorUpdateTemplateEntryKHR
          where
@@ -396,6 +447,15 @@ instance {-# OVERLAPPING #-}
              #{type size_t}
         type FieldOptional "stride" VkDescriptorUpdateTemplateEntryKHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "stride" VkDescriptorUpdateTemplateEntryKHR =
+             #{offset VkDescriptorUpdateTemplateEntryKHR, stride}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDescriptorUpdateTemplateEntryKHR, stride}
 
 instance CanReadField "stride" VkDescriptorUpdateTemplateEntryKHR
          where
@@ -567,6 +627,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkDescriptorUpdateTemplateCreateInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkDescriptorUpdateTemplateCreateInfoKHR =
+             #{offset VkDescriptorUpdateTemplateCreateInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDescriptorUpdateTemplateCreateInfoKHR, sType}
 
 instance CanReadField "sType"
            VkDescriptorUpdateTemplateCreateInfoKHR
@@ -611,6 +680,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkDescriptorUpdateTemplateCreateInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkDescriptorUpdateTemplateCreateInfoKHR =
+             #{offset VkDescriptorUpdateTemplateCreateInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDescriptorUpdateTemplateCreateInfoKHR, pNext}
 
 instance CanReadField "pNext"
            VkDescriptorUpdateTemplateCreateInfoKHR
@@ -655,6 +733,15 @@ instance {-# OVERLAPPING #-}
              VkDescriptorUpdateTemplateCreateFlagsKHR
         type FieldOptional "flags" VkDescriptorUpdateTemplateCreateInfoKHR
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "flags" VkDescriptorUpdateTemplateCreateInfoKHR =
+             #{offset VkDescriptorUpdateTemplateCreateInfoKHR, flags}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDescriptorUpdateTemplateCreateInfoKHR, flags}
 
 instance CanReadField "flags"
            VkDescriptorUpdateTemplateCreateInfoKHR
@@ -706,6 +793,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "descriptorUpdateEntryCount"
                VkDescriptorUpdateTemplateCreateInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "descriptorUpdateEntryCount"
+               VkDescriptorUpdateTemplateCreateInfoKHR
+             =
+             #{offset VkDescriptorUpdateTemplateCreateInfoKHR, descriptorUpdateEntryCount}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDescriptorUpdateTemplateCreateInfoKHR, descriptorUpdateEntryCount}
 
 instance CanReadField "descriptorUpdateEntryCount"
            VkDescriptorUpdateTemplateCreateInfoKHR
@@ -757,6 +855,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pDescriptorUpdateEntries"
                VkDescriptorUpdateTemplateCreateInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pDescriptorUpdateEntries"
+               VkDescriptorUpdateTemplateCreateInfoKHR
+             =
+             #{offset VkDescriptorUpdateTemplateCreateInfoKHR, pDescriptorUpdateEntries}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDescriptorUpdateTemplateCreateInfoKHR, pDescriptorUpdateEntries}
 
 instance CanReadField "pDescriptorUpdateEntries"
            VkDescriptorUpdateTemplateCreateInfoKHR
@@ -804,6 +913,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "templateType"
                VkDescriptorUpdateTemplateCreateInfoKHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "templateType"
+               VkDescriptorUpdateTemplateCreateInfoKHR
+             =
+             #{offset VkDescriptorUpdateTemplateCreateInfoKHR, templateType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDescriptorUpdateTemplateCreateInfoKHR, templateType}
 
 instance CanReadField "templateType"
            VkDescriptorUpdateTemplateCreateInfoKHR
@@ -854,6 +974,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "descriptorSetLayout"
                VkDescriptorUpdateTemplateCreateInfoKHR
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "descriptorSetLayout"
+               VkDescriptorUpdateTemplateCreateInfoKHR
+             =
+             #{offset VkDescriptorUpdateTemplateCreateInfoKHR, descriptorSetLayout}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDescriptorUpdateTemplateCreateInfoKHR, descriptorSetLayout}
 
 instance CanReadField "descriptorSetLayout"
            VkDescriptorUpdateTemplateCreateInfoKHR
@@ -904,6 +1035,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pipelineBindPoint"
                VkDescriptorUpdateTemplateCreateInfoKHR
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "pipelineBindPoint"
+               VkDescriptorUpdateTemplateCreateInfoKHR
+             =
+             #{offset VkDescriptorUpdateTemplateCreateInfoKHR, pipelineBindPoint}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDescriptorUpdateTemplateCreateInfoKHR, pipelineBindPoint}
 
 instance CanReadField "pipelineBindPoint"
            VkDescriptorUpdateTemplateCreateInfoKHR
@@ -951,6 +1093,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pipelineLayout"
                VkDescriptorUpdateTemplateCreateInfoKHR
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "pipelineLayout"
+               VkDescriptorUpdateTemplateCreateInfoKHR
+             =
+             #{offset VkDescriptorUpdateTemplateCreateInfoKHR, pipelineLayout}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDescriptorUpdateTemplateCreateInfoKHR, pipelineLayout}
 
 instance CanReadField "pipelineLayout"
            VkDescriptorUpdateTemplateCreateInfoKHR
@@ -994,6 +1147,15 @@ instance {-# OVERLAPPING #-}
              Word32
         type FieldOptional "set" VkDescriptorUpdateTemplateCreateInfoKHR =
              'True -- ' closing tick for hsc2hs
+        type FieldOffset "set" VkDescriptorUpdateTemplateCreateInfoKHR =
+             #{offset VkDescriptorUpdateTemplateCreateInfoKHR, set}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDescriptorUpdateTemplateCreateInfoKHR, set}
 
 instance CanReadField "set" VkDescriptorUpdateTemplateCreateInfoKHR
          where

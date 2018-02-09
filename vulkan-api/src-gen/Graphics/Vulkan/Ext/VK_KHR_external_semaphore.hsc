@@ -165,6 +165,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "sType" VkExportSemaphoreCreateInfoKHR =
              VkStructureType
         type FieldOptional "sType" VkExportSemaphoreCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkExportSemaphoreCreateInfoKHR =
+             #{offset VkExportSemaphoreCreateInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExportSemaphoreCreateInfoKHR, sType}
 
 instance CanReadField "sType" VkExportSemaphoreCreateInfoKHR where
         {-# INLINE getField #-}
@@ -202,6 +211,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkExportSemaphoreCreateInfoKHR where
         type FieldType "pNext" VkExportSemaphoreCreateInfoKHR = Ptr Void
         type FieldOptional "pNext" VkExportSemaphoreCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkExportSemaphoreCreateInfoKHR =
+             #{offset VkExportSemaphoreCreateInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExportSemaphoreCreateInfoKHR, pNext}
 
 instance CanReadField "pNext" VkExportSemaphoreCreateInfoKHR where
         {-# INLINE getField #-}
@@ -242,6 +260,15 @@ instance {-# OVERLAPPING #-}
              VkExternalSemaphoreHandleTypeFlagsKHR
         type FieldOptional "handleTypes" VkExportSemaphoreCreateInfoKHR =
              'True -- ' closing tick for hsc2hs
+        type FieldOffset "handleTypes" VkExportSemaphoreCreateInfoKHR =
+             #{offset VkExportSemaphoreCreateInfoKHR, handleTypes}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkExportSemaphoreCreateInfoKHR, handleTypes}
 
 instance CanReadField "handleTypes" VkExportSemaphoreCreateInfoKHR
          where

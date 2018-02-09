@@ -172,6 +172,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "sType" VkPhysicalDeviceSurfaceInfo2KHR =
              VkStructureType
         type FieldOptional "sType" VkPhysicalDeviceSurfaceInfo2KHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkPhysicalDeviceSurfaceInfo2KHR =
+             #{offset VkPhysicalDeviceSurfaceInfo2KHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceSurfaceInfo2KHR, sType}
 
 instance CanReadField "sType" VkPhysicalDeviceSurfaceInfo2KHR where
         {-# INLINE getField #-}
@@ -210,6 +219,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkPhysicalDeviceSurfaceInfo2KHR where
         type FieldType "pNext" VkPhysicalDeviceSurfaceInfo2KHR = Ptr Void
         type FieldOptional "pNext" VkPhysicalDeviceSurfaceInfo2KHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkPhysicalDeviceSurfaceInfo2KHR =
+             #{offset VkPhysicalDeviceSurfaceInfo2KHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceSurfaceInfo2KHR, pNext}
 
 instance CanReadField "pNext" VkPhysicalDeviceSurfaceInfo2KHR where
         {-# INLINE getField #-}
@@ -250,6 +268,15 @@ instance {-# OVERLAPPING #-}
              VkSurfaceKHR
         type FieldOptional "surface" VkPhysicalDeviceSurfaceInfo2KHR =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "surface" VkPhysicalDeviceSurfaceInfo2KHR =
+             #{offset VkPhysicalDeviceSurfaceInfo2KHR, surface}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceSurfaceInfo2KHR, surface}
 
 instance CanReadField "surface" VkPhysicalDeviceSurfaceInfo2KHR
          where
@@ -389,6 +416,15 @@ instance {-# OVERLAPPING #-}
          HasField "sType" VkSurfaceCapabilities2KHR where
         type FieldType "sType" VkSurfaceCapabilities2KHR = VkStructureType
         type FieldOptional "sType" VkSurfaceCapabilities2KHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkSurfaceCapabilities2KHR =
+             #{offset VkSurfaceCapabilities2KHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSurfaceCapabilities2KHR, sType}
 
 instance CanReadField "sType" VkSurfaceCapabilities2KHR where
         {-# INLINE getField #-}
@@ -422,6 +458,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkSurfaceCapabilities2KHR where
         type FieldType "pNext" VkSurfaceCapabilities2KHR = Ptr Void
         type FieldOptional "pNext" VkSurfaceCapabilities2KHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkSurfaceCapabilities2KHR =
+             #{offset VkSurfaceCapabilities2KHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSurfaceCapabilities2KHR, pNext}
 
 instance CanReadField "pNext" VkSurfaceCapabilities2KHR where
         {-# INLINE getField #-}
@@ -458,6 +503,15 @@ instance {-# OVERLAPPING #-}
              VkSurfaceCapabilitiesKHR
         type FieldOptional "surfaceCapabilities" VkSurfaceCapabilities2KHR
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "surfaceCapabilities" VkSurfaceCapabilities2KHR =
+             #{offset VkSurfaceCapabilities2KHR, surfaceCapabilities}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSurfaceCapabilities2KHR, surfaceCapabilities}
 
 instance CanReadField "surfaceCapabilities"
            VkSurfaceCapabilities2KHR
@@ -590,6 +644,14 @@ instance {-# OVERLAPPING #-} HasField "sType" VkSurfaceFormat2KHR
          where
         type FieldType "sType" VkSurfaceFormat2KHR = VkStructureType
         type FieldOptional "sType" VkSurfaceFormat2KHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkSurfaceFormat2KHR =
+             #{offset VkSurfaceFormat2KHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkSurfaceFormat2KHR, sType}
 
 instance CanReadField "sType" VkSurfaceFormat2KHR where
         {-# INLINE getField #-}
@@ -622,6 +684,14 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkSurfaceFormat2KHR
          where
         type FieldType "pNext" VkSurfaceFormat2KHR = Ptr Void
         type FieldOptional "pNext" VkSurfaceFormat2KHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkSurfaceFormat2KHR =
+             #{offset VkSurfaceFormat2KHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset = #{offset VkSurfaceFormat2KHR, pNext}
 
 instance CanReadField "pNext" VkSurfaceFormat2KHR where
         {-# INLINE getField #-}
@@ -656,6 +726,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "surfaceFormat" VkSurfaceFormat2KHR =
              VkSurfaceFormatKHR
         type FieldOptional "surfaceFormat" VkSurfaceFormat2KHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "surfaceFormat" VkSurfaceFormat2KHR =
+             #{offset VkSurfaceFormat2KHR, surfaceFormat}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSurfaceFormat2KHR, surfaceFormat}
 
 instance CanReadField "surfaceFormat" VkSurfaceFormat2KHR where
         {-# INLINE getField #-}

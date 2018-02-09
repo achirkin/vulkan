@@ -180,6 +180,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkSamplerReductionModeCreateInfoEXT =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkSamplerReductionModeCreateInfoEXT =
+             #{offset VkSamplerReductionModeCreateInfoEXT, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSamplerReductionModeCreateInfoEXT, sType}
 
 instance CanReadField "sType" VkSamplerReductionModeCreateInfoEXT
          where
@@ -221,6 +230,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkSamplerReductionModeCreateInfoEXT =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkSamplerReductionModeCreateInfoEXT =
+             #{offset VkSamplerReductionModeCreateInfoEXT, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSamplerReductionModeCreateInfoEXT, pNext}
 
 instance CanReadField "pNext" VkSamplerReductionModeCreateInfoEXT
          where
@@ -264,6 +282,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "reductionMode"
                VkSamplerReductionModeCreateInfoEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "reductionMode"
+               VkSamplerReductionModeCreateInfoEXT
+             =
+             #{offset VkSamplerReductionModeCreateInfoEXT, reductionMode}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkSamplerReductionModeCreateInfoEXT, reductionMode}
 
 instance CanReadField "reductionMode"
            VkSamplerReductionModeCreateInfoEXT
@@ -430,6 +459,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType"
                VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType"
+               VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+             =
+             #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, sType}
 
 instance CanReadField "sType"
            VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
@@ -471,6 +511,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext"
                VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext"
+               VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+             =
+             #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, pNext}
 
 instance CanReadField "pNext"
            VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
@@ -516,6 +567,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "filterMinmaxSingleComponentFormats"
                VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "filterMinmaxSingleComponentFormats"
+               VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+             =
+             #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, filterMinmaxSingleComponentFormats}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, filterMinmaxSingleComponentFormats}
 
 instance CanReadField "filterMinmaxSingleComponentFormats"
            VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
@@ -561,6 +623,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "filterMinmaxImageComponentMapping"
                VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "filterMinmaxImageComponentMapping"
+               VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+             =
+             #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, filterMinmaxImageComponentMapping}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, filterMinmaxImageComponentMapping}
 
 instance CanReadField "filterMinmaxImageComponentMapping"
            VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT

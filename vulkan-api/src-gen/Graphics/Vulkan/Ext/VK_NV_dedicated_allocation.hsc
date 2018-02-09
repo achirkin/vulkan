@@ -176,6 +176,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkDedicatedAllocationImageCreateInfoNV =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkDedicatedAllocationImageCreateInfoNV =
+             #{offset VkDedicatedAllocationImageCreateInfoNV, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDedicatedAllocationImageCreateInfoNV, sType}
 
 instance CanReadField "sType"
            VkDedicatedAllocationImageCreateInfoNV
@@ -219,6 +228,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkDedicatedAllocationImageCreateInfoNV =
              'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkDedicatedAllocationImageCreateInfoNV =
+             #{offset VkDedicatedAllocationImageCreateInfoNV, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDedicatedAllocationImageCreateInfoNV, pNext}
 
 instance CanReadField "pNext"
            VkDedicatedAllocationImageCreateInfoNV
@@ -269,6 +287,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "dedicatedAllocation"
                VkDedicatedAllocationImageCreateInfoNV
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "dedicatedAllocation"
+               VkDedicatedAllocationImageCreateInfoNV
+             =
+             #{offset VkDedicatedAllocationImageCreateInfoNV, dedicatedAllocation}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDedicatedAllocationImageCreateInfoNV, dedicatedAllocation}
 
 instance CanReadField "dedicatedAllocation"
            VkDedicatedAllocationImageCreateInfoNV
@@ -426,6 +455,15 @@ instance {-# OVERLAPPING #-}
              VkStructureType
         type FieldOptional "sType" VkDedicatedAllocationBufferCreateInfoNV
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkDedicatedAllocationBufferCreateInfoNV =
+             #{offset VkDedicatedAllocationBufferCreateInfoNV, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDedicatedAllocationBufferCreateInfoNV, sType}
 
 instance CanReadField "sType"
            VkDedicatedAllocationBufferCreateInfoNV
@@ -470,6 +508,15 @@ instance {-# OVERLAPPING #-}
              Ptr Void
         type FieldOptional "pNext" VkDedicatedAllocationBufferCreateInfoNV
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkDedicatedAllocationBufferCreateInfoNV =
+             #{offset VkDedicatedAllocationBufferCreateInfoNV, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDedicatedAllocationBufferCreateInfoNV, pNext}
 
 instance CanReadField "pNext"
            VkDedicatedAllocationBufferCreateInfoNV
@@ -520,6 +567,17 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "dedicatedAllocation"
                VkDedicatedAllocationBufferCreateInfoNV
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "dedicatedAllocation"
+               VkDedicatedAllocationBufferCreateInfoNV
+             =
+             #{offset VkDedicatedAllocationBufferCreateInfoNV, dedicatedAllocation}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDedicatedAllocationBufferCreateInfoNV, dedicatedAllocation}
 
 instance CanReadField "dedicatedAllocation"
            VkDedicatedAllocationBufferCreateInfoNV
@@ -679,6 +737,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType"
                VkDedicatedAllocationMemoryAllocateInfoNV
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkDedicatedAllocationMemoryAllocateInfoNV
+             =
+             #{offset VkDedicatedAllocationMemoryAllocateInfoNV, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDedicatedAllocationMemoryAllocateInfoNV, sType}
 
 instance CanReadField "sType"
            VkDedicatedAllocationMemoryAllocateInfoNV
@@ -724,6 +792,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext"
                VkDedicatedAllocationMemoryAllocateInfoNV
              = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkDedicatedAllocationMemoryAllocateInfoNV
+             =
+             #{offset VkDedicatedAllocationMemoryAllocateInfoNV, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDedicatedAllocationMemoryAllocateInfoNV, pNext}
 
 instance CanReadField "pNext"
            VkDedicatedAllocationMemoryAllocateInfoNV
@@ -769,6 +847,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "image"
                VkDedicatedAllocationMemoryAllocateInfoNV
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "image" VkDedicatedAllocationMemoryAllocateInfoNV
+             =
+             #{offset VkDedicatedAllocationMemoryAllocateInfoNV, image}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDedicatedAllocationMemoryAllocateInfoNV, image}
 
 instance CanReadField "image"
            VkDedicatedAllocationMemoryAllocateInfoNV
@@ -814,6 +902,16 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "buffer"
                VkDedicatedAllocationMemoryAllocateInfoNV
              = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "buffer" VkDedicatedAllocationMemoryAllocateInfoNV
+             =
+             #{offset VkDedicatedAllocationMemoryAllocateInfoNV, buffer}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkDedicatedAllocationMemoryAllocateInfoNV, buffer}
 
 instance CanReadField "buffer"
            VkDedicatedAllocationMemoryAllocateInfoNV

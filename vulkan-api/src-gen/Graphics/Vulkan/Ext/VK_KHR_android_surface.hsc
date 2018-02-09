@@ -168,6 +168,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "sType" VkAndroidSurfaceCreateInfoKHR =
              VkStructureType
         type FieldOptional "sType" VkAndroidSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "sType" VkAndroidSurfaceCreateInfoKHR =
+             #{offset VkAndroidSurfaceCreateInfoKHR, sType}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkAndroidSurfaceCreateInfoKHR, sType}
 
 instance CanReadField "sType" VkAndroidSurfaceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -205,6 +214,15 @@ instance {-# OVERLAPPING #-}
          HasField "pNext" VkAndroidSurfaceCreateInfoKHR where
         type FieldType "pNext" VkAndroidSurfaceCreateInfoKHR = Ptr Void
         type FieldOptional "pNext" VkAndroidSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "pNext" VkAndroidSurfaceCreateInfoKHR =
+             #{offset VkAndroidSurfaceCreateInfoKHR, pNext}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkAndroidSurfaceCreateInfoKHR, pNext}
 
 instance CanReadField "pNext" VkAndroidSurfaceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -244,6 +262,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "flags" VkAndroidSurfaceCreateInfoKHR =
              VkAndroidSurfaceCreateFlagsKHR
         type FieldOptional "flags" VkAndroidSurfaceCreateInfoKHR = 'True -- ' closing tick for hsc2hs
+        type FieldOffset "flags" VkAndroidSurfaceCreateInfoKHR =
+             #{offset VkAndroidSurfaceCreateInfoKHR, flags}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = True
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkAndroidSurfaceCreateInfoKHR, flags}
 
 instance CanReadField "flags" VkAndroidSurfaceCreateInfoKHR where
         {-# INLINE getField #-}
@@ -283,6 +310,15 @@ instance {-# OVERLAPPING #-}
         type FieldType "window" VkAndroidSurfaceCreateInfoKHR =
              Ptr ANativeWindow
         type FieldOptional "window" VkAndroidSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type FieldOffset "window" VkAndroidSurfaceCreateInfoKHR =
+             #{offset VkAndroidSurfaceCreateInfoKHR, window}
+
+        {-# INLINE fieldOptional #-}
+        fieldOptional = False
+
+        {-# INLINE fieldOffset #-}
+        fieldOffset
+          = #{offset VkAndroidSurfaceCreateInfoKHR, window}
 
 instance CanReadField "window" VkAndroidSurfaceCreateInfoKHR where
         {-# INLINE getField #-}
