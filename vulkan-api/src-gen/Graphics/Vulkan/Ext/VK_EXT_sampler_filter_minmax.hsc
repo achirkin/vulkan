@@ -108,6 +108,9 @@ instance Storable VkSamplerReductionModeCreateInfoEXT where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSamplerReductionModeCreateInfoEXT where
+        type StructFields VkSamplerReductionModeCreateInfoEXT =
+             '["sType", "pNext", "reductionMode"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -382,6 +385,11 @@ instance Storable VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
 instance VulkanMarshal
            VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
          where
+        type StructFields VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+             =
+             '["sType", "pNext", "filterMinmaxSingleComponentFormats", -- ' closing tick for hsc2hs
+               "filterMinmaxImageComponentMapping"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf

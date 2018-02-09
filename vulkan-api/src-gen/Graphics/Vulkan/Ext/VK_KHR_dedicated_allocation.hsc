@@ -102,6 +102,10 @@ instance Storable VkMemoryDedicatedRequirementsKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkMemoryDedicatedRequirementsKHR where
+        type StructFields VkMemoryDedicatedRequirementsKHR =
+             '["sType", "pNext", "prefersDedicatedAllocation", -- ' closing tick for hsc2hs
+               "requiresDedicatedAllocation"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkMemoryDedicatedRequirementsKHR),
@@ -408,6 +412,9 @@ instance Storable VkMemoryDedicatedAllocateInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkMemoryDedicatedAllocateInfoKHR where
+        type StructFields VkMemoryDedicatedAllocateInfoKHR =
+             '["sType", "pNext", "image", "buffer"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkMemoryDedicatedAllocateInfoKHR),

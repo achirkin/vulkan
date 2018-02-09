@@ -103,6 +103,9 @@ instance Storable VkDisplayPowerInfoEXT where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDisplayPowerInfoEXT where
+        type StructFields VkDisplayPowerInfoEXT =
+             '["sType", "pNext", "powerState"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDisplayPowerInfoEXT),
@@ -337,6 +340,9 @@ instance Storable VkDeviceEventInfoEXT where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDeviceEventInfoEXT where
+        type StructFields VkDeviceEventInfoEXT =
+             '["sType", "pNext", "deviceEvent"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDeviceEventInfoEXT),
@@ -570,6 +576,9 @@ instance Storable VkDisplayEventInfoEXT where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDisplayEventInfoEXT where
+        type StructFields VkDisplayEventInfoEXT =
+             '["sType", "pNext", "displayEvent"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDisplayEventInfoEXT),
@@ -807,6 +816,9 @@ instance Storable VkSwapchainCounterCreateInfoEXT where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSwapchainCounterCreateInfoEXT where
+        type StructFields VkSwapchainCounterCreateInfoEXT =
+             '["sType", "pNext", "surfaceCounters"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSwapchainCounterCreateInfoEXT),

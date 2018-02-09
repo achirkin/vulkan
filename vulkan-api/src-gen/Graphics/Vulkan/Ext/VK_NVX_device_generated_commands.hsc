@@ -127,6 +127,9 @@ instance Storable VkDeviceGeneratedCommandsFeaturesNVX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDeviceGeneratedCommandsFeaturesNVX where
+        type StructFields VkDeviceGeneratedCommandsFeaturesNVX =
+             '["sType", "pNext", "computeBindingPointSupport"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -401,6 +404,12 @@ instance Storable VkDeviceGeneratedCommandsLimitsNVX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDeviceGeneratedCommandsLimitsNVX where
+        type StructFields VkDeviceGeneratedCommandsLimitsNVX =
+             '["sType", "pNext", "maxIndirectCommandsLayoutTokenCount", -- ' closing tick for hsc2hs
+               "maxObjectEntryCounts", "minSequenceCountBufferOffsetAlignment",
+               "minSequenceIndexBufferOffsetAlignment",
+               "minCommandsTokenBufferOffsetAlignment"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDeviceGeneratedCommandsLimitsNVX),
@@ -929,6 +938,9 @@ instance Storable VkIndirectCommandsTokenNVX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkIndirectCommandsTokenNVX where
+        type StructFields VkIndirectCommandsTokenNVX =
+             '["tokenType", "buffer", "offset"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkIndirectCommandsTokenNVX),
@@ -1171,6 +1183,9 @@ instance Storable VkIndirectCommandsLayoutTokenNVX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkIndirectCommandsLayoutTokenNVX where
+        type StructFields VkIndirectCommandsLayoutTokenNVX =
+             '["tokenType", "bindingUnit", "dynamicCount", "divisor"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkIndirectCommandsLayoutTokenNVX),
@@ -1489,6 +1504,10 @@ instance Storable VkIndirectCommandsLayoutCreateInfoNVX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkIndirectCommandsLayoutCreateInfoNVX where
+        type StructFields VkIndirectCommandsLayoutCreateInfoNVX =
+             '["sType", "pNext", "pipelineBindPoint", "flags", "tokenCount", -- ' closing tick for hsc2hs
+               "pTokens"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -1932,6 +1951,13 @@ instance Storable VkCmdProcessCommandsInfoNVX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkCmdProcessCommandsInfoNVX where
+        type StructFields VkCmdProcessCommandsInfoNVX =
+             '["sType", "pNext", "objectTable", "indirectCommandsLayout", -- ' closing tick for hsc2hs
+               "indirectCommandsTokenCount", "pIndirectCommandsTokens",
+               "maxSequencesCount", "targetCommandBuffer", "sequencesCountBuffer",
+               "sequencesCountOffset", "sequencesIndexBuffer",
+               "sequencesIndexOffset"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkCmdProcessCommandsInfoNVX),
@@ -2726,6 +2752,10 @@ instance Storable VkCmdReserveSpaceForCommandsInfoNVX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkCmdReserveSpaceForCommandsInfoNVX where
+        type StructFields VkCmdReserveSpaceForCommandsInfoNVX =
+             '["sType", "pNext", "objectTable", "indirectCommandsLayout", -- ' closing tick for hsc2hs
+               "maxSequencesCount"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -3119,6 +3149,13 @@ instance Storable VkObjectTableCreateInfoNVX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkObjectTableCreateInfoNVX where
+        type StructFields VkObjectTableCreateInfoNVX =
+             '["sType", "pNext", "objectCount", "pObjectEntryTypes", -- ' closing tick for hsc2hs
+               "pObjectEntryCounts", "pObjectEntryUsageFlags",
+               "maxUniformBuffersPerDescriptor", "maxStorageBuffersPerDescriptor",
+               "maxStorageImagesPerDescriptor", "maxSampledImagesPerDescriptor",
+               "maxPipelineLayouts"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkObjectTableCreateInfoNVX),
@@ -3856,6 +3893,8 @@ instance Storable VkObjectTableEntryNVX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkObjectTableEntryNVX where
+        type StructFields VkObjectTableEntryNVX = '["type", "flags"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkObjectTableEntryNVX),
@@ -4042,6 +4081,9 @@ instance Storable VkObjectTablePipelineEntryNVX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkObjectTablePipelineEntryNVX where
+        type StructFields VkObjectTablePipelineEntryNVX =
+             '["type", "flags", "pipeline"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkObjectTablePipelineEntryNVX),
@@ -4292,6 +4334,9 @@ instance Storable VkObjectTableDescriptorSetEntryNVX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkObjectTableDescriptorSetEntryNVX where
+        type StructFields VkObjectTableDescriptorSetEntryNVX =
+             '["type", "flags", "pipelineLayout", "descriptorSet"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkObjectTableDescriptorSetEntryNVX),
@@ -4613,6 +4658,9 @@ instance Storable VkObjectTableVertexBufferEntryNVX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkObjectTableVertexBufferEntryNVX where
+        type StructFields VkObjectTableVertexBufferEntryNVX =
+             '["type", "flags", "buffer"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkObjectTableVertexBufferEntryNVX),
@@ -4868,6 +4916,9 @@ instance Storable VkObjectTableIndexBufferEntryNVX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkObjectTableIndexBufferEntryNVX where
+        type StructFields VkObjectTableIndexBufferEntryNVX =
+             '["type", "flags", "buffer", "indexType"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkObjectTableIndexBufferEntryNVX),
@@ -5175,6 +5226,9 @@ instance Storable VkObjectTablePushConstantEntryNVX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkObjectTablePushConstantEntryNVX where
+        type StructFields VkObjectTablePushConstantEntryNVX =
+             '["type", "flags", "pipelineLayout", "stageFlags"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkObjectTablePushConstantEntryNVX),

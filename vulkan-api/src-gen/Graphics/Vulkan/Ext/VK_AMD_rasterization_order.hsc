@@ -105,6 +105,9 @@ instance Storable VkPipelineRasterizationStateRasterizationOrderAMD
 instance VulkanMarshal
            VkPipelineRasterizationStateRasterizationOrderAMD
          where
+        type StructFields VkPipelineRasterizationStateRasterizationOrderAMD
+             = '["sType", "pNext", "rasterizationOrder"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf

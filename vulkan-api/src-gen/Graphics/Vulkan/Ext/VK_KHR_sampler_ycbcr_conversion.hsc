@@ -173,6 +173,11 @@ instance Storable VkSamplerYcbcrConversionCreateInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSamplerYcbcrConversionCreateInfoKHR where
+        type StructFields VkSamplerYcbcrConversionCreateInfoKHR =
+             '["sType", "pNext", "format", "ycbcrModel", "ycbcrRange", -- ' closing tick for hsc2hs
+               "components", "xChromaOffset", "yChromaOffset", "chromaFilter",
+               "forceExplicitReconstruction"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -859,6 +864,9 @@ instance Storable VkSamplerYcbcrConversionInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSamplerYcbcrConversionInfoKHR where
+        type StructFields VkSamplerYcbcrConversionInfoKHR =
+             '["sType", "pNext", "conversion"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSamplerYcbcrConversionInfoKHR),
@@ -1106,6 +1114,9 @@ instance Storable VkBindImagePlaneMemoryInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkBindImagePlaneMemoryInfoKHR where
+        type StructFields VkBindImagePlaneMemoryInfoKHR =
+             '["sType", "pNext", "planeAspect"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkBindImagePlaneMemoryInfoKHR),
@@ -1358,6 +1369,9 @@ instance Storable VkImagePlaneMemoryRequirementsInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkImagePlaneMemoryRequirementsInfoKHR where
+        type StructFields VkImagePlaneMemoryRequirementsInfoKHR =
+             '["sType", "pNext", "planeAspect"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -1634,6 +1648,9 @@ instance Storable VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
 instance VulkanMarshal
            VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
          where
+        type StructFields VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
+             = '["sType", "pNext", "samplerYcbcrConversion"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -1934,6 +1951,9 @@ instance Storable VkSamplerYcbcrConversionImageFormatPropertiesKHR
 instance VulkanMarshal
            VkSamplerYcbcrConversionImageFormatPropertiesKHR
          where
+        type StructFields VkSamplerYcbcrConversionImageFormatPropertiesKHR
+             = '["sType", "pNext", "combinedImageSamplerDescriptorCount"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf

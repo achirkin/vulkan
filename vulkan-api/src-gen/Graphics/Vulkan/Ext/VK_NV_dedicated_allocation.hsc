@@ -104,6 +104,9 @@ instance Storable VkDedicatedAllocationImageCreateInfoNV where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDedicatedAllocationImageCreateInfoNV where
+        type StructFields VkDedicatedAllocationImageCreateInfoNV =
+             '["sType", "pNext", "dedicatedAllocation"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -383,6 +386,9 @@ instance Storable VkDedicatedAllocationBufferCreateInfoNV where
 
 instance VulkanMarshal VkDedicatedAllocationBufferCreateInfoNV
          where
+        type StructFields VkDedicatedAllocationBufferCreateInfoNV =
+             '["sType", "pNext", "dedicatedAllocation"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -664,6 +670,9 @@ instance Storable VkDedicatedAllocationMemoryAllocateInfoNV where
 
 instance VulkanMarshal VkDedicatedAllocationMemoryAllocateInfoNV
          where
+        type StructFields VkDedicatedAllocationMemoryAllocateInfoNV =
+             '["sType", "pNext", "image", "buffer"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf

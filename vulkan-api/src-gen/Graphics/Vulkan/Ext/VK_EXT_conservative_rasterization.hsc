@@ -127,6 +127,18 @@ instance Storable
 instance VulkanMarshal
            VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
+        type StructFields
+               VkPhysicalDeviceConservativeRasterizationPropertiesEXT
+             =
+             '["sType", "pNext", "primitiveOverestimationSize", -- ' closing tick for hsc2hs
+               "maxExtraPrimitiveOverestimationSize",
+               "extraPrimitiveOverestimationSizeGranularity",
+               "primitiveUnderestimation",
+               "conservativePointAndLineRasterization",
+               "degenerateTrianglesRasterized", "degenerateLinesRasterized",
+               "fullyCoveredFragmentShaderInputVariable",
+               "conservativeRasterizationPostDepthCoverage"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -995,6 +1007,12 @@ instance Storable
 instance VulkanMarshal
            VkPipelineRasterizationConservativeStateCreateInfoEXT
          where
+        type StructFields
+               VkPipelineRasterizationConservativeStateCreateInfoEXT
+             =
+             '["sType", "pNext", "flags", "conservativeRasterizationMode", -- ' closing tick for hsc2hs
+               "extraPrimitiveOverestimationSize"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf

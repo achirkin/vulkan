@@ -99,6 +99,9 @@ instance Storable VkExportSemaphoreCreateInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkExportSemaphoreCreateInfoKHR where
+        type StructFields VkExportSemaphoreCreateInfoKHR =
+             '["sType", "pNext", "handleTypes"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkExportSemaphoreCreateInfoKHR),

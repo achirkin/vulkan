@@ -97,6 +97,9 @@ instance Storable VkBindBufferMemoryInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkBindBufferMemoryInfoKHR where
+        type StructFields VkBindBufferMemoryInfoKHR =
+             '["sType", "pNext", "buffer", "memory", "memoryOffset"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkBindBufferMemoryInfoKHR),
@@ -439,6 +442,9 @@ instance Storable VkBindImageMemoryInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkBindImageMemoryInfoKHR where
+        type StructFields VkBindImageMemoryInfoKHR =
+             '["sType", "pNext", "image", "memory", "memoryOffset"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkBindImageMemoryInfoKHR),

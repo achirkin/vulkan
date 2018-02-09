@@ -102,6 +102,9 @@ instance Storable VkImportFenceFdInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkImportFenceFdInfoKHR where
+        type StructFields VkImportFenceFdInfoKHR =
+             '["sType", "pNext", "fence", "flags", "handleType", "fd"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkImportFenceFdInfoKHR),
@@ -485,6 +488,9 @@ instance Storable VkFenceGetFdInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkFenceGetFdInfoKHR where
+        type StructFields VkFenceGetFdInfoKHR =
+             '["sType", "pNext", "fence", "handleType"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkFenceGetFdInfoKHR),

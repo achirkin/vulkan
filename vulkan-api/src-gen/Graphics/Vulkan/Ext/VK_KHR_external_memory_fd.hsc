@@ -101,6 +101,9 @@ instance Storable VkImportMemoryFdInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkImportMemoryFdInfoKHR where
+        type StructFields VkImportMemoryFdInfoKHR =
+             '["sType", "pNext", "handleType", "fd"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkImportMemoryFdInfoKHR),
@@ -386,6 +389,9 @@ instance Storable VkMemoryFdPropertiesKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkMemoryFdPropertiesKHR where
+        type StructFields VkMemoryFdPropertiesKHR =
+             '["sType", "pNext", "memoryTypeBits"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkMemoryFdPropertiesKHR),
@@ -612,6 +618,9 @@ instance Storable VkMemoryGetFdInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkMemoryGetFdInfoKHR where
+        type StructFields VkMemoryGetFdInfoKHR =
+             '["sType", "pNext", "memory", "handleType"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkMemoryGetFdInfoKHR),

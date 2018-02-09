@@ -108,6 +108,8 @@ instance Storable VkSampleLocationEXT where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSampleLocationEXT where
+        type StructFields VkSampleLocationEXT = '["x", "y"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSampleLocationEXT),
@@ -290,6 +292,11 @@ instance Storable VkSampleLocationsInfoEXT where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSampleLocationsInfoEXT where
+        type StructFields VkSampleLocationsInfoEXT =
+             '["sType", "pNext", "sampleLocationsPerPixel", -- ' closing tick for hsc2hs
+               "sampleLocationGridSize", "sampleLocationsCount",
+               "pSampleLocations"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSampleLocationsInfoEXT),
@@ -702,6 +709,9 @@ instance Storable VkAttachmentSampleLocationsEXT where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkAttachmentSampleLocationsEXT where
+        type StructFields VkAttachmentSampleLocationsEXT =
+             '["attachmentIndex", "sampleLocationsInfo"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkAttachmentSampleLocationsEXT),
@@ -906,6 +916,9 @@ instance Storable VkSubpassSampleLocationsEXT where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSubpassSampleLocationsEXT where
+        type StructFields VkSubpassSampleLocationsEXT =
+             '["subpassIndex", "sampleLocationsInfo"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSubpassSampleLocationsEXT),
@@ -1119,6 +1132,11 @@ instance Storable VkRenderPassSampleLocationsBeginInfoEXT where
 
 instance VulkanMarshal VkRenderPassSampleLocationsBeginInfoEXT
          where
+        type StructFields VkRenderPassSampleLocationsBeginInfoEXT =
+             '["sType", "pNext", "attachmentInitialSampleLocationsCount", -- ' closing tick for hsc2hs
+               "pAttachmentInitialSampleLocations",
+               "postSubpassSampleLocationsCount", "pPostSubpassSampleLocations"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -1597,6 +1615,9 @@ instance Storable VkPipelineSampleLocationsStateCreateInfoEXT where
 
 instance VulkanMarshal VkPipelineSampleLocationsStateCreateInfoEXT
          where
+        type StructFields VkPipelineSampleLocationsStateCreateInfoEXT =
+             '["sType", "pNext", "sampleLocationsEnable", "sampleLocationsInfo"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -1954,6 +1975,11 @@ instance Storable VkPhysicalDeviceSampleLocationsPropertiesEXT
 
 instance VulkanMarshal VkPhysicalDeviceSampleLocationsPropertiesEXT
          where
+        type StructFields VkPhysicalDeviceSampleLocationsPropertiesEXT =
+             '["sType", "pNext", "sampleLocationSampleCounts", -- ' closing tick for hsc2hs
+               "maxSampleLocationGridSize", "sampleLocationCoordinateRange",
+               "sampleLocationSubPixelBits", "variableSampleLocations"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -2484,6 +2510,9 @@ instance Storable VkMultisamplePropertiesEXT where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkMultisamplePropertiesEXT where
+        type StructFields VkMultisamplePropertiesEXT =
+             '["sType", "pNext", "maxSampleLocationGridSize"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkMultisamplePropertiesEXT),

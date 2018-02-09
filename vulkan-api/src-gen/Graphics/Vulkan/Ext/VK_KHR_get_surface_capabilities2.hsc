@@ -106,6 +106,9 @@ instance Storable VkPhysicalDeviceSurfaceInfo2KHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPhysicalDeviceSurfaceInfo2KHR where
+        type StructFields VkPhysicalDeviceSurfaceInfo2KHR =
+             '["sType", "pNext", "surface"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkPhysicalDeviceSurfaceInfo2KHR),
@@ -351,6 +354,9 @@ instance Storable VkSurfaceCapabilities2KHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSurfaceCapabilities2KHR where
+        type StructFields VkSurfaceCapabilities2KHR =
+             '["sType", "pNext", "surfaceCapabilities"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSurfaceCapabilities2KHR),
@@ -581,6 +587,9 @@ instance Storable VkSurfaceFormat2KHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSurfaceFormat2KHR where
+        type StructFields VkSurfaceFormat2KHR =
+             '["sType", "pNext", "surfaceFormat"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSurfaceFormat2KHR),

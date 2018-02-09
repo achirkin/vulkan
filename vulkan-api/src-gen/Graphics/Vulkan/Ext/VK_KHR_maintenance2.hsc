@@ -119,6 +119,9 @@ instance Storable VkPhysicalDevicePointClippingPropertiesKHR where
 
 instance VulkanMarshal VkPhysicalDevicePointClippingPropertiesKHR
          where
+        type StructFields VkPhysicalDevicePointClippingPropertiesKHR =
+             '["sType", "pNext", "pointClippingBehavior"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -390,6 +393,9 @@ instance Storable VkRenderPassInputAttachmentAspectCreateInfoKHR
 instance VulkanMarshal
            VkRenderPassInputAttachmentAspectCreateInfoKHR
          where
+        type StructFields VkRenderPassInputAttachmentAspectCreateInfoKHR =
+             '["sType", "pNext", "aspectReferenceCount", "pAspectReferences"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -743,6 +749,9 @@ instance Storable VkInputAttachmentAspectReferenceKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkInputAttachmentAspectReferenceKHR where
+        type StructFields VkInputAttachmentAspectReferenceKHR =
+             '["subpass", "inputAttachmentIndex", "aspectMask"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -1011,6 +1020,9 @@ instance Storable VkImageViewUsageCreateInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkImageViewUsageCreateInfoKHR where
+        type StructFields VkImageViewUsageCreateInfoKHR =
+             '["sType", "pNext", "usage"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkImageViewUsageCreateInfoKHR),
@@ -1266,6 +1278,10 @@ instance Storable
 instance VulkanMarshal
            VkPipelineTessellationDomainOriginStateCreateInfoKHR
          where
+        type StructFields
+               VkPipelineTessellationDomainOriginStateCreateInfoKHR
+             = '["sType", "pNext", "domainOrigin"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf

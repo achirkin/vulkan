@@ -94,6 +94,9 @@ instance Storable VkImageFormatListCreateInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkImageFormatListCreateInfoKHR where
+        type StructFields VkImageFormatListCreateInfoKHR =
+             '["sType", "pNext", "viewFormatCount", "pViewFormats"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkImageFormatListCreateInfoKHR),

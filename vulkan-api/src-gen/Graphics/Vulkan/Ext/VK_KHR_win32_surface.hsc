@@ -103,6 +103,9 @@ instance Storable VkWin32SurfaceCreateInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkWin32SurfaceCreateInfoKHR where
+        type StructFields VkWin32SurfaceCreateInfoKHR =
+             '["sType", "pNext", "flags", "hinstance", "hwnd"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkWin32SurfaceCreateInfoKHR),

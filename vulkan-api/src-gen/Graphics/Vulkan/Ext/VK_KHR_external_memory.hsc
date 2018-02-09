@@ -109,6 +109,9 @@ instance Storable VkExternalMemoryImageCreateInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkExternalMemoryImageCreateInfoKHR where
+        type StructFields VkExternalMemoryImageCreateInfoKHR =
+             '["sType", "pNext", "handleTypes"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkExternalMemoryImageCreateInfoKHR),
@@ -370,6 +373,9 @@ instance Storable VkExternalMemoryBufferCreateInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkExternalMemoryBufferCreateInfoKHR where
+        type StructFields VkExternalMemoryBufferCreateInfoKHR =
+             '["sType", "pNext", "handleTypes"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -631,6 +637,9 @@ instance Storable VkExportMemoryAllocateInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkExportMemoryAllocateInfoKHR where
+        type StructFields VkExportMemoryAllocateInfoKHR =
+             '["sType", "pNext", "handleTypes"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkExportMemoryAllocateInfoKHR),

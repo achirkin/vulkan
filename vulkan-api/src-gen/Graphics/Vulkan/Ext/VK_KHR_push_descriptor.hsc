@@ -108,6 +108,9 @@ instance Storable VkPhysicalDevicePushDescriptorPropertiesKHR where
 
 instance VulkanMarshal VkPhysicalDevicePushDescriptorPropertiesKHR
          where
+        type StructFields VkPhysicalDevicePushDescriptorPropertiesKHR =
+             '["sType", "pNext", "maxPushDescriptors"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf

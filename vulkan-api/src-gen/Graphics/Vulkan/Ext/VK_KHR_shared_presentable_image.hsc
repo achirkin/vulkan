@@ -109,6 +109,9 @@ instance Storable VkSharedPresentSurfaceCapabilitiesKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSharedPresentSurfaceCapabilitiesKHR where
+        type StructFields VkSharedPresentSurfaceCapabilitiesKHR =
+             '["sType", "pNext", "sharedPresentSupportedUsageFlags"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf

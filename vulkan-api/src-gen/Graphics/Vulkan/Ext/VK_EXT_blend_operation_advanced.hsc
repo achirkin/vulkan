@@ -145,6 +145,9 @@ instance Storable VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
 instance VulkanMarshal
            VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
          where
+        type StructFields VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
+             = '["sType", "pNext", "advancedBlendCoherentOperations"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -453,6 +456,15 @@ instance Storable
 instance VulkanMarshal
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
          where
+        type StructFields
+               VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+             =
+             '["sType", "pNext", "advancedBlendMaxColorAttachments", -- ' closing tick for hsc2hs
+               "advancedBlendIndependentBlend",
+               "advancedBlendNonPremultipliedSrcColor",
+               "advancedBlendNonPremultipliedDstColor",
+               "advancedBlendCorrelatedOverlap", "advancedBlendAllOperations"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -1046,6 +1058,10 @@ instance Storable VkPipelineColorBlendAdvancedStateCreateInfoEXT
 instance VulkanMarshal
            VkPipelineColorBlendAdvancedStateCreateInfoEXT
          where
+        type StructFields VkPipelineColorBlendAdvancedStateCreateInfoEXT =
+             '["sType", "pNext", "srcPremultiplied", "dstPremultiplied", -- ' closing tick for hsc2hs
+               "blendOverlap"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf

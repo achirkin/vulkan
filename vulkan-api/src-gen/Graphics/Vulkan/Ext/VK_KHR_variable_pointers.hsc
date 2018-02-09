@@ -107,6 +107,10 @@ instance Storable VkPhysicalDeviceVariablePointerFeaturesKHR where
 
 instance VulkanMarshal VkPhysicalDeviceVariablePointerFeaturesKHR
          where
+        type StructFields VkPhysicalDeviceVariablePointerFeaturesKHR =
+             '["sType", "pNext", "variablePointersStorageBuffer", -- ' closing tick for hsc2hs
+               "variablePointers"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf

@@ -53,6 +53,9 @@ import           GHC.TypeLits
 --   VulkanMarshal provides an interfaces to write and read these structures
 --   in an imperative way.
 class VulkanMarshal a where
+  -- | Names of fields in vulkan structure or union,
+  --   in the same order as they appear in C typedef.
+  type StructFields a :: [Symbol]
   -- | Allocate a pinned aligned byte array to keep vulkan data structure
   --   and fill it using a foreign function.
   newVkData :: (Ptr a -> IO ()) -> IO a

@@ -103,6 +103,9 @@ instance Storable VkXlibSurfaceCreateInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkXlibSurfaceCreateInfoKHR where
+        type StructFields VkXlibSurfaceCreateInfoKHR =
+             '["sType", "pNext", "flags", "dpy", "window"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkXlibSurfaceCreateInfoKHR),

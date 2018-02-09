@@ -120,6 +120,10 @@ instance Storable
 instance VulkanMarshal
            VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
          where
+        type StructFields
+               VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
+             = '["sType", "pNext", "perViewPositionAllComponents"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf

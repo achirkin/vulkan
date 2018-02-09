@@ -101,6 +101,9 @@ instance Storable VkMacOSSurfaceCreateInfoMVK where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkMacOSSurfaceCreateInfoMVK where
+        type StructFields VkMacOSSurfaceCreateInfoMVK =
+             '["sType", "pNext", "flags", "pView"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkMacOSSurfaceCreateInfoMVK),

@@ -104,6 +104,9 @@ instance Storable VkDeviceQueueGlobalPriorityCreateInfoEXT where
 
 instance VulkanMarshal VkDeviceQueueGlobalPriorityCreateInfoEXT
          where
+        type StructFields VkDeviceQueueGlobalPriorityCreateInfoEXT =
+             '["sType", "pNext", "globalPriority"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf

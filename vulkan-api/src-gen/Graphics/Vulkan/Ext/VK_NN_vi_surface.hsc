@@ -101,6 +101,9 @@ instance Storable VkViSurfaceCreateInfoNN where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkViSurfaceCreateInfoNN where
+        type StructFields VkViSurfaceCreateInfoNN =
+             '["sType", "pNext", "flags", "window"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkViSurfaceCreateInfoNN),

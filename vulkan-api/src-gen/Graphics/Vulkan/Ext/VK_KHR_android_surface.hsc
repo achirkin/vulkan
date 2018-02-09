@@ -102,6 +102,9 @@ instance Storable VkAndroidSurfaceCreateInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkAndroidSurfaceCreateInfoKHR where
+        type StructFields VkAndroidSurfaceCreateInfoKHR =
+             '["sType", "pNext", "flags", "window"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkAndroidSurfaceCreateInfoKHR),

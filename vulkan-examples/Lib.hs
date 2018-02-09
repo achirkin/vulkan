@@ -1,5 +1,5 @@
+{-# LANGUAGE DataKinds        #-}
 {-# LANGUAGE TypeApplications #-}
-{-# LANGUAGE DataKinds #-}
 module Lib
     ( withVulkanInstance
     ) where

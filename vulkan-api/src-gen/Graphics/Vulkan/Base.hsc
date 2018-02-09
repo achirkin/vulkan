@@ -266,6 +266,8 @@ instance Storable VkOffset2D where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkOffset2D where
+        type StructFields VkOffset2D = '["x", "y"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkOffset2D),
@@ -437,6 +439,8 @@ instance Storable VkOffset3D where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkOffset3D where
+        type StructFields VkOffset3D = '["x", "y", "z"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkOffset3D),
@@ -650,6 +654,8 @@ instance Storable VkExtent2D where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkExtent2D where
+        type StructFields VkExtent2D = '["width", "height"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkExtent2D),
@@ -825,6 +831,8 @@ instance Storable VkExtent3D where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkExtent3D where
+        type StructFields VkExtent3D = '["width", "height", "depth"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkExtent3D),
@@ -1048,6 +1056,9 @@ instance Storable VkViewport where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkViewport where
+        type StructFields VkViewport =
+             '["x", "y", "width", "height", "minDepth", "maxDepth"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkViewport),
@@ -1401,6 +1412,8 @@ instance Storable VkRect2D where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkRect2D where
+        type StructFields VkRect2D = '["offset", "extent"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkRect2D),
@@ -1578,6 +1591,9 @@ instance Storable VkClearRect where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkClearRect where
+        type StructFields VkClearRect =
+             '["rect", "baseArrayLayer", "layerCount"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkClearRect),
@@ -1807,6 +1823,8 @@ instance Storable VkComponentMapping where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkComponentMapping where
+        type StructFields VkComponentMapping = '["r", "g", "b", "a"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkComponentMapping),
@@ -2082,6 +2100,11 @@ instance Storable VkPhysicalDeviceProperties where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPhysicalDeviceProperties where
+        type StructFields VkPhysicalDeviceProperties =
+             '["apiVersion", "driverVersion", "vendorID", "deviceID", -- ' closing tick for hsc2hs
+               "deviceType", "deviceName", "pipelineCacheUUID", "limits",
+               "sparseProperties"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkPhysicalDeviceProperties),
@@ -2667,6 +2690,9 @@ instance Storable VkExtensionProperties where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkExtensionProperties where
+        type StructFields VkExtensionProperties =
+             '["extensionName", "specVersion"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkExtensionProperties),
@@ -2879,6 +2905,10 @@ instance Storable VkLayerProperties where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkLayerProperties where
+        type StructFields VkLayerProperties =
+             '["layerName", "specVersion", "implementationVersion", -- ' closing tick for hsc2hs
+               "description"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkLayerProperties),
@@ -3214,6 +3244,10 @@ instance Storable VkApplicationInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkApplicationInfo where
+        type StructFields VkApplicationInfo =
+             '["sType", "pNext", "pApplicationName", "applicationVersion", -- ' closing tick for hsc2hs
+               "pEngineName", "engineVersion", "apiVersion"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkApplicationInfo),
@@ -3643,6 +3677,10 @@ instance Storable VkAllocationCallbacks where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkAllocationCallbacks where
+        type StructFields VkAllocationCallbacks =
+             '["pUserData", "pfnAllocation", "pfnReallocation", "pfnFree", -- ' closing tick for hsc2hs
+               "pfnInternalAllocation", "pfnInternalFree"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkAllocationCallbacks),
@@ -4043,6 +4081,10 @@ instance Storable VkDeviceQueueCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDeviceQueueCreateInfo where
+        type StructFields VkDeviceQueueCreateInfo =
+             '["sType", "pNext", "flags", "queueFamilyIndex", "queueCount", -- ' closing tick for hsc2hs
+               "pQueuePriorities"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDeviceQueueCreateInfo),
@@ -4441,6 +4483,12 @@ instance Storable VkDeviceCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDeviceCreateInfo where
+        type StructFields VkDeviceCreateInfo =
+             '["sType", "pNext", "flags", "queueCreateInfoCount", -- ' closing tick for hsc2hs
+               "pQueueCreateInfos", "enabledLayerCount", "ppEnabledLayerNames",
+               "enabledExtensionCount", "ppEnabledExtensionNames",
+               "pEnabledFeatures"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDeviceCreateInfo),
@@ -5046,6 +5094,11 @@ instance Storable VkInstanceCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkInstanceCreateInfo where
+        type StructFields VkInstanceCreateInfo =
+             '["sType", "pNext", "flags", "pApplicationInfo", -- ' closing tick for hsc2hs
+               "enabledLayerCount", "ppEnabledLayerNames",
+               "enabledExtensionCount", "ppEnabledExtensionNames"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkInstanceCreateInfo),
@@ -5544,6 +5597,10 @@ instance Storable VkQueueFamilyProperties where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkQueueFamilyProperties where
+        type StructFields VkQueueFamilyProperties =
+             '["queueFlags", "queueCount", "timestampValidBits", -- ' closing tick for hsc2hs
+               "minImageTransferGranularity"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkQueueFamilyProperties),
@@ -5831,6 +5888,10 @@ instance Storable VkPhysicalDeviceMemoryProperties where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPhysicalDeviceMemoryProperties where
+        type StructFields VkPhysicalDeviceMemoryProperties =
+             '["memoryTypeCount", "memoryTypes", "memoryHeapCount", -- ' closing tick for hsc2hs
+               "memoryHeaps"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkPhysicalDeviceMemoryProperties),
@@ -6200,6 +6261,9 @@ instance Storable VkMemoryAllocateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkMemoryAllocateInfo where
+        type StructFields VkMemoryAllocateInfo =
+             '["sType", "pNext", "allocationSize", "memoryTypeIndex"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkMemoryAllocateInfo),
@@ -6481,6 +6545,9 @@ instance Storable VkMemoryRequirements where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkMemoryRequirements where
+        type StructFields VkMemoryRequirements =
+             '["size", "alignment", "memoryTypeBits"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkMemoryRequirements),
@@ -6704,6 +6771,9 @@ instance Storable VkSparseImageFormatProperties where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSparseImageFormatProperties where
+        type StructFields VkSparseImageFormatProperties =
+             '["aspectMask", "imageGranularity", "flags"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSparseImageFormatProperties),
@@ -6944,6 +7014,10 @@ instance Storable VkSparseImageMemoryRequirements where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSparseImageMemoryRequirements where
+        type StructFields VkSparseImageMemoryRequirements =
+             '["formatProperties", "imageMipTailFirstLod", "imageMipTailSize", -- ' closing tick for hsc2hs
+               "imageMipTailOffset", "imageMipTailStride"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSparseImageMemoryRequirements),
@@ -7297,6 +7371,8 @@ instance Storable VkMemoryType where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkMemoryType where
+        type StructFields VkMemoryType = '["propertyFlags", "heapIndex"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkMemoryType),
@@ -7470,6 +7546,8 @@ instance Storable VkMemoryHeap where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkMemoryHeap where
+        type StructFields VkMemoryHeap = '["size", "flags"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkMemoryHeap),
@@ -7642,6 +7720,9 @@ instance Storable VkMappedMemoryRange where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkMappedMemoryRange where
+        type StructFields VkMappedMemoryRange =
+             '["sType", "pNext", "memory", "offset", "size"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkMappedMemoryRange),
@@ -7965,6 +8046,10 @@ instance Storable VkFormatProperties where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkFormatProperties where
+        type StructFields VkFormatProperties =
+             '["linearTilingFeatures", "optimalTilingFeatures", -- ' closing tick for hsc2hs
+               "bufferFeatures"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkFormatProperties),
@@ -8202,6 +8287,10 @@ instance Storable VkImageFormatProperties where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkImageFormatProperties where
+        type StructFields VkImageFormatProperties =
+             '["maxExtent", "maxMipLevels", "maxArrayLayers", "sampleCounts", -- ' closing tick for hsc2hs
+               "maxResourceSize"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkImageFormatProperties),
@@ -8525,6 +8614,9 @@ instance Storable VkDescriptorBufferInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDescriptorBufferInfo where
+        type StructFields VkDescriptorBufferInfo =
+             '["buffer", "offset", "range"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDescriptorBufferInfo),
@@ -8758,6 +8850,9 @@ instance Storable VkDescriptorImageInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDescriptorImageInfo where
+        type StructFields VkDescriptorImageInfo =
+             '["sampler", "imageView", "imageLayout"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDescriptorImageInfo),
@@ -9000,6 +9095,11 @@ instance Storable VkWriteDescriptorSet where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkWriteDescriptorSet where
+        type StructFields VkWriteDescriptorSet =
+             '["sType", "pNext", "dstSet", "dstBinding", "dstArrayElement", -- ' closing tick for hsc2hs
+               "descriptorCount", "descriptorType", "pImageInfo", "pBufferInfo",
+               "pTexelBufferView"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkWriteDescriptorSet),
@@ -9591,6 +9691,10 @@ instance Storable VkCopyDescriptorSet where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkCopyDescriptorSet where
+        type StructFields VkCopyDescriptorSet =
+             '["sType", "pNext", "srcSet", "srcBinding", "srcArrayElement", -- ' closing tick for hsc2hs
+               "dstSet", "dstBinding", "dstArrayElement", "descriptorCount"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkCopyDescriptorSet),
@@ -10117,6 +10221,10 @@ instance Storable VkBufferCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkBufferCreateInfo where
+        type StructFields VkBufferCreateInfo =
+             '["sType", "pNext", "flags", "size", "usage", "sharingMode", -- ' closing tick for hsc2hs
+               "queueFamilyIndexCount", "pQueueFamilyIndices"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkBufferCreateInfo),
@@ -10600,6 +10708,9 @@ instance Storable VkBufferViewCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkBufferViewCreateInfo where
+        type StructFields VkBufferViewCreateInfo =
+             '["sType", "pNext", "flags", "buffer", "format", "offset", "range"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkBufferViewCreateInfo),
@@ -11027,6 +11138,9 @@ instance Storable VkImageSubresource where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkImageSubresource where
+        type StructFields VkImageSubresource =
+             '["aspectMask", "mipLevel", "arrayLayer"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkImageSubresource),
@@ -11261,6 +11375,9 @@ instance Storable VkImageSubresourceLayers where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkImageSubresourceLayers where
+        type StructFields VkImageSubresourceLayers =
+             '["aspectMask", "mipLevel", "baseArrayLayer", "layerCount"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkImageSubresourceLayers),
@@ -11555,6 +11672,10 @@ instance Storable VkImageSubresourceRange where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkImageSubresourceRange where
+        type StructFields VkImageSubresourceRange =
+             '["aspectMask", "baseMipLevel", "levelCount", "baseArrayLayer", -- ' closing tick for hsc2hs
+               "layerCount"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkImageSubresourceRange),
@@ -11905,6 +12026,12 @@ instance Storable VkImageCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkImageCreateInfo where
+        type StructFields VkImageCreateInfo =
+             '["sType", "pNext", "flags", "imageType", "format", "extent", -- ' closing tick for hsc2hs
+               "mipLevels", "arrayLayers", "samples", "tiling", "usage",
+               "sharingMode", "queueFamilyIndexCount", "pQueueFamilyIndices",
+               "initialLayout"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkImageCreateInfo),
@@ -12743,6 +12870,9 @@ instance Storable VkSubresourceLayout where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSubresourceLayout where
+        type StructFields VkSubresourceLayout =
+             '["offset", "size", "rowPitch", "arrayPitch", "depthPitch"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSubresourceLayout),
@@ -13055,6 +13185,10 @@ instance Storable VkImageViewCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkImageViewCreateInfo where
+        type StructFields VkImageViewCreateInfo =
+             '["sType", "pNext", "flags", "image", "viewType", "format", -- ' closing tick for hsc2hs
+               "components", "subresourceRange"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkImageViewCreateInfo),
@@ -13533,6 +13667,9 @@ instance Storable VkBufferCopy where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkBufferCopy where
+        type StructFields VkBufferCopy =
+             '["srcOffset", "dstOffset", "size"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkBufferCopy),
@@ -13762,6 +13899,9 @@ instance Storable VkSparseMemoryBind where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSparseMemoryBind where
+        type StructFields VkSparseMemoryBind =
+             '["resourceOffset", "size", "memory", "memoryOffset", "flags"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSparseMemoryBind),
@@ -14094,6 +14234,10 @@ instance Storable VkSparseImageMemoryBind where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSparseImageMemoryBind where
+        type StructFields VkSparseImageMemoryBind =
+             '["subresource", "offset", "extent", "memory", "memoryOffset", -- ' closing tick for hsc2hs
+               "flags"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSparseImageMemoryBind),
@@ -14480,6 +14624,9 @@ instance Storable VkSparseBufferMemoryBindInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSparseBufferMemoryBindInfo where
+        type StructFields VkSparseBufferMemoryBindInfo =
+             '["buffer", "bindCount", "pBinds"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSparseBufferMemoryBindInfo),
@@ -14725,6 +14872,9 @@ instance Storable VkSparseImageOpaqueMemoryBindInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSparseImageOpaqueMemoryBindInfo where
+        type StructFields VkSparseImageOpaqueMemoryBindInfo =
+             '["image", "bindCount", "pBinds"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSparseImageOpaqueMemoryBindInfo),
@@ -14976,6 +15126,9 @@ instance Storable VkSparseImageMemoryBindInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSparseImageMemoryBindInfo where
+        type StructFields VkSparseImageMemoryBindInfo =
+             '["image", "bindCount", "pBinds"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSparseImageMemoryBindInfo),
@@ -15223,6 +15376,12 @@ instance Storable VkBindSparseInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkBindSparseInfo where
+        type StructFields VkBindSparseInfo =
+             '["sType", "pNext", "waitSemaphoreCount", "pWaitSemaphores", -- ' closing tick for hsc2hs
+               "bufferBindCount", "pBufferBinds", "imageOpaqueBindCount",
+               "pImageOpaqueBinds", "imageBindCount", "pImageBinds",
+               "signalSemaphoreCount", "pSignalSemaphores"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkBindSparseInfo),
@@ -15915,6 +16074,10 @@ instance Storable VkImageCopy where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkImageCopy where
+        type StructFields VkImageCopy =
+             '["srcSubresource", "srcOffset", "dstSubresource", "dstOffset", -- ' closing tick for hsc2hs
+               "extent"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkImageCopy),
@@ -16237,6 +16400,9 @@ instance Storable VkImageBlit where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkImageBlit where
+        type StructFields VkImageBlit =
+             '["srcSubresource", "srcOffsets", "dstSubresource", "dstOffsets"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkImageBlit),
@@ -16588,6 +16754,10 @@ instance Storable VkBufferImageCopy where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkBufferImageCopy where
+        type StructFields VkBufferImageCopy =
+             '["bufferOffset", "bufferRowLength", "bufferImageHeight", -- ' closing tick for hsc2hs
+               "imageSubresource", "imageOffset", "imageExtent"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkBufferImageCopy),
@@ -16971,6 +17141,10 @@ instance Storable VkImageResolve where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkImageResolve where
+        type StructFields VkImageResolve =
+             '["srcSubresource", "srcOffset", "dstSubresource", "dstOffset", -- ' closing tick for hsc2hs
+               "extent"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkImageResolve),
@@ -17303,6 +17477,9 @@ instance Storable VkShaderModuleCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkShaderModuleCreateInfo where
+        type StructFields VkShaderModuleCreateInfo =
+             '["sType", "pNext", "flags", "codeSize", "pCode"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkShaderModuleCreateInfo),
@@ -17642,6 +17819,10 @@ instance Storable VkDescriptorSetLayoutBinding where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDescriptorSetLayoutBinding where
+        type StructFields VkDescriptorSetLayoutBinding =
+             '["binding", "descriptorType", "descriptorCount", "stageFlags", -- ' closing tick for hsc2hs
+               "pImmutableSamplers"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDescriptorSetLayoutBinding),
@@ -18008,6 +18189,9 @@ instance Storable VkDescriptorSetLayoutCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDescriptorSetLayoutCreateInfo where
+        type StructFields VkDescriptorSetLayoutCreateInfo =
+             '["sType", "pNext", "flags", "bindingCount", "pBindings"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDescriptorSetLayoutCreateInfo),
@@ -18359,6 +18543,9 @@ instance Storable VkDescriptorPoolSize where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDescriptorPoolSize where
+        type StructFields VkDescriptorPoolSize =
+             '["type", "descriptorCount"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDescriptorPoolSize),
@@ -18548,6 +18735,10 @@ instance Storable VkDescriptorPoolCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDescriptorPoolCreateInfo where
+        type StructFields VkDescriptorPoolCreateInfo =
+             '["sType", "pNext", "flags", "maxSets", "poolSizeCount", -- ' closing tick for hsc2hs
+               "pPoolSizes"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDescriptorPoolCreateInfo),
@@ -18943,6 +19134,10 @@ instance Storable VkDescriptorSetAllocateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDescriptorSetAllocateInfo where
+        type StructFields VkDescriptorSetAllocateInfo =
+             '["sType", "pNext", "descriptorPool", "descriptorSetCount", -- ' closing tick for hsc2hs
+               "pSetLayouts"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDescriptorSetAllocateInfo),
@@ -19296,6 +19491,9 @@ instance Storable VkSpecializationMapEntry where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSpecializationMapEntry where
+        type StructFields VkSpecializationMapEntry =
+             '["constantID", "offset", "size"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSpecializationMapEntry),
@@ -19534,6 +19732,9 @@ instance Storable VkSpecializationInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSpecializationInfo where
+        type StructFields VkSpecializationInfo =
+             '["mapEntryCount", "pMapEntries", "dataSize", "pData"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSpecializationInfo),
@@ -19826,6 +20027,10 @@ instance Storable VkPipelineShaderStageCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPipelineShaderStageCreateInfo where
+        type StructFields VkPipelineShaderStageCreateInfo =
+             '["sType", "pNext", "flags", "stage", "module", "pName", -- ' closing tick for hsc2hs
+               "pSpecializationInfo"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkPipelineShaderStageCreateInfo),
@@ -20291,6 +20496,10 @@ instance Storable VkComputePipelineCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkComputePipelineCreateInfo where
+        type StructFields VkComputePipelineCreateInfo =
+             '["sType", "pNext", "flags", "stage", "layout", -- ' closing tick for hsc2hs
+               "basePipelineHandle", "basePipelineIndex"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkComputePipelineCreateInfo),
@@ -20747,6 +20956,9 @@ instance Storable VkVertexInputBindingDescription where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkVertexInputBindingDescription where
+        type StructFields VkVertexInputBindingDescription =
+             '["binding", "stride", "inputRate"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkVertexInputBindingDescription),
@@ -21000,6 +21212,9 @@ instance Storable VkVertexInputAttributeDescription where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkVertexInputAttributeDescription where
+        type StructFields VkVertexInputAttributeDescription =
+             '["location", "binding", "format", "offset"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkVertexInputAttributeDescription),
@@ -21312,6 +21527,11 @@ instance Storable VkPipelineVertexInputStateCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPipelineVertexInputStateCreateInfo where
+        type StructFields VkPipelineVertexInputStateCreateInfo =
+             '["sType", "pNext", "flags", "vertexBindingDescriptionCount", -- ' closing tick for hsc2hs
+               "pVertexBindingDescriptions", "vertexAttributeDescriptionCount",
+               "pVertexAttributeDescriptions"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -21839,6 +22059,9 @@ instance Storable VkPipelineInputAssemblyStateCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPipelineInputAssemblyStateCreateInfo where
+        type StructFields VkPipelineInputAssemblyStateCreateInfo =
+             '["sType", "pNext", "flags", "topology", "primitiveRestartEnable"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -22232,6 +22455,9 @@ instance Storable VkPipelineTessellationStateCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPipelineTessellationStateCreateInfo where
+        type StructFields VkPipelineTessellationStateCreateInfo =
+             '["sType", "pNext", "flags", "patchControlPoints"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -22560,6 +22786,10 @@ instance Storable VkPipelineViewportStateCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPipelineViewportStateCreateInfo where
+        type StructFields VkPipelineViewportStateCreateInfo =
+             '["sType", "pNext", "flags", "viewportCount", "pViewports", -- ' closing tick for hsc2hs
+               "scissorCount", "pScissors"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkPipelineViewportStateCreateInfo),
@@ -23054,6 +23284,12 @@ instance Storable VkPipelineRasterizationStateCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPipelineRasterizationStateCreateInfo where
+        type StructFields VkPipelineRasterizationStateCreateInfo =
+             '["sType", "pNext", "flags", "depthClampEnable", -- ' closing tick for hsc2hs
+               "rasterizerDiscardEnable", "polygonMode", "cullMode", "frontFace",
+               "depthBiasEnable", "depthBiasConstantFactor", "depthBiasClamp",
+               "depthBiasSlopeFactor", "lineWidth"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -23959,6 +24195,11 @@ instance Storable VkPipelineMultisampleStateCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPipelineMultisampleStateCreateInfo where
+        type StructFields VkPipelineMultisampleStateCreateInfo =
+             '["sType", "pNext", "flags", "rasterizationSamples", -- ' closing tick for hsc2hs
+               "sampleShadingEnable", "minSampleShading", "pSampleMask",
+               "alphaToCoverageEnable", "alphaToOneEnable"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -24596,6 +24837,11 @@ instance Storable VkPipelineColorBlendAttachmentState where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPipelineColorBlendAttachmentState where
+        type StructFields VkPipelineColorBlendAttachmentState =
+             '["blendEnable", "srcColorBlendFactor", "dstColorBlendFactor", -- ' closing tick for hsc2hs
+               "colorBlendOp", "srcAlphaBlendFactor", "dstAlphaBlendFactor",
+               "alphaBlendOp", "colorWriteMask"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -25179,6 +25425,10 @@ instance Storable VkPipelineColorBlendStateCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPipelineColorBlendStateCreateInfo where
+        type StructFields VkPipelineColorBlendStateCreateInfo =
+             '["sType", "pNext", "flags", "logicOpEnable", "logicOp", -- ' closing tick for hsc2hs
+               "attachmentCount", "pAttachments", "blendConstants"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -25796,6 +26046,9 @@ instance Storable VkPipelineDynamicStateCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPipelineDynamicStateCreateInfo where
+        type StructFields VkPipelineDynamicStateCreateInfo =
+             '["sType", "pNext", "flags", "dynamicStateCount", "pDynamicStates"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkPipelineDynamicStateCreateInfo),
@@ -26165,6 +26418,10 @@ instance Storable VkStencilOpState where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkStencilOpState where
+        type StructFields VkStencilOpState =
+             '["failOp", "passOp", "depthFailOp", "compareOp", "compareMask", -- ' closing tick for hsc2hs
+               "writeMask", "reference"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkStencilOpState),
@@ -26603,6 +26860,11 @@ instance Storable VkPipelineDepthStencilStateCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPipelineDepthStencilStateCreateInfo where
+        type StructFields VkPipelineDepthStencilStateCreateInfo =
+             '["sType", "pNext", "flags", "depthTestEnable", "depthWriteEnable", -- ' closing tick for hsc2hs
+               "depthCompareOp", "depthBoundsTestEnable", "stencilTestEnable",
+               "front", "back", "minDepthBounds", "maxDepthBounds"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -27427,6 +27689,14 @@ instance Storable VkGraphicsPipelineCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkGraphicsPipelineCreateInfo where
+        type StructFields VkGraphicsPipelineCreateInfo =
+             '["sType", "pNext", "flags", "stageCount", "pStages", -- ' closing tick for hsc2hs
+               "pVertexInputState", "pInputAssemblyState", "pTessellationState",
+               "pViewportState", "pRasterizationState", "pMultisampleState",
+               "pDepthStencilState", "pColorBlendState", "pDynamicState",
+               "layout", "renderPass", "subpass", "basePipelineHandle",
+               "basePipelineIndex"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkGraphicsPipelineCreateInfo),
@@ -28617,6 +28887,9 @@ instance Storable VkPipelineCacheCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPipelineCacheCreateInfo where
+        type StructFields VkPipelineCacheCreateInfo =
+             '["sType", "pNext", "flags", "initialDataSize", "pInitialData"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkPipelineCacheCreateInfo),
@@ -28962,6 +29235,9 @@ instance Storable VkPushConstantRange where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPushConstantRange where
+        type StructFields VkPushConstantRange =
+             '["stageFlags", "offset", "size"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkPushConstantRange),
@@ -29198,6 +29474,10 @@ instance Storable VkPipelineLayoutCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPipelineLayoutCreateInfo where
+        type StructFields VkPipelineLayoutCreateInfo =
+             '["sType", "pNext", "flags", "setLayoutCount", "pSetLayouts", -- ' closing tick for hsc2hs
+               "pushConstantRangeCount", "pPushConstantRanges"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkPipelineLayoutCreateInfo),
@@ -29674,6 +29954,13 @@ instance Storable VkSamplerCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSamplerCreateInfo where
+        type StructFields VkSamplerCreateInfo =
+             '["sType", "pNext", "flags", "magFilter", "minFilter", -- ' closing tick for hsc2hs
+               "mipmapMode", "addressModeU", "addressModeV", "addressModeW",
+               "mipLodBias", "anisotropyEnable", "maxAnisotropy", "compareEnable",
+               "compareOp", "minLod", "maxLod", "borderColor",
+               "unnormalizedCoordinates"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSamplerCreateInfo),
@@ -30704,6 +30991,9 @@ instance Storable VkCommandPoolCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkCommandPoolCreateInfo where
+        type StructFields VkCommandPoolCreateInfo =
+             '["sType", "pNext", "flags", "queueFamilyIndex"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkCommandPoolCreateInfo),
@@ -30995,6 +31285,9 @@ instance Storable VkCommandBufferAllocateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkCommandBufferAllocateInfo where
+        type StructFields VkCommandBufferAllocateInfo =
+             '["sType", "pNext", "commandPool", "level", "commandBufferCount"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkCommandBufferAllocateInfo),
@@ -31350,6 +31643,10 @@ instance Storable VkCommandBufferInheritanceInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkCommandBufferInheritanceInfo where
+        type StructFields VkCommandBufferInheritanceInfo =
+             '["sType", "pNext", "renderPass", "subpass", "framebuffer", -- ' closing tick for hsc2hs
+               "occlusionQueryEnable", "queryFlags", "pipelineStatistics"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkCommandBufferInheritanceInfo),
@@ -31876,6 +32173,9 @@ instance Storable VkCommandBufferBeginInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkCommandBufferBeginInfo where
+        type StructFields VkCommandBufferBeginInfo =
+             '["sType", "pNext", "flags", "pInheritanceInfo"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkCommandBufferBeginInfo),
@@ -32170,6 +32470,10 @@ instance Storable VkRenderPassBeginInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkRenderPassBeginInfo where
+        type StructFields VkRenderPassBeginInfo =
+             '["sType", "pNext", "renderPass", "framebuffer", "renderArea", -- ' closing tick for hsc2hs
+               "clearValueCount", "pClearValues"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkRenderPassBeginInfo),
@@ -32601,6 +32905,9 @@ instance Storable VkClearColorValue where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkClearColorValue where
+        type StructFields VkClearColorValue =
+             '["float32", "int32", "uint32"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkClearColorValue),
@@ -32973,6 +33280,8 @@ instance Storable VkClearDepthStencilValue where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkClearDepthStencilValue where
+        type StructFields VkClearDepthStencilValue = '["depth", "stencil"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkClearDepthStencilValue),
@@ -33162,6 +33471,8 @@ instance Storable VkClearValue where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkClearValue where
+        type StructFields VkClearValue = '["color", "depthStencil"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkClearValue),
@@ -33343,6 +33654,9 @@ instance Storable VkClearAttachment where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkClearAttachment where
+        type StructFields VkClearAttachment =
+             '["aspectMask", "colorAttachment", "clearValue"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkClearAttachment),
@@ -33584,6 +33898,10 @@ instance Storable VkAttachmentDescription where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkAttachmentDescription where
+        type StructFields VkAttachmentDescription =
+             '["flags", "format", "samples", "loadOp", "storeOp", -- ' closing tick for hsc2hs
+               "stencilLoadOp", "stencilStoreOp", "initialLayout", "finalLayout"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkAttachmentDescription),
@@ -34128,6 +34446,8 @@ instance Storable VkAttachmentReference where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkAttachmentReference where
+        type StructFields VkAttachmentReference = '["attachment", "layout"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkAttachmentReference),
@@ -34320,6 +34640,12 @@ instance Storable VkSubpassDescription where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSubpassDescription where
+        type StructFields VkSubpassDescription =
+             '["flags", "pipelineBindPoint", "inputAttachmentCount", -- ' closing tick for hsc2hs
+               "pInputAttachments", "colorAttachmentCount", "pColorAttachments",
+               "pResolveAttachments", "pDepthStencilAttachment",
+               "preserveAttachmentCount", "pPreserveAttachments"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSubpassDescription),
@@ -34954,6 +35280,10 @@ instance Storable VkSubpassDependency where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSubpassDependency where
+        type StructFields VkSubpassDependency =
+             '["srcSubpass", "dstSubpass", "srcStageMask", "dstStageMask", -- ' closing tick for hsc2hs
+               "srcAccessMask", "dstAccessMask", "dependencyFlags"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSubpassDependency),
@@ -35394,6 +35724,10 @@ instance Storable VkRenderPassCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkRenderPassCreateInfo where
+        type StructFields VkRenderPassCreateInfo =
+             '["sType", "pNext", "flags", "attachmentCount", "pAttachments", -- ' closing tick for hsc2hs
+               "subpassCount", "pSubpasses", "dependencyCount", "pDependencies"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkRenderPassCreateInfo),
@@ -35933,6 +36267,8 @@ instance Storable VkEventCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkEventCreateInfo where
+        type StructFields VkEventCreateInfo = '["sType", "pNext", "flags"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkEventCreateInfo),
@@ -36161,6 +36497,8 @@ instance Storable VkFenceCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkFenceCreateInfo where
+        type StructFields VkFenceCreateInfo = '["sType", "pNext", "flags"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkFenceCreateInfo),
@@ -36443,6 +36781,34 @@ instance Storable VkPhysicalDeviceFeatures where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPhysicalDeviceFeatures where
+        type StructFields VkPhysicalDeviceFeatures =
+             '["robustBufferAccess", "fullDrawIndexUint32", "imageCubeArray", -- ' closing tick for hsc2hs
+               "independentBlend", "geometryShader", "tessellationShader",
+               "sampleRateShading", "dualSrcBlend", "logicOp",
+               "multiDrawIndirect", "drawIndirectFirstInstance", "depthClamp",
+               "depthBiasClamp", "fillModeNonSolid", "depthBounds", "wideLines",
+               "largePoints", "alphaToOne", "multiViewport", "samplerAnisotropy",
+               "textureCompressionETC2", "textureCompressionASTC_LDR",
+               "textureCompressionBC", "occlusionQueryPrecise",
+               "pipelineStatisticsQuery", "vertexPipelineStoresAndAtomics",
+               "fragmentStoresAndAtomics",
+               "shaderTessellationAndGeometryPointSize",
+               "shaderImageGatherExtended", "shaderStorageImageExtendedFormats",
+               "shaderStorageImageMultisample",
+               "shaderStorageImageReadWithoutFormat",
+               "shaderStorageImageWriteWithoutFormat",
+               "shaderUniformBufferArrayDynamicIndexing",
+               "shaderSampledImageArrayDynamicIndexing",
+               "shaderStorageBufferArrayDynamicIndexing",
+               "shaderStorageImageArrayDynamicIndexing", "shaderClipDistance",
+               "shaderCullDistance", "shaderFloat64", "shaderInt64",
+               "shaderInt16", "shaderResourceResidency", "shaderResourceMinLod",
+               "sparseBinding", "sparseResidencyBuffer", "sparseResidencyImage2D",
+               "sparseResidencyImage3D", "sparseResidency2Samples",
+               "sparseResidency4Samples", "sparseResidency8Samples",
+               "sparseResidency16Samples", "sparseResidencyAliased",
+               "variableMultisampleRate", "inheritedQueries"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkPhysicalDeviceFeatures),
@@ -39978,6 +40344,12 @@ instance Storable VkPhysicalDeviceSparseProperties where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPhysicalDeviceSparseProperties where
+        type StructFields VkPhysicalDeviceSparseProperties =
+             '["residencyStandard2DBlockShape", -- ' closing tick for hsc2hs
+               "residencyStandard2DMultisampleBlockShape",
+               "residencyStandard3DBlockShape", "residencyAlignedMipSize",
+               "residencyNonResidentStrict"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkPhysicalDeviceSparseProperties),
@@ -40461,6 +40833,67 @@ instance Storable VkPhysicalDeviceLimits where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPhysicalDeviceLimits where
+        type StructFields VkPhysicalDeviceLimits =
+             '["maxImageDimension1D", "maxImageDimension2D", -- ' closing tick for hsc2hs
+               "maxImageDimension3D", "maxImageDimensionCube",
+               "maxImageArrayLayers", "maxTexelBufferElements",
+               "maxUniformBufferRange", "maxStorageBufferRange",
+               "maxPushConstantsSize", "maxMemoryAllocationCount",
+               "maxSamplerAllocationCount", "bufferImageGranularity",
+               "sparseAddressSpaceSize", "maxBoundDescriptorSets",
+               "maxPerStageDescriptorSamplers",
+               "maxPerStageDescriptorUniformBuffers",
+               "maxPerStageDescriptorStorageBuffers",
+               "maxPerStageDescriptorSampledImages",
+               "maxPerStageDescriptorStorageImages",
+               "maxPerStageDescriptorInputAttachments", "maxPerStageResources",
+               "maxDescriptorSetSamplers", "maxDescriptorSetUniformBuffers",
+               "maxDescriptorSetUniformBuffersDynamic",
+               "maxDescriptorSetStorageBuffers",
+               "maxDescriptorSetStorageBuffersDynamic",
+               "maxDescriptorSetSampledImages", "maxDescriptorSetStorageImages",
+               "maxDescriptorSetInputAttachments", "maxVertexInputAttributes",
+               "maxVertexInputBindings", "maxVertexInputAttributeOffset",
+               "maxVertexInputBindingStride", "maxVertexOutputComponents",
+               "maxTessellationGenerationLevel", "maxTessellationPatchSize",
+               "maxTessellationControlPerVertexInputComponents",
+               "maxTessellationControlPerVertexOutputComponents",
+               "maxTessellationControlPerPatchOutputComponents",
+               "maxTessellationControlTotalOutputComponents",
+               "maxTessellationEvaluationInputComponents",
+               "maxTessellationEvaluationOutputComponents",
+               "maxGeometryShaderInvocations", "maxGeometryInputComponents",
+               "maxGeometryOutputComponents", "maxGeometryOutputVertices",
+               "maxGeometryTotalOutputComponents", "maxFragmentInputComponents",
+               "maxFragmentOutputAttachments", "maxFragmentDualSrcAttachments",
+               "maxFragmentCombinedOutputResources", "maxComputeSharedMemorySize",
+               "maxComputeWorkGroupCount", "maxComputeWorkGroupInvocations",
+               "maxComputeWorkGroupSize", "subPixelPrecisionBits",
+               "subTexelPrecisionBits", "mipmapPrecisionBits",
+               "maxDrawIndexedIndexValue", "maxDrawIndirectCount",
+               "maxSamplerLodBias", "maxSamplerAnisotropy", "maxViewports",
+               "maxViewportDimensions", "viewportBoundsRange",
+               "viewportSubPixelBits", "minMemoryMapAlignment",
+               "minTexelBufferOffsetAlignment", "minUniformBufferOffsetAlignment",
+               "minStorageBufferOffsetAlignment", "minTexelOffset",
+               "maxTexelOffset", "minTexelGatherOffset", "maxTexelGatherOffset",
+               "minInterpolationOffset", "maxInterpolationOffset",
+               "subPixelInterpolationOffsetBits", "maxFramebufferWidth",
+               "maxFramebufferHeight", "maxFramebufferLayers",
+               "framebufferColorSampleCounts", "framebufferDepthSampleCounts",
+               "framebufferStencilSampleCounts",
+               "framebufferNoAttachmentsSampleCounts", "maxColorAttachments",
+               "sampledImageColorSampleCounts", "sampledImageIntegerSampleCounts",
+               "sampledImageDepthSampleCounts", "sampledImageStencilSampleCounts",
+               "storageImageSampleCounts", "maxSampleMaskWords",
+               "timestampComputeAndGraphics", "timestampPeriod",
+               "maxClipDistances", "maxCullDistances",
+               "maxCombinedClipAndCullDistances", "discreteQueuePriorities",
+               "pointSizeRange", "lineWidthRange", "pointSizeGranularity",
+               "lineWidthGranularity", "strictLines", "standardSampleLocations",
+               "optimalBufferCopyOffsetAlignment",
+               "optimalBufferCopyRowPitchAlignment", "nonCoherentAtomSize"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkPhysicalDeviceLimits),
@@ -47063,6 +47496,9 @@ instance Storable VkSemaphoreCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSemaphoreCreateInfo where
+        type StructFields VkSemaphoreCreateInfo =
+             '["sType", "pNext", "flags"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSemaphoreCreateInfo),
@@ -47296,6 +47732,10 @@ instance Storable VkQueryPoolCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkQueryPoolCreateInfo where
+        type StructFields VkQueryPoolCreateInfo =
+             '["sType", "pNext", "flags", "queryType", "queryCount", -- ' closing tick for hsc2hs
+               "pipelineStatistics"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkQueryPoolCreateInfo),
@@ -47686,6 +48126,10 @@ instance Storable VkFramebufferCreateInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkFramebufferCreateInfo where
+        type StructFields VkFramebufferCreateInfo =
+             '["sType", "pNext", "flags", "renderPass", "attachmentCount", -- ' closing tick for hsc2hs
+               "pAttachments", "width", "height", "layers"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkFramebufferCreateInfo),
@@ -48223,6 +48667,11 @@ instance Storable VkSubmitInfo where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSubmitInfo where
+        type StructFields VkSubmitInfo =
+             '["sType", "pNext", "waitSemaphoreCount", "pWaitSemaphores", -- ' closing tick for hsc2hs
+               "pWaitDstStageMask", "commandBufferCount", "pCommandBuffers",
+               "signalSemaphoreCount", "pSignalSemaphores"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSubmitInfo),
@@ -48752,6 +49201,12 @@ instance Storable VkSurfaceCapabilitiesKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSurfaceCapabilitiesKHR where
+        type StructFields VkSurfaceCapabilitiesKHR =
+             '["minImageCount", "maxImageCount", "currentExtent", -- ' closing tick for hsc2hs
+               "minImageExtent", "maxImageExtent", "maxImageArrayLayers",
+               "supportedTransforms", "currentTransform",
+               "supportedCompositeAlpha", "supportedUsageFlags"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSurfaceCapabilitiesKHR),
@@ -49337,6 +49792,8 @@ instance Storable VkSurfaceFormatKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSurfaceFormatKHR where
+        type StructFields VkSurfaceFormatKHR = '["format", "colorSpace"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSurfaceFormatKHR),
@@ -49529,6 +49986,13 @@ instance Storable VkSwapchainCreateInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSwapchainCreateInfoKHR where
+        type StructFields VkSwapchainCreateInfoKHR =
+             '["sType", "pNext", "flags", "surface", "minImageCount", -- ' closing tick for hsc2hs
+               "imageFormat", "imageColorSpace", "imageExtent",
+               "imageArrayLayers", "imageUsage", "imageSharingMode",
+               "queueFamilyIndexCount", "pQueueFamilyIndices", "preTransform",
+               "compositeAlpha", "presentMode", "clipped", "oldSwapchain"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSwapchainCreateInfoKHR),
@@ -50602,6 +51066,10 @@ instance Storable VkPresentInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPresentInfoKHR where
+        type StructFields VkPresentInfoKHR =
+             '["sType", "pNext", "waitSemaphoreCount", "pWaitSemaphores", -- ' closing tick for hsc2hs
+               "swapchainCount", "pSwapchains", "pImageIndices", "pResults"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkPresentInfoKHR),

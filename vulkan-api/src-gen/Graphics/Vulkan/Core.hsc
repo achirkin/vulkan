@@ -2933,6 +2933,11 @@ instance Storable VkBufferMemoryBarrier where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkBufferMemoryBarrier where
+        type StructFields VkBufferMemoryBarrier =
+             '["sType", "pNext", "srcAccessMask", "dstAccessMask", -- ' closing tick for hsc2hs
+               "srcQueueFamilyIndex", "dstQueueFamilyIndex", "buffer", "offset",
+               "size"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkBufferMemoryBarrier),
@@ -3465,6 +3470,8 @@ instance Storable VkDispatchIndirectCommand where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDispatchIndirectCommand where
+        type StructFields VkDispatchIndirectCommand = '["x", "y", "z"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDispatchIndirectCommand),
@@ -3699,6 +3706,10 @@ instance Storable VkDrawIndexedIndirectCommand where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDrawIndexedIndirectCommand where
+        type StructFields VkDrawIndexedIndirectCommand =
+             '["indexCount", "instanceCount", "firstIndex", "vertexOffset", -- ' closing tick for hsc2hs
+               "firstInstance"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDrawIndexedIndirectCommand),
@@ -4052,6 +4063,9 @@ instance Storable VkDrawIndirectCommand where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDrawIndirectCommand where
+        type StructFields VkDrawIndirectCommand =
+             '["vertexCount", "instanceCount", "firstVertex", "firstInstance"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDrawIndirectCommand),
@@ -4344,6 +4358,11 @@ instance Storable VkImageMemoryBarrier where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkImageMemoryBarrier where
+        type StructFields VkImageMemoryBarrier =
+             '["sType", "pNext", "srcAccessMask", "dstAccessMask", "oldLayout", -- ' closing tick for hsc2hs
+               "newLayout", "srcQueueFamilyIndex", "dstQueueFamilyIndex", "image",
+               "subresourceRange"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkImageMemoryBarrier),
@@ -4928,6 +4947,9 @@ instance Storable VkMemoryBarrier where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkMemoryBarrier where
+        type StructFields VkMemoryBarrier =
+             '["sType", "pNext", "srcAccessMask", "dstAccessMask"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkMemoryBarrier),

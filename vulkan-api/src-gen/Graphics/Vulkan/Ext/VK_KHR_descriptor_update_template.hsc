@@ -106,6 +106,10 @@ instance Storable VkDescriptorUpdateTemplateEntryKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDescriptorUpdateTemplateEntryKHR where
+        type StructFields VkDescriptorUpdateTemplateEntryKHR =
+             '["dstBinding", "dstArrayElement", "descriptorCount", -- ' closing tick for hsc2hs
+               "descriptorType", "offset", "stride"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDescriptorUpdateTemplateEntryKHR),
@@ -555,6 +559,11 @@ instance Storable VkDescriptorUpdateTemplateCreateInfoKHR where
 
 instance VulkanMarshal VkDescriptorUpdateTemplateCreateInfoKHR
          where
+        type StructFields VkDescriptorUpdateTemplateCreateInfoKHR =
+             '["sType", "pNext", "flags", "descriptorUpdateEntryCount", -- ' closing tick for hsc2hs
+               "pDescriptorUpdateEntries", "templateType", "descriptorSetLayout",
+               "pipelineBindPoint", "pipelineLayout", "set"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf

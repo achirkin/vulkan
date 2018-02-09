@@ -113,6 +113,11 @@ instance Storable VkWin32KeyedMutexAcquireReleaseInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkWin32KeyedMutexAcquireReleaseInfoKHR where
+        type StructFields VkWin32KeyedMutexAcquireReleaseInfoKHR =
+             '["sType", "pNext", "acquireCount", "pAcquireSyncs", -- ' closing tick for hsc2hs
+               "pAcquireKeys", "pAcquireTimeouts", "releaseCount",
+               "pReleaseSyncs", "pReleaseKeys"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
