@@ -17,7 +17,6 @@ executable ve-01-CreateInstance
   main-is:             01-CreateInstance.hs
   ghc-options:         -Wall
   build-depends:       base
-                     , ghc-prim
                      , vulkan-api
   default-language:    Haskell2010
 
@@ -25,14 +24,27 @@ executable ve-01-CreateInstance
 executable ve-02-GLFWWindow
   hs-source-dirs:      .
   main-is:             02-GLFWWindow.hs
-  other-modules:       Lib
+  other-modules:       Lib.Vulkan
+                       Lib.Utils
   ghc-options:         -Wall
   build-depends:       base
-                     , ghc-prim
                      , vulkan-api
                      , GLFW-b
                      , bindings-GLFW
-                     , transformers
+  default-language:    Haskell2010
+
+
+executable ve-03-LogicalDevice
+  hs-source-dirs:      .
+  main-is:             03-LogicalDevice.hs
+  other-modules:       Lib.Vulkan
+                       Lib.Utils
+                       Lib.GLFW
+  ghc-options:         -Wall
+  build-depends:       base
+                     , vulkan-api
+                     , GLFW-b
+                     , bindings-GLFW
   default-language:    Haskell2010
 
 

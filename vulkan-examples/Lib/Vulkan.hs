@@ -1,59 +1,21 @@
 {-# LANGUAGE DataKinds        #-}
 {-# LANGUAGE Strict           #-}
 {-# LANGUAGE TypeApplications #-}
-module Lib
-    ( VulkanException (..), handleAllErrors, throwingVK, throwVKMsg
-    , withVulkanInstance
+module Lib.Vulkan
+    ( withVulkanInstance
+    , pickPhysicalDevice
+    , isDeviceSuitable
     ) where
 
 import           Control.Exception
-import           Control.Monad         (when)
+import           Control.Monad
 import           Foreign.C.String
 import           Foreign.Marshal.Alloc
 import           Foreign.Marshal.Array
-import           Foreign.Ptr
 import           Foreign.Storable
 import           Graphics.Vulkan
 
-
--- | Use this to throw all exceptions in this project
-data VulkanException
-  = VulkanException
-  { vkeCode    :: Maybe VkResult
-  , vkeMessage :: String
-  } deriving (Eq, Show, Read)
-
-instance Exception VulkanException where
-  displayException (VulkanException Nothing msg)
-    = unlines
-    [ ""
-    , "Vulkan exception:"
-    , "*** " ++ msg
-    ]
-  displayException (VulkanException (Just c) msg)
-    = unlines
-    [ ""
-    , "Vulkan error: " ++ show c
-    , "*** " ++ msg
-    ]
-
--- | Handle any error and return default value
-handleAllErrors :: a -> SomeException -> IO a
-handleAllErrors a (SomeException e)
-  = a <$ putStrLn (displayException e)
-
--- | Throw VulkanException if something goes wrong
-throwingVK :: String
-           -> IO VkResult
-           -> IO ()
-throwingVK msg f = do
-  vkRez <- f
-  when (vkRez < VK_SUCCESS) $ throwIO $ VulkanException (Just vkRez) msg
-
--- | Throw VulkanException without error code
-throwVKMsg :: String -> IO a
-throwVKMsg msg = throwIO $ VulkanException Nothing msg
-
+import           Lib.Utils
 
 -- | Run an action with vulkan instance
 withVulkanInstance :: String -- ^ program name
@@ -130,10 +92,28 @@ withVulkanInstance
     Right ()                 -> pure ()
     Left (SomeException err) -> throwIO err
 
--- | Use list of haskell strings as @Ptr CString@
-withCStringList :: [String] -> (Int -> Ptr CString -> IO a) -> IO a
-withCStringList [] f = f 0 nullPtr
-withCStringList xs f = go xs [] 0
+
+pickPhysicalDevice :: VkInstance -> IO VkPhysicalDevice
+pickPhysicalDevice vkInstance = do
+    devs <- alloca $ \deviceCountPtr -> do
+      throwingVK "pickPhysicalDevice: Failed to enumerate physical devices."
+        $ vkEnumeratePhysicalDevices vkInstance deviceCountPtr VK_NULL_HANDLE
+      devCount <- fromIntegral <$> peek deviceCountPtr
+      when (devCount <= 0) $ throwVKMsg "Zero device count!"
+      putStrLn $ "Found " ++ show devCount ++ " devices."
+
+      allocaArray devCount $ \devicesPtr -> do
+        throwingVK "pickPhysicalDevice: Failed to enumerate physical devices."
+          $ vkEnumeratePhysicalDevices vkInstance deviceCountPtr devicesPtr
+        peekArray devCount devicesPtr
+
+    selectFirstSuitable devs
   where
-    go [] pts n     = withArray (reverse pts) (f n)
-    go (s:ss) pts n = withCString s (\p -> go ss (p:pts) (n+1))
+    selectFirstSuitable [] = throwVKMsg "No suitable devices!"
+    selectFirstSuitable (x:xs) = isDeviceSuitable x >>= \yes ->
+      if yes then pure x
+             else selectFirstSuitable xs
+
+
+isDeviceSuitable :: VkPhysicalDevice -> IO Bool
+isDeviceSuitable _ = pure True

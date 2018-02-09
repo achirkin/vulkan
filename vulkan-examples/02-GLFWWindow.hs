@@ -3,20 +3,21 @@
 In this example, I follow first parts of vulkan-tutorial.com to create a window
 and pick a device using GLFW.
 
-Parts of the code are moved to Lib.hs
+Parts of the code are moved to Lib
 -}
 module Main (main) where
 
-import           Control.Monad
 import           Control.Exception
+import           Control.Monad
 import           Foreign.Marshal.Alloc
 import           Foreign.Marshal.Array
 import           Foreign.Storable
-import           Graphics.UI.GLFW           (ClientAPI (..), WindowHint (..))
-import qualified Graphics.UI.GLFW           as GLFW
+import           Graphics.UI.GLFW      (ClientAPI (..), WindowHint (..))
+import qualified Graphics.UI.GLFW      as GLFW
 import           Graphics.Vulkan
 
-import           Lib
+import           Lib.Utils
+import           Lib.Vulkan (withVulkanInstance)
 
 main :: IO ()
 main = withGLFWWindow $ \window ->
