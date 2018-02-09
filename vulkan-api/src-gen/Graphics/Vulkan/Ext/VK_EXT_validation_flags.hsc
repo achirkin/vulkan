@@ -92,6 +92,10 @@ instance Storable VkValidationFlagsEXT where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkValidationFlagsEXT where
+        type StructFields VkValidationFlagsEXT =
+             '["sType", "pNext", "disabledValidationCheckCount", -- ' closing tick for hsc2hs
+               "pDisabledValidationChecks"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkValidationFlagsEXT),

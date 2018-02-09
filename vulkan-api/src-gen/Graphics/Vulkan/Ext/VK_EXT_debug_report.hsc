@@ -103,6 +103,9 @@ instance Storable VkDebugReportCallbackCreateInfoEXT where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDebugReportCallbackCreateInfoEXT where
+        type StructFields VkDebugReportCallbackCreateInfoEXT =
+             '["sType", "pNext", "flags", "pfnCallback", "pUserData"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDebugReportCallbackCreateInfoEXT),

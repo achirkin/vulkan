@@ -113,6 +113,10 @@ instance Storable VkExternalMemoryPropertiesKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkExternalMemoryPropertiesKHR where
+        type StructFields VkExternalMemoryPropertiesKHR =
+             '["externalMemoryFeatures", "exportFromImportedHandleTypes", -- ' closing tick for hsc2hs
+               "compatibleHandleTypes"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkExternalMemoryPropertiesKHR),
@@ -381,6 +385,9 @@ instance Storable VkPhysicalDeviceExternalImageFormatInfoKHR where
 
 instance VulkanMarshal VkPhysicalDeviceExternalImageFormatInfoKHR
          where
+        type StructFields VkPhysicalDeviceExternalImageFormatInfoKHR =
+             '["sType", "pNext", "handleType"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -656,6 +663,9 @@ instance Storable VkExternalImageFormatPropertiesKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkExternalImageFormatPropertiesKHR where
+        type StructFields VkExternalImageFormatPropertiesKHR =
+             '["sType", "pNext", "externalMemoryProperties"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkExternalImageFormatPropertiesKHR),
@@ -914,6 +924,9 @@ instance Storable VkPhysicalDeviceExternalBufferInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPhysicalDeviceExternalBufferInfoKHR where
+        type StructFields VkPhysicalDeviceExternalBufferInfoKHR =
+             '["sType", "pNext", "flags", "usage", "handleType"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -1287,6 +1300,9 @@ instance Storable VkExternalBufferPropertiesKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkExternalBufferPropertiesKHR where
+        type StructFields VkExternalBufferPropertiesKHR =
+             '["sType", "pNext", "externalMemoryProperties"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkExternalBufferPropertiesKHR),
@@ -1530,6 +1546,10 @@ instance Storable VkPhysicalDeviceIDPropertiesKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPhysicalDeviceIDPropertiesKHR where
+        type StructFields VkPhysicalDeviceIDPropertiesKHR =
+             '["sType", "pNext", "deviceUUID", "driverUUID", "deviceLUID", -- ' closing tick for hsc2hs
+               "deviceNodeMask", "deviceLUIDValid"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkPhysicalDeviceIDPropertiesKHR),

@@ -96,6 +96,8 @@ instance Storable VkViewportSwizzleNV where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkViewportSwizzleNV where
+        type StructFields VkViewportSwizzleNV = '["x", "y", "z", "w"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkViewportSwizzleNV),
@@ -380,6 +382,9 @@ instance Storable VkPipelineViewportSwizzleStateCreateInfoNV where
 
 instance VulkanMarshal VkPipelineViewportSwizzleStateCreateInfoNV
          where
+        type StructFields VkPipelineViewportSwizzleStateCreateInfoNV =
+             '["sType", "pNext", "flags", "viewportCount", "pViewportSwizzles"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf

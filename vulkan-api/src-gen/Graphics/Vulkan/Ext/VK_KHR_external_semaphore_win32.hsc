@@ -115,6 +115,10 @@ instance Storable VkImportSemaphoreWin32HandleInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkImportSemaphoreWin32HandleInfoKHR where
+        type StructFields VkImportSemaphoreWin32HandleInfoKHR =
+             '["sType", "pNext", "semaphore", "flags", "handleType", "handle", -- ' closing tick for hsc2hs
+               "name"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -595,6 +599,9 @@ instance Storable VkExportSemaphoreWin32HandleInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkExportSemaphoreWin32HandleInfoKHR where
+        type StructFields VkExportSemaphoreWin32HandleInfoKHR =
+             '["sType", "pNext", "pAttributes", "dwAccess", "name"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -964,6 +971,11 @@ instance Storable VkD3D12FenceSubmitInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkD3D12FenceSubmitInfoKHR where
+        type StructFields VkD3D12FenceSubmitInfoKHR =
+             '["sType", "pNext", "waitSemaphoreValuesCount", -- ' closing tick for hsc2hs
+               "pWaitSemaphoreValues", "signalSemaphoreValuesCount",
+               "pSignalSemaphoreValues"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkD3D12FenceSubmitInfoKHR),
@@ -1391,6 +1403,9 @@ instance Storable VkSemaphoreGetWin32HandleInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSemaphoreGetWin32HandleInfoKHR where
+        type StructFields VkSemaphoreGetWin32HandleInfoKHR =
+             '["sType", "pNext", "semaphore", "handleType"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSemaphoreGetWin32HandleInfoKHR),

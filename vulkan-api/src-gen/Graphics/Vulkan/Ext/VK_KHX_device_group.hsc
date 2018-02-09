@@ -138,6 +138,9 @@ instance Storable VkMemoryAllocateFlagsInfoKHX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkMemoryAllocateFlagsInfoKHX where
+        type StructFields VkMemoryAllocateFlagsInfoKHX =
+             '["sType", "pNext", "flags", "deviceMask"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkMemoryAllocateFlagsInfoKHX),
@@ -438,6 +441,10 @@ instance Storable VkDeviceGroupRenderPassBeginInfoKHX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDeviceGroupRenderPassBeginInfoKHX where
+        type StructFields VkDeviceGroupRenderPassBeginInfoKHX =
+             '["sType", "pNext", "deviceMask", "deviceRenderAreaCount", -- ' closing tick for hsc2hs
+               "pDeviceRenderAreas"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -828,6 +835,9 @@ instance Storable VkDeviceGroupCommandBufferBeginInfoKHX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDeviceGroupCommandBufferBeginInfoKHX where
+        type StructFields VkDeviceGroupCommandBufferBeginInfoKHX =
+             '["sType", "pNext", "deviceMask"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -1098,6 +1108,12 @@ instance Storable VkDeviceGroupSubmitInfoKHX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDeviceGroupSubmitInfoKHX where
+        type StructFields VkDeviceGroupSubmitInfoKHX =
+             '["sType", "pNext", "waitSemaphoreCount", -- ' closing tick for hsc2hs
+               "pWaitSemaphoreDeviceIndices", "commandBufferCount",
+               "pCommandBufferDeviceMasks", "signalSemaphoreCount",
+               "pSignalSemaphoreDeviceIndices"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDeviceGroupSubmitInfoKHX),
@@ -1645,6 +1661,9 @@ instance Storable VkDeviceGroupBindSparseInfoKHX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDeviceGroupBindSparseInfoKHX where
+        type StructFields VkDeviceGroupBindSparseInfoKHX =
+             '["sType", "pNext", "resourceDeviceIndex", "memoryDeviceIndex"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDeviceGroupBindSparseInfoKHX),
@@ -2106,6 +2125,9 @@ instance Storable VkBindBufferMemoryDeviceGroupInfoKHX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkBindBufferMemoryDeviceGroupInfoKHX where
+        type StructFields VkBindBufferMemoryDeviceGroupInfoKHX =
+             '["sType", "pNext", "deviceIndexCount", "pDeviceIndices"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -2438,6 +2460,10 @@ instance Storable VkBindImageMemoryDeviceGroupInfoKHX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkBindImageMemoryDeviceGroupInfoKHX where
+        type StructFields VkBindImageMemoryDeviceGroupInfoKHX =
+             '["sType", "pNext", "deviceIndexCount", "pDeviceIndices", -- ' closing tick for hsc2hs
+               "SFRRectCount", "pSFRRects"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -2899,6 +2925,9 @@ instance Storable VkDeviceGroupPresentCapabilitiesKHX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDeviceGroupPresentCapabilitiesKHX where
+        type StructFields VkDeviceGroupPresentCapabilitiesKHX =
+             '["sType", "pNext", "presentMask", "modes"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -3299,6 +3328,9 @@ instance Storable VkImageSwapchainCreateInfoKHX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkImageSwapchainCreateInfoKHX where
+        type StructFields VkImageSwapchainCreateInfoKHX =
+             '["sType", "pNext", "swapchain"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkImageSwapchainCreateInfoKHX),
@@ -3547,6 +3579,9 @@ instance Storable VkBindImageMemorySwapchainInfoKHX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkBindImageMemorySwapchainInfoKHX where
+        type StructFields VkBindImageMemorySwapchainInfoKHX =
+             '["sType", "pNext", "swapchain", "imageIndex"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkBindImageMemorySwapchainInfoKHX),
@@ -3859,6 +3894,10 @@ instance Storable VkAcquireNextImageInfoKHX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkAcquireNextImageInfoKHX where
+        type StructFields VkAcquireNextImageInfoKHX =
+             '["sType", "pNext", "swapchain", "timeout", "semaphore", "fence", -- ' closing tick for hsc2hs
+               "deviceMask"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkAcquireNextImageInfoKHX),
@@ -4296,6 +4335,9 @@ instance Storable VkDeviceGroupPresentInfoKHX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDeviceGroupPresentInfoKHX where
+        type StructFields VkDeviceGroupPresentInfoKHX =
+             '["sType", "pNext", "swapchainCount", "pDeviceMasks", "mode"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDeviceGroupPresentInfoKHX),
@@ -4647,6 +4689,9 @@ instance Storable VkDeviceGroupSwapchainCreateInfoKHX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDeviceGroupSwapchainCreateInfoKHX where
+        type StructFields VkDeviceGroupSwapchainCreateInfoKHX =
+             '["sType", "pNext", "modes"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf

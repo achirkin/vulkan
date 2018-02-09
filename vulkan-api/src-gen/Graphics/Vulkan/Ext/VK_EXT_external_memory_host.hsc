@@ -107,6 +107,9 @@ instance Storable VkImportMemoryHostPointerInfoEXT where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkImportMemoryHostPointerInfoEXT where
+        type StructFields VkImportMemoryHostPointerInfoEXT =
+             '["sType", "pNext", "handleType", "pHostPointer"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkImportMemoryHostPointerInfoEXT),
@@ -417,6 +420,9 @@ instance Storable VkMemoryHostPointerPropertiesEXT where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkMemoryHostPointerPropertiesEXT where
+        type StructFields VkMemoryHostPointerPropertiesEXT =
+             '["sType", "pNext", "memoryTypeBits"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkMemoryHostPointerPropertiesEXT),
@@ -684,6 +690,9 @@ instance Storable VkPhysicalDeviceExternalMemoryHostPropertiesEXT
 instance VulkanMarshal
            VkPhysicalDeviceExternalMemoryHostPropertiesEXT
          where
+        type StructFields VkPhysicalDeviceExternalMemoryHostPropertiesEXT =
+             '["sType", "pNext", "minImportedHostPointerAlignment"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf

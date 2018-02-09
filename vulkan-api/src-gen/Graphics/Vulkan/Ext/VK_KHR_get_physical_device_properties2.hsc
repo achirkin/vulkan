@@ -121,6 +121,9 @@ instance Storable VkPhysicalDeviceFeatures2KHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPhysicalDeviceFeatures2KHR where
+        type StructFields VkPhysicalDeviceFeatures2KHR =
+             '["sType", "pNext", "features"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkPhysicalDeviceFeatures2KHR),
@@ -364,6 +367,9 @@ instance Storable VkPhysicalDeviceProperties2KHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPhysicalDeviceProperties2KHR where
+        type StructFields VkPhysicalDeviceProperties2KHR =
+             '["sType", "pNext", "properties"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkPhysicalDeviceProperties2KHR),
@@ -595,6 +601,9 @@ instance Storable VkFormatProperties2KHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkFormatProperties2KHR where
+        type StructFields VkFormatProperties2KHR =
+             '["sType", "pNext", "formatProperties"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkFormatProperties2KHR),
@@ -823,6 +832,9 @@ instance Storable VkImageFormatProperties2KHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkImageFormatProperties2KHR where
+        type StructFields VkImageFormatProperties2KHR =
+             '["sType", "pNext", "imageFormatProperties"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkImageFormatProperties2KHR),
@@ -1067,6 +1079,9 @@ instance Storable VkPhysicalDeviceImageFormatInfo2KHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPhysicalDeviceImageFormatInfo2KHR where
+        type StructFields VkPhysicalDeviceImageFormatInfo2KHR =
+             '["sType", "pNext", "format", "type", "tiling", "usage", "flags"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -1537,6 +1552,9 @@ instance Storable VkQueueFamilyProperties2KHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkQueueFamilyProperties2KHR where
+        type StructFields VkQueueFamilyProperties2KHR =
+             '["sType", "pNext", "queueFamilyProperties"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkQueueFamilyProperties2KHR),
@@ -1779,6 +1797,9 @@ instance Storable VkPhysicalDeviceMemoryProperties2KHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPhysicalDeviceMemoryProperties2KHR where
+        type StructFields VkPhysicalDeviceMemoryProperties2KHR =
+             '["sType", "pNext", "memoryProperties"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -2029,6 +2050,9 @@ instance Storable VkSparseImageFormatProperties2KHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSparseImageFormatProperties2KHR where
+        type StructFields VkSparseImageFormatProperties2KHR =
+             '["sType", "pNext", "properties"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSparseImageFormatProperties2KHR),
@@ -2280,6 +2304,9 @@ instance Storable VkPhysicalDeviceSparseImageFormatInfo2KHR where
 
 instance VulkanMarshal VkPhysicalDeviceSparseImageFormatInfo2KHR
          where
+        type StructFields VkPhysicalDeviceSparseImageFormatInfo2KHR =
+             '["sType", "pNext", "format", "type", "samples", "usage", "tiling"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf

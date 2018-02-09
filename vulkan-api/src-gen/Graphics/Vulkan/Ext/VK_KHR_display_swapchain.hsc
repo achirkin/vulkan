@@ -103,6 +103,9 @@ instance Storable VkDisplayPresentInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDisplayPresentInfoKHR where
+        type StructFields VkDisplayPresentInfoKHR =
+             '["sType", "pNext", "srcRect", "dstRect", "persistent"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDisplayPresentInfoKHR),

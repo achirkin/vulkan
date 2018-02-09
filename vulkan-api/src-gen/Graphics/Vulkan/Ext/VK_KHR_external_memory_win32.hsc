@@ -110,6 +110,9 @@ instance Storable VkImportMemoryWin32HandleInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkImportMemoryWin32HandleInfoKHR where
+        type StructFields VkImportMemoryWin32HandleInfoKHR =
+             '["sType", "pNext", "handleType", "handle", "name"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkImportMemoryWin32HandleInfoKHR),
@@ -467,6 +470,9 @@ instance Storable VkExportMemoryWin32HandleInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkExportMemoryWin32HandleInfoKHR where
+        type StructFields VkExportMemoryWin32HandleInfoKHR =
+             '["sType", "pNext", "pAttributes", "dwAccess", "name"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkExportMemoryWin32HandleInfoKHR),
@@ -823,6 +829,9 @@ instance Storable VkMemoryWin32HandlePropertiesKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkMemoryWin32HandlePropertiesKHR where
+        type StructFields VkMemoryWin32HandlePropertiesKHR =
+             '["sType", "pNext", "memoryTypeBits"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkMemoryWin32HandlePropertiesKHR),
@@ -1064,6 +1073,9 @@ instance Storable VkMemoryGetWin32HandleInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkMemoryGetWin32HandleInfoKHR where
+        type StructFields VkMemoryGetWin32HandleInfoKHR =
+             '["sType", "pNext", "memory", "handleType"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkMemoryGetWin32HandleInfoKHR),

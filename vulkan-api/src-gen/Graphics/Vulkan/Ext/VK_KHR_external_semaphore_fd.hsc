@@ -102,6 +102,9 @@ instance Storable VkImportSemaphoreFdInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkImportSemaphoreFdInfoKHR where
+        type StructFields VkImportSemaphoreFdInfoKHR =
+             '["sType", "pNext", "semaphore", "flags", "handleType", "fd"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkImportSemaphoreFdInfoKHR),
@@ -493,6 +496,9 @@ instance Storable VkSemaphoreGetFdInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSemaphoreGetFdInfoKHR where
+        type StructFields VkSemaphoreGetFdInfoKHR =
+             '["sType", "pNext", "semaphore", "handleType"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSemaphoreGetFdInfoKHR),

@@ -109,6 +109,10 @@ instance Storable VkImportFenceWin32HandleInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkImportFenceWin32HandleInfoKHR where
+        type StructFields VkImportFenceWin32HandleInfoKHR =
+             '["sType", "pNext", "fence", "flags", "handleType", "handle", -- ' closing tick for hsc2hs
+               "name"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkImportFenceWin32HandleInfoKHR),
@@ -561,6 +565,9 @@ instance Storable VkExportFenceWin32HandleInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkExportFenceWin32HandleInfoKHR where
+        type StructFields VkExportFenceWin32HandleInfoKHR =
+             '["sType", "pNext", "pAttributes", "dwAccess", "name"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkExportFenceWin32HandleInfoKHR),
@@ -910,6 +917,9 @@ instance Storable VkFenceGetWin32HandleInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkFenceGetWin32HandleInfoKHR where
+        type StructFields VkFenceGetWin32HandleInfoKHR =
+             '["sType", "pNext", "fence", "handleType"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkFenceGetWin32HandleInfoKHR),

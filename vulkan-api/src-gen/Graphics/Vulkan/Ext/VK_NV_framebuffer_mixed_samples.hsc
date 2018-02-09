@@ -110,6 +110,11 @@ instance Storable VkPipelineCoverageModulationStateCreateInfoNV
 instance VulkanMarshal
            VkPipelineCoverageModulationStateCreateInfoNV
          where
+        type StructFields VkPipelineCoverageModulationStateCreateInfoNV =
+             '["sType", "pNext", "flags", "coverageModulationMode", -- ' closing tick for hsc2hs
+               "coverageModulationTableEnable", "coverageModulationTableCount",
+               "pCoverageModulationTable"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf

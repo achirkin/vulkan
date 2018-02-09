@@ -102,6 +102,11 @@ instance Storable VkHdrMetadataEXT where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkHdrMetadataEXT where
+        type StructFields VkHdrMetadataEXT =
+             '["sType", "pNext", "displayPrimaryRed", "displayPrimaryGreen", -- ' closing tick for hsc2hs
+               "displayPrimaryBlue", "whitePoint", "maxLuminance", "minLuminance",
+               "maxContentLightLevel", "maxFrameAverageLightLevel"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkHdrMetadataEXT),
@@ -694,6 +699,8 @@ instance Storable VkXYColorEXT where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkXYColorEXT where
+        type StructFields VkXYColorEXT = '["x", "y"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkXYColorEXT),

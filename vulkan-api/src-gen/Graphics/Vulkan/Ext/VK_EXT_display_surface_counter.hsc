@@ -110,6 +110,13 @@ instance Storable VkSurfaceCapabilities2EXT where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSurfaceCapabilities2EXT where
+        type StructFields VkSurfaceCapabilities2EXT =
+             '["sType", "pNext", "minImageCount", "maxImageCount", -- ' closing tick for hsc2hs
+               "currentExtent", "minImageExtent", "maxImageExtent",
+               "maxImageArrayLayers", "supportedTransforms", "currentTransform",
+               "supportedCompositeAlpha", "supportedUsageFlags",
+               "supportedSurfaceCounters"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkSurfaceCapabilities2EXT),

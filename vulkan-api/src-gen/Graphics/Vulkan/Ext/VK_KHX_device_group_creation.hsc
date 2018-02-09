@@ -106,6 +106,10 @@ instance Storable VkPhysicalDeviceGroupPropertiesKHX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPhysicalDeviceGroupPropertiesKHX where
+        type StructFields VkPhysicalDeviceGroupPropertiesKHX =
+             '["sType", "pNext", "physicalDeviceCount", "physicalDevices", -- ' closing tick for hsc2hs
+               "subsetAllocation"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkPhysicalDeviceGroupPropertiesKHX),
@@ -505,6 +509,9 @@ instance Storable VkDeviceGroupDeviceCreateInfoKHX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDeviceGroupDeviceCreateInfoKHX where
+        type StructFields VkDeviceGroupDeviceCreateInfoKHX =
+             '["sType", "pNext", "physicalDeviceCount", "pPhysicalDevices"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDeviceGroupDeviceCreateInfoKHX),

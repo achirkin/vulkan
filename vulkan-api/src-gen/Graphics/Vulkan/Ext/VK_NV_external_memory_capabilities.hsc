@@ -97,6 +97,10 @@ instance Storable VkExternalImageFormatPropertiesNV where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkExternalImageFormatPropertiesNV where
+        type StructFields VkExternalImageFormatPropertiesNV =
+             '["imageFormatProperties", "externalMemoryFeatures", -- ' closing tick for hsc2hs
+               "exportFromImportedHandleTypes", "compatibleHandleTypes"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkExternalImageFormatPropertiesNV),

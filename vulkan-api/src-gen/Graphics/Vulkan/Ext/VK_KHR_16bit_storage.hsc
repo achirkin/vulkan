@@ -109,6 +109,11 @@ instance Storable VkPhysicalDevice16BitStorageFeaturesKHR where
 
 instance VulkanMarshal VkPhysicalDevice16BitStorageFeaturesKHR
          where
+        type StructFields VkPhysicalDevice16BitStorageFeaturesKHR =
+             '["sType", "pNext", "storageBuffer16BitAccess", -- ' closing tick for hsc2hs
+               "uniformAndStorageBuffer16BitAccess", "storagePushConstant16",
+               "storageInputOutput16"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf

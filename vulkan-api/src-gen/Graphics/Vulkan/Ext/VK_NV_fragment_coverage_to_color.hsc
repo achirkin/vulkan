@@ -103,6 +103,10 @@ instance Storable VkPipelineCoverageToColorStateCreateInfoNV where
 
 instance VulkanMarshal VkPipelineCoverageToColorStateCreateInfoNV
          where
+        type StructFields VkPipelineCoverageToColorStateCreateInfoNV =
+             '["sType", "pNext", "flags", "coverageToColorEnable", -- ' closing tick for hsc2hs
+               "coverageToColorLocation"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf

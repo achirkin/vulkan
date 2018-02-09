@@ -13,7 +13,8 @@ Features of the bindings:
     allowing zero-copy conversion to and from pointers.
     Moreover, it is not necessary to convert them at all, if one prefers to
     manage corresponding memory manually.
-  * Document generated code as much as possible with references to vulkan registry.
+  * Document the generated code as much as possible with references to vulkan registry.
+  * Use no dependencies except `base` and `ghc-prim`.
 
 # vulkan-api
 

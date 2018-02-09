@@ -93,6 +93,8 @@ instance Storable VkViewportWScalingNV where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkViewportWScalingNV where
+        type StructFields VkViewportWScalingNV = '["xcoeff", "ycoeff"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkViewportWScalingNV),
@@ -289,6 +291,10 @@ instance Storable VkPipelineViewportWScalingStateCreateInfoNV where
 
 instance VulkanMarshal VkPipelineViewportWScalingStateCreateInfoNV
          where
+        type StructFields VkPipelineViewportWScalingStateCreateInfoNV =
+             '["sType", "pNext", "viewportWScalingEnable", "viewportCount", -- ' closing tick for hsc2hs
+               "pViewportWScalings"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf

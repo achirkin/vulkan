@@ -112,6 +112,11 @@ instance Storable VkRenderPassMultiviewCreateInfoKHX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkRenderPassMultiviewCreateInfoKHX where
+        type StructFields VkRenderPassMultiviewCreateInfoKHX =
+             '["sType", "pNext", "subpassCount", "pViewMasks", -- ' closing tick for hsc2hs
+               "dependencyCount", "pViewOffsets", "correlationMaskCount",
+               "pCorrelationMasks"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkRenderPassMultiviewCreateInfoKHX),
@@ -675,6 +680,10 @@ instance Storable VkPhysicalDeviceMultiviewFeaturesKHX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPhysicalDeviceMultiviewFeaturesKHX where
+        type StructFields VkPhysicalDeviceMultiviewFeaturesKHX =
+             '["sType", "pNext", "multiview", "multiviewGeometryShader", -- ' closing tick for hsc2hs
+               "multiviewTessellationShader"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -1071,6 +1080,10 @@ instance Storable VkPhysicalDeviceMultiviewPropertiesKHX where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPhysicalDeviceMultiviewPropertiesKHX where
+        type StructFields VkPhysicalDeviceMultiviewPropertiesKHX =
+             '["sType", "pNext", "maxMultiviewViewCount", -- ' closing tick for hsc2hs
+               "maxMultiviewInstanceIndex"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf

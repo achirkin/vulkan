@@ -97,6 +97,10 @@ instance Storable VkShaderResourceUsageAMD where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkShaderResourceUsageAMD where
+        type StructFields VkShaderResourceUsageAMD =
+             '["numUsedVgprs", "numUsedSgprs", "ldsSizePerLocalWorkGroup", -- ' closing tick for hsc2hs
+               "ldsUsageSizeInBytes", "scratchMemUsageInBytes"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkShaderResourceUsageAMD),
@@ -437,6 +441,11 @@ instance Storable VkShaderStatisticsInfoAMD where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkShaderStatisticsInfoAMD where
+        type StructFields VkShaderStatisticsInfoAMD =
+             '["shaderStageMask", "resourceUsage", "numPhysicalVgprs", -- ' closing tick for hsc2hs
+               "numPhysicalSgprs", "numAvailableVgprs", "numAvailableSgprs",
+               "computeWorkGroupSize"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkShaderStatisticsInfoAMD),

@@ -109,6 +109,9 @@ instance Storable VkDebugMarkerObjectNameInfoEXT where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDebugMarkerObjectNameInfoEXT where
+        type StructFields VkDebugMarkerObjectNameInfoEXT =
+             '["sType", "pNext", "objectType", "object", "pObjectName"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDebugMarkerObjectNameInfoEXT),
@@ -461,6 +464,10 @@ instance Storable VkDebugMarkerObjectTagInfoEXT where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDebugMarkerObjectTagInfoEXT where
+        type StructFields VkDebugMarkerObjectTagInfoEXT =
+             '["sType", "pNext", "objectType", "object", "tagName", "tagSize", -- ' closing tick for hsc2hs
+               "pTag"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDebugMarkerObjectTagInfoEXT),
@@ -906,6 +913,9 @@ instance Storable VkDebugMarkerMarkerInfoEXT where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDebugMarkerMarkerInfoEXT where
+        type StructFields VkDebugMarkerMarkerInfoEXT =
+             '["sType", "pNext", "pMarkerName", "color"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDebugMarkerMarkerInfoEXT),

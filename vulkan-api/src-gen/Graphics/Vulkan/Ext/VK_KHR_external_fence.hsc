@@ -98,6 +98,9 @@ instance Storable VkExportFenceCreateInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkExportFenceCreateInfoKHR where
+        type StructFields VkExportFenceCreateInfoKHR =
+             '["sType", "pNext", "handleTypes"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkExportFenceCreateInfoKHR),

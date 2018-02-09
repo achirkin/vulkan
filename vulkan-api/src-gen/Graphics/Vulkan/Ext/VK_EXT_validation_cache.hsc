@@ -101,6 +101,9 @@ instance Storable VkValidationCacheCreateInfoEXT where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkValidationCacheCreateInfoEXT where
+        type StructFields VkValidationCacheCreateInfoEXT =
+             '["sType", "pNext", "flags", "initialDataSize", "pInitialData"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkValidationCacheCreateInfoEXT),
@@ -461,6 +464,9 @@ instance Storable VkShaderModuleValidationCacheCreateInfoEXT where
 
 instance VulkanMarshal VkShaderModuleValidationCacheCreateInfoEXT
          where
+        type StructFields VkShaderModuleValidationCacheCreateInfoEXT =
+             '["sType", "pNext", "validationCache"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf

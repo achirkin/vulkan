@@ -97,6 +97,9 @@ instance Storable VkPresentRegionsKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPresentRegionsKHR where
+        type StructFields VkPresentRegionsKHR =
+             '["sType", "pNext", "swapchainCount", "pRegions"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkPresentRegionsKHR),
@@ -377,6 +380,9 @@ instance Storable VkPresentRegionKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPresentRegionKHR where
+        type StructFields VkPresentRegionKHR =
+             '["rectangleCount", "pRectangles"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkPresentRegionKHR),
@@ -563,6 +569,8 @@ instance Storable VkRectLayerKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkRectLayerKHR where
+        type StructFields VkRectLayerKHR = '["offset", "extent", "layer"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkRectLayerKHR),

@@ -113,6 +113,11 @@ instance Storable VkDisplayPropertiesKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDisplayPropertiesKHR where
+        type StructFields VkDisplayPropertiesKHR =
+             '["display", "displayName", "physicalDimensions", -- ' closing tick for hsc2hs
+               "physicalResolution", "supportedTransforms",
+               "planeReorderPossible", "persistentContent"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDisplayPropertiesKHR),
@@ -534,6 +539,9 @@ instance Storable VkDisplayModeParametersKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDisplayModeParametersKHR where
+        type StructFields VkDisplayModeParametersKHR =
+             '["visibleRegion", "refreshRate"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDisplayModeParametersKHR),
@@ -729,6 +737,9 @@ instance Storable VkDisplayModePropertiesKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDisplayModePropertiesKHR where
+        type StructFields VkDisplayModePropertiesKHR =
+             '["displayMode", "parameters"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDisplayModePropertiesKHR),
@@ -917,6 +928,9 @@ instance Storable VkDisplayModeCreateInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDisplayModeCreateInfoKHR where
+        type StructFields VkDisplayModeCreateInfoKHR =
+             '["sType", "pNext", "flags", "parameters"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDisplayModeCreateInfoKHR),
@@ -1216,6 +1230,11 @@ instance Storable VkDisplayPlaneCapabilitiesKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDisplayPlaneCapabilitiesKHR where
+        type StructFields VkDisplayPlaneCapabilitiesKHR =
+             '["supportedAlpha", "minSrcPosition", "maxSrcPosition", -- ' closing tick for hsc2hs
+               "minSrcExtent", "maxSrcExtent", "minDstPosition", "maxDstPosition",
+               "minDstExtent", "maxDstExtent"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDisplayPlaneCapabilitiesKHR),
@@ -1749,6 +1768,9 @@ instance Storable VkDisplayPlanePropertiesKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDisplayPlanePropertiesKHR where
+        type StructFields VkDisplayPlanePropertiesKHR =
+             '["currentDisplay", "currentStackIndex"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDisplayPlanePropertiesKHR),
@@ -1946,6 +1968,11 @@ instance Storable VkDisplaySurfaceCreateInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkDisplaySurfaceCreateInfoKHR where
+        type StructFields VkDisplaySurfaceCreateInfoKHR =
+             '["sType", "pNext", "flags", "displayMode", "planeIndex", -- ' closing tick for hsc2hs
+               "planeStackIndex", "transform", "globalAlpha", "alphaMode",
+               "imageExtent"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkDisplaySurfaceCreateInfoKHR),

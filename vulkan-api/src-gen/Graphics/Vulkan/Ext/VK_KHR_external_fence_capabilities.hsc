@@ -111,6 +111,9 @@ instance Storable VkPhysicalDeviceExternalFenceInfoKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPhysicalDeviceExternalFenceInfoKHR where
+        type StructFields VkPhysicalDeviceExternalFenceInfoKHR =
+             '["sType", "pNext", "handleType"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -374,6 +377,10 @@ instance Storable VkExternalFencePropertiesKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkExternalFencePropertiesKHR where
+        type StructFields VkExternalFencePropertiesKHR =
+             '["sType", "pNext", "exportFromImportedHandleTypes", -- ' closing tick for hsc2hs
+               "compatibleHandleTypes", "externalFenceFeatures"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkExternalFencePropertiesKHR),

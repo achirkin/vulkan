@@ -91,6 +91,9 @@ instance Storable VkNativeBufferANDROID where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkNativeBufferANDROID where
+        type StructFields VkNativeBufferANDROID =
+             '["sType", "pNext", "handle", "stride", "format", "usage"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkNativeBufferANDROID),

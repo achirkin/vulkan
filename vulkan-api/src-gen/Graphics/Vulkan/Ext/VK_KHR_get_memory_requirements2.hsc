@@ -107,6 +107,9 @@ instance Storable VkBufferMemoryRequirementsInfo2KHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkBufferMemoryRequirementsInfo2KHR where
+        type StructFields VkBufferMemoryRequirementsInfo2KHR =
+             '["sType", "pNext", "buffer"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkBufferMemoryRequirementsInfo2KHR),
@@ -362,6 +365,9 @@ instance Storable VkImageMemoryRequirementsInfo2KHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkImageMemoryRequirementsInfo2KHR where
+        type StructFields VkImageMemoryRequirementsInfo2KHR =
+             '["sType", "pNext", "image"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkImageMemoryRequirementsInfo2KHR),
@@ -620,6 +626,9 @@ instance Storable VkImageSparseMemoryRequirementsInfo2KHR where
 
 instance VulkanMarshal VkImageSparseMemoryRequirementsInfo2KHR
          where
+        type StructFields VkImageSparseMemoryRequirementsInfo2KHR =
+             '["sType", "pNext", "image"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -881,6 +890,9 @@ instance Storable VkMemoryRequirements2KHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkMemoryRequirements2KHR where
+        type StructFields VkMemoryRequirements2KHR =
+             '["sType", "pNext", "memoryRequirements"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkMemoryRequirements2KHR),
@@ -1114,6 +1126,9 @@ instance Storable VkSparseImageMemoryRequirements2KHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkSparseImageMemoryRequirements2KHR where
+        type StructFields VkSparseImageMemoryRequirements2KHR =
+             '["sType", "pNext", "memoryRequirements"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf

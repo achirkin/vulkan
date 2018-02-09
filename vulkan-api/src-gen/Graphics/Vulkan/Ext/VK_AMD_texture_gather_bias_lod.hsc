@@ -105,6 +105,9 @@ instance Storable VkTextureLODGatherFormatPropertiesAMD where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkTextureLODGatherFormatPropertiesAMD where
+        type StructFields VkTextureLODGatherFormatPropertiesAMD =
+             '["sType", "pNext", "supportsTextureGatherLODBiasAMD"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf

@@ -113,6 +113,9 @@ instance Storable VkPhysicalDeviceExternalSemaphoreInfoKHR where
 
 instance VulkanMarshal VkPhysicalDeviceExternalSemaphoreInfoKHR
          where
+        type StructFields VkPhysicalDeviceExternalSemaphoreInfoKHR =
+             '["sType", "pNext", "handleType"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -385,6 +388,10 @@ instance Storable VkExternalSemaphorePropertiesKHR where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkExternalSemaphorePropertiesKHR where
+        type StructFields VkExternalSemaphorePropertiesKHR =
+             '["sType", "pNext", "exportFromImportedHandleTypes", -- ' closing tick for hsc2hs
+               "compatibleHandleTypes", "externalSemaphoreFeatures"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkExternalSemaphorePropertiesKHR),

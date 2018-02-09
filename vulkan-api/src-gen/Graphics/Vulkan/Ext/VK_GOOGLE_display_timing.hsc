@@ -99,6 +99,9 @@ instance Storable VkRefreshCycleDurationGOOGLE where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkRefreshCycleDurationGOOGLE where
+        type StructFields VkRefreshCycleDurationGOOGLE =
+             '["refreshDuration"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkRefreshCycleDurationGOOGLE),
@@ -248,6 +251,10 @@ instance Storable VkPastPresentationTimingGOOGLE where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPastPresentationTimingGOOGLE where
+        type StructFields VkPastPresentationTimingGOOGLE =
+             '["presentID", "desiredPresentTime", "actualPresentTime", -- ' closing tick for hsc2hs
+               "earliestPresentTime", "presentMargin"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkPastPresentationTimingGOOGLE),
@@ -623,6 +630,9 @@ instance Storable VkPresentTimesInfoGOOGLE where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPresentTimesInfoGOOGLE where
+        type StructFields VkPresentTimesInfoGOOGLE =
+             '["sType", "pNext", "swapchainCount", "pTimes"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkPresentTimesInfoGOOGLE),
@@ -910,6 +920,9 @@ instance Storable VkPresentTimeGOOGLE where
         {-# INLINE poke #-}
 
 instance VulkanMarshal VkPresentTimeGOOGLE where
+        type StructFields VkPresentTimeGOOGLE =
+             '["presentID", "desiredPresentTime"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf (undefined :: VkPresentTimeGOOGLE),

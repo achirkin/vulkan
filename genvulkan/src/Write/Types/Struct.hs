@@ -106,6 +106,7 @@ genStructOrUnion isUnion VkTypeComposite
             {-# INLINE poke #-}
 
           instance VulkanMarshal $tnametxt where
+            type StructFields $tnametxt = $fieldNamesTxt
             {-# INLINE newVkData #-}
             newVkData f
               | I# n <- sizeOf (undefined :: $tnametxt)
@@ -153,6 +154,8 @@ genStructOrUnion isUnion VkTypeComposite
     writeExport tnameDeclared
     return classDefs
   where
+    fieldNamesTxt = T.pack . ('\'':) . show
+                  $ map (\VkTypeMember{ name = VkMemberName n} -> n ) $ items tmems
     tnameDeclared = DIThing tnametxt DITAll
     -- totalSizeTxt = T.pack $ prettyPrint totalSize
     (_totalSize, sfimems)

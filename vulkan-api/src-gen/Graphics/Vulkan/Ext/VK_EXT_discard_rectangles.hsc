@@ -113,6 +113,9 @@ instance Storable VkPhysicalDeviceDiscardRectanglePropertiesEXT
 instance VulkanMarshal
            VkPhysicalDeviceDiscardRectanglePropertiesEXT
          where
+        type StructFields VkPhysicalDeviceDiscardRectanglePropertiesEXT =
+             '["sType", "pNext", "maxDiscardRectangles"] -- ' closing tick for hsc2hs
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
@@ -409,6 +412,10 @@ instance Storable VkPipelineDiscardRectangleStateCreateInfoEXT
 
 instance VulkanMarshal VkPipelineDiscardRectangleStateCreateInfoEXT
          where
+        type StructFields VkPipelineDiscardRectangleStateCreateInfoEXT =
+             '["sType", "pNext", "flags", "discardRectangleMode", -- ' closing tick for hsc2hs
+               "discardRectangleCount", "pDiscardRectangles"]
+
         {-# INLINE newVkData #-}
         newVkData f
           | I## n <- sizeOf
