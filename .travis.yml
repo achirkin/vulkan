@@ -22,3 +22,7 @@ matrix:
 
 before_install:
   - cd vulkan-api
+
+script:
+ - cabal configure --enable-tests --enable-benchmarks -v2
+ - cabal build
