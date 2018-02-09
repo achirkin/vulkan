@@ -7,10 +7,10 @@ packages:
 #  - location: ../../GLFW-b
   - location:
       git: https://github.com/achirkin/GLFW-b
-      commit: aef0725d1f711c09d0251b91626600098b1b43cf
+      commit: c57109dfede0a6ca08a7088f371fe29fff315415
     extra-dep: true
 #  - location: ../../bindings-GLFW
   - location:
-      git: https://github.com/bsl/bindings-GLFW.git
-      commit: fa7a29a1b4cd548b960071e657276e8458d39d79
+      git: https://github.com/achirkin/bindings-GLFW.git
+      commit: 29899ded9c0c8bec5bc4b98fced054353d840573
     extra-dep: true

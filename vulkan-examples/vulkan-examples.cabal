@@ -30,7 +30,6 @@ executable ve-02-GLFWWindow
   build-depends:       base
                      , vulkan-api
                      , GLFW-b
-                     , bindings-GLFW
   default-language:    Haskell2010
 
 
@@ -44,7 +43,19 @@ executable ve-03-LogicalDevice
   build-depends:       base
                      , vulkan-api
                      , GLFW-b
-                     , bindings-GLFW
+  default-language:    Haskell2010
+
+
+executable ve-04-Presentation
+  hs-source-dirs:      .
+  main-is:             04-Presentation.hs
+  other-modules:       Lib.Vulkan
+                       Lib.Utils
+                       Lib.GLFW
+  ghc-options:         -Wall
+  build-depends:       base
+                     , vulkan-api
+                     , GLFW-b
   default-language:    Haskell2010
 
 
