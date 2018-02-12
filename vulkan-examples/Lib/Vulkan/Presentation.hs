@@ -1,13 +1,12 @@
-{- |
-
-In this example, I follow vulkan-tutorial.com > Presentation
-
--}
 {-# LANGUAGE DataKinds        #-}
 {-# LANGUAGE RecordWildCards  #-}
 {-# LANGUAGE Strict           #-}
 {-# LANGUAGE TypeApplications #-}
-module Main (main) where
+module Lib.Vulkan.Presentation
+  ( SwapChainImgInfo (..)
+  , DevQueues (..)
+  , withSurface, withGraphicsDevice, withSwapChain, withImageViews
+  ) where
 
 import           Control.Exception
 import           Control.Monad
@@ -23,27 +22,8 @@ import           Graphics.Vulkan
 import           Graphics.Vulkan.Ext.VK_KHR_surface
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
 
-import           Lib.GLFW
 import           Lib.Utils
 import           Lib.Vulkan
-
-
-main :: IO ()
-main = withGLFWWindow 800 600 "03-Presentation-Window" $ \window ->
-       withGLFWVulkanInstance "03-Presentation" $ \vulkanInstance ->
-       withSurface vulkanInstance window $ \vulkanSurface -> do
-        (Just scsd, pdev)
-          <- pickPhysicalDevice vulkanInstance (Just vulkanSurface)
-        withGraphicsDevice pdev vulkanSurface $ \dev queues ->
-          withSwapChain dev scsd queues vulkanSurface $ \swInfo ->
-          withImageViews dev swInfo $ \imgViews -> do
-            putStrLn $ "Selected physical device: " ++ show pdev
-            putStrLn $ "Createad surface: " ++ show vulkanSurface
-            putStrLn $ "Createad device: " ++ show dev
-            putStrLn $ "Createad queues: " ++ show queues
-            putStrLn $ "Createad swapchain: " ++ show swInfo
-            putStrLn $ "Createad image views: " ++ show imgViews
-            glfwMainLoop window (return ())
 
 
 withSurface :: VkInstance -> GLFW.Window -> (VkSurfaceKHR -> IO ()) -> IO ()
@@ -268,9 +248,6 @@ withSwapChain dev scsd queues surf action = do
   surfFmt <- chooseSwapSurfaceFormat scsd
   let spMode = chooseSwapPresentMode scsd
   sExtent <- chooseSwapExtent scsd
-  putStrLn $ "Selected swap surface format: " ++ show surfFmt
-  putStrLn $ "Selected swap present mode: " ++ show spMode
-  putStrLn $ "Selected swap extent: " ++ show sExtent
 
   -- try tripple buffering
   let maxIC = getField @"maxImageCount" $ capabilities scsd

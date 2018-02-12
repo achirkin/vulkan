@@ -33,10 +33,8 @@ withVulkanInstance :: String -- ^ program name
                       --   or from GLFW
                    -> [String]
                       -- ^ required layer names
-                   -> (VkInstance -> IO ()) -> IO ()
-withVulkanInstance
-  progName extensions layers action = do
-  execRez <-
+                   -> (VkInstance -> IO a) -> IO a
+withVulkanInstance progName extensions layers action =
     -- allocate some strings - names
     withArrayLen extensions $ \extCount extNames ->
     withCStringList layers $ \layerCount layerNames ->
@@ -73,31 +71,17 @@ withVulkanInstance
           iCreateInfoPtr extNames
 
       -- execute createInstance
-      (vkResult, vkInstance) <- alloca $ \vkInstPtr -> do
-        vkRes <- vkCreateInstance
-          (unsafePtr iCreateInfo) -- must keep iCreateInfo alive!
-          VK_NULL_HANDLE vkInstPtr
-        vkI <- peek vkInstPtr
-        return (vkRes, vkI)
+      vkInstance <- alloca $ \vkInstPtr -> do
+        throwingVK "vkCreateInstance: Failed to create vkInstance."
+          $ vkCreateInstance (unsafePtr iCreateInfo) VK_NULL_HANDLE vkInstPtr
+        peek vkInstPtr
 
-      -- run a supplied action if instance creation was successful
-      if vkResult == VK_SUCCESS
-      then do
-          eerr <- try $ action vkInstance
-          vkDestroyInstance vkInstance VK_NULL_HANDLE
-          -- make sure our data structures exist until the end of the program.
-          touchVkData appInfo
-          touchVkData iCreateInfo
-          pure eerr
-      else pure $ Left
-                $ SomeException
-                $ VulkanException
-                   (Just vkResult)
-                   "vkCreateInstance: Failed to create vkInstance."
 
-  case execRez of
-    Right ()                 -> pure ()
-    Left (SomeException err) -> throwIO err
+      finally (action vkInstance) $ do
+        vkDestroyInstance vkInstance VK_NULL_HANDLE
+        -- make sure our data structures exist until the end of the program.
+        touchVkData appInfo
+        touchVkData iCreateInfo
 
 
 pickPhysicalDevice :: VkInstance
