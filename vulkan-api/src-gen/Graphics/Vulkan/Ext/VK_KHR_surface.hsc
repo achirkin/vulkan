@@ -31,12 +31,13 @@ module Graphics.Vulkan.Ext.VK_KHR_surface
         pattern VK_COLORSPACE_SRGB_NONLINEAR_KHR,
         pattern VK_OBJECT_TYPE_SURFACE_KHR)
        where
-import           Foreign.C.String       (CString)
-import           GHC.Ptr                (Ptr (..))
-import           Graphics.Vulkan.Base   (VkAllocationCallbacks (..),
-                                         VkSurfaceCapabilitiesKHR (..),
-                                         VkSurfaceFormatKHR (..))
+import           Foreign.C.String        (CString)
+import           GHC.Ptr                 (Ptr (..))
+import           Graphics.Vulkan.Base    (VkAllocationCallbacks (..),
+                                          VkSurfaceCapabilitiesKHR (..),
+                                          VkSurfaceFormatKHR (..))
 import           Graphics.Vulkan.Common
+import           Graphics.Vulkan.Marshal
 
 -- | > void vkDestroySurfaceKHR
 --   >     ( VkInstance instance
@@ -149,16 +150,16 @@ pattern VK_KHR_SURFACE_EXTENSION_NAME <-
   where VK_KHR_SURFACE_EXTENSION_NAME
           = _VK_KHR_SURFACE_EXTENSION_NAME
 
-_VK_KHR_SURFACE_EXTENSION_NAME :: CString
-
 {-# INLINE _VK_KHR_SURFACE_EXTENSION_NAME #-}
+
+_VK_KHR_SURFACE_EXTENSION_NAME :: CString
 _VK_KHR_SURFACE_EXTENSION_NAME = Ptr "VK_KHR_surface\NUL"##
 
-is_VK_KHR_SURFACE_EXTENSION_NAME :: CString -> Bool
-
 {-# INLINE is_VK_KHR_SURFACE_EXTENSION_NAME #-}
+
+is_VK_KHR_SURFACE_EXTENSION_NAME :: CString -> Bool
 is_VK_KHR_SURFACE_EXTENSION_NAME
-  = (_VK_KHR_SURFACE_EXTENSION_NAME ==)
+  = eqCStrings _VK_KHR_SURFACE_EXTENSION_NAME
 
 type VK_KHR_SURFACE_EXTENSION_NAME = "VK_KHR_surface"
 

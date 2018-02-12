@@ -23,8 +23,9 @@ module Graphics.Vulkan.Ext.VK_KHR_storage_buffer_storage_class
         VK_KHR_STORAGE_BUFFER_STORAGE_CLASS_EXTENSION_NAME,
         pattern VK_KHR_STORAGE_BUFFER_STORAGE_CLASS_EXTENSION_NAME)
        where
-import           Foreign.C.String (CString)
-import           GHC.Ptr          (Ptr (..))
+import           Foreign.C.String        (CString)
+import           GHC.Ptr                 (Ptr (..))
+import           Graphics.Vulkan.Marshal
 
 pattern VK_KHR_STORAGE_BUFFER_STORAGE_CLASS_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -41,19 +42,19 @@ pattern VK_KHR_STORAGE_BUFFER_STORAGE_CLASS_EXTENSION_NAME <-
   where VK_KHR_STORAGE_BUFFER_STORAGE_CLASS_EXTENSION_NAME
           = _VK_KHR_STORAGE_BUFFER_STORAGE_CLASS_EXTENSION_NAME
 
-_VK_KHR_STORAGE_BUFFER_STORAGE_CLASS_EXTENSION_NAME :: CString
-
 {-# INLINE _VK_KHR_STORAGE_BUFFER_STORAGE_CLASS_EXTENSION_NAME #-}
+
+_VK_KHR_STORAGE_BUFFER_STORAGE_CLASS_EXTENSION_NAME :: CString
 _VK_KHR_STORAGE_BUFFER_STORAGE_CLASS_EXTENSION_NAME
   = Ptr "VK_KHR_storage_buffer_storage_class\NUL"##
 
-is_VK_KHR_STORAGE_BUFFER_STORAGE_CLASS_EXTENSION_NAME ::
-                                                      CString -> Bool
-
 {-# INLINE is_VK_KHR_STORAGE_BUFFER_STORAGE_CLASS_EXTENSION_NAME
            #-}
+
+is_VK_KHR_STORAGE_BUFFER_STORAGE_CLASS_EXTENSION_NAME ::
+                                                      CString -> Bool
 is_VK_KHR_STORAGE_BUFFER_STORAGE_CLASS_EXTENSION_NAME
-  = (_VK_KHR_STORAGE_BUFFER_STORAGE_CLASS_EXTENSION_NAME ==)
+  = eqCStrings _VK_KHR_STORAGE_BUFFER_STORAGE_CLASS_EXTENSION_NAME
 
 type VK_KHR_STORAGE_BUFFER_STORAGE_CLASS_EXTENSION_NAME =
      "VK_KHR_storage_buffer_storage_class"

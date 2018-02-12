@@ -1,10 +1,13 @@
 {-# LANGUAGE DataKinds        #-}
+{-# LANGUAGE RecordWildCards  #-}
 {-# LANGUAGE Strict           #-}
 {-# LANGUAGE TypeApplications #-}
 module Lib.Vulkan
     ( withVulkanInstance
     , pickPhysicalDevice
     , isDeviceSuitable
+    , SwapChainSupportDetails (..), querySwapChainSupport
+    , checkDeviceExtensionSupport
     ) where
 
 import           Control.Exception
@@ -13,7 +16,11 @@ import           Foreign.C.String
 import           Foreign.Marshal.Alloc
 import           Foreign.Marshal.Array
 import           Foreign.Storable
+import           Foreign.Ptr
 import           Graphics.Vulkan
+import           Graphics.Vulkan.Ext.VK_KHR_surface
+import           Graphics.Vulkan.Ext.VK_KHR_swapchain
+import Data.List ((\\))
 
 import           Lib.Utils
 
@@ -93,27 +100,91 @@ withVulkanInstance
     Left (SomeException err) -> throwIO err
 
 
-pickPhysicalDevice :: VkInstance -> IO VkPhysicalDevice
-pickPhysicalDevice vkInstance = do
-    devs <- alloca $ \deviceCountPtr -> do
-      throwingVK "pickPhysicalDevice: Failed to enumerate physical devices."
-        $ vkEnumeratePhysicalDevices vkInstance deviceCountPtr VK_NULL_HANDLE
-      devCount <- fromIntegral <$> peek deviceCountPtr
-      when (devCount <= 0) $ throwVKMsg "Zero device count!"
-      putStrLn $ "Found " ++ show devCount ++ " devices."
-
-      allocaArray devCount $ \devicesPtr -> do
+pickPhysicalDevice :: VkInstance
+                   -> Maybe VkSurfaceKHR
+                   -> IO (Maybe SwapChainSupportDetails, VkPhysicalDevice)
+pickPhysicalDevice vkInstance mVkSurf = do
+    devs <- asListVK
+      $ \x ->
         throwingVK "pickPhysicalDevice: Failed to enumerate physical devices."
-          $ vkEnumeratePhysicalDevices vkInstance deviceCountPtr devicesPtr
-        peekArray devCount devicesPtr
+      . vkEnumeratePhysicalDevices vkInstance x
+
+    when (null devs) $ throwVKMsg "Zero device count!"
+    putStrLn $ "Found " ++ show (length devs) ++ " devices."
 
     selectFirstSuitable devs
   where
     selectFirstSuitable [] = throwVKMsg "No suitable devices!"
-    selectFirstSuitable (x:xs) = isDeviceSuitable x >>= \yes ->
-      if yes then pure x
-             else selectFirstSuitable xs
+    selectFirstSuitable (x:xs) = do
+      (mscsd, indeed) <- isDeviceSuitable mVkSurf x
+      if indeed then pure (mscsd, x)
+                else selectFirstSuitable xs
+
+data SwapChainSupportDetails
+  = SwapChainSupportDetails
+  { capabilities :: VkSurfaceCapabilitiesKHR
+  , formats      :: [VkSurfaceFormatKHR]
+  , presentModes :: [VkPresentModeKHR]
+  } deriving (Eq, Show)
 
 
-isDeviceSuitable :: VkPhysicalDevice -> IO Bool
-isDeviceSuitable _ = pure True
+querySwapChainSupport :: VkPhysicalDevice
+                      -> VkSurfaceKHR
+                      -> IO SwapChainSupportDetails
+querySwapChainSupport pdev surf = do
+
+  capabilities <- newVkData
+    $ throwingVK "vkGetPhysicalDeviceSurfaceCapabilitiesKHR error"
+    . vkGetPhysicalDeviceSurfaceCapabilitiesKHR pdev surf
+
+  formats <- asListVK
+    $ \x ->
+      throwingVK "vkGetPhysicalDeviceSurfaceFormatsKHR error"
+    . vkGetPhysicalDeviceSurfaceFormatsKHR pdev surf x
+
+  presentModes <- asListVK
+    $ \x ->
+      throwingVK "vkGetPhysicalDeviceSurfacePresentModesKHR error"
+    . vkGetPhysicalDeviceSurfacePresentModesKHR pdev surf x
+
+  return SwapChainSupportDetails {..}
+
+
+checkDeviceExtensionSupport :: VkPhysicalDevice
+                            -> [CString]
+                            -> IO Bool
+checkDeviceExtensionSupport pdev extensions = do
+  reqExts <- mapM peekCString extensions
+  availExtsC <- asListVK
+    $ \x ->
+      throwingVK "vkEnumerateDeviceExtensionProperties error"
+    . vkEnumerateDeviceExtensionProperties pdev VK_NULL_HANDLE x
+  availExts <- mapM ( peekCString
+                    . castPtr
+                    . ( `plusPtr`
+                          fieldOffset @"extensionName" @VkExtensionProperties
+                      )
+                    . unsafePtr) availExtsC
+  return . null $ reqExts \\ availExts
+
+
+
+isDeviceSuitable :: Maybe VkSurfaceKHR
+                 -> VkPhysicalDevice
+                 -> IO (Maybe SwapChainSupportDetails, Bool)
+isDeviceSuitable mVkSurf pdev = do
+  extsGood <- checkDeviceExtensionSupport pdev
+    [VK_KHR_SWAPCHAIN_EXTENSION_NAME]
+
+  (mscsd, surfGood) <- case mVkSurf of
+    Nothing -> pure (Nothing, True)
+    Just vkSurf
+      | not extsGood -> pure (Nothing, False)
+      | otherwise -> do
+      scsd@SwapChainSupportDetails {..} <- querySwapChainSupport pdev vkSurf
+      return  ( Just scsd
+              ,    not (null formats)
+                 && not (null presentModes)
+              )
+
+  pure (mscsd, extsGood && surfGood)

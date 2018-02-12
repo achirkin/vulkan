@@ -21,8 +21,9 @@ module Graphics.Vulkan.Ext.VK_NV_extension_151
         VK_NV_EXTENSION_151_EXTENSION_NAME,
         pattern VK_NV_EXTENSION_151_EXTENSION_NAME)
        where
-import           Foreign.C.String (CString)
-import           GHC.Ptr          (Ptr (..))
+import           Foreign.C.String        (CString)
+import           GHC.Ptr                 (Ptr (..))
+import           Graphics.Vulkan.Marshal
 
 pattern VK_NV_EXTENSION_151_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -37,16 +38,16 @@ pattern VK_NV_EXTENSION_151_EXTENSION_NAME <-
   where VK_NV_EXTENSION_151_EXTENSION_NAME
           = _VK_NV_EXTENSION_151_EXTENSION_NAME
 
-_VK_NV_EXTENSION_151_EXTENSION_NAME :: CString
-
 {-# INLINE _VK_NV_EXTENSION_151_EXTENSION_NAME #-}
+
+_VK_NV_EXTENSION_151_EXTENSION_NAME :: CString
 _VK_NV_EXTENSION_151_EXTENSION_NAME
   = Ptr "VK_NV_extension_151\NUL"##
 
-is_VK_NV_EXTENSION_151_EXTENSION_NAME :: CString -> Bool
-
 {-# INLINE is_VK_NV_EXTENSION_151_EXTENSION_NAME #-}
+
+is_VK_NV_EXTENSION_151_EXTENSION_NAME :: CString -> Bool
 is_VK_NV_EXTENSION_151_EXTENSION_NAME
-  = (_VK_NV_EXTENSION_151_EXTENSION_NAME ==)
+  = eqCStrings _VK_NV_EXTENSION_151_EXTENSION_NAME
 
 type VK_NV_EXTENSION_151_EXTENSION_NAME = "VK_NV_extension_151"

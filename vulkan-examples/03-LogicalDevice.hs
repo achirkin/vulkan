@@ -20,12 +20,12 @@ import           Graphics.Vulkan
 
 import           Lib.GLFW
 import           Lib.Utils
-import           Lib.Vulkan
+import           Lib.Vulkan (pickPhysicalDevice)
 
 main :: IO ()
 main = withGLFWWindow 800 600 "03-LogicalDev-Window" $ \window ->
        withGLFWVulkanInstance "03-LogicalDevice" $ \vulkanInstance -> do
-        pdev <- pickPhysicalDevice vulkanInstance
+        (_, pdev) <- pickPhysicalDevice vulkanInstance Nothing
         withGraphicsDevice pdev $ \dev queue -> do
           putStrLn $ "Selected physical device: " ++ show pdev
           putStrLn $ "Createad device: " ++ show dev

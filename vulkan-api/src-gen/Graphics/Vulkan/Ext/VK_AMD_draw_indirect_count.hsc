@@ -25,9 +25,10 @@ module Graphics.Vulkan.Ext.VK_AMD_draw_indirect_count
         VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME,
         pattern VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME)
        where
-import           Foreign.C.String       (CString)
-import           GHC.Ptr                (Ptr (..))
+import           Foreign.C.String        (CString)
+import           GHC.Ptr                 (Ptr (..))
 import           Graphics.Vulkan.Common
+import           Graphics.Vulkan.Marshal
 
 -- | queues: @graphics@
 --
@@ -105,17 +106,17 @@ pattern VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME <-
   where VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME
           = _VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME
 
-_VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME :: CString
-
 {-# INLINE _VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME #-}
+
+_VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME :: CString
 _VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME
   = Ptr "VK_AMD_draw_indirect_count\NUL"##
 
-is_VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME :: CString -> Bool
-
 {-# INLINE is_VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME #-}
+
+is_VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME :: CString -> Bool
 is_VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME
-  = (_VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME ==)
+  = eqCStrings _VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME
 
 type VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME =
      "VK_AMD_draw_indirect_count"

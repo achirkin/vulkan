@@ -23,8 +23,9 @@ module Graphics.Vulkan.Ext.VK_EXT_shader_stencil_export
         VK_EXT_SHADER_STENCIL_EXPORT_EXTENSION_NAME,
         pattern VK_EXT_SHADER_STENCIL_EXPORT_EXTENSION_NAME)
        where
-import           Foreign.C.String (CString)
-import           GHC.Ptr          (Ptr (..))
+import           Foreign.C.String        (CString)
+import           GHC.Ptr                 (Ptr (..))
+import           Graphics.Vulkan.Marshal
 
 pattern VK_EXT_SHADER_STENCIL_EXPORT_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -40,17 +41,17 @@ pattern VK_EXT_SHADER_STENCIL_EXPORT_EXTENSION_NAME <-
   where VK_EXT_SHADER_STENCIL_EXPORT_EXTENSION_NAME
           = _VK_EXT_SHADER_STENCIL_EXPORT_EXTENSION_NAME
 
-_VK_EXT_SHADER_STENCIL_EXPORT_EXTENSION_NAME :: CString
-
 {-# INLINE _VK_EXT_SHADER_STENCIL_EXPORT_EXTENSION_NAME #-}
+
+_VK_EXT_SHADER_STENCIL_EXPORT_EXTENSION_NAME :: CString
 _VK_EXT_SHADER_STENCIL_EXPORT_EXTENSION_NAME
   = Ptr "VK_EXT_shader_stencil_export\NUL"##
 
-is_VK_EXT_SHADER_STENCIL_EXPORT_EXTENSION_NAME :: CString -> Bool
-
 {-# INLINE is_VK_EXT_SHADER_STENCIL_EXPORT_EXTENSION_NAME #-}
+
+is_VK_EXT_SHADER_STENCIL_EXPORT_EXTENSION_NAME :: CString -> Bool
 is_VK_EXT_SHADER_STENCIL_EXPORT_EXTENSION_NAME
-  = (_VK_EXT_SHADER_STENCIL_EXPORT_EXTENSION_NAME ==)
+  = eqCStrings _VK_EXT_SHADER_STENCIL_EXPORT_EXTENSION_NAME
 
 type VK_EXT_SHADER_STENCIL_EXPORT_EXTENSION_NAME =
      "VK_EXT_shader_stencil_export"

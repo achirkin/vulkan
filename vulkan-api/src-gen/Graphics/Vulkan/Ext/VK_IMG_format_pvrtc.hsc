@@ -31,9 +31,10 @@ module Graphics.Vulkan.Ext.VK_IMG_format_pvrtc
         pattern VK_FORMAT_PVRTC2_2BPP_SRGB_BLOCK_IMG,
         pattern VK_FORMAT_PVRTC2_4BPP_SRGB_BLOCK_IMG)
        where
-import           Foreign.C.String       (CString)
-import           GHC.Ptr                (Ptr (..))
-import           Graphics.Vulkan.Common (VkFormat (..))
+import           Foreign.C.String        (CString)
+import           GHC.Ptr                 (Ptr (..))
+import           Graphics.Vulkan.Common  (VkFormat (..))
+import           Graphics.Vulkan.Marshal
 
 pattern VK_IMG_FORMAT_PVRTC_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -48,17 +49,17 @@ pattern VK_IMG_FORMAT_PVRTC_EXTENSION_NAME <-
   where VK_IMG_FORMAT_PVRTC_EXTENSION_NAME
           = _VK_IMG_FORMAT_PVRTC_EXTENSION_NAME
 
-_VK_IMG_FORMAT_PVRTC_EXTENSION_NAME :: CString
-
 {-# INLINE _VK_IMG_FORMAT_PVRTC_EXTENSION_NAME #-}
+
+_VK_IMG_FORMAT_PVRTC_EXTENSION_NAME :: CString
 _VK_IMG_FORMAT_PVRTC_EXTENSION_NAME
   = Ptr "VK_IMG_format_pvrtc\NUL"##
 
-is_VK_IMG_FORMAT_PVRTC_EXTENSION_NAME :: CString -> Bool
-
 {-# INLINE is_VK_IMG_FORMAT_PVRTC_EXTENSION_NAME #-}
+
+is_VK_IMG_FORMAT_PVRTC_EXTENSION_NAME :: CString -> Bool
 is_VK_IMG_FORMAT_PVRTC_EXTENSION_NAME
-  = (_VK_IMG_FORMAT_PVRTC_EXTENSION_NAME ==)
+  = eqCStrings _VK_IMG_FORMAT_PVRTC_EXTENSION_NAME
 
 type VK_IMG_FORMAT_PVRTC_EXTENSION_NAME = "VK_IMG_format_pvrtc"
 

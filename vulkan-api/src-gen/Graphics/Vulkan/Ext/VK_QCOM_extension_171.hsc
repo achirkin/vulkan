@@ -21,8 +21,9 @@ module Graphics.Vulkan.Ext.VK_QCOM_extension_171
         VK_QCOM_extension_171_EXTENSION_NAME,
         pattern VK_QCOM_extension_171_EXTENSION_NAME)
        where
-import           Foreign.C.String (CString)
-import           GHC.Ptr          (Ptr (..))
+import           Foreign.C.String        (CString)
+import           GHC.Ptr                 (Ptr (..))
+import           Graphics.Vulkan.Marshal
 
 pattern VK_QCOM_extension_171_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -37,16 +38,16 @@ pattern VK_QCOM_extension_171_EXTENSION_NAME <-
   where VK_QCOM_extension_171_EXTENSION_NAME
           = _VK_QCOM_extension_171_EXTENSION_NAME
 
-_VK_QCOM_extension_171_EXTENSION_NAME :: CString
-
 {-# INLINE _VK_QCOM_extension_171_EXTENSION_NAME #-}
+
+_VK_QCOM_extension_171_EXTENSION_NAME :: CString
 _VK_QCOM_extension_171_EXTENSION_NAME
   = Ptr "VK_QCOM_extension_171\NUL"##
 
-is_VK_QCOM_extension_171_EXTENSION_NAME :: CString -> Bool
-
 {-# INLINE is_VK_QCOM_extension_171_EXTENSION_NAME #-}
+
+is_VK_QCOM_extension_171_EXTENSION_NAME :: CString -> Bool
 is_VK_QCOM_extension_171_EXTENSION_NAME
-  = (_VK_QCOM_extension_171_EXTENSION_NAME ==)
+  = eqCStrings _VK_QCOM_extension_171_EXTENSION_NAME
 
 type VK_QCOM_extension_171_EXTENSION_NAME = "VK_QCOM_extension_171"

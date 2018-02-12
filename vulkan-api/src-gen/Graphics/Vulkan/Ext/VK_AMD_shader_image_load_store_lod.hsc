@@ -23,8 +23,9 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_image_load_store_lod
         VK_AMD_SHADER_IMAGE_LOAD_STORE_LOD_EXTENSION_NAME,
         pattern VK_AMD_SHADER_IMAGE_LOAD_STORE_LOD_EXTENSION_NAME)
        where
-import           Foreign.C.String (CString)
-import           GHC.Ptr          (Ptr (..))
+import           Foreign.C.String        (CString)
+import           GHC.Ptr                 (Ptr (..))
+import           Graphics.Vulkan.Marshal
 
 pattern VK_AMD_SHADER_IMAGE_LOAD_STORE_LOD_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -41,18 +42,18 @@ pattern VK_AMD_SHADER_IMAGE_LOAD_STORE_LOD_EXTENSION_NAME <-
   where VK_AMD_SHADER_IMAGE_LOAD_STORE_LOD_EXTENSION_NAME
           = _VK_AMD_SHADER_IMAGE_LOAD_STORE_LOD_EXTENSION_NAME
 
-_VK_AMD_SHADER_IMAGE_LOAD_STORE_LOD_EXTENSION_NAME :: CString
-
 {-# INLINE _VK_AMD_SHADER_IMAGE_LOAD_STORE_LOD_EXTENSION_NAME #-}
+
+_VK_AMD_SHADER_IMAGE_LOAD_STORE_LOD_EXTENSION_NAME :: CString
 _VK_AMD_SHADER_IMAGE_LOAD_STORE_LOD_EXTENSION_NAME
   = Ptr "VK_AMD_shader_image_load_store_lod\NUL"##
 
+{-# INLINE is_VK_AMD_SHADER_IMAGE_LOAD_STORE_LOD_EXTENSION_NAME #-}
+
 is_VK_AMD_SHADER_IMAGE_LOAD_STORE_LOD_EXTENSION_NAME ::
                                                      CString -> Bool
-
-{-# INLINE is_VK_AMD_SHADER_IMAGE_LOAD_STORE_LOD_EXTENSION_NAME #-}
 is_VK_AMD_SHADER_IMAGE_LOAD_STORE_LOD_EXTENSION_NAME
-  = (_VK_AMD_SHADER_IMAGE_LOAD_STORE_LOD_EXTENSION_NAME ==)
+  = eqCStrings _VK_AMD_SHADER_IMAGE_LOAD_STORE_LOD_EXTENSION_NAME
 
 type VK_AMD_SHADER_IMAGE_LOAD_STORE_LOD_EXTENSION_NAME =
      "VK_AMD_shader_image_load_store_lod"

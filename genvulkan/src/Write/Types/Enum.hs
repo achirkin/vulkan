@@ -237,6 +237,7 @@ enumPattern VkEnum {..} = writePragma "PatternSynonyms" >>
         -> do
           writePragma "MagicHash"
           writePragma "ViewPatterns"
+          writeFullImport "Graphics.Vulkan.Marshal"
           writeImport $ DIThing "CString" DITNo
           writeImport $ DIThing "Ptr" DITAll
           mapM_ writeDecl
@@ -247,13 +248,13 @@ enumPattern VkEnum {..} = writePragma "PatternSynonyms" >>
                   where
                     $patnametxt = $_patnametxt
 
-                $_patnametxt :: CString
                 {-# INLINE $_patnametxt #-}
+                $_patnametxt :: CString
                 $_patnametxt = $patval
 
-                $is_patnametxt :: CString -> Bool
                 {-# INLINE $is_patnametxt #-}
-                $is_patnametxt = ( $_patnametxt == )
+                $is_patnametxt :: CString -> Bool
+                $is_patnametxt = eqCStrings $_patnametxt
 
                 type $patnametxt = $tyval
               |]

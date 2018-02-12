@@ -29,9 +29,10 @@ module Graphics.Vulkan.Ext.VK_EXT_external_memory_dma_buf
         pattern VK_EXT_EXTERNAL_MEMORY_DMA_BUF_EXTENSION_NAME,
         pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF_BIT_EXT)
        where
-import           Foreign.C.String       (CString)
-import           GHC.Ptr                (Ptr (..))
-import           Graphics.Vulkan.Common (VkExternalMemoryHandleTypeFlagBitsKHR (..))
+import           Foreign.C.String        (CString)
+import           GHC.Ptr                 (Ptr (..))
+import           Graphics.Vulkan.Common  (VkExternalMemoryHandleTypeFlagBitsKHR (..))
+import           Graphics.Vulkan.Marshal
 
 pattern VK_EXT_EXTERNAL_MEMORY_DMA_BUF_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -47,17 +48,17 @@ pattern VK_EXT_EXTERNAL_MEMORY_DMA_BUF_EXTENSION_NAME <-
   where VK_EXT_EXTERNAL_MEMORY_DMA_BUF_EXTENSION_NAME
           = _VK_EXT_EXTERNAL_MEMORY_DMA_BUF_EXTENSION_NAME
 
-_VK_EXT_EXTERNAL_MEMORY_DMA_BUF_EXTENSION_NAME :: CString
-
 {-# INLINE _VK_EXT_EXTERNAL_MEMORY_DMA_BUF_EXTENSION_NAME #-}
+
+_VK_EXT_EXTERNAL_MEMORY_DMA_BUF_EXTENSION_NAME :: CString
 _VK_EXT_EXTERNAL_MEMORY_DMA_BUF_EXTENSION_NAME
   = Ptr "VK_EXT_external_memory_dma_buf\NUL"##
 
-is_VK_EXT_EXTERNAL_MEMORY_DMA_BUF_EXTENSION_NAME :: CString -> Bool
-
 {-# INLINE is_VK_EXT_EXTERNAL_MEMORY_DMA_BUF_EXTENSION_NAME #-}
+
+is_VK_EXT_EXTERNAL_MEMORY_DMA_BUF_EXTENSION_NAME :: CString -> Bool
 is_VK_EXT_EXTERNAL_MEMORY_DMA_BUF_EXTENSION_NAME
-  = (_VK_EXT_EXTERNAL_MEMORY_DMA_BUF_EXTENSION_NAME ==)
+  = eqCStrings _VK_EXT_EXTERNAL_MEMORY_DMA_BUF_EXTENSION_NAME
 
 type VK_EXT_EXTERNAL_MEMORY_DMA_BUF_EXTENSION_NAME =
      "VK_EXT_external_memory_dma_buf"
