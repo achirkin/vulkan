@@ -23,8 +23,9 @@ module Graphics.Vulkan.Ext.VK_EXT_depth_range_unrestricted
         VK_EXT_DEPTH_RANGE_UNRESTRICTED_EXTENSION_NAME,
         pattern VK_EXT_DEPTH_RANGE_UNRESTRICTED_EXTENSION_NAME)
        where
-import           Foreign.C.String (CString)
-import           GHC.Ptr          (Ptr (..))
+import           Foreign.C.String        (CString)
+import           GHC.Ptr                 (Ptr (..))
+import           Graphics.Vulkan.Marshal
 
 pattern VK_EXT_DEPTH_RANGE_UNRESTRICTED_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -40,18 +41,18 @@ pattern VK_EXT_DEPTH_RANGE_UNRESTRICTED_EXTENSION_NAME <-
   where VK_EXT_DEPTH_RANGE_UNRESTRICTED_EXTENSION_NAME
           = _VK_EXT_DEPTH_RANGE_UNRESTRICTED_EXTENSION_NAME
 
-_VK_EXT_DEPTH_RANGE_UNRESTRICTED_EXTENSION_NAME :: CString
-
 {-# INLINE _VK_EXT_DEPTH_RANGE_UNRESTRICTED_EXTENSION_NAME #-}
+
+_VK_EXT_DEPTH_RANGE_UNRESTRICTED_EXTENSION_NAME :: CString
 _VK_EXT_DEPTH_RANGE_UNRESTRICTED_EXTENSION_NAME
   = Ptr "VK_EXT_depth_range_unrestricted\NUL"##
 
+{-# INLINE is_VK_EXT_DEPTH_RANGE_UNRESTRICTED_EXTENSION_NAME #-}
+
 is_VK_EXT_DEPTH_RANGE_UNRESTRICTED_EXTENSION_NAME ::
                                                   CString -> Bool
-
-{-# INLINE is_VK_EXT_DEPTH_RANGE_UNRESTRICTED_EXTENSION_NAME #-}
 is_VK_EXT_DEPTH_RANGE_UNRESTRICTED_EXTENSION_NAME
-  = (_VK_EXT_DEPTH_RANGE_UNRESTRICTED_EXTENSION_NAME ==)
+  = eqCStrings _VK_EXT_DEPTH_RANGE_UNRESTRICTED_EXTENSION_NAME
 
 type VK_EXT_DEPTH_RANGE_UNRESTRICTED_EXTENSION_NAME =
      "VK_EXT_depth_range_unrestricted"

@@ -29,10 +29,11 @@ module Graphics.Vulkan.Ext.VK_EXT_queue_family_foreign
         pattern VK_EXT_QUEUE_FAMILY_FOREIGN_EXTENSION_NAME,
         pattern VK_QUEUE_FAMILY_FOREIGN_EXT, VK_QUEUE_FAMILY_FOREIGN_EXT)
        where
-import           Foreign.C.String       (CString)
-import           GHC.Ptr                (Ptr (..))
-import           Graphics.Vulkan.Common (VK_QUEUE_FAMILY_FOREIGN_EXT,
-                                         pattern VK_QUEUE_FAMILY_FOREIGN_EXT)
+import           Foreign.C.String        (CString)
+import           GHC.Ptr                 (Ptr (..))
+import           Graphics.Vulkan.Common  (VK_QUEUE_FAMILY_FOREIGN_EXT,
+                                          pattern VK_QUEUE_FAMILY_FOREIGN_EXT)
+import           Graphics.Vulkan.Marshal
 
 pattern VK_EXT_QUEUE_FAMILY_FOREIGN_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -48,17 +49,17 @@ pattern VK_EXT_QUEUE_FAMILY_FOREIGN_EXTENSION_NAME <-
   where VK_EXT_QUEUE_FAMILY_FOREIGN_EXTENSION_NAME
           = _VK_EXT_QUEUE_FAMILY_FOREIGN_EXTENSION_NAME
 
-_VK_EXT_QUEUE_FAMILY_FOREIGN_EXTENSION_NAME :: CString
-
 {-# INLINE _VK_EXT_QUEUE_FAMILY_FOREIGN_EXTENSION_NAME #-}
+
+_VK_EXT_QUEUE_FAMILY_FOREIGN_EXTENSION_NAME :: CString
 _VK_EXT_QUEUE_FAMILY_FOREIGN_EXTENSION_NAME
   = Ptr "VK_EXT_queue_family_foreign\NUL"##
 
-is_VK_EXT_QUEUE_FAMILY_FOREIGN_EXTENSION_NAME :: CString -> Bool
-
 {-# INLINE is_VK_EXT_QUEUE_FAMILY_FOREIGN_EXTENSION_NAME #-}
+
+is_VK_EXT_QUEUE_FAMILY_FOREIGN_EXTENSION_NAME :: CString -> Bool
 is_VK_EXT_QUEUE_FAMILY_FOREIGN_EXTENSION_NAME
-  = (_VK_EXT_QUEUE_FAMILY_FOREIGN_EXTENSION_NAME ==)
+  = eqCStrings _VK_EXT_QUEUE_FAMILY_FOREIGN_EXTENSION_NAME
 
 type VK_EXT_QUEUE_FAMILY_FOREIGN_EXTENSION_NAME =
      "VK_EXT_queue_family_foreign"

@@ -11,7 +11,9 @@
 {-# LANGUAGE MultiParamTypeClasses      #-}
 {-# LANGUAGE PatternSynonyms            #-}
 {-# LANGUAGE RoleAnnotations            #-}
+{-# LANGUAGE ScopedTypeVariables        #-}
 {-# LANGUAGE Strict                     #-}
+{-# LANGUAGE TypeApplications           #-}
 {-# LANGUAGE TypeFamilies               #-}
 {-# LANGUAGE TypeOperators              #-}
 {-# LANGUAGE UndecidableInstances       #-}
@@ -34,6 +36,10 @@ module Graphics.Vulkan.Marshal
   , Int8, Int16, Int32, Int64
   , Word8, Word16, Word32, Word64
   , Ptr, FunPtr, Void, CString
+    -- * Utilities for string types
+  , withCStringField, unsafeCStringField
+  , getStringField, readStringField, writeStringField
+  , eqCStrings, eqCStringsN
   ) where
 
 import           Data.Data             (Data)
@@ -41,14 +47,17 @@ import           Data.Int              (Int16, Int32, Int64, Int8)
 import           Data.Kind             (Constraint)
 import           Data.Void             (Void)
 import           Data.Word             (Word16, Word32, Word64, Word8)
-import           Foreign.C.String      (CString)
+import           Foreign.C.String      (CString, peekCString)
+import           Foreign.C.Types       (CChar, CInt (..), CSize (..))
 import           Foreign.ForeignPtr    (ForeignPtr, addForeignPtrFinalizer,
                                         mallocForeignPtr, withForeignPtr)
+import           Foreign.Marshal.Array (pokeArray0)
 import           Foreign.Marshal.Utils (fillBytes)
-import           Foreign.Ptr           (FunPtr, Ptr, nullPtr)
-import           Foreign.Storable      (Storable(sizeOf))
+import           Foreign.Ptr           (FunPtr, Ptr, castPtr, nullPtr, plusPtr)
+import           Foreign.Storable      (Storable (sizeOf))
 import           GHC.Generics          (Generic)
 import           GHC.TypeLits
+import           System.IO.Unsafe      (unsafeDupablePerformIO)
 
 -- | All Vulkan structures are stored as-is in byte arrays to avoid any overheads
 --   for wrapping and unwrapping haskell values.
@@ -222,3 +231,89 @@ type family IndexInBounds' (s :: Symbol)
      ':$$: 'Text "Note: the array size is "
         ':<>: 'ShowType (FieldArrayLength s a) ':<>: 'Text "."
     )
+
+-- | Perform an action on a C string field.
+--   The string pointers should not be used outside the callback.
+--   It will point to a correct location only as long as the struct is alive.
+withCStringField :: forall fname a b
+                 . ( CanReadFieldArray fname 0 a
+                   , FieldType fname a ~ CChar
+                   , VulkanMarshal a
+                   )
+                 => a -> (CString -> IO b) -> IO b
+withCStringField x f = do
+  r <- f (unsafeCStringField @fname @a x)
+  touchVkData x
+  pure r
+
+-- | Get pointer to a memory location of the C string field in a structure.
+unsafeCStringField :: forall fname a
+                   . ( CanReadFieldArray fname 0 a
+                     , FieldType fname a ~ CChar
+                     , VulkanMarshal a
+                     )
+                   => a -> CString
+unsafeCStringField x = castPtr $ unsafePtr x `plusPtr` fieldOffset @fname @a
+
+
+getStringField :: forall fname a
+                . ( CanReadFieldArray fname 0 a
+                  , FieldType fname a ~ CChar
+                  , VulkanMarshal a
+                  )
+               => a -> String
+getStringField x
+    = case takeForce (fieldArrayLength @fname @0 @a)
+         . unsafeDupablePerformIO
+         $ withCStringField @fname @a x peekCString of
+        ((), s) -> s
+
+readStringField :: forall fname a
+                . ( CanReadFieldArray fname 0 a
+                  , FieldType fname a ~ CChar
+                  , VulkanMarshal a
+                  )
+               => Ptr a -> IO String
+readStringField px = do
+  ((), s) <- takeForce (fieldArrayLength @fname @0 @a)
+         <$> peekCString (castPtr $ px `plusPtr` fieldOffset @fname @a)
+  return s
+
+writeStringField :: forall fname a
+                  . ( CanWriteFieldArray fname 0 a
+                    , FieldType fname a ~ CChar
+                    , VulkanMarshal a
+                    )
+               => Ptr a -> String -> IO ()
+writeStringField px =
+  pokeArray0 '\0' (castPtr $ px `plusPtr` fieldOffset @fname @a)
+
+takeForce :: Int -> String -> ((), String)
+takeForce 0 _      = ((), [])
+takeForce _ []     = ((), [])
+takeForce n (x:xs) = seq x $ (x:) <$> takeForce (n-1) xs
+
+
+-- | Check first if two CString point to the same memory location.
+--   Otherwise, compare them using C @strcmp@ function.
+eqCStrings :: CString -> CString -> Bool
+eqCStrings a b
+  | a == b = True
+  | c_strcmp a b == 0 = True
+  | otherwise = False
+
+-- | Check first if two CString point to the same memory location.
+--   Otherwise, compare them using C @strncmp@ function.
+--   It may be useful to provide maximum number of characters to compare.
+eqCStringsN :: CString -> CString -> Int -> Bool
+eqCStringsN a b n
+  | a == b = True
+  | c_strncmp a b (fromIntegral n) == 0 = True
+  | otherwise = False
+
+
+foreign import ccall unsafe "strncmp"
+  c_strncmp :: CString -> CString -> CSize -> CInt
+
+foreign import ccall unsafe "strcmp"
+  c_strcmp :: CString -> CString -> CInt

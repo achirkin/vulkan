@@ -24,9 +24,10 @@ module Graphics.Vulkan.Ext.VK_KHR_sampler_mirror_clamp_to_edge
         pattern VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_EXTENSION_NAME,
         pattern VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE)
        where
-import           Foreign.C.String       (CString)
-import           GHC.Ptr                (Ptr (..))
-import           Graphics.Vulkan.Common (VkSamplerAddressMode (..))
+import           Foreign.C.String        (CString)
+import           GHC.Ptr                 (Ptr (..))
+import           Graphics.Vulkan.Common  (VkSamplerAddressMode (..))
+import           Graphics.Vulkan.Marshal
 
 pattern VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -43,19 +44,19 @@ pattern VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_EXTENSION_NAME <-
   where VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_EXTENSION_NAME
           = _VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_EXTENSION_NAME
 
-_VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_EXTENSION_NAME :: CString
-
 {-# INLINE _VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_EXTENSION_NAME #-}
+
+_VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_EXTENSION_NAME :: CString
 _VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_EXTENSION_NAME
   = Ptr "VK_KHR_sampler_mirror_clamp_to_edge\NUL"##
 
-is_VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_EXTENSION_NAME ::
-                                                      CString -> Bool
-
 {-# INLINE is_VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_EXTENSION_NAME
            #-}
+
+is_VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_EXTENSION_NAME ::
+                                                      CString -> Bool
 is_VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_EXTENSION_NAME
-  = (_VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_EXTENSION_NAME ==)
+  = eqCStrings _VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_EXTENSION_NAME
 
 type VK_KHR_SAMPLER_MIRROR_CLAMP_TO_EDGE_EXTENSION_NAME =
      "VK_KHR_sampler_mirror_clamp_to_edge"

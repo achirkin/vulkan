@@ -25,10 +25,11 @@ module Graphics.Vulkan.Ext.VK_IMG_filter_cubic
         pattern VK_FILTER_CUBIC_IMG,
         pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_IMG)
        where
-import           Foreign.C.String       (CString)
-import           GHC.Ptr                (Ptr (..))
-import           Graphics.Vulkan.Common (VkFilter (..),
-                                         VkFormatFeatureFlagBits (..))
+import           Foreign.C.String        (CString)
+import           GHC.Ptr                 (Ptr (..))
+import           Graphics.Vulkan.Common  (VkFilter (..),
+                                          VkFormatFeatureFlagBits (..))
+import           Graphics.Vulkan.Marshal
 
 pattern VK_IMG_FILTER_CUBIC_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -43,17 +44,17 @@ pattern VK_IMG_FILTER_CUBIC_EXTENSION_NAME <-
   where VK_IMG_FILTER_CUBIC_EXTENSION_NAME
           = _VK_IMG_FILTER_CUBIC_EXTENSION_NAME
 
-_VK_IMG_FILTER_CUBIC_EXTENSION_NAME :: CString
-
 {-# INLINE _VK_IMG_FILTER_CUBIC_EXTENSION_NAME #-}
+
+_VK_IMG_FILTER_CUBIC_EXTENSION_NAME :: CString
 _VK_IMG_FILTER_CUBIC_EXTENSION_NAME
   = Ptr "VK_IMG_filter_cubic\NUL"##
 
-is_VK_IMG_FILTER_CUBIC_EXTENSION_NAME :: CString -> Bool
-
 {-# INLINE is_VK_IMG_FILTER_CUBIC_EXTENSION_NAME #-}
+
+is_VK_IMG_FILTER_CUBIC_EXTENSION_NAME :: CString -> Bool
 is_VK_IMG_FILTER_CUBIC_EXTENSION_NAME
-  = (_VK_IMG_FILTER_CUBIC_EXTENSION_NAME ==)
+  = eqCStrings _VK_IMG_FILTER_CUBIC_EXTENSION_NAME
 
 type VK_IMG_FILTER_CUBIC_EXTENSION_NAME = "VK_IMG_filter_cubic"
 

@@ -2,13 +2,16 @@
 module Lib.Utils
     ( VulkanException (..), handleAllErrors, throwingVK, throwVKMsg
     , withCStringList
+    , asListVK
     ) where
 
 import           Control.Exception
 import           Control.Monad         (when)
 import           Foreign.C.String
+import           Foreign.Marshal.Alloc
 import           Foreign.Marshal.Array
 import           Foreign.Ptr
+import           Foreign.Storable
 import           Graphics.Vulkan
 
 
@@ -59,3 +62,18 @@ withCStringList xs f = go xs [] 0
   where
     go [] pts n     = withArray (reverse pts) (f n)
     go (s:ss) pts n = withCString s (\p -> go ss (p:pts) (n+1))
+
+
+-- | Get size of action output and then get the result,
+--   performing data copy.
+asListVK :: Storable x
+         => (Ptr Word32 -> Ptr x -> IO ())
+         -> IO [x]
+asListVK action = alloca $ \counterPtr -> do
+  action counterPtr VK_NULL_HANDLE
+  counter <- fromIntegral <$> peek counterPtr
+  if counter <= 0
+  then pure []
+  else allocaArray counter $ \valPtr -> do
+    action counterPtr valPtr
+    peekArray counter valPtr

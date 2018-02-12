@@ -36,12 +36,13 @@ module Graphics.Vulkan.Ext.VK_KHR_swapchain
         pattern VK_ERROR_OUT_OF_DATE_KHR,
         pattern VK_OBJECT_TYPE_SWAPCHAIN_KHR)
        where
-import           Foreign.C.String       (CString)
-import           GHC.Ptr                (Ptr (..))
-import           Graphics.Vulkan.Base   (VkAllocationCallbacks (..),
-                                         VkPresentInfoKHR (..),
-                                         VkSwapchainCreateInfoKHR (..))
+import           Foreign.C.String        (CString)
+import           GHC.Ptr                 (Ptr (..))
+import           Graphics.Vulkan.Base    (VkAllocationCallbacks (..),
+                                          VkPresentInfoKHR (..),
+                                          VkSwapchainCreateInfoKHR (..))
 import           Graphics.Vulkan.Common
+import           Graphics.Vulkan.Marshal
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -154,16 +155,16 @@ pattern VK_KHR_SWAPCHAIN_EXTENSION_NAME <-
   where VK_KHR_SWAPCHAIN_EXTENSION_NAME
           = _VK_KHR_SWAPCHAIN_EXTENSION_NAME
 
-_VK_KHR_SWAPCHAIN_EXTENSION_NAME :: CString
-
 {-# INLINE _VK_KHR_SWAPCHAIN_EXTENSION_NAME #-}
+
+_VK_KHR_SWAPCHAIN_EXTENSION_NAME :: CString
 _VK_KHR_SWAPCHAIN_EXTENSION_NAME = Ptr "VK_KHR_swapchain\NUL"##
 
-is_VK_KHR_SWAPCHAIN_EXTENSION_NAME :: CString -> Bool
-
 {-# INLINE is_VK_KHR_SWAPCHAIN_EXTENSION_NAME #-}
+
+is_VK_KHR_SWAPCHAIN_EXTENSION_NAME :: CString -> Bool
 is_VK_KHR_SWAPCHAIN_EXTENSION_NAME
-  = (_VK_KHR_SWAPCHAIN_EXTENSION_NAME ==)
+  = eqCStrings _VK_KHR_SWAPCHAIN_EXTENSION_NAME
 
 type VK_KHR_SWAPCHAIN_EXTENSION_NAME = "VK_KHR_swapchain"
 
