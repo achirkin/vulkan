@@ -1,14 +1,12 @@
-{- |
-
-In this example, I follow vulkan-tutorial.com > Graphics pipeline basics
-
--}
 {-# LANGUAGE DataKinds        #-}
 {-# LANGUAGE RecordWildCards  #-}
 {-# LANGUAGE Strict           #-}
-{-# LANGUAGE TemplateHaskell  #-}
 {-# LANGUAGE TypeApplications #-}
-module Main (main) where
+module Lib.Vulkan.Pipeline
+  ( withVkShaderStageCI
+  , withGraphicsPipeline
+  , withRenderPass
+  ) where
 
 import           Control.Exception
 import           Data.Bits
@@ -17,57 +15,18 @@ import           Foreign.Marshal.Alloc
 import           Foreign.Marshal.Array
 import           Foreign.Storable
 import           Graphics.Vulkan
-
-import           Lib.GLFW
-import           Lib.Utils
-import           Lib.Utils.TH
-import           Lib.Vulkan
-import           Lib.Vulkan.Presentation
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
 
-windowWidth, windowHeight :: Num a => a
-windowWidth = 800
-windowHeight = 600
-
-main :: IO ()
-main = withGLFWWindow windowWidth windowHeight "05-GraphicsPipeline-Window"
-          $ \window ->
-       withGLFWVulkanInstance "05-GraphicsPipeline" $ \vulkanInstance ->
-       withSurface vulkanInstance window $ \vulkanSurface -> do
-        (Just scsd, pdev)
-          <- pickPhysicalDevice vulkanInstance (Just vulkanSurface)
-        withGraphicsDevice pdev vulkanSurface $ \dev queues ->
-          withSwapChain dev scsd queues vulkanSurface $ \swInfo ->
-          withImageViews dev swInfo $ \imgViews ->
-          withVkShaderStageCI dev
-              $(compileGLSL "shaders/triangle.vert")
-              VK_SHADER_STAGE_VERTEX_BIT
-              $ \shaderVert ->
-          withVkShaderStageCI dev
-              $(compileGLSL "shaders/triangle.frag")
-              VK_SHADER_STAGE_FRAGMENT_BIT
-              $ \shaderFrag ->
-          withGraphicsPipeline dev swInfo [shaderVert, shaderFrag]
-              $ \graphicsPipeline -> do
-            putStrLn $ "Selected physical device: " ++ show pdev
-            putStrLn $ "Createad surface: " ++ show vulkanSurface
-            putStrLn $ "Createad device: " ++ show dev
-            putStrLn $ "Createad queues: " ++ show queues
-            putStrLn $ "Createad swapchain: " ++ show swInfo
-            putStrLn $ "Createad image views: " ++ show imgViews
-            putStrLn $ "Createad vertex shader module: " ++ show shaderVert
-            putStrLn $ "Createad fragment shader module: " ++ show shaderFrag
-            putStrLn $ "Createad pipeline: " ++ show graphicsPipeline
-            glfwMainLoop window (return ())
-
+import           Lib.Utils
+import           Lib.Vulkan.Presentation
 
 
 
 withVkShaderStageCI :: VkDevice
-                   -> (Word64, Ptr Word32)
-                   -> VkShaderStageFlagBits
-                   -> (VkPipelineShaderStageCreateInfo -> IO a)
-                   -> IO a
+                    -> (Word64, Ptr Word32)
+                    -> VkShaderStageFlagBits
+                    -> (VkPipelineShaderStageCreateInfo -> IO a)
+                    -> IO a
 withVkShaderStageCI dev (codeSize, codePtr) stageBit action =
   withCString "main" $ \entryNamePtr -> do
 
@@ -101,9 +60,11 @@ withVkShaderStageCI dev (codeSize, codePtr) stageBit action =
 withGraphicsPipeline :: VkDevice
                      -> SwapChainImgInfo
                      -> [VkPipelineShaderStageCreateInfo]
+                     -> VkRenderPass
                      -> (VkPipeline -> IO ())
                      -> IO ()
-withGraphicsPipeline dev scii@SwapChainImgInfo{..} shaderDescs action = do
+withGraphicsPipeline
+    dev SwapChainImgInfo{..} shaderDescs renderPass action = do
 
   -- vertex input
   vertexInputInfo <- newVkData @VkPipelineVertexInputStateCreateInfo
@@ -245,7 +206,6 @@ withGraphicsPipeline dev scii@SwapChainImgInfo{..} shaderDescs action = do
 
   -- finally, create pipeline!
   withPipelineLayout dev $ \pipelineLayout ->
-    withRenderPass dev scii $ \renderPass ->
     withArrayLen shaderDescs $ \stageCount stagesPtr -> do
 
       pipelineInfo <- newVkData @VkGraphicsPipelineCreateInfo
@@ -372,6 +332,22 @@ withRenderPass dev SwapChainImgInfo{..} action = do
     writeField @"pColorAttachments" sdPtr (unsafePtr colorAttachmentRef)
 
 
+  -- subpass dependencies
+  dependency <- newVkData @VkSubpassDependency $ \depPtr -> do
+    writeField @"srcSubpass" depPtr VK_SUBPASS_EXTERNAL
+    writeField @"dstSubpass" depPtr 0
+    writeField @"srcStageMask"
+      depPtr VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT
+    writeField @"srcAccessMask"
+      depPtr 0
+    writeField @"dstStageMask"
+      depPtr VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT
+    writeField @"dstAccessMask"
+      depPtr $  VK_ACCESS_COLOR_ATTACHMENT_READ_BIT
+            .|. VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT
+
+
+
   -- render pass
   renderPassInfo <- newVkData @VkRenderPassCreateInfo
                               $ \rpiPtr -> do
@@ -381,6 +357,9 @@ withRenderPass dev SwapChainImgInfo{..} action = do
     writeField @"pAttachments" rpiPtr (unsafePtr colorAttachment)
     writeField @"subpassCount" rpiPtr 1
     writeField @"pSubpasses" rpiPtr (unsafePtr subpass)
+    writeField @"dependencyCount" rpiPtr 1
+    writeField @"pDependencies"
+      rpiPtr (unsafePtr dependency)
 
   renderPass <- alloca $ \rpPtr -> do
     throwingVK "vkCreatePipelineLayout failed!"
@@ -391,6 +370,7 @@ withRenderPass dev SwapChainImgInfo{..} action = do
 
   finally (action renderPass) $ do
     vkDestroyRenderPass dev renderPass VK_NULL_HANDLE
+    touchVkData dependency
     touchVkData renderPassInfo
     touchVkData subpass
     touchVkData colorAttachment
