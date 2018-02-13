@@ -88,6 +88,8 @@ data DevQueues
   { graphicsQueue :: VkQueue
   , presentQueue  :: VkQueue
   , qFamIndices   :: Ptr Word32
+  , graphicsFamIdx :: Word32
+  , presentFamIdx  :: Word32
   } deriving (Eq, Show)
 
 
@@ -170,6 +172,8 @@ withGraphicsDevice pdev surf action
                <$> Map.lookup gFamIdx gQueues
                <*> Map.lookup pFamIdx gQueues
                <*> Just famIndsPtr
+               <*> Just gFamIdx
+               <*> Just pFamIdx
 
   finally ( maybe (throwVKMsg "Some queues lost!") pure mdevQueues
            >>= action dev
