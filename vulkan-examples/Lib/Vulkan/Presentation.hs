@@ -26,7 +26,7 @@ import           Lib.Utils
 import           Lib.Vulkan
 
 
-withSurface :: VkInstance -> GLFW.Window -> (VkSurfaceKHR -> IO ()) -> IO ()
+withSurface :: VkInstance -> GLFW.Window -> (VkSurfaceKHR -> IO a) -> IO a
 withSurface vkInstance window action = do
   surface <- alloca $ \surfPtr -> do
     throwingVK "glfwCreateWindowSurface: failed to create window surface"

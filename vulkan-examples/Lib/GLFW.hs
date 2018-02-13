@@ -19,7 +19,7 @@ import           Lib.Vulkan
 withGLFWWindow :: Int -- ^ Window width
                -> Int -- ^ Window height
                -> String -- ^ Window name
-               -> (GLFW.Window -> IO ()) -> IO ()
+               -> (GLFW.Window -> IO a) -> IO a
 withGLFWWindow w h n action = do
   GLFW.init >>= flip unless
     (throwVKMsg "Failed to initialize GLFW.")
@@ -51,7 +51,7 @@ glfwMainLoop w action = go
       unless should $ GLFW.pollEvents >> action >> go
 
 
-withGLFWVulkanInstance :: String -> (VkInstance -> IO ()) -> IO ()
+withGLFWVulkanInstance :: String -> (VkInstance -> IO a) -> IO a
 withGLFWVulkanInstance progName action = do
     -- get required extension names from GLFW
     glfwReqExts <- GLFW.getRequiredInstanceExtensions
