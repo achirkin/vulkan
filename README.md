@@ -16,7 +16,7 @@ Features of the bindings:
   * Document the generated code as much as possible with references to vulkan registry.
   * Use no dependencies except `base` and `ghc-prim`.
 
-# vulkan-api [![Build Status](https://travis-ci.org/achirkin/vulkan.png)](https://travis-ci.org/achirkin/vulkan)
+# vulkan-api
 
 Generated haskell bindings for vulkan api.
 
