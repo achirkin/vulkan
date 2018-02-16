@@ -7,7 +7,6 @@
 {-# LANGUAGE PatternSynonyms       #-}
 {-# LANGUAGE Strict                #-}
 {-# LANGUAGE TypeFamilies          #-}
-{-# LANGUAGE UnboxedTuples         #-}
 {-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_EXT_sampler_filter_minmax
        (-- * Vulkan extension: @VK_EXT_sampler_filter_minmax@
@@ -39,12 +38,8 @@ module Graphics.Vulkan.Ext.VK_EXT_sampler_filter_minmax
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common           (VkBool32,
                                                    VkFormatFeatureFlagBits (..),
                                                    VkSamplerReductionModeEXT,
@@ -62,18 +57,20 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkSamplerReductionModeCreateInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSamplerReductionModeCreateInfoEXT.html VkSamplerReductionModeCreateInfoEXT registry at www.khronos.org>
-data VkSamplerReductionModeCreateInfoEXT = VkSamplerReductionModeCreateInfoEXT## ByteArray##
+data VkSamplerReductionModeCreateInfoEXT = VkSamplerReductionModeCreateInfoEXT## Addr##
+                                                                                ByteArray##
 
 instance Eq VkSamplerReductionModeCreateInfoEXT where
-        (VkSamplerReductionModeCreateInfoEXT## a) ==
-          (VkSamplerReductionModeCreateInfoEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkSamplerReductionModeCreateInfoEXT## a _) ==
+          x@(VkSamplerReductionModeCreateInfoEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkSamplerReductionModeCreateInfoEXT where
-        (VkSamplerReductionModeCreateInfoEXT## a) `compare`
-          (VkSamplerReductionModeCreateInfoEXT## b) = cmpImmutableContent a b
+        (VkSamplerReductionModeCreateInfoEXT## a _) `compare`
+          x@(VkSamplerReductionModeCreateInfoEXT## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -85,75 +82,31 @@ instance Storable VkSamplerReductionModeCreateInfoEXT where
           = #{alignment VkSamplerReductionModeCreateInfoEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkSamplerReductionModeCreateInfoEXT),
-            I## a <- alignment
-                      (undefined :: VkSamplerReductionModeCreateInfoEXT)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkSamplerReductionModeCreateInfoEXT##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkSamplerReductionModeCreateInfoEXT## ba)
-          | I## n <- sizeOf (undefined :: VkSamplerReductionModeCreateInfoEXT)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkSamplerReductionModeCreateInfoEXT
+         where
+        unsafeAddr (VkSamplerReductionModeCreateInfoEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkSamplerReductionModeCreateInfoEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkSamplerReductionModeCreateInfoEXT##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSamplerReductionModeCreateInfoEXT where
         type StructFields VkSamplerReductionModeCreateInfoEXT =
              '["sType", "pNext", "reductionMode"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkSamplerReductionModeCreateInfoEXT),
-            I## a <- alignment
-                      (undefined :: VkSamplerReductionModeCreateInfoEXT)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkSamplerReductionModeCreateInfoEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkSamplerReductionModeCreateInfoEXT## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkSamplerReductionModeCreateInfoEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkSamplerReductionModeCreateInfoEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkSamplerReductionModeCreateInfoEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkSamplerReductionModeCreateInfoEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkSamplerReductionModeCreateInfoEXT where
@@ -332,19 +285,20 @@ instance Show VkSamplerReductionModeCreateInfoEXT where
 --   > } VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT.html VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT registry at www.khronos.org>
-data VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT = VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT## ByteArray##
+data VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT = VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT## Addr##
+                                                                                                          ByteArray##
 
 instance Eq VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT where
-        (VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT## a) ==
-          (VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT## a _) ==
+          x@(VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT where
-        (VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT## a) `compare`
-          (VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT## b)
-          = cmpImmutableContent a b
+        (VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT## a _) `compare`
+          x@(VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -358,29 +312,30 @@ instance Storable VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
           = #{alignment VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr)
-          (VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim
+           VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+         where
+        unsafeAddr (VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT## a _)
+          = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray
+          (VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
@@ -389,52 +344,6 @@ instance VulkanMarshal
              =
              '["sType", "pNext", "filterMinmaxSingleComponentFormats", -- ' closing tick for hsc2hs
                "filterMinmaxImageComponentMapping"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr
-          (VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData
-          x@(VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT where

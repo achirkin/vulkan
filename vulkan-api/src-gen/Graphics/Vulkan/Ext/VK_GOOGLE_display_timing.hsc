@@ -8,7 +8,6 @@
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE UnboxedTuples            #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_GOOGLE_display_timing
        (-- * Vulkan extension: @VK_GOOGLE_display_timing@
@@ -40,12 +39,8 @@ module Graphics.Vulkan.Ext.VK_GOOGLE_display_timing
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
@@ -57,17 +52,19 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkRefreshCycleDurationGOOGLE;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkRefreshCycleDurationGOOGLE.html VkRefreshCycleDurationGOOGLE registry at www.khronos.org>
-data VkRefreshCycleDurationGOOGLE = VkRefreshCycleDurationGOOGLE## ByteArray##
+data VkRefreshCycleDurationGOOGLE = VkRefreshCycleDurationGOOGLE## Addr##
+                                                                  ByteArray##
 
 instance Eq VkRefreshCycleDurationGOOGLE where
-        (VkRefreshCycleDurationGOOGLE## a) ==
-          (VkRefreshCycleDurationGOOGLE## b) = EQ == cmpImmutableContent a b
+        (VkRefreshCycleDurationGOOGLE## a _) ==
+          x@(VkRefreshCycleDurationGOOGLE## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkRefreshCycleDurationGOOGLE where
-        (VkRefreshCycleDurationGOOGLE## a) `compare`
-          (VkRefreshCycleDurationGOOGLE## b) = cmpImmutableContent a b
+        (VkRefreshCycleDurationGOOGLE## a _) `compare`
+          x@(VkRefreshCycleDurationGOOGLE## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -79,68 +76,30 @@ instance Storable VkRefreshCycleDurationGOOGLE where
           = #{alignment VkRefreshCycleDurationGOOGLE}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkRefreshCycleDurationGOOGLE),
-            I## a <- alignment (undefined :: VkRefreshCycleDurationGOOGLE) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkRefreshCycleDurationGOOGLE##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkRefreshCycleDurationGOOGLE## ba)
-          | I## n <- sizeOf (undefined :: VkRefreshCycleDurationGOOGLE) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkRefreshCycleDurationGOOGLE where
+        unsafeAddr (VkRefreshCycleDurationGOOGLE## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkRefreshCycleDurationGOOGLE## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkRefreshCycleDurationGOOGLE##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkRefreshCycleDurationGOOGLE where
         type StructFields VkRefreshCycleDurationGOOGLE =
              '["refreshDuration"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkRefreshCycleDurationGOOGLE),
-            I## a <- alignment (undefined :: VkRefreshCycleDurationGOOGLE) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkRefreshCycleDurationGOOGLE##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkRefreshCycleDurationGOOGLE## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkRefreshCycleDurationGOOGLE##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkRefreshCycleDurationGOOGLE## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkRefreshCycleDurationGOOGLE## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkRefreshCycleDurationGOOGLE## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkRefreshDuration VkRefreshCycleDurationGOOGLE where
@@ -209,17 +168,19 @@ instance Show VkRefreshCycleDurationGOOGLE where
 --   > } VkPastPresentationTimingGOOGLE;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPastPresentationTimingGOOGLE.html VkPastPresentationTimingGOOGLE registry at www.khronos.org>
-data VkPastPresentationTimingGOOGLE = VkPastPresentationTimingGOOGLE## ByteArray##
+data VkPastPresentationTimingGOOGLE = VkPastPresentationTimingGOOGLE## Addr##
+                                                                      ByteArray##
 
 instance Eq VkPastPresentationTimingGOOGLE where
-        (VkPastPresentationTimingGOOGLE## a) ==
-          (VkPastPresentationTimingGOOGLE## b) = EQ == cmpImmutableContent a b
+        (VkPastPresentationTimingGOOGLE## a _) ==
+          x@(VkPastPresentationTimingGOOGLE## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPastPresentationTimingGOOGLE where
-        (VkPastPresentationTimingGOOGLE## a) `compare`
-          (VkPastPresentationTimingGOOGLE## b) = cmpImmutableContent a b
+        (VkPastPresentationTimingGOOGLE## a _) `compare`
+          x@(VkPastPresentationTimingGOOGLE## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -231,69 +192,31 @@ instance Storable VkPastPresentationTimingGOOGLE where
           = #{alignment VkPastPresentationTimingGOOGLE}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkPastPresentationTimingGOOGLE),
-            I## a <- alignment (undefined :: VkPastPresentationTimingGOOGLE) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPastPresentationTimingGOOGLE##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkPastPresentationTimingGOOGLE## ba)
-          | I## n <- sizeOf (undefined :: VkPastPresentationTimingGOOGLE) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkPastPresentationTimingGOOGLE where
+        unsafeAddr (VkPastPresentationTimingGOOGLE## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkPastPresentationTimingGOOGLE## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPastPresentationTimingGOOGLE##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPastPresentationTimingGOOGLE where
         type StructFields VkPastPresentationTimingGOOGLE =
              '["presentID", "desiredPresentTime", "actualPresentTime", -- ' closing tick for hsc2hs
                "earliestPresentTime", "presentMargin"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkPastPresentationTimingGOOGLE),
-            I## a <- alignment (undefined :: VkPastPresentationTimingGOOGLE) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPastPresentationTimingGOOGLE##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkPastPresentationTimingGOOGLE## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkPastPresentationTimingGOOGLE##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkPastPresentationTimingGOOGLE## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkPastPresentationTimingGOOGLE## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkPastPresentationTimingGOOGLE## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkPresentID VkPastPresentationTimingGOOGLE where
@@ -589,17 +512,18 @@ instance Show VkPastPresentationTimingGOOGLE where
 --   > } VkPresentTimesInfoGOOGLE;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPresentTimesInfoGOOGLE.html VkPresentTimesInfoGOOGLE registry at www.khronos.org>
-data VkPresentTimesInfoGOOGLE = VkPresentTimesInfoGOOGLE## ByteArray##
+data VkPresentTimesInfoGOOGLE = VkPresentTimesInfoGOOGLE## Addr##
+                                                          ByteArray##
 
 instance Eq VkPresentTimesInfoGOOGLE where
-        (VkPresentTimesInfoGOOGLE## a) == (VkPresentTimesInfoGOOGLE## b)
-          = EQ == cmpImmutableContent a b
+        (VkPresentTimesInfoGOOGLE## a _) ==
+          x@(VkPresentTimesInfoGOOGLE## b _) = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPresentTimesInfoGOOGLE where
-        (VkPresentTimesInfoGOOGLE## a) `compare`
-          (VkPresentTimesInfoGOOGLE## b) = cmpImmutableContent a b
+        (VkPresentTimesInfoGOOGLE## a _) `compare`
+          x@(VkPresentTimesInfoGOOGLE## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -610,68 +534,29 @@ instance Storable VkPresentTimesInfoGOOGLE where
         alignment ~_ = #{alignment VkPresentTimesInfoGOOGLE}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkPresentTimesInfoGOOGLE),
-            I## a <- alignment (undefined :: VkPresentTimesInfoGOOGLE) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPresentTimesInfoGOOGLE##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkPresentTimesInfoGOOGLE## ba)
-          | I## n <- sizeOf (undefined :: VkPresentTimesInfoGOOGLE) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkPresentTimesInfoGOOGLE where
+        unsafeAddr (VkPresentTimesInfoGOOGLE## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkPresentTimesInfoGOOGLE## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPresentTimesInfoGOOGLE## (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPresentTimesInfoGOOGLE where
         type StructFields VkPresentTimesInfoGOOGLE =
              '["sType", "pNext", "swapchainCount", "pTimes"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkPresentTimesInfoGOOGLE),
-            I## a <- alignment (undefined :: VkPresentTimesInfoGOOGLE) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPresentTimesInfoGOOGLE##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkPresentTimesInfoGOOGLE## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkPresentTimesInfoGOOGLE##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkPresentTimesInfoGOOGLE## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkPresentTimesInfoGOOGLE## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkPresentTimesInfoGOOGLE## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkSType VkPresentTimesInfoGOOGLE
          where
@@ -880,17 +765,17 @@ instance Show VkPresentTimesInfoGOOGLE where
 --   > } VkPresentTimeGOOGLE;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPresentTimeGOOGLE.html VkPresentTimeGOOGLE registry at www.khronos.org>
-data VkPresentTimeGOOGLE = VkPresentTimeGOOGLE## ByteArray##
+data VkPresentTimeGOOGLE = VkPresentTimeGOOGLE## Addr## ByteArray##
 
 instance Eq VkPresentTimeGOOGLE where
-        (VkPresentTimeGOOGLE## a) == (VkPresentTimeGOOGLE## b)
-          = EQ == cmpImmutableContent a b
+        (VkPresentTimeGOOGLE## a _) == x@(VkPresentTimeGOOGLE## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPresentTimeGOOGLE where
-        (VkPresentTimeGOOGLE## a) `compare` (VkPresentTimeGOOGLE## b)
-          = cmpImmutableContent a b
+        (VkPresentTimeGOOGLE## a _) `compare` x@(VkPresentTimeGOOGLE## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -901,66 +786,28 @@ instance Storable VkPresentTimeGOOGLE where
         alignment ~_ = #{alignment VkPresentTimeGOOGLE}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkPresentTimeGOOGLE),
-            I## a <- alignment (undefined :: VkPresentTimeGOOGLE) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPresentTimeGOOGLE## ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkPresentTimeGOOGLE## ba)
-          | I## n <- sizeOf (undefined :: VkPresentTimeGOOGLE) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkPresentTimeGOOGLE where
+        unsafeAddr (VkPresentTimeGOOGLE## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkPresentTimeGOOGLE## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPresentTimeGOOGLE## (plusAddr## (byteArrayContents## b) off) b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPresentTimeGOOGLE where
         type StructFields VkPresentTimeGOOGLE =
              '["presentID", "desiredPresentTime"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkPresentTimeGOOGLE),
-            I## a <- alignment (undefined :: VkPresentTimeGOOGLE) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPresentTimeGOOGLE##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkPresentTimeGOOGLE## ba) = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkPresentTimeGOOGLE##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkPresentTimeGOOGLE## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkPresentTimeGOOGLE## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkPresentTimeGOOGLE## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkPresentID VkPresentTimeGOOGLE
          where

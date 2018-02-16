@@ -7,7 +7,6 @@
 {-# LANGUAGE PatternSynonyms       #-}
 {-# LANGUAGE Strict                #-}
 {-# LANGUAGE TypeFamilies          #-}
-{-# LANGUAGE UnboxedTuples         #-}
 {-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_KHX_multiview
        (-- * Vulkan extension: @VK_KHX_multiview@
@@ -41,12 +40,8 @@ module Graphics.Vulkan.Ext.VK_KHX_multiview
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common           (VkBool32,
                                                    VkDependencyFlagBits (..),
                                                    VkStructureType,
@@ -68,18 +63,20 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkRenderPassMultiviewCreateInfoKHX;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkRenderPassMultiviewCreateInfoKHX.html VkRenderPassMultiviewCreateInfoKHX registry at www.khronos.org>
-data VkRenderPassMultiviewCreateInfoKHX = VkRenderPassMultiviewCreateInfoKHX## ByteArray##
+data VkRenderPassMultiviewCreateInfoKHX = VkRenderPassMultiviewCreateInfoKHX## Addr##
+                                                                              ByteArray##
 
 instance Eq VkRenderPassMultiviewCreateInfoKHX where
-        (VkRenderPassMultiviewCreateInfoKHX## a) ==
-          (VkRenderPassMultiviewCreateInfoKHX## b)
-          = EQ == cmpImmutableContent a b
+        (VkRenderPassMultiviewCreateInfoKHX## a _) ==
+          x@(VkRenderPassMultiviewCreateInfoKHX## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkRenderPassMultiviewCreateInfoKHX where
-        (VkRenderPassMultiviewCreateInfoKHX## a) `compare`
-          (VkRenderPassMultiviewCreateInfoKHX## b) = cmpImmutableContent a b
+        (VkRenderPassMultiviewCreateInfoKHX## a _) `compare`
+          x@(VkRenderPassMultiviewCreateInfoKHX## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -91,73 +88,32 @@ instance Storable VkRenderPassMultiviewCreateInfoKHX where
           = #{alignment VkRenderPassMultiviewCreateInfoKHX}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkRenderPassMultiviewCreateInfoKHX),
-            I## a <- alignment (undefined :: VkRenderPassMultiviewCreateInfoKHX)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkRenderPassMultiviewCreateInfoKHX##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkRenderPassMultiviewCreateInfoKHX## ba)
-          | I## n <- sizeOf (undefined :: VkRenderPassMultiviewCreateInfoKHX)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkRenderPassMultiviewCreateInfoKHX where
+        unsafeAddr (VkRenderPassMultiviewCreateInfoKHX## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkRenderPassMultiviewCreateInfoKHX## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkRenderPassMultiviewCreateInfoKHX##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkRenderPassMultiviewCreateInfoKHX where
         type StructFields VkRenderPassMultiviewCreateInfoKHX =
              '["sType", "pNext", "subpassCount", "pViewMasks", -- ' closing tick for hsc2hs
                "dependencyCount", "pViewOffsets", "correlationMaskCount",
                "pCorrelationMasks"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkRenderPassMultiviewCreateInfoKHX),
-            I## a <- alignment (undefined :: VkRenderPassMultiviewCreateInfoKHX)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkRenderPassMultiviewCreateInfoKHX##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkRenderPassMultiviewCreateInfoKHX## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkRenderPassMultiviewCreateInfoKHX##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkRenderPassMultiviewCreateInfoKHX## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkRenderPassMultiviewCreateInfoKHX## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkRenderPassMultiviewCreateInfoKHX## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkRenderPassMultiviewCreateInfoKHX where
@@ -632,18 +588,20 @@ instance Show VkRenderPassMultiviewCreateInfoKHX where
 --   > } VkPhysicalDeviceMultiviewFeaturesKHX;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceMultiviewFeaturesKHX.html VkPhysicalDeviceMultiviewFeaturesKHX registry at www.khronos.org>
-data VkPhysicalDeviceMultiviewFeaturesKHX = VkPhysicalDeviceMultiviewFeaturesKHX## ByteArray##
+data VkPhysicalDeviceMultiviewFeaturesKHX = VkPhysicalDeviceMultiviewFeaturesKHX## Addr##
+                                                                                  ByteArray##
 
 instance Eq VkPhysicalDeviceMultiviewFeaturesKHX where
-        (VkPhysicalDeviceMultiviewFeaturesKHX## a) ==
-          (VkPhysicalDeviceMultiviewFeaturesKHX## b)
-          = EQ == cmpImmutableContent a b
+        (VkPhysicalDeviceMultiviewFeaturesKHX## a _) ==
+          x@(VkPhysicalDeviceMultiviewFeaturesKHX## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceMultiviewFeaturesKHX where
-        (VkPhysicalDeviceMultiviewFeaturesKHX## a) `compare`
-          (VkPhysicalDeviceMultiviewFeaturesKHX## b) = cmpImmutableContent a b
+        (VkPhysicalDeviceMultiviewFeaturesKHX## a _) `compare`
+          x@(VkPhysicalDeviceMultiviewFeaturesKHX## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -656,77 +614,32 @@ instance Storable VkPhysicalDeviceMultiviewFeaturesKHX where
           = #{alignment VkPhysicalDeviceMultiviewFeaturesKHX}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceMultiviewFeaturesKHX),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDeviceMultiviewFeaturesKHX)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPhysicalDeviceMultiviewFeaturesKHX##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkPhysicalDeviceMultiviewFeaturesKHX## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceMultiviewFeaturesKHX)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkPhysicalDeviceMultiviewFeaturesKHX
+         where
+        unsafeAddr (VkPhysicalDeviceMultiviewFeaturesKHX## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkPhysicalDeviceMultiviewFeaturesKHX## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPhysicalDeviceMultiviewFeaturesKHX##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceMultiviewFeaturesKHX where
         type StructFields VkPhysicalDeviceMultiviewFeaturesKHX =
              '["sType", "pNext", "multiview", "multiviewGeometryShader", -- ' closing tick for hsc2hs
                "multiviewTessellationShader"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceMultiviewFeaturesKHX),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDeviceMultiviewFeaturesKHX)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPhysicalDeviceMultiviewFeaturesKHX##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkPhysicalDeviceMultiviewFeaturesKHX## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkPhysicalDeviceMultiviewFeaturesKHX##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkPhysicalDeviceMultiviewFeaturesKHX## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkPhysicalDeviceMultiviewFeaturesKHX## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkPhysicalDeviceMultiviewFeaturesKHX## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceMultiviewFeaturesKHX where
@@ -1031,19 +944,20 @@ instance Show VkPhysicalDeviceMultiviewFeaturesKHX where
 --   > } VkPhysicalDeviceMultiviewPropertiesKHX;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceMultiviewPropertiesKHX.html VkPhysicalDeviceMultiviewPropertiesKHX registry at www.khronos.org>
-data VkPhysicalDeviceMultiviewPropertiesKHX = VkPhysicalDeviceMultiviewPropertiesKHX## ByteArray##
+data VkPhysicalDeviceMultiviewPropertiesKHX = VkPhysicalDeviceMultiviewPropertiesKHX## Addr##
+                                                                                      ByteArray##
 
 instance Eq VkPhysicalDeviceMultiviewPropertiesKHX where
-        (VkPhysicalDeviceMultiviewPropertiesKHX## a) ==
-          (VkPhysicalDeviceMultiviewPropertiesKHX## b)
-          = EQ == cmpImmutableContent a b
+        (VkPhysicalDeviceMultiviewPropertiesKHX## a _) ==
+          x@(VkPhysicalDeviceMultiviewPropertiesKHX## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceMultiviewPropertiesKHX where
-        (VkPhysicalDeviceMultiviewPropertiesKHX## a) `compare`
-          (VkPhysicalDeviceMultiviewPropertiesKHX## b)
-          = cmpImmutableContent a b
+        (VkPhysicalDeviceMultiviewPropertiesKHX## a _) `compare`
+          x@(VkPhysicalDeviceMultiviewPropertiesKHX## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -1056,77 +970,32 @@ instance Storable VkPhysicalDeviceMultiviewPropertiesKHX where
           = #{alignment VkPhysicalDeviceMultiviewPropertiesKHX}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceMultiviewPropertiesKHX),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDeviceMultiviewPropertiesKHX)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPhysicalDeviceMultiviewPropertiesKHX##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkPhysicalDeviceMultiviewPropertiesKHX## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceMultiviewPropertiesKHX)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkPhysicalDeviceMultiviewPropertiesKHX
+         where
+        unsafeAddr (VkPhysicalDeviceMultiviewPropertiesKHX## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkPhysicalDeviceMultiviewPropertiesKHX## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPhysicalDeviceMultiviewPropertiesKHX##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceMultiviewPropertiesKHX where
         type StructFields VkPhysicalDeviceMultiviewPropertiesKHX =
              '["sType", "pNext", "maxMultiviewViewCount", -- ' closing tick for hsc2hs
                "maxMultiviewInstanceIndex"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceMultiviewPropertiesKHX),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDeviceMultiviewPropertiesKHX)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPhysicalDeviceMultiviewPropertiesKHX##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkPhysicalDeviceMultiviewPropertiesKHX## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkPhysicalDeviceMultiviewPropertiesKHX##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkPhysicalDeviceMultiviewPropertiesKHX## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkPhysicalDeviceMultiviewPropertiesKHX## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkPhysicalDeviceMultiviewPropertiesKHX## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceMultiviewPropertiesKHX where

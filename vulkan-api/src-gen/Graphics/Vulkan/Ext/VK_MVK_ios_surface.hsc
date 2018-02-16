@@ -8,7 +8,6 @@
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE UnboxedTuples            #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_MVK_ios_surface
        (-- * Vulkan extension: @VK_MVK_ios_surface@
@@ -39,12 +38,8 @@ module Graphics.Vulkan.Ext.VK_MVK_ios_surface
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..))
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
@@ -60,17 +55,18 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkIOSSurfaceCreateInfoMVK;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkIOSSurfaceCreateInfoMVK.html VkIOSSurfaceCreateInfoMVK registry at www.khronos.org>
-data VkIOSSurfaceCreateInfoMVK = VkIOSSurfaceCreateInfoMVK## ByteArray##
+data VkIOSSurfaceCreateInfoMVK = VkIOSSurfaceCreateInfoMVK## Addr##
+                                                            ByteArray##
 
 instance Eq VkIOSSurfaceCreateInfoMVK where
-        (VkIOSSurfaceCreateInfoMVK## a) == (VkIOSSurfaceCreateInfoMVK## b)
-          = EQ == cmpImmutableContent a b
+        (VkIOSSurfaceCreateInfoMVK## a _) ==
+          x@(VkIOSSurfaceCreateInfoMVK## b _) = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkIOSSurfaceCreateInfoMVK where
-        (VkIOSSurfaceCreateInfoMVK## a) `compare`
-          (VkIOSSurfaceCreateInfoMVK## b) = cmpImmutableContent a b
+        (VkIOSSurfaceCreateInfoMVK## a _) `compare`
+          x@(VkIOSSurfaceCreateInfoMVK## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -81,68 +77,29 @@ instance Storable VkIOSSurfaceCreateInfoMVK where
         alignment ~_ = #{alignment VkIOSSurfaceCreateInfoMVK}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkIOSSurfaceCreateInfoMVK),
-            I## a <- alignment (undefined :: VkIOSSurfaceCreateInfoMVK) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkIOSSurfaceCreateInfoMVK##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkIOSSurfaceCreateInfoMVK## ba)
-          | I## n <- sizeOf (undefined :: VkIOSSurfaceCreateInfoMVK) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkIOSSurfaceCreateInfoMVK where
+        unsafeAddr (VkIOSSurfaceCreateInfoMVK## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkIOSSurfaceCreateInfoMVK## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkIOSSurfaceCreateInfoMVK## (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkIOSSurfaceCreateInfoMVK where
         type StructFields VkIOSSurfaceCreateInfoMVK =
              '["sType", "pNext", "flags", "pView"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkIOSSurfaceCreateInfoMVK),
-            I## a <- alignment (undefined :: VkIOSSurfaceCreateInfoMVK) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkIOSSurfaceCreateInfoMVK##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkIOSSurfaceCreateInfoMVK## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkIOSSurfaceCreateInfoMVK##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkIOSSurfaceCreateInfoMVK## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkIOSSurfaceCreateInfoMVK## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkIOSSurfaceCreateInfoMVK## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkSType VkIOSSurfaceCreateInfoMVK
          where

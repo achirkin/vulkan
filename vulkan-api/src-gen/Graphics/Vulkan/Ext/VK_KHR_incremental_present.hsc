@@ -7,7 +7,6 @@
 {-# LANGUAGE PatternSynonyms       #-}
 {-# LANGUAGE Strict                #-}
 {-# LANGUAGE TypeFamilies          #-}
-{-# LANGUAGE UnboxedTuples         #-}
 {-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_KHR_incremental_present
        (-- * Vulkan extension: @VK_KHR_incremental_present@
@@ -36,12 +35,8 @@ module Graphics.Vulkan.Ext.VK_KHR_incremental_present
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base             (VkExtent2D, VkOffset2D)
 import           Graphics.Vulkan.Common           (VkStructureType (..), Word32)
 import           Graphics.Vulkan.Marshal
@@ -57,17 +52,17 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkPresentRegionsKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPresentRegionsKHR.html VkPresentRegionsKHR registry at www.khronos.org>
-data VkPresentRegionsKHR = VkPresentRegionsKHR## ByteArray##
+data VkPresentRegionsKHR = VkPresentRegionsKHR## Addr## ByteArray##
 
 instance Eq VkPresentRegionsKHR where
-        (VkPresentRegionsKHR## a) == (VkPresentRegionsKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkPresentRegionsKHR## a _) == x@(VkPresentRegionsKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPresentRegionsKHR where
-        (VkPresentRegionsKHR## a) `compare` (VkPresentRegionsKHR## b)
-          = cmpImmutableContent a b
+        (VkPresentRegionsKHR## a _) `compare` x@(VkPresentRegionsKHR## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -78,66 +73,28 @@ instance Storable VkPresentRegionsKHR where
         alignment ~_ = #{alignment VkPresentRegionsKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkPresentRegionsKHR),
-            I## a <- alignment (undefined :: VkPresentRegionsKHR) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPresentRegionsKHR## ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkPresentRegionsKHR## ba)
-          | I## n <- sizeOf (undefined :: VkPresentRegionsKHR) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkPresentRegionsKHR where
+        unsafeAddr (VkPresentRegionsKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkPresentRegionsKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPresentRegionsKHR## (plusAddr## (byteArrayContents## b) off) b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPresentRegionsKHR where
         type StructFields VkPresentRegionsKHR =
              '["sType", "pNext", "swapchainCount", "pRegions"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkPresentRegionsKHR),
-            I## a <- alignment (undefined :: VkPresentRegionsKHR) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPresentRegionsKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkPresentRegionsKHR## ba) = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkPresentRegionsKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkPresentRegionsKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkPresentRegionsKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkPresentRegionsKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkSType VkPresentRegionsKHR where
         type VkSTypeMType VkPresentRegionsKHR = VkStructureType
@@ -340,17 +297,17 @@ instance Show VkPresentRegionsKHR where
 --   > } VkPresentRegionKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPresentRegionKHR.html VkPresentRegionKHR registry at www.khronos.org>
-data VkPresentRegionKHR = VkPresentRegionKHR## ByteArray##
+data VkPresentRegionKHR = VkPresentRegionKHR## Addr## ByteArray##
 
 instance Eq VkPresentRegionKHR where
-        (VkPresentRegionKHR## a) == (VkPresentRegionKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkPresentRegionKHR## a _) == x@(VkPresentRegionKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPresentRegionKHR where
-        (VkPresentRegionKHR## a) `compare` (VkPresentRegionKHR## b)
-          = cmpImmutableContent a b
+        (VkPresentRegionKHR## a _) `compare` x@(VkPresentRegionKHR## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -361,66 +318,28 @@ instance Storable VkPresentRegionKHR where
         alignment ~_ = #{alignment VkPresentRegionKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkPresentRegionKHR),
-            I## a <- alignment (undefined :: VkPresentRegionKHR) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPresentRegionKHR## ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkPresentRegionKHR## ba)
-          | I## n <- sizeOf (undefined :: VkPresentRegionKHR) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkPresentRegionKHR where
+        unsafeAddr (VkPresentRegionKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkPresentRegionKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPresentRegionKHR## (plusAddr## (byteArrayContents## b) off) b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPresentRegionKHR where
         type StructFields VkPresentRegionKHR =
              '["rectangleCount", "pRectangles"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkPresentRegionKHR),
-            I## a <- alignment (undefined :: VkPresentRegionKHR) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPresentRegionKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkPresentRegionKHR## ba) = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkPresentRegionKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkPresentRegionKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkPresentRegionKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkPresentRegionKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkRectangleCount VkPresentRegionKHR
          where
@@ -530,17 +449,17 @@ instance Show VkPresentRegionKHR where
 --   > } VkRectLayerKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkRectLayerKHR.html VkRectLayerKHR registry at www.khronos.org>
-data VkRectLayerKHR = VkRectLayerKHR## ByteArray##
+data VkRectLayerKHR = VkRectLayerKHR## Addr## ByteArray##
 
 instance Eq VkRectLayerKHR where
-        (VkRectLayerKHR## a) == (VkRectLayerKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkRectLayerKHR## a _) == x@(VkRectLayerKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkRectLayerKHR where
-        (VkRectLayerKHR## a) `compare` (VkRectLayerKHR## b)
-          = cmpImmutableContent a b
+        (VkRectLayerKHR## a _) `compare` x@(VkRectLayerKHR## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -551,64 +470,27 @@ instance Storable VkRectLayerKHR where
         alignment ~_ = #{alignment VkRectLayerKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkRectLayerKHR),
-            I## a <- alignment (undefined :: VkRectLayerKHR) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3, VkRectLayerKHR## ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkRectLayerKHR## ba)
-          | I## n <- sizeOf (undefined :: VkRectLayerKHR) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
 
+instance VulkanMarshalPrim VkRectLayerKHR where
+        unsafeAddr (VkRectLayerKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkRectLayerKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkRectLayerKHR## (plusAddr## (byteArrayContents## b) off) b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
+
 instance VulkanMarshal VkRectLayerKHR where
         type StructFields VkRectLayerKHR = '["offset", "extent", "layer"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkRectLayerKHR),
-            I## a <- alignment (undefined :: VkRectLayerKHR) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkRectLayerKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkRectLayerKHR## ba) = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkRectLayerKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkRectLayerKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkRectLayerKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkRectLayerKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkOffset VkRectLayerKHR where
         type VkOffsetMType VkRectLayerKHR = VkOffset2D

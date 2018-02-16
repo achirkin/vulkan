@@ -8,7 +8,6 @@
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE UnboxedTuples            #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_EXT_display_surface_counter
        (-- * Vulkan extension: @VK_EXT_display_surface_counter@
@@ -39,12 +38,8 @@ module Graphics.Vulkan.Ext.VK_EXT_display_surface_counter
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base             (VkExtent2D)
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
@@ -69,17 +64,18 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkSurfaceCapabilities2EXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSurfaceCapabilities2EXT.html VkSurfaceCapabilities2EXT registry at www.khronos.org>
-data VkSurfaceCapabilities2EXT = VkSurfaceCapabilities2EXT## ByteArray##
+data VkSurfaceCapabilities2EXT = VkSurfaceCapabilities2EXT## Addr##
+                                                            ByteArray##
 
 instance Eq VkSurfaceCapabilities2EXT where
-        (VkSurfaceCapabilities2EXT## a) == (VkSurfaceCapabilities2EXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkSurfaceCapabilities2EXT## a _) ==
+          x@(VkSurfaceCapabilities2EXT## b _) = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkSurfaceCapabilities2EXT where
-        (VkSurfaceCapabilities2EXT## a) `compare`
-          (VkSurfaceCapabilities2EXT## b) = cmpImmutableContent a b
+        (VkSurfaceCapabilities2EXT## a _) `compare`
+          x@(VkSurfaceCapabilities2EXT## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -90,24 +86,25 @@ instance Storable VkSurfaceCapabilities2EXT where
         alignment ~_ = #{alignment VkSurfaceCapabilities2EXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkSurfaceCapabilities2EXT),
-            I## a <- alignment (undefined :: VkSurfaceCapabilities2EXT) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkSurfaceCapabilities2EXT##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkSurfaceCapabilities2EXT## ba)
-          | I## n <- sizeOf (undefined :: VkSurfaceCapabilities2EXT) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkSurfaceCapabilities2EXT where
+        unsafeAddr (VkSurfaceCapabilities2EXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkSurfaceCapabilities2EXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkSurfaceCapabilities2EXT## (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSurfaceCapabilities2EXT where
         type StructFields VkSurfaceCapabilities2EXT =
@@ -116,46 +113,6 @@ instance VulkanMarshal VkSurfaceCapabilities2EXT where
                "maxImageArrayLayers", "supportedTransforms", "currentTransform",
                "supportedCompositeAlpha", "supportedUsageFlags",
                "supportedSurfaceCounters"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkSurfaceCapabilities2EXT),
-            I## a <- alignment (undefined :: VkSurfaceCapabilities2EXT) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkSurfaceCapabilities2EXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkSurfaceCapabilities2EXT## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkSurfaceCapabilities2EXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkSurfaceCapabilities2EXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkSurfaceCapabilities2EXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkSurfaceCapabilities2EXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkSType VkSurfaceCapabilities2EXT
          where

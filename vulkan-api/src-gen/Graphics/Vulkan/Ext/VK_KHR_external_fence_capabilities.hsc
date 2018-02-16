@@ -8,7 +8,6 @@
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE UnboxedTuples            #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_external_fence_capabilities
        (-- * Vulkan extension: @VK_KHR_external_fence_capabilities@
@@ -42,13 +41,8 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_capabilities
        where
 import           Foreign.C.String                                        (CString)
 import           Foreign.Storable                                        (Storable (..))
-import           GHC.ForeignPtr                                          (ForeignPtr (..),
-                                                                          ForeignPtrContents (..),
-                                                                          newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                                                 (Ptr (..))
-import           GHC.Types                                               (IO (..),
-                                                                          Int (..))
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Ext.VK_KHR_external_memory_capabilities (VkPhysicalDeviceIDPropertiesKHR (..))
 import           Graphics.Vulkan.Marshal
@@ -63,18 +57,20 @@ import           System.IO.Unsafe                                        (unsafe
 --   > } VkPhysicalDeviceExternalFenceInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceExternalFenceInfoKHR.html VkPhysicalDeviceExternalFenceInfoKHR registry at www.khronos.org>
-data VkPhysicalDeviceExternalFenceInfoKHR = VkPhysicalDeviceExternalFenceInfoKHR## ByteArray##
+data VkPhysicalDeviceExternalFenceInfoKHR = VkPhysicalDeviceExternalFenceInfoKHR## Addr##
+                                                                                  ByteArray##
 
 instance Eq VkPhysicalDeviceExternalFenceInfoKHR where
-        (VkPhysicalDeviceExternalFenceInfoKHR## a) ==
-          (VkPhysicalDeviceExternalFenceInfoKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkPhysicalDeviceExternalFenceInfoKHR## a _) ==
+          x@(VkPhysicalDeviceExternalFenceInfoKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceExternalFenceInfoKHR where
-        (VkPhysicalDeviceExternalFenceInfoKHR## a) `compare`
-          (VkPhysicalDeviceExternalFenceInfoKHR## b) = cmpImmutableContent a b
+        (VkPhysicalDeviceExternalFenceInfoKHR## a _) `compare`
+          x@(VkPhysicalDeviceExternalFenceInfoKHR## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -87,76 +83,31 @@ instance Storable VkPhysicalDeviceExternalFenceInfoKHR where
           = #{alignment VkPhysicalDeviceExternalFenceInfoKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceExternalFenceInfoKHR),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDeviceExternalFenceInfoKHR)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPhysicalDeviceExternalFenceInfoKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkPhysicalDeviceExternalFenceInfoKHR## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceExternalFenceInfoKHR)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkPhysicalDeviceExternalFenceInfoKHR
+         where
+        unsafeAddr (VkPhysicalDeviceExternalFenceInfoKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkPhysicalDeviceExternalFenceInfoKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPhysicalDeviceExternalFenceInfoKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceExternalFenceInfoKHR where
         type StructFields VkPhysicalDeviceExternalFenceInfoKHR =
              '["sType", "pNext", "handleType"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceExternalFenceInfoKHR),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDeviceExternalFenceInfoKHR)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPhysicalDeviceExternalFenceInfoKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkPhysicalDeviceExternalFenceInfoKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkPhysicalDeviceExternalFenceInfoKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkPhysicalDeviceExternalFenceInfoKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkPhysicalDeviceExternalFenceInfoKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkPhysicalDeviceExternalFenceInfoKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceExternalFenceInfoKHR where
@@ -335,17 +286,19 @@ instance Show VkPhysicalDeviceExternalFenceInfoKHR where
 --   > } VkExternalFencePropertiesKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalFencePropertiesKHR.html VkExternalFencePropertiesKHR registry at www.khronos.org>
-data VkExternalFencePropertiesKHR = VkExternalFencePropertiesKHR## ByteArray##
+data VkExternalFencePropertiesKHR = VkExternalFencePropertiesKHR## Addr##
+                                                                  ByteArray##
 
 instance Eq VkExternalFencePropertiesKHR where
-        (VkExternalFencePropertiesKHR## a) ==
-          (VkExternalFencePropertiesKHR## b) = EQ == cmpImmutableContent a b
+        (VkExternalFencePropertiesKHR## a _) ==
+          x@(VkExternalFencePropertiesKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkExternalFencePropertiesKHR where
-        (VkExternalFencePropertiesKHR## a) `compare`
-          (VkExternalFencePropertiesKHR## b) = cmpImmutableContent a b
+        (VkExternalFencePropertiesKHR## a _) `compare`
+          x@(VkExternalFencePropertiesKHR## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -357,69 +310,31 @@ instance Storable VkExternalFencePropertiesKHR where
           = #{alignment VkExternalFencePropertiesKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkExternalFencePropertiesKHR),
-            I## a <- alignment (undefined :: VkExternalFencePropertiesKHR) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkExternalFencePropertiesKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkExternalFencePropertiesKHR## ba)
-          | I## n <- sizeOf (undefined :: VkExternalFencePropertiesKHR) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkExternalFencePropertiesKHR where
+        unsafeAddr (VkExternalFencePropertiesKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkExternalFencePropertiesKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkExternalFencePropertiesKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkExternalFencePropertiesKHR where
         type StructFields VkExternalFencePropertiesKHR =
              '["sType", "pNext", "exportFromImportedHandleTypes", -- ' closing tick for hsc2hs
                "compatibleHandleTypes", "externalFenceFeatures"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkExternalFencePropertiesKHR),
-            I## a <- alignment (undefined :: VkExternalFencePropertiesKHR) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkExternalFencePropertiesKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkExternalFencePropertiesKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkExternalFencePropertiesKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkExternalFencePropertiesKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkExternalFencePropertiesKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkExternalFencePropertiesKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkExternalFencePropertiesKHR where

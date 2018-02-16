@@ -8,7 +8,6 @@
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE UnboxedTuples            #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_NV_clip_space_w_scaling
        (-- * Vulkan extension: @VK_NV_clip_space_w_scaling@
@@ -35,12 +34,8 @@ module Graphics.Vulkan.Ext.VK_NV_clip_space_w_scaling
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
@@ -53,17 +48,17 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkViewportWScalingNV;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkViewportWScalingNV.html VkViewportWScalingNV registry at www.khronos.org>
-data VkViewportWScalingNV = VkViewportWScalingNV## ByteArray##
+data VkViewportWScalingNV = VkViewportWScalingNV## Addr## ByteArray##
 
 instance Eq VkViewportWScalingNV where
-        (VkViewportWScalingNV## a) == (VkViewportWScalingNV## b)
-          = EQ == cmpImmutableContent a b
+        (VkViewportWScalingNV## a _) == x@(VkViewportWScalingNV## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkViewportWScalingNV where
-        (VkViewportWScalingNV## a) `compare` (VkViewportWScalingNV## b)
-          = cmpImmutableContent a b
+        (VkViewportWScalingNV## a _) `compare` x@(VkViewportWScalingNV## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -74,65 +69,27 @@ instance Storable VkViewportWScalingNV where
         alignment ~_ = #{alignment VkViewportWScalingNV}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkViewportWScalingNV),
-            I## a <- alignment (undefined :: VkViewportWScalingNV) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkViewportWScalingNV## ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkViewportWScalingNV## ba)
-          | I## n <- sizeOf (undefined :: VkViewportWScalingNV) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
 
+instance VulkanMarshalPrim VkViewportWScalingNV where
+        unsafeAddr (VkViewportWScalingNV## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkViewportWScalingNV## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkViewportWScalingNV## (plusAddr## (byteArrayContents## b) off) b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
+
 instance VulkanMarshal VkViewportWScalingNV where
         type StructFields VkViewportWScalingNV = '["xcoeff", "ycoeff"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkViewportWScalingNV),
-            I## a <- alignment (undefined :: VkViewportWScalingNV) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkViewportWScalingNV##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkViewportWScalingNV## ba) = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkViewportWScalingNV##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkViewportWScalingNV## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkViewportWScalingNV## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkViewportWScalingNV## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkXcoeff VkViewportWScalingNV where
         type VkXcoeffMType VkViewportWScalingNV = #{type float}
@@ -241,19 +198,20 @@ instance Show VkViewportWScalingNV where
 --   > } VkPipelineViewportWScalingStateCreateInfoNV;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineViewportWScalingStateCreateInfoNV.html VkPipelineViewportWScalingStateCreateInfoNV registry at www.khronos.org>
-data VkPipelineViewportWScalingStateCreateInfoNV = VkPipelineViewportWScalingStateCreateInfoNV## ByteArray##
+data VkPipelineViewportWScalingStateCreateInfoNV = VkPipelineViewportWScalingStateCreateInfoNV## Addr##
+                                                                                                ByteArray##
 
 instance Eq VkPipelineViewportWScalingStateCreateInfoNV where
-        (VkPipelineViewportWScalingStateCreateInfoNV## a) ==
-          (VkPipelineViewportWScalingStateCreateInfoNV## b)
-          = EQ == cmpImmutableContent a b
+        (VkPipelineViewportWScalingStateCreateInfoNV## a _) ==
+          x@(VkPipelineViewportWScalingStateCreateInfoNV## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineViewportWScalingStateCreateInfoNV where
-        (VkPipelineViewportWScalingStateCreateInfoNV## a) `compare`
-          (VkPipelineViewportWScalingStateCreateInfoNV## b)
-          = cmpImmutableContent a b
+        (VkPipelineViewportWScalingStateCreateInfoNV## a _) `compare`
+          x@(VkPipelineViewportWScalingStateCreateInfoNV## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -266,78 +224,35 @@ instance Storable VkPipelineViewportWScalingStateCreateInfoNV where
           = #{alignment VkPipelineViewportWScalingStateCreateInfoNV}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkPipelineViewportWScalingStateCreateInfoNV),
-            I## a <- alignment
-                      (undefined :: VkPipelineViewportWScalingStateCreateInfoNV)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPipelineViewportWScalingStateCreateInfoNV##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkPipelineViewportWScalingStateCreateInfoNV## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkPipelineViewportWScalingStateCreateInfoNV)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim
+           VkPipelineViewportWScalingStateCreateInfoNV
+         where
+        unsafeAddr (VkPipelineViewportWScalingStateCreateInfoNV## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkPipelineViewportWScalingStateCreateInfoNV## _ b)
+          = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPipelineViewportWScalingStateCreateInfoNV##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPipelineViewportWScalingStateCreateInfoNV
          where
         type StructFields VkPipelineViewportWScalingStateCreateInfoNV =
              '["sType", "pNext", "viewportWScalingEnable", "viewportCount", -- ' closing tick for hsc2hs
                "pViewportWScalings"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkPipelineViewportWScalingStateCreateInfoNV),
-            I## a <- alignment
-                      (undefined :: VkPipelineViewportWScalingStateCreateInfoNV)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPipelineViewportWScalingStateCreateInfoNV##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkPipelineViewportWScalingStateCreateInfoNV## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkPipelineViewportWScalingStateCreateInfoNV##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkPipelineViewportWScalingStateCreateInfoNV## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkPipelineViewportWScalingStateCreateInfoNV## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkPipelineViewportWScalingStateCreateInfoNV## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPipelineViewportWScalingStateCreateInfoNV where

@@ -8,7 +8,6 @@
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE UnboxedTuples            #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_EXT_discard_rectangles
        (-- * Vulkan extension: @VK_EXT_discard_rectangles@
@@ -41,12 +40,8 @@ module Graphics.Vulkan.Ext.VK_EXT_discard_rectangles
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base             (VkRect2D (..))
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
@@ -61,19 +56,20 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkPhysicalDeviceDiscardRectanglePropertiesEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceDiscardRectanglePropertiesEXT.html VkPhysicalDeviceDiscardRectanglePropertiesEXT registry at www.khronos.org>
-data VkPhysicalDeviceDiscardRectanglePropertiesEXT = VkPhysicalDeviceDiscardRectanglePropertiesEXT## ByteArray##
+data VkPhysicalDeviceDiscardRectanglePropertiesEXT = VkPhysicalDeviceDiscardRectanglePropertiesEXT## Addr##
+                                                                                                    ByteArray##
 
 instance Eq VkPhysicalDeviceDiscardRectanglePropertiesEXT where
-        (VkPhysicalDeviceDiscardRectanglePropertiesEXT## a) ==
-          (VkPhysicalDeviceDiscardRectanglePropertiesEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkPhysicalDeviceDiscardRectanglePropertiesEXT## a _) ==
+          x@(VkPhysicalDeviceDiscardRectanglePropertiesEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceDiscardRectanglePropertiesEXT where
-        (VkPhysicalDeviceDiscardRectanglePropertiesEXT## a) `compare`
-          (VkPhysicalDeviceDiscardRectanglePropertiesEXT## b)
-          = cmpImmutableContent a b
+        (VkPhysicalDeviceDiscardRectanglePropertiesEXT## a _) `compare`
+          x@(VkPhysicalDeviceDiscardRectanglePropertiesEXT## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -87,79 +83,35 @@ instance Storable VkPhysicalDeviceDiscardRectanglePropertiesEXT
           = #{alignment VkPhysicalDeviceDiscardRectanglePropertiesEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceDiscardRectanglePropertiesEXT),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDeviceDiscardRectanglePropertiesEXT)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPhysicalDeviceDiscardRectanglePropertiesEXT##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkPhysicalDeviceDiscardRectanglePropertiesEXT## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceDiscardRectanglePropertiesEXT)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim
+           VkPhysicalDeviceDiscardRectanglePropertiesEXT
+         where
+        unsafeAddr (VkPhysicalDeviceDiscardRectanglePropertiesEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray
+          (VkPhysicalDeviceDiscardRectanglePropertiesEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPhysicalDeviceDiscardRectanglePropertiesEXT##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkPhysicalDeviceDiscardRectanglePropertiesEXT
          where
         type StructFields VkPhysicalDeviceDiscardRectanglePropertiesEXT =
              '["sType", "pNext", "maxDiscardRectangles"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceDiscardRectanglePropertiesEXT),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDeviceDiscardRectanglePropertiesEXT)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPhysicalDeviceDiscardRectanglePropertiesEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkPhysicalDeviceDiscardRectanglePropertiesEXT## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkPhysicalDeviceDiscardRectanglePropertiesEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkPhysicalDeviceDiscardRectanglePropertiesEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr
-          (VkPhysicalDeviceDiscardRectanglePropertiesEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkPhysicalDeviceDiscardRectanglePropertiesEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceDiscardRectanglePropertiesEXT where
@@ -361,19 +313,20 @@ instance Show VkPhysicalDeviceDiscardRectanglePropertiesEXT where
 --   > } VkPipelineDiscardRectangleStateCreateInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineDiscardRectangleStateCreateInfoEXT.html VkPipelineDiscardRectangleStateCreateInfoEXT registry at www.khronos.org>
-data VkPipelineDiscardRectangleStateCreateInfoEXT = VkPipelineDiscardRectangleStateCreateInfoEXT## ByteArray##
+data VkPipelineDiscardRectangleStateCreateInfoEXT = VkPipelineDiscardRectangleStateCreateInfoEXT## Addr##
+                                                                                                  ByteArray##
 
 instance Eq VkPipelineDiscardRectangleStateCreateInfoEXT where
-        (VkPipelineDiscardRectangleStateCreateInfoEXT## a) ==
-          (VkPipelineDiscardRectangleStateCreateInfoEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkPipelineDiscardRectangleStateCreateInfoEXT## a _) ==
+          x@(VkPipelineDiscardRectangleStateCreateInfoEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineDiscardRectangleStateCreateInfoEXT where
-        (VkPipelineDiscardRectangleStateCreateInfoEXT## a) `compare`
-          (VkPipelineDiscardRectangleStateCreateInfoEXT## b)
-          = cmpImmutableContent a b
+        (VkPipelineDiscardRectangleStateCreateInfoEXT## a _) `compare`
+          x@(VkPipelineDiscardRectangleStateCreateInfoEXT## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -387,79 +340,35 @@ instance Storable VkPipelineDiscardRectangleStateCreateInfoEXT
           = #{alignment VkPipelineDiscardRectangleStateCreateInfoEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkPipelineDiscardRectangleStateCreateInfoEXT),
-            I## a <- alignment
-                      (undefined :: VkPipelineDiscardRectangleStateCreateInfoEXT)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPipelineDiscardRectangleStateCreateInfoEXT##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkPipelineDiscardRectangleStateCreateInfoEXT## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkPipelineDiscardRectangleStateCreateInfoEXT)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim
+           VkPipelineDiscardRectangleStateCreateInfoEXT
+         where
+        unsafeAddr (VkPipelineDiscardRectangleStateCreateInfoEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkPipelineDiscardRectangleStateCreateInfoEXT## _ b)
+          = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPipelineDiscardRectangleStateCreateInfoEXT##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPipelineDiscardRectangleStateCreateInfoEXT
          where
         type StructFields VkPipelineDiscardRectangleStateCreateInfoEXT =
              '["sType", "pNext", "flags", "discardRectangleMode", -- ' closing tick for hsc2hs
                "discardRectangleCount", "pDiscardRectangles"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkPipelineDiscardRectangleStateCreateInfoEXT),
-            I## a <- alignment
-                      (undefined :: VkPipelineDiscardRectangleStateCreateInfoEXT)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPipelineDiscardRectangleStateCreateInfoEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkPipelineDiscardRectangleStateCreateInfoEXT## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkPipelineDiscardRectangleStateCreateInfoEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkPipelineDiscardRectangleStateCreateInfoEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr
-          (VkPipelineDiscardRectangleStateCreateInfoEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkPipelineDiscardRectangleStateCreateInfoEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPipelineDiscardRectangleStateCreateInfoEXT where

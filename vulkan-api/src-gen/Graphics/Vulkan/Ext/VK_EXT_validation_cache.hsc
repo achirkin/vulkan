@@ -8,7 +8,6 @@
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE UnboxedTuples            #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_EXT_validation_cache
        (-- * Vulkan extension: @VK_EXT_validation_cache@
@@ -37,12 +36,8 @@ module Graphics.Vulkan.Ext.VK_EXT_validation_cache
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..))
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
@@ -59,17 +54,19 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkValidationCacheCreateInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkValidationCacheCreateInfoEXT.html VkValidationCacheCreateInfoEXT registry at www.khronos.org>
-data VkValidationCacheCreateInfoEXT = VkValidationCacheCreateInfoEXT## ByteArray##
+data VkValidationCacheCreateInfoEXT = VkValidationCacheCreateInfoEXT## Addr##
+                                                                      ByteArray##
 
 instance Eq VkValidationCacheCreateInfoEXT where
-        (VkValidationCacheCreateInfoEXT## a) ==
-          (VkValidationCacheCreateInfoEXT## b) = EQ == cmpImmutableContent a b
+        (VkValidationCacheCreateInfoEXT## a _) ==
+          x@(VkValidationCacheCreateInfoEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkValidationCacheCreateInfoEXT where
-        (VkValidationCacheCreateInfoEXT## a) `compare`
-          (VkValidationCacheCreateInfoEXT## b) = cmpImmutableContent a b
+        (VkValidationCacheCreateInfoEXT## a _) `compare`
+          x@(VkValidationCacheCreateInfoEXT## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -81,68 +78,30 @@ instance Storable VkValidationCacheCreateInfoEXT where
           = #{alignment VkValidationCacheCreateInfoEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkValidationCacheCreateInfoEXT),
-            I## a <- alignment (undefined :: VkValidationCacheCreateInfoEXT) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkValidationCacheCreateInfoEXT##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkValidationCacheCreateInfoEXT## ba)
-          | I## n <- sizeOf (undefined :: VkValidationCacheCreateInfoEXT) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkValidationCacheCreateInfoEXT where
+        unsafeAddr (VkValidationCacheCreateInfoEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkValidationCacheCreateInfoEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkValidationCacheCreateInfoEXT##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkValidationCacheCreateInfoEXT where
         type StructFields VkValidationCacheCreateInfoEXT =
              '["sType", "pNext", "flags", "initialDataSize", "pInitialData"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkValidationCacheCreateInfoEXT),
-            I## a <- alignment (undefined :: VkValidationCacheCreateInfoEXT) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkValidationCacheCreateInfoEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkValidationCacheCreateInfoEXT## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkValidationCacheCreateInfoEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkValidationCacheCreateInfoEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkValidationCacheCreateInfoEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkValidationCacheCreateInfoEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkValidationCacheCreateInfoEXT where
@@ -414,19 +373,20 @@ instance Show VkValidationCacheCreateInfoEXT where
 --   > } VkShaderModuleValidationCacheCreateInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkShaderModuleValidationCacheCreateInfoEXT.html VkShaderModuleValidationCacheCreateInfoEXT registry at www.khronos.org>
-data VkShaderModuleValidationCacheCreateInfoEXT = VkShaderModuleValidationCacheCreateInfoEXT## ByteArray##
+data VkShaderModuleValidationCacheCreateInfoEXT = VkShaderModuleValidationCacheCreateInfoEXT## Addr##
+                                                                                              ByteArray##
 
 instance Eq VkShaderModuleValidationCacheCreateInfoEXT where
-        (VkShaderModuleValidationCacheCreateInfoEXT## a) ==
-          (VkShaderModuleValidationCacheCreateInfoEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkShaderModuleValidationCacheCreateInfoEXT## a _) ==
+          x@(VkShaderModuleValidationCacheCreateInfoEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkShaderModuleValidationCacheCreateInfoEXT where
-        (VkShaderModuleValidationCacheCreateInfoEXT## a) `compare`
-          (VkShaderModuleValidationCacheCreateInfoEXT## b)
-          = cmpImmutableContent a b
+        (VkShaderModuleValidationCacheCreateInfoEXT## a _) `compare`
+          x@(VkShaderModuleValidationCacheCreateInfoEXT## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -439,77 +399,34 @@ instance Storable VkShaderModuleValidationCacheCreateInfoEXT where
           = #{alignment VkShaderModuleValidationCacheCreateInfoEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkShaderModuleValidationCacheCreateInfoEXT),
-            I## a <- alignment
-                      (undefined :: VkShaderModuleValidationCacheCreateInfoEXT)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkShaderModuleValidationCacheCreateInfoEXT##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkShaderModuleValidationCacheCreateInfoEXT## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkShaderModuleValidationCacheCreateInfoEXT)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim
+           VkShaderModuleValidationCacheCreateInfoEXT
+         where
+        unsafeAddr (VkShaderModuleValidationCacheCreateInfoEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkShaderModuleValidationCacheCreateInfoEXT## _ b)
+          = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkShaderModuleValidationCacheCreateInfoEXT##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkShaderModuleValidationCacheCreateInfoEXT
          where
         type StructFields VkShaderModuleValidationCacheCreateInfoEXT =
              '["sType", "pNext", "validationCache"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkShaderModuleValidationCacheCreateInfoEXT),
-            I## a <- alignment
-                      (undefined :: VkShaderModuleValidationCacheCreateInfoEXT)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkShaderModuleValidationCacheCreateInfoEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkShaderModuleValidationCacheCreateInfoEXT## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkShaderModuleValidationCacheCreateInfoEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkShaderModuleValidationCacheCreateInfoEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkShaderModuleValidationCacheCreateInfoEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkShaderModuleValidationCacheCreateInfoEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkShaderModuleValidationCacheCreateInfoEXT where

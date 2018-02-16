@@ -234,6 +234,8 @@ genCabalFile eModules = T.unlines $
               exposed-modules:
                   Graphics.Vulkan
                   Graphics.Vulkan.Marshal
+                  Graphics.Vulkan.Marshal.Create
+                  Graphics.Vulkan.Marshal.Internal
                   Graphics.Vulkan.Common
                   Graphics.Vulkan.Base
                   Graphics.Vulkan.Core
@@ -246,8 +248,6 @@ genCabalFile eModules = T.unlines $
    <> ( tail $ T.lines
         [text|
           DUMMY (have to keep it here for NeatInterpolation to work properly)
-              other-modules:
-                  Graphics.Vulkan.Marshal.Internal
               build-depends:
                   base >= 4.7 && < 5
                 , ghc-prim >= 0.4 && < 0.6

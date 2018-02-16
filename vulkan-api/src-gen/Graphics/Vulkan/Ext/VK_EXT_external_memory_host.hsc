@@ -8,7 +8,6 @@
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE UnboxedTuples            #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_EXT_external_memory_host
        (-- * Vulkan extension: @VK_EXT_external_memory_host@
@@ -44,12 +43,8 @@ module Graphics.Vulkan.Ext.VK_EXT_external_memory_host
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
@@ -64,18 +59,20 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkImportMemoryHostPointerInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImportMemoryHostPointerInfoEXT.html VkImportMemoryHostPointerInfoEXT registry at www.khronos.org>
-data VkImportMemoryHostPointerInfoEXT = VkImportMemoryHostPointerInfoEXT## ByteArray##
+data VkImportMemoryHostPointerInfoEXT = VkImportMemoryHostPointerInfoEXT## Addr##
+                                                                          ByteArray##
 
 instance Eq VkImportMemoryHostPointerInfoEXT where
-        (VkImportMemoryHostPointerInfoEXT## a) ==
-          (VkImportMemoryHostPointerInfoEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkImportMemoryHostPointerInfoEXT## a _) ==
+          x@(VkImportMemoryHostPointerInfoEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkImportMemoryHostPointerInfoEXT where
-        (VkImportMemoryHostPointerInfoEXT## a) `compare`
-          (VkImportMemoryHostPointerInfoEXT## b) = cmpImmutableContent a b
+        (VkImportMemoryHostPointerInfoEXT## a _) `compare`
+          x@(VkImportMemoryHostPointerInfoEXT## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -87,68 +84,30 @@ instance Storable VkImportMemoryHostPointerInfoEXT where
           = #{alignment VkImportMemoryHostPointerInfoEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkImportMemoryHostPointerInfoEXT),
-            I## a <- alignment (undefined :: VkImportMemoryHostPointerInfoEXT) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkImportMemoryHostPointerInfoEXT##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkImportMemoryHostPointerInfoEXT## ba)
-          | I## n <- sizeOf (undefined :: VkImportMemoryHostPointerInfoEXT) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkImportMemoryHostPointerInfoEXT where
+        unsafeAddr (VkImportMemoryHostPointerInfoEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkImportMemoryHostPointerInfoEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkImportMemoryHostPointerInfoEXT##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkImportMemoryHostPointerInfoEXT where
         type StructFields VkImportMemoryHostPointerInfoEXT =
              '["sType", "pNext", "handleType", "pHostPointer"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkImportMemoryHostPointerInfoEXT),
-            I## a <- alignment (undefined :: VkImportMemoryHostPointerInfoEXT) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkImportMemoryHostPointerInfoEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkImportMemoryHostPointerInfoEXT## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkImportMemoryHostPointerInfoEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkImportMemoryHostPointerInfoEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkImportMemoryHostPointerInfoEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkImportMemoryHostPointerInfoEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkImportMemoryHostPointerInfoEXT where
@@ -377,18 +336,20 @@ instance Show VkImportMemoryHostPointerInfoEXT where
 --   > } VkMemoryHostPointerPropertiesEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryHostPointerPropertiesEXT.html VkMemoryHostPointerPropertiesEXT registry at www.khronos.org>
-data VkMemoryHostPointerPropertiesEXT = VkMemoryHostPointerPropertiesEXT## ByteArray##
+data VkMemoryHostPointerPropertiesEXT = VkMemoryHostPointerPropertiesEXT## Addr##
+                                                                          ByteArray##
 
 instance Eq VkMemoryHostPointerPropertiesEXT where
-        (VkMemoryHostPointerPropertiesEXT## a) ==
-          (VkMemoryHostPointerPropertiesEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkMemoryHostPointerPropertiesEXT## a _) ==
+          x@(VkMemoryHostPointerPropertiesEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkMemoryHostPointerPropertiesEXT where
-        (VkMemoryHostPointerPropertiesEXT## a) `compare`
-          (VkMemoryHostPointerPropertiesEXT## b) = cmpImmutableContent a b
+        (VkMemoryHostPointerPropertiesEXT## a _) `compare`
+          x@(VkMemoryHostPointerPropertiesEXT## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -400,68 +361,30 @@ instance Storable VkMemoryHostPointerPropertiesEXT where
           = #{alignment VkMemoryHostPointerPropertiesEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkMemoryHostPointerPropertiesEXT),
-            I## a <- alignment (undefined :: VkMemoryHostPointerPropertiesEXT) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkMemoryHostPointerPropertiesEXT##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkMemoryHostPointerPropertiesEXT## ba)
-          | I## n <- sizeOf (undefined :: VkMemoryHostPointerPropertiesEXT) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkMemoryHostPointerPropertiesEXT where
+        unsafeAddr (VkMemoryHostPointerPropertiesEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkMemoryHostPointerPropertiesEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkMemoryHostPointerPropertiesEXT##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkMemoryHostPointerPropertiesEXT where
         type StructFields VkMemoryHostPointerPropertiesEXT =
              '["sType", "pNext", "memoryTypeBits"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkMemoryHostPointerPropertiesEXT),
-            I## a <- alignment (undefined :: VkMemoryHostPointerPropertiesEXT) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkMemoryHostPointerPropertiesEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkMemoryHostPointerPropertiesEXT## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkMemoryHostPointerPropertiesEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkMemoryHostPointerPropertiesEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkMemoryHostPointerPropertiesEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkMemoryHostPointerPropertiesEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkMemoryHostPointerPropertiesEXT where
@@ -637,19 +560,20 @@ instance Show VkMemoryHostPointerPropertiesEXT where
 --   > } VkPhysicalDeviceExternalMemoryHostPropertiesEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceExternalMemoryHostPropertiesEXT.html VkPhysicalDeviceExternalMemoryHostPropertiesEXT registry at www.khronos.org>
-data VkPhysicalDeviceExternalMemoryHostPropertiesEXT = VkPhysicalDeviceExternalMemoryHostPropertiesEXT## ByteArray##
+data VkPhysicalDeviceExternalMemoryHostPropertiesEXT = VkPhysicalDeviceExternalMemoryHostPropertiesEXT## Addr##
+                                                                                                        ByteArray##
 
 instance Eq VkPhysicalDeviceExternalMemoryHostPropertiesEXT where
-        (VkPhysicalDeviceExternalMemoryHostPropertiesEXT## a) ==
-          (VkPhysicalDeviceExternalMemoryHostPropertiesEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkPhysicalDeviceExternalMemoryHostPropertiesEXT## a _) ==
+          x@(VkPhysicalDeviceExternalMemoryHostPropertiesEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceExternalMemoryHostPropertiesEXT where
-        (VkPhysicalDeviceExternalMemoryHostPropertiesEXT## a) `compare`
-          (VkPhysicalDeviceExternalMemoryHostPropertiesEXT## b)
-          = cmpImmutableContent a b
+        (VkPhysicalDeviceExternalMemoryHostPropertiesEXT## a _) `compare`
+          x@(VkPhysicalDeviceExternalMemoryHostPropertiesEXT## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -663,80 +587,36 @@ instance Storable VkPhysicalDeviceExternalMemoryHostPropertiesEXT
           = #{alignment VkPhysicalDeviceExternalMemoryHostPropertiesEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceExternalMemoryHostPropertiesEXT),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDeviceExternalMemoryHostPropertiesEXT)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPhysicalDeviceExternalMemoryHostPropertiesEXT##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr)
-          (VkPhysicalDeviceExternalMemoryHostPropertiesEXT## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceExternalMemoryHostPropertiesEXT)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim
+           VkPhysicalDeviceExternalMemoryHostPropertiesEXT
+         where
+        unsafeAddr (VkPhysicalDeviceExternalMemoryHostPropertiesEXT## a _)
+          = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray
+          (VkPhysicalDeviceExternalMemoryHostPropertiesEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPhysicalDeviceExternalMemoryHostPropertiesEXT##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkPhysicalDeviceExternalMemoryHostPropertiesEXT
          where
         type StructFields VkPhysicalDeviceExternalMemoryHostPropertiesEXT =
              '["sType", "pNext", "minImportedHostPointerAlignment"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceExternalMemoryHostPropertiesEXT),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDeviceExternalMemoryHostPropertiesEXT)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPhysicalDeviceExternalMemoryHostPropertiesEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkPhysicalDeviceExternalMemoryHostPropertiesEXT## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkPhysicalDeviceExternalMemoryHostPropertiesEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkPhysicalDeviceExternalMemoryHostPropertiesEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr
-          (VkPhysicalDeviceExternalMemoryHostPropertiesEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkPhysicalDeviceExternalMemoryHostPropertiesEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceExternalMemoryHostPropertiesEXT where

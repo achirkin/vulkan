@@ -8,7 +8,6 @@
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE UnboxedTuples            #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_descriptor_update_template
        (-- * Vulkan extension: @VK_KHR_descriptor_update_template@
@@ -39,12 +38,8 @@ module Graphics.Vulkan.Ext.VK_KHR_descriptor_update_template
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..))
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
@@ -62,18 +57,20 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkDescriptorUpdateTemplateEntryKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDescriptorUpdateTemplateEntryKHR.html VkDescriptorUpdateTemplateEntryKHR registry at www.khronos.org>
-data VkDescriptorUpdateTemplateEntryKHR = VkDescriptorUpdateTemplateEntryKHR## ByteArray##
+data VkDescriptorUpdateTemplateEntryKHR = VkDescriptorUpdateTemplateEntryKHR## Addr##
+                                                                              ByteArray##
 
 instance Eq VkDescriptorUpdateTemplateEntryKHR where
-        (VkDescriptorUpdateTemplateEntryKHR## a) ==
-          (VkDescriptorUpdateTemplateEntryKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkDescriptorUpdateTemplateEntryKHR## a _) ==
+          x@(VkDescriptorUpdateTemplateEntryKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkDescriptorUpdateTemplateEntryKHR where
-        (VkDescriptorUpdateTemplateEntryKHR## a) `compare`
-          (VkDescriptorUpdateTemplateEntryKHR## b) = cmpImmutableContent a b
+        (VkDescriptorUpdateTemplateEntryKHR## a _) `compare`
+          x@(VkDescriptorUpdateTemplateEntryKHR## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -85,72 +82,31 @@ instance Storable VkDescriptorUpdateTemplateEntryKHR where
           = #{alignment VkDescriptorUpdateTemplateEntryKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkDescriptorUpdateTemplateEntryKHR),
-            I## a <- alignment (undefined :: VkDescriptorUpdateTemplateEntryKHR)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkDescriptorUpdateTemplateEntryKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkDescriptorUpdateTemplateEntryKHR## ba)
-          | I## n <- sizeOf (undefined :: VkDescriptorUpdateTemplateEntryKHR)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkDescriptorUpdateTemplateEntryKHR where
+        unsafeAddr (VkDescriptorUpdateTemplateEntryKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkDescriptorUpdateTemplateEntryKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkDescriptorUpdateTemplateEntryKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDescriptorUpdateTemplateEntryKHR where
         type StructFields VkDescriptorUpdateTemplateEntryKHR =
              '["dstBinding", "dstArrayElement", "descriptorCount", -- ' closing tick for hsc2hs
                "descriptorType", "offset", "stride"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkDescriptorUpdateTemplateEntryKHR),
-            I## a <- alignment (undefined :: VkDescriptorUpdateTemplateEntryKHR)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkDescriptorUpdateTemplateEntryKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkDescriptorUpdateTemplateEntryKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkDescriptorUpdateTemplateEntryKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkDescriptorUpdateTemplateEntryKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkDescriptorUpdateTemplateEntryKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkDescriptorUpdateTemplateEntryKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkDstBinding VkDescriptorUpdateTemplateEntryKHR where
@@ -509,19 +465,20 @@ instance Show VkDescriptorUpdateTemplateEntryKHR where
 --   > } VkDescriptorUpdateTemplateCreateInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDescriptorUpdateTemplateCreateInfoKHR.html VkDescriptorUpdateTemplateCreateInfoKHR registry at www.khronos.org>
-data VkDescriptorUpdateTemplateCreateInfoKHR = VkDescriptorUpdateTemplateCreateInfoKHR## ByteArray##
+data VkDescriptorUpdateTemplateCreateInfoKHR = VkDescriptorUpdateTemplateCreateInfoKHR## Addr##
+                                                                                        ByteArray##
 
 instance Eq VkDescriptorUpdateTemplateCreateInfoKHR where
-        (VkDescriptorUpdateTemplateCreateInfoKHR## a) ==
-          (VkDescriptorUpdateTemplateCreateInfoKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkDescriptorUpdateTemplateCreateInfoKHR## a _) ==
+          x@(VkDescriptorUpdateTemplateCreateInfoKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkDescriptorUpdateTemplateCreateInfoKHR where
-        (VkDescriptorUpdateTemplateCreateInfoKHR## a) `compare`
-          (VkDescriptorUpdateTemplateCreateInfoKHR## b)
-          = cmpImmutableContent a b
+        (VkDescriptorUpdateTemplateCreateInfoKHR## a _) `compare`
+          x@(VkDescriptorUpdateTemplateCreateInfoKHR## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -534,28 +491,27 @@ instance Storable VkDescriptorUpdateTemplateCreateInfoKHR where
           = #{alignment VkDescriptorUpdateTemplateCreateInfoKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkDescriptorUpdateTemplateCreateInfoKHR),
-            I## a <- alignment
-                      (undefined :: VkDescriptorUpdateTemplateCreateInfoKHR)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkDescriptorUpdateTemplateCreateInfoKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkDescriptorUpdateTemplateCreateInfoKHR## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkDescriptorUpdateTemplateCreateInfoKHR)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkDescriptorUpdateTemplateCreateInfoKHR
+         where
+        unsafeAddr (VkDescriptorUpdateTemplateCreateInfoKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkDescriptorUpdateTemplateCreateInfoKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkDescriptorUpdateTemplateCreateInfoKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDescriptorUpdateTemplateCreateInfoKHR
          where
@@ -563,50 +519,6 @@ instance VulkanMarshal VkDescriptorUpdateTemplateCreateInfoKHR
              '["sType", "pNext", "flags", "descriptorUpdateEntryCount", -- ' closing tick for hsc2hs
                "pDescriptorUpdateEntries", "templateType", "descriptorSetLayout",
                "pipelineBindPoint", "pipelineLayout", "set"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkDescriptorUpdateTemplateCreateInfoKHR),
-            I## a <- alignment
-                      (undefined :: VkDescriptorUpdateTemplateCreateInfoKHR)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkDescriptorUpdateTemplateCreateInfoKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkDescriptorUpdateTemplateCreateInfoKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkDescriptorUpdateTemplateCreateInfoKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkDescriptorUpdateTemplateCreateInfoKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkDescriptorUpdateTemplateCreateInfoKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkDescriptorUpdateTemplateCreateInfoKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkDescriptorUpdateTemplateCreateInfoKHR where

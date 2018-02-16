@@ -7,7 +7,6 @@
 {-# LANGUAGE PatternSynonyms       #-}
 {-# LANGUAGE Strict                #-}
 {-# LANGUAGE TypeFamilies          #-}
-{-# LANGUAGE UnboxedTuples         #-}
 {-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_NV_external_memory
        (-- * Vulkan extension: @VK_NV_external_memory@
@@ -38,12 +37,8 @@ module Graphics.Vulkan.Ext.VK_NV_external_memory
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common           (VkExternalMemoryHandleTypeFlagsNV,
                                                    VkStructureType,
                                                    VkStructureType (..))
@@ -59,18 +54,20 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkExternalMemoryImageCreateInfoNV;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalMemoryImageCreateInfoNV.html VkExternalMemoryImageCreateInfoNV registry at www.khronos.org>
-data VkExternalMemoryImageCreateInfoNV = VkExternalMemoryImageCreateInfoNV## ByteArray##
+data VkExternalMemoryImageCreateInfoNV = VkExternalMemoryImageCreateInfoNV## Addr##
+                                                                            ByteArray##
 
 instance Eq VkExternalMemoryImageCreateInfoNV where
-        (VkExternalMemoryImageCreateInfoNV## a) ==
-          (VkExternalMemoryImageCreateInfoNV## b)
-          = EQ == cmpImmutableContent a b
+        (VkExternalMemoryImageCreateInfoNV## a _) ==
+          x@(VkExternalMemoryImageCreateInfoNV## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkExternalMemoryImageCreateInfoNV where
-        (VkExternalMemoryImageCreateInfoNV## a) `compare`
-          (VkExternalMemoryImageCreateInfoNV## b) = cmpImmutableContent a b
+        (VkExternalMemoryImageCreateInfoNV## a _) `compare`
+          x@(VkExternalMemoryImageCreateInfoNV## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -82,70 +79,30 @@ instance Storable VkExternalMemoryImageCreateInfoNV where
           = #{alignment VkExternalMemoryImageCreateInfoNV}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkExternalMemoryImageCreateInfoNV),
-            I## a <- alignment (undefined :: VkExternalMemoryImageCreateInfoNV)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkExternalMemoryImageCreateInfoNV##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkExternalMemoryImageCreateInfoNV## ba)
-          | I## n <- sizeOf (undefined :: VkExternalMemoryImageCreateInfoNV) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkExternalMemoryImageCreateInfoNV where
+        unsafeAddr (VkExternalMemoryImageCreateInfoNV## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkExternalMemoryImageCreateInfoNV## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkExternalMemoryImageCreateInfoNV##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkExternalMemoryImageCreateInfoNV where
         type StructFields VkExternalMemoryImageCreateInfoNV =
              '["sType", "pNext", "handleTypes"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkExternalMemoryImageCreateInfoNV),
-            I## a <- alignment (undefined :: VkExternalMemoryImageCreateInfoNV)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkExternalMemoryImageCreateInfoNV##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkExternalMemoryImageCreateInfoNV## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkExternalMemoryImageCreateInfoNV##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkExternalMemoryImageCreateInfoNV## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkExternalMemoryImageCreateInfoNV## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkExternalMemoryImageCreateInfoNV## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkExternalMemoryImageCreateInfoNV where
@@ -319,17 +276,19 @@ instance Show VkExternalMemoryImageCreateInfoNV where
 --   > } VkExportMemoryAllocateInfoNV;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExportMemoryAllocateInfoNV.html VkExportMemoryAllocateInfoNV registry at www.khronos.org>
-data VkExportMemoryAllocateInfoNV = VkExportMemoryAllocateInfoNV## ByteArray##
+data VkExportMemoryAllocateInfoNV = VkExportMemoryAllocateInfoNV## Addr##
+                                                                  ByteArray##
 
 instance Eq VkExportMemoryAllocateInfoNV where
-        (VkExportMemoryAllocateInfoNV## a) ==
-          (VkExportMemoryAllocateInfoNV## b) = EQ == cmpImmutableContent a b
+        (VkExportMemoryAllocateInfoNV## a _) ==
+          x@(VkExportMemoryAllocateInfoNV## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkExportMemoryAllocateInfoNV where
-        (VkExportMemoryAllocateInfoNV## a) `compare`
-          (VkExportMemoryAllocateInfoNV## b) = cmpImmutableContent a b
+        (VkExportMemoryAllocateInfoNV## a _) `compare`
+          x@(VkExportMemoryAllocateInfoNV## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -341,68 +300,30 @@ instance Storable VkExportMemoryAllocateInfoNV where
           = #{alignment VkExportMemoryAllocateInfoNV}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkExportMemoryAllocateInfoNV),
-            I## a <- alignment (undefined :: VkExportMemoryAllocateInfoNV) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkExportMemoryAllocateInfoNV##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkExportMemoryAllocateInfoNV## ba)
-          | I## n <- sizeOf (undefined :: VkExportMemoryAllocateInfoNV) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkExportMemoryAllocateInfoNV where
+        unsafeAddr (VkExportMemoryAllocateInfoNV## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkExportMemoryAllocateInfoNV## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkExportMemoryAllocateInfoNV##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkExportMemoryAllocateInfoNV where
         type StructFields VkExportMemoryAllocateInfoNV =
              '["sType", "pNext", "handleTypes"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkExportMemoryAllocateInfoNV),
-            I## a <- alignment (undefined :: VkExportMemoryAllocateInfoNV) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkExportMemoryAllocateInfoNV##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkExportMemoryAllocateInfoNV## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkExportMemoryAllocateInfoNV##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkExportMemoryAllocateInfoNV## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkExportMemoryAllocateInfoNV## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkExportMemoryAllocateInfoNV## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkExportMemoryAllocateInfoNV where

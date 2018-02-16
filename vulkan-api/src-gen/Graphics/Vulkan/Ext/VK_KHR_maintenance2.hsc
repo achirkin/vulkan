@@ -7,7 +7,6 @@
 {-# LANGUAGE PatternSynonyms       #-}
 {-# LANGUAGE Strict                #-}
 {-# LANGUAGE TypeFamilies          #-}
-{-# LANGUAGE UnboxedTuples         #-}
 {-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_KHR_maintenance2
        (-- * Vulkan extension: @VK_KHR_maintenance2@
@@ -42,12 +41,8 @@ module Graphics.Vulkan.Ext.VK_KHR_maintenance2
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common           (VkImageAspectFlags,
                                                    VkImageCreateFlagBits (..),
                                                    VkImageLayout (..),
@@ -69,19 +64,20 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkPhysicalDevicePointClippingPropertiesKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDevicePointClippingPropertiesKHR.html VkPhysicalDevicePointClippingPropertiesKHR registry at www.khronos.org>
-data VkPhysicalDevicePointClippingPropertiesKHR = VkPhysicalDevicePointClippingPropertiesKHR## ByteArray##
+data VkPhysicalDevicePointClippingPropertiesKHR = VkPhysicalDevicePointClippingPropertiesKHR## Addr##
+                                                                                              ByteArray##
 
 instance Eq VkPhysicalDevicePointClippingPropertiesKHR where
-        (VkPhysicalDevicePointClippingPropertiesKHR## a) ==
-          (VkPhysicalDevicePointClippingPropertiesKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkPhysicalDevicePointClippingPropertiesKHR## a _) ==
+          x@(VkPhysicalDevicePointClippingPropertiesKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDevicePointClippingPropertiesKHR where
-        (VkPhysicalDevicePointClippingPropertiesKHR## a) `compare`
-          (VkPhysicalDevicePointClippingPropertiesKHR## b)
-          = cmpImmutableContent a b
+        (VkPhysicalDevicePointClippingPropertiesKHR## a _) `compare`
+          x@(VkPhysicalDevicePointClippingPropertiesKHR## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -94,77 +90,34 @@ instance Storable VkPhysicalDevicePointClippingPropertiesKHR where
           = #{alignment VkPhysicalDevicePointClippingPropertiesKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDevicePointClippingPropertiesKHR),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDevicePointClippingPropertiesKHR)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPhysicalDevicePointClippingPropertiesKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkPhysicalDevicePointClippingPropertiesKHR## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDevicePointClippingPropertiesKHR)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim
+           VkPhysicalDevicePointClippingPropertiesKHR
+         where
+        unsafeAddr (VkPhysicalDevicePointClippingPropertiesKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkPhysicalDevicePointClippingPropertiesKHR## _ b)
+          = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPhysicalDevicePointClippingPropertiesKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDevicePointClippingPropertiesKHR
          where
         type StructFields VkPhysicalDevicePointClippingPropertiesKHR =
              '["sType", "pNext", "pointClippingBehavior"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDevicePointClippingPropertiesKHR),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDevicePointClippingPropertiesKHR)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPhysicalDevicePointClippingPropertiesKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkPhysicalDevicePointClippingPropertiesKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkPhysicalDevicePointClippingPropertiesKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkPhysicalDevicePointClippingPropertiesKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkPhysicalDevicePointClippingPropertiesKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkPhysicalDevicePointClippingPropertiesKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDevicePointClippingPropertiesKHR where
@@ -340,19 +293,20 @@ instance Show VkPhysicalDevicePointClippingPropertiesKHR where
 --   > } VkRenderPassInputAttachmentAspectCreateInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkRenderPassInputAttachmentAspectCreateInfoKHR.html VkRenderPassInputAttachmentAspectCreateInfoKHR registry at www.khronos.org>
-data VkRenderPassInputAttachmentAspectCreateInfoKHR = VkRenderPassInputAttachmentAspectCreateInfoKHR## ByteArray##
+data VkRenderPassInputAttachmentAspectCreateInfoKHR = VkRenderPassInputAttachmentAspectCreateInfoKHR## Addr##
+                                                                                                      ByteArray##
 
 instance Eq VkRenderPassInputAttachmentAspectCreateInfoKHR where
-        (VkRenderPassInputAttachmentAspectCreateInfoKHR## a) ==
-          (VkRenderPassInputAttachmentAspectCreateInfoKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkRenderPassInputAttachmentAspectCreateInfoKHR## a _) ==
+          x@(VkRenderPassInputAttachmentAspectCreateInfoKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkRenderPassInputAttachmentAspectCreateInfoKHR where
-        (VkRenderPassInputAttachmentAspectCreateInfoKHR## a) `compare`
-          (VkRenderPassInputAttachmentAspectCreateInfoKHR## b)
-          = cmpImmutableContent a b
+        (VkRenderPassInputAttachmentAspectCreateInfoKHR## a _) `compare`
+          x@(VkRenderPassInputAttachmentAspectCreateInfoKHR## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -366,80 +320,36 @@ instance Storable VkRenderPassInputAttachmentAspectCreateInfoKHR
           = #{alignment VkRenderPassInputAttachmentAspectCreateInfoKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkRenderPassInputAttachmentAspectCreateInfoKHR),
-            I## a <- alignment
-                      (undefined :: VkRenderPassInputAttachmentAspectCreateInfoKHR)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkRenderPassInputAttachmentAspectCreateInfoKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr)
-          (VkRenderPassInputAttachmentAspectCreateInfoKHR## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkRenderPassInputAttachmentAspectCreateInfoKHR)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim
+           VkRenderPassInputAttachmentAspectCreateInfoKHR
+         where
+        unsafeAddr (VkRenderPassInputAttachmentAspectCreateInfoKHR## a _)
+          = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray
+          (VkRenderPassInputAttachmentAspectCreateInfoKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkRenderPassInputAttachmentAspectCreateInfoKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkRenderPassInputAttachmentAspectCreateInfoKHR
          where
         type StructFields VkRenderPassInputAttachmentAspectCreateInfoKHR =
              '["sType", "pNext", "aspectReferenceCount", "pAspectReferences"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkRenderPassInputAttachmentAspectCreateInfoKHR),
-            I## a <- alignment
-                      (undefined :: VkRenderPassInputAttachmentAspectCreateInfoKHR)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkRenderPassInputAttachmentAspectCreateInfoKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkRenderPassInputAttachmentAspectCreateInfoKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkRenderPassInputAttachmentAspectCreateInfoKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkRenderPassInputAttachmentAspectCreateInfoKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr
-          (VkRenderPassInputAttachmentAspectCreateInfoKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkRenderPassInputAttachmentAspectCreateInfoKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkRenderPassInputAttachmentAspectCreateInfoKHR where
@@ -703,18 +613,20 @@ instance Show VkRenderPassInputAttachmentAspectCreateInfoKHR where
 --   > } VkInputAttachmentAspectReferenceKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkInputAttachmentAspectReferenceKHR.html VkInputAttachmentAspectReferenceKHR registry at www.khronos.org>
-data VkInputAttachmentAspectReferenceKHR = VkInputAttachmentAspectReferenceKHR## ByteArray##
+data VkInputAttachmentAspectReferenceKHR = VkInputAttachmentAspectReferenceKHR## Addr##
+                                                                                ByteArray##
 
 instance Eq VkInputAttachmentAspectReferenceKHR where
-        (VkInputAttachmentAspectReferenceKHR## a) ==
-          (VkInputAttachmentAspectReferenceKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkInputAttachmentAspectReferenceKHR## a _) ==
+          x@(VkInputAttachmentAspectReferenceKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkInputAttachmentAspectReferenceKHR where
-        (VkInputAttachmentAspectReferenceKHR## a) `compare`
-          (VkInputAttachmentAspectReferenceKHR## b) = cmpImmutableContent a b
+        (VkInputAttachmentAspectReferenceKHR## a _) `compare`
+          x@(VkInputAttachmentAspectReferenceKHR## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -726,75 +638,31 @@ instance Storable VkInputAttachmentAspectReferenceKHR where
           = #{alignment VkInputAttachmentAspectReferenceKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkInputAttachmentAspectReferenceKHR),
-            I## a <- alignment
-                      (undefined :: VkInputAttachmentAspectReferenceKHR)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkInputAttachmentAspectReferenceKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkInputAttachmentAspectReferenceKHR## ba)
-          | I## n <- sizeOf (undefined :: VkInputAttachmentAspectReferenceKHR)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkInputAttachmentAspectReferenceKHR
+         where
+        unsafeAddr (VkInputAttachmentAspectReferenceKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkInputAttachmentAspectReferenceKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkInputAttachmentAspectReferenceKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkInputAttachmentAspectReferenceKHR where
         type StructFields VkInputAttachmentAspectReferenceKHR =
              '["subpass", "inputAttachmentIndex", "aspectMask"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkInputAttachmentAspectReferenceKHR),
-            I## a <- alignment
-                      (undefined :: VkInputAttachmentAspectReferenceKHR)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkInputAttachmentAspectReferenceKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkInputAttachmentAspectReferenceKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkInputAttachmentAspectReferenceKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkInputAttachmentAspectReferenceKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkInputAttachmentAspectReferenceKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkInputAttachmentAspectReferenceKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSubpass VkInputAttachmentAspectReferenceKHR where
@@ -978,17 +846,19 @@ instance Show VkInputAttachmentAspectReferenceKHR where
 --   > } VkImageViewUsageCreateInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageViewUsageCreateInfoKHR.html VkImageViewUsageCreateInfoKHR registry at www.khronos.org>
-data VkImageViewUsageCreateInfoKHR = VkImageViewUsageCreateInfoKHR## ByteArray##
+data VkImageViewUsageCreateInfoKHR = VkImageViewUsageCreateInfoKHR## Addr##
+                                                                    ByteArray##
 
 instance Eq VkImageViewUsageCreateInfoKHR where
-        (VkImageViewUsageCreateInfoKHR## a) ==
-          (VkImageViewUsageCreateInfoKHR## b) = EQ == cmpImmutableContent a b
+        (VkImageViewUsageCreateInfoKHR## a _) ==
+          x@(VkImageViewUsageCreateInfoKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkImageViewUsageCreateInfoKHR where
-        (VkImageViewUsageCreateInfoKHR## a) `compare`
-          (VkImageViewUsageCreateInfoKHR## b) = cmpImmutableContent a b
+        (VkImageViewUsageCreateInfoKHR## a _) `compare`
+          x@(VkImageViewUsageCreateInfoKHR## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -1000,68 +870,30 @@ instance Storable VkImageViewUsageCreateInfoKHR where
           = #{alignment VkImageViewUsageCreateInfoKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkImageViewUsageCreateInfoKHR),
-            I## a <- alignment (undefined :: VkImageViewUsageCreateInfoKHR) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkImageViewUsageCreateInfoKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkImageViewUsageCreateInfoKHR## ba)
-          | I## n <- sizeOf (undefined :: VkImageViewUsageCreateInfoKHR) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkImageViewUsageCreateInfoKHR where
+        unsafeAddr (VkImageViewUsageCreateInfoKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkImageViewUsageCreateInfoKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkImageViewUsageCreateInfoKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkImageViewUsageCreateInfoKHR where
         type StructFields VkImageViewUsageCreateInfoKHR =
              '["sType", "pNext", "usage"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkImageViewUsageCreateInfoKHR),
-            I## a <- alignment (undefined :: VkImageViewUsageCreateInfoKHR) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkImageViewUsageCreateInfoKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkImageViewUsageCreateInfoKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkImageViewUsageCreateInfoKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkImageViewUsageCreateInfoKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkImageViewUsageCreateInfoKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkImageViewUsageCreateInfoKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkImageViewUsageCreateInfoKHR where
@@ -1221,21 +1053,23 @@ instance Show VkImageViewUsageCreateInfoKHR where
 --   > } VkPipelineTessellationDomainOriginStateCreateInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineTessellationDomainOriginStateCreateInfoKHR.html VkPipelineTessellationDomainOriginStateCreateInfoKHR registry at www.khronos.org>
-data VkPipelineTessellationDomainOriginStateCreateInfoKHR = VkPipelineTessellationDomainOriginStateCreateInfoKHR## ByteArray##
+data VkPipelineTessellationDomainOriginStateCreateInfoKHR = VkPipelineTessellationDomainOriginStateCreateInfoKHR## Addr##
+                                                                                                                  ByteArray##
 
 instance Eq VkPipelineTessellationDomainOriginStateCreateInfoKHR
          where
-        (VkPipelineTessellationDomainOriginStateCreateInfoKHR## a) ==
-          (VkPipelineTessellationDomainOriginStateCreateInfoKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkPipelineTessellationDomainOriginStateCreateInfoKHR## a _) ==
+          x@(VkPipelineTessellationDomainOriginStateCreateInfoKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineTessellationDomainOriginStateCreateInfoKHR
          where
-        (VkPipelineTessellationDomainOriginStateCreateInfoKHR## a) `compare`
-          (VkPipelineTessellationDomainOriginStateCreateInfoKHR## b)
-          = cmpImmutableContent a b
+        (VkPipelineTessellationDomainOriginStateCreateInfoKHR## a _)
+          `compare`
+          x@(VkPipelineTessellationDomainOriginStateCreateInfoKHR## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -1250,30 +1084,30 @@ instance Storable
           = #{alignment VkPipelineTessellationDomainOriginStateCreateInfoKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined ::
-                         VkPipelineTessellationDomainOriginStateCreateInfoKHR),
-            I## a <- alignment
-                      (undefined :: VkPipelineTessellationDomainOriginStateCreateInfoKHR)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPipelineTessellationDomainOriginStateCreateInfoKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr)
-          (VkPipelineTessellationDomainOriginStateCreateInfoKHR## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkPipelineTessellationDomainOriginStateCreateInfoKHR)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim
+           VkPipelineTessellationDomainOriginStateCreateInfoKHR
+         where
+        unsafeAddr
+          (VkPipelineTessellationDomainOriginStateCreateInfoKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray
+          (VkPipelineTessellationDomainOriginStateCreateInfoKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPipelineTessellationDomainOriginStateCreateInfoKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkPipelineTessellationDomainOriginStateCreateInfoKHR
@@ -1281,56 +1115,6 @@ instance VulkanMarshal
         type StructFields
                VkPipelineTessellationDomainOriginStateCreateInfoKHR
              = '["sType", "pNext", "domainOrigin"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined ::
-                         VkPipelineTessellationDomainOriginStateCreateInfoKHR),
-            I## a <- alignment
-                      (undefined :: VkPipelineTessellationDomainOriginStateCreateInfoKHR)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPipelineTessellationDomainOriginStateCreateInfoKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr
-          (VkPipelineTessellationDomainOriginStateCreateInfoKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr##
-              VkPipelineTessellationDomainOriginStateCreateInfoKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr
-          (VkPipelineTessellationDomainOriginStateCreateInfoKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr
-          (VkPipelineTessellationDomainOriginStateCreateInfoKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData
-          x@(VkPipelineTessellationDomainOriginStateCreateInfoKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPipelineTessellationDomainOriginStateCreateInfoKHR

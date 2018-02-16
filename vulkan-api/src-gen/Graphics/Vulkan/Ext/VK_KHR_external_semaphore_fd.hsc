@@ -8,7 +8,6 @@
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE UnboxedTuples            #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_fd
        (-- * Vulkan extension: @VK_KHR_external_semaphore_fd@
@@ -39,12 +38,8 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_fd
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
@@ -61,17 +56,19 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkImportSemaphoreFdInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImportSemaphoreFdInfoKHR.html VkImportSemaphoreFdInfoKHR registry at www.khronos.org>
-data VkImportSemaphoreFdInfoKHR = VkImportSemaphoreFdInfoKHR## ByteArray##
+data VkImportSemaphoreFdInfoKHR = VkImportSemaphoreFdInfoKHR## Addr##
+                                                              ByteArray##
 
 instance Eq VkImportSemaphoreFdInfoKHR where
-        (VkImportSemaphoreFdInfoKHR## a) == (VkImportSemaphoreFdInfoKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkImportSemaphoreFdInfoKHR## a _) ==
+          x@(VkImportSemaphoreFdInfoKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkImportSemaphoreFdInfoKHR where
-        (VkImportSemaphoreFdInfoKHR## a) `compare`
-          (VkImportSemaphoreFdInfoKHR## b) = cmpImmutableContent a b
+        (VkImportSemaphoreFdInfoKHR## a _) `compare`
+          x@(VkImportSemaphoreFdInfoKHR## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -82,68 +79,30 @@ instance Storable VkImportSemaphoreFdInfoKHR where
         alignment ~_ = #{alignment VkImportSemaphoreFdInfoKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkImportSemaphoreFdInfoKHR),
-            I## a <- alignment (undefined :: VkImportSemaphoreFdInfoKHR) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkImportSemaphoreFdInfoKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkImportSemaphoreFdInfoKHR## ba)
-          | I## n <- sizeOf (undefined :: VkImportSemaphoreFdInfoKHR) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkImportSemaphoreFdInfoKHR where
+        unsafeAddr (VkImportSemaphoreFdInfoKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkImportSemaphoreFdInfoKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkImportSemaphoreFdInfoKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkImportSemaphoreFdInfoKHR where
         type StructFields VkImportSemaphoreFdInfoKHR =
              '["sType", "pNext", "semaphore", "flags", "handleType", "fd"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkImportSemaphoreFdInfoKHR),
-            I## a <- alignment (undefined :: VkImportSemaphoreFdInfoKHR) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkImportSemaphoreFdInfoKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkImportSemaphoreFdInfoKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkImportSemaphoreFdInfoKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkImportSemaphoreFdInfoKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkImportSemaphoreFdInfoKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkImportSemaphoreFdInfoKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkSType VkImportSemaphoreFdInfoKHR
          where
@@ -455,17 +414,18 @@ instance Show VkImportSemaphoreFdInfoKHR where
 --   > } VkSemaphoreGetFdInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSemaphoreGetFdInfoKHR.html VkSemaphoreGetFdInfoKHR registry at www.khronos.org>
-data VkSemaphoreGetFdInfoKHR = VkSemaphoreGetFdInfoKHR## ByteArray##
+data VkSemaphoreGetFdInfoKHR = VkSemaphoreGetFdInfoKHR## Addr##
+                                                        ByteArray##
 
 instance Eq VkSemaphoreGetFdInfoKHR where
-        (VkSemaphoreGetFdInfoKHR## a) == (VkSemaphoreGetFdInfoKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkSemaphoreGetFdInfoKHR## a _) == x@(VkSemaphoreGetFdInfoKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkSemaphoreGetFdInfoKHR where
-        (VkSemaphoreGetFdInfoKHR## a) `compare` (VkSemaphoreGetFdInfoKHR## b)
-          = cmpImmutableContent a b
+        (VkSemaphoreGetFdInfoKHR## a _) `compare`
+          x@(VkSemaphoreGetFdInfoKHR## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -476,68 +436,28 @@ instance Storable VkSemaphoreGetFdInfoKHR where
         alignment ~_ = #{alignment VkSemaphoreGetFdInfoKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkSemaphoreGetFdInfoKHR),
-            I## a <- alignment (undefined :: VkSemaphoreGetFdInfoKHR) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkSemaphoreGetFdInfoKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkSemaphoreGetFdInfoKHR## ba)
-          | I## n <- sizeOf (undefined :: VkSemaphoreGetFdInfoKHR) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkSemaphoreGetFdInfoKHR where
+        unsafeAddr (VkSemaphoreGetFdInfoKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkSemaphoreGetFdInfoKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkSemaphoreGetFdInfoKHR## (plusAddr## (byteArrayContents## b) off) b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSemaphoreGetFdInfoKHR where
         type StructFields VkSemaphoreGetFdInfoKHR =
              '["sType", "pNext", "semaphore", "handleType"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkSemaphoreGetFdInfoKHR),
-            I## a <- alignment (undefined :: VkSemaphoreGetFdInfoKHR) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkSemaphoreGetFdInfoKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkSemaphoreGetFdInfoKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkSemaphoreGetFdInfoKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkSemaphoreGetFdInfoKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkSemaphoreGetFdInfoKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkSemaphoreGetFdInfoKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkSType VkSemaphoreGetFdInfoKHR
          where

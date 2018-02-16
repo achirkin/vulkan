@@ -7,7 +7,6 @@
 {-# LANGUAGE PatternSynonyms       #-}
 {-# LANGUAGE Strict                #-}
 {-# LANGUAGE TypeFamilies          #-}
-{-# LANGUAGE UnboxedTuples         #-}
 {-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_KHR_variable_pointers
        (-- * Vulkan extension: @VK_KHR_variable_pointers@
@@ -36,12 +35,8 @@ module Graphics.Vulkan.Ext.VK_KHR_variable_pointers
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common           (VkBool32,
                                                    VkStructureType (..))
 import           Graphics.Vulkan.Marshal
@@ -57,19 +52,20 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkPhysicalDeviceVariablePointerFeaturesKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceVariablePointerFeaturesKHR.html VkPhysicalDeviceVariablePointerFeaturesKHR registry at www.khronos.org>
-data VkPhysicalDeviceVariablePointerFeaturesKHR = VkPhysicalDeviceVariablePointerFeaturesKHR## ByteArray##
+data VkPhysicalDeviceVariablePointerFeaturesKHR = VkPhysicalDeviceVariablePointerFeaturesKHR## Addr##
+                                                                                              ByteArray##
 
 instance Eq VkPhysicalDeviceVariablePointerFeaturesKHR where
-        (VkPhysicalDeviceVariablePointerFeaturesKHR## a) ==
-          (VkPhysicalDeviceVariablePointerFeaturesKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkPhysicalDeviceVariablePointerFeaturesKHR## a _) ==
+          x@(VkPhysicalDeviceVariablePointerFeaturesKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceVariablePointerFeaturesKHR where
-        (VkPhysicalDeviceVariablePointerFeaturesKHR## a) `compare`
-          (VkPhysicalDeviceVariablePointerFeaturesKHR## b)
-          = cmpImmutableContent a b
+        (VkPhysicalDeviceVariablePointerFeaturesKHR## a _) `compare`
+          x@(VkPhysicalDeviceVariablePointerFeaturesKHR## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -82,78 +78,35 @@ instance Storable VkPhysicalDeviceVariablePointerFeaturesKHR where
           = #{alignment VkPhysicalDeviceVariablePointerFeaturesKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceVariablePointerFeaturesKHR),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDeviceVariablePointerFeaturesKHR)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPhysicalDeviceVariablePointerFeaturesKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkPhysicalDeviceVariablePointerFeaturesKHR## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceVariablePointerFeaturesKHR)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim
+           VkPhysicalDeviceVariablePointerFeaturesKHR
+         where
+        unsafeAddr (VkPhysicalDeviceVariablePointerFeaturesKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkPhysicalDeviceVariablePointerFeaturesKHR## _ b)
+          = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPhysicalDeviceVariablePointerFeaturesKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceVariablePointerFeaturesKHR
          where
         type StructFields VkPhysicalDeviceVariablePointerFeaturesKHR =
              '["sType", "pNext", "variablePointersStorageBuffer", -- ' closing tick for hsc2hs
                "variablePointers"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceVariablePointerFeaturesKHR),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDeviceVariablePointerFeaturesKHR)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPhysicalDeviceVariablePointerFeaturesKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkPhysicalDeviceVariablePointerFeaturesKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkPhysicalDeviceVariablePointerFeaturesKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkPhysicalDeviceVariablePointerFeaturesKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkPhysicalDeviceVariablePointerFeaturesKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkPhysicalDeviceVariablePointerFeaturesKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceVariablePointerFeaturesKHR where

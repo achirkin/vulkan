@@ -7,7 +7,6 @@
 {-# LANGUAGE PatternSynonyms       #-}
 {-# LANGUAGE Strict                #-}
 {-# LANGUAGE TypeFamilies          #-}
-{-# LANGUAGE UnboxedTuples         #-}
 {-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_KHR_16bit_storage
        (-- * Vulkan extension: @VK_KHR_16bit_storage@
@@ -36,12 +35,8 @@ module Graphics.Vulkan.Ext.VK_KHR_16bit_storage
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common           (VkBool32,
                                                    VkStructureType (..))
 import           Graphics.Vulkan.Marshal
@@ -59,19 +54,20 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkPhysicalDevice16BitStorageFeaturesKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDevice16BitStorageFeaturesKHR.html VkPhysicalDevice16BitStorageFeaturesKHR registry at www.khronos.org>
-data VkPhysicalDevice16BitStorageFeaturesKHR = VkPhysicalDevice16BitStorageFeaturesKHR## ByteArray##
+data VkPhysicalDevice16BitStorageFeaturesKHR = VkPhysicalDevice16BitStorageFeaturesKHR## Addr##
+                                                                                        ByteArray##
 
 instance Eq VkPhysicalDevice16BitStorageFeaturesKHR where
-        (VkPhysicalDevice16BitStorageFeaturesKHR## a) ==
-          (VkPhysicalDevice16BitStorageFeaturesKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkPhysicalDevice16BitStorageFeaturesKHR## a _) ==
+          x@(VkPhysicalDevice16BitStorageFeaturesKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDevice16BitStorageFeaturesKHR where
-        (VkPhysicalDevice16BitStorageFeaturesKHR## a) `compare`
-          (VkPhysicalDevice16BitStorageFeaturesKHR## b)
-          = cmpImmutableContent a b
+        (VkPhysicalDevice16BitStorageFeaturesKHR## a _) `compare`
+          x@(VkPhysicalDevice16BitStorageFeaturesKHR## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -84,28 +80,27 @@ instance Storable VkPhysicalDevice16BitStorageFeaturesKHR where
           = #{alignment VkPhysicalDevice16BitStorageFeaturesKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDevice16BitStorageFeaturesKHR),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDevice16BitStorageFeaturesKHR)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPhysicalDevice16BitStorageFeaturesKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkPhysicalDevice16BitStorageFeaturesKHR## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDevice16BitStorageFeaturesKHR)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkPhysicalDevice16BitStorageFeaturesKHR
+         where
+        unsafeAddr (VkPhysicalDevice16BitStorageFeaturesKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkPhysicalDevice16BitStorageFeaturesKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPhysicalDevice16BitStorageFeaturesKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDevice16BitStorageFeaturesKHR
          where
@@ -113,50 +108,6 @@ instance VulkanMarshal VkPhysicalDevice16BitStorageFeaturesKHR
              '["sType", "pNext", "storageBuffer16BitAccess", -- ' closing tick for hsc2hs
                "uniformAndStorageBuffer16BitAccess", "storagePushConstant16",
                "storageInputOutput16"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDevice16BitStorageFeaturesKHR),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDevice16BitStorageFeaturesKHR)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPhysicalDevice16BitStorageFeaturesKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkPhysicalDevice16BitStorageFeaturesKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkPhysicalDevice16BitStorageFeaturesKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkPhysicalDevice16BitStorageFeaturesKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkPhysicalDevice16BitStorageFeaturesKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkPhysicalDevice16BitStorageFeaturesKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDevice16BitStorageFeaturesKHR where

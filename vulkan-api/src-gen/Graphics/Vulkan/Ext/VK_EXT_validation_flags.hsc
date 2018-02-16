@@ -7,7 +7,6 @@
 {-# LANGUAGE PatternSynonyms       #-}
 {-# LANGUAGE Strict                #-}
 {-# LANGUAGE TypeFamilies          #-}
-{-# LANGUAGE UnboxedTuples         #-}
 {-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_EXT_validation_flags
        (-- * Vulkan extension: @VK_EXT_validation_flags@
@@ -30,12 +29,8 @@ module Graphics.Vulkan.Ext.VK_EXT_validation_flags
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common           (VkStructureType,
                                                    VkStructureType (..),
                                                    VkValidationCheckEXT, Word32)
@@ -52,17 +47,17 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkValidationFlagsEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkValidationFlagsEXT.html VkValidationFlagsEXT registry at www.khronos.org>
-data VkValidationFlagsEXT = VkValidationFlagsEXT## ByteArray##
+data VkValidationFlagsEXT = VkValidationFlagsEXT## Addr## ByteArray##
 
 instance Eq VkValidationFlagsEXT where
-        (VkValidationFlagsEXT## a) == (VkValidationFlagsEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkValidationFlagsEXT## a _) == x@(VkValidationFlagsEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkValidationFlagsEXT where
-        (VkValidationFlagsEXT## a) `compare` (VkValidationFlagsEXT## b)
-          = cmpImmutableContent a b
+        (VkValidationFlagsEXT## a _) `compare` x@(VkValidationFlagsEXT## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -73,67 +68,29 @@ instance Storable VkValidationFlagsEXT where
         alignment ~_ = #{alignment VkValidationFlagsEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkValidationFlagsEXT),
-            I## a <- alignment (undefined :: VkValidationFlagsEXT) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkValidationFlagsEXT## ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkValidationFlagsEXT## ba)
-          | I## n <- sizeOf (undefined :: VkValidationFlagsEXT) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkValidationFlagsEXT where
+        unsafeAddr (VkValidationFlagsEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkValidationFlagsEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkValidationFlagsEXT## (plusAddr## (byteArrayContents## b) off) b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkValidationFlagsEXT where
         type StructFields VkValidationFlagsEXT =
              '["sType", "pNext", "disabledValidationCheckCount", -- ' closing tick for hsc2hs
                "pDisabledValidationChecks"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkValidationFlagsEXT),
-            I## a <- alignment (undefined :: VkValidationFlagsEXT) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkValidationFlagsEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkValidationFlagsEXT## ba) = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkValidationFlagsEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkValidationFlagsEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkValidationFlagsEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkValidationFlagsEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkSType VkValidationFlagsEXT where
         type VkSTypeMType VkValidationFlagsEXT = VkStructureType

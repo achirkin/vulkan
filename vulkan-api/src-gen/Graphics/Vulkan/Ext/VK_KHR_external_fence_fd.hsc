@@ -8,7 +8,6 @@
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE UnboxedTuples            #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_external_fence_fd
        (-- * Vulkan extension: @VK_KHR_external_fence_fd@
@@ -39,12 +38,8 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_fd
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
@@ -61,17 +56,18 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkImportFenceFdInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImportFenceFdInfoKHR.html VkImportFenceFdInfoKHR registry at www.khronos.org>
-data VkImportFenceFdInfoKHR = VkImportFenceFdInfoKHR## ByteArray##
+data VkImportFenceFdInfoKHR = VkImportFenceFdInfoKHR## Addr##
+                                                      ByteArray##
 
 instance Eq VkImportFenceFdInfoKHR where
-        (VkImportFenceFdInfoKHR## a) == (VkImportFenceFdInfoKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkImportFenceFdInfoKHR## a _) == x@(VkImportFenceFdInfoKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkImportFenceFdInfoKHR where
-        (VkImportFenceFdInfoKHR## a) `compare` (VkImportFenceFdInfoKHR## b)
-          = cmpImmutableContent a b
+        (VkImportFenceFdInfoKHR## a _) `compare`
+          x@(VkImportFenceFdInfoKHR## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -82,68 +78,28 @@ instance Storable VkImportFenceFdInfoKHR where
         alignment ~_ = #{alignment VkImportFenceFdInfoKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkImportFenceFdInfoKHR),
-            I## a <- alignment (undefined :: VkImportFenceFdInfoKHR) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkImportFenceFdInfoKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkImportFenceFdInfoKHR## ba)
-          | I## n <- sizeOf (undefined :: VkImportFenceFdInfoKHR) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkImportFenceFdInfoKHR where
+        unsafeAddr (VkImportFenceFdInfoKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkImportFenceFdInfoKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkImportFenceFdInfoKHR## (plusAddr## (byteArrayContents## b) off) b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkImportFenceFdInfoKHR where
         type StructFields VkImportFenceFdInfoKHR =
              '["sType", "pNext", "fence", "flags", "handleType", "fd"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkImportFenceFdInfoKHR),
-            I## a <- alignment (undefined :: VkImportFenceFdInfoKHR) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkImportFenceFdInfoKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkImportFenceFdInfoKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkImportFenceFdInfoKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkImportFenceFdInfoKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkImportFenceFdInfoKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkImportFenceFdInfoKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkSType VkImportFenceFdInfoKHR
          where
@@ -448,17 +404,17 @@ instance Show VkImportFenceFdInfoKHR where
 --   > } VkFenceGetFdInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkFenceGetFdInfoKHR.html VkFenceGetFdInfoKHR registry at www.khronos.org>
-data VkFenceGetFdInfoKHR = VkFenceGetFdInfoKHR## ByteArray##
+data VkFenceGetFdInfoKHR = VkFenceGetFdInfoKHR## Addr## ByteArray##
 
 instance Eq VkFenceGetFdInfoKHR where
-        (VkFenceGetFdInfoKHR## a) == (VkFenceGetFdInfoKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkFenceGetFdInfoKHR## a _) == x@(VkFenceGetFdInfoKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkFenceGetFdInfoKHR where
-        (VkFenceGetFdInfoKHR## a) `compare` (VkFenceGetFdInfoKHR## b)
-          = cmpImmutableContent a b
+        (VkFenceGetFdInfoKHR## a _) `compare` x@(VkFenceGetFdInfoKHR## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -469,66 +425,28 @@ instance Storable VkFenceGetFdInfoKHR where
         alignment ~_ = #{alignment VkFenceGetFdInfoKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkFenceGetFdInfoKHR),
-            I## a <- alignment (undefined :: VkFenceGetFdInfoKHR) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkFenceGetFdInfoKHR## ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkFenceGetFdInfoKHR## ba)
-          | I## n <- sizeOf (undefined :: VkFenceGetFdInfoKHR) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkFenceGetFdInfoKHR where
+        unsafeAddr (VkFenceGetFdInfoKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkFenceGetFdInfoKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkFenceGetFdInfoKHR## (plusAddr## (byteArrayContents## b) off) b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkFenceGetFdInfoKHR where
         type StructFields VkFenceGetFdInfoKHR =
              '["sType", "pNext", "fence", "handleType"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkFenceGetFdInfoKHR),
-            I## a <- alignment (undefined :: VkFenceGetFdInfoKHR) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkFenceGetFdInfoKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkFenceGetFdInfoKHR## ba) = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkFenceGetFdInfoKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkFenceGetFdInfoKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkFenceGetFdInfoKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkFenceGetFdInfoKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkSType VkFenceGetFdInfoKHR where
         type VkSTypeMType VkFenceGetFdInfoKHR = VkStructureType
