@@ -8,7 +8,6 @@
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE UnboxedTuples            #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_MVK_macos_surface
        (-- * Vulkan extension: @VK_MVK_macos_surface@
@@ -39,12 +38,8 @@ module Graphics.Vulkan.Ext.VK_MVK_macos_surface
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..))
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
@@ -60,17 +55,19 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkMacOSSurfaceCreateInfoMVK;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMacOSSurfaceCreateInfoMVK.html VkMacOSSurfaceCreateInfoMVK registry at www.khronos.org>
-data VkMacOSSurfaceCreateInfoMVK = VkMacOSSurfaceCreateInfoMVK## ByteArray##
+data VkMacOSSurfaceCreateInfoMVK = VkMacOSSurfaceCreateInfoMVK## Addr##
+                                                                ByteArray##
 
 instance Eq VkMacOSSurfaceCreateInfoMVK where
-        (VkMacOSSurfaceCreateInfoMVK## a) ==
-          (VkMacOSSurfaceCreateInfoMVK## b) = EQ == cmpImmutableContent a b
+        (VkMacOSSurfaceCreateInfoMVK## a _) ==
+          x@(VkMacOSSurfaceCreateInfoMVK## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkMacOSSurfaceCreateInfoMVK where
-        (VkMacOSSurfaceCreateInfoMVK## a) `compare`
-          (VkMacOSSurfaceCreateInfoMVK## b) = cmpImmutableContent a b
+        (VkMacOSSurfaceCreateInfoMVK## a _) `compare`
+          x@(VkMacOSSurfaceCreateInfoMVK## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -81,68 +78,30 @@ instance Storable VkMacOSSurfaceCreateInfoMVK where
         alignment ~_ = #{alignment VkMacOSSurfaceCreateInfoMVK}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkMacOSSurfaceCreateInfoMVK),
-            I## a <- alignment (undefined :: VkMacOSSurfaceCreateInfoMVK) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkMacOSSurfaceCreateInfoMVK##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkMacOSSurfaceCreateInfoMVK## ba)
-          | I## n <- sizeOf (undefined :: VkMacOSSurfaceCreateInfoMVK) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkMacOSSurfaceCreateInfoMVK where
+        unsafeAddr (VkMacOSSurfaceCreateInfoMVK## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkMacOSSurfaceCreateInfoMVK## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkMacOSSurfaceCreateInfoMVK##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkMacOSSurfaceCreateInfoMVK where
         type StructFields VkMacOSSurfaceCreateInfoMVK =
              '["sType", "pNext", "flags", "pView"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkMacOSSurfaceCreateInfoMVK),
-            I## a <- alignment (undefined :: VkMacOSSurfaceCreateInfoMVK) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkMacOSSurfaceCreateInfoMVK##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkMacOSSurfaceCreateInfoMVK## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkMacOSSurfaceCreateInfoMVK##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkMacOSSurfaceCreateInfoMVK## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkMacOSSurfaceCreateInfoMVK## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkMacOSSurfaceCreateInfoMVK## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkSType VkMacOSSurfaceCreateInfoMVK
          where

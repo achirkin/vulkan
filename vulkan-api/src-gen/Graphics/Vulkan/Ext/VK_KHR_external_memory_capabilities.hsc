@@ -10,7 +10,6 @@
 {-# LANGUAGE ScopedTypeVariables      #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE UnboxedTuples            #-}
 {-# LANGUAGE UndecidableInstances     #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_external_memory_capabilities
@@ -51,13 +50,9 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_capabilities
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.TypeLits                     (KnownNat, natVal') -- ' closing tick for hsc2hs
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
@@ -71,17 +66,19 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkExternalMemoryPropertiesKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalMemoryPropertiesKHR.html VkExternalMemoryPropertiesKHR registry at www.khronos.org>
-data VkExternalMemoryPropertiesKHR = VkExternalMemoryPropertiesKHR## ByteArray##
+data VkExternalMemoryPropertiesKHR = VkExternalMemoryPropertiesKHR## Addr##
+                                                                    ByteArray##
 
 instance Eq VkExternalMemoryPropertiesKHR where
-        (VkExternalMemoryPropertiesKHR## a) ==
-          (VkExternalMemoryPropertiesKHR## b) = EQ == cmpImmutableContent a b
+        (VkExternalMemoryPropertiesKHR## a _) ==
+          x@(VkExternalMemoryPropertiesKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkExternalMemoryPropertiesKHR where
-        (VkExternalMemoryPropertiesKHR## a) `compare`
-          (VkExternalMemoryPropertiesKHR## b) = cmpImmutableContent a b
+        (VkExternalMemoryPropertiesKHR## a _) `compare`
+          x@(VkExternalMemoryPropertiesKHR## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -93,69 +90,31 @@ instance Storable VkExternalMemoryPropertiesKHR where
           = #{alignment VkExternalMemoryPropertiesKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkExternalMemoryPropertiesKHR),
-            I## a <- alignment (undefined :: VkExternalMemoryPropertiesKHR) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkExternalMemoryPropertiesKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkExternalMemoryPropertiesKHR## ba)
-          | I## n <- sizeOf (undefined :: VkExternalMemoryPropertiesKHR) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkExternalMemoryPropertiesKHR where
+        unsafeAddr (VkExternalMemoryPropertiesKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkExternalMemoryPropertiesKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkExternalMemoryPropertiesKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkExternalMemoryPropertiesKHR where
         type StructFields VkExternalMemoryPropertiesKHR =
              '["externalMemoryFeatures", "exportFromImportedHandleTypes", -- ' closing tick for hsc2hs
                "compatibleHandleTypes"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkExternalMemoryPropertiesKHR),
-            I## a <- alignment (undefined :: VkExternalMemoryPropertiesKHR) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkExternalMemoryPropertiesKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkExternalMemoryPropertiesKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkExternalMemoryPropertiesKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkExternalMemoryPropertiesKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkExternalMemoryPropertiesKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkExternalMemoryPropertiesKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkExternalMemoryFeatures VkExternalMemoryPropertiesKHR where
@@ -335,19 +294,20 @@ instance Show VkExternalMemoryPropertiesKHR where
 --   > } VkPhysicalDeviceExternalImageFormatInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceExternalImageFormatInfoKHR.html VkPhysicalDeviceExternalImageFormatInfoKHR registry at www.khronos.org>
-data VkPhysicalDeviceExternalImageFormatInfoKHR = VkPhysicalDeviceExternalImageFormatInfoKHR## ByteArray##
+data VkPhysicalDeviceExternalImageFormatInfoKHR = VkPhysicalDeviceExternalImageFormatInfoKHR## Addr##
+                                                                                              ByteArray##
 
 instance Eq VkPhysicalDeviceExternalImageFormatInfoKHR where
-        (VkPhysicalDeviceExternalImageFormatInfoKHR## a) ==
-          (VkPhysicalDeviceExternalImageFormatInfoKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkPhysicalDeviceExternalImageFormatInfoKHR## a _) ==
+          x@(VkPhysicalDeviceExternalImageFormatInfoKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceExternalImageFormatInfoKHR where
-        (VkPhysicalDeviceExternalImageFormatInfoKHR## a) `compare`
-          (VkPhysicalDeviceExternalImageFormatInfoKHR## b)
-          = cmpImmutableContent a b
+        (VkPhysicalDeviceExternalImageFormatInfoKHR## a _) `compare`
+          x@(VkPhysicalDeviceExternalImageFormatInfoKHR## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -360,77 +320,34 @@ instance Storable VkPhysicalDeviceExternalImageFormatInfoKHR where
           = #{alignment VkPhysicalDeviceExternalImageFormatInfoKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceExternalImageFormatInfoKHR),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDeviceExternalImageFormatInfoKHR)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPhysicalDeviceExternalImageFormatInfoKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkPhysicalDeviceExternalImageFormatInfoKHR## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceExternalImageFormatInfoKHR)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim
+           VkPhysicalDeviceExternalImageFormatInfoKHR
+         where
+        unsafeAddr (VkPhysicalDeviceExternalImageFormatInfoKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkPhysicalDeviceExternalImageFormatInfoKHR## _ b)
+          = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPhysicalDeviceExternalImageFormatInfoKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceExternalImageFormatInfoKHR
          where
         type StructFields VkPhysicalDeviceExternalImageFormatInfoKHR =
              '["sType", "pNext", "handleType"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceExternalImageFormatInfoKHR),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDeviceExternalImageFormatInfoKHR)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPhysicalDeviceExternalImageFormatInfoKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkPhysicalDeviceExternalImageFormatInfoKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkPhysicalDeviceExternalImageFormatInfoKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkPhysicalDeviceExternalImageFormatInfoKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkPhysicalDeviceExternalImageFormatInfoKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkPhysicalDeviceExternalImageFormatInfoKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceExternalImageFormatInfoKHR where
@@ -619,18 +536,20 @@ instance Show VkPhysicalDeviceExternalImageFormatInfoKHR where
 --   > } VkExternalImageFormatPropertiesKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalImageFormatPropertiesKHR.html VkExternalImageFormatPropertiesKHR registry at www.khronos.org>
-data VkExternalImageFormatPropertiesKHR = VkExternalImageFormatPropertiesKHR## ByteArray##
+data VkExternalImageFormatPropertiesKHR = VkExternalImageFormatPropertiesKHR## Addr##
+                                                                              ByteArray##
 
 instance Eq VkExternalImageFormatPropertiesKHR where
-        (VkExternalImageFormatPropertiesKHR## a) ==
-          (VkExternalImageFormatPropertiesKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkExternalImageFormatPropertiesKHR## a _) ==
+          x@(VkExternalImageFormatPropertiesKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkExternalImageFormatPropertiesKHR where
-        (VkExternalImageFormatPropertiesKHR## a) `compare`
-          (VkExternalImageFormatPropertiesKHR## b) = cmpImmutableContent a b
+        (VkExternalImageFormatPropertiesKHR## a _) `compare`
+          x@(VkExternalImageFormatPropertiesKHR## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -642,71 +561,30 @@ instance Storable VkExternalImageFormatPropertiesKHR where
           = #{alignment VkExternalImageFormatPropertiesKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkExternalImageFormatPropertiesKHR),
-            I## a <- alignment (undefined :: VkExternalImageFormatPropertiesKHR)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkExternalImageFormatPropertiesKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkExternalImageFormatPropertiesKHR## ba)
-          | I## n <- sizeOf (undefined :: VkExternalImageFormatPropertiesKHR)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkExternalImageFormatPropertiesKHR where
+        unsafeAddr (VkExternalImageFormatPropertiesKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkExternalImageFormatPropertiesKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkExternalImageFormatPropertiesKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkExternalImageFormatPropertiesKHR where
         type StructFields VkExternalImageFormatPropertiesKHR =
              '["sType", "pNext", "externalMemoryProperties"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkExternalImageFormatPropertiesKHR),
-            I## a <- alignment (undefined :: VkExternalImageFormatPropertiesKHR)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkExternalImageFormatPropertiesKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkExternalImageFormatPropertiesKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkExternalImageFormatPropertiesKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkExternalImageFormatPropertiesKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkExternalImageFormatPropertiesKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkExternalImageFormatPropertiesKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkExternalImageFormatPropertiesKHR where
@@ -875,19 +753,20 @@ instance Show VkExternalImageFormatPropertiesKHR where
 --   > } VkPhysicalDeviceExternalBufferInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceExternalBufferInfoKHR.html VkPhysicalDeviceExternalBufferInfoKHR registry at www.khronos.org>
-data VkPhysicalDeviceExternalBufferInfoKHR = VkPhysicalDeviceExternalBufferInfoKHR## ByteArray##
+data VkPhysicalDeviceExternalBufferInfoKHR = VkPhysicalDeviceExternalBufferInfoKHR## Addr##
+                                                                                    ByteArray##
 
 instance Eq VkPhysicalDeviceExternalBufferInfoKHR where
-        (VkPhysicalDeviceExternalBufferInfoKHR## a) ==
-          (VkPhysicalDeviceExternalBufferInfoKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkPhysicalDeviceExternalBufferInfoKHR## a _) ==
+          x@(VkPhysicalDeviceExternalBufferInfoKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceExternalBufferInfoKHR where
-        (VkPhysicalDeviceExternalBufferInfoKHR## a) `compare`
-          (VkPhysicalDeviceExternalBufferInfoKHR## b)
-          = cmpImmutableContent a b
+        (VkPhysicalDeviceExternalBufferInfoKHR## a _) `compare`
+          x@(VkPhysicalDeviceExternalBufferInfoKHR## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -900,76 +779,31 @@ instance Storable VkPhysicalDeviceExternalBufferInfoKHR where
           = #{alignment VkPhysicalDeviceExternalBufferInfoKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceExternalBufferInfoKHR),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDeviceExternalBufferInfoKHR)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPhysicalDeviceExternalBufferInfoKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkPhysicalDeviceExternalBufferInfoKHR## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceExternalBufferInfoKHR)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkPhysicalDeviceExternalBufferInfoKHR
+         where
+        unsafeAddr (VkPhysicalDeviceExternalBufferInfoKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkPhysicalDeviceExternalBufferInfoKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPhysicalDeviceExternalBufferInfoKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceExternalBufferInfoKHR where
         type StructFields VkPhysicalDeviceExternalBufferInfoKHR =
              '["sType", "pNext", "flags", "usage", "handleType"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceExternalBufferInfoKHR),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDeviceExternalBufferInfoKHR)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPhysicalDeviceExternalBufferInfoKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkPhysicalDeviceExternalBufferInfoKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkPhysicalDeviceExternalBufferInfoKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkPhysicalDeviceExternalBufferInfoKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkPhysicalDeviceExternalBufferInfoKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkPhysicalDeviceExternalBufferInfoKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceExternalBufferInfoKHR where
@@ -1258,17 +1092,19 @@ instance Show VkPhysicalDeviceExternalBufferInfoKHR where
 --   > } VkExternalBufferPropertiesKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalBufferPropertiesKHR.html VkExternalBufferPropertiesKHR registry at www.khronos.org>
-data VkExternalBufferPropertiesKHR = VkExternalBufferPropertiesKHR## ByteArray##
+data VkExternalBufferPropertiesKHR = VkExternalBufferPropertiesKHR## Addr##
+                                                                    ByteArray##
 
 instance Eq VkExternalBufferPropertiesKHR where
-        (VkExternalBufferPropertiesKHR## a) ==
-          (VkExternalBufferPropertiesKHR## b) = EQ == cmpImmutableContent a b
+        (VkExternalBufferPropertiesKHR## a _) ==
+          x@(VkExternalBufferPropertiesKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkExternalBufferPropertiesKHR where
-        (VkExternalBufferPropertiesKHR## a) `compare`
-          (VkExternalBufferPropertiesKHR## b) = cmpImmutableContent a b
+        (VkExternalBufferPropertiesKHR## a _) `compare`
+          x@(VkExternalBufferPropertiesKHR## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -1280,68 +1116,30 @@ instance Storable VkExternalBufferPropertiesKHR where
           = #{alignment VkExternalBufferPropertiesKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkExternalBufferPropertiesKHR),
-            I## a <- alignment (undefined :: VkExternalBufferPropertiesKHR) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkExternalBufferPropertiesKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkExternalBufferPropertiesKHR## ba)
-          | I## n <- sizeOf (undefined :: VkExternalBufferPropertiesKHR) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkExternalBufferPropertiesKHR where
+        unsafeAddr (VkExternalBufferPropertiesKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkExternalBufferPropertiesKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkExternalBufferPropertiesKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkExternalBufferPropertiesKHR where
         type StructFields VkExternalBufferPropertiesKHR =
              '["sType", "pNext", "externalMemoryProperties"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkExternalBufferPropertiesKHR),
-            I## a <- alignment (undefined :: VkExternalBufferPropertiesKHR) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkExternalBufferPropertiesKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkExternalBufferPropertiesKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkExternalBufferPropertiesKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkExternalBufferPropertiesKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkExternalBufferPropertiesKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkExternalBufferPropertiesKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkExternalBufferPropertiesKHR where
@@ -1503,18 +1301,19 @@ instance Show VkExternalBufferPropertiesKHR where
 --   > } VkPhysicalDeviceIDPropertiesKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceIDPropertiesKHR.html VkPhysicalDeviceIDPropertiesKHR registry at www.khronos.org>
-data VkPhysicalDeviceIDPropertiesKHR = VkPhysicalDeviceIDPropertiesKHR## ByteArray##
+data VkPhysicalDeviceIDPropertiesKHR = VkPhysicalDeviceIDPropertiesKHR## Addr##
+                                                                        ByteArray##
 
 instance Eq VkPhysicalDeviceIDPropertiesKHR where
-        (VkPhysicalDeviceIDPropertiesKHR## a) ==
-          (VkPhysicalDeviceIDPropertiesKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkPhysicalDeviceIDPropertiesKHR## a _) ==
+          x@(VkPhysicalDeviceIDPropertiesKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceIDPropertiesKHR where
-        (VkPhysicalDeviceIDPropertiesKHR## a) `compare`
-          (VkPhysicalDeviceIDPropertiesKHR## b) = cmpImmutableContent a b
+        (VkPhysicalDeviceIDPropertiesKHR## a _) `compare`
+          x@(VkPhysicalDeviceIDPropertiesKHR## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -1526,69 +1325,31 @@ instance Storable VkPhysicalDeviceIDPropertiesKHR where
           = #{alignment VkPhysicalDeviceIDPropertiesKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkPhysicalDeviceIDPropertiesKHR),
-            I## a <- alignment (undefined :: VkPhysicalDeviceIDPropertiesKHR) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPhysicalDeviceIDPropertiesKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkPhysicalDeviceIDPropertiesKHR## ba)
-          | I## n <- sizeOf (undefined :: VkPhysicalDeviceIDPropertiesKHR) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkPhysicalDeviceIDPropertiesKHR where
+        unsafeAddr (VkPhysicalDeviceIDPropertiesKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkPhysicalDeviceIDPropertiesKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPhysicalDeviceIDPropertiesKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceIDPropertiesKHR where
         type StructFields VkPhysicalDeviceIDPropertiesKHR =
              '["sType", "pNext", "deviceUUID", "driverUUID", "deviceLUID", -- ' closing tick for hsc2hs
                "deviceNodeMask", "deviceLUIDValid"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkPhysicalDeviceIDPropertiesKHR),
-            I## a <- alignment (undefined :: VkPhysicalDeviceIDPropertiesKHR) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPhysicalDeviceIDPropertiesKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkPhysicalDeviceIDPropertiesKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkPhysicalDeviceIDPropertiesKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkPhysicalDeviceIDPropertiesKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkPhysicalDeviceIDPropertiesKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkPhysicalDeviceIDPropertiesKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceIDPropertiesKHR where

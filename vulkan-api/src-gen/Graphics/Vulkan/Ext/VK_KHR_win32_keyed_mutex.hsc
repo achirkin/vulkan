@@ -7,7 +7,6 @@
 {-# LANGUAGE PatternSynonyms       #-}
 {-# LANGUAGE Strict                #-}
 {-# LANGUAGE TypeFamilies          #-}
-{-# LANGUAGE UnboxedTuples         #-}
 {-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_KHR_win32_keyed_mutex
        (-- * Vulkan extension: @VK_KHR_win32_keyed_mutex@
@@ -38,12 +37,8 @@ module Graphics.Vulkan.Ext.VK_KHR_win32_keyed_mutex
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common           (VkDeviceMemory,
                                                    VkStructureType (..), Word32)
 import           Graphics.Vulkan.Marshal
@@ -64,19 +59,20 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkWin32KeyedMutexAcquireReleaseInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkWin32KeyedMutexAcquireReleaseInfoKHR.html VkWin32KeyedMutexAcquireReleaseInfoKHR registry at www.khronos.org>
-data VkWin32KeyedMutexAcquireReleaseInfoKHR = VkWin32KeyedMutexAcquireReleaseInfoKHR## ByteArray##
+data VkWin32KeyedMutexAcquireReleaseInfoKHR = VkWin32KeyedMutexAcquireReleaseInfoKHR## Addr##
+                                                                                      ByteArray##
 
 instance Eq VkWin32KeyedMutexAcquireReleaseInfoKHR where
-        (VkWin32KeyedMutexAcquireReleaseInfoKHR## a) ==
-          (VkWin32KeyedMutexAcquireReleaseInfoKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkWin32KeyedMutexAcquireReleaseInfoKHR## a _) ==
+          x@(VkWin32KeyedMutexAcquireReleaseInfoKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkWin32KeyedMutexAcquireReleaseInfoKHR where
-        (VkWin32KeyedMutexAcquireReleaseInfoKHR## a) `compare`
-          (VkWin32KeyedMutexAcquireReleaseInfoKHR## b)
-          = cmpImmutableContent a b
+        (VkWin32KeyedMutexAcquireReleaseInfoKHR## a _) `compare`
+          x@(VkWin32KeyedMutexAcquireReleaseInfoKHR## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -89,78 +85,33 @@ instance Storable VkWin32KeyedMutexAcquireReleaseInfoKHR where
           = #{alignment VkWin32KeyedMutexAcquireReleaseInfoKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkWin32KeyedMutexAcquireReleaseInfoKHR),
-            I## a <- alignment
-                      (undefined :: VkWin32KeyedMutexAcquireReleaseInfoKHR)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkWin32KeyedMutexAcquireReleaseInfoKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkWin32KeyedMutexAcquireReleaseInfoKHR## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkWin32KeyedMutexAcquireReleaseInfoKHR)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkWin32KeyedMutexAcquireReleaseInfoKHR
+         where
+        unsafeAddr (VkWin32KeyedMutexAcquireReleaseInfoKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkWin32KeyedMutexAcquireReleaseInfoKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkWin32KeyedMutexAcquireReleaseInfoKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkWin32KeyedMutexAcquireReleaseInfoKHR where
         type StructFields VkWin32KeyedMutexAcquireReleaseInfoKHR =
              '["sType", "pNext", "acquireCount", "pAcquireSyncs", -- ' closing tick for hsc2hs
                "pAcquireKeys", "pAcquireTimeouts", "releaseCount",
                "pReleaseSyncs", "pReleaseKeys"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkWin32KeyedMutexAcquireReleaseInfoKHR),
-            I## a <- alignment
-                      (undefined :: VkWin32KeyedMutexAcquireReleaseInfoKHR)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkWin32KeyedMutexAcquireReleaseInfoKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkWin32KeyedMutexAcquireReleaseInfoKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkWin32KeyedMutexAcquireReleaseInfoKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkWin32KeyedMutexAcquireReleaseInfoKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkWin32KeyedMutexAcquireReleaseInfoKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkWin32KeyedMutexAcquireReleaseInfoKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkWin32KeyedMutexAcquireReleaseInfoKHR where

@@ -10,7 +10,6 @@
 {-# LANGUAGE ScopedTypeVariables      #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE UnboxedTuples            #-}
 {-# LANGUAGE UndecidableInstances     #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_EXT_debug_marker
@@ -45,13 +44,9 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_marker
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.TypeLits                     (KnownNat, natVal') -- ' closing tick for hsc2hs
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
@@ -67,17 +62,19 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkDebugMarkerObjectNameInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDebugMarkerObjectNameInfoEXT.html VkDebugMarkerObjectNameInfoEXT registry at www.khronos.org>
-data VkDebugMarkerObjectNameInfoEXT = VkDebugMarkerObjectNameInfoEXT## ByteArray##
+data VkDebugMarkerObjectNameInfoEXT = VkDebugMarkerObjectNameInfoEXT## Addr##
+                                                                      ByteArray##
 
 instance Eq VkDebugMarkerObjectNameInfoEXT where
-        (VkDebugMarkerObjectNameInfoEXT## a) ==
-          (VkDebugMarkerObjectNameInfoEXT## b) = EQ == cmpImmutableContent a b
+        (VkDebugMarkerObjectNameInfoEXT## a _) ==
+          x@(VkDebugMarkerObjectNameInfoEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkDebugMarkerObjectNameInfoEXT where
-        (VkDebugMarkerObjectNameInfoEXT## a) `compare`
-          (VkDebugMarkerObjectNameInfoEXT## b) = cmpImmutableContent a b
+        (VkDebugMarkerObjectNameInfoEXT## a _) `compare`
+          x@(VkDebugMarkerObjectNameInfoEXT## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -89,68 +86,30 @@ instance Storable VkDebugMarkerObjectNameInfoEXT where
           = #{alignment VkDebugMarkerObjectNameInfoEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkDebugMarkerObjectNameInfoEXT),
-            I## a <- alignment (undefined :: VkDebugMarkerObjectNameInfoEXT) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkDebugMarkerObjectNameInfoEXT##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkDebugMarkerObjectNameInfoEXT## ba)
-          | I## n <- sizeOf (undefined :: VkDebugMarkerObjectNameInfoEXT) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkDebugMarkerObjectNameInfoEXT where
+        unsafeAddr (VkDebugMarkerObjectNameInfoEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkDebugMarkerObjectNameInfoEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkDebugMarkerObjectNameInfoEXT##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDebugMarkerObjectNameInfoEXT where
         type StructFields VkDebugMarkerObjectNameInfoEXT =
              '["sType", "pNext", "objectType", "object", "pObjectName"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkDebugMarkerObjectNameInfoEXT),
-            I## a <- alignment (undefined :: VkDebugMarkerObjectNameInfoEXT) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkDebugMarkerObjectNameInfoEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkDebugMarkerObjectNameInfoEXT## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkDebugMarkerObjectNameInfoEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkDebugMarkerObjectNameInfoEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkDebugMarkerObjectNameInfoEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkDebugMarkerObjectNameInfoEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkDebugMarkerObjectNameInfoEXT where
@@ -422,17 +381,19 @@ instance Show VkDebugMarkerObjectNameInfoEXT where
 --   > } VkDebugMarkerObjectTagInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDebugMarkerObjectTagInfoEXT.html VkDebugMarkerObjectTagInfoEXT registry at www.khronos.org>
-data VkDebugMarkerObjectTagInfoEXT = VkDebugMarkerObjectTagInfoEXT## ByteArray##
+data VkDebugMarkerObjectTagInfoEXT = VkDebugMarkerObjectTagInfoEXT## Addr##
+                                                                    ByteArray##
 
 instance Eq VkDebugMarkerObjectTagInfoEXT where
-        (VkDebugMarkerObjectTagInfoEXT## a) ==
-          (VkDebugMarkerObjectTagInfoEXT## b) = EQ == cmpImmutableContent a b
+        (VkDebugMarkerObjectTagInfoEXT## a _) ==
+          x@(VkDebugMarkerObjectTagInfoEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkDebugMarkerObjectTagInfoEXT where
-        (VkDebugMarkerObjectTagInfoEXT## a) `compare`
-          (VkDebugMarkerObjectTagInfoEXT## b) = cmpImmutableContent a b
+        (VkDebugMarkerObjectTagInfoEXT## a _) `compare`
+          x@(VkDebugMarkerObjectTagInfoEXT## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -444,69 +405,31 @@ instance Storable VkDebugMarkerObjectTagInfoEXT where
           = #{alignment VkDebugMarkerObjectTagInfoEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkDebugMarkerObjectTagInfoEXT),
-            I## a <- alignment (undefined :: VkDebugMarkerObjectTagInfoEXT) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkDebugMarkerObjectTagInfoEXT##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkDebugMarkerObjectTagInfoEXT## ba)
-          | I## n <- sizeOf (undefined :: VkDebugMarkerObjectTagInfoEXT) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkDebugMarkerObjectTagInfoEXT where
+        unsafeAddr (VkDebugMarkerObjectTagInfoEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkDebugMarkerObjectTagInfoEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkDebugMarkerObjectTagInfoEXT##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDebugMarkerObjectTagInfoEXT where
         type StructFields VkDebugMarkerObjectTagInfoEXT =
              '["sType", "pNext", "objectType", "object", "tagName", "tagSize", -- ' closing tick for hsc2hs
                "pTag"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkDebugMarkerObjectTagInfoEXT),
-            I## a <- alignment (undefined :: VkDebugMarkerObjectTagInfoEXT) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkDebugMarkerObjectTagInfoEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkDebugMarkerObjectTagInfoEXT## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkDebugMarkerObjectTagInfoEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkDebugMarkerObjectTagInfoEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkDebugMarkerObjectTagInfoEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkDebugMarkerObjectTagInfoEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkDebugMarkerObjectTagInfoEXT where
@@ -872,17 +795,19 @@ instance Show VkDebugMarkerObjectTagInfoEXT where
 --   > } VkDebugMarkerMarkerInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDebugMarkerMarkerInfoEXT.html VkDebugMarkerMarkerInfoEXT registry at www.khronos.org>
-data VkDebugMarkerMarkerInfoEXT = VkDebugMarkerMarkerInfoEXT## ByteArray##
+data VkDebugMarkerMarkerInfoEXT = VkDebugMarkerMarkerInfoEXT## Addr##
+                                                              ByteArray##
 
 instance Eq VkDebugMarkerMarkerInfoEXT where
-        (VkDebugMarkerMarkerInfoEXT## a) == (VkDebugMarkerMarkerInfoEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkDebugMarkerMarkerInfoEXT## a _) ==
+          x@(VkDebugMarkerMarkerInfoEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkDebugMarkerMarkerInfoEXT where
-        (VkDebugMarkerMarkerInfoEXT## a) `compare`
-          (VkDebugMarkerMarkerInfoEXT## b) = cmpImmutableContent a b
+        (VkDebugMarkerMarkerInfoEXT## a _) `compare`
+          x@(VkDebugMarkerMarkerInfoEXT## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -893,68 +818,30 @@ instance Storable VkDebugMarkerMarkerInfoEXT where
         alignment ~_ = #{alignment VkDebugMarkerMarkerInfoEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkDebugMarkerMarkerInfoEXT),
-            I## a <- alignment (undefined :: VkDebugMarkerMarkerInfoEXT) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkDebugMarkerMarkerInfoEXT##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkDebugMarkerMarkerInfoEXT## ba)
-          | I## n <- sizeOf (undefined :: VkDebugMarkerMarkerInfoEXT) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkDebugMarkerMarkerInfoEXT where
+        unsafeAddr (VkDebugMarkerMarkerInfoEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkDebugMarkerMarkerInfoEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkDebugMarkerMarkerInfoEXT##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDebugMarkerMarkerInfoEXT where
         type StructFields VkDebugMarkerMarkerInfoEXT =
              '["sType", "pNext", "pMarkerName", "color"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkDebugMarkerMarkerInfoEXT),
-            I## a <- alignment (undefined :: VkDebugMarkerMarkerInfoEXT) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkDebugMarkerMarkerInfoEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkDebugMarkerMarkerInfoEXT## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkDebugMarkerMarkerInfoEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkDebugMarkerMarkerInfoEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkDebugMarkerMarkerInfoEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkDebugMarkerMarkerInfoEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkSType VkDebugMarkerMarkerInfoEXT
          where

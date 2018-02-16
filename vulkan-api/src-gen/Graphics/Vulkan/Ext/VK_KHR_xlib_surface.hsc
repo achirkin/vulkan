@@ -8,7 +8,6 @@
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE UnboxedTuples            #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_xlib_surface
        (-- * Vulkan extension: @VK_KHR_xlib_surface@
@@ -40,12 +39,8 @@ module Graphics.Vulkan.Ext.VK_KHR_xlib_surface
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..))
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
@@ -62,17 +57,19 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkXlibSurfaceCreateInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkXlibSurfaceCreateInfoKHR.html VkXlibSurfaceCreateInfoKHR registry at www.khronos.org>
-data VkXlibSurfaceCreateInfoKHR = VkXlibSurfaceCreateInfoKHR## ByteArray##
+data VkXlibSurfaceCreateInfoKHR = VkXlibSurfaceCreateInfoKHR## Addr##
+                                                              ByteArray##
 
 instance Eq VkXlibSurfaceCreateInfoKHR where
-        (VkXlibSurfaceCreateInfoKHR## a) == (VkXlibSurfaceCreateInfoKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkXlibSurfaceCreateInfoKHR## a _) ==
+          x@(VkXlibSurfaceCreateInfoKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkXlibSurfaceCreateInfoKHR where
-        (VkXlibSurfaceCreateInfoKHR## a) `compare`
-          (VkXlibSurfaceCreateInfoKHR## b) = cmpImmutableContent a b
+        (VkXlibSurfaceCreateInfoKHR## a _) `compare`
+          x@(VkXlibSurfaceCreateInfoKHR## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -83,68 +80,30 @@ instance Storable VkXlibSurfaceCreateInfoKHR where
         alignment ~_ = #{alignment VkXlibSurfaceCreateInfoKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkXlibSurfaceCreateInfoKHR),
-            I## a <- alignment (undefined :: VkXlibSurfaceCreateInfoKHR) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkXlibSurfaceCreateInfoKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkXlibSurfaceCreateInfoKHR## ba)
-          | I## n <- sizeOf (undefined :: VkXlibSurfaceCreateInfoKHR) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkXlibSurfaceCreateInfoKHR where
+        unsafeAddr (VkXlibSurfaceCreateInfoKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkXlibSurfaceCreateInfoKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkXlibSurfaceCreateInfoKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkXlibSurfaceCreateInfoKHR where
         type StructFields VkXlibSurfaceCreateInfoKHR =
              '["sType", "pNext", "flags", "dpy", "window"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkXlibSurfaceCreateInfoKHR),
-            I## a <- alignment (undefined :: VkXlibSurfaceCreateInfoKHR) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkXlibSurfaceCreateInfoKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkXlibSurfaceCreateInfoKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkXlibSurfaceCreateInfoKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkXlibSurfaceCreateInfoKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkXlibSurfaceCreateInfoKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkXlibSurfaceCreateInfoKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkSType VkXlibSurfaceCreateInfoKHR
          where

@@ -7,7 +7,6 @@
 {-# LANGUAGE PatternSynonyms       #-}
 {-# LANGUAGE Strict                #-}
 {-# LANGUAGE TypeFamilies          #-}
-{-# LANGUAGE UnboxedTuples         #-}
 {-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_KHR_dedicated_allocation
        (-- * Vulkan extension: @VK_KHR_dedicated_allocation@
@@ -38,12 +37,8 @@ module Graphics.Vulkan.Ext.VK_KHR_dedicated_allocation
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common           (VkBool32, VkBuffer, VkImage,
                                                    VkStructureType (..))
 import           Graphics.Vulkan.Marshal
@@ -59,18 +54,20 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkMemoryDedicatedRequirementsKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryDedicatedRequirementsKHR.html VkMemoryDedicatedRequirementsKHR registry at www.khronos.org>
-data VkMemoryDedicatedRequirementsKHR = VkMemoryDedicatedRequirementsKHR## ByteArray##
+data VkMemoryDedicatedRequirementsKHR = VkMemoryDedicatedRequirementsKHR## Addr##
+                                                                          ByteArray##
 
 instance Eq VkMemoryDedicatedRequirementsKHR where
-        (VkMemoryDedicatedRequirementsKHR## a) ==
-          (VkMemoryDedicatedRequirementsKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkMemoryDedicatedRequirementsKHR## a _) ==
+          x@(VkMemoryDedicatedRequirementsKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkMemoryDedicatedRequirementsKHR where
-        (VkMemoryDedicatedRequirementsKHR## a) `compare`
-          (VkMemoryDedicatedRequirementsKHR## b) = cmpImmutableContent a b
+        (VkMemoryDedicatedRequirementsKHR## a _) `compare`
+          x@(VkMemoryDedicatedRequirementsKHR## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -82,69 +79,31 @@ instance Storable VkMemoryDedicatedRequirementsKHR where
           = #{alignment VkMemoryDedicatedRequirementsKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkMemoryDedicatedRequirementsKHR),
-            I## a <- alignment (undefined :: VkMemoryDedicatedRequirementsKHR) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkMemoryDedicatedRequirementsKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkMemoryDedicatedRequirementsKHR## ba)
-          | I## n <- sizeOf (undefined :: VkMemoryDedicatedRequirementsKHR) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkMemoryDedicatedRequirementsKHR where
+        unsafeAddr (VkMemoryDedicatedRequirementsKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkMemoryDedicatedRequirementsKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkMemoryDedicatedRequirementsKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkMemoryDedicatedRequirementsKHR where
         type StructFields VkMemoryDedicatedRequirementsKHR =
              '["sType", "pNext", "prefersDedicatedAllocation", -- ' closing tick for hsc2hs
                "requiresDedicatedAllocation"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkMemoryDedicatedRequirementsKHR),
-            I## a <- alignment (undefined :: VkMemoryDedicatedRequirementsKHR) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkMemoryDedicatedRequirementsKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkMemoryDedicatedRequirementsKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkMemoryDedicatedRequirementsKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkMemoryDedicatedRequirementsKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkMemoryDedicatedRequirementsKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkMemoryDedicatedRequirementsKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkMemoryDedicatedRequirementsKHR where
@@ -369,18 +328,20 @@ instance Show VkMemoryDedicatedRequirementsKHR where
 --   > } VkMemoryDedicatedAllocateInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryDedicatedAllocateInfoKHR.html VkMemoryDedicatedAllocateInfoKHR registry at www.khronos.org>
-data VkMemoryDedicatedAllocateInfoKHR = VkMemoryDedicatedAllocateInfoKHR## ByteArray##
+data VkMemoryDedicatedAllocateInfoKHR = VkMemoryDedicatedAllocateInfoKHR## Addr##
+                                                                          ByteArray##
 
 instance Eq VkMemoryDedicatedAllocateInfoKHR where
-        (VkMemoryDedicatedAllocateInfoKHR## a) ==
-          (VkMemoryDedicatedAllocateInfoKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkMemoryDedicatedAllocateInfoKHR## a _) ==
+          x@(VkMemoryDedicatedAllocateInfoKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkMemoryDedicatedAllocateInfoKHR where
-        (VkMemoryDedicatedAllocateInfoKHR## a) `compare`
-          (VkMemoryDedicatedAllocateInfoKHR## b) = cmpImmutableContent a b
+        (VkMemoryDedicatedAllocateInfoKHR## a _) `compare`
+          x@(VkMemoryDedicatedAllocateInfoKHR## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -392,68 +353,30 @@ instance Storable VkMemoryDedicatedAllocateInfoKHR where
           = #{alignment VkMemoryDedicatedAllocateInfoKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkMemoryDedicatedAllocateInfoKHR),
-            I## a <- alignment (undefined :: VkMemoryDedicatedAllocateInfoKHR) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkMemoryDedicatedAllocateInfoKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkMemoryDedicatedAllocateInfoKHR## ba)
-          | I## n <- sizeOf (undefined :: VkMemoryDedicatedAllocateInfoKHR) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkMemoryDedicatedAllocateInfoKHR where
+        unsafeAddr (VkMemoryDedicatedAllocateInfoKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkMemoryDedicatedAllocateInfoKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkMemoryDedicatedAllocateInfoKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkMemoryDedicatedAllocateInfoKHR where
         type StructFields VkMemoryDedicatedAllocateInfoKHR =
              '["sType", "pNext", "image", "buffer"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkMemoryDedicatedAllocateInfoKHR),
-            I## a <- alignment (undefined :: VkMemoryDedicatedAllocateInfoKHR) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkMemoryDedicatedAllocateInfoKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkMemoryDedicatedAllocateInfoKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkMemoryDedicatedAllocateInfoKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkMemoryDedicatedAllocateInfoKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkMemoryDedicatedAllocateInfoKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkMemoryDedicatedAllocateInfoKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkMemoryDedicatedAllocateInfoKHR where

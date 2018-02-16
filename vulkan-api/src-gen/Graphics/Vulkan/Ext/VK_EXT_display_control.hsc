@@ -8,7 +8,6 @@
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE UnboxedTuples            #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_EXT_display_control
        (-- * Vulkan extension: @VK_EXT_display_control@
@@ -43,12 +42,8 @@ module Graphics.Vulkan.Ext.VK_EXT_display_control
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..))
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
@@ -63,17 +58,18 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkDisplayPowerInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplayPowerInfoEXT.html VkDisplayPowerInfoEXT registry at www.khronos.org>
-data VkDisplayPowerInfoEXT = VkDisplayPowerInfoEXT## ByteArray##
+data VkDisplayPowerInfoEXT = VkDisplayPowerInfoEXT## Addr##
+                                                    ByteArray##
 
 instance Eq VkDisplayPowerInfoEXT where
-        (VkDisplayPowerInfoEXT## a) == (VkDisplayPowerInfoEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkDisplayPowerInfoEXT## a _) == x@(VkDisplayPowerInfoEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkDisplayPowerInfoEXT where
-        (VkDisplayPowerInfoEXT## a) `compare` (VkDisplayPowerInfoEXT## b)
-          = cmpImmutableContent a b
+        (VkDisplayPowerInfoEXT## a _) `compare`
+          x@(VkDisplayPowerInfoEXT## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -84,66 +80,28 @@ instance Storable VkDisplayPowerInfoEXT where
         alignment ~_ = #{alignment VkDisplayPowerInfoEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkDisplayPowerInfoEXT),
-            I## a <- alignment (undefined :: VkDisplayPowerInfoEXT) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkDisplayPowerInfoEXT## ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkDisplayPowerInfoEXT## ba)
-          | I## n <- sizeOf (undefined :: VkDisplayPowerInfoEXT) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkDisplayPowerInfoEXT where
+        unsafeAddr (VkDisplayPowerInfoEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkDisplayPowerInfoEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkDisplayPowerInfoEXT## (plusAddr## (byteArrayContents## b) off) b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDisplayPowerInfoEXT where
         type StructFields VkDisplayPowerInfoEXT =
              '["sType", "pNext", "powerState"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkDisplayPowerInfoEXT),
-            I## a <- alignment (undefined :: VkDisplayPowerInfoEXT) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkDisplayPowerInfoEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkDisplayPowerInfoEXT## ba) = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkDisplayPowerInfoEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkDisplayPowerInfoEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkDisplayPowerInfoEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkDisplayPowerInfoEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkSType VkDisplayPowerInfoEXT where
         type VkSTypeMType VkDisplayPowerInfoEXT = VkStructureType
@@ -300,17 +258,17 @@ instance Show VkDisplayPowerInfoEXT where
 --   > } VkDeviceEventInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceEventInfoEXT.html VkDeviceEventInfoEXT registry at www.khronos.org>
-data VkDeviceEventInfoEXT = VkDeviceEventInfoEXT## ByteArray##
+data VkDeviceEventInfoEXT = VkDeviceEventInfoEXT## Addr## ByteArray##
 
 instance Eq VkDeviceEventInfoEXT where
-        (VkDeviceEventInfoEXT## a) == (VkDeviceEventInfoEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkDeviceEventInfoEXT## a _) == x@(VkDeviceEventInfoEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkDeviceEventInfoEXT where
-        (VkDeviceEventInfoEXT## a) `compare` (VkDeviceEventInfoEXT## b)
-          = cmpImmutableContent a b
+        (VkDeviceEventInfoEXT## a _) `compare` x@(VkDeviceEventInfoEXT## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -321,66 +279,28 @@ instance Storable VkDeviceEventInfoEXT where
         alignment ~_ = #{alignment VkDeviceEventInfoEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkDeviceEventInfoEXT),
-            I## a <- alignment (undefined :: VkDeviceEventInfoEXT) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkDeviceEventInfoEXT## ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkDeviceEventInfoEXT## ba)
-          | I## n <- sizeOf (undefined :: VkDeviceEventInfoEXT) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkDeviceEventInfoEXT where
+        unsafeAddr (VkDeviceEventInfoEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkDeviceEventInfoEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkDeviceEventInfoEXT## (plusAddr## (byteArrayContents## b) off) b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDeviceEventInfoEXT where
         type StructFields VkDeviceEventInfoEXT =
              '["sType", "pNext", "deviceEvent"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkDeviceEventInfoEXT),
-            I## a <- alignment (undefined :: VkDeviceEventInfoEXT) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkDeviceEventInfoEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkDeviceEventInfoEXT## ba) = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkDeviceEventInfoEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkDeviceEventInfoEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkDeviceEventInfoEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkDeviceEventInfoEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkSType VkDeviceEventInfoEXT where
         type VkSTypeMType VkDeviceEventInfoEXT = VkStructureType
@@ -536,17 +456,18 @@ instance Show VkDeviceEventInfoEXT where
 --   > } VkDisplayEventInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplayEventInfoEXT.html VkDisplayEventInfoEXT registry at www.khronos.org>
-data VkDisplayEventInfoEXT = VkDisplayEventInfoEXT## ByteArray##
+data VkDisplayEventInfoEXT = VkDisplayEventInfoEXT## Addr##
+                                                    ByteArray##
 
 instance Eq VkDisplayEventInfoEXT where
-        (VkDisplayEventInfoEXT## a) == (VkDisplayEventInfoEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkDisplayEventInfoEXT## a _) == x@(VkDisplayEventInfoEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkDisplayEventInfoEXT where
-        (VkDisplayEventInfoEXT## a) `compare` (VkDisplayEventInfoEXT## b)
-          = cmpImmutableContent a b
+        (VkDisplayEventInfoEXT## a _) `compare`
+          x@(VkDisplayEventInfoEXT## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -557,66 +478,28 @@ instance Storable VkDisplayEventInfoEXT where
         alignment ~_ = #{alignment VkDisplayEventInfoEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkDisplayEventInfoEXT),
-            I## a <- alignment (undefined :: VkDisplayEventInfoEXT) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkDisplayEventInfoEXT## ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkDisplayEventInfoEXT## ba)
-          | I## n <- sizeOf (undefined :: VkDisplayEventInfoEXT) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkDisplayEventInfoEXT where
+        unsafeAddr (VkDisplayEventInfoEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkDisplayEventInfoEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkDisplayEventInfoEXT## (plusAddr## (byteArrayContents## b) off) b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDisplayEventInfoEXT where
         type StructFields VkDisplayEventInfoEXT =
              '["sType", "pNext", "displayEvent"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkDisplayEventInfoEXT),
-            I## a <- alignment (undefined :: VkDisplayEventInfoEXT) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkDisplayEventInfoEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkDisplayEventInfoEXT## ba) = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkDisplayEventInfoEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkDisplayEventInfoEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkDisplayEventInfoEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkDisplayEventInfoEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkSType VkDisplayEventInfoEXT where
         type VkSTypeMType VkDisplayEventInfoEXT = VkStructureType
@@ -773,18 +656,19 @@ instance Show VkDisplayEventInfoEXT where
 --   > } VkSwapchainCounterCreateInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSwapchainCounterCreateInfoEXT.html VkSwapchainCounterCreateInfoEXT registry at www.khronos.org>
-data VkSwapchainCounterCreateInfoEXT = VkSwapchainCounterCreateInfoEXT## ByteArray##
+data VkSwapchainCounterCreateInfoEXT = VkSwapchainCounterCreateInfoEXT## Addr##
+                                                                        ByteArray##
 
 instance Eq VkSwapchainCounterCreateInfoEXT where
-        (VkSwapchainCounterCreateInfoEXT## a) ==
-          (VkSwapchainCounterCreateInfoEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkSwapchainCounterCreateInfoEXT## a _) ==
+          x@(VkSwapchainCounterCreateInfoEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkSwapchainCounterCreateInfoEXT where
-        (VkSwapchainCounterCreateInfoEXT## a) `compare`
-          (VkSwapchainCounterCreateInfoEXT## b) = cmpImmutableContent a b
+        (VkSwapchainCounterCreateInfoEXT## a _) `compare`
+          x@(VkSwapchainCounterCreateInfoEXT## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -796,68 +680,30 @@ instance Storable VkSwapchainCounterCreateInfoEXT where
           = #{alignment VkSwapchainCounterCreateInfoEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkSwapchainCounterCreateInfoEXT),
-            I## a <- alignment (undefined :: VkSwapchainCounterCreateInfoEXT) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkSwapchainCounterCreateInfoEXT##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkSwapchainCounterCreateInfoEXT## ba)
-          | I## n <- sizeOf (undefined :: VkSwapchainCounterCreateInfoEXT) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkSwapchainCounterCreateInfoEXT where
+        unsafeAddr (VkSwapchainCounterCreateInfoEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkSwapchainCounterCreateInfoEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkSwapchainCounterCreateInfoEXT##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSwapchainCounterCreateInfoEXT where
         type StructFields VkSwapchainCounterCreateInfoEXT =
              '["sType", "pNext", "surfaceCounters"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkSwapchainCounterCreateInfoEXT),
-            I## a <- alignment (undefined :: VkSwapchainCounterCreateInfoEXT) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkSwapchainCounterCreateInfoEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkSwapchainCounterCreateInfoEXT## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkSwapchainCounterCreateInfoEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkSwapchainCounterCreateInfoEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkSwapchainCounterCreateInfoEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkSwapchainCounterCreateInfoEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkSwapchainCounterCreateInfoEXT where

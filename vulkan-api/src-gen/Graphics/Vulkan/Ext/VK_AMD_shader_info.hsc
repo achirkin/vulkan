@@ -10,7 +10,6 @@
 {-# LANGUAGE ScopedTypeVariables      #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE UnboxedTuples            #-}
 {-# LANGUAGE UndecidableInstances     #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_AMD_shader_info
@@ -34,13 +33,9 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_info
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.TypeLits                     (KnownNat, natVal') -- ' closing tick for hsc2hs
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
@@ -56,17 +51,18 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkShaderResourceUsageAMD;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkShaderResourceUsageAMD.html VkShaderResourceUsageAMD registry at www.khronos.org>
-data VkShaderResourceUsageAMD = VkShaderResourceUsageAMD## ByteArray##
+data VkShaderResourceUsageAMD = VkShaderResourceUsageAMD## Addr##
+                                                          ByteArray##
 
 instance Eq VkShaderResourceUsageAMD where
-        (VkShaderResourceUsageAMD## a) == (VkShaderResourceUsageAMD## b)
-          = EQ == cmpImmutableContent a b
+        (VkShaderResourceUsageAMD## a _) ==
+          x@(VkShaderResourceUsageAMD## b _) = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkShaderResourceUsageAMD where
-        (VkShaderResourceUsageAMD## a) `compare`
-          (VkShaderResourceUsageAMD## b) = cmpImmutableContent a b
+        (VkShaderResourceUsageAMD## a _) `compare`
+          x@(VkShaderResourceUsageAMD## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -77,69 +73,30 @@ instance Storable VkShaderResourceUsageAMD where
         alignment ~_ = #{alignment VkShaderResourceUsageAMD}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkShaderResourceUsageAMD),
-            I## a <- alignment (undefined :: VkShaderResourceUsageAMD) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkShaderResourceUsageAMD##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkShaderResourceUsageAMD## ba)
-          | I## n <- sizeOf (undefined :: VkShaderResourceUsageAMD) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkShaderResourceUsageAMD where
+        unsafeAddr (VkShaderResourceUsageAMD## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkShaderResourceUsageAMD## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkShaderResourceUsageAMD## (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkShaderResourceUsageAMD where
         type StructFields VkShaderResourceUsageAMD =
              '["numUsedVgprs", "numUsedSgprs", "ldsSizePerLocalWorkGroup", -- ' closing tick for hsc2hs
                "ldsUsageSizeInBytes", "scratchMemUsageInBytes"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkShaderResourceUsageAMD),
-            I## a <- alignment (undefined :: VkShaderResourceUsageAMD) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkShaderResourceUsageAMD##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkShaderResourceUsageAMD## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkShaderResourceUsageAMD##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkShaderResourceUsageAMD## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkShaderResourceUsageAMD## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkShaderResourceUsageAMD## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkNumUsedVgprs VkShaderResourceUsageAMD where
@@ -400,17 +357,18 @@ instance Show VkShaderResourceUsageAMD where
 --   > } VkShaderStatisticsInfoAMD;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkShaderStatisticsInfoAMD.html VkShaderStatisticsInfoAMD registry at www.khronos.org>
-data VkShaderStatisticsInfoAMD = VkShaderStatisticsInfoAMD## ByteArray##
+data VkShaderStatisticsInfoAMD = VkShaderStatisticsInfoAMD## Addr##
+                                                            ByteArray##
 
 instance Eq VkShaderStatisticsInfoAMD where
-        (VkShaderStatisticsInfoAMD## a) == (VkShaderStatisticsInfoAMD## b)
-          = EQ == cmpImmutableContent a b
+        (VkShaderStatisticsInfoAMD## a _) ==
+          x@(VkShaderStatisticsInfoAMD## b _) = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkShaderStatisticsInfoAMD where
-        (VkShaderStatisticsInfoAMD## a) `compare`
-          (VkShaderStatisticsInfoAMD## b) = cmpImmutableContent a b
+        (VkShaderStatisticsInfoAMD## a _) `compare`
+          x@(VkShaderStatisticsInfoAMD## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -421,70 +379,31 @@ instance Storable VkShaderStatisticsInfoAMD where
         alignment ~_ = #{alignment VkShaderStatisticsInfoAMD}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkShaderStatisticsInfoAMD),
-            I## a <- alignment (undefined :: VkShaderStatisticsInfoAMD) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkShaderStatisticsInfoAMD##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkShaderStatisticsInfoAMD## ba)
-          | I## n <- sizeOf (undefined :: VkShaderStatisticsInfoAMD) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkShaderStatisticsInfoAMD where
+        unsafeAddr (VkShaderStatisticsInfoAMD## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkShaderStatisticsInfoAMD## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkShaderStatisticsInfoAMD## (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkShaderStatisticsInfoAMD where
         type StructFields VkShaderStatisticsInfoAMD =
              '["shaderStageMask", "resourceUsage", "numPhysicalVgprs", -- ' closing tick for hsc2hs
                "numPhysicalSgprs", "numAvailableVgprs", "numAvailableSgprs",
                "computeWorkGroupSize"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkShaderStatisticsInfoAMD),
-            I## a <- alignment (undefined :: VkShaderStatisticsInfoAMD) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkShaderStatisticsInfoAMD##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkShaderStatisticsInfoAMD## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkShaderStatisticsInfoAMD##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkShaderStatisticsInfoAMD## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkShaderStatisticsInfoAMD## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkShaderStatisticsInfoAMD## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkShaderStageMask VkShaderStatisticsInfoAMD where

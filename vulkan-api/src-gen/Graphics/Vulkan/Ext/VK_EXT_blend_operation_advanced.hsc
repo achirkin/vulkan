@@ -7,7 +7,6 @@
 {-# LANGUAGE PatternSynonyms       #-}
 {-# LANGUAGE Strict                #-}
 {-# LANGUAGE TypeFamilies          #-}
-{-# LANGUAGE UnboxedTuples         #-}
 {-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_EXT_blend_operation_advanced
        (-- * Vulkan extension: @VK_EXT_blend_operation_advanced@
@@ -68,12 +67,8 @@ module Graphics.Vulkan.Ext.VK_EXT_blend_operation_advanced
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common           (VkAccessFlagBits (..),
                                                    VkBlendOp (..),
                                                    VkBlendOverlapEXT, VkBool32,
@@ -91,20 +86,21 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT.html VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT registry at www.khronos.org>
-data VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT = VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT## ByteArray##
+data VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT = VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT## Addr##
+                                                                                                            ByteArray##
 
 instance Eq VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT where
-        (VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT## a) ==
-          (VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT## a _) ==
+          x@(VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
          where
-        (VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT## a) `compare`
-          (VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT## b)
-          = cmpImmutableContent a b
+        (VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT## a _) `compare`
+          x@(VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -118,83 +114,36 @@ instance Storable VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
           = #{alignment VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr)
-          (VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim
+           VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
+         where
+        unsafeAddr (VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT## a _)
+          = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray
+          (VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
          where
         type StructFields VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
              = '["sType", "pNext", "advancedBlendCoherentOperations"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr##
-              VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr
-          (VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr
-          (VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData
-          x@(VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT where
@@ -400,21 +349,23 @@ instance Show VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
 --   > } VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT.html VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT registry at www.khronos.org>
-data VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT = VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT## ByteArray##
+data VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT = VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT## Addr##
+                                                                                                                ByteArray##
 
 instance Eq VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
          where
-        (VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT## a) ==
-          (VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT## a _) ==
+          x@(VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
          where
-        (VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT## a) `compare`
-          (VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT## b)
-          = cmpImmutableContent a b
+        (VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT## a _)
+          `compare`
+          x@(VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -429,29 +380,30 @@ instance Storable
           = #{alignment VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr)
-          (VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim
+           VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+         where
+        unsafeAddr
+          (VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray
+          (VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
@@ -464,54 +416,6 @@ instance VulkanMarshal
                "advancedBlendNonPremultipliedSrcColor",
                "advancedBlendNonPremultipliedDstColor",
                "advancedBlendCorrelatedOverlap", "advancedBlendAllOperations"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr##
-              VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr
-          (VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr
-          (VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData
-          x@(VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
@@ -1005,19 +909,20 @@ instance Show VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
 --   > } VkPipelineColorBlendAdvancedStateCreateInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineColorBlendAdvancedStateCreateInfoEXT.html VkPipelineColorBlendAdvancedStateCreateInfoEXT registry at www.khronos.org>
-data VkPipelineColorBlendAdvancedStateCreateInfoEXT = VkPipelineColorBlendAdvancedStateCreateInfoEXT## ByteArray##
+data VkPipelineColorBlendAdvancedStateCreateInfoEXT = VkPipelineColorBlendAdvancedStateCreateInfoEXT## Addr##
+                                                                                                      ByteArray##
 
 instance Eq VkPipelineColorBlendAdvancedStateCreateInfoEXT where
-        (VkPipelineColorBlendAdvancedStateCreateInfoEXT## a) ==
-          (VkPipelineColorBlendAdvancedStateCreateInfoEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkPipelineColorBlendAdvancedStateCreateInfoEXT## a _) ==
+          x@(VkPipelineColorBlendAdvancedStateCreateInfoEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineColorBlendAdvancedStateCreateInfoEXT where
-        (VkPipelineColorBlendAdvancedStateCreateInfoEXT## a) `compare`
-          (VkPipelineColorBlendAdvancedStateCreateInfoEXT## b)
-          = cmpImmutableContent a b
+        (VkPipelineColorBlendAdvancedStateCreateInfoEXT## a _) `compare`
+          x@(VkPipelineColorBlendAdvancedStateCreateInfoEXT## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -1031,29 +936,30 @@ instance Storable VkPipelineColorBlendAdvancedStateCreateInfoEXT
           = #{alignment VkPipelineColorBlendAdvancedStateCreateInfoEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkPipelineColorBlendAdvancedStateCreateInfoEXT),
-            I## a <- alignment
-                      (undefined :: VkPipelineColorBlendAdvancedStateCreateInfoEXT)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPipelineColorBlendAdvancedStateCreateInfoEXT##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr)
-          (VkPipelineColorBlendAdvancedStateCreateInfoEXT## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkPipelineColorBlendAdvancedStateCreateInfoEXT)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim
+           VkPipelineColorBlendAdvancedStateCreateInfoEXT
+         where
+        unsafeAddr (VkPipelineColorBlendAdvancedStateCreateInfoEXT## a _)
+          = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray
+          (VkPipelineColorBlendAdvancedStateCreateInfoEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPipelineColorBlendAdvancedStateCreateInfoEXT##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkPipelineColorBlendAdvancedStateCreateInfoEXT
@@ -1061,51 +967,6 @@ instance VulkanMarshal
         type StructFields VkPipelineColorBlendAdvancedStateCreateInfoEXT =
              '["sType", "pNext", "srcPremultiplied", "dstPremultiplied", -- ' closing tick for hsc2hs
                "blendOverlap"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkPipelineColorBlendAdvancedStateCreateInfoEXT),
-            I## a <- alignment
-                      (undefined :: VkPipelineColorBlendAdvancedStateCreateInfoEXT)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPipelineColorBlendAdvancedStateCreateInfoEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkPipelineColorBlendAdvancedStateCreateInfoEXT## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkPipelineColorBlendAdvancedStateCreateInfoEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkPipelineColorBlendAdvancedStateCreateInfoEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr
-          (VkPipelineColorBlendAdvancedStateCreateInfoEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkPipelineColorBlendAdvancedStateCreateInfoEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPipelineColorBlendAdvancedStateCreateInfoEXT where

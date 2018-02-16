@@ -7,7 +7,6 @@
 {-# LANGUAGE PatternSynonyms       #-}
 {-# LANGUAGE Strict                #-}
 {-# LANGUAGE TypeFamilies          #-}
-{-# LANGUAGE UnboxedTuples         #-}
 {-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_EXT_conservative_rasterization
        (-- * Vulkan extension: @VK_EXT_conservative_rasterization@
@@ -38,12 +37,8 @@ module Graphics.Vulkan.Ext.VK_EXT_conservative_rasterization
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common           (VkBool32, VkConservativeRasterizationModeEXT,
                                                    VkPipelineRasterizationConservativeStateCreateFlagsEXT,
                                                    VkStructureType (..))
@@ -67,22 +62,23 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkPhysicalDeviceConservativeRasterizationPropertiesEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceConservativeRasterizationPropertiesEXT.html VkPhysicalDeviceConservativeRasterizationPropertiesEXT registry at www.khronos.org>
-data VkPhysicalDeviceConservativeRasterizationPropertiesEXT = VkPhysicalDeviceConservativeRasterizationPropertiesEXT## ByteArray##
+data VkPhysicalDeviceConservativeRasterizationPropertiesEXT = VkPhysicalDeviceConservativeRasterizationPropertiesEXT## Addr##
+                                                                                                                      ByteArray##
 
 instance Eq VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
-        (VkPhysicalDeviceConservativeRasterizationPropertiesEXT## a) ==
-          (VkPhysicalDeviceConservativeRasterizationPropertiesEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkPhysicalDeviceConservativeRasterizationPropertiesEXT## a _) ==
+          x@(VkPhysicalDeviceConservativeRasterizationPropertiesEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
-        (VkPhysicalDeviceConservativeRasterizationPropertiesEXT## a)
+        (VkPhysicalDeviceConservativeRasterizationPropertiesEXT## a _)
           `compare`
-          (VkPhysicalDeviceConservativeRasterizationPropertiesEXT## b)
-          = cmpImmutableContent a b
+          x@(VkPhysicalDeviceConservativeRasterizationPropertiesEXT## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -97,32 +93,30 @@ instance Storable
           = #{alignment VkPhysicalDeviceConservativeRasterizationPropertiesEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined ::
-                         VkPhysicalDeviceConservativeRasterizationPropertiesEXT),
-            I## a <- alignment
-                      (undefined ::
-                         VkPhysicalDeviceConservativeRasterizationPropertiesEXT)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPhysicalDeviceConservativeRasterizationPropertiesEXT##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr)
-          (VkPhysicalDeviceConservativeRasterizationPropertiesEXT## ba)
-          | I## n <- sizeOf
-                      (undefined ::
-                         VkPhysicalDeviceConservativeRasterizationPropertiesEXT)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim
+           VkPhysicalDeviceConservativeRasterizationPropertiesEXT
+         where
+        unsafeAddr
+          (VkPhysicalDeviceConservativeRasterizationPropertiesEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray
+          (VkPhysicalDeviceConservativeRasterizationPropertiesEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPhysicalDeviceConservativeRasterizationPropertiesEXT##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkPhysicalDeviceConservativeRasterizationPropertiesEXT
@@ -138,57 +132,6 @@ instance VulkanMarshal
                "degenerateTrianglesRasterized", "degenerateLinesRasterized",
                "fullyCoveredFragmentShaderInputVariable",
                "conservativeRasterizationPostDepthCoverage"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined ::
-                         VkPhysicalDeviceConservativeRasterizationPropertiesEXT),
-            I## a <- alignment
-                      (undefined ::
-                         VkPhysicalDeviceConservativeRasterizationPropertiesEXT)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPhysicalDeviceConservativeRasterizationPropertiesEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr
-          (VkPhysicalDeviceConservativeRasterizationPropertiesEXT## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr##
-              VkPhysicalDeviceConservativeRasterizationPropertiesEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr
-          (VkPhysicalDeviceConservativeRasterizationPropertiesEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr
-          (VkPhysicalDeviceConservativeRasterizationPropertiesEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData
-          x@(VkPhysicalDeviceConservativeRasterizationPropertiesEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceConservativeRasterizationPropertiesEXT
@@ -947,22 +890,23 @@ instance Show
 --   > } VkPipelineRasterizationConservativeStateCreateInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineRasterizationConservativeStateCreateInfoEXT.html VkPipelineRasterizationConservativeStateCreateInfoEXT registry at www.khronos.org>
-data VkPipelineRasterizationConservativeStateCreateInfoEXT = VkPipelineRasterizationConservativeStateCreateInfoEXT## ByteArray##
+data VkPipelineRasterizationConservativeStateCreateInfoEXT = VkPipelineRasterizationConservativeStateCreateInfoEXT## Addr##
+                                                                                                                    ByteArray##
 
 instance Eq VkPipelineRasterizationConservativeStateCreateInfoEXT
          where
-        (VkPipelineRasterizationConservativeStateCreateInfoEXT## a) ==
-          (VkPipelineRasterizationConservativeStateCreateInfoEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkPipelineRasterizationConservativeStateCreateInfoEXT## a _) ==
+          x@(VkPipelineRasterizationConservativeStateCreateInfoEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineRasterizationConservativeStateCreateInfoEXT
          where
-        (VkPipelineRasterizationConservativeStateCreateInfoEXT## a)
+        (VkPipelineRasterizationConservativeStateCreateInfoEXT## a _)
           `compare`
-          (VkPipelineRasterizationConservativeStateCreateInfoEXT## b)
-          = cmpImmutableContent a b
+          x@(VkPipelineRasterizationConservativeStateCreateInfoEXT## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -977,32 +921,30 @@ instance Storable
           = #{alignment VkPipelineRasterizationConservativeStateCreateInfoEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined ::
-                         VkPipelineRasterizationConservativeStateCreateInfoEXT),
-            I## a <- alignment
-                      (undefined ::
-                         VkPipelineRasterizationConservativeStateCreateInfoEXT)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPipelineRasterizationConservativeStateCreateInfoEXT##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr)
-          (VkPipelineRasterizationConservativeStateCreateInfoEXT## ba)
-          | I## n <- sizeOf
-                      (undefined ::
-                         VkPipelineRasterizationConservativeStateCreateInfoEXT)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim
+           VkPipelineRasterizationConservativeStateCreateInfoEXT
+         where
+        unsafeAddr
+          (VkPipelineRasterizationConservativeStateCreateInfoEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray
+          (VkPipelineRasterizationConservativeStateCreateInfoEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPipelineRasterizationConservativeStateCreateInfoEXT##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkPipelineRasterizationConservativeStateCreateInfoEXT
@@ -1012,57 +954,6 @@ instance VulkanMarshal
              =
              '["sType", "pNext", "flags", "conservativeRasterizationMode", -- ' closing tick for hsc2hs
                "extraPrimitiveOverestimationSize"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined ::
-                         VkPipelineRasterizationConservativeStateCreateInfoEXT),
-            I## a <- alignment
-                      (undefined ::
-                         VkPipelineRasterizationConservativeStateCreateInfoEXT)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPipelineRasterizationConservativeStateCreateInfoEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr
-          (VkPipelineRasterizationConservativeStateCreateInfoEXT## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr##
-              VkPipelineRasterizationConservativeStateCreateInfoEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr
-          (VkPipelineRasterizationConservativeStateCreateInfoEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr
-          (VkPipelineRasterizationConservativeStateCreateInfoEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData
-          x@(VkPipelineRasterizationConservativeStateCreateInfoEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPipelineRasterizationConservativeStateCreateInfoEXT

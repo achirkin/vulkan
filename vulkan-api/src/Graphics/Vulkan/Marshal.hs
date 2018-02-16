@@ -2,12 +2,14 @@
 {-# LANGUAGE AllowAmbiguousTypes        #-}
 {-# LANGUAGE ConstraintKinds            #-}
 {-# LANGUAGE DataKinds                  #-}
+{-# LANGUAGE DefaultSignatures          #-}
 {-# LANGUAGE DeriveDataTypeable         #-}
 {-# LANGUAGE DeriveGeneric              #-}
 {-# LANGUAGE FlexibleContexts           #-}
 {-# LANGUAGE FlexibleInstances          #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE KindSignatures             #-}
+{-# LANGUAGE MagicHash                  #-}
 {-# LANGUAGE MultiParamTypeClasses      #-}
 {-# LANGUAGE PatternSynonyms            #-}
 {-# LANGUAGE RoleAnnotations            #-}
@@ -22,11 +24,11 @@
 -- | This module is not part of auto-generated code based on vk.xml.
 --   Instead, it is hand-written to provide common types and classes.
 module Graphics.Vulkan.Marshal
-  ( VulkanMarshal (..)
+  ( VulkanMarshal (..), VulkanMarshalPrim ()
   , VulkanPtr (..)
   , VkPtr (..)
   , pattern VK_NULL_HANDLE
-  , clearStorable
+  , clearStorable, withPtr
     -- * Type-indexed access to struct members
   , HasField (..), CanReadField (..), CanWriteField (..)
   , CanReadFieldArray (..), CanWriteFieldArray (..), IndexInBounds
@@ -42,22 +44,28 @@ module Graphics.Vulkan.Marshal
   , eqCStrings, eqCStringsN
   ) where
 
-import           Data.Data             (Data)
-import           Data.Int              (Int16, Int32, Int64, Int8)
-import           Data.Kind             (Constraint)
-import           Data.Void             (Void)
-import           Data.Word             (Word16, Word32, Word64, Word8)
-import           Foreign.C.String      (CString, peekCString)
-import           Foreign.C.Types       (CChar, CInt (..), CSize (..))
-import           Foreign.ForeignPtr    (ForeignPtr, addForeignPtrFinalizer,
-                                        mallocForeignPtr, withForeignPtr)
-import           Foreign.Marshal.Array (pokeArray0)
-import           Foreign.Marshal.Utils (fillBytes)
-import           Foreign.Ptr           (FunPtr, Ptr, castPtr, nullPtr, plusPtr)
-import           Foreign.Storable      (Storable (sizeOf))
-import           GHC.Generics          (Generic)
+import           Data.Data                        (Data)
+import           Data.Int                         (Int16, Int32, Int64, Int8)
+import           Data.Kind                        (Constraint)
+import           Data.Void                        (Void)
+import           Data.Word                        (Word16, Word32, Word64,
+                                                   Word8)
+import           Foreign.C.String                 (CString, peekCString)
+import           Foreign.C.Types                  (CChar, CInt (..), CSize (..))
+import           Foreign.ForeignPtr               (ForeignPtr,
+                                                   addForeignPtrFinalizer,
+                                                   mallocForeignPtr,
+                                                   withForeignPtr)
+import           Foreign.Marshal.Array            (pokeArray0)
+import           Foreign.Marshal.Utils            (fillBytes)
+import           Foreign.Ptr                      (FunPtr, nullPtr, plusPtr)
+import           Foreign.Storable                 (Storable (sizeOf))
+import           GHC.Generics                     (Generic)
+import           GHC.Ptr                          (Ptr (..))
 import           GHC.TypeLits
-import           System.IO.Unsafe      (unsafeDupablePerformIO)
+import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+
+import           Graphics.Vulkan.Marshal.Internal
 
 -- | All Vulkan structures are stored as-is in byte arrays to avoid any overheads
 --   for wrapping and unwrapping haskell values.
@@ -73,12 +81,53 @@ class VulkanMarshal a where
   --   Note, the function is supposed to use `newAlignedPinnedByteArray#`
   --   and does not guarantee to fill memory with zeroes.
   --   Use `clearStorable` to make sure all bytes are set to zero.
+  --
+  --   Note, the memory is managed by GHC, thus no need for freeing it manually.
   newVkData :: (Ptr a -> IO ()) -> IO a
+  default newVkData :: (Storable a, VulkanMarshalPrim a)
+                    => (Ptr a -> IO ()) -> IO a
+  newVkData = newVkData#
+  {-# INLINE newVkData #-}
+  -- | Allocate a pinned aligned byte array to keep vulkan data structure.
+  --
+  --   Note, the function is supposed to use `newAlignedPinnedByteArray#`
+  --   and does not guarantee to fill memory with zeroes.
+  --   Use `clearStorable` to make sure all bytes are set to zero.
+  --
+  --   Note, the memory is managed by GHC, thus no need for freeing it manually.
+  mallocVkData :: IO a
+  default mallocVkData :: (Storable a, VulkanMarshalPrim a) => IO a
+  mallocVkData = mallocVkData#
+  {-# INLINE mallocVkData #-}
+  -- | Allocate a pinned aligned byte array to keep vulkan data structures.
+  --   Returned `Ptr a` points to the first element in the contiguous array of
+  --   returned structures. Returned list elements point to the same memory area.
+  --   This function is unsafe in two ways:
+  --
+  --     * Several structures are stored next to each other, with no gaps;
+  --       it would break its alignment if the size is not multiple of alignment.
+  --     * Returned pointer is not tracked by GHC as a reference to the managed
+  --       memory. Thus, the array can be GCed if all references to the returned
+  --       list are lost.
+  --
+  --   Note, the function is supposed to use `newAlignedPinnedByteArray#`
+  --   and does not guarantee to fill memory with zeroes.
+  --   Use `clearStorable` to make sure all bytes are set to zero.
+  --
+  --   Note, the memory is managed by GHC, thus no need for freeing it manually.
+  mallocVkDataArray :: Int -> IO (Ptr a, [a])
+  default mallocVkDataArray :: (Storable a, VulkanMarshalPrim a)
+                            => Int -> IO (Ptr a, [a])
+  mallocVkDataArray = mallocVkDataArray#
+  {-# INLINE mallocVkDataArray #-}
   -- | Get pointer to vulkan structure.
   --   Note, the address is only valid as long as a given vulkan structure exists.
   --   Structures created with newVkData are stored in pinned byte arrays,
   --   so their memory is maintained by Haskell GC.
   unsafePtr  :: a -> Ptr a
+  default unsafePtr :: VulkanMarshalPrim a => a -> Ptr a
+  unsafePtr a = Ptr (unsafeAddr a)
+  {-# INLINE unsafePtr #-}
   -- | Get vulkan structure referenced by a 'ForeignPtr' trying to avoid copying data.
   --
   --   This function does copy data if called on an unmanaged `ForeignPtr`
@@ -91,19 +140,43 @@ class VulkanMarshal a where
   --   Thus, if all references to original `ForeignPtr` are lost,
   --     its attached finalizers may run even if the created structure is alive.
   fromForeignPtr :: ForeignPtr a -> IO a
+  default fromForeignPtr :: (Storable a, VulkanMarshalPrim a)
+                         => ForeignPtr a -> IO a
+  fromForeignPtr = fromForeignPtr#
+  {-# INLINE fromForeignPtr #-}
   -- | Create a `ForeignPtr` referencing the structure without copying data.
   toForeignPtr :: a -> IO (ForeignPtr a)
+  default toForeignPtr :: VulkanMarshalPrim a => a -> IO (ForeignPtr a)
+  toForeignPtr = toForeignPtr#
+  {-# INLINE toForeignPtr #-}
   -- | Create a `ForeignPtr` referencing the structure without copying data.
   --   This version of a pointer carries no finalizers.
   --
   -- It is not possible to add a finalizer to a ForeignPtr created with
-  -- @unsafeToPlainForeignPtr@.
+  -- @toPlainForeignPtr@.
   -- Attempts to add a finalizer to a ForeignPtr created this way, or to
   -- finalize such a pointer, will throw an exception.
   toPlainForeignPtr :: a -> IO (ForeignPtr a)
+  default toPlainForeignPtr :: VulkanMarshalPrim a => a -> IO (ForeignPtr a)
+  toPlainForeignPtr = toPlainForeignPtr#
+  {-# INLINE toPlainForeignPtr #-}
   -- | Make sure this data is alive at a given point in a sequence of IO actions.
   touchVkData  :: a -> IO ()
+  default touchVkData :: VulkanMarshalPrim a => a -> IO ()
+  touchVkData = touchVkData#
+  {-# INLINE touchVkData #-}
 
+-- | Run some operation with a pointer to vulkan structure.
+--
+--   Should be used with care:
+--     the structure pretends to be immutable, so it is better to only read
+--     from the pointed memory area, not to write.
+--     If an action needs to write something to the pointer, use `newVkData`.
+withPtr :: VulkanMarshal a => a -> (Ptr a -> IO b) -> IO b
+withPtr x k = do
+  b <- k (unsafePtr x)
+  touchVkData x
+  return b
 
 -- | Fill all bytes to zero getting data size from `Storable` instance.
 clearStorable :: Storable a => Ptr a -> IO ()
@@ -213,8 +286,10 @@ instance {-# OVERLAPPABLE #-}
          , IndexInBounds fname idx a
          ) => CanWriteFieldArray fname idx a where
 
-type NoField s a = 'Text "Structure " ':<>: 'ShowType a
-  ':<>: 'Text " does not have field '" ':<>: 'Text s ':<>: 'Text "'."
+type NoField (s :: Symbol) (a :: *) = 'Text "Structure " ':<>: 'ShowType a
+  ':<>: 'Text " does not have field " ':<>: 'ShowType s ':<>: 'Text "."
+  ':$$: 'Text "Note, this structure has following fields: "
+        ':<>: 'ShowType (StructFields a)
 
 type IndexInBounds (s :: Symbol) (i :: Nat) (a :: *)
   = IndexInBounds' s i a (CmpNat i (FieldArrayLength s a))
@@ -253,7 +328,7 @@ unsafeCStringField :: forall fname a
                      , VulkanMarshal a
                      )
                    => a -> CString
-unsafeCStringField x = castPtr $ unsafePtr x `plusPtr` fieldOffset @fname @a
+unsafeCStringField x = unsafePtr x `plusPtr` fieldOffset @fname @a
 
 
 getStringField :: forall fname a
@@ -276,7 +351,7 @@ readStringField :: forall fname a
                => Ptr a -> IO String
 readStringField px = do
   ((), s) <- takeForce (fieldArrayLength @fname @0 @a)
-         <$> peekCString (castPtr $ px `plusPtr` fieldOffset @fname @a)
+         <$> peekCString (px `plusPtr` fieldOffset @fname @a)
   return s
 
 writeStringField :: forall fname a
@@ -286,7 +361,7 @@ writeStringField :: forall fname a
                     )
                => Ptr a -> String -> IO ()
 writeStringField px =
-  pokeArray0 '\0' (castPtr $ px `plusPtr` fieldOffset @fname @a)
+  pokeArray0 '\0' (px `plusPtr` fieldOffset @fname @a)
 
 takeForce :: Int -> String -> ((), String)
 takeForce 0 _      = ((), [])

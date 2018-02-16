@@ -8,7 +8,6 @@
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE UnboxedTuples            #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_EXT_hdr_metadata
        (-- * Vulkan extension: @VK_EXT_hdr_metadata@
@@ -37,12 +36,8 @@ module Graphics.Vulkan.Ext.VK_EXT_hdr_metadata
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
@@ -63,17 +58,17 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkHdrMetadataEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkHdrMetadataEXT.html VkHdrMetadataEXT registry at www.khronos.org>
-data VkHdrMetadataEXT = VkHdrMetadataEXT## ByteArray##
+data VkHdrMetadataEXT = VkHdrMetadataEXT## Addr## ByteArray##
 
 instance Eq VkHdrMetadataEXT where
-        (VkHdrMetadataEXT## a) == (VkHdrMetadataEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkHdrMetadataEXT## a _) == x@(VkHdrMetadataEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkHdrMetadataEXT where
-        (VkHdrMetadataEXT## a) `compare` (VkHdrMetadataEXT## b)
-          = cmpImmutableContent a b
+        (VkHdrMetadataEXT## a _) `compare` x@(VkHdrMetadataEXT## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -84,67 +79,30 @@ instance Storable VkHdrMetadataEXT where
         alignment ~_ = #{alignment VkHdrMetadataEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkHdrMetadataEXT),
-            I## a <- alignment (undefined :: VkHdrMetadataEXT) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3, VkHdrMetadataEXT## ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkHdrMetadataEXT## ba)
-          | I## n <- sizeOf (undefined :: VkHdrMetadataEXT) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkHdrMetadataEXT where
+        unsafeAddr (VkHdrMetadataEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkHdrMetadataEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkHdrMetadataEXT## (plusAddr## (byteArrayContents## b) off) b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkHdrMetadataEXT where
         type StructFields VkHdrMetadataEXT =
              '["sType", "pNext", "displayPrimaryRed", "displayPrimaryGreen", -- ' closing tick for hsc2hs
                "displayPrimaryBlue", "whitePoint", "maxLuminance", "minLuminance",
                "maxContentLightLevel", "maxFrameAverageLightLevel"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkHdrMetadataEXT),
-            I## a <- alignment (undefined :: VkHdrMetadataEXT) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkHdrMetadataEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkHdrMetadataEXT## ba) = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkHdrMetadataEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkHdrMetadataEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkHdrMetadataEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkHdrMetadataEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkSType VkHdrMetadataEXT where
         type VkSTypeMType VkHdrMetadataEXT = VkStructureType
@@ -660,17 +618,17 @@ instance Show VkHdrMetadataEXT where
 --   > } VkXYColorEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkXYColorEXT.html VkXYColorEXT registry at www.khronos.org>
-data VkXYColorEXT = VkXYColorEXT## ByteArray##
+data VkXYColorEXT = VkXYColorEXT## Addr## ByteArray##
 
 instance Eq VkXYColorEXT where
-        (VkXYColorEXT## a) == (VkXYColorEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkXYColorEXT## a _) == x@(VkXYColorEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkXYColorEXT where
-        (VkXYColorEXT## a) `compare` (VkXYColorEXT## b)
-          = cmpImmutableContent a b
+        (VkXYColorEXT## a _) `compare` x@(VkXYColorEXT## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -681,64 +639,27 @@ instance Storable VkXYColorEXT where
         alignment ~_ = #{alignment VkXYColorEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkXYColorEXT),
-            I## a <- alignment (undefined :: VkXYColorEXT) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3, VkXYColorEXT## ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkXYColorEXT## ba)
-          | I## n <- sizeOf (undefined :: VkXYColorEXT) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
 
+instance VulkanMarshalPrim VkXYColorEXT where
+        unsafeAddr (VkXYColorEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkXYColorEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkXYColorEXT## (plusAddr## (byteArrayContents## b) off) b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
+
 instance VulkanMarshal VkXYColorEXT where
         type StructFields VkXYColorEXT = '["x", "y"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkXYColorEXT),
-            I## a <- alignment (undefined :: VkXYColorEXT) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkXYColorEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkXYColorEXT## ba) = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkXYColorEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkXYColorEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkXYColorEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkXYColorEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkX VkXYColorEXT where
         type VkXMType VkXYColorEXT = #{type float}

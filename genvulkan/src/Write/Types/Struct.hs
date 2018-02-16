@@ -57,15 +57,14 @@ genStructOrUnion isUnion VkTypeComposite
     return mempty
   else do
     writePragma "MagicHash"
-    writePragma "UnboxedTuples"
 
     writeImport $ DIThing "Storable" DITAll
-    writeImport $ DIThing "IO" DITAll
-    writeImport $ DIThing "Int" DITAll
-    writeImport $ DIThing "Ptr" DITAll
-    writeImport $ DIThing "ForeignPtr" DITAll
-    writeImport $ DIThing "ForeignPtrContents" DITAll
-    writeImport $ DIVar   "newForeignPtr_"
+    -- writeImport $ DIThing "IO" DITAll
+    -- writeImport $ DIThing "Int" DITAll
+    -- writeImport $ DIThing "Ptr" DITAll
+    -- writeImport $ DIThing "ForeignPtr" DITAll
+    -- writeImport $ DIThing "ForeignPtrContents" DITAll
+    -- writeImport $ DIVar   "newForeignPtr_"
 
     writeFullImport "Graphics.Vulkan.StructMembers"
     writeFullImport "GHC.Prim"
@@ -73,16 +72,16 @@ genStructOrUnion isUnion VkTypeComposite
     writeFullImport "Graphics.Vulkan.Marshal.Internal"
 
     let ds = parseDecls [text|
-          data $tnametxt = $tnametxt# ByteArray#
+          data $tnametxt = $tnametxt# Addr# ByteArray#
 
           instance Eq $tnametxt where
-            ($tnametxt# a) == ($tnametxt# b)
-              = EQ == cmpImmutableContent a b
+            ($tnametxt# a _) == x@($tnametxt# b _)
+              = EQ == cmpBytes# (sizeOf x) a b
             {-# INLINE (==) #-}
 
           instance Ord $tnametxt where
-            ($tnametxt# a) `compare` ($tnametxt# b)
-              = cmpImmutableContent a b
+            ($tnametxt# a _) `compare` x@($tnametxt# b _)
+              = cmpBytes# (sizeOf x) a b
             {-# INLINE compare #-}
 
           instance Storable $tnametxt where
@@ -90,49 +89,22 @@ genStructOrUnion isUnion VkTypeComposite
             {-# INLINE sizeOf #-}
             alignment ~_ = HSC2HS___ "#{alignment $structNameTxt}"
             {-# INLINE alignment #-}
-            peek (Ptr addr)
-              | I# n <- sizeOf (undefined :: $tnametxt)
-              , I# a <- alignment (undefined :: $tnametxt)
-              = IO
-              (\s -> case newAlignedPinnedByteArray# n a s of
-                (# s1, mba #) -> case copyAddrToByteArray# addr mba 0# n s1 of
-                  s2 -> case unsafeFreezeByteArray# mba s2 of
-                    (# s3, ba #) -> (# s3, $tnametxt# ba #)
-              )
+            peek = peekVkData#
             {-# INLINE peek #-}
-            poke (Ptr addr) ($tnametxt# ba)
-              | I# n <- sizeOf (undefined :: $tnametxt)
-              = IO (\s -> (# copyByteArrayToAddr# ba 0# addr n s, () #))
+            poke = pokeVkData#
             {-# INLINE poke #-}
+
+          instance VulkanMarshalPrim $tnametxt where
+            unsafeAddr ($tnametxt# a _) = a
+            {-# INLINE unsafeAddr #-}
+            unsafeByteArray ($tnametxt# _ b) = b
+            {-# INLINE unsafeByteArray #-}
+            unsafeFromByteArrayOffset off b
+              = $tnametxt# (plusAddr# (byteArrayContents# b) off) b
+            {-# INLINE unsafeFromByteArrayOffset #-}
 
           instance VulkanMarshal $tnametxt where
             type StructFields $tnametxt = $fieldNamesTxt
-            {-# INLINE newVkData #-}
-            newVkData f
-              | I# n <- sizeOf (undefined :: $tnametxt)
-              , I# a <- alignment (undefined :: $tnametxt)
-              = IO
-              (\s0 -> case newAlignedPinnedByteArray# n a s0 of
-                (# s1, mba #) -> case unsafeFreezeByteArray# mba s1 of
-                  (# s2, ba #) -> case f (Ptr (byteArrayContents# ba)) of
-                    IO k -> case k s2 of
-                      (# s3, () #) -> (# s3, $tnametxt# ba #)
-              )
-            {-# INLINE unsafePtr #-}
-            unsafePtr ($tnametxt# ba) = Ptr (byteArrayContents# ba)
-            {-# INLINE fromForeignPtr #-}
-            fromForeignPtr = fromForeignPtr# $tnametxt#
-            {-# INLINE toForeignPtr #-}
-            toForeignPtr ($tnametxt# ba) = do
-              ForeignPtr addr (PlainForeignPtr r)
-                <- newForeignPtr_ (Ptr (byteArrayContents# ba))
-              IO (\s -> (# s, ForeignPtr addr (MallocPtr (unsafeCoerce# ba) r) #))
-            {-# INLINE toPlainForeignPtr #-}
-            toPlainForeignPtr ($tnametxt# ba) = IO
-              (\s -> (# s, ForeignPtr (byteArrayContents# ba) (PlainPtr (unsafeCoerce# ba)) #))
-            {-# INLINE touchVkData #-}
-            touchVkData x@($tnametxt# ba)
-              = IO (\s -> (# touch# x (touch# ba s), () #))
           |]
 
 

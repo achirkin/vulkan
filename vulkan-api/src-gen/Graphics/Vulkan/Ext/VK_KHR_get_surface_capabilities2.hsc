@@ -8,7 +8,6 @@
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE UnboxedTuples            #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_get_surface_capabilities2
        (-- * Vulkan extension: @VK_KHR_get_surface_capabilities2@
@@ -42,12 +41,8 @@ module Graphics.Vulkan.Ext.VK_KHR_get_surface_capabilities2
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base             (VkSurfaceCapabilitiesKHR,
                                                    VkSurfaceFormatKHR)
 import           Graphics.Vulkan.Common
@@ -63,18 +58,19 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkPhysicalDeviceSurfaceInfo2KHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceSurfaceInfo2KHR.html VkPhysicalDeviceSurfaceInfo2KHR registry at www.khronos.org>
-data VkPhysicalDeviceSurfaceInfo2KHR = VkPhysicalDeviceSurfaceInfo2KHR## ByteArray##
+data VkPhysicalDeviceSurfaceInfo2KHR = VkPhysicalDeviceSurfaceInfo2KHR## Addr##
+                                                                        ByteArray##
 
 instance Eq VkPhysicalDeviceSurfaceInfo2KHR where
-        (VkPhysicalDeviceSurfaceInfo2KHR## a) ==
-          (VkPhysicalDeviceSurfaceInfo2KHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkPhysicalDeviceSurfaceInfo2KHR## a _) ==
+          x@(VkPhysicalDeviceSurfaceInfo2KHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceSurfaceInfo2KHR where
-        (VkPhysicalDeviceSurfaceInfo2KHR## a) `compare`
-          (VkPhysicalDeviceSurfaceInfo2KHR## b) = cmpImmutableContent a b
+        (VkPhysicalDeviceSurfaceInfo2KHR## a _) `compare`
+          x@(VkPhysicalDeviceSurfaceInfo2KHR## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -86,68 +82,30 @@ instance Storable VkPhysicalDeviceSurfaceInfo2KHR where
           = #{alignment VkPhysicalDeviceSurfaceInfo2KHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkPhysicalDeviceSurfaceInfo2KHR),
-            I## a <- alignment (undefined :: VkPhysicalDeviceSurfaceInfo2KHR) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPhysicalDeviceSurfaceInfo2KHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkPhysicalDeviceSurfaceInfo2KHR## ba)
-          | I## n <- sizeOf (undefined :: VkPhysicalDeviceSurfaceInfo2KHR) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkPhysicalDeviceSurfaceInfo2KHR where
+        unsafeAddr (VkPhysicalDeviceSurfaceInfo2KHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkPhysicalDeviceSurfaceInfo2KHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPhysicalDeviceSurfaceInfo2KHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceSurfaceInfo2KHR where
         type StructFields VkPhysicalDeviceSurfaceInfo2KHR =
              '["sType", "pNext", "surface"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkPhysicalDeviceSurfaceInfo2KHR),
-            I## a <- alignment (undefined :: VkPhysicalDeviceSurfaceInfo2KHR) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPhysicalDeviceSurfaceInfo2KHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkPhysicalDeviceSurfaceInfo2KHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkPhysicalDeviceSurfaceInfo2KHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkPhysicalDeviceSurfaceInfo2KHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkPhysicalDeviceSurfaceInfo2KHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkPhysicalDeviceSurfaceInfo2KHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceSurfaceInfo2KHR where
@@ -313,17 +271,18 @@ instance Show VkPhysicalDeviceSurfaceInfo2KHR where
 --   > } VkSurfaceCapabilities2KHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSurfaceCapabilities2KHR.html VkSurfaceCapabilities2KHR registry at www.khronos.org>
-data VkSurfaceCapabilities2KHR = VkSurfaceCapabilities2KHR## ByteArray##
+data VkSurfaceCapabilities2KHR = VkSurfaceCapabilities2KHR## Addr##
+                                                            ByteArray##
 
 instance Eq VkSurfaceCapabilities2KHR where
-        (VkSurfaceCapabilities2KHR## a) == (VkSurfaceCapabilities2KHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkSurfaceCapabilities2KHR## a _) ==
+          x@(VkSurfaceCapabilities2KHR## b _) = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkSurfaceCapabilities2KHR where
-        (VkSurfaceCapabilities2KHR## a) `compare`
-          (VkSurfaceCapabilities2KHR## b) = cmpImmutableContent a b
+        (VkSurfaceCapabilities2KHR## a _) `compare`
+          x@(VkSurfaceCapabilities2KHR## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -334,68 +293,29 @@ instance Storable VkSurfaceCapabilities2KHR where
         alignment ~_ = #{alignment VkSurfaceCapabilities2KHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkSurfaceCapabilities2KHR),
-            I## a <- alignment (undefined :: VkSurfaceCapabilities2KHR) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkSurfaceCapabilities2KHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkSurfaceCapabilities2KHR## ba)
-          | I## n <- sizeOf (undefined :: VkSurfaceCapabilities2KHR) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkSurfaceCapabilities2KHR where
+        unsafeAddr (VkSurfaceCapabilities2KHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkSurfaceCapabilities2KHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkSurfaceCapabilities2KHR## (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSurfaceCapabilities2KHR where
         type StructFields VkSurfaceCapabilities2KHR =
              '["sType", "pNext", "surfaceCapabilities"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkSurfaceCapabilities2KHR),
-            I## a <- alignment (undefined :: VkSurfaceCapabilities2KHR) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkSurfaceCapabilities2KHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkSurfaceCapabilities2KHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkSurfaceCapabilities2KHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkSurfaceCapabilities2KHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkSurfaceCapabilities2KHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkSurfaceCapabilities2KHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkSType VkSurfaceCapabilities2KHR
          where
@@ -547,17 +467,17 @@ instance Show VkSurfaceCapabilities2KHR where
 --   > } VkSurfaceFormat2KHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSurfaceFormat2KHR.html VkSurfaceFormat2KHR registry at www.khronos.org>
-data VkSurfaceFormat2KHR = VkSurfaceFormat2KHR## ByteArray##
+data VkSurfaceFormat2KHR = VkSurfaceFormat2KHR## Addr## ByteArray##
 
 instance Eq VkSurfaceFormat2KHR where
-        (VkSurfaceFormat2KHR## a) == (VkSurfaceFormat2KHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkSurfaceFormat2KHR## a _) == x@(VkSurfaceFormat2KHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkSurfaceFormat2KHR where
-        (VkSurfaceFormat2KHR## a) `compare` (VkSurfaceFormat2KHR## b)
-          = cmpImmutableContent a b
+        (VkSurfaceFormat2KHR## a _) `compare` x@(VkSurfaceFormat2KHR## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -568,66 +488,28 @@ instance Storable VkSurfaceFormat2KHR where
         alignment ~_ = #{alignment VkSurfaceFormat2KHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkSurfaceFormat2KHR),
-            I## a <- alignment (undefined :: VkSurfaceFormat2KHR) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkSurfaceFormat2KHR## ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkSurfaceFormat2KHR## ba)
-          | I## n <- sizeOf (undefined :: VkSurfaceFormat2KHR) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkSurfaceFormat2KHR where
+        unsafeAddr (VkSurfaceFormat2KHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkSurfaceFormat2KHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkSurfaceFormat2KHR## (plusAddr## (byteArrayContents## b) off) b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSurfaceFormat2KHR where
         type StructFields VkSurfaceFormat2KHR =
              '["sType", "pNext", "surfaceFormat"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkSurfaceFormat2KHR),
-            I## a <- alignment (undefined :: VkSurfaceFormat2KHR) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkSurfaceFormat2KHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkSurfaceFormat2KHR## ba) = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkSurfaceFormat2KHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkSurfaceFormat2KHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkSurfaceFormat2KHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkSurfaceFormat2KHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkSType VkSurfaceFormat2KHR where
         type VkSTypeMType VkSurfaceFormat2KHR = VkStructureType

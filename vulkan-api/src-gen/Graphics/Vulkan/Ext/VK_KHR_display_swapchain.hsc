@@ -8,7 +8,6 @@
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE UnboxedTuples            #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_display_swapchain
        (-- * Vulkan extension: @VK_KHR_display_swapchain@
@@ -38,12 +37,8 @@ module Graphics.Vulkan.Ext.VK_KHR_display_swapchain
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..),
                                                    VkRect2D,
                                                    VkSwapchainCreateInfoKHR (..))
@@ -62,17 +57,18 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkDisplayPresentInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplayPresentInfoKHR.html VkDisplayPresentInfoKHR registry at www.khronos.org>
-data VkDisplayPresentInfoKHR = VkDisplayPresentInfoKHR## ByteArray##
+data VkDisplayPresentInfoKHR = VkDisplayPresentInfoKHR## Addr##
+                                                        ByteArray##
 
 instance Eq VkDisplayPresentInfoKHR where
-        (VkDisplayPresentInfoKHR## a) == (VkDisplayPresentInfoKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkDisplayPresentInfoKHR## a _) == x@(VkDisplayPresentInfoKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkDisplayPresentInfoKHR where
-        (VkDisplayPresentInfoKHR## a) `compare` (VkDisplayPresentInfoKHR## b)
-          = cmpImmutableContent a b
+        (VkDisplayPresentInfoKHR## a _) `compare`
+          x@(VkDisplayPresentInfoKHR## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -83,68 +79,28 @@ instance Storable VkDisplayPresentInfoKHR where
         alignment ~_ = #{alignment VkDisplayPresentInfoKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkDisplayPresentInfoKHR),
-            I## a <- alignment (undefined :: VkDisplayPresentInfoKHR) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkDisplayPresentInfoKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkDisplayPresentInfoKHR## ba)
-          | I## n <- sizeOf (undefined :: VkDisplayPresentInfoKHR) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkDisplayPresentInfoKHR where
+        unsafeAddr (VkDisplayPresentInfoKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkDisplayPresentInfoKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkDisplayPresentInfoKHR## (plusAddr## (byteArrayContents## b) off) b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDisplayPresentInfoKHR where
         type StructFields VkDisplayPresentInfoKHR =
              '["sType", "pNext", "srcRect", "dstRect", "persistent"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkDisplayPresentInfoKHR),
-            I## a <- alignment (undefined :: VkDisplayPresentInfoKHR) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkDisplayPresentInfoKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkDisplayPresentInfoKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkDisplayPresentInfoKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkDisplayPresentInfoKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkDisplayPresentInfoKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkDisplayPresentInfoKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkSType VkDisplayPresentInfoKHR
          where

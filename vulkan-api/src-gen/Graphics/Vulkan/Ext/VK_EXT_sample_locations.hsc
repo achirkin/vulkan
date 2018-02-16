@@ -10,7 +10,6 @@
 {-# LANGUAGE ScopedTypeVariables      #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE UnboxedTuples            #-}
 {-# LANGUAGE UndecidableInstances     #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_EXT_sample_locations
@@ -48,13 +47,9 @@ module Graphics.Vulkan.Ext.VK_EXT_sample_locations
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.TypeLits                     (KnownNat, natVal') -- ' closing tick for hsc2hs
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base             (VkExtent2D)
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
@@ -68,17 +63,17 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkSampleLocationEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSampleLocationEXT.html VkSampleLocationEXT registry at www.khronos.org>
-data VkSampleLocationEXT = VkSampleLocationEXT## ByteArray##
+data VkSampleLocationEXT = VkSampleLocationEXT## Addr## ByteArray##
 
 instance Eq VkSampleLocationEXT where
-        (VkSampleLocationEXT## a) == (VkSampleLocationEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkSampleLocationEXT## a _) == x@(VkSampleLocationEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkSampleLocationEXT where
-        (VkSampleLocationEXT## a) `compare` (VkSampleLocationEXT## b)
-          = cmpImmutableContent a b
+        (VkSampleLocationEXT## a _) `compare` x@(VkSampleLocationEXT## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -89,65 +84,27 @@ instance Storable VkSampleLocationEXT where
         alignment ~_ = #{alignment VkSampleLocationEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkSampleLocationEXT),
-            I## a <- alignment (undefined :: VkSampleLocationEXT) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkSampleLocationEXT## ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkSampleLocationEXT## ba)
-          | I## n <- sizeOf (undefined :: VkSampleLocationEXT) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
 
+instance VulkanMarshalPrim VkSampleLocationEXT where
+        unsafeAddr (VkSampleLocationEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkSampleLocationEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkSampleLocationEXT## (plusAddr## (byteArrayContents## b) off) b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
+
 instance VulkanMarshal VkSampleLocationEXT where
         type StructFields VkSampleLocationEXT = '["x", "y"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkSampleLocationEXT),
-            I## a <- alignment (undefined :: VkSampleLocationEXT) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkSampleLocationEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkSampleLocationEXT## ba) = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkSampleLocationEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkSampleLocationEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkSampleLocationEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkSampleLocationEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkX VkSampleLocationEXT where
         type VkXMType VkSampleLocationEXT = #{type float}
@@ -251,17 +208,18 @@ instance Show VkSampleLocationEXT where
 --   > } VkSampleLocationsInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSampleLocationsInfoEXT.html VkSampleLocationsInfoEXT registry at www.khronos.org>
-data VkSampleLocationsInfoEXT = VkSampleLocationsInfoEXT## ByteArray##
+data VkSampleLocationsInfoEXT = VkSampleLocationsInfoEXT## Addr##
+                                                          ByteArray##
 
 instance Eq VkSampleLocationsInfoEXT where
-        (VkSampleLocationsInfoEXT## a) == (VkSampleLocationsInfoEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkSampleLocationsInfoEXT## a _) ==
+          x@(VkSampleLocationsInfoEXT## b _) = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkSampleLocationsInfoEXT where
-        (VkSampleLocationsInfoEXT## a) `compare`
-          (VkSampleLocationsInfoEXT## b) = cmpImmutableContent a b
+        (VkSampleLocationsInfoEXT## a _) `compare`
+          x@(VkSampleLocationsInfoEXT## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -272,70 +230,31 @@ instance Storable VkSampleLocationsInfoEXT where
         alignment ~_ = #{alignment VkSampleLocationsInfoEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkSampleLocationsInfoEXT),
-            I## a <- alignment (undefined :: VkSampleLocationsInfoEXT) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkSampleLocationsInfoEXT##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkSampleLocationsInfoEXT## ba)
-          | I## n <- sizeOf (undefined :: VkSampleLocationsInfoEXT) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkSampleLocationsInfoEXT where
+        unsafeAddr (VkSampleLocationsInfoEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkSampleLocationsInfoEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkSampleLocationsInfoEXT## (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSampleLocationsInfoEXT where
         type StructFields VkSampleLocationsInfoEXT =
              '["sType", "pNext", "sampleLocationsPerPixel", -- ' closing tick for hsc2hs
                "sampleLocationGridSize", "sampleLocationsCount",
                "pSampleLocations"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkSampleLocationsInfoEXT),
-            I## a <- alignment (undefined :: VkSampleLocationsInfoEXT) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkSampleLocationsInfoEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkSampleLocationsInfoEXT## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkSampleLocationsInfoEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkSampleLocationsInfoEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkSampleLocationsInfoEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkSampleLocationsInfoEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkSType VkSampleLocationsInfoEXT
          where
@@ -667,17 +586,19 @@ instance Show VkSampleLocationsInfoEXT where
 --   > } VkAttachmentSampleLocationsEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkAttachmentSampleLocationsEXT.html VkAttachmentSampleLocationsEXT registry at www.khronos.org>
-data VkAttachmentSampleLocationsEXT = VkAttachmentSampleLocationsEXT## ByteArray##
+data VkAttachmentSampleLocationsEXT = VkAttachmentSampleLocationsEXT## Addr##
+                                                                      ByteArray##
 
 instance Eq VkAttachmentSampleLocationsEXT where
-        (VkAttachmentSampleLocationsEXT## a) ==
-          (VkAttachmentSampleLocationsEXT## b) = EQ == cmpImmutableContent a b
+        (VkAttachmentSampleLocationsEXT## a _) ==
+          x@(VkAttachmentSampleLocationsEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkAttachmentSampleLocationsEXT where
-        (VkAttachmentSampleLocationsEXT## a) `compare`
-          (VkAttachmentSampleLocationsEXT## b) = cmpImmutableContent a b
+        (VkAttachmentSampleLocationsEXT## a _) `compare`
+          x@(VkAttachmentSampleLocationsEXT## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -689,68 +610,30 @@ instance Storable VkAttachmentSampleLocationsEXT where
           = #{alignment VkAttachmentSampleLocationsEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkAttachmentSampleLocationsEXT),
-            I## a <- alignment (undefined :: VkAttachmentSampleLocationsEXT) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkAttachmentSampleLocationsEXT##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkAttachmentSampleLocationsEXT## ba)
-          | I## n <- sizeOf (undefined :: VkAttachmentSampleLocationsEXT) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkAttachmentSampleLocationsEXT where
+        unsafeAddr (VkAttachmentSampleLocationsEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkAttachmentSampleLocationsEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkAttachmentSampleLocationsEXT##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkAttachmentSampleLocationsEXT where
         type StructFields VkAttachmentSampleLocationsEXT =
              '["attachmentIndex", "sampleLocationsInfo"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkAttachmentSampleLocationsEXT),
-            I## a <- alignment (undefined :: VkAttachmentSampleLocationsEXT) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkAttachmentSampleLocationsEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkAttachmentSampleLocationsEXT## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkAttachmentSampleLocationsEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkAttachmentSampleLocationsEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkAttachmentSampleLocationsEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkAttachmentSampleLocationsEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkAttachmentIndex VkAttachmentSampleLocationsEXT where
@@ -875,17 +758,19 @@ instance Show VkAttachmentSampleLocationsEXT where
 --   > } VkSubpassSampleLocationsEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSubpassSampleLocationsEXT.html VkSubpassSampleLocationsEXT registry at www.khronos.org>
-data VkSubpassSampleLocationsEXT = VkSubpassSampleLocationsEXT## ByteArray##
+data VkSubpassSampleLocationsEXT = VkSubpassSampleLocationsEXT## Addr##
+                                                                ByteArray##
 
 instance Eq VkSubpassSampleLocationsEXT where
-        (VkSubpassSampleLocationsEXT## a) ==
-          (VkSubpassSampleLocationsEXT## b) = EQ == cmpImmutableContent a b
+        (VkSubpassSampleLocationsEXT## a _) ==
+          x@(VkSubpassSampleLocationsEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkSubpassSampleLocationsEXT where
-        (VkSubpassSampleLocationsEXT## a) `compare`
-          (VkSubpassSampleLocationsEXT## b) = cmpImmutableContent a b
+        (VkSubpassSampleLocationsEXT## a _) `compare`
+          x@(VkSubpassSampleLocationsEXT## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -896,68 +781,30 @@ instance Storable VkSubpassSampleLocationsEXT where
         alignment ~_ = #{alignment VkSubpassSampleLocationsEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkSubpassSampleLocationsEXT),
-            I## a <- alignment (undefined :: VkSubpassSampleLocationsEXT) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkSubpassSampleLocationsEXT##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkSubpassSampleLocationsEXT## ba)
-          | I## n <- sizeOf (undefined :: VkSubpassSampleLocationsEXT) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkSubpassSampleLocationsEXT where
+        unsafeAddr (VkSubpassSampleLocationsEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkSubpassSampleLocationsEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkSubpassSampleLocationsEXT##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSubpassSampleLocationsEXT where
         type StructFields VkSubpassSampleLocationsEXT =
              '["subpassIndex", "sampleLocationsInfo"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkSubpassSampleLocationsEXT),
-            I## a <- alignment (undefined :: VkSubpassSampleLocationsEXT) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkSubpassSampleLocationsEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkSubpassSampleLocationsEXT## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkSubpassSampleLocationsEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkSubpassSampleLocationsEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkSubpassSampleLocationsEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkSubpassSampleLocationsEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSubpassIndex VkSubpassSampleLocationsEXT where
@@ -1082,19 +929,20 @@ instance Show VkSubpassSampleLocationsEXT where
 --   > } VkRenderPassSampleLocationsBeginInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkRenderPassSampleLocationsBeginInfoEXT.html VkRenderPassSampleLocationsBeginInfoEXT registry at www.khronos.org>
-data VkRenderPassSampleLocationsBeginInfoEXT = VkRenderPassSampleLocationsBeginInfoEXT## ByteArray##
+data VkRenderPassSampleLocationsBeginInfoEXT = VkRenderPassSampleLocationsBeginInfoEXT## Addr##
+                                                                                        ByteArray##
 
 instance Eq VkRenderPassSampleLocationsBeginInfoEXT where
-        (VkRenderPassSampleLocationsBeginInfoEXT## a) ==
-          (VkRenderPassSampleLocationsBeginInfoEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkRenderPassSampleLocationsBeginInfoEXT## a _) ==
+          x@(VkRenderPassSampleLocationsBeginInfoEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkRenderPassSampleLocationsBeginInfoEXT where
-        (VkRenderPassSampleLocationsBeginInfoEXT## a) `compare`
-          (VkRenderPassSampleLocationsBeginInfoEXT## b)
-          = cmpImmutableContent a b
+        (VkRenderPassSampleLocationsBeginInfoEXT## a _) `compare`
+          x@(VkRenderPassSampleLocationsBeginInfoEXT## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -1107,28 +955,27 @@ instance Storable VkRenderPassSampleLocationsBeginInfoEXT where
           = #{alignment VkRenderPassSampleLocationsBeginInfoEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkRenderPassSampleLocationsBeginInfoEXT),
-            I## a <- alignment
-                      (undefined :: VkRenderPassSampleLocationsBeginInfoEXT)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkRenderPassSampleLocationsBeginInfoEXT##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkRenderPassSampleLocationsBeginInfoEXT## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkRenderPassSampleLocationsBeginInfoEXT)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkRenderPassSampleLocationsBeginInfoEXT
+         where
+        unsafeAddr (VkRenderPassSampleLocationsBeginInfoEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkRenderPassSampleLocationsBeginInfoEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkRenderPassSampleLocationsBeginInfoEXT##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkRenderPassSampleLocationsBeginInfoEXT
          where
@@ -1136,50 +983,6 @@ instance VulkanMarshal VkRenderPassSampleLocationsBeginInfoEXT
              '["sType", "pNext", "attachmentInitialSampleLocationsCount", -- ' closing tick for hsc2hs
                "pAttachmentInitialSampleLocations",
                "postSubpassSampleLocationsCount", "pPostSubpassSampleLocations"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkRenderPassSampleLocationsBeginInfoEXT),
-            I## a <- alignment
-                      (undefined :: VkRenderPassSampleLocationsBeginInfoEXT)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkRenderPassSampleLocationsBeginInfoEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkRenderPassSampleLocationsBeginInfoEXT## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkRenderPassSampleLocationsBeginInfoEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkRenderPassSampleLocationsBeginInfoEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkRenderPassSampleLocationsBeginInfoEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkRenderPassSampleLocationsBeginInfoEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkRenderPassSampleLocationsBeginInfoEXT where
@@ -1565,19 +1368,20 @@ instance Show VkRenderPassSampleLocationsBeginInfoEXT where
 --   > } VkPipelineSampleLocationsStateCreateInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineSampleLocationsStateCreateInfoEXT.html VkPipelineSampleLocationsStateCreateInfoEXT registry at www.khronos.org>
-data VkPipelineSampleLocationsStateCreateInfoEXT = VkPipelineSampleLocationsStateCreateInfoEXT## ByteArray##
+data VkPipelineSampleLocationsStateCreateInfoEXT = VkPipelineSampleLocationsStateCreateInfoEXT## Addr##
+                                                                                                ByteArray##
 
 instance Eq VkPipelineSampleLocationsStateCreateInfoEXT where
-        (VkPipelineSampleLocationsStateCreateInfoEXT## a) ==
-          (VkPipelineSampleLocationsStateCreateInfoEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkPipelineSampleLocationsStateCreateInfoEXT## a _) ==
+          x@(VkPipelineSampleLocationsStateCreateInfoEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPipelineSampleLocationsStateCreateInfoEXT where
-        (VkPipelineSampleLocationsStateCreateInfoEXT## a) `compare`
-          (VkPipelineSampleLocationsStateCreateInfoEXT## b)
-          = cmpImmutableContent a b
+        (VkPipelineSampleLocationsStateCreateInfoEXT## a _) `compare`
+          x@(VkPipelineSampleLocationsStateCreateInfoEXT## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -1590,77 +1394,34 @@ instance Storable VkPipelineSampleLocationsStateCreateInfoEXT where
           = #{alignment VkPipelineSampleLocationsStateCreateInfoEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkPipelineSampleLocationsStateCreateInfoEXT),
-            I## a <- alignment
-                      (undefined :: VkPipelineSampleLocationsStateCreateInfoEXT)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPipelineSampleLocationsStateCreateInfoEXT##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkPipelineSampleLocationsStateCreateInfoEXT## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkPipelineSampleLocationsStateCreateInfoEXT)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim
+           VkPipelineSampleLocationsStateCreateInfoEXT
+         where
+        unsafeAddr (VkPipelineSampleLocationsStateCreateInfoEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkPipelineSampleLocationsStateCreateInfoEXT## _ b)
+          = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPipelineSampleLocationsStateCreateInfoEXT##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPipelineSampleLocationsStateCreateInfoEXT
          where
         type StructFields VkPipelineSampleLocationsStateCreateInfoEXT =
              '["sType", "pNext", "sampleLocationsEnable", "sampleLocationsInfo"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkPipelineSampleLocationsStateCreateInfoEXT),
-            I## a <- alignment
-                      (undefined :: VkPipelineSampleLocationsStateCreateInfoEXT)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPipelineSampleLocationsStateCreateInfoEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkPipelineSampleLocationsStateCreateInfoEXT## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkPipelineSampleLocationsStateCreateInfoEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkPipelineSampleLocationsStateCreateInfoEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkPipelineSampleLocationsStateCreateInfoEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkPipelineSampleLocationsStateCreateInfoEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPipelineSampleLocationsStateCreateInfoEXT where
@@ -1924,19 +1685,20 @@ instance Show VkPipelineSampleLocationsStateCreateInfoEXT where
 --   > } VkPhysicalDeviceSampleLocationsPropertiesEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceSampleLocationsPropertiesEXT.html VkPhysicalDeviceSampleLocationsPropertiesEXT registry at www.khronos.org>
-data VkPhysicalDeviceSampleLocationsPropertiesEXT = VkPhysicalDeviceSampleLocationsPropertiesEXT## ByteArray##
+data VkPhysicalDeviceSampleLocationsPropertiesEXT = VkPhysicalDeviceSampleLocationsPropertiesEXT## Addr##
+                                                                                                  ByteArray##
 
 instance Eq VkPhysicalDeviceSampleLocationsPropertiesEXT where
-        (VkPhysicalDeviceSampleLocationsPropertiesEXT## a) ==
-          (VkPhysicalDeviceSampleLocationsPropertiesEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkPhysicalDeviceSampleLocationsPropertiesEXT## a _) ==
+          x@(VkPhysicalDeviceSampleLocationsPropertiesEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceSampleLocationsPropertiesEXT where
-        (VkPhysicalDeviceSampleLocationsPropertiesEXT## a) `compare`
-          (VkPhysicalDeviceSampleLocationsPropertiesEXT## b)
-          = cmpImmutableContent a b
+        (VkPhysicalDeviceSampleLocationsPropertiesEXT## a _) `compare`
+          x@(VkPhysicalDeviceSampleLocationsPropertiesEXT## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -1950,28 +1712,29 @@ instance Storable VkPhysicalDeviceSampleLocationsPropertiesEXT
           = #{alignment VkPhysicalDeviceSampleLocationsPropertiesEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceSampleLocationsPropertiesEXT),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDeviceSampleLocationsPropertiesEXT)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPhysicalDeviceSampleLocationsPropertiesEXT##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkPhysicalDeviceSampleLocationsPropertiesEXT## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceSampleLocationsPropertiesEXT)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim
+           VkPhysicalDeviceSampleLocationsPropertiesEXT
+         where
+        unsafeAddr (VkPhysicalDeviceSampleLocationsPropertiesEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkPhysicalDeviceSampleLocationsPropertiesEXT## _ b)
+          = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPhysicalDeviceSampleLocationsPropertiesEXT##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkPhysicalDeviceSampleLocationsPropertiesEXT
          where
@@ -1979,51 +1742,6 @@ instance VulkanMarshal VkPhysicalDeviceSampleLocationsPropertiesEXT
              '["sType", "pNext", "sampleLocationSampleCounts", -- ' closing tick for hsc2hs
                "maxSampleLocationGridSize", "sampleLocationCoordinateRange",
                "sampleLocationSubPixelBits", "variableSampleLocations"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceSampleLocationsPropertiesEXT),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDeviceSampleLocationsPropertiesEXT)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPhysicalDeviceSampleLocationsPropertiesEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkPhysicalDeviceSampleLocationsPropertiesEXT## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkPhysicalDeviceSampleLocationsPropertiesEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkPhysicalDeviceSampleLocationsPropertiesEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr
-          (VkPhysicalDeviceSampleLocationsPropertiesEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkPhysicalDeviceSampleLocationsPropertiesEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceSampleLocationsPropertiesEXT where
@@ -2469,17 +2187,19 @@ instance Show VkPhysicalDeviceSampleLocationsPropertiesEXT where
 --   > } VkMultisamplePropertiesEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMultisamplePropertiesEXT.html VkMultisamplePropertiesEXT registry at www.khronos.org>
-data VkMultisamplePropertiesEXT = VkMultisamplePropertiesEXT## ByteArray##
+data VkMultisamplePropertiesEXT = VkMultisamplePropertiesEXT## Addr##
+                                                              ByteArray##
 
 instance Eq VkMultisamplePropertiesEXT where
-        (VkMultisamplePropertiesEXT## a) == (VkMultisamplePropertiesEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkMultisamplePropertiesEXT## a _) ==
+          x@(VkMultisamplePropertiesEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkMultisamplePropertiesEXT where
-        (VkMultisamplePropertiesEXT## a) `compare`
-          (VkMultisamplePropertiesEXT## b) = cmpImmutableContent a b
+        (VkMultisamplePropertiesEXT## a _) `compare`
+          x@(VkMultisamplePropertiesEXT## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -2490,68 +2210,30 @@ instance Storable VkMultisamplePropertiesEXT where
         alignment ~_ = #{alignment VkMultisamplePropertiesEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkMultisamplePropertiesEXT),
-            I## a <- alignment (undefined :: VkMultisamplePropertiesEXT) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkMultisamplePropertiesEXT##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkMultisamplePropertiesEXT## ba)
-          | I## n <- sizeOf (undefined :: VkMultisamplePropertiesEXT) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkMultisamplePropertiesEXT where
+        unsafeAddr (VkMultisamplePropertiesEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkMultisamplePropertiesEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkMultisamplePropertiesEXT##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkMultisamplePropertiesEXT where
         type StructFields VkMultisamplePropertiesEXT =
              '["sType", "pNext", "maxSampleLocationGridSize"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkMultisamplePropertiesEXT),
-            I## a <- alignment (undefined :: VkMultisamplePropertiesEXT) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkMultisamplePropertiesEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkMultisamplePropertiesEXT## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkMultisamplePropertiesEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkMultisamplePropertiesEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkMultisamplePropertiesEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkMultisamplePropertiesEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkSType VkMultisamplePropertiesEXT
          where

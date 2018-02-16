@@ -8,7 +8,6 @@
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE UnboxedTuples            #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_win32_surface
        (-- * Vulkan extension: @VK_KHR_win32_surface@
@@ -40,12 +39,8 @@ module Graphics.Vulkan.Ext.VK_KHR_win32_surface
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..))
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
@@ -62,17 +57,19 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkWin32SurfaceCreateInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkWin32SurfaceCreateInfoKHR.html VkWin32SurfaceCreateInfoKHR registry at www.khronos.org>
-data VkWin32SurfaceCreateInfoKHR = VkWin32SurfaceCreateInfoKHR## ByteArray##
+data VkWin32SurfaceCreateInfoKHR = VkWin32SurfaceCreateInfoKHR## Addr##
+                                                                ByteArray##
 
 instance Eq VkWin32SurfaceCreateInfoKHR where
-        (VkWin32SurfaceCreateInfoKHR## a) ==
-          (VkWin32SurfaceCreateInfoKHR## b) = EQ == cmpImmutableContent a b
+        (VkWin32SurfaceCreateInfoKHR## a _) ==
+          x@(VkWin32SurfaceCreateInfoKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkWin32SurfaceCreateInfoKHR where
-        (VkWin32SurfaceCreateInfoKHR## a) `compare`
-          (VkWin32SurfaceCreateInfoKHR## b) = cmpImmutableContent a b
+        (VkWin32SurfaceCreateInfoKHR## a _) `compare`
+          x@(VkWin32SurfaceCreateInfoKHR## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -83,68 +80,30 @@ instance Storable VkWin32SurfaceCreateInfoKHR where
         alignment ~_ = #{alignment VkWin32SurfaceCreateInfoKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkWin32SurfaceCreateInfoKHR),
-            I## a <- alignment (undefined :: VkWin32SurfaceCreateInfoKHR) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkWin32SurfaceCreateInfoKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkWin32SurfaceCreateInfoKHR## ba)
-          | I## n <- sizeOf (undefined :: VkWin32SurfaceCreateInfoKHR) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkWin32SurfaceCreateInfoKHR where
+        unsafeAddr (VkWin32SurfaceCreateInfoKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkWin32SurfaceCreateInfoKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkWin32SurfaceCreateInfoKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkWin32SurfaceCreateInfoKHR where
         type StructFields VkWin32SurfaceCreateInfoKHR =
              '["sType", "pNext", "flags", "hinstance", "hwnd"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkWin32SurfaceCreateInfoKHR),
-            I## a <- alignment (undefined :: VkWin32SurfaceCreateInfoKHR) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkWin32SurfaceCreateInfoKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkWin32SurfaceCreateInfoKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkWin32SurfaceCreateInfoKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkWin32SurfaceCreateInfoKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkWin32SurfaceCreateInfoKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkWin32SurfaceCreateInfoKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-} HasVkSType VkWin32SurfaceCreateInfoKHR
          where

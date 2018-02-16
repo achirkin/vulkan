@@ -7,7 +7,6 @@
 {-# LANGUAGE PatternSynonyms       #-}
 {-# LANGUAGE Strict                #-}
 {-# LANGUAGE TypeFamilies          #-}
-{-# LANGUAGE UnboxedTuples         #-}
 {-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_EXT_global_priority
        (-- * Vulkan extension: @VK_EXT_global_priority@
@@ -32,12 +31,8 @@ module Graphics.Vulkan.Ext.VK_EXT_global_priority
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common           (VkQueueGlobalPriorityEXT,
                                                    VkResult (..),
                                                    VkStructureType,
@@ -54,19 +49,20 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkDeviceQueueGlobalPriorityCreateInfoEXT;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceQueueGlobalPriorityCreateInfoEXT.html VkDeviceQueueGlobalPriorityCreateInfoEXT registry at www.khronos.org>
-data VkDeviceQueueGlobalPriorityCreateInfoEXT = VkDeviceQueueGlobalPriorityCreateInfoEXT## ByteArray##
+data VkDeviceQueueGlobalPriorityCreateInfoEXT = VkDeviceQueueGlobalPriorityCreateInfoEXT## Addr##
+                                                                                          ByteArray##
 
 instance Eq VkDeviceQueueGlobalPriorityCreateInfoEXT where
-        (VkDeviceQueueGlobalPriorityCreateInfoEXT## a) ==
-          (VkDeviceQueueGlobalPriorityCreateInfoEXT## b)
-          = EQ == cmpImmutableContent a b
+        (VkDeviceQueueGlobalPriorityCreateInfoEXT## a _) ==
+          x@(VkDeviceQueueGlobalPriorityCreateInfoEXT## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkDeviceQueueGlobalPriorityCreateInfoEXT where
-        (VkDeviceQueueGlobalPriorityCreateInfoEXT## a) `compare`
-          (VkDeviceQueueGlobalPriorityCreateInfoEXT## b)
-          = cmpImmutableContent a b
+        (VkDeviceQueueGlobalPriorityCreateInfoEXT## a _) `compare`
+          x@(VkDeviceQueueGlobalPriorityCreateInfoEXT## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -79,77 +75,32 @@ instance Storable VkDeviceQueueGlobalPriorityCreateInfoEXT where
           = #{alignment VkDeviceQueueGlobalPriorityCreateInfoEXT}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkDeviceQueueGlobalPriorityCreateInfoEXT),
-            I## a <- alignment
-                      (undefined :: VkDeviceQueueGlobalPriorityCreateInfoEXT)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkDeviceQueueGlobalPriorityCreateInfoEXT##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkDeviceQueueGlobalPriorityCreateInfoEXT## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkDeviceQueueGlobalPriorityCreateInfoEXT)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkDeviceQueueGlobalPriorityCreateInfoEXT
+         where
+        unsafeAddr (VkDeviceQueueGlobalPriorityCreateInfoEXT## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkDeviceQueueGlobalPriorityCreateInfoEXT## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkDeviceQueueGlobalPriorityCreateInfoEXT##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkDeviceQueueGlobalPriorityCreateInfoEXT
          where
         type StructFields VkDeviceQueueGlobalPriorityCreateInfoEXT =
              '["sType", "pNext", "globalPriority"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkDeviceQueueGlobalPriorityCreateInfoEXT),
-            I## a <- alignment
-                      (undefined :: VkDeviceQueueGlobalPriorityCreateInfoEXT)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkDeviceQueueGlobalPriorityCreateInfoEXT##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkDeviceQueueGlobalPriorityCreateInfoEXT## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkDeviceQueueGlobalPriorityCreateInfoEXT##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkDeviceQueueGlobalPriorityCreateInfoEXT## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkDeviceQueueGlobalPriorityCreateInfoEXT## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkDeviceQueueGlobalPriorityCreateInfoEXT## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkDeviceQueueGlobalPriorityCreateInfoEXT where

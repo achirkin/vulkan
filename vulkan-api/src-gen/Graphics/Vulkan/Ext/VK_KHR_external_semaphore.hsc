@@ -7,7 +7,6 @@
 {-# LANGUAGE PatternSynonyms       #-}
 {-# LANGUAGE Strict                #-}
 {-# LANGUAGE TypeFamilies          #-}
-{-# LANGUAGE UnboxedTuples         #-}
 {-# LANGUAGE ViewPatterns          #-}
 module Graphics.Vulkan.Ext.VK_KHR_external_semaphore
        (-- * Vulkan extension: @VK_KHR_external_semaphore@
@@ -36,12 +35,8 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common           (VkExternalSemaphoreHandleTypeFlagsKHR,
                                                    VkStructureType,
                                                    VkStructureType (..))
@@ -57,17 +52,19 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkExportSemaphoreCreateInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExportSemaphoreCreateInfoKHR.html VkExportSemaphoreCreateInfoKHR registry at www.khronos.org>
-data VkExportSemaphoreCreateInfoKHR = VkExportSemaphoreCreateInfoKHR## ByteArray##
+data VkExportSemaphoreCreateInfoKHR = VkExportSemaphoreCreateInfoKHR## Addr##
+                                                                      ByteArray##
 
 instance Eq VkExportSemaphoreCreateInfoKHR where
-        (VkExportSemaphoreCreateInfoKHR## a) ==
-          (VkExportSemaphoreCreateInfoKHR## b) = EQ == cmpImmutableContent a b
+        (VkExportSemaphoreCreateInfoKHR## a _) ==
+          x@(VkExportSemaphoreCreateInfoKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkExportSemaphoreCreateInfoKHR where
-        (VkExportSemaphoreCreateInfoKHR## a) `compare`
-          (VkExportSemaphoreCreateInfoKHR## b) = cmpImmutableContent a b
+        (VkExportSemaphoreCreateInfoKHR## a _) `compare`
+          x@(VkExportSemaphoreCreateInfoKHR## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -79,68 +76,30 @@ instance Storable VkExportSemaphoreCreateInfoKHR where
           = #{alignment VkExportSemaphoreCreateInfoKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkExportSemaphoreCreateInfoKHR),
-            I## a <- alignment (undefined :: VkExportSemaphoreCreateInfoKHR) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkExportSemaphoreCreateInfoKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkExportSemaphoreCreateInfoKHR## ba)
-          | I## n <- sizeOf (undefined :: VkExportSemaphoreCreateInfoKHR) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkExportSemaphoreCreateInfoKHR where
+        unsafeAddr (VkExportSemaphoreCreateInfoKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkExportSemaphoreCreateInfoKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkExportSemaphoreCreateInfoKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkExportSemaphoreCreateInfoKHR where
         type StructFields VkExportSemaphoreCreateInfoKHR =
              '["sType", "pNext", "handleTypes"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkExportSemaphoreCreateInfoKHR),
-            I## a <- alignment (undefined :: VkExportSemaphoreCreateInfoKHR) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkExportSemaphoreCreateInfoKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkExportSemaphoreCreateInfoKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkExportSemaphoreCreateInfoKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkExportSemaphoreCreateInfoKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkExportSemaphoreCreateInfoKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkExportSemaphoreCreateInfoKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkExportSemaphoreCreateInfoKHR where

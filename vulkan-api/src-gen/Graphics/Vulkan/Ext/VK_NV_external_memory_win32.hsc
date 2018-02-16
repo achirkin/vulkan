@@ -8,7 +8,6 @@
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE UnboxedTuples            #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_NV_external_memory_win32
        (-- * Vulkan extension: @VK_NV_external_memory_win32@
@@ -41,12 +40,8 @@ module Graphics.Vulkan.Ext.VK_NV_external_memory_win32
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
@@ -61,18 +56,19 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkImportMemoryWin32HandleInfoNV;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImportMemoryWin32HandleInfoNV.html VkImportMemoryWin32HandleInfoNV registry at www.khronos.org>
-data VkImportMemoryWin32HandleInfoNV = VkImportMemoryWin32HandleInfoNV## ByteArray##
+data VkImportMemoryWin32HandleInfoNV = VkImportMemoryWin32HandleInfoNV## Addr##
+                                                                        ByteArray##
 
 instance Eq VkImportMemoryWin32HandleInfoNV where
-        (VkImportMemoryWin32HandleInfoNV## a) ==
-          (VkImportMemoryWin32HandleInfoNV## b)
-          = EQ == cmpImmutableContent a b
+        (VkImportMemoryWin32HandleInfoNV## a _) ==
+          x@(VkImportMemoryWin32HandleInfoNV## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkImportMemoryWin32HandleInfoNV where
-        (VkImportMemoryWin32HandleInfoNV## a) `compare`
-          (VkImportMemoryWin32HandleInfoNV## b) = cmpImmutableContent a b
+        (VkImportMemoryWin32HandleInfoNV## a _) `compare`
+          x@(VkImportMemoryWin32HandleInfoNV## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -84,68 +80,30 @@ instance Storable VkImportMemoryWin32HandleInfoNV where
           = #{alignment VkImportMemoryWin32HandleInfoNV}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkImportMemoryWin32HandleInfoNV),
-            I## a <- alignment (undefined :: VkImportMemoryWin32HandleInfoNV) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkImportMemoryWin32HandleInfoNV##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkImportMemoryWin32HandleInfoNV## ba)
-          | I## n <- sizeOf (undefined :: VkImportMemoryWin32HandleInfoNV) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkImportMemoryWin32HandleInfoNV where
+        unsafeAddr (VkImportMemoryWin32HandleInfoNV## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkImportMemoryWin32HandleInfoNV## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkImportMemoryWin32HandleInfoNV##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkImportMemoryWin32HandleInfoNV where
         type StructFields VkImportMemoryWin32HandleInfoNV =
              '["sType", "pNext", "handleType", "handle"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkImportMemoryWin32HandleInfoNV),
-            I## a <- alignment (undefined :: VkImportMemoryWin32HandleInfoNV) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkImportMemoryWin32HandleInfoNV##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkImportMemoryWin32HandleInfoNV## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkImportMemoryWin32HandleInfoNV##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkImportMemoryWin32HandleInfoNV## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkImportMemoryWin32HandleInfoNV## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkImportMemoryWin32HandleInfoNV## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkImportMemoryWin32HandleInfoNV where
@@ -363,18 +321,19 @@ instance Show VkImportMemoryWin32HandleInfoNV where
 --   > } VkExportMemoryWin32HandleInfoNV;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExportMemoryWin32HandleInfoNV.html VkExportMemoryWin32HandleInfoNV registry at www.khronos.org>
-data VkExportMemoryWin32HandleInfoNV = VkExportMemoryWin32HandleInfoNV## ByteArray##
+data VkExportMemoryWin32HandleInfoNV = VkExportMemoryWin32HandleInfoNV## Addr##
+                                                                        ByteArray##
 
 instance Eq VkExportMemoryWin32HandleInfoNV where
-        (VkExportMemoryWin32HandleInfoNV## a) ==
-          (VkExportMemoryWin32HandleInfoNV## b)
-          = EQ == cmpImmutableContent a b
+        (VkExportMemoryWin32HandleInfoNV## a _) ==
+          x@(VkExportMemoryWin32HandleInfoNV## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkExportMemoryWin32HandleInfoNV where
-        (VkExportMemoryWin32HandleInfoNV## a) `compare`
-          (VkExportMemoryWin32HandleInfoNV## b) = cmpImmutableContent a b
+        (VkExportMemoryWin32HandleInfoNV## a _) `compare`
+          x@(VkExportMemoryWin32HandleInfoNV## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -386,68 +345,30 @@ instance Storable VkExportMemoryWin32HandleInfoNV where
           = #{alignment VkExportMemoryWin32HandleInfoNV}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkExportMemoryWin32HandleInfoNV),
-            I## a <- alignment (undefined :: VkExportMemoryWin32HandleInfoNV) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkExportMemoryWin32HandleInfoNV##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkExportMemoryWin32HandleInfoNV## ba)
-          | I## n <- sizeOf (undefined :: VkExportMemoryWin32HandleInfoNV) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkExportMemoryWin32HandleInfoNV where
+        unsafeAddr (VkExportMemoryWin32HandleInfoNV## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkExportMemoryWin32HandleInfoNV## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkExportMemoryWin32HandleInfoNV##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkExportMemoryWin32HandleInfoNV where
         type StructFields VkExportMemoryWin32HandleInfoNV =
              '["sType", "pNext", "pAttributes", "dwAccess"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkExportMemoryWin32HandleInfoNV),
-            I## a <- alignment (undefined :: VkExportMemoryWin32HandleInfoNV) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkExportMemoryWin32HandleInfoNV##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkExportMemoryWin32HandleInfoNV## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkExportMemoryWin32HandleInfoNV##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkExportMemoryWin32HandleInfoNV## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkExportMemoryWin32HandleInfoNV## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkExportMemoryWin32HandleInfoNV## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkExportMemoryWin32HandleInfoNV where

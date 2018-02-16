@@ -8,7 +8,6 @@
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
 {-# LANGUAGE TypeFamilies             #-}
-{-# LANGUAGE UnboxedTuples            #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_sampler_ycbcr_conversion
        (-- * Vulkan extension: @VK_KHR_sampler_ycbcr_conversion@
@@ -96,12 +95,8 @@ module Graphics.Vulkan.Ext.VK_KHR_sampler_ycbcr_conversion
        where
 import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
-import           GHC.ForeignPtr                   (ForeignPtr (..),
-                                                   ForeignPtrContents (..),
-                                                   newForeignPtr_)
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           GHC.Types                        (IO (..), Int (..))
 import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..),
                                                    VkComponentMapping)
 import           Graphics.Vulkan.Common
@@ -124,19 +119,20 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   > } VkSamplerYcbcrConversionCreateInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSamplerYcbcrConversionCreateInfoKHR.html VkSamplerYcbcrConversionCreateInfoKHR registry at www.khronos.org>
-data VkSamplerYcbcrConversionCreateInfoKHR = VkSamplerYcbcrConversionCreateInfoKHR## ByteArray##
+data VkSamplerYcbcrConversionCreateInfoKHR = VkSamplerYcbcrConversionCreateInfoKHR## Addr##
+                                                                                    ByteArray##
 
 instance Eq VkSamplerYcbcrConversionCreateInfoKHR where
-        (VkSamplerYcbcrConversionCreateInfoKHR## a) ==
-          (VkSamplerYcbcrConversionCreateInfoKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkSamplerYcbcrConversionCreateInfoKHR## a _) ==
+          x@(VkSamplerYcbcrConversionCreateInfoKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkSamplerYcbcrConversionCreateInfoKHR where
-        (VkSamplerYcbcrConversionCreateInfoKHR## a) `compare`
-          (VkSamplerYcbcrConversionCreateInfoKHR## b)
-          = cmpImmutableContent a b
+        (VkSamplerYcbcrConversionCreateInfoKHR## a _) `compare`
+          x@(VkSamplerYcbcrConversionCreateInfoKHR## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -149,78 +145,33 @@ instance Storable VkSamplerYcbcrConversionCreateInfoKHR where
           = #{alignment VkSamplerYcbcrConversionCreateInfoKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkSamplerYcbcrConversionCreateInfoKHR),
-            I## a <- alignment
-                      (undefined :: VkSamplerYcbcrConversionCreateInfoKHR)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkSamplerYcbcrConversionCreateInfoKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkSamplerYcbcrConversionCreateInfoKHR## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkSamplerYcbcrConversionCreateInfoKHR)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkSamplerYcbcrConversionCreateInfoKHR
+         where
+        unsafeAddr (VkSamplerYcbcrConversionCreateInfoKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkSamplerYcbcrConversionCreateInfoKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkSamplerYcbcrConversionCreateInfoKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSamplerYcbcrConversionCreateInfoKHR where
         type StructFields VkSamplerYcbcrConversionCreateInfoKHR =
              '["sType", "pNext", "format", "ycbcrModel", "ycbcrRange", -- ' closing tick for hsc2hs
                "components", "xChromaOffset", "yChromaOffset", "chromaFilter",
                "forceExplicitReconstruction"]
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkSamplerYcbcrConversionCreateInfoKHR),
-            I## a <- alignment
-                      (undefined :: VkSamplerYcbcrConversionCreateInfoKHR)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkSamplerYcbcrConversionCreateInfoKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkSamplerYcbcrConversionCreateInfoKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkSamplerYcbcrConversionCreateInfoKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkSamplerYcbcrConversionCreateInfoKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkSamplerYcbcrConversionCreateInfoKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkSamplerYcbcrConversionCreateInfoKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkSamplerYcbcrConversionCreateInfoKHR where
@@ -821,18 +772,19 @@ instance Show VkSamplerYcbcrConversionCreateInfoKHR where
 --   > } VkSamplerYcbcrConversionInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSamplerYcbcrConversionInfoKHR.html VkSamplerYcbcrConversionInfoKHR registry at www.khronos.org>
-data VkSamplerYcbcrConversionInfoKHR = VkSamplerYcbcrConversionInfoKHR## ByteArray##
+data VkSamplerYcbcrConversionInfoKHR = VkSamplerYcbcrConversionInfoKHR## Addr##
+                                                                        ByteArray##
 
 instance Eq VkSamplerYcbcrConversionInfoKHR where
-        (VkSamplerYcbcrConversionInfoKHR## a) ==
-          (VkSamplerYcbcrConversionInfoKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkSamplerYcbcrConversionInfoKHR## a _) ==
+          x@(VkSamplerYcbcrConversionInfoKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkSamplerYcbcrConversionInfoKHR where
-        (VkSamplerYcbcrConversionInfoKHR## a) `compare`
-          (VkSamplerYcbcrConversionInfoKHR## b) = cmpImmutableContent a b
+        (VkSamplerYcbcrConversionInfoKHR## a _) `compare`
+          x@(VkSamplerYcbcrConversionInfoKHR## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -844,68 +796,30 @@ instance Storable VkSamplerYcbcrConversionInfoKHR where
           = #{alignment VkSamplerYcbcrConversionInfoKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkSamplerYcbcrConversionInfoKHR),
-            I## a <- alignment (undefined :: VkSamplerYcbcrConversionInfoKHR) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkSamplerYcbcrConversionInfoKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkSamplerYcbcrConversionInfoKHR## ba)
-          | I## n <- sizeOf (undefined :: VkSamplerYcbcrConversionInfoKHR) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkSamplerYcbcrConversionInfoKHR where
+        unsafeAddr (VkSamplerYcbcrConversionInfoKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkSamplerYcbcrConversionInfoKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkSamplerYcbcrConversionInfoKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkSamplerYcbcrConversionInfoKHR where
         type StructFields VkSamplerYcbcrConversionInfoKHR =
              '["sType", "pNext", "conversion"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkSamplerYcbcrConversionInfoKHR),
-            I## a <- alignment (undefined :: VkSamplerYcbcrConversionInfoKHR) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkSamplerYcbcrConversionInfoKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkSamplerYcbcrConversionInfoKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkSamplerYcbcrConversionInfoKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkSamplerYcbcrConversionInfoKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkSamplerYcbcrConversionInfoKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkSamplerYcbcrConversionInfoKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkSamplerYcbcrConversionInfoKHR where
@@ -1072,17 +986,19 @@ instance Show VkSamplerYcbcrConversionInfoKHR where
 --   > } VkBindImagePlaneMemoryInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBindImagePlaneMemoryInfoKHR.html VkBindImagePlaneMemoryInfoKHR registry at www.khronos.org>
-data VkBindImagePlaneMemoryInfoKHR = VkBindImagePlaneMemoryInfoKHR## ByteArray##
+data VkBindImagePlaneMemoryInfoKHR = VkBindImagePlaneMemoryInfoKHR## Addr##
+                                                                    ByteArray##
 
 instance Eq VkBindImagePlaneMemoryInfoKHR where
-        (VkBindImagePlaneMemoryInfoKHR## a) ==
-          (VkBindImagePlaneMemoryInfoKHR## b) = EQ == cmpImmutableContent a b
+        (VkBindImagePlaneMemoryInfoKHR## a _) ==
+          x@(VkBindImagePlaneMemoryInfoKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkBindImagePlaneMemoryInfoKHR where
-        (VkBindImagePlaneMemoryInfoKHR## a) `compare`
-          (VkBindImagePlaneMemoryInfoKHR## b) = cmpImmutableContent a b
+        (VkBindImagePlaneMemoryInfoKHR## a _) `compare`
+          x@(VkBindImagePlaneMemoryInfoKHR## b _) = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -1094,68 +1010,30 @@ instance Storable VkBindImagePlaneMemoryInfoKHR where
           = #{alignment VkBindImagePlaneMemoryInfoKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf (undefined :: VkBindImagePlaneMemoryInfoKHR),
-            I## a <- alignment (undefined :: VkBindImagePlaneMemoryInfoKHR) =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkBindImagePlaneMemoryInfoKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkBindImagePlaneMemoryInfoKHR## ba)
-          | I## n <- sizeOf (undefined :: VkBindImagePlaneMemoryInfoKHR) =
-            IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkBindImagePlaneMemoryInfoKHR where
+        unsafeAddr (VkBindImagePlaneMemoryInfoKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkBindImagePlaneMemoryInfoKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkBindImagePlaneMemoryInfoKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkBindImagePlaneMemoryInfoKHR where
         type StructFields VkBindImagePlaneMemoryInfoKHR =
              '["sType", "pNext", "planeAspect"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf (undefined :: VkBindImagePlaneMemoryInfoKHR),
-            I## a <- alignment (undefined :: VkBindImagePlaneMemoryInfoKHR) =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkBindImagePlaneMemoryInfoKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkBindImagePlaneMemoryInfoKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr = fromForeignPtr## VkBindImagePlaneMemoryInfoKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkBindImagePlaneMemoryInfoKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkBindImagePlaneMemoryInfoKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkBindImagePlaneMemoryInfoKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkBindImagePlaneMemoryInfoKHR where
@@ -1320,19 +1198,20 @@ instance Show VkBindImagePlaneMemoryInfoKHR where
 --   > } VkImagePlaneMemoryRequirementsInfoKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImagePlaneMemoryRequirementsInfoKHR.html VkImagePlaneMemoryRequirementsInfoKHR registry at www.khronos.org>
-data VkImagePlaneMemoryRequirementsInfoKHR = VkImagePlaneMemoryRequirementsInfoKHR## ByteArray##
+data VkImagePlaneMemoryRequirementsInfoKHR = VkImagePlaneMemoryRequirementsInfoKHR## Addr##
+                                                                                    ByteArray##
 
 instance Eq VkImagePlaneMemoryRequirementsInfoKHR where
-        (VkImagePlaneMemoryRequirementsInfoKHR## a) ==
-          (VkImagePlaneMemoryRequirementsInfoKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkImagePlaneMemoryRequirementsInfoKHR## a _) ==
+          x@(VkImagePlaneMemoryRequirementsInfoKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkImagePlaneMemoryRequirementsInfoKHR where
-        (VkImagePlaneMemoryRequirementsInfoKHR## a) `compare`
-          (VkImagePlaneMemoryRequirementsInfoKHR## b)
-          = cmpImmutableContent a b
+        (VkImagePlaneMemoryRequirementsInfoKHR## a _) `compare`
+          x@(VkImagePlaneMemoryRequirementsInfoKHR## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -1345,76 +1224,31 @@ instance Storable VkImagePlaneMemoryRequirementsInfoKHR where
           = #{alignment VkImagePlaneMemoryRequirementsInfoKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkImagePlaneMemoryRequirementsInfoKHR),
-            I## a <- alignment
-                      (undefined :: VkImagePlaneMemoryRequirementsInfoKHR)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkImagePlaneMemoryRequirementsInfoKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr) (VkImagePlaneMemoryRequirementsInfoKHR## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkImagePlaneMemoryRequirementsInfoKHR)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim VkImagePlaneMemoryRequirementsInfoKHR
+         where
+        unsafeAddr (VkImagePlaneMemoryRequirementsInfoKHR## a _) = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray (VkImagePlaneMemoryRequirementsInfoKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkImagePlaneMemoryRequirementsInfoKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal VkImagePlaneMemoryRequirementsInfoKHR where
         type StructFields VkImagePlaneMemoryRequirementsInfoKHR =
              '["sType", "pNext", "planeAspect"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkImagePlaneMemoryRequirementsInfoKHR),
-            I## a <- alignment
-                      (undefined :: VkImagePlaneMemoryRequirementsInfoKHR)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkImagePlaneMemoryRequirementsInfoKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkImagePlaneMemoryRequirementsInfoKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkImagePlaneMemoryRequirementsInfoKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkImagePlaneMemoryRequirementsInfoKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr (VkImagePlaneMemoryRequirementsInfoKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData x@(VkImagePlaneMemoryRequirementsInfoKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkImagePlaneMemoryRequirementsInfoKHR where
@@ -1594,20 +1428,21 @@ instance Show VkImagePlaneMemoryRequirementsInfoKHR where
 --   > } VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR.html VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR registry at www.khronos.org>
-data VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR = VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR## ByteArray##
+data VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR = VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR## Addr##
+                                                                                                            ByteArray##
 
 instance Eq VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR where
-        (VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR## a) ==
-          (VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR## a _) ==
+          x@(VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
          where
-        (VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR## a) `compare`
-          (VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR## b)
-          = cmpImmutableContent a b
+        (VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR## a _) `compare`
+          x@(VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -1621,83 +1456,36 @@ instance Storable VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
           = #{alignment VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr)
-          (VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim
+           VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
+         where
+        unsafeAddr (VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR## a _)
+          = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray
+          (VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
          where
         type StructFields VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
              = '["sType", "pNext", "samplerYcbcrConversion"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR),
-            I## a <- alignment
-                      (undefined :: VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr##
-              VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr
-          (VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr
-          (VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData
-          x@(VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR where
@@ -1898,19 +1686,20 @@ instance Show VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
 --   > } VkSamplerYcbcrConversionImageFormatPropertiesKHR;
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSamplerYcbcrConversionImageFormatPropertiesKHR.html VkSamplerYcbcrConversionImageFormatPropertiesKHR registry at www.khronos.org>
-data VkSamplerYcbcrConversionImageFormatPropertiesKHR = VkSamplerYcbcrConversionImageFormatPropertiesKHR## ByteArray##
+data VkSamplerYcbcrConversionImageFormatPropertiesKHR = VkSamplerYcbcrConversionImageFormatPropertiesKHR## Addr##
+                                                                                                          ByteArray##
 
 instance Eq VkSamplerYcbcrConversionImageFormatPropertiesKHR where
-        (VkSamplerYcbcrConversionImageFormatPropertiesKHR## a) ==
-          (VkSamplerYcbcrConversionImageFormatPropertiesKHR## b)
-          = EQ == cmpImmutableContent a b
+        (VkSamplerYcbcrConversionImageFormatPropertiesKHR## a _) ==
+          x@(VkSamplerYcbcrConversionImageFormatPropertiesKHR## b _)
+          = EQ == cmpBytes## (sizeOf x) a b
 
         {-# INLINE (==) #-}
 
 instance Ord VkSamplerYcbcrConversionImageFormatPropertiesKHR where
-        (VkSamplerYcbcrConversionImageFormatPropertiesKHR## a) `compare`
-          (VkSamplerYcbcrConversionImageFormatPropertiesKHR## b)
-          = cmpImmutableContent a b
+        (VkSamplerYcbcrConversionImageFormatPropertiesKHR## a _) `compare`
+          x@(VkSamplerYcbcrConversionImageFormatPropertiesKHR## b _)
+          = cmpBytes## (sizeOf x) a b
 
         {-# INLINE compare #-}
 
@@ -1924,81 +1713,36 @@ instance Storable VkSamplerYcbcrConversionImageFormatPropertiesKHR
           = #{alignment VkSamplerYcbcrConversionImageFormatPropertiesKHR}
 
         {-# INLINE alignment #-}
-        peek (Ptr addr)
-          | I## n <- sizeOf
-                      (undefined :: VkSamplerYcbcrConversionImageFormatPropertiesKHR),
-            I## a <- alignment
-                      (undefined :: VkSamplerYcbcrConversionImageFormatPropertiesKHR)
-            =
-            IO
-              (\ s ->
-                 case newAlignedPinnedByteArray## n a s of
-                     (## s1, mba ##) -> case copyAddrToByteArray## addr mba 0## n s1 of
-                                          s2 -> case unsafeFreezeByteArray## mba s2 of
-                                                    (## s3, ba ##) -> (## s3,
-                                                                       VkSamplerYcbcrConversionImageFormatPropertiesKHR##
-                                                                         ba ##))
+        peek = peekVkData##
 
         {-# INLINE peek #-}
-        poke (Ptr addr)
-          (VkSamplerYcbcrConversionImageFormatPropertiesKHR## ba)
-          | I## n <- sizeOf
-                      (undefined :: VkSamplerYcbcrConversionImageFormatPropertiesKHR)
-            = IO (\ s -> (## copyByteArrayToAddr## ba 0## addr n s, () ##))
+        poke = pokeVkData##
 
         {-# INLINE poke #-}
+
+instance VulkanMarshalPrim
+           VkSamplerYcbcrConversionImageFormatPropertiesKHR
+         where
+        unsafeAddr (VkSamplerYcbcrConversionImageFormatPropertiesKHR## a _)
+          = a
+
+        {-# INLINE unsafeAddr #-}
+        unsafeByteArray
+          (VkSamplerYcbcrConversionImageFormatPropertiesKHR## _ b) = b
+
+        {-# INLINE unsafeByteArray #-}
+        unsafeFromByteArrayOffset off b
+          = VkSamplerYcbcrConversionImageFormatPropertiesKHR##
+              (plusAddr## (byteArrayContents## b) off)
+              b
+
+        {-# INLINE unsafeFromByteArrayOffset #-}
 
 instance VulkanMarshal
            VkSamplerYcbcrConversionImageFormatPropertiesKHR
          where
         type StructFields VkSamplerYcbcrConversionImageFormatPropertiesKHR
              = '["sType", "pNext", "combinedImageSamplerDescriptorCount"] -- ' closing tick for hsc2hs
-
-        {-# INLINE newVkData #-}
-        newVkData f
-          | I## n <- sizeOf
-                      (undefined :: VkSamplerYcbcrConversionImageFormatPropertiesKHR),
-            I## a <- alignment
-                      (undefined :: VkSamplerYcbcrConversionImageFormatPropertiesKHR)
-            =
-            IO
-              (\ s0 ->
-                 case newAlignedPinnedByteArray## n a s0 of
-                     (## s1, mba ##) -> case unsafeFreezeByteArray## mba s1 of
-                                          (## s2, ba ##) -> case f (Ptr (byteArrayContents## ba)) of
-                                                              IO k -> case k s2 of
-                                                                          (## s3, () ##) -> (## s3,
-                                                                                             VkSamplerYcbcrConversionImageFormatPropertiesKHR##
-                                                                                               ba ##))
-
-        {-# INLINE unsafePtr #-}
-        unsafePtr (VkSamplerYcbcrConversionImageFormatPropertiesKHR## ba)
-          = Ptr (byteArrayContents## ba)
-
-        {-# INLINE fromForeignPtr #-}
-        fromForeignPtr
-          = fromForeignPtr## VkSamplerYcbcrConversionImageFormatPropertiesKHR##
-
-        {-# INLINE toForeignPtr #-}
-        toForeignPtr (VkSamplerYcbcrConversionImageFormatPropertiesKHR## ba)
-          = do ForeignPtr addr (PlainForeignPtr r) <- newForeignPtr_
-                                                        (Ptr (byteArrayContents## ba))
-               IO
-                 (\ s -> (## s, ForeignPtr addr (MallocPtr (unsafeCoerce## ba) r) ##))
-
-        {-# INLINE toPlainForeignPtr #-}
-        toPlainForeignPtr
-          (VkSamplerYcbcrConversionImageFormatPropertiesKHR## ba)
-          = IO
-              (\ s ->
-                 (## s,
-                    ForeignPtr (byteArrayContents## ba)
-                      (PlainPtr (unsafeCoerce## ba)) ##))
-
-        {-# INLINE touchVkData #-}
-        touchVkData
-          x@(VkSamplerYcbcrConversionImageFormatPropertiesKHR## ba)
-          = IO (\ s -> (## touch## x (touch## ba s), () ##))
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkSamplerYcbcrConversionImageFormatPropertiesKHR where
