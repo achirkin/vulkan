@@ -120,6 +120,7 @@ instance {-# OVERLAPPING #-} HasField "sType" VkNativeBufferANDROID
         type FieldOptional "sType" VkNativeBufferANDROID = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkNativeBufferANDROID =
              #{offset VkNativeBufferANDROID, sType}
+        type FieldIsArray "sType" VkNativeBufferANDROID = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -164,6 +165,7 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkNativeBufferANDROID
         type FieldOptional "pNext" VkNativeBufferANDROID = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkNativeBufferANDROID =
              #{offset VkNativeBufferANDROID, pNext}
+        type FieldIsArray "pNext" VkNativeBufferANDROID = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -209,6 +211,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "handle" VkNativeBufferANDROID = 'False -- ' closing tick for hsc2hs
         type FieldOffset "handle" VkNativeBufferANDROID =
              #{offset VkNativeBufferANDROID, handle}
+        type FieldIsArray "handle" VkNativeBufferANDROID = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -255,6 +258,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "stride" VkNativeBufferANDROID = 'False -- ' closing tick for hsc2hs
         type FieldOffset "stride" VkNativeBufferANDROID =
              #{offset VkNativeBufferANDROID, stride}
+        type FieldIsArray "stride" VkNativeBufferANDROID = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -301,6 +305,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "format" VkNativeBufferANDROID = 'False -- ' closing tick for hsc2hs
         type FieldOffset "format" VkNativeBufferANDROID =
              #{offset VkNativeBufferANDROID, format}
+        type FieldIsArray "format" VkNativeBufferANDROID = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -346,6 +351,7 @@ instance {-# OVERLAPPING #-} HasField "usage" VkNativeBufferANDROID
         type FieldOptional "usage" VkNativeBufferANDROID = 'False -- ' closing tick for hsc2hs
         type FieldOffset "usage" VkNativeBufferANDROID =
              #{offset VkNativeBufferANDROID, usage}
+        type FieldIsArray "usage" VkNativeBufferANDROID = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

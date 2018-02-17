@@ -139,6 +139,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkDebugReportCallbackCreateInfoEXT =
              #{offset VkDebugReportCallbackCreateInfoEXT, sType}
+        type FieldIsArray "sType" VkDebugReportCallbackCreateInfoEXT =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -189,6 +191,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkDebugReportCallbackCreateInfoEXT =
              #{offset VkDebugReportCallbackCreateInfoEXT, pNext}
+        type FieldIsArray "pNext" VkDebugReportCallbackCreateInfoEXT =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -240,6 +244,8 @@ instance {-# OVERLAPPING #-}
              'True -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkDebugReportCallbackCreateInfoEXT =
              #{offset VkDebugReportCallbackCreateInfoEXT, flags}
+        type FieldIsArray "flags" VkDebugReportCallbackCreateInfoEXT =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -291,6 +297,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pfnCallback" VkDebugReportCallbackCreateInfoEXT =
              #{offset VkDebugReportCallbackCreateInfoEXT, pfnCallback}
+        type FieldIsArray "pfnCallback" VkDebugReportCallbackCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -343,6 +351,8 @@ instance {-# OVERLAPPING #-}
              'True -- ' closing tick for hsc2hs
         type FieldOffset "pUserData" VkDebugReportCallbackCreateInfoEXT =
              #{offset VkDebugReportCallbackCreateInfoEXT, pUserData}
+        type FieldIsArray "pUserData" VkDebugReportCallbackCreateInfoEXT =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True

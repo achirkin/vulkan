@@ -147,6 +147,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "sType" VkPhysicalDeviceVariablePointerFeaturesKHR
              =
              #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, sType}
+        type FieldIsArray "sType"
+               VkPhysicalDeviceVariablePointerFeaturesKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -202,6 +205,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "pNext" VkPhysicalDeviceVariablePointerFeaturesKHR
              =
              #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, pNext}
+        type FieldIsArray "pNext"
+               VkPhysicalDeviceVariablePointerFeaturesKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -264,6 +270,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceVariablePointerFeaturesKHR
              =
              #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, variablePointersStorageBuffer}
+        type FieldIsArray "variablePointersStorageBuffer"
+               VkPhysicalDeviceVariablePointerFeaturesKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -325,6 +334,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceVariablePointerFeaturesKHR
              =
              #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, variablePointers}
+        type FieldIsArray "variablePointers"
+               VkPhysicalDeviceVariablePointerFeaturesKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

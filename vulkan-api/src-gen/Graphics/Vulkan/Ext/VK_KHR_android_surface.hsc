@@ -135,6 +135,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkAndroidSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkAndroidSurfaceCreateInfoKHR =
              #{offset VkAndroidSurfaceCreateInfoKHR, sType}
+        type FieldIsArray "sType" VkAndroidSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -181,6 +182,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkAndroidSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkAndroidSurfaceCreateInfoKHR =
              #{offset VkAndroidSurfaceCreateInfoKHR, pNext}
+        type FieldIsArray "pNext" VkAndroidSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -229,6 +231,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "flags" VkAndroidSurfaceCreateInfoKHR = 'True -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkAndroidSurfaceCreateInfoKHR =
              #{offset VkAndroidSurfaceCreateInfoKHR, flags}
+        type FieldIsArray "flags" VkAndroidSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -277,6 +280,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "window" VkAndroidSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "window" VkAndroidSurfaceCreateInfoKHR =
              #{offset VkAndroidSurfaceCreateInfoKHR, window}
+        type FieldIsArray "window" VkAndroidSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

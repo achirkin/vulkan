@@ -132,6 +132,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkDisplayPresentInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkDisplayPresentInfoKHR =
              #{offset VkDisplayPresentInfoKHR, sType}
+        type FieldIsArray "sType" VkDisplayPresentInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -177,6 +178,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkDisplayPresentInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkDisplayPresentInfoKHR =
              #{offset VkDisplayPresentInfoKHR, pNext}
+        type FieldIsArray "pNext" VkDisplayPresentInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -222,6 +224,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "srcRect" VkDisplayPresentInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "srcRect" VkDisplayPresentInfoKHR =
              #{offset VkDisplayPresentInfoKHR, srcRect}
+        type FieldIsArray "srcRect" VkDisplayPresentInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -268,6 +271,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "dstRect" VkDisplayPresentInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "dstRect" VkDisplayPresentInfoKHR =
              #{offset VkDisplayPresentInfoKHR, dstRect}
+        type FieldIsArray "dstRect" VkDisplayPresentInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -314,6 +318,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "persistent" VkDisplayPresentInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "persistent" VkDisplayPresentInfoKHR =
              #{offset VkDisplayPresentInfoKHR, persistent}
+        type FieldIsArray "persistent" VkDisplayPresentInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

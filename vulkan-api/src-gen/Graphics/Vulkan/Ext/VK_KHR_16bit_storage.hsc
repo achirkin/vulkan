@@ -145,6 +145,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkPhysicalDevice16BitStorageFeaturesKHR =
              #{offset VkPhysicalDevice16BitStorageFeaturesKHR, sType}
+        type FieldIsArray "sType" VkPhysicalDevice16BitStorageFeaturesKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -198,6 +200,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkPhysicalDevice16BitStorageFeaturesKHR =
              #{offset VkPhysicalDevice16BitStorageFeaturesKHR, pNext}
+        type FieldIsArray "pNext" VkPhysicalDevice16BitStorageFeaturesKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -260,6 +264,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDevice16BitStorageFeaturesKHR
              =
              #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storageBuffer16BitAccess}
+        type FieldIsArray "storageBuffer16BitAccess"
+               VkPhysicalDevice16BitStorageFeaturesKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -322,6 +329,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDevice16BitStorageFeaturesKHR
              =
              #{offset VkPhysicalDevice16BitStorageFeaturesKHR, uniformAndStorageBuffer16BitAccess}
+        type FieldIsArray "uniformAndStorageBuffer16BitAccess"
+               VkPhysicalDevice16BitStorageFeaturesKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -383,6 +393,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDevice16BitStorageFeaturesKHR
              =
              #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storagePushConstant16}
+        type FieldIsArray "storagePushConstant16"
+               VkPhysicalDevice16BitStorageFeaturesKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -444,6 +457,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDevice16BitStorageFeaturesKHR
              =
              #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storageInputOutput16}
+        type FieldIsArray "storageInputOutput16"
+               VkPhysicalDevice16BitStorageFeaturesKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

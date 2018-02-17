@@ -156,6 +156,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceDiscardRectanglePropertiesEXT
              =
              #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, sType}
+        type FieldIsArray "sType"
+               VkPhysicalDeviceDiscardRectanglePropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -214,6 +217,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceDiscardRectanglePropertiesEXT
              =
              #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, pNext}
+        type FieldIsArray "pNext"
+               VkPhysicalDeviceDiscardRectanglePropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -276,6 +282,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceDiscardRectanglePropertiesEXT
              =
              #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, maxDiscardRectangles}
+        type FieldIsArray "maxDiscardRectangles"
+               VkPhysicalDeviceDiscardRectanglePropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -417,6 +426,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineDiscardRectangleStateCreateInfoEXT
              =
              #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, sType}
+        type FieldIsArray "sType"
+               VkPipelineDiscardRectangleStateCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -473,6 +485,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineDiscardRectangleStateCreateInfoEXT
              =
              #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, pNext}
+        type FieldIsArray "pNext"
+               VkPipelineDiscardRectangleStateCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -529,6 +544,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineDiscardRectangleStateCreateInfoEXT
              =
              #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, flags}
+        type FieldIsArray "flags"
+               VkPipelineDiscardRectangleStateCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -591,6 +609,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineDiscardRectangleStateCreateInfoEXT
              =
              #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, discardRectangleMode}
+        type FieldIsArray "discardRectangleMode"
+               VkPipelineDiscardRectangleStateCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -653,6 +674,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineDiscardRectangleStateCreateInfoEXT
              =
              #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, discardRectangleCount}
+        type FieldIsArray "discardRectangleCount"
+               VkPipelineDiscardRectangleStateCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -715,6 +739,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineDiscardRectangleStateCreateInfoEXT
              =
              #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, pDiscardRectangles}
+        type FieldIsArray "pDiscardRectangles"
+               VkPipelineDiscardRectangleStateCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True

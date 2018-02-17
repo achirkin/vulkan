@@ -48,7 +48,7 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
-import           Graphics.Vulkan.Ext.VK_KHR_get_surface_capabilities2
+import Graphics.Vulkan.Ext.VK_KHR_get_surface_capabilities2
 
 -- | > typedef struct VkSharedPresentSurfaceCapabilitiesKHR {
 --   >     VkStructureType sType;
@@ -143,6 +143,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkSharedPresentSurfaceCapabilitiesKHR =
              #{offset VkSharedPresentSurfaceCapabilitiesKHR, sType}
+        type FieldIsArray "sType" VkSharedPresentSurfaceCapabilitiesKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -188,6 +190,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkSharedPresentSurfaceCapabilitiesKHR =
              #{offset VkSharedPresentSurfaceCapabilitiesKHR, pNext}
+        type FieldIsArray "pNext" VkSharedPresentSurfaceCapabilitiesKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -243,6 +247,9 @@ instance {-# OVERLAPPING #-}
                VkSharedPresentSurfaceCapabilitiesKHR
              =
              #{offset VkSharedPresentSurfaceCapabilitiesKHR, sharedPresentSupportedUsageFlags}
+        type FieldIsArray "sharedPresentSupportedUsageFlags"
+               VkSharedPresentSurfaceCapabilitiesKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True

@@ -1,3 +1,4 @@
+{-# LANGUAGE AllowAmbiguousTypes   #-}
 {-# LANGUAGE BangPatterns          #-}
 {-# LANGUAGE ConstraintKinds       #-}
 {-# LANGUAGE DataKinds             #-}
@@ -21,7 +22,7 @@
 module Graphics.Vulkan.Marshal.Create
     ( CreateVkStruct ()
     , createVk, (&*)
-    , set, setVk, setVkRef, setStr, setStrRef, setStrListRef, setListRef
+    , set, setAt, setVk, setVkRef, setStr, setStrRef, setStrListRef, setListRef
     , SetOptionalFields (..), HandleRemainingFields (..), HandleRemFields
     ) where
 
@@ -124,6 +125,13 @@ set :: forall fname x
     => FieldType fname x -> CreateVkStruct x '[fname] ()
 set v = CreateVkStruct $ \p -> (,) ([],[]) <$> writeField @fname @x p v
 
+
+-- | `writeFieldArray` wrapped into `CreateVkStruct` monad.
+setAt :: forall fname i x
+       . CanWriteFieldArray fname i x
+      => FieldType fname x -> CreateVkStruct x '[fname] ()
+setAt v = CreateVkStruct $ \p -> (,) ([],[]) <$> writeFieldArray @fname @i @x p v
+
 -- | Write fields of a member struct.
 setVk :: forall fname x afs a
        . ( CanWriteField fname x
@@ -213,19 +221,22 @@ setVkRef v = CreateVkStruct $ \p ->
 -- | Combine multiple field writes.
 infixl 1 &*
 (&*) :: CreateVkStruct x as () -> CreateVkStruct x bs ()
-     -> CreateVkStruct x (Union as bs) ()
+     -> CreateVkStruct x (Union x as bs) ()
 CreateVkStruct a &* CreateVkStruct b = CreateVkStruct a >> CreateVkStruct b
 
 
 
-type family Union (as :: [Symbol]) (bs :: [Symbol]) :: [Symbol] where
-  Union as '[] = as
-  Union '[] (b ': bs) = Union '[b] bs
-  Union (x ': _) (x ': _) = TypeError
-    ( 'Text "The same field " ':<>: 'ShowType x
-    ':<>: 'Text " should not be set twice."
+type family Union (x :: Type) (as :: [Symbol]) (bs :: [Symbol]) :: [Symbol] where
+  Union _ as '[] = as
+  Union x '[] (b ': bs) = Union x '[b] bs
+  Union x (a ': as) (a ': bs) = If (FieldIsArray a x)
+    ( Union x as (a ': bs) )
+    ( TypeError
+      ( 'Text "The same field " ':<>: 'ShowType x
+      ':<>: 'Text " should not be set twice."
+      )
     )
-  Union (a ': as) (b ': bs) = a ': Union as (b ': bs)
+  Union x (a ': as) (b ': bs) = a ': Union x as (b ': bs)
 
 type family Difference (as :: [Symbol]) (bs :: [Symbol]) :: [Symbol] where
   Difference '[] _  = '[]

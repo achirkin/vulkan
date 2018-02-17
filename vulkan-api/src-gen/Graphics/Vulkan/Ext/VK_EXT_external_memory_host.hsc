@@ -145,6 +145,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkImportMemoryHostPointerInfoEXT =
              #{offset VkImportMemoryHostPointerInfoEXT, sType}
+        type FieldIsArray "sType" VkImportMemoryHostPointerInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -194,6 +195,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkImportMemoryHostPointerInfoEXT =
              #{offset VkImportMemoryHostPointerInfoEXT, pNext}
+        type FieldIsArray "pNext" VkImportMemoryHostPointerInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -245,6 +247,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "handleType" VkImportMemoryHostPointerInfoEXT =
              #{offset VkImportMemoryHostPointerInfoEXT, handleType}
+        type FieldIsArray "handleType" VkImportMemoryHostPointerInfoEXT =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -297,6 +301,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pHostPointer" VkImportMemoryHostPointerInfoEXT =
              #{offset VkImportMemoryHostPointerInfoEXT, pHostPointer}
+        type FieldIsArray "pHostPointer" VkImportMemoryHostPointerInfoEXT =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -425,6 +431,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkMemoryHostPointerPropertiesEXT =
              #{offset VkMemoryHostPointerPropertiesEXT, sType}
+        type FieldIsArray "sType" VkMemoryHostPointerPropertiesEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -474,6 +481,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkMemoryHostPointerPropertiesEXT =
              #{offset VkMemoryHostPointerPropertiesEXT, pNext}
+        type FieldIsArray "pNext" VkMemoryHostPointerPropertiesEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -527,6 +535,8 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "memoryTypeBits" VkMemoryHostPointerPropertiesEXT
              =
              #{offset VkMemoryHostPointerPropertiesEXT, memoryTypeBits}
+        type FieldIsArray "memoryTypeBits" VkMemoryHostPointerPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -668,6 +678,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceExternalMemoryHostPropertiesEXT
              =
              #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, sType}
+        type FieldIsArray "sType"
+               VkPhysicalDeviceExternalMemoryHostPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -726,6 +739,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceExternalMemoryHostPropertiesEXT
              =
              #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, pNext}
+        type FieldIsArray "pNext"
+               VkPhysicalDeviceExternalMemoryHostPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -788,6 +804,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceExternalMemoryHostPropertiesEXT
              =
              #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, minImportedHostPointerAlignment}
+        type FieldIsArray "minImportedHostPointerAlignment"
+               VkPhysicalDeviceExternalMemoryHostPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

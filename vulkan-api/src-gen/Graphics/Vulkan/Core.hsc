@@ -2963,6 +2963,7 @@ instance {-# OVERLAPPING #-} HasField "sType" VkBufferMemoryBarrier
         type FieldOptional "sType" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkBufferMemoryBarrier =
              #{offset VkBufferMemoryBarrier, sType}
+        type FieldIsArray "sType" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3007,6 +3008,7 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkBufferMemoryBarrier
         type FieldOptional "pNext" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkBufferMemoryBarrier =
              #{offset VkBufferMemoryBarrier, pNext}
+        type FieldIsArray "pNext" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3053,6 +3055,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "srcAccessMask" VkBufferMemoryBarrier = 'True -- ' closing tick for hsc2hs
         type FieldOffset "srcAccessMask" VkBufferMemoryBarrier =
              #{offset VkBufferMemoryBarrier, srcAccessMask}
+        type FieldIsArray "srcAccessMask" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -3100,6 +3103,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "dstAccessMask" VkBufferMemoryBarrier = 'True -- ' closing tick for hsc2hs
         type FieldOffset "dstAccessMask" VkBufferMemoryBarrier =
              #{offset VkBufferMemoryBarrier, dstAccessMask}
+        type FieldIsArray "dstAccessMask" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -3147,6 +3151,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "srcQueueFamilyIndex" VkBufferMemoryBarrier =
              #{offset VkBufferMemoryBarrier, srcQueueFamilyIndex}
+        type FieldIsArray "srcQueueFamilyIndex" VkBufferMemoryBarrier =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3196,6 +3202,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "dstQueueFamilyIndex" VkBufferMemoryBarrier =
              #{offset VkBufferMemoryBarrier, dstQueueFamilyIndex}
+        type FieldIsArray "dstQueueFamilyIndex" VkBufferMemoryBarrier =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3244,6 +3252,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "buffer" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
         type FieldOffset "buffer" VkBufferMemoryBarrier =
              #{offset VkBufferMemoryBarrier, buffer}
+        type FieldIsArray "buffer" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3289,6 +3298,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "offset" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
         type FieldOffset "offset" VkBufferMemoryBarrier =
              #{offset VkBufferMemoryBarrier, offset}
+        type FieldIsArray "offset" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3333,6 +3343,7 @@ instance {-# OVERLAPPING #-} HasField "size" VkBufferMemoryBarrier
         type FieldOptional "size" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
         type FieldOffset "size" VkBufferMemoryBarrier =
              #{offset VkBufferMemoryBarrier, size}
+        type FieldIsArray "size" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3463,6 +3474,7 @@ instance {-# OVERLAPPING #-} HasField "x" VkDispatchIndirectCommand
         type FieldOptional "x" VkDispatchIndirectCommand = 'False -- ' closing tick for hsc2hs
         type FieldOffset "x" VkDispatchIndirectCommand =
              #{offset VkDispatchIndirectCommand, x}
+        type FieldIsArray "x" VkDispatchIndirectCommand = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3507,6 +3519,7 @@ instance {-# OVERLAPPING #-} HasField "y" VkDispatchIndirectCommand
         type FieldOptional "y" VkDispatchIndirectCommand = 'False -- ' closing tick for hsc2hs
         type FieldOffset "y" VkDispatchIndirectCommand =
              #{offset VkDispatchIndirectCommand, y}
+        type FieldIsArray "y" VkDispatchIndirectCommand = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3551,6 +3564,7 @@ instance {-# OVERLAPPING #-} HasField "z" VkDispatchIndirectCommand
         type FieldOptional "z" VkDispatchIndirectCommand = 'False -- ' closing tick for hsc2hs
         type FieldOffset "z" VkDispatchIndirectCommand =
              #{offset VkDispatchIndirectCommand, z}
+        type FieldIsArray "z" VkDispatchIndirectCommand = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3670,6 +3684,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "indexCount" VkDrawIndexedIndirectCommand =
              #{offset VkDrawIndexedIndirectCommand, indexCount}
+        type FieldIsArray "indexCount" VkDrawIndexedIndirectCommand =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3720,6 +3736,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "instanceCount" VkDrawIndexedIndirectCommand =
              #{offset VkDrawIndexedIndirectCommand, instanceCount}
+        type FieldIsArray "instanceCount" VkDrawIndexedIndirectCommand =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3769,6 +3787,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "firstIndex" VkDrawIndexedIndirectCommand =
              #{offset VkDrawIndexedIndirectCommand, firstIndex}
+        type FieldIsArray "firstIndex" VkDrawIndexedIndirectCommand =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3818,6 +3838,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "vertexOffset" VkDrawIndexedIndirectCommand =
              #{offset VkDrawIndexedIndirectCommand, vertexOffset}
+        type FieldIsArray "vertexOffset" VkDrawIndexedIndirectCommand =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3868,6 +3890,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "firstInstance" VkDrawIndexedIndirectCommand =
              #{offset VkDrawIndexedIndirectCommand, firstInstance}
+        type FieldIsArray "firstInstance" VkDrawIndexedIndirectCommand =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3990,6 +4014,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "vertexCount" VkDrawIndirectCommand = 'False -- ' closing tick for hsc2hs
         type FieldOffset "vertexCount" VkDrawIndirectCommand =
              #{offset VkDrawIndirectCommand, vertexCount}
+        type FieldIsArray "vertexCount" VkDrawIndirectCommand = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4036,6 +4061,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "instanceCount" VkDrawIndirectCommand = 'False -- ' closing tick for hsc2hs
         type FieldOffset "instanceCount" VkDrawIndirectCommand =
              #{offset VkDrawIndirectCommand, instanceCount}
+        type FieldIsArray "instanceCount" VkDrawIndirectCommand = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4082,6 +4108,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "firstVertex" VkDrawIndirectCommand = 'False -- ' closing tick for hsc2hs
         type FieldOffset "firstVertex" VkDrawIndirectCommand =
              #{offset VkDrawIndirectCommand, firstVertex}
+        type FieldIsArray "firstVertex" VkDrawIndirectCommand = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4128,6 +4155,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "firstInstance" VkDrawIndirectCommand = 'False -- ' closing tick for hsc2hs
         type FieldOffset "firstInstance" VkDrawIndirectCommand =
              #{offset VkDrawIndirectCommand, firstInstance}
+        type FieldIsArray "firstInstance" VkDrawIndirectCommand = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4251,6 +4279,7 @@ instance {-# OVERLAPPING #-} HasField "sType" VkImageMemoryBarrier
         type FieldOptional "sType" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkImageMemoryBarrier =
              #{offset VkImageMemoryBarrier, sType}
+        type FieldIsArray "sType" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4295,6 +4324,7 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkImageMemoryBarrier
         type FieldOptional "pNext" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkImageMemoryBarrier =
              #{offset VkImageMemoryBarrier, pNext}
+        type FieldIsArray "pNext" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4340,6 +4370,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "srcAccessMask" VkImageMemoryBarrier = 'True -- ' closing tick for hsc2hs
         type FieldOffset "srcAccessMask" VkImageMemoryBarrier =
              #{offset VkImageMemoryBarrier, srcAccessMask}
+        type FieldIsArray "srcAccessMask" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -4386,6 +4417,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "dstAccessMask" VkImageMemoryBarrier = 'True -- ' closing tick for hsc2hs
         type FieldOffset "dstAccessMask" VkImageMemoryBarrier =
              #{offset VkImageMemoryBarrier, dstAccessMask}
+        type FieldIsArray "dstAccessMask" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -4432,6 +4464,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "oldLayout" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
         type FieldOffset "oldLayout" VkImageMemoryBarrier =
              #{offset VkImageMemoryBarrier, oldLayout}
+        type FieldIsArray "oldLayout" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4477,6 +4510,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "newLayout" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
         type FieldOffset "newLayout" VkImageMemoryBarrier =
              #{offset VkImageMemoryBarrier, newLayout}
+        type FieldIsArray "newLayout" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4523,6 +4557,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "srcQueueFamilyIndex" VkImageMemoryBarrier =
              #{offset VkImageMemoryBarrier, srcQueueFamilyIndex}
+        type FieldIsArray "srcQueueFamilyIndex" VkImageMemoryBarrier =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4572,6 +4608,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "dstQueueFamilyIndex" VkImageMemoryBarrier =
              #{offset VkImageMemoryBarrier, dstQueueFamilyIndex}
+        type FieldIsArray "dstQueueFamilyIndex" VkImageMemoryBarrier =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4619,6 +4657,7 @@ instance {-# OVERLAPPING #-} HasField "image" VkImageMemoryBarrier
         type FieldOptional "image" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
         type FieldOffset "image" VkImageMemoryBarrier =
              #{offset VkImageMemoryBarrier, image}
+        type FieldIsArray "image" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4666,6 +4705,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "subresourceRange" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
         type FieldOffset "subresourceRange" VkImageMemoryBarrier =
              #{offset VkImageMemoryBarrier, subresourceRange}
+        type FieldIsArray "subresourceRange" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4802,6 +4842,7 @@ instance {-# OVERLAPPING #-} HasField "sType" VkMemoryBarrier where
         type FieldOptional "sType" VkMemoryBarrier = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkMemoryBarrier =
              #{offset VkMemoryBarrier, sType}
+        type FieldIsArray "sType" VkMemoryBarrier = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4844,6 +4885,7 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkMemoryBarrier where
         type FieldOptional "pNext" VkMemoryBarrier = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkMemoryBarrier =
              #{offset VkMemoryBarrier, pNext}
+        type FieldIsArray "pNext" VkMemoryBarrier = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4889,6 +4931,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "srcAccessMask" VkMemoryBarrier = 'True -- ' closing tick for hsc2hs
         type FieldOffset "srcAccessMask" VkMemoryBarrier =
              #{offset VkMemoryBarrier, srcAccessMask}
+        type FieldIsArray "srcAccessMask" VkMemoryBarrier = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -4934,6 +4977,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "dstAccessMask" VkMemoryBarrier = 'True -- ' closing tick for hsc2hs
         type FieldOffset "dstAccessMask" VkMemoryBarrier =
              #{offset VkMemoryBarrier, dstAccessMask}
+        type FieldIsArray "dstAccessMask" VkMemoryBarrier = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True

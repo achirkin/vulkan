@@ -122,6 +122,7 @@ instance {-# OVERLAPPING #-} HasField "xcoeff" VkViewportWScalingNV
         type FieldOptional "xcoeff" VkViewportWScalingNV = 'False -- ' closing tick for hsc2hs
         type FieldOffset "xcoeff" VkViewportWScalingNV =
              #{offset VkViewportWScalingNV, xcoeff}
+        type FieldIsArray "xcoeff" VkViewportWScalingNV = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -167,6 +168,7 @@ instance {-# OVERLAPPING #-} HasField "ycoeff" VkViewportWScalingNV
         type FieldOptional "ycoeff" VkViewportWScalingNV = 'False -- ' closing tick for hsc2hs
         type FieldOffset "ycoeff" VkViewportWScalingNV =
              #{offset VkViewportWScalingNV, ycoeff}
+        type FieldIsArray "ycoeff" VkViewportWScalingNV = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -297,6 +299,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineViewportWScalingStateCreateInfoNV
              =
              #{offset VkPipelineViewportWScalingStateCreateInfoNV, sType}
+        type FieldIsArray "sType"
+               VkPipelineViewportWScalingStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -353,6 +358,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineViewportWScalingStateCreateInfoNV
              =
              #{offset VkPipelineViewportWScalingStateCreateInfoNV, pNext}
+        type FieldIsArray "pNext"
+               VkPipelineViewportWScalingStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -415,6 +423,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineViewportWScalingStateCreateInfoNV
              =
              #{offset VkPipelineViewportWScalingStateCreateInfoNV, viewportWScalingEnable}
+        type FieldIsArray "viewportWScalingEnable"
+               VkPipelineViewportWScalingStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -476,6 +487,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineViewportWScalingStateCreateInfoNV
              =
              #{offset VkPipelineViewportWScalingStateCreateInfoNV, viewportCount}
+        type FieldIsArray "viewportCount"
+               VkPipelineViewportWScalingStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -537,6 +551,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineViewportWScalingStateCreateInfoNV
              =
              #{offset VkPipelineViewportWScalingStateCreateInfoNV, pViewportWScalings}
+        type FieldIsArray "pViewportWScalings"
+               VkPipelineViewportWScalingStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

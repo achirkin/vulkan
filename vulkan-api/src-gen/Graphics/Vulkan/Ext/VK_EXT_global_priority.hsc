@@ -137,6 +137,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkDeviceQueueGlobalPriorityCreateInfoEXT =
              #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, sType}
+        type FieldIsArray "sType" VkDeviceQueueGlobalPriorityCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -190,6 +192,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkDeviceQueueGlobalPriorityCreateInfoEXT =
              #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, pNext}
+        type FieldIsArray "pNext" VkDeviceQueueGlobalPriorityCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -248,6 +252,9 @@ instance {-# OVERLAPPING #-}
                VkDeviceQueueGlobalPriorityCreateInfoEXT
              =
              #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, globalPriority}
+        type FieldIsArray "globalPriority"
+               VkDeviceQueueGlobalPriorityCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

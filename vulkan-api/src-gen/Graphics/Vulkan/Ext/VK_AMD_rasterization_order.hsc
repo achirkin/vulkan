@@ -148,6 +148,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineRasterizationStateRasterizationOrderAMD
              =
              #{offset VkPipelineRasterizationStateRasterizationOrderAMD, sType}
+        type FieldIsArray "sType"
+               VkPipelineRasterizationStateRasterizationOrderAMD
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -206,6 +209,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineRasterizationStateRasterizationOrderAMD
              =
              #{offset VkPipelineRasterizationStateRasterizationOrderAMD, pNext}
+        type FieldIsArray "pNext"
+               VkPipelineRasterizationStateRasterizationOrderAMD
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -268,6 +274,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineRasterizationStateRasterizationOrderAMD
              =
              #{offset VkPipelineRasterizationStateRasterizationOrderAMD, rasterizationOrder}
+        type FieldIsArray "rasterizationOrder"
+               VkPipelineRasterizationStateRasterizationOrderAMD
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

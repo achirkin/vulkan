@@ -16,11 +16,11 @@ import           Control.Exception
 import           Control.Monad           (forM_)
 import           Foreign.Marshal.Alloc
 import           Foreign.Marshal.Array
-import           Foreign.Marshal.Utils
 import           Foreign.Storable
 import           Foreign.Ptr
 import           Graphics.Vulkan
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
+import           Graphics.Vulkan.Marshal.Create
 
 import           Lib.GLFW
 import           Lib.Utils
@@ -101,33 +101,26 @@ withFramebuffers :: VkDevice
                  -> ([VkFramebuffer] -> IO a)
                  -> IO a
 withFramebuffers dev renderPass SwapChainImgInfo{..} imgviews action = do
-
-    imgvPtrs <- mapM new imgviews
-    bufs <- mapM createFB imgvPtrs
-
-    finally (action $ map snd bufs) $ do
-      forM_ bufs $ \(fbci, fb) -> do
+    bufs <- mapM createFB imgviews
+    finally (action bufs) $
+      forM_ bufs $ \fb ->
         vkDestroyFramebuffer dev fb VK_NULL_HANDLE
-        touchVkData fbci
-      mapM_ free imgvPtrs
   where
-    createFB imgViewPtr = do
-
-      fbci <- newVkData @VkFramebufferCreateInfo $ \fbciPtr -> do
-        writeField @"sType" fbciPtr VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO
-        writeField @"flags" fbciPtr 0
-        writeField @"renderPass" fbciPtr renderPass
-        writeField @"attachmentCount" fbciPtr 1
-        writeField @"pAttachments" fbciPtr imgViewPtr
-        writeField @"width" fbciPtr (fromIntegral $ getField @"width" swExtent)
-        writeField @"height" fbciPtr (fromIntegral $ getField @"height" swExtent)
-        writeField @"layers" fbciPtr 1
-
-      alloca $ \fbPtr -> do
+    createFB imgView =
+      let fbci = createVk
+            $  set @"sType" VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO
+            &* set @"pNext" VK_NULL
+            &* set @"flags" 0
+            &* set @"renderPass" renderPass
+            &* set @"attachmentCount" 1
+            &* setListRef @"pAttachments" [imgView]
+            &* set @"width" (getField @"width" swExtent)
+            &* set @"height" (getField @"height" swExtent)
+            &* set @"layers" 1
+      in alloca $ \fbPtr -> withPtr fbci $ \fbciPtr -> do
         throwingVK "vkCreateFramebuffer failed!"
-          $ vkCreateFramebuffer
-              dev (unsafePtr fbci) VK_NULL_HANDLE fbPtr
-        (,) fbci <$> peek fbPtr
+          $ vkCreateFramebuffer dev fbciPtr VK_NULL fbPtr
+        peek fbPtr
 
 
 withCommandPool :: VkDevice -> DevQueues
@@ -135,25 +128,20 @@ withCommandPool :: VkDevice -> DevQueues
                 -> IO a
 withCommandPool dev DevQueues{..} action = do
 
-  poolInfo <- newVkData @VkCommandPoolCreateInfo $ \cpPtr -> do
-    writeField @"sType"
-      cpPtr VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO
-    writeField @"pNext"
-      cpPtr VK_NULL_HANDLE
-    writeField @"flags"
-      cpPtr 0
-    writeField @"queueFamilyIndex"
-      cpPtr graphicsFamIdx
-
   commandPool <- alloca $ \pPtr -> do
-    throwingVK "vkCreateCommandPool failed!"
-      $ vkCreateCommandPool
-          dev (unsafePtr poolInfo) VK_NULL_HANDLE pPtr
+    withPtr
+      ( createVk
+        $  set @"sType" VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO
+        &* set @"pNext" VK_NULL
+        &* set @"flags" 0
+        &* set @"queueFamilyIndex" graphicsFamIdx
+      ) $ \ciPtr ->
+      throwingVK "vkCreateCommandPool failed!"
+        $ vkCreateCommandPool dev ciPtr VK_NULL pPtr
     peek pPtr
 
-  finally (action commandPool) $ do
-    vkDestroyCommandPool dev commandPool VK_NULL_HANDLE
-    touchVkData poolInfo
+  finally (action commandPool) $
+    vkDestroyCommandPool dev commandPool VK_NULL
 
 withCommandBuffers :: VkDevice
                    -> VkPipeline
@@ -169,77 +157,53 @@ withCommandBuffers
   -- allocate a pointer to an array of command buffer handles
   allocaArray buffersCount $ \cbsPtr -> do
 
-    allocInfo <- newVkData @VkCommandBufferAllocateInfo $ \aiPtr -> do
-      writeField @"sType"
-        aiPtr VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
-      writeField @"pNext"
-        aiPtr VK_NULL_HANDLE
-      writeField @"commandPool"
-        aiPtr commandPool
-      writeField @"level"
-        aiPtr VK_COMMAND_BUFFER_LEVEL_PRIMARY
-      writeField @"commandBufferCount"
-        aiPtr (fromIntegral buffersCount)
+    let allocInfo = createVk @VkCommandBufferAllocateInfo
+          $  set @"sType" VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO
+          &* set @"pNext" VK_NULL
+          &* set @"commandPool" commandPool
+          &* set @"level" VK_COMMAND_BUFFER_LEVEL_PRIMARY
+          &* set @"commandBufferCount" (fromIntegral buffersCount)
 
-    throwingVK "vkAllocateCommandBuffers failed!"
-      $ vkAllocateCommandBuffers dev (unsafePtr allocInfo) cbsPtr
+    withPtr allocInfo $ \aiPtr ->
+      throwingVK "vkAllocateCommandBuffers failed!"
+        $ vkAllocateCommandBuffers dev aiPtr cbsPtr
     commandBuffers <- peekArray buffersCount cbsPtr
 
     -- record command buffers
     forM_ (zip fbs commandBuffers) $ \(frameBuffer, cmdBuffer) -> do
 
       -- begin commands
-      beginInfo <- newVkData @VkCommandBufferBeginInfo
-                             $ \biPtr -> do
-        writeField @"sType"
-          biPtr VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO
-        writeField @"pNext"
-          biPtr VK_NULL_HANDLE
-        writeField @"flags"
-          biPtr VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT
-        writeField @"pInheritanceInfo"
-          biPtr VK_NULL_HANDLE -- optional
+      let cmdBufBeginInfo = createVk @VkCommandBufferBeginInfo
+            $  set @"sType" VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO
+            &* set @"pNext" VK_NULL
+            &* set @"flags" VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT
 
-      throwingVK "vkBeginCommandBuffer failed!"
-        $ vkBeginCommandBuffer cmdBuffer (unsafePtr beginInfo)
-
-      touchVkData beginInfo
+      withPtr cmdBufBeginInfo
+        $ throwingVK "vkBeginCommandBuffer failed!"
+        . vkBeginCommandBuffer cmdBuffer
 
       -- render pass
-      clearColor <- newVkData $ \ccPtr ->
-        (>>= writeField @"color" ccPtr) . newVkData $ \cPtr -> do
-          writeFieldArray @"float32" @0 cPtr 0
-          writeFieldArray @"float32" @1 cPtr 0
-          writeFieldArray @"float32" @2 cPtr 0
-          writeFieldArray @"float32" @3 cPtr 1
+      let renderPassBeginInfo = createVk @VkRenderPassBeginInfo
+            $  set @"sType" VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO
+            &* set @"pNext" VK_NULL
+            &* set @"renderPass" rpass
+            &* set @"framebuffer" frameBuffer
+            &* setVk @"renderArea"
+                (  setVk @"offset"
+                   ( set @"x" 0 &* set @"y" 0 )
+                &* set @"extent" swExtent
+                )
+            &* set @"clearValueCount" 1
+            &* setVkRef @"pClearValues"
+               ( createVk $ setVk @"color"
+                  $  setAt @"float32" @0 0
+                  &* setAt @"float32" @1 0
+                  &* setAt @"float32" @2 0.2
+                  &* setAt @"float32" @3 1
+               )
 
-      renderPassInfo <- newVkData @VkRenderPassBeginInfo $ \rpiPtr -> do
-        writeField @"sType"
-          rpiPtr VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO
-        writeField @"pNext"
-          rpiPtr VK_NULL_HANDLE
-        writeField @"renderPass"
-          rpiPtr rpass
-        writeField @"framebuffer"
-          rpiPtr frameBuffer
-        renderArea <- newVkData $ \raPtr -> do
-          raOffset <- newVkData $ \raoPtr -> do
-            writeField @"x" raoPtr 0
-            writeField @"y" raoPtr 0
-          writeField @"offset" raPtr raOffset
-          writeField @"extent" raPtr swExtent
-        writeField @"renderArea"
-          rpiPtr renderArea
-        writeField @"clearValueCount" rpiPtr 1
-        writeField @"pClearValues"
-          rpiPtr (unsafePtr clearColor)
-
-      vkCmdBeginRenderPass
-        cmdBuffer (unsafePtr renderPassInfo)
-        VK_SUBPASS_CONTENTS_INLINE
-
-      touchVkData clearColor
-      touchVkData renderPassInfo
+      withPtr renderPassBeginInfo $ \rpibPtr ->
+        vkCmdBeginRenderPass cmdBuffer rpibPtr VK_SUBPASS_CONTENTS_INLINE
 
       -- basic drawing commands
       vkCmdBindPipeline cmdBuffer VK_PIPELINE_BIND_POINT_GRAPHICS pipeline
@@ -252,9 +216,8 @@ withCommandBuffers
         $ vkEndCommandBuffer cmdBuffer
 
 
-    finally (action commandBuffers) $ do
+    finally (action commandBuffers) $
       vkFreeCommandBuffers dev commandPool (fromIntegral buffersCount) cbsPtr
-      touchVkData allocInfo
 
 
 withSemaphore :: VkDevice
@@ -262,22 +225,18 @@ withSemaphore :: VkDevice
               -> IO a
 withSemaphore dev action = do
 
-  semaphoreInfo <- newVkData @VkSemaphoreCreateInfo $ \sciPtr -> do
-    writeField @"sType"
-      sciPtr VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO
-    writeField @"pNext"
-      sciPtr VK_NULL_HANDLE
-    writeField @"flags"
-      sciPtr 0
-
   semaphore <- alloca $ \sPtr -> do
-    throwingVK "vkCreateSemaphore failed!"
-      $ vkCreateSemaphore dev (unsafePtr semaphoreInfo) VK_NULL_HANDLE sPtr
+    withPtr
+      ( createVk
+        $  set @"sType" VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO
+        &* set @"pNext" VK_NULL
+        &* set @"flags" 0
+      ) $ \ciPtr -> throwingVK "vkCreateSemaphore failed!"
+                      $ vkCreateSemaphore dev ciPtr VK_NULL sPtr
     peek sPtr
-  touchVkData semaphoreInfo
 
   finally (action semaphore) $
-    vkDestroySemaphore dev semaphore VK_NULL_HANDLE
+    vkDestroySemaphore dev semaphore VK_NULL
 
 
 data RenderData
@@ -293,57 +252,48 @@ data RenderData
 
 
 drawFrame :: RenderData -> IO ()
-drawFrame RenderData {..}
-  | SwapChainImgInfo {..} <- swapChainInfo
-  , DevQueues {..} <- deviceQueues =
-  withArrayLen [imageAvailable]
-    $ \waitSemCount waitSemaphores ->
-  withArrayLen [renderFinished]
-    $ \signalSemCount signalSemaphores ->
-  withArray commandBuffers
-    $ \commandBuffersPtr ->
-  withArrayLen [swapchain]
-    $ \swapchainCount swapchainsPtr ->
-  withArray [VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT]
-    $ \waitStages -> do
+drawFrame RenderData {..} =
+    withArray commandBuffers
+      $ \commandBuffersPtr -> do
 
-  -- Acquiring an image from the swap chain
-  throwingVK "vkAcquireNextImageKHR failed!"
-    $ vkAcquireNextImageKHR
-        device swapchain maxBound
-        imageAvailable VK_NULL_HANDLE imgIndexPtr
-  bufPtr <- (\i -> commandBuffersPtr `plusPtr`
-                      (fromIntegral i * sizeOf (undefined :: VkCommandBuffer))
-            ) <$> peek imgIndexPtr
+    -- Acquiring an image from the swap chain
+    throwingVK "vkAcquireNextImageKHR failed!"
+      $ vkAcquireNextImageKHR
+          device swapchain maxBound
+          imageAvailable VK_NULL_HANDLE imgIndexPtr
+    bufPtr <- (\i -> commandBuffersPtr `plusPtr`
+                        (fromIntegral i * sizeOf (undefined :: VkCommandBuffer))
+              ) <$> peek imgIndexPtr
 
-  -- Submitting the command buffer
-  submitInfo <- newVkData @VkSubmitInfo $ \siPtr -> do
-    writeField @"sType" siPtr VK_STRUCTURE_TYPE_SUBMIT_INFO
-    writeField @"pNext" siPtr VK_NULL_HANDLE
-    writeField @"waitSemaphoreCount" siPtr $ fromIntegral waitSemCount
-    writeField @"pWaitSemaphores" siPtr waitSemaphores
-    writeField @"pWaitDstStageMask" siPtr waitStages
-    writeField @"commandBufferCount" siPtr 1
-    writeField @"pCommandBuffers" siPtr bufPtr
-    writeField @"signalSemaphoreCount" siPtr $ fromIntegral signalSemCount
-    writeField @"pSignalSemaphores" siPtr signalSemaphores
+    -- Submitting the command buffer
+    withPtr (mkSubmitInfo bufPtr) $ \siPtr ->
+      throwingVK "vkQueueSubmit failed!"
+        $ vkQueueSubmit graphicsQueue 1 siPtr VK_NULL
 
-  throwingVK "vkQueueSubmit failed!"
-    $ vkQueueSubmit graphicsQueue 1 (unsafePtr submitInfo) VK_NULL_HANDLE
-  touchVkData submitInfo
 
-  -- Presentation
-  presentInfo <- newVkData @VkPresentInfoKHR $ \piPtr -> do
-    writeField @"sType" piPtr VK_STRUCTURE_TYPE_PRESENT_INFO_KHR
-    writeField @"pNext" piPtr VK_NULL_HANDLE
-    writeField @"waitSemaphoreCount" piPtr $ fromIntegral signalSemCount
-    writeField @"pWaitSemaphores" piPtr signalSemaphores
-    writeField @"swapchainCount" piPtr $ fromIntegral swapchainCount
-    writeField @"pSwapchains" piPtr swapchainsPtr
-    writeField @"pImageIndices" piPtr imgIndexPtr
-    writeField @"pResults" piPtr VK_NULL_HANDLE
-
-  -- RENDERRR!!!
-  throwingVK "vkQueuePresentKHR failed!"
-    $ vkQueuePresentKHR presentQueue (unsafePtr presentInfo)
-  touchVkData presentInfo
+    -- RENDERRR!!!
+    withPtr presentInfo $
+      throwingVK "vkQueuePresentKHR failed!" . vkQueuePresentKHR presentQueue
+  where
+    SwapChainImgInfo {..} = swapChainInfo
+    DevQueues {..} = deviceQueues
+    -- Submitting the command buffer
+    mkSubmitInfo bufPtr = createVk @VkSubmitInfo
+      $  set @"sType" VK_STRUCTURE_TYPE_SUBMIT_INFO
+      &* set @"pNext" VK_NULL
+      &* set @"waitSemaphoreCount" 1
+      &* setListRef @"pWaitSemaphores"   [imageAvailable]
+      &* setListRef @"pWaitDstStageMask" [VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT]
+      &* set @"commandBufferCount" 1
+      &* set @"pCommandBuffers" bufPtr
+      &* set @"signalSemaphoreCount" 1
+      &* setListRef @"pSignalSemaphores" [renderFinished]
+    -- Presentation
+    presentInfo = createVk @VkPresentInfoKHR
+      $  set @"sType" VK_STRUCTURE_TYPE_PRESENT_INFO_KHR
+      &* set @"pNext" VK_NULL
+      &* set @"pImageIndices" imgIndexPtr
+      &* set        @"waitSemaphoreCount" 1
+      &* setListRef @"pWaitSemaphores" [renderFinished]
+      &* set        @"swapchainCount" 1
+      &* setListRef @"pSwapchains"    [swapchain]

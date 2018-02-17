@@ -133,6 +133,7 @@ instance {-# OVERLAPPING #-} HasField "sType" VkHdrMetadataEXT
         type FieldOptional "sType" VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkHdrMetadataEXT =
              #{offset VkHdrMetadataEXT, sType}
+        type FieldIsArray "sType" VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -177,6 +178,7 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkHdrMetadataEXT
         type FieldOptional "pNext" VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkHdrMetadataEXT =
              #{offset VkHdrMetadataEXT, pNext}
+        type FieldIsArray "pNext" VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -222,6 +224,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "displayPrimaryRed" VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "displayPrimaryRed" VkHdrMetadataEXT =
              #{offset VkHdrMetadataEXT, displayPrimaryRed}
+        type FieldIsArray "displayPrimaryRed" VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -269,6 +272,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "displayPrimaryGreen" VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "displayPrimaryGreen" VkHdrMetadataEXT =
              #{offset VkHdrMetadataEXT, displayPrimaryGreen}
+        type FieldIsArray "displayPrimaryGreen" VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -315,6 +319,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "displayPrimaryBlue" VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "displayPrimaryBlue" VkHdrMetadataEXT =
              #{offset VkHdrMetadataEXT, displayPrimaryBlue}
+        type FieldIsArray "displayPrimaryBlue" VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -360,6 +365,7 @@ instance {-# OVERLAPPING #-} HasField "whitePoint" VkHdrMetadataEXT
         type FieldOptional "whitePoint" VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "whitePoint" VkHdrMetadataEXT =
              #{offset VkHdrMetadataEXT, whitePoint}
+        type FieldIsArray "whitePoint" VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -407,6 +413,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "maxLuminance" VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "maxLuminance" VkHdrMetadataEXT =
              #{offset VkHdrMetadataEXT, maxLuminance}
+        type FieldIsArray "maxLuminance" VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -454,6 +461,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "minLuminance" VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "minLuminance" VkHdrMetadataEXT =
              #{offset VkHdrMetadataEXT, minLuminance}
+        type FieldIsArray "minLuminance" VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -501,6 +509,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "maxContentLightLevel" VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "maxContentLightLevel" VkHdrMetadataEXT =
              #{offset VkHdrMetadataEXT, maxContentLightLevel}
+        type FieldIsArray "maxContentLightLevel" VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -551,6 +560,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "maxFrameAverageLightLevel" VkHdrMetadataEXT =
              #{offset VkHdrMetadataEXT, maxFrameAverageLightLevel}
+        type FieldIsArray "maxFrameAverageLightLevel" VkHdrMetadataEXT =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -689,6 +700,7 @@ instance {-# OVERLAPPING #-} HasField "x" VkXYColorEXT where
         type FieldOptional "x" VkXYColorEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "x" VkXYColorEXT =
              #{offset VkXYColorEXT, x}
+        type FieldIsArray "x" VkXYColorEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -729,6 +741,7 @@ instance {-# OVERLAPPING #-} HasField "y" VkXYColorEXT where
         type FieldOptional "y" VkXYColorEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "y" VkXYColorEXT =
              #{offset VkXYColorEXT, y}
+        type FieldIsArray "y" VkXYColorEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

@@ -159,6 +159,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkDeviceGeneratedCommandsFeaturesNVX =
              #{offset VkDeviceGeneratedCommandsFeaturesNVX, sType}
+        type FieldIsArray "sType" VkDeviceGeneratedCommandsFeaturesNVX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -209,6 +211,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkDeviceGeneratedCommandsFeaturesNVX =
              #{offset VkDeviceGeneratedCommandsFeaturesNVX, pNext}
+        type FieldIsArray "pNext" VkDeviceGeneratedCommandsFeaturesNVX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -269,6 +273,9 @@ instance {-# OVERLAPPING #-}
                VkDeviceGeneratedCommandsFeaturesNVX
              =
              #{offset VkDeviceGeneratedCommandsFeaturesNVX, computeBindingPointSupport}
+        type FieldIsArray "computeBindingPointSupport"
+               VkDeviceGeneratedCommandsFeaturesNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -401,6 +408,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkDeviceGeneratedCommandsLimitsNVX =
              #{offset VkDeviceGeneratedCommandsLimitsNVX, sType}
+        type FieldIsArray "sType" VkDeviceGeneratedCommandsLimitsNVX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -451,6 +460,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkDeviceGeneratedCommandsLimitsNVX =
              #{offset VkDeviceGeneratedCommandsLimitsNVX, pNext}
+        type FieldIsArray "pNext" VkDeviceGeneratedCommandsLimitsNVX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -511,6 +522,9 @@ instance {-# OVERLAPPING #-}
                VkDeviceGeneratedCommandsLimitsNVX
              =
              #{offset VkDeviceGeneratedCommandsLimitsNVX, maxIndirectCommandsLayoutTokenCount}
+        type FieldIsArray "maxIndirectCommandsLayoutTokenCount"
+               VkDeviceGeneratedCommandsLimitsNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -569,6 +583,9 @@ instance {-# OVERLAPPING #-}
                VkDeviceGeneratedCommandsLimitsNVX
              =
              #{offset VkDeviceGeneratedCommandsLimitsNVX, maxObjectEntryCounts}
+        type FieldIsArray "maxObjectEntryCounts"
+               VkDeviceGeneratedCommandsLimitsNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -631,6 +648,9 @@ instance {-# OVERLAPPING #-}
                VkDeviceGeneratedCommandsLimitsNVX
              =
              #{offset VkDeviceGeneratedCommandsLimitsNVX, minSequenceCountBufferOffsetAlignment}
+        type FieldIsArray "minSequenceCountBufferOffsetAlignment"
+               VkDeviceGeneratedCommandsLimitsNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -693,6 +713,9 @@ instance {-# OVERLAPPING #-}
                VkDeviceGeneratedCommandsLimitsNVX
              =
              #{offset VkDeviceGeneratedCommandsLimitsNVX, minSequenceIndexBufferOffsetAlignment}
+        type FieldIsArray "minSequenceIndexBufferOffsetAlignment"
+               VkDeviceGeneratedCommandsLimitsNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -755,6 +778,9 @@ instance {-# OVERLAPPING #-}
                VkDeviceGeneratedCommandsLimitsNVX
              =
              #{offset VkDeviceGeneratedCommandsLimitsNVX, minCommandsTokenBufferOffsetAlignment}
+        type FieldIsArray "minCommandsTokenBufferOffsetAlignment"
+               VkDeviceGeneratedCommandsLimitsNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -896,6 +922,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "tokenType" VkIndirectCommandsTokenNVX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "tokenType" VkIndirectCommandsTokenNVX =
              #{offset VkIndirectCommandsTokenNVX, tokenType}
+        type FieldIsArray "tokenType" VkIndirectCommandsTokenNVX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -942,6 +969,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "buffer" VkIndirectCommandsTokenNVX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "buffer" VkIndirectCommandsTokenNVX =
              #{offset VkIndirectCommandsTokenNVX, buffer}
+        type FieldIsArray "buffer" VkIndirectCommandsTokenNVX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -988,6 +1016,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "offset" VkIndirectCommandsTokenNVX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "offset" VkIndirectCommandsTokenNVX =
              #{offset VkIndirectCommandsTokenNVX, offset}
+        type FieldIsArray "offset" VkIndirectCommandsTokenNVX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1109,6 +1138,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "tokenType" VkIndirectCommandsLayoutTokenNVX =
              #{offset VkIndirectCommandsLayoutTokenNVX, tokenType}
+        type FieldIsArray "tokenType" VkIndirectCommandsLayoutTokenNVX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1159,6 +1190,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "bindingUnit" VkIndirectCommandsLayoutTokenNVX =
              #{offset VkIndirectCommandsLayoutTokenNVX, bindingUnit}
+        type FieldIsArray "bindingUnit" VkIndirectCommandsLayoutTokenNVX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1211,6 +1244,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "dynamicCount" VkIndirectCommandsLayoutTokenNVX =
              #{offset VkIndirectCommandsLayoutTokenNVX, dynamicCount}
+        type FieldIsArray "dynamicCount" VkIndirectCommandsLayoutTokenNVX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1262,6 +1297,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "divisor" VkIndirectCommandsLayoutTokenNVX =
              #{offset VkIndirectCommandsLayoutTokenNVX, divisor}
+        type FieldIsArray "divisor" VkIndirectCommandsLayoutTokenNVX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1394,6 +1431,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkIndirectCommandsLayoutCreateInfoNVX =
              #{offset VkIndirectCommandsLayoutCreateInfoNVX, sType}
+        type FieldIsArray "sType" VkIndirectCommandsLayoutCreateInfoNVX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1445,6 +1484,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkIndirectCommandsLayoutCreateInfoNVX =
              #{offset VkIndirectCommandsLayoutCreateInfoNVX, pNext}
+        type FieldIsArray "pNext" VkIndirectCommandsLayoutCreateInfoNVX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1502,6 +1543,9 @@ instance {-# OVERLAPPING #-}
                VkIndirectCommandsLayoutCreateInfoNVX
              =
              #{offset VkIndirectCommandsLayoutCreateInfoNVX, pipelineBindPoint}
+        type FieldIsArray "pipelineBindPoint"
+               VkIndirectCommandsLayoutCreateInfoNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1555,6 +1599,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkIndirectCommandsLayoutCreateInfoNVX =
              #{offset VkIndirectCommandsLayoutCreateInfoNVX, flags}
+        type FieldIsArray "flags" VkIndirectCommandsLayoutCreateInfoNVX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1609,6 +1655,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "tokenCount" VkIndirectCommandsLayoutCreateInfoNVX
              =
              #{offset VkIndirectCommandsLayoutCreateInfoNVX, tokenCount}
+        type FieldIsArray "tokenCount"
+               VkIndirectCommandsLayoutCreateInfoNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1662,6 +1711,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pTokens" VkIndirectCommandsLayoutCreateInfoNVX =
              #{offset VkIndirectCommandsLayoutCreateInfoNVX, pTokens}
+        type FieldIsArray "pTokens" VkIndirectCommandsLayoutCreateInfoNVX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1805,6 +1856,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkCmdProcessCommandsInfoNVX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkCmdProcessCommandsInfoNVX =
              #{offset VkCmdProcessCommandsInfoNVX, sType}
+        type FieldIsArray "sType" VkCmdProcessCommandsInfoNVX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1851,6 +1903,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkCmdProcessCommandsInfoNVX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkCmdProcessCommandsInfoNVX =
              #{offset VkCmdProcessCommandsInfoNVX, pNext}
+        type FieldIsArray "pNext" VkCmdProcessCommandsInfoNVX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1900,6 +1953,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "objectTable" VkCmdProcessCommandsInfoNVX =
              #{offset VkCmdProcessCommandsInfoNVX, objectTable}
+        type FieldIsArray "objectTable" VkCmdProcessCommandsInfoNVX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1954,6 +2009,9 @@ instance {-# OVERLAPPING #-}
                VkCmdProcessCommandsInfoNVX
              =
              #{offset VkCmdProcessCommandsInfoNVX, indirectCommandsLayout}
+        type FieldIsArray "indirectCommandsLayout"
+               VkCmdProcessCommandsInfoNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2012,6 +2070,9 @@ instance {-# OVERLAPPING #-}
                VkCmdProcessCommandsInfoNVX
              =
              #{offset VkCmdProcessCommandsInfoNVX, indirectCommandsTokenCount}
+        type FieldIsArray "indirectCommandsTokenCount"
+               VkCmdProcessCommandsInfoNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2070,6 +2131,9 @@ instance {-# OVERLAPPING #-}
                VkCmdProcessCommandsInfoNVX
              =
              #{offset VkCmdProcessCommandsInfoNVX, pIndirectCommandsTokens}
+        type FieldIsArray "pIndirectCommandsTokens"
+               VkCmdProcessCommandsInfoNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2122,6 +2186,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "maxSequencesCount" VkCmdProcessCommandsInfoNVX =
              #{offset VkCmdProcessCommandsInfoNVX, maxSequencesCount}
+        type FieldIsArray "maxSequencesCount" VkCmdProcessCommandsInfoNVX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2177,6 +2243,8 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "targetCommandBuffer" VkCmdProcessCommandsInfoNVX
              =
              #{offset VkCmdProcessCommandsInfoNVX, targetCommandBuffer}
+        type FieldIsArray "targetCommandBuffer" VkCmdProcessCommandsInfoNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -2232,6 +2300,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "sequencesCountBuffer" VkCmdProcessCommandsInfoNVX
              =
              #{offset VkCmdProcessCommandsInfoNVX, sequencesCountBuffer}
+        type FieldIsArray "sequencesCountBuffer"
+               VkCmdProcessCommandsInfoNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -2287,6 +2358,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "sequencesCountOffset" VkCmdProcessCommandsInfoNVX
              =
              #{offset VkCmdProcessCommandsInfoNVX, sequencesCountOffset}
+        type FieldIsArray "sequencesCountOffset"
+               VkCmdProcessCommandsInfoNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -2342,6 +2416,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "sequencesIndexBuffer" VkCmdProcessCommandsInfoNVX
              =
              #{offset VkCmdProcessCommandsInfoNVX, sequencesIndexBuffer}
+        type FieldIsArray "sequencesIndexBuffer"
+               VkCmdProcessCommandsInfoNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -2397,6 +2474,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "sequencesIndexOffset" VkCmdProcessCommandsInfoNVX
              =
              #{offset VkCmdProcessCommandsInfoNVX, sequencesIndexOffset}
+        type FieldIsArray "sequencesIndexOffset"
+               VkCmdProcessCommandsInfoNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -2570,6 +2650,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkCmdReserveSpaceForCommandsInfoNVX =
              #{offset VkCmdReserveSpaceForCommandsInfoNVX, sType}
+        type FieldIsArray "sType" VkCmdReserveSpaceForCommandsInfoNVX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2620,6 +2702,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkCmdReserveSpaceForCommandsInfoNVX =
              #{offset VkCmdReserveSpaceForCommandsInfoNVX, pNext}
+        type FieldIsArray "pNext" VkCmdReserveSpaceForCommandsInfoNVX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2673,6 +2757,8 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "objectTable" VkCmdReserveSpaceForCommandsInfoNVX
              =
              #{offset VkCmdReserveSpaceForCommandsInfoNVX, objectTable}
+        type FieldIsArray "objectTable" VkCmdReserveSpaceForCommandsInfoNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2734,6 +2820,9 @@ instance {-# OVERLAPPING #-}
                VkCmdReserveSpaceForCommandsInfoNVX
              =
              #{offset VkCmdReserveSpaceForCommandsInfoNVX, indirectCommandsLayout}
+        type FieldIsArray "indirectCommandsLayout"
+               VkCmdReserveSpaceForCommandsInfoNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2792,6 +2881,9 @@ instance {-# OVERLAPPING #-}
                VkCmdReserveSpaceForCommandsInfoNVX
              =
              #{offset VkCmdReserveSpaceForCommandsInfoNVX, maxSequencesCount}
+        type FieldIsArray "maxSequencesCount"
+               VkCmdReserveSpaceForCommandsInfoNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2930,6 +3022,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkObjectTableCreateInfoNVX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkObjectTableCreateInfoNVX =
              #{offset VkObjectTableCreateInfoNVX, sType}
+        type FieldIsArray "sType" VkObjectTableCreateInfoNVX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2976,6 +3069,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkObjectTableCreateInfoNVX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkObjectTableCreateInfoNVX =
              #{offset VkObjectTableCreateInfoNVX, pNext}
+        type FieldIsArray "pNext" VkObjectTableCreateInfoNVX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3023,6 +3117,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "objectCount" VkObjectTableCreateInfoNVX =
              #{offset VkObjectTableCreateInfoNVX, objectCount}
+        type FieldIsArray "objectCount" VkObjectTableCreateInfoNVX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3074,6 +3169,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pObjectEntryTypes" VkObjectTableCreateInfoNVX =
              #{offset VkObjectTableCreateInfoNVX, pObjectEntryTypes}
+        type FieldIsArray "pObjectEntryTypes" VkObjectTableCreateInfoNVX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3127,6 +3224,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pObjectEntryCounts" VkObjectTableCreateInfoNVX =
              #{offset VkObjectTableCreateInfoNVX, pObjectEntryCounts}
+        type FieldIsArray "pObjectEntryCounts" VkObjectTableCreateInfoNVX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3183,6 +3282,9 @@ instance {-# OVERLAPPING #-}
                VkObjectTableCreateInfoNVX
              =
              #{offset VkObjectTableCreateInfoNVX, pObjectEntryUsageFlags}
+        type FieldIsArray "pObjectEntryUsageFlags"
+               VkObjectTableCreateInfoNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3244,6 +3346,9 @@ instance {-# OVERLAPPING #-}
                VkObjectTableCreateInfoNVX
              =
              #{offset VkObjectTableCreateInfoNVX, maxUniformBuffersPerDescriptor}
+        type FieldIsArray "maxUniformBuffersPerDescriptor"
+               VkObjectTableCreateInfoNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3305,6 +3410,9 @@ instance {-# OVERLAPPING #-}
                VkObjectTableCreateInfoNVX
              =
              #{offset VkObjectTableCreateInfoNVX, maxStorageBuffersPerDescriptor}
+        type FieldIsArray "maxStorageBuffersPerDescriptor"
+               VkObjectTableCreateInfoNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3364,6 +3472,9 @@ instance {-# OVERLAPPING #-}
                VkObjectTableCreateInfoNVX
              =
              #{offset VkObjectTableCreateInfoNVX, maxStorageImagesPerDescriptor}
+        type FieldIsArray "maxStorageImagesPerDescriptor"
+               VkObjectTableCreateInfoNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3423,6 +3534,9 @@ instance {-# OVERLAPPING #-}
                VkObjectTableCreateInfoNVX
              =
              #{offset VkObjectTableCreateInfoNVX, maxSampledImagesPerDescriptor}
+        type FieldIsArray "maxSampledImagesPerDescriptor"
+               VkObjectTableCreateInfoNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3475,6 +3589,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "maxPipelineLayouts" VkObjectTableCreateInfoNVX =
              #{offset VkObjectTableCreateInfoNVX, maxPipelineLayouts}
+        type FieldIsArray "maxPipelineLayouts" VkObjectTableCreateInfoNVX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3633,6 +3749,7 @@ instance {-# OVERLAPPING #-} HasField "type" VkObjectTableEntryNVX
         type FieldOptional "type" VkObjectTableEntryNVX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "type" VkObjectTableEntryNVX =
              #{offset VkObjectTableEntryNVX, type}
+        type FieldIsArray "type" VkObjectTableEntryNVX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3679,6 +3796,7 @@ instance {-# OVERLAPPING #-} HasField "flags" VkObjectTableEntryNVX
         type FieldOptional "flags" VkObjectTableEntryNVX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkObjectTableEntryNVX =
              #{offset VkObjectTableEntryNVX, flags}
+        type FieldIsArray "flags" VkObjectTableEntryNVX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3793,6 +3911,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "type" VkObjectTablePipelineEntryNVX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "type" VkObjectTablePipelineEntryNVX =
              #{offset VkObjectTablePipelineEntryNVX, type}
+        type FieldIsArray "type" VkObjectTablePipelineEntryNVX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3841,6 +3960,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "flags" VkObjectTablePipelineEntryNVX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkObjectTablePipelineEntryNVX =
              #{offset VkObjectTablePipelineEntryNVX, flags}
+        type FieldIsArray "flags" VkObjectTablePipelineEntryNVX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3889,6 +4009,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pipeline" VkObjectTablePipelineEntryNVX =
              #{offset VkObjectTablePipelineEntryNVX, pipeline}
+        type FieldIsArray "pipeline" VkObjectTablePipelineEntryNVX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4013,6 +4134,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "type" VkObjectTableDescriptorSetEntryNVX =
              #{offset VkObjectTableDescriptorSetEntryNVX, type}
+        type FieldIsArray "type" VkObjectTableDescriptorSetEntryNVX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4064,6 +4187,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkObjectTableDescriptorSetEntryNVX =
              #{offset VkObjectTableDescriptorSetEntryNVX, flags}
+        type FieldIsArray "flags" VkObjectTableDescriptorSetEntryNVX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4118,6 +4243,9 @@ instance {-# OVERLAPPING #-}
                VkObjectTableDescriptorSetEntryNVX
              =
              #{offset VkObjectTableDescriptorSetEntryNVX, pipelineLayout}
+        type FieldIsArray "pipelineLayout"
+               VkObjectTableDescriptorSetEntryNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4173,6 +4301,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "descriptorSet" VkObjectTableDescriptorSetEntryNVX
              =
              #{offset VkObjectTableDescriptorSetEntryNVX, descriptorSet}
+        type FieldIsArray "descriptorSet"
+               VkObjectTableDescriptorSetEntryNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4301,6 +4432,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "type" VkObjectTableVertexBufferEntryNVX =
              #{offset VkObjectTableVertexBufferEntryNVX, type}
+        type FieldIsArray "type" VkObjectTableVertexBufferEntryNVX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4352,6 +4484,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkObjectTableVertexBufferEntryNVX =
              #{offset VkObjectTableVertexBufferEntryNVX, flags}
+        type FieldIsArray "flags" VkObjectTableVertexBufferEntryNVX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4402,6 +4536,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "buffer" VkObjectTableVertexBufferEntryNVX =
              #{offset VkObjectTableVertexBufferEntryNVX, buffer}
+        type FieldIsArray "buffer" VkObjectTableVertexBufferEntryNVX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4524,6 +4660,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "type" VkObjectTableIndexBufferEntryNVX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "type" VkObjectTableIndexBufferEntryNVX =
              #{offset VkObjectTableIndexBufferEntryNVX, type}
+        type FieldIsArray "type" VkObjectTableIndexBufferEntryNVX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4574,6 +4711,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkObjectTableIndexBufferEntryNVX =
              #{offset VkObjectTableIndexBufferEntryNVX, flags}
+        type FieldIsArray "flags" VkObjectTableIndexBufferEntryNVX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4623,6 +4761,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "buffer" VkObjectTableIndexBufferEntryNVX =
              #{offset VkObjectTableIndexBufferEntryNVX, buffer}
+        type FieldIsArray "buffer" VkObjectTableIndexBufferEntryNVX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4674,6 +4814,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "indexType" VkObjectTableIndexBufferEntryNVX =
              #{offset VkObjectTableIndexBufferEntryNVX, indexType}
+        type FieldIsArray "indexType" VkObjectTableIndexBufferEntryNVX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4801,6 +4943,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "type" VkObjectTablePushConstantEntryNVX =
              #{offset VkObjectTablePushConstantEntryNVX, type}
+        type FieldIsArray "type" VkObjectTablePushConstantEntryNVX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4852,6 +4995,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkObjectTablePushConstantEntryNVX =
              #{offset VkObjectTablePushConstantEntryNVX, flags}
+        type FieldIsArray "flags" VkObjectTablePushConstantEntryNVX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4905,6 +5050,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "pipelineLayout" VkObjectTablePushConstantEntryNVX
              =
              #{offset VkObjectTablePushConstantEntryNVX, pipelineLayout}
+        type FieldIsArray "pipelineLayout"
+               VkObjectTablePushConstantEntryNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4958,6 +5106,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "stageFlags" VkObjectTablePushConstantEntryNVX =
              #{offset VkObjectTablePushConstantEntryNVX, stageFlags}
+        type FieldIsArray "stageFlags" VkObjectTablePushConstantEntryNVX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

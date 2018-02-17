@@ -126,6 +126,7 @@ instance {-# OVERLAPPING #-} HasField "sType" VkPresentRegionsKHR
         type FieldOptional "sType" VkPresentRegionsKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkPresentRegionsKHR =
              #{offset VkPresentRegionsKHR, sType}
+        type FieldIsArray "sType" VkPresentRegionsKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -170,6 +171,7 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkPresentRegionsKHR
         type FieldOptional "pNext" VkPresentRegionsKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkPresentRegionsKHR =
              #{offset VkPresentRegionsKHR, pNext}
+        type FieldIsArray "pNext" VkPresentRegionsKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -215,6 +217,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "swapchainCount" VkPresentRegionsKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "swapchainCount" VkPresentRegionsKHR =
              #{offset VkPresentRegionsKHR, swapchainCount}
+        type FieldIsArray "swapchainCount" VkPresentRegionsKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -262,6 +265,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pRegions" VkPresentRegionsKHR = 'True -- ' closing tick for hsc2hs
         type FieldOffset "pRegions" VkPresentRegionsKHR =
              #{offset VkPresentRegionsKHR, pRegions}
+        type FieldIsArray "pRegions" VkPresentRegionsKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -375,6 +379,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "rectangleCount" VkPresentRegionKHR = 'True -- ' closing tick for hsc2hs
         type FieldOffset "rectangleCount" VkPresentRegionKHR =
              #{offset VkPresentRegionKHR, rectangleCount}
+        type FieldIsArray "rectangleCount" VkPresentRegionKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -422,6 +427,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pRectangles" VkPresentRegionKHR = 'True -- ' closing tick for hsc2hs
         type FieldOffset "pRectangles" VkPresentRegionKHR =
              #{offset VkPresentRegionKHR, pRectangles}
+        type FieldIsArray "pRectangles" VkPresentRegionKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -527,6 +533,7 @@ instance {-# OVERLAPPING #-} HasField "offset" VkRectLayerKHR where
         type FieldOptional "offset" VkRectLayerKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "offset" VkRectLayerKHR =
              #{offset VkRectLayerKHR, offset}
+        type FieldIsArray "offset" VkRectLayerKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -570,6 +577,7 @@ instance {-# OVERLAPPING #-} HasField "extent" VkRectLayerKHR where
         type FieldOptional "extent" VkRectLayerKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "extent" VkRectLayerKHR =
              #{offset VkRectLayerKHR, extent}
+        type FieldIsArray "extent" VkRectLayerKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -612,6 +620,7 @@ instance {-# OVERLAPPING #-} HasField "layer" VkRectLayerKHR where
         type FieldOptional "layer" VkRectLayerKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "layer" VkRectLayerKHR =
              #{offset VkRectLayerKHR, layer}
+        type FieldIsArray "layer" VkRectLayerKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

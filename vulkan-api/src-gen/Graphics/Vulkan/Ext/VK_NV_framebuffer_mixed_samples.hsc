@@ -154,6 +154,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineCoverageModulationStateCreateInfoNV
              =
              #{offset VkPipelineCoverageModulationStateCreateInfoNV, sType}
+        type FieldIsArray "sType"
+               VkPipelineCoverageModulationStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -212,6 +215,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineCoverageModulationStateCreateInfoNV
              =
              #{offset VkPipelineCoverageModulationStateCreateInfoNV, pNext}
+        type FieldIsArray "pNext"
+               VkPipelineCoverageModulationStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -270,6 +276,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineCoverageModulationStateCreateInfoNV
              =
              #{offset VkPipelineCoverageModulationStateCreateInfoNV, flags}
+        type FieldIsArray "flags"
+               VkPipelineCoverageModulationStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -332,6 +341,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineCoverageModulationStateCreateInfoNV
              =
              #{offset VkPipelineCoverageModulationStateCreateInfoNV, coverageModulationMode}
+        type FieldIsArray "coverageModulationMode"
+               VkPipelineCoverageModulationStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -394,6 +406,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineCoverageModulationStateCreateInfoNV
              =
              #{offset VkPipelineCoverageModulationStateCreateInfoNV, coverageModulationTableEnable}
+        type FieldIsArray "coverageModulationTableEnable"
+               VkPipelineCoverageModulationStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -456,6 +471,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineCoverageModulationStateCreateInfoNV
              =
              #{offset VkPipelineCoverageModulationStateCreateInfoNV, coverageModulationTableCount}
+        type FieldIsArray "coverageModulationTableCount"
+               VkPipelineCoverageModulationStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -518,6 +536,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineCoverageModulationStateCreateInfoNV
              =
              #{offset VkPipelineCoverageModulationStateCreateInfoNV, pCoverageModulationTable}
+        type FieldIsArray "pCoverageModulationTable"
+               VkPipelineCoverageModulationStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True

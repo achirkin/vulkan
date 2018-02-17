@@ -137,6 +137,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkWaylandSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkWaylandSurfaceCreateInfoKHR =
              #{offset VkWaylandSurfaceCreateInfoKHR, sType}
+        type FieldIsArray "sType" VkWaylandSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -183,6 +184,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkWaylandSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkWaylandSurfaceCreateInfoKHR =
              #{offset VkWaylandSurfaceCreateInfoKHR, pNext}
+        type FieldIsArray "pNext" VkWaylandSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -231,6 +233,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "flags" VkWaylandSurfaceCreateInfoKHR = 'True -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkWaylandSurfaceCreateInfoKHR =
              #{offset VkWaylandSurfaceCreateInfoKHR, flags}
+        type FieldIsArray "flags" VkWaylandSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -278,6 +281,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "display" VkWaylandSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "display" VkWaylandSurfaceCreateInfoKHR =
              #{offset VkWaylandSurfaceCreateInfoKHR, display}
+        type FieldIsArray "display" VkWaylandSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -326,6 +330,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "surface" VkWaylandSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "surface" VkWaylandSurfaceCreateInfoKHR =
              #{offset VkWaylandSurfaceCreateInfoKHR, surface}
+        type FieldIsArray "surface" VkWaylandSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

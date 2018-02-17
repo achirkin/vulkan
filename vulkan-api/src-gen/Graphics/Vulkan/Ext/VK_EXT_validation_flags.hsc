@@ -122,6 +122,7 @@ instance {-# OVERLAPPING #-} HasField "sType" VkValidationFlagsEXT
         type FieldOptional "sType" VkValidationFlagsEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkValidationFlagsEXT =
              #{offset VkValidationFlagsEXT, sType}
+        type FieldIsArray "sType" VkValidationFlagsEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -166,6 +167,7 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkValidationFlagsEXT
         type FieldOptional "pNext" VkValidationFlagsEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkValidationFlagsEXT =
              #{offset VkValidationFlagsEXT, pNext}
+        type FieldIsArray "pNext" VkValidationFlagsEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -217,6 +219,9 @@ instance {-# OVERLAPPING #-}
                VkValidationFlagsEXT
              =
              #{offset VkValidationFlagsEXT, disabledValidationCheckCount}
+        type FieldIsArray "disabledValidationCheckCount"
+               VkValidationFlagsEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -270,6 +275,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pDisabledValidationChecks" VkValidationFlagsEXT =
              #{offset VkValidationFlagsEXT, pDisabledValidationChecks}
+        type FieldIsArray "pDisabledValidationChecks" VkValidationFlagsEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

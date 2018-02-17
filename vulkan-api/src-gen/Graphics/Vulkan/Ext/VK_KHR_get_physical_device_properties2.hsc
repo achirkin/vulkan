@@ -156,6 +156,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkPhysicalDeviceFeatures2KHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkPhysicalDeviceFeatures2KHR =
              #{offset VkPhysicalDeviceFeatures2KHR, sType}
+        type FieldIsArray "sType" VkPhysicalDeviceFeatures2KHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -202,6 +203,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkPhysicalDeviceFeatures2KHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkPhysicalDeviceFeatures2KHR =
              #{offset VkPhysicalDeviceFeatures2KHR, pNext}
+        type FieldIsArray "pNext" VkPhysicalDeviceFeatures2KHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -250,6 +252,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "features" VkPhysicalDeviceFeatures2KHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "features" VkPhysicalDeviceFeatures2KHR =
              #{offset VkPhysicalDeviceFeatures2KHR, features}
+        type FieldIsArray "features" VkPhysicalDeviceFeatures2KHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -369,6 +372,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkPhysicalDeviceProperties2KHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkPhysicalDeviceProperties2KHR =
              #{offset VkPhysicalDeviceProperties2KHR, sType}
+        type FieldIsArray "sType" VkPhysicalDeviceProperties2KHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -411,6 +415,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkPhysicalDeviceProperties2KHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkPhysicalDeviceProperties2KHR =
              #{offset VkPhysicalDeviceProperties2KHR, pNext}
+        type FieldIsArray "pNext" VkPhysicalDeviceProperties2KHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -456,6 +461,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "properties" VkPhysicalDeviceProperties2KHR =
              #{offset VkPhysicalDeviceProperties2KHR, properties}
+        type FieldIsArray "properties" VkPhysicalDeviceProperties2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -566,6 +573,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkFormatProperties2KHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkFormatProperties2KHR =
              #{offset VkFormatProperties2KHR, sType}
+        type FieldIsArray "sType" VkFormatProperties2KHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -607,6 +615,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkFormatProperties2KHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkFormatProperties2KHR =
              #{offset VkFormatProperties2KHR, pNext}
+        type FieldIsArray "pNext" VkFormatProperties2KHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -651,6 +660,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "formatProperties" VkFormatProperties2KHR =
              #{offset VkFormatProperties2KHR, formatProperties}
+        type FieldIsArray "formatProperties" VkFormatProperties2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -765,6 +776,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkImageFormatProperties2KHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkImageFormatProperties2KHR =
              #{offset VkImageFormatProperties2KHR, sType}
+        type FieldIsArray "sType" VkImageFormatProperties2KHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -807,6 +819,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkImageFormatProperties2KHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkImageFormatProperties2KHR =
              #{offset VkImageFormatProperties2KHR, pNext}
+        type FieldIsArray "pNext" VkImageFormatProperties2KHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -855,6 +868,9 @@ instance {-# OVERLAPPING #-}
                VkImageFormatProperties2KHR
              =
              #{offset VkImageFormatProperties2KHR, imageFormatProperties}
+        type FieldIsArray "imageFormatProperties"
+               VkImageFormatProperties2KHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -979,6 +995,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkPhysicalDeviceImageFormatInfo2KHR =
              #{offset VkPhysicalDeviceImageFormatInfo2KHR, sType}
+        type FieldIsArray "sType" VkPhysicalDeviceImageFormatInfo2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1029,6 +1047,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkPhysicalDeviceImageFormatInfo2KHR =
              #{offset VkPhysicalDeviceImageFormatInfo2KHR, pNext}
+        type FieldIsArray "pNext" VkPhysicalDeviceImageFormatInfo2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1079,6 +1099,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "format" VkPhysicalDeviceImageFormatInfo2KHR =
              #{offset VkPhysicalDeviceImageFormatInfo2KHR, format}
+        type FieldIsArray "format" VkPhysicalDeviceImageFormatInfo2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1129,6 +1151,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "type" VkPhysicalDeviceImageFormatInfo2KHR =
              #{offset VkPhysicalDeviceImageFormatInfo2KHR, type}
+        type FieldIsArray "type" VkPhysicalDeviceImageFormatInfo2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1180,6 +1204,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "tiling" VkPhysicalDeviceImageFormatInfo2KHR =
              #{offset VkPhysicalDeviceImageFormatInfo2KHR, tiling}
+        type FieldIsArray "tiling" VkPhysicalDeviceImageFormatInfo2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1231,6 +1257,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "usage" VkPhysicalDeviceImageFormatInfo2KHR =
              #{offset VkPhysicalDeviceImageFormatInfo2KHR, usage}
+        type FieldIsArray "usage" VkPhysicalDeviceImageFormatInfo2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1282,6 +1310,8 @@ instance {-# OVERLAPPING #-}
              'True -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkPhysicalDeviceImageFormatInfo2KHR =
              #{offset VkPhysicalDeviceImageFormatInfo2KHR, flags}
+        type FieldIsArray "flags" VkPhysicalDeviceImageFormatInfo2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -1413,6 +1443,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkQueueFamilyProperties2KHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkQueueFamilyProperties2KHR =
              #{offset VkQueueFamilyProperties2KHR, sType}
+        type FieldIsArray "sType" VkQueueFamilyProperties2KHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1455,6 +1486,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkQueueFamilyProperties2KHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkQueueFamilyProperties2KHR =
              #{offset VkQueueFamilyProperties2KHR, pNext}
+        type FieldIsArray "pNext" VkQueueFamilyProperties2KHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1503,6 +1535,9 @@ instance {-# OVERLAPPING #-}
                VkQueueFamilyProperties2KHR
              =
              #{offset VkQueueFamilyProperties2KHR, queueFamilyProperties}
+        type FieldIsArray "queueFamilyProperties"
+               VkQueueFamilyProperties2KHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1624,6 +1659,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkPhysicalDeviceMemoryProperties2KHR =
              #{offset VkPhysicalDeviceMemoryProperties2KHR, sType}
+        type FieldIsArray "sType" VkPhysicalDeviceMemoryProperties2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1669,6 +1706,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkPhysicalDeviceMemoryProperties2KHR =
              #{offset VkPhysicalDeviceMemoryProperties2KHR, pNext}
+        type FieldIsArray "pNext" VkPhysicalDeviceMemoryProperties2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1720,6 +1759,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceMemoryProperties2KHR
              =
              #{offset VkPhysicalDeviceMemoryProperties2KHR, memoryProperties}
+        type FieldIsArray "memoryProperties"
+               VkPhysicalDeviceMemoryProperties2KHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1839,6 +1881,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkSparseImageFormatProperties2KHR =
              #{offset VkSparseImageFormatProperties2KHR, sType}
+        type FieldIsArray "sType" VkSparseImageFormatProperties2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1883,6 +1927,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkSparseImageFormatProperties2KHR =
              #{offset VkSparseImageFormatProperties2KHR, pNext}
+        type FieldIsArray "pNext" VkSparseImageFormatProperties2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1929,6 +1975,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "properties" VkSparseImageFormatProperties2KHR =
              #{offset VkSparseImageFormatProperties2KHR, properties}
+        type FieldIsArray "properties" VkSparseImageFormatProperties2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2060,6 +2108,8 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "sType" VkPhysicalDeviceSparseImageFormatInfo2KHR
              =
              #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, sType}
+        type FieldIsArray "sType" VkPhysicalDeviceSparseImageFormatInfo2KHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2115,6 +2165,8 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "pNext" VkPhysicalDeviceSparseImageFormatInfo2KHR
              =
              #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, pNext}
+        type FieldIsArray "pNext" VkPhysicalDeviceSparseImageFormatInfo2KHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2170,6 +2222,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "format" VkPhysicalDeviceSparseImageFormatInfo2KHR
              =
              #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, format}
+        type FieldIsArray "format"
+               VkPhysicalDeviceSparseImageFormatInfo2KHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2223,6 +2278,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "type" VkPhysicalDeviceSparseImageFormatInfo2KHR =
              #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, type}
+        type FieldIsArray "type" VkPhysicalDeviceSparseImageFormatInfo2KHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2279,6 +2336,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceSparseImageFormatInfo2KHR
              =
              #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, samples}
+        type FieldIsArray "samples"
+               VkPhysicalDeviceSparseImageFormatInfo2KHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2334,6 +2394,8 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "usage" VkPhysicalDeviceSparseImageFormatInfo2KHR
              =
              #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, usage}
+        type FieldIsArray "usage" VkPhysicalDeviceSparseImageFormatInfo2KHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2389,6 +2451,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "tiling" VkPhysicalDeviceSparseImageFormatInfo2KHR
              =
              #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, tiling}
+        type FieldIsArray "tiling"
+               VkPhysicalDeviceSparseImageFormatInfo2KHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

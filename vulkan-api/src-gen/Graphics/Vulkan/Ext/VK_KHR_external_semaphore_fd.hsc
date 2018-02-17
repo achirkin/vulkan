@@ -134,6 +134,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkImportSemaphoreFdInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkImportSemaphoreFdInfoKHR =
              #{offset VkImportSemaphoreFdInfoKHR, sType}
+        type FieldIsArray "sType" VkImportSemaphoreFdInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -180,6 +181,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkImportSemaphoreFdInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkImportSemaphoreFdInfoKHR =
              #{offset VkImportSemaphoreFdInfoKHR, pNext}
+        type FieldIsArray "pNext" VkImportSemaphoreFdInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -226,6 +228,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "semaphore" VkImportSemaphoreFdInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "semaphore" VkImportSemaphoreFdInfoKHR =
              #{offset VkImportSemaphoreFdInfoKHR, semaphore}
+        type FieldIsArray "semaphore" VkImportSemaphoreFdInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -274,6 +277,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "flags" VkImportSemaphoreFdInfoKHR = 'True -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkImportSemaphoreFdInfoKHR =
              #{offset VkImportSemaphoreFdInfoKHR, flags}
+        type FieldIsArray "flags" VkImportSemaphoreFdInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -322,6 +326,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "handleType" VkImportSemaphoreFdInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "handleType" VkImportSemaphoreFdInfoKHR =
              #{offset VkImportSemaphoreFdInfoKHR, handleType}
+        type FieldIsArray "handleType" VkImportSemaphoreFdInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -370,6 +375,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "fd" VkImportSemaphoreFdInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "fd" VkImportSemaphoreFdInfoKHR =
              #{offset VkImportSemaphoreFdInfoKHR, fd}
+        type FieldIsArray "fd" VkImportSemaphoreFdInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -492,6 +498,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkSemaphoreGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkSemaphoreGetFdInfoKHR =
              #{offset VkSemaphoreGetFdInfoKHR, sType}
+        type FieldIsArray "sType" VkSemaphoreGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -537,6 +544,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkSemaphoreGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkSemaphoreGetFdInfoKHR =
              #{offset VkSemaphoreGetFdInfoKHR, pNext}
+        type FieldIsArray "pNext" VkSemaphoreGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -582,6 +590,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "semaphore" VkSemaphoreGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "semaphore" VkSemaphoreGetFdInfoKHR =
              #{offset VkSemaphoreGetFdInfoKHR, semaphore}
+        type FieldIsArray "semaphore" VkSemaphoreGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -630,6 +639,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "handleType" VkSemaphoreGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "handleType" VkSemaphoreGetFdInfoKHR =
              #{offset VkSemaphoreGetFdInfoKHR, handleType}
+        type FieldIsArray "handleType" VkSemaphoreGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

@@ -138,6 +138,7 @@ instance {-# OVERLAPPING #-} HasField "x" VkSampleLocationEXT where
         type FieldOptional "x" VkSampleLocationEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "x" VkSampleLocationEXT =
              #{offset VkSampleLocationEXT, x}
+        type FieldIsArray "x" VkSampleLocationEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -180,6 +181,7 @@ instance {-# OVERLAPPING #-} HasField "y" VkSampleLocationEXT where
         type FieldOptional "y" VkSampleLocationEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "y" VkSampleLocationEXT =
              #{offset VkSampleLocationEXT, y}
+        type FieldIsArray "y" VkSampleLocationEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -295,6 +297,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkSampleLocationsInfoEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkSampleLocationsInfoEXT =
              #{offset VkSampleLocationsInfoEXT, sType}
+        type FieldIsArray "sType" VkSampleLocationsInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -340,6 +343,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkSampleLocationsInfoEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkSampleLocationsInfoEXT =
              #{offset VkSampleLocationsInfoEXT, pNext}
+        type FieldIsArray "pNext" VkSampleLocationsInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -390,6 +394,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "sampleLocationsPerPixel" VkSampleLocationsInfoEXT
              =
              #{offset VkSampleLocationsInfoEXT, sampleLocationsPerPixel}
+        type FieldIsArray "sampleLocationsPerPixel"
+               VkSampleLocationsInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -445,6 +452,8 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "sampleLocationGridSize" VkSampleLocationsInfoEXT
              =
              #{offset VkSampleLocationsInfoEXT, sampleLocationGridSize}
+        type FieldIsArray "sampleLocationGridSize" VkSampleLocationsInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -497,6 +506,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sampleLocationsCount" VkSampleLocationsInfoEXT =
              #{offset VkSampleLocationsInfoEXT, sampleLocationsCount}
+        type FieldIsArray "sampleLocationsCount" VkSampleLocationsInfoEXT =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -550,6 +561,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pSampleLocations" VkSampleLocationsInfoEXT =
              #{offset VkSampleLocationsInfoEXT, pSampleLocations}
+        type FieldIsArray "pSampleLocations" VkSampleLocationsInfoEXT =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -679,6 +692,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "attachmentIndex" VkAttachmentSampleLocationsEXT =
              #{offset VkAttachmentSampleLocationsEXT, attachmentIndex}
+        type FieldIsArray "attachmentIndex" VkAttachmentSampleLocationsEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -735,6 +750,9 @@ instance {-# OVERLAPPING #-}
                VkAttachmentSampleLocationsEXT
              =
              #{offset VkAttachmentSampleLocationsEXT, sampleLocationsInfo}
+        type FieldIsArray "sampleLocationsInfo"
+               VkAttachmentSampleLocationsEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -852,6 +870,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "subpassIndex" VkSubpassSampleLocationsEXT =
              #{offset VkSubpassSampleLocationsEXT, subpassIndex}
+        type FieldIsArray "subpassIndex" VkSubpassSampleLocationsEXT =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -905,6 +925,8 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "sampleLocationsInfo" VkSubpassSampleLocationsEXT
              =
              #{offset VkSubpassSampleLocationsEXT, sampleLocationsInfo}
+        type FieldIsArray "sampleLocationsInfo" VkSubpassSampleLocationsEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1036,6 +1058,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkRenderPassSampleLocationsBeginInfoEXT =
              #{offset VkRenderPassSampleLocationsBeginInfoEXT, sType}
+        type FieldIsArray "sType" VkRenderPassSampleLocationsBeginInfoEXT =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1089,6 +1113,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkRenderPassSampleLocationsBeginInfoEXT =
              #{offset VkRenderPassSampleLocationsBeginInfoEXT, pNext}
+        type FieldIsArray "pNext" VkRenderPassSampleLocationsBeginInfoEXT =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1151,6 +1177,9 @@ instance {-# OVERLAPPING #-}
                VkRenderPassSampleLocationsBeginInfoEXT
              =
              #{offset VkRenderPassSampleLocationsBeginInfoEXT, attachmentInitialSampleLocationsCount}
+        type FieldIsArray "attachmentInitialSampleLocationsCount"
+               VkRenderPassSampleLocationsBeginInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -1213,6 +1242,9 @@ instance {-# OVERLAPPING #-}
                VkRenderPassSampleLocationsBeginInfoEXT
              =
              #{offset VkRenderPassSampleLocationsBeginInfoEXT, pAttachmentInitialSampleLocations}
+        type FieldIsArray "pAttachmentInitialSampleLocations"
+               VkRenderPassSampleLocationsBeginInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1275,6 +1307,9 @@ instance {-# OVERLAPPING #-}
                VkRenderPassSampleLocationsBeginInfoEXT
              =
              #{offset VkRenderPassSampleLocationsBeginInfoEXT, postSubpassSampleLocationsCount}
+        type FieldIsArray "postSubpassSampleLocationsCount"
+               VkRenderPassSampleLocationsBeginInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -1337,6 +1372,9 @@ instance {-# OVERLAPPING #-}
                VkRenderPassSampleLocationsBeginInfoEXT
              =
              #{offset VkRenderPassSampleLocationsBeginInfoEXT, pPostSubpassSampleLocations}
+        type FieldIsArray "pPostSubpassSampleLocations"
+               VkRenderPassSampleLocationsBeginInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1484,6 +1522,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineSampleLocationsStateCreateInfoEXT
              =
              #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sType}
+        type FieldIsArray "sType"
+               VkPipelineSampleLocationsStateCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1540,6 +1581,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineSampleLocationsStateCreateInfoEXT
              =
              #{offset VkPipelineSampleLocationsStateCreateInfoEXT, pNext}
+        type FieldIsArray "pNext"
+               VkPipelineSampleLocationsStateCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1602,6 +1646,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineSampleLocationsStateCreateInfoEXT
              =
              #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sampleLocationsEnable}
+        type FieldIsArray "sampleLocationsEnable"
+               VkPipelineSampleLocationsStateCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1664,6 +1711,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineSampleLocationsStateCreateInfoEXT
              =
              #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sampleLocationsInfo}
+        type FieldIsArray "sampleLocationsInfo"
+               VkPipelineSampleLocationsStateCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1810,6 +1860,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceSampleLocationsPropertiesEXT
              =
              #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sType}
+        type FieldIsArray "sType"
+               VkPhysicalDeviceSampleLocationsPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1860,6 +1913,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceSampleLocationsPropertiesEXT
              =
              #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, pNext}
+        type FieldIsArray "pNext"
+               VkPhysicalDeviceSampleLocationsPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1916,6 +1972,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceSampleLocationsPropertiesEXT
              =
              #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationSampleCounts}
+        type FieldIsArray "sampleLocationSampleCounts"
+               VkPhysicalDeviceSampleLocationsPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1972,6 +2031,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceSampleLocationsPropertiesEXT
              =
              #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, maxSampleLocationGridSize}
+        type FieldIsArray "maxSampleLocationGridSize"
+               VkPhysicalDeviceSampleLocationsPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2034,6 +2096,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceSampleLocationsPropertiesEXT
              =
              #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationCoordinateRange}
+        type FieldIsArray "sampleLocationCoordinateRange"
+               VkPhysicalDeviceSampleLocationsPropertiesEXT
+             = 'True -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2113,6 +2178,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceSampleLocationsPropertiesEXT
              =
              #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationSubPixelBits}
+        type FieldIsArray "sampleLocationSubPixelBits"
+               VkPhysicalDeviceSampleLocationsPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2169,6 +2237,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceSampleLocationsPropertiesEXT
              =
              #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, variableSampleLocations}
+        type FieldIsArray "variableSampleLocations"
+               VkPhysicalDeviceSampleLocationsPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2299,6 +2370,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkMultisamplePropertiesEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkMultisamplePropertiesEXT =
              #{offset VkMultisamplePropertiesEXT, sType}
+        type FieldIsArray "sType" VkMultisamplePropertiesEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2341,6 +2413,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkMultisamplePropertiesEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkMultisamplePropertiesEXT =
              #{offset VkMultisamplePropertiesEXT, pNext}
+        type FieldIsArray "pNext" VkMultisamplePropertiesEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2391,6 +2464,9 @@ instance {-# OVERLAPPING #-}
                VkMultisamplePropertiesEXT
              =
              #{offset VkMultisamplePropertiesEXT, maxSampleLocationGridSize}
+        type FieldIsArray "maxSampleLocationGridSize"
+               VkMultisamplePropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

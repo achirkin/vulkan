@@ -135,6 +135,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkValidationCacheCreateInfoEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkValidationCacheCreateInfoEXT =
              #{offset VkValidationCacheCreateInfoEXT, sType}
+        type FieldIsArray "sType" VkValidationCacheCreateInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -181,6 +182,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkValidationCacheCreateInfoEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkValidationCacheCreateInfoEXT =
              #{offset VkValidationCacheCreateInfoEXT, pNext}
+        type FieldIsArray "pNext" VkValidationCacheCreateInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -229,6 +231,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "flags" VkValidationCacheCreateInfoEXT = 'True -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkValidationCacheCreateInfoEXT =
              #{offset VkValidationCacheCreateInfoEXT, flags}
+        type FieldIsArray "flags" VkValidationCacheCreateInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -278,6 +281,8 @@ instance {-# OVERLAPPING #-}
              = 'True -- ' closing tick for hsc2hs
         type FieldOffset "initialDataSize" VkValidationCacheCreateInfoEXT =
              #{offset VkValidationCacheCreateInfoEXT, initialDataSize}
+        type FieldIsArray "initialDataSize" VkValidationCacheCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -330,6 +335,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pInitialData" VkValidationCacheCreateInfoEXT =
              #{offset VkValidationCacheCreateInfoEXT, pInitialData}
+        type FieldIsArray "pInitialData" VkValidationCacheCreateInfoEXT =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -469,6 +476,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "sType" VkShaderModuleValidationCacheCreateInfoEXT
              =
              #{offset VkShaderModuleValidationCacheCreateInfoEXT, sType}
+        type FieldIsArray "sType"
+               VkShaderModuleValidationCacheCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -524,6 +534,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "pNext" VkShaderModuleValidationCacheCreateInfoEXT
              =
              #{offset VkShaderModuleValidationCacheCreateInfoEXT, pNext}
+        type FieldIsArray "pNext"
+               VkShaderModuleValidationCacheCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -585,6 +598,9 @@ instance {-# OVERLAPPING #-}
                VkShaderModuleValidationCacheCreateInfoEXT
              =
              #{offset VkShaderModuleValidationCacheCreateInfoEXT, validationCache}
+        type FieldIsArray "validationCache"
+               VkShaderModuleValidationCacheCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

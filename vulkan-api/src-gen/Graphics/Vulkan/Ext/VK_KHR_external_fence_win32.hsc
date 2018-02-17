@@ -143,6 +143,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkImportFenceWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkImportFenceWin32HandleInfoKHR =
              #{offset VkImportFenceWin32HandleInfoKHR, sType}
+        type FieldIsArray "sType" VkImportFenceWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -190,6 +191,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkImportFenceWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkImportFenceWin32HandleInfoKHR =
              #{offset VkImportFenceWin32HandleInfoKHR, pNext}
+        type FieldIsArray "pNext" VkImportFenceWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -237,6 +239,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "fence" VkImportFenceWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "fence" VkImportFenceWin32HandleInfoKHR =
              #{offset VkImportFenceWin32HandleInfoKHR, fence}
+        type FieldIsArray "fence" VkImportFenceWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -286,6 +289,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "flags" VkImportFenceWin32HandleInfoKHR = 'True -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkImportFenceWin32HandleInfoKHR =
              #{offset VkImportFenceWin32HandleInfoKHR, flags}
+        type FieldIsArray "flags" VkImportFenceWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -336,6 +340,8 @@ instance {-# OVERLAPPING #-}
              'True -- ' closing tick for hsc2hs
         type FieldOffset "handleType" VkImportFenceWin32HandleInfoKHR =
              #{offset VkImportFenceWin32HandleInfoKHR, handleType}
+        type FieldIsArray "handleType" VkImportFenceWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -384,6 +390,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "handle" VkImportFenceWin32HandleInfoKHR = 'True -- ' closing tick for hsc2hs
         type FieldOffset "handle" VkImportFenceWin32HandleInfoKHR =
              #{offset VkImportFenceWin32HandleInfoKHR, handle}
+        type FieldIsArray "handle" VkImportFenceWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -432,6 +439,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "name" VkImportFenceWin32HandleInfoKHR = 'True -- ' closing tick for hsc2hs
         type FieldOffset "name" VkImportFenceWin32HandleInfoKHR =
              #{offset VkImportFenceWin32HandleInfoKHR, name}
+        type FieldIsArray "name" VkImportFenceWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -565,6 +573,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkExportFenceWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkExportFenceWin32HandleInfoKHR =
              #{offset VkExportFenceWin32HandleInfoKHR, sType}
+        type FieldIsArray "sType" VkExportFenceWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -612,6 +621,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkExportFenceWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkExportFenceWin32HandleInfoKHR =
              #{offset VkExportFenceWin32HandleInfoKHR, pNext}
+        type FieldIsArray "pNext" VkExportFenceWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -662,6 +672,8 @@ instance {-# OVERLAPPING #-}
              'True -- ' closing tick for hsc2hs
         type FieldOffset "pAttributes" VkExportFenceWin32HandleInfoKHR =
              #{offset VkExportFenceWin32HandleInfoKHR, pAttributes}
+        type FieldIsArray "pAttributes" VkExportFenceWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -712,6 +724,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "dwAccess" VkExportFenceWin32HandleInfoKHR =
              #{offset VkExportFenceWin32HandleInfoKHR, dwAccess}
+        type FieldIsArray "dwAccess" VkExportFenceWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -760,6 +774,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "name" VkExportFenceWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "name" VkExportFenceWin32HandleInfoKHR =
              #{offset VkExportFenceWin32HandleInfoKHR, name}
+        type FieldIsArray "name" VkExportFenceWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -884,6 +899,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkFenceGetWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkFenceGetWin32HandleInfoKHR =
              #{offset VkFenceGetWin32HandleInfoKHR, sType}
+        type FieldIsArray "sType" VkFenceGetWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -930,6 +946,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkFenceGetWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkFenceGetWin32HandleInfoKHR =
              #{offset VkFenceGetWin32HandleInfoKHR, pNext}
+        type FieldIsArray "pNext" VkFenceGetWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -976,6 +993,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "fence" VkFenceGetWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "fence" VkFenceGetWin32HandleInfoKHR =
              #{offset VkFenceGetWin32HandleInfoKHR, fence}
+        type FieldIsArray "fence" VkFenceGetWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1025,6 +1043,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "handleType" VkFenceGetWin32HandleInfoKHR =
              #{offset VkFenceGetWin32HandleInfoKHR, handleType}
+        type FieldIsArray "handleType" VkFenceGetWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

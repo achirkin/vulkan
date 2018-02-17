@@ -133,6 +133,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkMirSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkMirSurfaceCreateInfoKHR =
              #{offset VkMirSurfaceCreateInfoKHR, sType}
+        type FieldIsArray "sType" VkMirSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -179,6 +180,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkMirSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkMirSurfaceCreateInfoKHR =
              #{offset VkMirSurfaceCreateInfoKHR, pNext}
+        type FieldIsArray "pNext" VkMirSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -227,6 +229,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "flags" VkMirSurfaceCreateInfoKHR = 'True -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkMirSurfaceCreateInfoKHR =
              #{offset VkMirSurfaceCreateInfoKHR, flags}
+        type FieldIsArray "flags" VkMirSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -275,6 +278,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "connection" VkMirSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "connection" VkMirSurfaceCreateInfoKHR =
              #{offset VkMirSurfaceCreateInfoKHR, connection}
+        type FieldIsArray "connection" VkMirSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -322,6 +326,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "mirSurface" VkMirSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "mirSurface" VkMirSurfaceCreateInfoKHR =
              #{offset VkMirSurfaceCreateInfoKHR, mirSurface}
+        type FieldIsArray "mirSurface" VkMirSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

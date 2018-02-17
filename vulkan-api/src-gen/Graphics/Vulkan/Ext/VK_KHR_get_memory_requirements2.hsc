@@ -141,6 +141,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkBufferMemoryRequirementsInfo2KHR =
              #{offset VkBufferMemoryRequirementsInfo2KHR, sType}
+        type FieldIsArray "sType" VkBufferMemoryRequirementsInfo2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -191,6 +193,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkBufferMemoryRequirementsInfo2KHR =
              #{offset VkBufferMemoryRequirementsInfo2KHR, pNext}
+        type FieldIsArray "pNext" VkBufferMemoryRequirementsInfo2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -241,6 +245,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "buffer" VkBufferMemoryRequirementsInfo2KHR =
              #{offset VkBufferMemoryRequirementsInfo2KHR, buffer}
+        type FieldIsArray "buffer" VkBufferMemoryRequirementsInfo2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -363,6 +369,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkImageMemoryRequirementsInfo2KHR =
              #{offset VkImageMemoryRequirementsInfo2KHR, sType}
+        type FieldIsArray "sType" VkImageMemoryRequirementsInfo2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -412,6 +420,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkImageMemoryRequirementsInfo2KHR =
              #{offset VkImageMemoryRequirementsInfo2KHR, pNext}
+        type FieldIsArray "pNext" VkImageMemoryRequirementsInfo2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -461,6 +471,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "image" VkImageMemoryRequirementsInfo2KHR =
              #{offset VkImageMemoryRequirementsInfo2KHR, image}
+        type FieldIsArray "image" VkImageMemoryRequirementsInfo2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -586,6 +598,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkImageSparseMemoryRequirementsInfo2KHR =
              #{offset VkImageSparseMemoryRequirementsInfo2KHR, sType}
+        type FieldIsArray "sType" VkImageSparseMemoryRequirementsInfo2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -639,6 +653,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkImageSparseMemoryRequirementsInfo2KHR =
              #{offset VkImageSparseMemoryRequirementsInfo2KHR, pNext}
+        type FieldIsArray "pNext" VkImageSparseMemoryRequirementsInfo2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -691,6 +707,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "image" VkImageSparseMemoryRequirementsInfo2KHR =
              #{offset VkImageSparseMemoryRequirementsInfo2KHR, image}
+        type FieldIsArray "image" VkImageSparseMemoryRequirementsInfo2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -808,6 +826,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkMemoryRequirements2KHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkMemoryRequirements2KHR =
              #{offset VkMemoryRequirements2KHR, sType}
+        type FieldIsArray "sType" VkMemoryRequirements2KHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -849,6 +868,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkMemoryRequirements2KHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkMemoryRequirements2KHR =
              #{offset VkMemoryRequirements2KHR, pNext}
+        type FieldIsArray "pNext" VkMemoryRequirements2KHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -893,6 +913,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "memoryRequirements" VkMemoryRequirements2KHR =
              #{offset VkMemoryRequirements2KHR, memoryRequirements}
+        type FieldIsArray "memoryRequirements" VkMemoryRequirements2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1012,6 +1034,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkSparseImageMemoryRequirements2KHR =
              #{offset VkSparseImageMemoryRequirements2KHR, sType}
+        type FieldIsArray "sType" VkSparseImageMemoryRequirements2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1057,6 +1081,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkSparseImageMemoryRequirements2KHR =
              #{offset VkSparseImageMemoryRequirements2KHR, pNext}
+        type FieldIsArray "pNext" VkSparseImageMemoryRequirements2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1108,6 +1134,9 @@ instance {-# OVERLAPPING #-}
                VkSparseImageMemoryRequirements2KHR
              =
              #{offset VkSparseImageMemoryRequirements2KHR, memoryRequirements}
+        type FieldIsArray "memoryRequirements"
+               VkSparseImageMemoryRequirements2KHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

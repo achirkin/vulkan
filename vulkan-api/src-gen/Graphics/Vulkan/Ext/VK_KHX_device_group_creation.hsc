@@ -142,6 +142,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkPhysicalDeviceGroupPropertiesKHX =
              #{offset VkPhysicalDeviceGroupPropertiesKHX, sType}
+        type FieldIsArray "sType" VkPhysicalDeviceGroupPropertiesKHX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -187,6 +189,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkPhysicalDeviceGroupPropertiesKHX =
              #{offset VkPhysicalDeviceGroupPropertiesKHX, pNext}
+        type FieldIsArray "pNext" VkPhysicalDeviceGroupPropertiesKHX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -238,6 +242,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceGroupPropertiesKHX
              =
              #{offset VkPhysicalDeviceGroupPropertiesKHX, physicalDeviceCount}
+        type FieldIsArray "physicalDeviceCount"
+               VkPhysicalDeviceGroupPropertiesKHX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -294,6 +301,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceGroupPropertiesKHX
              =
              #{offset VkPhysicalDeviceGroupPropertiesKHX, physicalDevices}
+        type FieldIsArray "physicalDevices"
+               VkPhysicalDeviceGroupPropertiesKHX
+             = 'True -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -379,6 +389,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceGroupPropertiesKHX
              =
              #{offset VkPhysicalDeviceGroupPropertiesKHX, subsetAllocation}
+        type FieldIsArray "subsetAllocation"
+               VkPhysicalDeviceGroupPropertiesKHX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -510,6 +523,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkDeviceGroupDeviceCreateInfoKHX =
              #{offset VkDeviceGroupDeviceCreateInfoKHX, sType}
+        type FieldIsArray "sType" VkDeviceGroupDeviceCreateInfoKHX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -559,6 +573,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkDeviceGroupDeviceCreateInfoKHX =
              #{offset VkDeviceGroupDeviceCreateInfoKHX, pNext}
+        type FieldIsArray "pNext" VkDeviceGroupDeviceCreateInfoKHX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -615,6 +630,9 @@ instance {-# OVERLAPPING #-}
                VkDeviceGroupDeviceCreateInfoKHX
              =
              #{offset VkDeviceGroupDeviceCreateInfoKHX, physicalDeviceCount}
+        type FieldIsArray "physicalDeviceCount"
+               VkDeviceGroupDeviceCreateInfoKHX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -671,6 +689,9 @@ instance {-# OVERLAPPING #-}
                VkDeviceGroupDeviceCreateInfoKHX
              =
              #{offset VkDeviceGroupDeviceCreateInfoKHX, pPhysicalDevices}
+        type FieldIsArray "pPhysicalDevices"
+               VkDeviceGroupDeviceCreateInfoKHX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

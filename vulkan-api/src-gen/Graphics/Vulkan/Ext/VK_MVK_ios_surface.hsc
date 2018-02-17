@@ -131,6 +131,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkIOSSurfaceCreateInfoMVK = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkIOSSurfaceCreateInfoMVK =
              #{offset VkIOSSurfaceCreateInfoMVK, sType}
+        type FieldIsArray "sType" VkIOSSurfaceCreateInfoMVK = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -177,6 +178,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkIOSSurfaceCreateInfoMVK = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkIOSSurfaceCreateInfoMVK =
              #{offset VkIOSSurfaceCreateInfoMVK, pNext}
+        type FieldIsArray "pNext" VkIOSSurfaceCreateInfoMVK = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -225,6 +227,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "flags" VkIOSSurfaceCreateInfoMVK = 'True -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkIOSSurfaceCreateInfoMVK =
              #{offset VkIOSSurfaceCreateInfoMVK, flags}
+        type FieldIsArray "flags" VkIOSSurfaceCreateInfoMVK = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -271,6 +274,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pView" VkIOSSurfaceCreateInfoMVK = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pView" VkIOSSurfaceCreateInfoMVK =
              #{offset VkIOSSurfaceCreateInfoMVK, pView}
+        type FieldIsArray "pView" VkIOSSurfaceCreateInfoMVK = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

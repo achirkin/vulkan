@@ -44,7 +44,7 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
-import           Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
+import Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
 
 -- | > typedef struct VkTextureLODGatherFormatPropertiesAMD {
 --   >     VkStructureType sType;
@@ -139,6 +139,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkTextureLODGatherFormatPropertiesAMD =
              #{offset VkTextureLODGatherFormatPropertiesAMD, sType}
+        type FieldIsArray "sType" VkTextureLODGatherFormatPropertiesAMD =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -184,6 +186,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkTextureLODGatherFormatPropertiesAMD =
              #{offset VkTextureLODGatherFormatPropertiesAMD, pNext}
+        type FieldIsArray "pNext" VkTextureLODGatherFormatPropertiesAMD =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -239,6 +243,9 @@ instance {-# OVERLAPPING #-}
                VkTextureLODGatherFormatPropertiesAMD
              =
              #{offset VkTextureLODGatherFormatPropertiesAMD, supportsTextureGatherLODBiasAMD}
+        type FieldIsArray "supportsTextureGatherLODBiasAMD"
+               VkTextureLODGatherFormatPropertiesAMD
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
