@@ -65,19 +65,24 @@ module Graphics.Vulkan.Ext.VK_EXT_blend_operation_advanced
         pattern VK_BLEND_OP_GREEN_EXT, pattern VK_BLEND_OP_BLUE_EXT,
         pattern VK_ACCESS_COLOR_ATTACHMENT_READ_NONCOHERENT_BIT_EXT)
        where
-import           Foreign.C.String                 (CString)
-import           Foreign.Storable                 (Storable (..))
+import           Foreign.C.String                                           (CString)
+import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
-import           GHC.Ptr                          (Ptr (..))
-import           Graphics.Vulkan.Common           (VkAccessFlagBits (..),
-                                                   VkBlendOp (..),
-                                                   VkBlendOverlapEXT, VkBool32,
-                                                   VkStructureType,
-                                                   VkStructureType (..), Word32)
+import           GHC.Ptr                                                    (Ptr (..))
+import           Graphics.Vulkan.Base                                       (VkPipelineColorBlendStateCreateInfo)
+import           Graphics.Vulkan.Common                                     (VkAccessFlagBits (..),
+                                                                             VkBlendOp (..),
+                                                                             VkBlendOverlapEXT,
+                                                                             VkBool32,
+                                                                             VkStructureType,
+                                                                             VkStructureType (..),
+                                                                             Word32)
+import           Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2 (VkPhysicalDeviceFeatures2KHR,
+                                                                             VkPhysicalDeviceProperties2KHR)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+import           System.IO.Unsafe                                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT {
 --   >     VkStructureType sType;
@@ -144,6 +149,13 @@ instance VulkanMarshal
          where
         type StructFields VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
              = '["sType", "pNext", "advancedBlendCoherentOperations"] -- ' closing tick for hsc2hs
+        type CUnionType VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT =
+             'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
+             = 'False -- ' closing tick for hsc2hs
+        type StructExtends
+               VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
+             = '[VkPhysicalDeviceFeatures2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT where
@@ -416,6 +428,14 @@ instance VulkanMarshal
                "advancedBlendNonPremultipliedSrcColor",
                "advancedBlendNonPremultipliedDstColor",
                "advancedBlendCorrelatedOverlap", "advancedBlendAllOperations"]
+        type CUnionType VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly
+               VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+             = 'True -- ' closing tick for hsc2hs
+        type StructExtends
+               VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+             = '[VkPhysicalDeviceProperties2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
@@ -967,6 +987,12 @@ instance VulkanMarshal
         type StructFields VkPipelineColorBlendAdvancedStateCreateInfoEXT =
              '["sType", "pNext", "srcPremultiplied", "dstPremultiplied", -- ' closing tick for hsc2hs
                "blendOverlap"]
+        type CUnionType VkPipelineColorBlendAdvancedStateCreateInfoEXT =
+             'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPipelineColorBlendAdvancedStateCreateInfoEXT =
+             'False -- ' closing tick for hsc2hs
+        type StructExtends VkPipelineColorBlendAdvancedStateCreateInfoEXT =
+             '[VkPipelineColorBlendStateCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPipelineColorBlendAdvancedStateCreateInfoEXT where

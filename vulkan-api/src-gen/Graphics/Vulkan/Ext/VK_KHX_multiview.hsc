@@ -42,6 +42,8 @@ import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
+import           Graphics.Vulkan.Base             (VkDeviceCreateInfo,
+                                                   VkRenderPassCreateInfo)
 import           Graphics.Vulkan.Common           (VkBool32,
                                                    VkDependencyFlagBits (..),
                                                    VkStructureType,
@@ -50,6 +52,8 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+
+import           Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
 
 -- | > typedef struct VkRenderPassMultiviewCreateInfoKHX {
 --   >     VkStructureType        sType;
@@ -114,6 +118,10 @@ instance VulkanMarshal VkRenderPassMultiviewCreateInfoKHX where
              '["sType", "pNext", "subpassCount", "pViewMasks", -- ' closing tick for hsc2hs
                "dependencyCount", "pViewOffsets", "correlationMaskCount",
                "pCorrelationMasks"]
+        type CUnionType VkRenderPassMultiviewCreateInfoKHX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkRenderPassMultiviewCreateInfoKHX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkRenderPassMultiviewCreateInfoKHX =
+             '[VkRenderPassCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkRenderPassMultiviewCreateInfoKHX where
@@ -640,6 +648,10 @@ instance VulkanMarshal VkPhysicalDeviceMultiviewFeaturesKHX where
         type StructFields VkPhysicalDeviceMultiviewFeaturesKHX =
              '["sType", "pNext", "multiview", "multiviewGeometryShader", -- ' closing tick for hsc2hs
                "multiviewTessellationShader"]
+        type CUnionType VkPhysicalDeviceMultiviewFeaturesKHX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDeviceMultiviewFeaturesKHX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPhysicalDeviceMultiviewFeaturesKHX =
+             '[VkPhysicalDeviceFeatures2KHR, VkDeviceCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceMultiviewFeaturesKHX where
@@ -996,6 +1008,10 @@ instance VulkanMarshal VkPhysicalDeviceMultiviewPropertiesKHX where
         type StructFields VkPhysicalDeviceMultiviewPropertiesKHX =
              '["sType", "pNext", "maxMultiviewViewCount", -- ' closing tick for hsc2hs
                "maxMultiviewInstanceIndex"]
+        type CUnionType VkPhysicalDeviceMultiviewPropertiesKHX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDeviceMultiviewPropertiesKHX = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkPhysicalDeviceMultiviewPropertiesKHX =
+             '[VkPhysicalDeviceProperties2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceMultiviewPropertiesKHX where

@@ -113,6 +113,9 @@ instance VulkanMarshal VkDisplayPropertiesKHR where
              '["display", "displayName", "physicalDimensions", -- ' closing tick for hsc2hs
                "physicalResolution", "supportedTransforms",
                "planeReorderPossible", "persistentContent"]
+        type CUnionType VkDisplayPropertiesKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDisplayPropertiesKHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkDisplayPropertiesKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkDisplay VkDisplayPropertiesKHR
          where
@@ -501,6 +504,9 @@ instance VulkanMarshalPrim VkDisplayModeParametersKHR where
 instance VulkanMarshal VkDisplayModeParametersKHR where
         type StructFields VkDisplayModeParametersKHR =
              '["visibleRegion", "refreshRate"] -- ' closing tick for hsc2hs
+        type CUnionType VkDisplayModeParametersKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDisplayModeParametersKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDisplayModeParametersKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkVisibleRegion VkDisplayModeParametersKHR where
@@ -663,6 +669,9 @@ instance VulkanMarshalPrim VkDisplayModePropertiesKHR where
 instance VulkanMarshal VkDisplayModePropertiesKHR where
         type StructFields VkDisplayModePropertiesKHR =
              '["displayMode", "parameters"] -- ' closing tick for hsc2hs
+        type CUnionType VkDisplayModePropertiesKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDisplayModePropertiesKHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkDisplayModePropertiesKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkDisplayMode VkDisplayModePropertiesKHR where
@@ -818,6 +827,9 @@ instance VulkanMarshalPrim VkDisplayModeCreateInfoKHR where
 instance VulkanMarshal VkDisplayModeCreateInfoKHR where
         type StructFields VkDisplayModeCreateInfoKHR =
              '["sType", "pNext", "flags", "parameters"] -- ' closing tick for hsc2hs
+        type CUnionType VkDisplayModeCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDisplayModeCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDisplayModeCreateInfoKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkDisplayModeCreateInfoKHR
          where
@@ -1086,6 +1098,9 @@ instance VulkanMarshal VkDisplayPlaneCapabilitiesKHR where
              '["supportedAlpha", "minSrcPosition", "maxSrcPosition", -- ' closing tick for hsc2hs
                "minSrcExtent", "maxSrcExtent", "minDstPosition", "maxDstPosition",
                "minDstExtent", "maxDstExtent"]
+        type CUnionType VkDisplayPlaneCapabilitiesKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDisplayPlaneCapabilitiesKHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkDisplayPlaneCapabilitiesKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSupportedAlpha VkDisplayPlaneCapabilitiesKHR where
@@ -1586,6 +1601,9 @@ instance VulkanMarshalPrim VkDisplayPlanePropertiesKHR where
 instance VulkanMarshal VkDisplayPlanePropertiesKHR where
         type StructFields VkDisplayPlanePropertiesKHR =
              '["currentDisplay", "currentStackIndex"] -- ' closing tick for hsc2hs
+        type CUnionType VkDisplayPlanePropertiesKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDisplayPlanePropertiesKHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkDisplayPlanePropertiesKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkCurrentDisplay VkDisplayPlanePropertiesKHR where
@@ -1752,6 +1770,9 @@ instance VulkanMarshal VkDisplaySurfaceCreateInfoKHR where
              '["sType", "pNext", "flags", "displayMode", "planeIndex", -- ' closing tick for hsc2hs
                "planeStackIndex", "transform", "globalAlpha", "alphaMode",
                "imageExtent"]
+        type CUnionType VkDisplaySurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDisplaySurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDisplaySurfaceCreateInfoKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkDisplaySurfaceCreateInfoKHR where

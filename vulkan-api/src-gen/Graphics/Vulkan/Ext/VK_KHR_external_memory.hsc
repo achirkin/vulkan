@@ -43,6 +43,9 @@ import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
+import           Graphics.Vulkan.Base             (VkBufferCreateInfo,
+                                                   VkImageCreateInfo,
+                                                   VkMemoryAllocateInfo)
 import           Graphics.Vulkan.Common           (VK_QUEUE_FAMILY_EXTERNAL_KHR, pattern VK_QUEUE_FAMILY_EXTERNAL_KHR,
                                                    VkExternalMemoryHandleTypeFlagsKHR,
                                                    VkResult (..),
@@ -109,6 +112,10 @@ instance VulkanMarshalPrim VkExternalMemoryImageCreateInfoKHR where
 instance VulkanMarshal VkExternalMemoryImageCreateInfoKHR where
         type StructFields VkExternalMemoryImageCreateInfoKHR =
              '["sType", "pNext", "handleTypes"] -- ' closing tick for hsc2hs
+        type CUnionType VkExternalMemoryImageCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkExternalMemoryImageCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkExternalMemoryImageCreateInfoKHR =
+             '[VkImageCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkExternalMemoryImageCreateInfoKHR where
@@ -333,6 +340,10 @@ instance VulkanMarshalPrim VkExternalMemoryBufferCreateInfoKHR
 instance VulkanMarshal VkExternalMemoryBufferCreateInfoKHR where
         type StructFields VkExternalMemoryBufferCreateInfoKHR =
              '["sType", "pNext", "handleTypes"] -- ' closing tick for hsc2hs
+        type CUnionType VkExternalMemoryBufferCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkExternalMemoryBufferCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkExternalMemoryBufferCreateInfoKHR =
+             '[VkBufferCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkExternalMemoryBufferCreateInfoKHR where
@@ -557,6 +568,10 @@ instance VulkanMarshalPrim VkExportMemoryAllocateInfoKHR where
 instance VulkanMarshal VkExportMemoryAllocateInfoKHR where
         type StructFields VkExportMemoryAllocateInfoKHR =
              '["sType", "pNext", "handleTypes"] -- ' closing tick for hsc2hs
+        type CUnionType VkExportMemoryAllocateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkExportMemoryAllocateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkExportMemoryAllocateInfoKHR =
+             '[VkMemoryAllocateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkExportMemoryAllocateInfoKHR where

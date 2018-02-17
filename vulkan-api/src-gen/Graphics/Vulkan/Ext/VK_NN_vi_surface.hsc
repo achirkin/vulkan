@@ -99,6 +99,9 @@ instance VulkanMarshalPrim VkViSurfaceCreateInfoNN where
 instance VulkanMarshal VkViSurfaceCreateInfoNN where
         type StructFields VkViSurfaceCreateInfoNN =
              '["sType", "pNext", "flags", "window"] -- ' closing tick for hsc2hs
+        type CUnionType VkViSurfaceCreateInfoNN = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkViSurfaceCreateInfoNN = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkViSurfaceCreateInfoNN = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkViSurfaceCreateInfoNN
          where

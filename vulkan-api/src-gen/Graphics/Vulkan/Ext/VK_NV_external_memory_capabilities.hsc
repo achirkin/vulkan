@@ -98,6 +98,9 @@ instance VulkanMarshal VkExternalImageFormatPropertiesNV where
         type StructFields VkExternalImageFormatPropertiesNV =
              '["imageFormatProperties", "externalMemoryFeatures", -- ' closing tick for hsc2hs
                "exportFromImportedHandleTypes", "compatibleHandleTypes"]
+        type CUnionType VkExternalImageFormatPropertiesNV = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkExternalImageFormatPropertiesNV = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkExternalImageFormatPropertiesNV = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkImageFormatProperties VkExternalImageFormatPropertiesNV where

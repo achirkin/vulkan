@@ -37,7 +37,8 @@ import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           Graphics.Vulkan.Base             (VkExtent2D, VkOffset2D)
+import           Graphics.Vulkan.Base             (VkExtent2D, VkOffset2D,
+                                                   VkPresentInfoKHR)
 import           Graphics.Vulkan.Common           (VkStructureType (..), Word32)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
@@ -95,6 +96,9 @@ instance VulkanMarshalPrim VkPresentRegionsKHR where
 instance VulkanMarshal VkPresentRegionsKHR where
         type StructFields VkPresentRegionsKHR =
              '["sType", "pNext", "swapchainCount", "pRegions"] -- ' closing tick for hsc2hs
+        type CUnionType VkPresentRegionsKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPresentRegionsKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPresentRegionsKHR = '[VkPresentInfoKHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkPresentRegionsKHR where
         type VkSTypeMType VkPresentRegionsKHR = VkStructureType
@@ -340,6 +344,9 @@ instance VulkanMarshalPrim VkPresentRegionKHR where
 instance VulkanMarshal VkPresentRegionKHR where
         type StructFields VkPresentRegionKHR =
              '["rectangleCount", "pRectangles"] -- ' closing tick for hsc2hs
+        type CUnionType VkPresentRegionKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPresentRegionKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPresentRegionKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkRectangleCount VkPresentRegionKHR
          where
@@ -491,6 +498,9 @@ instance VulkanMarshalPrim VkRectLayerKHR where
 
 instance VulkanMarshal VkRectLayerKHR where
         type StructFields VkRectLayerKHR = '["offset", "extent", "layer"] -- ' closing tick for hsc2hs
+        type CUnionType VkRectLayerKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkRectLayerKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkRectLayerKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkOffset VkRectLayerKHR where
         type VkOffsetMType VkRectLayerKHR = VkOffset2D

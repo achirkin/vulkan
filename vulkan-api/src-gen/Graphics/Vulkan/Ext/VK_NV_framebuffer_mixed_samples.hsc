@@ -32,6 +32,7 @@ import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
+import           Graphics.Vulkan.Base             (VkPipelineMultisampleStateCreateInfo)
 import           Graphics.Vulkan.Common           (VkBool32,
                                                    VkCoverageModulationModeNV,
                                                    VkPipelineCoverageModulationStateCreateFlagsNV,
@@ -111,6 +112,12 @@ instance VulkanMarshal
              '["sType", "pNext", "flags", "coverageModulationMode", -- ' closing tick for hsc2hs
                "coverageModulationTableEnable", "coverageModulationTableCount",
                "pCoverageModulationTable"]
+        type CUnionType VkPipelineCoverageModulationStateCreateInfoNV =
+             'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPipelineCoverageModulationStateCreateInfoNV =
+             'False -- ' closing tick for hsc2hs
+        type StructExtends VkPipelineCoverageModulationStateCreateInfoNV =
+             '[VkPipelineMultisampleStateCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPipelineCoverageModulationStateCreateInfoNV where

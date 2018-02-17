@@ -41,6 +41,7 @@ import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
+import           Graphics.Vulkan.Base             (VkMemoryAllocateInfo)
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
@@ -99,6 +100,10 @@ instance VulkanMarshalPrim VkImportMemoryFdInfoKHR where
 instance VulkanMarshal VkImportMemoryFdInfoKHR where
         type StructFields VkImportMemoryFdInfoKHR =
              '["sType", "pNext", "handleType", "fd"] -- ' closing tick for hsc2hs
+        type CUnionType VkImportMemoryFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkImportMemoryFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkImportMemoryFdInfoKHR =
+             '[VkMemoryAllocateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkImportMemoryFdInfoKHR
          where
@@ -348,6 +353,9 @@ instance VulkanMarshalPrim VkMemoryFdPropertiesKHR where
 instance VulkanMarshal VkMemoryFdPropertiesKHR where
         type StructFields VkMemoryFdPropertiesKHR =
              '["sType", "pNext", "memoryTypeBits"] -- ' closing tick for hsc2hs
+        type CUnionType VkMemoryFdPropertiesKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkMemoryFdPropertiesKHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkMemoryFdPropertiesKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkMemoryFdPropertiesKHR
          where
@@ -538,6 +546,9 @@ instance VulkanMarshalPrim VkMemoryGetFdInfoKHR where
 instance VulkanMarshal VkMemoryGetFdInfoKHR where
         type StructFields VkMemoryGetFdInfoKHR =
              '["sType", "pNext", "memory", "handleType"] -- ' closing tick for hsc2hs
+        type CUnionType VkMemoryGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkMemoryGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkMemoryGetFdInfoKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkMemoryGetFdInfoKHR where
         type VkSTypeMType VkMemoryGetFdInfoKHR = VkStructureType

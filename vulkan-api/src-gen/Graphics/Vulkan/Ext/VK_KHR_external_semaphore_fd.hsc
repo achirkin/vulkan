@@ -103,6 +103,9 @@ instance VulkanMarshalPrim VkImportSemaphoreFdInfoKHR where
 instance VulkanMarshal VkImportSemaphoreFdInfoKHR where
         type StructFields VkImportSemaphoreFdInfoKHR =
              '["sType", "pNext", "semaphore", "flags", "handleType", "fd"] -- ' closing tick for hsc2hs
+        type CUnionType VkImportSemaphoreFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkImportSemaphoreFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkImportSemaphoreFdInfoKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkImportSemaphoreFdInfoKHR
          where
@@ -458,6 +461,9 @@ instance VulkanMarshalPrim VkSemaphoreGetFdInfoKHR where
 instance VulkanMarshal VkSemaphoreGetFdInfoKHR where
         type StructFields VkSemaphoreGetFdInfoKHR =
              '["sType", "pNext", "semaphore", "handleType"] -- ' closing tick for hsc2hs
+        type CUnionType VkSemaphoreGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSemaphoreGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkSemaphoreGetFdInfoKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkSemaphoreGetFdInfoKHR
          where

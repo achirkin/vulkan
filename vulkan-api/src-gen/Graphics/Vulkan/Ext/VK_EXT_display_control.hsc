@@ -44,7 +44,8 @@ import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..))
+import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..),
+                                                   VkSwapchainCreateInfoKHR)
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
@@ -102,6 +103,9 @@ instance VulkanMarshalPrim VkDisplayPowerInfoEXT where
 instance VulkanMarshal VkDisplayPowerInfoEXT where
         type StructFields VkDisplayPowerInfoEXT =
              '["sType", "pNext", "powerState"] -- ' closing tick for hsc2hs
+        type CUnionType VkDisplayPowerInfoEXT = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDisplayPowerInfoEXT = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDisplayPowerInfoEXT = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkDisplayPowerInfoEXT where
         type VkSTypeMType VkDisplayPowerInfoEXT = VkStructureType
@@ -301,6 +305,9 @@ instance VulkanMarshalPrim VkDeviceEventInfoEXT where
 instance VulkanMarshal VkDeviceEventInfoEXT where
         type StructFields VkDeviceEventInfoEXT =
              '["sType", "pNext", "deviceEvent"] -- ' closing tick for hsc2hs
+        type CUnionType VkDeviceEventInfoEXT = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDeviceEventInfoEXT = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDeviceEventInfoEXT = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkDeviceEventInfoEXT where
         type VkSTypeMType VkDeviceEventInfoEXT = VkStructureType
@@ -500,6 +507,9 @@ instance VulkanMarshalPrim VkDisplayEventInfoEXT where
 instance VulkanMarshal VkDisplayEventInfoEXT where
         type StructFields VkDisplayEventInfoEXT =
              '["sType", "pNext", "displayEvent"] -- ' closing tick for hsc2hs
+        type CUnionType VkDisplayEventInfoEXT = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDisplayEventInfoEXT = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDisplayEventInfoEXT = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkDisplayEventInfoEXT where
         type VkSTypeMType VkDisplayEventInfoEXT = VkStructureType
@@ -704,6 +714,10 @@ instance VulkanMarshalPrim VkSwapchainCounterCreateInfoEXT where
 instance VulkanMarshal VkSwapchainCounterCreateInfoEXT where
         type StructFields VkSwapchainCounterCreateInfoEXT =
              '["sType", "pNext", "surfaceCounters"] -- ' closing tick for hsc2hs
+        type CUnionType VkSwapchainCounterCreateInfoEXT = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSwapchainCounterCreateInfoEXT = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkSwapchainCounterCreateInfoEXT =
+             '[VkSwapchainCreateInfoKHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkSwapchainCounterCreateInfoEXT where

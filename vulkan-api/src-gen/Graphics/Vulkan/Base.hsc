@@ -265,6 +265,9 @@ instance VulkanMarshalPrim VkOffset2D where
 
 instance VulkanMarshal VkOffset2D where
         type StructFields VkOffset2D = '["x", "y"] -- ' closing tick for hsc2hs
+        type CUnionType VkOffset2D = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkOffset2D = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkOffset2D = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkX VkOffset2D where
         type VkXMType VkOffset2D = Int32
@@ -403,6 +406,9 @@ instance VulkanMarshalPrim VkOffset3D where
 
 instance VulkanMarshal VkOffset3D where
         type StructFields VkOffset3D = '["x", "y", "z"] -- ' closing tick for hsc2hs
+        type CUnionType VkOffset3D = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkOffset3D = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkOffset3D = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkX VkOffset3D where
         type VkXMType VkOffset3D = Int32
@@ -583,6 +589,9 @@ instance VulkanMarshalPrim VkExtent2D where
 
 instance VulkanMarshal VkExtent2D where
         type StructFields VkExtent2D = '["width", "height"] -- ' closing tick for hsc2hs
+        type CUnionType VkExtent2D = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkExtent2D = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkExtent2D = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkWidth VkExtent2D where
         type VkWidthMType VkExtent2D = Word32
@@ -725,6 +734,9 @@ instance VulkanMarshalPrim VkExtent3D where
 
 instance VulkanMarshal VkExtent3D where
         type StructFields VkExtent3D = '["width", "height", "depth"] -- ' closing tick for hsc2hs
+        type CUnionType VkExtent3D = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkExtent3D = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkExtent3D = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkWidth VkExtent3D where
         type VkWidthMType VkExtent3D = Word32
@@ -916,6 +928,9 @@ instance VulkanMarshalPrim VkViewport where
 instance VulkanMarshal VkViewport where
         type StructFields VkViewport =
              '["x", "y", "width", "height", "minDepth", "maxDepth"] -- ' closing tick for hsc2hs
+        type CUnionType VkViewport = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkViewport = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkViewport = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkX VkViewport where
         type VkXMType VkViewport = #{type float}
@@ -1236,6 +1251,9 @@ instance VulkanMarshalPrim VkRect2D where
 
 instance VulkanMarshal VkRect2D where
         type StructFields VkRect2D = '["offset", "extent"] -- ' closing tick for hsc2hs
+        type CUnionType VkRect2D = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkRect2D = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkRect2D = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkOffset VkRect2D where
         type VkOffsetMType VkRect2D = VkOffset2D
@@ -1379,6 +1397,9 @@ instance VulkanMarshalPrim VkClearRect where
 instance VulkanMarshal VkClearRect where
         type StructFields VkClearRect =
              '["rect", "baseArrayLayer", "layerCount"] -- ' closing tick for hsc2hs
+        type CUnionType VkClearRect = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkClearRect = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkClearRect = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkRect VkClearRect where
         type VkRectMType VkClearRect = VkRect2D
@@ -1572,6 +1593,9 @@ instance VulkanMarshalPrim VkComponentMapping where
 
 instance VulkanMarshal VkComponentMapping where
         type StructFields VkComponentMapping = '["r", "g", "b", "a"] -- ' closing tick for hsc2hs
+        type CUnionType VkComponentMapping = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkComponentMapping = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkComponentMapping = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkR VkComponentMapping where
         type VkRMType VkComponentMapping = VkComponentSwizzle
@@ -1817,6 +1841,9 @@ instance VulkanMarshal VkPhysicalDeviceProperties where
              '["apiVersion", "driverVersion", "vendorID", "deviceID", -- ' closing tick for hsc2hs
                "deviceType", "deviceName", "pipelineCacheUUID", "limits",
                "sparseProperties"]
+        type CUnionType VkPhysicalDeviceProperties = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDeviceProperties = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkPhysicalDeviceProperties = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkApiVersion VkPhysicalDeviceProperties where
@@ -2367,6 +2394,9 @@ instance VulkanMarshalPrim VkExtensionProperties where
 instance VulkanMarshal VkExtensionProperties where
         type StructFields VkExtensionProperties =
              '["extensionName", "specVersion"] -- ' closing tick for hsc2hs
+        type CUnionType VkExtensionProperties = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkExtensionProperties = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkExtensionProperties = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkExtensionNameArray VkExtensionProperties where
@@ -2546,6 +2576,9 @@ instance VulkanMarshal VkLayerProperties where
         type StructFields VkLayerProperties =
              '["layerName", "specVersion", "implementationVersion", -- ' closing tick for hsc2hs
                "description"]
+        type CUnionType VkLayerProperties = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkLayerProperties = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkLayerProperties = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkLayerNameArray VkLayerProperties
          where
@@ -2848,6 +2881,9 @@ instance VulkanMarshal VkApplicationInfo where
         type StructFields VkApplicationInfo =
              '["sType", "pNext", "pApplicationName", "applicationVersion", -- ' closing tick for hsc2hs
                "pEngineName", "engineVersion", "apiVersion"]
+        type CUnionType VkApplicationInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkApplicationInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkApplicationInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkApplicationInfo where
         type VkSTypeMType VkApplicationInfo = VkStructureType
@@ -3244,6 +3280,9 @@ instance VulkanMarshal VkAllocationCallbacks where
         type StructFields VkAllocationCallbacks =
              '["pUserData", "pfnAllocation", "pfnReallocation", "pfnFree", -- ' closing tick for hsc2hs
                "pfnInternalAllocation", "pfnInternalFree"]
+        type CUnionType VkAllocationCallbacks = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkAllocationCallbacks = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkAllocationCallbacks = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkPUserData VkAllocationCallbacks
          where
@@ -3610,6 +3649,9 @@ instance VulkanMarshal VkDeviceQueueCreateInfo where
         type StructFields VkDeviceQueueCreateInfo =
              '["sType", "pNext", "flags", "queueFamilyIndex", "queueCount", -- ' closing tick for hsc2hs
                "pQueuePriorities"]
+        type CUnionType VkDeviceQueueCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDeviceQueueCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDeviceQueueCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkDeviceQueueCreateInfo
          where
@@ -3975,6 +4017,9 @@ instance VulkanMarshal VkDeviceCreateInfo where
                "pQueueCreateInfos", "enabledLayerCount", "ppEnabledLayerNames",
                "enabledExtensionCount", "ppEnabledExtensionNames",
                "pEnabledFeatures"]
+        type CUnionType VkDeviceCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDeviceCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDeviceCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkDeviceCreateInfo where
         type VkSTypeMType VkDeviceCreateInfo = VkStructureType
@@ -4547,6 +4592,9 @@ instance VulkanMarshal VkInstanceCreateInfo where
              '["sType", "pNext", "flags", "pApplicationInfo", -- ' closing tick for hsc2hs
                "enabledLayerCount", "ppEnabledLayerNames",
                "enabledExtensionCount", "ppEnabledExtensionNames"]
+        type CUnionType VkInstanceCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkInstanceCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkInstanceCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkInstanceCreateInfo where
         type VkSTypeMType VkInstanceCreateInfo = VkStructureType
@@ -5011,6 +5059,9 @@ instance VulkanMarshal VkQueueFamilyProperties where
         type StructFields VkQueueFamilyProperties =
              '["queueFlags", "queueCount", "timestampValidBits", -- ' closing tick for hsc2hs
                "minImageTransferGranularity"]
+        type CUnionType VkQueueFamilyProperties = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkQueueFamilyProperties = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkQueueFamilyProperties = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkQueueFlags VkQueueFamilyProperties where
@@ -5266,6 +5317,9 @@ instance VulkanMarshal VkPhysicalDeviceMemoryProperties where
         type StructFields VkPhysicalDeviceMemoryProperties =
              '["memoryTypeCount", "memoryTypes", "memoryHeapCount", -- ' closing tick for hsc2hs
                "memoryHeaps"]
+        type CUnionType VkPhysicalDeviceMemoryProperties = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDeviceMemoryProperties = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkPhysicalDeviceMemoryProperties = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkMemoryTypeCount VkPhysicalDeviceMemoryProperties where
@@ -5599,6 +5653,9 @@ instance VulkanMarshalPrim VkMemoryAllocateInfo where
 instance VulkanMarshal VkMemoryAllocateInfo where
         type StructFields VkMemoryAllocateInfo =
              '["sType", "pNext", "allocationSize", "memoryTypeIndex"] -- ' closing tick for hsc2hs
+        type CUnionType VkMemoryAllocateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkMemoryAllocateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkMemoryAllocateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkMemoryAllocateInfo where
         type VkSTypeMType VkMemoryAllocateInfo = VkStructureType
@@ -5845,6 +5902,9 @@ instance VulkanMarshalPrim VkMemoryRequirements where
 instance VulkanMarshal VkMemoryRequirements where
         type StructFields VkMemoryRequirements =
              '["size", "alignment", "memoryTypeBits"] -- ' closing tick for hsc2hs
+        type CUnionType VkMemoryRequirements = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkMemoryRequirements = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkMemoryRequirements = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSize VkMemoryRequirements where
         type VkSizeMType VkMemoryRequirements = VkDeviceSize
@@ -6036,6 +6096,9 @@ instance VulkanMarshalPrim VkSparseImageFormatProperties where
 instance VulkanMarshal VkSparseImageFormatProperties where
         type StructFields VkSparseImageFormatProperties =
              '["aspectMask", "imageGranularity", "flags"] -- ' closing tick for hsc2hs
+        type CUnionType VkSparseImageFormatProperties = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSparseImageFormatProperties = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkSparseImageFormatProperties = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkAspectMask VkSparseImageFormatProperties where
@@ -6243,6 +6306,9 @@ instance VulkanMarshal VkSparseImageMemoryRequirements where
         type StructFields VkSparseImageMemoryRequirements =
              '["formatProperties", "imageMipTailFirstLod", "imageMipTailSize", -- ' closing tick for hsc2hs
                "imageMipTailOffset", "imageMipTailStride"]
+        type CUnionType VkSparseImageMemoryRequirements = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSparseImageMemoryRequirements = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkSparseImageMemoryRequirements = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkFormatProperties VkSparseImageMemoryRequirements where
@@ -6560,6 +6626,9 @@ instance VulkanMarshalPrim VkMemoryType where
 
 instance VulkanMarshal VkMemoryType where
         type StructFields VkMemoryType = '["propertyFlags", "heapIndex"] -- ' closing tick for hsc2hs
+        type CUnionType VkMemoryType = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkMemoryType = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkMemoryType = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkPropertyFlags VkMemoryType where
         type VkPropertyFlagsMType VkMemoryType = VkMemoryPropertyFlags
@@ -6698,6 +6767,9 @@ instance VulkanMarshalPrim VkMemoryHeap where
 
 instance VulkanMarshal VkMemoryHeap where
         type StructFields VkMemoryHeap = '["size", "flags"] -- ' closing tick for hsc2hs
+        type CUnionType VkMemoryHeap = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkMemoryHeap = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkMemoryHeap = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSize VkMemoryHeap where
         type VkSizeMType VkMemoryHeap = VkDeviceSize
@@ -6835,6 +6907,9 @@ instance VulkanMarshalPrim VkMappedMemoryRange where
 instance VulkanMarshal VkMappedMemoryRange where
         type StructFields VkMappedMemoryRange =
              '["sType", "pNext", "memory", "offset", "size"] -- ' closing tick for hsc2hs
+        type CUnionType VkMappedMemoryRange = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkMappedMemoryRange = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkMappedMemoryRange = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkMappedMemoryRange where
         type VkSTypeMType VkMappedMemoryRange = VkStructureType
@@ -7124,6 +7199,9 @@ instance VulkanMarshal VkFormatProperties where
         type StructFields VkFormatProperties =
              '["linearTilingFeatures", "optimalTilingFeatures", -- ' closing tick for hsc2hs
                "bufferFeatures"]
+        type CUnionType VkFormatProperties = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkFormatProperties = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkFormatProperties = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkLinearTilingFeatures VkFormatProperties where
@@ -7327,6 +7405,9 @@ instance VulkanMarshal VkImageFormatProperties where
         type StructFields VkImageFormatProperties =
              '["maxExtent", "maxMipLevels", "maxArrayLayers", "sampleCounts", -- ' closing tick for hsc2hs
                "maxResourceSize"]
+        type CUnionType VkImageFormatProperties = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkImageFormatProperties = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkImageFormatProperties = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkMaxExtent VkImageFormatProperties
          where
@@ -7614,6 +7695,9 @@ instance VulkanMarshalPrim VkDescriptorBufferInfo where
 instance VulkanMarshal VkDescriptorBufferInfo where
         type StructFields VkDescriptorBufferInfo =
              '["buffer", "offset", "range"] -- ' closing tick for hsc2hs
+        type CUnionType VkDescriptorBufferInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDescriptorBufferInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDescriptorBufferInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkBuffer VkDescriptorBufferInfo
          where
@@ -7812,6 +7896,9 @@ instance VulkanMarshalPrim VkDescriptorImageInfo where
 instance VulkanMarshal VkDescriptorImageInfo where
         type StructFields VkDescriptorImageInfo =
              '["sampler", "imageView", "imageLayout"] -- ' closing tick for hsc2hs
+        type CUnionType VkDescriptorImageInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDescriptorImageInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDescriptorImageInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSampler VkDescriptorImageInfo
          where
@@ -8021,6 +8108,9 @@ instance VulkanMarshal VkWriteDescriptorSet where
              '["sType", "pNext", "dstSet", "dstBinding", "dstArrayElement", -- ' closing tick for hsc2hs
                "descriptorCount", "descriptorType", "pImageInfo", "pBufferInfo",
                "pTexelBufferView"]
+        type CUnionType VkWriteDescriptorSet = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkWriteDescriptorSet = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkWriteDescriptorSet = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkWriteDescriptorSet where
         type VkSTypeMType VkWriteDescriptorSet = VkStructureType
@@ -8578,6 +8668,9 @@ instance VulkanMarshal VkCopyDescriptorSet where
         type StructFields VkCopyDescriptorSet =
              '["sType", "pNext", "srcSet", "srcBinding", "srcArrayElement", -- ' closing tick for hsc2hs
                "dstSet", "dstBinding", "dstArrayElement", "descriptorCount"]
+        type CUnionType VkCopyDescriptorSet = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkCopyDescriptorSet = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkCopyDescriptorSet = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkCopyDescriptorSet where
         type VkSTypeMType VkCopyDescriptorSet = VkStructureType
@@ -9070,6 +9163,9 @@ instance VulkanMarshal VkBufferCreateInfo where
         type StructFields VkBufferCreateInfo =
              '["sType", "pNext", "flags", "size", "usage", "sharingMode", -- ' closing tick for hsc2hs
                "queueFamilyIndexCount", "pQueueFamilyIndices"]
+        type CUnionType VkBufferCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkBufferCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkBufferCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkBufferCreateInfo where
         type VkSTypeMType VkBufferCreateInfo = VkStructureType
@@ -9518,6 +9614,9 @@ instance VulkanMarshalPrim VkBufferViewCreateInfo where
 instance VulkanMarshal VkBufferViewCreateInfo where
         type StructFields VkBufferViewCreateInfo =
              '["sType", "pNext", "flags", "buffer", "format", "offset", "range"] -- ' closing tick for hsc2hs
+        type CUnionType VkBufferViewCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkBufferViewCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkBufferViewCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkBufferViewCreateInfo
          where
@@ -9909,6 +10008,9 @@ instance VulkanMarshalPrim VkImageSubresource where
 instance VulkanMarshal VkImageSubresource where
         type StructFields VkImageSubresource =
              '["aspectMask", "mipLevel", "arrayLayer"] -- ' closing tick for hsc2hs
+        type CUnionType VkImageSubresource = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkImageSubresource = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkImageSubresource = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkAspectMask VkImageSubresource
          where
@@ -10109,6 +10211,9 @@ instance VulkanMarshalPrim VkImageSubresourceLayers where
 instance VulkanMarshal VkImageSubresourceLayers where
         type StructFields VkImageSubresourceLayers =
              '["aspectMask", "mipLevel", "baseArrayLayer", "layerCount"] -- ' closing tick for hsc2hs
+        type CUnionType VkImageSubresourceLayers = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkImageSubresourceLayers = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkImageSubresourceLayers = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkAspectMask VkImageSubresourceLayers where
@@ -10368,6 +10473,9 @@ instance VulkanMarshal VkImageSubresourceRange where
         type StructFields VkImageSubresourceRange =
              '["aspectMask", "baseMipLevel", "levelCount", "baseArrayLayer", -- ' closing tick for hsc2hs
                "layerCount"]
+        type CUnionType VkImageSubresourceRange = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkImageSubresourceRange = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkImageSubresourceRange = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkAspectMask VkImageSubresourceRange where
@@ -10686,6 +10794,9 @@ instance VulkanMarshal VkImageCreateInfo where
                "mipLevels", "arrayLayers", "samples", "tiling", "usage",
                "sharingMode", "queueFamilyIndexCount", "pQueueFamilyIndices",
                "initialLayout"]
+        type CUnionType VkImageCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkImageCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkImageCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkImageCreateInfo where
         type VkSTypeMType VkImageCreateInfo = VkStructureType
@@ -11489,6 +11600,9 @@ instance VulkanMarshalPrim VkSubresourceLayout where
 instance VulkanMarshal VkSubresourceLayout where
         type StructFields VkSubresourceLayout =
              '["offset", "size", "rowPitch", "arrayPitch", "depthPitch"] -- ' closing tick for hsc2hs
+        type CUnionType VkSubresourceLayout = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSubresourceLayout = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkSubresourceLayout = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkOffset VkSubresourceLayout where
         type VkOffsetMType VkSubresourceLayout = VkDeviceSize
@@ -11768,6 +11882,9 @@ instance VulkanMarshal VkImageViewCreateInfo where
         type StructFields VkImageViewCreateInfo =
              '["sType", "pNext", "flags", "image", "viewType", "format", -- ' closing tick for hsc2hs
                "components", "subresourceRange"]
+        type CUnionType VkImageViewCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkImageViewCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkImageViewCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkImageViewCreateInfo where
         type VkSTypeMType VkImageViewCreateInfo = VkStructureType
@@ -12212,6 +12329,9 @@ instance VulkanMarshalPrim VkBufferCopy where
 instance VulkanMarshal VkBufferCopy where
         type StructFields VkBufferCopy =
              '["srcOffset", "dstOffset", "size"] -- ' closing tick for hsc2hs
+        type CUnionType VkBufferCopy = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkBufferCopy = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkBufferCopy = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSrcOffset VkBufferCopy where
         type VkSrcOffsetMType VkBufferCopy = VkDeviceSize
@@ -12406,6 +12526,9 @@ instance VulkanMarshalPrim VkSparseMemoryBind where
 instance VulkanMarshal VkSparseMemoryBind where
         type StructFields VkSparseMemoryBind =
              '["resourceOffset", "size", "memory", "memoryOffset", "flags"] -- ' closing tick for hsc2hs
+        type CUnionType VkSparseMemoryBind = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSparseMemoryBind = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkSparseMemoryBind = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkResourceOffset VkSparseMemoryBind
          where
@@ -12704,6 +12827,9 @@ instance VulkanMarshal VkSparseImageMemoryBind where
         type StructFields VkSparseImageMemoryBind =
              '["subresource", "offset", "extent", "memory", "memoryOffset", -- ' closing tick for hsc2hs
                "flags"]
+        type CUnionType VkSparseImageMemoryBind = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSparseImageMemoryBind = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkSparseImageMemoryBind = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSubresource VkSparseImageMemoryBind where
@@ -13057,6 +13183,9 @@ instance VulkanMarshalPrim VkSparseBufferMemoryBindInfo where
 instance VulkanMarshal VkSparseBufferMemoryBindInfo where
         type StructFields VkSparseBufferMemoryBindInfo =
              '["buffer", "bindCount", "pBinds"] -- ' closing tick for hsc2hs
+        type CUnionType VkSparseBufferMemoryBindInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSparseBufferMemoryBindInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkSparseBufferMemoryBindInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkBuffer VkSparseBufferMemoryBindInfo where
@@ -13268,6 +13397,9 @@ instance VulkanMarshalPrim VkSparseImageOpaqueMemoryBindInfo where
 instance VulkanMarshal VkSparseImageOpaqueMemoryBindInfo where
         type StructFields VkSparseImageOpaqueMemoryBindInfo =
              '["image", "bindCount", "pBinds"] -- ' closing tick for hsc2hs
+        type CUnionType VkSparseImageOpaqueMemoryBindInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSparseImageOpaqueMemoryBindInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkSparseImageOpaqueMemoryBindInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkImage VkSparseImageOpaqueMemoryBindInfo where
@@ -13485,6 +13617,9 @@ instance VulkanMarshalPrim VkSparseImageMemoryBindInfo where
 instance VulkanMarshal VkSparseImageMemoryBindInfo where
         type StructFields VkSparseImageMemoryBindInfo =
              '["image", "bindCount", "pBinds"] -- ' closing tick for hsc2hs
+        type CUnionType VkSparseImageMemoryBindInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSparseImageMemoryBindInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkSparseImageMemoryBindInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkImage VkSparseImageMemoryBindInfo
          where
@@ -13700,6 +13835,9 @@ instance VulkanMarshal VkBindSparseInfo where
                "bufferBindCount", "pBufferBinds", "imageOpaqueBindCount",
                "pImageOpaqueBinds", "imageBindCount", "pImageBinds",
                "signalSemaphoreCount", "pSignalSemaphores"]
+        type CUnionType VkBindSparseInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkBindSparseInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkBindSparseInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkBindSparseInfo where
         type VkSTypeMType VkBindSparseInfo = VkStructureType
@@ -14359,6 +14497,9 @@ instance VulkanMarshal VkImageCopy where
         type StructFields VkImageCopy =
              '["srcSubresource", "srcOffset", "dstSubresource", "dstOffset", -- ' closing tick for hsc2hs
                "extent"]
+        type CUnionType VkImageCopy = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkImageCopy = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkImageCopy = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSrcSubresource VkImageCopy where
         type VkSrcSubresourceMType VkImageCopy = VkImageSubresourceLayers
@@ -14647,6 +14788,9 @@ instance VulkanMarshalPrim VkImageBlit where
 instance VulkanMarshal VkImageBlit where
         type StructFields VkImageBlit =
              '["srcSubresource", "srcOffsets", "dstSubresource", "dstOffsets"] -- ' closing tick for hsc2hs
+        type CUnionType VkImageBlit = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkImageBlit = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkImageBlit = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSrcSubresource VkImageBlit where
         type VkSrcSubresourceMType VkImageBlit = VkImageSubresourceLayers
@@ -14965,6 +15109,9 @@ instance VulkanMarshal VkBufferImageCopy where
         type StructFields VkBufferImageCopy =
              '["bufferOffset", "bufferRowLength", "bufferImageHeight", -- ' closing tick for hsc2hs
                "imageSubresource", "imageOffset", "imageExtent"]
+        type CUnionType VkBufferImageCopy = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkBufferImageCopy = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkBufferImageCopy = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkBufferOffset VkBufferImageCopy
          where
@@ -15315,6 +15462,9 @@ instance VulkanMarshal VkImageResolve where
         type StructFields VkImageResolve =
              '["srcSubresource", "srcOffset", "dstSubresource", "dstOffset", -- ' closing tick for hsc2hs
                "extent"]
+        type CUnionType VkImageResolve = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkImageResolve = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkImageResolve = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSrcSubresource VkImageResolve
          where
@@ -15613,6 +15763,9 @@ instance VulkanMarshalPrim VkShaderModuleCreateInfo where
 instance VulkanMarshal VkShaderModuleCreateInfo where
         type StructFields VkShaderModuleCreateInfo =
              '["sType", "pNext", "flags", "codeSize", "pCode"] -- ' closing tick for hsc2hs
+        type CUnionType VkShaderModuleCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkShaderModuleCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkShaderModuleCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkShaderModuleCreateInfo
          where
@@ -15920,6 +16073,9 @@ instance VulkanMarshal VkDescriptorSetLayoutBinding where
         type StructFields VkDescriptorSetLayoutBinding =
              '["binding", "descriptorType", "descriptorCount", "stageFlags", -- ' closing tick for hsc2hs
                "pImmutableSamplers"]
+        type CUnionType VkDescriptorSetLayoutBinding = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDescriptorSetLayoutBinding = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDescriptorSetLayoutBinding = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkBinding VkDescriptorSetLayoutBinding where
@@ -16252,6 +16408,9 @@ instance VulkanMarshalPrim VkDescriptorSetLayoutCreateInfo where
 instance VulkanMarshal VkDescriptorSetLayoutCreateInfo where
         type StructFields VkDescriptorSetLayoutCreateInfo =
              '["sType", "pNext", "flags", "bindingCount", "pBindings"] -- ' closing tick for hsc2hs
+        type CUnionType VkDescriptorSetLayoutCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDescriptorSetLayoutCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDescriptorSetLayoutCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkDescriptorSetLayoutCreateInfo where
@@ -16567,6 +16726,9 @@ instance VulkanMarshalPrim VkDescriptorPoolSize where
 instance VulkanMarshal VkDescriptorPoolSize where
         type StructFields VkDescriptorPoolSize =
              '["type", "descriptorCount"] -- ' closing tick for hsc2hs
+        type CUnionType VkDescriptorPoolSize = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDescriptorPoolSize = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDescriptorPoolSize = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkType VkDescriptorPoolSize where
         type VkTypeMType VkDescriptorPoolSize = VkDescriptorType
@@ -16725,6 +16887,9 @@ instance VulkanMarshal VkDescriptorPoolCreateInfo where
         type StructFields VkDescriptorPoolCreateInfo =
              '["sType", "pNext", "flags", "maxSets", "poolSizeCount", -- ' closing tick for hsc2hs
                "pPoolSizes"]
+        type CUnionType VkDescriptorPoolCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDescriptorPoolCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDescriptorPoolCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkDescriptorPoolCreateInfo
          where
@@ -17088,6 +17253,9 @@ instance VulkanMarshal VkDescriptorSetAllocateInfo where
         type StructFields VkDescriptorSetAllocateInfo =
              '["sType", "pNext", "descriptorPool", "descriptorSetCount", -- ' closing tick for hsc2hs
                "pSetLayouts"]
+        type CUnionType VkDescriptorSetAllocateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDescriptorSetAllocateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDescriptorSetAllocateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkDescriptorSetAllocateInfo
          where
@@ -17406,6 +17574,9 @@ instance VulkanMarshalPrim VkSpecializationMapEntry where
 instance VulkanMarshal VkSpecializationMapEntry where
         type StructFields VkSpecializationMapEntry =
              '["constantID", "offset", "size"] -- ' closing tick for hsc2hs
+        type CUnionType VkSpecializationMapEntry = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSpecializationMapEntry = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkSpecializationMapEntry = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkConstantID VkSpecializationMapEntry where
@@ -17608,6 +17779,9 @@ instance VulkanMarshalPrim VkSpecializationInfo where
 instance VulkanMarshal VkSpecializationInfo where
         type StructFields VkSpecializationInfo =
              '["mapEntryCount", "pMapEntries", "dataSize", "pData"] -- ' closing tick for hsc2hs
+        type CUnionType VkSpecializationInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSpecializationInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkSpecializationInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkMapEntryCount VkSpecializationInfo where
@@ -17868,6 +18042,9 @@ instance VulkanMarshal VkPipelineShaderStageCreateInfo where
         type StructFields VkPipelineShaderStageCreateInfo =
              '["sType", "pNext", "flags", "stage", "module", "pName", -- ' closing tick for hsc2hs
                "pSpecializationInfo"]
+        type CUnionType VkPipelineShaderStageCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPipelineShaderStageCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPipelineShaderStageCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPipelineShaderStageCreateInfo where
@@ -18301,6 +18478,9 @@ instance VulkanMarshal VkComputePipelineCreateInfo where
         type StructFields VkComputePipelineCreateInfo =
              '["sType", "pNext", "flags", "stage", "layout", -- ' closing tick for hsc2hs
                "basePipelineHandle", "basePipelineIndex"]
+        type CUnionType VkComputePipelineCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkComputePipelineCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkComputePipelineCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkComputePipelineCreateInfo
          where
@@ -18723,6 +18903,9 @@ instance VulkanMarshalPrim VkVertexInputBindingDescription where
 instance VulkanMarshal VkVertexInputBindingDescription where
         type StructFields VkVertexInputBindingDescription =
              '["binding", "stride", "inputRate"] -- ' closing tick for hsc2hs
+        type CUnionType VkVertexInputBindingDescription = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkVertexInputBindingDescription = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkVertexInputBindingDescription = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkBinding VkVertexInputBindingDescription where
@@ -18942,6 +19125,9 @@ instance VulkanMarshalPrim VkVertexInputAttributeDescription where
 instance VulkanMarshal VkVertexInputAttributeDescription where
         type StructFields VkVertexInputAttributeDescription =
              '["location", "binding", "format", "offset"] -- ' closing tick for hsc2hs
+        type CUnionType VkVertexInputAttributeDescription = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkVertexInputAttributeDescription = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkVertexInputAttributeDescription = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkLocation VkVertexInputAttributeDescription where
@@ -19219,6 +19405,9 @@ instance VulkanMarshal VkPipelineVertexInputStateCreateInfo where
              '["sType", "pNext", "flags", "vertexBindingDescriptionCount", -- ' closing tick for hsc2hs
                "pVertexBindingDescriptions", "vertexAttributeDescriptionCount",
                "pVertexAttributeDescriptions"]
+        type CUnionType VkPipelineVertexInputStateCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPipelineVertexInputStateCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPipelineVertexInputStateCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPipelineVertexInputStateCreateInfo where
@@ -19705,6 +19894,9 @@ instance VulkanMarshalPrim VkPipelineInputAssemblyStateCreateInfo
 instance VulkanMarshal VkPipelineInputAssemblyStateCreateInfo where
         type StructFields VkPipelineInputAssemblyStateCreateInfo =
              '["sType", "pNext", "flags", "topology", "primitiveRestartEnable"] -- ' closing tick for hsc2hs
+        type CUnionType VkPipelineInputAssemblyStateCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPipelineInputAssemblyStateCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPipelineInputAssemblyStateCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPipelineInputAssemblyStateCreateInfo where
@@ -20057,6 +20249,9 @@ instance VulkanMarshalPrim VkPipelineTessellationStateCreateInfo
 instance VulkanMarshal VkPipelineTessellationStateCreateInfo where
         type StructFields VkPipelineTessellationStateCreateInfo =
              '["sType", "pNext", "flags", "patchControlPoints"] -- ' closing tick for hsc2hs
+        type CUnionType VkPipelineTessellationStateCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPipelineTessellationStateCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPipelineTessellationStateCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPipelineTessellationStateCreateInfo where
@@ -20348,6 +20543,9 @@ instance VulkanMarshal VkPipelineViewportStateCreateInfo where
         type StructFields VkPipelineViewportStateCreateInfo =
              '["sType", "pNext", "flags", "viewportCount", "pViewports", -- ' closing tick for hsc2hs
                "scissorCount", "pScissors"]
+        type CUnionType VkPipelineViewportStateCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPipelineViewportStateCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPipelineViewportStateCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPipelineViewportStateCreateInfo where
@@ -20807,6 +21005,9 @@ instance VulkanMarshal VkPipelineRasterizationStateCreateInfo where
                "rasterizerDiscardEnable", "polygonMode", "cullMode", "frontFace",
                "depthBiasEnable", "depthBiasConstantFactor", "depthBiasClamp",
                "depthBiasSlopeFactor", "lineWidth"]
+        type CUnionType VkPipelineRasterizationStateCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPipelineRasterizationStateCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPipelineRasterizationStateCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPipelineRasterizationStateCreateInfo where
@@ -21674,6 +21875,9 @@ instance VulkanMarshal VkPipelineMultisampleStateCreateInfo where
              '["sType", "pNext", "flags", "rasterizationSamples", -- ' closing tick for hsc2hs
                "sampleShadingEnable", "minSampleShading", "pSampleMask",
                "alphaToCoverageEnable", "alphaToOneEnable"]
+        type CUnionType VkPipelineMultisampleStateCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPipelineMultisampleStateCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPipelineMultisampleStateCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPipelineMultisampleStateCreateInfo where
@@ -22274,6 +22478,9 @@ instance VulkanMarshal VkPipelineColorBlendAttachmentState where
              '["blendEnable", "srcColorBlendFactor", "dstColorBlendFactor", -- ' closing tick for hsc2hs
                "colorBlendOp", "srcAlphaBlendFactor", "dstAlphaBlendFactor",
                "alphaBlendOp", "colorWriteMask"]
+        type CUnionType VkPipelineColorBlendAttachmentState = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPipelineColorBlendAttachmentState = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPipelineColorBlendAttachmentState = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkBlendEnable VkPipelineColorBlendAttachmentState where
@@ -22819,6 +23026,9 @@ instance VulkanMarshal VkPipelineColorBlendStateCreateInfo where
         type StructFields VkPipelineColorBlendStateCreateInfo =
              '["sType", "pNext", "flags", "logicOpEnable", "logicOp", -- ' closing tick for hsc2hs
                "attachmentCount", "pAttachments", "blendConstants"]
+        type CUnionType VkPipelineColorBlendStateCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPipelineColorBlendStateCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPipelineColorBlendStateCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPipelineColorBlendStateCreateInfo where
@@ -23399,6 +23609,9 @@ instance VulkanMarshalPrim VkPipelineDynamicStateCreateInfo where
 instance VulkanMarshal VkPipelineDynamicStateCreateInfo where
         type StructFields VkPipelineDynamicStateCreateInfo =
              '["sType", "pNext", "flags", "dynamicStateCount", "pDynamicStates"] -- ' closing tick for hsc2hs
+        type CUnionType VkPipelineDynamicStateCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPipelineDynamicStateCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPipelineDynamicStateCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPipelineDynamicStateCreateInfo where
@@ -23734,6 +23947,9 @@ instance VulkanMarshal VkStencilOpState where
         type StructFields VkStencilOpState =
              '["failOp", "passOp", "depthFailOp", "compareOp", "compareMask", -- ' closing tick for hsc2hs
                "writeMask", "reference"]
+        type CUnionType VkStencilOpState = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkStencilOpState = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkStencilOpState = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkFailOp VkStencilOpState where
         type VkFailOpMType VkStencilOpState = VkStencilOp
@@ -24138,6 +24354,9 @@ instance VulkanMarshal VkPipelineDepthStencilStateCreateInfo where
              '["sType", "pNext", "flags", "depthTestEnable", "depthWriteEnable", -- ' closing tick for hsc2hs
                "depthCompareOp", "depthBoundsTestEnable", "stencilTestEnable",
                "front", "back", "minDepthBounds", "maxDepthBounds"]
+        type CUnionType VkPipelineDepthStencilStateCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPipelineDepthStencilStateCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPipelineDepthStencilStateCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPipelineDepthStencilStateCreateInfo where
@@ -24930,6 +25149,9 @@ instance VulkanMarshal VkGraphicsPipelineCreateInfo where
                "pDepthStencilState", "pColorBlendState", "pDynamicState",
                "layout", "renderPass", "subpass", "basePipelineHandle",
                "basePipelineIndex"]
+        type CUnionType VkGraphicsPipelineCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkGraphicsPipelineCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkGraphicsPipelineCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkGraphicsPipelineCreateInfo where
@@ -26085,6 +26307,9 @@ instance VulkanMarshalPrim VkPipelineCacheCreateInfo where
 instance VulkanMarshal VkPipelineCacheCreateInfo where
         type StructFields VkPipelineCacheCreateInfo =
              '["sType", "pNext", "flags", "initialDataSize", "pInitialData"] -- ' closing tick for hsc2hs
+        type CUnionType VkPipelineCacheCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPipelineCacheCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPipelineCacheCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkPipelineCacheCreateInfo
          where
@@ -26394,6 +26619,9 @@ instance VulkanMarshalPrim VkPushConstantRange where
 instance VulkanMarshal VkPushConstantRange where
         type StructFields VkPushConstantRange =
              '["stageFlags", "offset", "size"] -- ' closing tick for hsc2hs
+        type CUnionType VkPushConstantRange = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPushConstantRange = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPushConstantRange = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkStageFlags VkPushConstantRange
          where
@@ -26599,6 +26827,9 @@ instance VulkanMarshal VkPipelineLayoutCreateInfo where
         type StructFields VkPipelineLayoutCreateInfo =
              '["sType", "pNext", "flags", "setLayoutCount", "pSetLayouts", -- ' closing tick for hsc2hs
                "pushConstantRangeCount", "pPushConstantRanges"]
+        type CUnionType VkPipelineLayoutCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPipelineLayoutCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPipelineLayoutCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkPipelineLayoutCreateInfo
          where
@@ -27043,6 +27274,9 @@ instance VulkanMarshal VkSamplerCreateInfo where
                "mipLodBias", "anisotropyEnable", "maxAnisotropy", "compareEnable",
                "compareOp", "minLod", "maxLod", "borderColor",
                "unnormalizedCoordinates"]
+        type CUnionType VkSamplerCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSamplerCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkSamplerCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkSamplerCreateInfo where
         type VkSTypeMType VkSamplerCreateInfo = VkStructureType
@@ -28038,6 +28272,9 @@ instance VulkanMarshalPrim VkCommandPoolCreateInfo where
 instance VulkanMarshal VkCommandPoolCreateInfo where
         type StructFields VkCommandPoolCreateInfo =
              '["sType", "pNext", "flags", "queueFamilyIndex"] -- ' closing tick for hsc2hs
+        type CUnionType VkCommandPoolCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkCommandPoolCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkCommandPoolCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkCommandPoolCreateInfo
          where
@@ -28296,6 +28533,9 @@ instance VulkanMarshalPrim VkCommandBufferAllocateInfo where
 instance VulkanMarshal VkCommandBufferAllocateInfo where
         type StructFields VkCommandBufferAllocateInfo =
              '["sType", "pNext", "commandPool", "level", "commandBufferCount"] -- ' closing tick for hsc2hs
+        type CUnionType VkCommandBufferAllocateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkCommandBufferAllocateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkCommandBufferAllocateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkCommandBufferAllocateInfo
          where
@@ -28619,6 +28859,9 @@ instance VulkanMarshal VkCommandBufferInheritanceInfo where
         type StructFields VkCommandBufferInheritanceInfo =
              '["sType", "pNext", "renderPass", "subpass", "framebuffer", -- ' closing tick for hsc2hs
                "occlusionQueryEnable", "queryFlags", "pipelineStatistics"]
+        type CUnionType VkCommandBufferInheritanceInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkCommandBufferInheritanceInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkCommandBufferInheritanceInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkCommandBufferInheritanceInfo where
@@ -29110,6 +29353,9 @@ instance VulkanMarshalPrim VkCommandBufferBeginInfo where
 instance VulkanMarshal VkCommandBufferBeginInfo where
         type StructFields VkCommandBufferBeginInfo =
              '["sType", "pNext", "flags", "pInheritanceInfo"] -- ' closing tick for hsc2hs
+        type CUnionType VkCommandBufferBeginInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkCommandBufferBeginInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkCommandBufferBeginInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkCommandBufferBeginInfo
          where
@@ -29370,6 +29616,9 @@ instance VulkanMarshal VkRenderPassBeginInfo where
         type StructFields VkRenderPassBeginInfo =
              '["sType", "pNext", "renderPass", "framebuffer", "renderArea", -- ' closing tick for hsc2hs
                "clearValueCount", "pClearValues"]
+        type CUnionType VkRenderPassBeginInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkRenderPassBeginInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkRenderPassBeginInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkRenderPassBeginInfo where
         type VkSTypeMType VkRenderPassBeginInfo = VkStructureType
@@ -29767,6 +30016,9 @@ instance VulkanMarshalPrim VkClearColorValue where
 instance VulkanMarshal VkClearColorValue where
         type StructFields VkClearColorValue =
              '["float32", "int32", "uint32"] -- ' closing tick for hsc2hs
+        type CUnionType VkClearColorValue = 'True -- ' closing tick for hsc2hs
+        type ReturnedOnly VkClearColorValue = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkClearColorValue = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkFloat32Array VkClearColorValue
          where
@@ -30104,6 +30356,9 @@ instance VulkanMarshalPrim VkClearDepthStencilValue where
 
 instance VulkanMarshal VkClearDepthStencilValue where
         type StructFields VkClearDepthStencilValue = '["depth", "stencil"] -- ' closing tick for hsc2hs
+        type CUnionType VkClearDepthStencilValue = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkClearDepthStencilValue = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkClearDepthStencilValue = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkDepth VkClearDepthStencilValue
          where
@@ -30257,6 +30512,9 @@ instance VulkanMarshalPrim VkClearValue where
 
 instance VulkanMarshal VkClearValue where
         type StructFields VkClearValue = '["color", "depthStencil"] -- ' closing tick for hsc2hs
+        type CUnionType VkClearValue = 'True -- ' closing tick for hsc2hs
+        type ReturnedOnly VkClearValue = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkClearValue = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkColor VkClearValue where
         type VkColorMType VkClearValue = VkClearColorValue
@@ -30404,6 +30662,9 @@ instance VulkanMarshalPrim VkClearAttachment where
 instance VulkanMarshal VkClearAttachment where
         type StructFields VkClearAttachment =
              '["aspectMask", "colorAttachment", "clearValue"] -- ' closing tick for hsc2hs
+        type CUnionType VkClearAttachment = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkClearAttachment = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkClearAttachment = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkAspectMask VkClearAttachment
          where
@@ -30611,6 +30872,9 @@ instance VulkanMarshal VkAttachmentDescription where
         type StructFields VkAttachmentDescription =
              '["flags", "format", "samples", "loadOp", "storeOp", -- ' closing tick for hsc2hs
                "stencilLoadOp", "stencilStoreOp", "initialLayout", "finalLayout"]
+        type CUnionType VkAttachmentDescription = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkAttachmentDescription = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkAttachmentDescription = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkFlags VkAttachmentDescription
          where
@@ -31119,6 +31383,9 @@ instance VulkanMarshalPrim VkAttachmentReference where
 
 instance VulkanMarshal VkAttachmentReference where
         type StructFields VkAttachmentReference = '["attachment", "layout"] -- ' closing tick for hsc2hs
+        type CUnionType VkAttachmentReference = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkAttachmentReference = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkAttachmentReference = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkAttachment VkAttachmentReference
          where
@@ -31279,6 +31546,9 @@ instance VulkanMarshal VkSubpassDescription where
                "pInputAttachments", "colorAttachmentCount", "pColorAttachments",
                "pResolveAttachments", "pDepthStencilAttachment",
                "preserveAttachmentCount", "pPreserveAttachments"]
+        type CUnionType VkSubpassDescription = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSubpassDescription = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkSubpassDescription = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkFlags VkSubpassDescription where
         type VkFlagsMType VkSubpassDescription = VkSubpassDescriptionFlags
@@ -31879,6 +32149,9 @@ instance VulkanMarshal VkSubpassDependency where
         type StructFields VkSubpassDependency =
              '["srcSubpass", "dstSubpass", "srcStageMask", "dstStageMask", -- ' closing tick for hsc2hs
                "srcAccessMask", "dstAccessMask", "dependencyFlags"]
+        type CUnionType VkSubpassDependency = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSubpassDependency = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkSubpassDependency = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSrcSubpass VkSubpassDependency
          where
@@ -32285,6 +32558,9 @@ instance VulkanMarshal VkRenderPassCreateInfo where
         type StructFields VkRenderPassCreateInfo =
              '["sType", "pNext", "flags", "attachmentCount", "pAttachments", -- ' closing tick for hsc2hs
                "subpassCount", "pSubpasses", "dependencyCount", "pDependencies"]
+        type CUnionType VkRenderPassCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkRenderPassCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkRenderPassCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkRenderPassCreateInfo
          where
@@ -32788,6 +33064,9 @@ instance VulkanMarshalPrim VkEventCreateInfo where
 
 instance VulkanMarshal VkEventCreateInfo where
         type StructFields VkEventCreateInfo = '["sType", "pNext", "flags"] -- ' closing tick for hsc2hs
+        type CUnionType VkEventCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkEventCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkEventCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkEventCreateInfo where
         type VkSTypeMType VkEventCreateInfo = VkStructureType
@@ -32981,6 +33260,9 @@ instance VulkanMarshalPrim VkFenceCreateInfo where
 
 instance VulkanMarshal VkFenceCreateInfo where
         type StructFields VkFenceCreateInfo = '["sType", "pNext", "flags"] -- ' closing tick for hsc2hs
+        type CUnionType VkFenceCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkFenceCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkFenceCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkFenceCreateInfo where
         type VkSTypeMType VkFenceCreateInfo = VkStructureType
@@ -33254,6 +33536,9 @@ instance VulkanMarshal VkPhysicalDeviceFeatures where
                "sparseResidency4Samples", "sparseResidency8Samples",
                "sparseResidency16Samples", "sparseResidencyAliased",
                "variableMultisampleRate", "inheritedQueries"]
+        type CUnionType VkPhysicalDeviceFeatures = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDeviceFeatures = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPhysicalDeviceFeatures = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkRobustBufferAccess VkPhysicalDeviceFeatures where
@@ -36759,6 +37044,9 @@ instance VulkanMarshal VkPhysicalDeviceSparseProperties where
                "residencyStandard2DMultisampleBlockShape",
                "residencyStandard3DBlockShape", "residencyAlignedMipSize",
                "residencyNonResidentStrict"]
+        type CUnionType VkPhysicalDeviceSparseProperties = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDeviceSparseProperties = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkPhysicalDeviceSparseProperties = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkResidencyStandard2DBlockShape VkPhysicalDeviceSparseProperties
@@ -37264,6 +37552,9 @@ instance VulkanMarshal VkPhysicalDeviceLimits where
                "lineWidthGranularity", "strictLines", "standardSampleLocations",
                "optimalBufferCopyOffsetAlignment",
                "optimalBufferCopyRowPitchAlignment", "nonCoherentAtomSize"]
+        type CUnionType VkPhysicalDeviceLimits = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDeviceLimits = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkPhysicalDeviceLimits = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkMaxImageDimension1D VkPhysicalDeviceLimits where
@@ -43831,6 +44122,9 @@ instance VulkanMarshalPrim VkSemaphoreCreateInfo where
 instance VulkanMarshal VkSemaphoreCreateInfo where
         type StructFields VkSemaphoreCreateInfo =
              '["sType", "pNext", "flags"] -- ' closing tick for hsc2hs
+        type CUnionType VkSemaphoreCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSemaphoreCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkSemaphoreCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkSemaphoreCreateInfo where
         type VkSTypeMType VkSemaphoreCreateInfo = VkStructureType
@@ -44031,6 +44325,9 @@ instance VulkanMarshal VkQueryPoolCreateInfo where
         type StructFields VkQueryPoolCreateInfo =
              '["sType", "pNext", "flags", "queryType", "queryCount", -- ' closing tick for hsc2hs
                "pipelineStatistics"]
+        type CUnionType VkQueryPoolCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkQueryPoolCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkQueryPoolCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkQueryPoolCreateInfo where
         type VkSTypeMType VkQueryPoolCreateInfo = VkStructureType
@@ -44387,6 +44684,9 @@ instance VulkanMarshal VkFramebufferCreateInfo where
         type StructFields VkFramebufferCreateInfo =
              '["sType", "pNext", "flags", "renderPass", "attachmentCount", -- ' closing tick for hsc2hs
                "pAttachments", "width", "height", "layers"]
+        type CUnionType VkFramebufferCreateInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkFramebufferCreateInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkFramebufferCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkFramebufferCreateInfo
          where
@@ -44891,6 +45191,9 @@ instance VulkanMarshal VkSubmitInfo where
              '["sType", "pNext", "waitSemaphoreCount", "pWaitSemaphores", -- ' closing tick for hsc2hs
                "pWaitDstStageMask", "commandBufferCount", "pCommandBuffers",
                "signalSemaphoreCount", "pSignalSemaphores"]
+        type CUnionType VkSubmitInfo = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSubmitInfo = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkSubmitInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkSubmitInfo where
         type VkSTypeMType VkSubmitInfo = VkStructureType
@@ -45389,6 +45692,9 @@ instance VulkanMarshal VkSurfaceCapabilitiesKHR where
                "minImageExtent", "maxImageExtent", "maxImageArrayLayers",
                "supportedTransforms", "currentTransform",
                "supportedCompositeAlpha", "supportedUsageFlags"]
+        type CUnionType VkSurfaceCapabilitiesKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSurfaceCapabilitiesKHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkSurfaceCapabilitiesKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkMinImageCount VkSurfaceCapabilitiesKHR where
@@ -45937,6 +46243,9 @@ instance VulkanMarshalPrim VkSurfaceFormatKHR where
 
 instance VulkanMarshal VkSurfaceFormatKHR where
         type StructFields VkSurfaceFormatKHR = '["format", "colorSpace"] -- ' closing tick for hsc2hs
+        type CUnionType VkSurfaceFormatKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSurfaceFormatKHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkSurfaceFormatKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkFormat VkSurfaceFormatKHR where
         type VkFormatMType VkSurfaceFormatKHR = VkFormat
@@ -46099,6 +46408,9 @@ instance VulkanMarshal VkSwapchainCreateInfoKHR where
                "imageArrayLayers", "imageUsage", "imageSharingMode",
                "queueFamilyIndexCount", "pQueueFamilyIndices", "preTransform",
                "compositeAlpha", "presentMode", "clipped", "oldSwapchain"]
+        type CUnionType VkSwapchainCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSwapchainCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkSwapchainCreateInfoKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkSwapchainCreateInfoKHR
          where
@@ -47138,6 +47450,9 @@ instance VulkanMarshal VkPresentInfoKHR where
         type StructFields VkPresentInfoKHR =
              '["sType", "pNext", "waitSemaphoreCount", "pWaitSemaphores", -- ' closing tick for hsc2hs
                "swapchainCount", "pSwapchains", "pImageIndices", "pResults"]
+        type CUnionType VkPresentInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPresentInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPresentInfoKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkPresentInfoKHR where
         type VkSTypeMType VkPresentInfoKHR = VkStructureType

@@ -36,19 +36,21 @@ module Graphics.Vulkan.Ext.VK_EXT_sampler_filter_minmax
         pattern VK_STRUCTURE_TYPE_SAMPLER_REDUCTION_MODE_CREATE_INFO_EXT,
         pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_MINMAX_BIT_EXT)
        where
-import           Foreign.C.String                 (CString)
-import           Foreign.Storable                 (Storable (..))
+import           Foreign.C.String                                           (CString)
+import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
-import           GHC.Ptr                          (Ptr (..))
-import           Graphics.Vulkan.Common           (VkBool32,
-                                                   VkFormatFeatureFlagBits (..),
-                                                   VkSamplerReductionModeEXT,
-                                                   VkStructureType,
-                                                   VkStructureType (..))
+import           GHC.Ptr                                                    (Ptr (..))
+import           Graphics.Vulkan.Base                                       (VkSamplerCreateInfo)
+import           Graphics.Vulkan.Common                                     (VkBool32,
+                                                                             VkFormatFeatureFlagBits (..),
+                                                                             VkSamplerReductionModeEXT,
+                                                                             VkStructureType,
+                                                                             VkStructureType (..))
+import           Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2 (VkPhysicalDeviceProperties2KHR)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+import           System.IO.Unsafe                                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSamplerReductionModeCreateInfoEXT {
 --   >     VkStructureType sType;
@@ -107,6 +109,10 @@ instance VulkanMarshalPrim VkSamplerReductionModeCreateInfoEXT
 instance VulkanMarshal VkSamplerReductionModeCreateInfoEXT where
         type StructFields VkSamplerReductionModeCreateInfoEXT =
              '["sType", "pNext", "reductionMode"] -- ' closing tick for hsc2hs
+        type CUnionType VkSamplerReductionModeCreateInfoEXT = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSamplerReductionModeCreateInfoEXT = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkSamplerReductionModeCreateInfoEXT =
+             '[VkSamplerCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkSamplerReductionModeCreateInfoEXT where
@@ -344,6 +350,12 @@ instance VulkanMarshal
              =
              '["sType", "pNext", "filterMinmaxSingleComponentFormats", -- ' closing tick for hsc2hs
                "filterMinmaxImageComponentMapping"]
+        type CUnionType VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT =
+             'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+             = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+             = '[VkPhysicalDeviceProperties2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT where

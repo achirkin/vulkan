@@ -40,7 +40,7 @@ import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..),
-                                                   VkRect2D,
+                                                   VkPresentInfoKHR, VkRect2D,
                                                    VkSwapchainCreateInfoKHR (..))
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
@@ -101,6 +101,9 @@ instance VulkanMarshalPrim VkDisplayPresentInfoKHR where
 instance VulkanMarshal VkDisplayPresentInfoKHR where
         type StructFields VkDisplayPresentInfoKHR =
              '["sType", "pNext", "srcRect", "dstRect", "persistent"] -- ' closing tick for hsc2hs
+        type CUnionType VkDisplayPresentInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDisplayPresentInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDisplayPresentInfoKHR = '[VkPresentInfoKHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkDisplayPresentInfoKHR
          where

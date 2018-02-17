@@ -76,13 +76,22 @@ import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.TypeLits                     (KnownNat, natVal') -- ' closing tick for hsc2hs
-import           Graphics.Vulkan.Base             (VkRect2D (..))
+import           Graphics.Vulkan.Base             (VkBindSparseInfo,
+                                                   VkCommandBufferBeginInfo,
+                                                   VkImageCreateInfo,
+                                                   VkMemoryAllocateInfo,
+                                                   VkPresentInfoKHR, VkRect2D,
+                                                   VkRect2D (..),
+                                                   VkRenderPassBeginInfo,
+                                                   VkSubmitInfo,
+                                                   VkSwapchainCreateInfoKHR)
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+import           Graphics.Vulkan.Ext.VK_KHR_bind_memory2
 -- | > typedef struct VkMemoryAllocateFlagsInfoKHX {
 --   >     VkStructureType sType;
 --   >     const void*                      pNext;
@@ -139,6 +148,10 @@ instance VulkanMarshalPrim VkMemoryAllocateFlagsInfoKHX where
 instance VulkanMarshal VkMemoryAllocateFlagsInfoKHX where
         type StructFields VkMemoryAllocateFlagsInfoKHX =
              '["sType", "pNext", "flags", "deviceMask"] -- ' closing tick for hsc2hs
+        type CUnionType VkMemoryAllocateFlagsInfoKHX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkMemoryAllocateFlagsInfoKHX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkMemoryAllocateFlagsInfoKHX =
+             '[VkMemoryAllocateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkMemoryAllocateFlagsInfoKHX where
@@ -405,6 +418,10 @@ instance VulkanMarshal VkDeviceGroupRenderPassBeginInfoKHX where
         type StructFields VkDeviceGroupRenderPassBeginInfoKHX =
              '["sType", "pNext", "deviceMask", "deviceRenderAreaCount", -- ' closing tick for hsc2hs
                "pDeviceRenderAreas"]
+        type CUnionType VkDeviceGroupRenderPassBeginInfoKHX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDeviceGroupRenderPassBeginInfoKHX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDeviceGroupRenderPassBeginInfoKHX =
+             '[VkRenderPassBeginInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkDeviceGroupRenderPassBeginInfoKHX where
@@ -754,6 +771,10 @@ instance VulkanMarshalPrim VkDeviceGroupCommandBufferBeginInfoKHX
 instance VulkanMarshal VkDeviceGroupCommandBufferBeginInfoKHX where
         type StructFields VkDeviceGroupCommandBufferBeginInfoKHX =
              '["sType", "pNext", "deviceMask"] -- ' closing tick for hsc2hs
+        type CUnionType VkDeviceGroupCommandBufferBeginInfoKHX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDeviceGroupCommandBufferBeginInfoKHX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDeviceGroupCommandBufferBeginInfoKHX =
+             '[VkCommandBufferBeginInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkDeviceGroupCommandBufferBeginInfoKHX where
@@ -990,6 +1011,9 @@ instance VulkanMarshal VkDeviceGroupSubmitInfoKHX where
                "pWaitSemaphoreDeviceIndices", "commandBufferCount",
                "pCommandBufferDeviceMasks", "signalSemaphoreCount",
                "pSignalSemaphoreDeviceIndices"]
+        type CUnionType VkDeviceGroupSubmitInfoKHX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDeviceGroupSubmitInfoKHX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDeviceGroupSubmitInfoKHX = '[VkSubmitInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkDeviceGroupSubmitInfoKHX
          where
@@ -1504,6 +1528,10 @@ instance VulkanMarshalPrim VkDeviceGroupBindSparseInfoKHX where
 instance VulkanMarshal VkDeviceGroupBindSparseInfoKHX where
         type StructFields VkDeviceGroupBindSparseInfoKHX =
              '["sType", "pNext", "resourceDeviceIndex", "memoryDeviceIndex"] -- ' closing tick for hsc2hs
+        type CUnionType VkDeviceGroupBindSparseInfoKHX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDeviceGroupBindSparseInfoKHX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDeviceGroupBindSparseInfoKHX =
+             '[VkBindSparseInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkDeviceGroupBindSparseInfoKHX where
@@ -1929,6 +1957,10 @@ instance VulkanMarshalPrim VkBindBufferMemoryDeviceGroupInfoKHX
 instance VulkanMarshal VkBindBufferMemoryDeviceGroupInfoKHX where
         type StructFields VkBindBufferMemoryDeviceGroupInfoKHX =
              '["sType", "pNext", "deviceIndexCount", "pDeviceIndices"] -- ' closing tick for hsc2hs
+        type CUnionType VkBindBufferMemoryDeviceGroupInfoKHX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkBindBufferMemoryDeviceGroupInfoKHX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkBindBufferMemoryDeviceGroupInfoKHX =
+             '[VkBindBufferMemoryInfoKHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkBindBufferMemoryDeviceGroupInfoKHX where
@@ -2223,6 +2255,10 @@ instance VulkanMarshal VkBindImageMemoryDeviceGroupInfoKHX where
         type StructFields VkBindImageMemoryDeviceGroupInfoKHX =
              '["sType", "pNext", "deviceIndexCount", "pDeviceIndices", -- ' closing tick for hsc2hs
                "SFRRectCount", "pSFRRects"]
+        type CUnionType VkBindImageMemoryDeviceGroupInfoKHX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkBindImageMemoryDeviceGroupInfoKHX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkBindImageMemoryDeviceGroupInfoKHX =
+             '[VkBindImageMemoryInfoKHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkBindImageMemoryDeviceGroupInfoKHX where
@@ -2645,6 +2681,9 @@ instance VulkanMarshalPrim VkDeviceGroupPresentCapabilitiesKHX
 instance VulkanMarshal VkDeviceGroupPresentCapabilitiesKHX where
         type StructFields VkDeviceGroupPresentCapabilitiesKHX =
              '["sType", "pNext", "presentMask", "modes"] -- ' closing tick for hsc2hs
+        type CUnionType VkDeviceGroupPresentCapabilitiesKHX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDeviceGroupPresentCapabilitiesKHX = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkDeviceGroupPresentCapabilitiesKHX = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkDeviceGroupPresentCapabilitiesKHX where
@@ -3008,6 +3047,10 @@ instance VulkanMarshalPrim VkImageSwapchainCreateInfoKHX where
 instance VulkanMarshal VkImageSwapchainCreateInfoKHX where
         type StructFields VkImageSwapchainCreateInfoKHX =
              '["sType", "pNext", "swapchain"] -- ' closing tick for hsc2hs
+        type CUnionType VkImageSwapchainCreateInfoKHX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkImageSwapchainCreateInfoKHX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkImageSwapchainCreateInfoKHX =
+             '[VkImageCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkImageSwapchainCreateInfoKHX where
@@ -3222,6 +3265,10 @@ instance VulkanMarshalPrim VkBindImageMemorySwapchainInfoKHX where
 instance VulkanMarshal VkBindImageMemorySwapchainInfoKHX where
         type StructFields VkBindImageMemorySwapchainInfoKHX =
              '["sType", "pNext", "swapchain", "imageIndex"] -- ' closing tick for hsc2hs
+        type CUnionType VkBindImageMemorySwapchainInfoKHX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkBindImageMemorySwapchainInfoKHX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkBindImageMemorySwapchainInfoKHX =
+             '[VkBindImageMemoryInfoKHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkBindImageMemorySwapchainInfoKHX where
@@ -3499,6 +3546,9 @@ instance VulkanMarshal VkAcquireNextImageInfoKHX where
         type StructFields VkAcquireNextImageInfoKHX =
              '["sType", "pNext", "swapchain", "timeout", "semaphore", "fence", -- ' closing tick for hsc2hs
                "deviceMask"]
+        type CUnionType VkAcquireNextImageInfoKHX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkAcquireNextImageInfoKHX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkAcquireNextImageInfoKHX = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkAcquireNextImageInfoKHX
          where
@@ -3903,6 +3953,10 @@ instance VulkanMarshalPrim VkDeviceGroupPresentInfoKHX where
 instance VulkanMarshal VkDeviceGroupPresentInfoKHX where
         type StructFields VkDeviceGroupPresentInfoKHX =
              '["sType", "pNext", "swapchainCount", "pDeviceMasks", "mode"] -- ' closing tick for hsc2hs
+        type CUnionType VkDeviceGroupPresentInfoKHX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDeviceGroupPresentInfoKHX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDeviceGroupPresentInfoKHX =
+             '[VkPresentInfoKHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkDeviceGroupPresentInfoKHX
          where
@@ -4219,6 +4273,10 @@ instance VulkanMarshalPrim VkDeviceGroupSwapchainCreateInfoKHX
 instance VulkanMarshal VkDeviceGroupSwapchainCreateInfoKHX where
         type StructFields VkDeviceGroupSwapchainCreateInfoKHX =
              '["sType", "pNext", "modes"] -- ' closing tick for hsc2hs
+        type CUnionType VkDeviceGroupSwapchainCreateInfoKHX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDeviceGroupSwapchainCreateInfoKHX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDeviceGroupSwapchainCreateInfoKHX =
+             '[VkSwapchainCreateInfoKHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkDeviceGroupSwapchainCreateInfoKHX where

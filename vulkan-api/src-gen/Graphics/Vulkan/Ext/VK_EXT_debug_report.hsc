@@ -38,7 +38,8 @@ import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..))
+import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..),
+                                                   VkInstanceCreateInfo)
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
@@ -103,6 +104,10 @@ instance VulkanMarshalPrim VkDebugReportCallbackCreateInfoEXT where
 instance VulkanMarshal VkDebugReportCallbackCreateInfoEXT where
         type StructFields VkDebugReportCallbackCreateInfoEXT =
              '["sType", "pNext", "flags", "pfnCallback", "pUserData"] -- ' closing tick for hsc2hs
+        type CUnionType VkDebugReportCallbackCreateInfoEXT = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDebugReportCallbackCreateInfoEXT = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDebugReportCallbackCreateInfoEXT =
+             '[VkInstanceCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkDebugReportCallbackCreateInfoEXT where

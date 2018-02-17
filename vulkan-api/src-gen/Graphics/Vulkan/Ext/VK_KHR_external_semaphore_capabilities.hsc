@@ -109,6 +109,9 @@ instance VulkanMarshal VkPhysicalDeviceExternalSemaphoreInfoKHR
          where
         type StructFields VkPhysicalDeviceExternalSemaphoreInfoKHR =
              '["sType", "pNext", "handleType"] -- ' closing tick for hsc2hs
+        type CUnionType VkPhysicalDeviceExternalSemaphoreInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDeviceExternalSemaphoreInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPhysicalDeviceExternalSemaphoreInfoKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceExternalSemaphoreInfoKHR where
@@ -345,6 +348,9 @@ instance VulkanMarshal VkExternalSemaphorePropertiesKHR where
         type StructFields VkExternalSemaphorePropertiesKHR =
              '["sType", "pNext", "exportFromImportedHandleTypes", -- ' closing tick for hsc2hs
                "compatibleHandleTypes", "externalSemaphoreFeatures"]
+        type CUnionType VkExternalSemaphorePropertiesKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkExternalSemaphorePropertiesKHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkExternalSemaphorePropertiesKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkExternalSemaphorePropertiesKHR where

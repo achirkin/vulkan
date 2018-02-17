@@ -39,6 +39,8 @@ import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
+import           Graphics.Vulkan.Base             (VkImageCreateInfo,
+                                                   VkMemoryAllocateInfo)
 import           Graphics.Vulkan.Common           (VkExternalMemoryHandleTypeFlagsNV,
                                                    VkStructureType,
                                                    VkStructureType (..))
@@ -103,6 +105,10 @@ instance VulkanMarshalPrim VkExternalMemoryImageCreateInfoNV where
 instance VulkanMarshal VkExternalMemoryImageCreateInfoNV where
         type StructFields VkExternalMemoryImageCreateInfoNV =
              '["sType", "pNext", "handleTypes"] -- ' closing tick for hsc2hs
+        type CUnionType VkExternalMemoryImageCreateInfoNV = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkExternalMemoryImageCreateInfoNV = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkExternalMemoryImageCreateInfoNV =
+             '[VkImageCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkExternalMemoryImageCreateInfoNV where
@@ -324,6 +330,10 @@ instance VulkanMarshalPrim VkExportMemoryAllocateInfoNV where
 instance VulkanMarshal VkExportMemoryAllocateInfoNV where
         type StructFields VkExportMemoryAllocateInfoNV =
              '["sType", "pNext", "handleTypes"] -- ' closing tick for hsc2hs
+        type CUnionType VkExportMemoryAllocateInfoNV = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkExportMemoryAllocateInfoNV = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkExportMemoryAllocateInfoNV =
+             '[VkMemoryAllocateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkExportMemoryAllocateInfoNV where

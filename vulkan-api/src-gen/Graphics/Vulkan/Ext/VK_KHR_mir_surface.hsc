@@ -102,6 +102,9 @@ instance VulkanMarshalPrim VkMirSurfaceCreateInfoKHR where
 instance VulkanMarshal VkMirSurfaceCreateInfoKHR where
         type StructFields VkMirSurfaceCreateInfoKHR =
              '["sType", "pNext", "flags", "connection", "mirSurface"] -- ' closing tick for hsc2hs
+        type CUnionType VkMirSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkMirSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkMirSurfaceCreateInfoKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkMirSurfaceCreateInfoKHR
          where

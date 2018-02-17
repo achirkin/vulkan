@@ -36,6 +36,9 @@ import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
+import           Graphics.Vulkan.Base             (VkBufferCreateInfo,
+                                                   VkImageCreateInfo,
+                                                   VkMemoryAllocateInfo)
 import           Graphics.Vulkan.Common           (VkBool32, VkBuffer, VkImage,
                                                    VkStructureType (..))
 import           Graphics.Vulkan.Marshal
@@ -101,6 +104,10 @@ instance VulkanMarshalPrim VkDedicatedAllocationImageCreateInfoNV
 instance VulkanMarshal VkDedicatedAllocationImageCreateInfoNV where
         type StructFields VkDedicatedAllocationImageCreateInfoNV =
              '["sType", "pNext", "dedicatedAllocation"] -- ' closing tick for hsc2hs
+        type CUnionType VkDedicatedAllocationImageCreateInfoNV = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDedicatedAllocationImageCreateInfoNV = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDedicatedAllocationImageCreateInfoNV =
+             '[VkImageCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkDedicatedAllocationImageCreateInfoNV where
@@ -339,6 +346,10 @@ instance VulkanMarshal VkDedicatedAllocationBufferCreateInfoNV
          where
         type StructFields VkDedicatedAllocationBufferCreateInfoNV =
              '["sType", "pNext", "dedicatedAllocation"] -- ' closing tick for hsc2hs
+        type CUnionType VkDedicatedAllocationBufferCreateInfoNV = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDedicatedAllocationBufferCreateInfoNV = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDedicatedAllocationBufferCreateInfoNV =
+             '[VkBufferCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkDedicatedAllocationBufferCreateInfoNV where
@@ -581,6 +592,11 @@ instance VulkanMarshal VkDedicatedAllocationMemoryAllocateInfoNV
          where
         type StructFields VkDedicatedAllocationMemoryAllocateInfoNV =
              '["sType", "pNext", "image", "buffer"] -- ' closing tick for hsc2hs
+        type CUnionType VkDedicatedAllocationMemoryAllocateInfoNV = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDedicatedAllocationMemoryAllocateInfoNV =
+             'False -- ' closing tick for hsc2hs
+        type StructExtends VkDedicatedAllocationMemoryAllocateInfoNV =
+             '[VkMemoryAllocateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkDedicatedAllocationMemoryAllocateInfoNV where

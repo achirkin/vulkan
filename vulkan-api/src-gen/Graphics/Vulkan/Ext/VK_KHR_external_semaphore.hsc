@@ -37,6 +37,7 @@ import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
+import           Graphics.Vulkan.Base             (VkSemaphoreCreateInfo)
 import           Graphics.Vulkan.Common           (VkExternalSemaphoreHandleTypeFlagsKHR,
                                                    VkStructureType,
                                                    VkStructureType (..))
@@ -100,6 +101,10 @@ instance VulkanMarshalPrim VkExportSemaphoreCreateInfoKHR where
 instance VulkanMarshal VkExportSemaphoreCreateInfoKHR where
         type StructFields VkExportSemaphoreCreateInfoKHR =
              '["sType", "pNext", "handleTypes"] -- ' closing tick for hsc2hs
+        type CUnionType VkExportSemaphoreCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkExportSemaphoreCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkExportSemaphoreCreateInfoKHR =
+             '[VkSemaphoreCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkExportSemaphoreCreateInfoKHR where

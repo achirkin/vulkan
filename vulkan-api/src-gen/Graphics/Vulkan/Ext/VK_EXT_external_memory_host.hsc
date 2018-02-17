@@ -41,15 +41,17 @@ module Graphics.Vulkan.Ext.VK_EXT_external_memory_host
         pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION_BIT_EXT,
         pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY_BIT_EXT)
        where
-import           Foreign.C.String                 (CString)
-import           Foreign.Storable                 (Storable (..))
+import           Foreign.C.String                                           (CString)
+import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
-import           GHC.Ptr                          (Ptr (..))
+import           GHC.Ptr                                                    (Ptr (..))
+import           Graphics.Vulkan.Base                                       (VkMemoryAllocateInfo)
 import           Graphics.Vulkan.Common
+import           Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2 (VkPhysicalDeviceProperties2KHR)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+import           System.IO.Unsafe                                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkImportMemoryHostPointerInfoEXT {
 --   >     VkStructureType sType;
@@ -108,6 +110,10 @@ instance VulkanMarshalPrim VkImportMemoryHostPointerInfoEXT where
 instance VulkanMarshal VkImportMemoryHostPointerInfoEXT where
         type StructFields VkImportMemoryHostPointerInfoEXT =
              '["sType", "pNext", "handleType", "pHostPointer"] -- ' closing tick for hsc2hs
+        type CUnionType VkImportMemoryHostPointerInfoEXT = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkImportMemoryHostPointerInfoEXT = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkImportMemoryHostPointerInfoEXT =
+             '[VkMemoryAllocateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkImportMemoryHostPointerInfoEXT where
@@ -385,6 +391,9 @@ instance VulkanMarshalPrim VkMemoryHostPointerPropertiesEXT where
 instance VulkanMarshal VkMemoryHostPointerPropertiesEXT where
         type StructFields VkMemoryHostPointerPropertiesEXT =
              '["sType", "pNext", "memoryTypeBits"] -- ' closing tick for hsc2hs
+        type CUnionType VkMemoryHostPointerPropertiesEXT = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkMemoryHostPointerPropertiesEXT = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkMemoryHostPointerPropertiesEXT = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkMemoryHostPointerPropertiesEXT where
@@ -617,6 +626,12 @@ instance VulkanMarshal
          where
         type StructFields VkPhysicalDeviceExternalMemoryHostPropertiesEXT =
              '["sType", "pNext", "minImportedHostPointerAlignment"] -- ' closing tick for hsc2hs
+        type CUnionType VkPhysicalDeviceExternalMemoryHostPropertiesEXT =
+             'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDeviceExternalMemoryHostPropertiesEXT =
+             'False -- ' closing tick for hsc2hs
+        type StructExtends VkPhysicalDeviceExternalMemoryHostPropertiesEXT
+             = '[VkPhysicalDeviceProperties2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceExternalMemoryHostPropertiesEXT where

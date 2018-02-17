@@ -45,17 +45,22 @@ module Graphics.Vulkan.Ext.VK_EXT_sample_locations
         pattern VK_STRUCTURE_TYPE_MULTISAMPLE_PROPERTIES_EXT,
         pattern VK_DYNAMIC_STATE_SAMPLE_LOCATIONS_EXT)
        where
-import           Foreign.C.String                 (CString)
-import           Foreign.Storable                 (Storable (..))
+import           Foreign.C.String                                           (CString)
+import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
-import           GHC.Ptr                          (Ptr (..))
-import           GHC.TypeLits                     (KnownNat, natVal') -- ' closing tick for hsc2hs
-import           Graphics.Vulkan.Base             (VkExtent2D)
+import           GHC.Ptr                                                    (Ptr (..))
+import           GHC.TypeLits                                               (KnownNat,
+                                                                             natVal') -- ' closing tick for hsc2hs
+import           Graphics.Vulkan.Base                                       (VkExtent2D,
+                                                                             VkPipelineMultisampleStateCreateInfo,
+                                                                             VkRenderPassBeginInfo)
 import           Graphics.Vulkan.Common
+import           Graphics.Vulkan.Core                                       (VkImageMemoryBarrier)
+import           Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2 (VkPhysicalDeviceProperties2KHR)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+import           System.IO.Unsafe                                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSampleLocationEXT {
 --   >     float                            x;
@@ -105,6 +110,9 @@ instance VulkanMarshalPrim VkSampleLocationEXT where
 
 instance VulkanMarshal VkSampleLocationEXT where
         type StructFields VkSampleLocationEXT = '["x", "y"] -- ' closing tick for hsc2hs
+        type CUnionType VkSampleLocationEXT = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSampleLocationEXT = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkSampleLocationEXT = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkX VkSampleLocationEXT where
         type VkXMType VkSampleLocationEXT = #{type float}
@@ -255,6 +263,10 @@ instance VulkanMarshal VkSampleLocationsInfoEXT where
              '["sType", "pNext", "sampleLocationsPerPixel", -- ' closing tick for hsc2hs
                "sampleLocationGridSize", "sampleLocationsCount",
                "pSampleLocations"]
+        type CUnionType VkSampleLocationsInfoEXT = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSampleLocationsInfoEXT = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkSampleLocationsInfoEXT =
+             '[VkImageMemoryBarrier] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkSampleLocationsInfoEXT
          where
@@ -634,6 +646,9 @@ instance VulkanMarshalPrim VkAttachmentSampleLocationsEXT where
 instance VulkanMarshal VkAttachmentSampleLocationsEXT where
         type StructFields VkAttachmentSampleLocationsEXT =
              '["attachmentIndex", "sampleLocationsInfo"] -- ' closing tick for hsc2hs
+        type CUnionType VkAttachmentSampleLocationsEXT = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkAttachmentSampleLocationsEXT = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkAttachmentSampleLocationsEXT = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkAttachmentIndex VkAttachmentSampleLocationsEXT where
@@ -805,6 +820,9 @@ instance VulkanMarshalPrim VkSubpassSampleLocationsEXT where
 instance VulkanMarshal VkSubpassSampleLocationsEXT where
         type StructFields VkSubpassSampleLocationsEXT =
              '["subpassIndex", "sampleLocationsInfo"] -- ' closing tick for hsc2hs
+        type CUnionType VkSubpassSampleLocationsEXT = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSubpassSampleLocationsEXT = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkSubpassSampleLocationsEXT = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSubpassIndex VkSubpassSampleLocationsEXT where
@@ -983,6 +1001,10 @@ instance VulkanMarshal VkRenderPassSampleLocationsBeginInfoEXT
              '["sType", "pNext", "attachmentInitialSampleLocationsCount", -- ' closing tick for hsc2hs
                "pAttachmentInitialSampleLocations",
                "postSubpassSampleLocationsCount", "pPostSubpassSampleLocations"]
+        type CUnionType VkRenderPassSampleLocationsBeginInfoEXT = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkRenderPassSampleLocationsBeginInfoEXT = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkRenderPassSampleLocationsBeginInfoEXT =
+             '[VkRenderPassBeginInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkRenderPassSampleLocationsBeginInfoEXT where
@@ -1422,6 +1444,12 @@ instance VulkanMarshal VkPipelineSampleLocationsStateCreateInfoEXT
          where
         type StructFields VkPipelineSampleLocationsStateCreateInfoEXT =
              '["sType", "pNext", "sampleLocationsEnable", "sampleLocationsInfo"] -- ' closing tick for hsc2hs
+        type CUnionType VkPipelineSampleLocationsStateCreateInfoEXT =
+             'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPipelineSampleLocationsStateCreateInfoEXT =
+             'False -- ' closing tick for hsc2hs
+        type StructExtends VkPipelineSampleLocationsStateCreateInfoEXT =
+             '[VkPipelineMultisampleStateCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPipelineSampleLocationsStateCreateInfoEXT where
@@ -1742,6 +1770,12 @@ instance VulkanMarshal VkPhysicalDeviceSampleLocationsPropertiesEXT
              '["sType", "pNext", "sampleLocationSampleCounts", -- ' closing tick for hsc2hs
                "maxSampleLocationGridSize", "sampleLocationCoordinateRange",
                "sampleLocationSubPixelBits", "variableSampleLocations"]
+        type CUnionType VkPhysicalDeviceSampleLocationsPropertiesEXT =
+             'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDeviceSampleLocationsPropertiesEXT =
+             'True -- ' closing tick for hsc2hs
+        type StructExtends VkPhysicalDeviceSampleLocationsPropertiesEXT =
+             '[VkPhysicalDeviceProperties2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceSampleLocationsPropertiesEXT where
@@ -2234,6 +2268,9 @@ instance VulkanMarshalPrim VkMultisamplePropertiesEXT where
 instance VulkanMarshal VkMultisamplePropertiesEXT where
         type StructFields VkMultisamplePropertiesEXT =
              '["sType", "pNext", "maxSampleLocationGridSize"] -- ' closing tick for hsc2hs
+        type CUnionType VkMultisamplePropertiesEXT = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkMultisamplePropertiesEXT = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkMultisamplePropertiesEXT = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkMultisamplePropertiesEXT
          where

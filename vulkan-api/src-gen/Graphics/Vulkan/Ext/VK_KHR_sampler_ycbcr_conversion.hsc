@@ -93,17 +93,25 @@ module Graphics.Vulkan.Ext.VK_KHR_sampler_ycbcr_conversion
         pattern VK_FORMAT_FEATURE_DISJOINT_BIT_KHR,
         pattern VK_FORMAT_FEATURE_COSITED_CHROMA_SAMPLES_BIT_KHR)
        where
-import           Foreign.C.String                 (CString)
-import           Foreign.Storable                 (Storable (..))
+import           Foreign.C.String                                           (CString)
+import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
-import           GHC.Ptr                          (Ptr (..))
-import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..),
-                                                   VkComponentMapping)
+import           GHC.Ptr                                                    (Ptr (..))
+import           Graphics.Vulkan.Base                                       (VkAllocationCallbacks (..),
+                                                                             VkComponentMapping,
+                                                                             VkDeviceCreateInfo,
+                                                                             VkImageViewCreateInfo,
+                                                                             VkSamplerCreateInfo)
 import           Graphics.Vulkan.Common
+import           Graphics.Vulkan.Ext.VK_KHR_get_memory_requirements2        (VkImageMemoryRequirementsInfo2KHR)
+import           Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2 (VkImageFormatProperties2KHR,
+                                                                             VkPhysicalDeviceFeatures2KHR)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+import           System.IO.Unsafe                                           (unsafeDupablePerformIO)
+
+import           Graphics.Vulkan.Ext.VK_KHR_bind_memory2
 
 -- | > typedef struct VkSamplerYcbcrConversionCreateInfoKHR {
 --   >     VkStructureType sType;
@@ -172,6 +180,9 @@ instance VulkanMarshal VkSamplerYcbcrConversionCreateInfoKHR where
              '["sType", "pNext", "format", "ycbcrModel", "ycbcrRange", -- ' closing tick for hsc2hs
                "components", "xChromaOffset", "yChromaOffset", "chromaFilter",
                "forceExplicitReconstruction"]
+        type CUnionType VkSamplerYcbcrConversionCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSamplerYcbcrConversionCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkSamplerYcbcrConversionCreateInfoKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkSamplerYcbcrConversionCreateInfoKHR where
@@ -820,6 +831,10 @@ instance VulkanMarshalPrim VkSamplerYcbcrConversionInfoKHR where
 instance VulkanMarshal VkSamplerYcbcrConversionInfoKHR where
         type StructFields VkSamplerYcbcrConversionInfoKHR =
              '["sType", "pNext", "conversion"] -- ' closing tick for hsc2hs
+        type CUnionType VkSamplerYcbcrConversionInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSamplerYcbcrConversionInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkSamplerYcbcrConversionInfoKHR =
+             '[VkSamplerCreateInfo, VkImageViewCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkSamplerYcbcrConversionInfoKHR where
@@ -1034,6 +1049,10 @@ instance VulkanMarshalPrim VkBindImagePlaneMemoryInfoKHR where
 instance VulkanMarshal VkBindImagePlaneMemoryInfoKHR where
         type StructFields VkBindImagePlaneMemoryInfoKHR =
              '["sType", "pNext", "planeAspect"] -- ' closing tick for hsc2hs
+        type CUnionType VkBindImagePlaneMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkBindImagePlaneMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkBindImagePlaneMemoryInfoKHR =
+             '[VkBindImageMemoryInfoKHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkBindImagePlaneMemoryInfoKHR where
@@ -1249,6 +1268,10 @@ instance VulkanMarshalPrim VkImagePlaneMemoryRequirementsInfoKHR
 instance VulkanMarshal VkImagePlaneMemoryRequirementsInfoKHR where
         type StructFields VkImagePlaneMemoryRequirementsInfoKHR =
              '["sType", "pNext", "planeAspect"] -- ' closing tick for hsc2hs
+        type CUnionType VkImagePlaneMemoryRequirementsInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkImagePlaneMemoryRequirementsInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkImagePlaneMemoryRequirementsInfoKHR =
+             '[VkImageMemoryRequirementsInfo2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkImagePlaneMemoryRequirementsInfoKHR where
@@ -1486,6 +1509,13 @@ instance VulkanMarshal
          where
         type StructFields VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
              = '["sType", "pNext", "samplerYcbcrConversion"] -- ' closing tick for hsc2hs
+        type CUnionType VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR =
+             'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
+             = 'False -- ' closing tick for hsc2hs
+        type StructExtends
+               VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
+             = '[VkPhysicalDeviceFeatures2KHR, VkDeviceCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR where
@@ -1743,6 +1773,12 @@ instance VulkanMarshal
          where
         type StructFields VkSamplerYcbcrConversionImageFormatPropertiesKHR
              = '["sType", "pNext", "combinedImageSamplerDescriptorCount"] -- ' closing tick for hsc2hs
+        type CUnionType VkSamplerYcbcrConversionImageFormatPropertiesKHR =
+             'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSamplerYcbcrConversionImageFormatPropertiesKHR
+             = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkSamplerYcbcrConversionImageFormatPropertiesKHR
+             = '[VkImageFormatProperties2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkSamplerYcbcrConversionImageFormatPropertiesKHR where

@@ -103,6 +103,9 @@ instance VulkanMarshalPrim VkAndroidSurfaceCreateInfoKHR where
 instance VulkanMarshal VkAndroidSurfaceCreateInfoKHR where
         type StructFields VkAndroidSurfaceCreateInfoKHR =
              '["sType", "pNext", "flags", "window"] -- ' closing tick for hsc2hs
+        type CUnionType VkAndroidSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkAndroidSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkAndroidSurfaceCreateInfoKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkAndroidSurfaceCreateInfoKHR where

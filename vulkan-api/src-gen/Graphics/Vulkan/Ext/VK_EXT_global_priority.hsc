@@ -33,6 +33,7 @@ import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
+import           Graphics.Vulkan.Base             (VkDeviceQueueCreateInfo)
 import           Graphics.Vulkan.Common           (VkQueueGlobalPriorityEXT,
                                                    VkResult (..),
                                                    VkStructureType,
@@ -101,6 +102,10 @@ instance VulkanMarshal VkDeviceQueueGlobalPriorityCreateInfoEXT
          where
         type StructFields VkDeviceQueueGlobalPriorityCreateInfoEXT =
              '["sType", "pNext", "globalPriority"] -- ' closing tick for hsc2hs
+        type CUnionType VkDeviceQueueGlobalPriorityCreateInfoEXT = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDeviceQueueGlobalPriorityCreateInfoEXT = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDeviceQueueGlobalPriorityCreateInfoEXT =
+             '[VkDeviceQueueCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkDeviceQueueGlobalPriorityCreateInfoEXT where

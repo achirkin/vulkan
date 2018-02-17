@@ -90,6 +90,9 @@ instance VulkanMarshalPrim VkNativeBufferANDROID where
 instance VulkanMarshal VkNativeBufferANDROID where
         type StructFields VkNativeBufferANDROID =
              '["sType", "pNext", "handle", "stride", "format", "usage"] -- ' closing tick for hsc2hs
+        type CUnionType VkNativeBufferANDROID = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkNativeBufferANDROID = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkNativeBufferANDROID = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkNativeBufferANDROID where
         type VkSTypeMType VkNativeBufferANDROID = VkStructureType

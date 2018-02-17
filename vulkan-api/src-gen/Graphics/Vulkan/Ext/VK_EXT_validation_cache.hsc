@@ -38,7 +38,8 @@ import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..))
+import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..),
+                                                   VkShaderModuleCreateInfo)
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
@@ -102,6 +103,9 @@ instance VulkanMarshalPrim VkValidationCacheCreateInfoEXT where
 instance VulkanMarshal VkValidationCacheCreateInfoEXT where
         type StructFields VkValidationCacheCreateInfoEXT =
              '["sType", "pNext", "flags", "initialDataSize", "pInitialData"] -- ' closing tick for hsc2hs
+        type CUnionType VkValidationCacheCreateInfoEXT = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkValidationCacheCreateInfoEXT = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkValidationCacheCreateInfoEXT = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkValidationCacheCreateInfoEXT where
@@ -427,6 +431,11 @@ instance VulkanMarshal VkShaderModuleValidationCacheCreateInfoEXT
          where
         type StructFields VkShaderModuleValidationCacheCreateInfoEXT =
              '["sType", "pNext", "validationCache"] -- ' closing tick for hsc2hs
+        type CUnionType VkShaderModuleValidationCacheCreateInfoEXT = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkShaderModuleValidationCacheCreateInfoEXT =
+             'False -- ' closing tick for hsc2hs
+        type StructExtends VkShaderModuleValidationCacheCreateInfoEXT =
+             '[VkShaderModuleCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkShaderModuleValidationCacheCreateInfoEXT where

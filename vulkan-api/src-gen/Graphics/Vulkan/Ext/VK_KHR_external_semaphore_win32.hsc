@@ -47,6 +47,8 @@ import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
+import           Graphics.Vulkan.Base             (VkSemaphoreCreateInfo,
+                                                   VkSubmitInfo)
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
@@ -115,6 +117,9 @@ instance VulkanMarshal VkImportSemaphoreWin32HandleInfoKHR where
         type StructFields VkImportSemaphoreWin32HandleInfoKHR =
              '["sType", "pNext", "semaphore", "flags", "handleType", "handle", -- ' closing tick for hsc2hs
                "name"]
+        type CUnionType VkImportSemaphoreWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkImportSemaphoreWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkImportSemaphoreWin32HandleInfoKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkImportSemaphoreWin32HandleInfoKHR where
@@ -556,6 +561,10 @@ instance VulkanMarshalPrim VkExportSemaphoreWin32HandleInfoKHR
 instance VulkanMarshal VkExportSemaphoreWin32HandleInfoKHR where
         type StructFields VkExportSemaphoreWin32HandleInfoKHR =
              '["sType", "pNext", "pAttributes", "dwAccess", "name"] -- ' closing tick for hsc2hs
+        type CUnionType VkExportSemaphoreWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkExportSemaphoreWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkExportSemaphoreWin32HandleInfoKHR =
+             '[VkSemaphoreCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkExportSemaphoreWin32HandleInfoKHR where
@@ -888,6 +897,9 @@ instance VulkanMarshal VkD3D12FenceSubmitInfoKHR where
              '["sType", "pNext", "waitSemaphoreValuesCount", -- ' closing tick for hsc2hs
                "pWaitSemaphoreValues", "signalSemaphoreValuesCount",
                "pSignalSemaphoreValues"]
+        type CUnionType VkD3D12FenceSubmitInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkD3D12FenceSubmitInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkD3D12FenceSubmitInfoKHR = '[VkSubmitInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkD3D12FenceSubmitInfoKHR
          where
@@ -1282,6 +1294,9 @@ instance VulkanMarshalPrim VkSemaphoreGetWin32HandleInfoKHR where
 instance VulkanMarshal VkSemaphoreGetWin32HandleInfoKHR where
         type StructFields VkSemaphoreGetWin32HandleInfoKHR =
              '["sType", "pNext", "semaphore", "handleType"] -- ' closing tick for hsc2hs
+        type CUnionType VkSemaphoreGetWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSemaphoreGetWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkSemaphoreGetWin32HandleInfoKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkSemaphoreGetWin32HandleInfoKHR where

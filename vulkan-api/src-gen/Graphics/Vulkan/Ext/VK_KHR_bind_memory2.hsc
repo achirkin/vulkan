@@ -96,6 +96,9 @@ instance VulkanMarshalPrim VkBindBufferMemoryInfoKHR where
 instance VulkanMarshal VkBindBufferMemoryInfoKHR where
         type StructFields VkBindBufferMemoryInfoKHR =
              '["sType", "pNext", "buffer", "memory", "memoryOffset"] -- ' closing tick for hsc2hs
+        type CUnionType VkBindBufferMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkBindBufferMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkBindBufferMemoryInfoKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkBindBufferMemoryInfoKHR
          where
@@ -403,6 +406,9 @@ instance VulkanMarshalPrim VkBindImageMemoryInfoKHR where
 instance VulkanMarshal VkBindImageMemoryInfoKHR where
         type StructFields VkBindImageMemoryInfoKHR =
              '["sType", "pNext", "image", "memory", "memoryOffset"] -- ' closing tick for hsc2hs
+        type CUnionType VkBindImageMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkBindImageMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkBindImageMemoryInfoKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkBindImageMemoryInfoKHR
          where

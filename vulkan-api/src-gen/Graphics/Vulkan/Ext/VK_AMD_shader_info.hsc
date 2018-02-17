@@ -97,6 +97,9 @@ instance VulkanMarshal VkShaderResourceUsageAMD where
         type StructFields VkShaderResourceUsageAMD =
              '["numUsedVgprs", "numUsedSgprs", "ldsSizePerLocalWorkGroup", -- ' closing tick for hsc2hs
                "ldsUsageSizeInBytes", "scratchMemUsageInBytes"]
+        type CUnionType VkShaderResourceUsageAMD = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkShaderResourceUsageAMD = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkShaderResourceUsageAMD = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkNumUsedVgprs VkShaderResourceUsageAMD where
@@ -404,6 +407,9 @@ instance VulkanMarshal VkShaderStatisticsInfoAMD where
              '["shaderStageMask", "resourceUsage", "numPhysicalVgprs", -- ' closing tick for hsc2hs
                "numPhysicalSgprs", "numAvailableVgprs", "numAvailableSgprs",
                "computeWorkGroupSize"]
+        type CUnionType VkShaderStatisticsInfoAMD = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkShaderStatisticsInfoAMD = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkShaderStatisticsInfoAMD = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkShaderStageMask VkShaderStatisticsInfoAMD where

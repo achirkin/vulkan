@@ -33,6 +33,7 @@ import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
+import           Graphics.Vulkan.Base             (VkPipelineViewportStateCreateInfo)
 import           Graphics.Vulkan.Common           (VkPipelineViewportSwizzleStateCreateFlagsNV,
                                                    VkStructureType,
                                                    VkStructureType (..),
@@ -93,6 +94,9 @@ instance VulkanMarshalPrim VkViewportSwizzleNV where
 
 instance VulkanMarshal VkViewportSwizzleNV where
         type StructFields VkViewportSwizzleNV = '["x", "y", "z", "w"] -- ' closing tick for hsc2hs
+        type CUnionType VkViewportSwizzleNV = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkViewportSwizzleNV = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkViewportSwizzleNV = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkX VkViewportSwizzleNV where
         type VkXMType VkViewportSwizzleNV = VkViewportCoordinateSwizzleNV
@@ -343,6 +347,11 @@ instance VulkanMarshal VkPipelineViewportSwizzleStateCreateInfoNV
          where
         type StructFields VkPipelineViewportSwizzleStateCreateInfoNV =
              '["sType", "pNext", "flags", "viewportCount", "pViewportSwizzles"] -- ' closing tick for hsc2hs
+        type CUnionType VkPipelineViewportSwizzleStateCreateInfoNV = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPipelineViewportSwizzleStateCreateInfoNV =
+             'False -- ' closing tick for hsc2hs
+        type StructExtends VkPipelineViewportSwizzleStateCreateInfoNV =
+             '[VkPipelineViewportStateCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPipelineViewportSwizzleStateCreateInfoNV where
