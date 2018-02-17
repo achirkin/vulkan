@@ -35,12 +35,12 @@ genApiConstants = do
   writeSection glvl "API Constants"
   vk <- ask
   pushSecLvl . const $ mapM_ genEnums
-    (unInorder <$> Map.lookup Nothing (globEnums vk))
+    (Map.lookup Nothing (globEnums vk))
 
 
 -- | Lookup an enum in vk.xml and generate code for it
 genEnum :: Monad m => VkType -> ModuleWriter m ()
-genEnum t = ask >>= \vk -> case unInorder <$> Map.lookup (Just tname) (globEnums vk) of
+genEnum t = ask >>= \vk -> case Map.lookup (Just tname) (globEnums vk) of
       Nothing -> genAlias t
       Just e  -> genEnums e
   where
