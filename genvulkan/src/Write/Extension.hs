@@ -28,13 +28,13 @@ genExtension :: Monad m => VkExtension -> ModuleWriter m (ClassDeclarations, May
 genExtension (VkExtension VkExtAttrs{..} ereqs) = do
     curlvl <- getCurrentSecLvl
     vkXml <- ask
-    let VkFeature {..} = unInorder $ globFeature vkXml
+    let VkFeature {..} = globFeature vkXml
         tps = Map.fromList
                . map (\t -> ((Ts.name :: VkType -> VkTypeName) t, t))
-               . items . types . unInorder $ globTypes vkXml
+               . items . types $ globTypes vkXml
         cmds = Map.fromList
                . map (\c -> ((Cs.name :: VkCommand -> VkCommandName) c, c))
-               . commands . unInorder $ globCommands vkXml
+               . commands $ globCommands vkXml
     writeSection curlvl $ "Vulkan extension: @" <> unVkExtensionName extName <> "@"
        <:> ("supported: @" <> extSupported <> "@")
        <:> maybe mempty (\s -> "contact: @" <> s <> "@") extContact

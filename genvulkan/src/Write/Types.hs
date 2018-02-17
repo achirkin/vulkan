@@ -45,7 +45,7 @@ genBaseTypes' = do
     writeSection glvl "Types and enumerations"
     pushSecLvl $ \curlvl ->
       foldSectionsWithComments (fItem curlvl) fLast
-                               (types . unInorder $ globTypes vkXml)
+                               (types $ globTypes vkXml)
         where
           fItem curlvl cs t = do
             oldcat <- lift State.get
@@ -85,14 +85,14 @@ genBaseStructs = do
     let featureTypes = Set.fromList
                      . join
                      . map requireTypes
-                     . reqList . unInorder $ globFeature vkXml
+                     . reqList $ globFeature vkXml
         extTypes = Set.fromList
-                      $ extensions (unInorder $ globExtensions vkXml)
+                      $ extensions (globExtensions vkXml)
                           >>= extRequires >>= requireTypes
         excludedTypes = Set.union featureTypes extTypes
 
     fmap mconcat
-      $ forM (items . types . unInorder $ globTypes vkXml) $ \t ->
+      $ forM (items . types $ globTypes vkXml) $ \t ->
         if (name :: VkType -> VkTypeName) t `Set.member` excludedTypes
         then pure mempty
         else case vkTypeCat t of

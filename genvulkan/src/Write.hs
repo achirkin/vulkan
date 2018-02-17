@@ -41,7 +41,7 @@ import           Write.Types.Struct
 
 generateVkSource :: Path b Dir
                  -> Path c File
-                 -> VkXml ()
+                 -> VkXml
                  -> IO ()
 generateVkSource outputDir outCabalFile vkXml = do
 
@@ -137,7 +137,7 @@ generateVkSource outputDir outCabalFile vkXml = do
   (_exportedNamesExts, classDeclsExts, eModules)
     <- aggregateExts exportedNamesCore
                   ( L.sortOn (extNumber . attributes)
-                  . extensions . unInorder . globExtensions $ vkXml)
+                  . extensions . globExtensions $ vkXml)
                   $ \gn ext -> do
     let eName = T.unpack . unVkExtensionName . extName $ attributes ext
         modName = "Graphics.Vulkan.Ext." <> eName

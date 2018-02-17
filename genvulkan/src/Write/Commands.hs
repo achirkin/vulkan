@@ -31,13 +31,13 @@ genBaseCommands = do
     let featureComms = Set.fromList
                      . join
                      . map requireComms
-                     . reqList . unInorder $ globFeature vkXml
+                     . reqList  $ globFeature vkXml
         extComms = Set.fromList
-                     $ extensions (unInorder $ globExtensions vkXml)
+                     $ extensions (globExtensions vkXml)
                        >>= extRequires >>= requireComms
         excludedComms = Set.union featureComms extComms
 
-    forM_ (commands . unInorder $ globCommands vkXml) $ \c ->
+    forM_ (commands $ globCommands vkXml) $ \c ->
       if (name :: VkCommand -> VkCommandName) c `Set.member` excludedComms
       then pure ()
       else genCommand c

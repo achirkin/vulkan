@@ -202,14 +202,14 @@ data ModuleWriting
 
 newtype ModuleWriter m a
   = ModuleWriter
-  { unModuleWriter :: RWST (VkXml ()) () ModuleWriting m a
+  { unModuleWriter :: RWST VkXml () ModuleWriting m a
   } deriving (Functor, Applicative, Monad, MonadFix, MonadFail, MonadIO
-             , Alternative, MonadPlus, MonadReader (VkXml ())
+             , Alternative, MonadPlus, MonadReader VkXml
              , MFunctor, MonadTrans)
 
 
 runModuleWriter :: Functor m
-                => VkXml ()
+                => VkXml
                 -> String -- ^ module name
                 -> GlobalNames
                 -> ModuleWriter m a -> m (a, ModuleWriting)
@@ -592,6 +592,6 @@ vkRegistryLink :: Monad m
 vkRegistryLink tname = do
     vkXml <- ask
     pure $ "<https://www.khronos.org/registry/vulkan/specs/"
-        <> Feature.number (unInorder $ globFeature vkXml)
+        <> Feature.number (globFeature vkXml)
         <> "/man/html/" <> tname <> ".html "
         <> tname <> " registry at www.khronos.org>"

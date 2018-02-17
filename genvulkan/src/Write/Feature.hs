@@ -31,13 +31,13 @@ genFeature :: Monad m => ModuleWriter m ClassDeclarations
 genFeature = do
     curlvl <- getCurrentSecLvl
     vkXml <- ask
-    let VkFeature {..} = unInorder $ globFeature vkXml
+    let VkFeature {..} = globFeature vkXml
         tps = Map.fromList
                . map (\t -> ((Ts.name :: VkType -> VkTypeName) t, t))
-               . items . types . unInorder $ globTypes vkXml
+               . items . types $ globTypes vkXml
         cmds = Map.fromList
                . map (\c -> ((Cs.name :: VkCommand -> VkCommandName) c, c))
-               . commands . unInorder $ globCommands vkXml
+               . commands $ globCommands vkXml
         -- ens = Map.fromList
         --     . map (\e -> (_vkEnumName e, e))
         --     $ Map.elems (globEnums vkXml) >>= items . _vkEnumsMembers . unInorder
