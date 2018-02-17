@@ -35,17 +35,20 @@ module Graphics.Vulkan.Ext.VK_EXT_conservative_rasterization
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_CONSERVATIVE_RASTERIZATION_PROPERTIES_EXT,
         pattern VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_CONSERVATIVE_STATE_CREATE_INFO_EXT)
        where
-import           Foreign.C.String                 (CString)
-import           Foreign.Storable                 (Storable (..))
+import           Foreign.C.String                                           (CString)
+import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
-import           GHC.Ptr                          (Ptr (..))
-import           Graphics.Vulkan.Common           (VkBool32, VkConservativeRasterizationModeEXT,
-                                                   VkPipelineRasterizationConservativeStateCreateFlagsEXT,
-                                                   VkStructureType (..))
+import           GHC.Ptr                                                    (Ptr (..))
+import           Graphics.Vulkan.Base                                       (VkPipelineRasterizationStateCreateInfo)
+import           Graphics.Vulkan.Common                                     (VkBool32,
+                                                                             VkConservativeRasterizationModeEXT,
+                                                                             VkPipelineRasterizationConservativeStateCreateFlagsEXT,
+                                                                             VkStructureType (..))
+import           Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2 (VkPhysicalDeviceProperties2KHR)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+import           System.IO.Unsafe                                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDeviceConservativeRasterizationPropertiesEXT {
 --   >     VkStructureType sType;
@@ -132,6 +135,15 @@ instance VulkanMarshal
                "degenerateTrianglesRasterized", "degenerateLinesRasterized",
                "fullyCoveredFragmentShaderInputVariable",
                "conservativeRasterizationPostDepthCoverage"]
+        type CUnionType
+               VkPhysicalDeviceConservativeRasterizationPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly
+               VkPhysicalDeviceConservativeRasterizationPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
+        type StructExtends
+               VkPhysicalDeviceConservativeRasterizationPropertiesEXT
+             = '[VkPhysicalDeviceProperties2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceConservativeRasterizationPropertiesEXT
@@ -954,6 +966,15 @@ instance VulkanMarshal
              =
              '["sType", "pNext", "flags", "conservativeRasterizationMode", -- ' closing tick for hsc2hs
                "extraPrimitiveOverestimationSize"]
+        type CUnionType
+               VkPipelineRasterizationConservativeStateCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly
+               VkPipelineRasterizationConservativeStateCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
+        type StructExtends
+               VkPipelineRasterizationConservativeStateCreateInfoEXT
+             = '[VkPipelineRasterizationStateCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPipelineRasterizationConservativeStateCreateInfoEXT

@@ -39,6 +39,7 @@ import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
+import           Graphics.Vulkan.Base             (VkSubmitInfo)
 import           Graphics.Vulkan.Common           (VkDeviceMemory,
                                                    VkStructureType (..), Word32)
 import           Graphics.Vulkan.Marshal
@@ -112,6 +113,10 @@ instance VulkanMarshal VkWin32KeyedMutexAcquireReleaseInfoNV where
              '["sType", "pNext", "acquireCount", "pAcquireSyncs", -- ' closing tick for hsc2hs
                "pAcquireKeys", "pAcquireTimeoutMilliseconds", "releaseCount",
                "pReleaseSyncs", "pReleaseKeys"]
+        type CUnionType VkWin32KeyedMutexAcquireReleaseInfoNV = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkWin32KeyedMutexAcquireReleaseInfoNV = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkWin32KeyedMutexAcquireReleaseInfoNV =
+             '[VkSubmitInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkWin32KeyedMutexAcquireReleaseInfoNV where

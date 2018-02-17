@@ -32,6 +32,7 @@ import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
+import           Graphics.Vulkan.Base             (VkPipelineRasterizationStateCreateInfo)
 import           Graphics.Vulkan.Common           (VkRasterizationOrderAMD,
                                                    VkStructureType (..))
 import           Graphics.Vulkan.Marshal
@@ -104,6 +105,13 @@ instance VulkanMarshal
          where
         type StructFields VkPipelineRasterizationStateRasterizationOrderAMD
              = '["sType", "pNext", "rasterizationOrder"] -- ' closing tick for hsc2hs
+        type CUnionType VkPipelineRasterizationStateRasterizationOrderAMD =
+             'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPipelineRasterizationStateRasterizationOrderAMD
+             = 'False -- ' closing tick for hsc2hs
+        type StructExtends
+               VkPipelineRasterizationStateRasterizationOrderAMD
+             = '[VkPipelineRasterizationStateCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPipelineRasterizationStateRasterizationOrderAMD where

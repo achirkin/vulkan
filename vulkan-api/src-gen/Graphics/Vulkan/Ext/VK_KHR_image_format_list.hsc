@@ -32,6 +32,7 @@ import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
+import           Graphics.Vulkan.Base             (VkImageCreateInfo)
 import           Graphics.Vulkan.Common           (VkFormat,
                                                    VkStructureType (..), Word32)
 import           Graphics.Vulkan.Marshal
@@ -95,6 +96,10 @@ instance VulkanMarshalPrim VkImageFormatListCreateInfoKHR where
 instance VulkanMarshal VkImageFormatListCreateInfoKHR where
         type StructFields VkImageFormatListCreateInfoKHR =
              '["sType", "pNext", "viewFormatCount", "pViewFormats"] -- ' closing tick for hsc2hs
+        type CUnionType VkImageFormatListCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkImageFormatListCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkImageFormatListCreateInfoKHR =
+             '[VkImageCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkImageFormatListCreateInfoKHR where

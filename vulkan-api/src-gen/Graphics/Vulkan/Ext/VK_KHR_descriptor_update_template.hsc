@@ -107,6 +107,9 @@ instance VulkanMarshal VkDescriptorUpdateTemplateEntryKHR where
         type StructFields VkDescriptorUpdateTemplateEntryKHR =
              '["dstBinding", "dstArrayElement", "descriptorCount", -- ' closing tick for hsc2hs
                "descriptorType", "offset", "stride"]
+        type CUnionType VkDescriptorUpdateTemplateEntryKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDescriptorUpdateTemplateEntryKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDescriptorUpdateTemplateEntryKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkDstBinding VkDescriptorUpdateTemplateEntryKHR where
@@ -519,6 +522,9 @@ instance VulkanMarshal VkDescriptorUpdateTemplateCreateInfoKHR
              '["sType", "pNext", "flags", "descriptorUpdateEntryCount", -- ' closing tick for hsc2hs
                "pDescriptorUpdateEntries", "templateType", "descriptorSetLayout",
                "pipelineBindPoint", "pipelineLayout", "set"]
+        type CUnionType VkDescriptorUpdateTemplateCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDescriptorUpdateTemplateCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDescriptorUpdateTemplateCreateInfoKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkDescriptorUpdateTemplateCreateInfoKHR where

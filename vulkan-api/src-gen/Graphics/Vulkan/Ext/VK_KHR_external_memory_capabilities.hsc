@@ -48,16 +48,20 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_capabilities
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ID_PROPERTIES_KHR,
         pattern VK_LUID_SIZE_KHR, VK_LUID_SIZE_KHR)
        where
-import           Foreign.C.String                 (CString)
-import           Foreign.Storable                 (Storable (..))
+import           Foreign.C.String                                           (CString)
+import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
-import           GHC.Ptr                          (Ptr (..))
-import           GHC.TypeLits                     (KnownNat, natVal') -- ' closing tick for hsc2hs
+import           GHC.Ptr                                                    (Ptr (..))
+import           GHC.TypeLits                                               (KnownNat,
+                                                                             natVal') -- ' closing tick for hsc2hs
 import           Graphics.Vulkan.Common
+import           Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2 (VkImageFormatProperties2KHR,
+                                                                             VkPhysicalDeviceImageFormatInfo2KHR,
+                                                                             VkPhysicalDeviceProperties2KHR)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+import           System.IO.Unsafe                                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkExternalMemoryPropertiesKHR {
 --   >     VkExternalMemoryFeatureFlagsKHR  externalMemoryFeatures;
@@ -115,6 +119,9 @@ instance VulkanMarshal VkExternalMemoryPropertiesKHR where
         type StructFields VkExternalMemoryPropertiesKHR =
              '["externalMemoryFeatures", "exportFromImportedHandleTypes", -- ' closing tick for hsc2hs
                "compatibleHandleTypes"]
+        type CUnionType VkExternalMemoryPropertiesKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkExternalMemoryPropertiesKHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkExternalMemoryPropertiesKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkExternalMemoryFeatures VkExternalMemoryPropertiesKHR where
@@ -348,6 +355,11 @@ instance VulkanMarshal VkPhysicalDeviceExternalImageFormatInfoKHR
          where
         type StructFields VkPhysicalDeviceExternalImageFormatInfoKHR =
              '["sType", "pNext", "handleType"] -- ' closing tick for hsc2hs
+        type CUnionType VkPhysicalDeviceExternalImageFormatInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDeviceExternalImageFormatInfoKHR =
+             'False -- ' closing tick for hsc2hs
+        type StructExtends VkPhysicalDeviceExternalImageFormatInfoKHR =
+             '[VkPhysicalDeviceImageFormatInfo2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceExternalImageFormatInfoKHR where
@@ -585,6 +597,10 @@ instance VulkanMarshalPrim VkExternalImageFormatPropertiesKHR where
 instance VulkanMarshal VkExternalImageFormatPropertiesKHR where
         type StructFields VkExternalImageFormatPropertiesKHR =
              '["sType", "pNext", "externalMemoryProperties"] -- ' closing tick for hsc2hs
+        type CUnionType VkExternalImageFormatPropertiesKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkExternalImageFormatPropertiesKHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkExternalImageFormatPropertiesKHR =
+             '[VkImageFormatProperties2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkExternalImageFormatPropertiesKHR where
@@ -804,6 +820,9 @@ instance VulkanMarshalPrim VkPhysicalDeviceExternalBufferInfoKHR
 instance VulkanMarshal VkPhysicalDeviceExternalBufferInfoKHR where
         type StructFields VkPhysicalDeviceExternalBufferInfoKHR =
              '["sType", "pNext", "flags", "usage", "handleType"] -- ' closing tick for hsc2hs
+        type CUnionType VkPhysicalDeviceExternalBufferInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDeviceExternalBufferInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPhysicalDeviceExternalBufferInfoKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceExternalBufferInfoKHR where
@@ -1140,6 +1159,9 @@ instance VulkanMarshalPrim VkExternalBufferPropertiesKHR where
 instance VulkanMarshal VkExternalBufferPropertiesKHR where
         type StructFields VkExternalBufferPropertiesKHR =
              '["sType", "pNext", "externalMemoryProperties"] -- ' closing tick for hsc2hs
+        type CUnionType VkExternalBufferPropertiesKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkExternalBufferPropertiesKHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkExternalBufferPropertiesKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkExternalBufferPropertiesKHR where
@@ -1350,6 +1372,10 @@ instance VulkanMarshal VkPhysicalDeviceIDPropertiesKHR where
         type StructFields VkPhysicalDeviceIDPropertiesKHR =
              '["sType", "pNext", "deviceUUID", "driverUUID", "deviceLUID", -- ' closing tick for hsc2hs
                "deviceNodeMask", "deviceLUIDValid"]
+        type CUnionType VkPhysicalDeviceIDPropertiesKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDeviceIDPropertiesKHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkPhysicalDeviceIDPropertiesKHR =
+             '[VkPhysicalDeviceProperties2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceIDPropertiesKHR where

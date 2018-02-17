@@ -125,6 +125,9 @@ instance VulkanMarshalPrim VkDeviceGeneratedCommandsFeaturesNVX
 instance VulkanMarshal VkDeviceGeneratedCommandsFeaturesNVX where
         type StructFields VkDeviceGeneratedCommandsFeaturesNVX =
              '["sType", "pNext", "computeBindingPointSupport"] -- ' closing tick for hsc2hs
+        type CUnionType VkDeviceGeneratedCommandsFeaturesNVX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDeviceGeneratedCommandsFeaturesNVX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDeviceGeneratedCommandsFeaturesNVX = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkDeviceGeneratedCommandsFeaturesNVX where
@@ -364,6 +367,9 @@ instance VulkanMarshal VkDeviceGeneratedCommandsLimitsNVX where
                "maxObjectEntryCounts", "minSequenceCountBufferOffsetAlignment",
                "minSequenceIndexBufferOffsetAlignment",
                "minCommandsTokenBufferOffsetAlignment"]
+        type CUnionType VkDeviceGeneratedCommandsLimitsNVX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDeviceGeneratedCommandsLimitsNVX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDeviceGeneratedCommandsLimitsNVX = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkDeviceGeneratedCommandsLimitsNVX where
@@ -857,6 +863,9 @@ instance VulkanMarshalPrim VkIndirectCommandsTokenNVX where
 instance VulkanMarshal VkIndirectCommandsTokenNVX where
         type StructFields VkIndirectCommandsTokenNVX =
              '["tokenType", "buffer", "offset"] -- ' closing tick for hsc2hs
+        type CUnionType VkIndirectCommandsTokenNVX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkIndirectCommandsTokenNVX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkIndirectCommandsTokenNVX = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkTokenType VkIndirectCommandsTokenNVX where
@@ -1066,6 +1075,9 @@ instance VulkanMarshalPrim VkIndirectCommandsLayoutTokenNVX where
 instance VulkanMarshal VkIndirectCommandsLayoutTokenNVX where
         type StructFields VkIndirectCommandsLayoutTokenNVX =
              '["tokenType", "bindingUnit", "dynamicCount", "divisor"] -- ' closing tick for hsc2hs
+        type CUnionType VkIndirectCommandsLayoutTokenNVX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkIndirectCommandsLayoutTokenNVX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkIndirectCommandsLayoutTokenNVX = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkTokenType VkIndirectCommandsLayoutTokenNVX where
@@ -1348,6 +1360,9 @@ instance VulkanMarshal VkIndirectCommandsLayoutCreateInfoNVX where
         type StructFields VkIndirectCommandsLayoutCreateInfoNVX =
              '["sType", "pNext", "pipelineBindPoint", "flags", "tokenCount", -- ' closing tick for hsc2hs
                "pTokens"]
+        type CUnionType VkIndirectCommandsLayoutCreateInfoNVX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkIndirectCommandsLayoutCreateInfoNVX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkIndirectCommandsLayoutCreateInfoNVX = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkIndirectCommandsLayoutCreateInfoNVX where
@@ -1758,6 +1773,9 @@ instance VulkanMarshal VkCmdProcessCommandsInfoNVX where
                "maxSequencesCount", "targetCommandBuffer", "sequencesCountBuffer",
                "sequencesCountOffset", "sequencesIndexBuffer",
                "sequencesIndexOffset"]
+        type CUnionType VkCmdProcessCommandsInfoNVX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkCmdProcessCommandsInfoNVX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkCmdProcessCommandsInfoNVX = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkCmdProcessCommandsInfoNVX
          where
@@ -2518,6 +2536,9 @@ instance VulkanMarshal VkCmdReserveSpaceForCommandsInfoNVX where
         type StructFields VkCmdReserveSpaceForCommandsInfoNVX =
              '["sType", "pNext", "objectTable", "indirectCommandsLayout", -- ' closing tick for hsc2hs
                "maxSequencesCount"]
+        type CUnionType VkCmdReserveSpaceForCommandsInfoNVX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkCmdReserveSpaceForCommandsInfoNVX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkCmdReserveSpaceForCommandsInfoNVX = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkCmdReserveSpaceForCommandsInfoNVX where
@@ -2878,6 +2899,9 @@ instance VulkanMarshal VkObjectTableCreateInfoNVX where
                "maxUniformBuffersPerDescriptor", "maxStorageBuffersPerDescriptor",
                "maxStorageImagesPerDescriptor", "maxSampledImagesPerDescriptor",
                "maxPipelineLayouts"]
+        type CUnionType VkObjectTableCreateInfoNVX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkObjectTableCreateInfoNVX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkObjectTableCreateInfoNVX = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkObjectTableCreateInfoNVX
          where
@@ -3579,6 +3603,9 @@ instance VulkanMarshalPrim VkObjectTableEntryNVX where
 
 instance VulkanMarshal VkObjectTableEntryNVX where
         type StructFields VkObjectTableEntryNVX = '["type", "flags"] -- ' closing tick for hsc2hs
+        type CUnionType VkObjectTableEntryNVX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkObjectTableEntryNVX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkObjectTableEntryNVX = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkType VkObjectTableEntryNVX where
         type VkTypeMType VkObjectTableEntryNVX = VkObjectEntryTypeNVX
@@ -3733,6 +3760,9 @@ instance VulkanMarshalPrim VkObjectTablePipelineEntryNVX where
 instance VulkanMarshal VkObjectTablePipelineEntryNVX where
         type StructFields VkObjectTablePipelineEntryNVX =
              '["type", "flags", "pipeline"] -- ' closing tick for hsc2hs
+        type CUnionType VkObjectTablePipelineEntryNVX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkObjectTablePipelineEntryNVX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkObjectTablePipelineEntryNVX = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkType VkObjectTablePipelineEntryNVX where
@@ -3949,6 +3979,9 @@ instance VulkanMarshalPrim VkObjectTableDescriptorSetEntryNVX where
 instance VulkanMarshal VkObjectTableDescriptorSetEntryNVX where
         type StructFields VkObjectTableDescriptorSetEntryNVX =
              '["type", "flags", "pipelineLayout", "descriptorSet"] -- ' closing tick for hsc2hs
+        type CUnionType VkObjectTableDescriptorSetEntryNVX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkObjectTableDescriptorSetEntryNVX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkObjectTableDescriptorSetEntryNVX = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkType VkObjectTableDescriptorSetEntryNVX where
@@ -4234,6 +4267,9 @@ instance VulkanMarshalPrim VkObjectTableVertexBufferEntryNVX where
 instance VulkanMarshal VkObjectTableVertexBufferEntryNVX where
         type StructFields VkObjectTableVertexBufferEntryNVX =
              '["type", "flags", "buffer"] -- ' closing tick for hsc2hs
+        type CUnionType VkObjectTableVertexBufferEntryNVX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkObjectTableVertexBufferEntryNVX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkObjectTableVertexBufferEntryNVX = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkType VkObjectTableVertexBufferEntryNVX where
@@ -4455,6 +4491,9 @@ instance VulkanMarshalPrim VkObjectTableIndexBufferEntryNVX where
 instance VulkanMarshal VkObjectTableIndexBufferEntryNVX where
         type StructFields VkObjectTableIndexBufferEntryNVX =
              '["type", "flags", "buffer", "indexType"] -- ' closing tick for hsc2hs
+        type CUnionType VkObjectTableIndexBufferEntryNVX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkObjectTableIndexBufferEntryNVX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkObjectTableIndexBufferEntryNVX = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkType VkObjectTableIndexBufferEntryNVX where
@@ -4728,6 +4767,9 @@ instance VulkanMarshalPrim VkObjectTablePushConstantEntryNVX where
 instance VulkanMarshal VkObjectTablePushConstantEntryNVX where
         type StructFields VkObjectTablePushConstantEntryNVX =
              '["type", "flags", "pipelineLayout", "stageFlags"] -- ' closing tick for hsc2hs
+        type CUnionType VkObjectTablePushConstantEntryNVX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkObjectTablePushConstantEntryNVX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkObjectTablePushConstantEntryNVX = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkType VkObjectTablePushConstantEntryNVX where

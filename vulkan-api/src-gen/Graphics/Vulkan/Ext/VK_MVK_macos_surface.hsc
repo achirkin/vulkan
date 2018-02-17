@@ -102,6 +102,9 @@ instance VulkanMarshalPrim VkMacOSSurfaceCreateInfoMVK where
 instance VulkanMarshal VkMacOSSurfaceCreateInfoMVK where
         type StructFields VkMacOSSurfaceCreateInfoMVK =
              '["sType", "pNext", "flags", "pView"] -- ' closing tick for hsc2hs
+        type CUnionType VkMacOSSurfaceCreateInfoMVK = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkMacOSSurfaceCreateInfoMVK = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkMacOSSurfaceCreateInfoMVK = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkMacOSSurfaceCreateInfoMVK
          where

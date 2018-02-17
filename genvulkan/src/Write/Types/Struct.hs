@@ -12,7 +12,7 @@ module Write.Types.Struct
   ) where
 
 
-import           Control.Monad                        (when)
+import           Control.Monad                        (when, forM_)
 import           Data.Char                            (toUpper)
 import           Data.Map                             (Map)
 import qualified Data.Map                             as Map
@@ -70,6 +70,8 @@ genStructOrUnion isUnion VkTypeComposite
     writeFullImport "GHC.Prim"
     writeFullImport "Graphics.Vulkan.Marshal"
     writeFullImport "Graphics.Vulkan.Marshal.Internal"
+    forM_ (structextends attrs) $ \(VkTypeName n) ->
+      writeImport $ DIThing n DITNo
 
     let ds = parseDecls [text|
           data $tnametxt = $tnametxt# Addr# ByteArray#
@@ -104,7 +106,10 @@ genStructOrUnion isUnion VkTypeComposite
             {-# INLINE unsafeFromByteArrayOffset #-}
 
           instance VulkanMarshal $tnametxt where
-            type StructFields $tnametxt = $fieldNamesTxt
+            type StructFields  $tnametxt = $fieldNamesTxt
+            type CUnionType    $tnametxt = $isUnionTxt
+            type ReturnedOnly  $tnametxt = $returnedonlyTxt
+            type StructExtends $tnametxt = $structextendsTxt
           |]
 
 
@@ -126,6 +131,10 @@ genStructOrUnion isUnion VkTypeComposite
     writeExport tnameDeclared
     return classDefs
   where
+    returnedonlyTxt = T.pack . ('\'':) . show $ returnedonly attrs
+    isUnionTxt = T.pack . ('\'':) . show $ category attrs == VkTypeCatUnion
+    structextendsTxt
+      = "'[" <> T.intercalate "," (unVkTypeName <$> structextends attrs) <> "]"
     fieldNamesTxt = T.pack . ('\'':) . show
                   $ map (\VkTypeMember{ name = VkMemberName n} -> n ) $ items tmems
     tnameDeclared = DIThing tnametxt DITAll

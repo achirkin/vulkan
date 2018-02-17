@@ -47,6 +47,7 @@ import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
+import           Graphics.Vulkan.Base             (VkMemoryAllocateInfo)
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
@@ -111,6 +112,10 @@ instance VulkanMarshalPrim VkImportMemoryWin32HandleInfoKHR where
 instance VulkanMarshal VkImportMemoryWin32HandleInfoKHR where
         type StructFields VkImportMemoryWin32HandleInfoKHR =
              '["sType", "pNext", "handleType", "handle", "name"] -- ' closing tick for hsc2hs
+        type CUnionType VkImportMemoryWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkImportMemoryWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkImportMemoryWin32HandleInfoKHR =
+             '[VkMemoryAllocateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkImportMemoryWin32HandleInfoKHR where
@@ -435,6 +440,10 @@ instance VulkanMarshalPrim VkExportMemoryWin32HandleInfoKHR where
 instance VulkanMarshal VkExportMemoryWin32HandleInfoKHR where
         type StructFields VkExportMemoryWin32HandleInfoKHR =
              '["sType", "pNext", "pAttributes", "dwAccess", "name"] -- ' closing tick for hsc2hs
+        type CUnionType VkExportMemoryWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkExportMemoryWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkExportMemoryWin32HandleInfoKHR =
+             '[VkMemoryAllocateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkExportMemoryWin32HandleInfoKHR where
@@ -758,6 +767,9 @@ instance VulkanMarshalPrim VkMemoryWin32HandlePropertiesKHR where
 instance VulkanMarshal VkMemoryWin32HandlePropertiesKHR where
         type StructFields VkMemoryWin32HandlePropertiesKHR =
              '["sType", "pNext", "memoryTypeBits"] -- ' closing tick for hsc2hs
+        type CUnionType VkMemoryWin32HandlePropertiesKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkMemoryWin32HandlePropertiesKHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkMemoryWin32HandlePropertiesKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkMemoryWin32HandlePropertiesKHR where
@@ -966,6 +978,9 @@ instance VulkanMarshalPrim VkMemoryGetWin32HandleInfoKHR where
 instance VulkanMarshal VkMemoryGetWin32HandleInfoKHR where
         type StructFields VkMemoryGetWin32HandleInfoKHR =
              '["sType", "pNext", "memory", "handleType"] -- ' closing tick for hsc2hs
+        type CUnionType VkMemoryGetWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkMemoryGetWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkMemoryGetWin32HandleInfoKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkMemoryGetWin32HandleInfoKHR where

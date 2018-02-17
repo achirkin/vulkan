@@ -108,6 +108,9 @@ instance VulkanMarshalPrim VkPhysicalDeviceExternalFenceInfoKHR
 instance VulkanMarshal VkPhysicalDeviceExternalFenceInfoKHR where
         type StructFields VkPhysicalDeviceExternalFenceInfoKHR =
              '["sType", "pNext", "handleType"] -- ' closing tick for hsc2hs
+        type CUnionType VkPhysicalDeviceExternalFenceInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDeviceExternalFenceInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPhysicalDeviceExternalFenceInfoKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceExternalFenceInfoKHR where
@@ -335,6 +338,9 @@ instance VulkanMarshal VkExternalFencePropertiesKHR where
         type StructFields VkExternalFencePropertiesKHR =
              '["sType", "pNext", "exportFromImportedHandleTypes", -- ' closing tick for hsc2hs
                "compatibleHandleTypes", "externalFenceFeatures"]
+        type CUnionType VkExternalFencePropertiesKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkExternalFencePropertiesKHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkExternalFencePropertiesKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkExternalFencePropertiesKHR where

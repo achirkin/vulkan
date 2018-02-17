@@ -110,6 +110,9 @@ instance VulkanMarshalPrim VkDebugMarkerObjectNameInfoEXT where
 instance VulkanMarshal VkDebugMarkerObjectNameInfoEXT where
         type StructFields VkDebugMarkerObjectNameInfoEXT =
              '["sType", "pNext", "objectType", "object", "pObjectName"] -- ' closing tick for hsc2hs
+        type CUnionType VkDebugMarkerObjectNameInfoEXT = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDebugMarkerObjectNameInfoEXT = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDebugMarkerObjectNameInfoEXT = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkDebugMarkerObjectNameInfoEXT where
@@ -430,6 +433,9 @@ instance VulkanMarshal VkDebugMarkerObjectTagInfoEXT where
         type StructFields VkDebugMarkerObjectTagInfoEXT =
              '["sType", "pNext", "objectType", "object", "tagName", "tagSize", -- ' closing tick for hsc2hs
                "pTag"]
+        type CUnionType VkDebugMarkerObjectTagInfoEXT = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDebugMarkerObjectTagInfoEXT = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDebugMarkerObjectTagInfoEXT = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkDebugMarkerObjectTagInfoEXT where
@@ -842,6 +848,9 @@ instance VulkanMarshalPrim VkDebugMarkerMarkerInfoEXT where
 instance VulkanMarshal VkDebugMarkerMarkerInfoEXT where
         type StructFields VkDebugMarkerMarkerInfoEXT =
              '["sType", "pNext", "pMarkerName", "color"] -- ' closing tick for hsc2hs
+        type CUnionType VkDebugMarkerMarkerInfoEXT = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDebugMarkerMarkerInfoEXT = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDebugMarkerMarkerInfoEXT = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkDebugMarkerMarkerInfoEXT
          where

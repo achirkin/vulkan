@@ -100,6 +100,9 @@ instance VulkanMarshalPrim VkImportFenceFdInfoKHR where
 instance VulkanMarshal VkImportFenceFdInfoKHR where
         type StructFields VkImportFenceFdInfoKHR =
              '["sType", "pNext", "fence", "flags", "handleType", "fd"] -- ' closing tick for hsc2hs
+        type CUnionType VkImportFenceFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkImportFenceFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkImportFenceFdInfoKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkImportFenceFdInfoKHR
          where
@@ -447,6 +450,9 @@ instance VulkanMarshalPrim VkFenceGetFdInfoKHR where
 instance VulkanMarshal VkFenceGetFdInfoKHR where
         type StructFields VkFenceGetFdInfoKHR =
              '["sType", "pNext", "fence", "handleType"] -- ' closing tick for hsc2hs
+        type CUnionType VkFenceGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkFenceGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkFenceGetFdInfoKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkFenceGetFdInfoKHR where
         type VkSTypeMType VkFenceGetFdInfoKHR = VkStructureType

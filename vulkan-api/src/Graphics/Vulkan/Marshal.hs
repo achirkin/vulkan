@@ -46,7 +46,7 @@ module Graphics.Vulkan.Marshal
 
 import           Data.Data                        (Data)
 import           Data.Int                         (Int16, Int32, Int64, Int8)
-import           Data.Kind                        (Constraint)
+import           Data.Kind                        (Constraint, Type)
 import           Data.Void                        (Void)
 import           Data.Word                        (Word16, Word32, Word64,
                                                    Word8)
@@ -75,6 +75,14 @@ class VulkanMarshal a where
   -- | Names of fields in vulkan structure or union,
   --   in the same order as they appear in C typedef.
   type StructFields a :: [Symbol]
+  -- | Whether this type is a C union.
+  --   Otherwise this is a C structure.
+  type CUnionType a   :: Bool
+  -- | Notes that this struct or union is going to be filled in by the API,
+  --   rather than an application filling it out and passing it to the API.
+  type ReturnedOnly a :: Bool
+  -- | Comma-separated list of structures whose "pNext" can include this type.
+  type StructExtends a :: [Type]
   -- | Allocate a pinned aligned byte array to keep vulkan data structure
   --   and fill it using a foreign function.
   --
@@ -226,17 +234,21 @@ isNullPtr :: (Eq (ptr a), VulkanPtr ptr) => ptr a -> Bool
 isNullPtr = (vkNullPtr ==)
 {-# INLINE isNullPtr #-}
 
+-- | Null pointer (either dispatchable or non-dispatchable)
+pattern VK_NULL :: (Eq (ptr a), VulkanPtr ptr) => ptr a
+pattern VK_NULL <- (isNullPtr -> True)
+  where VK_NULL = vkNullPtr
+
 -- | >
 --   > #define VK_NULL_HANDLE 0
 --   >
 pattern VK_NULL_HANDLE :: (Eq (ptr a), VulkanPtr ptr) => ptr a
-pattern VK_NULL_HANDLE <- (isNullPtr -> True)
-  where VK_NULL_HANDLE = vkNullPtr
+pattern VK_NULL_HANDLE = VK_NULL
 
 -- | Describe fields of a vulkan structure or union.
-class HasField (fname :: Symbol) (a :: *) where
+class HasField (fname :: Symbol) (a :: Type) where
   -- | Type of a field in a vulkan structure or union.
-  type FieldType fname a     :: *
+  type FieldType fname a     :: Type
   -- | Whether this field marked optional in vulkan specification.
   --   Usually, this means that `VK_NULL_HANDLE` can be written in place
   --   of this field.
@@ -250,16 +262,16 @@ class HasField (fname :: Symbol) (a :: *) where
   -- | Offset of a field in bytes.
   fieldOffset :: Int
 
-class HasField fname a => CanReadField (fname :: Symbol) (a :: *) where
+class HasField fname a => CanReadField (fname :: Symbol) (a :: Type) where
   getField :: a -> FieldType fname a
   readField :: Ptr a -> IO (FieldType fname a)
 
-class CanReadField fname a => CanWriteField (fname :: Symbol) (a :: *) where
+class CanReadField fname a => CanWriteField (fname :: Symbol) (a :: Type) where
   writeField :: Ptr a -> FieldType fname a -> IO ()
 
 class ( HasField fname a
       , IndexInBounds fname idx a
-      ) => CanReadFieldArray (fname :: Symbol) (idx :: Nat) (a :: *) where
+      ) => CanReadFieldArray (fname :: Symbol) (idx :: Nat) (a :: Type) where
   -- | Length of an array that is a field of a structure or union
   type FieldArrayLength fname a :: Nat
   -- | Length of an array that is a field of a structure or union
@@ -268,7 +280,7 @@ class ( HasField fname a
   readFieldArray :: Ptr a -> IO (FieldType fname a)
 
 class CanReadFieldArray fname idx a
-      => CanWriteFieldArray (fname :: Symbol) (idx :: Nat) (a :: *) where
+      => CanWriteFieldArray (fname :: Symbol) (idx :: Nat) (a :: Type) where
   writeFieldArray :: Ptr a -> FieldType fname a -> IO ()
 
 instance {-# OVERLAPPABLE #-}
@@ -286,17 +298,17 @@ instance {-# OVERLAPPABLE #-}
          , IndexInBounds fname idx a
          ) => CanWriteFieldArray fname idx a where
 
-type NoField (s :: Symbol) (a :: *) = 'Text "Structure " ':<>: 'ShowType a
+type NoField (s :: Symbol) (a :: Type) = 'Text "Structure " ':<>: 'ShowType a
   ':<>: 'Text " does not have field " ':<>: 'ShowType s ':<>: 'Text "."
   ':$$: 'Text "Note, this structure has following fields: "
         ':<>: 'ShowType (StructFields a)
 
-type IndexInBounds (s :: Symbol) (i :: Nat) (a :: *)
+type IndexInBounds (s :: Symbol) (i :: Nat) (a :: Type)
   = IndexInBounds' s i a (CmpNat i (FieldArrayLength s a))
 
 type family IndexInBounds' (s :: Symbol)
                            (i :: Nat)
-                           (a :: *) (r :: Ordering) :: Constraint where
+                           (a :: Type) (r :: Ordering) :: Constraint where
   IndexInBounds' _ _ _ 'LT = ()
   IndexInBounds' s i a _ = TypeError
     ( 'Text "Array index " ':<>: 'ShowType i

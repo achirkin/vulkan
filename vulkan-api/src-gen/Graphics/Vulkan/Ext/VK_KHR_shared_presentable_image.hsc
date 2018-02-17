@@ -48,6 +48,8 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+import           Graphics.Vulkan.Ext.VK_KHR_get_surface_capabilities2
+
 -- | > typedef struct VkSharedPresentSurfaceCapabilitiesKHR {
 --   >     VkStructureType sType;
 --   >     void*                            pNext;
@@ -106,6 +108,10 @@ instance VulkanMarshalPrim VkSharedPresentSurfaceCapabilitiesKHR
 instance VulkanMarshal VkSharedPresentSurfaceCapabilitiesKHR where
         type StructFields VkSharedPresentSurfaceCapabilitiesKHR =
              '["sType", "pNext", "sharedPresentSupportedUsageFlags"] -- ' closing tick for hsc2hs
+        type CUnionType VkSharedPresentSurfaceCapabilitiesKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSharedPresentSurfaceCapabilitiesKHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkSharedPresentSurfaceCapabilitiesKHR =
+             '[VkSurfaceCapabilities2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkSharedPresentSurfaceCapabilitiesKHR where

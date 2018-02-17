@@ -39,23 +39,27 @@ module Graphics.Vulkan.Ext.VK_KHR_maintenance2
         pattern VK_IMAGE_LAYOUT_DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL_KHR,
         pattern VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL_KHR)
        where
-import           Foreign.C.String                 (CString)
-import           Foreign.Storable                 (Storable (..))
+import           Foreign.C.String                                           (CString)
+import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
-import           GHC.Ptr                          (Ptr (..))
-import           Graphics.Vulkan.Common           (VkImageAspectFlags,
-                                                   VkImageCreateFlagBits (..),
-                                                   VkImageLayout (..),
-                                                   VkImageUsageFlags,
-                                                   VkPointClippingBehaviorKHR,
-                                                   VkStructureType,
-                                                   VkStructureType (..),
-                                                   VkTessellationDomainOriginKHR,
-                                                   Word32)
+import           GHC.Ptr                                                    (Ptr (..))
+import           Graphics.Vulkan.Base                                       (VkImageViewCreateInfo,
+                                                                             VkPipelineTessellationStateCreateInfo,
+                                                                             VkRenderPassCreateInfo)
+import           Graphics.Vulkan.Common                                     (VkImageAspectFlags,
+                                                                             VkImageCreateFlagBits (..),
+                                                                             VkImageLayout (..),
+                                                                             VkImageUsageFlags,
+                                                                             VkPointClippingBehaviorKHR,
+                                                                             VkStructureType,
+                                                                             VkStructureType (..),
+                                                                             VkTessellationDomainOriginKHR,
+                                                                             Word32)
+import           Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2 (VkPhysicalDeviceProperties2KHR)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+import           System.IO.Unsafe                                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDevicePointClippingPropertiesKHR {
 --   >     VkStructureType sType;
@@ -118,6 +122,11 @@ instance VulkanMarshal VkPhysicalDevicePointClippingPropertiesKHR
          where
         type StructFields VkPhysicalDevicePointClippingPropertiesKHR =
              '["sType", "pNext", "pointClippingBehavior"] -- ' closing tick for hsc2hs
+        type CUnionType VkPhysicalDevicePointClippingPropertiesKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDevicePointClippingPropertiesKHR =
+             'True -- ' closing tick for hsc2hs
+        type StructExtends VkPhysicalDevicePointClippingPropertiesKHR =
+             '[VkPhysicalDeviceProperties2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDevicePointClippingPropertiesKHR where
@@ -350,6 +359,12 @@ instance VulkanMarshal
          where
         type StructFields VkRenderPassInputAttachmentAspectCreateInfoKHR =
              '["sType", "pNext", "aspectReferenceCount", "pAspectReferences"] -- ' closing tick for hsc2hs
+        type CUnionType VkRenderPassInputAttachmentAspectCreateInfoKHR =
+             'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkRenderPassInputAttachmentAspectCreateInfoKHR =
+             'False -- ' closing tick for hsc2hs
+        type StructExtends VkRenderPassInputAttachmentAspectCreateInfoKHR =
+             '[VkRenderPassCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkRenderPassInputAttachmentAspectCreateInfoKHR where
@@ -663,6 +678,9 @@ instance VulkanMarshalPrim VkInputAttachmentAspectReferenceKHR
 instance VulkanMarshal VkInputAttachmentAspectReferenceKHR where
         type StructFields VkInputAttachmentAspectReferenceKHR =
              '["subpass", "inputAttachmentIndex", "aspectMask"] -- ' closing tick for hsc2hs
+        type CUnionType VkInputAttachmentAspectReferenceKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkInputAttachmentAspectReferenceKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkInputAttachmentAspectReferenceKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSubpass VkInputAttachmentAspectReferenceKHR where
@@ -894,6 +912,10 @@ instance VulkanMarshalPrim VkImageViewUsageCreateInfoKHR where
 instance VulkanMarshal VkImageViewUsageCreateInfoKHR where
         type StructFields VkImageViewUsageCreateInfoKHR =
              '["sType", "pNext", "usage"] -- ' closing tick for hsc2hs
+        type CUnionType VkImageViewUsageCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkImageViewUsageCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkImageViewUsageCreateInfoKHR =
+             '[VkImageViewCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkImageViewUsageCreateInfoKHR where
@@ -1115,6 +1137,15 @@ instance VulkanMarshal
         type StructFields
                VkPipelineTessellationDomainOriginStateCreateInfoKHR
              = '["sType", "pNext", "domainOrigin"] -- ' closing tick for hsc2hs
+        type CUnionType
+               VkPipelineTessellationDomainOriginStateCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly
+               VkPipelineTessellationDomainOriginStateCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
+        type StructExtends
+               VkPipelineTessellationDomainOriginStateCreateInfoKHR
+             = '[VkPipelineTessellationStateCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPipelineTessellationDomainOriginStateCreateInfoKHR

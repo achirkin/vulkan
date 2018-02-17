@@ -38,16 +38,18 @@ module Graphics.Vulkan.Ext.VK_EXT_discard_rectangles
         pattern VK_STRUCTURE_TYPE_PIPELINE_DISCARD_RECTANGLE_STATE_CREATE_INFO_EXT,
         pattern VK_DYNAMIC_STATE_DISCARD_RECTANGLE_EXT)
        where
-import           Foreign.C.String                 (CString)
-import           Foreign.Storable                 (Storable (..))
+import           Foreign.C.String                                           (CString)
+import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
-import           GHC.Ptr                          (Ptr (..))
-import           Graphics.Vulkan.Base             (VkRect2D (..))
+import           GHC.Ptr                                                    (Ptr (..))
+import           Graphics.Vulkan.Base                                       (VkGraphicsPipelineCreateInfo,
+                                                                             VkRect2D (..))
 import           Graphics.Vulkan.Common
+import           Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2 (VkPhysicalDeviceProperties2KHR)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+import           System.IO.Unsafe                                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDeviceDiscardRectanglePropertiesEXT {
 --   >     VkStructureType sType;
@@ -112,6 +114,12 @@ instance VulkanMarshal
          where
         type StructFields VkPhysicalDeviceDiscardRectanglePropertiesEXT =
              '["sType", "pNext", "maxDiscardRectangles"] -- ' closing tick for hsc2hs
+        type CUnionType VkPhysicalDeviceDiscardRectanglePropertiesEXT =
+             'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDeviceDiscardRectanglePropertiesEXT =
+             'False -- ' closing tick for hsc2hs
+        type StructExtends VkPhysicalDeviceDiscardRectanglePropertiesEXT =
+             '[VkPhysicalDeviceProperties2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceDiscardRectanglePropertiesEXT where
@@ -369,6 +377,12 @@ instance VulkanMarshal VkPipelineDiscardRectangleStateCreateInfoEXT
         type StructFields VkPipelineDiscardRectangleStateCreateInfoEXT =
              '["sType", "pNext", "flags", "discardRectangleMode", -- ' closing tick for hsc2hs
                "discardRectangleCount", "pDiscardRectangles"]
+        type CUnionType VkPipelineDiscardRectangleStateCreateInfoEXT =
+             'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPipelineDiscardRectangleStateCreateInfoEXT =
+             'False -- ' closing tick for hsc2hs
+        type StructExtends VkPipelineDiscardRectangleStateCreateInfoEXT =
+             '[VkGraphicsPipelineCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPipelineDiscardRectangleStateCreateInfoEXT where

@@ -2933,6 +2933,9 @@ instance VulkanMarshal VkBufferMemoryBarrier where
              '["sType", "pNext", "srcAccessMask", "dstAccessMask", -- ' closing tick for hsc2hs
                "srcQueueFamilyIndex", "dstQueueFamilyIndex", "buffer", "offset",
                "size"]
+        type CUnionType VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkBufferMemoryBarrier = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkBufferMemoryBarrier where
         type VkSTypeMType VkBufferMemoryBarrier = VkStructureType
@@ -3430,6 +3433,9 @@ instance VulkanMarshalPrim VkDispatchIndirectCommand where
 
 instance VulkanMarshal VkDispatchIndirectCommand where
         type StructFields VkDispatchIndirectCommand = '["x", "y", "z"] -- ' closing tick for hsc2hs
+        type CUnionType VkDispatchIndirectCommand = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDispatchIndirectCommand = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDispatchIndirectCommand = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkX VkDispatchIndirectCommand where
         type VkXMType VkDispatchIndirectCommand = Word32
@@ -3632,6 +3638,9 @@ instance VulkanMarshal VkDrawIndexedIndirectCommand where
         type StructFields VkDrawIndexedIndirectCommand =
              '["indexCount", "instanceCount", "firstIndex", "vertexOffset", -- ' closing tick for hsc2hs
                "firstInstance"]
+        type CUnionType VkDrawIndexedIndirectCommand = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDrawIndexedIndirectCommand = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDrawIndexedIndirectCommand = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkIndexCount VkDrawIndexedIndirectCommand where
@@ -3950,6 +3959,9 @@ instance VulkanMarshalPrim VkDrawIndirectCommand where
 instance VulkanMarshal VkDrawIndirectCommand where
         type StructFields VkDrawIndirectCommand =
              '["vertexCount", "instanceCount", "firstVertex", "firstInstance"] -- ' closing tick for hsc2hs
+        type CUnionType VkDrawIndirectCommand = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDrawIndirectCommand = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDrawIndirectCommand = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkVertexCount VkDrawIndirectCommand
          where
@@ -4209,6 +4221,9 @@ instance VulkanMarshal VkImageMemoryBarrier where
              '["sType", "pNext", "srcAccessMask", "dstAccessMask", "oldLayout", -- ' closing tick for hsc2hs
                "newLayout", "srcQueueFamilyIndex", "dstQueueFamilyIndex", "image",
                "subresourceRange"]
+        type CUnionType VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkImageMemoryBarrier = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkImageMemoryBarrier where
         type VkSTypeMType VkImageMemoryBarrier = VkStructureType
@@ -4759,6 +4774,9 @@ instance VulkanMarshalPrim VkMemoryBarrier where
 instance VulkanMarshal VkMemoryBarrier where
         type StructFields VkMemoryBarrier =
              '["sType", "pNext", "srcAccessMask", "dstAccessMask"] -- ' closing tick for hsc2hs
+        type CUnionType VkMemoryBarrier = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkMemoryBarrier = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkMemoryBarrier = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkMemoryBarrier where
         type VkSTypeMType VkMemoryBarrier = VkStructureType

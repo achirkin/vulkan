@@ -113,6 +113,9 @@ instance VulkanMarshal VkSurfaceCapabilities2EXT where
                "maxImageArrayLayers", "supportedTransforms", "currentTransform",
                "supportedCompositeAlpha", "supportedUsageFlags",
                "supportedSurfaceCounters"]
+        type CUnionType VkSurfaceCapabilities2EXT = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSurfaceCapabilities2EXT = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkSurfaceCapabilities2EXT = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkSurfaceCapabilities2EXT
          where

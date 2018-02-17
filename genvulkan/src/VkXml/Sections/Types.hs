@@ -55,7 +55,7 @@ data VkTypeAttrs
   , parent        :: Maybe VkTypeName
   , returnedonly  :: Bool
   , comment       :: Text
-  , structextends :: Maybe VkTypeName
+  , structextends :: [VkTypeName]
   } deriving Show
 
 data VkTypeCategory
@@ -138,9 +138,10 @@ data VkType
 --   * If failed to parse tag "types", throw an exception
 parseTypes :: VkXmlParser m => Sink Event m (Maybe VkTypes)
 parseTypes = parseTagForceAttrs "types" (lift $ attr "comment")
-  $ \secComment -> do
-    tps <- parseSections parseVkType
-    return $ VkTypes (fromMaybe mempty secComment) tps
+  $ \secComment ->
+    VkTypes (fromMaybe mempty secComment)
+       <$> parseSections parseVkType
+
 
 
 parseAttrVkTypeCategory :: ReaderT ParseLoc AttrParser VkTypeCategory
@@ -179,8 +180,12 @@ parseAttrVkTypeReturnedonly = do
 parseAttrVkTypeComment :: ReaderT ParseLoc AttrParser Text
 parseAttrVkTypeComment = lift (fromMaybe mempty <$> attr "comment")
 
-parseAttrVkTypeStructextends :: ReaderT ParseLoc AttrParser (Maybe VkTypeName)
-parseAttrVkTypeStructextends = lift $ fmap VkTypeName <$> attr "structextends"
+parseAttrVkTypeStructextends :: ReaderT ParseLoc AttrParser [VkTypeName]
+parseAttrVkTypeStructextends
+  = lift
+  $ fmap VkTypeName
+  . maybe [] (T.split (','==))
+  <$> attr "structextends"
 
 
 parseVkTypeAttrs :: ReaderT ParseLoc AttrParser VkTypeAttrs

@@ -35,17 +35,18 @@ module Graphics.Vulkan.Ext.VK_NVX_multiview_per_view_attributes
         pattern VK_SUBPASS_DESCRIPTION_PER_VIEW_ATTRIBUTES_BIT_NVX,
         pattern VK_SUBPASS_DESCRIPTION_PER_VIEW_POSITION_X_ONLY_BIT_NVX)
        where
-import           Foreign.C.String                 (CString)
-import           Foreign.Storable                 (Storable (..))
+import           Foreign.C.String                                           (CString)
+import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
-import           GHC.Ptr                          (Ptr (..))
-import           Graphics.Vulkan.Common           (VkBool32,
-                                                   VkStructureType (..),
-                                                   VkSubpassDescriptionFlagBits (..))
+import           GHC.Ptr                                                    (Ptr (..))
+import           Graphics.Vulkan.Common                                     (VkBool32,
+                                                                             VkStructureType (..),
+                                                                             VkSubpassDescriptionFlagBits (..))
+import           Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2 (VkPhysicalDeviceProperties2KHR)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+import           System.IO.Unsafe                                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
 --   >     VkStructureType sType;
@@ -117,6 +118,15 @@ instance VulkanMarshal
         type StructFields
                VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
              = '["sType", "pNext", "perViewPositionAllComponents"] -- ' closing tick for hsc2hs
+        type CUnionType
+               VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
+             = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly
+               VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
+             = 'True -- ' closing tick for hsc2hs
+        type StructExtends
+               VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
+             = '[VkPhysicalDeviceProperties2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX

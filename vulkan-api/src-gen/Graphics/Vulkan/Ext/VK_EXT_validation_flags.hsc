@@ -31,6 +31,7 @@ import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
+import           Graphics.Vulkan.Base             (VkInstanceCreateInfo)
 import           Graphics.Vulkan.Common           (VkStructureType,
                                                    VkStructureType (..),
                                                    VkValidationCheckEXT, Word32)
@@ -91,6 +92,9 @@ instance VulkanMarshal VkValidationFlagsEXT where
         type StructFields VkValidationFlagsEXT =
              '["sType", "pNext", "disabledValidationCheckCount", -- ' closing tick for hsc2hs
                "pDisabledValidationChecks"]
+        type CUnionType VkValidationFlagsEXT = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkValidationFlagsEXT = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkValidationFlagsEXT = '[VkInstanceCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkValidationFlagsEXT where
         type VkSTypeMType VkValidationFlagsEXT = VkStructureType

@@ -44,6 +44,7 @@ import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
+import           Graphics.Vulkan.Base             (VkFenceCreateInfo)
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
@@ -110,6 +111,9 @@ instance VulkanMarshal VkImportFenceWin32HandleInfoKHR where
         type StructFields VkImportFenceWin32HandleInfoKHR =
              '["sType", "pNext", "fence", "flags", "handleType", "handle", -- ' closing tick for hsc2hs
                "name"]
+        type CUnionType VkImportFenceWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkImportFenceWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkImportFenceWin32HandleInfoKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkImportFenceWin32HandleInfoKHR where
@@ -528,6 +532,10 @@ instance VulkanMarshalPrim VkExportFenceWin32HandleInfoKHR where
 instance VulkanMarshal VkExportFenceWin32HandleInfoKHR where
         type StructFields VkExportFenceWin32HandleInfoKHR =
              '["sType", "pNext", "pAttributes", "dwAccess", "name"] -- ' closing tick for hsc2hs
+        type CUnionType VkExportFenceWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkExportFenceWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkExportFenceWin32HandleInfoKHR =
+             '[VkFenceCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkExportFenceWin32HandleInfoKHR where
@@ -844,6 +852,9 @@ instance VulkanMarshalPrim VkFenceGetWin32HandleInfoKHR where
 instance VulkanMarshal VkFenceGetWin32HandleInfoKHR where
         type StructFields VkFenceGetWin32HandleInfoKHR =
              '["sType", "pNext", "fence", "handleType"] -- ' closing tick for hsc2hs
+        type CUnionType VkFenceGetWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkFenceGetWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkFenceGetWin32HandleInfoKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkFenceGetWin32HandleInfoKHR where

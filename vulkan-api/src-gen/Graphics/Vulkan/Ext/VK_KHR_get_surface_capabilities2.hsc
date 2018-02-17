@@ -106,6 +106,9 @@ instance VulkanMarshalPrim VkPhysicalDeviceSurfaceInfo2KHR where
 instance VulkanMarshal VkPhysicalDeviceSurfaceInfo2KHR where
         type StructFields VkPhysicalDeviceSurfaceInfo2KHR =
              '["sType", "pNext", "surface"] -- ' closing tick for hsc2hs
+        type CUnionType VkPhysicalDeviceSurfaceInfo2KHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDeviceSurfaceInfo2KHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPhysicalDeviceSurfaceInfo2KHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceSurfaceInfo2KHR where
@@ -316,6 +319,9 @@ instance VulkanMarshalPrim VkSurfaceCapabilities2KHR where
 instance VulkanMarshal VkSurfaceCapabilities2KHR where
         type StructFields VkSurfaceCapabilities2KHR =
              '["sType", "pNext", "surfaceCapabilities"] -- ' closing tick for hsc2hs
+        type CUnionType VkSurfaceCapabilities2KHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSurfaceCapabilities2KHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkSurfaceCapabilities2KHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkSurfaceCapabilities2KHR
          where
@@ -510,6 +516,9 @@ instance VulkanMarshalPrim VkSurfaceFormat2KHR where
 instance VulkanMarshal VkSurfaceFormat2KHR where
         type StructFields VkSurfaceFormat2KHR =
              '["sType", "pNext", "surfaceFormat"] -- ' closing tick for hsc2hs
+        type CUnionType VkSurfaceFormat2KHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSurfaceFormat2KHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkSurfaceFormat2KHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkSurfaceFormat2KHR where
         type VkSTypeMType VkSurfaceFormat2KHR = VkStructureType

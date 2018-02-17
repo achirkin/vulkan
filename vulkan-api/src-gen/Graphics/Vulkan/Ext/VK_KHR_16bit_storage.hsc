@@ -33,16 +33,18 @@ module Graphics.Vulkan.Ext.VK_KHR_16bit_storage
         pattern VK_KHR_16BIT_STORAGE_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES_KHR)
        where
-import           Foreign.C.String                 (CString)
-import           Foreign.Storable                 (Storable (..))
+import           Foreign.C.String                                           (CString)
+import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
-import           GHC.Ptr                          (Ptr (..))
-import           Graphics.Vulkan.Common           (VkBool32,
-                                                   VkStructureType (..))
+import           GHC.Ptr                                                    (Ptr (..))
+import           Graphics.Vulkan.Base                                       (VkDeviceCreateInfo)
+import           Graphics.Vulkan.Common                                     (VkBool32,
+                                                                             VkStructureType (..))
+import           Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2 (VkPhysicalDeviceFeatures2KHR)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+import           System.IO.Unsafe                                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDevice16BitStorageFeaturesKHR {
 --   >     VkStructureType sType;
@@ -108,6 +110,10 @@ instance VulkanMarshal VkPhysicalDevice16BitStorageFeaturesKHR
              '["sType", "pNext", "storageBuffer16BitAccess", -- ' closing tick for hsc2hs
                "uniformAndStorageBuffer16BitAccess", "storagePushConstant16",
                "storageInputOutput16"]
+        type CUnionType VkPhysicalDevice16BitStorageFeaturesKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDevice16BitStorageFeaturesKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPhysicalDevice16BitStorageFeaturesKHR =
+             '[VkPhysicalDeviceFeatures2KHR, VkDeviceCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDevice16BitStorageFeaturesKHR where

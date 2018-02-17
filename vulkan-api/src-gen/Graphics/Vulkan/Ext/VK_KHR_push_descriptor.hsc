@@ -35,16 +35,17 @@ module Graphics.Vulkan.Ext.VK_KHR_push_descriptor
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES_KHR,
         pattern VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR)
        where
-import           Foreign.C.String                 (CString)
-import           Foreign.Storable                 (Storable (..))
+import           Foreign.C.String                                           (CString)
+import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
-import           GHC.Ptr                          (Ptr (..))
-import           Graphics.Vulkan.Base             (VkWriteDescriptorSet (..))
+import           GHC.Ptr                                                    (Ptr (..))
+import           Graphics.Vulkan.Base                                       (VkWriteDescriptorSet (..))
 import           Graphics.Vulkan.Common
+import           Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2 (VkPhysicalDeviceProperties2KHR)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+import           System.IO.Unsafe                                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDevicePushDescriptorPropertiesKHR {
 --   >     VkStructureType sType;
@@ -107,6 +108,12 @@ instance VulkanMarshal VkPhysicalDevicePushDescriptorPropertiesKHR
          where
         type StructFields VkPhysicalDevicePushDescriptorPropertiesKHR =
              '["sType", "pNext", "maxPushDescriptors"] -- ' closing tick for hsc2hs
+        type CUnionType VkPhysicalDevicePushDescriptorPropertiesKHR =
+             'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDevicePushDescriptorPropertiesKHR =
+             'False -- ' closing tick for hsc2hs
+        type StructExtends VkPhysicalDevicePushDescriptorPropertiesKHR =
+             '[VkPhysicalDeviceProperties2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDevicePushDescriptorPropertiesKHR where

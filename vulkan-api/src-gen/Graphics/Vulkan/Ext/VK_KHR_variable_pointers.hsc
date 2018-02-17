@@ -33,16 +33,18 @@ module Graphics.Vulkan.Ext.VK_KHR_variable_pointers
         pattern VK_KHR_VARIABLE_POINTERS_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES_KHR)
        where
-import           Foreign.C.String                 (CString)
-import           Foreign.Storable                 (Storable (..))
+import           Foreign.C.String                                           (CString)
+import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
-import           GHC.Ptr                          (Ptr (..))
-import           Graphics.Vulkan.Common           (VkBool32,
-                                                   VkStructureType (..))
+import           GHC.Ptr                                                    (Ptr (..))
+import           Graphics.Vulkan.Base                                       (VkDeviceCreateInfo)
+import           Graphics.Vulkan.Common                                     (VkBool32,
+                                                                             VkStructureType (..))
+import           Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2 (VkPhysicalDeviceFeatures2KHR)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+import           System.IO.Unsafe                                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDeviceVariablePointerFeaturesKHR {
 --   >     VkStructureType sType;
@@ -107,6 +109,11 @@ instance VulkanMarshal VkPhysicalDeviceVariablePointerFeaturesKHR
         type StructFields VkPhysicalDeviceVariablePointerFeaturesKHR =
              '["sType", "pNext", "variablePointersStorageBuffer", -- ' closing tick for hsc2hs
                "variablePointers"]
+        type CUnionType VkPhysicalDeviceVariablePointerFeaturesKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDeviceVariablePointerFeaturesKHR =
+             'False -- ' closing tick for hsc2hs
+        type StructExtends VkPhysicalDeviceVariablePointerFeaturesKHR =
+             '[VkPhysicalDeviceFeatures2KHR, VkDeviceCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceVariablePointerFeaturesKHR where

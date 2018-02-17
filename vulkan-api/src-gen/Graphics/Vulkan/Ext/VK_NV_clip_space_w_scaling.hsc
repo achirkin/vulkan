@@ -36,6 +36,7 @@ import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
+import           Graphics.Vulkan.Base             (VkPipelineViewportStateCreateInfo)
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
@@ -90,6 +91,9 @@ instance VulkanMarshalPrim VkViewportWScalingNV where
 
 instance VulkanMarshal VkViewportWScalingNV where
         type StructFields VkViewportWScalingNV = '["xcoeff", "ycoeff"] -- ' closing tick for hsc2hs
+        type CUnionType VkViewportWScalingNV = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkViewportWScalingNV = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkViewportWScalingNV = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkXcoeff VkViewportWScalingNV where
         type VkXcoeffMType VkViewportWScalingNV = #{type float}
@@ -253,6 +257,12 @@ instance VulkanMarshal VkPipelineViewportWScalingStateCreateInfoNV
         type StructFields VkPipelineViewportWScalingStateCreateInfoNV =
              '["sType", "pNext", "viewportWScalingEnable", "viewportCount", -- ' closing tick for hsc2hs
                "pViewportWScalings"]
+        type CUnionType VkPipelineViewportWScalingStateCreateInfoNV =
+             'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPipelineViewportWScalingStateCreateInfoNV =
+             'False -- ' closing tick for hsc2hs
+        type StructExtends VkPipelineViewportWScalingStateCreateInfoNV =
+             '[VkPipelineViewportStateCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPipelineViewportWScalingStateCreateInfoNV where

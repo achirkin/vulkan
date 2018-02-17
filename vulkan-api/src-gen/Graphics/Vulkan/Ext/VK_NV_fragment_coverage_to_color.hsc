@@ -32,6 +32,7 @@ import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
+import           Graphics.Vulkan.Base             (VkPipelineMultisampleStateCreateInfo)
 import           Graphics.Vulkan.Common           (VkBool32, VkPipelineCoverageToColorStateCreateFlagsNV,
                                                    VkStructureType (..), Word32)
 import           Graphics.Vulkan.Marshal
@@ -103,6 +104,11 @@ instance VulkanMarshal VkPipelineCoverageToColorStateCreateInfoNV
         type StructFields VkPipelineCoverageToColorStateCreateInfoNV =
              '["sType", "pNext", "flags", "coverageToColorEnable", -- ' closing tick for hsc2hs
                "coverageToColorLocation"]
+        type CUnionType VkPipelineCoverageToColorStateCreateInfoNV = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPipelineCoverageToColorStateCreateInfoNV =
+             'False -- ' closing tick for hsc2hs
+        type StructExtends VkPipelineCoverageToColorStateCreateInfoNV =
+             '[VkPipelineMultisampleStateCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPipelineCoverageToColorStateCreateInfoNV where

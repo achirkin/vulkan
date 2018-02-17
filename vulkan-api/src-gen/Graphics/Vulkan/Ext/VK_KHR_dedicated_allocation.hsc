@@ -39,12 +39,15 @@ import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
+import           Graphics.Vulkan.Base             (VkMemoryAllocateInfo)
 import           Graphics.Vulkan.Common           (VkBool32, VkBuffer, VkImage,
                                                    VkStructureType (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+
+import           Graphics.Vulkan.Ext.VK_KHR_get_memory_requirements2
 
 -- | > typedef struct VkMemoryDedicatedRequirementsKHR {
 --   >     VkStructureType sType;
@@ -104,6 +107,10 @@ instance VulkanMarshal VkMemoryDedicatedRequirementsKHR where
         type StructFields VkMemoryDedicatedRequirementsKHR =
              '["sType", "pNext", "prefersDedicatedAllocation", -- ' closing tick for hsc2hs
                "requiresDedicatedAllocation"]
+        type CUnionType VkMemoryDedicatedRequirementsKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkMemoryDedicatedRequirementsKHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkMemoryDedicatedRequirementsKHR =
+             '[VkMemoryRequirements2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkMemoryDedicatedRequirementsKHR where
@@ -377,6 +384,10 @@ instance VulkanMarshalPrim VkMemoryDedicatedAllocateInfoKHR where
 instance VulkanMarshal VkMemoryDedicatedAllocateInfoKHR where
         type StructFields VkMemoryDedicatedAllocateInfoKHR =
              '["sType", "pNext", "image", "buffer"] -- ' closing tick for hsc2hs
+        type CUnionType VkMemoryDedicatedAllocateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkMemoryDedicatedAllocateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkMemoryDedicatedAllocateInfoKHR =
+             '[VkMemoryAllocateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkMemoryDedicatedAllocateInfoKHR where

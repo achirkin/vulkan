@@ -44,6 +44,8 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
+import           Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
+
 -- | > typedef struct VkTextureLODGatherFormatPropertiesAMD {
 --   >     VkStructureType sType;
 --   >     void*                            pNext;
@@ -102,6 +104,10 @@ instance VulkanMarshalPrim VkTextureLODGatherFormatPropertiesAMD
 instance VulkanMarshal VkTextureLODGatherFormatPropertiesAMD where
         type StructFields VkTextureLODGatherFormatPropertiesAMD =
              '["sType", "pNext", "supportsTextureGatherLODBiasAMD"] -- ' closing tick for hsc2hs
+        type CUnionType VkTextureLODGatherFormatPropertiesAMD = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkTextureLODGatherFormatPropertiesAMD = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkTextureLODGatherFormatPropertiesAMD =
+             '[VkImageFormatProperties2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkTextureLODGatherFormatPropertiesAMD where

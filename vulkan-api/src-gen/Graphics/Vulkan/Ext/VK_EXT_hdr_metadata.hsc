@@ -103,6 +103,9 @@ instance VulkanMarshal VkHdrMetadataEXT where
              '["sType", "pNext", "displayPrimaryRed", "displayPrimaryGreen", -- ' closing tick for hsc2hs
                "displayPrimaryBlue", "whitePoint", "maxLuminance", "minLuminance",
                "maxContentLightLevel", "maxFrameAverageLightLevel"]
+        type CUnionType VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkHdrMetadataEXT = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkHdrMetadataEXT where
         type VkSTypeMType VkHdrMetadataEXT = VkStructureType
@@ -660,6 +663,9 @@ instance VulkanMarshalPrim VkXYColorEXT where
 
 instance VulkanMarshal VkXYColorEXT where
         type StructFields VkXYColorEXT = '["x", "y"] -- ' closing tick for hsc2hs
+        type CUnionType VkXYColorEXT = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkXYColorEXT = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkXYColorEXT = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkX VkXYColorEXT where
         type VkXMType VkXYColorEXT = #{type float}

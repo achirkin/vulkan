@@ -42,6 +42,7 @@ import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           GHC.TypeLits                     (KnownNat, natVal') -- ' closing tick for hsc2hs
+import           Graphics.Vulkan.Base             (VkDeviceCreateInfo)
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
@@ -107,6 +108,9 @@ instance VulkanMarshal VkPhysicalDeviceGroupPropertiesKHX where
         type StructFields VkPhysicalDeviceGroupPropertiesKHX =
              '["sType", "pNext", "physicalDeviceCount", "physicalDevices", -- ' closing tick for hsc2hs
                "subsetAllocation"]
+        type CUnionType VkPhysicalDeviceGroupPropertiesKHX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDeviceGroupPropertiesKHX = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkPhysicalDeviceGroupPropertiesKHX = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceGroupPropertiesKHX where
@@ -471,6 +475,10 @@ instance VulkanMarshalPrim VkDeviceGroupDeviceCreateInfoKHX where
 instance VulkanMarshal VkDeviceGroupDeviceCreateInfoKHX where
         type StructFields VkDeviceGroupDeviceCreateInfoKHX =
              '["sType", "pNext", "physicalDeviceCount", "pPhysicalDevices"] -- ' closing tick for hsc2hs
+        type CUnionType VkDeviceGroupDeviceCreateInfoKHX = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkDeviceGroupDeviceCreateInfoKHX = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkDeviceGroupDeviceCreateInfoKHX =
+             '[VkDeviceCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkDeviceGroupDeviceCreateInfoKHX where

@@ -107,6 +107,9 @@ instance VulkanMarshalPrim VkBufferMemoryRequirementsInfo2KHR where
 instance VulkanMarshal VkBufferMemoryRequirementsInfo2KHR where
         type StructFields VkBufferMemoryRequirementsInfo2KHR =
              '["sType", "pNext", "buffer"] -- ' closing tick for hsc2hs
+        type CUnionType VkBufferMemoryRequirementsInfo2KHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkBufferMemoryRequirementsInfo2KHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkBufferMemoryRequirementsInfo2KHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkBufferMemoryRequirementsInfo2KHR where
@@ -326,6 +329,9 @@ instance VulkanMarshalPrim VkImageMemoryRequirementsInfo2KHR where
 instance VulkanMarshal VkImageMemoryRequirementsInfo2KHR where
         type StructFields VkImageMemoryRequirementsInfo2KHR =
              '["sType", "pNext", "image"] -- ' closing tick for hsc2hs
+        type CUnionType VkImageMemoryRequirementsInfo2KHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkImageMemoryRequirementsInfo2KHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkImageMemoryRequirementsInfo2KHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkImageMemoryRequirementsInfo2KHR where
@@ -546,6 +552,9 @@ instance VulkanMarshal VkImageSparseMemoryRequirementsInfo2KHR
          where
         type StructFields VkImageSparseMemoryRequirementsInfo2KHR =
              '["sType", "pNext", "image"] -- ' closing tick for hsc2hs
+        type CUnionType VkImageSparseMemoryRequirementsInfo2KHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkImageSparseMemoryRequirementsInfo2KHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkImageSparseMemoryRequirementsInfo2KHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkImageSparseMemoryRequirementsInfo2KHR where
@@ -768,6 +777,9 @@ instance VulkanMarshalPrim VkMemoryRequirements2KHR where
 instance VulkanMarshal VkMemoryRequirements2KHR where
         type StructFields VkMemoryRequirements2KHR =
              '["sType", "pNext", "memoryRequirements"] -- ' closing tick for hsc2hs
+        type CUnionType VkMemoryRequirements2KHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkMemoryRequirements2KHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkMemoryRequirements2KHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkMemoryRequirements2KHR
          where
@@ -966,6 +978,9 @@ instance VulkanMarshalPrim VkSparseImageMemoryRequirements2KHR
 instance VulkanMarshal VkSparseImageMemoryRequirements2KHR where
         type StructFields VkSparseImageMemoryRequirements2KHR =
              '["sType", "pNext", "memoryRequirements"] -- ' closing tick for hsc2hs
+        type CUnionType VkSparseImageMemoryRequirements2KHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSparseImageMemoryRequirements2KHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkSparseImageMemoryRequirements2KHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkSparseImageMemoryRequirements2KHR where

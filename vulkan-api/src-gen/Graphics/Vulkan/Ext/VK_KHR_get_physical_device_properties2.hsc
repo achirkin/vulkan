@@ -54,7 +54,8 @@ import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
-import           Graphics.Vulkan.Base             (VkFormatProperties,
+import           Graphics.Vulkan.Base             (VkDeviceCreateInfo,
+                                                   VkFormatProperties,
                                                    VkImageFormatProperties,
                                                    VkPhysicalDeviceFeatures,
                                                    VkPhysicalDeviceMemoryProperties,
@@ -122,6 +123,10 @@ instance VulkanMarshalPrim VkPhysicalDeviceFeatures2KHR where
 instance VulkanMarshal VkPhysicalDeviceFeatures2KHR where
         type StructFields VkPhysicalDeviceFeatures2KHR =
              '["sType", "pNext", "features"] -- ' closing tick for hsc2hs
+        type CUnionType VkPhysicalDeviceFeatures2KHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDeviceFeatures2KHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPhysicalDeviceFeatures2KHR =
+             '[VkDeviceCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceFeatures2KHR where
@@ -332,6 +337,9 @@ instance VulkanMarshalPrim VkPhysicalDeviceProperties2KHR where
 instance VulkanMarshal VkPhysicalDeviceProperties2KHR where
         type StructFields VkPhysicalDeviceProperties2KHR =
              '["sType", "pNext", "properties"] -- ' closing tick for hsc2hs
+        type CUnionType VkPhysicalDeviceProperties2KHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDeviceProperties2KHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkPhysicalDeviceProperties2KHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceProperties2KHR where
@@ -527,6 +535,9 @@ instance VulkanMarshalPrim VkFormatProperties2KHR where
 instance VulkanMarshal VkFormatProperties2KHR where
         type StructFields VkFormatProperties2KHR =
              '["sType", "pNext", "formatProperties"] -- ' closing tick for hsc2hs
+        type CUnionType VkFormatProperties2KHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkFormatProperties2KHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkFormatProperties2KHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkFormatProperties2KHR
          where
@@ -722,6 +733,9 @@ instance VulkanMarshalPrim VkImageFormatProperties2KHR where
 instance VulkanMarshal VkImageFormatProperties2KHR where
         type StructFields VkImageFormatProperties2KHR =
              '["sType", "pNext", "imageFormatProperties"] -- ' closing tick for hsc2hs
+        type CUnionType VkImageFormatProperties2KHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkImageFormatProperties2KHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkImageFormatProperties2KHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkImageFormatProperties2KHR
          where
@@ -931,6 +945,9 @@ instance VulkanMarshalPrim VkPhysicalDeviceImageFormatInfo2KHR
 instance VulkanMarshal VkPhysicalDeviceImageFormatInfo2KHR where
         type StructFields VkPhysicalDeviceImageFormatInfo2KHR =
              '["sType", "pNext", "format", "type", "tiling", "usage", "flags"] -- ' closing tick for hsc2hs
+        type CUnionType VkPhysicalDeviceImageFormatInfo2KHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDeviceImageFormatInfo2KHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPhysicalDeviceImageFormatInfo2KHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceImageFormatInfo2KHR where
@@ -1364,6 +1381,9 @@ instance VulkanMarshalPrim VkQueueFamilyProperties2KHR where
 instance VulkanMarshal VkQueueFamilyProperties2KHR where
         type StructFields VkQueueFamilyProperties2KHR =
              '["sType", "pNext", "queueFamilyProperties"] -- ' closing tick for hsc2hs
+        type CUnionType VkQueueFamilyProperties2KHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkQueueFamilyProperties2KHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkQueueFamilyProperties2KHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkQueueFamilyProperties2KHR
          where
@@ -1570,6 +1590,9 @@ instance VulkanMarshalPrim VkPhysicalDeviceMemoryProperties2KHR
 instance VulkanMarshal VkPhysicalDeviceMemoryProperties2KHR where
         type StructFields VkPhysicalDeviceMemoryProperties2KHR =
              '["sType", "pNext", "memoryProperties"] -- ' closing tick for hsc2hs
+        type CUnionType VkPhysicalDeviceMemoryProperties2KHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDeviceMemoryProperties2KHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkPhysicalDeviceMemoryProperties2KHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceMemoryProperties2KHR where
@@ -1782,6 +1805,9 @@ instance VulkanMarshalPrim VkSparseImageFormatProperties2KHR where
 instance VulkanMarshal VkSparseImageFormatProperties2KHR where
         type StructFields VkSparseImageFormatProperties2KHR =
              '["sType", "pNext", "properties"] -- ' closing tick for hsc2hs
+        type CUnionType VkSparseImageFormatProperties2KHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkSparseImageFormatProperties2KHR = 'True -- ' closing tick for hsc2hs
+        type StructExtends VkSparseImageFormatProperties2KHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkSparseImageFormatProperties2KHR where
@@ -1997,6 +2023,10 @@ instance VulkanMarshal VkPhysicalDeviceSparseImageFormatInfo2KHR
          where
         type StructFields VkPhysicalDeviceSparseImageFormatInfo2KHR =
              '["sType", "pNext", "format", "type", "samples", "usage", "tiling"] -- ' closing tick for hsc2hs
+        type CUnionType VkPhysicalDeviceSparseImageFormatInfo2KHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPhysicalDeviceSparseImageFormatInfo2KHR =
+             'False -- ' closing tick for hsc2hs
+        type StructExtends VkPhysicalDeviceSparseImageFormatInfo2KHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkPhysicalDeviceSparseImageFormatInfo2KHR where

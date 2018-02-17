@@ -42,6 +42,7 @@ import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
+import           Graphics.Vulkan.Base             (VkMemoryAllocateInfo)
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
@@ -104,6 +105,10 @@ instance VulkanMarshalPrim VkImportMemoryWin32HandleInfoNV where
 instance VulkanMarshal VkImportMemoryWin32HandleInfoNV where
         type StructFields VkImportMemoryWin32HandleInfoNV =
              '["sType", "pNext", "handleType", "handle"] -- ' closing tick for hsc2hs
+        type CUnionType VkImportMemoryWin32HandleInfoNV = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkImportMemoryWin32HandleInfoNV = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkImportMemoryWin32HandleInfoNV =
+             '[VkMemoryAllocateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkImportMemoryWin32HandleInfoNV where
@@ -369,6 +374,10 @@ instance VulkanMarshalPrim VkExportMemoryWin32HandleInfoNV where
 instance VulkanMarshal VkExportMemoryWin32HandleInfoNV where
         type StructFields VkExportMemoryWin32HandleInfoNV =
              '["sType", "pNext", "pAttributes", "dwAccess"] -- ' closing tick for hsc2hs
+        type CUnionType VkExportMemoryWin32HandleInfoNV = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkExportMemoryWin32HandleInfoNV = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkExportMemoryWin32HandleInfoNV =
+             '[VkMemoryAllocateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkSType VkExportMemoryWin32HandleInfoNV where

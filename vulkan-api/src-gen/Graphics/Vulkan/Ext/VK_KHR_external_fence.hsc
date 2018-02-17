@@ -37,6 +37,7 @@ import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
+import           Graphics.Vulkan.Base             (VkFenceCreateInfo)
 import           Graphics.Vulkan.Common           (VkExternalFenceHandleTypeFlagsKHR,
                                                    VkStructureType,
                                                    VkStructureType (..))
@@ -99,6 +100,10 @@ instance VulkanMarshalPrim VkExportFenceCreateInfoKHR where
 instance VulkanMarshal VkExportFenceCreateInfoKHR where
         type StructFields VkExportFenceCreateInfoKHR =
              '["sType", "pNext", "handleTypes"] -- ' closing tick for hsc2hs
+        type CUnionType VkExportFenceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkExportFenceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkExportFenceCreateInfoKHR =
+             '[VkFenceCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkExportFenceCreateInfoKHR
          where

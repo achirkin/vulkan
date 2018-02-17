@@ -41,6 +41,7 @@ import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
+import           Graphics.Vulkan.Base             (VkPresentInfoKHR)
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
@@ -100,6 +101,9 @@ instance VulkanMarshalPrim VkRefreshCycleDurationGOOGLE where
 instance VulkanMarshal VkRefreshCycleDurationGOOGLE where
         type StructFields VkRefreshCycleDurationGOOGLE =
              '["refreshDuration"] -- ' closing tick for hsc2hs
+        type CUnionType VkRefreshCycleDurationGOOGLE = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkRefreshCycleDurationGOOGLE = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkRefreshCycleDurationGOOGLE = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkRefreshDuration VkRefreshCycleDurationGOOGLE where
@@ -217,6 +221,9 @@ instance VulkanMarshal VkPastPresentationTimingGOOGLE where
         type StructFields VkPastPresentationTimingGOOGLE =
              '["presentID", "desiredPresentTime", "actualPresentTime", -- ' closing tick for hsc2hs
                "earliestPresentTime", "presentMargin"]
+        type CUnionType VkPastPresentationTimingGOOGLE = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPastPresentationTimingGOOGLE = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPastPresentationTimingGOOGLE = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasVkPresentID VkPastPresentationTimingGOOGLE where
@@ -557,6 +564,9 @@ instance VulkanMarshalPrim VkPresentTimesInfoGOOGLE where
 instance VulkanMarshal VkPresentTimesInfoGOOGLE where
         type StructFields VkPresentTimesInfoGOOGLE =
              '["sType", "pNext", "swapchainCount", "pTimes"] -- ' closing tick for hsc2hs
+        type CUnionType VkPresentTimesInfoGOOGLE = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPresentTimesInfoGOOGLE = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPresentTimesInfoGOOGLE = '[VkPresentInfoKHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkSType VkPresentTimesInfoGOOGLE
          where
@@ -808,6 +818,9 @@ instance VulkanMarshalPrim VkPresentTimeGOOGLE where
 instance VulkanMarshal VkPresentTimeGOOGLE where
         type StructFields VkPresentTimeGOOGLE =
              '["presentID", "desiredPresentTime"] -- ' closing tick for hsc2hs
+        type CUnionType VkPresentTimeGOOGLE = 'False -- ' closing tick for hsc2hs
+        type ReturnedOnly VkPresentTimeGOOGLE = 'False -- ' closing tick for hsc2hs
+        type StructExtends VkPresentTimeGOOGLE = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasVkPresentID VkPresentTimeGOOGLE
          where

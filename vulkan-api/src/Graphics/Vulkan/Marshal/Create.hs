@@ -22,11 +22,11 @@ module Graphics.Vulkan.Marshal.Create
     ( CreateVkStruct ()
     , createVk, (&*)
     , set, setVk, setVkRef, setStr, setStrRef, setStrListRef, setListRef
-    , SetOptionalFields (..)
+    , SetOptionalFields (..), HandleRemainingFields (..), HandleRemFields
     ) where
 
 import           Data.Coerce
-import           Data.Kind                        (Constraint)
+import           Data.Kind                        (Constraint, Type)
 import           Data.Type.Bool                   (If)
 import           Foreign.C.String                 (newCString)
 import           Foreign.C.Types                  (CChar)
@@ -91,15 +91,12 @@ instance Monad (CreateVkStruct x fs) where
 --   These finalizers make sure all `malloc`ed memory is released and
 --    no managed memory gets purged too early.
 createVk :: ( VulkanMarshal x, VulkanMarshalPrim x
-            , SetOptionalFields x (Difference (StructFields x) fs)
+            , HandleRemFields x fs
             ) => CreateVkStruct x fs () -> x
 createVk a = unsafeDupablePerformIO $ do
     x <- mallocVkData
     withPtr x $ \xptr -> do
-      ((cDeps, hFins), ()) <- unCreateVkStruct
-        ((coerce :: CreateVkStruct x fs ()
-                 -> CreateVkStruct x (Difference (StructFields x) fs) ()) a
-          >> setOptionalFields) xptr
+      ((cDeps, hFins), ()) <- unCreateVkStruct (a >> handleRemFields) xptr
       IO $ \s0 -> case (# cDeps, hFins #) of
         (# [], [] #) -> (# s0, () #)
         (# _ , _  #) -> case mkW (unsafeByteArray x) hFins s0 of
@@ -132,14 +129,12 @@ setVk :: forall fname x afs a
        . ( CanWriteField fname x
          , a ~ FieldType fname x
          , VulkanMarshal a
-         , SetOptionalFields a (Difference (StructFields a) afs)
+         , HandleRemFields a afs
          )
       => CreateVkStruct a afs ()
       -> CreateVkStruct x '[fname] ()
 setVk ma = CreateVkStruct $ \p ->
-  unCreateVkStruct
-    ((coerce ma :: CreateVkStruct a (Difference (StructFields a) afs) ())
-      >> setOptionalFields) (plusPtr p (fieldOffset @fname @x))
+  unCreateVkStruct (ma >> handleRemFields) (plusPtr p (fieldOffset @fname @x))
 
 -- | Write a String into a vulkan struct in-place.
 setStr :: forall fname x
@@ -244,7 +239,49 @@ type family Delete (a :: Symbol) (as :: [Symbol]) :: [Symbol] where
   Delete a (b ': bs) = b ': Delete a bs
 
 
-class SetOptionalFields (x :: *) (fs :: [Symbol]) where
+
+-- | Notify user if some required fields are missing.
+type HandleRemFields x fs = HandleRemainingFields x fs (CUnionType x)
+
+
+-- | Notify user if some required fields are missing and fill in optional fields.
+class CUnionType x ~ isUnion
+      => HandleRemainingFields (x :: Type) (fs :: [Symbol]) (isUnion :: Bool) where
+  handleRemFields :: CreateVkStruct x fs ()
+
+
+
+type SetUnionMsg x =
+   'Text "You have to set exactly one field for a union type " ':<>: 'ShowType x
+   ':$$: 'Text "Note, this type has following fields: "
+         ':<>: 'ShowType (StructFields x)
+
+instance ( TypeError ( SetUnionMsg x )
+         , CUnionType x ~ 'True
+         ) => HandleRemainingFields x '[] 'True where
+  handleRemFields = pure ()
+
+instance CUnionType x ~ 'True => HandleRemainingFields x '[f] 'True where
+  handleRemFields = pure ()
+
+instance ( TypeError ( SetUnionMsg x )
+         , CUnionType x ~ 'True
+         ) => HandleRemainingFields x (a ': b ': fs) 'True where
+  handleRemFields = pure ()
+
+
+instance ( SetOptionalFields x (Difference (StructFields x) fs)
+         , CUnionType x ~ 'False
+         ) => HandleRemainingFields x fs 'False where
+  handleRemFields
+    = ( coerce :: CreateVkStruct x (Difference (StructFields x) fs) ()
+               -> CreateVkStruct x fs ()
+      ) setOptionalFields
+
+
+
+
+class SetOptionalFields (x :: Type) (fs :: [Symbol]) where
   setOptionalFields :: CreateVkStruct x fs ()
 
 instance SetOptionalFields x '[] where
@@ -264,7 +301,7 @@ instance ( SetOptionalFields x fs
                                   :: Ptr (FieldType f x)
                               )
 
-type family FieldMustBeOptional (f :: Symbol) (x :: *) :: Constraint where
+type family FieldMustBeOptional (f :: Symbol) (x :: Type) :: Constraint where
   FieldMustBeOptional f x = If (FieldOptional f x) (() :: Constraint)
     ( TypeError
       ( 'Text "Non-optional field " ':<>: 'ShowType f
