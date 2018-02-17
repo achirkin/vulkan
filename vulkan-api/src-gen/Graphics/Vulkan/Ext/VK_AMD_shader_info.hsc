@@ -128,6 +128,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "numUsedVgprs" VkShaderResourceUsageAMD = 'False -- ' closing tick for hsc2hs
         type FieldOffset "numUsedVgprs" VkShaderResourceUsageAMD =
              #{offset VkShaderResourceUsageAMD, numUsedVgprs}
+        type FieldIsArray "numUsedVgprs" VkShaderResourceUsageAMD = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -170,6 +171,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "numUsedSgprs" VkShaderResourceUsageAMD = 'False -- ' closing tick for hsc2hs
         type FieldOffset "numUsedSgprs" VkShaderResourceUsageAMD =
              #{offset VkShaderResourceUsageAMD, numUsedSgprs}
+        type FieldIsArray "numUsedSgprs" VkShaderResourceUsageAMD = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -218,6 +220,9 @@ instance {-# OVERLAPPING #-}
                VkShaderResourceUsageAMD
              =
              #{offset VkShaderResourceUsageAMD, ldsSizePerLocalWorkGroup}
+        type FieldIsArray "ldsSizePerLocalWorkGroup"
+               VkShaderResourceUsageAMD
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -265,6 +270,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "ldsUsageSizeInBytes" VkShaderResourceUsageAMD =
              #{offset VkShaderResourceUsageAMD, ldsUsageSizeInBytes}
+        type FieldIsArray "ldsUsageSizeInBytes" VkShaderResourceUsageAMD =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -314,6 +321,8 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "scratchMemUsageInBytes" VkShaderResourceUsageAMD
              =
              #{offset VkShaderResourceUsageAMD, scratchMemUsageInBytes}
+        type FieldIsArray "scratchMemUsageInBytes" VkShaderResourceUsageAMD
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -441,6 +450,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "shaderStageMask" VkShaderStatisticsInfoAMD =
              #{offset VkShaderStatisticsInfoAMD, shaderStageMask}
+        type FieldIsArray "shaderStageMask" VkShaderStatisticsInfoAMD =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -487,6 +498,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "resourceUsage" VkShaderStatisticsInfoAMD =
              #{offset VkShaderStatisticsInfoAMD, resourceUsage}
+        type FieldIsArray "resourceUsage" VkShaderStatisticsInfoAMD =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -532,6 +545,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "numPhysicalVgprs" VkShaderStatisticsInfoAMD =
              #{offset VkShaderStatisticsInfoAMD, numPhysicalVgprs}
+        type FieldIsArray "numPhysicalVgprs" VkShaderStatisticsInfoAMD =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -577,6 +592,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "numPhysicalSgprs" VkShaderStatisticsInfoAMD =
              #{offset VkShaderStatisticsInfoAMD, numPhysicalSgprs}
+        type FieldIsArray "numPhysicalSgprs" VkShaderStatisticsInfoAMD =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -622,6 +639,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "numAvailableVgprs" VkShaderStatisticsInfoAMD =
              #{offset VkShaderStatisticsInfoAMD, numAvailableVgprs}
+        type FieldIsArray "numAvailableVgprs" VkShaderStatisticsInfoAMD =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -667,6 +686,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "numAvailableSgprs" VkShaderStatisticsInfoAMD =
              #{offset VkShaderStatisticsInfoAMD, numAvailableSgprs}
+        type FieldIsArray "numAvailableSgprs" VkShaderStatisticsInfoAMD =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -719,6 +740,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "computeWorkGroupSize" VkShaderStatisticsInfoAMD =
              #{offset VkShaderStatisticsInfoAMD, computeWorkGroupSize}
+        type FieldIsArray "computeWorkGroupSize" VkShaderStatisticsInfoAMD
+             = 'True -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

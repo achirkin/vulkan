@@ -131,6 +131,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkImportFenceFdInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkImportFenceFdInfoKHR =
              #{offset VkImportFenceFdInfoKHR, sType}
+        type FieldIsArray "sType" VkImportFenceFdInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -176,6 +177,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkImportFenceFdInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkImportFenceFdInfoKHR =
              #{offset VkImportFenceFdInfoKHR, pNext}
+        type FieldIsArray "pNext" VkImportFenceFdInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -221,6 +223,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "fence" VkImportFenceFdInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "fence" VkImportFenceFdInfoKHR =
              #{offset VkImportFenceFdInfoKHR, fence}
+        type FieldIsArray "fence" VkImportFenceFdInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -267,6 +270,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "flags" VkImportFenceFdInfoKHR = 'True -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkImportFenceFdInfoKHR =
              #{offset VkImportFenceFdInfoKHR, flags}
+        type FieldIsArray "flags" VkImportFenceFdInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -314,6 +318,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "handleType" VkImportFenceFdInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "handleType" VkImportFenceFdInfoKHR =
              #{offset VkImportFenceFdInfoKHR, handleType}
+        type FieldIsArray "handleType" VkImportFenceFdInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -360,6 +365,7 @@ instance {-# OVERLAPPING #-} HasField "fd" VkImportFenceFdInfoKHR
         type FieldOptional "fd" VkImportFenceFdInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "fd" VkImportFenceFdInfoKHR =
              #{offset VkImportFenceFdInfoKHR, fd}
+        type FieldIsArray "fd" VkImportFenceFdInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -480,6 +486,7 @@ instance {-# OVERLAPPING #-} HasField "sType" VkFenceGetFdInfoKHR
         type FieldOptional "sType" VkFenceGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkFenceGetFdInfoKHR =
              #{offset VkFenceGetFdInfoKHR, sType}
+        type FieldIsArray "sType" VkFenceGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -524,6 +531,7 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkFenceGetFdInfoKHR
         type FieldOptional "pNext" VkFenceGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkFenceGetFdInfoKHR =
              #{offset VkFenceGetFdInfoKHR, pNext}
+        type FieldIsArray "pNext" VkFenceGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -568,6 +576,7 @@ instance {-# OVERLAPPING #-} HasField "fence" VkFenceGetFdInfoKHR
         type FieldOptional "fence" VkFenceGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "fence" VkFenceGetFdInfoKHR =
              #{offset VkFenceGetFdInfoKHR, fence}
+        type FieldIsArray "fence" VkFenceGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -615,6 +624,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "handleType" VkFenceGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "handleType" VkFenceGetFdInfoKHR =
              #{offset VkFenceGetFdInfoKHR, handleType}
+        type FieldIsArray "handleType" VkFenceGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

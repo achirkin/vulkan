@@ -133,6 +133,7 @@ instance {-# OVERLAPPING #-} HasField "sType" VkDisplayPowerInfoEXT
         type FieldOptional "sType" VkDisplayPowerInfoEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkDisplayPowerInfoEXT =
              #{offset VkDisplayPowerInfoEXT, sType}
+        type FieldIsArray "sType" VkDisplayPowerInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -177,6 +178,7 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkDisplayPowerInfoEXT
         type FieldOptional "pNext" VkDisplayPowerInfoEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkDisplayPowerInfoEXT =
              #{offset VkDisplayPowerInfoEXT, pNext}
+        type FieldIsArray "pNext" VkDisplayPowerInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -224,6 +226,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "powerState" VkDisplayPowerInfoEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "powerState" VkDisplayPowerInfoEXT =
              #{offset VkDisplayPowerInfoEXT, powerState}
+        type FieldIsArray "powerState" VkDisplayPowerInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -335,6 +338,7 @@ instance {-# OVERLAPPING #-} HasField "sType" VkDeviceEventInfoEXT
         type FieldOptional "sType" VkDeviceEventInfoEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkDeviceEventInfoEXT =
              #{offset VkDeviceEventInfoEXT, sType}
+        type FieldIsArray "sType" VkDeviceEventInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -379,6 +383,7 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkDeviceEventInfoEXT
         type FieldOptional "pNext" VkDeviceEventInfoEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkDeviceEventInfoEXT =
              #{offset VkDeviceEventInfoEXT, pNext}
+        type FieldIsArray "pNext" VkDeviceEventInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -425,6 +430,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "deviceEvent" VkDeviceEventInfoEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "deviceEvent" VkDeviceEventInfoEXT =
              #{offset VkDeviceEventInfoEXT, deviceEvent}
+        type FieldIsArray "deviceEvent" VkDeviceEventInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -537,6 +543,7 @@ instance {-# OVERLAPPING #-} HasField "sType" VkDisplayEventInfoEXT
         type FieldOptional "sType" VkDisplayEventInfoEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkDisplayEventInfoEXT =
              #{offset VkDisplayEventInfoEXT, sType}
+        type FieldIsArray "sType" VkDisplayEventInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -581,6 +588,7 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkDisplayEventInfoEXT
         type FieldOptional "pNext" VkDisplayEventInfoEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkDisplayEventInfoEXT =
              #{offset VkDisplayEventInfoEXT, pNext}
+        type FieldIsArray "pNext" VkDisplayEventInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -628,6 +636,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "displayEvent" VkDisplayEventInfoEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "displayEvent" VkDisplayEventInfoEXT =
              #{offset VkDisplayEventInfoEXT, displayEvent}
+        type FieldIsArray "displayEvent" VkDisplayEventInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -747,6 +756,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkSwapchainCounterCreateInfoEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkSwapchainCounterCreateInfoEXT =
              #{offset VkSwapchainCounterCreateInfoEXT, sType}
+        type FieldIsArray "sType" VkSwapchainCounterCreateInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -794,6 +804,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkSwapchainCounterCreateInfoEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkSwapchainCounterCreateInfoEXT =
              #{offset VkSwapchainCounterCreateInfoEXT, pNext}
+        type FieldIsArray "pNext" VkSwapchainCounterCreateInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -846,6 +857,8 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "surfaceCounters" VkSwapchainCounterCreateInfoEXT
              =
              #{offset VkSwapchainCounterCreateInfoEXT, surfaceCounters}
+        type FieldIsArray "surfaceCounters" VkSwapchainCounterCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True

@@ -133,6 +133,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkXcbSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkXcbSurfaceCreateInfoKHR =
              #{offset VkXcbSurfaceCreateInfoKHR, sType}
+        type FieldIsArray "sType" VkXcbSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -179,6 +180,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkXcbSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkXcbSurfaceCreateInfoKHR =
              #{offset VkXcbSurfaceCreateInfoKHR, pNext}
+        type FieldIsArray "pNext" VkXcbSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -227,6 +229,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "flags" VkXcbSurfaceCreateInfoKHR = 'True -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkXcbSurfaceCreateInfoKHR =
              #{offset VkXcbSurfaceCreateInfoKHR, flags}
+        type FieldIsArray "flags" VkXcbSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -275,6 +278,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "connection" VkXcbSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "connection" VkXcbSurfaceCreateInfoKHR =
              #{offset VkXcbSurfaceCreateInfoKHR, connection}
+        type FieldIsArray "connection" VkXcbSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -321,6 +325,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "window" VkXcbSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "window" VkXcbSurfaceCreateInfoKHR =
              #{offset VkXcbSurfaceCreateInfoKHR, window}
+        type FieldIsArray "window" VkXcbSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

@@ -140,6 +140,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "dstBinding" VkDescriptorUpdateTemplateEntryKHR =
              #{offset VkDescriptorUpdateTemplateEntryKHR, dstBinding}
+        type FieldIsArray "dstBinding" VkDescriptorUpdateTemplateEntryKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -196,6 +198,9 @@ instance {-# OVERLAPPING #-}
                VkDescriptorUpdateTemplateEntryKHR
              =
              #{offset VkDescriptorUpdateTemplateEntryKHR, dstArrayElement}
+        type FieldIsArray "dstArrayElement"
+               VkDescriptorUpdateTemplateEntryKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -252,6 +257,9 @@ instance {-# OVERLAPPING #-}
                VkDescriptorUpdateTemplateEntryKHR
              =
              #{offset VkDescriptorUpdateTemplateEntryKHR, descriptorCount}
+        type FieldIsArray "descriptorCount"
+               VkDescriptorUpdateTemplateEntryKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -308,6 +316,9 @@ instance {-# OVERLAPPING #-}
                VkDescriptorUpdateTemplateEntryKHR
              =
              #{offset VkDescriptorUpdateTemplateEntryKHR, descriptorType}
+        type FieldIsArray "descriptorType"
+               VkDescriptorUpdateTemplateEntryKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -361,6 +372,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "offset" VkDescriptorUpdateTemplateEntryKHR =
              #{offset VkDescriptorUpdateTemplateEntryKHR, offset}
+        type FieldIsArray "offset" VkDescriptorUpdateTemplateEntryKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -412,6 +425,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "stride" VkDescriptorUpdateTemplateEntryKHR =
              #{offset VkDescriptorUpdateTemplateEntryKHR, stride}
+        type FieldIsArray "stride" VkDescriptorUpdateTemplateEntryKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -556,6 +571,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkDescriptorUpdateTemplateCreateInfoKHR =
              #{offset VkDescriptorUpdateTemplateCreateInfoKHR, sType}
+        type FieldIsArray "sType" VkDescriptorUpdateTemplateCreateInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -609,6 +626,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkDescriptorUpdateTemplateCreateInfoKHR =
              #{offset VkDescriptorUpdateTemplateCreateInfoKHR, pNext}
+        type FieldIsArray "pNext" VkDescriptorUpdateTemplateCreateInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -662,6 +681,8 @@ instance {-# OVERLAPPING #-}
              = 'True -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkDescriptorUpdateTemplateCreateInfoKHR =
              #{offset VkDescriptorUpdateTemplateCreateInfoKHR, flags}
+        type FieldIsArray "flags" VkDescriptorUpdateTemplateCreateInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -724,6 +745,9 @@ instance {-# OVERLAPPING #-}
                VkDescriptorUpdateTemplateCreateInfoKHR
              =
              #{offset VkDescriptorUpdateTemplateCreateInfoKHR, descriptorUpdateEntryCount}
+        type FieldIsArray "descriptorUpdateEntryCount"
+               VkDescriptorUpdateTemplateCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -786,6 +810,9 @@ instance {-# OVERLAPPING #-}
                VkDescriptorUpdateTemplateCreateInfoKHR
              =
              #{offset VkDescriptorUpdateTemplateCreateInfoKHR, pDescriptorUpdateEntries}
+        type FieldIsArray "pDescriptorUpdateEntries"
+               VkDescriptorUpdateTemplateCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -844,6 +871,9 @@ instance {-# OVERLAPPING #-}
                VkDescriptorUpdateTemplateCreateInfoKHR
              =
              #{offset VkDescriptorUpdateTemplateCreateInfoKHR, templateType}
+        type FieldIsArray "templateType"
+               VkDescriptorUpdateTemplateCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -905,6 +935,9 @@ instance {-# OVERLAPPING #-}
                VkDescriptorUpdateTemplateCreateInfoKHR
              =
              #{offset VkDescriptorUpdateTemplateCreateInfoKHR, descriptorSetLayout}
+        type FieldIsArray "descriptorSetLayout"
+               VkDescriptorUpdateTemplateCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -966,6 +999,9 @@ instance {-# OVERLAPPING #-}
                VkDescriptorUpdateTemplateCreateInfoKHR
              =
              #{offset VkDescriptorUpdateTemplateCreateInfoKHR, pipelineBindPoint}
+        type FieldIsArray "pipelineBindPoint"
+               VkDescriptorUpdateTemplateCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -1024,6 +1060,9 @@ instance {-# OVERLAPPING #-}
                VkDescriptorUpdateTemplateCreateInfoKHR
              =
              #{offset VkDescriptorUpdateTemplateCreateInfoKHR, pipelineLayout}
+        type FieldIsArray "pipelineLayout"
+               VkDescriptorUpdateTemplateCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -1076,6 +1115,8 @@ instance {-# OVERLAPPING #-}
              'True -- ' closing tick for hsc2hs
         type FieldOffset "set" VkDescriptorUpdateTemplateCreateInfoKHR =
              #{offset VkDescriptorUpdateTemplateCreateInfoKHR, set}
+        type FieldIsArray "set" VkDescriptorUpdateTemplateCreateInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True

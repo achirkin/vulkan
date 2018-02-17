@@ -144,6 +144,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkSurfaceCapabilities2EXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkSurfaceCapabilities2EXT =
              #{offset VkSurfaceCapabilities2EXT, sType}
+        type FieldIsArray "sType" VkSurfaceCapabilities2EXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -186,6 +187,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkSurfaceCapabilities2EXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkSurfaceCapabilities2EXT =
              #{offset VkSurfaceCapabilities2EXT, pNext}
+        type FieldIsArray "pNext" VkSurfaceCapabilities2EXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -229,6 +231,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "minImageCount" VkSurfaceCapabilities2EXT =
              #{offset VkSurfaceCapabilities2EXT, minImageCount}
+        type FieldIsArray "minImageCount" VkSurfaceCapabilities2EXT =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -273,6 +277,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "maxImageCount" VkSurfaceCapabilities2EXT =
              #{offset VkSurfaceCapabilities2EXT, maxImageCount}
+        type FieldIsArray "maxImageCount" VkSurfaceCapabilities2EXT =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -318,6 +324,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "currentExtent" VkSurfaceCapabilities2EXT =
              #{offset VkSurfaceCapabilities2EXT, currentExtent}
+        type FieldIsArray "currentExtent" VkSurfaceCapabilities2EXT =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -363,6 +371,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "minImageExtent" VkSurfaceCapabilities2EXT =
              #{offset VkSurfaceCapabilities2EXT, minImageExtent}
+        type FieldIsArray "minImageExtent" VkSurfaceCapabilities2EXT =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -408,6 +418,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "maxImageExtent" VkSurfaceCapabilities2EXT =
              #{offset VkSurfaceCapabilities2EXT, maxImageExtent}
+        type FieldIsArray "maxImageExtent" VkSurfaceCapabilities2EXT =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -453,6 +465,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "maxImageArrayLayers" VkSurfaceCapabilities2EXT =
              #{offset VkSurfaceCapabilities2EXT, maxImageArrayLayers}
+        type FieldIsArray "maxImageArrayLayers" VkSurfaceCapabilities2EXT =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -500,6 +514,8 @@ instance {-# OVERLAPPING #-}
              = 'True -- ' closing tick for hsc2hs
         type FieldOffset "supportedTransforms" VkSurfaceCapabilities2EXT =
              #{offset VkSurfaceCapabilities2EXT, supportedTransforms}
+        type FieldIsArray "supportedTransforms" VkSurfaceCapabilities2EXT =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -547,6 +563,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "currentTransform" VkSurfaceCapabilities2EXT =
              #{offset VkSurfaceCapabilities2EXT, currentTransform}
+        type FieldIsArray "currentTransform" VkSurfaceCapabilities2EXT =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -596,6 +614,9 @@ instance {-# OVERLAPPING #-}
                VkSurfaceCapabilities2EXT
              =
              #{offset VkSurfaceCapabilities2EXT, supportedCompositeAlpha}
+        type FieldIsArray "supportedCompositeAlpha"
+               VkSurfaceCapabilities2EXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -643,6 +664,8 @@ instance {-# OVERLAPPING #-}
              = 'True -- ' closing tick for hsc2hs
         type FieldOffset "supportedUsageFlags" VkSurfaceCapabilities2EXT =
              #{offset VkSurfaceCapabilities2EXT, supportedUsageFlags}
+        type FieldIsArray "supportedUsageFlags" VkSurfaceCapabilities2EXT =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -693,6 +716,9 @@ instance {-# OVERLAPPING #-}
                VkSurfaceCapabilities2EXT
              =
              #{offset VkSurfaceCapabilities2EXT, supportedSurfaceCounters}
+        type FieldIsArray "supportedSurfaceCounters"
+               VkSurfaceCapabilities2EXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True

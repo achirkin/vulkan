@@ -123,6 +123,7 @@ instance {-# OVERLAPPING #-} HasField "x" VkViewportSwizzleNV where
         type FieldOptional "x" VkViewportSwizzleNV = 'False -- ' closing tick for hsc2hs
         type FieldOffset "x" VkViewportSwizzleNV =
              #{offset VkViewportSwizzleNV, x}
+        type FieldIsArray "x" VkViewportSwizzleNV = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -166,6 +167,7 @@ instance {-# OVERLAPPING #-} HasField "y" VkViewportSwizzleNV where
         type FieldOptional "y" VkViewportSwizzleNV = 'False -- ' closing tick for hsc2hs
         type FieldOffset "y" VkViewportSwizzleNV =
              #{offset VkViewportSwizzleNV, y}
+        type FieldIsArray "y" VkViewportSwizzleNV = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -209,6 +211,7 @@ instance {-# OVERLAPPING #-} HasField "z" VkViewportSwizzleNV where
         type FieldOptional "z" VkViewportSwizzleNV = 'False -- ' closing tick for hsc2hs
         type FieldOffset "z" VkViewportSwizzleNV =
              #{offset VkViewportSwizzleNV, z}
+        type FieldIsArray "z" VkViewportSwizzleNV = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -252,6 +255,7 @@ instance {-# OVERLAPPING #-} HasField "w" VkViewportSwizzleNV where
         type FieldOptional "w" VkViewportSwizzleNV = 'False -- ' closing tick for hsc2hs
         type FieldOffset "w" VkViewportSwizzleNV =
              #{offset VkViewportSwizzleNV, w}
+        type FieldIsArray "w" VkViewportSwizzleNV = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -385,6 +389,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "sType" VkPipelineViewportSwizzleStateCreateInfoNV
              =
              #{offset VkPipelineViewportSwizzleStateCreateInfoNV, sType}
+        type FieldIsArray "sType"
+               VkPipelineViewportSwizzleStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -440,6 +447,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "pNext" VkPipelineViewportSwizzleStateCreateInfoNV
              =
              #{offset VkPipelineViewportSwizzleStateCreateInfoNV, pNext}
+        type FieldIsArray "pNext"
+               VkPipelineViewportSwizzleStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -495,6 +505,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "flags" VkPipelineViewportSwizzleStateCreateInfoNV
              =
              #{offset VkPipelineViewportSwizzleStateCreateInfoNV, flags}
+        type FieldIsArray "flags"
+               VkPipelineViewportSwizzleStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -554,6 +567,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineViewportSwizzleStateCreateInfoNV
              =
              #{offset VkPipelineViewportSwizzleStateCreateInfoNV, viewportCount}
+        type FieldIsArray "viewportCount"
+               VkPipelineViewportSwizzleStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -615,6 +631,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineViewportSwizzleStateCreateInfoNV
              =
              #{offset VkPipelineViewportSwizzleStateCreateInfoNV, pViewportSwizzles}
+        type FieldIsArray "pViewportSwizzles"
+               VkPipelineViewportSwizzleStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True

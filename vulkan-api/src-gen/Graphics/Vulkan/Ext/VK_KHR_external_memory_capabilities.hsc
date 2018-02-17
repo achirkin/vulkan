@@ -158,6 +158,9 @@ instance {-# OVERLAPPING #-}
                VkExternalMemoryPropertiesKHR
              =
              #{offset VkExternalMemoryPropertiesKHR, externalMemoryFeatures}
+        type FieldIsArray "externalMemoryFeatures"
+               VkExternalMemoryPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -213,6 +216,9 @@ instance {-# OVERLAPPING #-}
                VkExternalMemoryPropertiesKHR
              =
              #{offset VkExternalMemoryPropertiesKHR, exportFromImportedHandleTypes}
+        type FieldIsArray "exportFromImportedHandleTypes"
+               VkExternalMemoryPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -265,6 +271,9 @@ instance {-# OVERLAPPING #-}
                VkExternalMemoryPropertiesKHR
              =
              #{offset VkExternalMemoryPropertiesKHR, compatibleHandleTypes}
+        type FieldIsArray "compatibleHandleTypes"
+               VkExternalMemoryPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -393,6 +402,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "sType" VkPhysicalDeviceExternalImageFormatInfoKHR
              =
              #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, sType}
+        type FieldIsArray "sType"
+               VkPhysicalDeviceExternalImageFormatInfoKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -448,6 +460,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "pNext" VkPhysicalDeviceExternalImageFormatInfoKHR
              =
              #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, pNext}
+        type FieldIsArray "pNext"
+               VkPhysicalDeviceExternalImageFormatInfoKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -506,6 +521,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceExternalImageFormatInfoKHR
              =
              #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, handleType}
+        type FieldIsArray "handleType"
+               VkPhysicalDeviceExternalImageFormatInfoKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -632,6 +650,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkExternalImageFormatPropertiesKHR =
              #{offset VkExternalImageFormatPropertiesKHR, sType}
+        type FieldIsArray "sType" VkExternalImageFormatPropertiesKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -677,6 +697,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkExternalImageFormatPropertiesKHR =
              #{offset VkExternalImageFormatPropertiesKHR, pNext}
+        type FieldIsArray "pNext" VkExternalImageFormatPropertiesKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -731,6 +753,9 @@ instance {-# OVERLAPPING #-}
                VkExternalImageFormatPropertiesKHR
              =
              #{offset VkExternalImageFormatPropertiesKHR, externalMemoryProperties}
+        type FieldIsArray "externalMemoryProperties"
+               VkExternalImageFormatPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -854,6 +879,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkPhysicalDeviceExternalBufferInfoKHR =
              #{offset VkPhysicalDeviceExternalBufferInfoKHR, sType}
+        type FieldIsArray "sType" VkPhysicalDeviceExternalBufferInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -905,6 +932,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkPhysicalDeviceExternalBufferInfoKHR =
              #{offset VkPhysicalDeviceExternalBufferInfoKHR, pNext}
+        type FieldIsArray "pNext" VkPhysicalDeviceExternalBufferInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -957,6 +986,8 @@ instance {-# OVERLAPPING #-}
              'True -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkPhysicalDeviceExternalBufferInfoKHR =
              #{offset VkPhysicalDeviceExternalBufferInfoKHR, flags}
+        type FieldIsArray "flags" VkPhysicalDeviceExternalBufferInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -1009,6 +1040,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "usage" VkPhysicalDeviceExternalBufferInfoKHR =
              #{offset VkPhysicalDeviceExternalBufferInfoKHR, usage}
+        type FieldIsArray "usage" VkPhysicalDeviceExternalBufferInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1063,6 +1096,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "handleType" VkPhysicalDeviceExternalBufferInfoKHR
              =
              #{offset VkPhysicalDeviceExternalBufferInfoKHR, handleType}
+        type FieldIsArray "handleType"
+               VkPhysicalDeviceExternalBufferInfoKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1191,6 +1227,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkExternalBufferPropertiesKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkExternalBufferPropertiesKHR =
              #{offset VkExternalBufferPropertiesKHR, sType}
+        type FieldIsArray "sType" VkExternalBufferPropertiesKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1233,6 +1270,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkExternalBufferPropertiesKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkExternalBufferPropertiesKHR =
              #{offset VkExternalBufferPropertiesKHR, pNext}
+        type FieldIsArray "pNext" VkExternalBufferPropertiesKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1283,6 +1321,9 @@ instance {-# OVERLAPPING #-}
                VkExternalBufferPropertiesKHR
              =
              #{offset VkExternalBufferPropertiesKHR, externalMemoryProperties}
+        type FieldIsArray "externalMemoryProperties"
+               VkExternalBufferPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1405,6 +1446,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkPhysicalDeviceIDPropertiesKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkPhysicalDeviceIDPropertiesKHR =
              #{offset VkPhysicalDeviceIDPropertiesKHR, sType}
+        type FieldIsArray "sType" VkPhysicalDeviceIDPropertiesKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1447,6 +1489,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkPhysicalDeviceIDPropertiesKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkPhysicalDeviceIDPropertiesKHR =
              #{offset VkPhysicalDeviceIDPropertiesKHR, pNext}
+        type FieldIsArray "pNext" VkPhysicalDeviceIDPropertiesKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1496,6 +1539,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "deviceUUID" VkPhysicalDeviceIDPropertiesKHR =
              #{offset VkPhysicalDeviceIDPropertiesKHR, deviceUUID}
+        type FieldIsArray "deviceUUID" VkPhysicalDeviceIDPropertiesKHR =
+             'True -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1573,6 +1618,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "driverUUID" VkPhysicalDeviceIDPropertiesKHR =
              #{offset VkPhysicalDeviceIDPropertiesKHR, driverUUID}
+        type FieldIsArray "driverUUID" VkPhysicalDeviceIDPropertiesKHR =
+             'True -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1650,6 +1697,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "deviceLUID" VkPhysicalDeviceIDPropertiesKHR =
              #{offset VkPhysicalDeviceIDPropertiesKHR, deviceLUID}
+        type FieldIsArray "deviceLUID" VkPhysicalDeviceIDPropertiesKHR =
+             'True -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1722,6 +1771,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "deviceNodeMask" VkPhysicalDeviceIDPropertiesKHR =
              #{offset VkPhysicalDeviceIDPropertiesKHR, deviceNodeMask}
+        type FieldIsArray "deviceNodeMask" VkPhysicalDeviceIDPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1771,6 +1822,8 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "deviceLUIDValid" VkPhysicalDeviceIDPropertiesKHR
              =
              #{offset VkPhysicalDeviceIDPropertiesKHR, deviceLUIDValid}
+        type FieldIsArray "deviceLUIDValid" VkPhysicalDeviceIDPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

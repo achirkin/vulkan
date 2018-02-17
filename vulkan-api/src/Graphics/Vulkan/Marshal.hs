@@ -27,7 +27,7 @@ module Graphics.Vulkan.Marshal
   ( VulkanMarshal (..), VulkanMarshalPrim ()
   , VulkanPtr (..)
   , VkPtr (..)
-  , pattern VK_NULL_HANDLE
+  , pattern VK_NULL_HANDLE, pattern VK_NULL
   , clearStorable, withPtr
     -- * Type-indexed access to struct members
   , HasField (..), CanReadField (..), CanWriteField (..)
@@ -250,13 +250,15 @@ class HasField (fname :: Symbol) (a :: Type) where
   -- | Type of a field in a vulkan structure or union.
   type FieldType fname a     :: Type
   -- | Whether this field marked optional in vulkan specification.
-  --   Usually, this means that `VK_NULL_HANDLE` can be written in place
+  --   Usually, this means that `VK_NULL` can be written in place
   --   of this field.
   type FieldOptional fname a :: Bool
   -- | Offset of a field in bytes.
   type FieldOffset fname a :: Nat
+  -- | Whether this field is a fixed-length array stored directly in a struct.
+  type FieldIsArray fname a :: Bool
   -- | Whether this field marked optional in vulkan specification.
-  --   Usually, this means that `VK_NULL_HANDLE` can be written in place
+  --   Usually, this means that `VK_NULL` can be written in place
   --   of this field.
   fieldOptional :: Bool
   -- | Offset of a field in bytes.
@@ -271,6 +273,7 @@ class CanReadField fname a => CanWriteField (fname :: Symbol) (a :: Type) where
 
 class ( HasField fname a
       , IndexInBounds fname idx a
+      , FieldIsArray fname a ~ 'True
       ) => CanReadFieldArray (fname :: Symbol) (idx :: Nat) (a :: Type) where
   -- | Length of an array that is a field of a structure or union
   type FieldArrayLength fname a :: Nat
@@ -292,10 +295,12 @@ instance {-# OVERLAPPABLE #-}
 instance {-# OVERLAPPABLE #-}
          ( TypeError (NoField fname a)
          , IndexInBounds fname idx a
+         , FieldIsArray fname a ~ 'True
          ) => CanReadFieldArray fname idx a where
 instance {-# OVERLAPPABLE #-}
          ( TypeError (NoField fname a)
          , IndexInBounds fname idx a
+         , FieldIsArray fname a ~ 'True
          ) => CanWriteFieldArray fname idx a where
 
 type NoField (s :: Symbol) (a :: Type) = 'Text "Structure " ':<>: 'ShowType a

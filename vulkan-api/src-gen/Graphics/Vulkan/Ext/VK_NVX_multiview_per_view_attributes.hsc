@@ -166,6 +166,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
              =
              #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, sType}
+        type FieldIsArray "sType"
+               VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -221,6 +224,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
              =
              #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, pNext}
+        type FieldIsArray "pNext"
+               VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -277,6 +283,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
              =
              #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, perViewPositionAllComponents}
+        type FieldIsArray "perViewPositionAllComponents"
+               VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

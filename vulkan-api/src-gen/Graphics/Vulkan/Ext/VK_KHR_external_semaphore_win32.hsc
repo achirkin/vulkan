@@ -151,6 +151,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkImportSemaphoreWin32HandleInfoKHR =
              #{offset VkImportSemaphoreWin32HandleInfoKHR, sType}
+        type FieldIsArray "sType" VkImportSemaphoreWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -201,6 +203,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkImportSemaphoreWin32HandleInfoKHR =
              #{offset VkImportSemaphoreWin32HandleInfoKHR, pNext}
+        type FieldIsArray "pNext" VkImportSemaphoreWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -252,6 +256,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "semaphore" VkImportSemaphoreWin32HandleInfoKHR =
              #{offset VkImportSemaphoreWin32HandleInfoKHR, semaphore}
+        type FieldIsArray "semaphore" VkImportSemaphoreWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -305,6 +311,8 @@ instance {-# OVERLAPPING #-}
              'True -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkImportSemaphoreWin32HandleInfoKHR =
              #{offset VkImportSemaphoreWin32HandleInfoKHR, flags}
+        type FieldIsArray "flags" VkImportSemaphoreWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -356,6 +364,8 @@ instance {-# OVERLAPPING #-}
              = 'True -- ' closing tick for hsc2hs
         type FieldOffset "handleType" VkImportSemaphoreWin32HandleInfoKHR =
              #{offset VkImportSemaphoreWin32HandleInfoKHR, handleType}
+        type FieldIsArray "handleType" VkImportSemaphoreWin32HandleInfoKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -408,6 +418,8 @@ instance {-# OVERLAPPING #-}
              'True -- ' closing tick for hsc2hs
         type FieldOffset "handle" VkImportSemaphoreWin32HandleInfoKHR =
              #{offset VkImportSemaphoreWin32HandleInfoKHR, handle}
+        type FieldIsArray "handle" VkImportSemaphoreWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -457,6 +469,8 @@ instance {-# OVERLAPPING #-}
              'True -- ' closing tick for hsc2hs
         type FieldOffset "name" VkImportSemaphoreWin32HandleInfoKHR =
              #{offset VkImportSemaphoreWin32HandleInfoKHR, name}
+        type FieldIsArray "name" VkImportSemaphoreWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -596,6 +610,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkExportSemaphoreWin32HandleInfoKHR =
              #{offset VkExportSemaphoreWin32HandleInfoKHR, sType}
+        type FieldIsArray "sType" VkExportSemaphoreWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -646,6 +662,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkExportSemaphoreWin32HandleInfoKHR =
              #{offset VkExportSemaphoreWin32HandleInfoKHR, pNext}
+        type FieldIsArray "pNext" VkExportSemaphoreWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -699,6 +717,8 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "pAttributes" VkExportSemaphoreWin32HandleInfoKHR
              =
              #{offset VkExportSemaphoreWin32HandleInfoKHR, pAttributes}
+        type FieldIsArray "pAttributes" VkExportSemaphoreWin32HandleInfoKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -751,6 +771,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "dwAccess" VkExportSemaphoreWin32HandleInfoKHR =
              #{offset VkExportSemaphoreWin32HandleInfoKHR, dwAccess}
+        type FieldIsArray "dwAccess" VkExportSemaphoreWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -802,6 +824,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "name" VkExportSemaphoreWin32HandleInfoKHR =
              #{offset VkExportSemaphoreWin32HandleInfoKHR, name}
+        type FieldIsArray "name" VkExportSemaphoreWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -928,6 +952,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkD3D12FenceSubmitInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkD3D12FenceSubmitInfoKHR =
              #{offset VkD3D12FenceSubmitInfoKHR, sType}
+        type FieldIsArray "sType" VkD3D12FenceSubmitInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -974,6 +999,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkD3D12FenceSubmitInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkD3D12FenceSubmitInfoKHR =
              #{offset VkD3D12FenceSubmitInfoKHR, pNext}
+        type FieldIsArray "pNext" VkD3D12FenceSubmitInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1026,6 +1052,9 @@ instance {-# OVERLAPPING #-}
                VkD3D12FenceSubmitInfoKHR
              =
              #{offset VkD3D12FenceSubmitInfoKHR, waitSemaphoreValuesCount}
+        type FieldIsArray "waitSemaphoreValuesCount"
+               VkD3D12FenceSubmitInfoKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -1079,6 +1108,8 @@ instance {-# OVERLAPPING #-}
              = 'True -- ' closing tick for hsc2hs
         type FieldOffset "pWaitSemaphoreValues" VkD3D12FenceSubmitInfoKHR =
              #{offset VkD3D12FenceSubmitInfoKHR, pWaitSemaphoreValues}
+        type FieldIsArray "pWaitSemaphoreValues" VkD3D12FenceSubmitInfoKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -1137,6 +1168,9 @@ instance {-# OVERLAPPING #-}
                VkD3D12FenceSubmitInfoKHR
              =
              #{offset VkD3D12FenceSubmitInfoKHR, signalSemaphoreValuesCount}
+        type FieldIsArray "signalSemaphoreValuesCount"
+               VkD3D12FenceSubmitInfoKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -1192,6 +1226,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "pSignalSemaphoreValues" VkD3D12FenceSubmitInfoKHR
              =
              #{offset VkD3D12FenceSubmitInfoKHR, pSignalSemaphoreValues}
+        type FieldIsArray "pSignalSemaphoreValues"
+               VkD3D12FenceSubmitInfoKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -1328,6 +1365,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkSemaphoreGetWin32HandleInfoKHR =
              #{offset VkSemaphoreGetWin32HandleInfoKHR, sType}
+        type FieldIsArray "sType" VkSemaphoreGetWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1377,6 +1415,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkSemaphoreGetWin32HandleInfoKHR =
              #{offset VkSemaphoreGetWin32HandleInfoKHR, pNext}
+        type FieldIsArray "pNext" VkSemaphoreGetWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1428,6 +1467,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "semaphore" VkSemaphoreGetWin32HandleInfoKHR =
              #{offset VkSemaphoreGetWin32HandleInfoKHR, semaphore}
+        type FieldIsArray "semaphore" VkSemaphoreGetWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1479,6 +1520,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "handleType" VkSemaphoreGetWin32HandleInfoKHR =
              #{offset VkSemaphoreGetWin32HandleInfoKHR, handleType}
+        type FieldIsArray "handleType" VkSemaphoreGetWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

@@ -140,6 +140,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkExternalMemoryImageCreateInfoNV =
              #{offset VkExternalMemoryImageCreateInfoNV, sType}
+        type FieldIsArray "sType" VkExternalMemoryImageCreateInfoNV =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -189,6 +191,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkExternalMemoryImageCreateInfoNV =
              #{offset VkExternalMemoryImageCreateInfoNV, pNext}
+        type FieldIsArray "pNext" VkExternalMemoryImageCreateInfoNV =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -240,6 +244,8 @@ instance {-# OVERLAPPING #-}
              = 'True -- ' closing tick for hsc2hs
         type FieldOffset "handleTypes" VkExternalMemoryImageCreateInfoNV =
              #{offset VkExternalMemoryImageCreateInfoNV, handleTypes}
+        type FieldIsArray "handleTypes" VkExternalMemoryImageCreateInfoNV =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -363,6 +369,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkExportMemoryAllocateInfoNV = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkExportMemoryAllocateInfoNV =
              #{offset VkExportMemoryAllocateInfoNV, sType}
+        type FieldIsArray "sType" VkExportMemoryAllocateInfoNV = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -409,6 +416,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkExportMemoryAllocateInfoNV = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkExportMemoryAllocateInfoNV =
              #{offset VkExportMemoryAllocateInfoNV, pNext}
+        type FieldIsArray "pNext" VkExportMemoryAllocateInfoNV = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -458,6 +466,8 @@ instance {-# OVERLAPPING #-}
              'True -- ' closing tick for hsc2hs
         type FieldOffset "handleTypes" VkExportMemoryAllocateInfoNV =
              #{offset VkExportMemoryAllocateInfoNV, handleTypes}
+        type FieldIsArray "handleTypes" VkExportMemoryAllocateInfoNV =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True

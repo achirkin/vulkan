@@ -135,6 +135,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkXlibSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkXlibSurfaceCreateInfoKHR =
              #{offset VkXlibSurfaceCreateInfoKHR, sType}
+        type FieldIsArray "sType" VkXlibSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -181,6 +182,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkXlibSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkXlibSurfaceCreateInfoKHR =
              #{offset VkXlibSurfaceCreateInfoKHR, pNext}
+        type FieldIsArray "pNext" VkXlibSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -229,6 +231,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "flags" VkXlibSurfaceCreateInfoKHR = 'True -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkXlibSurfaceCreateInfoKHR =
              #{offset VkXlibSurfaceCreateInfoKHR, flags}
+        type FieldIsArray "flags" VkXlibSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -275,6 +278,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "dpy" VkXlibSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "dpy" VkXlibSurfaceCreateInfoKHR =
              #{offset VkXlibSurfaceCreateInfoKHR, dpy}
+        type FieldIsArray "dpy" VkXlibSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -320,6 +324,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "window" VkXlibSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "window" VkXlibSurfaceCreateInfoKHR =
              #{offset VkXlibSurfaceCreateInfoKHR, window}
+        type FieldIsArray "window" VkXlibSurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

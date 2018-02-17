@@ -47,7 +47,7 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
-import           Graphics.Vulkan.Ext.VK_KHR_get_memory_requirements2
+import Graphics.Vulkan.Ext.VK_KHR_get_memory_requirements2
 
 -- | > typedef struct VkMemoryDedicatedRequirementsKHR {
 --   >     VkStructureType sType;
@@ -142,6 +142,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkMemoryDedicatedRequirementsKHR =
              #{offset VkMemoryDedicatedRequirementsKHR, sType}
+        type FieldIsArray "sType" VkMemoryDedicatedRequirementsKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -186,6 +187,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkMemoryDedicatedRequirementsKHR =
              #{offset VkMemoryDedicatedRequirementsKHR, pNext}
+        type FieldIsArray "pNext" VkMemoryDedicatedRequirementsKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -240,6 +242,9 @@ instance {-# OVERLAPPING #-}
                VkMemoryDedicatedRequirementsKHR
              =
              #{offset VkMemoryDedicatedRequirementsKHR, prefersDedicatedAllocation}
+        type FieldIsArray "prefersDedicatedAllocation"
+               VkMemoryDedicatedRequirementsKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -295,6 +300,9 @@ instance {-# OVERLAPPING #-}
                VkMemoryDedicatedRequirementsKHR
              =
              #{offset VkMemoryDedicatedRequirementsKHR, requiresDedicatedAllocation}
+        type FieldIsArray "requiresDedicatedAllocation"
+               VkMemoryDedicatedRequirementsKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -419,6 +427,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkMemoryDedicatedAllocateInfoKHR =
              #{offset VkMemoryDedicatedAllocateInfoKHR, sType}
+        type FieldIsArray "sType" VkMemoryDedicatedAllocateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -468,6 +477,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkMemoryDedicatedAllocateInfoKHR =
              #{offset VkMemoryDedicatedAllocateInfoKHR, pNext}
+        type FieldIsArray "pNext" VkMemoryDedicatedAllocateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -516,6 +526,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "image" VkMemoryDedicatedAllocateInfoKHR = 'True -- ' closing tick for hsc2hs
         type FieldOffset "image" VkMemoryDedicatedAllocateInfoKHR =
              #{offset VkMemoryDedicatedAllocateInfoKHR, image}
+        type FieldIsArray "image" VkMemoryDedicatedAllocateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -565,6 +576,8 @@ instance {-# OVERLAPPING #-}
              'True -- ' closing tick for hsc2hs
         type FieldOffset "buffer" VkMemoryDedicatedAllocateInfoKHR =
              #{offset VkMemoryDedicatedAllocateInfoKHR, buffer}
+        type FieldIsArray "buffer" VkMemoryDedicatedAllocateInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True

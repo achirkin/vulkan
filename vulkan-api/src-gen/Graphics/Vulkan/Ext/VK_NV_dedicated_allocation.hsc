@@ -139,6 +139,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkDedicatedAllocationImageCreateInfoNV =
              #{offset VkDedicatedAllocationImageCreateInfoNV, sType}
+        type FieldIsArray "sType" VkDedicatedAllocationImageCreateInfoNV =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -191,6 +193,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkDedicatedAllocationImageCreateInfoNV =
              #{offset VkDedicatedAllocationImageCreateInfoNV, pNext}
+        type FieldIsArray "pNext" VkDedicatedAllocationImageCreateInfoNV =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -252,6 +256,9 @@ instance {-# OVERLAPPING #-}
                VkDedicatedAllocationImageCreateInfoNV
              =
              #{offset VkDedicatedAllocationImageCreateInfoNV, dedicatedAllocation}
+        type FieldIsArray "dedicatedAllocation"
+               VkDedicatedAllocationImageCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -381,6 +388,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkDedicatedAllocationBufferCreateInfoNV =
              #{offset VkDedicatedAllocationBufferCreateInfoNV, sType}
+        type FieldIsArray "sType" VkDedicatedAllocationBufferCreateInfoNV =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -434,6 +443,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkDedicatedAllocationBufferCreateInfoNV =
              #{offset VkDedicatedAllocationBufferCreateInfoNV, pNext}
+        type FieldIsArray "pNext" VkDedicatedAllocationBufferCreateInfoNV =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -495,6 +506,9 @@ instance {-# OVERLAPPING #-}
                VkDedicatedAllocationBufferCreateInfoNV
              =
              #{offset VkDedicatedAllocationBufferCreateInfoNV, dedicatedAllocation}
+        type FieldIsArray "dedicatedAllocation"
+               VkDedicatedAllocationBufferCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -630,6 +644,8 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "sType" VkDedicatedAllocationMemoryAllocateInfoNV
              =
              #{offset VkDedicatedAllocationMemoryAllocateInfoNV, sType}
+        type FieldIsArray "sType" VkDedicatedAllocationMemoryAllocateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -685,6 +701,8 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "pNext" VkDedicatedAllocationMemoryAllocateInfoNV
              =
              #{offset VkDedicatedAllocationMemoryAllocateInfoNV, pNext}
+        type FieldIsArray "pNext" VkDedicatedAllocationMemoryAllocateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -740,6 +758,8 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "image" VkDedicatedAllocationMemoryAllocateInfoNV
              =
              #{offset VkDedicatedAllocationMemoryAllocateInfoNV, image}
+        type FieldIsArray "image" VkDedicatedAllocationMemoryAllocateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -795,6 +815,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "buffer" VkDedicatedAllocationMemoryAllocateInfoNV
              =
              #{offset VkDedicatedAllocationMemoryAllocateInfoNV, buffer}
+        type FieldIsArray "buffer"
+               VkDedicatedAllocationMemoryAllocateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True

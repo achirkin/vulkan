@@ -136,6 +136,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkWin32SurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkWin32SurfaceCreateInfoKHR =
              #{offset VkWin32SurfaceCreateInfoKHR, sType}
+        type FieldIsArray "sType" VkWin32SurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -182,6 +183,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkWin32SurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkWin32SurfaceCreateInfoKHR =
              #{offset VkWin32SurfaceCreateInfoKHR, pNext}
+        type FieldIsArray "pNext" VkWin32SurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -230,6 +232,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "flags" VkWin32SurfaceCreateInfoKHR = 'True -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkWin32SurfaceCreateInfoKHR =
              #{offset VkWin32SurfaceCreateInfoKHR, flags}
+        type FieldIsArray "flags" VkWin32SurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -276,6 +279,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "hinstance" VkWin32SurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "hinstance" VkWin32SurfaceCreateInfoKHR =
              #{offset VkWin32SurfaceCreateInfoKHR, hinstance}
+        type FieldIsArray "hinstance" VkWin32SurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -323,6 +327,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "hwnd" VkWin32SurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "hwnd" VkWin32SurfaceCreateInfoKHR =
              #{offset VkWin32SurfaceCreateInfoKHR, hwnd}
+        type FieldIsArray "hwnd" VkWin32SurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

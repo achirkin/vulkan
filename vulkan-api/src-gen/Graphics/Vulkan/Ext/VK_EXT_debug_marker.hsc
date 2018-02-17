@@ -142,6 +142,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkDebugMarkerObjectNameInfoEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkDebugMarkerObjectNameInfoEXT =
              #{offset VkDebugMarkerObjectNameInfoEXT, sType}
+        type FieldIsArray "sType" VkDebugMarkerObjectNameInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -188,6 +189,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkDebugMarkerObjectNameInfoEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkDebugMarkerObjectNameInfoEXT =
              #{offset VkDebugMarkerObjectNameInfoEXT, pNext}
+        type FieldIsArray "pNext" VkDebugMarkerObjectNameInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -237,6 +239,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "objectType" VkDebugMarkerObjectNameInfoEXT =
              #{offset VkDebugMarkerObjectNameInfoEXT, objectType}
+        type FieldIsArray "objectType" VkDebugMarkerObjectNameInfoEXT =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -285,6 +289,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "object" VkDebugMarkerObjectNameInfoEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "object" VkDebugMarkerObjectNameInfoEXT =
              #{offset VkDebugMarkerObjectNameInfoEXT, object}
+        type FieldIsArray "object" VkDebugMarkerObjectNameInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -334,6 +339,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pObjectName" VkDebugMarkerObjectNameInfoEXT =
              #{offset VkDebugMarkerObjectNameInfoEXT, pObjectName}
+        type FieldIsArray "pObjectName" VkDebugMarkerObjectNameInfoEXT =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -465,6 +472,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkDebugMarkerObjectTagInfoEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkDebugMarkerObjectTagInfoEXT =
              #{offset VkDebugMarkerObjectTagInfoEXT, sType}
+        type FieldIsArray "sType" VkDebugMarkerObjectTagInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -511,6 +519,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkDebugMarkerObjectTagInfoEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkDebugMarkerObjectTagInfoEXT =
              #{offset VkDebugMarkerObjectTagInfoEXT, pNext}
+        type FieldIsArray "pNext" VkDebugMarkerObjectTagInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -560,6 +569,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "objectType" VkDebugMarkerObjectTagInfoEXT =
              #{offset VkDebugMarkerObjectTagInfoEXT, objectType}
+        type FieldIsArray "objectType" VkDebugMarkerObjectTagInfoEXT =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -608,6 +619,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "object" VkDebugMarkerObjectTagInfoEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "object" VkDebugMarkerObjectTagInfoEXT =
              #{offset VkDebugMarkerObjectTagInfoEXT, object}
+        type FieldIsArray "object" VkDebugMarkerObjectTagInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -654,6 +666,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "tagName" VkDebugMarkerObjectTagInfoEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "tagName" VkDebugMarkerObjectTagInfoEXT =
              #{offset VkDebugMarkerObjectTagInfoEXT, tagName}
+        type FieldIsArray "tagName" VkDebugMarkerObjectTagInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -703,6 +716,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "tagSize" VkDebugMarkerObjectTagInfoEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "tagSize" VkDebugMarkerObjectTagInfoEXT =
              #{offset VkDebugMarkerObjectTagInfoEXT, tagSize}
+        type FieldIsArray "tagSize" VkDebugMarkerObjectTagInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -750,6 +764,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pTag" VkDebugMarkerObjectTagInfoEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pTag" VkDebugMarkerObjectTagInfoEXT =
              #{offset VkDebugMarkerObjectTagInfoEXT, pTag}
+        type FieldIsArray "pTag" VkDebugMarkerObjectTagInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -879,6 +894,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkDebugMarkerMarkerInfoEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkDebugMarkerMarkerInfoEXT =
              #{offset VkDebugMarkerMarkerInfoEXT, sType}
+        type FieldIsArray "sType" VkDebugMarkerMarkerInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -925,6 +941,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkDebugMarkerMarkerInfoEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkDebugMarkerMarkerInfoEXT =
              #{offset VkDebugMarkerMarkerInfoEXT, pNext}
+        type FieldIsArray "pNext" VkDebugMarkerMarkerInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -972,6 +989,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pMarkerName" VkDebugMarkerMarkerInfoEXT =
              #{offset VkDebugMarkerMarkerInfoEXT, pMarkerName}
+        type FieldIsArray "pMarkerName" VkDebugMarkerMarkerInfoEXT = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1028,6 +1046,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "color" VkDebugMarkerMarkerInfoEXT = 'True -- ' closing tick for hsc2hs
         type FieldOffset "color" VkDebugMarkerMarkerInfoEXT =
              #{offset VkDebugMarkerMarkerInfoEXT, color}
+        type FieldIsArray "color" VkDebugMarkerMarkerInfoEXT = 'True -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True

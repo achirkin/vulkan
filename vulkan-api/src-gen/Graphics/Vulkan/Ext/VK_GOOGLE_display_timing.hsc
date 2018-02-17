@@ -134,6 +134,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "refreshDuration" VkRefreshCycleDurationGOOGLE =
              #{offset VkRefreshCycleDurationGOOGLE, refreshDuration}
+        type FieldIsArray "refreshDuration" VkRefreshCycleDurationGOOGLE =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -253,6 +255,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "presentID" VkPastPresentationTimingGOOGLE =
              #{offset VkPastPresentationTimingGOOGLE, presentID}
+        type FieldIsArray "presentID" VkPastPresentationTimingGOOGLE =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -307,6 +311,9 @@ instance {-# OVERLAPPING #-}
                VkPastPresentationTimingGOOGLE
              =
              #{offset VkPastPresentationTimingGOOGLE, desiredPresentTime}
+        type FieldIsArray "desiredPresentTime"
+               VkPastPresentationTimingGOOGLE
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -362,6 +369,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "actualPresentTime" VkPastPresentationTimingGOOGLE
              =
              #{offset VkPastPresentationTimingGOOGLE, actualPresentTime}
+        type FieldIsArray "actualPresentTime"
+               VkPastPresentationTimingGOOGLE
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -418,6 +428,9 @@ instance {-# OVERLAPPING #-}
                VkPastPresentationTimingGOOGLE
              =
              #{offset VkPastPresentationTimingGOOGLE, earliestPresentTime}
+        type FieldIsArray "earliestPresentTime"
+               VkPastPresentationTimingGOOGLE
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -470,6 +483,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "presentMargin" VkPastPresentationTimingGOOGLE =
              #{offset VkPastPresentationTimingGOOGLE, presentMargin}
+        type FieldIsArray "presentMargin" VkPastPresentationTimingGOOGLE =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -595,6 +610,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkPresentTimesInfoGOOGLE = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkPresentTimesInfoGOOGLE =
              #{offset VkPresentTimesInfoGOOGLE, sType}
+        type FieldIsArray "sType" VkPresentTimesInfoGOOGLE = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -640,6 +656,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkPresentTimesInfoGOOGLE = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkPresentTimesInfoGOOGLE =
              #{offset VkPresentTimesInfoGOOGLE, pNext}
+        type FieldIsArray "pNext" VkPresentTimesInfoGOOGLE = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -686,6 +703,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "swapchainCount" VkPresentTimesInfoGOOGLE =
              #{offset VkPresentTimesInfoGOOGLE, swapchainCount}
+        type FieldIsArray "swapchainCount" VkPresentTimesInfoGOOGLE =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -736,6 +755,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pTimes" VkPresentTimesInfoGOOGLE = 'True -- ' closing tick for hsc2hs
         type FieldOffset "pTimes" VkPresentTimesInfoGOOGLE =
              #{offset VkPresentTimesInfoGOOGLE, pTimes}
+        type FieldIsArray "pTimes" VkPresentTimesInfoGOOGLE = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -849,6 +869,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "presentID" VkPresentTimeGOOGLE = 'False -- ' closing tick for hsc2hs
         type FieldOffset "presentID" VkPresentTimeGOOGLE =
              #{offset VkPresentTimeGOOGLE, presentID}
+        type FieldIsArray "presentID" VkPresentTimeGOOGLE = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -895,6 +916,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "desiredPresentTime" VkPresentTimeGOOGLE =
              #{offset VkPresentTimeGOOGLE, desiredPresentTime}
+        type FieldIsArray "desiredPresentTime" VkPresentTimeGOOGLE = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

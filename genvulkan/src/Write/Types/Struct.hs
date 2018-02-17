@@ -233,6 +233,7 @@ genStructField structAttrs structNameTxt structType VkTypeMember{..} _offsetE SF
     valueTypeTxt = T.pack $ prettyPrint sfiType
     offsetExpr = "HSC2HS___ \"#{offset " <> structNameTxt
                                  <> ", " <> origNameTxt <> "}\""
+    fieldIsArrayT = T.pack . ('\'':) . show $ isJust sfiElemN
     elemIdxArg = case sfiElemN of
       Nothing -> ""
       Just _  -> "Int ->"
@@ -299,6 +300,7 @@ genStructField structAttrs structNameTxt structType VkTypeMember{..} _offsetE SF
               type FieldType $origNameTxtQQ $structTypeTxt = $valueTypeTxt
               type FieldOptional $origNameTxtQQ $structTypeTxt = $fieldOptionalT
               type FieldOffset $origNameTxtQQ $structTypeTxt = $offsetExpr
+              type FieldIsArray $origNameTxtQQ $structTypeTxt = $fieldIsArrayT
               {-# INLINE fieldOptional #-}
               fieldOptional = $fieldOptional
               {-# INLINE fieldOffset #-}

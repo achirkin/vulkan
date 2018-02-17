@@ -129,6 +129,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkImageFormatListCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkImageFormatListCreateInfoKHR =
              #{offset VkImageFormatListCreateInfoKHR, sType}
+        type FieldIsArray "sType" VkImageFormatListCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -175,6 +176,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkImageFormatListCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkImageFormatListCreateInfoKHR =
              #{offset VkImageFormatListCreateInfoKHR, pNext}
+        type FieldIsArray "pNext" VkImageFormatListCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -223,6 +225,8 @@ instance {-# OVERLAPPING #-}
              = 'True -- ' closing tick for hsc2hs
         type FieldOffset "viewFormatCount" VkImageFormatListCreateInfoKHR =
              #{offset VkImageFormatListCreateInfoKHR, viewFormatCount}
+        type FieldIsArray "viewFormatCount" VkImageFormatListCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -276,6 +280,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pViewFormats" VkImageFormatListCreateInfoKHR =
              #{offset VkImageFormatListCreateInfoKHR, pViewFormats}
+        type FieldIsArray "pViewFormats" VkImageFormatListCreateInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

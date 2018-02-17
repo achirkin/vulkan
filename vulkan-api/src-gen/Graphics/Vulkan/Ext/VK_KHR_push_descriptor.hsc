@@ -148,6 +148,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDevicePushDescriptorPropertiesKHR
              =
              #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, sType}
+        type FieldIsArray "sType"
+               VkPhysicalDevicePushDescriptorPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -204,6 +207,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDevicePushDescriptorPropertiesKHR
              =
              #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, pNext}
+        type FieldIsArray "pNext"
+               VkPhysicalDevicePushDescriptorPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -265,6 +271,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDevicePushDescriptorPropertiesKHR
              =
              #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, maxPushDescriptors}
+        type FieldIsArray "maxPushDescriptors"
+               VkPhysicalDevicePushDescriptorPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

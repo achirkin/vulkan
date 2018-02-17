@@ -132,6 +132,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkExportFenceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkExportFenceCreateInfoKHR =
              #{offset VkExportFenceCreateInfoKHR, sType}
+        type FieldIsArray "sType" VkExportFenceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -178,6 +179,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkExportFenceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkExportFenceCreateInfoKHR =
              #{offset VkExportFenceCreateInfoKHR, pNext}
+        type FieldIsArray "pNext" VkExportFenceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -226,6 +228,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "handleTypes" VkExportFenceCreateInfoKHR = 'True -- ' closing tick for hsc2hs
         type FieldOffset "handleTypes" VkExportFenceCreateInfoKHR =
              #{offset VkExportFenceCreateInfoKHR, handleTypes}
+        type FieldIsArray "handleTypes" VkExportFenceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True

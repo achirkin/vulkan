@@ -127,6 +127,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkBindBufferMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkBindBufferMemoryInfoKHR =
              #{offset VkBindBufferMemoryInfoKHR, sType}
+        type FieldIsArray "sType" VkBindBufferMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -173,6 +174,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkBindBufferMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkBindBufferMemoryInfoKHR =
              #{offset VkBindBufferMemoryInfoKHR, pNext}
+        type FieldIsArray "pNext" VkBindBufferMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -219,6 +221,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "buffer" VkBindBufferMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "buffer" VkBindBufferMemoryInfoKHR =
              #{offset VkBindBufferMemoryInfoKHR, buffer}
+        type FieldIsArray "buffer" VkBindBufferMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -265,6 +268,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "memory" VkBindBufferMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "memory" VkBindBufferMemoryInfoKHR =
              #{offset VkBindBufferMemoryInfoKHR, memory}
+        type FieldIsArray "memory" VkBindBufferMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -313,6 +317,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "memoryOffset" VkBindBufferMemoryInfoKHR =
              #{offset VkBindBufferMemoryInfoKHR, memoryOffset}
+        type FieldIsArray "memoryOffset" VkBindBufferMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -437,6 +442,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkBindImageMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkBindImageMemoryInfoKHR =
              #{offset VkBindImageMemoryInfoKHR, sType}
+        type FieldIsArray "sType" VkBindImageMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -482,6 +488,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkBindImageMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkBindImageMemoryInfoKHR =
              #{offset VkBindImageMemoryInfoKHR, pNext}
+        type FieldIsArray "pNext" VkBindImageMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -527,6 +534,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "image" VkBindImageMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "image" VkBindImageMemoryInfoKHR =
              #{offset VkBindImageMemoryInfoKHR, image}
+        type FieldIsArray "image" VkBindImageMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -572,6 +580,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "memory" VkBindImageMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "memory" VkBindImageMemoryInfoKHR =
              #{offset VkBindImageMemoryInfoKHR, memory}
+        type FieldIsArray "memory" VkBindImageMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -619,6 +628,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "memoryOffset" VkBindImageMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "memoryOffset" VkBindImageMemoryInfoKHR =
              #{offset VkBindImageMemoryInfoKHR, memoryOffset}
+        type FieldIsArray "memoryOffset" VkBindImageMemoryInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

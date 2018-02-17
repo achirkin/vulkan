@@ -91,7 +91,8 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
-import           Graphics.Vulkan.Ext.VK_KHR_bind_memory2
+import Graphics.Vulkan.Ext.VK_KHR_bind_memory2
+
 -- | > typedef struct VkMemoryAllocateFlagsInfoKHX {
 --   >     VkStructureType sType;
 --   >     const void*                      pNext;
@@ -181,6 +182,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkMemoryAllocateFlagsInfoKHX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkMemoryAllocateFlagsInfoKHX =
              #{offset VkMemoryAllocateFlagsInfoKHX, sType}
+        type FieldIsArray "sType" VkMemoryAllocateFlagsInfoKHX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -227,6 +229,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkMemoryAllocateFlagsInfoKHX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkMemoryAllocateFlagsInfoKHX =
              #{offset VkMemoryAllocateFlagsInfoKHX, pNext}
+        type FieldIsArray "pNext" VkMemoryAllocateFlagsInfoKHX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -275,6 +278,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "flags" VkMemoryAllocateFlagsInfoKHX = 'True -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkMemoryAllocateFlagsInfoKHX =
              #{offset VkMemoryAllocateFlagsInfoKHX, flags}
+        type FieldIsArray "flags" VkMemoryAllocateFlagsInfoKHX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -322,6 +326,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "deviceMask" VkMemoryAllocateFlagsInfoKHX =
              #{offset VkMemoryAllocateFlagsInfoKHX, deviceMask}
+        type FieldIsArray "deviceMask" VkMemoryAllocateFlagsInfoKHX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -453,6 +459,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkDeviceGroupRenderPassBeginInfoKHX =
              #{offset VkDeviceGroupRenderPassBeginInfoKHX, sType}
+        type FieldIsArray "sType" VkDeviceGroupRenderPassBeginInfoKHX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -503,6 +511,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkDeviceGroupRenderPassBeginInfoKHX =
              #{offset VkDeviceGroupRenderPassBeginInfoKHX, pNext}
+        type FieldIsArray "pNext" VkDeviceGroupRenderPassBeginInfoKHX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -553,6 +563,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "deviceMask" VkDeviceGroupRenderPassBeginInfoKHX =
              #{offset VkDeviceGroupRenderPassBeginInfoKHX, deviceMask}
+        type FieldIsArray "deviceMask" VkDeviceGroupRenderPassBeginInfoKHX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -614,6 +626,9 @@ instance {-# OVERLAPPING #-}
                VkDeviceGroupRenderPassBeginInfoKHX
              =
              #{offset VkDeviceGroupRenderPassBeginInfoKHX, deviceRenderAreaCount}
+        type FieldIsArray "deviceRenderAreaCount"
+               VkDeviceGroupRenderPassBeginInfoKHX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -672,6 +687,9 @@ instance {-# OVERLAPPING #-}
                VkDeviceGroupRenderPassBeginInfoKHX
              =
              #{offset VkDeviceGroupRenderPassBeginInfoKHX, pDeviceRenderAreas}
+        type FieldIsArray "pDeviceRenderAreas"
+               VkDeviceGroupRenderPassBeginInfoKHX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -806,6 +824,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkDeviceGroupCommandBufferBeginInfoKHX =
              #{offset VkDeviceGroupCommandBufferBeginInfoKHX, sType}
+        type FieldIsArray "sType" VkDeviceGroupCommandBufferBeginInfoKHX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -858,6 +878,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkDeviceGroupCommandBufferBeginInfoKHX =
              #{offset VkDeviceGroupCommandBufferBeginInfoKHX, pNext}
+        type FieldIsArray "pNext" VkDeviceGroupCommandBufferBeginInfoKHX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -914,6 +936,9 @@ instance {-# OVERLAPPING #-}
                VkDeviceGroupCommandBufferBeginInfoKHX
              =
              #{offset VkDeviceGroupCommandBufferBeginInfoKHX, deviceMask}
+        type FieldIsArray "deviceMask"
+               VkDeviceGroupCommandBufferBeginInfoKHX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1042,6 +1067,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkDeviceGroupSubmitInfoKHX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkDeviceGroupSubmitInfoKHX =
              #{offset VkDeviceGroupSubmitInfoKHX, sType}
+        type FieldIsArray "sType" VkDeviceGroupSubmitInfoKHX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1088,6 +1114,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkDeviceGroupSubmitInfoKHX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkDeviceGroupSubmitInfoKHX =
              #{offset VkDeviceGroupSubmitInfoKHX, pNext}
+        type FieldIsArray "pNext" VkDeviceGroupSubmitInfoKHX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1136,6 +1163,8 @@ instance {-# OVERLAPPING #-}
              = 'True -- ' closing tick for hsc2hs
         type FieldOffset "waitSemaphoreCount" VkDeviceGroupSubmitInfoKHX =
              #{offset VkDeviceGroupSubmitInfoKHX, waitSemaphoreCount}
+        type FieldIsArray "waitSemaphoreCount" VkDeviceGroupSubmitInfoKHX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -1194,6 +1223,9 @@ instance {-# OVERLAPPING #-}
                VkDeviceGroupSubmitInfoKHX
              =
              #{offset VkDeviceGroupSubmitInfoKHX, pWaitSemaphoreDeviceIndices}
+        type FieldIsArray "pWaitSemaphoreDeviceIndices"
+               VkDeviceGroupSubmitInfoKHX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1246,6 +1278,8 @@ instance {-# OVERLAPPING #-}
              = 'True -- ' closing tick for hsc2hs
         type FieldOffset "commandBufferCount" VkDeviceGroupSubmitInfoKHX =
              #{offset VkDeviceGroupSubmitInfoKHX, commandBufferCount}
+        type FieldIsArray "commandBufferCount" VkDeviceGroupSubmitInfoKHX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -1304,6 +1338,9 @@ instance {-# OVERLAPPING #-}
                VkDeviceGroupSubmitInfoKHX
              =
              #{offset VkDeviceGroupSubmitInfoKHX, pCommandBufferDeviceMasks}
+        type FieldIsArray "pCommandBufferDeviceMasks"
+               VkDeviceGroupSubmitInfoKHX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1359,6 +1396,8 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "signalSemaphoreCount" VkDeviceGroupSubmitInfoKHX
              =
              #{offset VkDeviceGroupSubmitInfoKHX, signalSemaphoreCount}
+        type FieldIsArray "signalSemaphoreCount" VkDeviceGroupSubmitInfoKHX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -1418,6 +1457,9 @@ instance {-# OVERLAPPING #-}
                VkDeviceGroupSubmitInfoKHX
              =
              #{offset VkDeviceGroupSubmitInfoKHX, pSignalSemaphoreDeviceIndices}
+        type FieldIsArray "pSignalSemaphoreDeviceIndices"
+               VkDeviceGroupSubmitInfoKHX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1561,6 +1603,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkDeviceGroupBindSparseInfoKHX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkDeviceGroupBindSparseInfoKHX =
              #{offset VkDeviceGroupBindSparseInfoKHX, sType}
+        type FieldIsArray "sType" VkDeviceGroupBindSparseInfoKHX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1607,6 +1650,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkDeviceGroupBindSparseInfoKHX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkDeviceGroupBindSparseInfoKHX =
              #{offset VkDeviceGroupBindSparseInfoKHX, pNext}
+        type FieldIsArray "pNext" VkDeviceGroupBindSparseInfoKHX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1659,6 +1703,9 @@ instance {-# OVERLAPPING #-}
                VkDeviceGroupBindSparseInfoKHX
              =
              #{offset VkDeviceGroupBindSparseInfoKHX, resourceDeviceIndex}
+        type FieldIsArray "resourceDeviceIndex"
+               VkDeviceGroupBindSparseInfoKHX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1714,6 +1761,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "memoryDeviceIndex" VkDeviceGroupBindSparseInfoKHX
              =
              #{offset VkDeviceGroupBindSparseInfoKHX, memoryDeviceIndex}
+        type FieldIsArray "memoryDeviceIndex"
+               VkDeviceGroupBindSparseInfoKHX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1992,6 +2042,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkBindBufferMemoryDeviceGroupInfoKHX =
              #{offset VkBindBufferMemoryDeviceGroupInfoKHX, sType}
+        type FieldIsArray "sType" VkBindBufferMemoryDeviceGroupInfoKHX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2042,6 +2094,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkBindBufferMemoryDeviceGroupInfoKHX =
              #{offset VkBindBufferMemoryDeviceGroupInfoKHX, pNext}
+        type FieldIsArray "pNext" VkBindBufferMemoryDeviceGroupInfoKHX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2098,6 +2152,9 @@ instance {-# OVERLAPPING #-}
                VkBindBufferMemoryDeviceGroupInfoKHX
              =
              #{offset VkBindBufferMemoryDeviceGroupInfoKHX, deviceIndexCount}
+        type FieldIsArray "deviceIndexCount"
+               VkBindBufferMemoryDeviceGroupInfoKHX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -2156,6 +2213,9 @@ instance {-# OVERLAPPING #-}
                VkBindBufferMemoryDeviceGroupInfoKHX
              =
              #{offset VkBindBufferMemoryDeviceGroupInfoKHX, pDeviceIndices}
+        type FieldIsArray "pDeviceIndices"
+               VkBindBufferMemoryDeviceGroupInfoKHX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2290,6 +2350,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkBindImageMemoryDeviceGroupInfoKHX =
              #{offset VkBindImageMemoryDeviceGroupInfoKHX, sType}
+        type FieldIsArray "sType" VkBindImageMemoryDeviceGroupInfoKHX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2340,6 +2402,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkBindImageMemoryDeviceGroupInfoKHX =
              #{offset VkBindImageMemoryDeviceGroupInfoKHX, pNext}
+        type FieldIsArray "pNext" VkBindImageMemoryDeviceGroupInfoKHX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2396,6 +2460,9 @@ instance {-# OVERLAPPING #-}
                VkBindImageMemoryDeviceGroupInfoKHX
              =
              #{offset VkBindImageMemoryDeviceGroupInfoKHX, deviceIndexCount}
+        type FieldIsArray "deviceIndexCount"
+               VkBindImageMemoryDeviceGroupInfoKHX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -2452,6 +2519,9 @@ instance {-# OVERLAPPING #-}
                VkBindImageMemoryDeviceGroupInfoKHX
              =
              #{offset VkBindImageMemoryDeviceGroupInfoKHX, pDeviceIndices}
+        type FieldIsArray "pDeviceIndices"
+               VkBindImageMemoryDeviceGroupInfoKHX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2507,6 +2577,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "SFRRectCount" VkBindImageMemoryDeviceGroupInfoKHX
              =
              #{offset VkBindImageMemoryDeviceGroupInfoKHX, SFRRectCount}
+        type FieldIsArray "SFRRectCount"
+               VkBindImageMemoryDeviceGroupInfoKHX
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -2560,6 +2633,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pSFRRects" VkBindImageMemoryDeviceGroupInfoKHX =
              #{offset VkBindImageMemoryDeviceGroupInfoKHX, pSFRRects}
+        type FieldIsArray "pSFRRects" VkBindImageMemoryDeviceGroupInfoKHX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2715,6 +2790,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkDeviceGroupPresentCapabilitiesKHX =
              #{offset VkDeviceGroupPresentCapabilitiesKHX, sType}
+        type FieldIsArray "sType" VkDeviceGroupPresentCapabilitiesKHX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2760,6 +2837,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkDeviceGroupPresentCapabilitiesKHX =
              #{offset VkDeviceGroupPresentCapabilitiesKHX, pNext}
+        type FieldIsArray "pNext" VkDeviceGroupPresentCapabilitiesKHX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2814,6 +2893,8 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "presentMask" VkDeviceGroupPresentCapabilitiesKHX
              =
              #{offset VkDeviceGroupPresentCapabilitiesKHX, presentMask}
+        type FieldIsArray "presentMask" VkDeviceGroupPresentCapabilitiesKHX
+             = 'True -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2894,6 +2975,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "modes" VkDeviceGroupPresentCapabilitiesKHX =
              #{offset VkDeviceGroupPresentCapabilitiesKHX, modes}
+        type FieldIsArray "modes" VkDeviceGroupPresentCapabilitiesKHX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3080,6 +3163,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkImageSwapchainCreateInfoKHX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkImageSwapchainCreateInfoKHX =
              #{offset VkImageSwapchainCreateInfoKHX, sType}
+        type FieldIsArray "sType" VkImageSwapchainCreateInfoKHX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3126,6 +3210,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkImageSwapchainCreateInfoKHX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkImageSwapchainCreateInfoKHX =
              #{offset VkImageSwapchainCreateInfoKHX, pNext}
+        type FieldIsArray "pNext" VkImageSwapchainCreateInfoKHX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3175,6 +3260,8 @@ instance {-# OVERLAPPING #-}
              'True -- ' closing tick for hsc2hs
         type FieldOffset "swapchain" VkImageSwapchainCreateInfoKHX =
              #{offset VkImageSwapchainCreateInfoKHX, swapchain}
+        type FieldIsArray "swapchain" VkImageSwapchainCreateInfoKHX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -3300,6 +3387,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkBindImageMemorySwapchainInfoKHX =
              #{offset VkBindImageMemorySwapchainInfoKHX, sType}
+        type FieldIsArray "sType" VkBindImageMemorySwapchainInfoKHX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3349,6 +3438,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkBindImageMemorySwapchainInfoKHX =
              #{offset VkBindImageMemorySwapchainInfoKHX, pNext}
+        type FieldIsArray "pNext" VkBindImageMemorySwapchainInfoKHX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3400,6 +3491,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "swapchain" VkBindImageMemorySwapchainInfoKHX =
              #{offset VkBindImageMemorySwapchainInfoKHX, swapchain}
+        type FieldIsArray "swapchain" VkBindImageMemorySwapchainInfoKHX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3451,6 +3544,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "imageIndex" VkBindImageMemorySwapchainInfoKHX =
              #{offset VkBindImageMemorySwapchainInfoKHX, imageIndex}
+        type FieldIsArray "imageIndex" VkBindImageMemorySwapchainInfoKHX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3577,6 +3672,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkAcquireNextImageInfoKHX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkAcquireNextImageInfoKHX =
              #{offset VkAcquireNextImageInfoKHX, sType}
+        type FieldIsArray "sType" VkAcquireNextImageInfoKHX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3623,6 +3719,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkAcquireNextImageInfoKHX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkAcquireNextImageInfoKHX =
              #{offset VkAcquireNextImageInfoKHX, pNext}
+        type FieldIsArray "pNext" VkAcquireNextImageInfoKHX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3670,6 +3767,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "swapchain" VkAcquireNextImageInfoKHX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "swapchain" VkAcquireNextImageInfoKHX =
              #{offset VkAcquireNextImageInfoKHX, swapchain}
+        type FieldIsArray "swapchain" VkAcquireNextImageInfoKHX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3716,6 +3814,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "timeout" VkAcquireNextImageInfoKHX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "timeout" VkAcquireNextImageInfoKHX =
              #{offset VkAcquireNextImageInfoKHX, timeout}
+        type FieldIsArray "timeout" VkAcquireNextImageInfoKHX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3762,6 +3861,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "semaphore" VkAcquireNextImageInfoKHX = 'True -- ' closing tick for hsc2hs
         type FieldOffset "semaphore" VkAcquireNextImageInfoKHX =
              #{offset VkAcquireNextImageInfoKHX, semaphore}
+        type FieldIsArray "semaphore" VkAcquireNextImageInfoKHX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -3808,6 +3908,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "fence" VkAcquireNextImageInfoKHX = 'True -- ' closing tick for hsc2hs
         type FieldOffset "fence" VkAcquireNextImageInfoKHX =
              #{offset VkAcquireNextImageInfoKHX, fence}
+        type FieldIsArray "fence" VkAcquireNextImageInfoKHX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -3854,6 +3955,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "deviceMask" VkAcquireNextImageInfoKHX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "deviceMask" VkAcquireNextImageInfoKHX =
              #{offset VkAcquireNextImageInfoKHX, deviceMask}
+        type FieldIsArray "deviceMask" VkAcquireNextImageInfoKHX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -3986,6 +4088,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkDeviceGroupPresentInfoKHX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkDeviceGroupPresentInfoKHX =
              #{offset VkDeviceGroupPresentInfoKHX, sType}
+        type FieldIsArray "sType" VkDeviceGroupPresentInfoKHX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4032,6 +4135,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkDeviceGroupPresentInfoKHX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkDeviceGroupPresentInfoKHX =
              #{offset VkDeviceGroupPresentInfoKHX, pNext}
+        type FieldIsArray "pNext" VkDeviceGroupPresentInfoKHX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4080,6 +4184,8 @@ instance {-# OVERLAPPING #-}
              'True -- ' closing tick for hsc2hs
         type FieldOffset "swapchainCount" VkDeviceGroupPresentInfoKHX =
              #{offset VkDeviceGroupPresentInfoKHX, swapchainCount}
+        type FieldIsArray "swapchainCount" VkDeviceGroupPresentInfoKHX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -4130,6 +4236,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pDeviceMasks" VkDeviceGroupPresentInfoKHX =
              #{offset VkDeviceGroupPresentInfoKHX, pDeviceMasks}
+        type FieldIsArray "pDeviceMasks" VkDeviceGroupPresentInfoKHX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4180,6 +4288,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "mode" VkDeviceGroupPresentInfoKHX = 'False -- ' closing tick for hsc2hs
         type FieldOffset "mode" VkDeviceGroupPresentInfoKHX =
              #{offset VkDeviceGroupPresentInfoKHX, mode}
+        type FieldIsArray "mode" VkDeviceGroupPresentInfoKHX = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4308,6 +4417,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkDeviceGroupSwapchainCreateInfoKHX =
              #{offset VkDeviceGroupSwapchainCreateInfoKHX, sType}
+        type FieldIsArray "sType" VkDeviceGroupSwapchainCreateInfoKHX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4358,6 +4469,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkDeviceGroupSwapchainCreateInfoKHX =
              #{offset VkDeviceGroupSwapchainCreateInfoKHX, pNext}
+        type FieldIsArray "pNext" VkDeviceGroupSwapchainCreateInfoKHX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -4409,6 +4522,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "modes" VkDeviceGroupSwapchainCreateInfoKHX =
              #{offset VkDeviceGroupSwapchainCreateInfoKHX, modes}
+        type FieldIsArray "modes" VkDeviceGroupSwapchainCreateInfoKHX =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

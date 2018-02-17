@@ -130,6 +130,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkViSurfaceCreateInfoNN = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkViSurfaceCreateInfoNN =
              #{offset VkViSurfaceCreateInfoNN, sType}
+        type FieldIsArray "sType" VkViSurfaceCreateInfoNN = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -175,6 +176,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkViSurfaceCreateInfoNN = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkViSurfaceCreateInfoNN =
              #{offset VkViSurfaceCreateInfoNN, pNext}
+        type FieldIsArray "pNext" VkViSurfaceCreateInfoNN = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -222,6 +224,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "flags" VkViSurfaceCreateInfoNN = 'True -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkViSurfaceCreateInfoNN =
              #{offset VkViSurfaceCreateInfoNN, flags}
+        type FieldIsArray "flags" VkViSurfaceCreateInfoNN = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -267,6 +270,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "window" VkViSurfaceCreateInfoNN = 'False -- ' closing tick for hsc2hs
         type FieldOffset "window" VkViSurfaceCreateInfoNN =
              #{offset VkViSurfaceCreateInfoNN, window}
+        type FieldIsArray "window" VkViSurfaceCreateInfoNN = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

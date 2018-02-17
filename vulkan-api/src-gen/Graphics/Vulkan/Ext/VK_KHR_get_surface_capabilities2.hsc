@@ -138,6 +138,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkPhysicalDeviceSurfaceInfo2KHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkPhysicalDeviceSurfaceInfo2KHR =
              #{offset VkPhysicalDeviceSurfaceInfo2KHR, sType}
+        type FieldIsArray "sType" VkPhysicalDeviceSurfaceInfo2KHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -185,6 +186,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkPhysicalDeviceSurfaceInfo2KHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkPhysicalDeviceSurfaceInfo2KHR =
              #{offset VkPhysicalDeviceSurfaceInfo2KHR, pNext}
+        type FieldIsArray "pNext" VkPhysicalDeviceSurfaceInfo2KHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -234,6 +236,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "surface" VkPhysicalDeviceSurfaceInfo2KHR =
              #{offset VkPhysicalDeviceSurfaceInfo2KHR, surface}
+        type FieldIsArray "surface" VkPhysicalDeviceSurfaceInfo2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -350,6 +354,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkSurfaceCapabilities2KHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkSurfaceCapabilities2KHR =
              #{offset VkSurfaceCapabilities2KHR, sType}
+        type FieldIsArray "sType" VkSurfaceCapabilities2KHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -392,6 +397,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkSurfaceCapabilities2KHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkSurfaceCapabilities2KHR =
              #{offset VkSurfaceCapabilities2KHR, pNext}
+        type FieldIsArray "pNext" VkSurfaceCapabilities2KHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -437,6 +443,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "surfaceCapabilities" VkSurfaceCapabilities2KHR =
              #{offset VkSurfaceCapabilities2KHR, surfaceCapabilities}
+        type FieldIsArray "surfaceCapabilities" VkSurfaceCapabilities2KHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -546,6 +554,7 @@ instance {-# OVERLAPPING #-} HasField "sType" VkSurfaceFormat2KHR
         type FieldOptional "sType" VkSurfaceFormat2KHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkSurfaceFormat2KHR =
              #{offset VkSurfaceFormat2KHR, sType}
+        type FieldIsArray "sType" VkSurfaceFormat2KHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -586,6 +595,7 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkSurfaceFormat2KHR
         type FieldOptional "pNext" VkSurfaceFormat2KHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkSurfaceFormat2KHR =
              #{offset VkSurfaceFormat2KHR, pNext}
+        type FieldIsArray "pNext" VkSurfaceFormat2KHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -628,6 +638,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "surfaceFormat" VkSurfaceFormat2KHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "surfaceFormat" VkSurfaceFormat2KHR =
              #{offset VkSurfaceFormat2KHR, surfaceFormat}
+        type FieldIsArray "surfaceFormat" VkSurfaceFormat2KHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

@@ -192,6 +192,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
              =
              #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, sType}
+        type FieldIsArray "sType"
+               VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -250,6 +253,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
              =
              #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, pNext}
+        type FieldIsArray "pNext"
+               VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -312,6 +318,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
              =
              #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, advancedBlendCoherentOperations}
+        type FieldIsArray "advancedBlendCoherentOperations"
+               VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -475,6 +484,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
              =
              #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, sType}
+        type FieldIsArray "sType"
+               VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -530,6 +542,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
              =
              #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, pNext}
+        type FieldIsArray "pNext"
+               VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -586,6 +601,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
              =
              #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendMaxColorAttachments}
+        type FieldIsArray "advancedBlendMaxColorAttachments"
+               VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -642,6 +660,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
              =
              #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendIndependentBlend}
+        type FieldIsArray "advancedBlendIndependentBlend"
+               VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -698,6 +719,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
              =
              #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendNonPremultipliedSrcColor}
+        type FieldIsArray "advancedBlendNonPremultipliedSrcColor"
+               VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -754,6 +778,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
              =
              #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendNonPremultipliedDstColor}
+        type FieldIsArray "advancedBlendNonPremultipliedDstColor"
+               VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -810,6 +837,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
              =
              #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendCorrelatedOverlap}
+        type FieldIsArray "advancedBlendCorrelatedOverlap"
+               VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -866,6 +896,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
              =
              #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendAllOperations}
+        type FieldIsArray "advancedBlendAllOperations"
+               VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1029,6 +1062,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineColorBlendAdvancedStateCreateInfoEXT
              =
              #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, sType}
+        type FieldIsArray "sType"
+               VkPipelineColorBlendAdvancedStateCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1087,6 +1123,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineColorBlendAdvancedStateCreateInfoEXT
              =
              #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, pNext}
+        type FieldIsArray "pNext"
+               VkPipelineColorBlendAdvancedStateCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1149,6 +1188,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineColorBlendAdvancedStateCreateInfoEXT
              =
              #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, srcPremultiplied}
+        type FieldIsArray "srcPremultiplied"
+               VkPipelineColorBlendAdvancedStateCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1211,6 +1253,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineColorBlendAdvancedStateCreateInfoEXT
              =
              #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, dstPremultiplied}
+        type FieldIsArray "dstPremultiplied"
+               VkPipelineColorBlendAdvancedStateCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1272,6 +1317,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineColorBlendAdvancedStateCreateInfoEXT
              =
              #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, blendOverlap}
+        type FieldIsArray "blendOverlap"
+               VkPipelineColorBlendAdvancedStateCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

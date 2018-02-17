@@ -147,6 +147,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkImportMemoryWin32HandleInfoKHR =
              #{offset VkImportMemoryWin32HandleInfoKHR, sType}
+        type FieldIsArray "sType" VkImportMemoryWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -196,6 +197,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkImportMemoryWin32HandleInfoKHR =
              #{offset VkImportMemoryWin32HandleInfoKHR, pNext}
+        type FieldIsArray "pNext" VkImportMemoryWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -247,6 +249,8 @@ instance {-# OVERLAPPING #-}
              'True -- ' closing tick for hsc2hs
         type FieldOffset "handleType" VkImportMemoryWin32HandleInfoKHR =
              #{offset VkImportMemoryWin32HandleInfoKHR, handleType}
+        type FieldIsArray "handleType" VkImportMemoryWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -297,6 +301,8 @@ instance {-# OVERLAPPING #-}
              'True -- ' closing tick for hsc2hs
         type FieldOffset "handle" VkImportMemoryWin32HandleInfoKHR =
              #{offset VkImportMemoryWin32HandleInfoKHR, handle}
+        type FieldIsArray "handle" VkImportMemoryWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -345,6 +351,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "name" VkImportMemoryWin32HandleInfoKHR = 'True -- ' closing tick for hsc2hs
         type FieldOffset "name" VkImportMemoryWin32HandleInfoKHR =
              #{offset VkImportMemoryWin32HandleInfoKHR, name}
+        type FieldIsArray "name" VkImportMemoryWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -475,6 +482,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkExportMemoryWin32HandleInfoKHR =
              #{offset VkExportMemoryWin32HandleInfoKHR, sType}
+        type FieldIsArray "sType" VkExportMemoryWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -524,6 +532,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkExportMemoryWin32HandleInfoKHR =
              #{offset VkExportMemoryWin32HandleInfoKHR, pNext}
+        type FieldIsArray "pNext" VkExportMemoryWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -575,6 +584,8 @@ instance {-# OVERLAPPING #-}
              'True -- ' closing tick for hsc2hs
         type FieldOffset "pAttributes" VkExportMemoryWin32HandleInfoKHR =
              #{offset VkExportMemoryWin32HandleInfoKHR, pAttributes}
+        type FieldIsArray "pAttributes" VkExportMemoryWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -626,6 +637,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "dwAccess" VkExportMemoryWin32HandleInfoKHR =
              #{offset VkExportMemoryWin32HandleInfoKHR, dwAccess}
+        type FieldIsArray "dwAccess" VkExportMemoryWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -674,6 +687,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "name" VkExportMemoryWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "name" VkExportMemoryWin32HandleInfoKHR =
              #{offset VkExportMemoryWin32HandleInfoKHR, name}
+        type FieldIsArray "name" VkExportMemoryWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -801,6 +815,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkMemoryWin32HandlePropertiesKHR =
              #{offset VkMemoryWin32HandlePropertiesKHR, sType}
+        type FieldIsArray "sType" VkMemoryWin32HandlePropertiesKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -845,6 +860,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkMemoryWin32HandlePropertiesKHR =
              #{offset VkMemoryWin32HandlePropertiesKHR, pNext}
+        type FieldIsArray "pNext" VkMemoryWin32HandlePropertiesKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -893,6 +909,8 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "memoryTypeBits" VkMemoryWin32HandlePropertiesKHR
              =
              #{offset VkMemoryWin32HandlePropertiesKHR, memoryTypeBits}
+        type FieldIsArray "memoryTypeBits" VkMemoryWin32HandlePropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1010,6 +1028,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkMemoryGetWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkMemoryGetWin32HandleInfoKHR =
              #{offset VkMemoryGetWin32HandleInfoKHR, sType}
+        type FieldIsArray "sType" VkMemoryGetWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1056,6 +1075,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkMemoryGetWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkMemoryGetWin32HandleInfoKHR =
              #{offset VkMemoryGetWin32HandleInfoKHR, pNext}
+        type FieldIsArray "pNext" VkMemoryGetWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1103,6 +1123,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "memory" VkMemoryGetWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "memory" VkMemoryGetWin32HandleInfoKHR =
              #{offset VkMemoryGetWin32HandleInfoKHR, memory}
+        type FieldIsArray "memory" VkMemoryGetWin32HandleInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1152,6 +1173,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "handleType" VkMemoryGetWin32HandleInfoKHR =
              #{offset VkMemoryGetWin32HandleInfoKHR, handleType}
+        type FieldIsArray "handleType" VkMemoryGetWin32HandleInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

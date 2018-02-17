@@ -144,6 +144,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "display" VkDisplayPropertiesKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "display" VkDisplayPropertiesKHR =
              #{offset VkDisplayPropertiesKHR, display}
+        type FieldIsArray "display" VkDisplayPropertiesKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -185,6 +186,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "displayName" VkDisplayPropertiesKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "displayName" VkDisplayPropertiesKHR =
              #{offset VkDisplayPropertiesKHR, displayName}
+        type FieldIsArray "displayName" VkDisplayPropertiesKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -229,6 +231,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "physicalDimensions" VkDisplayPropertiesKHR =
              #{offset VkDisplayPropertiesKHR, physicalDimensions}
+        type FieldIsArray "physicalDimensions" VkDisplayPropertiesKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -274,6 +278,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "physicalResolution" VkDisplayPropertiesKHR =
              #{offset VkDisplayPropertiesKHR, physicalResolution}
+        type FieldIsArray "physicalResolution" VkDisplayPropertiesKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -320,6 +326,8 @@ instance {-# OVERLAPPING #-}
              'True -- ' closing tick for hsc2hs
         type FieldOffset "supportedTransforms" VkDisplayPropertiesKHR =
              #{offset VkDisplayPropertiesKHR, supportedTransforms}
+        type FieldIsArray "supportedTransforms" VkDisplayPropertiesKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -365,6 +373,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "planeReorderPossible" VkDisplayPropertiesKHR =
              #{offset VkDisplayPropertiesKHR, planeReorderPossible}
+        type FieldIsArray "planeReorderPossible" VkDisplayPropertiesKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -410,6 +420,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "persistentContent" VkDisplayPropertiesKHR =
              #{offset VkDisplayPropertiesKHR, persistentContent}
+        type FieldIsArray "persistentContent" VkDisplayPropertiesKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -537,6 +549,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "visibleRegion" VkDisplayModeParametersKHR =
              #{offset VkDisplayModeParametersKHR, visibleRegion}
+        type FieldIsArray "visibleRegion" VkDisplayModeParametersKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -586,6 +600,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "refreshRate" VkDisplayModeParametersKHR =
              #{offset VkDisplayModeParametersKHR, refreshRate}
+        type FieldIsArray "refreshRate" VkDisplayModeParametersKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -703,6 +718,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "displayMode" VkDisplayModePropertiesKHR =
              #{offset VkDisplayModePropertiesKHR, displayMode}
+        type FieldIsArray "displayMode" VkDisplayModePropertiesKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -748,6 +764,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "parameters" VkDisplayModePropertiesKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "parameters" VkDisplayModePropertiesKHR =
              #{offset VkDisplayModePropertiesKHR, parameters}
+        type FieldIsArray "parameters" VkDisplayModePropertiesKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -858,6 +875,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkDisplayModeCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkDisplayModeCreateInfoKHR =
              #{offset VkDisplayModeCreateInfoKHR, sType}
+        type FieldIsArray "sType" VkDisplayModeCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -904,6 +922,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkDisplayModeCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkDisplayModeCreateInfoKHR =
              #{offset VkDisplayModeCreateInfoKHR, pNext}
+        type FieldIsArray "pNext" VkDisplayModeCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -952,6 +971,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "flags" VkDisplayModeCreateInfoKHR = 'True -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkDisplayModeCreateInfoKHR =
              #{offset VkDisplayModeCreateInfoKHR, flags}
+        type FieldIsArray "flags" VkDisplayModeCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -1000,6 +1020,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "parameters" VkDisplayModeCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "parameters" VkDisplayModeCreateInfoKHR =
              #{offset VkDisplayModeCreateInfoKHR, parameters}
+        type FieldIsArray "parameters" VkDisplayModeCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1132,6 +1153,8 @@ instance {-# OVERLAPPING #-}
              'True -- ' closing tick for hsc2hs
         type FieldOffset "supportedAlpha" VkDisplayPlaneCapabilitiesKHR =
              #{offset VkDisplayPlaneCapabilitiesKHR, supportedAlpha}
+        type FieldIsArray "supportedAlpha" VkDisplayPlaneCapabilitiesKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -1179,6 +1202,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "minSrcPosition" VkDisplayPlaneCapabilitiesKHR =
              #{offset VkDisplayPlaneCapabilitiesKHR, minSrcPosition}
+        type FieldIsArray "minSrcPosition" VkDisplayPlaneCapabilitiesKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1226,6 +1251,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "maxSrcPosition" VkDisplayPlaneCapabilitiesKHR =
              #{offset VkDisplayPlaneCapabilitiesKHR, maxSrcPosition}
+        type FieldIsArray "maxSrcPosition" VkDisplayPlaneCapabilitiesKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1272,6 +1299,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "minSrcExtent" VkDisplayPlaneCapabilitiesKHR =
              #{offset VkDisplayPlaneCapabilitiesKHR, minSrcExtent}
+        type FieldIsArray "minSrcExtent" VkDisplayPlaneCapabilitiesKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1317,6 +1346,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "maxSrcExtent" VkDisplayPlaneCapabilitiesKHR =
              #{offset VkDisplayPlaneCapabilitiesKHR, maxSrcExtent}
+        type FieldIsArray "maxSrcExtent" VkDisplayPlaneCapabilitiesKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1363,6 +1394,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "minDstPosition" VkDisplayPlaneCapabilitiesKHR =
              #{offset VkDisplayPlaneCapabilitiesKHR, minDstPosition}
+        type FieldIsArray "minDstPosition" VkDisplayPlaneCapabilitiesKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1410,6 +1443,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "maxDstPosition" VkDisplayPlaneCapabilitiesKHR =
              #{offset VkDisplayPlaneCapabilitiesKHR, maxDstPosition}
+        type FieldIsArray "maxDstPosition" VkDisplayPlaneCapabilitiesKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1456,6 +1491,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "minDstExtent" VkDisplayPlaneCapabilitiesKHR =
              #{offset VkDisplayPlaneCapabilitiesKHR, minDstExtent}
+        type FieldIsArray "minDstExtent" VkDisplayPlaneCapabilitiesKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1501,6 +1538,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "maxDstExtent" VkDisplayPlaneCapabilitiesKHR =
              #{offset VkDisplayPlaneCapabilitiesKHR, maxDstExtent}
+        type FieldIsArray "maxDstExtent" VkDisplayPlaneCapabilitiesKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1635,6 +1674,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "currentDisplay" VkDisplayPlanePropertiesKHR =
              #{offset VkDisplayPlanePropertiesKHR, currentDisplay}
+        type FieldIsArray "currentDisplay" VkDisplayPlanePropertiesKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1680,6 +1721,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "currentStackIndex" VkDisplayPlanePropertiesKHR =
              #{offset VkDisplayPlanePropertiesKHR, currentStackIndex}
+        type FieldIsArray "currentStackIndex" VkDisplayPlanePropertiesKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1802,6 +1845,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkDisplaySurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkDisplaySurfaceCreateInfoKHR =
              #{offset VkDisplaySurfaceCreateInfoKHR, sType}
+        type FieldIsArray "sType" VkDisplaySurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1848,6 +1892,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkDisplaySurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkDisplaySurfaceCreateInfoKHR =
              #{offset VkDisplaySurfaceCreateInfoKHR, pNext}
+        type FieldIsArray "pNext" VkDisplaySurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1896,6 +1941,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "flags" VkDisplaySurfaceCreateInfoKHR = 'True -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkDisplaySurfaceCreateInfoKHR =
              #{offset VkDisplaySurfaceCreateInfoKHR, flags}
+        type FieldIsArray "flags" VkDisplaySurfaceCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -1945,6 +1991,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "displayMode" VkDisplaySurfaceCreateInfoKHR =
              #{offset VkDisplaySurfaceCreateInfoKHR, displayMode}
+        type FieldIsArray "displayMode" VkDisplaySurfaceCreateInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1994,6 +2042,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "planeIndex" VkDisplaySurfaceCreateInfoKHR =
              #{offset VkDisplaySurfaceCreateInfoKHR, planeIndex}
+        type FieldIsArray "planeIndex" VkDisplaySurfaceCreateInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2044,6 +2094,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "planeStackIndex" VkDisplaySurfaceCreateInfoKHR =
              #{offset VkDisplaySurfaceCreateInfoKHR, planeStackIndex}
+        type FieldIsArray "planeStackIndex" VkDisplaySurfaceCreateInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2097,6 +2149,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "transform" VkDisplaySurfaceCreateInfoKHR =
              #{offset VkDisplaySurfaceCreateInfoKHR, transform}
+        type FieldIsArray "transform" VkDisplaySurfaceCreateInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2148,6 +2202,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "globalAlpha" VkDisplaySurfaceCreateInfoKHR =
              #{offset VkDisplaySurfaceCreateInfoKHR, globalAlpha}
+        type FieldIsArray "globalAlpha" VkDisplaySurfaceCreateInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2199,6 +2255,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "alphaMode" VkDisplaySurfaceCreateInfoKHR =
              #{offset VkDisplaySurfaceCreateInfoKHR, alphaMode}
+        type FieldIsArray "alphaMode" VkDisplaySurfaceCreateInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -2249,6 +2307,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "imageExtent" VkDisplaySurfaceCreateInfoKHR =
              #{offset VkDisplaySurfaceCreateInfoKHR, imageExtent}
+        type FieldIsArray "imageExtent" VkDisplaySurfaceCreateInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

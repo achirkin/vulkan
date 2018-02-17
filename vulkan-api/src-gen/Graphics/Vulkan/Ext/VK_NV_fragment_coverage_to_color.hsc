@@ -142,6 +142,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "sType" VkPipelineCoverageToColorStateCreateInfoNV
              =
              #{offset VkPipelineCoverageToColorStateCreateInfoNV, sType}
+        type FieldIsArray "sType"
+               VkPipelineCoverageToColorStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -197,6 +200,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "pNext" VkPipelineCoverageToColorStateCreateInfoNV
              =
              #{offset VkPipelineCoverageToColorStateCreateInfoNV, pNext}
+        type FieldIsArray "pNext"
+               VkPipelineCoverageToColorStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -252,6 +258,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "flags" VkPipelineCoverageToColorStateCreateInfoNV
              =
              #{offset VkPipelineCoverageToColorStateCreateInfoNV, flags}
+        type FieldIsArray "flags"
+               VkPipelineCoverageToColorStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -314,6 +323,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineCoverageToColorStateCreateInfoNV
              =
              #{offset VkPipelineCoverageToColorStateCreateInfoNV, coverageToColorEnable}
+        type FieldIsArray "coverageToColorEnable"
+               VkPipelineCoverageToColorStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -376,6 +388,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineCoverageToColorStateCreateInfoNV
              =
              #{offset VkPipelineCoverageToColorStateCreateInfoNV, coverageToColorLocation}
+        type FieldIsArray "coverageToColorLocation"
+               VkPipelineCoverageToColorStateCreateInfoNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True

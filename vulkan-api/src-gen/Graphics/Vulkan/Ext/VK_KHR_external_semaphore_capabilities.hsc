@@ -143,6 +143,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkPhysicalDeviceExternalSemaphoreInfoKHR =
              #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, sType}
+        type FieldIsArray "sType" VkPhysicalDeviceExternalSemaphoreInfoKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -196,6 +198,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkPhysicalDeviceExternalSemaphoreInfoKHR =
              #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, pNext}
+        type FieldIsArray "pNext" VkPhysicalDeviceExternalSemaphoreInfoKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -254,6 +258,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceExternalSemaphoreInfoKHR
              =
              #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, handleType}
+        type FieldIsArray "handleType"
+               VkPhysicalDeviceExternalSemaphoreInfoKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -382,6 +389,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkExternalSemaphorePropertiesKHR =
              #{offset VkExternalSemaphorePropertiesKHR, sType}
+        type FieldIsArray "sType" VkExternalSemaphorePropertiesKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -426,6 +434,7 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkExternalSemaphorePropertiesKHR =
              #{offset VkExternalSemaphorePropertiesKHR, pNext}
+        type FieldIsArray "pNext" VkExternalSemaphorePropertiesKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -480,6 +489,9 @@ instance {-# OVERLAPPING #-}
                VkExternalSemaphorePropertiesKHR
              =
              #{offset VkExternalSemaphorePropertiesKHR, exportFromImportedHandleTypes}
+        type FieldIsArray "exportFromImportedHandleTypes"
+               VkExternalSemaphorePropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -532,6 +544,9 @@ instance {-# OVERLAPPING #-}
                VkExternalSemaphorePropertiesKHR
              =
              #{offset VkExternalSemaphorePropertiesKHR, compatibleHandleTypes}
+        type FieldIsArray "compatibleHandleTypes"
+               VkExternalSemaphorePropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -587,6 +602,9 @@ instance {-# OVERLAPPING #-}
                VkExternalSemaphorePropertiesKHR
              =
              #{offset VkExternalSemaphorePropertiesKHR, externalSemaphoreFeatures}
+        type FieldIsArray "externalSemaphoreFeatures"
+               VkExternalSemaphorePropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True

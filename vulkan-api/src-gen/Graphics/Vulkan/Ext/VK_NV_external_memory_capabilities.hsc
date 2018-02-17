@@ -137,6 +137,9 @@ instance {-# OVERLAPPING #-}
                VkExternalImageFormatPropertiesNV
              =
              #{offset VkExternalImageFormatPropertiesNV, imageFormatProperties}
+        type FieldIsArray "imageFormatProperties"
+               VkExternalImageFormatPropertiesNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -190,6 +193,9 @@ instance {-# OVERLAPPING #-}
                VkExternalImageFormatPropertiesNV
              =
              #{offset VkExternalImageFormatPropertiesNV, externalMemoryFeatures}
+        type FieldIsArray "externalMemoryFeatures"
+               VkExternalImageFormatPropertiesNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -246,6 +252,9 @@ instance {-# OVERLAPPING #-}
                VkExternalImageFormatPropertiesNV
              =
              #{offset VkExternalImageFormatPropertiesNV, exportFromImportedHandleTypes}
+        type FieldIsArray "exportFromImportedHandleTypes"
+               VkExternalImageFormatPropertiesNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -298,6 +307,9 @@ instance {-# OVERLAPPING #-}
                VkExternalImageFormatPropertiesNV
              =
              #{offset VkExternalImageFormatPropertiesNV, compatibleHandleTypes}
+        type FieldIsArray "compatibleHandleTypes"
+               VkExternalImageFormatPropertiesNV
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True

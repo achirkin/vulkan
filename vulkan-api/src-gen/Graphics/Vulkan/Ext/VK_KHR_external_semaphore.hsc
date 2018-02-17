@@ -134,6 +134,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkExportSemaphoreCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkExportSemaphoreCreateInfoKHR =
              #{offset VkExportSemaphoreCreateInfoKHR, sType}
+        type FieldIsArray "sType" VkExportSemaphoreCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -180,6 +181,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkExportSemaphoreCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkExportSemaphoreCreateInfoKHR =
              #{offset VkExportSemaphoreCreateInfoKHR, pNext}
+        type FieldIsArray "pNext" VkExportSemaphoreCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -229,6 +231,8 @@ instance {-# OVERLAPPING #-}
              'True -- ' closing tick for hsc2hs
         type FieldOffset "handleTypes" VkExportSemaphoreCreateInfoKHR =
              #{offset VkExportSemaphoreCreateInfoKHR, handleTypes}
+        type FieldIsArray "handleTypes" VkExportSemaphoreCreateInfoKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True

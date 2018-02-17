@@ -183,6 +183,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceConservativeRasterizationPropertiesEXT
              =
              #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, sType}
+        type FieldIsArray "sType"
+               VkPhysicalDeviceConservativeRasterizationPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -244,6 +247,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceConservativeRasterizationPropertiesEXT
              =
              #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, pNext}
+        type FieldIsArray "pNext"
+               VkPhysicalDeviceConservativeRasterizationPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -306,6 +312,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceConservativeRasterizationPropertiesEXT
              =
              #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, primitiveOverestimationSize}
+        type FieldIsArray "primitiveOverestimationSize"
+               VkPhysicalDeviceConservativeRasterizationPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -368,6 +377,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceConservativeRasterizationPropertiesEXT
              =
              #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, maxExtraPrimitiveOverestimationSize}
+        type FieldIsArray "maxExtraPrimitiveOverestimationSize"
+               VkPhysicalDeviceConservativeRasterizationPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -431,6 +443,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceConservativeRasterizationPropertiesEXT
              =
              #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, extraPrimitiveOverestimationSizeGranularity}
+        type FieldIsArray "extraPrimitiveOverestimationSizeGranularity"
+               VkPhysicalDeviceConservativeRasterizationPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -494,6 +509,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceConservativeRasterizationPropertiesEXT
              =
              #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, primitiveUnderestimation}
+        type FieldIsArray "primitiveUnderestimation"
+               VkPhysicalDeviceConservativeRasterizationPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -556,6 +574,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceConservativeRasterizationPropertiesEXT
              =
              #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, conservativePointAndLineRasterization}
+        type FieldIsArray "conservativePointAndLineRasterization"
+               VkPhysicalDeviceConservativeRasterizationPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -618,6 +639,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceConservativeRasterizationPropertiesEXT
              =
              #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, degenerateTrianglesRasterized}
+        type FieldIsArray "degenerateTrianglesRasterized"
+               VkPhysicalDeviceConservativeRasterizationPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -680,6 +704,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceConservativeRasterizationPropertiesEXT
              =
              #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, degenerateLinesRasterized}
+        type FieldIsArray "degenerateLinesRasterized"
+               VkPhysicalDeviceConservativeRasterizationPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -742,6 +769,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceConservativeRasterizationPropertiesEXT
              =
              #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, fullyCoveredFragmentShaderInputVariable}
+        type FieldIsArray "fullyCoveredFragmentShaderInputVariable"
+               VkPhysicalDeviceConservativeRasterizationPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -805,6 +835,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDeviceConservativeRasterizationPropertiesEXT
              =
              #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, conservativeRasterizationPostDepthCoverage}
+        type FieldIsArray "conservativeRasterizationPostDepthCoverage"
+               VkPhysicalDeviceConservativeRasterizationPropertiesEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1014,6 +1047,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineRasterizationConservativeStateCreateInfoEXT
              =
              #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, sType}
+        type FieldIsArray "sType"
+               VkPipelineRasterizationConservativeStateCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1075,6 +1111,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineRasterizationConservativeStateCreateInfoEXT
              =
              #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, pNext}
+        type FieldIsArray "pNext"
+               VkPipelineRasterizationConservativeStateCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1136,6 +1175,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineRasterizationConservativeStateCreateInfoEXT
              =
              #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, flags}
+        type FieldIsArray "flags"
+               VkPipelineRasterizationConservativeStateCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = True
@@ -1198,6 +1240,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineRasterizationConservativeStateCreateInfoEXT
              =
              #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, conservativeRasterizationMode}
+        type FieldIsArray "conservativeRasterizationMode"
+               VkPipelineRasterizationConservativeStateCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1260,6 +1305,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineRasterizationConservativeStateCreateInfoEXT
              =
              #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, extraPrimitiveOverestimationSize}
+        type FieldIsArray "extraPrimitiveOverestimationSize"
+               VkPipelineRasterizationConservativeStateCreateInfoEXT
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False

@@ -160,6 +160,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "sType" VkPhysicalDevicePointClippingPropertiesKHR
              =
              #{offset VkPhysicalDevicePointClippingPropertiesKHR, sType}
+        type FieldIsArray "sType"
+               VkPhysicalDevicePointClippingPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -209,6 +212,9 @@ instance {-# OVERLAPPING #-}
         type FieldOffset "pNext" VkPhysicalDevicePointClippingPropertiesKHR
              =
              #{offset VkPhysicalDevicePointClippingPropertiesKHR, pNext}
+        type FieldIsArray "pNext"
+               VkPhysicalDevicePointClippingPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -265,6 +271,9 @@ instance {-# OVERLAPPING #-}
                VkPhysicalDevicePointClippingPropertiesKHR
              =
              #{offset VkPhysicalDevicePointClippingPropertiesKHR, pointClippingBehavior}
+        type FieldIsArray "pointClippingBehavior"
+               VkPhysicalDevicePointClippingPropertiesKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -401,6 +410,9 @@ instance {-# OVERLAPPING #-}
                VkRenderPassInputAttachmentAspectCreateInfoKHR
              =
              #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, sType}
+        type FieldIsArray "sType"
+               VkRenderPassInputAttachmentAspectCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -459,6 +471,9 @@ instance {-# OVERLAPPING #-}
                VkRenderPassInputAttachmentAspectCreateInfoKHR
              =
              #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, pNext}
+        type FieldIsArray "pNext"
+               VkRenderPassInputAttachmentAspectCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -521,6 +536,9 @@ instance {-# OVERLAPPING #-}
                VkRenderPassInputAttachmentAspectCreateInfoKHR
              =
              #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, aspectReferenceCount}
+        type FieldIsArray "aspectReferenceCount"
+               VkRenderPassInputAttachmentAspectCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -583,6 +601,9 @@ instance {-# OVERLAPPING #-}
                VkRenderPassInputAttachmentAspectCreateInfoKHR
              =
              #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, pAspectReferences}
+        type FieldIsArray "pAspectReferences"
+               VkRenderPassInputAttachmentAspectCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -711,6 +732,8 @@ instance {-# OVERLAPPING #-}
              'False -- ' closing tick for hsc2hs
         type FieldOffset "subpass" VkInputAttachmentAspectReferenceKHR =
              #{offset VkInputAttachmentAspectReferenceKHR, subpass}
+        type FieldIsArray "subpass" VkInputAttachmentAspectReferenceKHR =
+             'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -769,6 +792,9 @@ instance {-# OVERLAPPING #-}
                VkInputAttachmentAspectReferenceKHR
              =
              #{offset VkInputAttachmentAspectReferenceKHR, inputAttachmentIndex}
+        type FieldIsArray "inputAttachmentIndex"
+               VkInputAttachmentAspectReferenceKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -822,6 +848,8 @@ instance {-# OVERLAPPING #-}
              = 'False -- ' closing tick for hsc2hs
         type FieldOffset "aspectMask" VkInputAttachmentAspectReferenceKHR =
              #{offset VkInputAttachmentAspectReferenceKHR, aspectMask}
+        type FieldIsArray "aspectMask" VkInputAttachmentAspectReferenceKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -945,6 +973,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "sType" VkImageViewUsageCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "sType" VkImageViewUsageCreateInfoKHR =
              #{offset VkImageViewUsageCreateInfoKHR, sType}
+        type FieldIsArray "sType" VkImageViewUsageCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -991,6 +1020,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "pNext" VkImageViewUsageCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "pNext" VkImageViewUsageCreateInfoKHR =
              #{offset VkImageViewUsageCreateInfoKHR, pNext}
+        type FieldIsArray "pNext" VkImageViewUsageCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1038,6 +1068,7 @@ instance {-# OVERLAPPING #-}
         type FieldOptional "usage" VkImageViewUsageCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "usage" VkImageViewUsageCreateInfoKHR =
              #{offset VkImageViewUsageCreateInfoKHR, usage}
+        type FieldIsArray "usage" VkImageViewUsageCreateInfoKHR = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1185,6 +1216,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineTessellationDomainOriginStateCreateInfoKHR
              =
              #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, sType}
+        type FieldIsArray "sType"
+               VkPipelineTessellationDomainOriginStateCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1246,6 +1280,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineTessellationDomainOriginStateCreateInfoKHR
              =
              #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, pNext}
+        type FieldIsArray "pNext"
+               VkPipelineTessellationDomainOriginStateCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
@@ -1308,6 +1345,9 @@ instance {-# OVERLAPPING #-}
                VkPipelineTessellationDomainOriginStateCreateInfoKHR
              =
              #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, domainOrigin}
+        type FieldIsArray "domainOrigin"
+               VkPipelineTessellationDomainOriginStateCreateInfoKHR
+             = 'False -- ' closing tick for hsc2hs
 
         {-# INLINE fieldOptional #-}
         fieldOptional = False
