@@ -12,7 +12,6 @@ import           Control.Monad
 import           Data.Char
 import qualified Data.List                            as L
 import qualified Data.Map                             as Map
-import           Data.Maybe                           (fromMaybe)
 import           Data.Semigroup
 import           Data.Text                            (Text)
 import qualified Data.Text                            as T
@@ -136,10 +135,10 @@ generateVkSource outputDir outCabalFile vkXml = do
 
   (_exportedNamesExts, classDeclsExts, eModules)
     <- aggregateExts exportedNamesCore
-                  ( L.sortOn (extNumber . attributes)
-                  . extensions . globExtensions $ vkXml)
+                  ( L.sortOn (extNumber . extAttributes)
+                  . Map.elems . globExtensions $ vkXml)
                   $ \gn ext -> do
-    let eName = T.unpack . unVkExtensionName . extName $ attributes ext
+    let eName = T.unpack . unVkExtensionName . extName $ extAttributes ext
         modName = "Graphics.Vulkan.Ext." <> eName
     fname <- parseRelFile (eName ++ ".hsc")
     ((cds, exProtect), mr) <- runModuleWriter vkXml modName gn $ do
@@ -274,17 +273,9 @@ genCabalFile eModules = T.unlines $
     splitThem ((Nothing, xs):ms) = first (xs ++)     $ splitThem ms
     splitThem ((Just g , xs):ms) = second ((g, xs):) $ splitThem ms
 
-    mkFlagName
-      = firstDown
-      . T.pack
-      . toCamelCase
-      . T.unpack
-      . T.toLower
-      . removeVk
-    removeVk g = fromMaybe g $ T.stripPrefix "VK_" g
 
     mkFlagDef (g, _)
-      | f <- mkFlagName g
+      | f <- toFlagName g
       = [text|
           flag $f
               description:
@@ -293,7 +284,7 @@ genCabalFile eModules = T.unlines $
         |]
 
     mkModules (g,ms)
-      | f <- mkFlagName g
+      | f <- toFlagName g
       = T.unlines
       $ ("    if flag(" <> f <> ")")
       : ("      cpp-options: -D" <> g)

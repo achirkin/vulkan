@@ -1,4 +1,3 @@
-{-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE LambdaCase            #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
@@ -8,7 +7,7 @@
 -- | Vulkan commands, as they defined in vk.xml
 module VkXml.Sections.Commands
   ( parseCommands
-  , VkCommands (..)
+  , VkCommands
   , VkCommand (..), VkCommandAttrs (..)
   , VkCommandParam (..), VkCommandParamAttrs (..)
   ) where
@@ -16,7 +15,8 @@ module VkXml.Sections.Commands
 import           Control.Monad.Except
 import           Control.Monad.Trans.Reader (ReaderT (..))
 import           Data.Conduit
-import           Data.Maybe
+import           Data.Map                   (Map)
+import qualified Data.Map                   as Map
 import           Data.Semigroup
 import           Data.Text                  (Text)
 import qualified Data.Text                  as T
@@ -31,31 +31,38 @@ import           Debug.Trace
 -- * Types
 
 
-data VkCommands
-  = VkCommands
-  { comment  :: Text
-  , commands :: [VkCommand]
-  } deriving Show
+type VkCommands = Map VkCommandName VkCommand
+
 
 data VkCommand
   = VkCommand
-  { returnType :: VkTypeName
-  , name       :: VkCommandName
-  , attributes :: VkCommandAttrs
-  , parameters :: [VkCommandParam]
+  { cReturnType :: VkTypeName
+    -- ^ Always, either () or VkResult; so no pointers expected.
+  , cName       :: VkCommandName
+    -- ^ Maybe a little bit adjusted to fit haskell var logic
+  , cNameOrig   :: Text
+    -- ^ Original name appeared as-is, used for foreign calls
+  , cAttributes :: VkCommandAttrs
+  , cParameters :: [VkCommandParam]
   } deriving Show
 
+
+-- |
+-- <https://www.khronos.org/registry/vulkan/specs/1.0/registry.html#_attributes_of_code_command_code_tags vulkan registry 15.1>
 data VkCommandAttrs
   = VkCommandAttrs
-  { successcodes   :: [VkEnumName]
+  { queues         :: [Text]
+  , successcodes   :: [VkEnumName]
   , errorcodes     :: [VkEnumName]
-  , queues         :: Maybe Text
   , renderpass     :: Maybe Text
   , cmdbufferlevel :: [Text]
   , pipeline       :: Maybe Text
-  , comment        :: Maybe Text
+  , cComment       :: Maybe Text
   } deriving Show
 
+-- |
+--   TODO: this is not fully compliant with the
+-- <https://www.khronos.org/registry/vulkan/specs/1.0/registry.html#tag-command:param spec 15.4>
 data VkCommandParam
   = VkCommandParam
   { attributes      :: VkCommandParamAttrs
@@ -87,24 +94,24 @@ data VkCommandParamAttrs
 --   * If failed to parse tag "commands", throw an exception
 parseCommands :: VkXmlParser m => Sink Event m (Maybe VkCommands)
 parseCommands = parseTagForceAttrs "commands" (lift $ attr "comment")
-  $ \secComment -> do
-    coms <- many parseVkCommand
-    return $ VkCommands (fromMaybe mempty secComment) coms
+  $ \_ ->
+      Map.fromList . fmap (\c -> (cName c, c)) <$> many parseVkCommand
 
 
 parseVkCommand :: VkXmlParser m => Sink Event m (Maybe VkCommand)
 parseVkCommand =
-  parseTagForceAttrs "command" parseVkCommandAttrs $ \attributes -> do
+  parseTagForceAttrs "command" parseVkCommandAttrs $ \cAttributes -> do
     -- first element of command is always a "proto" tag
     --  the rest are "param" tags
     mtn <- parseTagForceAttrs "proto" (pure ()) $ \() -> do
-      mt <- tagIgnoreAttrs "type" $ VkTypeName <$> content
-      mn <- tagIgnoreAttrs "name" $ VkCommandName <$> content
-      pure $ (,) <$> mt <*> mn
+      mt <- tagIgnoreAttrs "type" content >>= mapM toHaskellType
+      mon <- tagIgnoreAttrs "name" content
+      mn <- mapM toHaskellComm mon
+      pure $ (,,) <$> mt <*> mn <*> mon
     case join mtn of
       Nothing -> parseFailed "Could not parse type/name from command.proto"
-      Just (returnType, name) -> do
-        parameters <- many $ do
+      Just (cReturnType, cName, cNameOrig) -> do
+        cParameters <- many $ do
            mi <- ignoreTreeContent "implicitexternsyncparams"
            case mi of
              Nothing -> return ()
@@ -116,18 +123,20 @@ parseVkCommand =
 
 
 parseVkCommandAttrs :: ReaderT ParseLoc AttrParser VkCommandAttrs
-parseVkCommandAttrs = lift $ do
-    successcodes     <- map VkEnumName . f <$> attr "successcodes"
-    errorcodes       <- map VkEnumName . f <$> attr "errorcodes"
-    queues           <- attr "queues"
-    renderpass       <- attr "renderpass"
-    cmdbufferlevel   <- f <$> attr "cmdbufferlevel"
-    pipeline         <- attr "pipeline"
-    comment          <- attr "comment"
+parseVkCommandAttrs = do
+    successcodes     <- commaSeparated <$> lift (attr "successcodes")
+                        >>= mapM toHaskellPat
+    errorcodes       <- commaSeparated <$> lift (attr "errorcodes")
+                        >>= mapM toHaskellPat
+    queues           <- commaSeparated <$> lift (attr "queues")
+    renderpass       <- lift $ attr "renderpass"
+    cmdbufferlevel   <- commaSeparated <$> lift (attr "cmdbufferlevel")
+    pipeline         <- lift $ attr "pipeline"
+    cComment         <- lift $ attr "comment"
     return VkCommandAttrs {..}
-  where
-    f = maybe [] (T.split (',' ==))
 
+-- TODO: use https://hackage.haskell.org/package/language-c
+--  to parse the param tag more robustly.
 parseVkCommandParam :: VkXmlParser m => Sink Event m (Maybe VkCommandParam)
 parseVkCommandParam =
   parseTagForceAttrs "param" parseVkCommandParamAttrs $ \attributes -> do
@@ -140,8 +149,8 @@ parseVkCommandParam =
       Nothing -> parseFailed "missing 'name' tag in command param"
       Just t  -> pure t
     paramArraySizeTxt <- content
+    paramType <- toHaskellType paramTypeTxt
     let paramIsConst    = T.strip constTxt == "const"
-        paramType       = VkTypeName paramTypeTxt
         paramTypeRefLvl = fromIntegral $ T.count "*" paramTypeRefLvlTxt
         code = constTxt <> paramTypeTxt <> paramTypeRefLvlTxt
             <> paramName <> paramArraySizeTxt

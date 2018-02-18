@@ -7,7 +7,7 @@
 -- | Vulkan types, as they defined in vk.xml
 module VkXml.Sections.Types
   ( parseTypes
-  , VkTypes (..)
+  , VkTypes
   , VkTypeQualifier (..)
   , VkTypeAttrs (..), VkMemberAttrs (..)
   , VkTypeCategory (..)
@@ -21,6 +21,8 @@ import           Control.Monad.Except
 import           Control.Monad.Trans.Reader (ReaderT (..))
 import           Data.Coerce
 import           Data.Conduit
+import           Data.Map                   (Map)
+import qualified Data.Map                   as Map
 import           Data.Maybe
 import           Data.Semigroup
 import           Data.Text                  (Text)
@@ -33,12 +35,7 @@ import           VkXml.Parser
 
 -- * Types
 
-data VkTypes
-  = VkTypes
-  { comment :: Text
-  , types   :: Sections VkType
-  } deriving Show
-
+type VkTypes = Map VkTypeName VkType
 
 
 data VkTypeQualifier
@@ -52,7 +49,7 @@ data VkTypeAttrs
   { name          :: Maybe VkTypeName
   , category      :: VkTypeCategory
   , requires      :: Maybe VkTypeName
-  , parent        :: Maybe VkTypeName
+  , parent        :: [VkTypeName]
   , returnedonly  :: Bool
   , comment       :: Text
   , structextends :: [VkTypeName]
@@ -75,7 +72,7 @@ data VkTypeData name
   = VkTypeData
   { name      :: Maybe (name, [VkTypeQualifier])
     -- ^ name parsed from type or member content
-  , reference :: [(name, [VkTypeQualifier])]
+  , reference :: [(VkTypeName, [VkTypeQualifier])]
     -- ^ content of "type" child; typically, a part of type definition
   , comment   :: Maybe Text
     -- ^ optional comment
@@ -138,9 +135,9 @@ data VkType
 --   * If failed to parse tag "types", throw an exception
 parseTypes :: VkXmlParser m => Sink Event m (Maybe VkTypes)
 parseTypes = parseTagForceAttrs "types" (lift $ attr "comment")
-  $ \secComment ->
-    VkTypes (fromMaybe mempty secComment)
-       <$> parseSections parseVkType
+  $ \_ ->
+    Map.fromList . fmap (\t -> ( (name :: VkType -> VkTypeName) t,t))
+    <$> manyIgnore parseVkType (ignoreTreeContent "comment")
 
 
 
@@ -161,14 +158,15 @@ parseAttrVkTypeCategory = do
     Just unknown       -> parseFailed $ "unknown type category " <> show unknown
 
 parseAttrVkTypeName :: ReaderT ParseLoc AttrParser (Maybe VkTypeName)
-parseAttrVkTypeName = lift $ fmap VkTypeName <$> attr "name"
+parseAttrVkTypeName = lift (attr "name") >>= mapM toHaskellType
 
 
 parseAttrVkTypeRequires :: ReaderT ParseLoc AttrParser (Maybe VkTypeName)
-parseAttrVkTypeRequires = lift $ fmap VkTypeName <$> attr "requires"
+parseAttrVkTypeRequires = lift (attr "requires") >>= mapM toHaskellType
 
-parseAttrVkTypeParent :: ReaderT ParseLoc AttrParser (Maybe VkTypeName)
-parseAttrVkTypeParent = lift $ fmap VkTypeName <$> attr "parent"
+parseAttrVkTypeParent :: ReaderT ParseLoc AttrParser [VkTypeName]
+parseAttrVkTypeParent = commaSeparated <$> lift (attr "parent")
+                    >>= mapM toHaskellType
 
 parseAttrVkTypeReturnedonly :: ReaderT ParseLoc AttrParser Bool
 parseAttrVkTypeReturnedonly = do
@@ -182,10 +180,8 @@ parseAttrVkTypeComment = lift (fromMaybe mempty <$> attr "comment")
 
 parseAttrVkTypeStructextends :: ReaderT ParseLoc AttrParser [VkTypeName]
 parseAttrVkTypeStructextends
-  = lift
-  $ fmap VkTypeName
-  . maybe [] (T.split (','==))
-  <$> attr "structextends"
+  = commaSeparated <$> lift (attr "structextends")
+  >>= mapM toHaskellType
 
 
 parseVkTypeAttrs :: ReaderT ParseLoc AttrParser VkTypeAttrs
@@ -201,7 +197,7 @@ parseVkTypeAttrs = VkTypeAttrs <$> parseAttrVkTypeName
 
 
 parseAttrVkMemberValues :: ReaderT ParseLoc AttrParser (Maybe VkEnumName)
-parseAttrVkMemberValues = lift $ fmap VkEnumName <$> attr "values"
+parseAttrVkMemberValues = lift (attr "values") >>= mapM toHaskellPat
 
 
 parseAttrVkMemberOptional :: ReaderT ParseLoc AttrParser Bool
@@ -241,12 +237,12 @@ parseVkMemberAttrs = VkMemberAttrs <$> parseAttrVkMemberValues
                                    <*> parseAttrVkMemberExternsync
 
 
-
+-- TODO: rewrite this either using regex or language-c
 parseVkTypeData :: ( Coercible Text name
                    , VkXmlParser m
                    )
-                => Sink Event m (VkTypeData name)
-parseVkTypeData =
+                => (Text -> m name) -> Sink Event m (VkTypeData name)
+parseVkTypeData k =
     parseIt (VkTypeData Nothing [] Nothing mempty)
   where
     parseQualifiers n = do
@@ -257,30 +253,34 @@ parseVkTypeData =
           -- filter out enums
           menum <- join <$> tagIgnoreAttrs "enum" contentMaybe
           case menum of
-            Nothing -> (n, getSimpleQualifiers c)
-                    <$ leftover (EventContent (ContentText c))
+            Nothing -> leftover (EventContent (ContentText c))
+                     >> (,) n <$> getSimpleQualifiers c
             Just en -> do
               leftover (EventContent (ContentText $ c <> en))
               parseQualifiers n
     getSimpleQualifiers t = case T.uncons (T.stripStart $ T.replace "const" "" t) of
-      Just ('*', s) -> VkTypeQStar : getSimpleQualifiers s
+      Just ('*', s) -> (VkTypeQStar :) <$> getSimpleQualifiers s
       Just ('[', s) -> case decOrHex (T.stripStart s) of
         Left _       -> case T.breakOn "]" s of
-           (enumname, rest) -> VkTypeQArrLenEnum (VkEnumName $ T.strip enumname)
-                               : getSimpleQualifiers (T.drop 1 rest)
+           (enumname, rest) -> do
+              nnn <- toHaskellPat $ T.strip enumname
+              (VkTypeQArrLenEnum nnn :) <$> getSimpleQualifiers (T.drop 1 rest)
         Right (i, u) -> case T.uncons (T.stripStart u) of
-          Just (']', v) -> VkTypeQArrLen i : getSimpleQualifiers v
-          _             -> []
-      _ -> []
+          Just (']', v) -> (VkTypeQArrLen i :) <$> getSimpleQualifiers v
+          _             -> pure []
+      _ -> pure []
     parseIt d@VkTypeData{..} = do
       mr <- choose
         [ fmap (\c -> d { code = code <> c}) <$> contentMaybe
-        , (join <$> tagIgnoreAttrs "type" (coerce <$> contentMaybe)) >>= mapM
+        , (join <$> tagIgnoreAttrs "type"
+             (contentMaybe >>= mapM toHaskellType)) >>= mapM
           (\newref -> do
             newrefq <- parseQualifiers newref
-            return $ d { code = code <> coerce newref, reference = reference <> [newrefq] }
+            return $ d { code = code <> coerce newref
+                       , reference = reference <> [newrefq] }
           )
-        , (join <$> tagIgnoreAttrs "name" (coerce <$> contentMaybe)) >>= mapM
+        , (join <$> tagIgnoreAttrs "name"
+              (contentMaybe >>= lift . mapM k)) >>= mapM
           (\newname -> do
             newnameq <- parseQualifiers newname
             return d { code = code <> coerce newname, name = Just newnameq }
@@ -292,8 +292,10 @@ parseVkTypeData =
         Just d' -> parseIt d'
 
 dataComment :: VkTypeData a -> Text -> VkTypeData a
-dataComment d@VkTypeData{ comment = Just s} t = d { comment = Just (T.unlines [s,t])}
-dataComment d@VkTypeData{ comment = Nothing} t = d { comment = Just t}
+dataComment d@VkTypeData{ comment = Just s} t
+  = d { comment = Just (T.unlines [s,t])}
+dataComment d@VkTypeData{ comment = Nothing} t
+  = d { comment = Just t}
 
       -- do
       -- mev <- await
@@ -341,7 +343,7 @@ parseVkType = parseTagForceAttrs "type" parseVkTypeAttrs $ \attrs ->
                  $ "Could not get type name from tag attributes "
                  <> show attrs
     else do
-      d <- parseVkTypeData
+      d <- parseVkTypeData toHaskellType
       case name (attrs :: VkTypeAttrs)
        <|> fst <$> name (d :: VkTypeData VkTypeName) of
         Just n -> pure $ VkTypeSimple n attrs d
@@ -353,7 +355,7 @@ parseVkType = parseTagForceAttrs "type" parseVkTypeAttrs $ \attrs ->
 parseVkTypeMember :: VkXmlParser m
                   => Sink Event m (Maybe VkTypeMember)
 parseVkTypeMember = parseTagForceAttrs "member" parseVkMemberAttrs $ \ma -> do
-    d <- parseVkTypeData
+    d <- parseVkTypeData toHaskellMemb
     case fst <$> name (d :: VkTypeData VkMemberName) of
       Just n  -> pure $ VkTypeMember n ma d
       Nothing -> parseFailed

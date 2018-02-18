@@ -157,7 +157,7 @@ genAlias VkTypeSimple
     writeImport $ DIThing "Data" DITNo
     writeImport $ DIThing "Bits" DITNo
     writeImport $ DIThing "FiniteBits" DITNo
-    writeImport $ DIThing (qNameTxt . unqualifyQ . toHaskellName $ treftxt) DITNo
+    writeImport $ DIThing treftxt DITNo
 
     writeDecl . setComment rezComment $ parseDecl'
       [text|
@@ -179,9 +179,9 @@ genAlias VkTypeSimple
 
     writeExport $ DIThing tnametxt DITAll
   where
-    tname = toHaskellName vkTName
-    tnametxt = qNameTxt tname
-    treftxt = qNameTxt $ toHaskellName vkTRef
+    -- tname = toQName vkTName
+    tnametxt = unVkTypeName vkTName
+    treftxt = unVkTypeName vkTRef
     rezComment = rezComment' >>= preComment . T.unpack
     rezComment' = if txt == mempty
                   then mtxt2
@@ -217,8 +217,8 @@ newInt32TypeDec vkTName insts com = do
 
     writeExport $ DIThing tnametxt DITAll
   where
-    tname = toHaskellName vkTName
-    tnametxt = qNameTxt tname
+    -- tname = toQName vkTName
+    tnametxt = unVkTypeName vkTName
 
 
 enumPattern :: Monad m => VkEnum -> ModuleWriter m ()
@@ -266,7 +266,7 @@ enumPattern VkEnum {..} = writePragma "PatternSynonyms" >>
       , patval <- T.pack $
           if n < 0 then "(" ++ show n ++ ")" else show n
         -> do
-          writeImport $ DIThing (qNameTxt . unqualifyQ . toHaskellName $ tnametxt) DITAll
+          writeImport $ DIThing tnametxt DITAll
           writeDecl . setComment rezComment
                     $ parseDecl' [text|pattern $patnametxt :: $tnametxt|]
           writeDecl $ parseDecl' [text|pattern $patnametxt = $cname $patval|]
@@ -301,6 +301,6 @@ enumPattern VkEnum {..} = writePragma "PatternSynonyms" >>
                     $ parseDecl' [text|pattern $patnametxt = $aliasname|]
           writeExport $ DIPat patnametxt
   where
-    patname = toHaskellName _vkEnumName
+    patname = toQName _vkEnumName
     patnametxt = qNameTxt patname
     rezComment = preComment $ T.unpack _vkEnumComment

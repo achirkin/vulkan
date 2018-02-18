@@ -16,6 +16,7 @@ import           Control.Monad.Trans.State.Strict     (StateT)
 import qualified Control.Monad.Trans.State.Strict     as State
 import           Data.Semigroup
 import qualified Data.Set as Set
+import qualified Data.Map as Map
 import qualified Data.Text                            as T
 import           Language.Haskell.Exts.SimpleComments
 import           Language.Haskell.Exts.Syntax
@@ -44,10 +45,9 @@ genBaseTypes' = do
     glvl <- ModuleWriter $ RWS.gets currentSecLvl
     writeSection glvl "Types and enumerations"
     pushSecLvl $ \curlvl ->
-      foldSectionsWithComments (fItem curlvl) fLast
-                               (types $ globTypes vkXml)
+      mapM_ (fItem curlvl) (globTypes vkXml)
         where
-          fItem curlvl cs t = do
+          fItem curlvl t = do
             oldcat <- lift State.get
             let curcat = vkTypeCat t
             when (oldcat /= Just curcat) $ do
@@ -63,7 +63,7 @@ genBaseTypes' = do
                 VkTypeCatFuncpointer -> writeSection curlvl "Function pointers"
                 VkTypeCatStruct      -> return ()
                 VkTypeCatUnion       -> return ()
-            forM_ cs $ writeSection (curlvl+1)
+
             case vkTypeCat t of
               VkTypeNoCat          -> genNocatData t
               VkTypeCatInclude     -> return ()
@@ -75,8 +75,6 @@ genBaseTypes' = do
               VkTypeCatFuncpointer -> genFuncpointer t
               VkTypeCatStruct      -> return ()
               VkTypeCatUnion       -> return ()
-          fLast [] = pure ()
-          fLast cs = writeSection 0 $ T.unlines $ "|":cs
 
 
 genBaseStructs :: Monad m => ModuleWriter m ClassDeclarations
@@ -87,12 +85,12 @@ genBaseStructs = do
                      . map requireTypes
                      . reqList $ globFeature vkXml
         extTypes = Set.fromList
-                      $ extensions (globExtensions vkXml)
+                      $ Map.elems (globExtensions vkXml)
                           >>= extRequires >>= requireTypes
         excludedTypes = Set.union featureTypes extTypes
 
     fmap mconcat
-      $ forM (items . types $ globTypes vkXml) $ \t ->
+      $ forM (Map.elems $ globTypes vkXml) $ \t ->
         if (name :: VkType -> VkTypeName) t `Set.member` excludedTypes
         then pure mempty
         else case vkTypeCat t of
@@ -173,6 +171,19 @@ genNocatData VkTypeSimple
             writeImport $ DIThing "CULong" DITAll
             writeDecl . setComment rezComment $ parseDecl'
               [text|type RROutput = CULong|]
+          "Word8"  -> pure ()
+          "Word16" -> pure ()
+          "Word32" -> pure ()
+          "Word64" -> pure ()
+          "Int8"  -> pure ()
+          "Int16" -> pure ()
+          "Int32" -> pure ()
+          "Int64" -> pure ()
+          "CChar" -> pure ()
+          "CInt"  -> pure ()
+          "CSize" -> pure ()
+          "Float" -> pure ()
+          "Double" -> pure ()
           _ -> do
             writePragma "EmptyDataDecls"
             writeDecl . setComment rezComment $ parseDecl'
@@ -183,8 +194,8 @@ genNocatData VkTypeSimple
         writeExport $ DIThing tnametxt DITNo
       _        -> pure ()
   where
-    tname = toHaskellName vkTName
-    tnametxt = qNameTxt tname
+    tname = toQName vkTName
+    tnametxt = unVkTypeName vkTName
     rezComment = ((\s -> "Requires @" <> s <> "@") . unVkTypeName <$> mreq)
               >>= preComment . T.unpack
 genNocatData t = error
@@ -210,7 +221,7 @@ genBasetypeAlias t@VkTypeSimple
        { reference = [(vkTRef, [])]
        }
     } = do
-  writeImport $ DIThing (qNameTxt $ toHaskellName vkTRef) DITNo
+  writeImport $ DIThing (unVkTypeName vkTRef) DITNo
   genAlias t
 genBasetypeAlias t
   = error $ "genBasetypeAlias: expected a simple basetype, but got: "

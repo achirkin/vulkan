@@ -3,16 +3,21 @@
 {-# LANGUAGE MultiParamTypeClasses      #-}
 {-# LANGUAGE OverloadedStrings          #-}
 module VkXml.CommonTypes
-  ( VkTypeName (..), VkMemberName (..), VkCommandName (..)
-  , Sections (..), VkTagName (..), VkExtensionName (..)
-  , parseSections, parseSectionsL
+  ( VkTypeName (..)
   , VkEnumName (..)
+  , VkMemberName (..)
+  , VkCommandName (..)
+  , Sections (..), VkTagName (..)
+  , VkExtensionName (..)
+  , parseSections, parseSectionsL
   , (<:>)
-  , ValidIdent (..)
-  , isHaskellIdent, isHaskellLowerFirst, isHaskellUpperFirst
-  , firstUp, firstDown, toCamelCase
-  , toHaskellName, toHaskellName', toType
-  , moduleName, unqualifyQ, unqualify, qNameTxt
+  , toType, toQName, qNameTxt
+  , moduleName, unqualify
+    -- * Initial ident parsing
+  , toHaskellType, toHaskellPat, toHaskellVar, toHaskellExt
+  , toHaskellComm, toHaskellMemb
+  , commaSeparated
+  , toFlagName
   ) where
 
 import           Control.Monad.State.Class
@@ -21,10 +26,12 @@ import           Data.Char
 import           Data.Coerce
 import           Data.Conduit
 import           Data.Conduit.Lift
+import           Data.Maybe                   (fromMaybe)
 import           Data.String                  (IsString)
 import           Data.Text                    (Text)
 import qualified Data.Text                    as T
 import           Data.XML.Types               hiding (Name)
+import           GHC.Stack
 import           Language.Haskell.Exts.Pretty
 import           Language.Haskell.Exts.Syntax
 import           Text.XML.Stream.Parse
@@ -115,31 +122,83 @@ infixr 6 <:>
 
 
 
+toHaskellType :: (VkXmlParser m, HasCallStack) => Text -> m VkTypeName
+toHaskellType "()"       = pure $ VkTypeName "()"
+toHaskellType "void"     = pure $ VkTypeName "()"
+toHaskellType "char"     = pure $ VkTypeName "CChar"
+toHaskellType "float"    = pure $ VkTypeName "HSC2HS___ \"#{type float}\""
+toHaskellType "double"   = pure $ VkTypeName "HSC2HS___ \"#{type double}\""
+toHaskellType "uint8_t"  = pure $ VkTypeName "Word8"
+toHaskellType "uint16_t" = pure $ VkTypeName "Word16"
+toHaskellType "uint32_t" = pure $ VkTypeName "Word32"
+toHaskellType "uint64_t" = pure $ VkTypeName "Word64"
+toHaskellType "int8_t"   = pure $ VkTypeName "Int8"
+toHaskellType "int16_t"  = pure $ VkTypeName "Int16"
+toHaskellType "int32_t"  = pure $ VkTypeName "Int32"
+toHaskellType "int64_t"  = pure $ VkTypeName "Int64"
+toHaskellType "size_t"   = pure $ VkTypeName "CSize"
+toHaskellType "int"      = pure $ VkTypeName "CInt"
+-- exceptions **************************************************
+-- Linux xcb types
+toHaskellType t
+  | "wl_" `T.isPrefixOf` t || "xcb_" `T.isPrefixOf` t
+    = toHaskellType . firstUp . T.pack . toCamelCase $ T.unpack t
+-- Header files
+toHaskellType t
+  | ".h" `T.isSuffixOf` t
+    = pure $ VkTypeName t
+-- *************************************************************
+toHaskellType t
+  |  "HSC2HS___" `T.isPrefixOf` t
+    = pure $ VkTypeName t
+toHaskellType t
+  | isHaskellIdent t = pure $ VkTypeName . firstUp $ T.dropWhile ('_' ==) t
+  | otherwise = parseFailed $ "Invalid haskell type name " ++ show t
+
+
+toHaskellVar :: (VkXmlParser m, HasCallStack) => Text -> m Text
+toHaskellVar t
+  | isHaskellIdent t = pure $ firstDown t
+  | otherwise = parseFailed $ "Invalid haskell variable name " ++ show t
+
+
+toHaskellPat :: (VkXmlParser m, HasCallStack) => Text -> m VkEnumName
+toHaskellPat t
+  | isHaskellIdent t = pure . VkEnumName . firstUp $ T.dropWhile ('_' ==) t
+  | otherwise = parseFailed $ "Invalid haskell pattern/enum name " ++ show t
+
+
+toHaskellExt :: (VkXmlParser m, HasCallStack) => Text -> m VkExtensionName
+toHaskellExt t
+  | isHaskellIdent t = pure . VkExtensionName . firstUp $ T.dropWhile ('_' ==) t
+  | otherwise = parseFailed $ "Invalid haskell extension (module) name " ++ show t
+
+toHaskellComm :: (VkXmlParser m, HasCallStack) => Text -> m VkCommandName
+toHaskellComm = fmap VkCommandName . toHaskellVar
+
+toHaskellMemb :: (VkXmlParser m, HasCallStack) => Text -> m VkMemberName
+toHaskellMemb t
+  | isHaskellIdent t = pure $ VkMemberName t
+  | otherwise = parseFailed $ "Invalid haskell member name " ++ show t
+
+
+
+toFlagName :: Text -> Text
+toFlagName
+    = firstDown
+    . T.pack
+    . toCamelCase
+    . T.unpack
+    . T.toLower
+    . removeVk
+  where
+    removeVk g = fromMaybe g $ T.stripPrefix "VK_" g
+
+
+commaSeparated :: Maybe Text -> [Text]
+commaSeparated = maybe [] (T.split (',' ==))
+
 -- * Checking type and value names
-
-class ValidIdent a where
-  isValid :: a -> Bool
-
-instance ValidIdent VkEnumName where
-  isValid = isHaskellUpperFirst . unVkEnumName
-
-
-instance ValidIdent VkTypeName where
-  isValid "void"         = True
-  isValid "char"         = True
-  isValid "float"        = True
-  isValid "double"       = True
-  isValid "uint8_t"      = True
-  isValid "uint16_t"     = True
-  isValid "uint32_t"     = True
-  isValid "uint64_t"     = True
-  isValid "int8_t"       = True
-  isValid "int16_t"      = True
-  isValid "int32_t"      = True
-  isValid "int64_t"      = True
-  isValid "size_t"       = True
-  isValid "int"          = True
-  isValid (VkTypeName n) = isHaskellUpperFirst n
 
 
 firstUp :: Text -> Text
@@ -152,11 +211,6 @@ firstDown s = case T.uncons s of
   Just (a, ss) -> T.cons (toLower a) ss
   Nothing      -> s
 
-isHaskellUpperFirst :: Text -> Bool
-isHaskellUpperFirst s = isHaskellIdent s && isUpper (T.head s)
-
-isHaskellLowerFirst :: Text -> Bool
-isHaskellLowerFirst s = isHaskellIdent s && not (isUpper (T.head s))
 
 -- | check if this is a valid haskell-vulkan ident
 --   (only ascii alhanumeric chars are accepted, first must be alpha or underscore).
@@ -170,80 +224,41 @@ isHaskellIdent s
     validChar c = isAscii c && (isAlphaNum c || c == '_')
     invalidChar = not . validChar
 
-toHaskellName :: Coercible a Text => a -> QName ()
-toHaskellName = toHaskellName' . coerce
-
-toHaskellName' :: Text -> QName ()
-toHaskellName' "void"
-  = Special () (UnitCon ())
-toHaskellName' "char"
-  = Qual () (ModuleName () "Foreign.C.Types") (Ident () "CChar")
-toHaskellName' "float"
-  = UnQual () (Ident () "HSC2HS___ \"#{type float}\"")
-toHaskellName' "double"
-  = UnQual () (Ident () "HSC2HS___ \"#{type double}\"")
-toHaskellName' "uint8_t"
-  = Qual () (ModuleName () "Data.Word") (Ident () "Word8")
-toHaskellName' "uint16_t"
-  = Qual () (ModuleName () "Data.Word") (Ident () "Word16")
-toHaskellName' "uint32_t"
-  = Qual () (ModuleName () "Data.Word") (Ident () "Word32")
-toHaskellName' "uint64_t"
-  = Qual () (ModuleName () "Data.Word") (Ident () "Word64")
-toHaskellName' "int8_t"
-  = Qual () (ModuleName () "Data.Int") (Ident () "Int8")
-toHaskellName' "int16_t"
-  = Qual () (ModuleName () "Data.Int") (Ident () "Int16")
-toHaskellName' "int32_t"
-  = Qual () (ModuleName () "Data.Int") (Ident () "Int32")
-toHaskellName' "int64_t"
-  = Qual () (ModuleName () "Data.Int") (Ident () "Int64")
-toHaskellName' "size_t"
-  = UnQual () (Ident () "HSC2HS___ \"#{type size_t}\"")
-toHaskellName' "int"
-  = UnQual () (Ident () "HSC2HS___ \"#{type int}\"")
-
--- exceptions **************************************************
-toHaskellName' t
-  |  "wl_" `T.isPrefixOf` t || "xcb_" `T.isPrefixOf` t
-    = toHaskellName' . firstUp . T.pack . toCamelCase $ T.unpack t
--- *************************************************************
-
-toHaskellName' t
-  = UnQual () (Ident () (T.unpack t))
-
-
 
 -- | Construct a type from a qualified type name and pointer level.
 --   If the type is c void and it is wrapped into a Ptr,
 --     I treat it as Void.
 toType :: Word -- ^ number of times pointer
-       -> QName () -- ^ name of the type
+       -> VkTypeName -- ^ name of the type
        -> Type ()
-toType 0 t = TyCon () t
-toType n t | t == toHaskellName' "void"
-             = appPtr n voidTy
-           | Ident () "CChar" <- unqualify t
-           , n > 0
-             = toType (n-1) cstringQN
-           | otherwise
-             = appPtr n $ TyCon () t
+toType n t | t == "()"    = if n > 0 then appPtr n voidTy
+                                     else unitTy
+           | n == 0       = tty
+           | n > 0
+           , t == "CChar" = toType (n-1) "CString"
+           | otherwise    = appPtr n tty
   where
     appPtr 0 ty = ty
     appPtr k ty = appPtr (k-1) $ TyApp () ptrTy ty
     voidTy = TyCon () (UnQual () (Ident () "Void"))
     ptrTy  = TyCon () (UnQual () (Ident () "Ptr"))
-    cstringQN = UnQual () (Ident () "CString")
+    tty    = TyCon () (UnQual () (Ident () . T.unpack $ unVkTypeName t))
+    unitTy = TyCon () (Special () (UnitCon ()))
+
+
+toQName :: Coercible a Text => a -> QName ()
+toQName = toQName' . coerce
+
+toQName' :: Text -> QName ()
+toQName' "()" = Special () (UnitCon ())
+toQName' t    = UnQual () . Ident () $ T.unpack t
+
 
 unqualify :: QName a -> Name a
 unqualify (Qual _ _ n)  = n
 unqualify (UnQual _ n)  = n
 unqualify (Special _ _) = error "unqualify: cannot unqualify special name."
 
-unqualifyQ :: QName a -> QName a
-unqualifyQ (Qual l _ n) = UnQual l n
-unqualifyQ x@UnQual{}   = x
-unqualifyQ x@Special{}  = x
 
 moduleName :: QName a -> Maybe String
 moduleName (Qual _ (ModuleName _ m) _) = Just m

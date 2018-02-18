@@ -12,6 +12,7 @@ import           Control.Monad.Reader.Class
 import           Data.Maybe                           (isJust)
 import           Data.Semigroup
 import qualified Data.Set                             as Set
+import qualified Data.Map                             as Map
 import qualified Data.Text                            as T
 import           Language.Haskell.Exts.SimpleComments
 import           Language.Haskell.Exts.Syntax
@@ -33,12 +34,12 @@ genBaseCommands = do
                      . map requireComms
                      . reqList  $ globFeature vkXml
         extComms = Set.fromList
-                     $ extensions (globExtensions vkXml)
+                     $ Map.elems (globExtensions vkXml)
                        >>= extRequires >>= requireComms
         excludedComms = Set.union featureComms extComms
 
-    forM_ (commands $ globCommands vkXml) $ \c ->
-      if (name :: VkCommand -> VkCommandName) c `Set.member` excludedComms
+    forM_ (globCommands vkXml) $ \c ->
+      if cName c `Set.member` excludedComms
       then pure ()
       else genCommand c
 
@@ -46,12 +47,13 @@ genBaseCommands = do
 
 genCommand :: Monad m => VkCommand -> ModuleWriter m ()
 genCommand VkCommand
-  { name = vkname
-  , returnType = vkrt
-  , attributes = attrs@VkCommandAttrs
-    { comment = mtxt
+  { cName = vkname
+  , cNameOrig = cnameOrigTxt
+  , cReturnType = vkrt
+  , cAttributes = attrs@VkCommandAttrs
+    { cComment = mtxt
     }
-  , parameters = vkpams
+  , cParameters = vkpams
   } = do
     regLink <- vkRegistryLink $ unVkCommandName vkname
     let rezComment = appendComLine rezComment' regLink
@@ -61,7 +63,7 @@ genCommand VkCommand
     -- writeFullImport "Graphics.Vulkan.Marshal"
     writeFullImport "Graphics.Vulkan.Common"
     forM_ (vkrt : map paramType vkpams) $ \p ->
-      let t = qNameTxt . unqualifyQ $ toHaskellName p
+      let t = unVkTypeName p
           dit = if "Vk" `T.isPrefixOf` t
                 then DITAll else DITNo
       in writeImport $ DIThing t dit
@@ -69,22 +71,20 @@ genCommand VkCommand
     writeDecl $ ForImp rezComment (CCall Nothing) (Just (PlayRisky Nothing))
                       (Just cnameOrigStr) (Ident Nothing cnameStr) funtype
 
-    writeExport $ DIVar $ qNameTxt cname
+    writeExport . DIVar $ unVkCommandName vkname
   where
-    cname = unqualifyQ $ toHaskellName vkname
-    cnameStr = T.unpack  $ qNameTxt cname
-    cnameOrigStr = T.unpack $ unVkCommandName vkname
-    -- funtypeTxt = T.pack $ prettyPrint funtype
-    rtname = unqualifyQ $ toHaskellName vkrt
+    cname = toQName vkname
+    cnameStr = T.unpack $ qNameTxt cname
+    cnameOrigStr = T.unpack cnameOrigTxt
     rtype = (Nothing <$)
-          $ TyApp () (TyCon () (UnQual () (Ident () "IO"))) (toType 0 rtname)
+          $ TyApp () (TyCon () (UnQual () (Ident () "IO"))) (toType 0 vkrt)
     funtype = foldr accumRefs rtype vkpams
     paramT VkCommandParam {..}
       = let n = paramTypeRefLvl + if isJust paramArraySize
                                   then 1 else 0
         in amap (const . Just . CodeComment NextToCode '^' $ T.unpack paramName)
          . (Nothing <$)
-         . toType n $ unqualifyQ $ toHaskellName paramType
+         $ toType n paramType
     accumRefs vkp = TyFun Nothing (paramT vkp)
 
     c = T.unlines $
@@ -111,7 +111,12 @@ genCommand VkCommand
                             ( map (\t -> "'" <> unVkEnumName t <> "'")
                               x) <> "."
                       )
-                 . ml (queues attrs)     (\x -> "queues: @" <> x <> "@")
+                 . al (queues attrs)
+                      (\x -> "queues: "
+                          <> T.intercalate ", "
+                            ( map (\t -> "'" <> t <> "'")
+                              x) <> "."
+                      )
                  . ml (renderpass attrs) (\x -> "renderpass: @" <> x <> "@")
                  . ml (pipeline attrs)   (\x -> "pipeline: @" <> x <> "@")
                  . map ("> " <>) $ T.lines c

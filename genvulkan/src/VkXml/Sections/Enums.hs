@@ -30,7 +30,6 @@ import qualified Data.Text                    as T
 import qualified Data.Text.Read               as T
 import           Data.Word
 import           Data.XML.Types
-import           Language.Haskell.Exts.Pretty
 import           Text.RE.TDFA.Text
 import           Text.XML.Stream.Parse
 
@@ -113,15 +112,16 @@ parseVkEnums = parseTagForceAttrs "enums" parseVkEnumsAttrs $
 
 parseVkEnumsAttrs :: ReaderT ParseLoc AttrParser VkEnums
 parseVkEnumsAttrs = do
-  n <- VkTypeName <$> forceAttr "name"
+  _vkEnumsTypeName
+    <- ( \s -> if s == "API Constants"
+               then Nothing else Just s
+       ) <$> forceAttr "name"
+       >>= mapM toHaskellType
   c <- lift $ fromMaybe mempty <$> attr "comment"
   met <- lift $ attr "type"
   let _vkEnumsComment = c
           <:> maybe mempty (\s -> "type = @" <> s <> "@") met
       _vkEnumsMembers = Sections [] []
-      _vkEnumsTypeName =
-         if n == VkTypeName "API Constants"
-         then Nothing else Just n
       _vkEnumsIsBits = met == Just "bitmask"
 
   pure VkEnums {..}
@@ -144,12 +144,7 @@ parseVkEnum extNumber mTypeName
   where
     parseAttrs :: ReaderT ParseLoc AttrParser [VkEnum]
     parseAttrs = do
-      _vkEnumName  <- VkEnumName <$> forceAttr "name"
-      unless (isValid _vkEnumName)
-        $ parseFailed
-        $ "parseVkEnum: invalid enum name: "
-          <> T.unpack (unVkEnumName _vkEnumName)
-          <> ". The enum name should be a valid haskell pattern synonym."
+      _vkEnumName  <- forceAttr "name" >>= toHaskellPat
 
       mvalue       <- lift $ attr "value"
       mbitpos      <- lift $ attr "bitpos"
@@ -160,7 +155,7 @@ parseVkEnum extNumber mTypeName
       moffset      <- lift $ attr "offset"
       negDir       <- lift $ (Just "-" ==) <$> attr "dir"
       _vkEnumTName <- fmap (<|> mTypeName)
-                    . lift $ fmap VkTypeName <$> attr "extends"
+                    $ lift (attr "extends") >>= mapM toHaskellType
       let _vkEnumComment = comment
                        <:> maybe mempty (\s -> "bitpos = @" <> s <> "@") mbitpos
                        <:> maybe mempty (\s -> "api = @" <> s <> "@") mapi
@@ -175,7 +170,7 @@ parseVkEnum extNumber mTypeName
               (decOrHex <$> mbitpos)
               (decOrHex <$> moffset)
               negDir
-              (T.pack . prettyPrint $ toType 0 (toHaskellName tname))
+              (unVkTypeName tname)
 
           -- if there is no type name, we are dealing with a constant,
           -- that can be WordXX, IntXX, Num a, Fractional a, or literal string
@@ -199,7 +194,7 @@ parseVkEnum extNumber mTypeName
 
                 -- this is a string literal
               | matched $ val ?=~ [re|^[A-Z][0-9A-Za-z_]*$|]
-                -> pure $ VkEnumAlias (VkEnumName val)
+                -> VkEnumAlias <$> toHaskellPat val
 
                 -- special unparsed cases
               | "(~0U)" <- val
@@ -227,13 +222,7 @@ parseVkEnum extNumber mTypeName
 
       aliasEnumL <- case malias of
         Nothing -> pure []
-        Just alias -> do
-          unless (isValid $ VkEnumName alias)
-            $ parseFailed
-            $ "parseVkEnum: invalid enum name: "
-              <> T.unpack alias
-              <> ". The enum name should be a valid haskell pattern synonym."
-          return [rEnum & vkEnumName .~ VkEnumName alias]
+        Just alias -> (\a -> [rEnum & vkEnumName .~ a]) <$> toHaskellPat alias
 
       return $ rEnum : aliasEnumL
 

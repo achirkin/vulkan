@@ -32,16 +32,12 @@ genFeature = do
     curlvl <- getCurrentSecLvl
     vkXml <- ask
     let VkFeature {..} = globFeature vkXml
-        tps = Map.fromList
-               . map (\t -> ((Ts.name :: VkType -> VkTypeName) t, t))
-               . items . types $ globTypes vkXml
-        cmds = Map.fromList
-               . map (\c -> ((Cs.name :: VkCommand -> VkCommandName) c, c))
-               . commands $ globCommands vkXml
+        tps = globTypes vkXml
+        cmds = globCommands vkXml
         -- ens = Map.fromList
         --     . map (\e -> (_vkEnumName e, e))
         --     $ Map.elems (globEnums vkXml) >>= items . _vkEnumsMembers . unInorder
-            -- ^.. vkEnumMembers . traverse items
+            -- .. vkEnumMembers . traverse items
     writeSection curlvl $ T.unlines
       [ comment
       , ""

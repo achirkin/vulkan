@@ -58,3 +58,9 @@ sudo apt-get install libvulkan-dev
        3. Define a common `newtype Vk**FB (a :: VkFlagType) = Vk**FB VkFlags`
        3. Make all patterns parameter-polymorphic.
        4. Optionally, make converting functions.
+
+ * [ ] `VkXml.Sections.Commands`: parse command parameters more robustly,
+       maybe use `language-c` package for that.
+       Make parsing more compliant with the registry spec.
+ * [ ] `VkXml.Sections.Types` `parseVkTypeData` needs a cleaner rewrite.
+      Especially, check if type and member names are parsed correctly.

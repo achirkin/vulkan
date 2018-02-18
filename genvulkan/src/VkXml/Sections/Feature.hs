@@ -73,11 +73,11 @@ parseVkRequire extN baseExtReqs
 
   where
     -- https://www.khronos.org/registry/vulkan/specs/1.0/registry.html 19.1
-    parseAttrs = lift $ do
-      comm     <- fromMaybe mempty <$> attr "comment"
-      mext     <- fmap VkExtensionName <$> attr "extension"
-      mprofile <- attr "profile"
-      mapi     <- attr "api"
+    parseAttrs = do
+      comm     <- lift $ fromMaybe mempty <$> attr "comment"
+      mext     <- lift (attr "extension") >>= mapM toHaskellExt
+      mprofile <- lift $ attr "profile"
+      mapi     <- lift $ attr "api"
       return
         VkRequire
           { comment      = comm
@@ -91,10 +91,10 @@ parseVkRequire extN baseExtReqs
 
     parseIt = choose
         [ parseTagForceAttrs "type"
-            (VkTypeName <$> forceAttr "name")
+            (forceAttr "name" >>= toHaskellType)
             (\x -> pure $ \r -> r {requireTypes = x : requireTypes r})
         , parseTagForceAttrs "command"
-            (VkCommandName <$> forceAttr "name")
+            (forceAttr "name" >>= toHaskellComm)
             (\x -> pure $ \r -> r {requireComms = x : requireComms r})
         , parseVkEnum extN Nothing >>= \case
               [] -> pure Nothing
