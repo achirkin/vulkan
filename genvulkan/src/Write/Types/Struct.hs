@@ -153,7 +153,7 @@ genStructOrUnion isUnion VkTypeComposite
     offsetF = if isUnion
               then const (Lit () (Int () 0 "0"))
               else id
-    tname = toHaskellName vkTName
+    tname = toQName vkTName
     tnametxt = qNameTxt tname
     structNameTxt = unVkTypeName vkTName
     rezComment'' = appendComLine rezComment'
@@ -222,7 +222,7 @@ genStructField structAttrs structNameTxt structType VkTypeMember{..} _offsetE SF
     origNameTxtQQ = "\"" <> origNameTxt <> "\""
     classNameTxt = "HasVk" <> sfiBaseNameTxt
     memberTypeTxt = "Vk" <> sfiBaseNameTxt <> "MType"
-    className = toHaskellName classNameTxt
+    className = toQName classNameTxt
     indexFunTxt = "vk" <> sfiBaseNameTxt
     readFunTxt = "readVk" <> sfiBaseNameTxt
     writeFunTxt = "writeVk" <> sfiBaseNameTxt
@@ -435,7 +435,7 @@ fieldInfo tm@VkTypeMember
         Just (unVkEnumName n)
       _ -> Nothing
   , sfiType = t
-  , sfiRTypeTxt = unVkMemberName vkt
+  , sfiRTypeTxt = unVkTypeName vkt
   , sfiBaseNameTxt = case unqualify sname of
       Ident _ x -> case T.uncons $ T.pack x of
          Just (s, ss) -> T.cons (toUpper s) ss
@@ -449,13 +449,12 @@ fieldInfo tm@VkTypeMember
         Just (_, [VkTypeQArrLen n]) ->
           Just (Lit () (Int () (fromIntegral n) $ show n))
         Just (_, [VkTypeQArrLenEnum n]) ->
-          Just (Var () (toHaskellName n))
+          Just (Var () (toQName n))
         _ -> Nothing
     sname = if isJust en
-            then toHaskellName (unVkMemberName vkn <> "Array")
-            else toHaskellName vkn
-    t = toType (fromIntegral $ length quals) $ unqualifyQ $ toHaskellName
-      $ VkTypeName $ unVkMemberName vkt
+            then toQName (unVkMemberName vkn <> "Array")
+            else toQName vkn
+    t = toType (fromIntegral $ length quals) vkt
     uSize = App ()
         (Var () (UnQual () (Ident () "sizeOf")))
         (Paren ()

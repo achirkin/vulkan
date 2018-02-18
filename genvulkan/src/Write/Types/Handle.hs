@@ -32,9 +32,9 @@ genHandle VkTypeSimple
   | htype == "VK_DEFINE_HANDLE" = go "Ptr"
   | htype == "VK_DEFINE_NON_DISPATCHABLE_HANDLE" = go "VkPtr"
   where
-    tname = toHaskellName vkTName
+    tname = toQName vkTName
     tnametxt = qNameTxt tname
-    tnameT = toHaskellName $ VkTypeName . (<>"_T") $ unVkTypeName vkTName
+    tnameT = toQName $ VkTypeName . (<>"_T") $ unVkTypeName vkTName
     tnametxtT = qNameTxt tnameT
     rezComment = rezComment' >>= preComment . T.unpack
     rezComment' = if txt == mempty

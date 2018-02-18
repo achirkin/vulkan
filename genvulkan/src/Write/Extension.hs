@@ -8,14 +8,14 @@ module Write.Extension
   ) where
 
 import           Control.Monad.Reader.Class
-import qualified Data.Map                             as Map
+-- import qualified Data.Map                             as Map
 import           Data.Semigroup
 import qualified Data.Text                            as T
 
 import           VkXml.CommonTypes
 import           VkXml.Sections
-import           VkXml.Sections.Types as Ts
-import           VkXml.Sections.Commands as Cs
+-- import           VkXml.Sections.Types as Ts
+-- import           VkXml.Sections.Commands as Cs
 import           VkXml.Sections.Feature
 import           VkXml.Sections.Extensions
 
@@ -29,12 +29,8 @@ genExtension (VkExtension VkExtAttrs{..} ereqs) = do
     curlvl <- getCurrentSecLvl
     vkXml <- ask
     let VkFeature {..} = globFeature vkXml
-        tps = Map.fromList
-               . map (\t -> ((Ts.name :: VkType -> VkTypeName) t, t))
-               . items . types $ globTypes vkXml
-        cmds = Map.fromList
-               . map (\c -> ((Cs.name :: VkCommand -> VkCommandName) c, c))
-               . commands $ globCommands vkXml
+        tps = globTypes vkXml
+        cmds = globCommands vkXml
     writeSection curlvl $ "Vulkan extension: @" <> unVkExtensionName extName <> "@"
        <:> ("supported: @" <> extSupported <> "@")
        <:> maybe mempty (\s -> "contact: @" <> s <> "@") extContact

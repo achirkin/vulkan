@@ -1,4 +1,3 @@
-{-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE OverloadedStrings     #-}
@@ -7,14 +6,15 @@
 
 module VkXml.Sections.Extensions
   ( parseExtensions
-  , VkExtensions (..), VkExtension (..), VkExtAttrs (..)
+  , VkExtensions, VkExtension (..), VkExtAttrs (..)
   ) where
 
 import           Control.Monad.Except
 import           Control.Monad.Trans.Reader (ReaderT (..))
 import           Data.Conduit
+import           Data.Map                   (Map)
+import qualified Data.Map                   as Map
 import           Data.Text                  (Text)
-import qualified Data.Text                  as T
 import           Data.XML.Types
 import           Text.XML.Stream.Parse
 
@@ -27,16 +27,13 @@ import           VkXml.Sections.Feature
 
 
 
-data VkExtensions
-  = VkExtensions
-  { comment    :: Text
-  , extensions :: [VkExtension]
-  } deriving Show
+type VkExtensions = Map VkExtensionName VkExtension
+
 
 data VkExtension
   = VkExtension
-  { attributes  :: VkExtAttrs
-  , extRequires :: [VkRequire]
+  { extAttributes :: VkExtAttrs
+  , extRequires   :: [VkRequire]
   } deriving Show
 
 data VkExtAttrs
@@ -58,29 +55,31 @@ data VkExtAttrs
 --   * If failed to parse tag "vendorids", throw an exception
 parseExtensions :: VkXmlParser m => Sink Event m (Maybe VkExtensions)
 parseExtensions =
-  parseTagForceAttrs "extensions" (forceAttr "comment") $ \comment -> do
-    extensions <- many parseVkExtension
-    pure VkExtensions {..}
+  parseTagForceAttrs "extensions" (forceAttr "comment") $ \_ ->
+    Map.fromList
+    . fmap (\e -> (extName $ extAttributes e,e))
+    <$> many parseVkExtension
+
 
 parseVkExtension :: VkXmlParser m => Sink Event m (Maybe VkExtension)
 parseVkExtension =
-    parseTagForceAttrs "extension" parseVkExtAttrs $ \attributes -> do
+    parseTagForceAttrs "extension" parseVkExtAttrs $ \extAttributes -> do
       extRequires <- many $ parseVkRequire
-                              (extNumber attributes)
-                              (extReqExts attributes)
+                              (extNumber extAttributes)
+                              (extReqExts extAttributes)
       pure VkExtension {..}
 
 
 parseVkExtAttrs :: ReaderT ParseLoc AttrParser VkExtAttrs
 parseVkExtAttrs = do
-  extName      <- VkExtensionName <$> forceAttr "name"
+  extName      <- forceAttr "name" >>= toHaskellExt
   extSupported <- forceAttr "supported"
   extContact   <- lift $ attr "contact"
   extAuthor    <- lift $ fmap VkTagName <$> attr "author"
   extType      <- lift $ attr "type"
   extProtect   <- lift $ attr "protect"
-  extReqExts   <- map VkExtensionName . maybe [] (T.split (',' ==))
-              <$> lift (attr "requires")
+  extReqExts   <- commaSeparated <$> lift (attr "requires")
+                  >>= mapM toHaskellExt
   eextNumber   <- decOrHex <$> forceAttr "number"
   case eextNumber of
     Left err -> parseFailed $ "Could not parse extension.number: " ++ err

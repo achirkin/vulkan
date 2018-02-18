@@ -1,6 +1,6 @@
 {-# LANGUAGE DuplicateRecordFields #-}
 {-# LANGUAGE OverloadedStrings     #-}
-{-# LANGUAGE QuasiQuotes     #-}
+{-# LANGUAGE QuasiQuotes           #-}
 {-# LANGUAGE Strict                #-}
 -- | Generate function pointer types
 module Write.Types.Funcpointer
@@ -9,8 +9,9 @@ module Write.Types.Funcpointer
 
 
 import           Control.Arrow
+import           Control.Monad                        (forM_)
+import           Data.Char                            (toUpper)
 import           Data.Semigroup
-import Data.Char (toUpper)
 import qualified Data.Text                            as T
 import           Language.Haskell.Exts.SimpleComments
 import           Language.Haskell.Exts.Syntax
@@ -40,7 +41,7 @@ genFuncpointer VkTypeSimple
                    $ T.breakOn (unVkTypeName vkTName) c
     , rtype <- TyApp () (TyCon () (UnQual () (Ident () "IO")))
              . uncurry (flip toType)
-             . first toHaskellName $ countStars rtypeTxt
+             $ countStars rtypeTxt
     , funtype <- foldr accumRefs rtype refs
     , pfuntype <- TyApp () (TyCon () (UnQual () (Ident () "FunPtr")))
                            (TyCon () tfname)
@@ -49,6 +50,8 @@ genFuncpointer VkTypeSimple
     writeImport $ DIThing "FunPtr" DITEmpty
     writeImport $ DIThing "Void" DITEmpty
     writeImport $ DIThing "CString" DITNo
+    forM_ refs $ \(VkTypeName t, _) ->
+      writeImport $ DIThing t DITAll
     writeDecl . (Nothing <$) $
       TypeDecl () (DHead () $ unqualify tfname) funtype
     writeDecl . setComment rezComment
@@ -74,9 +77,9 @@ genFuncpointer VkTypeSimple
     writeExport $ DIVar newFun
     writeExport $ DIVar unwrapFun
   where
-    tname = toHaskellName vkTName
-    tnametxt = qNameTxt tname
-    tfname = toHaskellName . VkTypeName $ "HS_" <> tnamebasetxt
+    tname = toQName vkTName
+    tnametxt = unVkTypeName vkTName
+    tfname = toQName . VkTypeName $ "HS_" <> tnamebasetxt
     tfnametxt = qNameTxt tfname
     tnamebasetxt = T.drop 1 . T.dropWhile ('_' /=) $ unVkTypeName vkTName
     tnamebasetxtC = case T.uncons tnamebasetxt of
@@ -84,10 +87,12 @@ genFuncpointer VkTypeSimple
                       Nothing      -> tnamebasetxt
     newFun = "new" <> tnamebasetxtC
     unwrapFun = "unwrap" <> tnamebasetxtC
+    countStars "void"  = (VkTypeName "()", 0)
+    countStars "void*" = (VkTypeName "Void", 1)
     countStars s | "*" `T.isSuffixOf` s = second (1+) $ countStars (T.dropEnd 1 s)
                  | otherwise = (VkTypeName s, 0)
     refs = map (second length) refs'
-    accumRefs (tn, k) = TyFun () (toType (fromIntegral k) (unqualifyQ $ toHaskellName tn))
+    accumRefs (tn, k) = TyFun () (toType (fromIntegral k) tn)
     rezComment = rezComment'' >>= preComment . T.unpack
     rezComment'' = appendComLine rezComment'
                  $ T.unlines . map ("> " <>) $ T.lines c
