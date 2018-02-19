@@ -33,7 +33,7 @@ import           Foreign.C.String                 (newCString)
 import           Foreign.C.Types                  (CChar)
 import           Foreign.Marshal.Alloc            (finalizerFree, free)
 import           Foreign.Marshal.Array            (newArray, pokeArray0)
-import           Foreign.Ptr                      (plusPtr)
+import           Foreign.Ptr                      (plusPtr, nullPtr)
 import           Foreign.Storable                 (Storable)
 import           GHC.Base                         (IO (..))
 import           GHC.Prim
@@ -173,14 +173,15 @@ setStrRef v = CreateVkStruct $ \p -> do
 --   This function also attaches a reliable finalizer to the vulkan struct,
 --    so that the array memory is freed when the structure is GCed.
 --
---   This function does nothing if used with an empty list.
+--   This function writes null pointer if used with an empty list.
 setListRef :: forall fname x a
             . ( CanWriteField fname x
               , FieldType fname x ~ Ptr a
               , Storable a
               )
            => [a] -> CreateVkStruct x '[fname] ()
-setListRef [] = pure ()
+setListRef [] = CreateVkStruct $ \p ->
+  (,) ([],[]) <$> writeField @fname @x p nullPtr
 setListRef v = CreateVkStruct $ \p -> do
   aPtr <- newArray v
   (,) ([coerce aPtr],[]) <$> writeField @fname @x p aPtr
@@ -191,13 +192,14 @@ setListRef v = CreateVkStruct $ \p -> do
 --   This function also attaches a reliable finalizer to the vulkan struct,
 --    so that the array memory is freed when the structure is GCed.
 --
---   This function does nothing if used with an empty list.
+--   This function writes null pointer if used with an empty list.
 setStrListRef :: forall fname x
               . ( CanWriteField fname x
                 , FieldType fname x ~ Ptr CString
                 )
               => [String] -> CreateVkStruct x '[fname] ()
-setStrListRef [] = pure ()
+setStrListRef [] = CreateVkStruct $ \p ->
+  (,) ([],[]) <$> writeField @fname @x p nullPtr
 setStrListRef v = CreateVkStruct $ \p -> do
   strptrs <- mapM newCString v
   aPtr <- newArray strptrs
