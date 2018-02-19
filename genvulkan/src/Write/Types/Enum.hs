@@ -9,6 +9,7 @@ module Write.Types.Enum
   , genAlias
   , genApiConstants
   , enumPattern
+  , genBitmaskPair
   ) where
 
 import           Control.Monad
@@ -19,6 +20,7 @@ import           Data.Semigroup
 import           Data.Text                            (Text)
 import qualified Data.Text                            as T
 import           Language.Haskell.Exts.SimpleComments
+import           Language.Haskell.Exts.Syntax
 import           NeatInterpolation
 
 import           VkXml.CommonTypes
@@ -27,6 +29,82 @@ import           VkXml.Sections.Enums
 import           VkXml.Sections.Types
 
 import           Write.ModuleWriter
+
+
+
+
+genBitmaskPair :: Monad m
+               => VkType
+                  -- ^ type category bitmask
+               -> VkType
+                  -- ^ corresponding bits
+               -> ModuleWriter m ()
+genBitmaskPair tbm te
+  = ask >>= \vk -> case Map.lookup (Just bitsName) (globEnums vk) of
+      Nothing -> error $ "genBitmaskPair: Could not find a corresponding enum for bits type "
+                      ++ show te
+      Just e@VkEnums {..}  -> do
+        writePragma "GeneralizedNewtypeDeriving"
+        writePragma "DeriveDataTypeable"
+        writePragma "DeriveGeneric"
+        writePragma "DataKinds"
+        writePragma "KindSignatures"
+        writePragma "StandaloneDeriving"
+        writePragma "TypeSynonymInstances"
+        writePragma "PatternSynonyms"
+        writePragma "FlexibleInstances"
+        writeFullImport "Graphics.Vulkan.Marshal"
+        writeImport $ DIThing "Generic" DITNo
+        writeImport $ DIThing "Data" DITNo
+        writeImport $ DIThing "Storable" DITNo
+        writeImport $ DIThing "Bits" DITNo
+        writeImport $ DIThing "FiniteBits" DITNo
+        writeImport $ DIThing "VkFlags" DITAll
+
+        let allPNs = map (unVkEnumName . _vkEnumName) . items $ _vkEnumsMembers
+        mapM_ writeDecl $ parseDecls
+          [text|
+            newtype $baseNameTxt (a :: FlagType) = $baseNameTxt VkFlags
+              deriving ( Eq, Ord, Storable, Data, Generic)
+
+            type $flagNameTxt = $baseNameTxt FlagMask
+            type $bitsNameTxt = $baseNameTxt FlagBit
+
+            deriving instance Bits       ($baseNameTxt FlagMask)
+            deriving instance FiniteBits ($baseNameTxt FlagMask)
+            deriving instance Integral   ($baseNameTxt FlagMask)
+            deriving instance Num        ($baseNameTxt FlagMask)
+            deriving instance Bounded    ($baseNameTxt FlagMask)
+            deriving instance Enum       ($baseNameTxt FlagMask)
+            deriving instance Real       ($baseNameTxt FlagMask)
+
+          |]
+
+        genEnumShow (VkTypeName $ "(" <> baseNameTxt <> " a)") baseNameTxt allPNs
+        genEnumRead (VkTypeName $ "(" <> baseNameTxt <> " a)") baseNameTxt allPNs
+
+        pats <- mapM ( bitmaskPattern
+                       (baseNameTxt <> " a")
+                        baseNameTxt
+                      )  $ items _vkEnumsMembers
+        let patCNames = map (ConName () . Ident () . T.unpack) $ baseNameTxt : pats
+
+        writeExport $ DIThing baseNameTxt DITAll
+        writeExport $ DIThing flagNameTxt DITNo
+        writeExport $ DIThing bitsNameTxt DITNo
+        writeExportExplicit (DIThing flagNameTxt DITAll)
+          [ IThingAll () (Ident () (T.unpack baseNameTxt))
+          , IAbs () (NoNamespace ()) (Ident () (T.unpack flagNameTxt))]
+        writeExportExplicit (DIThing bitsNameTxt DITAll)
+          [ IThingAll () (Ident () (T.unpack baseNameTxt))
+          , IAbs () (NoNamespace ()) (Ident () (T.unpack bitsNameTxt))]
+  where
+    flagName = tname tbm
+    bitsName = tname te
+    baseNameTxt = T.replace "Flags" "Flag" flagNameTxt
+    flagNameTxt = unVkTypeName flagName
+    bitsNameTxt = unVkTypeName bitsName
+    tname = (name :: VkType -> VkTypeName)
 
 
 genApiConstants :: Monad m => ModuleWriter m ()
@@ -62,10 +140,10 @@ genEnums VkEnums {..} = do
 
     forM_ _vkEnumsTypeName $ \tname -> do
       newInt32TypeDec tname derives _vkEnumsComment
-      genEnumShow tname allPNs
-      genEnumRead tname allPNs
+      genEnumShow tname (unVkTypeName tname) allPNs
+      genEnumRead tname (unVkTypeName tname) allPNs
 
-    writeSections enumPattern _vkEnumsMembers
+    writeSections enumPattern $ _vkEnumsMembers
   where
     derives = (if _vkEnumsIsBits then ("Bits":).("FiniteBits":) else id)
               ["Eq","Ord","Num","Bounded","Storable","Enum", "Data", "Generic"]
@@ -73,19 +151,19 @@ genEnums VkEnums {..} = do
     allPNs = map (unVkEnumName . _vkEnumName) . items $ _vkEnumsMembers
 
 
-genEnumShow :: Monad m => VkTypeName -> [Text] -> ModuleWriter m ()
-genEnumShow (VkTypeName tname) xs =
+genEnumShow :: Monad m => VkTypeName -> Text -> [Text] -> ModuleWriter m ()
+genEnumShow (VkTypeName tname) constr xs =
     writeDecl $ parseDecl' $ T.unlines
        $  [text|instance Show $tname where|]
        : map (\x -> "  " <>
                   [text|showsPrec _ $x = showString "$x"|]
              ) xs
-      ++ ["  " <> [text|showsPrec p ($tname x) = showParen (p >= 11) (showString "$tname " . showsPrec 11 x)|]
+      ++ ["  " <> [text|showsPrec p ($constr x) = showParen (p >= 11) (showString "$constr " . showsPrec 11 x)|]
          ]
 
 
-genEnumRead :: Monad m => VkTypeName -> [Text] -> ModuleWriter m ()
-genEnumRead (VkTypeName tname) xs = do
+genEnumRead :: Monad m => VkTypeName -> Text -> [Text] -> ModuleWriter m ()
+genEnumRead (VkTypeName tname) constr xs = do
 
     writeImport $ DIThing "Lexeme" DITAll
     writeImport $ DIThing "Read" DITAll
@@ -105,7 +183,7 @@ genEnumRead (VkTypeName tname) xs = do
            T.intercalate ", " ( map (\x -> [text|("$x", pure $x)|]) xs ) <>
            [text|
                                          ] +++
-                                  prec 10 (expectP (Ident "$tname") >> ($tname <$> step readPrec))
+                                  prec 10 (expectP (Ident "$constr") >> ($constr <$> step readPrec))
                                 )
            |]
           )
@@ -220,6 +298,23 @@ newInt32TypeDec vkTName insts com = do
   where
     -- tname = toQName vkTName
     tnametxt = unVkTypeName vkTName
+
+
+bitmaskPattern :: Monad m => Text -> Text -> VkEnum -> ModuleWriter m Text
+bitmaskPattern tnameTxt constrTxt
+  VkEnum
+  { _vkEnumName = VkEnumName patnameTxt
+  , _vkEnumComment = comm
+  , _vkEnumValue = VkEnumIntegral n _
+  } = do
+    writeDecl . setComment rezComment
+              $ parseDecl' [text|pattern $patnameTxt :: $tnameTxt|]
+    writeDecl $ parseDecl' [text|pattern $patnameTxt = $constrTxt $patVal|]
+    return patnameTxt
+  where
+    patVal = T.pack $ show n
+    rezComment = preComment $ T.unpack comm
+bitmaskPattern _ _ p = error $ "Unexpected bitmask pattern " ++ show p
 
 
 enumPattern :: Monad m => VkEnum -> ModuleWriter m ()

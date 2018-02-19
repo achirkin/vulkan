@@ -24,7 +24,8 @@
 -- | This module is not part of auto-generated code based on vk.xml.
 --   Instead, it is hand-written to provide common types and classes.
 module Graphics.Vulkan.Marshal
-  ( VulkanMarshal (..), VulkanMarshalPrim ()
+  ( FlagType (..), FlagMask, FlagBit
+  , VulkanMarshal (..), VulkanMarshalPrim ()
   , VulkanPtr (..)
   , VkPtr (..)
   , pattern VK_NULL_HANDLE, pattern VK_NULL
@@ -67,6 +68,15 @@ import           GHC.TypeLits
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 import           Graphics.Vulkan.Marshal.Internal
+
+-- | Distinguish single bits and bitmasks in vulkan flags
+data FlagType = FlagMask | FlagBit
+
+-- | Vulkan flags type that can have multiple bits set.
+type FlagMask = 'FlagMask
+-- | Vulkan single bit flag value.
+type FlagBit  = 'FlagBit
+
 
 -- | All Vulkan structures are stored as-is in byte arrays to avoid any overheads
 --   for wrapping and unwrapping haskell values.

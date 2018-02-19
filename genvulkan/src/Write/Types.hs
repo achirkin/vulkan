@@ -73,6 +73,18 @@ writeAllTypes vkXml@VkXml{..}
       writeSimpleTypes "Graphics.Vulkan.Types.Bitmasks" $
         mapM_ genEnum bitmasksNoRequireds
 
+    moduleEnums <- forM (Map.elems trueEnums) $ \t ->
+      writeSimpleTypes ("Graphics.Vulkan.Types."
+                         <> T.unpack (unVkTypeName
+                                       $ (name :: VkType -> VkTypeName) t)
+                       ) $ genEnum t
+
+    moduleBitmasks <- forM (Map.elems bitmasksCouples) $ \(tbm, te) ->
+      writeSimpleTypes ("Graphics.Vulkan.Types."
+                         <> T.unpack (unVkTypeName
+                                       $ (name :: VkType -> VkTypeName) tbm)
+                       ) $ genBitmaskPair tbm te
+
 
     return $
       [ moduleInclude
@@ -81,7 +93,7 @@ writeAllTypes vkXml@VkXml{..}
       , moduleHandles
       , moduleFuncpointers
       , moduleOrphanBitmasks
-      ]
+      ] ++ moduleEnums ++ moduleBitmasks
   | otherwise = error $ "Not all types were processed\n" ++ show allt8
   where
 
@@ -110,6 +122,19 @@ writeAllTypes vkXml@VkXml{..}
     (typesStructsOrUnions, allt8)
       = Map.partition ((\c -> VkTypeCatStruct == c || VkTypeCatUnion == c
                        ) . vkTypeCat) allt7
+
+    (trueEnums, bitmasksCouples)
+      = Map.mapAccum (\eMap bm@VkTypeSimple
+                              { attributes = VkTypeAttrs
+                                 { requires = Just eName}
+                              }
+                          -> case Map.updateLookupWithKey
+                                    (\_ _ -> Nothing) eName eMap of
+                              (Nothing, _) ->
+                                error "writeAllTypes/updateLookupWithKey failed!"
+                              (Just ev, eMap') -> (eMap', (bm, ev))
+                     ) typesEnums bitmasksRequireds
+
 
     writeSimpleTypes mname a = do
       mds <- State.get
@@ -230,6 +255,19 @@ genNocatData VkTypeSimple
   } = case tname of
       UnQual () (Ident () n)
         | "HSC2HS___" `T.isPrefixOf` T.pack n -> pure ()
+        | "Word8"  == n -> pure ()
+        | "Word16" == n -> pure ()
+        | "Word32" == n -> pure ()
+        | "Word64" == n -> pure ()
+        | "Int8"   == n -> pure ()
+        | "Int16"  == n -> pure ()
+        | "Int32"  == n -> pure ()
+        | "Int64"  == n -> pure ()
+        | "CChar"  == n -> pure ()
+        | "CInt"   == n -> pure ()
+        | "CSize"  == n -> pure ()
+        | "Float"  == n -> pure ()
+        | "Double" == n -> pure ()
         | otherwise -> do
         -- Guess representation of some imported types
         -- https://github.com/haskell/win32
@@ -280,19 +318,6 @@ genNocatData VkTypeSimple
             writeImport $ DIThing "CULong" DITAll
             writeDecl . setComment rezComment $ parseDecl'
               [text|type RROutput = CULong|]
-          "Word8"  -> pure ()
-          "Word16" -> pure ()
-          "Word32" -> pure ()
-          "Word64" -> pure ()
-          "Int8"  -> pure ()
-          "Int16" -> pure ()
-          "Int32" -> pure ()
-          "Int64" -> pure ()
-          "CChar" -> pure ()
-          "CInt"  -> pure ()
-          "CSize" -> pure ()
-          "Float" -> pure ()
-          "Double" -> pure ()
           _ -> do
             writePragma "EmptyDataDecls"
             writeDecl . setComment rezComment $ parseDecl'

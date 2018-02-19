@@ -24,7 +24,7 @@ import           Write.ModuleWriter
 
 
 genFuncpointer :: Monad m => VkType -> ModuleWriter m ()
-genFuncpointer VkTypeSimple
+genFuncpointer vkt@VkTypeSimple
     { name = vkTName
     , attributes = VkTypeAttrs
         { comment = txt
@@ -46,7 +46,7 @@ genFuncpointer VkTypeSimple
     writeImport $ DIThing "FunPtr" DITEmpty
     writeImport $ DIThing "Void" DITEmpty
     writeImport $ DIThing "CString" DITNo
-    forM_ refs $ \(VkTypeName t, _) ->
+    forM_ (requiresTypes vkt) $ \(VkTypeName t) ->
       writeImport $ DIThing t DITAll
     writeDecl . (Nothing <$) $
       TypeDecl () (DHead () $ unqualify tfname) funtype

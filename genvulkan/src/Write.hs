@@ -64,12 +64,11 @@ generateVkSource' dnames' outputDir outCabalFile vkXml = do
     (\(m, mpdf) -> flip (,) mpdf <$> writeModule' outputDir m) genTModules
 
   exportedNamesCommon <- do
-    ((), mr) <- runModuleWriter vkXml "Graphics.Vulkan.Common" dnames $ do
+    ((), mr) <- runModuleWriter vkXml "Graphics.Vulkan.Constants" dnames $ do
        writePragma "Strict"
        writePragma "DataKinds"
        genApiConstants
-       genBaseTypes
-    writeModule outputDir [relfile|Graphics/Vulkan/Common.hsc|] id mr
+    writeModule outputDir [relfile|Graphics/Vulkan/Constants.hs|] id mr
     pure $ globalNames mr
 
   (classDeclsBase, exportedNamesBase) <- do

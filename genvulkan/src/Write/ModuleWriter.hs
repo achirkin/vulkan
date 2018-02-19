@@ -486,6 +486,7 @@ vkParseMode = defaultParseMode
         , EnableExtension UnliftedFFITypes
         , EnableExtension UndecidableInstances
         , EnableExtension MultiParamTypeClasses
+        , EnableExtension StandaloneDeriving
         , UnknownExtension "Strict"
         ]
       }
