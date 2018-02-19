@@ -20,7 +20,7 @@ hardcodedModules =
   , "Graphics.Vulkan.Marshal"
   , "Graphics.Vulkan.Marshal.Create"
   , "Graphics.Vulkan.Marshal.Internal"
-  , "Graphics.Vulkan.Common"
+  , "Graphics.Vulkan.Constants"
   , "Graphics.Vulkan.Base"
   , "Graphics.Vulkan.Core"
   , "Graphics.Vulkan.StructMembers"
