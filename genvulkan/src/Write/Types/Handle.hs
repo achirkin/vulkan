@@ -44,6 +44,7 @@ genHandle VkTypeSimple
                     Just txt2 -> appendComLine (Just txt) txt2
     go t = do
       writePragma "EmptyDataDecls"
+      writeImport $ DIThing t DITEmpty
       writeDecl . setComment rezComment $ parseDecl'
         [text|type $tnametxt = $t $tnametxtT|]
       writeDecl

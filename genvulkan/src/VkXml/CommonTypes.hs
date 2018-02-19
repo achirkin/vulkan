@@ -154,7 +154,7 @@ toHaskellType "int64_t"  = pure $ VkTypeName "Int64"
 toHaskellType "size_t"   = pure $ VkTypeName "CSize"
 toHaskellType "int"      = pure $ VkTypeName "CInt"
 -- exceptions **************************************************
--- Linux xcb types
+-- Linux types
 toHaskellType t
   | "wl_" `T.isPrefixOf` t || "xcb_" `T.isPrefixOf` t
     = toHaskellType . firstUp . T.pack . toCamelCase $ T.unpack t

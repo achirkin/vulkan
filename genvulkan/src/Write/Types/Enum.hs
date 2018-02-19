@@ -157,6 +157,7 @@ genAlias VkTypeSimple
     writeImport $ DIThing "Data" DITNo
     writeImport $ DIThing "Bits" DITNo
     writeImport $ DIThing "FiniteBits" DITNo
+    writeImport $ DIThing "Storable" DITNo
     writeImport $ DIThing treftxt DITNo
 
     writeDecl . setComment rezComment $ parseDecl'

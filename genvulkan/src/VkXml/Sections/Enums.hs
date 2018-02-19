@@ -93,6 +93,16 @@ data VkEnums
 makeLenses ''VkEnum
 makeLenses ''VkEnums
 
+
+instance TypeScope VkEnum where
+  providesTypes _ = []
+  requiresTypes e = e ^.. vkEnumTName . _Just
+
+
+instance TypeScope VkEnums where
+  providesTypes _ = []
+  requiresTypes e = e ^.. vkEnumsTypeName . _Just
+
 -- * Parsing
 
 -- | Try to parse current tag as being enums,
