@@ -64,7 +64,7 @@ main = withGLFWWindow windowWidth windowHeight "05-GraphicsPipeline-Window"
 
 
 withVkShaderStageCI :: VkDevice
-                   -> (Word64, Ptr Word32)
+                   -> (CSize, Ptr Word32)
                    -> VkShaderStageFlagBits
                    -> (VkPipelineShaderStageCreateInfo -> IO a)
                    -> IO a

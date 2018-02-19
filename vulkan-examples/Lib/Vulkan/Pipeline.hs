@@ -23,7 +23,7 @@ import           Lib.Vulkan.Presentation
 
 
 withVkShaderStageCI :: VkDevice
-                    -> (Word64, Ptr Word32)
+                    -> (CSize, Ptr Word32)
                     -> VkShaderStageFlagBits
                     -> (VkPipelineShaderStageCreateInfo -> IO a)
                     -> IO a
