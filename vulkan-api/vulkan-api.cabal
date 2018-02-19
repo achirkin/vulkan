@@ -70,154 +70,109 @@ flag usePlatformXlibXrandrExt
 library
     hs-source-dirs:      src, src-gen
     exposed-modules:
+
         Graphics.Vulkan
+        Graphics.Vulkan.Base
+        Graphics.Vulkan.Common
+        Graphics.Vulkan.Core
+        Graphics.Vulkan.Ext
+        Graphics.Vulkan.Ext.VK_AMD_draw_indirect_count
+        Graphics.Vulkan.Ext.VK_AMD_gcn_shader
+        Graphics.Vulkan.Ext.VK_AMD_gpu_shader_half_float
+        Graphics.Vulkan.Ext.VK_AMD_gpu_shader_int16
+        Graphics.Vulkan.Ext.VK_AMD_mixed_attachment_samples
+        Graphics.Vulkan.Ext.VK_AMD_negative_viewport_height
+        Graphics.Vulkan.Ext.VK_AMD_rasterization_order
+        Graphics.Vulkan.Ext.VK_AMD_shader_ballot
+        Graphics.Vulkan.Ext.VK_AMD_shader_explicit_vertex_parameter
+        Graphics.Vulkan.Ext.VK_AMD_shader_fragment_mask
+        Graphics.Vulkan.Ext.VK_AMD_shader_image_load_store_lod
+        Graphics.Vulkan.Ext.VK_AMD_shader_info
+        Graphics.Vulkan.Ext.VK_AMD_shader_trinary_minmax
+        Graphics.Vulkan.Ext.VK_AMD_texture_gather_bias_lod
+        Graphics.Vulkan.Ext.VK_EXT_blend_operation_advanced
+        Graphics.Vulkan.Ext.VK_EXT_conservative_rasterization
+        Graphics.Vulkan.Ext.VK_EXT_debug_marker
+        Graphics.Vulkan.Ext.VK_EXT_debug_report
+        Graphics.Vulkan.Ext.VK_EXT_depth_range_unrestricted
+        Graphics.Vulkan.Ext.VK_EXT_direct_mode_display
+        Graphics.Vulkan.Ext.VK_EXT_discard_rectangles
+        Graphics.Vulkan.Ext.VK_EXT_display_control
+        Graphics.Vulkan.Ext.VK_EXT_display_surface_counter
+        Graphics.Vulkan.Ext.VK_EXT_external_memory_dma_buf
+        Graphics.Vulkan.Ext.VK_EXT_external_memory_host
+        Graphics.Vulkan.Ext.VK_EXT_global_priority
+        Graphics.Vulkan.Ext.VK_EXT_hdr_metadata
+        Graphics.Vulkan.Ext.VK_EXT_post_depth_coverage
+        Graphics.Vulkan.Ext.VK_EXT_queue_family_foreign
+        Graphics.Vulkan.Ext.VK_EXT_sample_locations
+        Graphics.Vulkan.Ext.VK_EXT_sampler_filter_minmax
+        Graphics.Vulkan.Ext.VK_EXT_shader_stencil_export
+        Graphics.Vulkan.Ext.VK_EXT_shader_subgroup_ballot
+        Graphics.Vulkan.Ext.VK_EXT_shader_subgroup_vote
+        Graphics.Vulkan.Ext.VK_EXT_shader_viewport_index_layer
+        Graphics.Vulkan.Ext.VK_EXT_swapchain_colorspace
+        Graphics.Vulkan.Ext.VK_EXT_validation_cache
+        Graphics.Vulkan.Ext.VK_EXT_validation_flags
+        Graphics.Vulkan.Ext.VK_GOOGLE_display_timing
+        Graphics.Vulkan.Ext.VK_IMG_filter_cubic
+        Graphics.Vulkan.Ext.VK_IMG_format_pvrtc
+        Graphics.Vulkan.Ext.VK_KHR_16bit_storage
+        Graphics.Vulkan.Ext.VK_KHR_bind_memory2
+        Graphics.Vulkan.Ext.VK_KHR_dedicated_allocation
+        Graphics.Vulkan.Ext.VK_KHR_descriptor_update_template
+        Graphics.Vulkan.Ext.VK_KHR_display
+        Graphics.Vulkan.Ext.VK_KHR_display_swapchain
+        Graphics.Vulkan.Ext.VK_KHR_external_fence
+        Graphics.Vulkan.Ext.VK_KHR_external_fence_capabilities
+        Graphics.Vulkan.Ext.VK_KHR_external_fence_fd
+        Graphics.Vulkan.Ext.VK_KHR_external_memory
+        Graphics.Vulkan.Ext.VK_KHR_external_memory_capabilities
+        Graphics.Vulkan.Ext.VK_KHR_external_memory_fd
+        Graphics.Vulkan.Ext.VK_KHR_external_semaphore
+        Graphics.Vulkan.Ext.VK_KHR_external_semaphore_capabilities
+        Graphics.Vulkan.Ext.VK_KHR_external_semaphore_fd
+        Graphics.Vulkan.Ext.VK_KHR_get_memory_requirements2
+        Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
+        Graphics.Vulkan.Ext.VK_KHR_get_surface_capabilities2
+        Graphics.Vulkan.Ext.VK_KHR_image_format_list
+        Graphics.Vulkan.Ext.VK_KHR_incremental_present
+        Graphics.Vulkan.Ext.VK_KHR_maintenance1
+        Graphics.Vulkan.Ext.VK_KHR_maintenance2
+        Graphics.Vulkan.Ext.VK_KHR_push_descriptor
+        Graphics.Vulkan.Ext.VK_KHR_relaxed_block_layout
+        Graphics.Vulkan.Ext.VK_KHR_sampler_mirror_clamp_to_edge
+        Graphics.Vulkan.Ext.VK_KHR_sampler_ycbcr_conversion
+        Graphics.Vulkan.Ext.VK_KHR_shader_draw_parameters
+        Graphics.Vulkan.Ext.VK_KHR_shared_presentable_image
+        Graphics.Vulkan.Ext.VK_KHR_storage_buffer_storage_class
+        Graphics.Vulkan.Ext.VK_KHR_surface
+        Graphics.Vulkan.Ext.VK_KHR_swapchain
+        Graphics.Vulkan.Ext.VK_KHR_variable_pointers
+        Graphics.Vulkan.Ext.VK_KHX_device_group
+        Graphics.Vulkan.Ext.VK_KHX_device_group_creation
+        Graphics.Vulkan.Ext.VK_KHX_multiview
+        Graphics.Vulkan.Ext.VK_NVX_device_generated_commands
+        Graphics.Vulkan.Ext.VK_NVX_multiview_per_view_attributes
+        Graphics.Vulkan.Ext.VK_NV_clip_space_w_scaling
+        Graphics.Vulkan.Ext.VK_NV_dedicated_allocation
+        Graphics.Vulkan.Ext.VK_NV_external_memory
+        Graphics.Vulkan.Ext.VK_NV_external_memory_capabilities
+        Graphics.Vulkan.Ext.VK_NV_fill_rectangle
+        Graphics.Vulkan.Ext.VK_NV_fragment_coverage_to_color
+        Graphics.Vulkan.Ext.VK_NV_framebuffer_mixed_samples
+        Graphics.Vulkan.Ext.VK_NV_geometry_shader_passthrough
+        Graphics.Vulkan.Ext.VK_NV_glsl_shader
+        Graphics.Vulkan.Ext.VK_NV_sample_mask_override_coverage
+        Graphics.Vulkan.Ext.VK_NV_viewport_array2
+        Graphics.Vulkan.Ext.VK_NV_viewport_swizzle
         Graphics.Vulkan.Marshal
         Graphics.Vulkan.Marshal.Create
         Graphics.Vulkan.Marshal.Internal
-        Graphics.Vulkan.Common
-        Graphics.Vulkan.Base
-        Graphics.Vulkan.Core
         Graphics.Vulkan.StructMembers
-        Graphics.Vulkan.Ext
-
-        Graphics.Vulkan.Ext.VK_KHR_surface
-        Graphics.Vulkan.Ext.VK_KHR_swapchain
-        Graphics.Vulkan.Ext.VK_KHR_display
-        Graphics.Vulkan.Ext.VK_KHR_display_swapchain
-        Graphics.Vulkan.Ext.VK_EXT_debug_report
-        Graphics.Vulkan.Ext.VK_NV_glsl_shader
-        Graphics.Vulkan.Ext.VK_EXT_depth_range_unrestricted
-        Graphics.Vulkan.Ext.VK_KHR_sampler_mirror_clamp_to_edge
-        Graphics.Vulkan.Ext.VK_IMG_filter_cubic
-        Graphics.Vulkan.Ext.VK_AMD_rasterization_order
-        Graphics.Vulkan.Ext.VK_AMD_shader_trinary_minmax
-        Graphics.Vulkan.Ext.VK_AMD_shader_explicit_vertex_parameter
-        Graphics.Vulkan.Ext.VK_EXT_debug_marker
-        Graphics.Vulkan.Ext.VK_AMD_gcn_shader
-        Graphics.Vulkan.Ext.VK_NV_dedicated_allocation
-        Graphics.Vulkan.Ext.VK_AMD_draw_indirect_count
-        Graphics.Vulkan.Ext.VK_AMD_negative_viewport_height
-        Graphics.Vulkan.Ext.VK_AMD_gpu_shader_half_float
-        Graphics.Vulkan.Ext.VK_AMD_shader_ballot
-        Graphics.Vulkan.Ext.VK_AMD_texture_gather_bias_lod
-        Graphics.Vulkan.Ext.VK_AMD_shader_info
-        Graphics.Vulkan.Ext.VK_AMD_shader_image_load_store_lod
-        Graphics.Vulkan.Ext.VK_KHX_multiview
-        Graphics.Vulkan.Ext.VK_IMG_format_pvrtc
-        Graphics.Vulkan.Ext.VK_NV_external_memory_capabilities
-        Graphics.Vulkan.Ext.VK_NV_external_memory
-        Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
-        Graphics.Vulkan.Ext.VK_KHX_device_group
-        Graphics.Vulkan.Ext.VK_EXT_validation_flags
-        Graphics.Vulkan.Ext.VK_KHR_shader_draw_parameters
-        Graphics.Vulkan.Ext.VK_EXT_shader_subgroup_ballot
-        Graphics.Vulkan.Ext.VK_EXT_shader_subgroup_vote
-        Graphics.Vulkan.Ext.VK_KHR_maintenance1
-        Graphics.Vulkan.Ext.VK_KHX_device_group_creation
-        Graphics.Vulkan.Ext.VK_KHR_external_memory_capabilities
-        Graphics.Vulkan.Ext.VK_KHR_external_memory
-        Graphics.Vulkan.Ext.VK_KHR_external_memory_fd
-        Graphics.Vulkan.Ext.VK_KHR_external_semaphore_capabilities
-        Graphics.Vulkan.Ext.VK_KHR_external_semaphore
-        Graphics.Vulkan.Ext.VK_KHR_external_semaphore_fd
-        Graphics.Vulkan.Ext.VK_KHR_push_descriptor
-        Graphics.Vulkan.Ext.VK_KHR_16bit_storage
-        Graphics.Vulkan.Ext.VK_KHR_incremental_present
-        Graphics.Vulkan.Ext.VK_KHR_descriptor_update_template
-        Graphics.Vulkan.Ext.VK_NVX_device_generated_commands
-        Graphics.Vulkan.Ext.VK_NV_clip_space_w_scaling
-        Graphics.Vulkan.Ext.VK_EXT_direct_mode_display
-        Graphics.Vulkan.Ext.VK_EXT_display_surface_counter
-        Graphics.Vulkan.Ext.VK_EXT_display_control
-        Graphics.Vulkan.Ext.VK_GOOGLE_display_timing
-        Graphics.Vulkan.Ext.VK_NV_sample_mask_override_coverage
-        Graphics.Vulkan.Ext.VK_NV_geometry_shader_passthrough
-        Graphics.Vulkan.Ext.VK_NV_viewport_array2
-        Graphics.Vulkan.Ext.VK_NVX_multiview_per_view_attributes
-        Graphics.Vulkan.Ext.VK_NV_viewport_swizzle
-        Graphics.Vulkan.Ext.VK_EXT_discard_rectangles
-        Graphics.Vulkan.Ext.VK_EXT_conservative_rasterization
-        Graphics.Vulkan.Ext.VK_EXT_swapchain_colorspace
-        Graphics.Vulkan.Ext.VK_EXT_hdr_metadata
-        Graphics.Vulkan.Ext.VK_KHR_shared_presentable_image
-        Graphics.Vulkan.Ext.VK_KHR_external_fence_capabilities
-        Graphics.Vulkan.Ext.VK_KHR_external_fence
-        Graphics.Vulkan.Ext.VK_KHR_external_fence_fd
-        Graphics.Vulkan.Ext.VK_KHR_maintenance2
-        Graphics.Vulkan.Ext.VK_KHR_get_surface_capabilities2
-        Graphics.Vulkan.Ext.VK_KHR_variable_pointers
-        Graphics.Vulkan.Ext.VK_EXT_external_memory_dma_buf
-        Graphics.Vulkan.Ext.VK_EXT_queue_family_foreign
-        Graphics.Vulkan.Ext.VK_KHR_dedicated_allocation
-        Graphics.Vulkan.Ext.VK_EXT_sampler_filter_minmax
-        Graphics.Vulkan.Ext.VK_KHR_storage_buffer_storage_class
-        Graphics.Vulkan.Ext.VK_AMD_gpu_shader_int16
-        Graphics.Vulkan.Ext.VK_AMD_mixed_attachment_samples
-        Graphics.Vulkan.Ext.VK_AMD_shader_fragment_mask
-        Graphics.Vulkan.Ext.VK_EXT_shader_stencil_export
-        Graphics.Vulkan.Ext.VK_EXT_sample_locations
-        Graphics.Vulkan.Ext.VK_KHR_relaxed_block_layout
-        Graphics.Vulkan.Ext.VK_KHR_get_memory_requirements2
-        Graphics.Vulkan.Ext.VK_KHR_image_format_list
-        Graphics.Vulkan.Ext.VK_EXT_blend_operation_advanced
-        Graphics.Vulkan.Ext.VK_NV_fragment_coverage_to_color
-        Graphics.Vulkan.Ext.VK_NV_framebuffer_mixed_samples
-        Graphics.Vulkan.Ext.VK_NV_fill_rectangle
-        Graphics.Vulkan.Ext.VK_EXT_post_depth_coverage
-        Graphics.Vulkan.Ext.VK_KHR_sampler_ycbcr_conversion
-        Graphics.Vulkan.Ext.VK_KHR_bind_memory2
-        Graphics.Vulkan.Ext.VK_EXT_validation_cache
-        Graphics.Vulkan.Ext.VK_EXT_shader_viewport_index_layer
-        Graphics.Vulkan.Ext.VK_EXT_global_priority
-        Graphics.Vulkan.Ext.VK_EXT_external_memory_host
     if flag(disabledExtensionsStub)
       cpp-options: -DDISABLED_EXTENSIONS_STUB
       exposed-modules:
-        Graphics.Vulkan.Ext.VK_ANDROID_native_buffer
-        Graphics.Vulkan.Ext.VK_AMD_extension_17
-        Graphics.Vulkan.Ext.VK_AMD_extension_18
-        Graphics.Vulkan.Ext.VK_AMD_extension_20
-        Graphics.Vulkan.Ext.VK_AMD_extension_24
-        Graphics.Vulkan.Ext.VK_AMD_extension_25
-        Graphics.Vulkan.Ext.VK_EXT_extension_28
-        Graphics.Vulkan.Ext.VK_NVX_extension_29
-        Graphics.Vulkan.Ext.VK_NVX_extension_30
-        Graphics.Vulkan.Ext.VK_NVX_extension_31
-        Graphics.Vulkan.Ext.VK_AMD_extension_32
-        Graphics.Vulkan.Ext.VK_AMD_extension_33
-        Graphics.Vulkan.Ext.VK_AMD_extension_35
-        Graphics.Vulkan.Ext.VK_AMD_extension_39
-        Graphics.Vulkan.Ext.VK_AMD_extension_40
-        Graphics.Vulkan.Ext.VK_AMD_extension_41
-        Graphics.Vulkan.Ext.VK_AMD_extension_44
-        Graphics.Vulkan.Ext.VK_AMD_extension_45
-        Graphics.Vulkan.Ext.VK_AMD_extension_46
-        Graphics.Vulkan.Ext.VK_NVX_extension_48
-        Graphics.Vulkan.Ext.VK_GOOGLE_extension_49
-        Graphics.Vulkan.Ext.VK_GOOGLE_extension_50
-        Graphics.Vulkan.Ext.VK_NVX_extension_51
-        Graphics.Vulkan.Ext.VK_NVX_extension_52
-        Graphics.Vulkan.Ext.VK_NV_extension_53
-        Graphics.Vulkan.Ext.VK_ARM_extension_01
-        Graphics.Vulkan.Ext.VK_ARM_extension_02
-        Graphics.Vulkan.Ext.VK_IMG_extension_69
-        Graphics.Vulkan.Ext.VK_KHR_extension_82
-        Graphics.Vulkan.Ext.VK_KHR_extension_83
-        Graphics.Vulkan.Ext.VK_KHR_extension_94
-        Graphics.Vulkan.Ext.VK_NV_extension_101
-        Graphics.Vulkan.Ext.VK_NV_extension_103
-        Graphics.Vulkan.Ext.VK_NV_extension_104
-        Graphics.Vulkan.Ext.VK_IMG_extension_107
-        Graphics.Vulkan.Ext.VK_IMG_extension_108
-        Graphics.Vulkan.Ext.VK_IMG_extension_109
-        Graphics.Vulkan.Ext.VK_IMG_extension_110
-        Graphics.Vulkan.Ext.VK_IMG_extension_111
-        Graphics.Vulkan.Ext.VK_KHR_extension_117
-        Graphics.Vulkan.Ext.VK_KHR_extension_119
-        Graphics.Vulkan.Ext.VK_KHR_extension_122
-        Graphics.Vulkan.Ext.VK_MVK_moltenvk
-        Graphics.Vulkan.Ext.VK_EXT_extension_129
-        Graphics.Vulkan.Ext.VK_KHR_extension_130
         Graphics.Vulkan.Ext.VK_AMD_extension_134
         Graphics.Vulkan.Ext.VK_AMD_extension_135
         Graphics.Vulkan.Ext.VK_AMD_extension_136
@@ -225,27 +180,8 @@ library
         Graphics.Vulkan.Ext.VK_AMD_extension_140
         Graphics.Vulkan.Ext.VK_AMD_extension_142
         Graphics.Vulkan.Ext.VK_AMD_extension_143
-        Graphics.Vulkan.Ext.VK_KHR_extension_146
-        Graphics.Vulkan.Ext.VK_NV_extension_151
-        Graphics.Vulkan.Ext.VK_NV_extension_152
-        Graphics.Vulkan.Ext.VK_NV_extension_155
-        Graphics.Vulkan.Ext.VK_EXT_extension_159
-        Graphics.Vulkan.Ext.VK_EXT_extension_160
-        Graphics.Vulkan.Ext.VK_EXT_extension_162
-        Graphics.Vulkan.Ext.VK_NV_extension_164
-        Graphics.Vulkan.Ext.VK_NV_extension_165
-        Graphics.Vulkan.Ext.VK_NV_extension_166
-        Graphics.Vulkan.Ext.VK_NV_extension_167
-        Graphics.Vulkan.Ext.VK_NV_extension_168
-        Graphics.Vulkan.Ext.VK_KHR_extension_169
-        Graphics.Vulkan.Ext.VK_EXT_extension_170
-        Graphics.Vulkan.Ext.VK_QCOM_extension_171
-        Graphics.Vulkan.Ext.VK_QCOM_extension_172
-        Graphics.Vulkan.Ext.VK_QCOM_extension_173
-        Graphics.Vulkan.Ext.VK_QCOM_extension_174
-        Graphics.Vulkan.Ext.VK_EXT_extension_176
-        Graphics.Vulkan.Ext.VK_EXT_extension_177
-        Graphics.Vulkan.Ext.VK_EXT_extension_178
+        Graphics.Vulkan.Ext.VK_AMD_extension_17
+        Graphics.Vulkan.Ext.VK_AMD_extension_18
         Graphics.Vulkan.Ext.VK_AMD_extension_180
         Graphics.Vulkan.Ext.VK_AMD_extension_181
         Graphics.Vulkan.Ext.VK_AMD_extension_182
@@ -257,12 +193,76 @@ library
         Graphics.Vulkan.Ext.VK_AMD_extension_188
         Graphics.Vulkan.Ext.VK_AMD_extension_189
         Graphics.Vulkan.Ext.VK_AMD_extension_190
-        Graphics.Vulkan.Ext.VK_NV_extension_191
+        Graphics.Vulkan.Ext.VK_AMD_extension_20
+        Graphics.Vulkan.Ext.VK_AMD_extension_24
+        Graphics.Vulkan.Ext.VK_AMD_extension_25
+        Graphics.Vulkan.Ext.VK_AMD_extension_32
+        Graphics.Vulkan.Ext.VK_AMD_extension_33
+        Graphics.Vulkan.Ext.VK_AMD_extension_35
+        Graphics.Vulkan.Ext.VK_AMD_extension_39
+        Graphics.Vulkan.Ext.VK_AMD_extension_40
+        Graphics.Vulkan.Ext.VK_AMD_extension_41
+        Graphics.Vulkan.Ext.VK_AMD_extension_44
+        Graphics.Vulkan.Ext.VK_AMD_extension_45
+        Graphics.Vulkan.Ext.VK_AMD_extension_46
+        Graphics.Vulkan.Ext.VK_ANDROID_native_buffer
+        Graphics.Vulkan.Ext.VK_ARM_extension_01
+        Graphics.Vulkan.Ext.VK_ARM_extension_02
+        Graphics.Vulkan.Ext.VK_EXT_extension_129
+        Graphics.Vulkan.Ext.VK_EXT_extension_159
+        Graphics.Vulkan.Ext.VK_EXT_extension_160
+        Graphics.Vulkan.Ext.VK_EXT_extension_162
+        Graphics.Vulkan.Ext.VK_EXT_extension_170
+        Graphics.Vulkan.Ext.VK_EXT_extension_176
+        Graphics.Vulkan.Ext.VK_EXT_extension_177
+        Graphics.Vulkan.Ext.VK_EXT_extension_178
+        Graphics.Vulkan.Ext.VK_EXT_extension_28
         Graphics.Vulkan.Ext.VK_GOOGLE_extension_192
         Graphics.Vulkan.Ext.VK_GOOGLE_extension_193
         Graphics.Vulkan.Ext.VK_GOOGLE_extension_194
         Graphics.Vulkan.Ext.VK_GOOGLE_extension_195
         Graphics.Vulkan.Ext.VK_GOOGLE_extension_196
+        Graphics.Vulkan.Ext.VK_GOOGLE_extension_49
+        Graphics.Vulkan.Ext.VK_GOOGLE_extension_50
+        Graphics.Vulkan.Ext.VK_IMG_extension_107
+        Graphics.Vulkan.Ext.VK_IMG_extension_108
+        Graphics.Vulkan.Ext.VK_IMG_extension_109
+        Graphics.Vulkan.Ext.VK_IMG_extension_110
+        Graphics.Vulkan.Ext.VK_IMG_extension_111
+        Graphics.Vulkan.Ext.VK_IMG_extension_69
+        Graphics.Vulkan.Ext.VK_KHR_extension_117
+        Graphics.Vulkan.Ext.VK_KHR_extension_119
+        Graphics.Vulkan.Ext.VK_KHR_extension_122
+        Graphics.Vulkan.Ext.VK_KHR_extension_130
+        Graphics.Vulkan.Ext.VK_KHR_extension_146
+        Graphics.Vulkan.Ext.VK_KHR_extension_169
+        Graphics.Vulkan.Ext.VK_KHR_extension_82
+        Graphics.Vulkan.Ext.VK_KHR_extension_83
+        Graphics.Vulkan.Ext.VK_KHR_extension_94
+        Graphics.Vulkan.Ext.VK_MVK_moltenvk
+        Graphics.Vulkan.Ext.VK_NVX_extension_29
+        Graphics.Vulkan.Ext.VK_NVX_extension_30
+        Graphics.Vulkan.Ext.VK_NVX_extension_31
+        Graphics.Vulkan.Ext.VK_NVX_extension_48
+        Graphics.Vulkan.Ext.VK_NVX_extension_51
+        Graphics.Vulkan.Ext.VK_NVX_extension_52
+        Graphics.Vulkan.Ext.VK_NV_extension_101
+        Graphics.Vulkan.Ext.VK_NV_extension_103
+        Graphics.Vulkan.Ext.VK_NV_extension_104
+        Graphics.Vulkan.Ext.VK_NV_extension_151
+        Graphics.Vulkan.Ext.VK_NV_extension_152
+        Graphics.Vulkan.Ext.VK_NV_extension_155
+        Graphics.Vulkan.Ext.VK_NV_extension_164
+        Graphics.Vulkan.Ext.VK_NV_extension_165
+        Graphics.Vulkan.Ext.VK_NV_extension_166
+        Graphics.Vulkan.Ext.VK_NV_extension_167
+        Graphics.Vulkan.Ext.VK_NV_extension_168
+        Graphics.Vulkan.Ext.VK_NV_extension_191
+        Graphics.Vulkan.Ext.VK_NV_extension_53
+        Graphics.Vulkan.Ext.VK_QCOM_extension_171
+        Graphics.Vulkan.Ext.VK_QCOM_extension_172
+        Graphics.Vulkan.Ext.VK_QCOM_extension_173
+        Graphics.Vulkan.Ext.VK_QCOM_extension_174
 
     if flag(usePlatformAndroidKhr)
       cpp-options: -DVK_USE_PLATFORM_ANDROID_KHR
@@ -297,13 +297,13 @@ library
     if flag(usePlatformWin32Khr)
       cpp-options: -DVK_USE_PLATFORM_WIN32_KHR
       exposed-modules:
+        Graphics.Vulkan.Ext.VK_KHR_external_fence_win32
+        Graphics.Vulkan.Ext.VK_KHR_external_memory_win32
+        Graphics.Vulkan.Ext.VK_KHR_external_semaphore_win32
+        Graphics.Vulkan.Ext.VK_KHR_win32_keyed_mutex
         Graphics.Vulkan.Ext.VK_KHR_win32_surface
         Graphics.Vulkan.Ext.VK_NV_external_memory_win32
         Graphics.Vulkan.Ext.VK_NV_win32_keyed_mutex
-        Graphics.Vulkan.Ext.VK_KHR_external_memory_win32
-        Graphics.Vulkan.Ext.VK_KHR_win32_keyed_mutex
-        Graphics.Vulkan.Ext.VK_KHR_external_semaphore_win32
-        Graphics.Vulkan.Ext.VK_KHR_external_fence_win32
 
     if flag(usePlatformXcbKhr)
       cpp-options: -DVK_USE_PLATFORM_XCB_KHR
