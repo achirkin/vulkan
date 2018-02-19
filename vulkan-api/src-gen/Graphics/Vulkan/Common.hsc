@@ -30,26 +30,39 @@ module Graphics.Vulkan.Common
         pattern VK_MAX_DEVICE_GROUP_SIZE_KHX, -- * Types and enumerations
                                               --
 
-                                              -- *** WSI extensions
-                                              --
-
                                               -- ** External types
-                                              Display, VisualID, Window,
-        RROutput, ANativeWindow, MirConnection, MirSurface, WlDisplay,
-        WlSurface, HINSTANCE, HWND, HANDLE, SECURITY_ATTRIBUTES, DWORD,
-        LPCWSTR, XcbConnectionT, XcbVisualidT, XcbWindowT,
+                                              ANativeWindow, CChar, CInt,
+        CSize, DWORD, Display, HANDLE, HINSTANCE, HWND, Int32, LPCWSTR,
+        MirConnection, MirSurface, -- ** Function pointers
+                                   PFN_vkAllocationFunction,
+        HS_vkAllocationFunction, newVkAllocationFunction,
+        unwrapVkAllocationFunction, PFN_vkDebugReportCallbackEXT,
+        HS_vkDebugReportCallbackEXT, newVkDebugReportCallbackEXT,
+        unwrapVkDebugReportCallbackEXT, PFN_vkFreeFunction,
+        HS_vkFreeFunction, newVkFreeFunction, unwrapVkFreeFunction,
+        PFN_vkInternalAllocationNotification,
+        HS_vkInternalAllocationNotification,
+        newVkInternalAllocationNotification,
+        unwrapVkInternalAllocationNotification,
+        PFN_vkInternalFreeNotification, HS_vkInternalFreeNotification,
+        newVkInternalFreeNotification, unwrapVkInternalFreeNotification,
+        PFN_vkReallocationFunction, HS_vkReallocationFunction,
+        newVkReallocationFunction, unwrapVkReallocationFunction,
+        PFN_vkVoidFunction, HS_vkVoidFunction, newVkVoidFunction,
+        unwrapVkVoidFunction, -- ** External types
+                              RROutput, SECURITY_ATTRIBUTES,
         -- ** Define pragmas
-        _VK_MAKE_VERSION, _VK_VERSION_MAJOR, _VK_VERSION_MINOR,
-        _VK_VERSION_PATCH, -- | ===== @VK_API_VERSION@
-                           -- > // DEPRECATED: This define has been removed. Specific version defines (e.g. VK_API_VERSION_1_0), or the VK_MAKE_VERSION macro, should be used instead.
-                           -- > //##define VK_API_VERSION VK_MAKE_VERSION(1, 0, 0) // Patch version should always be set to 0
-                           VK_API_VERSION_1_0, pattern VK_API_VERSION_1_0,
-        VK_HEADER_VERSION, pattern VK_HEADER_VERSION, Ptr(), -- | ===== @VK_DEFINE_HANDLE@
-                                                             -- Dispatchable handles are represented as `Foreign.Ptr`
-                                                             --
-                                                             -- >
-                                                             -- > ##define VK_DEFINE_HANDLE(object) typedef struct object####_T* object;
-                                                             VkPtr(..),
+        --
+        -- |
+        -- | ===== @VK_API_VERSION@
+        -- > // DEPRECATED: This define has been removed. Specific version defines (e.g. VK_API_VERSION_1_0), or the VK_MAKE_VERSION macro, should be used instead.
+        -- > //##define VK_API_VERSION VK_MAKE_VERSION(1, 0, 0) // Patch version should always be set to 0
+        VK_API_VERSION_1_0, pattern VK_API_VERSION_1_0, Ptr(), -- | ===== @VK_DEFINE_HANDLE@
+                                                               -- Dispatchable handles are represented as `Foreign.Ptr`
+                                                               --
+                                                               -- >
+                                                               -- > ##define VK_DEFINE_HANDLE(object) typedef struct object####_T* object;
+                                                               VkPtr(..),
         -- | ===== @VK_DEFINE_NON_DISPATCHABLE_HANDLE@
         -- Non-dispatchable handles are represented as `VkPtr`
         --
@@ -62,112 +75,43 @@ module Graphics.Vulkan.Common
         -- > ##endif
         -- > ##endif
         -- >
-        VulkanPtr(..), pattern VK_NULL_HANDLE, -- ** Base types
-                                               VkSampleMask(..),
-        VkBool32(..), VkFlags(..), VkDeviceSize(..), -- ** External types
-                                                     --
-
-                                                     -- *** Basic C types, pulled in via vk_platform.h
-                                                     CChar, Word8, Word32,
-        Word64, Int32, -- ** Bitmasks
-                       --
-
-                       -- *** Bitmask types
-                       VkFramebufferCreateFlags(..),
-        VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
-        VkSamplerCreateFlags(..), VkPipelineLayoutCreateFlags(..),
-        VkPipelineCacheCreateFlags(..),
-        VkPipelineDepthStencilStateCreateFlags(..),
-        VkPipelineDynamicStateCreateFlags(..),
-        VkPipelineColorBlendStateCreateFlags(..),
-        VkPipelineMultisampleStateCreateFlags(..),
-        VkPipelineRasterizationStateCreateFlags(..),
-        VkPipelineViewportStateCreateFlags(..),
-        VkPipelineTessellationStateCreateFlags(..),
-        VkPipelineInputAssemblyStateCreateFlags(..),
-        VkPipelineVertexInputStateCreateFlags(..),
-        VkPipelineShaderStageCreateFlags(..),
-        VkDescriptorSetLayoutCreateFlags, VkBufferViewCreateFlags(..),
-        VkInstanceCreateFlags(..), VkDeviceCreateFlags(..),
-        VkDeviceQueueCreateFlags(..), VkQueueFlags, VkMemoryPropertyFlags,
-        VkMemoryHeapFlags, VkAccessFlags, VkBufferUsageFlags,
-        VkBufferCreateFlags, VkShaderStageFlags, VkImageUsageFlags,
-        VkImageCreateFlags, VkImageViewCreateFlags(..),
-        VkPipelineCreateFlags, VkColorComponentFlags, VkFenceCreateFlags,
-        VkSemaphoreCreateFlags(..), VkFormatFeatureFlags,
-        VkQueryControlFlags, VkQueryResultFlags,
-        VkShaderModuleCreateFlags(..), VkEventCreateFlags(..),
-        VkCommandPoolCreateFlags, VkCommandPoolResetFlags,
-        VkCommandBufferResetFlags, VkCommandBufferUsageFlags,
-        VkQueryPipelineStatisticFlags, VkMemoryMapFlags(..),
-        VkImageAspectFlags, VkSparseMemoryBindFlags,
-        VkSparseImageFormatFlags, VkSubpassDescriptionFlags,
-        VkPipelineStageFlags, VkSampleCountFlags,
-        VkAttachmentDescriptionFlags, VkStencilFaceFlags, VkCullModeFlags,
-        VkDescriptorPoolCreateFlags, VkDescriptorPoolResetFlags(..),
-        VkDependencyFlags, VkIndirectCommandsLayoutUsageFlagsNVX,
-        VkObjectEntryUsageFlagsNVX,
-        VkDescriptorUpdateTemplateCreateFlagsKHR(..),
-        -- *** WSI extensions
-        VkCompositeAlphaFlagsKHR, VkDisplayPlaneAlphaFlagsKHR,
-        VkSurfaceTransformFlagsKHR, VkSwapchainCreateFlagsKHR,
-        VkDisplayModeCreateFlagsKHR(..),
-        VkDisplaySurfaceCreateFlagsKHR(..),
-        VkAndroidSurfaceCreateFlagsKHR(..), VkMirSurfaceCreateFlagsKHR(..),
-        VkViSurfaceCreateFlagsNN(..), VkWaylandSurfaceCreateFlagsKHR(..),
-        VkWin32SurfaceCreateFlagsKHR(..), VkXlibSurfaceCreateFlagsKHR(..),
-        VkXcbSurfaceCreateFlagsKHR(..), VkIOSSurfaceCreateFlagsMVK(..),
-        VkMacOSSurfaceCreateFlagsMVK(..), VkPeerMemoryFeatureFlagsKHX,
-        VkMemoryAllocateFlagsKHX, VkDeviceGroupPresentModeFlagsKHX,
-        VkDebugReportFlagsEXT, VkCommandPoolTrimFlagsKHR(..),
-        VkExternalMemoryHandleTypeFlagsNV, VkExternalMemoryFeatureFlagsNV,
-        VkExternalMemoryHandleTypeFlagsKHR,
-        VkExternalMemoryFeatureFlagsKHR,
-        VkExternalSemaphoreHandleTypeFlagsKHR,
-        VkExternalSemaphoreFeatureFlagsKHR, VkSemaphoreImportFlagsKHR,
-        VkExternalFenceHandleTypeFlagsKHR, VkExternalFenceFeatureFlagsKHR,
-        VkFenceImportFlagsKHR, VkSurfaceCounterFlagsEXT,
-        VkPipelineViewportSwizzleStateCreateFlagsNV(..),
-        VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
-        VkPipelineCoverageToColorStateCreateFlagsNV(..),
-        VkPipelineCoverageModulationStateCreateFlagsNV(..),
-        VkValidationCacheCreateFlagsEXT(..),
-        VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
-        -- ** Handles
-        --
-
-        -- *** Types which can be void pointers or class pointers, selected at compile time
-        VkInstance, VkInstance_T(), VkPhysicalDevice, VkPhysicalDevice_T(),
-        VkDevice, VkDevice_T(), VkQueue, VkQueue_T(), VkCommandBuffer,
-        VkCommandBuffer_T(), VkDeviceMemory, VkDeviceMemory_T(),
-        VkCommandPool, VkCommandPool_T(), VkBuffer, VkBuffer_T(),
-        VkBufferView, VkBufferView_T(), VkImage, VkImage_T(), VkImageView,
-        VkImageView_T(), VkShaderModule, VkShaderModule_T(), VkPipeline,
-        VkPipeline_T(), VkPipelineLayout, VkPipelineLayout_T(), VkSampler,
-        VkSampler_T(), VkDescriptorSet, VkDescriptorSet_T(),
-        VkDescriptorSetLayout, VkDescriptorSetLayout_T(), VkDescriptorPool,
-        VkDescriptorPool_T(), VkFence, VkFence_T(), VkSemaphore,
-        VkSemaphore_T(), VkEvent, VkEvent_T(), VkQueryPool,
-        VkQueryPool_T(), VkFramebuffer, VkFramebuffer_T(), VkRenderPass,
-        VkRenderPass_T(), VkPipelineCache, VkPipelineCache_T(),
-        VkObjectTableNVX, VkObjectTableNVX_T(),
-        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
-        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
-        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
-        VkValidationCacheEXT, VkValidationCacheEXT_T(), -- *** WSI extensions
-                                                        VkDisplayKHR,
-        VkDisplayKHR_T(), VkDisplayModeKHR, VkDisplayModeKHR_T(),
-        VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
-        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        VK_HEADER_VERSION, pattern VK_HEADER_VERSION, _VK_MAKE_VERSION,
+        VulkanPtr(..), pattern VK_NULL_HANDLE, _VK_VERSION_MAJOR,
+        _VK_VERSION_MINOR, _VK_VERSION_PATCH, -- ** External types
+                                              VisualID,
         -- ** Enums
-        --
-
-        -- *** Types generated from corresponding enums tags below
-        VkAttachmentLoadOp(..), pattern VK_ATTACHMENT_LOAD_OP_LOAD,
+        VkAccessFlagBits(..), pattern VK_ACCESS_INDIRECT_COMMAND_READ_BIT,
+        pattern VK_ACCESS_INDEX_READ_BIT,
+        pattern VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT,
+        pattern VK_ACCESS_UNIFORM_READ_BIT,
+        pattern VK_ACCESS_INPUT_ATTACHMENT_READ_BIT,
+        pattern VK_ACCESS_SHADER_READ_BIT,
+        pattern VK_ACCESS_SHADER_WRITE_BIT,
+        pattern VK_ACCESS_COLOR_ATTACHMENT_READ_BIT,
+        pattern VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
+        pattern VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT,
+        pattern VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT,
+        pattern VK_ACCESS_TRANSFER_READ_BIT,
+        pattern VK_ACCESS_TRANSFER_WRITE_BIT,
+        pattern VK_ACCESS_HOST_READ_BIT, pattern VK_ACCESS_HOST_WRITE_BIT,
+        pattern VK_ACCESS_MEMORY_READ_BIT,
+        pattern VK_ACCESS_MEMORY_WRITE_BIT, -- ** Bitmasks
+                                            VkAccessFlags,
+        -- ** Bitmasks
+        VkAndroidSurfaceCreateFlagsKHR(..),
+        -- ** Enums
+        VkAttachmentDescriptionFlagBits(..),
+        pattern VK_ATTACHMENT_DESCRIPTION_MAY_ALIAS_BIT,
+        -- ** Bitmasks
+        VkAttachmentDescriptionFlags, -- ** Enums
+                                      VkAttachmentLoadOp(..),
+        pattern VK_ATTACHMENT_LOAD_OP_LOAD,
         pattern VK_ATTACHMENT_LOAD_OP_CLEAR,
-        pattern VK_ATTACHMENT_LOAD_OP_DONT_CARE, VkAttachmentStoreOp(..),
+        pattern VK_ATTACHMENT_LOAD_OP_DONT_CARE, -- ** Enums
+                                                 VkAttachmentStoreOp(..),
         pattern VK_ATTACHMENT_STORE_OP_STORE,
-        pattern VK_ATTACHMENT_STORE_OP_DONT_CARE, VkBlendFactor(..),
+        pattern VK_ATTACHMENT_STORE_OP_DONT_CARE, -- ** Enums
+                                                  VkBlendFactor(..),
         pattern VK_BLEND_FACTOR_ZERO, pattern VK_BLEND_FACTOR_ONE,
         pattern VK_BLEND_FACTOR_SRC_COLOR,
         pattern VK_BLEND_FACTOR_ONE_MINUS_SRC_COLOR,
@@ -188,35 +132,26 @@ module Graphics.Vulkan.Common
         pattern VK_BLEND_FACTOR_ONE_MINUS_SRC1_ALPHA, VkBlendOp(..),
         pattern VK_BLEND_OP_ADD, pattern VK_BLEND_OP_SUBTRACT,
         pattern VK_BLEND_OP_REVERSE_SUBTRACT, pattern VK_BLEND_OP_MIN,
-        pattern VK_BLEND_OP_MAX, VkBorderColor(..),
-        pattern VK_BORDER_COLOR_FLOAT_TRANSPARENT_BLACK,
+        pattern VK_BLEND_OP_MAX, VkBlendOverlapEXT(..),
+        pattern VK_BLEND_OVERLAP_UNCORRELATED_EXT,
+        pattern VK_BLEND_OVERLAP_DISJOINT_EXT,
+        pattern VK_BLEND_OVERLAP_CONJOINT_EXT, -- ** Base types
+                                               VkBool32(..),
+        -- ** Enums
+        VkBorderColor(..), pattern VK_BORDER_COLOR_FLOAT_TRANSPARENT_BLACK,
         pattern VK_BORDER_COLOR_INT_TRANSPARENT_BLACK,
         pattern VK_BORDER_COLOR_FLOAT_OPAQUE_BLACK,
         pattern VK_BORDER_COLOR_INT_OPAQUE_BLACK,
         pattern VK_BORDER_COLOR_FLOAT_OPAQUE_WHITE,
-        pattern VK_BORDER_COLOR_INT_OPAQUE_WHITE,
-        VkFramebufferCreateFlagBits(..), VkQueryPoolCreateFlagBits(..),
-        VkRenderPassCreateFlagBits(..), VkSamplerCreateFlagBits(..),
-        VkPipelineCacheHeaderVersion(..),
-        pattern VK_PIPELINE_CACHE_HEADER_VERSION_ONE,
-        VkPipelineLayoutCreateFlagBits(..),
-        VkPipelineCacheCreateFlagBits(..),
-        VkPipelineDepthStencilStateCreateFlagBits(..),
-        VkPipelineDynamicStateCreateFlagBits(..),
-        VkPipelineColorBlendStateCreateFlagBits(..),
-        VkPipelineMultisampleStateCreateFlagBits(..),
-        VkPipelineRasterizationStateCreateFlagBits(..),
-        VkPipelineViewportStateCreateFlagBits(..),
-        VkPipelineTessellationStateCreateFlagBits(..),
-        VkPipelineInputAssemblyStateCreateFlagBits(..),
-        VkPipelineVertexInputStateCreateFlagBits(..),
-        VkPipelineShaderStageCreateFlagBits(..),
-        VkDescriptorSetLayoutCreateFlagBits(..),
-        VkBufferViewCreateFlagBits(..), VkInstanceCreateFlagBits(..),
-        VkDeviceQueueCreateFlagBits(..), VkBufferCreateFlagBits(..),
+        pattern VK_BORDER_COLOR_INT_OPAQUE_WHITE, -- ** Handles
+                                                  VkBuffer, VkBuffer_T(),
+        -- ** Enums
+        VkBufferCreateFlagBits(..),
         pattern VK_BUFFER_CREATE_SPARSE_BINDING_BIT,
         pattern VK_BUFFER_CREATE_SPARSE_RESIDENCY_BIT,
-        pattern VK_BUFFER_CREATE_SPARSE_ALIASED_BIT,
+        pattern VK_BUFFER_CREATE_SPARSE_ALIASED_BIT, -- ** Bitmasks
+                                                     VkBufferCreateFlags,
+        -- ** Enums
         VkBufferUsageFlagBits(..),
         pattern VK_BUFFER_USAGE_TRANSFER_SRC_BIT,
         pattern VK_BUFFER_USAGE_TRANSFER_DST_BIT,
@@ -226,36 +161,148 @@ module Graphics.Vulkan.Common
         pattern VK_BUFFER_USAGE_STORAGE_BUFFER_BIT,
         pattern VK_BUFFER_USAGE_INDEX_BUFFER_BIT,
         pattern VK_BUFFER_USAGE_VERTEX_BUFFER_BIT,
-        pattern VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT,
+        pattern VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT, -- ** Bitmasks
+                                                     VkBufferUsageFlags,
+        -- ** Handles
+        VkBufferView, VkBufferView_T(), -- ** Enums
+                                        VkBufferViewCreateFlagBits(..),
+        -- ** Bitmasks
+        VkBufferViewCreateFlags(..), -- ** Enums
+                                     VkChromaLocationKHR(..),
+        pattern VK_CHROMA_LOCATION_COSITED_EVEN_KHR,
+        pattern VK_CHROMA_LOCATION_MIDPOINT_KHR,
+        -- ** Enums
         VkColorComponentFlagBits(..), pattern VK_COLOR_COMPONENT_R_BIT,
         pattern VK_COLOR_COMPONENT_G_BIT, pattern VK_COLOR_COMPONENT_B_BIT,
-        pattern VK_COLOR_COMPONENT_A_BIT, VkComponentSwizzle(..),
-        pattern VK_COMPONENT_SWIZZLE_IDENTITY,
-        pattern VK_COMPONENT_SWIZZLE_ZERO,
-        pattern VK_COMPONENT_SWIZZLE_ONE, pattern VK_COMPONENT_SWIZZLE_R,
-        pattern VK_COMPONENT_SWIZZLE_G, pattern VK_COMPONENT_SWIZZLE_B,
-        pattern VK_COMPONENT_SWIZZLE_A, VkCommandPoolCreateFlagBits(..),
-        pattern VK_COMMAND_POOL_CREATE_TRANSIENT_BIT,
-        pattern VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT,
-        VkCommandPoolResetFlagBits(..),
-        pattern VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT,
+        pattern VK_COLOR_COMPONENT_A_BIT, -- ** Bitmasks
+                                          VkColorComponentFlags,
+        -- ** Enums
+        VkColorSpaceKHR(..), pattern VK_COLOR_SPACE_SRGB_NONLINEAR_KHR,
+        -- ** Handles
+        VkCommandBuffer, VkCommandBuffer_T(), -- ** Enums
+                                              VkCommandBufferLevel(..),
+        pattern VK_COMMAND_BUFFER_LEVEL_PRIMARY,
+        pattern VK_COMMAND_BUFFER_LEVEL_SECONDARY,
         VkCommandBufferResetFlagBits(..),
         pattern VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT,
-        VkCommandBufferLevel(..), pattern VK_COMMAND_BUFFER_LEVEL_PRIMARY,
-        pattern VK_COMMAND_BUFFER_LEVEL_SECONDARY,
-        VkCommandBufferUsageFlagBits(..),
+        -- ** Bitmasks
+        VkCommandBufferResetFlags, -- ** Enums
+                                   VkCommandBufferUsageFlagBits(..),
         pattern VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT,
         pattern VK_COMMAND_BUFFER_USAGE_RENDER_PASS_CONTINUE_BIT,
         pattern VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT,
+        -- ** Bitmasks
+        VkCommandBufferUsageFlags, -- ** Handles
+                                   VkCommandPool, VkCommandPool_T(),
+        -- ** Enums
+        VkCommandPoolCreateFlagBits(..),
+        pattern VK_COMMAND_POOL_CREATE_TRANSIENT_BIT,
+        pattern VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT,
+        -- ** Bitmasks
+        VkCommandPoolCreateFlags, -- ** Enums
+                                  VkCommandPoolResetFlagBits(..),
+        pattern VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT,
+        -- ** Bitmasks
+        VkCommandPoolResetFlags, VkCommandPoolTrimFlagsKHR(..),
+        -- ** Enums
         VkCompareOp(..), pattern VK_COMPARE_OP_NEVER,
         pattern VK_COMPARE_OP_LESS, pattern VK_COMPARE_OP_EQUAL,
         pattern VK_COMPARE_OP_LESS_OR_EQUAL, pattern VK_COMPARE_OP_GREATER,
         pattern VK_COMPARE_OP_NOT_EQUAL,
         pattern VK_COMPARE_OP_GREATER_OR_EQUAL,
-        pattern VK_COMPARE_OP_ALWAYS, VkCullModeFlagBits(..),
-        pattern VK_CULL_MODE_NONE, pattern VK_CULL_MODE_FRONT_BIT,
-        pattern VK_CULL_MODE_BACK_BIT, pattern VK_CULL_MODE_FRONT_AND_BACK,
-        VkDescriptorType(..), pattern VK_DESCRIPTOR_TYPE_SAMPLER,
+        pattern VK_COMPARE_OP_ALWAYS, -- ** Enums
+                                      VkComponentSwizzle(..),
+        pattern VK_COMPONENT_SWIZZLE_IDENTITY,
+        pattern VK_COMPONENT_SWIZZLE_ZERO,
+        pattern VK_COMPONENT_SWIZZLE_ONE, pattern VK_COMPONENT_SWIZZLE_R,
+        pattern VK_COMPONENT_SWIZZLE_G, pattern VK_COMPONENT_SWIZZLE_B,
+        pattern VK_COMPONENT_SWIZZLE_A, VkCompositeAlphaFlagBitsKHR(..),
+        pattern VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR,
+        pattern VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR,
+        pattern VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR,
+        pattern VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR,
+        -- ** Bitmasks
+        VkCompositeAlphaFlagsKHR, -- ** Enums
+                                  VkConservativeRasterizationModeEXT(..),
+        pattern VK_CONSERVATIVE_RASTERIZATION_MODE_DISABLED_EXT,
+        pattern VK_CONSERVATIVE_RASTERIZATION_MODE_OVERESTIMATE_EXT,
+        pattern VK_CONSERVATIVE_RASTERIZATION_MODE_UNDERESTIMATE_EXT,
+        -- ** Enums
+        VkCoverageModulationModeNV(..),
+        pattern VK_COVERAGE_MODULATION_MODE_NONE_NV,
+        pattern VK_COVERAGE_MODULATION_MODE_RGB_NV,
+        pattern VK_COVERAGE_MODULATION_MODE_ALPHA_NV,
+        pattern VK_COVERAGE_MODULATION_MODE_RGBA_NV,
+        VkCullModeFlagBits(..), pattern VK_CULL_MODE_NONE,
+        pattern VK_CULL_MODE_FRONT_BIT, pattern VK_CULL_MODE_BACK_BIT,
+        pattern VK_CULL_MODE_FRONT_AND_BACK, -- ** Bitmasks
+                                             VkCullModeFlags,
+        -- ** Handles
+        VkDebugReportCallbackEXT, VkDebugReportCallbackEXT_T(),
+        -- ** Enums
+        VkDebugReportFlagBitsEXT(..),
+        pattern VK_DEBUG_REPORT_INFORMATION_BIT_EXT,
+        pattern VK_DEBUG_REPORT_WARNING_BIT_EXT,
+        pattern VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT,
+        pattern VK_DEBUG_REPORT_ERROR_BIT_EXT,
+        pattern VK_DEBUG_REPORT_DEBUG_BIT_EXT, -- ** Bitmasks
+                                               VkDebugReportFlagsEXT,
+        -- ** Enums
+        VkDebugReportObjectTypeEXT(..),
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_PHYSICAL_DEVICE_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_QUEUE_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_SEMAPHORE_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_BUFFER_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_FENCE_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_EVENT_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_VIEW_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_CACHE_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_LAYOUT_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_POOL_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_FRAMEBUFFER_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_POOL_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_SURFACE_KHR_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_SWAPCHAIN_KHR_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT,
+        -- ** Enums
+        VkDependencyFlagBits(..), pattern VK_DEPENDENCY_BY_REGION_BIT,
+        -- ** Bitmasks
+        VkDependencyFlags, -- ** Handles
+                           VkDescriptorPool, VkDescriptorPool_T(),
+        -- ** Enums
+        VkDescriptorPoolCreateFlagBits(..),
+        pattern VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT,
+        -- ** Bitmasks
+        VkDescriptorPoolCreateFlags, -- ** Bitmasks
+                                     VkDescriptorPoolResetFlags(..),
+        -- ** Handles
+        VkDescriptorSet, VkDescriptorSet_T(), -- ** Handles
+                                              VkDescriptorSetLayout,
+        VkDescriptorSetLayout_T(), -- ** Enums
+                                   VkDescriptorSetLayoutCreateFlagBits(..),
+        -- ** Bitmasks
+        VkDescriptorSetLayoutCreateFlags, -- ** Enums
+                                          VkDescriptorType(..),
+        pattern VK_DESCRIPTOR_TYPE_SAMPLER,
         pattern VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER,
         pattern VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE,
         pattern VK_DESCRIPTOR_TYPE_STORAGE_IMAGE,
@@ -266,7 +313,62 @@ module Graphics.Vulkan.Common
         pattern VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC,
         pattern VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC,
         pattern VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT,
-        VkDeviceCreateFlagBits(..), VkDynamicState(..),
+        -- ** Bitmasks
+        VkDescriptorUpdateTemplateCreateFlagsKHR(..),
+        -- ** Handles
+        VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
+        -- ** Enums
+        VkDescriptorUpdateTemplateTypeKHR(..),
+        pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_DESCRIPTOR_SET_KHR,
+        pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR,
+        -- ** Handles
+        VkDevice, VkDevice_T(), -- ** Enums
+                                VkDeviceCreateFlagBits(..),
+        -- ** Bitmasks
+        VkDeviceCreateFlags(..), -- ** Enums
+                                 VkDeviceEventTypeEXT(..),
+        pattern VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT,
+        -- ** Enums
+        VkDeviceGroupPresentModeFlagBitsKHX(..),
+        pattern VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHX,
+        pattern VK_DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHX,
+        pattern VK_DEVICE_GROUP_PRESENT_MODE_SUM_BIT_KHX,
+        pattern VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHX,
+        -- ** Bitmasks
+        VkDeviceGroupPresentModeFlagsKHX, -- ** Handles
+                                          VkDeviceMemory,
+        VkDeviceMemory_T(), -- ** Enums
+                            VkDeviceQueueCreateFlagBits(..),
+        -- ** Bitmasks
+        VkDeviceQueueCreateFlags(..), -- ** Base types
+                                      VkDeviceSize(..),
+        -- ** Enums
+        VkDiscardRectangleModeEXT(..),
+        pattern VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT,
+        pattern VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT,
+        -- ** Enums
+        VkDisplayEventTypeEXT(..),
+        pattern VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT, -- ** Handles
+                                                           VkDisplayKHR,
+        VkDisplayKHR_T(), -- ** Bitmasks
+                          VkDisplayModeCreateFlagsKHR(..),
+        -- ** Handles
+        VkDisplayModeKHR, VkDisplayModeKHR_T(),
+        -- ** Enums
+        VkDisplayPlaneAlphaFlagBitsKHR(..),
+        pattern VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR,
+        pattern VK_DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR,
+        pattern VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_BIT_KHR,
+        pattern VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR,
+        -- ** Bitmasks
+        VkDisplayPlaneAlphaFlagsKHR, -- ** Enums
+                                     VkDisplayPowerStateEXT(..),
+        pattern VK_DISPLAY_POWER_STATE_OFF_EXT,
+        pattern VK_DISPLAY_POWER_STATE_SUSPEND_EXT,
+        pattern VK_DISPLAY_POWER_STATE_ON_EXT,
+        -- ** Bitmasks
+        VkDisplaySurfaceCreateFlagsKHR(..), -- ** Enums
+                                            VkDynamicState(..),
         pattern VK_DYNAMIC_STATE_VIEWPORT,
         pattern VK_DYNAMIC_STATE_SCISSOR,
         pattern VK_DYNAMIC_STATE_LINE_WIDTH,
@@ -275,11 +377,79 @@ module Graphics.Vulkan.Common
         pattern VK_DYNAMIC_STATE_DEPTH_BOUNDS,
         pattern VK_DYNAMIC_STATE_STENCIL_COMPARE_MASK,
         pattern VK_DYNAMIC_STATE_STENCIL_WRITE_MASK,
-        pattern VK_DYNAMIC_STATE_STENCIL_REFERENCE,
+        pattern VK_DYNAMIC_STATE_STENCIL_REFERENCE, -- ** Handles
+                                                    VkEvent, VkEvent_T(),
+        -- ** Bitmasks
+        VkEventCreateFlags(..), -- ** Enums
+                                VkExternalFenceFeatureFlagBitsKHR(..),
+        pattern VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT_KHR,
+        pattern VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT_KHR,
+        -- ** Bitmasks
+        VkExternalFenceFeatureFlagsKHR,
+        -- ** Enums
+        VkExternalFenceHandleTypeFlagBitsKHR(..),
+        pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR,
+        pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR,
+        pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR,
+        pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT_KHR,
+        -- ** Bitmasks
+        VkExternalFenceHandleTypeFlagsKHR,
+        -- ** Enums
+        VkExternalMemoryFeatureFlagBitsKHR(..),
+        pattern VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_KHR,
+        pattern VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_KHR,
+        pattern VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_KHR,
+        VkExternalMemoryFeatureFlagBitsNV(..),
+        pattern VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV,
+        pattern VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_NV,
+        pattern VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV,
+        -- ** Bitmasks
+        VkExternalMemoryFeatureFlagsKHR, VkExternalMemoryFeatureFlagsNV,
+        -- ** Enums
+        VkExternalMemoryHandleTypeFlagBitsKHR(..),
+        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT_KHR,
+        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR,
+        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR,
+        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT_KHR,
+        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT_KHR,
+        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT_KHR,
+        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT_KHR,
+        VkExternalMemoryHandleTypeFlagBitsNV(..),
+        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_NV,
+        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_NV,
+        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_BIT_NV,
+        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV,
+        -- ** Bitmasks
+        VkExternalMemoryHandleTypeFlagsKHR,
+        VkExternalMemoryHandleTypeFlagsNV,
+        -- ** Enums
+        VkExternalSemaphoreFeatureFlagBitsKHR(..),
+        pattern VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT_KHR,
+        pattern VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT_KHR,
+        -- ** Bitmasks
+        VkExternalSemaphoreFeatureFlagsKHR,
+        -- ** Enums
+        VkExternalSemaphoreHandleTypeFlagBitsKHR(..),
+        pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR,
+        pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR,
+        pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR,
+        pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT_KHR,
+        pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT_KHR,
+        -- ** Bitmasks
+        VkExternalSemaphoreHandleTypeFlagsKHR, -- ** Handles
+                                               VkFence, VkFence_T(),
+        -- ** Enums
         VkFenceCreateFlagBits(..), pattern VK_FENCE_CREATE_SIGNALED_BIT,
-        VkPolygonMode(..), pattern VK_POLYGON_MODE_FILL,
-        pattern VK_POLYGON_MODE_LINE, pattern VK_POLYGON_MODE_POINT,
-        VkFormat(..), pattern VK_FORMAT_UNDEFINED,
+        -- ** Bitmasks
+        VkFenceCreateFlags, -- ** Enums
+                            VkFenceImportFlagBitsKHR(..),
+        pattern VK_FENCE_IMPORT_TEMPORARY_BIT_KHR, -- ** Bitmasks
+                                                   VkFenceImportFlagsKHR,
+        -- ** Enums
+        VkFilter(..), pattern VK_FILTER_NEAREST, pattern VK_FILTER_LINEAR,
+        -- ** Base types
+        VkFlags(..), -- ** Enums
+                     VkFormat(..), pattern VK_FORMAT_UNDEFINED,
         pattern VK_FORMAT_R4G4_UNORM_PACK8,
         pattern VK_FORMAT_R4G4B4A4_UNORM_PACK16,
         pattern VK_FORMAT_B4G4R4A4_UNORM_PACK16,
@@ -442,25 +612,43 @@ module Graphics.Vulkan.Common
         pattern VK_FORMAT_FEATURE_BLIT_SRC_BIT,
         pattern VK_FORMAT_FEATURE_BLIT_DST_BIT,
         pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT,
+        -- ** Bitmasks
+        VkFormatFeatureFlags, -- ** Handles
+                              VkFramebuffer, VkFramebuffer_T(),
+        -- ** Enums
+        VkFramebufferCreateFlagBits(..), -- ** Bitmasks
+                                         VkFramebufferCreateFlags(..),
+        -- ** Enums
         VkFrontFace(..), pattern VK_FRONT_FACE_COUNTER_CLOCKWISE,
-        pattern VK_FRONT_FACE_CLOCKWISE, VkImageAspectFlagBits(..),
+        pattern VK_FRONT_FACE_CLOCKWISE, -- ** Bitmasks
+                                         VkIOSSurfaceCreateFlagsMVK(..),
+        -- ** Handles
+        VkImage, VkImage_T(), -- ** Enums
+                              VkImageAspectFlagBits(..),
         pattern VK_IMAGE_ASPECT_COLOR_BIT,
         pattern VK_IMAGE_ASPECT_DEPTH_BIT,
         pattern VK_IMAGE_ASPECT_STENCIL_BIT,
-        pattern VK_IMAGE_ASPECT_METADATA_BIT, VkImageCreateFlagBits(..),
+        pattern VK_IMAGE_ASPECT_METADATA_BIT, -- ** Bitmasks
+                                              VkImageAspectFlags,
+        -- ** Enums
+        VkImageCreateFlagBits(..),
         pattern VK_IMAGE_CREATE_SPARSE_BINDING_BIT,
         pattern VK_IMAGE_CREATE_SPARSE_RESIDENCY_BIT,
         pattern VK_IMAGE_CREATE_SPARSE_ALIASED_BIT,
         pattern VK_IMAGE_CREATE_MUTABLE_FORMAT_BIT,
-        pattern VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT, VkImageLayout(..),
-        pattern VK_IMAGE_LAYOUT_UNDEFINED, pattern VK_IMAGE_LAYOUT_GENERAL,
+        pattern VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT, -- ** Bitmasks
+                                                     VkImageCreateFlags,
+        -- ** Enums
+        VkImageLayout(..), pattern VK_IMAGE_LAYOUT_UNDEFINED,
+        pattern VK_IMAGE_LAYOUT_GENERAL,
         pattern VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL,
         pattern VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL,
         pattern VK_IMAGE_LAYOUT_DEPTH_STENCIL_READ_ONLY_OPTIMAL,
         pattern VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL,
         pattern VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL,
         pattern VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
-        pattern VK_IMAGE_LAYOUT_PREINITIALIZED, VkImageTiling(..),
+        pattern VK_IMAGE_LAYOUT_PREINITIALIZED, -- ** Enums
+                                                VkImageTiling(..),
         pattern VK_IMAGE_TILING_OPTIMAL, pattern VK_IMAGE_TILING_LINEAR,
         VkImageType(..), pattern VK_IMAGE_TYPE_1D,
         pattern VK_IMAGE_TYPE_2D, pattern VK_IMAGE_TYPE_3D,
@@ -471,16 +659,49 @@ module Graphics.Vulkan.Common
         pattern VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT,
         pattern VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT,
         pattern VK_IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT,
-        pattern VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, VkImageViewType(..),
-        pattern VK_IMAGE_VIEW_TYPE_1D, pattern VK_IMAGE_VIEW_TYPE_2D,
-        pattern VK_IMAGE_VIEW_TYPE_3D, pattern VK_IMAGE_VIEW_TYPE_CUBE,
+        pattern VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT, -- ** Bitmasks
+                                                     VkImageUsageFlags,
+        -- ** Handles
+        VkImageView, VkImageView_T(), -- ** Bitmasks
+                                      VkImageViewCreateFlags(..),
+        -- ** Enums
+        VkImageViewType(..), pattern VK_IMAGE_VIEW_TYPE_1D,
+        pattern VK_IMAGE_VIEW_TYPE_2D, pattern VK_IMAGE_VIEW_TYPE_3D,
+        pattern VK_IMAGE_VIEW_TYPE_CUBE,
         pattern VK_IMAGE_VIEW_TYPE_1D_ARRAY,
         pattern VK_IMAGE_VIEW_TYPE_2D_ARRAY,
-        pattern VK_IMAGE_VIEW_TYPE_CUBE_ARRAY, VkSharingMode(..),
-        pattern VK_SHARING_MODE_EXCLUSIVE,
-        pattern VK_SHARING_MODE_CONCURRENT, VkIndexType(..),
+        pattern VK_IMAGE_VIEW_TYPE_CUBE_ARRAY, -- ** Enums
+                                               VkIndexType(..),
         pattern VK_INDEX_TYPE_UINT16, pattern VK_INDEX_TYPE_UINT32,
-        VkLogicOp(..), pattern VK_LOGIC_OP_CLEAR, pattern VK_LOGIC_OP_AND,
+        -- ** Handles
+        VkIndirectCommandsLayoutNVX, VkIndirectCommandsLayoutNVX_T(),
+        -- ** Enums
+        VkIndirectCommandsLayoutUsageFlagBitsNVX(..),
+        pattern VK_INDIRECT_COMMANDS_LAYOUT_USAGE_UNORDERED_SEQUENCES_BIT_NVX,
+        pattern VK_INDIRECT_COMMANDS_LAYOUT_USAGE_SPARSE_SEQUENCES_BIT_NVX,
+        pattern VK_INDIRECT_COMMANDS_LAYOUT_USAGE_EMPTY_EXECUTIONS_BIT_NVX,
+        pattern VK_INDIRECT_COMMANDS_LAYOUT_USAGE_INDEXED_SEQUENCES_BIT_NVX,
+        -- ** Bitmasks
+        VkIndirectCommandsLayoutUsageFlagsNVX,
+        -- ** Enums
+        VkIndirectCommandsTokenTypeNVX(..),
+        pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_PIPELINE_NVX,
+        pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_DESCRIPTOR_SET_NVX,
+        pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_INDEX_BUFFER_NVX,
+        pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_VERTEX_BUFFER_NVX,
+        pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_PUSH_CONSTANT_NVX,
+        pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_INDEXED_NVX,
+        pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_NVX,
+        pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_DISPATCH_NVX, -- ** Handles
+                                                              VkInstance,
+        VkInstance_T(), -- ** Enums
+                        VkInstanceCreateFlagBits(..),
+        -- ** Bitmasks
+        VkInstanceCreateFlags(..), -- ** Enums
+                                   VkInternalAllocationType(..),
+        pattern VK_INTERNAL_ALLOCATION_TYPE_EXECUTABLE, -- ** Enums
+                                                        VkLogicOp(..),
+        pattern VK_LOGIC_OP_CLEAR, pattern VK_LOGIC_OP_AND,
         pattern VK_LOGIC_OP_AND_REVERSE, pattern VK_LOGIC_OP_COPY,
         pattern VK_LOGIC_OP_AND_INVERTED, pattern VK_LOGIC_OP_NO_OP,
         pattern VK_LOGIC_OP_XOR, pattern VK_LOGIC_OP_OR,
@@ -488,39 +709,181 @@ module Graphics.Vulkan.Common
         pattern VK_LOGIC_OP_INVERT, pattern VK_LOGIC_OP_OR_REVERSE,
         pattern VK_LOGIC_OP_COPY_INVERTED, pattern VK_LOGIC_OP_OR_INVERTED,
         pattern VK_LOGIC_OP_NAND, pattern VK_LOGIC_OP_SET,
-        VkMemoryHeapFlagBits(..), pattern VK_MEMORY_HEAP_DEVICE_LOCAL_BIT,
-        VkAccessFlagBits(..), pattern VK_ACCESS_INDIRECT_COMMAND_READ_BIT,
-        pattern VK_ACCESS_INDEX_READ_BIT,
-        pattern VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT,
-        pattern VK_ACCESS_UNIFORM_READ_BIT,
-        pattern VK_ACCESS_INPUT_ATTACHMENT_READ_BIT,
-        pattern VK_ACCESS_SHADER_READ_BIT,
-        pattern VK_ACCESS_SHADER_WRITE_BIT,
-        pattern VK_ACCESS_COLOR_ATTACHMENT_READ_BIT,
-        pattern VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
-        pattern VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT,
-        pattern VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT,
-        pattern VK_ACCESS_TRANSFER_READ_BIT,
-        pattern VK_ACCESS_TRANSFER_WRITE_BIT,
-        pattern VK_ACCESS_HOST_READ_BIT, pattern VK_ACCESS_HOST_WRITE_BIT,
-        pattern VK_ACCESS_MEMORY_READ_BIT,
-        pattern VK_ACCESS_MEMORY_WRITE_BIT, VkMemoryPropertyFlagBits(..),
+        -- ** Bitmasks
+        VkMacOSSurfaceCreateFlagsMVK(..), -- ** Enums
+                                          VkMemoryAllocateFlagBitsKHX(..),
+        pattern VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT_KHX,
+        -- ** Bitmasks
+        VkMemoryAllocateFlagsKHX, -- ** Enums
+                                  VkMemoryHeapFlagBits(..),
+        pattern VK_MEMORY_HEAP_DEVICE_LOCAL_BIT, -- ** Bitmasks
+                                                 VkMemoryHeapFlags,
+        -- ** Bitmasks
+        VkMemoryMapFlags(..), -- ** Enums
+                              VkMemoryPropertyFlagBits(..),
         pattern VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
         pattern VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT,
         pattern VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
         pattern VK_MEMORY_PROPERTY_HOST_CACHED_BIT,
         pattern VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT,
-        VkPhysicalDeviceType(..), pattern VK_PHYSICAL_DEVICE_TYPE_OTHER,
+        -- ** Bitmasks
+        VkMemoryPropertyFlags, -- ** Bitmasks
+                               VkMirSurfaceCreateFlagsKHR(..),
+        -- ** Enums
+        VkObjectEntryTypeNVX(..),
+        pattern VK_OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX,
+        pattern VK_OBJECT_ENTRY_TYPE_PIPELINE_NVX,
+        pattern VK_OBJECT_ENTRY_TYPE_INDEX_BUFFER_NVX,
+        pattern VK_OBJECT_ENTRY_TYPE_VERTEX_BUFFER_NVX,
+        pattern VK_OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX,
+        VkObjectEntryUsageFlagBitsNVX(..),
+        pattern VK_OBJECT_ENTRY_USAGE_GRAPHICS_BIT_NVX,
+        pattern VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX,
+        -- ** Bitmasks
+        VkObjectEntryUsageFlagsNVX, -- ** Handles
+                                    VkObjectTableNVX, VkObjectTableNVX_T(),
+        -- ** Enums
+        VkObjectType(..), pattern VK_OBJECT_TYPE_UNKNOWN,
+        pattern VK_OBJECT_TYPE_INSTANCE,
+        pattern VK_OBJECT_TYPE_PHYSICAL_DEVICE,
+        pattern VK_OBJECT_TYPE_DEVICE, pattern VK_OBJECT_TYPE_QUEUE,
+        pattern VK_OBJECT_TYPE_SEMAPHORE,
+        pattern VK_OBJECT_TYPE_COMMAND_BUFFER,
+        pattern VK_OBJECT_TYPE_FENCE, pattern VK_OBJECT_TYPE_DEVICE_MEMORY,
+        pattern VK_OBJECT_TYPE_BUFFER, pattern VK_OBJECT_TYPE_IMAGE,
+        pattern VK_OBJECT_TYPE_EVENT, pattern VK_OBJECT_TYPE_QUERY_POOL,
+        pattern VK_OBJECT_TYPE_BUFFER_VIEW,
+        pattern VK_OBJECT_TYPE_IMAGE_VIEW,
+        pattern VK_OBJECT_TYPE_SHADER_MODULE,
+        pattern VK_OBJECT_TYPE_PIPELINE_CACHE,
+        pattern VK_OBJECT_TYPE_PIPELINE_LAYOUT,
+        pattern VK_OBJECT_TYPE_RENDER_PASS,
+        pattern VK_OBJECT_TYPE_PIPELINE,
+        pattern VK_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT,
+        pattern VK_OBJECT_TYPE_SAMPLER,
+        pattern VK_OBJECT_TYPE_DESCRIPTOR_POOL,
+        pattern VK_OBJECT_TYPE_DESCRIPTOR_SET,
+        pattern VK_OBJECT_TYPE_FRAMEBUFFER,
+        pattern VK_OBJECT_TYPE_COMMAND_POOL,
+        -- ** Enums
+        VkPeerMemoryFeatureFlagBitsKHX(..),
+        pattern VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT_KHX,
+        pattern VK_PEER_MEMORY_FEATURE_COPY_DST_BIT_KHX,
+        pattern VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT_KHX,
+        pattern VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT_KHX,
+        -- ** Bitmasks
+        VkPeerMemoryFeatureFlagsKHX, -- ** Handles
+                                     VkPhysicalDevice,
+        VkPhysicalDevice_T(), -- ** Enums
+                              VkPhysicalDeviceType(..),
+        pattern VK_PHYSICAL_DEVICE_TYPE_OTHER,
         pattern VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU,
         pattern VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU,
         pattern VK_PHYSICAL_DEVICE_TYPE_VIRTUAL_GPU,
-        pattern VK_PHYSICAL_DEVICE_TYPE_CPU, VkPipelineBindPoint(..),
-        pattern VK_PIPELINE_BIND_POINT_GRAPHICS,
-        pattern VK_PIPELINE_BIND_POINT_COMPUTE,
+        pattern VK_PHYSICAL_DEVICE_TYPE_CPU, -- ** Handles
+                                             VkPipeline, VkPipeline_T(),
+        -- ** Enums
+        VkPipelineBindPoint(..), pattern VK_PIPELINE_BIND_POINT_GRAPHICS,
+        pattern VK_PIPELINE_BIND_POINT_COMPUTE, -- ** Handles
+                                                VkPipelineCache,
+        VkPipelineCache_T(), -- ** Enums
+                             VkPipelineCacheCreateFlagBits(..),
+        -- ** Bitmasks
+        VkPipelineCacheCreateFlags(..), -- ** Enums
+                                        VkPipelineCacheHeaderVersion(..),
+        pattern VK_PIPELINE_CACHE_HEADER_VERSION_ONE,
+        -- ** Enums
+        VkPipelineColorBlendStateCreateFlagBits(..),
+        -- ** Bitmasks
+        VkPipelineColorBlendStateCreateFlags(..),
+        -- ** Bitmasks
+        VkPipelineCoverageModulationStateCreateFlagsNV(..),
+        -- ** Bitmasks
+        VkPipelineCoverageToColorStateCreateFlagsNV(..),
+        -- ** Enums
         VkPipelineCreateFlagBits(..),
         pattern VK_PIPELINE_CREATE_DISABLE_OPTIMIZATION_BIT,
         pattern VK_PIPELINE_CREATE_ALLOW_DERIVATIVES_BIT,
-        pattern VK_PIPELINE_CREATE_DERIVATIVE_BIT, VkPrimitiveTopology(..),
+        pattern VK_PIPELINE_CREATE_DERIVATIVE_BIT, -- ** Bitmasks
+                                                   VkPipelineCreateFlags,
+        -- ** Enums
+        VkPipelineDepthStencilStateCreateFlagBits(..),
+        -- ** Bitmasks
+        VkPipelineDepthStencilStateCreateFlags(..),
+        -- ** Bitmasks
+        VkPipelineDiscardRectangleStateCreateFlagsEXT(..),
+        -- ** Enums
+        VkPipelineDynamicStateCreateFlagBits(..),
+        -- ** Bitmasks
+        VkPipelineDynamicStateCreateFlags(..),
+        -- ** Enums
+        VkPipelineInputAssemblyStateCreateFlagBits(..),
+        -- ** Bitmasks
+        VkPipelineInputAssemblyStateCreateFlags(..), -- ** Handles
+                                                     VkPipelineLayout,
+        VkPipelineLayout_T(), -- ** Enums
+                              VkPipelineLayoutCreateFlagBits(..),
+        -- ** Bitmasks
+        VkPipelineLayoutCreateFlags(..),
+        -- ** Enums
+        VkPipelineMultisampleStateCreateFlagBits(..),
+        -- ** Bitmasks
+        VkPipelineMultisampleStateCreateFlags(..),
+        -- ** Bitmasks
+        VkPipelineRasterizationConservativeStateCreateFlagsEXT(..),
+        -- ** Enums
+        VkPipelineRasterizationStateCreateFlagBits(..),
+        -- ** Bitmasks
+        VkPipelineRasterizationStateCreateFlags(..),
+        -- ** Enums
+        VkPipelineShaderStageCreateFlagBits(..),
+        -- ** Bitmasks
+        VkPipelineShaderStageCreateFlags(..), -- ** Enums
+                                              VkPipelineStageFlagBits(..),
+        pattern VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+        pattern VK_PIPELINE_STAGE_DRAW_INDIRECT_BIT,
+        pattern VK_PIPELINE_STAGE_VERTEX_INPUT_BIT,
+        pattern VK_PIPELINE_STAGE_VERTEX_SHADER_BIT,
+        pattern VK_PIPELINE_STAGE_TESSELLATION_CONTROL_SHADER_BIT,
+        pattern VK_PIPELINE_STAGE_TESSELLATION_EVALUATION_SHADER_BIT,
+        pattern VK_PIPELINE_STAGE_GEOMETRY_SHADER_BIT,
+        pattern VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT,
+        pattern VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT,
+        pattern VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT,
+        pattern VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
+        pattern VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT,
+        pattern VK_PIPELINE_STAGE_TRANSFER_BIT,
+        pattern VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT,
+        pattern VK_PIPELINE_STAGE_HOST_BIT,
+        pattern VK_PIPELINE_STAGE_ALL_GRAPHICS_BIT,
+        pattern VK_PIPELINE_STAGE_ALL_COMMANDS_BIT, -- ** Bitmasks
+                                                    VkPipelineStageFlags,
+        -- ** Enums
+        VkPipelineTessellationStateCreateFlagBits(..),
+        -- ** Bitmasks
+        VkPipelineTessellationStateCreateFlags(..),
+        -- ** Enums
+        VkPipelineVertexInputStateCreateFlagBits(..),
+        -- ** Bitmasks
+        VkPipelineVertexInputStateCreateFlags(..),
+        -- ** Enums
+        VkPipelineViewportStateCreateFlagBits(..),
+        -- ** Bitmasks
+        VkPipelineViewportStateCreateFlags(..),
+        -- ** Bitmasks
+        VkPipelineViewportSwizzleStateCreateFlagsNV(..),
+        -- ** Enums
+        VkPointClippingBehaviorKHR(..),
+        pattern VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES_KHR,
+        pattern VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY_KHR,
+        VkPolygonMode(..), pattern VK_POLYGON_MODE_FILL,
+        pattern VK_POLYGON_MODE_LINE, pattern VK_POLYGON_MODE_POINT,
+        -- ** Enums
+        VkPresentModeKHR(..), pattern VK_PRESENT_MODE_IMMEDIATE_KHR,
+        pattern VK_PRESENT_MODE_MAILBOX_KHR,
+        pattern VK_PRESENT_MODE_FIFO_KHR,
+        pattern VK_PRESENT_MODE_FIFO_RELAXED_KHR, -- ** Enums
+                                                  VkPrimitiveTopology(..),
         pattern VK_PRIMITIVE_TOPOLOGY_POINT_LIST,
         pattern VK_PRIMITIVE_TOPOLOGY_LINE_LIST,
         pattern VK_PRIMITIVE_TOPOLOGY_LINE_STRIP,
@@ -532,8 +895,11 @@ module Graphics.Vulkan.Common
         pattern VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST_WITH_ADJACENCY,
         pattern VK_PRIMITIVE_TOPOLOGY_TRIANGLE_STRIP_WITH_ADJACENCY,
         pattern VK_PRIMITIVE_TOPOLOGY_PATCH_LIST,
+        -- ** Enums
         VkQueryControlFlagBits(..), pattern VK_QUERY_CONTROL_PRECISE_BIT,
-        VkQueryPipelineStatisticFlagBits(..),
+        -- ** Bitmasks
+        VkQueryControlFlags, -- ** Enums
+                             VkQueryPipelineStatisticFlagBits(..),
         pattern VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_VERTICES_BIT,
         pattern VK_QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_PRIMITIVES_BIT,
         pattern VK_QUERY_PIPELINE_STATISTIC_VERTEX_SHADER_INVOCATIONS_BIT,
@@ -545,22 +911,48 @@ module Graphics.Vulkan.Common
         pattern VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_CONTROL_SHADER_PATCHES_BIT,
         pattern VK_QUERY_PIPELINE_STATISTIC_TESSELLATION_EVALUATION_SHADER_INVOCATIONS_BIT,
         pattern VK_QUERY_PIPELINE_STATISTIC_COMPUTE_SHADER_INVOCATIONS_BIT,
+        -- ** Bitmasks
+        VkQueryPipelineStatisticFlags, -- ** Handles
+                                       VkQueryPool, VkQueryPool_T(),
+        -- ** Enums
+        VkQueryPoolCreateFlagBits(..), -- ** Bitmasks
+                                       VkQueryPoolCreateFlags(..),
+        -- ** Enums
         VkQueryResultFlagBits(..), pattern VK_QUERY_RESULT_64_BIT,
         pattern VK_QUERY_RESULT_WAIT_BIT,
         pattern VK_QUERY_RESULT_WITH_AVAILABILITY_BIT,
-        pattern VK_QUERY_RESULT_PARTIAL_BIT, VkQueryType(..),
-        pattern VK_QUERY_TYPE_OCCLUSION,
+        pattern VK_QUERY_RESULT_PARTIAL_BIT, -- ** Bitmasks
+                                             VkQueryResultFlags,
+        -- ** Enums
+        VkQueryType(..), pattern VK_QUERY_TYPE_OCCLUSION,
         pattern VK_QUERY_TYPE_PIPELINE_STATISTICS,
-        pattern VK_QUERY_TYPE_TIMESTAMP, VkQueueFlagBits(..),
-        pattern VK_QUEUE_GRAPHICS_BIT, pattern VK_QUEUE_COMPUTE_BIT,
-        pattern VK_QUEUE_TRANSFER_BIT, pattern VK_QUEUE_SPARSE_BINDING_BIT,
-        VkSubpassContents(..), pattern VK_SUBPASS_CONTENTS_INLINE,
-        pattern VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS,
-        VkResult(..), -- ** Return codes (positive values)
-                      pattern VK_SUCCESS, pattern VK_NOT_READY,
-        pattern VK_TIMEOUT, pattern VK_EVENT_SET, pattern VK_EVENT_RESET,
-        pattern VK_INCOMPLETE, -- ** Error codes (negative values)
-                               pattern VK_ERROR_OUT_OF_HOST_MEMORY,
+        pattern VK_QUERY_TYPE_TIMESTAMP, -- ** Handles
+                                         VkQueue, VkQueue_T(),
+        -- ** Enums
+        VkQueueFlagBits(..), pattern VK_QUEUE_GRAPHICS_BIT,
+        pattern VK_QUEUE_COMPUTE_BIT, pattern VK_QUEUE_TRANSFER_BIT,
+        pattern VK_QUEUE_SPARSE_BINDING_BIT, -- ** Bitmasks
+                                             VkQueueFlags,
+        -- ** Enums
+        VkQueueGlobalPriorityEXT(..),
+        pattern VK_QUEUE_GLOBAL_PRIORITY_LOW_EXT,
+        pattern VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT,
+        pattern VK_QUEUE_GLOBAL_PRIORITY_HIGH_EXT,
+        pattern VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT,
+        VkRasterizationOrderAMD(..),
+        pattern VK_RASTERIZATION_ORDER_STRICT_AMD,
+        pattern VK_RASTERIZATION_ORDER_RELAXED_AMD, -- ** Handles
+                                                    VkRenderPass,
+        VkRenderPass_T(), -- ** Enums
+                          VkRenderPassCreateFlagBits(..),
+        -- ** Bitmasks
+        VkRenderPassCreateFlags(..), -- ** Enums
+                                     VkResult(..), -- ** Return codes (positive values)
+                                                   pattern VK_SUCCESS,
+        pattern VK_NOT_READY, pattern VK_TIMEOUT, pattern VK_EVENT_SET,
+        pattern VK_EVENT_RESET, pattern VK_INCOMPLETE,
+        -- ** Error codes (negative values)
+        pattern VK_ERROR_OUT_OF_HOST_MEMORY,
         pattern VK_ERROR_OUT_OF_DEVICE_MEMORY,
         pattern VK_ERROR_INITIALIZATION_FAILED,
         pattern VK_ERROR_DEVICE_LOST, pattern VK_ERROR_MEMORY_MAP_FAILED,
@@ -570,26 +962,98 @@ module Graphics.Vulkan.Common
         pattern VK_ERROR_INCOMPATIBLE_DRIVER,
         pattern VK_ERROR_TOO_MANY_OBJECTS,
         pattern VK_ERROR_FORMAT_NOT_SUPPORTED,
-        pattern VK_ERROR_FRAGMENTED_POOL, VkShaderStageFlagBits(..),
-        pattern VK_SHADER_STAGE_VERTEX_BIT,
+        pattern VK_ERROR_FRAGMENTED_POOL, VkSampleCountFlagBits(..),
+        pattern VK_SAMPLE_COUNT_1_BIT, pattern VK_SAMPLE_COUNT_2_BIT,
+        pattern VK_SAMPLE_COUNT_4_BIT, pattern VK_SAMPLE_COUNT_8_BIT,
+        pattern VK_SAMPLE_COUNT_16_BIT, pattern VK_SAMPLE_COUNT_32_BIT,
+        pattern VK_SAMPLE_COUNT_64_BIT, -- ** Bitmasks
+                                        VkSampleCountFlags,
+        -- ** Base types
+        VkSampleMask(..), -- ** Handles
+                          VkSampler, VkSampler_T(),
+        -- ** Enums
+        VkSamplerAddressMode(..), pattern VK_SAMPLER_ADDRESS_MODE_REPEAT,
+        pattern VK_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT,
+        pattern VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
+        pattern VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER,
+        -- value="4" reserved for VK_KHR_sampler_mirror_clamp_to_edge
+        --                 enum VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE; do not
+        --                 alias!
+        VkSamplerCreateFlagBits(..), -- ** Bitmasks
+                                     VkSamplerCreateFlags(..),
+        -- ** Enums
+        VkSamplerMipmapMode(..), pattern VK_SAMPLER_MIPMAP_MODE_NEAREST,
+        pattern VK_SAMPLER_MIPMAP_MODE_LINEAR,
+        -- ** Enums
+        VkSamplerReductionModeEXT(..),
+        pattern VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT,
+        pattern VK_SAMPLER_REDUCTION_MODE_MIN_EXT,
+        pattern VK_SAMPLER_REDUCTION_MODE_MAX_EXT,
+        -- ** Handles
+        VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
+        -- ** Enums
+        VkSamplerYcbcrModelConversionKHR(..),
+        pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY_KHR,
+        pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_IDENTITY_KHR,
+        pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_709_KHR,
+        pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_601_KHR,
+        pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_2020_KHR,
+        VkSamplerYcbcrRangeKHR(..),
+        pattern VK_SAMPLER_YCBCR_RANGE_ITU_FULL_KHR,
+        pattern VK_SAMPLER_YCBCR_RANGE_ITU_NARROW_KHR, -- ** Handles
+                                                       VkSemaphore,
+        VkSemaphore_T(), -- ** Bitmasks
+                         VkSemaphoreCreateFlags(..),
+        -- ** Enums
+        VkSemaphoreImportFlagBitsKHR(..),
+        pattern VK_SEMAPHORE_IMPORT_TEMPORARY_BIT_KHR,
+        -- ** Bitmasks
+        VkSemaphoreImportFlagsKHR, -- ** Enums
+                                   VkShaderInfoTypeAMD(..),
+        pattern VK_SHADER_INFO_TYPE_STATISTICS_AMD,
+        pattern VK_SHADER_INFO_TYPE_BINARY_AMD,
+        pattern VK_SHADER_INFO_TYPE_DISASSEMBLY_AMD, -- ** Handles
+                                                     VkShaderModule,
+        VkShaderModule_T(), -- ** Bitmasks
+                            VkShaderModuleCreateFlags(..),
+        -- ** Enums
+        VkShaderStageFlagBits(..), pattern VK_SHADER_STAGE_VERTEX_BIT,
         pattern VK_SHADER_STAGE_TESSELLATION_CONTROL_BIT,
         pattern VK_SHADER_STAGE_TESSELLATION_EVALUATION_BIT,
         pattern VK_SHADER_STAGE_GEOMETRY_BIT,
         pattern VK_SHADER_STAGE_FRAGMENT_BIT,
         pattern VK_SHADER_STAGE_COMPUTE_BIT,
         pattern VK_SHADER_STAGE_ALL_GRAPHICS, pattern VK_SHADER_STAGE_ALL,
-        VkSparseMemoryBindFlagBits(..),
+        -- ** Bitmasks
+        VkShaderStageFlags, -- ** Enums
+                            VkSharingMode(..),
+        pattern VK_SHARING_MODE_EXCLUSIVE,
+        pattern VK_SHARING_MODE_CONCURRENT,
+        -- ** Enums
+        VkSparseImageFormatFlagBits(..),
+        pattern VK_SPARSE_IMAGE_FORMAT_SINGLE_MIPTAIL_BIT,
+        pattern VK_SPARSE_IMAGE_FORMAT_ALIGNED_MIP_SIZE_BIT,
+        pattern VK_SPARSE_IMAGE_FORMAT_NONSTANDARD_BLOCK_SIZE_BIT,
+        -- ** Bitmasks
+        VkSparseImageFormatFlags, -- ** Enums
+                                  VkSparseMemoryBindFlagBits(..),
         pattern VK_SPARSE_MEMORY_BIND_METADATA_BIT,
-        VkStencilFaceFlagBits(..), pattern VK_STENCIL_FACE_FRONT_BIT,
+        -- ** Bitmasks
+        VkSparseMemoryBindFlags, -- ** Enums
+                                 VkStencilFaceFlagBits(..),
+        pattern VK_STENCIL_FACE_FRONT_BIT,
         pattern VK_STENCIL_FACE_BACK_BIT,
-        pattern VK_STENCIL_FRONT_AND_BACK, VkStencilOp(..),
-        pattern VK_STENCIL_OP_KEEP, pattern VK_STENCIL_OP_ZERO,
-        pattern VK_STENCIL_OP_REPLACE,
+        pattern VK_STENCIL_FRONT_AND_BACK, -- ** Bitmasks
+                                           VkStencilFaceFlags,
+        -- ** Enums
+        VkStencilOp(..), pattern VK_STENCIL_OP_KEEP,
+        pattern VK_STENCIL_OP_ZERO, pattern VK_STENCIL_OP_REPLACE,
         pattern VK_STENCIL_OP_INCREMENT_AND_CLAMP,
         pattern VK_STENCIL_OP_DECREMENT_AND_CLAMP,
         pattern VK_STENCIL_OP_INVERT,
         pattern VK_STENCIL_OP_INCREMENT_AND_WRAP,
-        pattern VK_STENCIL_OP_DECREMENT_AND_WRAP, VkStructureType(..),
+        pattern VK_STENCIL_OP_DECREMENT_AND_WRAP, -- ** Enums
+                                                  VkStructureType(..),
         pattern VK_STRUCTURE_TYPE_APPLICATION_INFO,
         pattern VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
         pattern VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO,
@@ -639,157 +1103,19 @@ module Graphics.Vulkan.Common
         pattern VK_STRUCTURE_TYPE_MEMORY_BARRIER,
         pattern VK_STRUCTURE_TYPE_LOADER_INSTANCE_CREATE_INFO,
         pattern VK_STRUCTURE_TYPE_LOADER_DEVICE_CREATE_INFO,
-        VkSystemAllocationScope(..),
-        pattern VK_SYSTEM_ALLOCATION_SCOPE_COMMAND,
-        pattern VK_SYSTEM_ALLOCATION_SCOPE_OBJECT,
-        pattern VK_SYSTEM_ALLOCATION_SCOPE_CACHE,
-        pattern VK_SYSTEM_ALLOCATION_SCOPE_DEVICE,
-        pattern VK_SYSTEM_ALLOCATION_SCOPE_INSTANCE,
-        VkInternalAllocationType(..),
-        pattern VK_INTERNAL_ALLOCATION_TYPE_EXECUTABLE,
-        VkSamplerAddressMode(..), pattern VK_SAMPLER_ADDRESS_MODE_REPEAT,
-        pattern VK_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT,
-        pattern VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE,
-        pattern VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER, -- value="4" reserved for VK_KHR_sampler_mirror_clamp_to_edge
-                                                         --                 enum VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE; do not
-                                                         --                 alias!
-                                                         VkFilter(..),
-        pattern VK_FILTER_NEAREST, pattern VK_FILTER_LINEAR,
-        VkSamplerMipmapMode(..), pattern VK_SAMPLER_MIPMAP_MODE_NEAREST,
-        pattern VK_SAMPLER_MIPMAP_MODE_LINEAR, VkVertexInputRate(..),
-        pattern VK_VERTEX_INPUT_RATE_VERTEX,
-        pattern VK_VERTEX_INPUT_RATE_INSTANCE, VkPipelineStageFlagBits(..),
-        pattern VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT,
-        pattern VK_PIPELINE_STAGE_DRAW_INDIRECT_BIT,
-        pattern VK_PIPELINE_STAGE_VERTEX_INPUT_BIT,
-        pattern VK_PIPELINE_STAGE_VERTEX_SHADER_BIT,
-        pattern VK_PIPELINE_STAGE_TESSELLATION_CONTROL_SHADER_BIT,
-        pattern VK_PIPELINE_STAGE_TESSELLATION_EVALUATION_SHADER_BIT,
-        pattern VK_PIPELINE_STAGE_GEOMETRY_SHADER_BIT,
-        pattern VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT,
-        pattern VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT,
-        pattern VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT,
-        pattern VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
-        pattern VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT,
-        pattern VK_PIPELINE_STAGE_TRANSFER_BIT,
-        pattern VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT,
-        pattern VK_PIPELINE_STAGE_HOST_BIT,
-        pattern VK_PIPELINE_STAGE_ALL_GRAPHICS_BIT,
-        pattern VK_PIPELINE_STAGE_ALL_COMMANDS_BIT,
-        VkSparseImageFormatFlagBits(..),
-        pattern VK_SPARSE_IMAGE_FORMAT_SINGLE_MIPTAIL_BIT,
-        pattern VK_SPARSE_IMAGE_FORMAT_ALIGNED_MIP_SIZE_BIT,
-        pattern VK_SPARSE_IMAGE_FORMAT_NONSTANDARD_BLOCK_SIZE_BIT,
-        VkSampleCountFlagBits(..), pattern VK_SAMPLE_COUNT_1_BIT,
-        pattern VK_SAMPLE_COUNT_2_BIT, pattern VK_SAMPLE_COUNT_4_BIT,
-        pattern VK_SAMPLE_COUNT_8_BIT, pattern VK_SAMPLE_COUNT_16_BIT,
-        pattern VK_SAMPLE_COUNT_32_BIT, pattern VK_SAMPLE_COUNT_64_BIT,
-        VkAttachmentDescriptionFlagBits(..),
-        pattern VK_ATTACHMENT_DESCRIPTION_MAY_ALIAS_BIT,
-        VkDescriptorPoolCreateFlagBits(..),
-        pattern VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT,
-        VkDependencyFlagBits(..), pattern VK_DEPENDENCY_BY_REGION_BIT,
-        VkObjectType(..), pattern VK_OBJECT_TYPE_UNKNOWN,
-        pattern VK_OBJECT_TYPE_INSTANCE,
-        pattern VK_OBJECT_TYPE_PHYSICAL_DEVICE,
-        pattern VK_OBJECT_TYPE_DEVICE, pattern VK_OBJECT_TYPE_QUEUE,
-        pattern VK_OBJECT_TYPE_SEMAPHORE,
-        pattern VK_OBJECT_TYPE_COMMAND_BUFFER,
-        pattern VK_OBJECT_TYPE_FENCE, pattern VK_OBJECT_TYPE_DEVICE_MEMORY,
-        pattern VK_OBJECT_TYPE_BUFFER, pattern VK_OBJECT_TYPE_IMAGE,
-        pattern VK_OBJECT_TYPE_EVENT, pattern VK_OBJECT_TYPE_QUERY_POOL,
-        pattern VK_OBJECT_TYPE_BUFFER_VIEW,
-        pattern VK_OBJECT_TYPE_IMAGE_VIEW,
-        pattern VK_OBJECT_TYPE_SHADER_MODULE,
-        pattern VK_OBJECT_TYPE_PIPELINE_CACHE,
-        pattern VK_OBJECT_TYPE_PIPELINE_LAYOUT,
-        pattern VK_OBJECT_TYPE_RENDER_PASS,
-        pattern VK_OBJECT_TYPE_PIPELINE,
-        pattern VK_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT,
-        pattern VK_OBJECT_TYPE_SAMPLER,
-        pattern VK_OBJECT_TYPE_DESCRIPTOR_POOL,
-        pattern VK_OBJECT_TYPE_DESCRIPTOR_SET,
-        pattern VK_OBJECT_TYPE_FRAMEBUFFER,
-        pattern VK_OBJECT_TYPE_COMMAND_POOL,
-        -- *** Extensions
-        VkIndirectCommandsLayoutUsageFlagBitsNVX(..),
-        pattern VK_INDIRECT_COMMANDS_LAYOUT_USAGE_UNORDERED_SEQUENCES_BIT_NVX,
-        pattern VK_INDIRECT_COMMANDS_LAYOUT_USAGE_SPARSE_SEQUENCES_BIT_NVX,
-        pattern VK_INDIRECT_COMMANDS_LAYOUT_USAGE_EMPTY_EXECUTIONS_BIT_NVX,
-        pattern VK_INDIRECT_COMMANDS_LAYOUT_USAGE_INDEXED_SEQUENCES_BIT_NVX,
-        VkIndirectCommandsTokenTypeNVX(..),
-        pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_PIPELINE_NVX,
-        pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_DESCRIPTOR_SET_NVX,
-        pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_INDEX_BUFFER_NVX,
-        pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_VERTEX_BUFFER_NVX,
-        pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_PUSH_CONSTANT_NVX,
-        pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_INDEXED_NVX,
-        pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_NVX,
-        pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_DISPATCH_NVX,
-        VkObjectEntryUsageFlagBitsNVX(..),
-        pattern VK_OBJECT_ENTRY_USAGE_GRAPHICS_BIT_NVX,
-        pattern VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX,
-        VkObjectEntryTypeNVX(..),
-        pattern VK_OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX,
-        pattern VK_OBJECT_ENTRY_TYPE_PIPELINE_NVX,
-        pattern VK_OBJECT_ENTRY_TYPE_INDEX_BUFFER_NVX,
-        pattern VK_OBJECT_ENTRY_TYPE_VERTEX_BUFFER_NVX,
-        pattern VK_OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX,
-        VkDescriptorUpdateTemplateTypeKHR(..),
-        pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_DESCRIPTOR_SET_KHR,
-        pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR,
-        VkViewportCoordinateSwizzleNV(..),
-        pattern VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_X_NV,
-        pattern VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_X_NV,
-        pattern VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Y_NV,
-        pattern VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Y_NV,
-        pattern VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Z_NV,
-        pattern VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Z_NV,
-        pattern VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_W_NV,
-        pattern VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_W_NV,
-        VkDiscardRectangleModeEXT(..),
-        pattern VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT,
-        pattern VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT,
-        VkSubpassDescriptionFlagBits(..), VkPointClippingBehaviorKHR(..),
-        pattern VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES_KHR,
-        pattern VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY_KHR,
-        VkCoverageModulationModeNV(..),
-        pattern VK_COVERAGE_MODULATION_MODE_NONE_NV,
-        pattern VK_COVERAGE_MODULATION_MODE_RGB_NV,
-        pattern VK_COVERAGE_MODULATION_MODE_ALPHA_NV,
-        pattern VK_COVERAGE_MODULATION_MODE_RGBA_NV,
-        VkValidationCacheHeaderVersionEXT(..),
-        pattern VK_VALIDATION_CACHE_HEADER_VERSION_ONE_EXT,
-        VkShaderInfoTypeAMD(..),
-        pattern VK_SHADER_INFO_TYPE_STATISTICS_AMD,
-        pattern VK_SHADER_INFO_TYPE_BINARY_AMD,
-        pattern VK_SHADER_INFO_TYPE_DISASSEMBLY_AMD,
-        VkQueueGlobalPriorityEXT(..),
-        pattern VK_QUEUE_GLOBAL_PRIORITY_LOW_EXT,
-        pattern VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT,
-        pattern VK_QUEUE_GLOBAL_PRIORITY_HIGH_EXT,
-        pattern VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT,
-        VkConservativeRasterizationModeEXT(..),
-        pattern VK_CONSERVATIVE_RASTERIZATION_MODE_DISABLED_EXT,
-        pattern VK_CONSERVATIVE_RASTERIZATION_MODE_OVERESTIMATE_EXT,
-        pattern VK_CONSERVATIVE_RASTERIZATION_MODE_UNDERESTIMATE_EXT,
-        -- *** WSI extensions
-        VkColorSpaceKHR(..), pattern VK_COLOR_SPACE_SRGB_NONLINEAR_KHR,
-        VkCompositeAlphaFlagBitsKHR(..),
-        pattern VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR,
-        pattern VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR,
-        pattern VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR,
-        pattern VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR,
-        VkDisplayPlaneAlphaFlagBitsKHR(..),
-        pattern VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR,
-        pattern VK_DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR,
-        pattern VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_BIT_KHR,
-        pattern VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR,
-        VkPresentModeKHR(..), pattern VK_PRESENT_MODE_IMMEDIATE_KHR,
-        pattern VK_PRESENT_MODE_MAILBOX_KHR,
-        pattern VK_PRESENT_MODE_FIFO_KHR,
-        pattern VK_PRESENT_MODE_FIFO_RELAXED_KHR,
-        VkSurfaceTransformFlagBitsKHR(..),
+        -- ** Enums
+        VkSubpassContents(..), pattern VK_SUBPASS_CONTENTS_INLINE,
+        pattern VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS,
+        -- ** Enums
+        VkSubpassDescriptionFlagBits(..), -- ** Bitmasks
+                                          VkSubpassDescriptionFlags,
+        -- ** Enums
+        VkSurfaceCounterFlagBitsEXT(..),
+        pattern VK_SURFACE_COUNTER_VBLANK_EXT, -- ** Bitmasks
+                                               VkSurfaceCounterFlagsEXT,
+        -- ** Handles
+        VkSurfaceKHR, VkSurfaceKHR_T(), -- ** Enums
+                                        VkSurfaceTransformFlagBitsKHR(..),
         pattern VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR,
         pattern VK_SURFACE_TRANSFORM_ROTATE_90_BIT_KHR,
         pattern VK_SURFACE_TRANSFORM_ROTATE_180_BIT_KHR,
@@ -799,167 +1125,62 @@ module Graphics.Vulkan.Common
         pattern VK_SURFACE_TRANSFORM_HORIZONTAL_MIRROR_ROTATE_180_BIT_KHR,
         pattern VK_SURFACE_TRANSFORM_HORIZONTAL_MIRROR_ROTATE_270_BIT_KHR,
         pattern VK_SURFACE_TRANSFORM_INHERIT_BIT_KHR,
-        VkDebugReportFlagBitsEXT(..),
-        pattern VK_DEBUG_REPORT_INFORMATION_BIT_EXT,
-        pattern VK_DEBUG_REPORT_WARNING_BIT_EXT,
-        pattern VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT,
-        pattern VK_DEBUG_REPORT_ERROR_BIT_EXT,
-        pattern VK_DEBUG_REPORT_DEBUG_BIT_EXT,
-        VkDebugReportObjectTypeEXT(..),
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_PHYSICAL_DEVICE_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_QUEUE_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_SEMAPHORE_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_BUFFER_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_FENCE_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_EVENT_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_VIEW_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_CACHE_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_LAYOUT_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_POOL_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_FRAMEBUFFER_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_POOL_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_SURFACE_KHR_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_SWAPCHAIN_KHR_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT,
-        VkRasterizationOrderAMD(..),
-        pattern VK_RASTERIZATION_ORDER_STRICT_AMD,
-        pattern VK_RASTERIZATION_ORDER_RELAXED_AMD,
-        VkExternalMemoryHandleTypeFlagBitsNV(..),
-        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_NV,
-        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_NV,
-        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_BIT_NV,
-        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV,
-        VkExternalMemoryFeatureFlagBitsNV(..),
-        pattern VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV,
-        pattern VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_NV,
-        pattern VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV,
-        VkValidationCheckEXT(..), pattern VK_VALIDATION_CHECK_ALL_EXT,
-        pattern VK_VALIDATION_CHECK_SHADERS_EXT,
-        -- Placeholder for validation enums to be defined for VK_EXT_Validation_flags extension
-        VkExternalMemoryHandleTypeFlagBitsKHR(..),
-        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT_KHR,
-        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR,
-        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR,
-        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT_KHR,
-        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT_KHR,
-        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT_KHR,
-        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT_KHR,
-        VkExternalMemoryFeatureFlagBitsKHR(..),
-        pattern VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_KHR,
-        pattern VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_KHR,
-        pattern VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_KHR,
-        VkExternalSemaphoreHandleTypeFlagBitsKHR(..),
-        pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR,
-        pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR,
-        pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR,
-        pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT_KHR,
-        pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT_KHR,
-        VkExternalSemaphoreFeatureFlagBitsKHR(..),
-        pattern VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT_KHR,
-        pattern VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT_KHR,
-        VkSemaphoreImportFlagBitsKHR(..),
-        pattern VK_SEMAPHORE_IMPORT_TEMPORARY_BIT_KHR,
-        VkExternalFenceHandleTypeFlagBitsKHR(..),
-        pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR,
-        pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR,
-        pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR,
-        pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT_KHR,
-        VkExternalFenceFeatureFlagBitsKHR(..),
-        pattern VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT_KHR,
-        pattern VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT_KHR,
-        VkFenceImportFlagBitsKHR(..),
-        pattern VK_FENCE_IMPORT_TEMPORARY_BIT_KHR,
-        VkSurfaceCounterFlagBitsEXT(..),
-        pattern VK_SURFACE_COUNTER_VBLANK_EXT, VkDisplayPowerStateEXT(..),
-        pattern VK_DISPLAY_POWER_STATE_OFF_EXT,
-        pattern VK_DISPLAY_POWER_STATE_SUSPEND_EXT,
-        pattern VK_DISPLAY_POWER_STATE_ON_EXT, VkDeviceEventTypeEXT(..),
-        pattern VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT,
-        VkDisplayEventTypeEXT(..),
-        pattern VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT,
-        VkPeerMemoryFeatureFlagBitsKHX(..),
-        pattern VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT_KHX,
-        pattern VK_PEER_MEMORY_FEATURE_COPY_DST_BIT_KHX,
-        pattern VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT_KHX,
-        pattern VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT_KHX,
-        VkMemoryAllocateFlagBitsKHX(..),
-        pattern VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT_KHX,
-        VkDeviceGroupPresentModeFlagBitsKHX(..),
-        pattern VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHX,
-        pattern VK_DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHX,
-        pattern VK_DEVICE_GROUP_PRESENT_MODE_SUM_BIT_KHX,
-        pattern VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHX,
-        VkSwapchainCreateFlagBitsKHR(..),
+        -- ** Bitmasks
+        VkSurfaceTransformFlagsKHR, -- ** Enums
+                                    VkSwapchainCreateFlagBitsKHR(..),
+        -- ** Bitmasks
+        VkSwapchainCreateFlagsKHR, -- ** Handles
+                                   VkSwapchainKHR, VkSwapchainKHR_T(),
+        -- ** Enums
+        VkSystemAllocationScope(..),
+        pattern VK_SYSTEM_ALLOCATION_SCOPE_COMMAND,
+        pattern VK_SYSTEM_ALLOCATION_SCOPE_OBJECT,
+        pattern VK_SYSTEM_ALLOCATION_SCOPE_CACHE,
+        pattern VK_SYSTEM_ALLOCATION_SCOPE_DEVICE,
+        pattern VK_SYSTEM_ALLOCATION_SCOPE_INSTANCE,
         VkTessellationDomainOriginKHR(..),
         pattern VK_TESSELLATION_DOMAIN_ORIGIN_UPPER_LEFT_KHR,
         pattern VK_TESSELLATION_DOMAIN_ORIGIN_LOWER_LEFT_KHR,
-        VkSamplerYcbcrModelConversionKHR(..),
-        pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY_KHR,
-        pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_IDENTITY_KHR,
-        pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_709_KHR,
-        pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_601_KHR,
-        pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_2020_KHR,
-        VkSamplerYcbcrRangeKHR(..),
-        pattern VK_SAMPLER_YCBCR_RANGE_ITU_FULL_KHR,
-        pattern VK_SAMPLER_YCBCR_RANGE_ITU_NARROW_KHR,
-        VkChromaLocationKHR(..),
-        pattern VK_CHROMA_LOCATION_COSITED_EVEN_KHR,
-        pattern VK_CHROMA_LOCATION_MIDPOINT_KHR,
-        VkSamplerReductionModeEXT(..),
-        pattern VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT,
-        pattern VK_SAMPLER_REDUCTION_MODE_MIN_EXT,
-        pattern VK_SAMPLER_REDUCTION_MODE_MAX_EXT, VkBlendOverlapEXT(..),
-        pattern VK_BLEND_OVERLAP_UNCORRELATED_EXT,
-        pattern VK_BLEND_OVERLAP_DISJOINT_EXT,
-        pattern VK_BLEND_OVERLAP_CONJOINT_EXT,
-        -- ** Function pointers
-        --
+        -- ** Bitmasks
+        VkValidationCacheCreateFlagsEXT(..), -- ** Handles
+                                             VkValidationCacheEXT,
+        VkValidationCacheEXT_T(), -- ** Enums
+                                  VkValidationCacheHeaderVersionEXT(..),
+        pattern VK_VALIDATION_CACHE_HEADER_VERSION_ONE_EXT,
+        VkValidationCheckEXT(..), pattern VK_VALIDATION_CHECK_ALL_EXT,
+        pattern VK_VALIDATION_CHECK_SHADERS_EXT, -- Placeholder for validation enums to be defined for VK_EXT_Validation_flags extension
+                                                 --
 
-        -- *** The PFN_vk*Function types are used by VkAllocationCallbacks below
-        PFN_vkInternalAllocationNotification,
-        HS_vkInternalAllocationNotification,
-        newVkInternalAllocationNotification,
-        unwrapVkInternalAllocationNotification,
-        PFN_vkInternalFreeNotification, HS_vkInternalFreeNotification,
-        newVkInternalFreeNotification, unwrapVkInternalFreeNotification,
-        PFN_vkReallocationFunction, HS_vkReallocationFunction,
-        newVkReallocationFunction, unwrapVkReallocationFunction,
-        PFN_vkAllocationFunction, HS_vkAllocationFunction,
-        newVkAllocationFunction, unwrapVkAllocationFunction,
-        PFN_vkFreeFunction, HS_vkFreeFunction, newVkFreeFunction,
-        unwrapVkFreeFunction, -- *** The PFN_vkVoidFunction type are used by VkGet*ProcAddr below
-                              PFN_vkVoidFunction, HS_vkVoidFunction,
-        newVkVoidFunction, unwrapVkVoidFunction,
-        -- *** The PFN_vkDebugReportCallbackEXT type are used by the DEBUG_REPORT extension
-        PFN_vkDebugReportCallbackEXT, HS_vkDebugReportCallbackEXT,
-        newVkDebugReportCallbackEXT, unwrapVkDebugReportCallbackEXT)
+                                                 -- ** Enums
+                                                 VkVertexInputRate(..),
+        pattern VK_VERTEX_INPUT_RATE_VERTEX,
+        pattern VK_VERTEX_INPUT_RATE_INSTANCE,
+        -- ** Bitmasks
+        VkViSurfaceCreateFlagsNN(..), -- ** Enums
+                                      VkViewportCoordinateSwizzleNV(..),
+        pattern VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_X_NV,
+        pattern VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_X_NV,
+        pattern VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Y_NV,
+        pattern VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Y_NV,
+        pattern VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Z_NV,
+        pattern VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Z_NV,
+        pattern VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_W_NV,
+        pattern VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_W_NV,
+        -- ** Bitmasks
+        VkWaylandSurfaceCreateFlagsKHR(..),
+        -- ** Bitmasks
+        VkWin32SurfaceCreateFlagsKHR(..), -- ** Bitmasks
+                                          VkXcbSurfaceCreateFlagsKHR(..),
+        -- ** Bitmasks
+        VkXlibSurfaceCreateFlagsKHR(..), -- ** External types
+                                         Window, WlDisplay, WlSurface,
+        Word32, Word64, Word8, -- ** External types
+                               XcbConnectionT, XcbVisualidT, XcbWindowT)
        where
 import           Data.Bits                       (Bits (..), FiniteBits)
 import           Data.Coerce                     (coerce)
 import           Data.Data                       (Data)
-import           Data.Void                       (Void)
-import           Foreign.C.String                (CString)
-import           Foreign.C.Types                 (CChar, CULong (..),
-                                                  CWchar (..))
+import           Foreign.C.Types                 (CULong (..), CWchar (..))
 import           Foreign.Storable                (Storable)
 import           GHC.Generics                    (Generic)
 import           GHC.Read                        (choose, expectP)
@@ -1081,32 +1302,17 @@ pattern VK_MAX_DEVICE_GROUP_SIZE_KHX = 32
 
 type VK_MAX_DEVICE_GROUP_SIZE_KHX = 32
 
--- | Requires @X11/Xlib.h@
-data Display
-
--- | Requires @X11/Xlib.h@
-type VisualID = CULong
-
--- | Requires @X11/Xlib.h@
-type Window = CULong
-
--- | Requires @X11/extensions/Xrandr.h@
-type RROutput = CULong
-
 -- | Requires @android/native_window.h@
 data ANativeWindow
 
--- | Requires @mir_toolkit/client_types.h@
-data MirConnection
+-- | Requires @windows.h@
+type DWORD = Word32
 
--- | Requires @mir_toolkit/client_types.h@
-data MirSurface
+-- | Requires @X11/Xlib.h@
+data Display
 
--- | Requires @wayland-client.h@
-data WlDisplay
-
--- | Requires @wayland-client.h@
-data WlSurface
+-- | Requires @windows.h@
+type HANDLE = Ptr ()
 
 -- | Requires @windows.h@
 type HINSTANCE = Ptr ()
@@ -1115,25 +1321,175 @@ type HINSTANCE = Ptr ()
 type HWND = Ptr ()
 
 -- | Requires @windows.h@
-type HANDLE = Ptr ()
+type LPCWSTR = Ptr CWchar
+
+-- | Requires @mir_toolkit/client_types.h@
+data MirConnection
+
+-- | Requires @mir_toolkit/client_types.h@
+data MirSurface
+
+type HS_vkAllocationFunction =
+     Ptr Void ->
+       CSize -> CSize -> VkSystemAllocationScope -> IO (Ptr Void)
+
+-- | > typedef void* (VKAPI_PTR *PFN_vkAllocationFunction)(
+--   >     void*                                       pUserData,
+--   >     size_t                                      size,
+--   >     size_t                                      alignment,
+--   >     VkSystemAllocationScope                     allocationScope);
+type PFN_vkAllocationFunction = FunPtr HS_vkAllocationFunction
+
+-- | Wrap haskell function into C-callable FunPtr.
+--   Note, you need to free resources after using it.
+foreign import ccall "wrapper" newVkAllocationFunction ::
+               HS_vkAllocationFunction -> IO PFN_vkAllocationFunction
+
+foreign import ccall "dynamic" unwrapVkAllocationFunction ::
+               PFN_vkAllocationFunction -> HS_vkAllocationFunction
+
+type HS_vkDebugReportCallbackEXT =
+     VkDebugReportFlagsEXT ->
+       VkDebugReportObjectTypeEXT ->
+         Word64 ->
+           CSize -> Int32 -> CString -> CString -> Ptr Void -> IO VkBool32
+
+-- | > typedef VkBool32 (VKAPI_PTR *PFN_vkDebugReportCallbackEXT)(
+--   >     VkDebugReportFlagsEXT                       flags,
+--   >     VkDebugReportObjectTypeEXT                  objectType,
+--   >     uint64_t                                    object,
+--   >     size_t                                      location,
+--   >     int32_t                                     messageCode,
+--   >     const char*                                 pLayerPrefix,
+--   >     const char*                                 pMessage,
+--   >     void*                                       pUserData);
+type PFN_vkDebugReportCallbackEXT =
+     FunPtr HS_vkDebugReportCallbackEXT
+
+-- | Wrap haskell function into C-callable FunPtr.
+--   Note, you need to free resources after using it.
+foreign import ccall "wrapper" newVkDebugReportCallbackEXT ::
+               HS_vkDebugReportCallbackEXT -> IO PFN_vkDebugReportCallbackEXT
+
+foreign import ccall "dynamic" unwrapVkDebugReportCallbackEXT ::
+               PFN_vkDebugReportCallbackEXT -> HS_vkDebugReportCallbackEXT
+
+type HS_vkFreeFunction = Ptr Void -> Ptr Void -> IO ()
+
+-- | > typedef void (VKAPI_PTR *PFN_vkFreeFunction)(
+--   >     void*                                       pUserData,
+--   >     void*                                       pMemory);
+type PFN_vkFreeFunction = FunPtr HS_vkFreeFunction
+
+-- | Wrap haskell function into C-callable FunPtr.
+--   Note, you need to free resources after using it.
+foreign import ccall "wrapper" newVkFreeFunction ::
+               HS_vkFreeFunction -> IO PFN_vkFreeFunction
+
+foreign import ccall "dynamic" unwrapVkFreeFunction ::
+               PFN_vkFreeFunction -> HS_vkFreeFunction
+
+type HS_vkInternalAllocationNotification =
+     Ptr Void ->
+       CSize ->
+         VkInternalAllocationType -> VkSystemAllocationScope -> IO ()
+
+-- | > typedef void (VKAPI_PTR *PFN_vkInternalAllocationNotification)(
+--   >     void*                                       pUserData,
+--   >     size_t                                      size,
+--   >     VkInternalAllocationType                    allocationType,
+--   >     VkSystemAllocationScope                     allocationScope);
+type PFN_vkInternalAllocationNotification =
+     FunPtr HS_vkInternalAllocationNotification
+
+-- | Wrap haskell function into C-callable FunPtr.
+--   Note, you need to free resources after using it.
+foreign import ccall "wrapper" newVkInternalAllocationNotification
+               ::
+               HS_vkInternalAllocationNotification ->
+                 IO PFN_vkInternalAllocationNotification
+
+foreign import ccall "dynamic"
+               unwrapVkInternalAllocationNotification ::
+               PFN_vkInternalAllocationNotification ->
+                 HS_vkInternalAllocationNotification
+
+type HS_vkInternalFreeNotification =
+     Ptr Void ->
+       CSize ->
+         VkInternalAllocationType -> VkSystemAllocationScope -> IO ()
+
+-- | > typedef void (VKAPI_PTR *PFN_vkInternalFreeNotification)(
+--   >     void*                                       pUserData,
+--   >     size_t                                      size,
+--   >     VkInternalAllocationType                    allocationType,
+--   >     VkSystemAllocationScope                     allocationScope);
+type PFN_vkInternalFreeNotification =
+     FunPtr HS_vkInternalFreeNotification
+
+-- | Wrap haskell function into C-callable FunPtr.
+--   Note, you need to free resources after using it.
+foreign import ccall "wrapper" newVkInternalFreeNotification ::
+               HS_vkInternalFreeNotification -> IO PFN_vkInternalFreeNotification
+
+foreign import ccall "dynamic" unwrapVkInternalFreeNotification ::
+               PFN_vkInternalFreeNotification -> HS_vkInternalFreeNotification
+
+type HS_vkReallocationFunction =
+     Ptr Void ->
+       Ptr Void ->
+         CSize -> CSize -> VkSystemAllocationScope -> IO (Ptr Void)
+
+-- | > typedef void* (VKAPI_PTR *PFN_vkReallocationFunction)(
+--   >     void*                                       pUserData,
+--   >     void*                                       pOriginal,
+--   >     size_t                                      size,
+--   >     size_t                                      alignment,
+--   >     VkSystemAllocationScope                     allocationScope);
+type PFN_vkReallocationFunction = FunPtr HS_vkReallocationFunction
+
+-- | Wrap haskell function into C-callable FunPtr.
+--   Note, you need to free resources after using it.
+foreign import ccall "wrapper" newVkReallocationFunction ::
+               HS_vkReallocationFunction -> IO PFN_vkReallocationFunction
+
+foreign import ccall "dynamic" unwrapVkReallocationFunction ::
+               PFN_vkReallocationFunction -> HS_vkReallocationFunction
+
+type HS_vkVoidFunction = IO ()
+
+-- | > typedef void (VKAPI_PTR *PFN_vkVoidFunction)(void);
+type PFN_vkVoidFunction = FunPtr HS_vkVoidFunction
+
+-- | Wrap haskell function into C-callable FunPtr.
+--   Note, you need to free resources after using it.
+foreign import ccall "wrapper" newVkVoidFunction ::
+               HS_vkVoidFunction -> IO PFN_vkVoidFunction
+
+foreign import ccall "dynamic" unwrapVkVoidFunction ::
+               PFN_vkVoidFunction -> HS_vkVoidFunction
+
+-- | Requires @X11/extensions/Xrandr.h@
+type RROutput = CULong
 
 -- | Requires @windows.h@
 data SECURITY_ATTRIBUTES
 
--- | Requires @windows.h@
-type DWORD = Word32
+-- | > // Vulkan 1.0 version number
+--   > ##define VK_API_VERSION_1_0 VK_MAKE_VERSION(1, 0, 0)// Patch version should always be set to 0
+pattern VK_API_VERSION_1_0 :: (Num a, Eq a) => a
 
--- | Requires @windows.h@
-type LPCWSTR = Ptr CWchar
+pattern VK_API_VERSION_1_0 = 4194304
 
--- | Requires @xcb/xcb.h@
-data XcbConnectionT
+type VK_API_VERSION_1_0 = 4194304
 
--- | Requires @xcb/xcb.h@
-data XcbVisualidT
+-- | > // Version of this file
+--   > ##define VK_HEADER_VERSION 67
+pattern VK_HEADER_VERSION :: (Num a, Eq a) => a
 
--- | Requires @xcb/xcb.h@
-data XcbWindowT
+pattern VK_HEADER_VERSION = 67
+
+type VK_HEADER_VERSION = 67
 
 -- | > ##define VK_MAKE_VERSION(major, minor, patch) \
 --   >     (((major) << 22) | ((minor) << 12) | (patch))
@@ -1165,505 +1521,213 @@ _VK_VERSION_PATCH = (.&. 4095)
 {-# INLINE _VK_VERSION_PATCH #-}
 ##define VK_VERSION_PATCH(version) _VK_VERSION_PATCH version
 
--- | > // Vulkan 1.0 version number
---   > ##define VK_API_VERSION_1_0 VK_MAKE_VERSION(1, 0, 0)// Patch version should always be set to 0
-pattern VK_API_VERSION_1_0 :: (Num a, Eq a) => a
+-- | Requires @X11/Xlib.h@
+type VisualID = CULong
+
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkAccessFlagBits.html VkAccessFlagBits registry at www.khronos.org>
+newtype VkAccessFlagBits = VkAccessFlagBits Int32
+                             deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable, Enum,
+                                       Data, Generic)
+
+instance Show VkAccessFlagBits where
+        showsPrec _ VK_ACCESS_INDIRECT_COMMAND_READ_BIT
+          = showString "VK_ACCESS_INDIRECT_COMMAND_READ_BIT"
+        showsPrec _ VK_ACCESS_INDEX_READ_BIT
+          = showString "VK_ACCESS_INDEX_READ_BIT"
+        showsPrec _ VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT
+          = showString "VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT"
+        showsPrec _ VK_ACCESS_UNIFORM_READ_BIT
+          = showString "VK_ACCESS_UNIFORM_READ_BIT"
+        showsPrec _ VK_ACCESS_INPUT_ATTACHMENT_READ_BIT
+          = showString "VK_ACCESS_INPUT_ATTACHMENT_READ_BIT"
+        showsPrec _ VK_ACCESS_SHADER_READ_BIT
+          = showString "VK_ACCESS_SHADER_READ_BIT"
+        showsPrec _ VK_ACCESS_SHADER_WRITE_BIT
+          = showString "VK_ACCESS_SHADER_WRITE_BIT"
+        showsPrec _ VK_ACCESS_COLOR_ATTACHMENT_READ_BIT
+          = showString "VK_ACCESS_COLOR_ATTACHMENT_READ_BIT"
+        showsPrec _ VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT
+          = showString "VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT"
+        showsPrec _ VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT
+          = showString "VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT"
+        showsPrec _ VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT
+          = showString "VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT"
+        showsPrec _ VK_ACCESS_TRANSFER_READ_BIT
+          = showString "VK_ACCESS_TRANSFER_READ_BIT"
+        showsPrec _ VK_ACCESS_TRANSFER_WRITE_BIT
+          = showString "VK_ACCESS_TRANSFER_WRITE_BIT"
+        showsPrec _ VK_ACCESS_HOST_READ_BIT
+          = showString "VK_ACCESS_HOST_READ_BIT"
+        showsPrec _ VK_ACCESS_HOST_WRITE_BIT
+          = showString "VK_ACCESS_HOST_WRITE_BIT"
+        showsPrec _ VK_ACCESS_MEMORY_READ_BIT
+          = showString "VK_ACCESS_MEMORY_READ_BIT"
+        showsPrec _ VK_ACCESS_MEMORY_WRITE_BIT
+          = showString "VK_ACCESS_MEMORY_WRITE_BIT"
+        showsPrec p (VkAccessFlagBits x)
+          = showParen (p >= 11)
+              (showString "VkAccessFlagBits " . showsPrec 11 x)
+
+instance Read VkAccessFlagBits where
+        readPrec
+          = parens
+              (choose
+                 [("VK_ACCESS_INDIRECT_COMMAND_READ_BIT",
+                   pure VK_ACCESS_INDIRECT_COMMAND_READ_BIT),
+                  ("VK_ACCESS_INDEX_READ_BIT", pure VK_ACCESS_INDEX_READ_BIT),
+                  ("VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT",
+                   pure VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT),
+                  ("VK_ACCESS_UNIFORM_READ_BIT", pure VK_ACCESS_UNIFORM_READ_BIT),
+                  ("VK_ACCESS_INPUT_ATTACHMENT_READ_BIT",
+                   pure VK_ACCESS_INPUT_ATTACHMENT_READ_BIT),
+                  ("VK_ACCESS_SHADER_READ_BIT", pure VK_ACCESS_SHADER_READ_BIT),
+                  ("VK_ACCESS_SHADER_WRITE_BIT", pure VK_ACCESS_SHADER_WRITE_BIT),
+                  ("VK_ACCESS_COLOR_ATTACHMENT_READ_BIT",
+                   pure VK_ACCESS_COLOR_ATTACHMENT_READ_BIT),
+                  ("VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT",
+                   pure VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT),
+                  ("VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT",
+                   pure VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT),
+                  ("VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT",
+                   pure VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT),
+                  ("VK_ACCESS_TRANSFER_READ_BIT", pure VK_ACCESS_TRANSFER_READ_BIT),
+                  ("VK_ACCESS_TRANSFER_WRITE_BIT",
+                   pure VK_ACCESS_TRANSFER_WRITE_BIT),
+                  ("VK_ACCESS_HOST_READ_BIT", pure VK_ACCESS_HOST_READ_BIT),
+                  ("VK_ACCESS_HOST_WRITE_BIT", pure VK_ACCESS_HOST_WRITE_BIT),
+                  ("VK_ACCESS_MEMORY_READ_BIT", pure VK_ACCESS_MEMORY_READ_BIT),
+                  ("VK_ACCESS_MEMORY_WRITE_BIT", pure VK_ACCESS_MEMORY_WRITE_BIT)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkAccessFlagBits") >>
+                      (VkAccessFlagBits <$> step readPrec)))
+
+-- | Controls coherency of indirect command reads
+--
+--   bitpos = @0@
+pattern VK_ACCESS_INDIRECT_COMMAND_READ_BIT :: VkAccessFlagBits
+
+pattern VK_ACCESS_INDIRECT_COMMAND_READ_BIT = VkAccessFlagBits 1
+
+-- | Controls coherency of index reads
+--
+--   bitpos = @1@
+pattern VK_ACCESS_INDEX_READ_BIT :: VkAccessFlagBits
+
+pattern VK_ACCESS_INDEX_READ_BIT = VkAccessFlagBits 2
+
+-- | Controls coherency of vertex attribute reads
+--
+--   bitpos = @2@
+pattern VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT :: VkAccessFlagBits
 
-pattern VK_API_VERSION_1_0 = 4194304
+pattern VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT = VkAccessFlagBits 4
 
-type VK_API_VERSION_1_0 = 4194304
+-- | Controls coherency of uniform buffer reads
+--
+--   bitpos = @3@
+pattern VK_ACCESS_UNIFORM_READ_BIT :: VkAccessFlagBits
 
--- | > // Version of this file
---   > ##define VK_HEADER_VERSION 67
-pattern VK_HEADER_VERSION :: (Num a, Eq a) => a
+pattern VK_ACCESS_UNIFORM_READ_BIT = VkAccessFlagBits 8
 
-pattern VK_HEADER_VERSION = 67
+-- | Controls coherency of input attachment reads
+--
+--   bitpos = @4@
+pattern VK_ACCESS_INPUT_ATTACHMENT_READ_BIT :: VkAccessFlagBits
 
-type VK_HEADER_VERSION = 67
+pattern VK_ACCESS_INPUT_ATTACHMENT_READ_BIT = VkAccessFlagBits 16
 
-newtype VkSampleMask = VkSampleMask Word32
-                         deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits, FiniteBits,
-                                   Storable, Real, Data, Generic)
+-- | Controls coherency of shader reads
+--
+--   bitpos = @5@
+pattern VK_ACCESS_SHADER_READ_BIT :: VkAccessFlagBits
 
-instance Show VkSampleMask where
-        {-# INLINE show #-}
-        show (VkSampleMask x) = show x
+pattern VK_ACCESS_SHADER_READ_BIT = VkAccessFlagBits 32
 
-instance Read VkSampleMask where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS Word32)
+-- | Controls coherency of shader writes
+--
+--   bitpos = @6@
+pattern VK_ACCESS_SHADER_WRITE_BIT :: VkAccessFlagBits
 
-newtype VkBool32 = VkBool32 Word32
-                     deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits, FiniteBits,
-                               Storable, Real, Data, Generic)
+pattern VK_ACCESS_SHADER_WRITE_BIT = VkAccessFlagBits 64
 
-instance Show VkBool32 where
-        {-# INLINE show #-}
-        show (VkBool32 x) = show x
+-- | Controls coherency of color attachment reads
+--
+--   bitpos = @7@
+pattern VK_ACCESS_COLOR_ATTACHMENT_READ_BIT :: VkAccessFlagBits
 
-instance Read VkBool32 where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS Word32)
+pattern VK_ACCESS_COLOR_ATTACHMENT_READ_BIT = VkAccessFlagBits 128
 
-newtype VkFlags = VkFlags Word32
-                    deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits, FiniteBits,
-                              Storable, Real, Data, Generic)
+-- | Controls coherency of color attachment writes
+--
+--   bitpos = @8@
+pattern VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT :: VkAccessFlagBits
 
-instance Show VkFlags where
-        {-# INLINE show #-}
-        show (VkFlags x) = show x
+pattern VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT = VkAccessFlagBits 256
 
-instance Read VkFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS Word32)
+-- | Controls coherency of depth/stencil attachment reads
+--
+--   bitpos = @9@
+pattern VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT ::
+        VkAccessFlagBits
 
-newtype VkDeviceSize = VkDeviceSize Word64
-                         deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits, FiniteBits,
-                                   Storable, Real, Data, Generic)
+pattern VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT =
+        VkAccessFlagBits 512
 
-instance Show VkDeviceSize where
-        {-# INLINE show #-}
-        show (VkDeviceSize x) = show x
+-- | Controls coherency of depth/stencil attachment writes
+--
+--   bitpos = @10@
+pattern VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT ::
+        VkAccessFlagBits
 
-instance Read VkDeviceSize where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS Word64)
+pattern VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT =
+        VkAccessFlagBits 1024
 
-newtype VkFramebufferCreateFlags = VkFramebufferCreateFlags VkFlags
-                                     deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                               FiniteBits, Storable, Real, Data, Generic)
+-- | Controls coherency of transfer reads
+--
+--   bitpos = @11@
+pattern VK_ACCESS_TRANSFER_READ_BIT :: VkAccessFlagBits
 
-instance Show VkFramebufferCreateFlags where
-        {-# INLINE show #-}
-        show (VkFramebufferCreateFlags x) = show x
+pattern VK_ACCESS_TRANSFER_READ_BIT = VkAccessFlagBits 2048
 
-instance Read VkFramebufferCreateFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+-- | Controls coherency of transfer writes
+--
+--   bitpos = @12@
+pattern VK_ACCESS_TRANSFER_WRITE_BIT :: VkAccessFlagBits
 
-newtype VkQueryPoolCreateFlags = VkQueryPoolCreateFlags VkFlags
-                                   deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                             FiniteBits, Storable, Real, Data, Generic)
+pattern VK_ACCESS_TRANSFER_WRITE_BIT = VkAccessFlagBits 4096
 
-instance Show VkQueryPoolCreateFlags where
-        {-# INLINE show #-}
-        show (VkQueryPoolCreateFlags x) = show x
+-- | Controls coherency of host reads
+--
+--   bitpos = @13@
+pattern VK_ACCESS_HOST_READ_BIT :: VkAccessFlagBits
 
-instance Read VkQueryPoolCreateFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+pattern VK_ACCESS_HOST_READ_BIT = VkAccessFlagBits 8192
 
-newtype VkRenderPassCreateFlags = VkRenderPassCreateFlags VkFlags
-                                    deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                              FiniteBits, Storable, Real, Data, Generic)
+-- | Controls coherency of host writes
+--
+--   bitpos = @14@
+pattern VK_ACCESS_HOST_WRITE_BIT :: VkAccessFlagBits
 
-instance Show VkRenderPassCreateFlags where
-        {-# INLINE show #-}
-        show (VkRenderPassCreateFlags x) = show x
+pattern VK_ACCESS_HOST_WRITE_BIT = VkAccessFlagBits 16384
 
-instance Read VkRenderPassCreateFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+-- | Controls coherency of memory reads
+--
+--   bitpos = @15@
+pattern VK_ACCESS_MEMORY_READ_BIT :: VkAccessFlagBits
 
-newtype VkSamplerCreateFlags = VkSamplerCreateFlags VkFlags
-                                 deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits, FiniteBits,
-                                           Storable, Real, Data, Generic)
-
-instance Show VkSamplerCreateFlags where
-        {-# INLINE show #-}
-        show (VkSamplerCreateFlags x) = show x
-
-instance Read VkSamplerCreateFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineLayoutCreateFlags = VkPipelineLayoutCreateFlags VkFlags
-                                        deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                  FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkPipelineLayoutCreateFlags where
-        {-# INLINE show #-}
-        show (VkPipelineLayoutCreateFlags x) = show x
-
-instance Read VkPipelineLayoutCreateFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineCacheCreateFlags = VkPipelineCacheCreateFlags VkFlags
-                                       deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                 FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkPipelineCacheCreateFlags where
-        {-# INLINE show #-}
-        show (VkPipelineCacheCreateFlags x) = show x
-
-instance Read VkPipelineCacheCreateFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineDepthStencilStateCreateFlags = VkPipelineDepthStencilStateCreateFlags VkFlags
-                                                   deriving (Eq, Ord, Num, Bounded, Enum, Integral,
-                                                             Bits, FiniteBits, Storable, Real, Data,
-                                                             Generic)
-
-instance Show VkPipelineDepthStencilStateCreateFlags where
-        {-# INLINE show #-}
-        show (VkPipelineDepthStencilStateCreateFlags x) = show x
-
-instance Read VkPipelineDepthStencilStateCreateFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineDynamicStateCreateFlags = VkPipelineDynamicStateCreateFlags VkFlags
-                                              deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                        FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkPipelineDynamicStateCreateFlags where
-        {-# INLINE show #-}
-        show (VkPipelineDynamicStateCreateFlags x) = show x
-
-instance Read VkPipelineDynamicStateCreateFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineColorBlendStateCreateFlags = VkPipelineColorBlendStateCreateFlags VkFlags
-                                                 deriving (Eq, Ord, Num, Bounded, Enum, Integral,
-                                                           Bits, FiniteBits, Storable, Real, Data,
-                                                           Generic)
-
-instance Show VkPipelineColorBlendStateCreateFlags where
-        {-# INLINE show #-}
-        show (VkPipelineColorBlendStateCreateFlags x) = show x
-
-instance Read VkPipelineColorBlendStateCreateFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineMultisampleStateCreateFlags = VkPipelineMultisampleStateCreateFlags VkFlags
-                                                  deriving (Eq, Ord, Num, Bounded, Enum, Integral,
-                                                            Bits, FiniteBits, Storable, Real, Data,
-                                                            Generic)
-
-instance Show VkPipelineMultisampleStateCreateFlags where
-        {-# INLINE show #-}
-        show (VkPipelineMultisampleStateCreateFlags x) = show x
-
-instance Read VkPipelineMultisampleStateCreateFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineRasterizationStateCreateFlags = VkPipelineRasterizationStateCreateFlags VkFlags
-                                                    deriving (Eq, Ord, Num, Bounded, Enum, Integral,
-                                                              Bits, FiniteBits, Storable, Real,
-                                                              Data, Generic)
-
-instance Show VkPipelineRasterizationStateCreateFlags where
-        {-# INLINE show #-}
-        show (VkPipelineRasterizationStateCreateFlags x) = show x
-
-instance Read VkPipelineRasterizationStateCreateFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineViewportStateCreateFlags = VkPipelineViewportStateCreateFlags VkFlags
-                                               deriving (Eq, Ord, Num, Bounded, Enum, Integral,
-                                                         Bits, FiniteBits, Storable, Real, Data,
-                                                         Generic)
-
-instance Show VkPipelineViewportStateCreateFlags where
-        {-# INLINE show #-}
-        show (VkPipelineViewportStateCreateFlags x) = show x
-
-instance Read VkPipelineViewportStateCreateFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineTessellationStateCreateFlags = VkPipelineTessellationStateCreateFlags VkFlags
-                                                   deriving (Eq, Ord, Num, Bounded, Enum, Integral,
-                                                             Bits, FiniteBits, Storable, Real, Data,
-                                                             Generic)
-
-instance Show VkPipelineTessellationStateCreateFlags where
-        {-# INLINE show #-}
-        show (VkPipelineTessellationStateCreateFlags x) = show x
-
-instance Read VkPipelineTessellationStateCreateFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineInputAssemblyStateCreateFlags = VkPipelineInputAssemblyStateCreateFlags VkFlags
-                                                    deriving (Eq, Ord, Num, Bounded, Enum, Integral,
-                                                              Bits, FiniteBits, Storable, Real,
-                                                              Data, Generic)
-
-instance Show VkPipelineInputAssemblyStateCreateFlags where
-        {-# INLINE show #-}
-        show (VkPipelineInputAssemblyStateCreateFlags x) = show x
-
-instance Read VkPipelineInputAssemblyStateCreateFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineVertexInputStateCreateFlags = VkPipelineVertexInputStateCreateFlags VkFlags
-                                                  deriving (Eq, Ord, Num, Bounded, Enum, Integral,
-                                                            Bits, FiniteBits, Storable, Real, Data,
-                                                            Generic)
-
-instance Show VkPipelineVertexInputStateCreateFlags where
-        {-# INLINE show #-}
-        show (VkPipelineVertexInputStateCreateFlags x) = show x
-
-instance Read VkPipelineVertexInputStateCreateFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineShaderStageCreateFlags = VkPipelineShaderStageCreateFlags VkFlags
-                                             deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                       FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkPipelineShaderStageCreateFlags where
-        {-# INLINE show #-}
-        show (VkPipelineShaderStageCreateFlags x) = show x
-
-instance Read VkPipelineShaderStageCreateFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-type VkDescriptorSetLayoutCreateFlags =
-     VkDescriptorSetLayoutCreateFlagBits
-
-newtype VkBufferViewCreateFlags = VkBufferViewCreateFlags VkFlags
-                                    deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                              FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkBufferViewCreateFlags where
-        {-# INLINE show #-}
-        show (VkBufferViewCreateFlags x) = show x
-
-instance Read VkBufferViewCreateFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkInstanceCreateFlags = VkInstanceCreateFlags VkFlags
-                                  deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits, FiniteBits,
-                                            Storable, Real, Data, Generic)
-
-instance Show VkInstanceCreateFlags where
-        {-# INLINE show #-}
-        show (VkInstanceCreateFlags x) = show x
-
-instance Read VkInstanceCreateFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkDeviceCreateFlags = VkDeviceCreateFlags VkFlags
-                                deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits, FiniteBits,
-                                          Storable, Real, Data, Generic)
-
-instance Show VkDeviceCreateFlags where
-        {-# INLINE show #-}
-        show (VkDeviceCreateFlags x) = show x
-
-instance Read VkDeviceCreateFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkDeviceQueueCreateFlags = VkDeviceQueueCreateFlags VkFlags
-                                     deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                               FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkDeviceQueueCreateFlags where
-        {-# INLINE show #-}
-        show (VkDeviceQueueCreateFlags x) = show x
-
-instance Read VkDeviceQueueCreateFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-type VkQueueFlags = VkQueueFlagBits
-
-type VkMemoryPropertyFlags = VkMemoryPropertyFlagBits
-
-type VkMemoryHeapFlags = VkMemoryHeapFlagBits
+pattern VK_ACCESS_MEMORY_READ_BIT = VkAccessFlagBits 32768
+
+-- | Controls coherency of memory writes
+--
+--   bitpos = @16@
+pattern VK_ACCESS_MEMORY_WRITE_BIT :: VkAccessFlagBits
+
+pattern VK_ACCESS_MEMORY_WRITE_BIT = VkAccessFlagBits 65536
 
 type VkAccessFlags = VkAccessFlagBits
-
-type VkBufferUsageFlags = VkBufferUsageFlagBits
-
-type VkBufferCreateFlags = VkBufferCreateFlagBits
-
-type VkShaderStageFlags = VkShaderStageFlagBits
-
-type VkImageUsageFlags = VkImageUsageFlagBits
-
-type VkImageCreateFlags = VkImageCreateFlagBits
-
-newtype VkImageViewCreateFlags = VkImageViewCreateFlags VkFlags
-                                   deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                             FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkImageViewCreateFlags where
-        {-# INLINE show #-}
-        show (VkImageViewCreateFlags x) = show x
-
-instance Read VkImageViewCreateFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-type VkPipelineCreateFlags = VkPipelineCreateFlagBits
-
-type VkColorComponentFlags = VkColorComponentFlagBits
-
-type VkFenceCreateFlags = VkFenceCreateFlagBits
-
-newtype VkSemaphoreCreateFlags = VkSemaphoreCreateFlags VkFlags
-                                   deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                             FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkSemaphoreCreateFlags where
-        {-# INLINE show #-}
-        show (VkSemaphoreCreateFlags x) = show x
-
-instance Read VkSemaphoreCreateFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-type VkFormatFeatureFlags = VkFormatFeatureFlagBits
-
-type VkQueryControlFlags = VkQueryControlFlagBits
-
-type VkQueryResultFlags = VkQueryResultFlagBits
-
-newtype VkShaderModuleCreateFlags = VkShaderModuleCreateFlags VkFlags
-                                      deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkShaderModuleCreateFlags where
-        {-# INLINE show #-}
-        show (VkShaderModuleCreateFlags x) = show x
-
-instance Read VkShaderModuleCreateFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkEventCreateFlags = VkEventCreateFlags VkFlags
-                               deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits, FiniteBits,
-                                         Storable, Real, Data, Generic)
-
-instance Show VkEventCreateFlags where
-        {-# INLINE show #-}
-        show (VkEventCreateFlags x) = show x
-
-instance Read VkEventCreateFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-type VkCommandPoolCreateFlags = VkCommandPoolCreateFlagBits
-
-type VkCommandPoolResetFlags = VkCommandPoolResetFlagBits
-
-type VkCommandBufferResetFlags = VkCommandBufferResetFlagBits
-
-type VkCommandBufferUsageFlags = VkCommandBufferUsageFlagBits
-
-type VkQueryPipelineStatisticFlags =
-     VkQueryPipelineStatisticFlagBits
-
-newtype VkMemoryMapFlags = VkMemoryMapFlags VkFlags
-                             deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits, FiniteBits,
-                                       Storable, Real, Data, Generic)
-
-instance Show VkMemoryMapFlags where
-        {-# INLINE show #-}
-        show (VkMemoryMapFlags x) = show x
-
-instance Read VkMemoryMapFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-type VkImageAspectFlags = VkImageAspectFlagBits
-
-type VkSparseMemoryBindFlags = VkSparseMemoryBindFlagBits
-
-type VkSparseImageFormatFlags = VkSparseImageFormatFlagBits
-
-type VkSubpassDescriptionFlags = VkSubpassDescriptionFlagBits
-
-type VkPipelineStageFlags = VkPipelineStageFlagBits
-
-type VkSampleCountFlags = VkSampleCountFlagBits
-
-type VkAttachmentDescriptionFlags = VkAttachmentDescriptionFlagBits
-
-type VkStencilFaceFlags = VkStencilFaceFlagBits
-
-type VkCullModeFlags = VkCullModeFlagBits
-
-type VkDescriptorPoolCreateFlags = VkDescriptorPoolCreateFlagBits
-
-newtype VkDescriptorPoolResetFlags = VkDescriptorPoolResetFlags VkFlags
-                                       deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                 FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkDescriptorPoolResetFlags where
-        {-# INLINE show #-}
-        show (VkDescriptorPoolResetFlags x) = show x
-
-instance Read VkDescriptorPoolResetFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-type VkDependencyFlags = VkDependencyFlagBits
-
-type VkIndirectCommandsLayoutUsageFlagsNVX =
-     VkIndirectCommandsLayoutUsageFlagBitsNVX
-
-type VkObjectEntryUsageFlagsNVX = VkObjectEntryUsageFlagBitsNVX
-
-newtype VkDescriptorUpdateTemplateCreateFlagsKHR = VkDescriptorUpdateTemplateCreateFlagsKHR VkFlags
-                                                     deriving (Eq, Ord, Num, Bounded, Enum,
-                                                               Integral, Bits, FiniteBits, Storable,
-                                                               Real, Data, Generic)
-
-instance Show VkDescriptorUpdateTemplateCreateFlagsKHR where
-        {-# INLINE show #-}
-        show (VkDescriptorUpdateTemplateCreateFlagsKHR x) = show x
-
-instance Read VkDescriptorUpdateTemplateCreateFlagsKHR where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-type VkCompositeAlphaFlagsKHR = VkCompositeAlphaFlagBitsKHR
-
-type VkDisplayPlaneAlphaFlagsKHR = VkDisplayPlaneAlphaFlagBitsKHR
-
-type VkSurfaceTransformFlagsKHR = VkSurfaceTransformFlagBitsKHR
-
-type VkSwapchainCreateFlagsKHR = VkSwapchainCreateFlagBitsKHR
-
-newtype VkDisplayModeCreateFlagsKHR = VkDisplayModeCreateFlagsKHR VkFlags
-                                        deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                  FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkDisplayModeCreateFlagsKHR where
-        {-# INLINE show #-}
-        show (VkDisplayModeCreateFlagsKHR x) = show x
-
-instance Read VkDisplayModeCreateFlagsKHR where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkDisplaySurfaceCreateFlagsKHR = VkDisplaySurfaceCreateFlagsKHR VkFlags
-                                           deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                     FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkDisplaySurfaceCreateFlagsKHR where
-        {-# INLINE show #-}
-        show (VkDisplaySurfaceCreateFlagsKHR x) = show x
-
-instance Read VkDisplaySurfaceCreateFlagsKHR where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 newtype VkAndroidSurfaceCreateFlagsKHR = VkAndroidSurfaceCreateFlagsKHR VkFlags
                                            deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
@@ -1677,417 +1741,45 @@ instance Read VkAndroidSurfaceCreateFlagsKHR where
         {-# INLINE readsPrec #-}
         readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
-newtype VkMirSurfaceCreateFlagsKHR = VkMirSurfaceCreateFlagsKHR VkFlags
-                                       deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                 FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkMirSurfaceCreateFlagsKHR where
-        {-# INLINE show #-}
-        show (VkMirSurfaceCreateFlagsKHR x) = show x
-
-instance Read VkMirSurfaceCreateFlagsKHR where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkViSurfaceCreateFlagsNN = VkViSurfaceCreateFlagsNN VkFlags
-                                     deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                               FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkViSurfaceCreateFlagsNN where
-        {-# INLINE show #-}
-        show (VkViSurfaceCreateFlagsNN x) = show x
-
-instance Read VkViSurfaceCreateFlagsNN where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkWaylandSurfaceCreateFlagsKHR = VkWaylandSurfaceCreateFlagsKHR VkFlags
-                                           deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                     FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkWaylandSurfaceCreateFlagsKHR where
-        {-# INLINE show #-}
-        show (VkWaylandSurfaceCreateFlagsKHR x) = show x
-
-instance Read VkWaylandSurfaceCreateFlagsKHR where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkWin32SurfaceCreateFlagsKHR = VkWin32SurfaceCreateFlagsKHR VkFlags
-                                         deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                   FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkWin32SurfaceCreateFlagsKHR where
-        {-# INLINE show #-}
-        show (VkWin32SurfaceCreateFlagsKHR x) = show x
-
-instance Read VkWin32SurfaceCreateFlagsKHR where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkXlibSurfaceCreateFlagsKHR = VkXlibSurfaceCreateFlagsKHR VkFlags
-                                        deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                  FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkXlibSurfaceCreateFlagsKHR where
-        {-# INLINE show #-}
-        show (VkXlibSurfaceCreateFlagsKHR x) = show x
-
-instance Read VkXlibSurfaceCreateFlagsKHR where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkXcbSurfaceCreateFlagsKHR = VkXcbSurfaceCreateFlagsKHR VkFlags
-                                       deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                 FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkXcbSurfaceCreateFlagsKHR where
-        {-# INLINE show #-}
-        show (VkXcbSurfaceCreateFlagsKHR x) = show x
-
-instance Read VkXcbSurfaceCreateFlagsKHR where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkIOSSurfaceCreateFlagsMVK = VkIOSSurfaceCreateFlagsMVK VkFlags
-                                       deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                 FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkIOSSurfaceCreateFlagsMVK where
-        {-# INLINE show #-}
-        show (VkIOSSurfaceCreateFlagsMVK x) = show x
-
-instance Read VkIOSSurfaceCreateFlagsMVK where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkMacOSSurfaceCreateFlagsMVK = VkMacOSSurfaceCreateFlagsMVK VkFlags
-                                         deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                   FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkMacOSSurfaceCreateFlagsMVK where
-        {-# INLINE show #-}
-        show (VkMacOSSurfaceCreateFlagsMVK x) = show x
-
-instance Read VkMacOSSurfaceCreateFlagsMVK where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-type VkPeerMemoryFeatureFlagsKHX = VkPeerMemoryFeatureFlagBitsKHX
-
-type VkMemoryAllocateFlagsKHX = VkMemoryAllocateFlagBitsKHX
-
-type VkDeviceGroupPresentModeFlagsKHX =
-     VkDeviceGroupPresentModeFlagBitsKHX
-
-type VkDebugReportFlagsEXT = VkDebugReportFlagBitsEXT
-
-newtype VkCommandPoolTrimFlagsKHR = VkCommandPoolTrimFlagsKHR VkFlags
-                                      deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkCommandPoolTrimFlagsKHR where
-        {-# INLINE show #-}
-        show (VkCommandPoolTrimFlagsKHR x) = show x
-
-instance Read VkCommandPoolTrimFlagsKHR where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-type VkExternalMemoryHandleTypeFlagsNV =
-     VkExternalMemoryHandleTypeFlagBitsNV
-
-type VkExternalMemoryFeatureFlagsNV =
-     VkExternalMemoryFeatureFlagBitsNV
-
-type VkExternalMemoryHandleTypeFlagsKHR =
-     VkExternalMemoryHandleTypeFlagBitsKHR
-
-type VkExternalMemoryFeatureFlagsKHR =
-     VkExternalMemoryFeatureFlagBitsKHR
-
-type VkExternalSemaphoreHandleTypeFlagsKHR =
-     VkExternalSemaphoreHandleTypeFlagBitsKHR
-
-type VkExternalSemaphoreFeatureFlagsKHR =
-     VkExternalSemaphoreFeatureFlagBitsKHR
-
-type VkSemaphoreImportFlagsKHR = VkSemaphoreImportFlagBitsKHR
-
-type VkExternalFenceHandleTypeFlagsKHR =
-     VkExternalFenceHandleTypeFlagBitsKHR
-
-type VkExternalFenceFeatureFlagsKHR =
-     VkExternalFenceFeatureFlagBitsKHR
-
-type VkFenceImportFlagsKHR = VkFenceImportFlagBitsKHR
-
-type VkSurfaceCounterFlagsEXT = VkSurfaceCounterFlagBitsEXT
-
-newtype VkPipelineViewportSwizzleStateCreateFlagsNV = VkPipelineViewportSwizzleStateCreateFlagsNV VkFlags
-                                                        deriving (Eq, Ord, Num, Bounded, Enum,
-                                                                  Integral, Bits, FiniteBits,
-                                                                  Storable, Real, Data, Generic)
-
-instance Show VkPipelineViewportSwizzleStateCreateFlagsNV where
-        {-# INLINE show #-}
-        show (VkPipelineViewportSwizzleStateCreateFlagsNV x) = show x
-
-instance Read VkPipelineViewportSwizzleStateCreateFlagsNV where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineDiscardRectangleStateCreateFlagsEXT = VkPipelineDiscardRectangleStateCreateFlagsEXT VkFlags
-                                                          deriving (Eq, Ord, Num, Bounded, Enum,
-                                                                    Integral, Bits, FiniteBits,
-                                                                    Storable, Real, Data, Generic)
-
-instance Show VkPipelineDiscardRectangleStateCreateFlagsEXT where
-        {-# INLINE show #-}
-        show (VkPipelineDiscardRectangleStateCreateFlagsEXT x) = show x
-
-instance Read VkPipelineDiscardRectangleStateCreateFlagsEXT where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineCoverageToColorStateCreateFlagsNV = VkPipelineCoverageToColorStateCreateFlagsNV VkFlags
-                                                        deriving (Eq, Ord, Num, Bounded, Enum,
-                                                                  Integral, Bits, FiniteBits,
-                                                                  Storable, Real, Data, Generic)
-
-instance Show VkPipelineCoverageToColorStateCreateFlagsNV where
-        {-# INLINE show #-}
-        show (VkPipelineCoverageToColorStateCreateFlagsNV x) = show x
-
-instance Read VkPipelineCoverageToColorStateCreateFlagsNV where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineCoverageModulationStateCreateFlagsNV = VkPipelineCoverageModulationStateCreateFlagsNV VkFlags
-                                                           deriving (Eq, Ord, Num, Bounded, Enum,
-                                                                     Integral, Bits, FiniteBits,
-                                                                     Storable, Real, Data, Generic)
-
-instance Show VkPipelineCoverageModulationStateCreateFlagsNV where
-        {-# INLINE show #-}
-        show (VkPipelineCoverageModulationStateCreateFlagsNV x) = show x
-
-instance Read VkPipelineCoverageModulationStateCreateFlagsNV where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkValidationCacheCreateFlagsEXT = VkValidationCacheCreateFlagsEXT VkFlags
-                                            deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                      FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkValidationCacheCreateFlagsEXT where
-        {-# INLINE show #-}
-        show (VkValidationCacheCreateFlagsEXT x) = show x
-
-instance Read VkValidationCacheCreateFlagsEXT where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineRasterizationConservativeStateCreateFlagsEXT = VkPipelineRasterizationConservativeStateCreateFlagsEXT VkFlags
-                                                                   deriving (Eq, Ord, Num, Bounded,
-                                                                             Enum, Integral, Bits,
-                                                                             FiniteBits, Storable,
-                                                                             Real, Data, Generic)
-
-instance Show
-           VkPipelineRasterizationConservativeStateCreateFlagsEXT
-         where
-        {-# INLINE show #-}
-        show (VkPipelineRasterizationConservativeStateCreateFlagsEXT x)
-          = show x
-
-instance Read
-           VkPipelineRasterizationConservativeStateCreateFlagsEXT
-         where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-type VkInstance = Ptr VkInstance_T
-
--- | Opaque data type referenced by VkInstance
-data VkInstance_T
-
-type VkPhysicalDevice = Ptr VkPhysicalDevice_T
-
--- | Opaque data type referenced by VkPhysicalDevice
-data VkPhysicalDevice_T
-
-type VkDevice = Ptr VkDevice_T
-
--- | Opaque data type referenced by VkDevice
-data VkDevice_T
-
-type VkQueue = Ptr VkQueue_T
-
--- | Opaque data type referenced by VkQueue
-data VkQueue_T
-
-type VkCommandBuffer = Ptr VkCommandBuffer_T
-
--- | Opaque data type referenced by VkCommandBuffer
-data VkCommandBuffer_T
-
-type VkDeviceMemory = VkPtr VkDeviceMemory_T
-
--- | Opaque data type referenced by VkDeviceMemory
-data VkDeviceMemory_T
-
-type VkCommandPool = VkPtr VkCommandPool_T
-
--- | Opaque data type referenced by VkCommandPool
-data VkCommandPool_T
-
-type VkBuffer = VkPtr VkBuffer_T
-
--- | Opaque data type referenced by VkBuffer
-data VkBuffer_T
-
-type VkBufferView = VkPtr VkBufferView_T
-
--- | Opaque data type referenced by VkBufferView
-data VkBufferView_T
-
-type VkImage = VkPtr VkImage_T
-
--- | Opaque data type referenced by VkImage
-data VkImage_T
-
-type VkImageView = VkPtr VkImageView_T
-
--- | Opaque data type referenced by VkImageView
-data VkImageView_T
-
-type VkShaderModule = VkPtr VkShaderModule_T
-
--- | Opaque data type referenced by VkShaderModule
-data VkShaderModule_T
-
-type VkPipeline = VkPtr VkPipeline_T
-
--- | Opaque data type referenced by VkPipeline
-data VkPipeline_T
-
-type VkPipelineLayout = VkPtr VkPipelineLayout_T
-
--- | Opaque data type referenced by VkPipelineLayout
-data VkPipelineLayout_T
-
-type VkSampler = VkPtr VkSampler_T
-
--- | Opaque data type referenced by VkSampler
-data VkSampler_T
-
-type VkDescriptorSet = VkPtr VkDescriptorSet_T
-
--- | Opaque data type referenced by VkDescriptorSet
-data VkDescriptorSet_T
-
-type VkDescriptorSetLayout = VkPtr VkDescriptorSetLayout_T
-
--- | Opaque data type referenced by VkDescriptorSetLayout
-data VkDescriptorSetLayout_T
-
-type VkDescriptorPool = VkPtr VkDescriptorPool_T
-
--- | Opaque data type referenced by VkDescriptorPool
-data VkDescriptorPool_T
-
-type VkFence = VkPtr VkFence_T
-
--- | Opaque data type referenced by VkFence
-data VkFence_T
-
-type VkSemaphore = VkPtr VkSemaphore_T
-
--- | Opaque data type referenced by VkSemaphore
-data VkSemaphore_T
-
-type VkEvent = VkPtr VkEvent_T
-
--- | Opaque data type referenced by VkEvent
-data VkEvent_T
-
-type VkQueryPool = VkPtr VkQueryPool_T
-
--- | Opaque data type referenced by VkQueryPool
-data VkQueryPool_T
-
-type VkFramebuffer = VkPtr VkFramebuffer_T
-
--- | Opaque data type referenced by VkFramebuffer
-data VkFramebuffer_T
-
-type VkRenderPass = VkPtr VkRenderPass_T
-
--- | Opaque data type referenced by VkRenderPass
-data VkRenderPass_T
-
-type VkPipelineCache = VkPtr VkPipelineCache_T
-
--- | Opaque data type referenced by VkPipelineCache
-data VkPipelineCache_T
-
-type VkObjectTableNVX = VkPtr VkObjectTableNVX_T
-
--- | Opaque data type referenced by VkObjectTableNVX
-data VkObjectTableNVX_T
-
-type VkIndirectCommandsLayoutNVX =
-     VkPtr VkIndirectCommandsLayoutNVX_T
-
--- | Opaque data type referenced by VkIndirectCommandsLayoutNVX
-data VkIndirectCommandsLayoutNVX_T
-
-type VkDescriptorUpdateTemplateKHR =
-     VkPtr VkDescriptorUpdateTemplateKHR_T
-
--- | Opaque data type referenced by VkDescriptorUpdateTemplateKHR
-data VkDescriptorUpdateTemplateKHR_T
-
-type VkSamplerYcbcrConversionKHR =
-     VkPtr VkSamplerYcbcrConversionKHR_T
-
--- | Opaque data type referenced by VkSamplerYcbcrConversionKHR
-data VkSamplerYcbcrConversionKHR_T
-
-type VkValidationCacheEXT = VkPtr VkValidationCacheEXT_T
-
--- | Opaque data type referenced by VkValidationCacheEXT
-data VkValidationCacheEXT_T
-
-type VkDisplayKHR = VkPtr VkDisplayKHR_T
-
--- | Opaque data type referenced by VkDisplayKHR
-data VkDisplayKHR_T
-
-type VkDisplayModeKHR = VkPtr VkDisplayModeKHR_T
-
--- | Opaque data type referenced by VkDisplayModeKHR
-data VkDisplayModeKHR_T
-
-type VkSurfaceKHR = VkPtr VkSurfaceKHR_T
-
--- | Opaque data type referenced by VkSurfaceKHR
-data VkSurfaceKHR_T
-
-type VkSwapchainKHR = VkPtr VkSwapchainKHR_T
-
--- | Opaque data type referenced by VkSwapchainKHR
-data VkSwapchainKHR_T
-
-type VkDebugReportCallbackEXT = VkPtr VkDebugReportCallbackEXT_T
-
--- | Opaque data type referenced by VkDebugReportCallbackEXT
-data VkDebugReportCallbackEXT_T
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkAttachmentDescriptionFlagBits.html VkAttachmentDescriptionFlagBits registry at www.khronos.org>
+newtype VkAttachmentDescriptionFlagBits = VkAttachmentDescriptionFlagBits Int32
+                                            deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
+                                                      Storable, Enum, Data, Generic)
+
+instance Show VkAttachmentDescriptionFlagBits where
+        showsPrec _ VK_ATTACHMENT_DESCRIPTION_MAY_ALIAS_BIT
+          = showString "VK_ATTACHMENT_DESCRIPTION_MAY_ALIAS_BIT"
+        showsPrec p (VkAttachmentDescriptionFlagBits x)
+          = showParen (p >= 11)
+              (showString "VkAttachmentDescriptionFlagBits " . showsPrec 11 x)
+
+instance Read VkAttachmentDescriptionFlagBits where
+        readPrec
+          = parens
+              (choose
+                 [("VK_ATTACHMENT_DESCRIPTION_MAY_ALIAS_BIT",
+                   pure VK_ATTACHMENT_DESCRIPTION_MAY_ALIAS_BIT)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkAttachmentDescriptionFlagBits") >>
+                      (VkAttachmentDescriptionFlagBits <$> step readPrec)))
+
+-- | The attachment may alias physical memory of another attachment in the same render pass
+--
+--   bitpos = @0@
+pattern VK_ATTACHMENT_DESCRIPTION_MAY_ALIAS_BIT ::
+        VkAttachmentDescriptionFlagBits
+
+pattern VK_ATTACHMENT_DESCRIPTION_MAY_ALIAS_BIT =
+        VkAttachmentDescriptionFlagBits 1
+
+type VkAttachmentDescriptionFlags = VkAttachmentDescriptionFlagBits
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkAttachmentLoadOp.html VkAttachmentLoadOp registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkAttachmentLoadOp.html VkAttachmentLoadOp registry at www.khronos.org>
 newtype VkAttachmentLoadOp = VkAttachmentLoadOp Int32
                                deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
@@ -2129,7 +1821,7 @@ pattern VK_ATTACHMENT_LOAD_OP_DONT_CARE = VkAttachmentLoadOp 2
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkAttachmentStoreOp.html VkAttachmentStoreOp registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkAttachmentStoreOp.html VkAttachmentStoreOp registry at www.khronos.org>
 newtype VkAttachmentStoreOp = VkAttachmentStoreOp Int32
                                 deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
@@ -2165,7 +1857,7 @@ pattern VK_ATTACHMENT_STORE_OP_DONT_CARE = VkAttachmentStoreOp 1
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBlendFactor.html VkBlendFactor registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkBlendFactor.html VkBlendFactor registry at www.khronos.org>
 newtype VkBlendFactor = VkBlendFactor Int32
                           deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
@@ -2328,7 +2020,7 @@ pattern VK_BLEND_FACTOR_ONE_MINUS_SRC1_ALPHA = VkBlendFactor 18
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBlendOp.html VkBlendOp registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkBlendOp.html VkBlendOp registry at www.khronos.org>
 newtype VkBlendOp = VkBlendOp Int32
                       deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
@@ -2379,7 +2071,63 @@ pattern VK_BLEND_OP_MAX = VkBlendOp 4
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBorderColor.html VkBorderColor registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkBlendOverlapEXT.html VkBlendOverlapEXT registry at www.khronos.org>
+newtype VkBlendOverlapEXT = VkBlendOverlapEXT Int32
+                              deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+
+instance Show VkBlendOverlapEXT where
+        showsPrec _ VK_BLEND_OVERLAP_UNCORRELATED_EXT
+          = showString "VK_BLEND_OVERLAP_UNCORRELATED_EXT"
+        showsPrec _ VK_BLEND_OVERLAP_DISJOINT_EXT
+          = showString "VK_BLEND_OVERLAP_DISJOINT_EXT"
+        showsPrec _ VK_BLEND_OVERLAP_CONJOINT_EXT
+          = showString "VK_BLEND_OVERLAP_CONJOINT_EXT"
+        showsPrec p (VkBlendOverlapEXT x)
+          = showParen (p >= 11)
+              (showString "VkBlendOverlapEXT " . showsPrec 11 x)
+
+instance Read VkBlendOverlapEXT where
+        readPrec
+          = parens
+              (choose
+                 [("VK_BLEND_OVERLAP_UNCORRELATED_EXT",
+                   pure VK_BLEND_OVERLAP_UNCORRELATED_EXT),
+                  ("VK_BLEND_OVERLAP_DISJOINT_EXT",
+                   pure VK_BLEND_OVERLAP_DISJOINT_EXT),
+                  ("VK_BLEND_OVERLAP_CONJOINT_EXT",
+                   pure VK_BLEND_OVERLAP_CONJOINT_EXT)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkBlendOverlapEXT") >>
+                      (VkBlendOverlapEXT <$> step readPrec)))
+
+pattern VK_BLEND_OVERLAP_UNCORRELATED_EXT :: VkBlendOverlapEXT
+
+pattern VK_BLEND_OVERLAP_UNCORRELATED_EXT = VkBlendOverlapEXT 0
+
+pattern VK_BLEND_OVERLAP_DISJOINT_EXT :: VkBlendOverlapEXT
+
+pattern VK_BLEND_OVERLAP_DISJOINT_EXT = VkBlendOverlapEXT 1
+
+pattern VK_BLEND_OVERLAP_CONJOINT_EXT :: VkBlendOverlapEXT
+
+pattern VK_BLEND_OVERLAP_CONJOINT_EXT = VkBlendOverlapEXT 2
+
+newtype VkBool32 = VkBool32 Word32
+                     deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits, FiniteBits,
+                               Storable, Real, Data, Generic)
+
+instance Show VkBool32 where
+        {-# INLINE show #-}
+        show (VkBool32 x) = show x
+
+instance Read VkBool32 where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS Word32)
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkBorderColor.html VkBorderColor registry at www.khronos.org>
 newtype VkBorderColor = VkBorderColor Int32
                           deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
@@ -2445,299 +2193,14 @@ pattern VK_BORDER_COLOR_INT_OPAQUE_WHITE :: VkBorderColor
 
 pattern VK_BORDER_COLOR_INT_OPAQUE_WHITE = VkBorderColor 5
 
-newtype VkFramebufferCreateFlagBits = VkFramebufferCreateFlagBits VkFlags
-                                        deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                  FiniteBits, Storable, Real, Data, Generic)
+type VkBuffer = VkPtr VkBuffer_T
 
-instance Show VkFramebufferCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkFramebufferCreateFlagBits x) = show x
-
-instance Read VkFramebufferCreateFlagBits where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkQueryPoolCreateFlagBits = VkQueryPoolCreateFlagBits VkFlags
-                                      deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkQueryPoolCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkQueryPoolCreateFlagBits x) = show x
-
-instance Read VkQueryPoolCreateFlagBits where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkRenderPassCreateFlagBits = VkRenderPassCreateFlagBits VkFlags
-                                       deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                 FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkRenderPassCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkRenderPassCreateFlagBits x) = show x
-
-instance Read VkRenderPassCreateFlagBits where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkSamplerCreateFlagBits = VkSamplerCreateFlagBits VkFlags
-                                    deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                              FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkSamplerCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkSamplerCreateFlagBits x) = show x
-
-instance Read VkSamplerCreateFlagBits where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineCacheHeaderVersion.html VkPipelineCacheHeaderVersion registry at www.khronos.org>
-newtype VkPipelineCacheHeaderVersion = VkPipelineCacheHeaderVersion Int32
-                                         deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
-                                                   Generic)
-
-instance Show VkPipelineCacheHeaderVersion where
-        showsPrec _ VK_PIPELINE_CACHE_HEADER_VERSION_ONE
-          = showString "VK_PIPELINE_CACHE_HEADER_VERSION_ONE"
-        showsPrec p (VkPipelineCacheHeaderVersion x)
-          = showParen (p >= 11)
-              (showString "VkPipelineCacheHeaderVersion " . showsPrec 11 x)
-
-instance Read VkPipelineCacheHeaderVersion where
-        readPrec
-          = parens
-              (choose
-                 [("VK_PIPELINE_CACHE_HEADER_VERSION_ONE",
-                   pure VK_PIPELINE_CACHE_HEADER_VERSION_ONE)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkPipelineCacheHeaderVersion") >>
-                      (VkPipelineCacheHeaderVersion <$> step readPrec)))
-
-pattern VK_PIPELINE_CACHE_HEADER_VERSION_ONE ::
-        VkPipelineCacheHeaderVersion
-
-pattern VK_PIPELINE_CACHE_HEADER_VERSION_ONE =
-        VkPipelineCacheHeaderVersion 1
-
-newtype VkPipelineLayoutCreateFlagBits = VkPipelineLayoutCreateFlagBits VkFlags
-                                           deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                     FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkPipelineLayoutCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkPipelineLayoutCreateFlagBits x) = show x
-
-instance Read VkPipelineLayoutCreateFlagBits where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineCacheCreateFlagBits = VkPipelineCacheCreateFlagBits VkFlags
-                                          deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                    FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkPipelineCacheCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkPipelineCacheCreateFlagBits x) = show x
-
-instance Read VkPipelineCacheCreateFlagBits where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineDepthStencilStateCreateFlagBits = VkPipelineDepthStencilStateCreateFlagBits VkFlags
-                                                      deriving (Eq, Ord, Num, Bounded, Enum,
-                                                                Integral, Bits, FiniteBits,
-                                                                Storable, Real, Data, Generic)
-
-instance Show VkPipelineDepthStencilStateCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkPipelineDepthStencilStateCreateFlagBits x) = show x
-
-instance Read VkPipelineDepthStencilStateCreateFlagBits where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineDynamicStateCreateFlagBits = VkPipelineDynamicStateCreateFlagBits VkFlags
-                                                 deriving (Eq, Ord, Num, Bounded, Enum, Integral,
-                                                           Bits, FiniteBits, Storable, Real, Data,
-                                                           Generic)
-
-instance Show VkPipelineDynamicStateCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkPipelineDynamicStateCreateFlagBits x) = show x
-
-instance Read VkPipelineDynamicStateCreateFlagBits where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineColorBlendStateCreateFlagBits = VkPipelineColorBlendStateCreateFlagBits VkFlags
-                                                    deriving (Eq, Ord, Num, Bounded, Enum, Integral,
-                                                              Bits, FiniteBits, Storable, Real,
-                                                              Data, Generic)
-
-instance Show VkPipelineColorBlendStateCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkPipelineColorBlendStateCreateFlagBits x) = show x
-
-instance Read VkPipelineColorBlendStateCreateFlagBits where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineMultisampleStateCreateFlagBits = VkPipelineMultisampleStateCreateFlagBits VkFlags
-                                                     deriving (Eq, Ord, Num, Bounded, Enum,
-                                                               Integral, Bits, FiniteBits, Storable,
-                                                               Real, Data, Generic)
-
-instance Show VkPipelineMultisampleStateCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkPipelineMultisampleStateCreateFlagBits x) = show x
-
-instance Read VkPipelineMultisampleStateCreateFlagBits where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineRasterizationStateCreateFlagBits = VkPipelineRasterizationStateCreateFlagBits VkFlags
-                                                       deriving (Eq, Ord, Num, Bounded, Enum,
-                                                                 Integral, Bits, FiniteBits,
-                                                                 Storable, Real, Data, Generic)
-
-instance Show VkPipelineRasterizationStateCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkPipelineRasterizationStateCreateFlagBits x) = show x
-
-instance Read VkPipelineRasterizationStateCreateFlagBits where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineViewportStateCreateFlagBits = VkPipelineViewportStateCreateFlagBits VkFlags
-                                                  deriving (Eq, Ord, Num, Bounded, Enum, Integral,
-                                                            Bits, FiniteBits, Storable, Real, Data,
-                                                            Generic)
-
-instance Show VkPipelineViewportStateCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkPipelineViewportStateCreateFlagBits x) = show x
-
-instance Read VkPipelineViewportStateCreateFlagBits where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineTessellationStateCreateFlagBits = VkPipelineTessellationStateCreateFlagBits VkFlags
-                                                      deriving (Eq, Ord, Num, Bounded, Enum,
-                                                                Integral, Bits, FiniteBits,
-                                                                Storable, Real, Data, Generic)
-
-instance Show VkPipelineTessellationStateCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkPipelineTessellationStateCreateFlagBits x) = show x
-
-instance Read VkPipelineTessellationStateCreateFlagBits where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineInputAssemblyStateCreateFlagBits = VkPipelineInputAssemblyStateCreateFlagBits VkFlags
-                                                       deriving (Eq, Ord, Num, Bounded, Enum,
-                                                                 Integral, Bits, FiniteBits,
-                                                                 Storable, Real, Data, Generic)
-
-instance Show VkPipelineInputAssemblyStateCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkPipelineInputAssemblyStateCreateFlagBits x) = show x
-
-instance Read VkPipelineInputAssemblyStateCreateFlagBits where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineVertexInputStateCreateFlagBits = VkPipelineVertexInputStateCreateFlagBits VkFlags
-                                                     deriving (Eq, Ord, Num, Bounded, Enum,
-                                                               Integral, Bits, FiniteBits, Storable,
-                                                               Real, Data, Generic)
-
-instance Show VkPipelineVertexInputStateCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkPipelineVertexInputStateCreateFlagBits x) = show x
-
-instance Read VkPipelineVertexInputStateCreateFlagBits where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkPipelineShaderStageCreateFlagBits = VkPipelineShaderStageCreateFlagBits VkFlags
-                                                deriving (Eq, Ord, Num, Bounded, Enum, Integral,
-                                                          Bits, FiniteBits, Storable, Real, Data,
-                                                          Generic)
-
-instance Show VkPipelineShaderStageCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkPipelineShaderStageCreateFlagBits x) = show x
-
-instance Read VkPipelineShaderStageCreateFlagBits where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+-- | Opaque data type referenced by VkBuffer
+data VkBuffer_T
 
 -- | type = @bitmask@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDescriptorSetLayoutCreateFlagBits.html VkDescriptorSetLayoutCreateFlagBits registry at www.khronos.org>
-newtype VkDescriptorSetLayoutCreateFlagBits = VkDescriptorSetLayoutCreateFlagBits Int32
-                                                deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
-                                                          Storable, Enum, Data, Generic)
-
-instance Show VkDescriptorSetLayoutCreateFlagBits where
-        showsPrec p (VkDescriptorSetLayoutCreateFlagBits x)
-          = showParen (p >= 11)
-              (showString "VkDescriptorSetLayoutCreateFlagBits " .
-                 showsPrec 11 x)
-
-instance Read VkDescriptorSetLayoutCreateFlagBits where
-        readPrec
-          = parens
-              (choose [] +++
-                 prec 10
-                   (expectP (Ident "VkDescriptorSetLayoutCreateFlagBits") >>
-                      (VkDescriptorSetLayoutCreateFlagBits <$> step readPrec)))
-
-newtype VkBufferViewCreateFlagBits = VkBufferViewCreateFlagBits VkFlags
-                                       deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                 FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkBufferViewCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkBufferViewCreateFlagBits x) = show x
-
-instance Read VkBufferViewCreateFlagBits where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkInstanceCreateFlagBits = VkInstanceCreateFlagBits VkFlags
-                                     deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                               FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkInstanceCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkInstanceCreateFlagBits x) = show x
-
-instance Read VkInstanceCreateFlagBits where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkDeviceQueueCreateFlagBits = VkDeviceQueueCreateFlagBits VkFlags
-                                        deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                                  FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkDeviceQueueCreateFlagBits where
-        {-# INLINE show #-}
-        show (VkDeviceQueueCreateFlagBits x) = show x
-
-instance Read VkDeviceQueueCreateFlagBits where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBufferCreateFlagBits.html VkBufferCreateFlagBits registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkBufferCreateFlagBits.html VkBufferCreateFlagBits registry at www.khronos.org>
 newtype VkBufferCreateFlagBits = VkBufferCreateFlagBits Int32
                                    deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable,
                                              Enum, Data, Generic)
@@ -2795,9 +2258,11 @@ pattern VK_BUFFER_CREATE_SPARSE_ALIASED_BIT ::
 pattern VK_BUFFER_CREATE_SPARSE_ALIASED_BIT =
         VkBufferCreateFlagBits 4
 
+type VkBufferCreateFlags = VkBufferCreateFlagBits
+
 -- | type = @bitmask@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBufferUsageFlagBits.html VkBufferUsageFlagBits registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkBufferUsageFlagBits.html VkBufferUsageFlagBits registry at www.khronos.org>
 newtype VkBufferUsageFlagBits = VkBufferUsageFlagBits Int32
                                   deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable, Enum,
                                             Data, Generic)
@@ -2924,9 +2389,76 @@ pattern VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT ::
 pattern VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT =
         VkBufferUsageFlagBits 256
 
+type VkBufferUsageFlags = VkBufferUsageFlagBits
+
+type VkBufferView = VkPtr VkBufferView_T
+
+-- | Opaque data type referenced by VkBufferView
+data VkBufferView_T
+
+newtype VkBufferViewCreateFlagBits = VkBufferViewCreateFlagBits VkFlags
+                                       deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                 FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkBufferViewCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkBufferViewCreateFlagBits x) = show x
+
+instance Read VkBufferViewCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkBufferViewCreateFlags = VkBufferViewCreateFlags VkFlags
+                                    deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                              FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkBufferViewCreateFlags where
+        {-# INLINE show #-}
+        show (VkBufferViewCreateFlags x) = show x
+
+instance Read VkBufferViewCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkChromaLocationKHR.html VkChromaLocationKHR registry at www.khronos.org>
+newtype VkChromaLocationKHR = VkChromaLocationKHR Int32
+                                deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+
+instance Show VkChromaLocationKHR where
+        showsPrec _ VK_CHROMA_LOCATION_COSITED_EVEN_KHR
+          = showString "VK_CHROMA_LOCATION_COSITED_EVEN_KHR"
+        showsPrec _ VK_CHROMA_LOCATION_MIDPOINT_KHR
+          = showString "VK_CHROMA_LOCATION_MIDPOINT_KHR"
+        showsPrec p (VkChromaLocationKHR x)
+          = showParen (p >= 11)
+              (showString "VkChromaLocationKHR " . showsPrec 11 x)
+
+instance Read VkChromaLocationKHR where
+        readPrec
+          = parens
+              (choose
+                 [("VK_CHROMA_LOCATION_COSITED_EVEN_KHR",
+                   pure VK_CHROMA_LOCATION_COSITED_EVEN_KHR),
+                  ("VK_CHROMA_LOCATION_MIDPOINT_KHR",
+                   pure VK_CHROMA_LOCATION_MIDPOINT_KHR)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkChromaLocationKHR") >>
+                      (VkChromaLocationKHR <$> step readPrec)))
+
+pattern VK_CHROMA_LOCATION_COSITED_EVEN_KHR :: VkChromaLocationKHR
+
+pattern VK_CHROMA_LOCATION_COSITED_EVEN_KHR = VkChromaLocationKHR 0
+
+pattern VK_CHROMA_LOCATION_MIDPOINT_KHR :: VkChromaLocationKHR
+
+pattern VK_CHROMA_LOCATION_MIDPOINT_KHR = VkChromaLocationKHR 1
+
 -- | type = @bitmask@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkColorComponentFlagBits.html VkColorComponentFlagBits registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkColorComponentFlagBits.html VkColorComponentFlagBits registry at www.khronos.org>
 newtype VkColorComponentFlagBits = VkColorComponentFlagBits Int32
                                      deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable,
                                                Enum, Data, Generic)
@@ -2977,194 +2509,44 @@ pattern VK_COLOR_COMPONENT_A_BIT :: VkColorComponentFlagBits
 
 pattern VK_COLOR_COMPONENT_A_BIT = VkColorComponentFlagBits 8
 
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkComponentSwizzle.html VkComponentSwizzle registry at www.khronos.org>
-newtype VkComponentSwizzle = VkComponentSwizzle Int32
-                               deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
-
-instance Show VkComponentSwizzle where
-        showsPrec _ VK_COMPONENT_SWIZZLE_IDENTITY
-          = showString "VK_COMPONENT_SWIZZLE_IDENTITY"
-        showsPrec _ VK_COMPONENT_SWIZZLE_ZERO
-          = showString "VK_COMPONENT_SWIZZLE_ZERO"
-        showsPrec _ VK_COMPONENT_SWIZZLE_ONE
-          = showString "VK_COMPONENT_SWIZZLE_ONE"
-        showsPrec _ VK_COMPONENT_SWIZZLE_R
-          = showString "VK_COMPONENT_SWIZZLE_R"
-        showsPrec _ VK_COMPONENT_SWIZZLE_G
-          = showString "VK_COMPONENT_SWIZZLE_G"
-        showsPrec _ VK_COMPONENT_SWIZZLE_B
-          = showString "VK_COMPONENT_SWIZZLE_B"
-        showsPrec _ VK_COMPONENT_SWIZZLE_A
-          = showString "VK_COMPONENT_SWIZZLE_A"
-        showsPrec p (VkComponentSwizzle x)
-          = showParen (p >= 11)
-              (showString "VkComponentSwizzle " . showsPrec 11 x)
-
-instance Read VkComponentSwizzle where
-        readPrec
-          = parens
-              (choose
-                 [("VK_COMPONENT_SWIZZLE_IDENTITY",
-                   pure VK_COMPONENT_SWIZZLE_IDENTITY),
-                  ("VK_COMPONENT_SWIZZLE_ZERO", pure VK_COMPONENT_SWIZZLE_ZERO),
-                  ("VK_COMPONENT_SWIZZLE_ONE", pure VK_COMPONENT_SWIZZLE_ONE),
-                  ("VK_COMPONENT_SWIZZLE_R", pure VK_COMPONENT_SWIZZLE_R),
-                  ("VK_COMPONENT_SWIZZLE_G", pure VK_COMPONENT_SWIZZLE_G),
-                  ("VK_COMPONENT_SWIZZLE_B", pure VK_COMPONENT_SWIZZLE_B),
-                  ("VK_COMPONENT_SWIZZLE_A", pure VK_COMPONENT_SWIZZLE_A)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkComponentSwizzle") >>
-                      (VkComponentSwizzle <$> step readPrec)))
-
-pattern VK_COMPONENT_SWIZZLE_IDENTITY :: VkComponentSwizzle
-
-pattern VK_COMPONENT_SWIZZLE_IDENTITY = VkComponentSwizzle 0
-
-pattern VK_COMPONENT_SWIZZLE_ZERO :: VkComponentSwizzle
-
-pattern VK_COMPONENT_SWIZZLE_ZERO = VkComponentSwizzle 1
-
-pattern VK_COMPONENT_SWIZZLE_ONE :: VkComponentSwizzle
-
-pattern VK_COMPONENT_SWIZZLE_ONE = VkComponentSwizzle 2
-
-pattern VK_COMPONENT_SWIZZLE_R :: VkComponentSwizzle
-
-pattern VK_COMPONENT_SWIZZLE_R = VkComponentSwizzle 3
-
-pattern VK_COMPONENT_SWIZZLE_G :: VkComponentSwizzle
-
-pattern VK_COMPONENT_SWIZZLE_G = VkComponentSwizzle 4
-
-pattern VK_COMPONENT_SWIZZLE_B :: VkComponentSwizzle
-
-pattern VK_COMPONENT_SWIZZLE_B = VkComponentSwizzle 5
-
-pattern VK_COMPONENT_SWIZZLE_A :: VkComponentSwizzle
-
-pattern VK_COMPONENT_SWIZZLE_A = VkComponentSwizzle 6
-
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkCommandPoolCreateFlagBits.html VkCommandPoolCreateFlagBits registry at www.khronos.org>
-newtype VkCommandPoolCreateFlagBits = VkCommandPoolCreateFlagBits Int32
-                                        deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable,
-                                                  Enum, Data, Generic)
-
-instance Show VkCommandPoolCreateFlagBits where
-        showsPrec _ VK_COMMAND_POOL_CREATE_TRANSIENT_BIT
-          = showString "VK_COMMAND_POOL_CREATE_TRANSIENT_BIT"
-        showsPrec _ VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT
-          = showString "VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT"
-        showsPrec p (VkCommandPoolCreateFlagBits x)
-          = showParen (p >= 11)
-              (showString "VkCommandPoolCreateFlagBits " . showsPrec 11 x)
-
-instance Read VkCommandPoolCreateFlagBits where
-        readPrec
-          = parens
-              (choose
-                 [("VK_COMMAND_POOL_CREATE_TRANSIENT_BIT",
-                   pure VK_COMMAND_POOL_CREATE_TRANSIENT_BIT),
-                  ("VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT",
-                   pure VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkCommandPoolCreateFlagBits") >>
-                      (VkCommandPoolCreateFlagBits <$> step readPrec)))
-
--- | Command buffers have a short lifetime
---
---   bitpos = @0@
-pattern VK_COMMAND_POOL_CREATE_TRANSIENT_BIT ::
-        VkCommandPoolCreateFlagBits
-
-pattern VK_COMMAND_POOL_CREATE_TRANSIENT_BIT =
-        VkCommandPoolCreateFlagBits 1
-
--- | Command buffers may release their memory individually
---
---   bitpos = @1@
-pattern VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT ::
-        VkCommandPoolCreateFlagBits
-
-pattern VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT =
-        VkCommandPoolCreateFlagBits 2
-
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkCommandPoolResetFlagBits.html VkCommandPoolResetFlagBits registry at www.khronos.org>
-newtype VkCommandPoolResetFlagBits = VkCommandPoolResetFlagBits Int32
-                                       deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable,
-                                                 Enum, Data, Generic)
-
-instance Show VkCommandPoolResetFlagBits where
-        showsPrec _ VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT
-          = showString "VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT"
-        showsPrec p (VkCommandPoolResetFlagBits x)
-          = showParen (p >= 11)
-              (showString "VkCommandPoolResetFlagBits " . showsPrec 11 x)
-
-instance Read VkCommandPoolResetFlagBits where
-        readPrec
-          = parens
-              (choose
-                 [("VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT",
-                   pure VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkCommandPoolResetFlagBits") >>
-                      (VkCommandPoolResetFlagBits <$> step readPrec)))
-
--- | Release resources owned by the pool
---
---   bitpos = @0@
-pattern VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT ::
-        VkCommandPoolResetFlagBits
-
-pattern VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT =
-        VkCommandPoolResetFlagBits 1
-
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkCommandBufferResetFlagBits.html VkCommandBufferResetFlagBits registry at www.khronos.org>
-newtype VkCommandBufferResetFlagBits = VkCommandBufferResetFlagBits Int32
-                                         deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
-                                                   Storable, Enum, Data, Generic)
-
-instance Show VkCommandBufferResetFlagBits where
-        showsPrec _ VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT
-          = showString "VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT"
-        showsPrec p (VkCommandBufferResetFlagBits x)
-          = showParen (p >= 11)
-              (showString "VkCommandBufferResetFlagBits " . showsPrec 11 x)
-
-instance Read VkCommandBufferResetFlagBits where
-        readPrec
-          = parens
-              (choose
-                 [("VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT",
-                   pure VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkCommandBufferResetFlagBits") >>
-                      (VkCommandBufferResetFlagBits <$> step readPrec)))
-
--- | Release resources owned by the buffer
---
---   bitpos = @0@
-pattern VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT ::
-        VkCommandBufferResetFlagBits
-
-pattern VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT =
-        VkCommandBufferResetFlagBits 1
+type VkColorComponentFlags = VkColorComponentFlagBits
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkCommandBufferLevel.html VkCommandBufferLevel registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkColorSpaceKHR.html VkColorSpaceKHR registry at www.khronos.org>
+newtype VkColorSpaceKHR = VkColorSpaceKHR Int32
+                            deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+
+instance Show VkColorSpaceKHR where
+        showsPrec _ VK_COLOR_SPACE_SRGB_NONLINEAR_KHR
+          = showString "VK_COLOR_SPACE_SRGB_NONLINEAR_KHR"
+        showsPrec p (VkColorSpaceKHR x)
+          = showParen (p >= 11)
+              (showString "VkColorSpaceKHR " . showsPrec 11 x)
+
+instance Read VkColorSpaceKHR where
+        readPrec
+          = parens
+              (choose
+                 [("VK_COLOR_SPACE_SRGB_NONLINEAR_KHR",
+                   pure VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkColorSpaceKHR") >>
+                      (VkColorSpaceKHR <$> step readPrec)))
+
+pattern VK_COLOR_SPACE_SRGB_NONLINEAR_KHR :: VkColorSpaceKHR
+
+pattern VK_COLOR_SPACE_SRGB_NONLINEAR_KHR = VkColorSpaceKHR 0
+
+type VkCommandBuffer = Ptr VkCommandBuffer_T
+
+-- | Opaque data type referenced by VkCommandBuffer
+data VkCommandBuffer_T
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkCommandBufferLevel.html VkCommandBufferLevel registry at www.khronos.org>
 newtype VkCommandBufferLevel = VkCommandBufferLevel Int32
                                  deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
@@ -3200,7 +2582,43 @@ pattern VK_COMMAND_BUFFER_LEVEL_SECONDARY = VkCommandBufferLevel 1
 
 -- | type = @bitmask@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkCommandBufferUsageFlagBits.html VkCommandBufferUsageFlagBits registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkCommandBufferResetFlagBits.html VkCommandBufferResetFlagBits registry at www.khronos.org>
+newtype VkCommandBufferResetFlagBits = VkCommandBufferResetFlagBits Int32
+                                         deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
+                                                   Storable, Enum, Data, Generic)
+
+instance Show VkCommandBufferResetFlagBits where
+        showsPrec _ VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT
+          = showString "VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT"
+        showsPrec p (VkCommandBufferResetFlagBits x)
+          = showParen (p >= 11)
+              (showString "VkCommandBufferResetFlagBits " . showsPrec 11 x)
+
+instance Read VkCommandBufferResetFlagBits where
+        readPrec
+          = parens
+              (choose
+                 [("VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT",
+                   pure VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkCommandBufferResetFlagBits") >>
+                      (VkCommandBufferResetFlagBits <$> step readPrec)))
+
+-- | Release resources owned by the buffer
+--
+--   bitpos = @0@
+pattern VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT ::
+        VkCommandBufferResetFlagBits
+
+pattern VK_COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT =
+        VkCommandBufferResetFlagBits 1
+
+type VkCommandBufferResetFlags = VkCommandBufferResetFlagBits
+
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkCommandBufferUsageFlagBits.html VkCommandBufferUsageFlagBits registry at www.khronos.org>
 newtype VkCommandBufferUsageFlagBits = VkCommandBufferUsageFlagBits Int32
                                          deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
                                                    Storable, Enum, Data, Generic)
@@ -3254,9 +2672,113 @@ pattern VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT ::
 pattern VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT =
         VkCommandBufferUsageFlagBits 4
 
+type VkCommandBufferUsageFlags = VkCommandBufferUsageFlagBits
+
+type VkCommandPool = VkPtr VkCommandPool_T
+
+-- | Opaque data type referenced by VkCommandPool
+data VkCommandPool_T
+
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkCommandPoolCreateFlagBits.html VkCommandPoolCreateFlagBits registry at www.khronos.org>
+newtype VkCommandPoolCreateFlagBits = VkCommandPoolCreateFlagBits Int32
+                                        deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable,
+                                                  Enum, Data, Generic)
+
+instance Show VkCommandPoolCreateFlagBits where
+        showsPrec _ VK_COMMAND_POOL_CREATE_TRANSIENT_BIT
+          = showString "VK_COMMAND_POOL_CREATE_TRANSIENT_BIT"
+        showsPrec _ VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT
+          = showString "VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT"
+        showsPrec p (VkCommandPoolCreateFlagBits x)
+          = showParen (p >= 11)
+              (showString "VkCommandPoolCreateFlagBits " . showsPrec 11 x)
+
+instance Read VkCommandPoolCreateFlagBits where
+        readPrec
+          = parens
+              (choose
+                 [("VK_COMMAND_POOL_CREATE_TRANSIENT_BIT",
+                   pure VK_COMMAND_POOL_CREATE_TRANSIENT_BIT),
+                  ("VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT",
+                   pure VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkCommandPoolCreateFlagBits") >>
+                      (VkCommandPoolCreateFlagBits <$> step readPrec)))
+
+-- | Command buffers have a short lifetime
+--
+--   bitpos = @0@
+pattern VK_COMMAND_POOL_CREATE_TRANSIENT_BIT ::
+        VkCommandPoolCreateFlagBits
+
+pattern VK_COMMAND_POOL_CREATE_TRANSIENT_BIT =
+        VkCommandPoolCreateFlagBits 1
+
+-- | Command buffers may release their memory individually
+--
+--   bitpos = @1@
+pattern VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT ::
+        VkCommandPoolCreateFlagBits
+
+pattern VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT =
+        VkCommandPoolCreateFlagBits 2
+
+type VkCommandPoolCreateFlags = VkCommandPoolCreateFlagBits
+
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkCommandPoolResetFlagBits.html VkCommandPoolResetFlagBits registry at www.khronos.org>
+newtype VkCommandPoolResetFlagBits = VkCommandPoolResetFlagBits Int32
+                                       deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable,
+                                                 Enum, Data, Generic)
+
+instance Show VkCommandPoolResetFlagBits where
+        showsPrec _ VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT
+          = showString "VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT"
+        showsPrec p (VkCommandPoolResetFlagBits x)
+          = showParen (p >= 11)
+              (showString "VkCommandPoolResetFlagBits " . showsPrec 11 x)
+
+instance Read VkCommandPoolResetFlagBits where
+        readPrec
+          = parens
+              (choose
+                 [("VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT",
+                   pure VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkCommandPoolResetFlagBits") >>
+                      (VkCommandPoolResetFlagBits <$> step readPrec)))
+
+-- | Release resources owned by the pool
+--
+--   bitpos = @0@
+pattern VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT ::
+        VkCommandPoolResetFlagBits
+
+pattern VK_COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT =
+        VkCommandPoolResetFlagBits 1
+
+type VkCommandPoolResetFlags = VkCommandPoolResetFlagBits
+
+newtype VkCommandPoolTrimFlagsKHR = VkCommandPoolTrimFlagsKHR VkFlags
+                                      deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkCommandPoolTrimFlagsKHR where
+        {-# INLINE show #-}
+        show (VkCommandPoolTrimFlagsKHR x) = show x
+
+instance Read VkCommandPoolTrimFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkCompareOp.html VkCompareOp registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkCompareOp.html VkCompareOp registry at www.khronos.org>
 newtype VkCompareOp = VkCompareOp Int32
                         deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
@@ -3326,9 +2848,258 @@ pattern VK_COMPARE_OP_ALWAYS :: VkCompareOp
 
 pattern VK_COMPARE_OP_ALWAYS = VkCompareOp 7
 
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkComponentSwizzle.html VkComponentSwizzle registry at www.khronos.org>
+newtype VkComponentSwizzle = VkComponentSwizzle Int32
+                               deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+
+instance Show VkComponentSwizzle where
+        showsPrec _ VK_COMPONENT_SWIZZLE_IDENTITY
+          = showString "VK_COMPONENT_SWIZZLE_IDENTITY"
+        showsPrec _ VK_COMPONENT_SWIZZLE_ZERO
+          = showString "VK_COMPONENT_SWIZZLE_ZERO"
+        showsPrec _ VK_COMPONENT_SWIZZLE_ONE
+          = showString "VK_COMPONENT_SWIZZLE_ONE"
+        showsPrec _ VK_COMPONENT_SWIZZLE_R
+          = showString "VK_COMPONENT_SWIZZLE_R"
+        showsPrec _ VK_COMPONENT_SWIZZLE_G
+          = showString "VK_COMPONENT_SWIZZLE_G"
+        showsPrec _ VK_COMPONENT_SWIZZLE_B
+          = showString "VK_COMPONENT_SWIZZLE_B"
+        showsPrec _ VK_COMPONENT_SWIZZLE_A
+          = showString "VK_COMPONENT_SWIZZLE_A"
+        showsPrec p (VkComponentSwizzle x)
+          = showParen (p >= 11)
+              (showString "VkComponentSwizzle " . showsPrec 11 x)
+
+instance Read VkComponentSwizzle where
+        readPrec
+          = parens
+              (choose
+                 [("VK_COMPONENT_SWIZZLE_IDENTITY",
+                   pure VK_COMPONENT_SWIZZLE_IDENTITY),
+                  ("VK_COMPONENT_SWIZZLE_ZERO", pure VK_COMPONENT_SWIZZLE_ZERO),
+                  ("VK_COMPONENT_SWIZZLE_ONE", pure VK_COMPONENT_SWIZZLE_ONE),
+                  ("VK_COMPONENT_SWIZZLE_R", pure VK_COMPONENT_SWIZZLE_R),
+                  ("VK_COMPONENT_SWIZZLE_G", pure VK_COMPONENT_SWIZZLE_G),
+                  ("VK_COMPONENT_SWIZZLE_B", pure VK_COMPONENT_SWIZZLE_B),
+                  ("VK_COMPONENT_SWIZZLE_A", pure VK_COMPONENT_SWIZZLE_A)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkComponentSwizzle") >>
+                      (VkComponentSwizzle <$> step readPrec)))
+
+pattern VK_COMPONENT_SWIZZLE_IDENTITY :: VkComponentSwizzle
+
+pattern VK_COMPONENT_SWIZZLE_IDENTITY = VkComponentSwizzle 0
+
+pattern VK_COMPONENT_SWIZZLE_ZERO :: VkComponentSwizzle
+
+pattern VK_COMPONENT_SWIZZLE_ZERO = VkComponentSwizzle 1
+
+pattern VK_COMPONENT_SWIZZLE_ONE :: VkComponentSwizzle
+
+pattern VK_COMPONENT_SWIZZLE_ONE = VkComponentSwizzle 2
+
+pattern VK_COMPONENT_SWIZZLE_R :: VkComponentSwizzle
+
+pattern VK_COMPONENT_SWIZZLE_R = VkComponentSwizzle 3
+
+pattern VK_COMPONENT_SWIZZLE_G :: VkComponentSwizzle
+
+pattern VK_COMPONENT_SWIZZLE_G = VkComponentSwizzle 4
+
+pattern VK_COMPONENT_SWIZZLE_B :: VkComponentSwizzle
+
+pattern VK_COMPONENT_SWIZZLE_B = VkComponentSwizzle 5
+
+pattern VK_COMPONENT_SWIZZLE_A :: VkComponentSwizzle
+
+pattern VK_COMPONENT_SWIZZLE_A = VkComponentSwizzle 6
+
 -- | type = @bitmask@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkCullModeFlagBits.html VkCullModeFlagBits registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkCompositeAlphaFlagBitsKHR.html VkCompositeAlphaFlagBitsKHR registry at www.khronos.org>
+newtype VkCompositeAlphaFlagBitsKHR = VkCompositeAlphaFlagBitsKHR Int32
+                                        deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable,
+                                                  Enum, Data, Generic)
+
+instance Show VkCompositeAlphaFlagBitsKHR where
+        showsPrec _ VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR
+          = showString "VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR"
+        showsPrec _ VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR
+          = showString "VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR"
+        showsPrec _ VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR
+          = showString "VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR"
+        showsPrec _ VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR
+          = showString "VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR"
+        showsPrec p (VkCompositeAlphaFlagBitsKHR x)
+          = showParen (p >= 11)
+              (showString "VkCompositeAlphaFlagBitsKHR " . showsPrec 11 x)
+
+instance Read VkCompositeAlphaFlagBitsKHR where
+        readPrec
+          = parens
+              (choose
+                 [("VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR",
+                   pure VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR),
+                  ("VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR",
+                   pure VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR),
+                  ("VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR",
+                   pure VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR),
+                  ("VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR",
+                   pure VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkCompositeAlphaFlagBitsKHR") >>
+                      (VkCompositeAlphaFlagBitsKHR <$> step readPrec)))
+
+-- | bitpos = @0@
+pattern VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR ::
+        VkCompositeAlphaFlagBitsKHR
+
+pattern VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR =
+        VkCompositeAlphaFlagBitsKHR 1
+
+-- | bitpos = @1@
+pattern VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR ::
+        VkCompositeAlphaFlagBitsKHR
+
+pattern VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR =
+        VkCompositeAlphaFlagBitsKHR 2
+
+-- | bitpos = @2@
+pattern VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR ::
+        VkCompositeAlphaFlagBitsKHR
+
+pattern VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR =
+        VkCompositeAlphaFlagBitsKHR 4
+
+-- | bitpos = @3@
+pattern VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR ::
+        VkCompositeAlphaFlagBitsKHR
+
+pattern VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR =
+        VkCompositeAlphaFlagBitsKHR 8
+
+type VkCompositeAlphaFlagsKHR = VkCompositeAlphaFlagBitsKHR
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkConservativeRasterizationModeEXT.html VkConservativeRasterizationModeEXT registry at www.khronos.org>
+newtype VkConservativeRasterizationModeEXT = VkConservativeRasterizationModeEXT Int32
+                                               deriving (Eq, Ord, Num, Bounded, Storable, Enum,
+                                                         Data, Generic)
+
+instance Show VkConservativeRasterizationModeEXT where
+        showsPrec _ VK_CONSERVATIVE_RASTERIZATION_MODE_DISABLED_EXT
+          = showString "VK_CONSERVATIVE_RASTERIZATION_MODE_DISABLED_EXT"
+        showsPrec _ VK_CONSERVATIVE_RASTERIZATION_MODE_OVERESTIMATE_EXT
+          = showString "VK_CONSERVATIVE_RASTERIZATION_MODE_OVERESTIMATE_EXT"
+        showsPrec _ VK_CONSERVATIVE_RASTERIZATION_MODE_UNDERESTIMATE_EXT
+          = showString "VK_CONSERVATIVE_RASTERIZATION_MODE_UNDERESTIMATE_EXT"
+        showsPrec p (VkConservativeRasterizationModeEXT x)
+          = showParen (p >= 11)
+              (showString "VkConservativeRasterizationModeEXT " . showsPrec 11 x)
+
+instance Read VkConservativeRasterizationModeEXT where
+        readPrec
+          = parens
+              (choose
+                 [("VK_CONSERVATIVE_RASTERIZATION_MODE_DISABLED_EXT",
+                   pure VK_CONSERVATIVE_RASTERIZATION_MODE_DISABLED_EXT),
+                  ("VK_CONSERVATIVE_RASTERIZATION_MODE_OVERESTIMATE_EXT",
+                   pure VK_CONSERVATIVE_RASTERIZATION_MODE_OVERESTIMATE_EXT),
+                  ("VK_CONSERVATIVE_RASTERIZATION_MODE_UNDERESTIMATE_EXT",
+                   pure VK_CONSERVATIVE_RASTERIZATION_MODE_UNDERESTIMATE_EXT)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkConservativeRasterizationModeEXT") >>
+                      (VkConservativeRasterizationModeEXT <$> step readPrec)))
+
+pattern VK_CONSERVATIVE_RASTERIZATION_MODE_DISABLED_EXT ::
+        VkConservativeRasterizationModeEXT
+
+pattern VK_CONSERVATIVE_RASTERIZATION_MODE_DISABLED_EXT =
+        VkConservativeRasterizationModeEXT 0
+
+pattern VK_CONSERVATIVE_RASTERIZATION_MODE_OVERESTIMATE_EXT ::
+        VkConservativeRasterizationModeEXT
+
+pattern VK_CONSERVATIVE_RASTERIZATION_MODE_OVERESTIMATE_EXT =
+        VkConservativeRasterizationModeEXT 1
+
+pattern VK_CONSERVATIVE_RASTERIZATION_MODE_UNDERESTIMATE_EXT ::
+        VkConservativeRasterizationModeEXT
+
+pattern VK_CONSERVATIVE_RASTERIZATION_MODE_UNDERESTIMATE_EXT =
+        VkConservativeRasterizationModeEXT 2
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkCoverageModulationModeNV.html VkCoverageModulationModeNV registry at www.khronos.org>
+newtype VkCoverageModulationModeNV = VkCoverageModulationModeNV Int32
+                                       deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
+                                                 Generic)
+
+instance Show VkCoverageModulationModeNV where
+        showsPrec _ VK_COVERAGE_MODULATION_MODE_NONE_NV
+          = showString "VK_COVERAGE_MODULATION_MODE_NONE_NV"
+        showsPrec _ VK_COVERAGE_MODULATION_MODE_RGB_NV
+          = showString "VK_COVERAGE_MODULATION_MODE_RGB_NV"
+        showsPrec _ VK_COVERAGE_MODULATION_MODE_ALPHA_NV
+          = showString "VK_COVERAGE_MODULATION_MODE_ALPHA_NV"
+        showsPrec _ VK_COVERAGE_MODULATION_MODE_RGBA_NV
+          = showString "VK_COVERAGE_MODULATION_MODE_RGBA_NV"
+        showsPrec p (VkCoverageModulationModeNV x)
+          = showParen (p >= 11)
+              (showString "VkCoverageModulationModeNV " . showsPrec 11 x)
+
+instance Read VkCoverageModulationModeNV where
+        readPrec
+          = parens
+              (choose
+                 [("VK_COVERAGE_MODULATION_MODE_NONE_NV",
+                   pure VK_COVERAGE_MODULATION_MODE_NONE_NV),
+                  ("VK_COVERAGE_MODULATION_MODE_RGB_NV",
+                   pure VK_COVERAGE_MODULATION_MODE_RGB_NV),
+                  ("VK_COVERAGE_MODULATION_MODE_ALPHA_NV",
+                   pure VK_COVERAGE_MODULATION_MODE_ALPHA_NV),
+                  ("VK_COVERAGE_MODULATION_MODE_RGBA_NV",
+                   pure VK_COVERAGE_MODULATION_MODE_RGBA_NV)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkCoverageModulationModeNV") >>
+                      (VkCoverageModulationModeNV <$> step readPrec)))
+
+pattern VK_COVERAGE_MODULATION_MODE_NONE_NV ::
+        VkCoverageModulationModeNV
+
+pattern VK_COVERAGE_MODULATION_MODE_NONE_NV =
+        VkCoverageModulationModeNV 0
+
+pattern VK_COVERAGE_MODULATION_MODE_RGB_NV ::
+        VkCoverageModulationModeNV
+
+pattern VK_COVERAGE_MODULATION_MODE_RGB_NV =
+        VkCoverageModulationModeNV 1
+
+pattern VK_COVERAGE_MODULATION_MODE_ALPHA_NV ::
+        VkCoverageModulationModeNV
+
+pattern VK_COVERAGE_MODULATION_MODE_ALPHA_NV =
+        VkCoverageModulationModeNV 2
+
+pattern VK_COVERAGE_MODULATION_MODE_RGBA_NV ::
+        VkCoverageModulationModeNV
+
+pattern VK_COVERAGE_MODULATION_MODE_RGBA_NV =
+        VkCoverageModulationModeNV 3
+
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkCullModeFlagBits.html VkCullModeFlagBits registry at www.khronos.org>
 newtype VkCullModeFlagBits = VkCullModeFlagBits Int32
                                deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable, Enum,
                                          Data, Generic)
@@ -3376,9 +3147,575 @@ pattern VK_CULL_MODE_FRONT_AND_BACK :: VkCullModeFlagBits
 
 pattern VK_CULL_MODE_FRONT_AND_BACK = VkCullModeFlagBits 3
 
+type VkCullModeFlags = VkCullModeFlagBits
+
+type VkDebugReportCallbackEXT = VkPtr VkDebugReportCallbackEXT_T
+
+-- | Opaque data type referenced by VkDebugReportCallbackEXT
+data VkDebugReportCallbackEXT_T
+
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDebugReportFlagBitsEXT.html VkDebugReportFlagBitsEXT registry at www.khronos.org>
+newtype VkDebugReportFlagBitsEXT = VkDebugReportFlagBitsEXT Int32
+                                     deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable,
+                                               Enum, Data, Generic)
+
+instance Show VkDebugReportFlagBitsEXT where
+        showsPrec _ VK_DEBUG_REPORT_INFORMATION_BIT_EXT
+          = showString "VK_DEBUG_REPORT_INFORMATION_BIT_EXT"
+        showsPrec _ VK_DEBUG_REPORT_WARNING_BIT_EXT
+          = showString "VK_DEBUG_REPORT_WARNING_BIT_EXT"
+        showsPrec _ VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT
+          = showString "VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT"
+        showsPrec _ VK_DEBUG_REPORT_ERROR_BIT_EXT
+          = showString "VK_DEBUG_REPORT_ERROR_BIT_EXT"
+        showsPrec _ VK_DEBUG_REPORT_DEBUG_BIT_EXT
+          = showString "VK_DEBUG_REPORT_DEBUG_BIT_EXT"
+        showsPrec p (VkDebugReportFlagBitsEXT x)
+          = showParen (p >= 11)
+              (showString "VkDebugReportFlagBitsEXT " . showsPrec 11 x)
+
+instance Read VkDebugReportFlagBitsEXT where
+        readPrec
+          = parens
+              (choose
+                 [("VK_DEBUG_REPORT_INFORMATION_BIT_EXT",
+                   pure VK_DEBUG_REPORT_INFORMATION_BIT_EXT),
+                  ("VK_DEBUG_REPORT_WARNING_BIT_EXT",
+                   pure VK_DEBUG_REPORT_WARNING_BIT_EXT),
+                  ("VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT",
+                   pure VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT),
+                  ("VK_DEBUG_REPORT_ERROR_BIT_EXT",
+                   pure VK_DEBUG_REPORT_ERROR_BIT_EXT),
+                  ("VK_DEBUG_REPORT_DEBUG_BIT_EXT",
+                   pure VK_DEBUG_REPORT_DEBUG_BIT_EXT)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkDebugReportFlagBitsEXT") >>
+                      (VkDebugReportFlagBitsEXT <$> step readPrec)))
+
+-- | bitpos = @0@
+pattern VK_DEBUG_REPORT_INFORMATION_BIT_EXT ::
+        VkDebugReportFlagBitsEXT
+
+pattern VK_DEBUG_REPORT_INFORMATION_BIT_EXT =
+        VkDebugReportFlagBitsEXT 1
+
+-- | bitpos = @1@
+pattern VK_DEBUG_REPORT_WARNING_BIT_EXT :: VkDebugReportFlagBitsEXT
+
+pattern VK_DEBUG_REPORT_WARNING_BIT_EXT =
+        VkDebugReportFlagBitsEXT 2
+
+-- | bitpos = @2@
+pattern VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT ::
+        VkDebugReportFlagBitsEXT
+
+pattern VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT =
+        VkDebugReportFlagBitsEXT 4
+
+-- | bitpos = @3@
+pattern VK_DEBUG_REPORT_ERROR_BIT_EXT :: VkDebugReportFlagBitsEXT
+
+pattern VK_DEBUG_REPORT_ERROR_BIT_EXT = VkDebugReportFlagBitsEXT 8
+
+-- | bitpos = @4@
+pattern VK_DEBUG_REPORT_DEBUG_BIT_EXT :: VkDebugReportFlagBitsEXT
+
+pattern VK_DEBUG_REPORT_DEBUG_BIT_EXT = VkDebugReportFlagBitsEXT 16
+
+type VkDebugReportFlagsEXT = VkDebugReportFlagBitsEXT
+
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDescriptorType.html VkDescriptorType registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDebugReportObjectTypeEXT.html VkDebugReportObjectTypeEXT registry at www.khronos.org>
+newtype VkDebugReportObjectTypeEXT = VkDebugReportObjectTypeEXT Int32
+                                       deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
+                                                 Generic)
+
+instance Show VkDebugReportObjectTypeEXT where
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_PHYSICAL_DEVICE_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_PHYSICAL_DEVICE_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_QUEUE_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_QUEUE_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_SEMAPHORE_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_SEMAPHORE_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_BUFFER_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_BUFFER_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_FENCE_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_FENCE_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_EVENT_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_EVENT_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_VIEW_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_VIEW_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_CACHE_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_CACHE_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_LAYOUT_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_LAYOUT_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT_EXT
+          = showString
+              "VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_POOL_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_POOL_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_FRAMEBUFFER_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_FRAMEBUFFER_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_POOL_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_POOL_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_SURFACE_KHR_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_SURFACE_KHR_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_SWAPCHAIN_KHR_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_SWAPCHAIN_KHR_EXT"
+        showsPrec _
+          VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT
+          = showString
+              "VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT"
+        showsPrec _
+          VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT
+          = showString
+              "VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT"
+        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT
+          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT"
+        showsPrec p (VkDebugReportObjectTypeEXT x)
+          = showParen (p >= 11)
+              (showString "VkDebugReportObjectTypeEXT " . showsPrec 11 x)
+
+instance Read VkDebugReportObjectTypeEXT where
+        readPrec
+          = parens
+              (choose
+                 [("VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_PHYSICAL_DEVICE_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_PHYSICAL_DEVICE_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_QUEUE_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_QUEUE_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_SEMAPHORE_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_SEMAPHORE_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_BUFFER_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_BUFFER_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_FENCE_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_FENCE_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_EVENT_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_EVENT_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_VIEW_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_VIEW_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_CACHE_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_CACHE_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_LAYOUT_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_LAYOUT_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_POOL_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_POOL_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_FRAMEBUFFER_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_FRAMEBUFFER_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_POOL_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_POOL_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_SURFACE_KHR_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_SURFACE_KHR_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_SWAPCHAIN_KHR_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_SWAPCHAIN_KHR_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT),
+                  ("VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT",
+                   pure VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkDebugReportObjectTypeEXT") >>
+                      (VkDebugReportObjectTypeEXT <$> step readPrec)))
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT =
+        VkDebugReportObjectTypeEXT 0
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT =
+        VkDebugReportObjectTypeEXT 1
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_PHYSICAL_DEVICE_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_PHYSICAL_DEVICE_EXT =
+        VkDebugReportObjectTypeEXT 2
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT =
+        VkDebugReportObjectTypeEXT 3
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_QUEUE_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_QUEUE_EXT =
+        VkDebugReportObjectTypeEXT 4
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_SEMAPHORE_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_SEMAPHORE_EXT =
+        VkDebugReportObjectTypeEXT 5
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_BUFFER_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_BUFFER_EXT =
+        VkDebugReportObjectTypeEXT 6
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_FENCE_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_FENCE_EXT =
+        VkDebugReportObjectTypeEXT 7
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT =
+        VkDebugReportObjectTypeEXT 8
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT =
+        VkDebugReportObjectTypeEXT 9
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT =
+        VkDebugReportObjectTypeEXT 10
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_EVENT_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_EVENT_EXT =
+        VkDebugReportObjectTypeEXT 11
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT =
+        VkDebugReportObjectTypeEXT 12
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_VIEW_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_VIEW_EXT =
+        VkDebugReportObjectTypeEXT 13
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT =
+        VkDebugReportObjectTypeEXT 14
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT =
+        VkDebugReportObjectTypeEXT 15
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_CACHE_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_CACHE_EXT =
+        VkDebugReportObjectTypeEXT 16
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_LAYOUT_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_LAYOUT_EXT =
+        VkDebugReportObjectTypeEXT 17
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT =
+        VkDebugReportObjectTypeEXT 18
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT =
+        VkDebugReportObjectTypeEXT 19
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT_EXT =
+        VkDebugReportObjectTypeEXT 20
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_EXT =
+        VkDebugReportObjectTypeEXT 21
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_POOL_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_POOL_EXT =
+        VkDebugReportObjectTypeEXT 22
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT =
+        VkDebugReportObjectTypeEXT 23
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_FRAMEBUFFER_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_FRAMEBUFFER_EXT =
+        VkDebugReportObjectTypeEXT 24
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_POOL_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_POOL_EXT =
+        VkDebugReportObjectTypeEXT 25
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_SURFACE_KHR_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_SURFACE_KHR_EXT =
+        VkDebugReportObjectTypeEXT 26
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_SWAPCHAIN_KHR_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_SWAPCHAIN_KHR_EXT =
+        VkDebugReportObjectTypeEXT 27
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT
+        :: VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT =
+        VkDebugReportObjectTypeEXT 28
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT =
+        VkDebugReportObjectTypeEXT 29
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT =
+        VkDebugReportObjectTypeEXT 30
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT =
+        VkDebugReportObjectTypeEXT 31
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT
+        :: VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT
+        = VkDebugReportObjectTypeEXT 32
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT =
+        VkDebugReportObjectTypeEXT 33
+
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDependencyFlagBits.html VkDependencyFlagBits registry at www.khronos.org>
+newtype VkDependencyFlagBits = VkDependencyFlagBits Int32
+                                 deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable, Enum,
+                                           Data, Generic)
+
+instance Show VkDependencyFlagBits where
+        showsPrec _ VK_DEPENDENCY_BY_REGION_BIT
+          = showString "VK_DEPENDENCY_BY_REGION_BIT"
+        showsPrec p (VkDependencyFlagBits x)
+          = showParen (p >= 11)
+              (showString "VkDependencyFlagBits " . showsPrec 11 x)
+
+instance Read VkDependencyFlagBits where
+        readPrec
+          = parens
+              (choose
+                 [("VK_DEPENDENCY_BY_REGION_BIT", pure VK_DEPENDENCY_BY_REGION_BIT)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkDependencyFlagBits") >>
+                      (VkDependencyFlagBits <$> step readPrec)))
+
+-- | Dependency is per pixel region
+--
+--   bitpos = @0@
+pattern VK_DEPENDENCY_BY_REGION_BIT :: VkDependencyFlagBits
+
+pattern VK_DEPENDENCY_BY_REGION_BIT = VkDependencyFlagBits 1
+
+type VkDependencyFlags = VkDependencyFlagBits
+
+type VkDescriptorPool = VkPtr VkDescriptorPool_T
+
+-- | Opaque data type referenced by VkDescriptorPool
+data VkDescriptorPool_T
+
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDescriptorPoolCreateFlagBits.html VkDescriptorPoolCreateFlagBits registry at www.khronos.org>
+newtype VkDescriptorPoolCreateFlagBits = VkDescriptorPoolCreateFlagBits Int32
+                                           deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
+                                                     Storable, Enum, Data, Generic)
+
+instance Show VkDescriptorPoolCreateFlagBits where
+        showsPrec _ VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT
+          = showString "VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT"
+        showsPrec p (VkDescriptorPoolCreateFlagBits x)
+          = showParen (p >= 11)
+              (showString "VkDescriptorPoolCreateFlagBits " . showsPrec 11 x)
+
+instance Read VkDescriptorPoolCreateFlagBits where
+        readPrec
+          = parens
+              (choose
+                 [("VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT",
+                   pure VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkDescriptorPoolCreateFlagBits") >>
+                      (VkDescriptorPoolCreateFlagBits <$> step readPrec)))
+
+-- | Descriptor sets may be freed individually
+--
+--   bitpos = @0@
+pattern VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT ::
+        VkDescriptorPoolCreateFlagBits
+
+pattern VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT =
+        VkDescriptorPoolCreateFlagBits 1
+
+type VkDescriptorPoolCreateFlags = VkDescriptorPoolCreateFlagBits
+
+newtype VkDescriptorPoolResetFlags = VkDescriptorPoolResetFlags VkFlags
+                                       deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                 FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkDescriptorPoolResetFlags where
+        {-# INLINE show #-}
+        show (VkDescriptorPoolResetFlags x) = show x
+
+instance Read VkDescriptorPoolResetFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+type VkDescriptorSet = VkPtr VkDescriptorSet_T
+
+-- | Opaque data type referenced by VkDescriptorSet
+data VkDescriptorSet_T
+
+type VkDescriptorSetLayout = VkPtr VkDescriptorSetLayout_T
+
+-- | Opaque data type referenced by VkDescriptorSetLayout
+data VkDescriptorSetLayout_T
+
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDescriptorSetLayoutCreateFlagBits.html VkDescriptorSetLayoutCreateFlagBits registry at www.khronos.org>
+newtype VkDescriptorSetLayoutCreateFlagBits = VkDescriptorSetLayoutCreateFlagBits Int32
+                                                deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
+                                                          Storable, Enum, Data, Generic)
+
+instance Show VkDescriptorSetLayoutCreateFlagBits where
+        showsPrec p (VkDescriptorSetLayoutCreateFlagBits x)
+          = showParen (p >= 11)
+              (showString "VkDescriptorSetLayoutCreateFlagBits " .
+                 showsPrec 11 x)
+
+instance Read VkDescriptorSetLayoutCreateFlagBits where
+        readPrec
+          = parens
+              (choose [] +++
+                 prec 10
+                   (expectP (Ident "VkDescriptorSetLayoutCreateFlagBits") >>
+                      (VkDescriptorSetLayoutCreateFlagBits <$> step readPrec)))
+
+type VkDescriptorSetLayoutCreateFlags =
+     VkDescriptorSetLayoutCreateFlagBits
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDescriptorType.html VkDescriptorType registry at www.khronos.org>
 newtype VkDescriptorType = VkDescriptorType Int32
                              deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
@@ -3491,6 +3828,75 @@ pattern VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT :: VkDescriptorType
 
 pattern VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT = VkDescriptorType 10
 
+newtype VkDescriptorUpdateTemplateCreateFlagsKHR = VkDescriptorUpdateTemplateCreateFlagsKHR VkFlags
+                                                     deriving (Eq, Ord, Num, Bounded, Enum,
+                                                               Integral, Bits, FiniteBits, Storable,
+                                                               Real, Data, Generic)
+
+instance Show VkDescriptorUpdateTemplateCreateFlagsKHR where
+        {-# INLINE show #-}
+        show (VkDescriptorUpdateTemplateCreateFlagsKHR x) = show x
+
+instance Read VkDescriptorUpdateTemplateCreateFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+type VkDescriptorUpdateTemplateKHR =
+     VkPtr VkDescriptorUpdateTemplateKHR_T
+
+-- | Opaque data type referenced by VkDescriptorUpdateTemplateKHR
+data VkDescriptorUpdateTemplateKHR_T
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDescriptorUpdateTemplateTypeKHR.html VkDescriptorUpdateTemplateTypeKHR registry at www.khronos.org>
+newtype VkDescriptorUpdateTemplateTypeKHR = VkDescriptorUpdateTemplateTypeKHR Int32
+                                              deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
+                                                        Generic)
+
+instance Show VkDescriptorUpdateTemplateTypeKHR where
+        showsPrec _ VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_DESCRIPTOR_SET_KHR
+          = showString
+              "VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_DESCRIPTOR_SET_KHR"
+        showsPrec _ VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR
+          = showString
+              "VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR"
+        showsPrec p (VkDescriptorUpdateTemplateTypeKHR x)
+          = showParen (p >= 11)
+              (showString "VkDescriptorUpdateTemplateTypeKHR " . showsPrec 11 x)
+
+instance Read VkDescriptorUpdateTemplateTypeKHR where
+        readPrec
+          = parens
+              (choose
+                 [("VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_DESCRIPTOR_SET_KHR",
+                   pure VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_DESCRIPTOR_SET_KHR),
+                  ("VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR",
+                   pure VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkDescriptorUpdateTemplateTypeKHR") >>
+                      (VkDescriptorUpdateTemplateTypeKHR <$> step readPrec)))
+
+-- | Create descriptor update template for descriptor set updates
+pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_DESCRIPTOR_SET_KHR ::
+        VkDescriptorUpdateTemplateTypeKHR
+
+pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_DESCRIPTOR_SET_KHR =
+        VkDescriptorUpdateTemplateTypeKHR 0
+
+-- | Create descriptor update template for pushed descriptor updates
+pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR ::
+        VkDescriptorUpdateTemplateTypeKHR
+
+pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR =
+        VkDescriptorUpdateTemplateTypeKHR 1
+
+type VkDevice = Ptr VkDevice_T
+
+-- | Opaque data type referenced by VkDevice
+data VkDevice_T
+
 newtype VkDeviceCreateFlagBits = VkDeviceCreateFlagBits VkFlags
                                    deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
                                              FiniteBits, Storable, Real, Data, Generic)
@@ -3503,9 +3909,389 @@ instance Read VkDeviceCreateFlagBits where
         {-# INLINE readsPrec #-}
         readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
+newtype VkDeviceCreateFlags = VkDeviceCreateFlags VkFlags
+                                deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits, FiniteBits,
+                                          Storable, Real, Data, Generic)
+
+instance Show VkDeviceCreateFlags where
+        {-# INLINE show #-}
+        show (VkDeviceCreateFlags x) = show x
+
+instance Read VkDeviceCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDynamicState.html VkDynamicState registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDeviceEventTypeEXT.html VkDeviceEventTypeEXT registry at www.khronos.org>
+newtype VkDeviceEventTypeEXT = VkDeviceEventTypeEXT Int32
+                                 deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+
+instance Show VkDeviceEventTypeEXT where
+        showsPrec _ VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT
+          = showString "VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT"
+        showsPrec p (VkDeviceEventTypeEXT x)
+          = showParen (p >= 11)
+              (showString "VkDeviceEventTypeEXT " . showsPrec 11 x)
+
+instance Read VkDeviceEventTypeEXT where
+        readPrec
+          = parens
+              (choose
+                 [("VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT",
+                   pure VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkDeviceEventTypeEXT") >>
+                      (VkDeviceEventTypeEXT <$> step readPrec)))
+
+pattern VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT ::
+        VkDeviceEventTypeEXT
+
+pattern VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT =
+        VkDeviceEventTypeEXT 0
+
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDeviceGroupPresentModeFlagBitsKHX.html VkDeviceGroupPresentModeFlagBitsKHX registry at www.khronos.org>
+newtype VkDeviceGroupPresentModeFlagBitsKHX = VkDeviceGroupPresentModeFlagBitsKHX Int32
+                                                deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
+                                                          Storable, Enum, Data, Generic)
+
+instance Show VkDeviceGroupPresentModeFlagBitsKHX where
+        showsPrec _ VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHX
+          = showString "VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHX"
+        showsPrec _ VK_DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHX
+          = showString "VK_DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHX"
+        showsPrec _ VK_DEVICE_GROUP_PRESENT_MODE_SUM_BIT_KHX
+          = showString "VK_DEVICE_GROUP_PRESENT_MODE_SUM_BIT_KHX"
+        showsPrec _ VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHX
+          = showString
+              "VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHX"
+        showsPrec p (VkDeviceGroupPresentModeFlagBitsKHX x)
+          = showParen (p >= 11)
+              (showString "VkDeviceGroupPresentModeFlagBitsKHX " .
+                 showsPrec 11 x)
+
+instance Read VkDeviceGroupPresentModeFlagBitsKHX where
+        readPrec
+          = parens
+              (choose
+                 [("VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHX",
+                   pure VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHX),
+                  ("VK_DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHX",
+                   pure VK_DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHX),
+                  ("VK_DEVICE_GROUP_PRESENT_MODE_SUM_BIT_KHX",
+                   pure VK_DEVICE_GROUP_PRESENT_MODE_SUM_BIT_KHX),
+                  ("VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHX",
+                   pure VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHX)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkDeviceGroupPresentModeFlagBitsKHX") >>
+                      (VkDeviceGroupPresentModeFlagBitsKHX <$> step readPrec)))
+
+-- | Present from local memory
+--
+--   bitpos = @0@
+pattern VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHX ::
+        VkDeviceGroupPresentModeFlagBitsKHX
+
+pattern VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHX =
+        VkDeviceGroupPresentModeFlagBitsKHX 1
+
+-- | Present from remote memory
+--
+--   bitpos = @1@
+pattern VK_DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHX ::
+        VkDeviceGroupPresentModeFlagBitsKHX
+
+pattern VK_DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHX =
+        VkDeviceGroupPresentModeFlagBitsKHX 2
+
+-- | Present sum of local and/or remote memory
+--
+--   bitpos = @2@
+pattern VK_DEVICE_GROUP_PRESENT_MODE_SUM_BIT_KHX ::
+        VkDeviceGroupPresentModeFlagBitsKHX
+
+pattern VK_DEVICE_GROUP_PRESENT_MODE_SUM_BIT_KHX =
+        VkDeviceGroupPresentModeFlagBitsKHX 4
+
+-- | Each physical device presents from local memory
+--
+--   bitpos = @3@
+pattern VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHX ::
+        VkDeviceGroupPresentModeFlagBitsKHX
+
+pattern VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHX =
+        VkDeviceGroupPresentModeFlagBitsKHX 8
+
+type VkDeviceGroupPresentModeFlagsKHX =
+     VkDeviceGroupPresentModeFlagBitsKHX
+
+type VkDeviceMemory = VkPtr VkDeviceMemory_T
+
+-- | Opaque data type referenced by VkDeviceMemory
+data VkDeviceMemory_T
+
+newtype VkDeviceQueueCreateFlagBits = VkDeviceQueueCreateFlagBits VkFlags
+                                        deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                  FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkDeviceQueueCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkDeviceQueueCreateFlagBits x) = show x
+
+instance Read VkDeviceQueueCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkDeviceQueueCreateFlags = VkDeviceQueueCreateFlags VkFlags
+                                     deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                               FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkDeviceQueueCreateFlags where
+        {-# INLINE show #-}
+        show (VkDeviceQueueCreateFlags x) = show x
+
+instance Read VkDeviceQueueCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkDeviceSize = VkDeviceSize Word64
+                         deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits, FiniteBits,
+                                   Storable, Real, Data, Generic)
+
+instance Show VkDeviceSize where
+        {-# INLINE show #-}
+        show (VkDeviceSize x) = show x
+
+instance Read VkDeviceSize where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS Word64)
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDiscardRectangleModeEXT.html VkDiscardRectangleModeEXT registry at www.khronos.org>
+newtype VkDiscardRectangleModeEXT = VkDiscardRectangleModeEXT Int32
+                                      deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
+                                                Generic)
+
+instance Show VkDiscardRectangleModeEXT where
+        showsPrec _ VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT
+          = showString "VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT"
+        showsPrec _ VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT
+          = showString "VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT"
+        showsPrec p (VkDiscardRectangleModeEXT x)
+          = showParen (p >= 11)
+              (showString "VkDiscardRectangleModeEXT " . showsPrec 11 x)
+
+instance Read VkDiscardRectangleModeEXT where
+        readPrec
+          = parens
+              (choose
+                 [("VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT",
+                   pure VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT),
+                  ("VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT",
+                   pure VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkDiscardRectangleModeEXT") >>
+                      (VkDiscardRectangleModeEXT <$> step readPrec)))
+
+pattern VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT ::
+        VkDiscardRectangleModeEXT
+
+pattern VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT =
+        VkDiscardRectangleModeEXT 0
+
+pattern VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT ::
+        VkDiscardRectangleModeEXT
+
+pattern VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT =
+        VkDiscardRectangleModeEXT 1
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDisplayEventTypeEXT.html VkDisplayEventTypeEXT registry at www.khronos.org>
+newtype VkDisplayEventTypeEXT = VkDisplayEventTypeEXT Int32
+                                  deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+
+instance Show VkDisplayEventTypeEXT where
+        showsPrec _ VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT
+          = showString "VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT"
+        showsPrec p (VkDisplayEventTypeEXT x)
+          = showParen (p >= 11)
+              (showString "VkDisplayEventTypeEXT " . showsPrec 11 x)
+
+instance Read VkDisplayEventTypeEXT where
+        readPrec
+          = parens
+              (choose
+                 [("VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT",
+                   pure VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkDisplayEventTypeEXT") >>
+                      (VkDisplayEventTypeEXT <$> step readPrec)))
+
+pattern VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT ::
+        VkDisplayEventTypeEXT
+
+pattern VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT =
+        VkDisplayEventTypeEXT 0
+
+type VkDisplayKHR = VkPtr VkDisplayKHR_T
+
+-- | Opaque data type referenced by VkDisplayKHR
+data VkDisplayKHR_T
+
+newtype VkDisplayModeCreateFlagsKHR = VkDisplayModeCreateFlagsKHR VkFlags
+                                        deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                  FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkDisplayModeCreateFlagsKHR where
+        {-# INLINE show #-}
+        show (VkDisplayModeCreateFlagsKHR x) = show x
+
+instance Read VkDisplayModeCreateFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+type VkDisplayModeKHR = VkPtr VkDisplayModeKHR_T
+
+-- | Opaque data type referenced by VkDisplayModeKHR
+data VkDisplayModeKHR_T
+
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDisplayPlaneAlphaFlagBitsKHR.html VkDisplayPlaneAlphaFlagBitsKHR registry at www.khronos.org>
+newtype VkDisplayPlaneAlphaFlagBitsKHR = VkDisplayPlaneAlphaFlagBitsKHR Int32
+                                           deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
+                                                     Storable, Enum, Data, Generic)
+
+instance Show VkDisplayPlaneAlphaFlagBitsKHR where
+        showsPrec _ VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR
+          = showString "VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR"
+        showsPrec _ VK_DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR
+          = showString "VK_DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR"
+        showsPrec _ VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_BIT_KHR
+          = showString "VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_BIT_KHR"
+        showsPrec _ VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR
+          = showString
+              "VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR"
+        showsPrec p (VkDisplayPlaneAlphaFlagBitsKHR x)
+          = showParen (p >= 11)
+              (showString "VkDisplayPlaneAlphaFlagBitsKHR " . showsPrec 11 x)
+
+instance Read VkDisplayPlaneAlphaFlagBitsKHR where
+        readPrec
+          = parens
+              (choose
+                 [("VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR",
+                   pure VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR),
+                  ("VK_DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR",
+                   pure VK_DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR),
+                  ("VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_BIT_KHR",
+                   pure VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_BIT_KHR),
+                  ("VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR",
+                   pure VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkDisplayPlaneAlphaFlagBitsKHR") >>
+                      (VkDisplayPlaneAlphaFlagBitsKHR <$> step readPrec)))
+
+-- | bitpos = @0@
+pattern VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR ::
+        VkDisplayPlaneAlphaFlagBitsKHR
+
+pattern VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR =
+        VkDisplayPlaneAlphaFlagBitsKHR 1
+
+-- | bitpos = @1@
+pattern VK_DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR ::
+        VkDisplayPlaneAlphaFlagBitsKHR
+
+pattern VK_DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR =
+        VkDisplayPlaneAlphaFlagBitsKHR 2
+
+-- | bitpos = @2@
+pattern VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_BIT_KHR ::
+        VkDisplayPlaneAlphaFlagBitsKHR
+
+pattern VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_BIT_KHR =
+        VkDisplayPlaneAlphaFlagBitsKHR 4
+
+-- | bitpos = @3@
+pattern VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR ::
+        VkDisplayPlaneAlphaFlagBitsKHR
+
+pattern VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR =
+        VkDisplayPlaneAlphaFlagBitsKHR 8
+
+type VkDisplayPlaneAlphaFlagsKHR = VkDisplayPlaneAlphaFlagBitsKHR
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDisplayPowerStateEXT.html VkDisplayPowerStateEXT registry at www.khronos.org>
+newtype VkDisplayPowerStateEXT = VkDisplayPowerStateEXT Int32
+                                   deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+
+instance Show VkDisplayPowerStateEXT where
+        showsPrec _ VK_DISPLAY_POWER_STATE_OFF_EXT
+          = showString "VK_DISPLAY_POWER_STATE_OFF_EXT"
+        showsPrec _ VK_DISPLAY_POWER_STATE_SUSPEND_EXT
+          = showString "VK_DISPLAY_POWER_STATE_SUSPEND_EXT"
+        showsPrec _ VK_DISPLAY_POWER_STATE_ON_EXT
+          = showString "VK_DISPLAY_POWER_STATE_ON_EXT"
+        showsPrec p (VkDisplayPowerStateEXT x)
+          = showParen (p >= 11)
+              (showString "VkDisplayPowerStateEXT " . showsPrec 11 x)
+
+instance Read VkDisplayPowerStateEXT where
+        readPrec
+          = parens
+              (choose
+                 [("VK_DISPLAY_POWER_STATE_OFF_EXT",
+                   pure VK_DISPLAY_POWER_STATE_OFF_EXT),
+                  ("VK_DISPLAY_POWER_STATE_SUSPEND_EXT",
+                   pure VK_DISPLAY_POWER_STATE_SUSPEND_EXT),
+                  ("VK_DISPLAY_POWER_STATE_ON_EXT",
+                   pure VK_DISPLAY_POWER_STATE_ON_EXT)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkDisplayPowerStateEXT") >>
+                      (VkDisplayPowerStateEXT <$> step readPrec)))
+
+pattern VK_DISPLAY_POWER_STATE_OFF_EXT :: VkDisplayPowerStateEXT
+
+pattern VK_DISPLAY_POWER_STATE_OFF_EXT = VkDisplayPowerStateEXT 0
+
+pattern VK_DISPLAY_POWER_STATE_SUSPEND_EXT ::
+        VkDisplayPowerStateEXT
+
+pattern VK_DISPLAY_POWER_STATE_SUSPEND_EXT =
+        VkDisplayPowerStateEXT 1
+
+pattern VK_DISPLAY_POWER_STATE_ON_EXT :: VkDisplayPowerStateEXT
+
+pattern VK_DISPLAY_POWER_STATE_ON_EXT = VkDisplayPowerStateEXT 2
+
+newtype VkDisplaySurfaceCreateFlagsKHR = VkDisplaySurfaceCreateFlagsKHR VkFlags
+                                           deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                     FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkDisplaySurfaceCreateFlagsKHR where
+        {-# INLINE show #-}
+        show (VkDisplaySurfaceCreateFlagsKHR x) = show x
+
+instance Read VkDisplaySurfaceCreateFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDynamicState.html VkDynamicState registry at www.khronos.org>
 newtype VkDynamicState = VkDynamicState Int32
                            deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
@@ -3591,9 +4377,570 @@ pattern VK_DYNAMIC_STATE_STENCIL_REFERENCE :: VkDynamicState
 
 pattern VK_DYNAMIC_STATE_STENCIL_REFERENCE = VkDynamicState 8
 
+type VkEvent = VkPtr VkEvent_T
+
+-- | Opaque data type referenced by VkEvent
+data VkEvent_T
+
+newtype VkEventCreateFlags = VkEventCreateFlags VkFlags
+                               deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits, FiniteBits,
+                                         Storable, Real, Data, Generic)
+
+instance Show VkEventCreateFlags where
+        {-# INLINE show #-}
+        show (VkEventCreateFlags x) = show x
+
+instance Read VkEventCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
 -- | type = @bitmask@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkFenceCreateFlagBits.html VkFenceCreateFlagBits registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkExternalFenceFeatureFlagBitsKHR.html VkExternalFenceFeatureFlagBitsKHR registry at www.khronos.org>
+newtype VkExternalFenceFeatureFlagBitsKHR = VkExternalFenceFeatureFlagBitsKHR Int32
+                                              deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
+                                                        Storable, Enum, Data, Generic)
+
+instance Show VkExternalFenceFeatureFlagBitsKHR where
+        showsPrec _ VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT_KHR
+          = showString "VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT_KHR"
+        showsPrec _ VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT_KHR
+          = showString "VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT_KHR"
+        showsPrec p (VkExternalFenceFeatureFlagBitsKHR x)
+          = showParen (p >= 11)
+              (showString "VkExternalFenceFeatureFlagBitsKHR " . showsPrec 11 x)
+
+instance Read VkExternalFenceFeatureFlagBitsKHR where
+        readPrec
+          = parens
+              (choose
+                 [("VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT_KHR",
+                   pure VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT_KHR),
+                  ("VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT_KHR",
+                   pure VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT_KHR)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkExternalFenceFeatureFlagBitsKHR") >>
+                      (VkExternalFenceFeatureFlagBitsKHR <$> step readPrec)))
+
+-- | bitpos = @0@
+pattern VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT_KHR ::
+        VkExternalFenceFeatureFlagBitsKHR
+
+pattern VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT_KHR =
+        VkExternalFenceFeatureFlagBitsKHR 1
+
+-- | bitpos = @1@
+pattern VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT_KHR ::
+        VkExternalFenceFeatureFlagBitsKHR
+
+pattern VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT_KHR =
+        VkExternalFenceFeatureFlagBitsKHR 2
+
+type VkExternalFenceFeatureFlagsKHR =
+     VkExternalFenceFeatureFlagBitsKHR
+
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkExternalFenceHandleTypeFlagBitsKHR.html VkExternalFenceHandleTypeFlagBitsKHR registry at www.khronos.org>
+newtype VkExternalFenceHandleTypeFlagBitsKHR = VkExternalFenceHandleTypeFlagBitsKHR Int32
+                                                 deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
+                                                           Storable, Enum, Data, Generic)
+
+instance Show VkExternalFenceHandleTypeFlagBitsKHR where
+        showsPrec _ VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR
+          = showString "VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR"
+        showsPrec _ VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR
+          = showString "VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR"
+        showsPrec _ VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR
+          = showString
+              "VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR"
+        showsPrec _ VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT_KHR
+          = showString "VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT_KHR"
+        showsPrec p (VkExternalFenceHandleTypeFlagBitsKHR x)
+          = showParen (p >= 11)
+              (showString "VkExternalFenceHandleTypeFlagBitsKHR " .
+                 showsPrec 11 x)
+
+instance Read VkExternalFenceHandleTypeFlagBitsKHR where
+        readPrec
+          = parens
+              (choose
+                 [("VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR",
+                   pure VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR),
+                  ("VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR",
+                   pure VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR),
+                  ("VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR",
+                   pure VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR),
+                  ("VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT_KHR",
+                   pure VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT_KHR)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkExternalFenceHandleTypeFlagBitsKHR") >>
+                      (VkExternalFenceHandleTypeFlagBitsKHR <$> step readPrec)))
+
+-- | bitpos = @0@
+pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR ::
+        VkExternalFenceHandleTypeFlagBitsKHR
+
+pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR =
+        VkExternalFenceHandleTypeFlagBitsKHR 1
+
+-- | bitpos = @1@
+pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR ::
+        VkExternalFenceHandleTypeFlagBitsKHR
+
+pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR =
+        VkExternalFenceHandleTypeFlagBitsKHR 2
+
+-- | bitpos = @2@
+pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR ::
+        VkExternalFenceHandleTypeFlagBitsKHR
+
+pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR =
+        VkExternalFenceHandleTypeFlagBitsKHR 4
+
+-- | bitpos = @3@
+pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT_KHR ::
+        VkExternalFenceHandleTypeFlagBitsKHR
+
+pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT_KHR =
+        VkExternalFenceHandleTypeFlagBitsKHR 8
+
+type VkExternalFenceHandleTypeFlagsKHR =
+     VkExternalFenceHandleTypeFlagBitsKHR
+
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkExternalMemoryFeatureFlagBitsKHR.html VkExternalMemoryFeatureFlagBitsKHR registry at www.khronos.org>
+newtype VkExternalMemoryFeatureFlagBitsKHR = VkExternalMemoryFeatureFlagBitsKHR Int32
+                                               deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
+                                                         Storable, Enum, Data, Generic)
+
+instance Show VkExternalMemoryFeatureFlagBitsKHR where
+        showsPrec _ VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_KHR
+          = showString "VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_KHR"
+        showsPrec _ VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_KHR
+          = showString "VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_KHR"
+        showsPrec _ VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_KHR
+          = showString "VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_KHR"
+        showsPrec p (VkExternalMemoryFeatureFlagBitsKHR x)
+          = showParen (p >= 11)
+              (showString "VkExternalMemoryFeatureFlagBitsKHR " . showsPrec 11 x)
+
+instance Read VkExternalMemoryFeatureFlagBitsKHR where
+        readPrec
+          = parens
+              (choose
+                 [("VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_KHR",
+                   pure VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_KHR),
+                  ("VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_KHR",
+                   pure VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_KHR),
+                  ("VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_KHR",
+                   pure VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_KHR)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkExternalMemoryFeatureFlagBitsKHR") >>
+                      (VkExternalMemoryFeatureFlagBitsKHR <$> step readPrec)))
+
+-- | bitpos = @0@
+pattern VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_KHR ::
+        VkExternalMemoryFeatureFlagBitsKHR
+
+pattern VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_KHR =
+        VkExternalMemoryFeatureFlagBitsKHR 1
+
+-- | bitpos = @1@
+pattern VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_KHR ::
+        VkExternalMemoryFeatureFlagBitsKHR
+
+pattern VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_KHR =
+        VkExternalMemoryFeatureFlagBitsKHR 2
+
+-- | bitpos = @2@
+pattern VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_KHR ::
+        VkExternalMemoryFeatureFlagBitsKHR
+
+pattern VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_KHR =
+        VkExternalMemoryFeatureFlagBitsKHR 4
+
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkExternalMemoryFeatureFlagBitsNV.html VkExternalMemoryFeatureFlagBitsNV registry at www.khronos.org>
+newtype VkExternalMemoryFeatureFlagBitsNV = VkExternalMemoryFeatureFlagBitsNV Int32
+                                              deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
+                                                        Storable, Enum, Data, Generic)
+
+instance Show VkExternalMemoryFeatureFlagBitsNV where
+        showsPrec _ VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV
+          = showString "VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV"
+        showsPrec _ VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_NV
+          = showString "VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_NV"
+        showsPrec _ VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV
+          = showString "VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV"
+        showsPrec p (VkExternalMemoryFeatureFlagBitsNV x)
+          = showParen (p >= 11)
+              (showString "VkExternalMemoryFeatureFlagBitsNV " . showsPrec 11 x)
+
+instance Read VkExternalMemoryFeatureFlagBitsNV where
+        readPrec
+          = parens
+              (choose
+                 [("VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV",
+                   pure VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV),
+                  ("VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_NV",
+                   pure VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_NV),
+                  ("VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV",
+                   pure VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkExternalMemoryFeatureFlagBitsNV") >>
+                      (VkExternalMemoryFeatureFlagBitsNV <$> step readPrec)))
+
+-- | bitpos = @0@
+pattern VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV ::
+        VkExternalMemoryFeatureFlagBitsNV
+
+pattern VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV =
+        VkExternalMemoryFeatureFlagBitsNV 1
+
+-- | bitpos = @1@
+pattern VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_NV ::
+        VkExternalMemoryFeatureFlagBitsNV
+
+pattern VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_NV =
+        VkExternalMemoryFeatureFlagBitsNV 2
+
+-- | bitpos = @2@
+pattern VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV ::
+        VkExternalMemoryFeatureFlagBitsNV
+
+pattern VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV =
+        VkExternalMemoryFeatureFlagBitsNV 4
+
+type VkExternalMemoryFeatureFlagsKHR =
+     VkExternalMemoryFeatureFlagBitsKHR
+
+type VkExternalMemoryFeatureFlagsNV =
+     VkExternalMemoryFeatureFlagBitsNV
+
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkExternalMemoryHandleTypeFlagBitsKHR.html VkExternalMemoryHandleTypeFlagBitsKHR registry at www.khronos.org>
+newtype VkExternalMemoryHandleTypeFlagBitsKHR = VkExternalMemoryHandleTypeFlagBitsKHR Int32
+                                                  deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
+                                                            Storable, Enum, Data, Generic)
+
+instance Show VkExternalMemoryHandleTypeFlagBitsKHR where
+        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT_KHR
+          = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT_KHR"
+        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR
+          = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR"
+        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR
+          = showString
+              "VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR"
+        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT_KHR
+          = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT_KHR"
+        showsPrec _
+          VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT_KHR
+          = showString
+              "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT_KHR"
+        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT_KHR
+          = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT_KHR"
+        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT_KHR
+          = showString
+              "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT_KHR"
+        showsPrec p (VkExternalMemoryHandleTypeFlagBitsKHR x)
+          = showParen (p >= 11)
+              (showString "VkExternalMemoryHandleTypeFlagBitsKHR " .
+                 showsPrec 11 x)
+
+instance Read VkExternalMemoryHandleTypeFlagBitsKHR where
+        readPrec
+          = parens
+              (choose
+                 [("VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT_KHR",
+                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT_KHR),
+                  ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR",
+                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR),
+                  ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR",
+                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR),
+                  ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT_KHR",
+                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT_KHR),
+                  ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT_KHR",
+                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT_KHR),
+                  ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT_KHR",
+                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT_KHR),
+                  ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT_KHR",
+                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT_KHR)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkExternalMemoryHandleTypeFlagBitsKHR") >>
+                      (VkExternalMemoryHandleTypeFlagBitsKHR <$> step readPrec)))
+
+-- | bitpos = @0@
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT_KHR ::
+        VkExternalMemoryHandleTypeFlagBitsKHR
+
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT_KHR =
+        VkExternalMemoryHandleTypeFlagBitsKHR 1
+
+-- | bitpos = @1@
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR ::
+        VkExternalMemoryHandleTypeFlagBitsKHR
+
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR =
+        VkExternalMemoryHandleTypeFlagBitsKHR 2
+
+-- | bitpos = @2@
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR ::
+        VkExternalMemoryHandleTypeFlagBitsKHR
+
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR =
+        VkExternalMemoryHandleTypeFlagBitsKHR 4
+
+-- | bitpos = @3@
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT_KHR ::
+        VkExternalMemoryHandleTypeFlagBitsKHR
+
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT_KHR =
+        VkExternalMemoryHandleTypeFlagBitsKHR 8
+
+-- | bitpos = @4@
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT_KHR ::
+        VkExternalMemoryHandleTypeFlagBitsKHR
+
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT_KHR =
+        VkExternalMemoryHandleTypeFlagBitsKHR 16
+
+-- | bitpos = @5@
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT_KHR ::
+        VkExternalMemoryHandleTypeFlagBitsKHR
+
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT_KHR =
+        VkExternalMemoryHandleTypeFlagBitsKHR 32
+
+-- | bitpos = @6@
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT_KHR ::
+        VkExternalMemoryHandleTypeFlagBitsKHR
+
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT_KHR =
+        VkExternalMemoryHandleTypeFlagBitsKHR 64
+
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkExternalMemoryHandleTypeFlagBitsNV.html VkExternalMemoryHandleTypeFlagBitsNV registry at www.khronos.org>
+newtype VkExternalMemoryHandleTypeFlagBitsNV = VkExternalMemoryHandleTypeFlagBitsNV Int32
+                                                 deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
+                                                           Storable, Enum, Data, Generic)
+
+instance Show VkExternalMemoryHandleTypeFlagBitsNV where
+        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_NV
+          = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_NV"
+        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_NV
+          = showString
+              "VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_NV"
+        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_BIT_NV
+          = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_BIT_NV"
+        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV
+          = showString
+              "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV"
+        showsPrec p (VkExternalMemoryHandleTypeFlagBitsNV x)
+          = showParen (p >= 11)
+              (showString "VkExternalMemoryHandleTypeFlagBitsNV " .
+                 showsPrec 11 x)
+
+instance Read VkExternalMemoryHandleTypeFlagBitsNV where
+        readPrec
+          = parens
+              (choose
+                 [("VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_NV",
+                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_NV),
+                  ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_NV",
+                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_NV),
+                  ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_BIT_NV",
+                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_BIT_NV),
+                  ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV",
+                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkExternalMemoryHandleTypeFlagBitsNV") >>
+                      (VkExternalMemoryHandleTypeFlagBitsNV <$> step readPrec)))
+
+-- | bitpos = @0@
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_NV ::
+        VkExternalMemoryHandleTypeFlagBitsNV
+
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_NV =
+        VkExternalMemoryHandleTypeFlagBitsNV 1
+
+-- | bitpos = @1@
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_NV ::
+        VkExternalMemoryHandleTypeFlagBitsNV
+
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_NV =
+        VkExternalMemoryHandleTypeFlagBitsNV 2
+
+-- | bitpos = @2@
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_BIT_NV ::
+        VkExternalMemoryHandleTypeFlagBitsNV
+
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_BIT_NV =
+        VkExternalMemoryHandleTypeFlagBitsNV 4
+
+-- | bitpos = @3@
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV ::
+        VkExternalMemoryHandleTypeFlagBitsNV
+
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV =
+        VkExternalMemoryHandleTypeFlagBitsNV 8
+
+type VkExternalMemoryHandleTypeFlagsKHR =
+     VkExternalMemoryHandleTypeFlagBitsKHR
+
+type VkExternalMemoryHandleTypeFlagsNV =
+     VkExternalMemoryHandleTypeFlagBitsNV
+
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkExternalSemaphoreFeatureFlagBitsKHR.html VkExternalSemaphoreFeatureFlagBitsKHR registry at www.khronos.org>
+newtype VkExternalSemaphoreFeatureFlagBitsKHR = VkExternalSemaphoreFeatureFlagBitsKHR Int32
+                                                  deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
+                                                            Storable, Enum, Data, Generic)
+
+instance Show VkExternalSemaphoreFeatureFlagBitsKHR where
+        showsPrec _ VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT_KHR
+          = showString "VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT_KHR"
+        showsPrec _ VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT_KHR
+          = showString "VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT_KHR"
+        showsPrec p (VkExternalSemaphoreFeatureFlagBitsKHR x)
+          = showParen (p >= 11)
+              (showString "VkExternalSemaphoreFeatureFlagBitsKHR " .
+                 showsPrec 11 x)
+
+instance Read VkExternalSemaphoreFeatureFlagBitsKHR where
+        readPrec
+          = parens
+              (choose
+                 [("VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT_KHR",
+                   pure VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT_KHR),
+                  ("VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT_KHR",
+                   pure VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT_KHR)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkExternalSemaphoreFeatureFlagBitsKHR") >>
+                      (VkExternalSemaphoreFeatureFlagBitsKHR <$> step readPrec)))
+
+-- | bitpos = @0@
+pattern VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT_KHR ::
+        VkExternalSemaphoreFeatureFlagBitsKHR
+
+pattern VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT_KHR =
+        VkExternalSemaphoreFeatureFlagBitsKHR 1
+
+-- | bitpos = @1@
+pattern VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT_KHR ::
+        VkExternalSemaphoreFeatureFlagBitsKHR
+
+pattern VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT_KHR =
+        VkExternalSemaphoreFeatureFlagBitsKHR 2
+
+type VkExternalSemaphoreFeatureFlagsKHR =
+     VkExternalSemaphoreFeatureFlagBitsKHR
+
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkExternalSemaphoreHandleTypeFlagBitsKHR.html VkExternalSemaphoreHandleTypeFlagBitsKHR registry at www.khronos.org>
+newtype VkExternalSemaphoreHandleTypeFlagBitsKHR = VkExternalSemaphoreHandleTypeFlagBitsKHR Int32
+                                                     deriving (Bits, FiniteBits, Eq, Ord, Num,
+                                                               Bounded, Storable, Enum, Data,
+                                                               Generic)
+
+instance Show VkExternalSemaphoreHandleTypeFlagBitsKHR where
+        showsPrec _ VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR
+          = showString "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR"
+        showsPrec _ VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR
+          = showString
+              "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR"
+        showsPrec _
+          VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR
+          = showString
+              "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR"
+        showsPrec _ VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT_KHR
+          = showString
+              "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT_KHR"
+        showsPrec _ VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT_KHR
+          = showString "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT_KHR"
+        showsPrec p (VkExternalSemaphoreHandleTypeFlagBitsKHR x)
+          = showParen (p >= 11)
+              (showString "VkExternalSemaphoreHandleTypeFlagBitsKHR " .
+                 showsPrec 11 x)
+
+instance Read VkExternalSemaphoreHandleTypeFlagBitsKHR where
+        readPrec
+          = parens
+              (choose
+                 [("VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR",
+                   pure VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR),
+                  ("VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR",
+                   pure VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR),
+                  ("VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR",
+                   pure VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR),
+                  ("VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT_KHR",
+                   pure VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT_KHR),
+                  ("VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT_KHR",
+                   pure VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT_KHR)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkExternalSemaphoreHandleTypeFlagBitsKHR") >>
+                      (VkExternalSemaphoreHandleTypeFlagBitsKHR <$> step readPrec)))
+
+-- | bitpos = @0@
+pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR ::
+        VkExternalSemaphoreHandleTypeFlagBitsKHR
+
+pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR =
+        VkExternalSemaphoreHandleTypeFlagBitsKHR 1
+
+-- | bitpos = @1@
+pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR ::
+        VkExternalSemaphoreHandleTypeFlagBitsKHR
+
+pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR =
+        VkExternalSemaphoreHandleTypeFlagBitsKHR 2
+
+-- | bitpos = @2@
+pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR
+        :: VkExternalSemaphoreHandleTypeFlagBitsKHR
+
+pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR
+        = VkExternalSemaphoreHandleTypeFlagBitsKHR 4
+
+-- | bitpos = @3@
+pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT_KHR ::
+        VkExternalSemaphoreHandleTypeFlagBitsKHR
+
+pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT_KHR =
+        VkExternalSemaphoreHandleTypeFlagBitsKHR 8
+
+-- | bitpos = @4@
+pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT_KHR ::
+        VkExternalSemaphoreHandleTypeFlagBitsKHR
+
+pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT_KHR =
+        VkExternalSemaphoreHandleTypeFlagBitsKHR 16
+
+type VkExternalSemaphoreHandleTypeFlagsKHR =
+     VkExternalSemaphoreHandleTypeFlagBitsKHR
+
+type VkFence = VkPtr VkFence_T
+
+-- | Opaque data type referenced by VkFence
+data VkFence_T
+
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkFenceCreateFlagBits.html VkFenceCreateFlagBits registry at www.khronos.org>
 newtype VkFenceCreateFlagBits = VkFenceCreateFlagBits Int32
                                   deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable, Enum,
                                             Data, Generic)
@@ -3621,53 +4968,90 @@ pattern VK_FENCE_CREATE_SIGNALED_BIT :: VkFenceCreateFlagBits
 
 pattern VK_FENCE_CREATE_SIGNALED_BIT = VkFenceCreateFlagBits 1
 
--- | type = @enum@
+type VkFenceCreateFlags = VkFenceCreateFlagBits
+
+-- | type = @bitmask@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPolygonMode.html VkPolygonMode registry at www.khronos.org>
-newtype VkPolygonMode = VkPolygonMode Int32
-                          deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkFenceImportFlagBitsKHR.html VkFenceImportFlagBitsKHR registry at www.khronos.org>
+newtype VkFenceImportFlagBitsKHR = VkFenceImportFlagBitsKHR Int32
+                                     deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable,
+                                               Enum, Data, Generic)
 
-instance Show VkPolygonMode where
-        showsPrec _ VK_POLYGON_MODE_FILL
-          = showString "VK_POLYGON_MODE_FILL"
-        showsPrec _ VK_POLYGON_MODE_LINE
-          = showString "VK_POLYGON_MODE_LINE"
-        showsPrec _ VK_POLYGON_MODE_POINT
-          = showString "VK_POLYGON_MODE_POINT"
-        showsPrec p (VkPolygonMode x)
+instance Show VkFenceImportFlagBitsKHR where
+        showsPrec _ VK_FENCE_IMPORT_TEMPORARY_BIT_KHR
+          = showString "VK_FENCE_IMPORT_TEMPORARY_BIT_KHR"
+        showsPrec p (VkFenceImportFlagBitsKHR x)
           = showParen (p >= 11)
-              (showString "VkPolygonMode " . showsPrec 11 x)
+              (showString "VkFenceImportFlagBitsKHR " . showsPrec 11 x)
 
-instance Read VkPolygonMode where
+instance Read VkFenceImportFlagBitsKHR where
         readPrec
           = parens
               (choose
-                 [("VK_POLYGON_MODE_FILL", pure VK_POLYGON_MODE_FILL),
-                  ("VK_POLYGON_MODE_LINE", pure VK_POLYGON_MODE_LINE),
-                  ("VK_POLYGON_MODE_POINT", pure VK_POLYGON_MODE_POINT)]
+                 [("VK_FENCE_IMPORT_TEMPORARY_BIT_KHR",
+                   pure VK_FENCE_IMPORT_TEMPORARY_BIT_KHR)]
                  +++
                  prec 10
-                   (expectP (Ident "VkPolygonMode") >>
-                      (VkPolygonMode <$> step readPrec)))
+                   (expectP (Ident "VkFenceImportFlagBitsKHR") >>
+                      (VkFenceImportFlagBitsKHR <$> step readPrec)))
 
-pattern VK_POLYGON_MODE_FILL :: VkPolygonMode
+-- | bitpos = @0@
+pattern VK_FENCE_IMPORT_TEMPORARY_BIT_KHR ::
+        VkFenceImportFlagBitsKHR
 
-pattern VK_POLYGON_MODE_FILL = VkPolygonMode 0
+pattern VK_FENCE_IMPORT_TEMPORARY_BIT_KHR =
+        VkFenceImportFlagBitsKHR 1
 
-pattern VK_POLYGON_MODE_LINE :: VkPolygonMode
+type VkFenceImportFlagsKHR = VkFenceImportFlagBitsKHR
 
-pattern VK_POLYGON_MODE_LINE = VkPolygonMode 1
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkFilter.html VkFilter registry at www.khronos.org>
+newtype VkFilter = VkFilter Int32
+                     deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
-pattern VK_POLYGON_MODE_POINT :: VkPolygonMode
+instance Show VkFilter where
+        showsPrec _ VK_FILTER_NEAREST = showString "VK_FILTER_NEAREST"
+        showsPrec _ VK_FILTER_LINEAR = showString "VK_FILTER_LINEAR"
+        showsPrec p (VkFilter x)
+          = showParen (p >= 11) (showString "VkFilter " . showsPrec 11 x)
 
-pattern VK_POLYGON_MODE_POINT = VkPolygonMode 2
+instance Read VkFilter where
+        readPrec
+          = parens
+              (choose
+                 [("VK_FILTER_NEAREST", pure VK_FILTER_NEAREST),
+                  ("VK_FILTER_LINEAR", pure VK_FILTER_LINEAR)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkFilter") >> (VkFilter <$> step readPrec)))
+
+pattern VK_FILTER_NEAREST :: VkFilter
+
+pattern VK_FILTER_NEAREST = VkFilter 0
+
+pattern VK_FILTER_LINEAR :: VkFilter
+
+pattern VK_FILTER_LINEAR = VkFilter 1
+
+newtype VkFlags = VkFlags Word32
+                    deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits, FiniteBits,
+                              Storable, Real, Data, Generic)
+
+instance Show VkFlags where
+        {-# INLINE show #-}
+        show (VkFlags x) = show x
+
+instance Read VkFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS Word32)
 
 -- | Vulkan format definitions
 --
 --   type = @enum@
 --
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkFormat.html VkFormat registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkFormat.html VkFormat registry at www.khronos.org>
 newtype VkFormat = VkFormat Int32
                      deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
@@ -5040,7 +6424,7 @@ pattern VK_FORMAT_ASTC_12x12_SRGB_BLOCK = VkFormat 184
 
 -- | type = @bitmask@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkFormatFeatureFlagBits.html VkFormatFeatureFlagBits registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkFormatFeatureFlagBits.html VkFormatFeatureFlagBits registry at www.khronos.org>
 newtype VkFormatFeatureFlagBits = VkFormatFeatureFlagBits Int32
                                     deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable,
                                               Enum, Data, Generic)
@@ -5226,9 +6610,40 @@ pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT ::
 pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT =
         VkFormatFeatureFlagBits 4096
 
+type VkFormatFeatureFlags = VkFormatFeatureFlagBits
+
+type VkFramebuffer = VkPtr VkFramebuffer_T
+
+-- | Opaque data type referenced by VkFramebuffer
+data VkFramebuffer_T
+
+newtype VkFramebufferCreateFlagBits = VkFramebufferCreateFlagBits VkFlags
+                                        deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                  FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkFramebufferCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkFramebufferCreateFlagBits x) = show x
+
+instance Read VkFramebufferCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkFramebufferCreateFlags = VkFramebufferCreateFlags VkFlags
+                                     deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                               FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkFramebufferCreateFlags where
+        {-# INLINE show #-}
+        show (VkFramebufferCreateFlags x) = show x
+
+instance Read VkFramebufferCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkFrontFace.html VkFrontFace registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkFrontFace.html VkFrontFace registry at www.khronos.org>
 newtype VkFrontFace = VkFrontFace Int32
                         deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
@@ -5259,9 +6674,26 @@ pattern VK_FRONT_FACE_CLOCKWISE :: VkFrontFace
 
 pattern VK_FRONT_FACE_CLOCKWISE = VkFrontFace 1
 
+newtype VkIOSSurfaceCreateFlagsMVK = VkIOSSurfaceCreateFlagsMVK VkFlags
+                                       deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                 FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkIOSSurfaceCreateFlagsMVK where
+        {-# INLINE show #-}
+        show (VkIOSSurfaceCreateFlagsMVK x) = show x
+
+instance Read VkIOSSurfaceCreateFlagsMVK where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+type VkImage = VkPtr VkImage_T
+
+-- | Opaque data type referenced by VkImage
+data VkImage_T
+
 -- | type = @bitmask@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageAspectFlagBits.html VkImageAspectFlagBits registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImageAspectFlagBits.html VkImageAspectFlagBits registry at www.khronos.org>
 newtype VkImageAspectFlagBits = VkImageAspectFlagBits Int32
                                   deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable, Enum,
                                             Data, Generic)
@@ -5313,9 +6745,11 @@ pattern VK_IMAGE_ASPECT_METADATA_BIT :: VkImageAspectFlagBits
 
 pattern VK_IMAGE_ASPECT_METADATA_BIT = VkImageAspectFlagBits 8
 
+type VkImageAspectFlags = VkImageAspectFlagBits
+
 -- | type = @bitmask@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageCreateFlagBits.html VkImageCreateFlagBits registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImageCreateFlagBits.html VkImageCreateFlagBits registry at www.khronos.org>
 newtype VkImageCreateFlagBits = VkImageCreateFlagBits Int32
                                   deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable, Enum,
                                             Data, Generic)
@@ -5396,9 +6830,11 @@ pattern VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT ::
 pattern VK_IMAGE_CREATE_CUBE_COMPATIBLE_BIT =
         VkImageCreateFlagBits 16
 
+type VkImageCreateFlags = VkImageCreateFlagBits
+
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageLayout.html VkImageLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImageLayout.html VkImageLayout registry at www.khronos.org>
 newtype VkImageLayout = VkImageLayout Int32
                           deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
@@ -5501,7 +6937,7 @@ pattern VK_IMAGE_LAYOUT_PREINITIALIZED = VkImageLayout 8
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageTiling.html VkImageTiling registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImageTiling.html VkImageTiling registry at www.khronos.org>
 newtype VkImageTiling = VkImageTiling Int32
                           deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
@@ -5535,7 +6971,7 @@ pattern VK_IMAGE_TILING_LINEAR = VkImageTiling 1
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageType.html VkImageType registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImageType.html VkImageType registry at www.khronos.org>
 newtype VkImageType = VkImageType Int32
                         deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
@@ -5571,7 +7007,7 @@ pattern VK_IMAGE_TYPE_3D = VkImageType 2
 
 -- | type = @bitmask@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageUsageFlagBits.html VkImageUsageFlagBits registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImageUsageFlagBits.html VkImageUsageFlagBits registry at www.khronos.org>
 newtype VkImageUsageFlagBits = VkImageUsageFlagBits Int32
                                  deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable, Enum,
                                            Data, Generic)
@@ -5682,9 +7118,28 @@ pattern VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT :: VkImageUsageFlagBits
 pattern VK_IMAGE_USAGE_INPUT_ATTACHMENT_BIT =
         VkImageUsageFlagBits 128
 
+type VkImageUsageFlags = VkImageUsageFlagBits
+
+type VkImageView = VkPtr VkImageView_T
+
+-- | Opaque data type referenced by VkImageView
+data VkImageView_T
+
+newtype VkImageViewCreateFlags = VkImageViewCreateFlags VkFlags
+                                   deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                             FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkImageViewCreateFlags where
+        {-# INLINE show #-}
+        show (VkImageViewCreateFlags x) = show x
+
+instance Read VkImageViewCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageViewType.html VkImageViewType registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImageViewType.html VkImageViewType registry at www.khronos.org>
 newtype VkImageViewType = VkImageViewType Int32
                             deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
@@ -5754,41 +7209,7 @@ pattern VK_IMAGE_VIEW_TYPE_CUBE_ARRAY = VkImageViewType 6
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSharingMode.html VkSharingMode registry at www.khronos.org>
-newtype VkSharingMode = VkSharingMode Int32
-                          deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
-
-instance Show VkSharingMode where
-        showsPrec _ VK_SHARING_MODE_EXCLUSIVE
-          = showString "VK_SHARING_MODE_EXCLUSIVE"
-        showsPrec _ VK_SHARING_MODE_CONCURRENT
-          = showString "VK_SHARING_MODE_CONCURRENT"
-        showsPrec p (VkSharingMode x)
-          = showParen (p >= 11)
-              (showString "VkSharingMode " . showsPrec 11 x)
-
-instance Read VkSharingMode where
-        readPrec
-          = parens
-              (choose
-                 [("VK_SHARING_MODE_EXCLUSIVE", pure VK_SHARING_MODE_EXCLUSIVE),
-                  ("VK_SHARING_MODE_CONCURRENT", pure VK_SHARING_MODE_CONCURRENT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkSharingMode") >>
-                      (VkSharingMode <$> step readPrec)))
-
-pattern VK_SHARING_MODE_EXCLUSIVE :: VkSharingMode
-
-pattern VK_SHARING_MODE_EXCLUSIVE = VkSharingMode 0
-
-pattern VK_SHARING_MODE_CONCURRENT :: VkSharingMode
-
-pattern VK_SHARING_MODE_CONCURRENT = VkSharingMode 1
-
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkIndexType.html VkIndexType registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkIndexType.html VkIndexType registry at www.khronos.org>
 newtype VkIndexType = VkIndexType Int32
                         deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
@@ -5818,9 +7239,254 @@ pattern VK_INDEX_TYPE_UINT32 :: VkIndexType
 
 pattern VK_INDEX_TYPE_UINT32 = VkIndexType 1
 
+type VkIndirectCommandsLayoutNVX =
+     VkPtr VkIndirectCommandsLayoutNVX_T
+
+-- | Opaque data type referenced by VkIndirectCommandsLayoutNVX
+data VkIndirectCommandsLayoutNVX_T
+
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkIndirectCommandsLayoutUsageFlagBitsNVX.html VkIndirectCommandsLayoutUsageFlagBitsNVX registry at www.khronos.org>
+newtype VkIndirectCommandsLayoutUsageFlagBitsNVX = VkIndirectCommandsLayoutUsageFlagBitsNVX Int32
+                                                     deriving (Bits, FiniteBits, Eq, Ord, Num,
+                                                               Bounded, Storable, Enum, Data,
+                                                               Generic)
+
+instance Show VkIndirectCommandsLayoutUsageFlagBitsNVX where
+        showsPrec _
+          VK_INDIRECT_COMMANDS_LAYOUT_USAGE_UNORDERED_SEQUENCES_BIT_NVX
+          = showString
+              "VK_INDIRECT_COMMANDS_LAYOUT_USAGE_UNORDERED_SEQUENCES_BIT_NVX"
+        showsPrec _
+          VK_INDIRECT_COMMANDS_LAYOUT_USAGE_SPARSE_SEQUENCES_BIT_NVX
+          = showString
+              "VK_INDIRECT_COMMANDS_LAYOUT_USAGE_SPARSE_SEQUENCES_BIT_NVX"
+        showsPrec _
+          VK_INDIRECT_COMMANDS_LAYOUT_USAGE_EMPTY_EXECUTIONS_BIT_NVX
+          = showString
+              "VK_INDIRECT_COMMANDS_LAYOUT_USAGE_EMPTY_EXECUTIONS_BIT_NVX"
+        showsPrec _
+          VK_INDIRECT_COMMANDS_LAYOUT_USAGE_INDEXED_SEQUENCES_BIT_NVX
+          = showString
+              "VK_INDIRECT_COMMANDS_LAYOUT_USAGE_INDEXED_SEQUENCES_BIT_NVX"
+        showsPrec p (VkIndirectCommandsLayoutUsageFlagBitsNVX x)
+          = showParen (p >= 11)
+              (showString "VkIndirectCommandsLayoutUsageFlagBitsNVX " .
+                 showsPrec 11 x)
+
+instance Read VkIndirectCommandsLayoutUsageFlagBitsNVX where
+        readPrec
+          = parens
+              (choose
+                 [("VK_INDIRECT_COMMANDS_LAYOUT_USAGE_UNORDERED_SEQUENCES_BIT_NVX",
+                   pure
+                     VK_INDIRECT_COMMANDS_LAYOUT_USAGE_UNORDERED_SEQUENCES_BIT_NVX),
+                  ("VK_INDIRECT_COMMANDS_LAYOUT_USAGE_SPARSE_SEQUENCES_BIT_NVX",
+                   pure VK_INDIRECT_COMMANDS_LAYOUT_USAGE_SPARSE_SEQUENCES_BIT_NVX),
+                  ("VK_INDIRECT_COMMANDS_LAYOUT_USAGE_EMPTY_EXECUTIONS_BIT_NVX",
+                   pure VK_INDIRECT_COMMANDS_LAYOUT_USAGE_EMPTY_EXECUTIONS_BIT_NVX),
+                  ("VK_INDIRECT_COMMANDS_LAYOUT_USAGE_INDEXED_SEQUENCES_BIT_NVX",
+                   pure VK_INDIRECT_COMMANDS_LAYOUT_USAGE_INDEXED_SEQUENCES_BIT_NVX)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkIndirectCommandsLayoutUsageFlagBitsNVX") >>
+                      (VkIndirectCommandsLayoutUsageFlagBitsNVX <$> step readPrec)))
+
+-- | bitpos = @0@
+pattern VK_INDIRECT_COMMANDS_LAYOUT_USAGE_UNORDERED_SEQUENCES_BIT_NVX
+        :: VkIndirectCommandsLayoutUsageFlagBitsNVX
+
+pattern VK_INDIRECT_COMMANDS_LAYOUT_USAGE_UNORDERED_SEQUENCES_BIT_NVX
+        = VkIndirectCommandsLayoutUsageFlagBitsNVX 1
+
+-- | bitpos = @1@
+pattern VK_INDIRECT_COMMANDS_LAYOUT_USAGE_SPARSE_SEQUENCES_BIT_NVX
+        :: VkIndirectCommandsLayoutUsageFlagBitsNVX
+
+pattern VK_INDIRECT_COMMANDS_LAYOUT_USAGE_SPARSE_SEQUENCES_BIT_NVX
+        = VkIndirectCommandsLayoutUsageFlagBitsNVX 2
+
+-- | bitpos = @2@
+pattern VK_INDIRECT_COMMANDS_LAYOUT_USAGE_EMPTY_EXECUTIONS_BIT_NVX
+        :: VkIndirectCommandsLayoutUsageFlagBitsNVX
+
+pattern VK_INDIRECT_COMMANDS_LAYOUT_USAGE_EMPTY_EXECUTIONS_BIT_NVX
+        = VkIndirectCommandsLayoutUsageFlagBitsNVX 4
+
+-- | bitpos = @3@
+pattern VK_INDIRECT_COMMANDS_LAYOUT_USAGE_INDEXED_SEQUENCES_BIT_NVX
+        :: VkIndirectCommandsLayoutUsageFlagBitsNVX
+
+pattern VK_INDIRECT_COMMANDS_LAYOUT_USAGE_INDEXED_SEQUENCES_BIT_NVX
+        = VkIndirectCommandsLayoutUsageFlagBitsNVX 8
+
+type VkIndirectCommandsLayoutUsageFlagsNVX =
+     VkIndirectCommandsLayoutUsageFlagBitsNVX
+
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkLogicOp.html VkLogicOp registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkIndirectCommandsTokenTypeNVX.html VkIndirectCommandsTokenTypeNVX registry at www.khronos.org>
+newtype VkIndirectCommandsTokenTypeNVX = VkIndirectCommandsTokenTypeNVX Int32
+                                           deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
+                                                     Generic)
+
+instance Show VkIndirectCommandsTokenTypeNVX where
+        showsPrec _ VK_INDIRECT_COMMANDS_TOKEN_TYPE_PIPELINE_NVX
+          = showString "VK_INDIRECT_COMMANDS_TOKEN_TYPE_PIPELINE_NVX"
+        showsPrec _ VK_INDIRECT_COMMANDS_TOKEN_TYPE_DESCRIPTOR_SET_NVX
+          = showString "VK_INDIRECT_COMMANDS_TOKEN_TYPE_DESCRIPTOR_SET_NVX"
+        showsPrec _ VK_INDIRECT_COMMANDS_TOKEN_TYPE_INDEX_BUFFER_NVX
+          = showString "VK_INDIRECT_COMMANDS_TOKEN_TYPE_INDEX_BUFFER_NVX"
+        showsPrec _ VK_INDIRECT_COMMANDS_TOKEN_TYPE_VERTEX_BUFFER_NVX
+          = showString "VK_INDIRECT_COMMANDS_TOKEN_TYPE_VERTEX_BUFFER_NVX"
+        showsPrec _ VK_INDIRECT_COMMANDS_TOKEN_TYPE_PUSH_CONSTANT_NVX
+          = showString "VK_INDIRECT_COMMANDS_TOKEN_TYPE_PUSH_CONSTANT_NVX"
+        showsPrec _ VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_INDEXED_NVX
+          = showString "VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_INDEXED_NVX"
+        showsPrec _ VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_NVX
+          = showString "VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_NVX"
+        showsPrec _ VK_INDIRECT_COMMANDS_TOKEN_TYPE_DISPATCH_NVX
+          = showString "VK_INDIRECT_COMMANDS_TOKEN_TYPE_DISPATCH_NVX"
+        showsPrec p (VkIndirectCommandsTokenTypeNVX x)
+          = showParen (p >= 11)
+              (showString "VkIndirectCommandsTokenTypeNVX " . showsPrec 11 x)
+
+instance Read VkIndirectCommandsTokenTypeNVX where
+        readPrec
+          = parens
+              (choose
+                 [("VK_INDIRECT_COMMANDS_TOKEN_TYPE_PIPELINE_NVX",
+                   pure VK_INDIRECT_COMMANDS_TOKEN_TYPE_PIPELINE_NVX),
+                  ("VK_INDIRECT_COMMANDS_TOKEN_TYPE_DESCRIPTOR_SET_NVX",
+                   pure VK_INDIRECT_COMMANDS_TOKEN_TYPE_DESCRIPTOR_SET_NVX),
+                  ("VK_INDIRECT_COMMANDS_TOKEN_TYPE_INDEX_BUFFER_NVX",
+                   pure VK_INDIRECT_COMMANDS_TOKEN_TYPE_INDEX_BUFFER_NVX),
+                  ("VK_INDIRECT_COMMANDS_TOKEN_TYPE_VERTEX_BUFFER_NVX",
+                   pure VK_INDIRECT_COMMANDS_TOKEN_TYPE_VERTEX_BUFFER_NVX),
+                  ("VK_INDIRECT_COMMANDS_TOKEN_TYPE_PUSH_CONSTANT_NVX",
+                   pure VK_INDIRECT_COMMANDS_TOKEN_TYPE_PUSH_CONSTANT_NVX),
+                  ("VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_INDEXED_NVX",
+                   pure VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_INDEXED_NVX),
+                  ("VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_NVX",
+                   pure VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_NVX),
+                  ("VK_INDIRECT_COMMANDS_TOKEN_TYPE_DISPATCH_NVX",
+                   pure VK_INDIRECT_COMMANDS_TOKEN_TYPE_DISPATCH_NVX)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkIndirectCommandsTokenTypeNVX") >>
+                      (VkIndirectCommandsTokenTypeNVX <$> step readPrec)))
+
+pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_PIPELINE_NVX ::
+        VkIndirectCommandsTokenTypeNVX
+
+pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_PIPELINE_NVX =
+        VkIndirectCommandsTokenTypeNVX 0
+
+pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_DESCRIPTOR_SET_NVX ::
+        VkIndirectCommandsTokenTypeNVX
+
+pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_DESCRIPTOR_SET_NVX =
+        VkIndirectCommandsTokenTypeNVX 1
+
+pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_INDEX_BUFFER_NVX ::
+        VkIndirectCommandsTokenTypeNVX
+
+pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_INDEX_BUFFER_NVX =
+        VkIndirectCommandsTokenTypeNVX 2
+
+pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_VERTEX_BUFFER_NVX ::
+        VkIndirectCommandsTokenTypeNVX
+
+pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_VERTEX_BUFFER_NVX =
+        VkIndirectCommandsTokenTypeNVX 3
+
+pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_PUSH_CONSTANT_NVX ::
+        VkIndirectCommandsTokenTypeNVX
+
+pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_PUSH_CONSTANT_NVX =
+        VkIndirectCommandsTokenTypeNVX 4
+
+pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_INDEXED_NVX ::
+        VkIndirectCommandsTokenTypeNVX
+
+pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_INDEXED_NVX =
+        VkIndirectCommandsTokenTypeNVX 5
+
+pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_NVX ::
+        VkIndirectCommandsTokenTypeNVX
+
+pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_NVX =
+        VkIndirectCommandsTokenTypeNVX 6
+
+pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_DISPATCH_NVX ::
+        VkIndirectCommandsTokenTypeNVX
+
+pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_DISPATCH_NVX =
+        VkIndirectCommandsTokenTypeNVX 7
+
+type VkInstance = Ptr VkInstance_T
+
+-- | Opaque data type referenced by VkInstance
+data VkInstance_T
+
+newtype VkInstanceCreateFlagBits = VkInstanceCreateFlagBits VkFlags
+                                     deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                               FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkInstanceCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkInstanceCreateFlagBits x) = show x
+
+instance Read VkInstanceCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkInstanceCreateFlags = VkInstanceCreateFlags VkFlags
+                                  deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits, FiniteBits,
+                                            Storable, Real, Data, Generic)
+
+instance Show VkInstanceCreateFlags where
+        {-# INLINE show #-}
+        show (VkInstanceCreateFlags x) = show x
+
+instance Read VkInstanceCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkInternalAllocationType.html VkInternalAllocationType registry at www.khronos.org>
+newtype VkInternalAllocationType = VkInternalAllocationType Int32
+                                     deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+
+instance Show VkInternalAllocationType where
+        showsPrec _ VK_INTERNAL_ALLOCATION_TYPE_EXECUTABLE
+          = showString "VK_INTERNAL_ALLOCATION_TYPE_EXECUTABLE"
+        showsPrec p (VkInternalAllocationType x)
+          = showParen (p >= 11)
+              (showString "VkInternalAllocationType " . showsPrec 11 x)
+
+instance Read VkInternalAllocationType where
+        readPrec
+          = parens
+              (choose
+                 [("VK_INTERNAL_ALLOCATION_TYPE_EXECUTABLE",
+                   pure VK_INTERNAL_ALLOCATION_TYPE_EXECUTABLE)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkInternalAllocationType") >>
+                      (VkInternalAllocationType <$> step readPrec)))
+
+pattern VK_INTERNAL_ALLOCATION_TYPE_EXECUTABLE ::
+        VkInternalAllocationType
+
+pattern VK_INTERNAL_ALLOCATION_TYPE_EXECUTABLE =
+        VkInternalAllocationType 0
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkLogicOp.html VkLogicOp registry at www.khronos.org>
 newtype VkLogicOp = VkLogicOp Int32
                       deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
@@ -5938,9 +7604,57 @@ pattern VK_LOGIC_OP_SET :: VkLogicOp
 
 pattern VK_LOGIC_OP_SET = VkLogicOp 15
 
+newtype VkMacOSSurfaceCreateFlagsMVK = VkMacOSSurfaceCreateFlagsMVK VkFlags
+                                         deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                   FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkMacOSSurfaceCreateFlagsMVK where
+        {-# INLINE show #-}
+        show (VkMacOSSurfaceCreateFlagsMVK x) = show x
+
+instance Read VkMacOSSurfaceCreateFlagsMVK where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
 -- | type = @bitmask@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryHeapFlagBits.html VkMemoryHeapFlagBits registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkMemoryAllocateFlagBitsKHX.html VkMemoryAllocateFlagBitsKHX registry at www.khronos.org>
+newtype VkMemoryAllocateFlagBitsKHX = VkMemoryAllocateFlagBitsKHX Int32
+                                        deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable,
+                                                  Enum, Data, Generic)
+
+instance Show VkMemoryAllocateFlagBitsKHX where
+        showsPrec _ VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT_KHX
+          = showString "VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT_KHX"
+        showsPrec p (VkMemoryAllocateFlagBitsKHX x)
+          = showParen (p >= 11)
+              (showString "VkMemoryAllocateFlagBitsKHX " . showsPrec 11 x)
+
+instance Read VkMemoryAllocateFlagBitsKHX where
+        readPrec
+          = parens
+              (choose
+                 [("VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT_KHX",
+                   pure VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT_KHX)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkMemoryAllocateFlagBitsKHX") >>
+                      (VkMemoryAllocateFlagBitsKHX <$> step readPrec)))
+
+-- | Force allocation on specific devices
+--
+--   bitpos = @0@
+pattern VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT_KHX ::
+        VkMemoryAllocateFlagBitsKHX
+
+pattern VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT_KHX =
+        VkMemoryAllocateFlagBitsKHX 1
+
+type VkMemoryAllocateFlagsKHX = VkMemoryAllocateFlagBitsKHX
+
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkMemoryHeapFlagBits.html VkMemoryHeapFlagBits registry at www.khronos.org>
 newtype VkMemoryHeapFlagBits = VkMemoryHeapFlagBits Int32
                                  deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable, Enum,
                                            Data, Generic)
@@ -5970,212 +7684,23 @@ pattern VK_MEMORY_HEAP_DEVICE_LOCAL_BIT :: VkMemoryHeapFlagBits
 
 pattern VK_MEMORY_HEAP_DEVICE_LOCAL_BIT = VkMemoryHeapFlagBits 1
 
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkAccessFlagBits.html VkAccessFlagBits registry at www.khronos.org>
-newtype VkAccessFlagBits = VkAccessFlagBits Int32
-                             deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable, Enum,
-                                       Data, Generic)
+type VkMemoryHeapFlags = VkMemoryHeapFlagBits
 
-instance Show VkAccessFlagBits where
-        showsPrec _ VK_ACCESS_INDIRECT_COMMAND_READ_BIT
-          = showString "VK_ACCESS_INDIRECT_COMMAND_READ_BIT"
-        showsPrec _ VK_ACCESS_INDEX_READ_BIT
-          = showString "VK_ACCESS_INDEX_READ_BIT"
-        showsPrec _ VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT
-          = showString "VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT"
-        showsPrec _ VK_ACCESS_UNIFORM_READ_BIT
-          = showString "VK_ACCESS_UNIFORM_READ_BIT"
-        showsPrec _ VK_ACCESS_INPUT_ATTACHMENT_READ_BIT
-          = showString "VK_ACCESS_INPUT_ATTACHMENT_READ_BIT"
-        showsPrec _ VK_ACCESS_SHADER_READ_BIT
-          = showString "VK_ACCESS_SHADER_READ_BIT"
-        showsPrec _ VK_ACCESS_SHADER_WRITE_BIT
-          = showString "VK_ACCESS_SHADER_WRITE_BIT"
-        showsPrec _ VK_ACCESS_COLOR_ATTACHMENT_READ_BIT
-          = showString "VK_ACCESS_COLOR_ATTACHMENT_READ_BIT"
-        showsPrec _ VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT
-          = showString "VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT"
-        showsPrec _ VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT
-          = showString "VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT"
-        showsPrec _ VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT
-          = showString "VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT"
-        showsPrec _ VK_ACCESS_TRANSFER_READ_BIT
-          = showString "VK_ACCESS_TRANSFER_READ_BIT"
-        showsPrec _ VK_ACCESS_TRANSFER_WRITE_BIT
-          = showString "VK_ACCESS_TRANSFER_WRITE_BIT"
-        showsPrec _ VK_ACCESS_HOST_READ_BIT
-          = showString "VK_ACCESS_HOST_READ_BIT"
-        showsPrec _ VK_ACCESS_HOST_WRITE_BIT
-          = showString "VK_ACCESS_HOST_WRITE_BIT"
-        showsPrec _ VK_ACCESS_MEMORY_READ_BIT
-          = showString "VK_ACCESS_MEMORY_READ_BIT"
-        showsPrec _ VK_ACCESS_MEMORY_WRITE_BIT
-          = showString "VK_ACCESS_MEMORY_WRITE_BIT"
-        showsPrec p (VkAccessFlagBits x)
-          = showParen (p >= 11)
-              (showString "VkAccessFlagBits " . showsPrec 11 x)
+newtype VkMemoryMapFlags = VkMemoryMapFlags VkFlags
+                             deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits, FiniteBits,
+                                       Storable, Real, Data, Generic)
 
-instance Read VkAccessFlagBits where
-        readPrec
-          = parens
-              (choose
-                 [("VK_ACCESS_INDIRECT_COMMAND_READ_BIT",
-                   pure VK_ACCESS_INDIRECT_COMMAND_READ_BIT),
-                  ("VK_ACCESS_INDEX_READ_BIT", pure VK_ACCESS_INDEX_READ_BIT),
-                  ("VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT",
-                   pure VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT),
-                  ("VK_ACCESS_UNIFORM_READ_BIT", pure VK_ACCESS_UNIFORM_READ_BIT),
-                  ("VK_ACCESS_INPUT_ATTACHMENT_READ_BIT",
-                   pure VK_ACCESS_INPUT_ATTACHMENT_READ_BIT),
-                  ("VK_ACCESS_SHADER_READ_BIT", pure VK_ACCESS_SHADER_READ_BIT),
-                  ("VK_ACCESS_SHADER_WRITE_BIT", pure VK_ACCESS_SHADER_WRITE_BIT),
-                  ("VK_ACCESS_COLOR_ATTACHMENT_READ_BIT",
-                   pure VK_ACCESS_COLOR_ATTACHMENT_READ_BIT),
-                  ("VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT",
-                   pure VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT),
-                  ("VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT",
-                   pure VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT),
-                  ("VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT",
-                   pure VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT),
-                  ("VK_ACCESS_TRANSFER_READ_BIT", pure VK_ACCESS_TRANSFER_READ_BIT),
-                  ("VK_ACCESS_TRANSFER_WRITE_BIT",
-                   pure VK_ACCESS_TRANSFER_WRITE_BIT),
-                  ("VK_ACCESS_HOST_READ_BIT", pure VK_ACCESS_HOST_READ_BIT),
-                  ("VK_ACCESS_HOST_WRITE_BIT", pure VK_ACCESS_HOST_WRITE_BIT),
-                  ("VK_ACCESS_MEMORY_READ_BIT", pure VK_ACCESS_MEMORY_READ_BIT),
-                  ("VK_ACCESS_MEMORY_WRITE_BIT", pure VK_ACCESS_MEMORY_WRITE_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkAccessFlagBits") >>
-                      (VkAccessFlagBits <$> step readPrec)))
+instance Show VkMemoryMapFlags where
+        {-# INLINE show #-}
+        show (VkMemoryMapFlags x) = show x
 
--- | Controls coherency of indirect command reads
---
---   bitpos = @0@
-pattern VK_ACCESS_INDIRECT_COMMAND_READ_BIT :: VkAccessFlagBits
-
-pattern VK_ACCESS_INDIRECT_COMMAND_READ_BIT = VkAccessFlagBits 1
-
--- | Controls coherency of index reads
---
---   bitpos = @1@
-pattern VK_ACCESS_INDEX_READ_BIT :: VkAccessFlagBits
-
-pattern VK_ACCESS_INDEX_READ_BIT = VkAccessFlagBits 2
-
--- | Controls coherency of vertex attribute reads
---
---   bitpos = @2@
-pattern VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT :: VkAccessFlagBits
-
-pattern VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT = VkAccessFlagBits 4
-
--- | Controls coherency of uniform buffer reads
---
---   bitpos = @3@
-pattern VK_ACCESS_UNIFORM_READ_BIT :: VkAccessFlagBits
-
-pattern VK_ACCESS_UNIFORM_READ_BIT = VkAccessFlagBits 8
-
--- | Controls coherency of input attachment reads
---
---   bitpos = @4@
-pattern VK_ACCESS_INPUT_ATTACHMENT_READ_BIT :: VkAccessFlagBits
-
-pattern VK_ACCESS_INPUT_ATTACHMENT_READ_BIT = VkAccessFlagBits 16
-
--- | Controls coherency of shader reads
---
---   bitpos = @5@
-pattern VK_ACCESS_SHADER_READ_BIT :: VkAccessFlagBits
-
-pattern VK_ACCESS_SHADER_READ_BIT = VkAccessFlagBits 32
-
--- | Controls coherency of shader writes
---
---   bitpos = @6@
-pattern VK_ACCESS_SHADER_WRITE_BIT :: VkAccessFlagBits
-
-pattern VK_ACCESS_SHADER_WRITE_BIT = VkAccessFlagBits 64
-
--- | Controls coherency of color attachment reads
---
---   bitpos = @7@
-pattern VK_ACCESS_COLOR_ATTACHMENT_READ_BIT :: VkAccessFlagBits
-
-pattern VK_ACCESS_COLOR_ATTACHMENT_READ_BIT = VkAccessFlagBits 128
-
--- | Controls coherency of color attachment writes
---
---   bitpos = @8@
-pattern VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT :: VkAccessFlagBits
-
-pattern VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT = VkAccessFlagBits 256
-
--- | Controls coherency of depth/stencil attachment reads
---
---   bitpos = @9@
-pattern VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT ::
-        VkAccessFlagBits
-
-pattern VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT =
-        VkAccessFlagBits 512
-
--- | Controls coherency of depth/stencil attachment writes
---
---   bitpos = @10@
-pattern VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT ::
-        VkAccessFlagBits
-
-pattern VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT =
-        VkAccessFlagBits 1024
-
--- | Controls coherency of transfer reads
---
---   bitpos = @11@
-pattern VK_ACCESS_TRANSFER_READ_BIT :: VkAccessFlagBits
-
-pattern VK_ACCESS_TRANSFER_READ_BIT = VkAccessFlagBits 2048
-
--- | Controls coherency of transfer writes
---
---   bitpos = @12@
-pattern VK_ACCESS_TRANSFER_WRITE_BIT :: VkAccessFlagBits
-
-pattern VK_ACCESS_TRANSFER_WRITE_BIT = VkAccessFlagBits 4096
-
--- | Controls coherency of host reads
---
---   bitpos = @13@
-pattern VK_ACCESS_HOST_READ_BIT :: VkAccessFlagBits
-
-pattern VK_ACCESS_HOST_READ_BIT = VkAccessFlagBits 8192
-
--- | Controls coherency of host writes
---
---   bitpos = @14@
-pattern VK_ACCESS_HOST_WRITE_BIT :: VkAccessFlagBits
-
-pattern VK_ACCESS_HOST_WRITE_BIT = VkAccessFlagBits 16384
-
--- | Controls coherency of memory reads
---
---   bitpos = @15@
-pattern VK_ACCESS_MEMORY_READ_BIT :: VkAccessFlagBits
-
-pattern VK_ACCESS_MEMORY_READ_BIT = VkAccessFlagBits 32768
-
--- | Controls coherency of memory writes
---
---   bitpos = @16@
-pattern VK_ACCESS_MEMORY_WRITE_BIT :: VkAccessFlagBits
-
-pattern VK_ACCESS_MEMORY_WRITE_BIT = VkAccessFlagBits 65536
+instance Read VkMemoryMapFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 -- | type = @bitmask@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryPropertyFlagBits.html VkMemoryPropertyFlagBits registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkMemoryPropertyFlagBits.html VkMemoryPropertyFlagBits registry at www.khronos.org>
 newtype VkMemoryPropertyFlagBits = VkMemoryPropertyFlagBits Int32
                                      deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable,
                                                Enum, Data, Generic)
@@ -6259,9 +7784,459 @@ pattern VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT ::
 pattern VK_MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT =
         VkMemoryPropertyFlagBits 16
 
+type VkMemoryPropertyFlags = VkMemoryPropertyFlagBits
+
+newtype VkMirSurfaceCreateFlagsKHR = VkMirSurfaceCreateFlagsKHR VkFlags
+                                       deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                 FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkMirSurfaceCreateFlagsKHR where
+        {-# INLINE show #-}
+        show (VkMirSurfaceCreateFlagsKHR x) = show x
+
+instance Read VkMirSurfaceCreateFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceType.html VkPhysicalDeviceType registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkObjectEntryTypeNVX.html VkObjectEntryTypeNVX registry at www.khronos.org>
+newtype VkObjectEntryTypeNVX = VkObjectEntryTypeNVX Int32
+                                 deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+
+instance Show VkObjectEntryTypeNVX where
+        showsPrec _ VK_OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX
+          = showString "VK_OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX"
+        showsPrec _ VK_OBJECT_ENTRY_TYPE_PIPELINE_NVX
+          = showString "VK_OBJECT_ENTRY_TYPE_PIPELINE_NVX"
+        showsPrec _ VK_OBJECT_ENTRY_TYPE_INDEX_BUFFER_NVX
+          = showString "VK_OBJECT_ENTRY_TYPE_INDEX_BUFFER_NVX"
+        showsPrec _ VK_OBJECT_ENTRY_TYPE_VERTEX_BUFFER_NVX
+          = showString "VK_OBJECT_ENTRY_TYPE_VERTEX_BUFFER_NVX"
+        showsPrec _ VK_OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX
+          = showString "VK_OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX"
+        showsPrec p (VkObjectEntryTypeNVX x)
+          = showParen (p >= 11)
+              (showString "VkObjectEntryTypeNVX " . showsPrec 11 x)
+
+instance Read VkObjectEntryTypeNVX where
+        readPrec
+          = parens
+              (choose
+                 [("VK_OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX",
+                   pure VK_OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX),
+                  ("VK_OBJECT_ENTRY_TYPE_PIPELINE_NVX",
+                   pure VK_OBJECT_ENTRY_TYPE_PIPELINE_NVX),
+                  ("VK_OBJECT_ENTRY_TYPE_INDEX_BUFFER_NVX",
+                   pure VK_OBJECT_ENTRY_TYPE_INDEX_BUFFER_NVX),
+                  ("VK_OBJECT_ENTRY_TYPE_VERTEX_BUFFER_NVX",
+                   pure VK_OBJECT_ENTRY_TYPE_VERTEX_BUFFER_NVX),
+                  ("VK_OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX",
+                   pure VK_OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkObjectEntryTypeNVX") >>
+                      (VkObjectEntryTypeNVX <$> step readPrec)))
+
+pattern VK_OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX ::
+        VkObjectEntryTypeNVX
+
+pattern VK_OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX =
+        VkObjectEntryTypeNVX 0
+
+pattern VK_OBJECT_ENTRY_TYPE_PIPELINE_NVX :: VkObjectEntryTypeNVX
+
+pattern VK_OBJECT_ENTRY_TYPE_PIPELINE_NVX = VkObjectEntryTypeNVX 1
+
+pattern VK_OBJECT_ENTRY_TYPE_INDEX_BUFFER_NVX ::
+        VkObjectEntryTypeNVX
+
+pattern VK_OBJECT_ENTRY_TYPE_INDEX_BUFFER_NVX =
+        VkObjectEntryTypeNVX 2
+
+pattern VK_OBJECT_ENTRY_TYPE_VERTEX_BUFFER_NVX ::
+        VkObjectEntryTypeNVX
+
+pattern VK_OBJECT_ENTRY_TYPE_VERTEX_BUFFER_NVX =
+        VkObjectEntryTypeNVX 3
+
+pattern VK_OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX ::
+        VkObjectEntryTypeNVX
+
+pattern VK_OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX =
+        VkObjectEntryTypeNVX 4
+
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkObjectEntryUsageFlagBitsNVX.html VkObjectEntryUsageFlagBitsNVX registry at www.khronos.org>
+newtype VkObjectEntryUsageFlagBitsNVX = VkObjectEntryUsageFlagBitsNVX Int32
+                                          deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
+                                                    Storable, Enum, Data, Generic)
+
+instance Show VkObjectEntryUsageFlagBitsNVX where
+        showsPrec _ VK_OBJECT_ENTRY_USAGE_GRAPHICS_BIT_NVX
+          = showString "VK_OBJECT_ENTRY_USAGE_GRAPHICS_BIT_NVX"
+        showsPrec _ VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX
+          = showString "VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX"
+        showsPrec p (VkObjectEntryUsageFlagBitsNVX x)
+          = showParen (p >= 11)
+              (showString "VkObjectEntryUsageFlagBitsNVX " . showsPrec 11 x)
+
+instance Read VkObjectEntryUsageFlagBitsNVX where
+        readPrec
+          = parens
+              (choose
+                 [("VK_OBJECT_ENTRY_USAGE_GRAPHICS_BIT_NVX",
+                   pure VK_OBJECT_ENTRY_USAGE_GRAPHICS_BIT_NVX),
+                  ("VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX",
+                   pure VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkObjectEntryUsageFlagBitsNVX") >>
+                      (VkObjectEntryUsageFlagBitsNVX <$> step readPrec)))
+
+-- | bitpos = @0@
+pattern VK_OBJECT_ENTRY_USAGE_GRAPHICS_BIT_NVX ::
+        VkObjectEntryUsageFlagBitsNVX
+
+pattern VK_OBJECT_ENTRY_USAGE_GRAPHICS_BIT_NVX =
+        VkObjectEntryUsageFlagBitsNVX 1
+
+-- | bitpos = @1@
+pattern VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX ::
+        VkObjectEntryUsageFlagBitsNVX
+
+pattern VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX =
+        VkObjectEntryUsageFlagBitsNVX 2
+
+type VkObjectEntryUsageFlagsNVX = VkObjectEntryUsageFlagBitsNVX
+
+type VkObjectTableNVX = VkPtr VkObjectTableNVX_T
+
+-- | Opaque data type referenced by VkObjectTableNVX
+data VkObjectTableNVX_T
+
+-- | Enums to track objects of various types
+--
+--   type = @enum@
+--
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkObjectType.html VkObjectType registry at www.khronos.org>
+newtype VkObjectType = VkObjectType Int32
+                         deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+
+instance Show VkObjectType where
+        showsPrec _ VK_OBJECT_TYPE_UNKNOWN
+          = showString "VK_OBJECT_TYPE_UNKNOWN"
+        showsPrec _ VK_OBJECT_TYPE_INSTANCE
+          = showString "VK_OBJECT_TYPE_INSTANCE"
+        showsPrec _ VK_OBJECT_TYPE_PHYSICAL_DEVICE
+          = showString "VK_OBJECT_TYPE_PHYSICAL_DEVICE"
+        showsPrec _ VK_OBJECT_TYPE_DEVICE
+          = showString "VK_OBJECT_TYPE_DEVICE"
+        showsPrec _ VK_OBJECT_TYPE_QUEUE
+          = showString "VK_OBJECT_TYPE_QUEUE"
+        showsPrec _ VK_OBJECT_TYPE_SEMAPHORE
+          = showString "VK_OBJECT_TYPE_SEMAPHORE"
+        showsPrec _ VK_OBJECT_TYPE_COMMAND_BUFFER
+          = showString "VK_OBJECT_TYPE_COMMAND_BUFFER"
+        showsPrec _ VK_OBJECT_TYPE_FENCE
+          = showString "VK_OBJECT_TYPE_FENCE"
+        showsPrec _ VK_OBJECT_TYPE_DEVICE_MEMORY
+          = showString "VK_OBJECT_TYPE_DEVICE_MEMORY"
+        showsPrec _ VK_OBJECT_TYPE_BUFFER
+          = showString "VK_OBJECT_TYPE_BUFFER"
+        showsPrec _ VK_OBJECT_TYPE_IMAGE
+          = showString "VK_OBJECT_TYPE_IMAGE"
+        showsPrec _ VK_OBJECT_TYPE_EVENT
+          = showString "VK_OBJECT_TYPE_EVENT"
+        showsPrec _ VK_OBJECT_TYPE_QUERY_POOL
+          = showString "VK_OBJECT_TYPE_QUERY_POOL"
+        showsPrec _ VK_OBJECT_TYPE_BUFFER_VIEW
+          = showString "VK_OBJECT_TYPE_BUFFER_VIEW"
+        showsPrec _ VK_OBJECT_TYPE_IMAGE_VIEW
+          = showString "VK_OBJECT_TYPE_IMAGE_VIEW"
+        showsPrec _ VK_OBJECT_TYPE_SHADER_MODULE
+          = showString "VK_OBJECT_TYPE_SHADER_MODULE"
+        showsPrec _ VK_OBJECT_TYPE_PIPELINE_CACHE
+          = showString "VK_OBJECT_TYPE_PIPELINE_CACHE"
+        showsPrec _ VK_OBJECT_TYPE_PIPELINE_LAYOUT
+          = showString "VK_OBJECT_TYPE_PIPELINE_LAYOUT"
+        showsPrec _ VK_OBJECT_TYPE_RENDER_PASS
+          = showString "VK_OBJECT_TYPE_RENDER_PASS"
+        showsPrec _ VK_OBJECT_TYPE_PIPELINE
+          = showString "VK_OBJECT_TYPE_PIPELINE"
+        showsPrec _ VK_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT
+          = showString "VK_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT"
+        showsPrec _ VK_OBJECT_TYPE_SAMPLER
+          = showString "VK_OBJECT_TYPE_SAMPLER"
+        showsPrec _ VK_OBJECT_TYPE_DESCRIPTOR_POOL
+          = showString "VK_OBJECT_TYPE_DESCRIPTOR_POOL"
+        showsPrec _ VK_OBJECT_TYPE_DESCRIPTOR_SET
+          = showString "VK_OBJECT_TYPE_DESCRIPTOR_SET"
+        showsPrec _ VK_OBJECT_TYPE_FRAMEBUFFER
+          = showString "VK_OBJECT_TYPE_FRAMEBUFFER"
+        showsPrec _ VK_OBJECT_TYPE_COMMAND_POOL
+          = showString "VK_OBJECT_TYPE_COMMAND_POOL"
+        showsPrec p (VkObjectType x)
+          = showParen (p >= 11) (showString "VkObjectType " . showsPrec 11 x)
+
+instance Read VkObjectType where
+        readPrec
+          = parens
+              (choose
+                 [("VK_OBJECT_TYPE_UNKNOWN", pure VK_OBJECT_TYPE_UNKNOWN),
+                  ("VK_OBJECT_TYPE_INSTANCE", pure VK_OBJECT_TYPE_INSTANCE),
+                  ("VK_OBJECT_TYPE_PHYSICAL_DEVICE",
+                   pure VK_OBJECT_TYPE_PHYSICAL_DEVICE),
+                  ("VK_OBJECT_TYPE_DEVICE", pure VK_OBJECT_TYPE_DEVICE),
+                  ("VK_OBJECT_TYPE_QUEUE", pure VK_OBJECT_TYPE_QUEUE),
+                  ("VK_OBJECT_TYPE_SEMAPHORE", pure VK_OBJECT_TYPE_SEMAPHORE),
+                  ("VK_OBJECT_TYPE_COMMAND_BUFFER",
+                   pure VK_OBJECT_TYPE_COMMAND_BUFFER),
+                  ("VK_OBJECT_TYPE_FENCE", pure VK_OBJECT_TYPE_FENCE),
+                  ("VK_OBJECT_TYPE_DEVICE_MEMORY",
+                   pure VK_OBJECT_TYPE_DEVICE_MEMORY),
+                  ("VK_OBJECT_TYPE_BUFFER", pure VK_OBJECT_TYPE_BUFFER),
+                  ("VK_OBJECT_TYPE_IMAGE", pure VK_OBJECT_TYPE_IMAGE),
+                  ("VK_OBJECT_TYPE_EVENT", pure VK_OBJECT_TYPE_EVENT),
+                  ("VK_OBJECT_TYPE_QUERY_POOL", pure VK_OBJECT_TYPE_QUERY_POOL),
+                  ("VK_OBJECT_TYPE_BUFFER_VIEW", pure VK_OBJECT_TYPE_BUFFER_VIEW),
+                  ("VK_OBJECT_TYPE_IMAGE_VIEW", pure VK_OBJECT_TYPE_IMAGE_VIEW),
+                  ("VK_OBJECT_TYPE_SHADER_MODULE",
+                   pure VK_OBJECT_TYPE_SHADER_MODULE),
+                  ("VK_OBJECT_TYPE_PIPELINE_CACHE",
+                   pure VK_OBJECT_TYPE_PIPELINE_CACHE),
+                  ("VK_OBJECT_TYPE_PIPELINE_LAYOUT",
+                   pure VK_OBJECT_TYPE_PIPELINE_LAYOUT),
+                  ("VK_OBJECT_TYPE_RENDER_PASS", pure VK_OBJECT_TYPE_RENDER_PASS),
+                  ("VK_OBJECT_TYPE_PIPELINE", pure VK_OBJECT_TYPE_PIPELINE),
+                  ("VK_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT",
+                   pure VK_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT),
+                  ("VK_OBJECT_TYPE_SAMPLER", pure VK_OBJECT_TYPE_SAMPLER),
+                  ("VK_OBJECT_TYPE_DESCRIPTOR_POOL",
+                   pure VK_OBJECT_TYPE_DESCRIPTOR_POOL),
+                  ("VK_OBJECT_TYPE_DESCRIPTOR_SET",
+                   pure VK_OBJECT_TYPE_DESCRIPTOR_SET),
+                  ("VK_OBJECT_TYPE_FRAMEBUFFER", pure VK_OBJECT_TYPE_FRAMEBUFFER),
+                  ("VK_OBJECT_TYPE_COMMAND_POOL", pure VK_OBJECT_TYPE_COMMAND_POOL)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkObjectType") >>
+                      (VkObjectType <$> step readPrec)))
+
+pattern VK_OBJECT_TYPE_UNKNOWN :: VkObjectType
+
+pattern VK_OBJECT_TYPE_UNKNOWN = VkObjectType 0
+
+-- | VkInstance
+pattern VK_OBJECT_TYPE_INSTANCE :: VkObjectType
+
+pattern VK_OBJECT_TYPE_INSTANCE = VkObjectType 1
+
+-- | VkPhysicalDevice
+pattern VK_OBJECT_TYPE_PHYSICAL_DEVICE :: VkObjectType
+
+pattern VK_OBJECT_TYPE_PHYSICAL_DEVICE = VkObjectType 2
+
+-- | VkDevice
+pattern VK_OBJECT_TYPE_DEVICE :: VkObjectType
+
+pattern VK_OBJECT_TYPE_DEVICE = VkObjectType 3
+
+-- | VkQueue
+pattern VK_OBJECT_TYPE_QUEUE :: VkObjectType
+
+pattern VK_OBJECT_TYPE_QUEUE = VkObjectType 4
+
+-- | VkSemaphore
+pattern VK_OBJECT_TYPE_SEMAPHORE :: VkObjectType
+
+pattern VK_OBJECT_TYPE_SEMAPHORE = VkObjectType 5
+
+-- | VkCommandBuffer
+pattern VK_OBJECT_TYPE_COMMAND_BUFFER :: VkObjectType
+
+pattern VK_OBJECT_TYPE_COMMAND_BUFFER = VkObjectType 6
+
+-- | VkFence
+pattern VK_OBJECT_TYPE_FENCE :: VkObjectType
+
+pattern VK_OBJECT_TYPE_FENCE = VkObjectType 7
+
+-- | VkDeviceMemory
+pattern VK_OBJECT_TYPE_DEVICE_MEMORY :: VkObjectType
+
+pattern VK_OBJECT_TYPE_DEVICE_MEMORY = VkObjectType 8
+
+-- | VkBuffer
+pattern VK_OBJECT_TYPE_BUFFER :: VkObjectType
+
+pattern VK_OBJECT_TYPE_BUFFER = VkObjectType 9
+
+-- | VkImage
+pattern VK_OBJECT_TYPE_IMAGE :: VkObjectType
+
+pattern VK_OBJECT_TYPE_IMAGE = VkObjectType 10
+
+-- | VkEvent
+pattern VK_OBJECT_TYPE_EVENT :: VkObjectType
+
+pattern VK_OBJECT_TYPE_EVENT = VkObjectType 11
+
+-- | VkQueryPool
+pattern VK_OBJECT_TYPE_QUERY_POOL :: VkObjectType
+
+pattern VK_OBJECT_TYPE_QUERY_POOL = VkObjectType 12
+
+-- | VkBufferView
+pattern VK_OBJECT_TYPE_BUFFER_VIEW :: VkObjectType
+
+pattern VK_OBJECT_TYPE_BUFFER_VIEW = VkObjectType 13
+
+-- | VkImageView
+pattern VK_OBJECT_TYPE_IMAGE_VIEW :: VkObjectType
+
+pattern VK_OBJECT_TYPE_IMAGE_VIEW = VkObjectType 14
+
+-- | VkShaderModule
+pattern VK_OBJECT_TYPE_SHADER_MODULE :: VkObjectType
+
+pattern VK_OBJECT_TYPE_SHADER_MODULE = VkObjectType 15
+
+-- | VkPipelineCache
+pattern VK_OBJECT_TYPE_PIPELINE_CACHE :: VkObjectType
+
+pattern VK_OBJECT_TYPE_PIPELINE_CACHE = VkObjectType 16
+
+-- | VkPipelineLayout
+pattern VK_OBJECT_TYPE_PIPELINE_LAYOUT :: VkObjectType
+
+pattern VK_OBJECT_TYPE_PIPELINE_LAYOUT = VkObjectType 17
+
+-- | VkRenderPass
+pattern VK_OBJECT_TYPE_RENDER_PASS :: VkObjectType
+
+pattern VK_OBJECT_TYPE_RENDER_PASS = VkObjectType 18
+
+-- | VkPipeline
+pattern VK_OBJECT_TYPE_PIPELINE :: VkObjectType
+
+pattern VK_OBJECT_TYPE_PIPELINE = VkObjectType 19
+
+-- | VkDescriptorSetLayout
+pattern VK_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT :: VkObjectType
+
+pattern VK_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT = VkObjectType 20
+
+-- | VkSampler
+pattern VK_OBJECT_TYPE_SAMPLER :: VkObjectType
+
+pattern VK_OBJECT_TYPE_SAMPLER = VkObjectType 21
+
+-- | VkDescriptorPool
+pattern VK_OBJECT_TYPE_DESCRIPTOR_POOL :: VkObjectType
+
+pattern VK_OBJECT_TYPE_DESCRIPTOR_POOL = VkObjectType 22
+
+-- | VkDescriptorSet
+pattern VK_OBJECT_TYPE_DESCRIPTOR_SET :: VkObjectType
+
+pattern VK_OBJECT_TYPE_DESCRIPTOR_SET = VkObjectType 23
+
+-- | VkFramebuffer
+pattern VK_OBJECT_TYPE_FRAMEBUFFER :: VkObjectType
+
+pattern VK_OBJECT_TYPE_FRAMEBUFFER = VkObjectType 24
+
+-- | VkCommandPool
+pattern VK_OBJECT_TYPE_COMMAND_POOL :: VkObjectType
+
+pattern VK_OBJECT_TYPE_COMMAND_POOL = VkObjectType 25
+
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPeerMemoryFeatureFlagBitsKHX.html VkPeerMemoryFeatureFlagBitsKHX registry at www.khronos.org>
+newtype VkPeerMemoryFeatureFlagBitsKHX = VkPeerMemoryFeatureFlagBitsKHX Int32
+                                           deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
+                                                     Storable, Enum, Data, Generic)
+
+instance Show VkPeerMemoryFeatureFlagBitsKHX where
+        showsPrec _ VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT_KHX
+          = showString "VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT_KHX"
+        showsPrec _ VK_PEER_MEMORY_FEATURE_COPY_DST_BIT_KHX
+          = showString "VK_PEER_MEMORY_FEATURE_COPY_DST_BIT_KHX"
+        showsPrec _ VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT_KHX
+          = showString "VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT_KHX"
+        showsPrec _ VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT_KHX
+          = showString "VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT_KHX"
+        showsPrec p (VkPeerMemoryFeatureFlagBitsKHX x)
+          = showParen (p >= 11)
+              (showString "VkPeerMemoryFeatureFlagBitsKHX " . showsPrec 11 x)
+
+instance Read VkPeerMemoryFeatureFlagBitsKHX where
+        readPrec
+          = parens
+              (choose
+                 [("VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT_KHX",
+                   pure VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT_KHX),
+                  ("VK_PEER_MEMORY_FEATURE_COPY_DST_BIT_KHX",
+                   pure VK_PEER_MEMORY_FEATURE_COPY_DST_BIT_KHX),
+                  ("VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT_KHX",
+                   pure VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT_KHX),
+                  ("VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT_KHX",
+                   pure VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT_KHX)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkPeerMemoryFeatureFlagBitsKHX") >>
+                      (VkPeerMemoryFeatureFlagBitsKHX <$> step readPrec)))
+
+-- | Can read with vkCmdCopy commands
+--
+--   bitpos = @0@
+pattern VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT_KHX ::
+        VkPeerMemoryFeatureFlagBitsKHX
+
+pattern VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT_KHX =
+        VkPeerMemoryFeatureFlagBitsKHX 1
+
+-- | Can write with vkCmdCopy commands
+--
+--   bitpos = @1@
+pattern VK_PEER_MEMORY_FEATURE_COPY_DST_BIT_KHX ::
+        VkPeerMemoryFeatureFlagBitsKHX
+
+pattern VK_PEER_MEMORY_FEATURE_COPY_DST_BIT_KHX =
+        VkPeerMemoryFeatureFlagBitsKHX 2
+
+-- | Can read with any access type/command
+--
+--   bitpos = @2@
+pattern VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT_KHX ::
+        VkPeerMemoryFeatureFlagBitsKHX
+
+pattern VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT_KHX =
+        VkPeerMemoryFeatureFlagBitsKHX 4
+
+-- | Can write with and access type/command
+--
+--   bitpos = @3@
+pattern VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT_KHX ::
+        VkPeerMemoryFeatureFlagBitsKHX
+
+pattern VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT_KHX =
+        VkPeerMemoryFeatureFlagBitsKHX 8
+
+type VkPeerMemoryFeatureFlagsKHX = VkPeerMemoryFeatureFlagBitsKHX
+
+type VkPhysicalDevice = Ptr VkPhysicalDevice_T
+
+-- | Opaque data type referenced by VkPhysicalDevice
+data VkPhysicalDevice_T
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceType.html VkPhysicalDeviceType registry at www.khronos.org>
 newtype VkPhysicalDeviceType = VkPhysicalDeviceType Int32
                                  deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
@@ -6323,9 +8298,14 @@ pattern VK_PHYSICAL_DEVICE_TYPE_CPU :: VkPhysicalDeviceType
 
 pattern VK_PHYSICAL_DEVICE_TYPE_CPU = VkPhysicalDeviceType 4
 
+type VkPipeline = VkPtr VkPipeline_T
+
+-- | Opaque data type referenced by VkPipeline
+data VkPipeline_T
+
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineBindPoint.html VkPipelineBindPoint registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPipelineBindPoint.html VkPipelineBindPoint registry at www.khronos.org>
 newtype VkPipelineBindPoint = VkPipelineBindPoint Int32
                                 deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
@@ -6359,9 +8339,121 @@ pattern VK_PIPELINE_BIND_POINT_COMPUTE :: VkPipelineBindPoint
 
 pattern VK_PIPELINE_BIND_POINT_COMPUTE = VkPipelineBindPoint 1
 
+type VkPipelineCache = VkPtr VkPipelineCache_T
+
+-- | Opaque data type referenced by VkPipelineCache
+data VkPipelineCache_T
+
+newtype VkPipelineCacheCreateFlagBits = VkPipelineCacheCreateFlagBits VkFlags
+                                          deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                    FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkPipelineCacheCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkPipelineCacheCreateFlagBits x) = show x
+
+instance Read VkPipelineCacheCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineCacheCreateFlags = VkPipelineCacheCreateFlags VkFlags
+                                       deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                 FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkPipelineCacheCreateFlags where
+        {-# INLINE show #-}
+        show (VkPipelineCacheCreateFlags x) = show x
+
+instance Read VkPipelineCacheCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPipelineCacheHeaderVersion.html VkPipelineCacheHeaderVersion registry at www.khronos.org>
+newtype VkPipelineCacheHeaderVersion = VkPipelineCacheHeaderVersion Int32
+                                         deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
+                                                   Generic)
+
+instance Show VkPipelineCacheHeaderVersion where
+        showsPrec _ VK_PIPELINE_CACHE_HEADER_VERSION_ONE
+          = showString "VK_PIPELINE_CACHE_HEADER_VERSION_ONE"
+        showsPrec p (VkPipelineCacheHeaderVersion x)
+          = showParen (p >= 11)
+              (showString "VkPipelineCacheHeaderVersion " . showsPrec 11 x)
+
+instance Read VkPipelineCacheHeaderVersion where
+        readPrec
+          = parens
+              (choose
+                 [("VK_PIPELINE_CACHE_HEADER_VERSION_ONE",
+                   pure VK_PIPELINE_CACHE_HEADER_VERSION_ONE)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkPipelineCacheHeaderVersion") >>
+                      (VkPipelineCacheHeaderVersion <$> step readPrec)))
+
+pattern VK_PIPELINE_CACHE_HEADER_VERSION_ONE ::
+        VkPipelineCacheHeaderVersion
+
+pattern VK_PIPELINE_CACHE_HEADER_VERSION_ONE =
+        VkPipelineCacheHeaderVersion 1
+
+newtype VkPipelineColorBlendStateCreateFlagBits = VkPipelineColorBlendStateCreateFlagBits VkFlags
+                                                    deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                              Bits, FiniteBits, Storable, Real,
+                                                              Data, Generic)
+
+instance Show VkPipelineColorBlendStateCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkPipelineColorBlendStateCreateFlagBits x) = show x
+
+instance Read VkPipelineColorBlendStateCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineColorBlendStateCreateFlags = VkPipelineColorBlendStateCreateFlags VkFlags
+                                                 deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                           Bits, FiniteBits, Storable, Real, Data,
+                                                           Generic)
+
+instance Show VkPipelineColorBlendStateCreateFlags where
+        {-# INLINE show #-}
+        show (VkPipelineColorBlendStateCreateFlags x) = show x
+
+instance Read VkPipelineColorBlendStateCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineCoverageModulationStateCreateFlagsNV = VkPipelineCoverageModulationStateCreateFlagsNV VkFlags
+                                                           deriving (Eq, Ord, Num, Bounded, Enum,
+                                                                     Integral, Bits, FiniteBits,
+                                                                     Storable, Real, Data, Generic)
+
+instance Show VkPipelineCoverageModulationStateCreateFlagsNV where
+        {-# INLINE show #-}
+        show (VkPipelineCoverageModulationStateCreateFlagsNV x) = show x
+
+instance Read VkPipelineCoverageModulationStateCreateFlagsNV where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineCoverageToColorStateCreateFlagsNV = VkPipelineCoverageToColorStateCreateFlagsNV VkFlags
+                                                        deriving (Eq, Ord, Num, Bounded, Enum,
+                                                                  Integral, Bits, FiniteBits,
+                                                                  Storable, Real, Data, Generic)
+
+instance Show VkPipelineCoverageToColorStateCreateFlagsNV where
+        {-# INLINE show #-}
+        show (VkPipelineCoverageToColorStateCreateFlagsNV x) = show x
+
+instance Read VkPipelineCoverageToColorStateCreateFlagsNV where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
 -- | type = @bitmask@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineCreateFlagBits.html VkPipelineCreateFlagBits registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPipelineCreateFlagBits.html VkPipelineCreateFlagBits registry at www.khronos.org>
 newtype VkPipelineCreateFlagBits = VkPipelineCreateFlagBits Int32
                                      deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable,
                                                Enum, Data, Generic)
@@ -6413,9 +8505,689 @@ pattern VK_PIPELINE_CREATE_DERIVATIVE_BIT ::
 pattern VK_PIPELINE_CREATE_DERIVATIVE_BIT =
         VkPipelineCreateFlagBits 4
 
+type VkPipelineCreateFlags = VkPipelineCreateFlagBits
+
+newtype VkPipelineDepthStencilStateCreateFlagBits = VkPipelineDepthStencilStateCreateFlagBits VkFlags
+                                                      deriving (Eq, Ord, Num, Bounded, Enum,
+                                                                Integral, Bits, FiniteBits,
+                                                                Storable, Real, Data, Generic)
+
+instance Show VkPipelineDepthStencilStateCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkPipelineDepthStencilStateCreateFlagBits x) = show x
+
+instance Read VkPipelineDepthStencilStateCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineDepthStencilStateCreateFlags = VkPipelineDepthStencilStateCreateFlags VkFlags
+                                                   deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                             Bits, FiniteBits, Storable, Real, Data,
+                                                             Generic)
+
+instance Show VkPipelineDepthStencilStateCreateFlags where
+        {-# INLINE show #-}
+        show (VkPipelineDepthStencilStateCreateFlags x) = show x
+
+instance Read VkPipelineDepthStencilStateCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineDiscardRectangleStateCreateFlagsEXT = VkPipelineDiscardRectangleStateCreateFlagsEXT VkFlags
+                                                          deriving (Eq, Ord, Num, Bounded, Enum,
+                                                                    Integral, Bits, FiniteBits,
+                                                                    Storable, Real, Data, Generic)
+
+instance Show VkPipelineDiscardRectangleStateCreateFlagsEXT where
+        {-# INLINE show #-}
+        show (VkPipelineDiscardRectangleStateCreateFlagsEXT x) = show x
+
+instance Read VkPipelineDiscardRectangleStateCreateFlagsEXT where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineDynamicStateCreateFlagBits = VkPipelineDynamicStateCreateFlagBits VkFlags
+                                                 deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                           Bits, FiniteBits, Storable, Real, Data,
+                                                           Generic)
+
+instance Show VkPipelineDynamicStateCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkPipelineDynamicStateCreateFlagBits x) = show x
+
+instance Read VkPipelineDynamicStateCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineDynamicStateCreateFlags = VkPipelineDynamicStateCreateFlags VkFlags
+                                              deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                        FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkPipelineDynamicStateCreateFlags where
+        {-# INLINE show #-}
+        show (VkPipelineDynamicStateCreateFlags x) = show x
+
+instance Read VkPipelineDynamicStateCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineInputAssemblyStateCreateFlagBits = VkPipelineInputAssemblyStateCreateFlagBits VkFlags
+                                                       deriving (Eq, Ord, Num, Bounded, Enum,
+                                                                 Integral, Bits, FiniteBits,
+                                                                 Storable, Real, Data, Generic)
+
+instance Show VkPipelineInputAssemblyStateCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkPipelineInputAssemblyStateCreateFlagBits x) = show x
+
+instance Read VkPipelineInputAssemblyStateCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineInputAssemblyStateCreateFlags = VkPipelineInputAssemblyStateCreateFlags VkFlags
+                                                    deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                              Bits, FiniteBits, Storable, Real,
+                                                              Data, Generic)
+
+instance Show VkPipelineInputAssemblyStateCreateFlags where
+        {-# INLINE show #-}
+        show (VkPipelineInputAssemblyStateCreateFlags x) = show x
+
+instance Read VkPipelineInputAssemblyStateCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+type VkPipelineLayout = VkPtr VkPipelineLayout_T
+
+-- | Opaque data type referenced by VkPipelineLayout
+data VkPipelineLayout_T
+
+newtype VkPipelineLayoutCreateFlagBits = VkPipelineLayoutCreateFlagBits VkFlags
+                                           deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                     FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkPipelineLayoutCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkPipelineLayoutCreateFlagBits x) = show x
+
+instance Read VkPipelineLayoutCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineLayoutCreateFlags = VkPipelineLayoutCreateFlags VkFlags
+                                        deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                  FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkPipelineLayoutCreateFlags where
+        {-# INLINE show #-}
+        show (VkPipelineLayoutCreateFlags x) = show x
+
+instance Read VkPipelineLayoutCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineMultisampleStateCreateFlagBits = VkPipelineMultisampleStateCreateFlagBits VkFlags
+                                                     deriving (Eq, Ord, Num, Bounded, Enum,
+                                                               Integral, Bits, FiniteBits, Storable,
+                                                               Real, Data, Generic)
+
+instance Show VkPipelineMultisampleStateCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkPipelineMultisampleStateCreateFlagBits x) = show x
+
+instance Read VkPipelineMultisampleStateCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineMultisampleStateCreateFlags = VkPipelineMultisampleStateCreateFlags VkFlags
+                                                  deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                            Bits, FiniteBits, Storable, Real, Data,
+                                                            Generic)
+
+instance Show VkPipelineMultisampleStateCreateFlags where
+        {-# INLINE show #-}
+        show (VkPipelineMultisampleStateCreateFlags x) = show x
+
+instance Read VkPipelineMultisampleStateCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineRasterizationConservativeStateCreateFlagsEXT = VkPipelineRasterizationConservativeStateCreateFlagsEXT VkFlags
+                                                                   deriving (Eq, Ord, Num, Bounded,
+                                                                             Enum, Integral, Bits,
+                                                                             FiniteBits, Storable,
+                                                                             Real, Data, Generic)
+
+instance Show
+           VkPipelineRasterizationConservativeStateCreateFlagsEXT
+         where
+        {-# INLINE show #-}
+        show (VkPipelineRasterizationConservativeStateCreateFlagsEXT x)
+          = show x
+
+instance Read
+           VkPipelineRasterizationConservativeStateCreateFlagsEXT
+         where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineRasterizationStateCreateFlagBits = VkPipelineRasterizationStateCreateFlagBits VkFlags
+                                                       deriving (Eq, Ord, Num, Bounded, Enum,
+                                                                 Integral, Bits, FiniteBits,
+                                                                 Storable, Real, Data, Generic)
+
+instance Show VkPipelineRasterizationStateCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkPipelineRasterizationStateCreateFlagBits x) = show x
+
+instance Read VkPipelineRasterizationStateCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineRasterizationStateCreateFlags = VkPipelineRasterizationStateCreateFlags VkFlags
+                                                    deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                              Bits, FiniteBits, Storable, Real,
+                                                              Data, Generic)
+
+instance Show VkPipelineRasterizationStateCreateFlags where
+        {-# INLINE show #-}
+        show (VkPipelineRasterizationStateCreateFlags x) = show x
+
+instance Read VkPipelineRasterizationStateCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineShaderStageCreateFlagBits = VkPipelineShaderStageCreateFlagBits VkFlags
+                                                deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                          Bits, FiniteBits, Storable, Real, Data,
+                                                          Generic)
+
+instance Show VkPipelineShaderStageCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkPipelineShaderStageCreateFlagBits x) = show x
+
+instance Read VkPipelineShaderStageCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineShaderStageCreateFlags = VkPipelineShaderStageCreateFlags VkFlags
+                                             deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                       FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkPipelineShaderStageCreateFlags where
+        {-# INLINE show #-}
+        show (VkPipelineShaderStageCreateFlags x) = show x
+
+instance Read VkPipelineShaderStageCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPipelineStageFlagBits.html VkPipelineStageFlagBits registry at www.khronos.org>
+newtype VkPipelineStageFlagBits = VkPipelineStageFlagBits Int32
+                                    deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable,
+                                              Enum, Data, Generic)
+
+instance Show VkPipelineStageFlagBits where
+        showsPrec _ VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT
+          = showString "VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT"
+        showsPrec _ VK_PIPELINE_STAGE_DRAW_INDIRECT_BIT
+          = showString "VK_PIPELINE_STAGE_DRAW_INDIRECT_BIT"
+        showsPrec _ VK_PIPELINE_STAGE_VERTEX_INPUT_BIT
+          = showString "VK_PIPELINE_STAGE_VERTEX_INPUT_BIT"
+        showsPrec _ VK_PIPELINE_STAGE_VERTEX_SHADER_BIT
+          = showString "VK_PIPELINE_STAGE_VERTEX_SHADER_BIT"
+        showsPrec _ VK_PIPELINE_STAGE_TESSELLATION_CONTROL_SHADER_BIT
+          = showString "VK_PIPELINE_STAGE_TESSELLATION_CONTROL_SHADER_BIT"
+        showsPrec _ VK_PIPELINE_STAGE_TESSELLATION_EVALUATION_SHADER_BIT
+          = showString "VK_PIPELINE_STAGE_TESSELLATION_EVALUATION_SHADER_BIT"
+        showsPrec _ VK_PIPELINE_STAGE_GEOMETRY_SHADER_BIT
+          = showString "VK_PIPELINE_STAGE_GEOMETRY_SHADER_BIT"
+        showsPrec _ VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT
+          = showString "VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT"
+        showsPrec _ VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT
+          = showString "VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT"
+        showsPrec _ VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT
+          = showString "VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT"
+        showsPrec _ VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT
+          = showString "VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT"
+        showsPrec _ VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT
+          = showString "VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT"
+        showsPrec _ VK_PIPELINE_STAGE_TRANSFER_BIT
+          = showString "VK_PIPELINE_STAGE_TRANSFER_BIT"
+        showsPrec _ VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT
+          = showString "VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT"
+        showsPrec _ VK_PIPELINE_STAGE_HOST_BIT
+          = showString "VK_PIPELINE_STAGE_HOST_BIT"
+        showsPrec _ VK_PIPELINE_STAGE_ALL_GRAPHICS_BIT
+          = showString "VK_PIPELINE_STAGE_ALL_GRAPHICS_BIT"
+        showsPrec _ VK_PIPELINE_STAGE_ALL_COMMANDS_BIT
+          = showString "VK_PIPELINE_STAGE_ALL_COMMANDS_BIT"
+        showsPrec p (VkPipelineStageFlagBits x)
+          = showParen (p >= 11)
+              (showString "VkPipelineStageFlagBits " . showsPrec 11 x)
+
+instance Read VkPipelineStageFlagBits where
+        readPrec
+          = parens
+              (choose
+                 [("VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT",
+                   pure VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT),
+                  ("VK_PIPELINE_STAGE_DRAW_INDIRECT_BIT",
+                   pure VK_PIPELINE_STAGE_DRAW_INDIRECT_BIT),
+                  ("VK_PIPELINE_STAGE_VERTEX_INPUT_BIT",
+                   pure VK_PIPELINE_STAGE_VERTEX_INPUT_BIT),
+                  ("VK_PIPELINE_STAGE_VERTEX_SHADER_BIT",
+                   pure VK_PIPELINE_STAGE_VERTEX_SHADER_BIT),
+                  ("VK_PIPELINE_STAGE_TESSELLATION_CONTROL_SHADER_BIT",
+                   pure VK_PIPELINE_STAGE_TESSELLATION_CONTROL_SHADER_BIT),
+                  ("VK_PIPELINE_STAGE_TESSELLATION_EVALUATION_SHADER_BIT",
+                   pure VK_PIPELINE_STAGE_TESSELLATION_EVALUATION_SHADER_BIT),
+                  ("VK_PIPELINE_STAGE_GEOMETRY_SHADER_BIT",
+                   pure VK_PIPELINE_STAGE_GEOMETRY_SHADER_BIT),
+                  ("VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT",
+                   pure VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT),
+                  ("VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT",
+                   pure VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT),
+                  ("VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT",
+                   pure VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT),
+                  ("VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT",
+                   pure VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT),
+                  ("VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT",
+                   pure VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT),
+                  ("VK_PIPELINE_STAGE_TRANSFER_BIT",
+                   pure VK_PIPELINE_STAGE_TRANSFER_BIT),
+                  ("VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT",
+                   pure VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT),
+                  ("VK_PIPELINE_STAGE_HOST_BIT", pure VK_PIPELINE_STAGE_HOST_BIT),
+                  ("VK_PIPELINE_STAGE_ALL_GRAPHICS_BIT",
+                   pure VK_PIPELINE_STAGE_ALL_GRAPHICS_BIT),
+                  ("VK_PIPELINE_STAGE_ALL_COMMANDS_BIT",
+                   pure VK_PIPELINE_STAGE_ALL_COMMANDS_BIT)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkPipelineStageFlagBits") >>
+                      (VkPipelineStageFlagBits <$> step readPrec)))
+
+-- | Before subsequent commands are processed
+--
+--   bitpos = @0@
+pattern VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT ::
+        VkPipelineStageFlagBits
+
+pattern VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT =
+        VkPipelineStageFlagBits 1
+
+-- | Draw/DispatchIndirect command fetch
+--
+--   bitpos = @1@
+pattern VK_PIPELINE_STAGE_DRAW_INDIRECT_BIT ::
+        VkPipelineStageFlagBits
+
+pattern VK_PIPELINE_STAGE_DRAW_INDIRECT_BIT =
+        VkPipelineStageFlagBits 2
+
+-- | Vertex/index fetch
+--
+--   bitpos = @2@
+pattern VK_PIPELINE_STAGE_VERTEX_INPUT_BIT ::
+        VkPipelineStageFlagBits
+
+pattern VK_PIPELINE_STAGE_VERTEX_INPUT_BIT =
+        VkPipelineStageFlagBits 4
+
+-- | Vertex shading
+--
+--   bitpos = @3@
+pattern VK_PIPELINE_STAGE_VERTEX_SHADER_BIT ::
+        VkPipelineStageFlagBits
+
+pattern VK_PIPELINE_STAGE_VERTEX_SHADER_BIT =
+        VkPipelineStageFlagBits 8
+
+-- | Tessellation control shading
+--
+--   bitpos = @4@
+pattern VK_PIPELINE_STAGE_TESSELLATION_CONTROL_SHADER_BIT ::
+        VkPipelineStageFlagBits
+
+pattern VK_PIPELINE_STAGE_TESSELLATION_CONTROL_SHADER_BIT =
+        VkPipelineStageFlagBits 16
+
+-- | Tessellation evaluation shading
+--
+--   bitpos = @5@
+pattern VK_PIPELINE_STAGE_TESSELLATION_EVALUATION_SHADER_BIT ::
+        VkPipelineStageFlagBits
+
+pattern VK_PIPELINE_STAGE_TESSELLATION_EVALUATION_SHADER_BIT =
+        VkPipelineStageFlagBits 32
+
+-- | Geometry shading
+--
+--   bitpos = @6@
+pattern VK_PIPELINE_STAGE_GEOMETRY_SHADER_BIT ::
+        VkPipelineStageFlagBits
+
+pattern VK_PIPELINE_STAGE_GEOMETRY_SHADER_BIT =
+        VkPipelineStageFlagBits 64
+
+-- | Fragment shading
+--
+--   bitpos = @7@
+pattern VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT ::
+        VkPipelineStageFlagBits
+
+pattern VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT =
+        VkPipelineStageFlagBits 128
+
+-- | Early fragment (depth and stencil) tests
+--
+--   bitpos = @8@
+pattern VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT ::
+        VkPipelineStageFlagBits
+
+pattern VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT =
+        VkPipelineStageFlagBits 256
+
+-- | Late fragment (depth and stencil) tests
+--
+--   bitpos = @9@
+pattern VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT ::
+        VkPipelineStageFlagBits
+
+pattern VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT =
+        VkPipelineStageFlagBits 512
+
+-- | Color attachment writes
+--
+--   bitpos = @10@
+pattern VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT ::
+        VkPipelineStageFlagBits
+
+pattern VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT =
+        VkPipelineStageFlagBits 1024
+
+-- | Compute shading
+--
+--   bitpos = @11@
+pattern VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT ::
+        VkPipelineStageFlagBits
+
+pattern VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT =
+        VkPipelineStageFlagBits 2048
+
+-- | Transfer/copy operations
+--
+--   bitpos = @12@
+pattern VK_PIPELINE_STAGE_TRANSFER_BIT :: VkPipelineStageFlagBits
+
+pattern VK_PIPELINE_STAGE_TRANSFER_BIT =
+        VkPipelineStageFlagBits 4096
+
+-- | After previous commands have completed
+--
+--   bitpos = @13@
+pattern VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT ::
+        VkPipelineStageFlagBits
+
+pattern VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT =
+        VkPipelineStageFlagBits 8192
+
+-- | Indicates host (CPU) is a source/sink of the dependency
+--
+--   bitpos = @14@
+pattern VK_PIPELINE_STAGE_HOST_BIT :: VkPipelineStageFlagBits
+
+pattern VK_PIPELINE_STAGE_HOST_BIT = VkPipelineStageFlagBits 16384
+
+-- | All stages of the graphics pipeline
+--
+--   bitpos = @15@
+pattern VK_PIPELINE_STAGE_ALL_GRAPHICS_BIT ::
+        VkPipelineStageFlagBits
+
+pattern VK_PIPELINE_STAGE_ALL_GRAPHICS_BIT =
+        VkPipelineStageFlagBits 32768
+
+-- | All stages supported on the queue
+--
+--   bitpos = @16@
+pattern VK_PIPELINE_STAGE_ALL_COMMANDS_BIT ::
+        VkPipelineStageFlagBits
+
+pattern VK_PIPELINE_STAGE_ALL_COMMANDS_BIT =
+        VkPipelineStageFlagBits 65536
+
+type VkPipelineStageFlags = VkPipelineStageFlagBits
+
+newtype VkPipelineTessellationStateCreateFlagBits = VkPipelineTessellationStateCreateFlagBits VkFlags
+                                                      deriving (Eq, Ord, Num, Bounded, Enum,
+                                                                Integral, Bits, FiniteBits,
+                                                                Storable, Real, Data, Generic)
+
+instance Show VkPipelineTessellationStateCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkPipelineTessellationStateCreateFlagBits x) = show x
+
+instance Read VkPipelineTessellationStateCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineTessellationStateCreateFlags = VkPipelineTessellationStateCreateFlags VkFlags
+                                                   deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                             Bits, FiniteBits, Storable, Real, Data,
+                                                             Generic)
+
+instance Show VkPipelineTessellationStateCreateFlags where
+        {-# INLINE show #-}
+        show (VkPipelineTessellationStateCreateFlags x) = show x
+
+instance Read VkPipelineTessellationStateCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineVertexInputStateCreateFlagBits = VkPipelineVertexInputStateCreateFlagBits VkFlags
+                                                     deriving (Eq, Ord, Num, Bounded, Enum,
+                                                               Integral, Bits, FiniteBits, Storable,
+                                                               Real, Data, Generic)
+
+instance Show VkPipelineVertexInputStateCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkPipelineVertexInputStateCreateFlagBits x) = show x
+
+instance Read VkPipelineVertexInputStateCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineVertexInputStateCreateFlags = VkPipelineVertexInputStateCreateFlags VkFlags
+                                                  deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                            Bits, FiniteBits, Storable, Real, Data,
+                                                            Generic)
+
+instance Show VkPipelineVertexInputStateCreateFlags where
+        {-# INLINE show #-}
+        show (VkPipelineVertexInputStateCreateFlags x) = show x
+
+instance Read VkPipelineVertexInputStateCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineViewportStateCreateFlagBits = VkPipelineViewportStateCreateFlagBits VkFlags
+                                                  deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                            Bits, FiniteBits, Storable, Real, Data,
+                                                            Generic)
+
+instance Show VkPipelineViewportStateCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkPipelineViewportStateCreateFlagBits x) = show x
+
+instance Read VkPipelineViewportStateCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineViewportStateCreateFlags = VkPipelineViewportStateCreateFlags VkFlags
+                                               deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                         Bits, FiniteBits, Storable, Real, Data,
+                                                         Generic)
+
+instance Show VkPipelineViewportStateCreateFlags where
+        {-# INLINE show #-}
+        show (VkPipelineViewportStateCreateFlags x) = show x
+
+instance Read VkPipelineViewportStateCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPipelineViewportSwizzleStateCreateFlagsNV = VkPipelineViewportSwizzleStateCreateFlagsNV VkFlags
+                                                        deriving (Eq, Ord, Num, Bounded, Enum,
+                                                                  Integral, Bits, FiniteBits,
+                                                                  Storable, Real, Data, Generic)
+
+instance Show VkPipelineViewportSwizzleStateCreateFlagsNV where
+        {-# INLINE show #-}
+        show (VkPipelineViewportSwizzleStateCreateFlagsNV x) = show x
+
+instance Read VkPipelineViewportSwizzleStateCreateFlagsNV where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPrimitiveTopology.html VkPrimitiveTopology registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPointClippingBehaviorKHR.html VkPointClippingBehaviorKHR registry at www.khronos.org>
+newtype VkPointClippingBehaviorKHR = VkPointClippingBehaviorKHR Int32
+                                       deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
+                                                 Generic)
+
+instance Show VkPointClippingBehaviorKHR where
+        showsPrec _ VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES_KHR
+          = showString "VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES_KHR"
+        showsPrec _ VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY_KHR
+          = showString "VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY_KHR"
+        showsPrec p (VkPointClippingBehaviorKHR x)
+          = showParen (p >= 11)
+              (showString "VkPointClippingBehaviorKHR " . showsPrec 11 x)
+
+instance Read VkPointClippingBehaviorKHR where
+        readPrec
+          = parens
+              (choose
+                 [("VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES_KHR",
+                   pure VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES_KHR),
+                  ("VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY_KHR",
+                   pure VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY_KHR)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkPointClippingBehaviorKHR") >>
+                      (VkPointClippingBehaviorKHR <$> step readPrec)))
+
+pattern VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES_KHR ::
+        VkPointClippingBehaviorKHR
+
+pattern VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES_KHR =
+        VkPointClippingBehaviorKHR 0
+
+pattern VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY_KHR ::
+        VkPointClippingBehaviorKHR
+
+pattern VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY_KHR =
+        VkPointClippingBehaviorKHR 1
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPolygonMode.html VkPolygonMode registry at www.khronos.org>
+newtype VkPolygonMode = VkPolygonMode Int32
+                          deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+
+instance Show VkPolygonMode where
+        showsPrec _ VK_POLYGON_MODE_FILL
+          = showString "VK_POLYGON_MODE_FILL"
+        showsPrec _ VK_POLYGON_MODE_LINE
+          = showString "VK_POLYGON_MODE_LINE"
+        showsPrec _ VK_POLYGON_MODE_POINT
+          = showString "VK_POLYGON_MODE_POINT"
+        showsPrec p (VkPolygonMode x)
+          = showParen (p >= 11)
+              (showString "VkPolygonMode " . showsPrec 11 x)
+
+instance Read VkPolygonMode where
+        readPrec
+          = parens
+              (choose
+                 [("VK_POLYGON_MODE_FILL", pure VK_POLYGON_MODE_FILL),
+                  ("VK_POLYGON_MODE_LINE", pure VK_POLYGON_MODE_LINE),
+                  ("VK_POLYGON_MODE_POINT", pure VK_POLYGON_MODE_POINT)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkPolygonMode") >>
+                      (VkPolygonMode <$> step readPrec)))
+
+pattern VK_POLYGON_MODE_FILL :: VkPolygonMode
+
+pattern VK_POLYGON_MODE_FILL = VkPolygonMode 0
+
+pattern VK_POLYGON_MODE_LINE :: VkPolygonMode
+
+pattern VK_POLYGON_MODE_LINE = VkPolygonMode 1
+
+pattern VK_POLYGON_MODE_POINT :: VkPolygonMode
+
+pattern VK_POLYGON_MODE_POINT = VkPolygonMode 2
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPresentModeKHR.html VkPresentModeKHR registry at www.khronos.org>
+newtype VkPresentModeKHR = VkPresentModeKHR Int32
+                             deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+
+instance Show VkPresentModeKHR where
+        showsPrec _ VK_PRESENT_MODE_IMMEDIATE_KHR
+          = showString "VK_PRESENT_MODE_IMMEDIATE_KHR"
+        showsPrec _ VK_PRESENT_MODE_MAILBOX_KHR
+          = showString "VK_PRESENT_MODE_MAILBOX_KHR"
+        showsPrec _ VK_PRESENT_MODE_FIFO_KHR
+          = showString "VK_PRESENT_MODE_FIFO_KHR"
+        showsPrec _ VK_PRESENT_MODE_FIFO_RELAXED_KHR
+          = showString "VK_PRESENT_MODE_FIFO_RELAXED_KHR"
+        showsPrec p (VkPresentModeKHR x)
+          = showParen (p >= 11)
+              (showString "VkPresentModeKHR " . showsPrec 11 x)
+
+instance Read VkPresentModeKHR where
+        readPrec
+          = parens
+              (choose
+                 [("VK_PRESENT_MODE_IMMEDIATE_KHR",
+                   pure VK_PRESENT_MODE_IMMEDIATE_KHR),
+                  ("VK_PRESENT_MODE_MAILBOX_KHR", pure VK_PRESENT_MODE_MAILBOX_KHR),
+                  ("VK_PRESENT_MODE_FIFO_KHR", pure VK_PRESENT_MODE_FIFO_KHR),
+                  ("VK_PRESENT_MODE_FIFO_RELAXED_KHR",
+                   pure VK_PRESENT_MODE_FIFO_RELAXED_KHR)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkPresentModeKHR") >>
+                      (VkPresentModeKHR <$> step readPrec)))
+
+pattern VK_PRESENT_MODE_IMMEDIATE_KHR :: VkPresentModeKHR
+
+pattern VK_PRESENT_MODE_IMMEDIATE_KHR = VkPresentModeKHR 0
+
+pattern VK_PRESENT_MODE_MAILBOX_KHR :: VkPresentModeKHR
+
+pattern VK_PRESENT_MODE_MAILBOX_KHR = VkPresentModeKHR 1
+
+pattern VK_PRESENT_MODE_FIFO_KHR :: VkPresentModeKHR
+
+pattern VK_PRESENT_MODE_FIFO_KHR = VkPresentModeKHR 2
+
+pattern VK_PRESENT_MODE_FIFO_RELAXED_KHR :: VkPresentModeKHR
+
+pattern VK_PRESENT_MODE_FIFO_RELAXED_KHR = VkPresentModeKHR 3
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPrimitiveTopology.html VkPrimitiveTopology registry at www.khronos.org>
 newtype VkPrimitiveTopology = VkPrimitiveTopology Int32
                                 deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
@@ -6532,7 +9304,7 @@ pattern VK_PRIMITIVE_TOPOLOGY_PATCH_LIST = VkPrimitiveTopology 10
 
 -- | type = @bitmask@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkQueryControlFlagBits.html VkQueryControlFlagBits registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkQueryControlFlagBits.html VkQueryControlFlagBits registry at www.khronos.org>
 newtype VkQueryControlFlagBits = VkQueryControlFlagBits Int32
                                    deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable,
                                              Enum, Data, Generic)
@@ -6562,9 +9334,11 @@ pattern VK_QUERY_CONTROL_PRECISE_BIT :: VkQueryControlFlagBits
 
 pattern VK_QUERY_CONTROL_PRECISE_BIT = VkQueryControlFlagBits 1
 
+type VkQueryControlFlags = VkQueryControlFlagBits
+
 -- | type = @bitmask@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkQueryPipelineStatisticFlagBits.html VkQueryPipelineStatisticFlagBits registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkQueryPipelineStatisticFlagBits.html VkQueryPipelineStatisticFlagBits registry at www.khronos.org>
 newtype VkQueryPipelineStatisticFlagBits = VkQueryPipelineStatisticFlagBits Int32
                                              deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
                                                        Storable, Enum, Data, Generic)
@@ -6745,9 +9519,41 @@ pattern VK_QUERY_PIPELINE_STATISTIC_COMPUTE_SHADER_INVOCATIONS_BIT
 pattern VK_QUERY_PIPELINE_STATISTIC_COMPUTE_SHADER_INVOCATIONS_BIT
         = VkQueryPipelineStatisticFlagBits 1024
 
+type VkQueryPipelineStatisticFlags =
+     VkQueryPipelineStatisticFlagBits
+
+type VkQueryPool = VkPtr VkQueryPool_T
+
+-- | Opaque data type referenced by VkQueryPool
+data VkQueryPool_T
+
+newtype VkQueryPoolCreateFlagBits = VkQueryPoolCreateFlagBits VkFlags
+                                      deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkQueryPoolCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkQueryPoolCreateFlagBits x) = show x
+
+instance Read VkQueryPoolCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkQueryPoolCreateFlags = VkQueryPoolCreateFlags VkFlags
+                                   deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                             FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkQueryPoolCreateFlags where
+        {-# INLINE show #-}
+        show (VkQueryPoolCreateFlags x) = show x
+
+instance Read VkQueryPoolCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
 -- | type = @bitmask@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkQueryResultFlagBits.html VkQueryResultFlagBits registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkQueryResultFlagBits.html VkQueryResultFlagBits registry at www.khronos.org>
 newtype VkQueryResultFlagBits = VkQueryResultFlagBits Int32
                                   deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable, Enum,
                                             Data, Generic)
@@ -6809,9 +9615,11 @@ pattern VK_QUERY_RESULT_PARTIAL_BIT :: VkQueryResultFlagBits
 
 pattern VK_QUERY_RESULT_PARTIAL_BIT = VkQueryResultFlagBits 8
 
+type VkQueryResultFlags = VkQueryResultFlagBits
+
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkQueryType.html VkQueryType registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkQueryType.html VkQueryType registry at www.khronos.org>
 newtype VkQueryType = VkQueryType Int32
                         deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
@@ -6850,9 +9658,14 @@ pattern VK_QUERY_TYPE_TIMESTAMP :: VkQueryType
 
 pattern VK_QUERY_TYPE_TIMESTAMP = VkQueryType 2
 
+type VkQueue = Ptr VkQueue_T
+
+-- | Opaque data type referenced by VkQueue
+data VkQueue_T
+
 -- | type = @bitmask@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkQueueFlagBits.html VkQueueFlagBits registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkQueueFlagBits.html VkQueueFlagBits registry at www.khronos.org>
 newtype VkQueueFlagBits = VkQueueFlagBits Int32
                             deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable, Enum,
                                       Data, Generic)
@@ -6911,49 +9724,143 @@ pattern VK_QUEUE_SPARSE_BINDING_BIT :: VkQueueFlagBits
 
 pattern VK_QUEUE_SPARSE_BINDING_BIT = VkQueueFlagBits 8
 
+type VkQueueFlags = VkQueueFlagBits
+
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSubpassContents.html VkSubpassContents registry at www.khronos.org>
-newtype VkSubpassContents = VkSubpassContents Int32
-                              deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkQueueGlobalPriorityEXT.html VkQueueGlobalPriorityEXT registry at www.khronos.org>
+newtype VkQueueGlobalPriorityEXT = VkQueueGlobalPriorityEXT Int32
+                                     deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
-instance Show VkSubpassContents where
-        showsPrec _ VK_SUBPASS_CONTENTS_INLINE
-          = showString "VK_SUBPASS_CONTENTS_INLINE"
-        showsPrec _ VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS
-          = showString "VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS"
-        showsPrec p (VkSubpassContents x)
+instance Show VkQueueGlobalPriorityEXT where
+        showsPrec _ VK_QUEUE_GLOBAL_PRIORITY_LOW_EXT
+          = showString "VK_QUEUE_GLOBAL_PRIORITY_LOW_EXT"
+        showsPrec _ VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT
+          = showString "VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT"
+        showsPrec _ VK_QUEUE_GLOBAL_PRIORITY_HIGH_EXT
+          = showString "VK_QUEUE_GLOBAL_PRIORITY_HIGH_EXT"
+        showsPrec _ VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT
+          = showString "VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT"
+        showsPrec p (VkQueueGlobalPriorityEXT x)
           = showParen (p >= 11)
-              (showString "VkSubpassContents " . showsPrec 11 x)
+              (showString "VkQueueGlobalPriorityEXT " . showsPrec 11 x)
 
-instance Read VkSubpassContents where
+instance Read VkQueueGlobalPriorityEXT where
         readPrec
           = parens
               (choose
-                 [("VK_SUBPASS_CONTENTS_INLINE", pure VK_SUBPASS_CONTENTS_INLINE),
-                  ("VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS",
-                   pure VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS)]
+                 [("VK_QUEUE_GLOBAL_PRIORITY_LOW_EXT",
+                   pure VK_QUEUE_GLOBAL_PRIORITY_LOW_EXT),
+                  ("VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT",
+                   pure VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT),
+                  ("VK_QUEUE_GLOBAL_PRIORITY_HIGH_EXT",
+                   pure VK_QUEUE_GLOBAL_PRIORITY_HIGH_EXT),
+                  ("VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT",
+                   pure VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT)]
                  +++
                  prec 10
-                   (expectP (Ident "VkSubpassContents") >>
-                      (VkSubpassContents <$> step readPrec)))
+                   (expectP (Ident "VkQueueGlobalPriorityEXT") >>
+                      (VkQueueGlobalPriorityEXT <$> step readPrec)))
 
-pattern VK_SUBPASS_CONTENTS_INLINE :: VkSubpassContents
+pattern VK_QUEUE_GLOBAL_PRIORITY_LOW_EXT ::
+        VkQueueGlobalPriorityEXT
 
-pattern VK_SUBPASS_CONTENTS_INLINE = VkSubpassContents 0
+pattern VK_QUEUE_GLOBAL_PRIORITY_LOW_EXT =
+        VkQueueGlobalPriorityEXT 128
 
-pattern VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS ::
-        VkSubpassContents
+pattern VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT ::
+        VkQueueGlobalPriorityEXT
 
-pattern VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS =
-        VkSubpassContents 1
+pattern VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT =
+        VkQueueGlobalPriorityEXT 256
+
+pattern VK_QUEUE_GLOBAL_PRIORITY_HIGH_EXT ::
+        VkQueueGlobalPriorityEXT
+
+pattern VK_QUEUE_GLOBAL_PRIORITY_HIGH_EXT =
+        VkQueueGlobalPriorityEXT 512
+
+pattern VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT ::
+        VkQueueGlobalPriorityEXT
+
+pattern VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT =
+        VkQueueGlobalPriorityEXT 1024
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkRasterizationOrderAMD.html VkRasterizationOrderAMD registry at www.khronos.org>
+newtype VkRasterizationOrderAMD = VkRasterizationOrderAMD Int32
+                                    deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+
+instance Show VkRasterizationOrderAMD where
+        showsPrec _ VK_RASTERIZATION_ORDER_STRICT_AMD
+          = showString "VK_RASTERIZATION_ORDER_STRICT_AMD"
+        showsPrec _ VK_RASTERIZATION_ORDER_RELAXED_AMD
+          = showString "VK_RASTERIZATION_ORDER_RELAXED_AMD"
+        showsPrec p (VkRasterizationOrderAMD x)
+          = showParen (p >= 11)
+              (showString "VkRasterizationOrderAMD " . showsPrec 11 x)
+
+instance Read VkRasterizationOrderAMD where
+        readPrec
+          = parens
+              (choose
+                 [("VK_RASTERIZATION_ORDER_STRICT_AMD",
+                   pure VK_RASTERIZATION_ORDER_STRICT_AMD),
+                  ("VK_RASTERIZATION_ORDER_RELAXED_AMD",
+                   pure VK_RASTERIZATION_ORDER_RELAXED_AMD)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkRasterizationOrderAMD") >>
+                      (VkRasterizationOrderAMD <$> step readPrec)))
+
+pattern VK_RASTERIZATION_ORDER_STRICT_AMD ::
+        VkRasterizationOrderAMD
+
+pattern VK_RASTERIZATION_ORDER_STRICT_AMD =
+        VkRasterizationOrderAMD 0
+
+pattern VK_RASTERIZATION_ORDER_RELAXED_AMD ::
+        VkRasterizationOrderAMD
+
+pattern VK_RASTERIZATION_ORDER_RELAXED_AMD =
+        VkRasterizationOrderAMD 1
+
+type VkRenderPass = VkPtr VkRenderPass_T
+
+-- | Opaque data type referenced by VkRenderPass
+data VkRenderPass_T
+
+newtype VkRenderPassCreateFlagBits = VkRenderPassCreateFlagBits VkFlags
+                                       deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                 FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkRenderPassCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkRenderPassCreateFlagBits x) = show x
+
+instance Read VkRenderPassCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkRenderPassCreateFlags = VkRenderPassCreateFlags VkFlags
+                                    deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                              FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkRenderPassCreateFlags where
+        {-# INLINE show #-}
+        show (VkRenderPassCreateFlags x) = show x
+
+instance Read VkRenderPassCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
 -- | API result codes
 --
 --   type = @enum@
 --
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkResult.html VkResult registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkResult.html VkResult registry at www.khronos.org>
 newtype VkResult = VkResult Int32
                      deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
@@ -7115,7 +10022,523 @@ pattern VK_ERROR_FRAGMENTED_POOL = VkResult (-12)
 
 -- | type = @bitmask@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkShaderStageFlagBits.html VkShaderStageFlagBits registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSampleCountFlagBits.html VkSampleCountFlagBits registry at www.khronos.org>
+newtype VkSampleCountFlagBits = VkSampleCountFlagBits Int32
+                                  deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable, Enum,
+                                            Data, Generic)
+
+instance Show VkSampleCountFlagBits where
+        showsPrec _ VK_SAMPLE_COUNT_1_BIT
+          = showString "VK_SAMPLE_COUNT_1_BIT"
+        showsPrec _ VK_SAMPLE_COUNT_2_BIT
+          = showString "VK_SAMPLE_COUNT_2_BIT"
+        showsPrec _ VK_SAMPLE_COUNT_4_BIT
+          = showString "VK_SAMPLE_COUNT_4_BIT"
+        showsPrec _ VK_SAMPLE_COUNT_8_BIT
+          = showString "VK_SAMPLE_COUNT_8_BIT"
+        showsPrec _ VK_SAMPLE_COUNT_16_BIT
+          = showString "VK_SAMPLE_COUNT_16_BIT"
+        showsPrec _ VK_SAMPLE_COUNT_32_BIT
+          = showString "VK_SAMPLE_COUNT_32_BIT"
+        showsPrec _ VK_SAMPLE_COUNT_64_BIT
+          = showString "VK_SAMPLE_COUNT_64_BIT"
+        showsPrec p (VkSampleCountFlagBits x)
+          = showParen (p >= 11)
+              (showString "VkSampleCountFlagBits " . showsPrec 11 x)
+
+instance Read VkSampleCountFlagBits where
+        readPrec
+          = parens
+              (choose
+                 [("VK_SAMPLE_COUNT_1_BIT", pure VK_SAMPLE_COUNT_1_BIT),
+                  ("VK_SAMPLE_COUNT_2_BIT", pure VK_SAMPLE_COUNT_2_BIT),
+                  ("VK_SAMPLE_COUNT_4_BIT", pure VK_SAMPLE_COUNT_4_BIT),
+                  ("VK_SAMPLE_COUNT_8_BIT", pure VK_SAMPLE_COUNT_8_BIT),
+                  ("VK_SAMPLE_COUNT_16_BIT", pure VK_SAMPLE_COUNT_16_BIT),
+                  ("VK_SAMPLE_COUNT_32_BIT", pure VK_SAMPLE_COUNT_32_BIT),
+                  ("VK_SAMPLE_COUNT_64_BIT", pure VK_SAMPLE_COUNT_64_BIT)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkSampleCountFlagBits") >>
+                      (VkSampleCountFlagBits <$> step readPrec)))
+
+-- | Sample count 1 supported
+--
+--   bitpos = @0@
+pattern VK_SAMPLE_COUNT_1_BIT :: VkSampleCountFlagBits
+
+pattern VK_SAMPLE_COUNT_1_BIT = VkSampleCountFlagBits 1
+
+-- | Sample count 2 supported
+--
+--   bitpos = @1@
+pattern VK_SAMPLE_COUNT_2_BIT :: VkSampleCountFlagBits
+
+pattern VK_SAMPLE_COUNT_2_BIT = VkSampleCountFlagBits 2
+
+-- | Sample count 4 supported
+--
+--   bitpos = @2@
+pattern VK_SAMPLE_COUNT_4_BIT :: VkSampleCountFlagBits
+
+pattern VK_SAMPLE_COUNT_4_BIT = VkSampleCountFlagBits 4
+
+-- | Sample count 8 supported
+--
+--   bitpos = @3@
+pattern VK_SAMPLE_COUNT_8_BIT :: VkSampleCountFlagBits
+
+pattern VK_SAMPLE_COUNT_8_BIT = VkSampleCountFlagBits 8
+
+-- | Sample count 16 supported
+--
+--   bitpos = @4@
+pattern VK_SAMPLE_COUNT_16_BIT :: VkSampleCountFlagBits
+
+pattern VK_SAMPLE_COUNT_16_BIT = VkSampleCountFlagBits 16
+
+-- | Sample count 32 supported
+--
+--   bitpos = @5@
+pattern VK_SAMPLE_COUNT_32_BIT :: VkSampleCountFlagBits
+
+pattern VK_SAMPLE_COUNT_32_BIT = VkSampleCountFlagBits 32
+
+-- | Sample count 64 supported
+--
+--   bitpos = @6@
+pattern VK_SAMPLE_COUNT_64_BIT :: VkSampleCountFlagBits
+
+pattern VK_SAMPLE_COUNT_64_BIT = VkSampleCountFlagBits 64
+
+type VkSampleCountFlags = VkSampleCountFlagBits
+
+newtype VkSampleMask = VkSampleMask Word32
+                         deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits, FiniteBits,
+                                   Storable, Real, Data, Generic)
+
+instance Show VkSampleMask where
+        {-# INLINE show #-}
+        show (VkSampleMask x) = show x
+
+instance Read VkSampleMask where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS Word32)
+
+type VkSampler = VkPtr VkSampler_T
+
+-- | Opaque data type referenced by VkSampler
+data VkSampler_T
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSamplerAddressMode.html VkSamplerAddressMode registry at www.khronos.org>
+newtype VkSamplerAddressMode = VkSamplerAddressMode Int32
+                                 deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+
+instance Show VkSamplerAddressMode where
+        showsPrec _ VK_SAMPLER_ADDRESS_MODE_REPEAT
+          = showString "VK_SAMPLER_ADDRESS_MODE_REPEAT"
+        showsPrec _ VK_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT
+          = showString "VK_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT"
+        showsPrec _ VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE
+          = showString "VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE"
+        showsPrec _ VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER
+          = showString "VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER"
+        showsPrec p (VkSamplerAddressMode x)
+          = showParen (p >= 11)
+              (showString "VkSamplerAddressMode " . showsPrec 11 x)
+
+instance Read VkSamplerAddressMode where
+        readPrec
+          = parens
+              (choose
+                 [("VK_SAMPLER_ADDRESS_MODE_REPEAT",
+                   pure VK_SAMPLER_ADDRESS_MODE_REPEAT),
+                  ("VK_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT",
+                   pure VK_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT),
+                  ("VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE",
+                   pure VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE),
+                  ("VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER",
+                   pure VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkSamplerAddressMode") >>
+                      (VkSamplerAddressMode <$> step readPrec)))
+
+pattern VK_SAMPLER_ADDRESS_MODE_REPEAT :: VkSamplerAddressMode
+
+pattern VK_SAMPLER_ADDRESS_MODE_REPEAT = VkSamplerAddressMode 0
+
+pattern VK_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT ::
+        VkSamplerAddressMode
+
+pattern VK_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT =
+        VkSamplerAddressMode 1
+
+pattern VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE ::
+        VkSamplerAddressMode
+
+pattern VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE =
+        VkSamplerAddressMode 2
+
+pattern VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER ::
+        VkSamplerAddressMode
+
+pattern VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER =
+        VkSamplerAddressMode 3
+
+newtype VkSamplerCreateFlagBits = VkSamplerCreateFlagBits VkFlags
+                                    deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                              FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkSamplerCreateFlagBits where
+        {-# INLINE show #-}
+        show (VkSamplerCreateFlagBits x) = show x
+
+instance Read VkSamplerCreateFlagBits where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkSamplerCreateFlags = VkSamplerCreateFlags VkFlags
+                                 deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits, FiniteBits,
+                                           Storable, Real, Data, Generic)
+
+instance Show VkSamplerCreateFlags where
+        {-# INLINE show #-}
+        show (VkSamplerCreateFlags x) = show x
+
+instance Read VkSamplerCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSamplerMipmapMode.html VkSamplerMipmapMode registry at www.khronos.org>
+newtype VkSamplerMipmapMode = VkSamplerMipmapMode Int32
+                                deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+
+instance Show VkSamplerMipmapMode where
+        showsPrec _ VK_SAMPLER_MIPMAP_MODE_NEAREST
+          = showString "VK_SAMPLER_MIPMAP_MODE_NEAREST"
+        showsPrec _ VK_SAMPLER_MIPMAP_MODE_LINEAR
+          = showString "VK_SAMPLER_MIPMAP_MODE_LINEAR"
+        showsPrec p (VkSamplerMipmapMode x)
+          = showParen (p >= 11)
+              (showString "VkSamplerMipmapMode " . showsPrec 11 x)
+
+instance Read VkSamplerMipmapMode where
+        readPrec
+          = parens
+              (choose
+                 [("VK_SAMPLER_MIPMAP_MODE_NEAREST",
+                   pure VK_SAMPLER_MIPMAP_MODE_NEAREST),
+                  ("VK_SAMPLER_MIPMAP_MODE_LINEAR",
+                   pure VK_SAMPLER_MIPMAP_MODE_LINEAR)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkSamplerMipmapMode") >>
+                      (VkSamplerMipmapMode <$> step readPrec)))
+
+-- | Choose nearest mip level
+pattern VK_SAMPLER_MIPMAP_MODE_NEAREST :: VkSamplerMipmapMode
+
+pattern VK_SAMPLER_MIPMAP_MODE_NEAREST = VkSamplerMipmapMode 0
+
+-- | Linear filter between mip levels
+pattern VK_SAMPLER_MIPMAP_MODE_LINEAR :: VkSamplerMipmapMode
+
+pattern VK_SAMPLER_MIPMAP_MODE_LINEAR = VkSamplerMipmapMode 1
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSamplerReductionModeEXT.html VkSamplerReductionModeEXT registry at www.khronos.org>
+newtype VkSamplerReductionModeEXT = VkSamplerReductionModeEXT Int32
+                                      deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
+                                                Generic)
+
+instance Show VkSamplerReductionModeEXT where
+        showsPrec _ VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT
+          = showString "VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT"
+        showsPrec _ VK_SAMPLER_REDUCTION_MODE_MIN_EXT
+          = showString "VK_SAMPLER_REDUCTION_MODE_MIN_EXT"
+        showsPrec _ VK_SAMPLER_REDUCTION_MODE_MAX_EXT
+          = showString "VK_SAMPLER_REDUCTION_MODE_MAX_EXT"
+        showsPrec p (VkSamplerReductionModeEXT x)
+          = showParen (p >= 11)
+              (showString "VkSamplerReductionModeEXT " . showsPrec 11 x)
+
+instance Read VkSamplerReductionModeEXT where
+        readPrec
+          = parens
+              (choose
+                 [("VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT",
+                   pure VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT),
+                  ("VK_SAMPLER_REDUCTION_MODE_MIN_EXT",
+                   pure VK_SAMPLER_REDUCTION_MODE_MIN_EXT),
+                  ("VK_SAMPLER_REDUCTION_MODE_MAX_EXT",
+                   pure VK_SAMPLER_REDUCTION_MODE_MAX_EXT)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkSamplerReductionModeEXT") >>
+                      (VkSamplerReductionModeEXT <$> step readPrec)))
+
+pattern VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT ::
+        VkSamplerReductionModeEXT
+
+pattern VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT =
+        VkSamplerReductionModeEXT 0
+
+pattern VK_SAMPLER_REDUCTION_MODE_MIN_EXT ::
+        VkSamplerReductionModeEXT
+
+pattern VK_SAMPLER_REDUCTION_MODE_MIN_EXT =
+        VkSamplerReductionModeEXT 1
+
+pattern VK_SAMPLER_REDUCTION_MODE_MAX_EXT ::
+        VkSamplerReductionModeEXT
+
+pattern VK_SAMPLER_REDUCTION_MODE_MAX_EXT =
+        VkSamplerReductionModeEXT 2
+
+type VkSamplerYcbcrConversionKHR =
+     VkPtr VkSamplerYcbcrConversionKHR_T
+
+-- | Opaque data type referenced by VkSamplerYcbcrConversionKHR
+data VkSamplerYcbcrConversionKHR_T
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSamplerYcbcrModelConversionKHR.html VkSamplerYcbcrModelConversionKHR registry at www.khronos.org>
+newtype VkSamplerYcbcrModelConversionKHR = VkSamplerYcbcrModelConversionKHR Int32
+                                             deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
+                                                       Generic)
+
+instance Show VkSamplerYcbcrModelConversionKHR where
+        showsPrec _ VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY_KHR
+          = showString "VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY_KHR"
+        showsPrec _ VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_IDENTITY_KHR
+          = showString "VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_IDENTITY_KHR"
+        showsPrec _ VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_709_KHR
+          = showString "VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_709_KHR"
+        showsPrec _ VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_601_KHR
+          = showString "VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_601_KHR"
+        showsPrec _ VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_2020_KHR
+          = showString "VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_2020_KHR"
+        showsPrec p (VkSamplerYcbcrModelConversionKHR x)
+          = showParen (p >= 11)
+              (showString "VkSamplerYcbcrModelConversionKHR " . showsPrec 11 x)
+
+instance Read VkSamplerYcbcrModelConversionKHR where
+        readPrec
+          = parens
+              (choose
+                 [("VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY_KHR",
+                   pure VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY_KHR),
+                  ("VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_IDENTITY_KHR",
+                   pure VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_IDENTITY_KHR),
+                  ("VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_709_KHR",
+                   pure VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_709_KHR),
+                  ("VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_601_KHR",
+                   pure VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_601_KHR),
+                  ("VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_2020_KHR",
+                   pure VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_2020_KHR)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkSamplerYcbcrModelConversionKHR") >>
+                      (VkSamplerYcbcrModelConversionKHR <$> step readPrec)))
+
+pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY_KHR ::
+        VkSamplerYcbcrModelConversionKHR
+
+pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY_KHR =
+        VkSamplerYcbcrModelConversionKHR 0
+
+-- | just range expansion
+pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_IDENTITY_KHR ::
+        VkSamplerYcbcrModelConversionKHR
+
+pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_IDENTITY_KHR =
+        VkSamplerYcbcrModelConversionKHR 1
+
+-- | aka HD YUV
+pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_709_KHR ::
+        VkSamplerYcbcrModelConversionKHR
+
+pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_709_KHR =
+        VkSamplerYcbcrModelConversionKHR 2
+
+-- | aka SD YUV
+pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_601_KHR ::
+        VkSamplerYcbcrModelConversionKHR
+
+pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_601_KHR =
+        VkSamplerYcbcrModelConversionKHR 3
+
+-- | aka UHD YUV
+pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_2020_KHR ::
+        VkSamplerYcbcrModelConversionKHR
+
+pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_2020_KHR =
+        VkSamplerYcbcrModelConversionKHR 4
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSamplerYcbcrRangeKHR.html VkSamplerYcbcrRangeKHR registry at www.khronos.org>
+newtype VkSamplerYcbcrRangeKHR = VkSamplerYcbcrRangeKHR Int32
+                                   deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+
+instance Show VkSamplerYcbcrRangeKHR where
+        showsPrec _ VK_SAMPLER_YCBCR_RANGE_ITU_FULL_KHR
+          = showString "VK_SAMPLER_YCBCR_RANGE_ITU_FULL_KHR"
+        showsPrec _ VK_SAMPLER_YCBCR_RANGE_ITU_NARROW_KHR
+          = showString "VK_SAMPLER_YCBCR_RANGE_ITU_NARROW_KHR"
+        showsPrec p (VkSamplerYcbcrRangeKHR x)
+          = showParen (p >= 11)
+              (showString "VkSamplerYcbcrRangeKHR " . showsPrec 11 x)
+
+instance Read VkSamplerYcbcrRangeKHR where
+        readPrec
+          = parens
+              (choose
+                 [("VK_SAMPLER_YCBCR_RANGE_ITU_FULL_KHR",
+                   pure VK_SAMPLER_YCBCR_RANGE_ITU_FULL_KHR),
+                  ("VK_SAMPLER_YCBCR_RANGE_ITU_NARROW_KHR",
+                   pure VK_SAMPLER_YCBCR_RANGE_ITU_NARROW_KHR)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkSamplerYcbcrRangeKHR") >>
+                      (VkSamplerYcbcrRangeKHR <$> step readPrec)))
+
+-- | Luma 0..1 maps to 0..255, chroma -0.5..0.5 to 1..255 (clamped)
+pattern VK_SAMPLER_YCBCR_RANGE_ITU_FULL_KHR ::
+        VkSamplerYcbcrRangeKHR
+
+pattern VK_SAMPLER_YCBCR_RANGE_ITU_FULL_KHR =
+        VkSamplerYcbcrRangeKHR 0
+
+-- | Luma 0..1 maps to 16..235, chroma -0.5..0.5 to 16..240
+pattern VK_SAMPLER_YCBCR_RANGE_ITU_NARROW_KHR ::
+        VkSamplerYcbcrRangeKHR
+
+pattern VK_SAMPLER_YCBCR_RANGE_ITU_NARROW_KHR =
+        VkSamplerYcbcrRangeKHR 1
+
+type VkSemaphore = VkPtr VkSemaphore_T
+
+-- | Opaque data type referenced by VkSemaphore
+data VkSemaphore_T
+
+newtype VkSemaphoreCreateFlags = VkSemaphoreCreateFlags VkFlags
+                                   deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                             FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkSemaphoreCreateFlags where
+        {-# INLINE show #-}
+        show (VkSemaphoreCreateFlags x) = show x
+
+instance Read VkSemaphoreCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSemaphoreImportFlagBitsKHR.html VkSemaphoreImportFlagBitsKHR registry at www.khronos.org>
+newtype VkSemaphoreImportFlagBitsKHR = VkSemaphoreImportFlagBitsKHR Int32
+                                         deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
+                                                   Storable, Enum, Data, Generic)
+
+instance Show VkSemaphoreImportFlagBitsKHR where
+        showsPrec _ VK_SEMAPHORE_IMPORT_TEMPORARY_BIT_KHR
+          = showString "VK_SEMAPHORE_IMPORT_TEMPORARY_BIT_KHR"
+        showsPrec p (VkSemaphoreImportFlagBitsKHR x)
+          = showParen (p >= 11)
+              (showString "VkSemaphoreImportFlagBitsKHR " . showsPrec 11 x)
+
+instance Read VkSemaphoreImportFlagBitsKHR where
+        readPrec
+          = parens
+              (choose
+                 [("VK_SEMAPHORE_IMPORT_TEMPORARY_BIT_KHR",
+                   pure VK_SEMAPHORE_IMPORT_TEMPORARY_BIT_KHR)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkSemaphoreImportFlagBitsKHR") >>
+                      (VkSemaphoreImportFlagBitsKHR <$> step readPrec)))
+
+-- | bitpos = @0@
+pattern VK_SEMAPHORE_IMPORT_TEMPORARY_BIT_KHR ::
+        VkSemaphoreImportFlagBitsKHR
+
+pattern VK_SEMAPHORE_IMPORT_TEMPORARY_BIT_KHR =
+        VkSemaphoreImportFlagBitsKHR 1
+
+type VkSemaphoreImportFlagsKHR = VkSemaphoreImportFlagBitsKHR
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkShaderInfoTypeAMD.html VkShaderInfoTypeAMD registry at www.khronos.org>
+newtype VkShaderInfoTypeAMD = VkShaderInfoTypeAMD Int32
+                                deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+
+instance Show VkShaderInfoTypeAMD where
+        showsPrec _ VK_SHADER_INFO_TYPE_STATISTICS_AMD
+          = showString "VK_SHADER_INFO_TYPE_STATISTICS_AMD"
+        showsPrec _ VK_SHADER_INFO_TYPE_BINARY_AMD
+          = showString "VK_SHADER_INFO_TYPE_BINARY_AMD"
+        showsPrec _ VK_SHADER_INFO_TYPE_DISASSEMBLY_AMD
+          = showString "VK_SHADER_INFO_TYPE_DISASSEMBLY_AMD"
+        showsPrec p (VkShaderInfoTypeAMD x)
+          = showParen (p >= 11)
+              (showString "VkShaderInfoTypeAMD " . showsPrec 11 x)
+
+instance Read VkShaderInfoTypeAMD where
+        readPrec
+          = parens
+              (choose
+                 [("VK_SHADER_INFO_TYPE_STATISTICS_AMD",
+                   pure VK_SHADER_INFO_TYPE_STATISTICS_AMD),
+                  ("VK_SHADER_INFO_TYPE_BINARY_AMD",
+                   pure VK_SHADER_INFO_TYPE_BINARY_AMD),
+                  ("VK_SHADER_INFO_TYPE_DISASSEMBLY_AMD",
+                   pure VK_SHADER_INFO_TYPE_DISASSEMBLY_AMD)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkShaderInfoTypeAMD") >>
+                      (VkShaderInfoTypeAMD <$> step readPrec)))
+
+pattern VK_SHADER_INFO_TYPE_STATISTICS_AMD :: VkShaderInfoTypeAMD
+
+pattern VK_SHADER_INFO_TYPE_STATISTICS_AMD = VkShaderInfoTypeAMD 0
+
+pattern VK_SHADER_INFO_TYPE_BINARY_AMD :: VkShaderInfoTypeAMD
+
+pattern VK_SHADER_INFO_TYPE_BINARY_AMD = VkShaderInfoTypeAMD 1
+
+pattern VK_SHADER_INFO_TYPE_DISASSEMBLY_AMD :: VkShaderInfoTypeAMD
+
+pattern VK_SHADER_INFO_TYPE_DISASSEMBLY_AMD = VkShaderInfoTypeAMD 2
+
+type VkShaderModule = VkPtr VkShaderModule_T
+
+-- | Opaque data type referenced by VkShaderModule
+data VkShaderModule_T
+
+newtype VkShaderModuleCreateFlags = VkShaderModuleCreateFlags VkFlags
+                                      deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkShaderModuleCreateFlags where
+        {-# INLINE show #-}
+        show (VkShaderModuleCreateFlags x) = show x
+
+instance Read VkShaderModuleCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkShaderStageFlagBits.html VkShaderStageFlagBits registry at www.khronos.org>
 newtype VkShaderStageFlagBits = VkShaderStageFlagBits Int32
                                   deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable, Enum,
                                             Data, Generic)
@@ -7204,9 +10627,107 @@ pattern VK_SHADER_STAGE_ALL :: VkShaderStageFlagBits
 
 pattern VK_SHADER_STAGE_ALL = VkShaderStageFlagBits 2147483647
 
+type VkShaderStageFlags = VkShaderStageFlagBits
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSharingMode.html VkSharingMode registry at www.khronos.org>
+newtype VkSharingMode = VkSharingMode Int32
+                          deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+
+instance Show VkSharingMode where
+        showsPrec _ VK_SHARING_MODE_EXCLUSIVE
+          = showString "VK_SHARING_MODE_EXCLUSIVE"
+        showsPrec _ VK_SHARING_MODE_CONCURRENT
+          = showString "VK_SHARING_MODE_CONCURRENT"
+        showsPrec p (VkSharingMode x)
+          = showParen (p >= 11)
+              (showString "VkSharingMode " . showsPrec 11 x)
+
+instance Read VkSharingMode where
+        readPrec
+          = parens
+              (choose
+                 [("VK_SHARING_MODE_EXCLUSIVE", pure VK_SHARING_MODE_EXCLUSIVE),
+                  ("VK_SHARING_MODE_CONCURRENT", pure VK_SHARING_MODE_CONCURRENT)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkSharingMode") >>
+                      (VkSharingMode <$> step readPrec)))
+
+pattern VK_SHARING_MODE_EXCLUSIVE :: VkSharingMode
+
+pattern VK_SHARING_MODE_EXCLUSIVE = VkSharingMode 0
+
+pattern VK_SHARING_MODE_CONCURRENT :: VkSharingMode
+
+pattern VK_SHARING_MODE_CONCURRENT = VkSharingMode 1
+
 -- | type = @bitmask@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSparseMemoryBindFlagBits.html VkSparseMemoryBindFlagBits registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSparseImageFormatFlagBits.html VkSparseImageFormatFlagBits registry at www.khronos.org>
+newtype VkSparseImageFormatFlagBits = VkSparseImageFormatFlagBits Int32
+                                        deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable,
+                                                  Enum, Data, Generic)
+
+instance Show VkSparseImageFormatFlagBits where
+        showsPrec _ VK_SPARSE_IMAGE_FORMAT_SINGLE_MIPTAIL_BIT
+          = showString "VK_SPARSE_IMAGE_FORMAT_SINGLE_MIPTAIL_BIT"
+        showsPrec _ VK_SPARSE_IMAGE_FORMAT_ALIGNED_MIP_SIZE_BIT
+          = showString "VK_SPARSE_IMAGE_FORMAT_ALIGNED_MIP_SIZE_BIT"
+        showsPrec _ VK_SPARSE_IMAGE_FORMAT_NONSTANDARD_BLOCK_SIZE_BIT
+          = showString "VK_SPARSE_IMAGE_FORMAT_NONSTANDARD_BLOCK_SIZE_BIT"
+        showsPrec p (VkSparseImageFormatFlagBits x)
+          = showParen (p >= 11)
+              (showString "VkSparseImageFormatFlagBits " . showsPrec 11 x)
+
+instance Read VkSparseImageFormatFlagBits where
+        readPrec
+          = parens
+              (choose
+                 [("VK_SPARSE_IMAGE_FORMAT_SINGLE_MIPTAIL_BIT",
+                   pure VK_SPARSE_IMAGE_FORMAT_SINGLE_MIPTAIL_BIT),
+                  ("VK_SPARSE_IMAGE_FORMAT_ALIGNED_MIP_SIZE_BIT",
+                   pure VK_SPARSE_IMAGE_FORMAT_ALIGNED_MIP_SIZE_BIT),
+                  ("VK_SPARSE_IMAGE_FORMAT_NONSTANDARD_BLOCK_SIZE_BIT",
+                   pure VK_SPARSE_IMAGE_FORMAT_NONSTANDARD_BLOCK_SIZE_BIT)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkSparseImageFormatFlagBits") >>
+                      (VkSparseImageFormatFlagBits <$> step readPrec)))
+
+-- | Image uses a single mip tail region for all array layers
+--
+--   bitpos = @0@
+pattern VK_SPARSE_IMAGE_FORMAT_SINGLE_MIPTAIL_BIT ::
+        VkSparseImageFormatFlagBits
+
+pattern VK_SPARSE_IMAGE_FORMAT_SINGLE_MIPTAIL_BIT =
+        VkSparseImageFormatFlagBits 1
+
+-- | Image requires mip level dimensions to be an integer multiple of the sparse image block dimensions for non-tail mip levels.
+--
+--   bitpos = @1@
+pattern VK_SPARSE_IMAGE_FORMAT_ALIGNED_MIP_SIZE_BIT ::
+        VkSparseImageFormatFlagBits
+
+pattern VK_SPARSE_IMAGE_FORMAT_ALIGNED_MIP_SIZE_BIT =
+        VkSparseImageFormatFlagBits 2
+
+-- | Image uses a non-standard sparse image block dimensions
+--
+--   bitpos = @2@
+pattern VK_SPARSE_IMAGE_FORMAT_NONSTANDARD_BLOCK_SIZE_BIT ::
+        VkSparseImageFormatFlagBits
+
+pattern VK_SPARSE_IMAGE_FORMAT_NONSTANDARD_BLOCK_SIZE_BIT =
+        VkSparseImageFormatFlagBits 4
+
+type VkSparseImageFormatFlags = VkSparseImageFormatFlagBits
+
+-- | type = @bitmask@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSparseMemoryBindFlagBits.html VkSparseMemoryBindFlagBits registry at www.khronos.org>
 newtype VkSparseMemoryBindFlagBits = VkSparseMemoryBindFlagBits Int32
                                        deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable,
                                                  Enum, Data, Generic)
@@ -7238,9 +10759,11 @@ pattern VK_SPARSE_MEMORY_BIND_METADATA_BIT ::
 pattern VK_SPARSE_MEMORY_BIND_METADATA_BIT =
         VkSparseMemoryBindFlagBits 1
 
+type VkSparseMemoryBindFlags = VkSparseMemoryBindFlagBits
+
 -- | type = @bitmask@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkStencilFaceFlagBits.html VkStencilFaceFlagBits registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkStencilFaceFlagBits.html VkStencilFaceFlagBits registry at www.khronos.org>
 newtype VkStencilFaceFlagBits = VkStencilFaceFlagBits Int32
                                   deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable, Enum,
                                             Data, Generic)
@@ -7287,9 +10810,11 @@ pattern VK_STENCIL_FRONT_AND_BACK :: VkStencilFaceFlagBits
 
 pattern VK_STENCIL_FRONT_AND_BACK = VkStencilFaceFlagBits 3
 
+type VkStencilFaceFlags = VkStencilFaceFlagBits
+
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkStencilOp.html VkStencilOp registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkStencilOp.html VkStencilOp registry at www.khronos.org>
 newtype VkStencilOp = VkStencilOp Int32
                         deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
@@ -7368,7 +10893,7 @@ pattern VK_STENCIL_OP_DECREMENT_AND_WRAP = VkStencilOp 7
 --   type = @enum@
 --
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkStructureType.html VkStructureType registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkStructureType.html VkStructureType registry at www.khronos.org>
 newtype VkStructureType = VkStructureType Int32
                             deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
@@ -7857,1468 +11382,44 @@ pattern VK_STRUCTURE_TYPE_LOADER_DEVICE_CREATE_INFO =
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSystemAllocationScope.html VkSystemAllocationScope registry at www.khronos.org>
-newtype VkSystemAllocationScope = VkSystemAllocationScope Int32
-                                    deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
-
-instance Show VkSystemAllocationScope where
-        showsPrec _ VK_SYSTEM_ALLOCATION_SCOPE_COMMAND
-          = showString "VK_SYSTEM_ALLOCATION_SCOPE_COMMAND"
-        showsPrec _ VK_SYSTEM_ALLOCATION_SCOPE_OBJECT
-          = showString "VK_SYSTEM_ALLOCATION_SCOPE_OBJECT"
-        showsPrec _ VK_SYSTEM_ALLOCATION_SCOPE_CACHE
-          = showString "VK_SYSTEM_ALLOCATION_SCOPE_CACHE"
-        showsPrec _ VK_SYSTEM_ALLOCATION_SCOPE_DEVICE
-          = showString "VK_SYSTEM_ALLOCATION_SCOPE_DEVICE"
-        showsPrec _ VK_SYSTEM_ALLOCATION_SCOPE_INSTANCE
-          = showString "VK_SYSTEM_ALLOCATION_SCOPE_INSTANCE"
-        showsPrec p (VkSystemAllocationScope x)
-          = showParen (p >= 11)
-              (showString "VkSystemAllocationScope " . showsPrec 11 x)
-
-instance Read VkSystemAllocationScope where
-        readPrec
-          = parens
-              (choose
-                 [("VK_SYSTEM_ALLOCATION_SCOPE_COMMAND",
-                   pure VK_SYSTEM_ALLOCATION_SCOPE_COMMAND),
-                  ("VK_SYSTEM_ALLOCATION_SCOPE_OBJECT",
-                   pure VK_SYSTEM_ALLOCATION_SCOPE_OBJECT),
-                  ("VK_SYSTEM_ALLOCATION_SCOPE_CACHE",
-                   pure VK_SYSTEM_ALLOCATION_SCOPE_CACHE),
-                  ("VK_SYSTEM_ALLOCATION_SCOPE_DEVICE",
-                   pure VK_SYSTEM_ALLOCATION_SCOPE_DEVICE),
-                  ("VK_SYSTEM_ALLOCATION_SCOPE_INSTANCE",
-                   pure VK_SYSTEM_ALLOCATION_SCOPE_INSTANCE)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkSystemAllocationScope") >>
-                      (VkSystemAllocationScope <$> step readPrec)))
-
-pattern VK_SYSTEM_ALLOCATION_SCOPE_COMMAND ::
-        VkSystemAllocationScope
-
-pattern VK_SYSTEM_ALLOCATION_SCOPE_COMMAND =
-        VkSystemAllocationScope 0
-
-pattern VK_SYSTEM_ALLOCATION_SCOPE_OBJECT ::
-        VkSystemAllocationScope
-
-pattern VK_SYSTEM_ALLOCATION_SCOPE_OBJECT =
-        VkSystemAllocationScope 1
-
-pattern VK_SYSTEM_ALLOCATION_SCOPE_CACHE :: VkSystemAllocationScope
-
-pattern VK_SYSTEM_ALLOCATION_SCOPE_CACHE =
-        VkSystemAllocationScope 2
-
-pattern VK_SYSTEM_ALLOCATION_SCOPE_DEVICE ::
-        VkSystemAllocationScope
-
-pattern VK_SYSTEM_ALLOCATION_SCOPE_DEVICE =
-        VkSystemAllocationScope 3
-
-pattern VK_SYSTEM_ALLOCATION_SCOPE_INSTANCE ::
-        VkSystemAllocationScope
-
-pattern VK_SYSTEM_ALLOCATION_SCOPE_INSTANCE =
-        VkSystemAllocationScope 4
-
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkInternalAllocationType.html VkInternalAllocationType registry at www.khronos.org>
-newtype VkInternalAllocationType = VkInternalAllocationType Int32
-                                     deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
-
-instance Show VkInternalAllocationType where
-        showsPrec _ VK_INTERNAL_ALLOCATION_TYPE_EXECUTABLE
-          = showString "VK_INTERNAL_ALLOCATION_TYPE_EXECUTABLE"
-        showsPrec p (VkInternalAllocationType x)
-          = showParen (p >= 11)
-              (showString "VkInternalAllocationType " . showsPrec 11 x)
-
-instance Read VkInternalAllocationType where
-        readPrec
-          = parens
-              (choose
-                 [("VK_INTERNAL_ALLOCATION_TYPE_EXECUTABLE",
-                   pure VK_INTERNAL_ALLOCATION_TYPE_EXECUTABLE)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkInternalAllocationType") >>
-                      (VkInternalAllocationType <$> step readPrec)))
-
-pattern VK_INTERNAL_ALLOCATION_TYPE_EXECUTABLE ::
-        VkInternalAllocationType
-
-pattern VK_INTERNAL_ALLOCATION_TYPE_EXECUTABLE =
-        VkInternalAllocationType 0
-
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSamplerAddressMode.html VkSamplerAddressMode registry at www.khronos.org>
-newtype VkSamplerAddressMode = VkSamplerAddressMode Int32
-                                 deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
-
-instance Show VkSamplerAddressMode where
-        showsPrec _ VK_SAMPLER_ADDRESS_MODE_REPEAT
-          = showString "VK_SAMPLER_ADDRESS_MODE_REPEAT"
-        showsPrec _ VK_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT
-          = showString "VK_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT"
-        showsPrec _ VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE
-          = showString "VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE"
-        showsPrec _ VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER
-          = showString "VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER"
-        showsPrec p (VkSamplerAddressMode x)
-          = showParen (p >= 11)
-              (showString "VkSamplerAddressMode " . showsPrec 11 x)
-
-instance Read VkSamplerAddressMode where
-        readPrec
-          = parens
-              (choose
-                 [("VK_SAMPLER_ADDRESS_MODE_REPEAT",
-                   pure VK_SAMPLER_ADDRESS_MODE_REPEAT),
-                  ("VK_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT",
-                   pure VK_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT),
-                  ("VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE",
-                   pure VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE),
-                  ("VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER",
-                   pure VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkSamplerAddressMode") >>
-                      (VkSamplerAddressMode <$> step readPrec)))
-
-pattern VK_SAMPLER_ADDRESS_MODE_REPEAT :: VkSamplerAddressMode
-
-pattern VK_SAMPLER_ADDRESS_MODE_REPEAT = VkSamplerAddressMode 0
-
-pattern VK_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT ::
-        VkSamplerAddressMode
-
-pattern VK_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT =
-        VkSamplerAddressMode 1
-
-pattern VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE ::
-        VkSamplerAddressMode
-
-pattern VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE =
-        VkSamplerAddressMode 2
-
-pattern VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER ::
-        VkSamplerAddressMode
-
-pattern VK_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER =
-        VkSamplerAddressMode 3
-
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkFilter.html VkFilter registry at www.khronos.org>
-newtype VkFilter = VkFilter Int32
-                     deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
-
-instance Show VkFilter where
-        showsPrec _ VK_FILTER_NEAREST = showString "VK_FILTER_NEAREST"
-        showsPrec _ VK_FILTER_LINEAR = showString "VK_FILTER_LINEAR"
-        showsPrec p (VkFilter x)
-          = showParen (p >= 11) (showString "VkFilter " . showsPrec 11 x)
-
-instance Read VkFilter where
-        readPrec
-          = parens
-              (choose
-                 [("VK_FILTER_NEAREST", pure VK_FILTER_NEAREST),
-                  ("VK_FILTER_LINEAR", pure VK_FILTER_LINEAR)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkFilter") >> (VkFilter <$> step readPrec)))
-
-pattern VK_FILTER_NEAREST :: VkFilter
-
-pattern VK_FILTER_NEAREST = VkFilter 0
-
-pattern VK_FILTER_LINEAR :: VkFilter
-
-pattern VK_FILTER_LINEAR = VkFilter 1
-
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSamplerMipmapMode.html VkSamplerMipmapMode registry at www.khronos.org>
-newtype VkSamplerMipmapMode = VkSamplerMipmapMode Int32
-                                deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
-
-instance Show VkSamplerMipmapMode where
-        showsPrec _ VK_SAMPLER_MIPMAP_MODE_NEAREST
-          = showString "VK_SAMPLER_MIPMAP_MODE_NEAREST"
-        showsPrec _ VK_SAMPLER_MIPMAP_MODE_LINEAR
-          = showString "VK_SAMPLER_MIPMAP_MODE_LINEAR"
-        showsPrec p (VkSamplerMipmapMode x)
-          = showParen (p >= 11)
-              (showString "VkSamplerMipmapMode " . showsPrec 11 x)
-
-instance Read VkSamplerMipmapMode where
-        readPrec
-          = parens
-              (choose
-                 [("VK_SAMPLER_MIPMAP_MODE_NEAREST",
-                   pure VK_SAMPLER_MIPMAP_MODE_NEAREST),
-                  ("VK_SAMPLER_MIPMAP_MODE_LINEAR",
-                   pure VK_SAMPLER_MIPMAP_MODE_LINEAR)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkSamplerMipmapMode") >>
-                      (VkSamplerMipmapMode <$> step readPrec)))
-
--- | Choose nearest mip level
-pattern VK_SAMPLER_MIPMAP_MODE_NEAREST :: VkSamplerMipmapMode
-
-pattern VK_SAMPLER_MIPMAP_MODE_NEAREST = VkSamplerMipmapMode 0
-
--- | Linear filter between mip levels
-pattern VK_SAMPLER_MIPMAP_MODE_LINEAR :: VkSamplerMipmapMode
-
-pattern VK_SAMPLER_MIPMAP_MODE_LINEAR = VkSamplerMipmapMode 1
-
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkVertexInputRate.html VkVertexInputRate registry at www.khronos.org>
-newtype VkVertexInputRate = VkVertexInputRate Int32
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSubpassContents.html VkSubpassContents registry at www.khronos.org>
+newtype VkSubpassContents = VkSubpassContents Int32
                               deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
-instance Show VkVertexInputRate where
-        showsPrec _ VK_VERTEX_INPUT_RATE_VERTEX
-          = showString "VK_VERTEX_INPUT_RATE_VERTEX"
-        showsPrec _ VK_VERTEX_INPUT_RATE_INSTANCE
-          = showString "VK_VERTEX_INPUT_RATE_INSTANCE"
-        showsPrec p (VkVertexInputRate x)
+instance Show VkSubpassContents where
+        showsPrec _ VK_SUBPASS_CONTENTS_INLINE
+          = showString "VK_SUBPASS_CONTENTS_INLINE"
+        showsPrec _ VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS
+          = showString "VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS"
+        showsPrec p (VkSubpassContents x)
           = showParen (p >= 11)
-              (showString "VkVertexInputRate " . showsPrec 11 x)
+              (showString "VkSubpassContents " . showsPrec 11 x)
 
-instance Read VkVertexInputRate where
+instance Read VkSubpassContents where
         readPrec
           = parens
               (choose
-                 [("VK_VERTEX_INPUT_RATE_VERTEX", pure VK_VERTEX_INPUT_RATE_VERTEX),
-                  ("VK_VERTEX_INPUT_RATE_INSTANCE",
-                   pure VK_VERTEX_INPUT_RATE_INSTANCE)]
+                 [("VK_SUBPASS_CONTENTS_INLINE", pure VK_SUBPASS_CONTENTS_INLINE),
+                  ("VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS",
+                   pure VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS)]
                  +++
                  prec 10
-                   (expectP (Ident "VkVertexInputRate") >>
-                      (VkVertexInputRate <$> step readPrec)))
+                   (expectP (Ident "VkSubpassContents") >>
+                      (VkSubpassContents <$> step readPrec)))
 
-pattern VK_VERTEX_INPUT_RATE_VERTEX :: VkVertexInputRate
+pattern VK_SUBPASS_CONTENTS_INLINE :: VkSubpassContents
 
-pattern VK_VERTEX_INPUT_RATE_VERTEX = VkVertexInputRate 0
+pattern VK_SUBPASS_CONTENTS_INLINE = VkSubpassContents 0
 
-pattern VK_VERTEX_INPUT_RATE_INSTANCE :: VkVertexInputRate
+pattern VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS ::
+        VkSubpassContents
 
-pattern VK_VERTEX_INPUT_RATE_INSTANCE = VkVertexInputRate 1
+pattern VK_SUBPASS_CONTENTS_SECONDARY_COMMAND_BUFFERS =
+        VkSubpassContents 1
 
 -- | type = @bitmask@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineStageFlagBits.html VkPipelineStageFlagBits registry at www.khronos.org>
-newtype VkPipelineStageFlagBits = VkPipelineStageFlagBits Int32
-                                    deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable,
-                                              Enum, Data, Generic)
-
-instance Show VkPipelineStageFlagBits where
-        showsPrec _ VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT
-          = showString "VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT"
-        showsPrec _ VK_PIPELINE_STAGE_DRAW_INDIRECT_BIT
-          = showString "VK_PIPELINE_STAGE_DRAW_INDIRECT_BIT"
-        showsPrec _ VK_PIPELINE_STAGE_VERTEX_INPUT_BIT
-          = showString "VK_PIPELINE_STAGE_VERTEX_INPUT_BIT"
-        showsPrec _ VK_PIPELINE_STAGE_VERTEX_SHADER_BIT
-          = showString "VK_PIPELINE_STAGE_VERTEX_SHADER_BIT"
-        showsPrec _ VK_PIPELINE_STAGE_TESSELLATION_CONTROL_SHADER_BIT
-          = showString "VK_PIPELINE_STAGE_TESSELLATION_CONTROL_SHADER_BIT"
-        showsPrec _ VK_PIPELINE_STAGE_TESSELLATION_EVALUATION_SHADER_BIT
-          = showString "VK_PIPELINE_STAGE_TESSELLATION_EVALUATION_SHADER_BIT"
-        showsPrec _ VK_PIPELINE_STAGE_GEOMETRY_SHADER_BIT
-          = showString "VK_PIPELINE_STAGE_GEOMETRY_SHADER_BIT"
-        showsPrec _ VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT
-          = showString "VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT"
-        showsPrec _ VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT
-          = showString "VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT"
-        showsPrec _ VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT
-          = showString "VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT"
-        showsPrec _ VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT
-          = showString "VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT"
-        showsPrec _ VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT
-          = showString "VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT"
-        showsPrec _ VK_PIPELINE_STAGE_TRANSFER_BIT
-          = showString "VK_PIPELINE_STAGE_TRANSFER_BIT"
-        showsPrec _ VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT
-          = showString "VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT"
-        showsPrec _ VK_PIPELINE_STAGE_HOST_BIT
-          = showString "VK_PIPELINE_STAGE_HOST_BIT"
-        showsPrec _ VK_PIPELINE_STAGE_ALL_GRAPHICS_BIT
-          = showString "VK_PIPELINE_STAGE_ALL_GRAPHICS_BIT"
-        showsPrec _ VK_PIPELINE_STAGE_ALL_COMMANDS_BIT
-          = showString "VK_PIPELINE_STAGE_ALL_COMMANDS_BIT"
-        showsPrec p (VkPipelineStageFlagBits x)
-          = showParen (p >= 11)
-              (showString "VkPipelineStageFlagBits " . showsPrec 11 x)
-
-instance Read VkPipelineStageFlagBits where
-        readPrec
-          = parens
-              (choose
-                 [("VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT",
-                   pure VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT),
-                  ("VK_PIPELINE_STAGE_DRAW_INDIRECT_BIT",
-                   pure VK_PIPELINE_STAGE_DRAW_INDIRECT_BIT),
-                  ("VK_PIPELINE_STAGE_VERTEX_INPUT_BIT",
-                   pure VK_PIPELINE_STAGE_VERTEX_INPUT_BIT),
-                  ("VK_PIPELINE_STAGE_VERTEX_SHADER_BIT",
-                   pure VK_PIPELINE_STAGE_VERTEX_SHADER_BIT),
-                  ("VK_PIPELINE_STAGE_TESSELLATION_CONTROL_SHADER_BIT",
-                   pure VK_PIPELINE_STAGE_TESSELLATION_CONTROL_SHADER_BIT),
-                  ("VK_PIPELINE_STAGE_TESSELLATION_EVALUATION_SHADER_BIT",
-                   pure VK_PIPELINE_STAGE_TESSELLATION_EVALUATION_SHADER_BIT),
-                  ("VK_PIPELINE_STAGE_GEOMETRY_SHADER_BIT",
-                   pure VK_PIPELINE_STAGE_GEOMETRY_SHADER_BIT),
-                  ("VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT",
-                   pure VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT),
-                  ("VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT",
-                   pure VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT),
-                  ("VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT",
-                   pure VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT),
-                  ("VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT",
-                   pure VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT),
-                  ("VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT",
-                   pure VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT),
-                  ("VK_PIPELINE_STAGE_TRANSFER_BIT",
-                   pure VK_PIPELINE_STAGE_TRANSFER_BIT),
-                  ("VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT",
-                   pure VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT),
-                  ("VK_PIPELINE_STAGE_HOST_BIT", pure VK_PIPELINE_STAGE_HOST_BIT),
-                  ("VK_PIPELINE_STAGE_ALL_GRAPHICS_BIT",
-                   pure VK_PIPELINE_STAGE_ALL_GRAPHICS_BIT),
-                  ("VK_PIPELINE_STAGE_ALL_COMMANDS_BIT",
-                   pure VK_PIPELINE_STAGE_ALL_COMMANDS_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkPipelineStageFlagBits") >>
-                      (VkPipelineStageFlagBits <$> step readPrec)))
-
--- | Before subsequent commands are processed
---
---   bitpos = @0@
-pattern VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT ::
-        VkPipelineStageFlagBits
-
-pattern VK_PIPELINE_STAGE_TOP_OF_PIPE_BIT =
-        VkPipelineStageFlagBits 1
-
--- | Draw/DispatchIndirect command fetch
---
---   bitpos = @1@
-pattern VK_PIPELINE_STAGE_DRAW_INDIRECT_BIT ::
-        VkPipelineStageFlagBits
-
-pattern VK_PIPELINE_STAGE_DRAW_INDIRECT_BIT =
-        VkPipelineStageFlagBits 2
-
--- | Vertex/index fetch
---
---   bitpos = @2@
-pattern VK_PIPELINE_STAGE_VERTEX_INPUT_BIT ::
-        VkPipelineStageFlagBits
-
-pattern VK_PIPELINE_STAGE_VERTEX_INPUT_BIT =
-        VkPipelineStageFlagBits 4
-
--- | Vertex shading
---
---   bitpos = @3@
-pattern VK_PIPELINE_STAGE_VERTEX_SHADER_BIT ::
-        VkPipelineStageFlagBits
-
-pattern VK_PIPELINE_STAGE_VERTEX_SHADER_BIT =
-        VkPipelineStageFlagBits 8
-
--- | Tessellation control shading
---
---   bitpos = @4@
-pattern VK_PIPELINE_STAGE_TESSELLATION_CONTROL_SHADER_BIT ::
-        VkPipelineStageFlagBits
-
-pattern VK_PIPELINE_STAGE_TESSELLATION_CONTROL_SHADER_BIT =
-        VkPipelineStageFlagBits 16
-
--- | Tessellation evaluation shading
---
---   bitpos = @5@
-pattern VK_PIPELINE_STAGE_TESSELLATION_EVALUATION_SHADER_BIT ::
-        VkPipelineStageFlagBits
-
-pattern VK_PIPELINE_STAGE_TESSELLATION_EVALUATION_SHADER_BIT =
-        VkPipelineStageFlagBits 32
-
--- | Geometry shading
---
---   bitpos = @6@
-pattern VK_PIPELINE_STAGE_GEOMETRY_SHADER_BIT ::
-        VkPipelineStageFlagBits
-
-pattern VK_PIPELINE_STAGE_GEOMETRY_SHADER_BIT =
-        VkPipelineStageFlagBits 64
-
--- | Fragment shading
---
---   bitpos = @7@
-pattern VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT ::
-        VkPipelineStageFlagBits
-
-pattern VK_PIPELINE_STAGE_FRAGMENT_SHADER_BIT =
-        VkPipelineStageFlagBits 128
-
--- | Early fragment (depth and stencil) tests
---
---   bitpos = @8@
-pattern VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT ::
-        VkPipelineStageFlagBits
-
-pattern VK_PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT =
-        VkPipelineStageFlagBits 256
-
--- | Late fragment (depth and stencil) tests
---
---   bitpos = @9@
-pattern VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT ::
-        VkPipelineStageFlagBits
-
-pattern VK_PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT =
-        VkPipelineStageFlagBits 512
-
--- | Color attachment writes
---
---   bitpos = @10@
-pattern VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT ::
-        VkPipelineStageFlagBits
-
-pattern VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT =
-        VkPipelineStageFlagBits 1024
-
--- | Compute shading
---
---   bitpos = @11@
-pattern VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT ::
-        VkPipelineStageFlagBits
-
-pattern VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT =
-        VkPipelineStageFlagBits 2048
-
--- | Transfer/copy operations
---
---   bitpos = @12@
-pattern VK_PIPELINE_STAGE_TRANSFER_BIT :: VkPipelineStageFlagBits
-
-pattern VK_PIPELINE_STAGE_TRANSFER_BIT =
-        VkPipelineStageFlagBits 4096
-
--- | After previous commands have completed
---
---   bitpos = @13@
-pattern VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT ::
-        VkPipelineStageFlagBits
-
-pattern VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT =
-        VkPipelineStageFlagBits 8192
-
--- | Indicates host (CPU) is a source/sink of the dependency
---
---   bitpos = @14@
-pattern VK_PIPELINE_STAGE_HOST_BIT :: VkPipelineStageFlagBits
-
-pattern VK_PIPELINE_STAGE_HOST_BIT = VkPipelineStageFlagBits 16384
-
--- | All stages of the graphics pipeline
---
---   bitpos = @15@
-pattern VK_PIPELINE_STAGE_ALL_GRAPHICS_BIT ::
-        VkPipelineStageFlagBits
-
-pattern VK_PIPELINE_STAGE_ALL_GRAPHICS_BIT =
-        VkPipelineStageFlagBits 32768
-
--- | All stages supported on the queue
---
---   bitpos = @16@
-pattern VK_PIPELINE_STAGE_ALL_COMMANDS_BIT ::
-        VkPipelineStageFlagBits
-
-pattern VK_PIPELINE_STAGE_ALL_COMMANDS_BIT =
-        VkPipelineStageFlagBits 65536
-
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSparseImageFormatFlagBits.html VkSparseImageFormatFlagBits registry at www.khronos.org>
-newtype VkSparseImageFormatFlagBits = VkSparseImageFormatFlagBits Int32
-                                        deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable,
-                                                  Enum, Data, Generic)
-
-instance Show VkSparseImageFormatFlagBits where
-        showsPrec _ VK_SPARSE_IMAGE_FORMAT_SINGLE_MIPTAIL_BIT
-          = showString "VK_SPARSE_IMAGE_FORMAT_SINGLE_MIPTAIL_BIT"
-        showsPrec _ VK_SPARSE_IMAGE_FORMAT_ALIGNED_MIP_SIZE_BIT
-          = showString "VK_SPARSE_IMAGE_FORMAT_ALIGNED_MIP_SIZE_BIT"
-        showsPrec _ VK_SPARSE_IMAGE_FORMAT_NONSTANDARD_BLOCK_SIZE_BIT
-          = showString "VK_SPARSE_IMAGE_FORMAT_NONSTANDARD_BLOCK_SIZE_BIT"
-        showsPrec p (VkSparseImageFormatFlagBits x)
-          = showParen (p >= 11)
-              (showString "VkSparseImageFormatFlagBits " . showsPrec 11 x)
-
-instance Read VkSparseImageFormatFlagBits where
-        readPrec
-          = parens
-              (choose
-                 [("VK_SPARSE_IMAGE_FORMAT_SINGLE_MIPTAIL_BIT",
-                   pure VK_SPARSE_IMAGE_FORMAT_SINGLE_MIPTAIL_BIT),
-                  ("VK_SPARSE_IMAGE_FORMAT_ALIGNED_MIP_SIZE_BIT",
-                   pure VK_SPARSE_IMAGE_FORMAT_ALIGNED_MIP_SIZE_BIT),
-                  ("VK_SPARSE_IMAGE_FORMAT_NONSTANDARD_BLOCK_SIZE_BIT",
-                   pure VK_SPARSE_IMAGE_FORMAT_NONSTANDARD_BLOCK_SIZE_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkSparseImageFormatFlagBits") >>
-                      (VkSparseImageFormatFlagBits <$> step readPrec)))
-
--- | Image uses a single mip tail region for all array layers
---
---   bitpos = @0@
-pattern VK_SPARSE_IMAGE_FORMAT_SINGLE_MIPTAIL_BIT ::
-        VkSparseImageFormatFlagBits
-
-pattern VK_SPARSE_IMAGE_FORMAT_SINGLE_MIPTAIL_BIT =
-        VkSparseImageFormatFlagBits 1
-
--- | Image requires mip level dimensions to be an integer multiple of the sparse image block dimensions for non-tail mip levels.
---
---   bitpos = @1@
-pattern VK_SPARSE_IMAGE_FORMAT_ALIGNED_MIP_SIZE_BIT ::
-        VkSparseImageFormatFlagBits
-
-pattern VK_SPARSE_IMAGE_FORMAT_ALIGNED_MIP_SIZE_BIT =
-        VkSparseImageFormatFlagBits 2
-
--- | Image uses a non-standard sparse image block dimensions
---
---   bitpos = @2@
-pattern VK_SPARSE_IMAGE_FORMAT_NONSTANDARD_BLOCK_SIZE_BIT ::
-        VkSparseImageFormatFlagBits
-
-pattern VK_SPARSE_IMAGE_FORMAT_NONSTANDARD_BLOCK_SIZE_BIT =
-        VkSparseImageFormatFlagBits 4
-
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSampleCountFlagBits.html VkSampleCountFlagBits registry at www.khronos.org>
-newtype VkSampleCountFlagBits = VkSampleCountFlagBits Int32
-                                  deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable, Enum,
-                                            Data, Generic)
-
-instance Show VkSampleCountFlagBits where
-        showsPrec _ VK_SAMPLE_COUNT_1_BIT
-          = showString "VK_SAMPLE_COUNT_1_BIT"
-        showsPrec _ VK_SAMPLE_COUNT_2_BIT
-          = showString "VK_SAMPLE_COUNT_2_BIT"
-        showsPrec _ VK_SAMPLE_COUNT_4_BIT
-          = showString "VK_SAMPLE_COUNT_4_BIT"
-        showsPrec _ VK_SAMPLE_COUNT_8_BIT
-          = showString "VK_SAMPLE_COUNT_8_BIT"
-        showsPrec _ VK_SAMPLE_COUNT_16_BIT
-          = showString "VK_SAMPLE_COUNT_16_BIT"
-        showsPrec _ VK_SAMPLE_COUNT_32_BIT
-          = showString "VK_SAMPLE_COUNT_32_BIT"
-        showsPrec _ VK_SAMPLE_COUNT_64_BIT
-          = showString "VK_SAMPLE_COUNT_64_BIT"
-        showsPrec p (VkSampleCountFlagBits x)
-          = showParen (p >= 11)
-              (showString "VkSampleCountFlagBits " . showsPrec 11 x)
-
-instance Read VkSampleCountFlagBits where
-        readPrec
-          = parens
-              (choose
-                 [("VK_SAMPLE_COUNT_1_BIT", pure VK_SAMPLE_COUNT_1_BIT),
-                  ("VK_SAMPLE_COUNT_2_BIT", pure VK_SAMPLE_COUNT_2_BIT),
-                  ("VK_SAMPLE_COUNT_4_BIT", pure VK_SAMPLE_COUNT_4_BIT),
-                  ("VK_SAMPLE_COUNT_8_BIT", pure VK_SAMPLE_COUNT_8_BIT),
-                  ("VK_SAMPLE_COUNT_16_BIT", pure VK_SAMPLE_COUNT_16_BIT),
-                  ("VK_SAMPLE_COUNT_32_BIT", pure VK_SAMPLE_COUNT_32_BIT),
-                  ("VK_SAMPLE_COUNT_64_BIT", pure VK_SAMPLE_COUNT_64_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkSampleCountFlagBits") >>
-                      (VkSampleCountFlagBits <$> step readPrec)))
-
--- | Sample count 1 supported
---
---   bitpos = @0@
-pattern VK_SAMPLE_COUNT_1_BIT :: VkSampleCountFlagBits
-
-pattern VK_SAMPLE_COUNT_1_BIT = VkSampleCountFlagBits 1
-
--- | Sample count 2 supported
---
---   bitpos = @1@
-pattern VK_SAMPLE_COUNT_2_BIT :: VkSampleCountFlagBits
-
-pattern VK_SAMPLE_COUNT_2_BIT = VkSampleCountFlagBits 2
-
--- | Sample count 4 supported
---
---   bitpos = @2@
-pattern VK_SAMPLE_COUNT_4_BIT :: VkSampleCountFlagBits
-
-pattern VK_SAMPLE_COUNT_4_BIT = VkSampleCountFlagBits 4
-
--- | Sample count 8 supported
---
---   bitpos = @3@
-pattern VK_SAMPLE_COUNT_8_BIT :: VkSampleCountFlagBits
-
-pattern VK_SAMPLE_COUNT_8_BIT = VkSampleCountFlagBits 8
-
--- | Sample count 16 supported
---
---   bitpos = @4@
-pattern VK_SAMPLE_COUNT_16_BIT :: VkSampleCountFlagBits
-
-pattern VK_SAMPLE_COUNT_16_BIT = VkSampleCountFlagBits 16
-
--- | Sample count 32 supported
---
---   bitpos = @5@
-pattern VK_SAMPLE_COUNT_32_BIT :: VkSampleCountFlagBits
-
-pattern VK_SAMPLE_COUNT_32_BIT = VkSampleCountFlagBits 32
-
--- | Sample count 64 supported
---
---   bitpos = @6@
-pattern VK_SAMPLE_COUNT_64_BIT :: VkSampleCountFlagBits
-
-pattern VK_SAMPLE_COUNT_64_BIT = VkSampleCountFlagBits 64
-
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkAttachmentDescriptionFlagBits.html VkAttachmentDescriptionFlagBits registry at www.khronos.org>
-newtype VkAttachmentDescriptionFlagBits = VkAttachmentDescriptionFlagBits Int32
-                                            deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
-                                                      Storable, Enum, Data, Generic)
-
-instance Show VkAttachmentDescriptionFlagBits where
-        showsPrec _ VK_ATTACHMENT_DESCRIPTION_MAY_ALIAS_BIT
-          = showString "VK_ATTACHMENT_DESCRIPTION_MAY_ALIAS_BIT"
-        showsPrec p (VkAttachmentDescriptionFlagBits x)
-          = showParen (p >= 11)
-              (showString "VkAttachmentDescriptionFlagBits " . showsPrec 11 x)
-
-instance Read VkAttachmentDescriptionFlagBits where
-        readPrec
-          = parens
-              (choose
-                 [("VK_ATTACHMENT_DESCRIPTION_MAY_ALIAS_BIT",
-                   pure VK_ATTACHMENT_DESCRIPTION_MAY_ALIAS_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkAttachmentDescriptionFlagBits") >>
-                      (VkAttachmentDescriptionFlagBits <$> step readPrec)))
-
--- | The attachment may alias physical memory of another attachment in the same render pass
---
---   bitpos = @0@
-pattern VK_ATTACHMENT_DESCRIPTION_MAY_ALIAS_BIT ::
-        VkAttachmentDescriptionFlagBits
-
-pattern VK_ATTACHMENT_DESCRIPTION_MAY_ALIAS_BIT =
-        VkAttachmentDescriptionFlagBits 1
-
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDescriptorPoolCreateFlagBits.html VkDescriptorPoolCreateFlagBits registry at www.khronos.org>
-newtype VkDescriptorPoolCreateFlagBits = VkDescriptorPoolCreateFlagBits Int32
-                                           deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
-                                                     Storable, Enum, Data, Generic)
-
-instance Show VkDescriptorPoolCreateFlagBits where
-        showsPrec _ VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT
-          = showString "VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT"
-        showsPrec p (VkDescriptorPoolCreateFlagBits x)
-          = showParen (p >= 11)
-              (showString "VkDescriptorPoolCreateFlagBits " . showsPrec 11 x)
-
-instance Read VkDescriptorPoolCreateFlagBits where
-        readPrec
-          = parens
-              (choose
-                 [("VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT",
-                   pure VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkDescriptorPoolCreateFlagBits") >>
-                      (VkDescriptorPoolCreateFlagBits <$> step readPrec)))
-
--- | Descriptor sets may be freed individually
---
---   bitpos = @0@
-pattern VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT ::
-        VkDescriptorPoolCreateFlagBits
-
-pattern VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT =
-        VkDescriptorPoolCreateFlagBits 1
-
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDependencyFlagBits.html VkDependencyFlagBits registry at www.khronos.org>
-newtype VkDependencyFlagBits = VkDependencyFlagBits Int32
-                                 deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable, Enum,
-                                           Data, Generic)
-
-instance Show VkDependencyFlagBits where
-        showsPrec _ VK_DEPENDENCY_BY_REGION_BIT
-          = showString "VK_DEPENDENCY_BY_REGION_BIT"
-        showsPrec p (VkDependencyFlagBits x)
-          = showParen (p >= 11)
-              (showString "VkDependencyFlagBits " . showsPrec 11 x)
-
-instance Read VkDependencyFlagBits where
-        readPrec
-          = parens
-              (choose
-                 [("VK_DEPENDENCY_BY_REGION_BIT", pure VK_DEPENDENCY_BY_REGION_BIT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkDependencyFlagBits") >>
-                      (VkDependencyFlagBits <$> step readPrec)))
-
--- | Dependency is per pixel region
---
---   bitpos = @0@
-pattern VK_DEPENDENCY_BY_REGION_BIT :: VkDependencyFlagBits
-
-pattern VK_DEPENDENCY_BY_REGION_BIT = VkDependencyFlagBits 1
-
--- | Enums to track objects of various types
---
---   type = @enum@
---
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkObjectType.html VkObjectType registry at www.khronos.org>
-newtype VkObjectType = VkObjectType Int32
-                         deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
-
-instance Show VkObjectType where
-        showsPrec _ VK_OBJECT_TYPE_UNKNOWN
-          = showString "VK_OBJECT_TYPE_UNKNOWN"
-        showsPrec _ VK_OBJECT_TYPE_INSTANCE
-          = showString "VK_OBJECT_TYPE_INSTANCE"
-        showsPrec _ VK_OBJECT_TYPE_PHYSICAL_DEVICE
-          = showString "VK_OBJECT_TYPE_PHYSICAL_DEVICE"
-        showsPrec _ VK_OBJECT_TYPE_DEVICE
-          = showString "VK_OBJECT_TYPE_DEVICE"
-        showsPrec _ VK_OBJECT_TYPE_QUEUE
-          = showString "VK_OBJECT_TYPE_QUEUE"
-        showsPrec _ VK_OBJECT_TYPE_SEMAPHORE
-          = showString "VK_OBJECT_TYPE_SEMAPHORE"
-        showsPrec _ VK_OBJECT_TYPE_COMMAND_BUFFER
-          = showString "VK_OBJECT_TYPE_COMMAND_BUFFER"
-        showsPrec _ VK_OBJECT_TYPE_FENCE
-          = showString "VK_OBJECT_TYPE_FENCE"
-        showsPrec _ VK_OBJECT_TYPE_DEVICE_MEMORY
-          = showString "VK_OBJECT_TYPE_DEVICE_MEMORY"
-        showsPrec _ VK_OBJECT_TYPE_BUFFER
-          = showString "VK_OBJECT_TYPE_BUFFER"
-        showsPrec _ VK_OBJECT_TYPE_IMAGE
-          = showString "VK_OBJECT_TYPE_IMAGE"
-        showsPrec _ VK_OBJECT_TYPE_EVENT
-          = showString "VK_OBJECT_TYPE_EVENT"
-        showsPrec _ VK_OBJECT_TYPE_QUERY_POOL
-          = showString "VK_OBJECT_TYPE_QUERY_POOL"
-        showsPrec _ VK_OBJECT_TYPE_BUFFER_VIEW
-          = showString "VK_OBJECT_TYPE_BUFFER_VIEW"
-        showsPrec _ VK_OBJECT_TYPE_IMAGE_VIEW
-          = showString "VK_OBJECT_TYPE_IMAGE_VIEW"
-        showsPrec _ VK_OBJECT_TYPE_SHADER_MODULE
-          = showString "VK_OBJECT_TYPE_SHADER_MODULE"
-        showsPrec _ VK_OBJECT_TYPE_PIPELINE_CACHE
-          = showString "VK_OBJECT_TYPE_PIPELINE_CACHE"
-        showsPrec _ VK_OBJECT_TYPE_PIPELINE_LAYOUT
-          = showString "VK_OBJECT_TYPE_PIPELINE_LAYOUT"
-        showsPrec _ VK_OBJECT_TYPE_RENDER_PASS
-          = showString "VK_OBJECT_TYPE_RENDER_PASS"
-        showsPrec _ VK_OBJECT_TYPE_PIPELINE
-          = showString "VK_OBJECT_TYPE_PIPELINE"
-        showsPrec _ VK_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT
-          = showString "VK_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT"
-        showsPrec _ VK_OBJECT_TYPE_SAMPLER
-          = showString "VK_OBJECT_TYPE_SAMPLER"
-        showsPrec _ VK_OBJECT_TYPE_DESCRIPTOR_POOL
-          = showString "VK_OBJECT_TYPE_DESCRIPTOR_POOL"
-        showsPrec _ VK_OBJECT_TYPE_DESCRIPTOR_SET
-          = showString "VK_OBJECT_TYPE_DESCRIPTOR_SET"
-        showsPrec _ VK_OBJECT_TYPE_FRAMEBUFFER
-          = showString "VK_OBJECT_TYPE_FRAMEBUFFER"
-        showsPrec _ VK_OBJECT_TYPE_COMMAND_POOL
-          = showString "VK_OBJECT_TYPE_COMMAND_POOL"
-        showsPrec p (VkObjectType x)
-          = showParen (p >= 11) (showString "VkObjectType " . showsPrec 11 x)
-
-instance Read VkObjectType where
-        readPrec
-          = parens
-              (choose
-                 [("VK_OBJECT_TYPE_UNKNOWN", pure VK_OBJECT_TYPE_UNKNOWN),
-                  ("VK_OBJECT_TYPE_INSTANCE", pure VK_OBJECT_TYPE_INSTANCE),
-                  ("VK_OBJECT_TYPE_PHYSICAL_DEVICE",
-                   pure VK_OBJECT_TYPE_PHYSICAL_DEVICE),
-                  ("VK_OBJECT_TYPE_DEVICE", pure VK_OBJECT_TYPE_DEVICE),
-                  ("VK_OBJECT_TYPE_QUEUE", pure VK_OBJECT_TYPE_QUEUE),
-                  ("VK_OBJECT_TYPE_SEMAPHORE", pure VK_OBJECT_TYPE_SEMAPHORE),
-                  ("VK_OBJECT_TYPE_COMMAND_BUFFER",
-                   pure VK_OBJECT_TYPE_COMMAND_BUFFER),
-                  ("VK_OBJECT_TYPE_FENCE", pure VK_OBJECT_TYPE_FENCE),
-                  ("VK_OBJECT_TYPE_DEVICE_MEMORY",
-                   pure VK_OBJECT_TYPE_DEVICE_MEMORY),
-                  ("VK_OBJECT_TYPE_BUFFER", pure VK_OBJECT_TYPE_BUFFER),
-                  ("VK_OBJECT_TYPE_IMAGE", pure VK_OBJECT_TYPE_IMAGE),
-                  ("VK_OBJECT_TYPE_EVENT", pure VK_OBJECT_TYPE_EVENT),
-                  ("VK_OBJECT_TYPE_QUERY_POOL", pure VK_OBJECT_TYPE_QUERY_POOL),
-                  ("VK_OBJECT_TYPE_BUFFER_VIEW", pure VK_OBJECT_TYPE_BUFFER_VIEW),
-                  ("VK_OBJECT_TYPE_IMAGE_VIEW", pure VK_OBJECT_TYPE_IMAGE_VIEW),
-                  ("VK_OBJECT_TYPE_SHADER_MODULE",
-                   pure VK_OBJECT_TYPE_SHADER_MODULE),
-                  ("VK_OBJECT_TYPE_PIPELINE_CACHE",
-                   pure VK_OBJECT_TYPE_PIPELINE_CACHE),
-                  ("VK_OBJECT_TYPE_PIPELINE_LAYOUT",
-                   pure VK_OBJECT_TYPE_PIPELINE_LAYOUT),
-                  ("VK_OBJECT_TYPE_RENDER_PASS", pure VK_OBJECT_TYPE_RENDER_PASS),
-                  ("VK_OBJECT_TYPE_PIPELINE", pure VK_OBJECT_TYPE_PIPELINE),
-                  ("VK_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT",
-                   pure VK_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT),
-                  ("VK_OBJECT_TYPE_SAMPLER", pure VK_OBJECT_TYPE_SAMPLER),
-                  ("VK_OBJECT_TYPE_DESCRIPTOR_POOL",
-                   pure VK_OBJECT_TYPE_DESCRIPTOR_POOL),
-                  ("VK_OBJECT_TYPE_DESCRIPTOR_SET",
-                   pure VK_OBJECT_TYPE_DESCRIPTOR_SET),
-                  ("VK_OBJECT_TYPE_FRAMEBUFFER", pure VK_OBJECT_TYPE_FRAMEBUFFER),
-                  ("VK_OBJECT_TYPE_COMMAND_POOL", pure VK_OBJECT_TYPE_COMMAND_POOL)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkObjectType") >>
-                      (VkObjectType <$> step readPrec)))
-
-pattern VK_OBJECT_TYPE_UNKNOWN :: VkObjectType
-
-pattern VK_OBJECT_TYPE_UNKNOWN = VkObjectType 0
-
--- | VkInstance
-pattern VK_OBJECT_TYPE_INSTANCE :: VkObjectType
-
-pattern VK_OBJECT_TYPE_INSTANCE = VkObjectType 1
-
--- | VkPhysicalDevice
-pattern VK_OBJECT_TYPE_PHYSICAL_DEVICE :: VkObjectType
-
-pattern VK_OBJECT_TYPE_PHYSICAL_DEVICE = VkObjectType 2
-
--- | VkDevice
-pattern VK_OBJECT_TYPE_DEVICE :: VkObjectType
-
-pattern VK_OBJECT_TYPE_DEVICE = VkObjectType 3
-
--- | VkQueue
-pattern VK_OBJECT_TYPE_QUEUE :: VkObjectType
-
-pattern VK_OBJECT_TYPE_QUEUE = VkObjectType 4
-
--- | VkSemaphore
-pattern VK_OBJECT_TYPE_SEMAPHORE :: VkObjectType
-
-pattern VK_OBJECT_TYPE_SEMAPHORE = VkObjectType 5
-
--- | VkCommandBuffer
-pattern VK_OBJECT_TYPE_COMMAND_BUFFER :: VkObjectType
-
-pattern VK_OBJECT_TYPE_COMMAND_BUFFER = VkObjectType 6
-
--- | VkFence
-pattern VK_OBJECT_TYPE_FENCE :: VkObjectType
-
-pattern VK_OBJECT_TYPE_FENCE = VkObjectType 7
-
--- | VkDeviceMemory
-pattern VK_OBJECT_TYPE_DEVICE_MEMORY :: VkObjectType
-
-pattern VK_OBJECT_TYPE_DEVICE_MEMORY = VkObjectType 8
-
--- | VkBuffer
-pattern VK_OBJECT_TYPE_BUFFER :: VkObjectType
-
-pattern VK_OBJECT_TYPE_BUFFER = VkObjectType 9
-
--- | VkImage
-pattern VK_OBJECT_TYPE_IMAGE :: VkObjectType
-
-pattern VK_OBJECT_TYPE_IMAGE = VkObjectType 10
-
--- | VkEvent
-pattern VK_OBJECT_TYPE_EVENT :: VkObjectType
-
-pattern VK_OBJECT_TYPE_EVENT = VkObjectType 11
-
--- | VkQueryPool
-pattern VK_OBJECT_TYPE_QUERY_POOL :: VkObjectType
-
-pattern VK_OBJECT_TYPE_QUERY_POOL = VkObjectType 12
-
--- | VkBufferView
-pattern VK_OBJECT_TYPE_BUFFER_VIEW :: VkObjectType
-
-pattern VK_OBJECT_TYPE_BUFFER_VIEW = VkObjectType 13
-
--- | VkImageView
-pattern VK_OBJECT_TYPE_IMAGE_VIEW :: VkObjectType
-
-pattern VK_OBJECT_TYPE_IMAGE_VIEW = VkObjectType 14
-
--- | VkShaderModule
-pattern VK_OBJECT_TYPE_SHADER_MODULE :: VkObjectType
-
-pattern VK_OBJECT_TYPE_SHADER_MODULE = VkObjectType 15
-
--- | VkPipelineCache
-pattern VK_OBJECT_TYPE_PIPELINE_CACHE :: VkObjectType
-
-pattern VK_OBJECT_TYPE_PIPELINE_CACHE = VkObjectType 16
-
--- | VkPipelineLayout
-pattern VK_OBJECT_TYPE_PIPELINE_LAYOUT :: VkObjectType
-
-pattern VK_OBJECT_TYPE_PIPELINE_LAYOUT = VkObjectType 17
-
--- | VkRenderPass
-pattern VK_OBJECT_TYPE_RENDER_PASS :: VkObjectType
-
-pattern VK_OBJECT_TYPE_RENDER_PASS = VkObjectType 18
-
--- | VkPipeline
-pattern VK_OBJECT_TYPE_PIPELINE :: VkObjectType
-
-pattern VK_OBJECT_TYPE_PIPELINE = VkObjectType 19
-
--- | VkDescriptorSetLayout
-pattern VK_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT :: VkObjectType
-
-pattern VK_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT = VkObjectType 20
-
--- | VkSampler
-pattern VK_OBJECT_TYPE_SAMPLER :: VkObjectType
-
-pattern VK_OBJECT_TYPE_SAMPLER = VkObjectType 21
-
--- | VkDescriptorPool
-pattern VK_OBJECT_TYPE_DESCRIPTOR_POOL :: VkObjectType
-
-pattern VK_OBJECT_TYPE_DESCRIPTOR_POOL = VkObjectType 22
-
--- | VkDescriptorSet
-pattern VK_OBJECT_TYPE_DESCRIPTOR_SET :: VkObjectType
-
-pattern VK_OBJECT_TYPE_DESCRIPTOR_SET = VkObjectType 23
-
--- | VkFramebuffer
-pattern VK_OBJECT_TYPE_FRAMEBUFFER :: VkObjectType
-
-pattern VK_OBJECT_TYPE_FRAMEBUFFER = VkObjectType 24
-
--- | VkCommandPool
-pattern VK_OBJECT_TYPE_COMMAND_POOL :: VkObjectType
-
-pattern VK_OBJECT_TYPE_COMMAND_POOL = VkObjectType 25
-
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkIndirectCommandsLayoutUsageFlagBitsNVX.html VkIndirectCommandsLayoutUsageFlagBitsNVX registry at www.khronos.org>
-newtype VkIndirectCommandsLayoutUsageFlagBitsNVX = VkIndirectCommandsLayoutUsageFlagBitsNVX Int32
-                                                     deriving (Bits, FiniteBits, Eq, Ord, Num,
-                                                               Bounded, Storable, Enum, Data,
-                                                               Generic)
-
-instance Show VkIndirectCommandsLayoutUsageFlagBitsNVX where
-        showsPrec _
-          VK_INDIRECT_COMMANDS_LAYOUT_USAGE_UNORDERED_SEQUENCES_BIT_NVX
-          = showString
-              "VK_INDIRECT_COMMANDS_LAYOUT_USAGE_UNORDERED_SEQUENCES_BIT_NVX"
-        showsPrec _
-          VK_INDIRECT_COMMANDS_LAYOUT_USAGE_SPARSE_SEQUENCES_BIT_NVX
-          = showString
-              "VK_INDIRECT_COMMANDS_LAYOUT_USAGE_SPARSE_SEQUENCES_BIT_NVX"
-        showsPrec _
-          VK_INDIRECT_COMMANDS_LAYOUT_USAGE_EMPTY_EXECUTIONS_BIT_NVX
-          = showString
-              "VK_INDIRECT_COMMANDS_LAYOUT_USAGE_EMPTY_EXECUTIONS_BIT_NVX"
-        showsPrec _
-          VK_INDIRECT_COMMANDS_LAYOUT_USAGE_INDEXED_SEQUENCES_BIT_NVX
-          = showString
-              "VK_INDIRECT_COMMANDS_LAYOUT_USAGE_INDEXED_SEQUENCES_BIT_NVX"
-        showsPrec p (VkIndirectCommandsLayoutUsageFlagBitsNVX x)
-          = showParen (p >= 11)
-              (showString "VkIndirectCommandsLayoutUsageFlagBitsNVX " .
-                 showsPrec 11 x)
-
-instance Read VkIndirectCommandsLayoutUsageFlagBitsNVX where
-        readPrec
-          = parens
-              (choose
-                 [("VK_INDIRECT_COMMANDS_LAYOUT_USAGE_UNORDERED_SEQUENCES_BIT_NVX",
-                   pure
-                     VK_INDIRECT_COMMANDS_LAYOUT_USAGE_UNORDERED_SEQUENCES_BIT_NVX),
-                  ("VK_INDIRECT_COMMANDS_LAYOUT_USAGE_SPARSE_SEQUENCES_BIT_NVX",
-                   pure VK_INDIRECT_COMMANDS_LAYOUT_USAGE_SPARSE_SEQUENCES_BIT_NVX),
-                  ("VK_INDIRECT_COMMANDS_LAYOUT_USAGE_EMPTY_EXECUTIONS_BIT_NVX",
-                   pure VK_INDIRECT_COMMANDS_LAYOUT_USAGE_EMPTY_EXECUTIONS_BIT_NVX),
-                  ("VK_INDIRECT_COMMANDS_LAYOUT_USAGE_INDEXED_SEQUENCES_BIT_NVX",
-                   pure VK_INDIRECT_COMMANDS_LAYOUT_USAGE_INDEXED_SEQUENCES_BIT_NVX)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkIndirectCommandsLayoutUsageFlagBitsNVX") >>
-                      (VkIndirectCommandsLayoutUsageFlagBitsNVX <$> step readPrec)))
-
--- | bitpos = @0@
-pattern VK_INDIRECT_COMMANDS_LAYOUT_USAGE_UNORDERED_SEQUENCES_BIT_NVX
-        :: VkIndirectCommandsLayoutUsageFlagBitsNVX
-
-pattern VK_INDIRECT_COMMANDS_LAYOUT_USAGE_UNORDERED_SEQUENCES_BIT_NVX
-        = VkIndirectCommandsLayoutUsageFlagBitsNVX 1
-
--- | bitpos = @1@
-pattern VK_INDIRECT_COMMANDS_LAYOUT_USAGE_SPARSE_SEQUENCES_BIT_NVX
-        :: VkIndirectCommandsLayoutUsageFlagBitsNVX
-
-pattern VK_INDIRECT_COMMANDS_LAYOUT_USAGE_SPARSE_SEQUENCES_BIT_NVX
-        = VkIndirectCommandsLayoutUsageFlagBitsNVX 2
-
--- | bitpos = @2@
-pattern VK_INDIRECT_COMMANDS_LAYOUT_USAGE_EMPTY_EXECUTIONS_BIT_NVX
-        :: VkIndirectCommandsLayoutUsageFlagBitsNVX
-
-pattern VK_INDIRECT_COMMANDS_LAYOUT_USAGE_EMPTY_EXECUTIONS_BIT_NVX
-        = VkIndirectCommandsLayoutUsageFlagBitsNVX 4
-
--- | bitpos = @3@
-pattern VK_INDIRECT_COMMANDS_LAYOUT_USAGE_INDEXED_SEQUENCES_BIT_NVX
-        :: VkIndirectCommandsLayoutUsageFlagBitsNVX
-
-pattern VK_INDIRECT_COMMANDS_LAYOUT_USAGE_INDEXED_SEQUENCES_BIT_NVX
-        = VkIndirectCommandsLayoutUsageFlagBitsNVX 8
-
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkIndirectCommandsTokenTypeNVX.html VkIndirectCommandsTokenTypeNVX registry at www.khronos.org>
-newtype VkIndirectCommandsTokenTypeNVX = VkIndirectCommandsTokenTypeNVX Int32
-                                           deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
-                                                     Generic)
-
-instance Show VkIndirectCommandsTokenTypeNVX where
-        showsPrec _ VK_INDIRECT_COMMANDS_TOKEN_TYPE_PIPELINE_NVX
-          = showString "VK_INDIRECT_COMMANDS_TOKEN_TYPE_PIPELINE_NVX"
-        showsPrec _ VK_INDIRECT_COMMANDS_TOKEN_TYPE_DESCRIPTOR_SET_NVX
-          = showString "VK_INDIRECT_COMMANDS_TOKEN_TYPE_DESCRIPTOR_SET_NVX"
-        showsPrec _ VK_INDIRECT_COMMANDS_TOKEN_TYPE_INDEX_BUFFER_NVX
-          = showString "VK_INDIRECT_COMMANDS_TOKEN_TYPE_INDEX_BUFFER_NVX"
-        showsPrec _ VK_INDIRECT_COMMANDS_TOKEN_TYPE_VERTEX_BUFFER_NVX
-          = showString "VK_INDIRECT_COMMANDS_TOKEN_TYPE_VERTEX_BUFFER_NVX"
-        showsPrec _ VK_INDIRECT_COMMANDS_TOKEN_TYPE_PUSH_CONSTANT_NVX
-          = showString "VK_INDIRECT_COMMANDS_TOKEN_TYPE_PUSH_CONSTANT_NVX"
-        showsPrec _ VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_INDEXED_NVX
-          = showString "VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_INDEXED_NVX"
-        showsPrec _ VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_NVX
-          = showString "VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_NVX"
-        showsPrec _ VK_INDIRECT_COMMANDS_TOKEN_TYPE_DISPATCH_NVX
-          = showString "VK_INDIRECT_COMMANDS_TOKEN_TYPE_DISPATCH_NVX"
-        showsPrec p (VkIndirectCommandsTokenTypeNVX x)
-          = showParen (p >= 11)
-              (showString "VkIndirectCommandsTokenTypeNVX " . showsPrec 11 x)
-
-instance Read VkIndirectCommandsTokenTypeNVX where
-        readPrec
-          = parens
-              (choose
-                 [("VK_INDIRECT_COMMANDS_TOKEN_TYPE_PIPELINE_NVX",
-                   pure VK_INDIRECT_COMMANDS_TOKEN_TYPE_PIPELINE_NVX),
-                  ("VK_INDIRECT_COMMANDS_TOKEN_TYPE_DESCRIPTOR_SET_NVX",
-                   pure VK_INDIRECT_COMMANDS_TOKEN_TYPE_DESCRIPTOR_SET_NVX),
-                  ("VK_INDIRECT_COMMANDS_TOKEN_TYPE_INDEX_BUFFER_NVX",
-                   pure VK_INDIRECT_COMMANDS_TOKEN_TYPE_INDEX_BUFFER_NVX),
-                  ("VK_INDIRECT_COMMANDS_TOKEN_TYPE_VERTEX_BUFFER_NVX",
-                   pure VK_INDIRECT_COMMANDS_TOKEN_TYPE_VERTEX_BUFFER_NVX),
-                  ("VK_INDIRECT_COMMANDS_TOKEN_TYPE_PUSH_CONSTANT_NVX",
-                   pure VK_INDIRECT_COMMANDS_TOKEN_TYPE_PUSH_CONSTANT_NVX),
-                  ("VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_INDEXED_NVX",
-                   pure VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_INDEXED_NVX),
-                  ("VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_NVX",
-                   pure VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_NVX),
-                  ("VK_INDIRECT_COMMANDS_TOKEN_TYPE_DISPATCH_NVX",
-                   pure VK_INDIRECT_COMMANDS_TOKEN_TYPE_DISPATCH_NVX)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkIndirectCommandsTokenTypeNVX") >>
-                      (VkIndirectCommandsTokenTypeNVX <$> step readPrec)))
-
-pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_PIPELINE_NVX ::
-        VkIndirectCommandsTokenTypeNVX
-
-pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_PIPELINE_NVX =
-        VkIndirectCommandsTokenTypeNVX 0
-
-pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_DESCRIPTOR_SET_NVX ::
-        VkIndirectCommandsTokenTypeNVX
-
-pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_DESCRIPTOR_SET_NVX =
-        VkIndirectCommandsTokenTypeNVX 1
-
-pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_INDEX_BUFFER_NVX ::
-        VkIndirectCommandsTokenTypeNVX
-
-pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_INDEX_BUFFER_NVX =
-        VkIndirectCommandsTokenTypeNVX 2
-
-pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_VERTEX_BUFFER_NVX ::
-        VkIndirectCommandsTokenTypeNVX
-
-pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_VERTEX_BUFFER_NVX =
-        VkIndirectCommandsTokenTypeNVX 3
-
-pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_PUSH_CONSTANT_NVX ::
-        VkIndirectCommandsTokenTypeNVX
-
-pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_PUSH_CONSTANT_NVX =
-        VkIndirectCommandsTokenTypeNVX 4
-
-pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_INDEXED_NVX ::
-        VkIndirectCommandsTokenTypeNVX
-
-pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_INDEXED_NVX =
-        VkIndirectCommandsTokenTypeNVX 5
-
-pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_NVX ::
-        VkIndirectCommandsTokenTypeNVX
-
-pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_NVX =
-        VkIndirectCommandsTokenTypeNVX 6
-
-pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_DISPATCH_NVX ::
-        VkIndirectCommandsTokenTypeNVX
-
-pattern VK_INDIRECT_COMMANDS_TOKEN_TYPE_DISPATCH_NVX =
-        VkIndirectCommandsTokenTypeNVX 7
-
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkObjectEntryUsageFlagBitsNVX.html VkObjectEntryUsageFlagBitsNVX registry at www.khronos.org>
-newtype VkObjectEntryUsageFlagBitsNVX = VkObjectEntryUsageFlagBitsNVX Int32
-                                          deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
-                                                    Storable, Enum, Data, Generic)
-
-instance Show VkObjectEntryUsageFlagBitsNVX where
-        showsPrec _ VK_OBJECT_ENTRY_USAGE_GRAPHICS_BIT_NVX
-          = showString "VK_OBJECT_ENTRY_USAGE_GRAPHICS_BIT_NVX"
-        showsPrec _ VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX
-          = showString "VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX"
-        showsPrec p (VkObjectEntryUsageFlagBitsNVX x)
-          = showParen (p >= 11)
-              (showString "VkObjectEntryUsageFlagBitsNVX " . showsPrec 11 x)
-
-instance Read VkObjectEntryUsageFlagBitsNVX where
-        readPrec
-          = parens
-              (choose
-                 [("VK_OBJECT_ENTRY_USAGE_GRAPHICS_BIT_NVX",
-                   pure VK_OBJECT_ENTRY_USAGE_GRAPHICS_BIT_NVX),
-                  ("VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX",
-                   pure VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkObjectEntryUsageFlagBitsNVX") >>
-                      (VkObjectEntryUsageFlagBitsNVX <$> step readPrec)))
-
--- | bitpos = @0@
-pattern VK_OBJECT_ENTRY_USAGE_GRAPHICS_BIT_NVX ::
-        VkObjectEntryUsageFlagBitsNVX
-
-pattern VK_OBJECT_ENTRY_USAGE_GRAPHICS_BIT_NVX =
-        VkObjectEntryUsageFlagBitsNVX 1
-
--- | bitpos = @1@
-pattern VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX ::
-        VkObjectEntryUsageFlagBitsNVX
-
-pattern VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX =
-        VkObjectEntryUsageFlagBitsNVX 2
-
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkObjectEntryTypeNVX.html VkObjectEntryTypeNVX registry at www.khronos.org>
-newtype VkObjectEntryTypeNVX = VkObjectEntryTypeNVX Int32
-                                 deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
-
-instance Show VkObjectEntryTypeNVX where
-        showsPrec _ VK_OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX
-          = showString "VK_OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX"
-        showsPrec _ VK_OBJECT_ENTRY_TYPE_PIPELINE_NVX
-          = showString "VK_OBJECT_ENTRY_TYPE_PIPELINE_NVX"
-        showsPrec _ VK_OBJECT_ENTRY_TYPE_INDEX_BUFFER_NVX
-          = showString "VK_OBJECT_ENTRY_TYPE_INDEX_BUFFER_NVX"
-        showsPrec _ VK_OBJECT_ENTRY_TYPE_VERTEX_BUFFER_NVX
-          = showString "VK_OBJECT_ENTRY_TYPE_VERTEX_BUFFER_NVX"
-        showsPrec _ VK_OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX
-          = showString "VK_OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX"
-        showsPrec p (VkObjectEntryTypeNVX x)
-          = showParen (p >= 11)
-              (showString "VkObjectEntryTypeNVX " . showsPrec 11 x)
-
-instance Read VkObjectEntryTypeNVX where
-        readPrec
-          = parens
-              (choose
-                 [("VK_OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX",
-                   pure VK_OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX),
-                  ("VK_OBJECT_ENTRY_TYPE_PIPELINE_NVX",
-                   pure VK_OBJECT_ENTRY_TYPE_PIPELINE_NVX),
-                  ("VK_OBJECT_ENTRY_TYPE_INDEX_BUFFER_NVX",
-                   pure VK_OBJECT_ENTRY_TYPE_INDEX_BUFFER_NVX),
-                  ("VK_OBJECT_ENTRY_TYPE_VERTEX_BUFFER_NVX",
-                   pure VK_OBJECT_ENTRY_TYPE_VERTEX_BUFFER_NVX),
-                  ("VK_OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX",
-                   pure VK_OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkObjectEntryTypeNVX") >>
-                      (VkObjectEntryTypeNVX <$> step readPrec)))
-
-pattern VK_OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX ::
-        VkObjectEntryTypeNVX
-
-pattern VK_OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX =
-        VkObjectEntryTypeNVX 0
-
-pattern VK_OBJECT_ENTRY_TYPE_PIPELINE_NVX :: VkObjectEntryTypeNVX
-
-pattern VK_OBJECT_ENTRY_TYPE_PIPELINE_NVX = VkObjectEntryTypeNVX 1
-
-pattern VK_OBJECT_ENTRY_TYPE_INDEX_BUFFER_NVX ::
-        VkObjectEntryTypeNVX
-
-pattern VK_OBJECT_ENTRY_TYPE_INDEX_BUFFER_NVX =
-        VkObjectEntryTypeNVX 2
-
-pattern VK_OBJECT_ENTRY_TYPE_VERTEX_BUFFER_NVX ::
-        VkObjectEntryTypeNVX
-
-pattern VK_OBJECT_ENTRY_TYPE_VERTEX_BUFFER_NVX =
-        VkObjectEntryTypeNVX 3
-
-pattern VK_OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX ::
-        VkObjectEntryTypeNVX
-
-pattern VK_OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX =
-        VkObjectEntryTypeNVX 4
-
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDescriptorUpdateTemplateTypeKHR.html VkDescriptorUpdateTemplateTypeKHR registry at www.khronos.org>
-newtype VkDescriptorUpdateTemplateTypeKHR = VkDescriptorUpdateTemplateTypeKHR Int32
-                                              deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
-                                                        Generic)
-
-instance Show VkDescriptorUpdateTemplateTypeKHR where
-        showsPrec _ VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_DESCRIPTOR_SET_KHR
-          = showString
-              "VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_DESCRIPTOR_SET_KHR"
-        showsPrec _ VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR
-          = showString
-              "VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR"
-        showsPrec p (VkDescriptorUpdateTemplateTypeKHR x)
-          = showParen (p >= 11)
-              (showString "VkDescriptorUpdateTemplateTypeKHR " . showsPrec 11 x)
-
-instance Read VkDescriptorUpdateTemplateTypeKHR where
-        readPrec
-          = parens
-              (choose
-                 [("VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_DESCRIPTOR_SET_KHR",
-                   pure VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_DESCRIPTOR_SET_KHR),
-                  ("VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR",
-                   pure VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkDescriptorUpdateTemplateTypeKHR") >>
-                      (VkDescriptorUpdateTemplateTypeKHR <$> step readPrec)))
-
--- | Create descriptor update template for descriptor set updates
-pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_DESCRIPTOR_SET_KHR ::
-        VkDescriptorUpdateTemplateTypeKHR
-
-pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_DESCRIPTOR_SET_KHR =
-        VkDescriptorUpdateTemplateTypeKHR 0
-
--- | Create descriptor update template for pushed descriptor updates
-pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR ::
-        VkDescriptorUpdateTemplateTypeKHR
-
-pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR =
-        VkDescriptorUpdateTemplateTypeKHR 1
-
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkViewportCoordinateSwizzleNV.html VkViewportCoordinateSwizzleNV registry at www.khronos.org>
-newtype VkViewportCoordinateSwizzleNV = VkViewportCoordinateSwizzleNV Int32
-                                          deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
-                                                    Generic)
-
-instance Show VkViewportCoordinateSwizzleNV where
-        showsPrec _ VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_X_NV
-          = showString "VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_X_NV"
-        showsPrec _ VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_X_NV
-          = showString "VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_X_NV"
-        showsPrec _ VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Y_NV
-          = showString "VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Y_NV"
-        showsPrec _ VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Y_NV
-          = showString "VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Y_NV"
-        showsPrec _ VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Z_NV
-          = showString "VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Z_NV"
-        showsPrec _ VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Z_NV
-          = showString "VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Z_NV"
-        showsPrec _ VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_W_NV
-          = showString "VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_W_NV"
-        showsPrec _ VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_W_NV
-          = showString "VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_W_NV"
-        showsPrec p (VkViewportCoordinateSwizzleNV x)
-          = showParen (p >= 11)
-              (showString "VkViewportCoordinateSwizzleNV " . showsPrec 11 x)
-
-instance Read VkViewportCoordinateSwizzleNV where
-        readPrec
-          = parens
-              (choose
-                 [("VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_X_NV",
-                   pure VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_X_NV),
-                  ("VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_X_NV",
-                   pure VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_X_NV),
-                  ("VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Y_NV",
-                   pure VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Y_NV),
-                  ("VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Y_NV",
-                   pure VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Y_NV),
-                  ("VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Z_NV",
-                   pure VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Z_NV),
-                  ("VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Z_NV",
-                   pure VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Z_NV),
-                  ("VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_W_NV",
-                   pure VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_W_NV),
-                  ("VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_W_NV",
-                   pure VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_W_NV)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkViewportCoordinateSwizzleNV") >>
-                      (VkViewportCoordinateSwizzleNV <$> step readPrec)))
-
-pattern VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_X_NV ::
-        VkViewportCoordinateSwizzleNV
-
-pattern VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_X_NV =
-        VkViewportCoordinateSwizzleNV 0
-
-pattern VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_X_NV ::
-        VkViewportCoordinateSwizzleNV
-
-pattern VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_X_NV =
-        VkViewportCoordinateSwizzleNV 1
-
-pattern VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Y_NV ::
-        VkViewportCoordinateSwizzleNV
-
-pattern VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Y_NV =
-        VkViewportCoordinateSwizzleNV 2
-
-pattern VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Y_NV ::
-        VkViewportCoordinateSwizzleNV
-
-pattern VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Y_NV =
-        VkViewportCoordinateSwizzleNV 3
-
-pattern VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Z_NV ::
-        VkViewportCoordinateSwizzleNV
-
-pattern VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Z_NV =
-        VkViewportCoordinateSwizzleNV 4
-
-pattern VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Z_NV ::
-        VkViewportCoordinateSwizzleNV
-
-pattern VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Z_NV =
-        VkViewportCoordinateSwizzleNV 5
-
-pattern VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_W_NV ::
-        VkViewportCoordinateSwizzleNV
-
-pattern VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_W_NV =
-        VkViewportCoordinateSwizzleNV 6
-
-pattern VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_W_NV ::
-        VkViewportCoordinateSwizzleNV
-
-pattern VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_W_NV =
-        VkViewportCoordinateSwizzleNV 7
-
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDiscardRectangleModeEXT.html VkDiscardRectangleModeEXT registry at www.khronos.org>
-newtype VkDiscardRectangleModeEXT = VkDiscardRectangleModeEXT Int32
-                                      deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
-                                                Generic)
-
-instance Show VkDiscardRectangleModeEXT where
-        showsPrec _ VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT
-          = showString "VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT"
-        showsPrec _ VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT
-          = showString "VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT"
-        showsPrec p (VkDiscardRectangleModeEXT x)
-          = showParen (p >= 11)
-              (showString "VkDiscardRectangleModeEXT " . showsPrec 11 x)
-
-instance Read VkDiscardRectangleModeEXT where
-        readPrec
-          = parens
-              (choose
-                 [("VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT",
-                   pure VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT),
-                  ("VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT",
-                   pure VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkDiscardRectangleModeEXT") >>
-                      (VkDiscardRectangleModeEXT <$> step readPrec)))
-
-pattern VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT ::
-        VkDiscardRectangleModeEXT
-
-pattern VK_DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT =
-        VkDiscardRectangleModeEXT 0
-
-pattern VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT ::
-        VkDiscardRectangleModeEXT
-
-pattern VK_DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT =
-        VkDiscardRectangleModeEXT 1
-
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSubpassDescriptionFlagBits.html VkSubpassDescriptionFlagBits registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSubpassDescriptionFlagBits.html VkSubpassDescriptionFlagBits registry at www.khronos.org>
 newtype VkSubpassDescriptionFlagBits = VkSubpassDescriptionFlagBits Int32
                                          deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
                                                    Storable, Enum, Data, Generic)
@@ -9336,506 +11437,50 @@ instance Read VkSubpassDescriptionFlagBits where
                    (expectP (Ident "VkSubpassDescriptionFlagBits") >>
                       (VkSubpassDescriptionFlagBits <$> step readPrec)))
 
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPointClippingBehaviorKHR.html VkPointClippingBehaviorKHR registry at www.khronos.org>
-newtype VkPointClippingBehaviorKHR = VkPointClippingBehaviorKHR Int32
-                                       deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
-                                                 Generic)
-
-instance Show VkPointClippingBehaviorKHR where
-        showsPrec _ VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES_KHR
-          = showString "VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES_KHR"
-        showsPrec _ VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY_KHR
-          = showString "VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY_KHR"
-        showsPrec p (VkPointClippingBehaviorKHR x)
-          = showParen (p >= 11)
-              (showString "VkPointClippingBehaviorKHR " . showsPrec 11 x)
-
-instance Read VkPointClippingBehaviorKHR where
-        readPrec
-          = parens
-              (choose
-                 [("VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES_KHR",
-                   pure VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES_KHR),
-                  ("VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY_KHR",
-                   pure VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY_KHR)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkPointClippingBehaviorKHR") >>
-                      (VkPointClippingBehaviorKHR <$> step readPrec)))
-
-pattern VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES_KHR ::
-        VkPointClippingBehaviorKHR
-
-pattern VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES_KHR =
-        VkPointClippingBehaviorKHR 0
-
-pattern VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY_KHR ::
-        VkPointClippingBehaviorKHR
-
-pattern VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY_KHR =
-        VkPointClippingBehaviorKHR 1
-
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkCoverageModulationModeNV.html VkCoverageModulationModeNV registry at www.khronos.org>
-newtype VkCoverageModulationModeNV = VkCoverageModulationModeNV Int32
-                                       deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
-                                                 Generic)
-
-instance Show VkCoverageModulationModeNV where
-        showsPrec _ VK_COVERAGE_MODULATION_MODE_NONE_NV
-          = showString "VK_COVERAGE_MODULATION_MODE_NONE_NV"
-        showsPrec _ VK_COVERAGE_MODULATION_MODE_RGB_NV
-          = showString "VK_COVERAGE_MODULATION_MODE_RGB_NV"
-        showsPrec _ VK_COVERAGE_MODULATION_MODE_ALPHA_NV
-          = showString "VK_COVERAGE_MODULATION_MODE_ALPHA_NV"
-        showsPrec _ VK_COVERAGE_MODULATION_MODE_RGBA_NV
-          = showString "VK_COVERAGE_MODULATION_MODE_RGBA_NV"
-        showsPrec p (VkCoverageModulationModeNV x)
-          = showParen (p >= 11)
-              (showString "VkCoverageModulationModeNV " . showsPrec 11 x)
-
-instance Read VkCoverageModulationModeNV where
-        readPrec
-          = parens
-              (choose
-                 [("VK_COVERAGE_MODULATION_MODE_NONE_NV",
-                   pure VK_COVERAGE_MODULATION_MODE_NONE_NV),
-                  ("VK_COVERAGE_MODULATION_MODE_RGB_NV",
-                   pure VK_COVERAGE_MODULATION_MODE_RGB_NV),
-                  ("VK_COVERAGE_MODULATION_MODE_ALPHA_NV",
-                   pure VK_COVERAGE_MODULATION_MODE_ALPHA_NV),
-                  ("VK_COVERAGE_MODULATION_MODE_RGBA_NV",
-                   pure VK_COVERAGE_MODULATION_MODE_RGBA_NV)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkCoverageModulationModeNV") >>
-                      (VkCoverageModulationModeNV <$> step readPrec)))
-
-pattern VK_COVERAGE_MODULATION_MODE_NONE_NV ::
-        VkCoverageModulationModeNV
-
-pattern VK_COVERAGE_MODULATION_MODE_NONE_NV =
-        VkCoverageModulationModeNV 0
-
-pattern VK_COVERAGE_MODULATION_MODE_RGB_NV ::
-        VkCoverageModulationModeNV
-
-pattern VK_COVERAGE_MODULATION_MODE_RGB_NV =
-        VkCoverageModulationModeNV 1
-
-pattern VK_COVERAGE_MODULATION_MODE_ALPHA_NV ::
-        VkCoverageModulationModeNV
-
-pattern VK_COVERAGE_MODULATION_MODE_ALPHA_NV =
-        VkCoverageModulationModeNV 2
-
-pattern VK_COVERAGE_MODULATION_MODE_RGBA_NV ::
-        VkCoverageModulationModeNV
-
-pattern VK_COVERAGE_MODULATION_MODE_RGBA_NV =
-        VkCoverageModulationModeNV 3
-
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkValidationCacheHeaderVersionEXT.html VkValidationCacheHeaderVersionEXT registry at www.khronos.org>
-newtype VkValidationCacheHeaderVersionEXT = VkValidationCacheHeaderVersionEXT Int32
-                                              deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
-                                                        Generic)
-
-instance Show VkValidationCacheHeaderVersionEXT where
-        showsPrec _ VK_VALIDATION_CACHE_HEADER_VERSION_ONE_EXT
-          = showString "VK_VALIDATION_CACHE_HEADER_VERSION_ONE_EXT"
-        showsPrec p (VkValidationCacheHeaderVersionEXT x)
-          = showParen (p >= 11)
-              (showString "VkValidationCacheHeaderVersionEXT " . showsPrec 11 x)
-
-instance Read VkValidationCacheHeaderVersionEXT where
-        readPrec
-          = parens
-              (choose
-                 [("VK_VALIDATION_CACHE_HEADER_VERSION_ONE_EXT",
-                   pure VK_VALIDATION_CACHE_HEADER_VERSION_ONE_EXT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkValidationCacheHeaderVersionEXT") >>
-                      (VkValidationCacheHeaderVersionEXT <$> step readPrec)))
-
-pattern VK_VALIDATION_CACHE_HEADER_VERSION_ONE_EXT ::
-        VkValidationCacheHeaderVersionEXT
-
-pattern VK_VALIDATION_CACHE_HEADER_VERSION_ONE_EXT =
-        VkValidationCacheHeaderVersionEXT 1
-
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkShaderInfoTypeAMD.html VkShaderInfoTypeAMD registry at www.khronos.org>
-newtype VkShaderInfoTypeAMD = VkShaderInfoTypeAMD Int32
-                                deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
-
-instance Show VkShaderInfoTypeAMD where
-        showsPrec _ VK_SHADER_INFO_TYPE_STATISTICS_AMD
-          = showString "VK_SHADER_INFO_TYPE_STATISTICS_AMD"
-        showsPrec _ VK_SHADER_INFO_TYPE_BINARY_AMD
-          = showString "VK_SHADER_INFO_TYPE_BINARY_AMD"
-        showsPrec _ VK_SHADER_INFO_TYPE_DISASSEMBLY_AMD
-          = showString "VK_SHADER_INFO_TYPE_DISASSEMBLY_AMD"
-        showsPrec p (VkShaderInfoTypeAMD x)
-          = showParen (p >= 11)
-              (showString "VkShaderInfoTypeAMD " . showsPrec 11 x)
-
-instance Read VkShaderInfoTypeAMD where
-        readPrec
-          = parens
-              (choose
-                 [("VK_SHADER_INFO_TYPE_STATISTICS_AMD",
-                   pure VK_SHADER_INFO_TYPE_STATISTICS_AMD),
-                  ("VK_SHADER_INFO_TYPE_BINARY_AMD",
-                   pure VK_SHADER_INFO_TYPE_BINARY_AMD),
-                  ("VK_SHADER_INFO_TYPE_DISASSEMBLY_AMD",
-                   pure VK_SHADER_INFO_TYPE_DISASSEMBLY_AMD)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkShaderInfoTypeAMD") >>
-                      (VkShaderInfoTypeAMD <$> step readPrec)))
-
-pattern VK_SHADER_INFO_TYPE_STATISTICS_AMD :: VkShaderInfoTypeAMD
-
-pattern VK_SHADER_INFO_TYPE_STATISTICS_AMD = VkShaderInfoTypeAMD 0
-
-pattern VK_SHADER_INFO_TYPE_BINARY_AMD :: VkShaderInfoTypeAMD
-
-pattern VK_SHADER_INFO_TYPE_BINARY_AMD = VkShaderInfoTypeAMD 1
-
-pattern VK_SHADER_INFO_TYPE_DISASSEMBLY_AMD :: VkShaderInfoTypeAMD
-
-pattern VK_SHADER_INFO_TYPE_DISASSEMBLY_AMD = VkShaderInfoTypeAMD 2
-
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkQueueGlobalPriorityEXT.html VkQueueGlobalPriorityEXT registry at www.khronos.org>
-newtype VkQueueGlobalPriorityEXT = VkQueueGlobalPriorityEXT Int32
-                                     deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
-
-instance Show VkQueueGlobalPriorityEXT where
-        showsPrec _ VK_QUEUE_GLOBAL_PRIORITY_LOW_EXT
-          = showString "VK_QUEUE_GLOBAL_PRIORITY_LOW_EXT"
-        showsPrec _ VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT
-          = showString "VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT"
-        showsPrec _ VK_QUEUE_GLOBAL_PRIORITY_HIGH_EXT
-          = showString "VK_QUEUE_GLOBAL_PRIORITY_HIGH_EXT"
-        showsPrec _ VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT
-          = showString "VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT"
-        showsPrec p (VkQueueGlobalPriorityEXT x)
-          = showParen (p >= 11)
-              (showString "VkQueueGlobalPriorityEXT " . showsPrec 11 x)
-
-instance Read VkQueueGlobalPriorityEXT where
-        readPrec
-          = parens
-              (choose
-                 [("VK_QUEUE_GLOBAL_PRIORITY_LOW_EXT",
-                   pure VK_QUEUE_GLOBAL_PRIORITY_LOW_EXT),
-                  ("VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT",
-                   pure VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT),
-                  ("VK_QUEUE_GLOBAL_PRIORITY_HIGH_EXT",
-                   pure VK_QUEUE_GLOBAL_PRIORITY_HIGH_EXT),
-                  ("VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT",
-                   pure VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkQueueGlobalPriorityEXT") >>
-                      (VkQueueGlobalPriorityEXT <$> step readPrec)))
-
-pattern VK_QUEUE_GLOBAL_PRIORITY_LOW_EXT ::
-        VkQueueGlobalPriorityEXT
-
-pattern VK_QUEUE_GLOBAL_PRIORITY_LOW_EXT =
-        VkQueueGlobalPriorityEXT 128
-
-pattern VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT ::
-        VkQueueGlobalPriorityEXT
-
-pattern VK_QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT =
-        VkQueueGlobalPriorityEXT 256
-
-pattern VK_QUEUE_GLOBAL_PRIORITY_HIGH_EXT ::
-        VkQueueGlobalPriorityEXT
-
-pattern VK_QUEUE_GLOBAL_PRIORITY_HIGH_EXT =
-        VkQueueGlobalPriorityEXT 512
-
-pattern VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT ::
-        VkQueueGlobalPriorityEXT
-
-pattern VK_QUEUE_GLOBAL_PRIORITY_REALTIME_EXT =
-        VkQueueGlobalPriorityEXT 1024
-
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkConservativeRasterizationModeEXT.html VkConservativeRasterizationModeEXT registry at www.khronos.org>
-newtype VkConservativeRasterizationModeEXT = VkConservativeRasterizationModeEXT Int32
-                                               deriving (Eq, Ord, Num, Bounded, Storable, Enum,
-                                                         Data, Generic)
-
-instance Show VkConservativeRasterizationModeEXT where
-        showsPrec _ VK_CONSERVATIVE_RASTERIZATION_MODE_DISABLED_EXT
-          = showString "VK_CONSERVATIVE_RASTERIZATION_MODE_DISABLED_EXT"
-        showsPrec _ VK_CONSERVATIVE_RASTERIZATION_MODE_OVERESTIMATE_EXT
-          = showString "VK_CONSERVATIVE_RASTERIZATION_MODE_OVERESTIMATE_EXT"
-        showsPrec _ VK_CONSERVATIVE_RASTERIZATION_MODE_UNDERESTIMATE_EXT
-          = showString "VK_CONSERVATIVE_RASTERIZATION_MODE_UNDERESTIMATE_EXT"
-        showsPrec p (VkConservativeRasterizationModeEXT x)
-          = showParen (p >= 11)
-              (showString "VkConservativeRasterizationModeEXT " . showsPrec 11 x)
-
-instance Read VkConservativeRasterizationModeEXT where
-        readPrec
-          = parens
-              (choose
-                 [("VK_CONSERVATIVE_RASTERIZATION_MODE_DISABLED_EXT",
-                   pure VK_CONSERVATIVE_RASTERIZATION_MODE_DISABLED_EXT),
-                  ("VK_CONSERVATIVE_RASTERIZATION_MODE_OVERESTIMATE_EXT",
-                   pure VK_CONSERVATIVE_RASTERIZATION_MODE_OVERESTIMATE_EXT),
-                  ("VK_CONSERVATIVE_RASTERIZATION_MODE_UNDERESTIMATE_EXT",
-                   pure VK_CONSERVATIVE_RASTERIZATION_MODE_UNDERESTIMATE_EXT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkConservativeRasterizationModeEXT") >>
-                      (VkConservativeRasterizationModeEXT <$> step readPrec)))
-
-pattern VK_CONSERVATIVE_RASTERIZATION_MODE_DISABLED_EXT ::
-        VkConservativeRasterizationModeEXT
-
-pattern VK_CONSERVATIVE_RASTERIZATION_MODE_DISABLED_EXT =
-        VkConservativeRasterizationModeEXT 0
-
-pattern VK_CONSERVATIVE_RASTERIZATION_MODE_OVERESTIMATE_EXT ::
-        VkConservativeRasterizationModeEXT
-
-pattern VK_CONSERVATIVE_RASTERIZATION_MODE_OVERESTIMATE_EXT =
-        VkConservativeRasterizationModeEXT 1
-
-pattern VK_CONSERVATIVE_RASTERIZATION_MODE_UNDERESTIMATE_EXT ::
-        VkConservativeRasterizationModeEXT
-
-pattern VK_CONSERVATIVE_RASTERIZATION_MODE_UNDERESTIMATE_EXT =
-        VkConservativeRasterizationModeEXT 2
-
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkColorSpaceKHR.html VkColorSpaceKHR registry at www.khronos.org>
-newtype VkColorSpaceKHR = VkColorSpaceKHR Int32
-                            deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
-
-instance Show VkColorSpaceKHR where
-        showsPrec _ VK_COLOR_SPACE_SRGB_NONLINEAR_KHR
-          = showString "VK_COLOR_SPACE_SRGB_NONLINEAR_KHR"
-        showsPrec p (VkColorSpaceKHR x)
-          = showParen (p >= 11)
-              (showString "VkColorSpaceKHR " . showsPrec 11 x)
-
-instance Read VkColorSpaceKHR where
-        readPrec
-          = parens
-              (choose
-                 [("VK_COLOR_SPACE_SRGB_NONLINEAR_KHR",
-                   pure VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkColorSpaceKHR") >>
-                      (VkColorSpaceKHR <$> step readPrec)))
-
-pattern VK_COLOR_SPACE_SRGB_NONLINEAR_KHR :: VkColorSpaceKHR
-
-pattern VK_COLOR_SPACE_SRGB_NONLINEAR_KHR = VkColorSpaceKHR 0
+type VkSubpassDescriptionFlags = VkSubpassDescriptionFlagBits
 
 -- | type = @bitmask@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkCompositeAlphaFlagBitsKHR.html VkCompositeAlphaFlagBitsKHR registry at www.khronos.org>
-newtype VkCompositeAlphaFlagBitsKHR = VkCompositeAlphaFlagBitsKHR Int32
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSurfaceCounterFlagBitsEXT.html VkSurfaceCounterFlagBitsEXT registry at www.khronos.org>
+newtype VkSurfaceCounterFlagBitsEXT = VkSurfaceCounterFlagBitsEXT Int32
                                         deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable,
                                                   Enum, Data, Generic)
 
-instance Show VkCompositeAlphaFlagBitsKHR where
-        showsPrec _ VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR
-          = showString "VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR"
-        showsPrec _ VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR
-          = showString "VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR"
-        showsPrec _ VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR
-          = showString "VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR"
-        showsPrec _ VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR
-          = showString "VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR"
-        showsPrec p (VkCompositeAlphaFlagBitsKHR x)
+instance Show VkSurfaceCounterFlagBitsEXT where
+        showsPrec _ VK_SURFACE_COUNTER_VBLANK_EXT
+          = showString "VK_SURFACE_COUNTER_VBLANK_EXT"
+        showsPrec p (VkSurfaceCounterFlagBitsEXT x)
           = showParen (p >= 11)
-              (showString "VkCompositeAlphaFlagBitsKHR " . showsPrec 11 x)
+              (showString "VkSurfaceCounterFlagBitsEXT " . showsPrec 11 x)
 
-instance Read VkCompositeAlphaFlagBitsKHR where
+instance Read VkSurfaceCounterFlagBitsEXT where
         readPrec
           = parens
               (choose
-                 [("VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR",
-                   pure VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR),
-                  ("VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR",
-                   pure VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR),
-                  ("VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR",
-                   pure VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR),
-                  ("VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR",
-                   pure VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR)]
+                 [("VK_SURFACE_COUNTER_VBLANK_EXT",
+                   pure VK_SURFACE_COUNTER_VBLANK_EXT)]
                  +++
                  prec 10
-                   (expectP (Ident "VkCompositeAlphaFlagBitsKHR") >>
-                      (VkCompositeAlphaFlagBitsKHR <$> step readPrec)))
+                   (expectP (Ident "VkSurfaceCounterFlagBitsEXT") >>
+                      (VkSurfaceCounterFlagBitsEXT <$> step readPrec)))
 
 -- | bitpos = @0@
-pattern VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR ::
-        VkCompositeAlphaFlagBitsKHR
+pattern VK_SURFACE_COUNTER_VBLANK_EXT ::
+        VkSurfaceCounterFlagBitsEXT
 
-pattern VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR =
-        VkCompositeAlphaFlagBitsKHR 1
+pattern VK_SURFACE_COUNTER_VBLANK_EXT =
+        VkSurfaceCounterFlagBitsEXT 1
 
--- | bitpos = @1@
-pattern VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR ::
-        VkCompositeAlphaFlagBitsKHR
+type VkSurfaceCounterFlagsEXT = VkSurfaceCounterFlagBitsEXT
 
-pattern VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR =
-        VkCompositeAlphaFlagBitsKHR 2
+type VkSurfaceKHR = VkPtr VkSurfaceKHR_T
 
--- | bitpos = @2@
-pattern VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR ::
-        VkCompositeAlphaFlagBitsKHR
-
-pattern VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR =
-        VkCompositeAlphaFlagBitsKHR 4
-
--- | bitpos = @3@
-pattern VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR ::
-        VkCompositeAlphaFlagBitsKHR
-
-pattern VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR =
-        VkCompositeAlphaFlagBitsKHR 8
+-- | Opaque data type referenced by VkSurfaceKHR
+data VkSurfaceKHR_T
 
 -- | type = @bitmask@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplayPlaneAlphaFlagBitsKHR.html VkDisplayPlaneAlphaFlagBitsKHR registry at www.khronos.org>
-newtype VkDisplayPlaneAlphaFlagBitsKHR = VkDisplayPlaneAlphaFlagBitsKHR Int32
-                                           deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
-                                                     Storable, Enum, Data, Generic)
-
-instance Show VkDisplayPlaneAlphaFlagBitsKHR where
-        showsPrec _ VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR
-          = showString "VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR"
-        showsPrec _ VK_DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR
-          = showString "VK_DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR"
-        showsPrec _ VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_BIT_KHR
-          = showString "VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_BIT_KHR"
-        showsPrec _ VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR
-          = showString
-              "VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR"
-        showsPrec p (VkDisplayPlaneAlphaFlagBitsKHR x)
-          = showParen (p >= 11)
-              (showString "VkDisplayPlaneAlphaFlagBitsKHR " . showsPrec 11 x)
-
-instance Read VkDisplayPlaneAlphaFlagBitsKHR where
-        readPrec
-          = parens
-              (choose
-                 [("VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR",
-                   pure VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR),
-                  ("VK_DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR",
-                   pure VK_DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR),
-                  ("VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_BIT_KHR",
-                   pure VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_BIT_KHR),
-                  ("VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR",
-                   pure VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkDisplayPlaneAlphaFlagBitsKHR") >>
-                      (VkDisplayPlaneAlphaFlagBitsKHR <$> step readPrec)))
-
--- | bitpos = @0@
-pattern VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR ::
-        VkDisplayPlaneAlphaFlagBitsKHR
-
-pattern VK_DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR =
-        VkDisplayPlaneAlphaFlagBitsKHR 1
-
--- | bitpos = @1@
-pattern VK_DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR ::
-        VkDisplayPlaneAlphaFlagBitsKHR
-
-pattern VK_DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR =
-        VkDisplayPlaneAlphaFlagBitsKHR 2
-
--- | bitpos = @2@
-pattern VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_BIT_KHR ::
-        VkDisplayPlaneAlphaFlagBitsKHR
-
-pattern VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_BIT_KHR =
-        VkDisplayPlaneAlphaFlagBitsKHR 4
-
--- | bitpos = @3@
-pattern VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR ::
-        VkDisplayPlaneAlphaFlagBitsKHR
-
-pattern VK_DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR =
-        VkDisplayPlaneAlphaFlagBitsKHR 8
-
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPresentModeKHR.html VkPresentModeKHR registry at www.khronos.org>
-newtype VkPresentModeKHR = VkPresentModeKHR Int32
-                             deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
-
-instance Show VkPresentModeKHR where
-        showsPrec _ VK_PRESENT_MODE_IMMEDIATE_KHR
-          = showString "VK_PRESENT_MODE_IMMEDIATE_KHR"
-        showsPrec _ VK_PRESENT_MODE_MAILBOX_KHR
-          = showString "VK_PRESENT_MODE_MAILBOX_KHR"
-        showsPrec _ VK_PRESENT_MODE_FIFO_KHR
-          = showString "VK_PRESENT_MODE_FIFO_KHR"
-        showsPrec _ VK_PRESENT_MODE_FIFO_RELAXED_KHR
-          = showString "VK_PRESENT_MODE_FIFO_RELAXED_KHR"
-        showsPrec p (VkPresentModeKHR x)
-          = showParen (p >= 11)
-              (showString "VkPresentModeKHR " . showsPrec 11 x)
-
-instance Read VkPresentModeKHR where
-        readPrec
-          = parens
-              (choose
-                 [("VK_PRESENT_MODE_IMMEDIATE_KHR",
-                   pure VK_PRESENT_MODE_IMMEDIATE_KHR),
-                  ("VK_PRESENT_MODE_MAILBOX_KHR", pure VK_PRESENT_MODE_MAILBOX_KHR),
-                  ("VK_PRESENT_MODE_FIFO_KHR", pure VK_PRESENT_MODE_FIFO_KHR),
-                  ("VK_PRESENT_MODE_FIFO_RELAXED_KHR",
-                   pure VK_PRESENT_MODE_FIFO_RELAXED_KHR)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkPresentModeKHR") >>
-                      (VkPresentModeKHR <$> step readPrec)))
-
-pattern VK_PRESENT_MODE_IMMEDIATE_KHR :: VkPresentModeKHR
-
-pattern VK_PRESENT_MODE_IMMEDIATE_KHR = VkPresentModeKHR 0
-
-pattern VK_PRESENT_MODE_MAILBOX_KHR :: VkPresentModeKHR
-
-pattern VK_PRESENT_MODE_MAILBOX_KHR = VkPresentModeKHR 1
-
-pattern VK_PRESENT_MODE_FIFO_KHR :: VkPresentModeKHR
-
-pattern VK_PRESENT_MODE_FIFO_KHR = VkPresentModeKHR 2
-
-pattern VK_PRESENT_MODE_FIFO_RELAXED_KHR :: VkPresentModeKHR
-
-pattern VK_PRESENT_MODE_FIFO_RELAXED_KHR = VkPresentModeKHR 3
-
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSurfaceTransformFlagBitsKHR.html VkSurfaceTransformFlagBitsKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSurfaceTransformFlagBitsKHR.html VkSurfaceTransformFlagBitsKHR registry at www.khronos.org>
 newtype VkSurfaceTransformFlagBitsKHR = VkSurfaceTransformFlagBitsKHR Int32
                                           deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
                                                     Storable, Enum, Data, Generic)
@@ -9959,1420 +11604,11 @@ pattern VK_SURFACE_TRANSFORM_INHERIT_BIT_KHR ::
 pattern VK_SURFACE_TRANSFORM_INHERIT_BIT_KHR =
         VkSurfaceTransformFlagBitsKHR 256
 
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDebugReportFlagBitsEXT.html VkDebugReportFlagBitsEXT registry at www.khronos.org>
-newtype VkDebugReportFlagBitsEXT = VkDebugReportFlagBitsEXT Int32
-                                     deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable,
-                                               Enum, Data, Generic)
-
-instance Show VkDebugReportFlagBitsEXT where
-        showsPrec _ VK_DEBUG_REPORT_INFORMATION_BIT_EXT
-          = showString "VK_DEBUG_REPORT_INFORMATION_BIT_EXT"
-        showsPrec _ VK_DEBUG_REPORT_WARNING_BIT_EXT
-          = showString "VK_DEBUG_REPORT_WARNING_BIT_EXT"
-        showsPrec _ VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT
-          = showString "VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT"
-        showsPrec _ VK_DEBUG_REPORT_ERROR_BIT_EXT
-          = showString "VK_DEBUG_REPORT_ERROR_BIT_EXT"
-        showsPrec _ VK_DEBUG_REPORT_DEBUG_BIT_EXT
-          = showString "VK_DEBUG_REPORT_DEBUG_BIT_EXT"
-        showsPrec p (VkDebugReportFlagBitsEXT x)
-          = showParen (p >= 11)
-              (showString "VkDebugReportFlagBitsEXT " . showsPrec 11 x)
-
-instance Read VkDebugReportFlagBitsEXT where
-        readPrec
-          = parens
-              (choose
-                 [("VK_DEBUG_REPORT_INFORMATION_BIT_EXT",
-                   pure VK_DEBUG_REPORT_INFORMATION_BIT_EXT),
-                  ("VK_DEBUG_REPORT_WARNING_BIT_EXT",
-                   pure VK_DEBUG_REPORT_WARNING_BIT_EXT),
-                  ("VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT",
-                   pure VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT),
-                  ("VK_DEBUG_REPORT_ERROR_BIT_EXT",
-                   pure VK_DEBUG_REPORT_ERROR_BIT_EXT),
-                  ("VK_DEBUG_REPORT_DEBUG_BIT_EXT",
-                   pure VK_DEBUG_REPORT_DEBUG_BIT_EXT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkDebugReportFlagBitsEXT") >>
-                      (VkDebugReportFlagBitsEXT <$> step readPrec)))
-
--- | bitpos = @0@
-pattern VK_DEBUG_REPORT_INFORMATION_BIT_EXT ::
-        VkDebugReportFlagBitsEXT
-
-pattern VK_DEBUG_REPORT_INFORMATION_BIT_EXT =
-        VkDebugReportFlagBitsEXT 1
-
--- | bitpos = @1@
-pattern VK_DEBUG_REPORT_WARNING_BIT_EXT :: VkDebugReportFlagBitsEXT
-
-pattern VK_DEBUG_REPORT_WARNING_BIT_EXT =
-        VkDebugReportFlagBitsEXT 2
-
--- | bitpos = @2@
-pattern VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT ::
-        VkDebugReportFlagBitsEXT
-
-pattern VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT =
-        VkDebugReportFlagBitsEXT 4
-
--- | bitpos = @3@
-pattern VK_DEBUG_REPORT_ERROR_BIT_EXT :: VkDebugReportFlagBitsEXT
-
-pattern VK_DEBUG_REPORT_ERROR_BIT_EXT = VkDebugReportFlagBitsEXT 8
-
--- | bitpos = @4@
-pattern VK_DEBUG_REPORT_DEBUG_BIT_EXT :: VkDebugReportFlagBitsEXT
-
-pattern VK_DEBUG_REPORT_DEBUG_BIT_EXT = VkDebugReportFlagBitsEXT 16
-
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDebugReportObjectTypeEXT.html VkDebugReportObjectTypeEXT registry at www.khronos.org>
-newtype VkDebugReportObjectTypeEXT = VkDebugReportObjectTypeEXT Int32
-                                       deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
-                                                 Generic)
-
-instance Show VkDebugReportObjectTypeEXT where
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_PHYSICAL_DEVICE_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_PHYSICAL_DEVICE_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_QUEUE_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_QUEUE_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_SEMAPHORE_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_SEMAPHORE_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_BUFFER_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_BUFFER_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_FENCE_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_FENCE_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_EVENT_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_EVENT_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_VIEW_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_VIEW_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_CACHE_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_CACHE_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_LAYOUT_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_LAYOUT_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT_EXT
-          = showString
-              "VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_POOL_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_POOL_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_FRAMEBUFFER_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_FRAMEBUFFER_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_POOL_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_POOL_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_SURFACE_KHR_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_SURFACE_KHR_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_SWAPCHAIN_KHR_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_SWAPCHAIN_KHR_EXT"
-        showsPrec _
-          VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT
-          = showString
-              "VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT"
-        showsPrec _
-          VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT
-          = showString
-              "VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT"
-        showsPrec _ VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT
-          = showString "VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT"
-        showsPrec p (VkDebugReportObjectTypeEXT x)
-          = showParen (p >= 11)
-              (showString "VkDebugReportObjectTypeEXT " . showsPrec 11 x)
-
-instance Read VkDebugReportObjectTypeEXT where
-        readPrec
-          = parens
-              (choose
-                 [("VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_PHYSICAL_DEVICE_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_PHYSICAL_DEVICE_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_QUEUE_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_QUEUE_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_SEMAPHORE_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_SEMAPHORE_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_BUFFER_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_BUFFER_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_FENCE_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_FENCE_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_EVENT_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_EVENT_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_VIEW_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_VIEW_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_CACHE_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_CACHE_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_LAYOUT_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_LAYOUT_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_POOL_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_POOL_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_FRAMEBUFFER_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_FRAMEBUFFER_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_POOL_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_POOL_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_SURFACE_KHR_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_SURFACE_KHR_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_SWAPCHAIN_KHR_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_SWAPCHAIN_KHR_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT),
-                  ("VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT",
-                   pure VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkDebugReportObjectTypeEXT") >>
-                      (VkDebugReportObjectTypeEXT <$> step readPrec)))
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT =
-        VkDebugReportObjectTypeEXT 0
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT =
-        VkDebugReportObjectTypeEXT 1
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_PHYSICAL_DEVICE_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_PHYSICAL_DEVICE_EXT =
-        VkDebugReportObjectTypeEXT 2
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT =
-        VkDebugReportObjectTypeEXT 3
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_QUEUE_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_QUEUE_EXT =
-        VkDebugReportObjectTypeEXT 4
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_SEMAPHORE_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_SEMAPHORE_EXT =
-        VkDebugReportObjectTypeEXT 5
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_BUFFER_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_BUFFER_EXT =
-        VkDebugReportObjectTypeEXT 6
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_FENCE_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_FENCE_EXT =
-        VkDebugReportObjectTypeEXT 7
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT =
-        VkDebugReportObjectTypeEXT 8
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT =
-        VkDebugReportObjectTypeEXT 9
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT =
-        VkDebugReportObjectTypeEXT 10
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_EVENT_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_EVENT_EXT =
-        VkDebugReportObjectTypeEXT 11
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT =
-        VkDebugReportObjectTypeEXT 12
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_VIEW_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_BUFFER_VIEW_EXT =
-        VkDebugReportObjectTypeEXT 13
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT =
-        VkDebugReportObjectTypeEXT 14
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT =
-        VkDebugReportObjectTypeEXT 15
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_CACHE_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_CACHE_EXT =
-        VkDebugReportObjectTypeEXT 16
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_LAYOUT_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_LAYOUT_EXT =
-        VkDebugReportObjectTypeEXT 17
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT =
-        VkDebugReportObjectTypeEXT 18
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT =
-        VkDebugReportObjectTypeEXT 19
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT_EXT =
-        VkDebugReportObjectTypeEXT 20
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_EXT =
-        VkDebugReportObjectTypeEXT 21
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_POOL_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_POOL_EXT =
-        VkDebugReportObjectTypeEXT 22
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT =
-        VkDebugReportObjectTypeEXT 23
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_FRAMEBUFFER_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_FRAMEBUFFER_EXT =
-        VkDebugReportObjectTypeEXT 24
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_POOL_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_COMMAND_POOL_EXT =
-        VkDebugReportObjectTypeEXT 25
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_SURFACE_KHR_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_SURFACE_KHR_EXT =
-        VkDebugReportObjectTypeEXT 26
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_SWAPCHAIN_KHR_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_SWAPCHAIN_KHR_EXT =
-        VkDebugReportObjectTypeEXT 27
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT
-        :: VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT =
-        VkDebugReportObjectTypeEXT 28
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT =
-        VkDebugReportObjectTypeEXT 29
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT =
-        VkDebugReportObjectTypeEXT 30
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT =
-        VkDebugReportObjectTypeEXT 31
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT
-        :: VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT
-        = VkDebugReportObjectTypeEXT 32
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT ::
-        VkDebugReportObjectTypeEXT
-
-pattern VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT =
-        VkDebugReportObjectTypeEXT 33
-
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkRasterizationOrderAMD.html VkRasterizationOrderAMD registry at www.khronos.org>
-newtype VkRasterizationOrderAMD = VkRasterizationOrderAMD Int32
-                                    deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
-
-instance Show VkRasterizationOrderAMD where
-        showsPrec _ VK_RASTERIZATION_ORDER_STRICT_AMD
-          = showString "VK_RASTERIZATION_ORDER_STRICT_AMD"
-        showsPrec _ VK_RASTERIZATION_ORDER_RELAXED_AMD
-          = showString "VK_RASTERIZATION_ORDER_RELAXED_AMD"
-        showsPrec p (VkRasterizationOrderAMD x)
-          = showParen (p >= 11)
-              (showString "VkRasterizationOrderAMD " . showsPrec 11 x)
-
-instance Read VkRasterizationOrderAMD where
-        readPrec
-          = parens
-              (choose
-                 [("VK_RASTERIZATION_ORDER_STRICT_AMD",
-                   pure VK_RASTERIZATION_ORDER_STRICT_AMD),
-                  ("VK_RASTERIZATION_ORDER_RELAXED_AMD",
-                   pure VK_RASTERIZATION_ORDER_RELAXED_AMD)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkRasterizationOrderAMD") >>
-                      (VkRasterizationOrderAMD <$> step readPrec)))
-
-pattern VK_RASTERIZATION_ORDER_STRICT_AMD ::
-        VkRasterizationOrderAMD
-
-pattern VK_RASTERIZATION_ORDER_STRICT_AMD =
-        VkRasterizationOrderAMD 0
-
-pattern VK_RASTERIZATION_ORDER_RELAXED_AMD ::
-        VkRasterizationOrderAMD
-
-pattern VK_RASTERIZATION_ORDER_RELAXED_AMD =
-        VkRasterizationOrderAMD 1
+type VkSurfaceTransformFlagsKHR = VkSurfaceTransformFlagBitsKHR
 
 -- | type = @bitmask@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalMemoryHandleTypeFlagBitsNV.html VkExternalMemoryHandleTypeFlagBitsNV registry at www.khronos.org>
-newtype VkExternalMemoryHandleTypeFlagBitsNV = VkExternalMemoryHandleTypeFlagBitsNV Int32
-                                                 deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
-                                                           Storable, Enum, Data, Generic)
-
-instance Show VkExternalMemoryHandleTypeFlagBitsNV where
-        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_NV
-          = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_NV"
-        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_NV
-          = showString
-              "VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_NV"
-        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_BIT_NV
-          = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_BIT_NV"
-        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV
-          = showString
-              "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV"
-        showsPrec p (VkExternalMemoryHandleTypeFlagBitsNV x)
-          = showParen (p >= 11)
-              (showString "VkExternalMemoryHandleTypeFlagBitsNV " .
-                 showsPrec 11 x)
-
-instance Read VkExternalMemoryHandleTypeFlagBitsNV where
-        readPrec
-          = parens
-              (choose
-                 [("VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_NV",
-                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_NV),
-                  ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_NV",
-                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_NV),
-                  ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_BIT_NV",
-                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_BIT_NV),
-                  ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV",
-                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkExternalMemoryHandleTypeFlagBitsNV") >>
-                      (VkExternalMemoryHandleTypeFlagBitsNV <$> step readPrec)))
-
--- | bitpos = @0@
-pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_NV ::
-        VkExternalMemoryHandleTypeFlagBitsNV
-
-pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_NV =
-        VkExternalMemoryHandleTypeFlagBitsNV 1
-
--- | bitpos = @1@
-pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_NV ::
-        VkExternalMemoryHandleTypeFlagBitsNV
-
-pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_NV =
-        VkExternalMemoryHandleTypeFlagBitsNV 2
-
--- | bitpos = @2@
-pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_BIT_NV ::
-        VkExternalMemoryHandleTypeFlagBitsNV
-
-pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_BIT_NV =
-        VkExternalMemoryHandleTypeFlagBitsNV 4
-
--- | bitpos = @3@
-pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV ::
-        VkExternalMemoryHandleTypeFlagBitsNV
-
-pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV =
-        VkExternalMemoryHandleTypeFlagBitsNV 8
-
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalMemoryFeatureFlagBitsNV.html VkExternalMemoryFeatureFlagBitsNV registry at www.khronos.org>
-newtype VkExternalMemoryFeatureFlagBitsNV = VkExternalMemoryFeatureFlagBitsNV Int32
-                                              deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
-                                                        Storable, Enum, Data, Generic)
-
-instance Show VkExternalMemoryFeatureFlagBitsNV where
-        showsPrec _ VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV
-          = showString "VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV"
-        showsPrec _ VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_NV
-          = showString "VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_NV"
-        showsPrec _ VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV
-          = showString "VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV"
-        showsPrec p (VkExternalMemoryFeatureFlagBitsNV x)
-          = showParen (p >= 11)
-              (showString "VkExternalMemoryFeatureFlagBitsNV " . showsPrec 11 x)
-
-instance Read VkExternalMemoryFeatureFlagBitsNV where
-        readPrec
-          = parens
-              (choose
-                 [("VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV",
-                   pure VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV),
-                  ("VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_NV",
-                   pure VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_NV),
-                  ("VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV",
-                   pure VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkExternalMemoryFeatureFlagBitsNV") >>
-                      (VkExternalMemoryFeatureFlagBitsNV <$> step readPrec)))
-
--- | bitpos = @0@
-pattern VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV ::
-        VkExternalMemoryFeatureFlagBitsNV
-
-pattern VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV =
-        VkExternalMemoryFeatureFlagBitsNV 1
-
--- | bitpos = @1@
-pattern VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_NV ::
-        VkExternalMemoryFeatureFlagBitsNV
-
-pattern VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_NV =
-        VkExternalMemoryFeatureFlagBitsNV 2
-
--- | bitpos = @2@
-pattern VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV ::
-        VkExternalMemoryFeatureFlagBitsNV
-
-pattern VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV =
-        VkExternalMemoryFeatureFlagBitsNV 4
-
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkValidationCheckEXT.html VkValidationCheckEXT registry at www.khronos.org>
-newtype VkValidationCheckEXT = VkValidationCheckEXT Int32
-                                 deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
-
-instance Show VkValidationCheckEXT where
-        showsPrec _ VK_VALIDATION_CHECK_ALL_EXT
-          = showString "VK_VALIDATION_CHECK_ALL_EXT"
-        showsPrec _ VK_VALIDATION_CHECK_SHADERS_EXT
-          = showString "VK_VALIDATION_CHECK_SHADERS_EXT"
-        showsPrec p (VkValidationCheckEXT x)
-          = showParen (p >= 11)
-              (showString "VkValidationCheckEXT " . showsPrec 11 x)
-
-instance Read VkValidationCheckEXT where
-        readPrec
-          = parens
-              (choose
-                 [("VK_VALIDATION_CHECK_ALL_EXT", pure VK_VALIDATION_CHECK_ALL_EXT),
-                  ("VK_VALIDATION_CHECK_SHADERS_EXT",
-                   pure VK_VALIDATION_CHECK_SHADERS_EXT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkValidationCheckEXT") >>
-                      (VkValidationCheckEXT <$> step readPrec)))
-
-pattern VK_VALIDATION_CHECK_ALL_EXT :: VkValidationCheckEXT
-
-pattern VK_VALIDATION_CHECK_ALL_EXT = VkValidationCheckEXT 0
-
-pattern VK_VALIDATION_CHECK_SHADERS_EXT :: VkValidationCheckEXT
-
-pattern VK_VALIDATION_CHECK_SHADERS_EXT = VkValidationCheckEXT 1
-
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalMemoryHandleTypeFlagBitsKHR.html VkExternalMemoryHandleTypeFlagBitsKHR registry at www.khronos.org>
-newtype VkExternalMemoryHandleTypeFlagBitsKHR = VkExternalMemoryHandleTypeFlagBitsKHR Int32
-                                                  deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
-                                                            Storable, Enum, Data, Generic)
-
-instance Show VkExternalMemoryHandleTypeFlagBitsKHR where
-        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT_KHR
-          = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT_KHR"
-        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR
-          = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR"
-        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR
-          = showString
-              "VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR"
-        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT_KHR
-          = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT_KHR"
-        showsPrec _
-          VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT_KHR
-          = showString
-              "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT_KHR"
-        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT_KHR
-          = showString "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT_KHR"
-        showsPrec _ VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT_KHR
-          = showString
-              "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT_KHR"
-        showsPrec p (VkExternalMemoryHandleTypeFlagBitsKHR x)
-          = showParen (p >= 11)
-              (showString "VkExternalMemoryHandleTypeFlagBitsKHR " .
-                 showsPrec 11 x)
-
-instance Read VkExternalMemoryHandleTypeFlagBitsKHR where
-        readPrec
-          = parens
-              (choose
-                 [("VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT_KHR",
-                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT_KHR),
-                  ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR",
-                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR),
-                  ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR",
-                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR),
-                  ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT_KHR",
-                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT_KHR),
-                  ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT_KHR",
-                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT_KHR),
-                  ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT_KHR",
-                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT_KHR),
-                  ("VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT_KHR",
-                   pure VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT_KHR)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkExternalMemoryHandleTypeFlagBitsKHR") >>
-                      (VkExternalMemoryHandleTypeFlagBitsKHR <$> step readPrec)))
-
--- | bitpos = @0@
-pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT_KHR ::
-        VkExternalMemoryHandleTypeFlagBitsKHR
-
-pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT_KHR =
-        VkExternalMemoryHandleTypeFlagBitsKHR 1
-
--- | bitpos = @1@
-pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR ::
-        VkExternalMemoryHandleTypeFlagBitsKHR
-
-pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR =
-        VkExternalMemoryHandleTypeFlagBitsKHR 2
-
--- | bitpos = @2@
-pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR ::
-        VkExternalMemoryHandleTypeFlagBitsKHR
-
-pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR =
-        VkExternalMemoryHandleTypeFlagBitsKHR 4
-
--- | bitpos = @3@
-pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT_KHR ::
-        VkExternalMemoryHandleTypeFlagBitsKHR
-
-pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT_KHR =
-        VkExternalMemoryHandleTypeFlagBitsKHR 8
-
--- | bitpos = @4@
-pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT_KHR ::
-        VkExternalMemoryHandleTypeFlagBitsKHR
-
-pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT_KHR =
-        VkExternalMemoryHandleTypeFlagBitsKHR 16
-
--- | bitpos = @5@
-pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT_KHR ::
-        VkExternalMemoryHandleTypeFlagBitsKHR
-
-pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT_KHR =
-        VkExternalMemoryHandleTypeFlagBitsKHR 32
-
--- | bitpos = @6@
-pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT_KHR ::
-        VkExternalMemoryHandleTypeFlagBitsKHR
-
-pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT_KHR =
-        VkExternalMemoryHandleTypeFlagBitsKHR 64
-
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalMemoryFeatureFlagBitsKHR.html VkExternalMemoryFeatureFlagBitsKHR registry at www.khronos.org>
-newtype VkExternalMemoryFeatureFlagBitsKHR = VkExternalMemoryFeatureFlagBitsKHR Int32
-                                               deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
-                                                         Storable, Enum, Data, Generic)
-
-instance Show VkExternalMemoryFeatureFlagBitsKHR where
-        showsPrec _ VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_KHR
-          = showString "VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_KHR"
-        showsPrec _ VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_KHR
-          = showString "VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_KHR"
-        showsPrec _ VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_KHR
-          = showString "VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_KHR"
-        showsPrec p (VkExternalMemoryFeatureFlagBitsKHR x)
-          = showParen (p >= 11)
-              (showString "VkExternalMemoryFeatureFlagBitsKHR " . showsPrec 11 x)
-
-instance Read VkExternalMemoryFeatureFlagBitsKHR where
-        readPrec
-          = parens
-              (choose
-                 [("VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_KHR",
-                   pure VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_KHR),
-                  ("VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_KHR",
-                   pure VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_KHR),
-                  ("VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_KHR",
-                   pure VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_KHR)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkExternalMemoryFeatureFlagBitsKHR") >>
-                      (VkExternalMemoryFeatureFlagBitsKHR <$> step readPrec)))
-
--- | bitpos = @0@
-pattern VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_KHR ::
-        VkExternalMemoryFeatureFlagBitsKHR
-
-pattern VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_KHR =
-        VkExternalMemoryFeatureFlagBitsKHR 1
-
--- | bitpos = @1@
-pattern VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_KHR ::
-        VkExternalMemoryFeatureFlagBitsKHR
-
-pattern VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_KHR =
-        VkExternalMemoryFeatureFlagBitsKHR 2
-
--- | bitpos = @2@
-pattern VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_KHR ::
-        VkExternalMemoryFeatureFlagBitsKHR
-
-pattern VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_KHR =
-        VkExternalMemoryFeatureFlagBitsKHR 4
-
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalSemaphoreHandleTypeFlagBitsKHR.html VkExternalSemaphoreHandleTypeFlagBitsKHR registry at www.khronos.org>
-newtype VkExternalSemaphoreHandleTypeFlagBitsKHR = VkExternalSemaphoreHandleTypeFlagBitsKHR Int32
-                                                     deriving (Bits, FiniteBits, Eq, Ord, Num,
-                                                               Bounded, Storable, Enum, Data,
-                                                               Generic)
-
-instance Show VkExternalSemaphoreHandleTypeFlagBitsKHR where
-        showsPrec _ VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR
-          = showString "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR"
-        showsPrec _ VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR
-          = showString
-              "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR"
-        showsPrec _
-          VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR
-          = showString
-              "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR"
-        showsPrec _ VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT_KHR
-          = showString
-              "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT_KHR"
-        showsPrec _ VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT_KHR
-          = showString "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT_KHR"
-        showsPrec p (VkExternalSemaphoreHandleTypeFlagBitsKHR x)
-          = showParen (p >= 11)
-              (showString "VkExternalSemaphoreHandleTypeFlagBitsKHR " .
-                 showsPrec 11 x)
-
-instance Read VkExternalSemaphoreHandleTypeFlagBitsKHR where
-        readPrec
-          = parens
-              (choose
-                 [("VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR",
-                   pure VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR),
-                  ("VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR",
-                   pure VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR),
-                  ("VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR",
-                   pure VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR),
-                  ("VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT_KHR",
-                   pure VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT_KHR),
-                  ("VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT_KHR",
-                   pure VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT_KHR)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkExternalSemaphoreHandleTypeFlagBitsKHR") >>
-                      (VkExternalSemaphoreHandleTypeFlagBitsKHR <$> step readPrec)))
-
--- | bitpos = @0@
-pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR ::
-        VkExternalSemaphoreHandleTypeFlagBitsKHR
-
-pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR =
-        VkExternalSemaphoreHandleTypeFlagBitsKHR 1
-
--- | bitpos = @1@
-pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR ::
-        VkExternalSemaphoreHandleTypeFlagBitsKHR
-
-pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR =
-        VkExternalSemaphoreHandleTypeFlagBitsKHR 2
-
--- | bitpos = @2@
-pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR
-        :: VkExternalSemaphoreHandleTypeFlagBitsKHR
-
-pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR
-        = VkExternalSemaphoreHandleTypeFlagBitsKHR 4
-
--- | bitpos = @3@
-pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT_KHR ::
-        VkExternalSemaphoreHandleTypeFlagBitsKHR
-
-pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT_KHR =
-        VkExternalSemaphoreHandleTypeFlagBitsKHR 8
-
--- | bitpos = @4@
-pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT_KHR ::
-        VkExternalSemaphoreHandleTypeFlagBitsKHR
-
-pattern VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT_KHR =
-        VkExternalSemaphoreHandleTypeFlagBitsKHR 16
-
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalSemaphoreFeatureFlagBitsKHR.html VkExternalSemaphoreFeatureFlagBitsKHR registry at www.khronos.org>
-newtype VkExternalSemaphoreFeatureFlagBitsKHR = VkExternalSemaphoreFeatureFlagBitsKHR Int32
-                                                  deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
-                                                            Storable, Enum, Data, Generic)
-
-instance Show VkExternalSemaphoreFeatureFlagBitsKHR where
-        showsPrec _ VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT_KHR
-          = showString "VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT_KHR"
-        showsPrec _ VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT_KHR
-          = showString "VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT_KHR"
-        showsPrec p (VkExternalSemaphoreFeatureFlagBitsKHR x)
-          = showParen (p >= 11)
-              (showString "VkExternalSemaphoreFeatureFlagBitsKHR " .
-                 showsPrec 11 x)
-
-instance Read VkExternalSemaphoreFeatureFlagBitsKHR where
-        readPrec
-          = parens
-              (choose
-                 [("VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT_KHR",
-                   pure VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT_KHR),
-                  ("VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT_KHR",
-                   pure VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT_KHR)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkExternalSemaphoreFeatureFlagBitsKHR") >>
-                      (VkExternalSemaphoreFeatureFlagBitsKHR <$> step readPrec)))
-
--- | bitpos = @0@
-pattern VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT_KHR ::
-        VkExternalSemaphoreFeatureFlagBitsKHR
-
-pattern VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT_KHR =
-        VkExternalSemaphoreFeatureFlagBitsKHR 1
-
--- | bitpos = @1@
-pattern VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT_KHR ::
-        VkExternalSemaphoreFeatureFlagBitsKHR
-
-pattern VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT_KHR =
-        VkExternalSemaphoreFeatureFlagBitsKHR 2
-
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSemaphoreImportFlagBitsKHR.html VkSemaphoreImportFlagBitsKHR registry at www.khronos.org>
-newtype VkSemaphoreImportFlagBitsKHR = VkSemaphoreImportFlagBitsKHR Int32
-                                         deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
-                                                   Storable, Enum, Data, Generic)
-
-instance Show VkSemaphoreImportFlagBitsKHR where
-        showsPrec _ VK_SEMAPHORE_IMPORT_TEMPORARY_BIT_KHR
-          = showString "VK_SEMAPHORE_IMPORT_TEMPORARY_BIT_KHR"
-        showsPrec p (VkSemaphoreImportFlagBitsKHR x)
-          = showParen (p >= 11)
-              (showString "VkSemaphoreImportFlagBitsKHR " . showsPrec 11 x)
-
-instance Read VkSemaphoreImportFlagBitsKHR where
-        readPrec
-          = parens
-              (choose
-                 [("VK_SEMAPHORE_IMPORT_TEMPORARY_BIT_KHR",
-                   pure VK_SEMAPHORE_IMPORT_TEMPORARY_BIT_KHR)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkSemaphoreImportFlagBitsKHR") >>
-                      (VkSemaphoreImportFlagBitsKHR <$> step readPrec)))
-
--- | bitpos = @0@
-pattern VK_SEMAPHORE_IMPORT_TEMPORARY_BIT_KHR ::
-        VkSemaphoreImportFlagBitsKHR
-
-pattern VK_SEMAPHORE_IMPORT_TEMPORARY_BIT_KHR =
-        VkSemaphoreImportFlagBitsKHR 1
-
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalFenceHandleTypeFlagBitsKHR.html VkExternalFenceHandleTypeFlagBitsKHR registry at www.khronos.org>
-newtype VkExternalFenceHandleTypeFlagBitsKHR = VkExternalFenceHandleTypeFlagBitsKHR Int32
-                                                 deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
-                                                           Storable, Enum, Data, Generic)
-
-instance Show VkExternalFenceHandleTypeFlagBitsKHR where
-        showsPrec _ VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR
-          = showString "VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR"
-        showsPrec _ VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR
-          = showString "VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR"
-        showsPrec _ VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR
-          = showString
-              "VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR"
-        showsPrec _ VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT_KHR
-          = showString "VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT_KHR"
-        showsPrec p (VkExternalFenceHandleTypeFlagBitsKHR x)
-          = showParen (p >= 11)
-              (showString "VkExternalFenceHandleTypeFlagBitsKHR " .
-                 showsPrec 11 x)
-
-instance Read VkExternalFenceHandleTypeFlagBitsKHR where
-        readPrec
-          = parens
-              (choose
-                 [("VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR",
-                   pure VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR),
-                  ("VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR",
-                   pure VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR),
-                  ("VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR",
-                   pure VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR),
-                  ("VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT_KHR",
-                   pure VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT_KHR)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkExternalFenceHandleTypeFlagBitsKHR") >>
-                      (VkExternalFenceHandleTypeFlagBitsKHR <$> step readPrec)))
-
--- | bitpos = @0@
-pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR ::
-        VkExternalFenceHandleTypeFlagBitsKHR
-
-pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR =
-        VkExternalFenceHandleTypeFlagBitsKHR 1
-
--- | bitpos = @1@
-pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR ::
-        VkExternalFenceHandleTypeFlagBitsKHR
-
-pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR =
-        VkExternalFenceHandleTypeFlagBitsKHR 2
-
--- | bitpos = @2@
-pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR ::
-        VkExternalFenceHandleTypeFlagBitsKHR
-
-pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR =
-        VkExternalFenceHandleTypeFlagBitsKHR 4
-
--- | bitpos = @3@
-pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT_KHR ::
-        VkExternalFenceHandleTypeFlagBitsKHR
-
-pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT_KHR =
-        VkExternalFenceHandleTypeFlagBitsKHR 8
-
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalFenceFeatureFlagBitsKHR.html VkExternalFenceFeatureFlagBitsKHR registry at www.khronos.org>
-newtype VkExternalFenceFeatureFlagBitsKHR = VkExternalFenceFeatureFlagBitsKHR Int32
-                                              deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
-                                                        Storable, Enum, Data, Generic)
-
-instance Show VkExternalFenceFeatureFlagBitsKHR where
-        showsPrec _ VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT_KHR
-          = showString "VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT_KHR"
-        showsPrec _ VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT_KHR
-          = showString "VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT_KHR"
-        showsPrec p (VkExternalFenceFeatureFlagBitsKHR x)
-          = showParen (p >= 11)
-              (showString "VkExternalFenceFeatureFlagBitsKHR " . showsPrec 11 x)
-
-instance Read VkExternalFenceFeatureFlagBitsKHR where
-        readPrec
-          = parens
-              (choose
-                 [("VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT_KHR",
-                   pure VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT_KHR),
-                  ("VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT_KHR",
-                   pure VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT_KHR)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkExternalFenceFeatureFlagBitsKHR") >>
-                      (VkExternalFenceFeatureFlagBitsKHR <$> step readPrec)))
-
--- | bitpos = @0@
-pattern VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT_KHR ::
-        VkExternalFenceFeatureFlagBitsKHR
-
-pattern VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT_KHR =
-        VkExternalFenceFeatureFlagBitsKHR 1
-
--- | bitpos = @1@
-pattern VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT_KHR ::
-        VkExternalFenceFeatureFlagBitsKHR
-
-pattern VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT_KHR =
-        VkExternalFenceFeatureFlagBitsKHR 2
-
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkFenceImportFlagBitsKHR.html VkFenceImportFlagBitsKHR registry at www.khronos.org>
-newtype VkFenceImportFlagBitsKHR = VkFenceImportFlagBitsKHR Int32
-                                     deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable,
-                                               Enum, Data, Generic)
-
-instance Show VkFenceImportFlagBitsKHR where
-        showsPrec _ VK_FENCE_IMPORT_TEMPORARY_BIT_KHR
-          = showString "VK_FENCE_IMPORT_TEMPORARY_BIT_KHR"
-        showsPrec p (VkFenceImportFlagBitsKHR x)
-          = showParen (p >= 11)
-              (showString "VkFenceImportFlagBitsKHR " . showsPrec 11 x)
-
-instance Read VkFenceImportFlagBitsKHR where
-        readPrec
-          = parens
-              (choose
-                 [("VK_FENCE_IMPORT_TEMPORARY_BIT_KHR",
-                   pure VK_FENCE_IMPORT_TEMPORARY_BIT_KHR)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkFenceImportFlagBitsKHR") >>
-                      (VkFenceImportFlagBitsKHR <$> step readPrec)))
-
--- | bitpos = @0@
-pattern VK_FENCE_IMPORT_TEMPORARY_BIT_KHR ::
-        VkFenceImportFlagBitsKHR
-
-pattern VK_FENCE_IMPORT_TEMPORARY_BIT_KHR =
-        VkFenceImportFlagBitsKHR 1
-
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSurfaceCounterFlagBitsEXT.html VkSurfaceCounterFlagBitsEXT registry at www.khronos.org>
-newtype VkSurfaceCounterFlagBitsEXT = VkSurfaceCounterFlagBitsEXT Int32
-                                        deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable,
-                                                  Enum, Data, Generic)
-
-instance Show VkSurfaceCounterFlagBitsEXT where
-        showsPrec _ VK_SURFACE_COUNTER_VBLANK_EXT
-          = showString "VK_SURFACE_COUNTER_VBLANK_EXT"
-        showsPrec p (VkSurfaceCounterFlagBitsEXT x)
-          = showParen (p >= 11)
-              (showString "VkSurfaceCounterFlagBitsEXT " . showsPrec 11 x)
-
-instance Read VkSurfaceCounterFlagBitsEXT where
-        readPrec
-          = parens
-              (choose
-                 [("VK_SURFACE_COUNTER_VBLANK_EXT",
-                   pure VK_SURFACE_COUNTER_VBLANK_EXT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkSurfaceCounterFlagBitsEXT") >>
-                      (VkSurfaceCounterFlagBitsEXT <$> step readPrec)))
-
--- | bitpos = @0@
-pattern VK_SURFACE_COUNTER_VBLANK_EXT ::
-        VkSurfaceCounterFlagBitsEXT
-
-pattern VK_SURFACE_COUNTER_VBLANK_EXT =
-        VkSurfaceCounterFlagBitsEXT 1
-
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplayPowerStateEXT.html VkDisplayPowerStateEXT registry at www.khronos.org>
-newtype VkDisplayPowerStateEXT = VkDisplayPowerStateEXT Int32
-                                   deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
-
-instance Show VkDisplayPowerStateEXT where
-        showsPrec _ VK_DISPLAY_POWER_STATE_OFF_EXT
-          = showString "VK_DISPLAY_POWER_STATE_OFF_EXT"
-        showsPrec _ VK_DISPLAY_POWER_STATE_SUSPEND_EXT
-          = showString "VK_DISPLAY_POWER_STATE_SUSPEND_EXT"
-        showsPrec _ VK_DISPLAY_POWER_STATE_ON_EXT
-          = showString "VK_DISPLAY_POWER_STATE_ON_EXT"
-        showsPrec p (VkDisplayPowerStateEXT x)
-          = showParen (p >= 11)
-              (showString "VkDisplayPowerStateEXT " . showsPrec 11 x)
-
-instance Read VkDisplayPowerStateEXT where
-        readPrec
-          = parens
-              (choose
-                 [("VK_DISPLAY_POWER_STATE_OFF_EXT",
-                   pure VK_DISPLAY_POWER_STATE_OFF_EXT),
-                  ("VK_DISPLAY_POWER_STATE_SUSPEND_EXT",
-                   pure VK_DISPLAY_POWER_STATE_SUSPEND_EXT),
-                  ("VK_DISPLAY_POWER_STATE_ON_EXT",
-                   pure VK_DISPLAY_POWER_STATE_ON_EXT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkDisplayPowerStateEXT") >>
-                      (VkDisplayPowerStateEXT <$> step readPrec)))
-
-pattern VK_DISPLAY_POWER_STATE_OFF_EXT :: VkDisplayPowerStateEXT
-
-pattern VK_DISPLAY_POWER_STATE_OFF_EXT = VkDisplayPowerStateEXT 0
-
-pattern VK_DISPLAY_POWER_STATE_SUSPEND_EXT ::
-        VkDisplayPowerStateEXT
-
-pattern VK_DISPLAY_POWER_STATE_SUSPEND_EXT =
-        VkDisplayPowerStateEXT 1
-
-pattern VK_DISPLAY_POWER_STATE_ON_EXT :: VkDisplayPowerStateEXT
-
-pattern VK_DISPLAY_POWER_STATE_ON_EXT = VkDisplayPowerStateEXT 2
-
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceEventTypeEXT.html VkDeviceEventTypeEXT registry at www.khronos.org>
-newtype VkDeviceEventTypeEXT = VkDeviceEventTypeEXT Int32
-                                 deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
-
-instance Show VkDeviceEventTypeEXT where
-        showsPrec _ VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT
-          = showString "VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT"
-        showsPrec p (VkDeviceEventTypeEXT x)
-          = showParen (p >= 11)
-              (showString "VkDeviceEventTypeEXT " . showsPrec 11 x)
-
-instance Read VkDeviceEventTypeEXT where
-        readPrec
-          = parens
-              (choose
-                 [("VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT",
-                   pure VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkDeviceEventTypeEXT") >>
-                      (VkDeviceEventTypeEXT <$> step readPrec)))
-
-pattern VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT ::
-        VkDeviceEventTypeEXT
-
-pattern VK_DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT =
-        VkDeviceEventTypeEXT 0
-
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplayEventTypeEXT.html VkDisplayEventTypeEXT registry at www.khronos.org>
-newtype VkDisplayEventTypeEXT = VkDisplayEventTypeEXT Int32
-                                  deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
-
-instance Show VkDisplayEventTypeEXT where
-        showsPrec _ VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT
-          = showString "VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT"
-        showsPrec p (VkDisplayEventTypeEXT x)
-          = showParen (p >= 11)
-              (showString "VkDisplayEventTypeEXT " . showsPrec 11 x)
-
-instance Read VkDisplayEventTypeEXT where
-        readPrec
-          = parens
-              (choose
-                 [("VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT",
-                   pure VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkDisplayEventTypeEXT") >>
-                      (VkDisplayEventTypeEXT <$> step readPrec)))
-
-pattern VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT ::
-        VkDisplayEventTypeEXT
-
-pattern VK_DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT =
-        VkDisplayEventTypeEXT 0
-
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPeerMemoryFeatureFlagBitsKHX.html VkPeerMemoryFeatureFlagBitsKHX registry at www.khronos.org>
-newtype VkPeerMemoryFeatureFlagBitsKHX = VkPeerMemoryFeatureFlagBitsKHX Int32
-                                           deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
-                                                     Storable, Enum, Data, Generic)
-
-instance Show VkPeerMemoryFeatureFlagBitsKHX where
-        showsPrec _ VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT_KHX
-          = showString "VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT_KHX"
-        showsPrec _ VK_PEER_MEMORY_FEATURE_COPY_DST_BIT_KHX
-          = showString "VK_PEER_MEMORY_FEATURE_COPY_DST_BIT_KHX"
-        showsPrec _ VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT_KHX
-          = showString "VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT_KHX"
-        showsPrec _ VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT_KHX
-          = showString "VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT_KHX"
-        showsPrec p (VkPeerMemoryFeatureFlagBitsKHX x)
-          = showParen (p >= 11)
-              (showString "VkPeerMemoryFeatureFlagBitsKHX " . showsPrec 11 x)
-
-instance Read VkPeerMemoryFeatureFlagBitsKHX where
-        readPrec
-          = parens
-              (choose
-                 [("VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT_KHX",
-                   pure VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT_KHX),
-                  ("VK_PEER_MEMORY_FEATURE_COPY_DST_BIT_KHX",
-                   pure VK_PEER_MEMORY_FEATURE_COPY_DST_BIT_KHX),
-                  ("VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT_KHX",
-                   pure VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT_KHX),
-                  ("VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT_KHX",
-                   pure VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT_KHX)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkPeerMemoryFeatureFlagBitsKHX") >>
-                      (VkPeerMemoryFeatureFlagBitsKHX <$> step readPrec)))
-
--- | Can read with vkCmdCopy commands
---
---   bitpos = @0@
-pattern VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT_KHX ::
-        VkPeerMemoryFeatureFlagBitsKHX
-
-pattern VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT_KHX =
-        VkPeerMemoryFeatureFlagBitsKHX 1
-
--- | Can write with vkCmdCopy commands
---
---   bitpos = @1@
-pattern VK_PEER_MEMORY_FEATURE_COPY_DST_BIT_KHX ::
-        VkPeerMemoryFeatureFlagBitsKHX
-
-pattern VK_PEER_MEMORY_FEATURE_COPY_DST_BIT_KHX =
-        VkPeerMemoryFeatureFlagBitsKHX 2
-
--- | Can read with any access type/command
---
---   bitpos = @2@
-pattern VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT_KHX ::
-        VkPeerMemoryFeatureFlagBitsKHX
-
-pattern VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT_KHX =
-        VkPeerMemoryFeatureFlagBitsKHX 4
-
--- | Can write with and access type/command
---
---   bitpos = @3@
-pattern VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT_KHX ::
-        VkPeerMemoryFeatureFlagBitsKHX
-
-pattern VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT_KHX =
-        VkPeerMemoryFeatureFlagBitsKHX 8
-
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryAllocateFlagBitsKHX.html VkMemoryAllocateFlagBitsKHX registry at www.khronos.org>
-newtype VkMemoryAllocateFlagBitsKHX = VkMemoryAllocateFlagBitsKHX Int32
-                                        deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded, Storable,
-                                                  Enum, Data, Generic)
-
-instance Show VkMemoryAllocateFlagBitsKHX where
-        showsPrec _ VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT_KHX
-          = showString "VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT_KHX"
-        showsPrec p (VkMemoryAllocateFlagBitsKHX x)
-          = showParen (p >= 11)
-              (showString "VkMemoryAllocateFlagBitsKHX " . showsPrec 11 x)
-
-instance Read VkMemoryAllocateFlagBitsKHX where
-        readPrec
-          = parens
-              (choose
-                 [("VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT_KHX",
-                   pure VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT_KHX)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkMemoryAllocateFlagBitsKHX") >>
-                      (VkMemoryAllocateFlagBitsKHX <$> step readPrec)))
-
--- | Force allocation on specific devices
---
---   bitpos = @0@
-pattern VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT_KHX ::
-        VkMemoryAllocateFlagBitsKHX
-
-pattern VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT_KHX =
-        VkMemoryAllocateFlagBitsKHX 1
-
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceGroupPresentModeFlagBitsKHX.html VkDeviceGroupPresentModeFlagBitsKHX registry at www.khronos.org>
-newtype VkDeviceGroupPresentModeFlagBitsKHX = VkDeviceGroupPresentModeFlagBitsKHX Int32
-                                                deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
-                                                          Storable, Enum, Data, Generic)
-
-instance Show VkDeviceGroupPresentModeFlagBitsKHX where
-        showsPrec _ VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHX
-          = showString "VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHX"
-        showsPrec _ VK_DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHX
-          = showString "VK_DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHX"
-        showsPrec _ VK_DEVICE_GROUP_PRESENT_MODE_SUM_BIT_KHX
-          = showString "VK_DEVICE_GROUP_PRESENT_MODE_SUM_BIT_KHX"
-        showsPrec _ VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHX
-          = showString
-              "VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHX"
-        showsPrec p (VkDeviceGroupPresentModeFlagBitsKHX x)
-          = showParen (p >= 11)
-              (showString "VkDeviceGroupPresentModeFlagBitsKHX " .
-                 showsPrec 11 x)
-
-instance Read VkDeviceGroupPresentModeFlagBitsKHX where
-        readPrec
-          = parens
-              (choose
-                 [("VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHX",
-                   pure VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHX),
-                  ("VK_DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHX",
-                   pure VK_DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHX),
-                  ("VK_DEVICE_GROUP_PRESENT_MODE_SUM_BIT_KHX",
-                   pure VK_DEVICE_GROUP_PRESENT_MODE_SUM_BIT_KHX),
-                  ("VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHX",
-                   pure VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHX)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkDeviceGroupPresentModeFlagBitsKHX") >>
-                      (VkDeviceGroupPresentModeFlagBitsKHX <$> step readPrec)))
-
--- | Present from local memory
---
---   bitpos = @0@
-pattern VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHX ::
-        VkDeviceGroupPresentModeFlagBitsKHX
-
-pattern VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHX =
-        VkDeviceGroupPresentModeFlagBitsKHX 1
-
--- | Present from remote memory
---
---   bitpos = @1@
-pattern VK_DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHX ::
-        VkDeviceGroupPresentModeFlagBitsKHX
-
-pattern VK_DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHX =
-        VkDeviceGroupPresentModeFlagBitsKHX 2
-
--- | Present sum of local and/or remote memory
---
---   bitpos = @2@
-pattern VK_DEVICE_GROUP_PRESENT_MODE_SUM_BIT_KHX ::
-        VkDeviceGroupPresentModeFlagBitsKHX
-
-pattern VK_DEVICE_GROUP_PRESENT_MODE_SUM_BIT_KHX =
-        VkDeviceGroupPresentModeFlagBitsKHX 4
-
--- | Each physical device presents from local memory
---
---   bitpos = @3@
-pattern VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHX ::
-        VkDeviceGroupPresentModeFlagBitsKHX
-
-pattern VK_DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHX =
-        VkDeviceGroupPresentModeFlagBitsKHX 8
-
--- | type = @bitmask@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSwapchainCreateFlagBitsKHR.html VkSwapchainCreateFlagBitsKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSwapchainCreateFlagBitsKHR.html VkSwapchainCreateFlagBitsKHR registry at www.khronos.org>
 newtype VkSwapchainCreateFlagBitsKHR = VkSwapchainCreateFlagBitsKHR Int32
                                          deriving (Bits, FiniteBits, Eq, Ord, Num, Bounded,
                                                    Storable, Enum, Data, Generic)
@@ -11390,9 +11626,85 @@ instance Read VkSwapchainCreateFlagBitsKHR where
                    (expectP (Ident "VkSwapchainCreateFlagBitsKHR") >>
                       (VkSwapchainCreateFlagBitsKHR <$> step readPrec)))
 
+type VkSwapchainCreateFlagsKHR = VkSwapchainCreateFlagBitsKHR
+
+type VkSwapchainKHR = VkPtr VkSwapchainKHR_T
+
+-- | Opaque data type referenced by VkSwapchainKHR
+data VkSwapchainKHR_T
+
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkTessellationDomainOriginKHR.html VkTessellationDomainOriginKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSystemAllocationScope.html VkSystemAllocationScope registry at www.khronos.org>
+newtype VkSystemAllocationScope = VkSystemAllocationScope Int32
+                                    deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+
+instance Show VkSystemAllocationScope where
+        showsPrec _ VK_SYSTEM_ALLOCATION_SCOPE_COMMAND
+          = showString "VK_SYSTEM_ALLOCATION_SCOPE_COMMAND"
+        showsPrec _ VK_SYSTEM_ALLOCATION_SCOPE_OBJECT
+          = showString "VK_SYSTEM_ALLOCATION_SCOPE_OBJECT"
+        showsPrec _ VK_SYSTEM_ALLOCATION_SCOPE_CACHE
+          = showString "VK_SYSTEM_ALLOCATION_SCOPE_CACHE"
+        showsPrec _ VK_SYSTEM_ALLOCATION_SCOPE_DEVICE
+          = showString "VK_SYSTEM_ALLOCATION_SCOPE_DEVICE"
+        showsPrec _ VK_SYSTEM_ALLOCATION_SCOPE_INSTANCE
+          = showString "VK_SYSTEM_ALLOCATION_SCOPE_INSTANCE"
+        showsPrec p (VkSystemAllocationScope x)
+          = showParen (p >= 11)
+              (showString "VkSystemAllocationScope " . showsPrec 11 x)
+
+instance Read VkSystemAllocationScope where
+        readPrec
+          = parens
+              (choose
+                 [("VK_SYSTEM_ALLOCATION_SCOPE_COMMAND",
+                   pure VK_SYSTEM_ALLOCATION_SCOPE_COMMAND),
+                  ("VK_SYSTEM_ALLOCATION_SCOPE_OBJECT",
+                   pure VK_SYSTEM_ALLOCATION_SCOPE_OBJECT),
+                  ("VK_SYSTEM_ALLOCATION_SCOPE_CACHE",
+                   pure VK_SYSTEM_ALLOCATION_SCOPE_CACHE),
+                  ("VK_SYSTEM_ALLOCATION_SCOPE_DEVICE",
+                   pure VK_SYSTEM_ALLOCATION_SCOPE_DEVICE),
+                  ("VK_SYSTEM_ALLOCATION_SCOPE_INSTANCE",
+                   pure VK_SYSTEM_ALLOCATION_SCOPE_INSTANCE)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkSystemAllocationScope") >>
+                      (VkSystemAllocationScope <$> step readPrec)))
+
+pattern VK_SYSTEM_ALLOCATION_SCOPE_COMMAND ::
+        VkSystemAllocationScope
+
+pattern VK_SYSTEM_ALLOCATION_SCOPE_COMMAND =
+        VkSystemAllocationScope 0
+
+pattern VK_SYSTEM_ALLOCATION_SCOPE_OBJECT ::
+        VkSystemAllocationScope
+
+pattern VK_SYSTEM_ALLOCATION_SCOPE_OBJECT =
+        VkSystemAllocationScope 1
+
+pattern VK_SYSTEM_ALLOCATION_SCOPE_CACHE :: VkSystemAllocationScope
+
+pattern VK_SYSTEM_ALLOCATION_SCOPE_CACHE =
+        VkSystemAllocationScope 2
+
+pattern VK_SYSTEM_ALLOCATION_SCOPE_DEVICE ::
+        VkSystemAllocationScope
+
+pattern VK_SYSTEM_ALLOCATION_SCOPE_DEVICE =
+        VkSystemAllocationScope 3
+
+pattern VK_SYSTEM_ALLOCATION_SCOPE_INSTANCE ::
+        VkSystemAllocationScope
+
+pattern VK_SYSTEM_ALLOCATION_SCOPE_INSTANCE =
+        VkSystemAllocationScope 4
+
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkTessellationDomainOriginKHR.html VkTessellationDomainOriginKHR registry at www.khronos.org>
 newtype VkTessellationDomainOriginKHR = VkTessellationDomainOriginKHR Int32
                                           deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
                                                     Generic)
@@ -11431,395 +11743,299 @@ pattern VK_TESSELLATION_DOMAIN_ORIGIN_LOWER_LEFT_KHR ::
 pattern VK_TESSELLATION_DOMAIN_ORIGIN_LOWER_LEFT_KHR =
         VkTessellationDomainOriginKHR 1
 
+newtype VkValidationCacheCreateFlagsEXT = VkValidationCacheCreateFlagsEXT VkFlags
+                                            deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                      FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkValidationCacheCreateFlagsEXT where
+        {-# INLINE show #-}
+        show (VkValidationCacheCreateFlagsEXT x) = show x
+
+instance Read VkValidationCacheCreateFlagsEXT where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+type VkValidationCacheEXT = VkPtr VkValidationCacheEXT_T
+
+-- | Opaque data type referenced by VkValidationCacheEXT
+data VkValidationCacheEXT_T
+
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSamplerYcbcrModelConversionKHR.html VkSamplerYcbcrModelConversionKHR registry at www.khronos.org>
-newtype VkSamplerYcbcrModelConversionKHR = VkSamplerYcbcrModelConversionKHR Int32
-                                             deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
-                                                       Generic)
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkValidationCacheHeaderVersionEXT.html VkValidationCacheHeaderVersionEXT registry at www.khronos.org>
+newtype VkValidationCacheHeaderVersionEXT = VkValidationCacheHeaderVersionEXT Int32
+                                              deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
+                                                        Generic)
 
-instance Show VkSamplerYcbcrModelConversionKHR where
-        showsPrec _ VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY_KHR
-          = showString "VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY_KHR"
-        showsPrec _ VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_IDENTITY_KHR
-          = showString "VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_IDENTITY_KHR"
-        showsPrec _ VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_709_KHR
-          = showString "VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_709_KHR"
-        showsPrec _ VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_601_KHR
-          = showString "VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_601_KHR"
-        showsPrec _ VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_2020_KHR
-          = showString "VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_2020_KHR"
-        showsPrec p (VkSamplerYcbcrModelConversionKHR x)
+instance Show VkValidationCacheHeaderVersionEXT where
+        showsPrec _ VK_VALIDATION_CACHE_HEADER_VERSION_ONE_EXT
+          = showString "VK_VALIDATION_CACHE_HEADER_VERSION_ONE_EXT"
+        showsPrec p (VkValidationCacheHeaderVersionEXT x)
           = showParen (p >= 11)
-              (showString "VkSamplerYcbcrModelConversionKHR " . showsPrec 11 x)
+              (showString "VkValidationCacheHeaderVersionEXT " . showsPrec 11 x)
 
-instance Read VkSamplerYcbcrModelConversionKHR where
+instance Read VkValidationCacheHeaderVersionEXT where
         readPrec
           = parens
               (choose
-                 [("VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY_KHR",
-                   pure VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY_KHR),
-                  ("VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_IDENTITY_KHR",
-                   pure VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_IDENTITY_KHR),
-                  ("VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_709_KHR",
-                   pure VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_709_KHR),
-                  ("VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_601_KHR",
-                   pure VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_601_KHR),
-                  ("VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_2020_KHR",
-                   pure VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_2020_KHR)]
+                 [("VK_VALIDATION_CACHE_HEADER_VERSION_ONE_EXT",
+                   pure VK_VALIDATION_CACHE_HEADER_VERSION_ONE_EXT)]
                  +++
                  prec 10
-                   (expectP (Ident "VkSamplerYcbcrModelConversionKHR") >>
-                      (VkSamplerYcbcrModelConversionKHR <$> step readPrec)))
+                   (expectP (Ident "VkValidationCacheHeaderVersionEXT") >>
+                      (VkValidationCacheHeaderVersionEXT <$> step readPrec)))
 
-pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY_KHR ::
-        VkSamplerYcbcrModelConversionKHR
+pattern VK_VALIDATION_CACHE_HEADER_VERSION_ONE_EXT ::
+        VkValidationCacheHeaderVersionEXT
 
-pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY_KHR =
-        VkSamplerYcbcrModelConversionKHR 0
-
--- | just range expansion
-pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_IDENTITY_KHR ::
-        VkSamplerYcbcrModelConversionKHR
-
-pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_IDENTITY_KHR =
-        VkSamplerYcbcrModelConversionKHR 1
-
--- | aka HD YUV
-pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_709_KHR ::
-        VkSamplerYcbcrModelConversionKHR
-
-pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_709_KHR =
-        VkSamplerYcbcrModelConversionKHR 2
-
--- | aka SD YUV
-pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_601_KHR ::
-        VkSamplerYcbcrModelConversionKHR
-
-pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_601_KHR =
-        VkSamplerYcbcrModelConversionKHR 3
-
--- | aka UHD YUV
-pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_2020_KHR ::
-        VkSamplerYcbcrModelConversionKHR
-
-pattern VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_2020_KHR =
-        VkSamplerYcbcrModelConversionKHR 4
+pattern VK_VALIDATION_CACHE_HEADER_VERSION_ONE_EXT =
+        VkValidationCacheHeaderVersionEXT 1
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSamplerYcbcrRangeKHR.html VkSamplerYcbcrRangeKHR registry at www.khronos.org>
-newtype VkSamplerYcbcrRangeKHR = VkSamplerYcbcrRangeKHR Int32
-                                   deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkValidationCheckEXT.html VkValidationCheckEXT registry at www.khronos.org>
+newtype VkValidationCheckEXT = VkValidationCheckEXT Int32
+                                 deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
-instance Show VkSamplerYcbcrRangeKHR where
-        showsPrec _ VK_SAMPLER_YCBCR_RANGE_ITU_FULL_KHR
-          = showString "VK_SAMPLER_YCBCR_RANGE_ITU_FULL_KHR"
-        showsPrec _ VK_SAMPLER_YCBCR_RANGE_ITU_NARROW_KHR
-          = showString "VK_SAMPLER_YCBCR_RANGE_ITU_NARROW_KHR"
-        showsPrec p (VkSamplerYcbcrRangeKHR x)
+instance Show VkValidationCheckEXT where
+        showsPrec _ VK_VALIDATION_CHECK_ALL_EXT
+          = showString "VK_VALIDATION_CHECK_ALL_EXT"
+        showsPrec _ VK_VALIDATION_CHECK_SHADERS_EXT
+          = showString "VK_VALIDATION_CHECK_SHADERS_EXT"
+        showsPrec p (VkValidationCheckEXT x)
           = showParen (p >= 11)
-              (showString "VkSamplerYcbcrRangeKHR " . showsPrec 11 x)
+              (showString "VkValidationCheckEXT " . showsPrec 11 x)
 
-instance Read VkSamplerYcbcrRangeKHR where
+instance Read VkValidationCheckEXT where
         readPrec
           = parens
               (choose
-                 [("VK_SAMPLER_YCBCR_RANGE_ITU_FULL_KHR",
-                   pure VK_SAMPLER_YCBCR_RANGE_ITU_FULL_KHR),
-                  ("VK_SAMPLER_YCBCR_RANGE_ITU_NARROW_KHR",
-                   pure VK_SAMPLER_YCBCR_RANGE_ITU_NARROW_KHR)]
+                 [("VK_VALIDATION_CHECK_ALL_EXT", pure VK_VALIDATION_CHECK_ALL_EXT),
+                  ("VK_VALIDATION_CHECK_SHADERS_EXT",
+                   pure VK_VALIDATION_CHECK_SHADERS_EXT)]
                  +++
                  prec 10
-                   (expectP (Ident "VkSamplerYcbcrRangeKHR") >>
-                      (VkSamplerYcbcrRangeKHR <$> step readPrec)))
+                   (expectP (Ident "VkValidationCheckEXT") >>
+                      (VkValidationCheckEXT <$> step readPrec)))
 
--- | Luma 0..1 maps to 0..255, chroma -0.5..0.5 to 1..255 (clamped)
-pattern VK_SAMPLER_YCBCR_RANGE_ITU_FULL_KHR ::
-        VkSamplerYcbcrRangeKHR
+pattern VK_VALIDATION_CHECK_ALL_EXT :: VkValidationCheckEXT
 
-pattern VK_SAMPLER_YCBCR_RANGE_ITU_FULL_KHR =
-        VkSamplerYcbcrRangeKHR 0
+pattern VK_VALIDATION_CHECK_ALL_EXT = VkValidationCheckEXT 0
 
--- | Luma 0..1 maps to 16..235, chroma -0.5..0.5 to 16..240
-pattern VK_SAMPLER_YCBCR_RANGE_ITU_NARROW_KHR ::
-        VkSamplerYcbcrRangeKHR
+pattern VK_VALIDATION_CHECK_SHADERS_EXT :: VkValidationCheckEXT
 
-pattern VK_SAMPLER_YCBCR_RANGE_ITU_NARROW_KHR =
-        VkSamplerYcbcrRangeKHR 1
+pattern VK_VALIDATION_CHECK_SHADERS_EXT = VkValidationCheckEXT 1
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkChromaLocationKHR.html VkChromaLocationKHR registry at www.khronos.org>
-newtype VkChromaLocationKHR = VkChromaLocationKHR Int32
-                                deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
-
-instance Show VkChromaLocationKHR where
-        showsPrec _ VK_CHROMA_LOCATION_COSITED_EVEN_KHR
-          = showString "VK_CHROMA_LOCATION_COSITED_EVEN_KHR"
-        showsPrec _ VK_CHROMA_LOCATION_MIDPOINT_KHR
-          = showString "VK_CHROMA_LOCATION_MIDPOINT_KHR"
-        showsPrec p (VkChromaLocationKHR x)
-          = showParen (p >= 11)
-              (showString "VkChromaLocationKHR " . showsPrec 11 x)
-
-instance Read VkChromaLocationKHR where
-        readPrec
-          = parens
-              (choose
-                 [("VK_CHROMA_LOCATION_COSITED_EVEN_KHR",
-                   pure VK_CHROMA_LOCATION_COSITED_EVEN_KHR),
-                  ("VK_CHROMA_LOCATION_MIDPOINT_KHR",
-                   pure VK_CHROMA_LOCATION_MIDPOINT_KHR)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkChromaLocationKHR") >>
-                      (VkChromaLocationKHR <$> step readPrec)))
-
-pattern VK_CHROMA_LOCATION_COSITED_EVEN_KHR :: VkChromaLocationKHR
-
-pattern VK_CHROMA_LOCATION_COSITED_EVEN_KHR = VkChromaLocationKHR 0
-
-pattern VK_CHROMA_LOCATION_MIDPOINT_KHR :: VkChromaLocationKHR
-
-pattern VK_CHROMA_LOCATION_MIDPOINT_KHR = VkChromaLocationKHR 1
-
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSamplerReductionModeEXT.html VkSamplerReductionModeEXT registry at www.khronos.org>
-newtype VkSamplerReductionModeEXT = VkSamplerReductionModeEXT Int32
-                                      deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
-                                                Generic)
-
-instance Show VkSamplerReductionModeEXT where
-        showsPrec _ VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT
-          = showString "VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT"
-        showsPrec _ VK_SAMPLER_REDUCTION_MODE_MIN_EXT
-          = showString "VK_SAMPLER_REDUCTION_MODE_MIN_EXT"
-        showsPrec _ VK_SAMPLER_REDUCTION_MODE_MAX_EXT
-          = showString "VK_SAMPLER_REDUCTION_MODE_MAX_EXT"
-        showsPrec p (VkSamplerReductionModeEXT x)
-          = showParen (p >= 11)
-              (showString "VkSamplerReductionModeEXT " . showsPrec 11 x)
-
-instance Read VkSamplerReductionModeEXT where
-        readPrec
-          = parens
-              (choose
-                 [("VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT",
-                   pure VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT),
-                  ("VK_SAMPLER_REDUCTION_MODE_MIN_EXT",
-                   pure VK_SAMPLER_REDUCTION_MODE_MIN_EXT),
-                  ("VK_SAMPLER_REDUCTION_MODE_MAX_EXT",
-                   pure VK_SAMPLER_REDUCTION_MODE_MAX_EXT)]
-                 +++
-                 prec 10
-                   (expectP (Ident "VkSamplerReductionModeEXT") >>
-                      (VkSamplerReductionModeEXT <$> step readPrec)))
-
-pattern VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT ::
-        VkSamplerReductionModeEXT
-
-pattern VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT =
-        VkSamplerReductionModeEXT 0
-
-pattern VK_SAMPLER_REDUCTION_MODE_MIN_EXT ::
-        VkSamplerReductionModeEXT
-
-pattern VK_SAMPLER_REDUCTION_MODE_MIN_EXT =
-        VkSamplerReductionModeEXT 1
-
-pattern VK_SAMPLER_REDUCTION_MODE_MAX_EXT ::
-        VkSamplerReductionModeEXT
-
-pattern VK_SAMPLER_REDUCTION_MODE_MAX_EXT =
-        VkSamplerReductionModeEXT 2
-
--- | type = @enum@
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBlendOverlapEXT.html VkBlendOverlapEXT registry at www.khronos.org>
-newtype VkBlendOverlapEXT = VkBlendOverlapEXT Int32
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkVertexInputRate.html VkVertexInputRate registry at www.khronos.org>
+newtype VkVertexInputRate = VkVertexInputRate Int32
                               deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 
-instance Show VkBlendOverlapEXT where
-        showsPrec _ VK_BLEND_OVERLAP_UNCORRELATED_EXT
-          = showString "VK_BLEND_OVERLAP_UNCORRELATED_EXT"
-        showsPrec _ VK_BLEND_OVERLAP_DISJOINT_EXT
-          = showString "VK_BLEND_OVERLAP_DISJOINT_EXT"
-        showsPrec _ VK_BLEND_OVERLAP_CONJOINT_EXT
-          = showString "VK_BLEND_OVERLAP_CONJOINT_EXT"
-        showsPrec p (VkBlendOverlapEXT x)
+instance Show VkVertexInputRate where
+        showsPrec _ VK_VERTEX_INPUT_RATE_VERTEX
+          = showString "VK_VERTEX_INPUT_RATE_VERTEX"
+        showsPrec _ VK_VERTEX_INPUT_RATE_INSTANCE
+          = showString "VK_VERTEX_INPUT_RATE_INSTANCE"
+        showsPrec p (VkVertexInputRate x)
           = showParen (p >= 11)
-              (showString "VkBlendOverlapEXT " . showsPrec 11 x)
+              (showString "VkVertexInputRate " . showsPrec 11 x)
 
-instance Read VkBlendOverlapEXT where
+instance Read VkVertexInputRate where
         readPrec
           = parens
               (choose
-                 [("VK_BLEND_OVERLAP_UNCORRELATED_EXT",
-                   pure VK_BLEND_OVERLAP_UNCORRELATED_EXT),
-                  ("VK_BLEND_OVERLAP_DISJOINT_EXT",
-                   pure VK_BLEND_OVERLAP_DISJOINT_EXT),
-                  ("VK_BLEND_OVERLAP_CONJOINT_EXT",
-                   pure VK_BLEND_OVERLAP_CONJOINT_EXT)]
+                 [("VK_VERTEX_INPUT_RATE_VERTEX", pure VK_VERTEX_INPUT_RATE_VERTEX),
+                  ("VK_VERTEX_INPUT_RATE_INSTANCE",
+                   pure VK_VERTEX_INPUT_RATE_INSTANCE)]
                  +++
                  prec 10
-                   (expectP (Ident "VkBlendOverlapEXT") >>
-                      (VkBlendOverlapEXT <$> step readPrec)))
+                   (expectP (Ident "VkVertexInputRate") >>
+                      (VkVertexInputRate <$> step readPrec)))
 
-pattern VK_BLEND_OVERLAP_UNCORRELATED_EXT :: VkBlendOverlapEXT
+pattern VK_VERTEX_INPUT_RATE_VERTEX :: VkVertexInputRate
 
-pattern VK_BLEND_OVERLAP_UNCORRELATED_EXT = VkBlendOverlapEXT 0
+pattern VK_VERTEX_INPUT_RATE_VERTEX = VkVertexInputRate 0
 
-pattern VK_BLEND_OVERLAP_DISJOINT_EXT :: VkBlendOverlapEXT
+pattern VK_VERTEX_INPUT_RATE_INSTANCE :: VkVertexInputRate
 
-pattern VK_BLEND_OVERLAP_DISJOINT_EXT = VkBlendOverlapEXT 1
+pattern VK_VERTEX_INPUT_RATE_INSTANCE = VkVertexInputRate 1
 
-pattern VK_BLEND_OVERLAP_CONJOINT_EXT :: VkBlendOverlapEXT
+newtype VkViSurfaceCreateFlagsNN = VkViSurfaceCreateFlagsNN VkFlags
+                                     deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                               FiniteBits, Storable, Real, Data, Generic)
 
-pattern VK_BLEND_OVERLAP_CONJOINT_EXT = VkBlendOverlapEXT 2
+instance Show VkViSurfaceCreateFlagsNN where
+        {-# INLINE show #-}
+        show (VkViSurfaceCreateFlagsNN x) = show x
 
-type HS_vkInternalAllocationNotification =
-     Ptr Void ->
-       #{type size_t} ->
-         VkInternalAllocationType -> VkSystemAllocationScope -> IO ()
+instance Read VkViSurfaceCreateFlagsNN where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
--- | > typedef void (VKAPI_PTR *PFN_vkInternalAllocationNotification)(
---   >     void*                                       pUserData,
---   >     size_t                                      size,
---   >     VkInternalAllocationType                    allocationType,
---   >     VkSystemAllocationScope                     allocationScope);
-type PFN_vkInternalAllocationNotification =
-     FunPtr HS_vkInternalAllocationNotification
+-- | type = @enum@
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkViewportCoordinateSwizzleNV.html VkViewportCoordinateSwizzleNV registry at www.khronos.org>
+newtype VkViewportCoordinateSwizzleNV = VkViewportCoordinateSwizzleNV Int32
+                                          deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data,
+                                                    Generic)
 
--- | Wrap haskell function into C-callable FunPtr.
---   Note, you need to free resources after using it.
-foreign import ccall "wrapper" newVkInternalAllocationNotification
-               ::
-               HS_vkInternalAllocationNotification ->
-                 IO PFN_vkInternalAllocationNotification
+instance Show VkViewportCoordinateSwizzleNV where
+        showsPrec _ VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_X_NV
+          = showString "VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_X_NV"
+        showsPrec _ VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_X_NV
+          = showString "VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_X_NV"
+        showsPrec _ VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Y_NV
+          = showString "VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Y_NV"
+        showsPrec _ VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Y_NV
+          = showString "VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Y_NV"
+        showsPrec _ VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Z_NV
+          = showString "VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Z_NV"
+        showsPrec _ VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Z_NV
+          = showString "VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Z_NV"
+        showsPrec _ VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_W_NV
+          = showString "VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_W_NV"
+        showsPrec _ VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_W_NV
+          = showString "VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_W_NV"
+        showsPrec p (VkViewportCoordinateSwizzleNV x)
+          = showParen (p >= 11)
+              (showString "VkViewportCoordinateSwizzleNV " . showsPrec 11 x)
 
-foreign import ccall "dynamic"
-               unwrapVkInternalAllocationNotification ::
-               PFN_vkInternalAllocationNotification ->
-                 HS_vkInternalAllocationNotification
+instance Read VkViewportCoordinateSwizzleNV where
+        readPrec
+          = parens
+              (choose
+                 [("VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_X_NV",
+                   pure VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_X_NV),
+                  ("VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_X_NV",
+                   pure VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_X_NV),
+                  ("VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Y_NV",
+                   pure VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Y_NV),
+                  ("VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Y_NV",
+                   pure VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Y_NV),
+                  ("VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Z_NV",
+                   pure VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Z_NV),
+                  ("VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Z_NV",
+                   pure VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Z_NV),
+                  ("VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_W_NV",
+                   pure VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_W_NV),
+                  ("VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_W_NV",
+                   pure VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_W_NV)]
+                 +++
+                 prec 10
+                   (expectP (Ident "VkViewportCoordinateSwizzleNV") >>
+                      (VkViewportCoordinateSwizzleNV <$> step readPrec)))
 
-type HS_vkInternalFreeNotification =
-     Ptr Void ->
-       #{type size_t} ->
-         VkInternalAllocationType -> VkSystemAllocationScope -> IO ()
+pattern VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_X_NV ::
+        VkViewportCoordinateSwizzleNV
 
--- | > typedef void (VKAPI_PTR *PFN_vkInternalFreeNotification)(
---   >     void*                                       pUserData,
---   >     size_t                                      size,
---   >     VkInternalAllocationType                    allocationType,
---   >     VkSystemAllocationScope                     allocationScope);
-type PFN_vkInternalFreeNotification =
-     FunPtr HS_vkInternalFreeNotification
+pattern VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_X_NV =
+        VkViewportCoordinateSwizzleNV 0
 
--- | Wrap haskell function into C-callable FunPtr.
---   Note, you need to free resources after using it.
-foreign import ccall "wrapper" newVkInternalFreeNotification ::
-               HS_vkInternalFreeNotification -> IO PFN_vkInternalFreeNotification
+pattern VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_X_NV ::
+        VkViewportCoordinateSwizzleNV
 
-foreign import ccall "dynamic" unwrapVkInternalFreeNotification ::
-               PFN_vkInternalFreeNotification -> HS_vkInternalFreeNotification
+pattern VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_X_NV =
+        VkViewportCoordinateSwizzleNV 1
 
-type HS_vkReallocationFunction =
-     Ptr Void ->
-       Ptr Void ->
-         #{type size_t} ->
-           #{type size_t} ->
-             VkSystemAllocationScope -> IO (Ptr Void)
+pattern VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Y_NV ::
+        VkViewportCoordinateSwizzleNV
 
--- | > typedef void* (VKAPI_PTR *PFN_vkReallocationFunction)(
---   >     void*                                       pUserData,
---   >     void*                                       pOriginal,
---   >     size_t                                      size,
---   >     size_t                                      alignment,
---   >     VkSystemAllocationScope                     allocationScope);
-type PFN_vkReallocationFunction = FunPtr HS_vkReallocationFunction
+pattern VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Y_NV =
+        VkViewportCoordinateSwizzleNV 2
 
--- | Wrap haskell function into C-callable FunPtr.
---   Note, you need to free resources after using it.
-foreign import ccall "wrapper" newVkReallocationFunction ::
-               HS_vkReallocationFunction -> IO PFN_vkReallocationFunction
+pattern VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Y_NV ::
+        VkViewportCoordinateSwizzleNV
 
-foreign import ccall "dynamic" unwrapVkReallocationFunction ::
-               PFN_vkReallocationFunction -> HS_vkReallocationFunction
+pattern VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Y_NV =
+        VkViewportCoordinateSwizzleNV 3
 
-type HS_vkAllocationFunction =
-     Ptr Void ->
-       #{type size_t} ->
-         #{type size_t} ->
-           VkSystemAllocationScope -> IO (Ptr Void)
+pattern VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Z_NV ::
+        VkViewportCoordinateSwizzleNV
 
--- | > typedef void* (VKAPI_PTR *PFN_vkAllocationFunction)(
---   >     void*                                       pUserData,
---   >     size_t                                      size,
---   >     size_t                                      alignment,
---   >     VkSystemAllocationScope                     allocationScope);
-type PFN_vkAllocationFunction = FunPtr HS_vkAllocationFunction
+pattern VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Z_NV =
+        VkViewportCoordinateSwizzleNV 4
 
--- | Wrap haskell function into C-callable FunPtr.
---   Note, you need to free resources after using it.
-foreign import ccall "wrapper" newVkAllocationFunction ::
-               HS_vkAllocationFunction -> IO PFN_vkAllocationFunction
+pattern VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Z_NV ::
+        VkViewportCoordinateSwizzleNV
 
-foreign import ccall "dynamic" unwrapVkAllocationFunction ::
-               PFN_vkAllocationFunction -> HS_vkAllocationFunction
+pattern VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Z_NV =
+        VkViewportCoordinateSwizzleNV 5
 
-type HS_vkFreeFunction = Ptr Void -> Ptr Void -> IO ()
+pattern VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_W_NV ::
+        VkViewportCoordinateSwizzleNV
 
--- | > typedef void (VKAPI_PTR *PFN_vkFreeFunction)(
---   >     void*                                       pUserData,
---   >     void*                                       pMemory);
-type PFN_vkFreeFunction = FunPtr HS_vkFreeFunction
+pattern VK_VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_W_NV =
+        VkViewportCoordinateSwizzleNV 6
 
--- | Wrap haskell function into C-callable FunPtr.
---   Note, you need to free resources after using it.
-foreign import ccall "wrapper" newVkFreeFunction ::
-               HS_vkFreeFunction -> IO PFN_vkFreeFunction
+pattern VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_W_NV ::
+        VkViewportCoordinateSwizzleNV
 
-foreign import ccall "dynamic" unwrapVkFreeFunction ::
-               PFN_vkFreeFunction -> HS_vkFreeFunction
+pattern VK_VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_W_NV =
+        VkViewportCoordinateSwizzleNV 7
 
-type HS_vkVoidFunction = IO ()
+newtype VkWaylandSurfaceCreateFlagsKHR = VkWaylandSurfaceCreateFlagsKHR VkFlags
+                                           deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                     FiniteBits, Storable, Real, Data, Generic)
 
--- | > typedef void (VKAPI_PTR *PFN_vkVoidFunction)(void);
-type PFN_vkVoidFunction = FunPtr HS_vkVoidFunction
+instance Show VkWaylandSurfaceCreateFlagsKHR where
+        {-# INLINE show #-}
+        show (VkWaylandSurfaceCreateFlagsKHR x) = show x
 
--- | Wrap haskell function into C-callable FunPtr.
---   Note, you need to free resources after using it.
-foreign import ccall "wrapper" newVkVoidFunction ::
-               HS_vkVoidFunction -> IO PFN_vkVoidFunction
+instance Read VkWaylandSurfaceCreateFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
-foreign import ccall "dynamic" unwrapVkVoidFunction ::
-               PFN_vkVoidFunction -> HS_vkVoidFunction
+newtype VkWin32SurfaceCreateFlagsKHR = VkWin32SurfaceCreateFlagsKHR VkFlags
+                                         deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                   FiniteBits, Storable, Real, Data, Generic)
 
-type HS_vkDebugReportCallbackEXT =
-     VkDebugReportFlagsEXT ->
-       VkDebugReportObjectTypeEXT ->
-         Word64 ->
-           #{type size_t} ->
-             Int32 -> CString -> CString -> Ptr Void -> IO VkBool32
+instance Show VkWin32SurfaceCreateFlagsKHR where
+        {-# INLINE show #-}
+        show (VkWin32SurfaceCreateFlagsKHR x) = show x
 
--- | > typedef VkBool32 (VKAPI_PTR *PFN_vkDebugReportCallbackEXT)(
---   >     VkDebugReportFlagsEXT                       flags,
---   >     VkDebugReportObjectTypeEXT                  objectType,
---   >     uint64_t                                    object,
---   >     size_t                                      location,
---   >     int32_t                                     messageCode,
---   >     const char*                                 pLayerPrefix,
---   >     const char*                                 pMessage,
---   >     void*                                       pUserData);
-type PFN_vkDebugReportCallbackEXT =
-     FunPtr HS_vkDebugReportCallbackEXT
+instance Read VkWin32SurfaceCreateFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
--- | Wrap haskell function into C-callable FunPtr.
---   Note, you need to free resources after using it.
-foreign import ccall "wrapper" newVkDebugReportCallbackEXT ::
-               HS_vkDebugReportCallbackEXT -> IO PFN_vkDebugReportCallbackEXT
+newtype VkXcbSurfaceCreateFlagsKHR = VkXcbSurfaceCreateFlagsKHR VkFlags
+                                       deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                 FiniteBits, Storable, Real, Data, Generic)
 
-foreign import ccall "dynamic" unwrapVkDebugReportCallbackEXT ::
-               PFN_vkDebugReportCallbackEXT -> HS_vkDebugReportCallbackEXT
+instance Show VkXcbSurfaceCreateFlagsKHR where
+        {-# INLINE show #-}
+        show (VkXcbSurfaceCreateFlagsKHR x) = show x
+
+instance Read VkXcbSurfaceCreateFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkXlibSurfaceCreateFlagsKHR = VkXlibSurfaceCreateFlagsKHR VkFlags
+                                        deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                  FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkXlibSurfaceCreateFlagsKHR where
+        {-# INLINE show #-}
+        show (VkXlibSurfaceCreateFlagsKHR x) = show x
+
+instance Read VkXlibSurfaceCreateFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+-- | Requires @X11/Xlib.h@
+type Window = CULong
+
+-- | Requires @wayland-client.h@
+data WlDisplay
+
+-- | Requires @wayland-client.h@
+data WlSurface
+
+-- | Requires @xcb/xcb.h@
+data XcbConnectionT
+
+-- | Requires @xcb/xcb.h@
+data XcbVisualidT
+
+-- | Requires @xcb/xcb.h@
+data XcbWindowT

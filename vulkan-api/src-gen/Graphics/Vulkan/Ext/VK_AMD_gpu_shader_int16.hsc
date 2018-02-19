@@ -23,7 +23,6 @@ module Graphics.Vulkan.Ext.VK_AMD_gpu_shader_int16
         VK_AMD_GPU_SHADER_INT16_EXTENSION_NAME,
         pattern VK_AMD_GPU_SHADER_INT16_EXTENSION_NAME)
        where
-import           Foreign.C.String        (CString)
 import           GHC.Ptr                 (Ptr (..))
 import           Graphics.Vulkan.Marshal
 

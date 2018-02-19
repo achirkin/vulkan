@@ -28,13 +28,12 @@ module Graphics.Vulkan.Ext.VK_NV_fragment_coverage_to_color
         pattern VK_NV_FRAGMENT_COVERAGE_TO_COLOR_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PIPELINE_COVERAGE_TO_COLOR_STATE_CREATE_INFO_NV)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           Graphics.Vulkan.Base             (VkPipelineMultisampleStateCreateInfo)
 import           Graphics.Vulkan.Common           (VkBool32, VkPipelineCoverageToColorStateCreateFlagsNV,
-                                                   VkStructureType (..), Word32)
+                                                   VkStructureType (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
@@ -48,7 +47,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     uint32_t         coverageToColorLocation;
 --   > } VkPipelineCoverageToColorStateCreateInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineCoverageToColorStateCreateInfoNV.html VkPipelineCoverageToColorStateCreateInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPipelineCoverageToColorStateCreateInfoNV.html VkPipelineCoverageToColorStateCreateInfoNV registry at www.khronos.org>
 data VkPipelineCoverageToColorStateCreateInfoNV = VkPipelineCoverageToColorStateCreateInfoNV## Addr##
                                                                                               ByteArray##
 

@@ -43,7 +43,6 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_win32
         pattern VK_STRUCTURE_TYPE_D3D12_FENCE_SUBMIT_INFO_KHR,
         pattern VK_STRUCTURE_TYPE_SEMAPHORE_GET_WIN32_HANDLE_INFO_KHR)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -65,7 +64,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     LPCWSTR          name;
 --   > } VkImportSemaphoreWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImportSemaphoreWin32HandleInfoKHR.html VkImportSemaphoreWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImportSemaphoreWin32HandleInfoKHR.html VkImportSemaphoreWin32HandleInfoKHR registry at www.khronos.org>
 data VkImportSemaphoreWin32HandleInfoKHR = VkImportSemaphoreWin32HandleInfoKHR## Addr##
                                                                                 ByteArray##
 
@@ -524,7 +523,7 @@ instance Show VkImportSemaphoreWin32HandleInfoKHR where
 --   >     LPCWSTR                          name;
 --   > } VkExportSemaphoreWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExportSemaphoreWin32HandleInfoKHR.html VkExportSemaphoreWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkExportSemaphoreWin32HandleInfoKHR.html VkExportSemaphoreWin32HandleInfoKHR registry at www.khronos.org>
 data VkExportSemaphoreWin32HandleInfoKHR = VkExportSemaphoreWin32HandleInfoKHR## Addr##
                                                                                 ByteArray##
 
@@ -873,7 +872,7 @@ instance Show VkExportSemaphoreWin32HandleInfoKHR where
 --   >     const uint64_t* pSignalSemaphoreValues;
 --   > } VkD3D12FenceSubmitInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkD3D12FenceSubmitInfoKHR.html VkD3D12FenceSubmitInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkD3D12FenceSubmitInfoKHR.html VkD3D12FenceSubmitInfoKHR registry at www.khronos.org>
 data VkD3D12FenceSubmitInfoKHR = VkD3D12FenceSubmitInfoKHR## Addr##
                                                             ByteArray##
 
@@ -1281,7 +1280,7 @@ instance Show VkD3D12FenceSubmitInfoKHR where
 --   >     VkExternalSemaphoreHandleTypeFlagBitsKHR handleType;
 --   > } VkSemaphoreGetWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSemaphoreGetWin32HandleInfoKHR.html VkSemaphoreGetWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSemaphoreGetWin32HandleInfoKHR.html VkSemaphoreGetWin32HandleInfoKHR registry at www.khronos.org>
 data VkSemaphoreGetWin32HandleInfoKHR = VkSemaphoreGetWin32HandleInfoKHR## Addr##
                                                                           ByteArray##
 
@@ -1568,7 +1567,7 @@ instance Show VkSemaphoreGetWin32HandleInfoKHR where
 --   >     , const VkImportSemaphoreWin32HandleInfoKHR* pImportSemaphoreWin32HandleInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkImportSemaphoreWin32HandleKHR.html vkImportSemaphoreWin32HandleKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkImportSemaphoreWin32HandleKHR.html vkImportSemaphoreWin32HandleKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkImportSemaphoreWin32HandleKHR"
                vkImportSemaphoreWin32HandleKHR ::
                VkDevice -- ^ device
@@ -1585,7 +1584,7 @@ foreign import ccall unsafe "vkImportSemaphoreWin32HandleKHR"
 --   >     , HANDLE* pHandle
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetSemaphoreWin32HandleKHR.html vkGetSemaphoreWin32HandleKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetSemaphoreWin32HandleKHR.html vkGetSemaphoreWin32HandleKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkGetSemaphoreWin32HandleKHR"
                vkGetSemaphoreWin32HandleKHR ::
                VkDevice -- ^ device

@@ -29,7 +29,6 @@ module Graphics.Vulkan.Ext.VK_NV_external_memory_capabilities
         VK_NV_EXTERNAL_MEMORY_CAPABILITIES_EXTENSION_NAME,
         pattern VK_NV_EXTERNAL_MEMORY_CAPABILITIES_EXTENSION_NAME)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -47,7 +46,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     VkExternalMemoryHandleTypeFlagsNV compatibleHandleTypes;
 --   > } VkExternalImageFormatPropertiesNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalImageFormatPropertiesNV.html VkExternalImageFormatPropertiesNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkExternalImageFormatPropertiesNV.html VkExternalImageFormatPropertiesNV registry at www.khronos.org>
 data VkExternalImageFormatPropertiesNV = VkExternalImageFormatPropertiesNV## Addr##
                                                                             ByteArray##
 
@@ -357,7 +356,7 @@ instance Show VkExternalImageFormatPropertiesNV where
 --   >     , VkExternalImageFormatPropertiesNV* pExternalImageFormatProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetPhysicalDeviceExternalImageFormatPropertiesNV.html vkGetPhysicalDeviceExternalImageFormatPropertiesNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceExternalImageFormatPropertiesNV.html vkGetPhysicalDeviceExternalImageFormatPropertiesNV registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceExternalImageFormatPropertiesNV"
                vkGetPhysicalDeviceExternalImageFormatPropertiesNV ::

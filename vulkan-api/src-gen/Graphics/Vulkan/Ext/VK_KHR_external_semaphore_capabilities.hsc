@@ -39,7 +39,6 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_capabilities
         pattern VK_STRUCTURE_TYPE_EXTERNAL_SEMAPHORE_PROPERTIES_KHR,
         pattern VK_LUID_SIZE_KHR, VK_LUID_SIZE_KHR)
        where
-import           Foreign.C.String                                        (CString)
 import           Foreign.Storable                                        (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                                                 (Ptr (..))
@@ -56,7 +55,7 @@ import           System.IO.Unsafe                                        (unsafe
 --   >     VkExternalSemaphoreHandleTypeFlagBitsKHR handleType;
 --   > } VkPhysicalDeviceExternalSemaphoreInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceExternalSemaphoreInfoKHR.html VkPhysicalDeviceExternalSemaphoreInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceExternalSemaphoreInfoKHR.html VkPhysicalDeviceExternalSemaphoreInfoKHR registry at www.khronos.org>
 data VkPhysicalDeviceExternalSemaphoreInfoKHR = VkPhysicalDeviceExternalSemaphoreInfoKHR## Addr##
                                                                                           ByteArray##
 
@@ -304,7 +303,7 @@ instance Show VkPhysicalDeviceExternalSemaphoreInfoKHR where
 --   >     VkExternalSemaphoreFeatureFlagsKHR externalSemaphoreFeatures;
 --   > } VkExternalSemaphorePropertiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalSemaphorePropertiesKHR.html VkExternalSemaphorePropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkExternalSemaphorePropertiesKHR.html VkExternalSemaphorePropertiesKHR registry at www.khronos.org>
 data VkExternalSemaphorePropertiesKHR = VkExternalSemaphorePropertiesKHR## Addr##
                                                                           ByteArray##
 
@@ -640,13 +639,13 @@ instance Show VkExternalSemaphorePropertiesKHR where
                                       showString "vkExternalSemaphoreFeatures = " .
                                         showsPrec d (vkExternalSemaphoreFeatures x) . showChar '}'
 
--- | > void vkGetPhysicalDeviceExternalSemaphorePropertiesKHR
+-- | > () vkGetPhysicalDeviceExternalSemaphorePropertiesKHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , const VkPhysicalDeviceExternalSemaphoreInfoKHR* pExternalSemaphoreInfo
 --   >     , VkExternalSemaphorePropertiesKHR* pExternalSemaphoreProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetPhysicalDeviceExternalSemaphorePropertiesKHR.html vkGetPhysicalDeviceExternalSemaphorePropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceExternalSemaphorePropertiesKHR.html vkGetPhysicalDeviceExternalSemaphorePropertiesKHR registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceExternalSemaphorePropertiesKHR"
                vkGetPhysicalDeviceExternalSemaphorePropertiesKHR ::

@@ -39,7 +39,6 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory
         pattern VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR,
         pattern VK_QUEUE_FAMILY_EXTERNAL_KHR, VK_QUEUE_FAMILY_EXTERNAL_KHR)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -62,7 +61,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     VkExternalMemoryHandleTypeFlagsKHR handleTypes;
 --   > } VkExternalMemoryImageCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalMemoryImageCreateInfoKHR.html VkExternalMemoryImageCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkExternalMemoryImageCreateInfoKHR.html VkExternalMemoryImageCreateInfoKHR registry at www.khronos.org>
 data VkExternalMemoryImageCreateInfoKHR = VkExternalMemoryImageCreateInfoKHR## Addr##
                                                                               ByteArray##
 
@@ -295,7 +294,7 @@ instance Show VkExternalMemoryImageCreateInfoKHR where
 --   >     VkExternalMemoryHandleTypeFlagsKHR handleTypes;
 --   > } VkExternalMemoryBufferCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalMemoryBufferCreateInfoKHR.html VkExternalMemoryBufferCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkExternalMemoryBufferCreateInfoKHR.html VkExternalMemoryBufferCreateInfoKHR registry at www.khronos.org>
 data VkExternalMemoryBufferCreateInfoKHR = VkExternalMemoryBufferCreateInfoKHR## Addr##
                                                                                 ByteArray##
 
@@ -531,7 +530,7 @@ instance Show VkExternalMemoryBufferCreateInfoKHR where
 --   >     VkExternalMemoryHandleTypeFlagsKHR handleTypes;
 --   > } VkExportMemoryAllocateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExportMemoryAllocateInfoKHR.html VkExportMemoryAllocateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkExportMemoryAllocateInfoKHR.html VkExportMemoryAllocateInfoKHR registry at www.khronos.org>
 data VkExportMemoryAllocateInfoKHR = VkExportMemoryAllocateInfoKHR## Addr##
                                                                     ByteArray##
 

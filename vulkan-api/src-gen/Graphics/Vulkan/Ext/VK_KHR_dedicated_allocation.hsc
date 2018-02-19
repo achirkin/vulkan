@@ -35,19 +35,19 @@ module Graphics.Vulkan.Ext.VK_KHR_dedicated_allocation
         pattern VK_STRUCTURE_TYPE_MEMORY_DEDICATED_REQUIREMENTS_KHR,
         pattern VK_STRUCTURE_TYPE_MEMORY_DEDICATED_ALLOCATE_INFO_KHR)
        where
-import           Foreign.C.String                 (CString)
-import           Foreign.Storable                 (Storable (..))
+import           Foreign.Storable                                    (Storable (..))
 import           GHC.Prim
-import           GHC.Ptr                          (Ptr (..))
-import           Graphics.Vulkan.Base             (VkMemoryAllocateInfo)
-import           Graphics.Vulkan.Common           (VkBool32, VkBuffer, VkImage,
-                                                   VkStructureType (..))
+import           GHC.Ptr                                             (Ptr (..))
+import           Graphics.Vulkan.Base                                (VkMemoryAllocateInfo)
+import           Graphics.Vulkan.Common                              (VkBool32,
+                                                                      VkBuffer,
+                                                                      VkImage,
+                                                                      VkStructureType (..))
+import           Graphics.Vulkan.Ext.VK_KHR_get_memory_requirements2 (VkMemoryRequirements2KHR)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
-
-import Graphics.Vulkan.Ext.VK_KHR_get_memory_requirements2
+import           System.IO.Unsafe                                    (unsafeDupablePerformIO)
 
 -- | > typedef struct VkMemoryDedicatedRequirementsKHR {
 --   >     VkStructureType sType;
@@ -56,7 +56,7 @@ import Graphics.Vulkan.Ext.VK_KHR_get_memory_requirements2
 --   >     VkBool32                         requiresDedicatedAllocation;
 --   > } VkMemoryDedicatedRequirementsKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryDedicatedRequirementsKHR.html VkMemoryDedicatedRequirementsKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkMemoryDedicatedRequirementsKHR.html VkMemoryDedicatedRequirementsKHR registry at www.khronos.org>
 data VkMemoryDedicatedRequirementsKHR = VkMemoryDedicatedRequirementsKHR## Addr##
                                                                           ByteArray##
 
@@ -342,7 +342,7 @@ instance Show VkMemoryDedicatedRequirementsKHR where
 --   >     VkBuffer         buffer;
 --   > } VkMemoryDedicatedAllocateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryDedicatedAllocateInfoKHR.html VkMemoryDedicatedAllocateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkMemoryDedicatedAllocateInfoKHR.html VkMemoryDedicatedAllocateInfoKHR registry at www.khronos.org>
 data VkMemoryDedicatedAllocateInfoKHR = VkMemoryDedicatedAllocateInfoKHR## Addr##
                                                                           ByteArray##
 

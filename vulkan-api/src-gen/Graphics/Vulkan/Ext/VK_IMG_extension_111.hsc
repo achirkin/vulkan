@@ -21,7 +21,6 @@ module Graphics.Vulkan.Ext.VK_IMG_extension_111
         VK_IMG_EXTENSION_111_EXTENSION_NAME,
         pattern VK_IMG_EXTENSION_111_EXTENSION_NAME)
        where
-import           Foreign.C.String        (CString)
 import           GHC.Ptr                 (Ptr (..))
 import           Graphics.Vulkan.Marshal
 

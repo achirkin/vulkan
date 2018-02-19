@@ -91,11 +91,11 @@ data VkXml
   = VkXml
   { globVendorIds  :: VendorIds
   , globTags       :: VkTags
-  , globTypes      :: VkTypes
+  , globTypes      :: Map VkTypeName VkType
   , globEnums      :: Map (Maybe VkTypeName) VkEnums
-  , globCommands   :: VkCommands
-  , globFeature    :: VkFeature
-  , globExtensions :: VkExtensions
+  , globCommands   :: Map VkCommandName VkCommand
+  , globFeature    :: [VkFeature]
+  , globExtensions :: Map VkExtensionName VkExtension
   } deriving Show
 
 data VkXmlPartial
@@ -118,7 +118,7 @@ fixVkXml VkXmlPartial
   , gpTypes      = Seq.Empty Seq.:|> pTypes
   , gpEnums      = pEnums
   , gpCommands   = Seq.Empty Seq.:|> pCommands
-  , gpFeature    = Seq.Empty Seq.:|> pFeature
+  , gpFeature    = pFeatures
   , gpExtensions = Seq.Empty Seq.:|> pExtensions
   } = VkXml
   { globVendorIds  = pVendorIds
@@ -129,7 +129,7 @@ fixVkXml VkXmlPartial
                          )
                    $ toList pEnums
   , globCommands   = pCommands
-  , globFeature    = pFeature
+  , globFeature    = toList pFeatures
   , globExtensions = pExtensions
   }
 fixVkXml _ = error "Unexpected number of sections in vk.xml"

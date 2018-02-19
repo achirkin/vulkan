@@ -36,7 +36,6 @@ module Graphics.Vulkan.Ext.VK_NN_vi_surface
         pattern VK_NN_VI_SURFACE_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_VI_SURFACE_CREATE_INFO_NN)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -54,7 +53,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     void*                            window;
 --   > } VkViSurfaceCreateInfoNN;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkViSurfaceCreateInfoNN.html VkViSurfaceCreateInfoNN registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkViSurfaceCreateInfoNN.html VkViSurfaceCreateInfoNN registry at www.khronos.org>
 data VkViSurfaceCreateInfoNN = VkViSurfaceCreateInfoNN## Addr##
                                                         ByteArray##
 
@@ -314,7 +313,7 @@ instance Show VkViSurfaceCreateInfoNN where
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCreateViSurfaceNN.html vkCreateViSurfaceNN registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateViSurfaceNN.html vkCreateViSurfaceNN registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateViSurfaceNN"
                vkCreateViSurfaceNN ::
                VkInstance -- ^ instance

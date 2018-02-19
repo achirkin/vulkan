@@ -38,22 +38,21 @@ module Graphics.Vulkan.Ext.VK_KHX_multiview
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES_KHX,
         pattern VK_DEPENDENCY_VIEW_LOCAL_BIT_KHX)
        where
-import           Foreign.C.String                 (CString)
-import           Foreign.Storable                 (Storable (..))
+import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
-import           GHC.Ptr                          (Ptr (..))
-import           Graphics.Vulkan.Base             (VkDeviceCreateInfo,
-                                                   VkRenderPassCreateInfo)
-import           Graphics.Vulkan.Common           (VkBool32,
-                                                   VkDependencyFlagBits (..),
-                                                   VkStructureType,
-                                                   VkStructureType (..), Word32)
+import           GHC.Ptr                                                    (Ptr (..))
+import           Graphics.Vulkan.Base                                       (VkDeviceCreateInfo,
+                                                                             VkRenderPassCreateInfo)
+import           Graphics.Vulkan.Common                                     (VkBool32,
+                                                                             VkDependencyFlagBits (..),
+                                                                             VkStructureType,
+                                                                             VkStructureType (..))
+import           Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2 (VkPhysicalDeviceFeatures2KHR,
+                                                                             VkPhysicalDeviceProperties2KHR)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
-
-import Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
+import           System.IO.Unsafe                                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkRenderPassMultiviewCreateInfoKHX {
 --   >     VkStructureType        sType;
@@ -66,7 +65,7 @@ import Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
 --   >     const uint32_t* pCorrelationMasks;
 --   > } VkRenderPassMultiviewCreateInfoKHX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkRenderPassMultiviewCreateInfoKHX.html VkRenderPassMultiviewCreateInfoKHX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkRenderPassMultiviewCreateInfoKHX.html VkRenderPassMultiviewCreateInfoKHX registry at www.khronos.org>
 data VkRenderPassMultiviewCreateInfoKHX = VkRenderPassMultiviewCreateInfoKHX## Addr##
                                                                               ByteArray##
 
@@ -614,7 +613,7 @@ instance Show VkRenderPassMultiviewCreateInfoKHX where
 --   >     VkBool32                         multiviewTessellationShader;
 --   > } VkPhysicalDeviceMultiviewFeaturesKHX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceMultiviewFeaturesKHX.html VkPhysicalDeviceMultiviewFeaturesKHX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceMultiviewFeaturesKHX.html VkPhysicalDeviceMultiviewFeaturesKHX registry at www.khronos.org>
 data VkPhysicalDeviceMultiviewFeaturesKHX = VkPhysicalDeviceMultiviewFeaturesKHX## Addr##
                                                                                   ByteArray##
 
@@ -986,7 +985,7 @@ instance Show VkPhysicalDeviceMultiviewFeaturesKHX where
 --   >     uint32_t                         maxMultiviewInstanceIndex;
 --   > } VkPhysicalDeviceMultiviewPropertiesKHX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceMultiviewPropertiesKHX.html VkPhysicalDeviceMultiviewPropertiesKHX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceMultiviewPropertiesKHX.html VkPhysicalDeviceMultiviewPropertiesKHX registry at www.khronos.org>
 data VkPhysicalDeviceMultiviewPropertiesKHX = VkPhysicalDeviceMultiviewPropertiesKHX## Addr##
                                                                                       ByteArray##
 

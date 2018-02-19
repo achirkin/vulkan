@@ -37,7 +37,6 @@ module Graphics.Vulkan.Ext.VK_KHR_xlib_surface
         pattern VK_KHR_XLIB_SURFACE_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_XLIB_SURFACE_CREATE_INFO_KHR)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -56,7 +55,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     Window                           window;
 --   > } VkXlibSurfaceCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkXlibSurfaceCreateInfoKHR.html VkXlibSurfaceCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkXlibSurfaceCreateInfoKHR.html VkXlibSurfaceCreateInfoKHR registry at www.khronos.org>
 data VkXlibSurfaceCreateInfoKHR = VkXlibSurfaceCreateInfoKHR## Addr##
                                                               ByteArray##
 
@@ -373,7 +372,7 @@ instance Show VkXlibSurfaceCreateInfoKHR where
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCreateXlibSurfaceKHR.html vkCreateXlibSurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateXlibSurfaceKHR.html vkCreateXlibSurfaceKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateXlibSurfaceKHR"
                vkCreateXlibSurfaceKHR ::
                VkInstance -- ^ instance
@@ -391,7 +390,7 @@ foreign import ccall unsafe "vkCreateXlibSurfaceKHR"
 --   >     , VisualID visualID
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetPhysicalDeviceXlibPresentationSupportKHR.html vkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceXlibPresentationSupportKHR.html vkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceXlibPresentationSupportKHR"
                vkGetPhysicalDeviceXlibPresentationSupportKHR ::

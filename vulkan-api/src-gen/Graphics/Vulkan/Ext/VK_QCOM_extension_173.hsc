@@ -21,7 +21,6 @@ module Graphics.Vulkan.Ext.VK_QCOM_extension_173
         VK_QCOM_extension_173_EXTENSION_NAME,
         pattern VK_QCOM_extension_173_EXTENSION_NAME)
        where
-import           Foreign.C.String        (CString)
 import           GHC.Ptr                 (Ptr (..))
 import           Graphics.Vulkan.Marshal
 

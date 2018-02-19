@@ -35,7 +35,6 @@ module Graphics.Vulkan.Ext.VK_NV_external_memory
         pattern VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMAGE_CREATE_INFO_NV,
         pattern VK_STRUCTURE_TYPE_EXPORT_MEMORY_ALLOCATE_INFO_NV)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -55,7 +54,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     VkExternalMemoryHandleTypeFlagsNV handleTypes;
 --   > } VkExternalMemoryImageCreateInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalMemoryImageCreateInfoNV.html VkExternalMemoryImageCreateInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkExternalMemoryImageCreateInfoNV.html VkExternalMemoryImageCreateInfoNV registry at www.khronos.org>
 data VkExternalMemoryImageCreateInfoNV = VkExternalMemoryImageCreateInfoNV## Addr##
                                                                             ByteArray##
 
@@ -287,7 +286,7 @@ instance Show VkExternalMemoryImageCreateInfoNV where
 --   >     VkExternalMemoryHandleTypeFlagsNV handleTypes;
 --   > } VkExportMemoryAllocateInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExportMemoryAllocateInfoNV.html VkExportMemoryAllocateInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkExportMemoryAllocateInfoNV.html VkExportMemoryAllocateInfoNV registry at www.khronos.org>
 data VkExportMemoryAllocateInfoNV = VkExportMemoryAllocateInfoNV## Addr##
                                                                   ByteArray##
 

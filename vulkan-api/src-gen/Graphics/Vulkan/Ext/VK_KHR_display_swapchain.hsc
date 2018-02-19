@@ -35,7 +35,6 @@ module Graphics.Vulkan.Ext.VK_KHR_display_swapchain
         pattern VK_STRUCTURE_TYPE_DISPLAY_PRESENT_INFO_KHR,
         pattern VK_ERROR_INCOMPATIBLE_DISPLAY_KHR)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -56,7 +55,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     VkBool32                         persistent;
 --   > } VkDisplayPresentInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplayPresentInfoKHR.html VkDisplayPresentInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDisplayPresentInfoKHR.html VkDisplayPresentInfoKHR registry at www.khronos.org>
 data VkDisplayPresentInfoKHR = VkDisplayPresentInfoKHR## Addr##
                                                         ByteArray##
 
@@ -368,7 +367,7 @@ instance Show VkDisplayPresentInfoKHR where
 --   >     , VkSwapchainKHR* pSwapchains
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCreateSharedSwapchainsKHR.html vkCreateSharedSwapchainsKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateSharedSwapchainsKHR.html vkCreateSharedSwapchainsKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateSharedSwapchainsKHR"
                vkCreateSharedSwapchainsKHR ::
                VkDevice -- ^ device

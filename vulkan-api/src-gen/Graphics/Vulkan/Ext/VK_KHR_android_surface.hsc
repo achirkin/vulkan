@@ -36,7 +36,6 @@ module Graphics.Vulkan.Ext.VK_KHR_android_surface
         pattern VK_KHR_ANDROID_SURFACE_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_ANDROID_SURFACE_CREATE_INFO_KHR)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -54,7 +53,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     ANativeWindow*                   window;
 --   > } VkAndroidSurfaceCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkAndroidSurfaceCreateInfoKHR.html VkAndroidSurfaceCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkAndroidSurfaceCreateInfoKHR.html VkAndroidSurfaceCreateInfoKHR registry at www.khronos.org>
 data VkAndroidSurfaceCreateInfoKHR = VkAndroidSurfaceCreateInfoKHR## Addr##
                                                                     ByteArray##
 
@@ -325,7 +324,7 @@ instance Show VkAndroidSurfaceCreateInfoKHR where
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCreateAndroidSurfaceKHR.html vkCreateAndroidSurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateAndroidSurfaceKHR.html vkCreateAndroidSurfaceKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateAndroidSurfaceKHR"
                vkCreateAndroidSurfaceKHR ::
                VkInstance -- ^ instance

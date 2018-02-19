@@ -35,13 +35,12 @@ module Graphics.Vulkan.Ext.VK_NV_win32_keyed_mutex
         pattern VK_NV_WIN32_KEYED_MUTEX_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_NV)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           Graphics.Vulkan.Base             (VkSubmitInfo)
 import           Graphics.Vulkan.Common           (VkDeviceMemory,
-                                                   VkStructureType (..), Word32)
+                                                   VkStructureType (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
@@ -59,7 +58,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     const uint64_t*                  pReleaseKeys;
 --   > } VkWin32KeyedMutexAcquireReleaseInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkWin32KeyedMutexAcquireReleaseInfoNV.html VkWin32KeyedMutexAcquireReleaseInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkWin32KeyedMutexAcquireReleaseInfoNV.html VkWin32KeyedMutexAcquireReleaseInfoNV registry at www.khronos.org>
 data VkWin32KeyedMutexAcquireReleaseInfoNV = VkWin32KeyedMutexAcquireReleaseInfoNV## Addr##
                                                                                     ByteArray##
 

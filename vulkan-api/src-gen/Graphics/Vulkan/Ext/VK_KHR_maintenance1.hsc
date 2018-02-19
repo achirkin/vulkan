@@ -28,18 +28,17 @@ module Graphics.Vulkan.Ext.VK_KHR_maintenance1
         pattern VK_FORMAT_FEATURE_TRANSFER_DST_BIT_KHR,
         pattern VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT_KHR)
        where
-import           Foreign.C.String        (CString)
 import           GHC.Ptr                 (Ptr (..))
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 
--- | > void vkTrimCommandPoolKHR
+-- | > () vkTrimCommandPoolKHR
 --   >     ( VkDevice device
 --   >     , VkCommandPool commandPool
 --   >     , VkCommandPoolTrimFlagsKHR flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkTrimCommandPoolKHR.html vkTrimCommandPoolKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkTrimCommandPoolKHR.html vkTrimCommandPoolKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkTrimCommandPoolKHR"
                vkTrimCommandPoolKHR ::
                VkDevice -- ^ device

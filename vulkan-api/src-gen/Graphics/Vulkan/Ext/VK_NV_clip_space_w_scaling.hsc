@@ -32,7 +32,6 @@ module Graphics.Vulkan.Ext.VK_NV_clip_space_w_scaling
         pattern VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_W_SCALING_STATE_CREATE_INFO_NV,
         pattern VK_DYNAMIC_STATE_VIEWPORT_W_SCALING_NV)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -48,7 +47,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     float          ycoeff;
 --   > } VkViewportWScalingNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkViewportWScalingNV.html VkViewportWScalingNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkViewportWScalingNV.html VkViewportWScalingNV registry at www.khronos.org>
 data VkViewportWScalingNV = VkViewportWScalingNV## Addr## ByteArray##
 
 instance Eq VkViewportWScalingNV where
@@ -203,7 +202,7 @@ instance Show VkViewportWScalingNV where
 --   >     const VkViewportWScalingNV*      pViewportWScalings;
 --   > } VkPipelineViewportWScalingStateCreateInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineViewportWScalingStateCreateInfoNV.html VkPipelineViewportWScalingStateCreateInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPipelineViewportWScalingStateCreateInfoNV.html VkPipelineViewportWScalingStateCreateInfoNV registry at www.khronos.org>
 data VkPipelineViewportWScalingStateCreateInfoNV = VkPipelineViewportWScalingStateCreateInfoNV## Addr##
                                                                                                 ByteArray##
 
@@ -595,18 +594,18 @@ instance Show VkPipelineViewportWScalingStateCreateInfoNV where
                                       showString "vkPViewportWScalings = " .
                                         showsPrec d (vkPViewportWScalings x) . showChar '}'
 
--- | queues: @graphics@
+-- | queues: 'graphics'.
 --
 --   renderpass: @both@
 --
---   > void vkCmdSetViewportWScalingNV
+--   > () vkCmdSetViewportWScalingNV
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , uint32_t firstViewport
 --   >     , uint32_t viewportCount
 --   >     , const VkViewportWScalingNV* pViewportWScalings
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCmdSetViewportWScalingNV.html vkCmdSetViewportWScalingNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdSetViewportWScalingNV.html vkCmdSetViewportWScalingNV registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdSetViewportWScalingNV"
                vkCmdSetViewportWScalingNV ::
                VkCommandBuffer -- ^ commandBuffer

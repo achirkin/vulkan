@@ -23,7 +23,6 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_trinary_minmax
         VK_AMD_SHADER_TRINARY_MINMAX_EXTENSION_NAME,
         pattern VK_AMD_SHADER_TRINARY_MINMAX_EXTENSION_NAME)
        where
-import           Foreign.C.String        (CString)
 import           GHC.Ptr                 (Ptr (..))
 import           Graphics.Vulkan.Marshal
 

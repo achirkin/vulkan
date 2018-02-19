@@ -38,7 +38,6 @@ module Graphics.Vulkan.Ext.VK_EXT_discard_rectangles
         pattern VK_STRUCTURE_TYPE_PIPELINE_DISCARD_RECTANGLE_STATE_CREATE_INFO_EXT,
         pattern VK_DYNAMIC_STATE_DISCARD_RECTANGLE_EXT)
        where
-import           Foreign.C.String                                           (CString)
 import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                                                    (Ptr (..))
@@ -57,7 +56,7 @@ import           System.IO.Unsafe                                           (uns
 --   >     uint32_t               maxDiscardRectangles;
 --   > } VkPhysicalDeviceDiscardRectanglePropertiesEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceDiscardRectanglePropertiesEXT.html VkPhysicalDeviceDiscardRectanglePropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceDiscardRectanglePropertiesEXT.html VkPhysicalDeviceDiscardRectanglePropertiesEXT registry at www.khronos.org>
 data VkPhysicalDeviceDiscardRectanglePropertiesEXT = VkPhysicalDeviceDiscardRectanglePropertiesEXT## Addr##
                                                                                                     ByteArray##
 
@@ -329,7 +328,7 @@ instance Show VkPhysicalDeviceDiscardRectanglePropertiesEXT where
 --   >     const VkRect2D* pDiscardRectangles;
 --   > } VkPipelineDiscardRectangleStateCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineDiscardRectangleStateCreateInfoEXT.html VkPipelineDiscardRectangleStateCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPipelineDiscardRectangleStateCreateInfoEXT.html VkPipelineDiscardRectangleStateCreateInfoEXT registry at www.khronos.org>
 data VkPipelineDiscardRectangleStateCreateInfoEXT = VkPipelineDiscardRectangleStateCreateInfoEXT## Addr##
                                                                                                   ByteArray##
 
@@ -786,18 +785,18 @@ instance Show VkPipelineDiscardRectangleStateCreateInfoEXT where
                                             showString "vkPDiscardRectangles = " .
                                               showsPrec d (vkPDiscardRectangles x) . showChar '}'
 
--- | queues: @graphics@
+-- | queues: 'graphics'.
 --
 --   renderpass: @both@
 --
---   > void vkCmdSetDiscardRectangleEXT
+--   > () vkCmdSetDiscardRectangleEXT
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , uint32_t firstDiscardRectangle
 --   >     , uint32_t discardRectangleCount
 --   >     , const VkRect2D* pDiscardRectangles
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCmdSetDiscardRectangleEXT.html vkCmdSetDiscardRectangleEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdSetDiscardRectangleEXT.html vkCmdSetDiscardRectangleEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdSetDiscardRectangleEXT"
                vkCmdSetDiscardRectangleEXT ::
                VkCommandBuffer -- ^ commandBuffer

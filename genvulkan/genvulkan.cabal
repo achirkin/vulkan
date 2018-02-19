@@ -26,6 +26,8 @@ library
                        VkXml.Sections.Tags
                        VkXml.Sections.Extensions
                        Write
+                       Write.Util.NFData
+                       Write.Util.DeclaredNames
                        Write.Commands
                        Write.Feature
                        Write.Extension

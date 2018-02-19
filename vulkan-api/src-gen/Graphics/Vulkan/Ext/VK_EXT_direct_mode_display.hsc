@@ -29,7 +29,6 @@ module Graphics.Vulkan.Ext.VK_EXT_direct_mode_display
         VK_EXT_DIRECT_MODE_DISPLAY_EXTENSION_NAME,
         pattern VK_EXT_DIRECT_MODE_DISPLAY_EXTENSION_NAME)
        where
-import           Foreign.C.String        (CString)
 import           GHC.Ptr                 (Ptr (..))
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
@@ -41,7 +40,7 @@ import           Graphics.Vulkan.Marshal
 --   >     , VkDisplayKHR display
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkReleaseDisplayEXT.html vkReleaseDisplayEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkReleaseDisplayEXT.html vkReleaseDisplayEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkReleaseDisplayEXT"
                vkReleaseDisplayEXT ::
                VkPhysicalDevice -- ^ physicalDevice

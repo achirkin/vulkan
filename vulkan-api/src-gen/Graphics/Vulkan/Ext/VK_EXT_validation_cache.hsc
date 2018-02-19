@@ -34,7 +34,6 @@ module Graphics.Vulkan.Ext.VK_EXT_validation_cache
         pattern VK_STRUCTURE_TYPE_SHADER_MODULE_VALIDATION_CACHE_CREATE_INFO_EXT,
         pattern VK_OBJECT_TYPE_VALIDATION_CACHE_EXT)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -54,7 +53,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     const void*            pInitialData;
 --   > } VkValidationCacheCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkValidationCacheCreateInfoEXT.html VkValidationCacheCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkValidationCacheCreateInfoEXT.html VkValidationCacheCreateInfoEXT registry at www.khronos.org>
 data VkValidationCacheCreateInfoEXT = VkValidationCacheCreateInfoEXT## Addr##
                                                                       ByteArray##
 
@@ -253,8 +252,7 @@ instance CanWriteField "flags" VkValidationCacheCreateInfoEXT where
 
 instance {-# OVERLAPPING #-}
          HasVkInitialDataSize VkValidationCacheCreateInfoEXT where
-        type VkInitialDataSizeMType VkValidationCacheCreateInfoEXT =
-             #{type size_t}
+        type VkInitialDataSizeMType VkValidationCacheCreateInfoEXT = CSize
 
         {-# NOINLINE vkInitialDataSize #-}
         vkInitialDataSize x
@@ -276,7 +274,7 @@ instance {-# OVERLAPPING #-}
 instance {-# OVERLAPPING #-}
          HasField "initialDataSize" VkValidationCacheCreateInfoEXT where
         type FieldType "initialDataSize" VkValidationCacheCreateInfoEXT =
-             #{type size_t}
+             CSize
         type FieldOptional "initialDataSize" VkValidationCacheCreateInfoEXT
              = 'True -- ' closing tick for hsc2hs
         type FieldOffset "initialDataSize" VkValidationCacheCreateInfoEXT =
@@ -383,7 +381,7 @@ instance Show VkValidationCacheCreateInfoEXT where
 --   >     VkValidationCacheEXT    validationCache;
 --   > } VkShaderModuleValidationCacheCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkShaderModuleValidationCacheCreateInfoEXT.html VkShaderModuleValidationCacheCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkShaderModuleValidationCacheCreateInfoEXT.html VkShaderModuleValidationCacheCreateInfoEXT registry at www.khronos.org>
 data VkShaderModuleValidationCacheCreateInfoEXT = VkShaderModuleValidationCacheCreateInfoEXT## Addr##
                                                                                               ByteArray##
 
@@ -647,7 +645,7 @@ instance Show VkShaderModuleValidationCacheCreateInfoEXT where
 --   >     , VkValidationCacheEXT* pValidationCache
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCreateValidationCacheEXT.html vkCreateValidationCacheEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateValidationCacheEXT.html vkCreateValidationCacheEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateValidationCacheEXT"
                vkCreateValidationCacheEXT ::
                VkDevice -- ^ device
@@ -659,13 +657,13 @@ foreign import ccall unsafe "vkCreateValidationCacheEXT"
                      Ptr VkValidationCacheEXT -- ^ pValidationCache
                                               -> IO VkResult
 
--- | > void vkDestroyValidationCacheEXT
+-- | > () vkDestroyValidationCacheEXT
 --   >     ( VkDevice device
 --   >     , VkValidationCacheEXT validationCache
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkDestroyValidationCacheEXT.html vkDestroyValidationCacheEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroyValidationCacheEXT.html vkDestroyValidationCacheEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyValidationCacheEXT"
                vkDestroyValidationCacheEXT ::
                VkDevice -- ^ device
@@ -685,7 +683,7 @@ foreign import ccall unsafe "vkDestroyValidationCacheEXT"
 --   >     , const VkValidationCacheEXT* pSrcCaches
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkMergeValidationCachesEXT.html vkMergeValidationCachesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkMergeValidationCachesEXT.html vkMergeValidationCachesEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkMergeValidationCachesEXT"
                vkMergeValidationCachesEXT ::
                VkDevice -- ^ device
@@ -707,16 +705,15 @@ foreign import ccall unsafe "vkMergeValidationCachesEXT"
 --   >     , void* pData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetValidationCacheDataEXT.html vkGetValidationCacheDataEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetValidationCacheDataEXT.html vkGetValidationCacheDataEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkGetValidationCacheDataEXT"
                vkGetValidationCacheDataEXT ::
                VkDevice -- ^ device
                         ->
                  VkValidationCacheEXT -- ^ validationCache
-                                      ->
-                   Ptr #{type size_t} -- ^ pDataSize
-                                                  -> Ptr Void -- ^ pData
-                                                              -> IO VkResult
+                                      -> Ptr CSize -- ^ pDataSize
+                                                   -> Ptr Void -- ^ pData
+                                                               -> IO VkResult
 
 pattern VK_EXT_VALIDATION_CACHE_SPEC_VERSION :: (Num a, Eq a) => a
 

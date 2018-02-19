@@ -71,27 +71,26 @@ module Graphics.Vulkan.Ext.VK_KHX_device_group
         pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHX,
         pattern VK_SWAPCHAIN_CREATE_BIND_SFR_BIT_KHX)
        where
-import           Foreign.C.String                 (CString)
-import           Foreign.Storable                 (Storable (..))
+import           Foreign.Storable                        (Storable (..))
 import           GHC.Prim
-import           GHC.Ptr                          (Ptr (..))
-import           GHC.TypeLits                     (KnownNat, natVal') -- ' closing tick for hsc2hs
-import           Graphics.Vulkan.Base             (VkBindSparseInfo,
-                                                   VkCommandBufferBeginInfo,
-                                                   VkImageCreateInfo,
-                                                   VkMemoryAllocateInfo,
-                                                   VkPresentInfoKHR, VkRect2D,
-                                                   VkRect2D (..),
-                                                   VkRenderPassBeginInfo,
-                                                   VkSubmitInfo,
-                                                   VkSwapchainCreateInfoKHR)
+import           GHC.Ptr                                 (Ptr (..))
+import           GHC.TypeLits                            (KnownNat, natVal') -- ' closing tick for hsc2hs
+import           Graphics.Vulkan.Base                    (VkBindSparseInfo, VkCommandBufferBeginInfo,
+                                                          VkImageCreateInfo,
+                                                          VkMemoryAllocateInfo,
+                                                          VkPresentInfoKHR,
+                                                          VkRect2D,
+                                                          VkRect2D (..),
+                                                          VkRenderPassBeginInfo,
+                                                          VkSubmitInfo,
+                                                          VkSwapchainCreateInfoKHR)
 import           Graphics.Vulkan.Common
+import           Graphics.Vulkan.Ext.VK_KHR_bind_memory2 (VkBindBufferMemoryInfoKHR,
+                                                          VkBindImageMemoryInfoKHR)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
-
-import Graphics.Vulkan.Ext.VK_KHR_bind_memory2
+import           System.IO.Unsafe                        (unsafeDupablePerformIO)
 
 -- | > typedef struct VkMemoryAllocateFlagsInfoKHX {
 --   >     VkStructureType sType;
@@ -100,7 +99,7 @@ import Graphics.Vulkan.Ext.VK_KHR_bind_memory2
 --   >     uint32_t                         deviceMask;
 --   > } VkMemoryAllocateFlagsInfoKHX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryAllocateFlagsInfoKHX.html VkMemoryAllocateFlagsInfoKHX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkMemoryAllocateFlagsInfoKHX.html VkMemoryAllocateFlagsInfoKHX registry at www.khronos.org>
 data VkMemoryAllocateFlagsInfoKHX = VkMemoryAllocateFlagsInfoKHX## Addr##
                                                                   ByteArray##
 
@@ -372,7 +371,7 @@ instance Show VkMemoryAllocateFlagsInfoKHX where
 --   >     const VkRect2D*  pDeviceRenderAreas;
 --   > } VkDeviceGroupRenderPassBeginInfoKHX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceGroupRenderPassBeginInfoKHX.html VkDeviceGroupRenderPassBeginInfoKHX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDeviceGroupRenderPassBeginInfoKHX.html VkDeviceGroupRenderPassBeginInfoKHX registry at www.khronos.org>
 data VkDeviceGroupRenderPassBeginInfoKHX = VkDeviceGroupRenderPassBeginInfoKHX## Addr##
                                                                                 ByteArray##
 
@@ -737,7 +736,7 @@ instance Show VkDeviceGroupRenderPassBeginInfoKHX where
 --   >     uint32_t                         deviceMask;
 --   > } VkDeviceGroupCommandBufferBeginInfoKHX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceGroupCommandBufferBeginInfoKHX.html VkDeviceGroupCommandBufferBeginInfoKHX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDeviceGroupCommandBufferBeginInfoKHX.html VkDeviceGroupCommandBufferBeginInfoKHX registry at www.khronos.org>
 data VkDeviceGroupCommandBufferBeginInfoKHX = VkDeviceGroupCommandBufferBeginInfoKHX## Addr##
                                                                                       ByteArray##
 
@@ -985,7 +984,7 @@ instance Show VkDeviceGroupCommandBufferBeginInfoKHX where
 --   >     const uint32_t*  pSignalSemaphoreDeviceIndices;
 --   > } VkDeviceGroupSubmitInfoKHX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceGroupSubmitInfoKHX.html VkDeviceGroupSubmitInfoKHX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDeviceGroupSubmitInfoKHX.html VkDeviceGroupSubmitInfoKHX registry at www.khronos.org>
 data VkDeviceGroupSubmitInfoKHX = VkDeviceGroupSubmitInfoKHX## Addr##
                                                               ByteArray##
 
@@ -1521,7 +1520,7 @@ instance Show VkDeviceGroupSubmitInfoKHX where
 --   >     uint32_t                         memoryDeviceIndex;
 --   > } VkDeviceGroupBindSparseInfoKHX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceGroupBindSparseInfoKHX.html VkDeviceGroupBindSparseInfoKHX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDeviceGroupBindSparseInfoKHX.html VkDeviceGroupBindSparseInfoKHX registry at www.khronos.org>
 data VkDeviceGroupBindSparseInfoKHX = VkDeviceGroupBindSparseInfoKHX## Addr##
                                                                       ByteArray##
 
@@ -1802,7 +1801,7 @@ instance Show VkDeviceGroupBindSparseInfoKHX where
                                 showString "vkMemoryDeviceIndex = " .
                                   showsPrec d (vkMemoryDeviceIndex x) . showChar '}'
 
--- | > void vkGetDeviceGroupPeerMemoryFeaturesKHX
+-- | > () vkGetDeviceGroupPeerMemoryFeaturesKHX
 --   >     ( VkDevice device
 --   >     , uint32_t heapIndex
 --   >     , uint32_t localDeviceIndex
@@ -1810,7 +1809,7 @@ instance Show VkDeviceGroupBindSparseInfoKHX where
 --   >     , VkPeerMemoryFeatureFlagsKHX* pPeerMemoryFeatures
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetDeviceGroupPeerMemoryFeaturesKHX.html vkGetDeviceGroupPeerMemoryFeaturesKHX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetDeviceGroupPeerMemoryFeaturesKHX.html vkGetDeviceGroupPeerMemoryFeaturesKHX registry at www.khronos.org>
 foreign import ccall unsafe "vkGetDeviceGroupPeerMemoryFeaturesKHX"
                vkGetDeviceGroupPeerMemoryFeaturesKHX ::
                VkDevice -- ^ device
@@ -1822,26 +1821,26 @@ foreign import ccall unsafe "vkGetDeviceGroupPeerMemoryFeaturesKHX"
                                     -> Ptr VkPeerMemoryFeatureFlagsKHX -- ^ pPeerMemoryFeatures
                                                                        -> IO ()
 
--- | queues: @graphics,compute,transfer@
+-- | queues: 'graphics', 'compute', 'transfer'.
 --
 --   renderpass: @both@
 --
---   > void vkCmdSetDeviceMaskKHX
+--   > () vkCmdSetDeviceMaskKHX
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , uint32_t deviceMask
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCmdSetDeviceMaskKHX.html vkCmdSetDeviceMaskKHX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdSetDeviceMaskKHX.html vkCmdSetDeviceMaskKHX registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdSetDeviceMaskKHX"
                vkCmdSetDeviceMaskKHX :: VkCommandBuffer -- ^ commandBuffer
                                                         -> Word32 -- ^ deviceMask
                                                                   -> IO ()
 
--- | queues: @compute@
+-- | queues: 'compute'.
 --
 --   renderpass: @outside@
 --
---   > void vkCmdDispatchBaseKHX
+--   > () vkCmdDispatchBaseKHX
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , uint32_t baseGroupX
 --   >     , uint32_t baseGroupY
@@ -1851,7 +1850,7 @@ foreign import ccall unsafe "vkCmdSetDeviceMaskKHX"
 --   >     , uint32_t groupCountZ
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCmdDispatchBaseKHX.html vkCmdDispatchBaseKHX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdDispatchBaseKHX.html vkCmdDispatchBaseKHX registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdDispatchBaseKHX"
                vkCmdDispatchBaseKHX ::
                VkCommandBuffer -- ^ commandBuffer
@@ -1955,7 +1954,7 @@ pattern VK_DEPENDENCY_DEVICE_GROUP_BIT_KHX = VkDependencyFlagBits 4
 --   >     const uint32_t*  pDeviceIndices;
 --   > } VkBindBufferMemoryDeviceGroupInfoKHX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBindBufferMemoryDeviceGroupInfoKHX.html VkBindBufferMemoryDeviceGroupInfoKHX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkBindBufferMemoryDeviceGroupInfoKHX.html VkBindBufferMemoryDeviceGroupInfoKHX registry at www.khronos.org>
 data VkBindBufferMemoryDeviceGroupInfoKHX = VkBindBufferMemoryDeviceGroupInfoKHX## Addr##
                                                                                   ByteArray##
 
@@ -2263,7 +2262,7 @@ instance Show VkBindBufferMemoryDeviceGroupInfoKHX where
 --   >     const VkRect2D*  pSFRRects;
 --   > } VkBindImageMemoryDeviceGroupInfoKHX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBindImageMemoryDeviceGroupInfoKHX.html VkBindImageMemoryDeviceGroupInfoKHX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkBindImageMemoryDeviceGroupInfoKHX.html VkBindImageMemoryDeviceGroupInfoKHX registry at www.khronos.org>
 data VkBindImageMemoryDeviceGroupInfoKHX = VkBindImageMemoryDeviceGroupInfoKHX## Addr##
                                                                                 ByteArray##
 
@@ -2705,7 +2704,7 @@ pattern VK_IMAGE_CREATE_BIND_SFR_BIT_KHX = VkImageCreateFlagBits 64
 --   >     VkDeviceGroupPresentModeFlagsKHX modes;
 --   > } VkDeviceGroupPresentCapabilitiesKHX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceGroupPresentCapabilitiesKHX.html VkDeviceGroupPresentCapabilitiesKHX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDeviceGroupPresentCapabilitiesKHX.html VkDeviceGroupPresentCapabilitiesKHX registry at www.khronos.org>
 data VkDeviceGroupPresentCapabilitiesKHX = VkDeviceGroupPresentCapabilitiesKHX## Addr##
                                                                                 ByteArray##
 
@@ -3019,7 +3018,7 @@ instance Show VkDeviceGroupPresentCapabilitiesKHX where
 --   >     , VkDeviceGroupPresentCapabilitiesKHX* pDeviceGroupPresentCapabilities
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetDeviceGroupPresentCapabilitiesKHX.html vkGetDeviceGroupPresentCapabilitiesKHX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetDeviceGroupPresentCapabilitiesKHX.html vkGetDeviceGroupPresentCapabilitiesKHX registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetDeviceGroupPresentCapabilitiesKHX"
                vkGetDeviceGroupPresentCapabilitiesKHX ::
@@ -3037,7 +3036,7 @@ foreign import ccall unsafe
 --   >     , VkDeviceGroupPresentModeFlagsKHX* pModes
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetDeviceGroupSurfacePresentModesKHX.html vkGetDeviceGroupSurfacePresentModesKHX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetDeviceGroupSurfacePresentModesKHX.html vkGetDeviceGroupSurfacePresentModesKHX registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetDeviceGroupSurfacePresentModesKHX"
                vkGetDeviceGroupSurfacePresentModesKHX ::
@@ -3058,7 +3057,7 @@ foreign import ccall unsafe
 --   >     , VkRect2D* pRects
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetPhysicalDevicePresentRectanglesKHX.html vkGetPhysicalDevicePresentRectanglesKHX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDevicePresentRectanglesKHX.html vkGetPhysicalDevicePresentRectanglesKHX registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDevicePresentRectanglesKHX"
                vkGetPhysicalDevicePresentRectanglesKHX ::
@@ -3081,7 +3080,7 @@ pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_CAPABILITIES_KHX =
 --   >     VkSwapchainKHR   swapchain;
 --   > } VkImageSwapchainCreateInfoKHX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageSwapchainCreateInfoKHX.html VkImageSwapchainCreateInfoKHX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImageSwapchainCreateInfoKHX.html VkImageSwapchainCreateInfoKHX registry at www.khronos.org>
 data VkImageSwapchainCreateInfoKHX = VkImageSwapchainCreateInfoKHX## Addr##
                                                                     ByteArray##
 
@@ -3302,7 +3301,7 @@ instance Show VkImageSwapchainCreateInfoKHX where
 --   >     uint32_t                         imageIndex;
 --   > } VkBindImageMemorySwapchainInfoKHX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBindImageMemorySwapchainInfoKHX.html VkBindImageMemorySwapchainInfoKHX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkBindImageMemorySwapchainInfoKHX.html VkBindImageMemorySwapchainInfoKHX registry at www.khronos.org>
 data VkBindImageMemorySwapchainInfoKHX = VkBindImageMemorySwapchainInfoKHX## Addr##
                                                                             ByteArray##
 
@@ -3594,7 +3593,7 @@ instance Show VkBindImageMemorySwapchainInfoKHX where
 --   >     uint32_t                         deviceMask;
 --   > } VkAcquireNextImageInfoKHX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkAcquireNextImageInfoKHX.html VkAcquireNextImageInfoKHX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkAcquireNextImageInfoKHX.html VkAcquireNextImageInfoKHX registry at www.khronos.org>
 data VkAcquireNextImageInfoKHX = VkAcquireNextImageInfoKHX## Addr##
                                                             ByteArray##
 
@@ -4007,7 +4006,7 @@ instance Show VkAcquireNextImageInfoKHX where
 --   >     VkDeviceGroupPresentModeFlagBitsKHX mode;
 --   > } VkDeviceGroupPresentInfoKHX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceGroupPresentInfoKHX.html VkDeviceGroupPresentInfoKHX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDeviceGroupPresentInfoKHX.html VkDeviceGroupPresentInfoKHX registry at www.khronos.org>
 data VkDeviceGroupPresentInfoKHX = VkDeviceGroupPresentInfoKHX## Addr##
                                                                 ByteArray##
 
@@ -4331,7 +4330,7 @@ instance Show VkDeviceGroupPresentInfoKHX where
 --   >     VkDeviceGroupPresentModeFlagsKHX                         modes;
 --   > } VkDeviceGroupSwapchainCreateInfoKHX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceGroupSwapchainCreateInfoKHX.html VkDeviceGroupSwapchainCreateInfoKHX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDeviceGroupSwapchainCreateInfoKHX.html VkDeviceGroupSwapchainCreateInfoKHX registry at www.khronos.org>
 data VkDeviceGroupSwapchainCreateInfoKHX = VkDeviceGroupSwapchainCreateInfoKHX## Addr##
                                                                                 ByteArray##
 
@@ -4566,7 +4565,7 @@ instance Show VkDeviceGroupSwapchainCreateInfoKHX where
 --   >     , uint32_t* pImageIndex
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkAcquireNextImage2KHX.html vkAcquireNextImage2KHX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkAcquireNextImage2KHX.html vkAcquireNextImage2KHX registry at www.khronos.org>
 foreign import ccall unsafe "vkAcquireNextImage2KHX"
                vkAcquireNextImage2KHX ::
                VkDevice -- ^ device

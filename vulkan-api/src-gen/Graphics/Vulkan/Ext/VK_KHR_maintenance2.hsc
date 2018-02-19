@@ -39,7 +39,6 @@ module Graphics.Vulkan.Ext.VK_KHR_maintenance2
         pattern VK_IMAGE_LAYOUT_DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL_KHR,
         pattern VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL_KHR)
        where
-import           Foreign.C.String                                           (CString)
 import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                                                    (Ptr (..))
@@ -53,8 +52,7 @@ import           Graphics.Vulkan.Common                                     (VkI
                                                                              VkPointClippingBehaviorKHR,
                                                                              VkStructureType,
                                                                              VkStructureType (..),
-                                                                             VkTessellationDomainOriginKHR,
-                                                                             Word32)
+                                                                             VkTessellationDomainOriginKHR)
 import           Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2 (VkPhysicalDeviceProperties2KHR)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
@@ -67,7 +65,7 @@ import           System.IO.Unsafe                                           (uns
 --   >     VkPointClippingBehaviorKHR      pointClippingBehavior;
 --   > } VkPhysicalDevicePointClippingPropertiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDevicePointClippingPropertiesKHR.html VkPhysicalDevicePointClippingPropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDevicePointClippingPropertiesKHR.html VkPhysicalDevicePointClippingPropertiesKHR registry at www.khronos.org>
 data VkPhysicalDevicePointClippingPropertiesKHR = VkPhysicalDevicePointClippingPropertiesKHR## Addr##
                                                                                               ByteArray##
 
@@ -310,7 +308,7 @@ instance Show VkPhysicalDevicePointClippingPropertiesKHR where
 --   >     const VkInputAttachmentAspectReferenceKHR* pAspectReferences;
 --   > } VkRenderPassInputAttachmentAspectCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkRenderPassInputAttachmentAspectCreateInfoKHR.html VkRenderPassInputAttachmentAspectCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkRenderPassInputAttachmentAspectCreateInfoKHR.html VkRenderPassInputAttachmentAspectCreateInfoKHR registry at www.khronos.org>
 data VkRenderPassInputAttachmentAspectCreateInfoKHR = VkRenderPassInputAttachmentAspectCreateInfoKHR## Addr##
                                                                                                       ByteArray##
 
@@ -648,7 +646,7 @@ instance Show VkRenderPassInputAttachmentAspectCreateInfoKHR where
 --   >     VkImageAspectFlags              aspectMask;
 --   > } VkInputAttachmentAspectReferenceKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkInputAttachmentAspectReferenceKHR.html VkInputAttachmentAspectReferenceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkInputAttachmentAspectReferenceKHR.html VkInputAttachmentAspectReferenceKHR registry at www.khronos.org>
 data VkInputAttachmentAspectReferenceKHR = VkInputAttachmentAspectReferenceKHR## Addr##
                                                                                 ByteArray##
 
@@ -891,7 +889,7 @@ instance Show VkInputAttachmentAspectReferenceKHR where
 --   >     VkImageUsageFlags usage;
 --   > } VkImageViewUsageCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageViewUsageCreateInfoKHR.html VkImageViewUsageCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImageViewUsageCreateInfoKHR.html VkImageViewUsageCreateInfoKHR registry at www.khronos.org>
 data VkImageViewUsageCreateInfoKHR = VkImageViewUsageCreateInfoKHR## Addr##
                                                                     ByteArray##
 
@@ -1105,7 +1103,7 @@ instance Show VkImageViewUsageCreateInfoKHR where
 --   >     VkTessellationDomainOriginKHR    domainOrigin;
 --   > } VkPipelineTessellationDomainOriginStateCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineTessellationDomainOriginStateCreateInfoKHR.html VkPipelineTessellationDomainOriginStateCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPipelineTessellationDomainOriginStateCreateInfoKHR.html VkPipelineTessellationDomainOriginStateCreateInfoKHR registry at www.khronos.org>
 data VkPipelineTessellationDomainOriginStateCreateInfoKHR = VkPipelineTessellationDomainOriginStateCreateInfoKHR## Addr##
                                                                                                                   ByteArray##
 

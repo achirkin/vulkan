@@ -23,7 +23,6 @@ module Graphics.Vulkan.Ext.VK_EXT_shader_subgroup_vote
         VK_EXT_SHADER_SUBGROUP_VOTE_EXTENSION_NAME,
         pattern VK_EXT_SHADER_SUBGROUP_VOTE_EXTENSION_NAME)
        where
-import           Foreign.C.String        (CString)
 import           GHC.Ptr                 (Ptr (..))
 import           Graphics.Vulkan.Marshal
 

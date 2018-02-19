@@ -81,9 +81,7 @@ genBaseStructs :: Monad m => ModuleWriter m ClassDeclarations
 genBaseStructs = do
     vkXml <- ask
     let featureTypes = Set.fromList
-                     . join
-                     . map requireTypes
-                     . reqList $ globFeature vkXml
+                     $ globFeature vkXml >>= reqList >>= requireTypes
         extTypes = Set.fromList
                       $ Map.elems (globExtensions vkXml)
                           >>= extRequires >>= requireTypes

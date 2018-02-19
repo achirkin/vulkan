@@ -36,7 +36,6 @@ module Graphics.Vulkan.Ext.VK_EXT_display_surface_counter
         pattern VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_2_EXT,
         pattern VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES2_EXT)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -63,7 +62,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     VkSurfaceCounterFlagsEXT supportedSurfaceCounters;
 --   > } VkSurfaceCapabilities2EXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSurfaceCapabilities2EXT.html VkSurfaceCapabilities2EXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSurfaceCapabilities2EXT.html VkSurfaceCapabilities2EXT registry at www.khronos.org>
 data VkSurfaceCapabilities2EXT = VkSurfaceCapabilities2EXT## Addr##
                                                             ByteArray##
 
@@ -813,7 +812,7 @@ instance Show VkSurfaceCapabilities2EXT where
 --   >     , VkSurfaceCapabilities2EXT* pSurfaceCapabilities
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetPhysicalDeviceSurfaceCapabilities2EXT.html vkGetPhysicalDeviceSurfaceCapabilities2EXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilities2EXT.html vkGetPhysicalDeviceSurfaceCapabilities2EXT registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceSurfaceCapabilities2EXT"
                vkGetPhysicalDeviceSurfaceCapabilities2EXT ::

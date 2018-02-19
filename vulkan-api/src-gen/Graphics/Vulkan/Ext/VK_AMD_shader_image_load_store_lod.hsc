@@ -23,7 +23,6 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_image_load_store_lod
         VK_AMD_SHADER_IMAGE_LOAD_STORE_LOD_EXTENSION_NAME,
         pattern VK_AMD_SHADER_IMAGE_LOAD_STORE_LOD_EXTENSION_NAME)
        where
-import           Foreign.C.String        (CString)
 import           GHC.Ptr                 (Ptr (..))
 import           Graphics.Vulkan.Marshal
 

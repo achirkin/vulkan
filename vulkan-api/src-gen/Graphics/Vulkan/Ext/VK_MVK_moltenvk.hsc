@@ -23,7 +23,6 @@ module Graphics.Vulkan.Ext.VK_MVK_moltenvk
         VK_MVK_MOLTENVK_EXTENSION_NAME,
         pattern VK_MVK_MOLTENVK_EXTENSION_NAME)
        where
-import           Foreign.C.String        (CString)
 import           GHC.Ptr                 (Ptr (..))
 import           Graphics.Vulkan.Marshal
 

@@ -37,7 +37,6 @@ module Graphics.Vulkan.Ext.VK_KHR_mir_surface
         pattern VK_KHR_MIR_SURFACE_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_MIR_SURFACE_CREATE_INFO_KHR)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -56,7 +55,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     MirSurface*                      mirSurface;
 --   > } VkMirSurfaceCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMirSurfaceCreateInfoKHR.html VkMirSurfaceCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkMirSurfaceCreateInfoKHR.html VkMirSurfaceCreateInfoKHR registry at www.khronos.org>
 data VkMirSurfaceCreateInfoKHR = VkMirSurfaceCreateInfoKHR## Addr##
                                                             ByteArray##
 
@@ -375,7 +374,7 @@ instance Show VkMirSurfaceCreateInfoKHR where
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCreateMirSurfaceKHR.html vkCreateMirSurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateMirSurfaceKHR.html vkCreateMirSurfaceKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateMirSurfaceKHR"
                vkCreateMirSurfaceKHR ::
                VkInstance -- ^ instance
@@ -392,7 +391,7 @@ foreign import ccall unsafe "vkCreateMirSurfaceKHR"
 --   >     , MirConnection* connection
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetPhysicalDeviceMirPresentationSupportKHR.html vkGetPhysicalDeviceMirPresentationSupportKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceMirPresentationSupportKHR.html vkGetPhysicalDeviceMirPresentationSupportKHR registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceMirPresentationSupportKHR"
                vkGetPhysicalDeviceMirPresentationSupportKHR ::

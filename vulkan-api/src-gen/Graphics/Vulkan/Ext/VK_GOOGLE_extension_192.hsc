@@ -21,7 +21,6 @@ module Graphics.Vulkan.Ext.VK_GOOGLE_extension_192
         VK_GOOGLE_EXTENSION_192_EXTENSION_NAME,
         pattern VK_GOOGLE_EXTENSION_192_EXTENSION_NAME)
        where
-import           Foreign.C.String        (CString)
 import           GHC.Ptr                 (Ptr (..))
 import           Graphics.Vulkan.Marshal
 

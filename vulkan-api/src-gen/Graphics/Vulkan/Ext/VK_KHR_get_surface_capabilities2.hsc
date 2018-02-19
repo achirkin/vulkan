@@ -39,7 +39,6 @@ module Graphics.Vulkan.Ext.VK_KHR_get_surface_capabilities2
         pattern VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_2_KHR,
         pattern VK_STRUCTURE_TYPE_SURFACE_FORMAT_2_KHR)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -57,7 +56,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     VkSurfaceKHR surface;
 --   > } VkPhysicalDeviceSurfaceInfo2KHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceSurfaceInfo2KHR.html VkPhysicalDeviceSurfaceInfo2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceSurfaceInfo2KHR.html VkPhysicalDeviceSurfaceInfo2KHR registry at www.khronos.org>
 data VkPhysicalDeviceSurfaceInfo2KHR = VkPhysicalDeviceSurfaceInfo2KHR## Addr##
                                                                         ByteArray##
 
@@ -277,7 +276,7 @@ instance Show VkPhysicalDeviceSurfaceInfo2KHR where
 --   >     VkSurfaceCapabilitiesKHR surfaceCapabilities;
 --   > } VkSurfaceCapabilities2KHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSurfaceCapabilities2KHR.html VkSurfaceCapabilities2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSurfaceCapabilities2KHR.html VkSurfaceCapabilities2KHR registry at www.khronos.org>
 data VkSurfaceCapabilities2KHR = VkSurfaceCapabilities2KHR## Addr##
                                                             ByteArray##
 
@@ -480,7 +479,7 @@ instance Show VkSurfaceCapabilities2KHR where
 --   >     VkSurfaceFormatKHR surfaceFormat;
 --   > } VkSurfaceFormat2KHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSurfaceFormat2KHR.html VkSurfaceFormat2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSurfaceFormat2KHR.html VkSurfaceFormat2KHR registry at www.khronos.org>
 data VkSurfaceFormat2KHR = VkSurfaceFormat2KHR## Addr## ByteArray##
 
 instance Eq VkSurfaceFormat2KHR where
@@ -676,7 +675,7 @@ instance Show VkSurfaceFormat2KHR where
 --   >     , VkSurfaceCapabilities2KHR* pSurfaceCapabilities
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetPhysicalDeviceSurfaceCapabilities2KHR.html vkGetPhysicalDeviceSurfaceCapabilities2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilities2KHR.html vkGetPhysicalDeviceSurfaceCapabilities2KHR registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceSurfaceCapabilities2KHR"
                vkGetPhysicalDeviceSurfaceCapabilities2KHR ::
@@ -698,7 +697,7 @@ foreign import ccall unsafe
 --   >     , VkSurfaceFormat2KHR* pSurfaceFormats
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetPhysicalDeviceSurfaceFormats2KHR.html vkGetPhysicalDeviceSurfaceFormats2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceSurfaceFormats2KHR.html vkGetPhysicalDeviceSurfaceFormats2KHR registry at www.khronos.org>
 foreign import ccall unsafe "vkGetPhysicalDeviceSurfaceFormats2KHR"
                vkGetPhysicalDeviceSurfaceFormats2KHR ::
                VkPhysicalDevice -- ^ physicalDevice

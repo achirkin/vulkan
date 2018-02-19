@@ -36,7 +36,6 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_fd
         pattern VK_STRUCTURE_TYPE_IMPORT_SEMAPHORE_FD_INFO_KHR,
         pattern VK_STRUCTURE_TYPE_SEMAPHORE_GET_FD_INFO_KHR)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -55,7 +54,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     int                              fd;
 --   > } VkImportSemaphoreFdInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImportSemaphoreFdInfoKHR.html VkImportSemaphoreFdInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImportSemaphoreFdInfoKHR.html VkImportSemaphoreFdInfoKHR registry at www.khronos.org>
 data VkImportSemaphoreFdInfoKHR = VkImportSemaphoreFdInfoKHR## Addr##
                                                               ByteArray##
 
@@ -349,7 +348,7 @@ instance CanWriteField "handleType" VkImportSemaphoreFdInfoKHR
 
 instance {-# OVERLAPPING #-} HasVkFd VkImportSemaphoreFdInfoKHR
          where
-        type VkFdMType VkImportSemaphoreFdInfoKHR = #{type int}
+        type VkFdMType VkImportSemaphoreFdInfoKHR = CInt
 
         {-# NOINLINE vkFd #-}
         vkFd x
@@ -370,8 +369,7 @@ instance {-# OVERLAPPING #-} HasVkFd VkImportSemaphoreFdInfoKHR
 
 instance {-# OVERLAPPING #-}
          HasField "fd" VkImportSemaphoreFdInfoKHR where
-        type FieldType "fd" VkImportSemaphoreFdInfoKHR =
-             #{type int}
+        type FieldType "fd" VkImportSemaphoreFdInfoKHR = CInt
         type FieldOptional "fd" VkImportSemaphoreFdInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "fd" VkImportSemaphoreFdInfoKHR =
              #{offset VkImportSemaphoreFdInfoKHR, fd}
@@ -422,7 +420,7 @@ instance Show VkImportSemaphoreFdInfoKHR where
 --   >     VkExternalSemaphoreHandleTypeFlagBitsKHR handleType;
 --   > } VkSemaphoreGetFdInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSemaphoreGetFdInfoKHR.html VkSemaphoreGetFdInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSemaphoreGetFdInfoKHR.html VkSemaphoreGetFdInfoKHR registry at www.khronos.org>
 data VkSemaphoreGetFdInfoKHR = VkSemaphoreGetFdInfoKHR## Addr##
                                                         ByteArray##
 
@@ -683,7 +681,7 @@ instance Show VkSemaphoreGetFdInfoKHR where
 --   >     , const VkImportSemaphoreFdInfoKHR* pImportSemaphoreFdInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkImportSemaphoreFdKHR.html vkImportSemaphoreFdKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkImportSemaphoreFdKHR.html vkImportSemaphoreFdKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkImportSemaphoreFdKHR"
                vkImportSemaphoreFdKHR ::
                VkDevice -- ^ device
@@ -700,15 +698,13 @@ foreign import ccall unsafe "vkImportSemaphoreFdKHR"
 --   >     , int* pFd
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetSemaphoreFdKHR.html vkGetSemaphoreFdKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetSemaphoreFdKHR.html vkGetSemaphoreFdKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkGetSemaphoreFdKHR"
                vkGetSemaphoreFdKHR ::
                VkDevice -- ^ device
-                        ->
-                 Ptr VkSemaphoreGetFdInfoKHR -- ^ pGetFdInfo
-                                             ->
-                   Ptr #{type int} -- ^ pFd
-                                               -> IO VkResult
+                        -> Ptr VkSemaphoreGetFdInfoKHR -- ^ pGetFdInfo
+                                                       -> Ptr CInt -- ^ pFd
+                                                                   -> IO VkResult
 
 pattern VK_KHR_EXTERNAL_SEMAPHORE_FD_SPEC_VERSION ::
         (Num a, Eq a) => a

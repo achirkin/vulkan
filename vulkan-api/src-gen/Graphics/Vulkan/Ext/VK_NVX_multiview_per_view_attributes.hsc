@@ -35,7 +35,6 @@ module Graphics.Vulkan.Ext.VK_NVX_multiview_per_view_attributes
         pattern VK_SUBPASS_DESCRIPTION_PER_VIEW_ATTRIBUTES_BIT_NVX,
         pattern VK_SUBPASS_DESCRIPTION_PER_VIEW_POSITION_X_ONLY_BIT_NVX)
        where
-import           Foreign.C.String                                           (CString)
 import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                                                    (Ptr (..))
@@ -54,7 +53,7 @@ import           System.IO.Unsafe                                           (uns
 --   >     VkBool32                         perViewPositionAllComponents;
 --   > } VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX.html VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX.html VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX registry at www.khronos.org>
 data VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX = VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX## Addr##
                                                                                                                         ByteArray##
 

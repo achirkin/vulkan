@@ -9,11 +9,12 @@
 {-# LANGUAGE Strict                     #-}
 {-# LANGUAGE UndecidableInstances       #-}
 module Write.ModuleWriter
-  ( A, GlobalNames, ModuleWriting (..), ModuleWriter (..)
+  ( A, DeclaredNames, ModuleWriting (..), ModuleWriter (..)
   , DeclaredIdent (..), DIThingMembers (..)
   , runModuleWriter, genModule
   , lookupDiModule, isIdentDeclared, lookupDeclared
-  , writeImport, writeFullImport, writeExport, writeExportNoScope
+  , writeImport, writeFullImport, writeExport, writeExportExplicit
+  , writeExportNoScope
   , writePragma, writeDecl
   , writeSection --, writeSectionPre
     -- * Helpers
@@ -54,142 +55,22 @@ import           Language.Haskell.Exts.Parser
 import           Language.Haskell.Exts.SimpleComments
 import           Language.Haskell.Exts.Syntax
 
+import           Write.Util.NFData ()
+import           Write.Util.DeclaredNames
+
 import           VkXml.CommonTypes
 import           VkXml.Sections
 import qualified VkXml.Sections.Feature               as Feature
 
-instance NFData a => NFData (Decl a)
-instance NFData a => NFData (DeclHead a)
-instance NFData a => NFData (Type a)
-instance NFData a => NFData (ResultSig a)
-instance NFData a => NFData (TyVarBind a)
-instance NFData a => NFData (Context a)
-instance NFData a => NFData (Name a)
-instance NFData a => NFData (QName a)
-instance NFData a => NFData (InjectivityInfo a)
-instance NFData a => NFData (MaybePromotedName a)
-instance NFData a => NFData (Kind a)
-instance NFData a => NFData (Asst a)
-instance NFData a => NFData (ModuleName a)
-instance NFData a => NFData (IPName a)
-instance NFData a => NFData (TypeEqn a)
-instance NFData a => NFData (DataOrNew a)
-instance NFData a => NFData (Promoted a)
-instance NFData a => NFData (SpecialCon a)
-instance NFData a => NFData (QualConDecl a)
-instance NFData a => NFData (Splice a)
-instance NFData a => NFData (Deriving a)
-instance NFData a => NFData (BangType a)
-instance NFData a => NFData (ConDecl a)
-instance NFData a => NFData (Exp a)
-instance NFData a => NFData (GadtDecl a)
-instance NFData a => NFData (Unpackedness a)
-instance NFData a => NFData (DerivStrategy a)
-instance NFData a => NFData (FieldDecl a)
-instance NFData a => NFData (Literal a)
-instance NFData a => NFData (FunDep a)
-instance NFData a => NFData (InstRule a)
-instance NFData a => NFData (QOp a)
-instance NFData a => NFData (ClassDecl a)
-instance NFData a => NFData (Pat a)
-instance NFData a => NFData (InstHead a)
-instance NFData a => NFData (Overlap a)
-instance NFData a => NFData (Binds a)
-instance NFData a => NFData (Sign a)
-instance NFData a => NFData (InstDecl a)
-instance NFData a => NFData (GuardedRhs a)
-instance NFData a => NFData (PatField a)
-instance NFData a => NFData (IPBind a)
-instance NFData a => NFData (Assoc a)
-instance NFData a => NFData (Alt a)
-instance NFData a => NFData (RPat a)
-instance NFData a => NFData (Op a)
-instance NFData a => NFData (FieldUpdate a)
-instance NFData a => NFData (XName a)
-instance NFData a => NFData (Rhs a)
-instance NFData a => NFData (RPatOp a)
-instance NFData a => NFData (Stmt a)
-instance NFData a => NFData (Match a)
-instance NFData a => NFData (QualStmt a)
-instance NFData a => NFData (PXAttr a)
-instance NFData a => NFData (PatternSynDirection a)
-instance NFData a => NFData (Bracket a)
-instance NFData a => NFData (CallConv a)
-instance NFData a => NFData (XAttr a)
-instance NFData a => NFData (Safety a)
-instance NFData a => NFData (Rule a)
-instance NFData a => NFData (Activation a)
-instance NFData a => NFData (Annotation a)
-instance NFData a => NFData (RuleVar a)
-instance NFData a => NFData (BooleanFormula a)
-instance NFData a => NFData (Role a)
-instance NFData Boxed
-instance NFData CodeComment where
-  rnf (CodeComment p c s) = p `seq` c `seq` s `seq` ()
 
 
 type A = Maybe CodeComment
--- | I want to have unambiguous set of haskell identifiers globally for
---   the library. Thus, it should be possible to lookup module names
---   (for export or import) by identifiers.
-type GlobalNames = Map DeclaredIdent (ModuleName ())
-
--- | I limit number of ways to express imports and exports to
---    simplify further processing.
---   I think, this is a good compromise.
-data DeclaredIdent
-  = DIVar         { diName :: Text }
-    -- ^ variable or function (starts with lower case)
-  | DIPat         { diName :: Text }
-    -- ^ pattern synonyms
-  | DIThing       { diName :: Text, diWithMembers :: DIThingMembers}
-    -- ^ Class or data or type (starts with upper case)
-  deriving (Eq, Ord, Show)
-
-data DIThingMembers = DITNo | DITEmpty | DITAll
-  deriving (Eq, Ord, Show)
-
-
-diToImportSpec :: DeclaredIdent -> ImportSpec ()
-diToImportSpec (DIVar n)
-  | T.length n >= 2 && T.head n == '(' && T.last n == ')'
-    = IVar () (Symbol () . T.unpack . T.init $ T.tail n)
-  | otherwise
-    = IVar () (Ident () $ T.unpack n)
-diToImportSpec (DIPat n)
-  = IAbs () (PatternNamespace ()) (Ident () $ T.unpack n)
-diToImportSpec (DIThing n DITNo)
-  = IAbs () (NoNamespace ()) (Ident () $ T.unpack n)
-diToImportSpec (DIThing n DITEmpty)
-  = IThingWith () (Ident () $ T.unpack n) []
-diToImportSpec (DIThing n DITAll)
-  = IThingAll () (Ident () $ T.unpack n)
-
-
-diToExportSpec :: DeclaredIdent -> ExportSpec ()
-diToExportSpec (DIVar n)
-  | T.length n >= 2 && T.head n == '(' && T.last n == ')'
-    = EVar () (UnQual () . Symbol () . T.unpack . T.init $ T.tail n)
-  | otherwise
-    = EVar () (UnQual () $ Ident () $ T.unpack n)
-diToExportSpec (DIPat n)
-  = EAbs () (PatternNamespace ())
-    (UnQual () $ Ident () $ T.unpack n)
-diToExportSpec (DIThing n DITNo)
-  = EAbs () (NoNamespace ())
-    (UnQual () $ Ident () $ T.unpack n)
-diToExportSpec (DIThing n DITEmpty)
-  = EThingWith () (NoWildcard ())
-    (UnQual () $ Ident () $ T.unpack n) []
-diToExportSpec (DIThing n DITAll)
-  = EThingWith () (EWildcard () 0)
-    (UnQual () $ Ident () $ T.unpack n) []
 
 
 data ModuleWriting
   = ModuleWriting
   { mName         :: ModuleName ()
-  , globalNames   :: GlobalNames
+  , globalNames   :: DeclaredNames
   , mImports      :: Map (ModuleName ()) (Set (ImportSpec ()))
   , mFullImports  :: Set (ModuleName ())
   , mPragmas      :: Set String
@@ -211,7 +92,7 @@ newtype ModuleWriter m a
 runModuleWriter :: Functor m
                 => VkXml
                 -> String -- ^ module name
-                -> GlobalNames
+                -> DeclaredNames
                 -> ModuleWriter m a -> m (a, ModuleWriting)
 runModuleWriter vkxml mname gNames mw
     = f <$> runRWST (unModuleWriter mw) vkxml
@@ -242,12 +123,18 @@ genModule ModuleWriting {..}
 
 
 lookupDiModule :: Monad m => DeclaredIdent -> ModuleWriter m (Maybe (ModuleName ()))
-lookupDiModule di = ModuleWriter $ gets (Map.lookup di . globalNames)
+lookupDiModule di = ModuleWriter $ gets (fmap fst . Map.lookup di . globalNames)
 
+lookupDiModuleImports :: Monad m => DeclaredIdent
+                     -> ModuleWriter m (Maybe (ModuleName (), [ImportSpec ()]))
+lookupDiModuleImports di = ModuleWriter $ gets (Map.lookup di . globalNames)
 
 
 isIdentDeclared :: Monad m => DeclaredIdent -> ModuleWriter m Bool
-isIdentDeclared di = ModuleWriter $ gets (isJust . Map.lookup di . globalNames)
+isIdentDeclared di = ModuleWriter $ gets $ \mr ->
+  let mm = fmap ((mName mr ==) . fst) . Map.lookup di $ globalNames mr
+  in if Just False == mm
+     then True else False
 
 lookupDeclared :: (Monad m, Coercible a Text)
                => a -> ModuleWriter m [DeclaredIdent]
@@ -270,8 +157,8 @@ writeImport :: Monad m
             => DeclaredIdent
             -> ModuleWriter m ()
 writeImport di = do
-    mmname <- fmap ((,) di) <$> lookupDiModule di
-    mmnameNo <- fmap ((,) diNo) <$> lookupDiModule diNo
+    mmname <- fmap ((,) di) <$> lookupDiModuleImports di
+    mmnameNo <- fmap ((,) diNo) <$> lookupDiModuleImports diNo
     mapM_  (uncurry writeImport') (mmname <|> mmnameNo)
   where
     diNo = case di of
@@ -280,15 +167,21 @@ writeImport di = do
 
 writeImport' :: Monad m
             => DeclaredIdent
-            -> ModuleName ()
+            -> (ModuleName (), [ImportSpec ()])
             -> ModuleWriter m ()
-writeImport' di mname = ModuleWriter . modify $
+writeImport' di (m,[]) = writeImport'' m (diToImportSpec di)
+writeImport' _ (m,xs) = mapM_ (writeImport'' m) xs
+
+writeImport'' :: Monad m
+              => ModuleName ()
+              -> ImportSpec ()
+              -> ModuleWriter m ()
+writeImport'' mname is = ModuleWriter . modify $
       \mr -> mr {mImports = if mName mr /= mname
                             then Map.alter f mname $ mImports mr
                             else mImports mr
                 }
   where
-    is = diToImportSpec di
     f Nothing = Just $ Set.singleton is
     f (Just iss) = case mapAccumL check (Just is) $ toList iss of
         (Nothing, iss')  -> Just $ Set.fromList iss'
@@ -323,14 +216,27 @@ writePragma :: Monad m => String -> ModuleWriter m ()
 writePragma pname = ModuleWriter . modify $
   \mr -> mr {mPragmas = Set.insert pname $ mPragmas mr}
 
+
+writeExportExplicit :: Monad m
+                    => DeclaredIdent -> [ImportSpec ()] -> ModuleWriter m ()
+writeExportExplicit di is = do
+  writeExportNoScope di
+  ModuleWriter . modify $
+   \mr -> mr { globalNames = Map.insert di (mName mr, is) (globalNames mr) }
+
+
 -- | Add an export declaration to a module export list
 writeExport :: Monad m => DeclaredIdent -> ModuleWriter m ()
 writeExport di = do
   writeExportNoScope di
   ModuleWriter . modify $
-   \mr -> mr { globalNames = foldr (`Map.insert` mName mr)
-                                   (globalNames mr) dis
-             }
+   \mr -> mr
+     { globalNames =
+       foldr (\n m -> case Map.lookup n m of
+                Just _ -> m
+                Nothing -> Map.insert n (mName mr, [diToImportSpec n]) m
+             ) (globalNames mr) dis
+      }
   where
     dis = case di of
       (DIThing n DITAll)   -> [DIThing n DITAll, DIThing n DITEmpty, DIThing n DITNo]
@@ -592,6 +498,6 @@ vkRegistryLink :: Monad m
 vkRegistryLink tname = do
     vkXml <- ask
     pure $ "<https://www.khronos.org/registry/vulkan/specs/"
-        <> Feature.number (globFeature vkXml)
-        <> "/man/html/" <> tname <> ".html "
+        <> Feature.number (last $ globFeature vkXml)
+        <> "-extensions/man/html/" <> tname <> ".html "
         <> tname <> " registry at www.khronos.org>"

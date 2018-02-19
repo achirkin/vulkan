@@ -33,18 +33,16 @@ module Graphics.Vulkan.Ext.VK_AMD_texture_gather_bias_lod
         pattern VK_AMD_TEXTURE_GATHER_BIAS_LOD_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_TEXTURE_LOD_GATHER_FORMAT_PROPERTIES_AMD)
        where
-import           Foreign.C.String                 (CString)
-import           Foreign.Storable                 (Storable (..))
+import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
-import           GHC.Ptr                          (Ptr (..))
-import           Graphics.Vulkan.Common           (VkBool32,
-                                                   VkStructureType (..))
+import           GHC.Ptr                                                    (Ptr (..))
+import           Graphics.Vulkan.Common                                     (VkBool32,
+                                                                             VkStructureType (..))
+import           Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2 (VkImageFormatProperties2KHR)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
-
-import Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
+import           System.IO.Unsafe                                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkTextureLODGatherFormatPropertiesAMD {
 --   >     VkStructureType sType;
@@ -52,7 +50,7 @@ import Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
 --   >     VkBool32                         supportsTextureGatherLODBiasAMD;
 --   > } VkTextureLODGatherFormatPropertiesAMD;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkTextureLODGatherFormatPropertiesAMD.html VkTextureLODGatherFormatPropertiesAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkTextureLODGatherFormatPropertiesAMD.html VkTextureLODGatherFormatPropertiesAMD registry at www.khronos.org>
 data VkTextureLODGatherFormatPropertiesAMD = VkTextureLODGatherFormatPropertiesAMD## Addr##
                                                                                     ByteArray##
 

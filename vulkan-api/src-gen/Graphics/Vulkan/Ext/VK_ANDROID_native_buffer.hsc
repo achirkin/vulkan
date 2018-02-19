@@ -26,7 +26,6 @@ module Graphics.Vulkan.Ext.VK_ANDROID_native_buffer
         pattern VK_ANDROID_NATIVE_BUFFER_NAME,
         pattern VK_STRUCTURE_TYPE_NATIVE_BUFFER_ANDROID)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -45,7 +44,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     int usage;
 --   > } VkNativeBufferANDROID;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkNativeBufferANDROID.html VkNativeBufferANDROID registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkNativeBufferANDROID.html VkNativeBufferANDROID registry at www.khronos.org>
 data VkNativeBufferANDROID = VkNativeBufferANDROID## Addr##
                                                     ByteArray##
 
@@ -232,7 +231,7 @@ instance CanWriteField "handle" VkNativeBufferANDROID where
 
 instance {-# OVERLAPPING #-} HasVkStride VkNativeBufferANDROID
          where
-        type VkStrideMType VkNativeBufferANDROID = #{type int}
+        type VkStrideMType VkNativeBufferANDROID = CInt
 
         {-# NOINLINE vkStride #-}
         vkStride x
@@ -253,8 +252,7 @@ instance {-# OVERLAPPING #-} HasVkStride VkNativeBufferANDROID
 
 instance {-# OVERLAPPING #-}
          HasField "stride" VkNativeBufferANDROID where
-        type FieldType "stride" VkNativeBufferANDROID =
-             #{type int}
+        type FieldType "stride" VkNativeBufferANDROID = CInt
         type FieldOptional "stride" VkNativeBufferANDROID = 'False -- ' closing tick for hsc2hs
         type FieldOffset "stride" VkNativeBufferANDROID =
              #{offset VkNativeBufferANDROID, stride}
@@ -279,7 +277,7 @@ instance CanWriteField "stride" VkNativeBufferANDROID where
 
 instance {-# OVERLAPPING #-} HasVkFormat VkNativeBufferANDROID
          where
-        type VkFormatMType VkNativeBufferANDROID = #{type int}
+        type VkFormatMType VkNativeBufferANDROID = CInt
 
         {-# NOINLINE vkFormat #-}
         vkFormat x
@@ -300,8 +298,7 @@ instance {-# OVERLAPPING #-} HasVkFormat VkNativeBufferANDROID
 
 instance {-# OVERLAPPING #-}
          HasField "format" VkNativeBufferANDROID where
-        type FieldType "format" VkNativeBufferANDROID =
-             #{type int}
+        type FieldType "format" VkNativeBufferANDROID = CInt
         type FieldOptional "format" VkNativeBufferANDROID = 'False -- ' closing tick for hsc2hs
         type FieldOffset "format" VkNativeBufferANDROID =
              #{offset VkNativeBufferANDROID, format}
@@ -325,7 +322,7 @@ instance CanWriteField "format" VkNativeBufferANDROID where
         writeField = writeVkFormat
 
 instance {-# OVERLAPPING #-} HasVkUsage VkNativeBufferANDROID where
-        type VkUsageMType VkNativeBufferANDROID = #{type int}
+        type VkUsageMType VkNativeBufferANDROID = CInt
 
         {-# NOINLINE vkUsage #-}
         vkUsage x
@@ -346,8 +343,7 @@ instance {-# OVERLAPPING #-} HasVkUsage VkNativeBufferANDROID where
 
 instance {-# OVERLAPPING #-} HasField "usage" VkNativeBufferANDROID
          where
-        type FieldType "usage" VkNativeBufferANDROID =
-             #{type int}
+        type FieldType "usage" VkNativeBufferANDROID = CInt
         type FieldOptional "usage" VkNativeBufferANDROID = 'False -- ' closing tick for hsc2hs
         type FieldOffset "usage" VkNativeBufferANDROID =
              #{offset VkNativeBufferANDROID, usage}
@@ -398,16 +394,15 @@ instance Show VkNativeBufferANDROID where
 --   >     , int* grallocUsage
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetSwapchainGrallocUsageANDROID.html vkGetSwapchainGrallocUsageANDROID registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetSwapchainGrallocUsageANDROID.html vkGetSwapchainGrallocUsageANDROID registry at www.khronos.org>
 foreign import ccall unsafe "vkGetSwapchainGrallocUsageANDROID"
                vkGetSwapchainGrallocUsageANDROID ::
                VkDevice -- ^ device
                         ->
                  VkFormat -- ^ format
-                          ->
-                   VkImageUsageFlags -- ^ imageUsage
-                                     -> Ptr #{type int} -- ^ grallocUsage
-                                                                    -> IO VkResult
+                          -> VkImageUsageFlags -- ^ imageUsage
+                                               -> Ptr CInt -- ^ grallocUsage
+                                                           -> IO VkResult
 
 -- | > VkResult vkAcquireImageANDROID
 --   >     ( VkDevice device
@@ -417,16 +412,16 @@ foreign import ccall unsafe "vkGetSwapchainGrallocUsageANDROID"
 --   >     , VkFence fence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkAcquireImageANDROID.html vkAcquireImageANDROID registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkAcquireImageANDROID.html vkAcquireImageANDROID registry at www.khronos.org>
 foreign import ccall unsafe "vkAcquireImageANDROID"
                vkAcquireImageANDROID ::
                VkDevice -- ^ device
                         ->
                  VkImage -- ^ image
-                         ->
-                   #{type int} -> VkSemaphore -- ^ semaphore
-                                                          -> VkFence -- ^ fence
-                                                                     -> IO VkResult
+                         -> CInt -- ^ nativeFenceFd
+                                 -> VkSemaphore -- ^ semaphore
+                                                -> VkFence -- ^ fence
+                                                           -> IO VkResult
 
 -- | > VkResult vkQueueSignalReleaseImageANDROID
 --   >     ( VkQueue queue
@@ -436,18 +431,16 @@ foreign import ccall unsafe "vkAcquireImageANDROID"
 --   >     , int* pNativeFenceFd
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkQueueSignalReleaseImageANDROID.html vkQueueSignalReleaseImageANDROID registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkQueueSignalReleaseImageANDROID.html vkQueueSignalReleaseImageANDROID registry at www.khronos.org>
 foreign import ccall unsafe "vkQueueSignalReleaseImageANDROID"
                vkQueueSignalReleaseImageANDROID ::
                VkQueue -- ^ queue
                        ->
                  Word32 -- ^ waitSemaphoreCount
-                        ->
-                   Ptr VkSemaphore -- ^ pWaitSemaphores
-                                   ->
-                     VkImage -- ^ image
-                             -> Ptr #{type int} -- ^ pNativeFenceFd
-                                                            -> IO VkResult
+                        -> Ptr VkSemaphore -- ^ pWaitSemaphores
+                                           -> VkImage -- ^ image
+                                                      -> Ptr CInt -- ^ pNativeFenceFd
+                                                                  -> IO VkResult
 
 pattern VK_ANDROID_NATIVE_BUFFER_SPEC_VERSION :: (Num a, Eq a) => a
 

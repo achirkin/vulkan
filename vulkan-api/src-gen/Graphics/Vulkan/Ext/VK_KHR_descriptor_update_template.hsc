@@ -36,7 +36,6 @@ module Graphics.Vulkan.Ext.VK_KHR_descriptor_update_template
         pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_KHR_EXT,
         pattern VK_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_KHR)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -56,7 +55,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     size_t                           stride;
 --   > } VkDescriptorUpdateTemplateEntryKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDescriptorUpdateTemplateEntryKHR.html VkDescriptorUpdateTemplateEntryKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDescriptorUpdateTemplateEntryKHR.html VkDescriptorUpdateTemplateEntryKHR registry at www.khronos.org>
 data VkDescriptorUpdateTemplateEntryKHR = VkDescriptorUpdateTemplateEntryKHR## Addr##
                                                                               ByteArray##
 
@@ -344,8 +343,7 @@ instance CanWriteField "descriptorType"
 
 instance {-# OVERLAPPING #-}
          HasVkOffset VkDescriptorUpdateTemplateEntryKHR where
-        type VkOffsetMType VkDescriptorUpdateTemplateEntryKHR =
-             #{type size_t}
+        type VkOffsetMType VkDescriptorUpdateTemplateEntryKHR = CSize
 
         {-# NOINLINE vkOffset #-}
         vkOffset x
@@ -366,8 +364,7 @@ instance {-# OVERLAPPING #-}
 
 instance {-# OVERLAPPING #-}
          HasField "offset" VkDescriptorUpdateTemplateEntryKHR where
-        type FieldType "offset" VkDescriptorUpdateTemplateEntryKHR =
-             #{type size_t}
+        type FieldType "offset" VkDescriptorUpdateTemplateEntryKHR = CSize
         type FieldOptional "offset" VkDescriptorUpdateTemplateEntryKHR =
              'False -- ' closing tick for hsc2hs
         type FieldOffset "offset" VkDescriptorUpdateTemplateEntryKHR =
@@ -397,8 +394,7 @@ instance CanWriteField "offset" VkDescriptorUpdateTemplateEntryKHR
 
 instance {-# OVERLAPPING #-}
          HasVkStride VkDescriptorUpdateTemplateEntryKHR where
-        type VkStrideMType VkDescriptorUpdateTemplateEntryKHR =
-             #{type size_t}
+        type VkStrideMType VkDescriptorUpdateTemplateEntryKHR = CSize
 
         {-# NOINLINE vkStride #-}
         vkStride x
@@ -419,8 +415,7 @@ instance {-# OVERLAPPING #-}
 
 instance {-# OVERLAPPING #-}
          HasField "stride" VkDescriptorUpdateTemplateEntryKHR where
-        type FieldType "stride" VkDescriptorUpdateTemplateEntryKHR =
-             #{type size_t}
+        type FieldType "stride" VkDescriptorUpdateTemplateEntryKHR = CSize
         type FieldOptional "stride" VkDescriptorUpdateTemplateEntryKHR =
              'False -- ' closing tick for hsc2hs
         type FieldOffset "stride" VkDescriptorUpdateTemplateEntryKHR =
@@ -482,7 +477,7 @@ instance Show VkDescriptorUpdateTemplateEntryKHR where
 --   >     uint32_t set;
 --   > } VkDescriptorUpdateTemplateCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDescriptorUpdateTemplateCreateInfoKHR.html VkDescriptorUpdateTemplateCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDescriptorUpdateTemplateCreateInfoKHR.html VkDescriptorUpdateTemplateCreateInfoKHR registry at www.khronos.org>
 data VkDescriptorUpdateTemplateCreateInfoKHR = VkDescriptorUpdateTemplateCreateInfoKHR## Addr##
                                                                                         ByteArray##
 
@@ -1184,7 +1179,7 @@ instance Show VkDescriptorUpdateTemplateCreateInfoKHR where
 --   >     , VkDescriptorUpdateTemplateKHR* pDescriptorUpdateTemplate
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCreateDescriptorUpdateTemplateKHR.html vkCreateDescriptorUpdateTemplateKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateDescriptorUpdateTemplateKHR.html vkCreateDescriptorUpdateTemplateKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateDescriptorUpdateTemplateKHR"
                vkCreateDescriptorUpdateTemplateKHR ::
                VkDevice -- ^ device
@@ -1196,13 +1191,13 @@ foreign import ccall unsafe "vkCreateDescriptorUpdateTemplateKHR"
                      Ptr VkDescriptorUpdateTemplateKHR -- ^ pDescriptorUpdateTemplate
                                                        -> IO VkResult
 
--- | > void vkDestroyDescriptorUpdateTemplateKHR
+-- | > () vkDestroyDescriptorUpdateTemplateKHR
 --   >     ( VkDevice device
 --   >     , VkDescriptorUpdateTemplateKHR descriptorUpdateTemplate
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkDestroyDescriptorUpdateTemplateKHR.html vkDestroyDescriptorUpdateTemplateKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroyDescriptorUpdateTemplateKHR.html vkDestroyDescriptorUpdateTemplateKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyDescriptorUpdateTemplateKHR"
                vkDestroyDescriptorUpdateTemplateKHR ::
                VkDevice -- ^ device
@@ -1211,14 +1206,14 @@ foreign import ccall unsafe "vkDestroyDescriptorUpdateTemplateKHR"
                                                -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                             -> IO ()
 
--- | > void vkUpdateDescriptorSetWithTemplateKHR
+-- | > () vkUpdateDescriptorSetWithTemplateKHR
 --   >     ( VkDevice device
 --   >     , VkDescriptorSet descriptorSet
 --   >     , VkDescriptorUpdateTemplateKHR descriptorUpdateTemplate
 --   >     , const void* pData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkUpdateDescriptorSetWithTemplateKHR.html vkUpdateDescriptorSetWithTemplateKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkUpdateDescriptorSetWithTemplateKHR.html vkUpdateDescriptorSetWithTemplateKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkUpdateDescriptorSetWithTemplateKHR"
                vkUpdateDescriptorSetWithTemplateKHR ::
                VkDevice -- ^ device
@@ -1229,11 +1224,11 @@ foreign import ccall unsafe "vkUpdateDescriptorSetWithTemplateKHR"
                                                  -> Ptr Void -- ^ pData
                                                              -> IO ()
 
--- | queues: @graphics,compute@
+-- | queues: 'graphics', 'compute'.
 --
 --   renderpass: @both@
 --
---   > void vkCmdPushDescriptorSetWithTemplateKHR
+--   > () vkCmdPushDescriptorSetWithTemplateKHR
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , VkDescriptorUpdateTemplateKHR descriptorUpdateTemplate
 --   >     , VkPipelineLayout layout
@@ -1241,7 +1236,7 @@ foreign import ccall unsafe "vkUpdateDescriptorSetWithTemplateKHR"
 --   >     , const void* pData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html vkCmdPushDescriptorSetWithTemplateKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html vkCmdPushDescriptorSetWithTemplateKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdPushDescriptorSetWithTemplateKHR"
                vkCmdPushDescriptorSetWithTemplateKHR ::
                VkCommandBuffer -- ^ commandBuffer

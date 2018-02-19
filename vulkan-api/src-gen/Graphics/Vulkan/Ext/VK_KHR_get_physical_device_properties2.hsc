@@ -50,7 +50,6 @@ module Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
         pattern VK_STRUCTURE_TYPE_SPARSE_IMAGE_FORMAT_PROPERTIES_2_KHR,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2_KHR)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -74,7 +73,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     VkPhysicalDeviceFeatures         features;
 --   > } VkPhysicalDeviceFeatures2KHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceFeatures2KHR.html VkPhysicalDeviceFeatures2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceFeatures2KHR.html VkPhysicalDeviceFeatures2KHR registry at www.khronos.org>
 data VkPhysicalDeviceFeatures2KHR = VkPhysicalDeviceFeatures2KHR## Addr##
                                                                   ByteArray##
 
@@ -291,7 +290,7 @@ instance Show VkPhysicalDeviceFeatures2KHR where
 --   >     VkPhysicalDeviceProperties       properties;
 --   > } VkPhysicalDeviceProperties2KHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceProperties2KHR.html VkPhysicalDeviceProperties2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceProperties2KHR.html VkPhysicalDeviceProperties2KHR registry at www.khronos.org>
 data VkPhysicalDeviceProperties2KHR = VkPhysicalDeviceProperties2KHR## Addr##
                                                                       ByteArray##
 
@@ -497,7 +496,7 @@ instance Show VkPhysicalDeviceProperties2KHR where
 --   >     VkFormatProperties               formatProperties;
 --   > } VkFormatProperties2KHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkFormatProperties2KHR.html VkFormatProperties2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkFormatProperties2KHR.html VkFormatProperties2KHR registry at www.khronos.org>
 data VkFormatProperties2KHR = VkFormatProperties2KHR## Addr##
                                                       ByteArray##
 
@@ -696,7 +695,7 @@ instance Show VkFormatProperties2KHR where
 --   >     VkImageFormatProperties          imageFormatProperties;
 --   > } VkImageFormatProperties2KHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageFormatProperties2KHR.html VkImageFormatProperties2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImageFormatProperties2KHR.html VkImageFormatProperties2KHR registry at www.khronos.org>
 data VkImageFormatProperties2KHR = VkImageFormatProperties2KHR## Addr##
                                                                 ByteArray##
 
@@ -910,7 +909,7 @@ instance Show VkImageFormatProperties2KHR where
 --   >     VkImageCreateFlags flags;
 --   > } VkPhysicalDeviceImageFormatInfo2KHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceImageFormatInfo2KHR.html VkPhysicalDeviceImageFormatInfo2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceImageFormatInfo2KHR.html VkPhysicalDeviceImageFormatInfo2KHR registry at www.khronos.org>
 data VkPhysicalDeviceImageFormatInfo2KHR = VkPhysicalDeviceImageFormatInfo2KHR## Addr##
                                                                                 ByteArray##
 
@@ -1363,7 +1362,7 @@ instance Show VkPhysicalDeviceImageFormatInfo2KHR where
 --   >     VkQueueFamilyProperties          queueFamilyProperties;
 --   > } VkQueueFamilyProperties2KHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkQueueFamilyProperties2KHR.html VkQueueFamilyProperties2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkQueueFamilyProperties2KHR.html VkQueueFamilyProperties2KHR registry at www.khronos.org>
 data VkQueueFamilyProperties2KHR = VkQueueFamilyProperties2KHR## Addr##
                                                                 ByteArray##
 
@@ -1573,7 +1572,7 @@ instance Show VkQueueFamilyProperties2KHR where
 --   >     VkPhysicalDeviceMemoryProperties memoryProperties;
 --   > } VkPhysicalDeviceMemoryProperties2KHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceMemoryProperties2KHR.html VkPhysicalDeviceMemoryProperties2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceMemoryProperties2KHR.html VkPhysicalDeviceMemoryProperties2KHR registry at www.khronos.org>
 data VkPhysicalDeviceMemoryProperties2KHR = VkPhysicalDeviceMemoryProperties2KHR## Addr##
                                                                                   ByteArray##
 
@@ -1797,7 +1796,7 @@ instance Show VkPhysicalDeviceMemoryProperties2KHR where
 --   >     VkSparseImageFormatProperties    properties;
 --   > } VkSparseImageFormatProperties2KHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSparseImageFormatProperties2KHR.html VkSparseImageFormatProperties2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSparseImageFormatProperties2KHR.html VkSparseImageFormatProperties2KHR registry at www.khronos.org>
 data VkSparseImageFormatProperties2KHR = VkSparseImageFormatProperties2KHR## Addr##
                                                                             ByteArray##
 
@@ -2016,7 +2015,7 @@ instance Show VkSparseImageFormatProperties2KHR where
 --   >     VkImageTiling                    tiling;
 --   > } VkPhysicalDeviceSparseImageFormatInfo2KHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceSparseImageFormatInfo2KHR.html VkPhysicalDeviceSparseImageFormatInfo2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceSparseImageFormatInfo2KHR.html VkPhysicalDeviceSparseImageFormatInfo2KHR registry at www.khronos.org>
 data VkPhysicalDeviceSparseImageFormatInfo2KHR = VkPhysicalDeviceSparseImageFormatInfo2KHR## Addr##
                                                                                             ByteArray##
 
@@ -2501,37 +2500,37 @@ instance Show VkPhysicalDeviceSparseImageFormatInfo2KHR where
                                                   showString "vkTiling = " .
                                                     showsPrec d (vkTiling x) . showChar '}'
 
--- | > void vkGetPhysicalDeviceFeatures2KHR
+-- | > () vkGetPhysicalDeviceFeatures2KHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkPhysicalDeviceFeatures2KHR* pFeatures
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetPhysicalDeviceFeatures2KHR.html vkGetPhysicalDeviceFeatures2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceFeatures2KHR.html vkGetPhysicalDeviceFeatures2KHR registry at www.khronos.org>
 foreign import ccall unsafe "vkGetPhysicalDeviceFeatures2KHR"
                vkGetPhysicalDeviceFeatures2KHR ::
                VkPhysicalDevice -- ^ physicalDevice
                                 -> Ptr VkPhysicalDeviceFeatures2KHR -- ^ pFeatures
                                                                     -> IO ()
 
--- | > void vkGetPhysicalDeviceProperties2KHR
+-- | > () vkGetPhysicalDeviceProperties2KHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkPhysicalDeviceProperties2KHR* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetPhysicalDeviceProperties2KHR.html vkGetPhysicalDeviceProperties2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceProperties2KHR.html vkGetPhysicalDeviceProperties2KHR registry at www.khronos.org>
 foreign import ccall unsafe "vkGetPhysicalDeviceProperties2KHR"
                vkGetPhysicalDeviceProperties2KHR ::
                VkPhysicalDevice -- ^ physicalDevice
                                 -> Ptr VkPhysicalDeviceProperties2KHR -- ^ pProperties
                                                                       -> IO ()
 
--- | > void vkGetPhysicalDeviceFormatProperties2KHR
+-- | > () vkGetPhysicalDeviceFormatProperties2KHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkFormat format
 --   >     , VkFormatProperties2KHR* pFormatProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetPhysicalDeviceFormatProperties2KHR.html vkGetPhysicalDeviceFormatProperties2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceFormatProperties2KHR.html vkGetPhysicalDeviceFormatProperties2KHR registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceFormatProperties2KHR"
                vkGetPhysicalDeviceFormatProperties2KHR ::
@@ -2550,7 +2549,7 @@ foreign import ccall unsafe
 --   >     , VkImageFormatProperties2KHR* pImageFormatProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetPhysicalDeviceImageFormatProperties2KHR.html vkGetPhysicalDeviceImageFormatProperties2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceImageFormatProperties2KHR.html vkGetPhysicalDeviceImageFormatProperties2KHR registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceImageFormatProperties2KHR"
                vkGetPhysicalDeviceImageFormatProperties2KHR ::
@@ -2561,13 +2560,13 @@ foreign import ccall unsafe
                    Ptr VkImageFormatProperties2KHR -- ^ pImageFormatProperties
                                                    -> IO VkResult
 
--- | > void vkGetPhysicalDeviceQueueFamilyProperties2KHR
+-- | > () vkGetPhysicalDeviceQueueFamilyProperties2KHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , uint32_t* pQueueFamilyPropertyCount
 --   >     , VkQueueFamilyProperties2KHR* pQueueFamilyProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetPhysicalDeviceQueueFamilyProperties2KHR.html vkGetPhysicalDeviceQueueFamilyProperties2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties2KHR.html vkGetPhysicalDeviceQueueFamilyProperties2KHR registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceQueueFamilyProperties2KHR"
                vkGetPhysicalDeviceQueueFamilyProperties2KHR ::
@@ -2577,12 +2576,12 @@ foreign import ccall unsafe
                             -> Ptr VkQueueFamilyProperties2KHR -- ^ pQueueFamilyProperties
                                                                -> IO ()
 
--- | > void vkGetPhysicalDeviceMemoryProperties2KHR
+-- | > () vkGetPhysicalDeviceMemoryProperties2KHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkPhysicalDeviceMemoryProperties2KHR* pMemoryProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetPhysicalDeviceMemoryProperties2KHR.html vkGetPhysicalDeviceMemoryProperties2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceMemoryProperties2KHR.html vkGetPhysicalDeviceMemoryProperties2KHR registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceMemoryProperties2KHR"
                vkGetPhysicalDeviceMemoryProperties2KHR ::
@@ -2591,14 +2590,14 @@ foreign import ccall unsafe
                  Ptr VkPhysicalDeviceMemoryProperties2KHR -- ^ pMemoryProperties
                                                           -> IO ()
 
--- | > void vkGetPhysicalDeviceSparseImageFormatProperties2KHR
+-- | > () vkGetPhysicalDeviceSparseImageFormatProperties2KHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , const VkPhysicalDeviceSparseImageFormatInfo2KHR* pFormatInfo
 --   >     , uint32_t* pPropertyCount
 --   >     , VkSparseImageFormatProperties2KHR* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetPhysicalDeviceSparseImageFormatProperties2KHR.html vkGetPhysicalDeviceSparseImageFormatProperties2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceSparseImageFormatProperties2KHR.html vkGetPhysicalDeviceSparseImageFormatProperties2KHR registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceSparseImageFormatProperties2KHR"
                vkGetPhysicalDeviceSparseImageFormatProperties2KHR ::

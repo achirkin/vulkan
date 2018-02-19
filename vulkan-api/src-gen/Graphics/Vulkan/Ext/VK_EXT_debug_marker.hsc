@@ -42,7 +42,6 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_marker
         pattern VK_STRUCTURE_TYPE_DEBUG_MARKER_OBJECT_TAG_INFO_EXT,
         pattern VK_STRUCTURE_TYPE_DEBUG_MARKER_MARKER_INFO_EXT)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -61,7 +60,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     const char* pObjectName;
 --   > } VkDebugMarkerObjectNameInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDebugMarkerObjectNameInfoEXT.html VkDebugMarkerObjectNameInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDebugMarkerObjectNameInfoEXT.html VkDebugMarkerObjectNameInfoEXT registry at www.khronos.org>
 data VkDebugMarkerObjectNameInfoEXT = VkDebugMarkerObjectNameInfoEXT## Addr##
                                                                       ByteArray##
 
@@ -390,7 +389,7 @@ instance Show VkDebugMarkerObjectNameInfoEXT where
 --   >     const void*        pTag;
 --   > } VkDebugMarkerObjectTagInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDebugMarkerObjectTagInfoEXT.html VkDebugMarkerObjectTagInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDebugMarkerObjectTagInfoEXT.html VkDebugMarkerObjectTagInfoEXT registry at www.khronos.org>
 data VkDebugMarkerObjectTagInfoEXT = VkDebugMarkerObjectTagInfoEXT## Addr##
                                                                     ByteArray##
 
@@ -689,8 +688,7 @@ instance CanWriteField "tagName" VkDebugMarkerObjectTagInfoEXT
 
 instance {-# OVERLAPPING #-}
          HasVkTagSize VkDebugMarkerObjectTagInfoEXT where
-        type VkTagSizeMType VkDebugMarkerObjectTagInfoEXT =
-             #{type size_t}
+        type VkTagSizeMType VkDebugMarkerObjectTagInfoEXT = CSize
 
         {-# NOINLINE vkTagSize #-}
         vkTagSize x
@@ -711,8 +709,7 @@ instance {-# OVERLAPPING #-}
 
 instance {-# OVERLAPPING #-}
          HasField "tagSize" VkDebugMarkerObjectTagInfoEXT where
-        type FieldType "tagSize" VkDebugMarkerObjectTagInfoEXT =
-             #{type size_t}
+        type FieldType "tagSize" VkDebugMarkerObjectTagInfoEXT = CSize
         type FieldOptional "tagSize" VkDebugMarkerObjectTagInfoEXT = 'False -- ' closing tick for hsc2hs
         type FieldOffset "tagSize" VkDebugMarkerObjectTagInfoEXT =
              #{offset VkDebugMarkerObjectTagInfoEXT, tagSize}
@@ -815,7 +812,7 @@ instance Show VkDebugMarkerObjectTagInfoEXT where
 --   >     float            color[4];
 --   > } VkDebugMarkerMarkerInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDebugMarkerMarkerInfoEXT.html VkDebugMarkerMarkerInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDebugMarkerMarkerInfoEXT.html VkDebugMarkerMarkerInfoEXT registry at www.khronos.org>
 data VkDebugMarkerMarkerInfoEXT = VkDebugMarkerMarkerInfoEXT## Addr##
                                                               ByteArray##
 
@@ -1129,7 +1126,7 @@ instance Show VkDebugMarkerMarkerInfoEXT where
 --   >     , const VkDebugMarkerObjectTagInfoEXT* pTagInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkDebugMarkerSetObjectTagEXT.html vkDebugMarkerSetObjectTagEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDebugMarkerSetObjectTagEXT.html vkDebugMarkerSetObjectTagEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkDebugMarkerSetObjectTagEXT"
                vkDebugMarkerSetObjectTagEXT ::
                VkDevice -- ^ device
@@ -1145,52 +1142,52 @@ foreign import ccall unsafe "vkDebugMarkerSetObjectTagEXT"
 --   >     , const VkDebugMarkerObjectNameInfoEXT* pNameInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkDebugMarkerSetObjectNameEXT.html vkDebugMarkerSetObjectNameEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDebugMarkerSetObjectNameEXT.html vkDebugMarkerSetObjectNameEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkDebugMarkerSetObjectNameEXT"
                vkDebugMarkerSetObjectNameEXT ::
                VkDevice -- ^ device
                         -> Ptr VkDebugMarkerObjectNameInfoEXT -- ^ pNameInfo
                                                               -> IO VkResult
 
--- | queues: @graphics,compute@
+-- | queues: 'graphics', 'compute'.
 --
 --   renderpass: @both@
 --
---   > void vkCmdDebugMarkerBeginEXT
+--   > () vkCmdDebugMarkerBeginEXT
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , const VkDebugMarkerMarkerInfoEXT* pMarkerInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCmdDebugMarkerBeginEXT.html vkCmdDebugMarkerBeginEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdDebugMarkerBeginEXT.html vkCmdDebugMarkerBeginEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdDebugMarkerBeginEXT"
                vkCmdDebugMarkerBeginEXT ::
                VkCommandBuffer -- ^ commandBuffer
                                -> Ptr VkDebugMarkerMarkerInfoEXT -- ^ pMarkerInfo
                                                                  -> IO ()
 
--- | queues: @graphics,compute@
+-- | queues: 'graphics', 'compute'.
 --
 --   renderpass: @both@
 --
---   > void vkCmdDebugMarkerEndEXT
+--   > () vkCmdDebugMarkerEndEXT
 --   >     ( VkCommandBuffer commandBuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCmdDebugMarkerEndEXT.html vkCmdDebugMarkerEndEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdDebugMarkerEndEXT.html vkCmdDebugMarkerEndEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdDebugMarkerEndEXT"
                vkCmdDebugMarkerEndEXT :: VkCommandBuffer -- ^ commandBuffer
                                                          -> IO ()
 
--- | queues: @graphics,compute@
+-- | queues: 'graphics', 'compute'.
 --
 --   renderpass: @both@
 --
---   > void vkCmdDebugMarkerInsertEXT
+--   > () vkCmdDebugMarkerInsertEXT
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , const VkDebugMarkerMarkerInfoEXT* pMarkerInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCmdDebugMarkerInsertEXT.html vkCmdDebugMarkerInsertEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdDebugMarkerInsertEXT.html vkCmdDebugMarkerInsertEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdDebugMarkerInsertEXT"
                vkCmdDebugMarkerInsertEXT ::
                VkCommandBuffer -- ^ commandBuffer

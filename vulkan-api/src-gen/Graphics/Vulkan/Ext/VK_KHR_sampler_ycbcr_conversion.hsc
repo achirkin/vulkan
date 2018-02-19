@@ -93,7 +93,6 @@ module Graphics.Vulkan.Ext.VK_KHR_sampler_ycbcr_conversion
         pattern VK_FORMAT_FEATURE_DISJOINT_BIT_KHR,
         pattern VK_FORMAT_FEATURE_COSITED_CHROMA_SAMPLES_BIT_KHR)
        where
-import           Foreign.C.String                                           (CString)
 import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                                                    (Ptr (..))
@@ -103,6 +102,7 @@ import           Graphics.Vulkan.Base                                       (VkA
                                                                              VkImageViewCreateInfo,
                                                                              VkSamplerCreateInfo)
 import           Graphics.Vulkan.Common
+import           Graphics.Vulkan.Ext.VK_KHR_bind_memory2                    (VkBindImageMemoryInfoKHR)
 import           Graphics.Vulkan.Ext.VK_KHR_get_memory_requirements2        (VkImageMemoryRequirementsInfo2KHR)
 import           Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2 (VkImageFormatProperties2KHR,
                                                                              VkPhysicalDeviceFeatures2KHR)
@@ -110,8 +110,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
 import           System.IO.Unsafe                                           (unsafeDupablePerformIO)
-
-import Graphics.Vulkan.Ext.VK_KHR_bind_memory2
 
 -- | > typedef struct VkSamplerYcbcrConversionCreateInfoKHR {
 --   >     VkStructureType sType;
@@ -126,7 +124,7 @@ import Graphics.Vulkan.Ext.VK_KHR_bind_memory2
 --   >     VkBool32                         forceExplicitReconstruction;
 --   > } VkSamplerYcbcrConversionCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSamplerYcbcrConversionCreateInfoKHR.html VkSamplerYcbcrConversionCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSamplerYcbcrConversionCreateInfoKHR.html VkSamplerYcbcrConversionCreateInfoKHR registry at www.khronos.org>
 data VkSamplerYcbcrConversionCreateInfoKHR = VkSamplerYcbcrConversionCreateInfoKHR## Addr##
                                                                                     ByteArray##
 
@@ -809,7 +807,7 @@ instance Show VkSamplerYcbcrConversionCreateInfoKHR where
 --   >     VkSamplerYcbcrConversionKHR      conversion;
 --   > } VkSamplerYcbcrConversionInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSamplerYcbcrConversionInfoKHR.html VkSamplerYcbcrConversionInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSamplerYcbcrConversionInfoKHR.html VkSamplerYcbcrConversionInfoKHR registry at www.khronos.org>
 data VkSamplerYcbcrConversionInfoKHR = VkSamplerYcbcrConversionInfoKHR## Addr##
                                                                         ByteArray##
 
@@ -1031,7 +1029,7 @@ instance Show VkSamplerYcbcrConversionInfoKHR where
 --   >     VkImageAspectFlagBits            planeAspect;
 --   > } VkBindImagePlaneMemoryInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBindImagePlaneMemoryInfoKHR.html VkBindImagePlaneMemoryInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkBindImagePlaneMemoryInfoKHR.html VkBindImagePlaneMemoryInfoKHR registry at www.khronos.org>
 data VkBindImagePlaneMemoryInfoKHR = VkBindImagePlaneMemoryInfoKHR## Addr##
                                                                     ByteArray##
 
@@ -1251,7 +1249,7 @@ instance Show VkBindImagePlaneMemoryInfoKHR where
 --   >     VkImageAspectFlagBits            planeAspect;
 --   > } VkImagePlaneMemoryRequirementsInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImagePlaneMemoryRequirementsInfoKHR.html VkImagePlaneMemoryRequirementsInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImagePlaneMemoryRequirementsInfoKHR.html VkImagePlaneMemoryRequirementsInfoKHR registry at www.khronos.org>
 data VkImagePlaneMemoryRequirementsInfoKHR = VkImagePlaneMemoryRequirementsInfoKHR## Addr##
                                                                                     ByteArray##
 
@@ -1492,7 +1490,7 @@ instance Show VkImagePlaneMemoryRequirementsInfoKHR where
 --   >     VkBool32                         samplerYcbcrConversion;
 --   > } VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR.html VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR.html VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR registry at www.khronos.org>
 data VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR = VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR## Addr##
                                                                                                             ByteArray##
 
@@ -1766,7 +1764,7 @@ instance Show VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
 --   >     uint32_t                         combinedImageSamplerDescriptorCount;
 --   > } VkSamplerYcbcrConversionImageFormatPropertiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSamplerYcbcrConversionImageFormatPropertiesKHR.html VkSamplerYcbcrConversionImageFormatPropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSamplerYcbcrConversionImageFormatPropertiesKHR.html VkSamplerYcbcrConversionImageFormatPropertiesKHR registry at www.khronos.org>
 data VkSamplerYcbcrConversionImageFormatPropertiesKHR = VkSamplerYcbcrConversionImageFormatPropertiesKHR## Addr##
                                                                                                           ByteArray##
 
@@ -2025,7 +2023,7 @@ instance Show VkSamplerYcbcrConversionImageFormatPropertiesKHR
 --   >     , VkSamplerYcbcrConversionKHR* pYcbcrConversion
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCreateSamplerYcbcrConversionKHR.html vkCreateSamplerYcbcrConversionKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateSamplerYcbcrConversionKHR.html vkCreateSamplerYcbcrConversionKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateSamplerYcbcrConversionKHR"
                vkCreateSamplerYcbcrConversionKHR ::
                VkDevice -- ^ device
@@ -2037,13 +2035,13 @@ foreign import ccall unsafe "vkCreateSamplerYcbcrConversionKHR"
                      Ptr VkSamplerYcbcrConversionKHR -- ^ pYcbcrConversion
                                                      -> IO VkResult
 
--- | > void vkDestroySamplerYcbcrConversionKHR
+-- | > () vkDestroySamplerYcbcrConversionKHR
 --   >     ( VkDevice device
 --   >     , VkSamplerYcbcrConversionKHR ycbcrConversion
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkDestroySamplerYcbcrConversionKHR.html vkDestroySamplerYcbcrConversionKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroySamplerYcbcrConversionKHR.html vkDestroySamplerYcbcrConversionKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroySamplerYcbcrConversionKHR"
                vkDestroySamplerYcbcrConversionKHR ::
                VkDevice -- ^ device

@@ -27,14 +27,12 @@ module Graphics.Vulkan.Ext.VK_EXT_validation_flags
         pattern VK_EXT_VALIDATION_FLAGS_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_VALIDATION_FLAGS_EXT)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           Graphics.Vulkan.Base             (VkInstanceCreateInfo)
-import           Graphics.Vulkan.Common           (VkStructureType,
-                                                   VkStructureType (..),
-                                                   VkValidationCheckEXT, Word32)
+import           Graphics.Vulkan.Common           (VkStructureType (..),
+                                                   VkValidationCheckEXT)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
@@ -47,7 +45,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     VkValidationCheckEXT* pDisabledValidationChecks;
 --   > } VkValidationFlagsEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkValidationFlagsEXT.html VkValidationFlagsEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkValidationFlagsEXT.html VkValidationFlagsEXT registry at www.khronos.org>
 data VkValidationFlagsEXT = VkValidationFlagsEXT## Addr## ByteArray##
 
 instance Eq VkValidationFlagsEXT where
