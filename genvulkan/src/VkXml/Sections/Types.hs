@@ -2,6 +2,7 @@
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE QuasiQuotes           #-}
 {-# LANGUAGE RecordWildCards       #-}
 {-# LANGUAGE Strict                #-}
 -- | Vulkan types, as they defined in vk.xml
@@ -19,6 +20,7 @@ import           Control.Applicative        ((<|>))
 import           Control.Arrow
 import           Control.Monad.Except
 import           Control.Monad.Trans.Reader (ReaderT (..))
+import           Data.Char                  (isSpace)
 import           Data.Coerce
 import           Data.Conduit
 import           Data.Map                   (Map)
@@ -28,6 +30,7 @@ import           Data.Semigroup
 import           Data.Text                  (Text)
 import qualified Data.Text                  as T
 import           Data.XML.Types
+import           Text.RE.TDFA.Text
 import           Text.XML.Stream.Parse
 
 import           VkXml.CommonTypes
@@ -72,6 +75,8 @@ data VkTypeData name
   = VkTypeData
   { name      :: Maybe (name, [VkTypeQualifier])
     -- ^ name parsed from type or member content
+  , retType   :: Maybe (VkTypeName, Word)
+    -- ^ Makes only sense for funcpointer category
   , reference :: [(VkTypeName, [VkTypeQualifier])]
     -- ^ content of "type" child; typically, a part of type definition
   , comment   :: Maybe Text
@@ -242,9 +247,22 @@ parseVkTypeData :: ( Coercible Text name
                    , VkXmlParser m
                    )
                 => (Text -> m name) -> Sink Event m (VkTypeData name)
-parseVkTypeData k =
-    parseIt (VkTypeData Nothing [] Nothing mempty)
+parseVkTypeData k = do
+    -- handle funcpointer
+    mc <- contentMaybe
+    mrt <- parseFuncpointerRetType mc
+    forM_ mc $ leftover . EventContent . ContentText
+    parseIt (VkTypeData Nothing mrt [] Nothing mempty)
   where
+    parseFuncpointerRetType Nothing = pure Nothing
+    parseFuncpointerRetType (Just t)
+      | Just tstars <- fmap (T.drop 7 . T.filter (not . isSpace))
+          . matchedText $ t ?=~
+          [re|typedef[[:space:]]+[A-Za-z][0-9A-Za-z_]*[\*[[:space:]]]*|]
+      , stars <- fromIntegral . T.length $ T.filter ('*' ==) tstars
+      , tp <- T.filter ('*' /=) tstars
+        = Just . flip (,) stars <$> toHaskellType tp
+      | otherwise = pure Nothing
     parseQualifiers n = do
       mc <- contentMaybe
       case mc of
@@ -272,18 +290,18 @@ parseVkTypeData k =
     parseIt d@VkTypeData{..} = do
       mr <- choose
         [ fmap (\c -> d { code = code <> c}) <$> contentMaybe
-        , (join <$> tagIgnoreAttrs "type"
-             (contentMaybe >>= mapM toHaskellType)) >>= mapM
-          (\newref -> do
+        , (join <$> tagIgnoreAttrs "type" contentMaybe) >>= mapM
+          (\newrefTxt -> do
+            newref <- toHaskellType newrefTxt
             newrefq <- parseQualifiers newref
-            return $ d { code = code <> coerce newref
+            return $ d { code = code <> newrefTxt
                        , reference = reference <> [newrefq] }
           )
-        , (join <$> tagIgnoreAttrs "name"
-              (contentMaybe >>= lift . mapM k)) >>= mapM
-          (\newname -> do
+        , (join <$> tagIgnoreAttrs "name" contentMaybe) >>= mapM
+          (\newnameTxt -> do
+            newname <- lift $ k newnameTxt
             newnameq <- parseQualifiers newname
-            return d { code = code <> coerce newname, name = Just newnameq }
+            return d { code = code <> newnameTxt, name = Just newnameq }
           )
         , fmap (dataComment d) . join <$> tagIgnoreAttrs "comment" contentMaybe
         ]
@@ -296,38 +314,6 @@ dataComment d@VkTypeData{ comment = Just s} t
   = d { comment = Just (T.unlines [s,t])}
 dataComment d@VkTypeData{ comment = Nothing} t
   = d { comment = Just t}
-
-      -- do
-      -- mev <- await
-      -- case mev of
-      --   Nothing -> return d
-      --   Just ev -> leftover ev >> do
-      --     mnewref <- join
-      --           <$> tagIgnoreAttrs "type" (coerce <$> contentMaybe)
-      --     mnewrefq <- mapM parseQualifiers mnewref
-      --     newcontent <- content
-      --     mnewname <- join
-      --            <$> tagIgnoreAttrs "name" (coerce <$> contentMaybe)
-      --     mnewnameq <- mapM parseQualifiers mnewname
-      --     mnewcomment <- join <$> tagIgnoreAttrs "comment" contentMaybe
-      --     -- fallback to error if could not manage to parse anything
-      --     when (  isNothing mnewname
-      --         && isNothing mnewref
-      --         && isNothing mnewcomment
-      --         && newcontent  == mempty
-      --         ) $ parseFailed $ "Unexpected event in type content tree: "
-      --                        <> show ev
-      --     -- add newly parsed stuff to VkTypeData
-      --     parseIt (d
-      --        { name      = mnewnameq <|> name
-      --        , reference = reference <> maybeToList mnewrefq
-      --        , comment   = mnewcomment <|> comment
-      --        , code      = code
-      --                    <> maybe mempty coerce mnewref
-      --                    <> newcontent
-      --                    <> maybe mempty coerce mnewname
-      --        }
-      --      )
 
 
 

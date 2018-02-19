@@ -30,18 +30,14 @@ genFuncpointer VkTypeSimple
         { comment = txt
         }
     , typeData = VkTypeData
-       { reference = refs'
+       { retType = Just (rtypeName, rstars)
+       , reference = refs'
        , comment = mtxt2
        , code = c
        }
     }
-    | rtypeTxt:_ <-  T.words
-                   . T.strip . snd
-                   . T.breakOnEnd "typedef" . fst
-                   $ T.breakOn (unVkTypeName vkTName) c
-    , rtype <- TyApp () (TyCon () (UnQual () (Ident () "IO")))
-             . uncurry (flip toType)
-             $ countStars rtypeTxt
+    | rtype <- TyApp () (TyCon () (UnQual () (Ident () "IO")))
+             $ toType rstars rtypeName
     , funtype <- foldr accumRefs rtype refs
     , pfuntype <- TyApp () (TyCon () (UnQual () (Ident () "FunPtr")))
                            (TyCon () tfname)
@@ -87,10 +83,6 @@ genFuncpointer VkTypeSimple
                       Nothing      -> tnamebasetxt
     newFun = "new" <> tnamebasetxtC
     unwrapFun = "unwrap" <> tnamebasetxtC
-    countStars "void"  = (VkTypeName "()", 0)
-    countStars "void*" = (VkTypeName "Void", 1)
-    countStars s | "*" `T.isSuffixOf` s = second (1+) $ countStars (T.dropEnd 1 s)
-                 | otherwise = (VkTypeName s, 0)
     refs = map (second length) refs'
     accumRefs (tn, k) = TyFun () (toType (fromIntegral k) tn)
     rezComment = rezComment'' >>= preComment . T.unpack
