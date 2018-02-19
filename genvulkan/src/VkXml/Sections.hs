@@ -3,25 +3,31 @@
 {-# LANGUAGE LambdaCase            #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE OverloadedStrings     #-}
+{-# LANGUAGE RecordWildCards       #-}
 {-# LANGUAGE Strict                #-}
 module VkXml.Sections
   ( parseVkXml
   , VkXml (..)
+  , reexportedTypesRequire
+  , reexportedTypesFeature
+  , reexportedTypesExtension
   ) where
 
 import           Control.Monad.State.Class
 import           Data.Conduit
 import           Data.Conduit.Lift
+import           Data.Maybe (maybeToList)
+import           Data.Foldable             (toList)
+import           Data.List                 (nub)
 import           Data.Map.Strict           (Map)
 import qualified Data.Map.Strict           as Map
-import           Data.Foldable             (toList)
 import           Data.Sequence             (Seq, (|>))
 import qualified Data.Sequence             as Seq
 import           Data.XML.Types
 import           Text.XML.Stream.Parse     as Xml
 
-import           VkXml.Parser
 import           VkXml.CommonTypes
+import           VkXml.Parser
 import           VkXml.Sections.Commands
 import           VkXml.Sections.Enums
 import           VkXml.Sections.Extensions
@@ -133,3 +139,29 @@ fixVkXml VkXmlPartial
   , globExtensions = pExtensions
   }
 fixVkXml _ = error "Unexpected number of sections in vk.xml"
+
+
+reexportedTypesRequire :: VkXml -> VkRequire -> [VkTypeName]
+reexportedTypesRequire VkXml {..} VkRequire {..} = nub $
+  requireTypes ++
+    ( requireComms
+      >>= maybeToList . (`Map.lookup` globCommands)
+      >>= requiresTypes
+    )
+
+reexportedTypesFeature :: VkXml -> VkFeature -> [VkTypeName]
+reexportedTypesFeature vkXml VkFeature {..}
+ = nub $ reqList >>= reexportedTypesRequire vkXml
+
+
+reexportedTypesExtension :: VkXml -> VkExtension -> [VkTypeName]
+reexportedTypesExtension vkXml VkExtension {..}
+ = nub $ extRequires >>= reexportedTypesRequire vkXml
+
+
+-- evalProtectedTypes :: VkXml
+--                    -> Map VkTypeName VkType
+--                    -> Map VkTypeName (VkType, ProtectDef)
+-- evalProtectedTypes vkXml ts =
+--   where
+--

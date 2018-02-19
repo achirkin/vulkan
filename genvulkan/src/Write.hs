@@ -51,12 +51,17 @@ generateVkSource' :: DeclaredNames
                   -> Path c File
                   -> VkXml
                   -> IO DeclaredNames
-generateVkSource' dnames outputDir outCabalFile vkXml = do
+generateVkSource' dnames' outputDir outCabalFile vkXml = do
+
 
   removeDirRecur outputDir
   createDirIfMissing True (outputDir </> [reldir|Graphics|])
   createDirIfMissing True (outputDir </> [reldir|Graphics/Vulkan|])
   createDirIfMissing True (outputDir </> [reldir|Graphics/Vulkan/Ext|])
+
+  (genTModules, dnames) <- writeAllTypes vkXml dnames'
+  eModules0 <- mapM
+    (\(m, mpdf) -> flip (,) mpdf <$> writeModule' outputDir m) genTModules
 
   exportedNamesCommon <- do
     ((), mr) <- runModuleWriter vkXml "Graphics.Vulkan.Common" dnames $ do
@@ -129,7 +134,8 @@ generateVkSource' dnames outputDir outCabalFile vkXml = do
 
 
 
-  writeFile (toFilePath outCabalFile) . T.unpack $ genCabalFile eModules
+  writeFile (toFilePath outCabalFile) . T.unpack $ genCabalFile
+    $ eModules0 <> eModules
   return exportedNamesExts
 
 
@@ -171,6 +177,39 @@ addOptionsPragma tool str (XmlPage a b ps c d e f)
   = XmlPage a b (OptionsPragma Nothing (Just tool) str : ps) c d e f
 addOptionsPragma tool str (XmlHybrid a b ps c d e f g h)
   = XmlHybrid a b (OptionsPragma Nothing (Just tool) str : ps) c d e f g h
+
+writeModule' :: Path b Dir
+             -> ModuleWriting
+             -> IO Text
+writeModule' outputDir mw = do
+    rez `deepseq` putStrLn "Done generating; now apply hfmt to reformat code..."
+    p <- parseRelFile fileNameStr
+    let pp = toFilePath $ outputDir </> p
+    createDirIfMissing True (parent $ outputDir </> p)
+    frez <- hfmt rez
+    case frez of
+      Left err -> do
+        putStrLn $ "Could not format the code:\n" <> err
+        writeFile pp
+          $ fixSourceHooks isHsc rez
+      Right (ss, rez') -> do
+        forM_ ss $ \(Suggestion s) ->
+          putStrLn $ "Formatting suggestion:\n    " <> s
+        writeFile pp
+          $ fixSourceHooks isHsc rez'
+    putStrLn $ "Done: " <> pp
+    return $ T.pack moduleName
+  where
+    isHsc = "HSC2HS___" `L.isInfixOf` rez
+    moduleName = case mName mw of
+      ModuleName () m -> m
+    fileNameStr = map repSym moduleName <> if isHsc then ".hsc" else ".hs"
+    repSym '.' = '/'
+    repSym c = c
+    rez = uncurry exactPrint
+        . ppWithCommentsMode defaultMode
+        $ genModule mw
+
 
 writeModule :: Path b Dir
             -> Path Rel File

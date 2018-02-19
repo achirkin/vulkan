@@ -2,10 +2,12 @@
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE QuasiQuotes           #-}
+{-# LANGUAGE RecordWildCards       #-}
 {-# LANGUAGE Strict                #-}
 module Write.Types
   ( genBaseTypes, genType
   , genBaseStructs
+  , writeAllTypes
   ) where
 
 import           Control.Monad
@@ -14,9 +16,11 @@ import           Control.Monad.Reader.Class
 import qualified Control.Monad.Trans.RWS.Strict       as RWS
 import           Control.Monad.Trans.State.Strict     (StateT)
 import qualified Control.Monad.Trans.State.Strict     as State
+import qualified Data.Map                             as Map
 import           Data.Semigroup
-import qualified Data.Set as Set
-import qualified Data.Map as Map
+import           Data.Maybe (isNothing)
+import qualified Data.Set                             as Set
+import           Data.Text                            (Text)
 import qualified Data.Text                            as T
 import           Language.Haskell.Exts.SimpleComments
 import           Language.Haskell.Exts.Syntax
@@ -24,9 +28,9 @@ import           NeatInterpolation
 
 import           VkXml.CommonTypes
 import           VkXml.Sections
-import           VkXml.Sections.Types
-import           VkXml.Sections.Feature
 import           VkXml.Sections.Extensions
+import           VkXml.Sections.Feature
+import           VkXml.Sections.Types
 
 import           Write.ModuleWriter
 import           Write.Types.Define
@@ -34,6 +38,102 @@ import           Write.Types.Enum
 import           Write.Types.Funcpointer
 import           Write.Types.Handle
 import           Write.Types.Struct
+import           Write.Util.DeclaredNames
+
+
+-- | Write all types one-per-module in Graphics.Vulkan.Types
+writeAllTypes :: VkXml
+              -> DeclaredNames
+              -> IO ([(ModuleWriting, Maybe ProtectDef)], DeclaredNames)
+writeAllTypes vkXml@VkXml{..}
+  | Map.null allt8 = State.runStateT $ do
+
+    moduleInclude <-
+      writeSimpleTypes "Graphics.Vulkan.Types.Include" $ do
+        mapM_ genInclude typesIncludes
+        mapM_ genNocatData typesNoCat
+
+    moduleDefines <-
+      writeSimpleTypes "Graphics.Vulkan.Types.Defines" $
+        mapM_ genDefine typesDefine
+
+    moduleBaseTypes <-
+      writeSimpleTypes "Graphics.Vulkan.Types.BaseTypes" $
+        mapM_ genBasetypeAlias typesBaseTypes
+
+    moduleHandles <-
+      writeSimpleTypes "Graphics.Vulkan.Types.Handles" $
+        mapM_ genHandle typesHandles
+
+    moduleFuncpointers <-
+      writeSimpleTypes "Graphics.Vulkan.Types.Funcpointers" $
+        mapM_ genFuncpointer typesFuncpointers
+
+    moduleOrphanBitmasks <-
+      writeSimpleTypes "Graphics.Vulkan.Types.Bitmasks" $
+        mapM_ genEnum bitmasksNoRequireds
+
+
+    return $
+      [ moduleInclude
+      , moduleDefines
+      , moduleBaseTypes
+      , moduleHandles
+      , moduleFuncpointers
+      , moduleOrphanBitmasks
+      ]
+  | otherwise = error $ "Not all types were processed\n" ++ show allt8
+  where
+
+    (typesNoCat, allt0)
+      = Map.partition ((VkTypeNoCat ==) . vkTypeCat) globTypes
+    (typesIncludes, allt1)
+      = Map.partition ((VkTypeCatInclude ==) . vkTypeCat) allt0
+    (typesDefine, allt2)
+      = Map.partition ((VkTypeCatDefine ==) . vkTypeCat) allt1
+    (typesBaseTypes, allt3)
+      = Map.partition ((VkTypeCatBasetype ==) . vkTypeCat) allt2
+    (typesHandles, allt4)
+      = Map.partition ((VkTypeCatHandle ==) . vkTypeCat) allt3
+    (typesFuncpointers, allt5)
+      = Map.partition ((VkTypeCatFuncpointer ==) . vkTypeCat) allt4
+
+    (typesBitmasks, allt6)
+      = Map.partition ((VkTypeCatBitmask ==) . vkTypeCat) allt5
+    (typesEnums, allt7)
+      = Map.partition ((VkTypeCatEnum ==) . vkTypeCat) allt6
+
+    (bitmasksNoRequireds, bitmasksRequireds)
+      = Map.partition (isNothing . requires . (attributes :: VkType -> VkTypeAttrs)
+                      ) typesBitmasks
+
+    (typesStructsOrUnions, allt8)
+      = Map.partition ((\c -> VkTypeCatStruct == c || VkTypeCatUnion == c
+                       ) . vkTypeCat) allt7
+
+    writeSimpleTypes mname a = do
+      mds <- State.get
+      ((), mr) <- runModuleWriter vkXml mname mds $ do
+        writePragma "Strict"
+        writePragma "DataKinds"
+        a
+      State.put (globalNames mr)
+      return (mr, Nothing)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 genBaseTypes :: Monad m => ModuleWriter m ()
 genBaseTypes = hoist (`State.evalStateT` Nothing) genBaseTypes'
@@ -65,14 +165,14 @@ genBaseTypes' = do
                 VkTypeCatUnion       -> return ()
 
             case vkTypeCat t of
-              VkTypeNoCat          -> genNocatData t
+              VkTypeNoCat          -> return ()
               VkTypeCatInclude     -> return ()
-              VkTypeCatDefine      -> genDefine t
-              VkTypeCatBasetype    -> genBasetypeAlias t
+              VkTypeCatDefine      -> return ()
+              VkTypeCatBasetype    -> return ()
               VkTypeCatBitmask     -> genEnum t
-              VkTypeCatHandle      -> genHandle t
+              VkTypeCatHandle      -> return ()
               VkTypeCatEnum        -> genEnum t
-              VkTypeCatFuncpointer -> genFuncpointer t
+              VkTypeCatFuncpointer -> return ()
               VkTypeCatStruct      -> return ()
               VkTypeCatUnion       -> return ()
 
@@ -93,7 +193,7 @@ genBaseStructs = do
         then pure mempty
         else case vkTypeCat t of
           VkTypeNoCat          -> return mempty
-          VkTypeCatInclude     -> mempty <$ genInclude t
+          VkTypeCatInclude     -> return mempty -- <$ genInclude t
           VkTypeCatDefine      -> return mempty
           VkTypeCatBasetype    -> return mempty
           VkTypeCatBitmask     -> return mempty
@@ -135,28 +235,39 @@ genNocatData VkTypeSimple
         -- https://github.com/haskell/win32
         -- https://github.com/xmonad/X11
         case n of
-          "HINSTANCE" -> writeDecl . setComment rezComment $ parseDecl'
+          "HINSTANCE" -> do
+            writeImport $ DIThing "Ptr" DITEmpty
+            writeDecl . setComment rezComment $ parseDecl'
               [text|type HINSTANCE = Ptr ()|]
-          "HWND" -> writeDecl . setComment rezComment $ parseDecl'
+          "HWND" -> do
+            writeImport $ DIThing "Ptr" DITEmpty
+            writeDecl . setComment rezComment $ parseDecl'
               [text|type HWND = Ptr ()|]
-          "HANDLE" -> writeDecl . setComment rezComment $ parseDecl'
+          "HANDLE" -> do
+            writeImport $ DIThing "Ptr" DITEmpty
+            writeDecl . setComment rezComment $ parseDecl'
               [text|type HANDLE = Ptr ()|]
-          "DWORD" -> writeDecl . setComment rezComment $ parseDecl'
+          "DWORD" -> do
+            writeImport $ DIThing "Word32" DITEmpty
+            writeDecl . setComment rezComment $ parseDecl'
               [text|type DWORD = Word32|]
-          "DDWORD" -> writeDecl . setComment rezComment $ parseDecl'
+          "DDWORD" -> do
+            writeImport $ DIThing "Word64" DITEmpty
+            writeDecl . setComment rezComment $ parseDecl'
               [text|type DWORD = Word64|]
           "LPCWSTR" -> do
             writeImport $ DIThing "CWchar" DITAll
+            writeImport $ DIThing "Ptr" DITEmpty
             writeDecl . setComment rezComment $ parseDecl'
               [text|type LPCWSTR = Ptr CWchar|]
-          "Xcb_window_t" -> do
+          "XcbWindowT" -> do
             writeImport $ DIThing "CULong" DITAll
             writeDecl . setComment rezComment $ parseDecl'
-              [text|type Xcb_window_t = CULong|]
-          "Xcb_visualid_t" -> do
+              [text|type XcbWindowT = CULong|]
+          "XcbVisualidT" -> do
             writeImport $ DIThing "CULong" DITAll
             writeDecl . setComment rezComment $ parseDecl'
-              [text|type Xcb_visualid_t = CULong|]
+              [text|type XcbVisualidT = CULong|]
           "Window" -> do
             writeImport $ DIThing "CULong" DITAll
             writeDecl . setComment rezComment $ parseDecl'
