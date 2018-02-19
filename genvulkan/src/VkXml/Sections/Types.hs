@@ -23,6 +23,7 @@ import           Control.Monad.Trans.Reader (ReaderT (..))
 import           Data.Char                  (isSpace)
 import           Data.Coerce
 import           Data.Conduit
+import           Data.List                  (nub, union)
 import           Data.Map                   (Map)
 import qualified Data.Map                   as Map
 import           Data.Maybe
@@ -39,6 +40,43 @@ import           VkXml.Parser
 -- * Types
 
 type VkTypes = Map VkTypeName VkType
+
+data VkType
+  = VkTypeSimple
+    { name       :: VkTypeName
+    , attributes :: VkTypeAttrs
+    , typeData   :: VkTypeData VkTypeName
+    }
+  | VkTypeComposite
+    { name       :: VkTypeName
+    , attributes :: VkTypeAttrs
+    , members    :: Sections VkTypeMember
+      -- ^ Members sometimes separated by comments
+    }
+  deriving Show
+
+instance TypeScope VkType where
+  providesTypes = (:[]) . (name :: VkType -> VkTypeName)
+  requiresTypes VkTypeSimple {..} =
+    requiresTypes attributes `union` requiresTypes typeData
+  requiresTypes VkTypeComposite {..} =
+    requiresTypes attributes `union`
+      nub (items members >>= requiresTypes)
+
+instance TypeScope VkTypeAttrs where
+  providesTypes = maybeToList . (name :: VkTypeAttrs -> Maybe VkTypeName)
+  requiresTypes VkTypeAttrs {..}
+    = nub $ structextends ++ parent ++ maybeToList requires
+
+instance TypeScope (VkTypeData a) where
+  providesTypes _ = []
+  requiresTypes VkTypeData {..} = nub $
+    maybeToList (fmap fst retType) ++ map fst reference
+
+instance TypeScope VkTypeMember where
+  providesTypes _ = []
+  requiresTypes VkTypeMember {..} = requiresTypes memberData
+
 
 
 data VkTypeQualifier
@@ -110,23 +148,6 @@ data VkMemberAttrs
   , externsync     :: Bool
   }
   deriving Show
-
-
-data VkType
-  = VkTypeSimple
-    { name       :: VkTypeName
-    , attributes :: VkTypeAttrs
-    , typeData   :: VkTypeData VkTypeName
-    }
-  | VkTypeComposite
-    { name       :: VkTypeName
-    , attributes :: VkTypeAttrs
-    , members    :: Sections VkTypeMember
-      -- ^ Members sometimes separated by comments
-    }
-  deriving Show
-
-
 
 
 

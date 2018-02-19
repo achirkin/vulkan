@@ -29,7 +29,6 @@ module Graphics.Vulkan.Ext.VK_EXT_global_priority
         pattern VK_STRUCTURE_TYPE_DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_EXT,
         pattern VK_ERROR_NOT_PERMITTED_EXT)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -49,7 +48,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     VkQueueGlobalPriorityEXT       globalPriority;
 --   > } VkDeviceQueueGlobalPriorityCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceQueueGlobalPriorityCreateInfoEXT.html VkDeviceQueueGlobalPriorityCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDeviceQueueGlobalPriorityCreateInfoEXT.html VkDeviceQueueGlobalPriorityCreateInfoEXT registry at www.khronos.org>
 data VkDeviceQueueGlobalPriorityCreateInfoEXT = VkDeviceQueueGlobalPriorityCreateInfoEXT## Addr##
                                                                                           ByteArray##
 

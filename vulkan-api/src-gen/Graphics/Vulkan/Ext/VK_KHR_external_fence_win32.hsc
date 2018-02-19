@@ -40,7 +40,6 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_win32
         pattern VK_STRUCTURE_TYPE_EXPORT_FENCE_WIN32_HANDLE_INFO_KHR,
         pattern VK_STRUCTURE_TYPE_FENCE_GET_WIN32_HANDLE_INFO_KHR)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -61,7 +60,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     LPCWSTR                            name;
 --   > } VkImportFenceWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImportFenceWin32HandleInfoKHR.html VkImportFenceWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImportFenceWin32HandleInfoKHR.html VkImportFenceWin32HandleInfoKHR registry at www.khronos.org>
 data VkImportFenceWin32HandleInfoKHR = VkImportFenceWin32HandleInfoKHR## Addr##
                                                                         ByteArray##
 
@@ -491,7 +490,7 @@ instance Show VkImportFenceWin32HandleInfoKHR where
 --   >     LPCWSTR                                    name;
 --   > } VkExportFenceWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExportFenceWin32HandleInfoKHR.html VkExportFenceWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkExportFenceWin32HandleInfoKHR.html VkExportFenceWin32HandleInfoKHR registry at www.khronos.org>
 data VkExportFenceWin32HandleInfoKHR = VkExportFenceWin32HandleInfoKHR## Addr##
                                                                         ByteArray##
 
@@ -818,7 +817,7 @@ instance Show VkExportFenceWin32HandleInfoKHR where
 --   >     VkExternalFenceHandleTypeFlagBitsKHR   handleType;
 --   > } VkFenceGetWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkFenceGetWin32HandleInfoKHR.html VkFenceGetWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkFenceGetWin32HandleInfoKHR.html VkFenceGetWin32HandleInfoKHR registry at www.khronos.org>
 data VkFenceGetWin32HandleInfoKHR = VkFenceGetWin32HandleInfoKHR## Addr##
                                                                   ByteArray##
 
@@ -1090,7 +1089,7 @@ instance Show VkFenceGetWin32HandleInfoKHR where
 --   >     , const VkImportFenceWin32HandleInfoKHR* pImportFenceWin32HandleInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkImportFenceWin32HandleKHR.html vkImportFenceWin32HandleKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkImportFenceWin32HandleKHR.html vkImportFenceWin32HandleKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkImportFenceWin32HandleKHR"
                vkImportFenceWin32HandleKHR ::
                VkDevice -- ^ device
@@ -1107,7 +1106,7 @@ foreign import ccall unsafe "vkImportFenceWin32HandleKHR"
 --   >     , HANDLE* pHandle
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetFenceWin32HandleKHR.html vkGetFenceWin32HandleKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetFenceWin32HandleKHR.html vkGetFenceWin32HandleKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkGetFenceWin32HandleKHR"
                vkGetFenceWin32HandleKHR ::
                VkDevice -- ^ device

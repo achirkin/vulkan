@@ -37,7 +37,6 @@ module Graphics.Vulkan.Ext.VK_KHX_device_group_creation
         pattern VK_MAX_DEVICE_GROUP_SIZE_KHX, VK_MAX_DEVICE_GROUP_SIZE_KHX,
         pattern VK_MEMORY_HEAP_MULTI_INSTANCE_BIT_KHX)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -57,7 +56,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     VkBool32                         subsetAllocation;
 --   > } VkPhysicalDeviceGroupPropertiesKHX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceGroupPropertiesKHX.html VkPhysicalDeviceGroupPropertiesKHX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceGroupPropertiesKHX.html VkPhysicalDeviceGroupPropertiesKHX registry at www.khronos.org>
 data VkPhysicalDeviceGroupPropertiesKHX = VkPhysicalDeviceGroupPropertiesKHX## Addr##
                                                                               ByteArray##
 
@@ -438,7 +437,7 @@ instance Show VkPhysicalDeviceGroupPropertiesKHX where
 --   >     const VkPhysicalDevice*  pPhysicalDevices;
 --   > } VkDeviceGroupDeviceCreateInfoKHX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceGroupDeviceCreateInfoKHX.html VkDeviceGroupDeviceCreateInfoKHX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDeviceGroupDeviceCreateInfoKHX.html VkDeviceGroupDeviceCreateInfoKHX registry at www.khronos.org>
 data VkDeviceGroupDeviceCreateInfoKHX = VkDeviceGroupDeviceCreateInfoKHX## Addr##
                                                                           ByteArray##
 
@@ -740,7 +739,7 @@ instance Show VkDeviceGroupDeviceCreateInfoKHX where
 --   >     , VkPhysicalDeviceGroupPropertiesKHX* pPhysicalDeviceGroupProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkEnumeratePhysicalDeviceGroupsKHX.html vkEnumeratePhysicalDeviceGroupsKHX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkEnumeratePhysicalDeviceGroupsKHX.html vkEnumeratePhysicalDeviceGroupsKHX registry at www.khronos.org>
 foreign import ccall unsafe "vkEnumeratePhysicalDeviceGroupsKHX"
                vkEnumeratePhysicalDeviceGroupsKHX ::
                VkInstance -- ^ instance

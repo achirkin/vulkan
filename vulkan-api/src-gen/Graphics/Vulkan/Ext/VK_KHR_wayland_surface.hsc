@@ -37,7 +37,6 @@ module Graphics.Vulkan.Ext.VK_KHR_wayland_surface
         pattern VK_KHR_WAYLAND_SURFACE_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_WAYLAND_SURFACE_CREATE_INFO_KHR)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -56,7 +55,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     struct wl_surface*               surface;
 --   > } VkWaylandSurfaceCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkWaylandSurfaceCreateInfoKHR.html VkWaylandSurfaceCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkWaylandSurfaceCreateInfoKHR.html VkWaylandSurfaceCreateInfoKHR registry at www.khronos.org>
 data VkWaylandSurfaceCreateInfoKHR = VkWaylandSurfaceCreateInfoKHR## Addr##
                                                                     ByteArray##
 
@@ -380,7 +379,7 @@ instance Show VkWaylandSurfaceCreateInfoKHR where
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCreateWaylandSurfaceKHR.html vkCreateWaylandSurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateWaylandSurfaceKHR.html vkCreateWaylandSurfaceKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateWaylandSurfaceKHR"
                vkCreateWaylandSurfaceKHR ::
                VkInstance -- ^ instance
@@ -397,7 +396,7 @@ foreign import ccall unsafe "vkCreateWaylandSurfaceKHR"
 --   >     , struct wl_display* display
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetPhysicalDeviceWaylandPresentationSupportKHR.html vkGetPhysicalDeviceWaylandPresentationSupportKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceWaylandPresentationSupportKHR.html vkGetPhysicalDeviceWaylandPresentationSupportKHR registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceWaylandPresentationSupportKHR"
                vkGetPhysicalDeviceWaylandPresentationSupportKHR ::

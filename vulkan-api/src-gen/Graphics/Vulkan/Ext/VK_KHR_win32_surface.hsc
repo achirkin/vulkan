@@ -37,7 +37,6 @@ module Graphics.Vulkan.Ext.VK_KHR_win32_surface
         pattern VK_KHR_WIN32_SURFACE_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_WIN32_SURFACE_CREATE_INFO_KHR)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -56,7 +55,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     HWND                             hwnd;
 --   > } VkWin32SurfaceCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkWin32SurfaceCreateInfoKHR.html VkWin32SurfaceCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkWin32SurfaceCreateInfoKHR.html VkWin32SurfaceCreateInfoKHR registry at www.khronos.org>
 data VkWin32SurfaceCreateInfoKHR = VkWin32SurfaceCreateInfoKHR## Addr##
                                                                 ByteArray##
 
@@ -375,7 +374,7 @@ instance Show VkWin32SurfaceCreateInfoKHR where
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCreateWin32SurfaceKHR.html vkCreateWin32SurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateWin32SurfaceKHR.html vkCreateWin32SurfaceKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateWin32SurfaceKHR"
                vkCreateWin32SurfaceKHR ::
                VkInstance -- ^ instance
@@ -391,7 +390,7 @@ foreign import ccall unsafe "vkCreateWin32SurfaceKHR"
 --   >     , uint32_t queueFamilyIndex
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetPhysicalDeviceWin32PresentationSupportKHR.html vkGetPhysicalDeviceWin32PresentationSupportKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceWin32PresentationSupportKHR.html vkGetPhysicalDeviceWin32PresentationSupportKHR registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceWin32PresentationSupportKHR"
                vkGetPhysicalDeviceWin32PresentationSupportKHR ::

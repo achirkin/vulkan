@@ -36,7 +36,6 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_fd
         pattern VK_STRUCTURE_TYPE_IMPORT_FENCE_FD_INFO_KHR,
         pattern VK_STRUCTURE_TYPE_FENCE_GET_FD_INFO_KHR)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -55,7 +54,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     int                                    fd;
 --   > } VkImportFenceFdInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImportFenceFdInfoKHR.html VkImportFenceFdInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImportFenceFdInfoKHR.html VkImportFenceFdInfoKHR registry at www.khronos.org>
 data VkImportFenceFdInfoKHR = VkImportFenceFdInfoKHR## Addr##
                                                       ByteArray##
 
@@ -339,7 +338,7 @@ instance CanWriteField "handleType" VkImportFenceFdInfoKHR where
         writeField = writeVkHandleType
 
 instance {-# OVERLAPPING #-} HasVkFd VkImportFenceFdInfoKHR where
-        type VkFdMType VkImportFenceFdInfoKHR = #{type int}
+        type VkFdMType VkImportFenceFdInfoKHR = CInt
 
         {-# NOINLINE vkFd #-}
         vkFd x
@@ -360,8 +359,7 @@ instance {-# OVERLAPPING #-} HasVkFd VkImportFenceFdInfoKHR where
 
 instance {-# OVERLAPPING #-} HasField "fd" VkImportFenceFdInfoKHR
          where
-        type FieldType "fd" VkImportFenceFdInfoKHR =
-             #{type int}
+        type FieldType "fd" VkImportFenceFdInfoKHR = CInt
         type FieldOptional "fd" VkImportFenceFdInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "fd" VkImportFenceFdInfoKHR =
              #{offset VkImportFenceFdInfoKHR, fd}
@@ -412,7 +410,7 @@ instance Show VkImportFenceFdInfoKHR where
 --   >     VkExternalFenceHandleTypeFlagBitsKHR   handleType;
 --   > } VkFenceGetFdInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkFenceGetFdInfoKHR.html VkFenceGetFdInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkFenceGetFdInfoKHR.html VkFenceGetFdInfoKHR registry at www.khronos.org>
 data VkFenceGetFdInfoKHR = VkFenceGetFdInfoKHR## Addr## ByteArray##
 
 instance Eq VkFenceGetFdInfoKHR where
@@ -667,7 +665,7 @@ instance Show VkFenceGetFdInfoKHR where
 --   >     , const VkImportFenceFdInfoKHR* pImportFenceFdInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkImportFenceFdKHR.html vkImportFenceFdKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkImportFenceFdKHR.html vkImportFenceFdKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkImportFenceFdKHR" vkImportFenceFdKHR
                :: VkDevice -- ^ device
                            -> Ptr VkImportFenceFdInfoKHR -- ^ pImportFenceFdInfo
@@ -683,14 +681,12 @@ foreign import ccall unsafe "vkImportFenceFdKHR" vkImportFenceFdKHR
 --   >     , int* pFd
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetFenceFdKHR.html vkGetFenceFdKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetFenceFdKHR.html vkGetFenceFdKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkGetFenceFdKHR" vkGetFenceFdKHR ::
                VkDevice -- ^ device
-                        ->
-                 Ptr VkFenceGetFdInfoKHR -- ^ pGetFdInfo
-                                         ->
-                   Ptr #{type int} -- ^ pFd
-                                               -> IO VkResult
+                        -> Ptr VkFenceGetFdInfoKHR -- ^ pGetFdInfo
+                                                   -> Ptr CInt -- ^ pFd
+                                                               -> IO VkResult
 
 pattern VK_KHR_EXTERNAL_FENCE_FD_SPEC_VERSION :: (Num a, Eq a) => a
 

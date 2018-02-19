@@ -38,17 +38,15 @@ module Graphics.Vulkan.Ext.VK_KHR_shared_presentable_image
         pattern VK_PRESENT_MODE_SHARED_CONTINUOUS_REFRESH_KHR,
         pattern VK_IMAGE_LAYOUT_SHARED_PRESENT_KHR)
        where
-import           Foreign.C.String                 (CString)
-import           Foreign.Storable                 (Storable (..))
+import           Foreign.Storable                                     (Storable (..))
 import           GHC.Prim
-import           GHC.Ptr                          (Ptr (..))
+import           GHC.Ptr                                              (Ptr (..))
 import           Graphics.Vulkan.Common
+import           Graphics.Vulkan.Ext.VK_KHR_get_surface_capabilities2 (VkSurfaceCapabilities2KHR)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
-
-import Graphics.Vulkan.Ext.VK_KHR_get_surface_capabilities2
+import           System.IO.Unsafe                                     (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSharedPresentSurfaceCapabilitiesKHR {
 --   >     VkStructureType sType;
@@ -56,7 +54,7 @@ import Graphics.Vulkan.Ext.VK_KHR_get_surface_capabilities2
 --   >     VkImageUsageFlags sharedPresentSupportedUsageFlags;
 --   > } VkSharedPresentSurfaceCapabilitiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSharedPresentSurfaceCapabilitiesKHR.html VkSharedPresentSurfaceCapabilitiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSharedPresentSurfaceCapabilitiesKHR.html VkSharedPresentSurfaceCapabilitiesKHR registry at www.khronos.org>
 data VkSharedPresentSurfaceCapabilitiesKHR = VkSharedPresentSurfaceCapabilitiesKHR## Addr##
                                                                                     ByteArray##
 
@@ -288,7 +286,7 @@ instance Show VkSharedPresentSurfaceCapabilitiesKHR where
 --   >     , VkSwapchainKHR swapchain
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetSwapchainStatusKHR.html vkGetSwapchainStatusKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetSwapchainStatusKHR.html vkGetSwapchainStatusKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkGetSwapchainStatusKHR"
                vkGetSwapchainStatusKHR ::
                VkDevice -- ^ device

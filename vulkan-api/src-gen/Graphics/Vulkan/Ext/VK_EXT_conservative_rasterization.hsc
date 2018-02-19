@@ -35,7 +35,6 @@ module Graphics.Vulkan.Ext.VK_EXT_conservative_rasterization
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_CONSERVATIVE_RASTERIZATION_PROPERTIES_EXT,
         pattern VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_CONSERVATIVE_STATE_CREATE_INFO_EXT)
        where
-import           Foreign.C.String                                           (CString)
 import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                                                    (Ptr (..))
@@ -64,7 +63,7 @@ import           System.IO.Unsafe                                           (uns
 --   >     VkBool32               conservativeRasterizationPostDepthCoverage;
 --   > } VkPhysicalDeviceConservativeRasterizationPropertiesEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceConservativeRasterizationPropertiesEXT.html VkPhysicalDeviceConservativeRasterizationPropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceConservativeRasterizationPropertiesEXT.html VkPhysicalDeviceConservativeRasterizationPropertiesEXT registry at www.khronos.org>
 data VkPhysicalDeviceConservativeRasterizationPropertiesEXT = VkPhysicalDeviceConservativeRasterizationPropertiesEXT## Addr##
                                                                                                                       ByteArray##
 
@@ -934,7 +933,7 @@ instance Show
 --   >     float                                                                            extraPrimitiveOverestimationSize;
 --   > } VkPipelineRasterizationConservativeStateCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineRasterizationConservativeStateCreateInfoEXT.html VkPipelineRasterizationConservativeStateCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPipelineRasterizationConservativeStateCreateInfoEXT.html VkPipelineRasterizationConservativeStateCreateInfoEXT registry at www.khronos.org>
 data VkPipelineRasterizationConservativeStateCreateInfoEXT = VkPipelineRasterizationConservativeStateCreateInfoEXT## Addr##
                                                                                                                     ByteArray##
 

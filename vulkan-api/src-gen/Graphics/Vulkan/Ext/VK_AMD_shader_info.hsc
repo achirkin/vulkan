@@ -31,7 +31,6 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_info
         VK_AMD_SHADER_INFO_EXTENSION_NAME,
         pattern VK_AMD_SHADER_INFO_EXTENSION_NAME)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -50,7 +49,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     size_t scratchMemUsageInBytes;
 --   > } VkShaderResourceUsageAMD;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkShaderResourceUsageAMD.html VkShaderResourceUsageAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkShaderResourceUsageAMD.html VkShaderResourceUsageAMD registry at www.khronos.org>
 data VkShaderResourceUsageAMD = VkShaderResourceUsageAMD## Addr##
                                                           ByteArray##
 
@@ -242,8 +241,7 @@ instance CanReadField "ldsSizePerLocalWorkGroup"
 
 instance {-# OVERLAPPING #-}
          HasVkLdsUsageSizeInBytes VkShaderResourceUsageAMD where
-        type VkLdsUsageSizeInBytesMType VkShaderResourceUsageAMD =
-             #{type size_t}
+        type VkLdsUsageSizeInBytesMType VkShaderResourceUsageAMD = CSize
 
         {-# NOINLINE vkLdsUsageSizeInBytes #-}
         vkLdsUsageSizeInBytes x
@@ -265,7 +263,7 @@ instance {-# OVERLAPPING #-}
 instance {-# OVERLAPPING #-}
          HasField "ldsUsageSizeInBytes" VkShaderResourceUsageAMD where
         type FieldType "ldsUsageSizeInBytes" VkShaderResourceUsageAMD =
-             #{type size_t}
+             CSize
         type FieldOptional "ldsUsageSizeInBytes" VkShaderResourceUsageAMD =
              'False -- ' closing tick for hsc2hs
         type FieldOffset "ldsUsageSizeInBytes" VkShaderResourceUsageAMD =
@@ -291,8 +289,7 @@ instance CanReadField "ldsUsageSizeInBytes"
 
 instance {-# OVERLAPPING #-}
          HasVkScratchMemUsageInBytes VkShaderResourceUsageAMD where
-        type VkScratchMemUsageInBytesMType VkShaderResourceUsageAMD =
-             #{type size_t}
+        type VkScratchMemUsageInBytesMType VkShaderResourceUsageAMD = CSize
 
         {-# NOINLINE vkScratchMemUsageInBytes #-}
         vkScratchMemUsageInBytes x
@@ -314,7 +311,7 @@ instance {-# OVERLAPPING #-}
 instance {-# OVERLAPPING #-}
          HasField "scratchMemUsageInBytes" VkShaderResourceUsageAMD where
         type FieldType "scratchMemUsageInBytes" VkShaderResourceUsageAMD =
-             #{type size_t}
+             CSize
         type FieldOptional "scratchMemUsageInBytes"
                VkShaderResourceUsageAMD
              = 'False -- ' closing tick for hsc2hs
@@ -368,7 +365,7 @@ instance Show VkShaderResourceUsageAMD where
 --   >     uint32_t computeWorkGroupSize[3];
 --   > } VkShaderStatisticsInfoAMD;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkShaderStatisticsInfoAMD.html VkShaderStatisticsInfoAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkShaderStatisticsInfoAMD.html VkShaderStatisticsInfoAMD registry at www.khronos.org>
 data VkShaderStatisticsInfoAMD = VkShaderStatisticsInfoAMD## Addr##
                                                             ByteArray##
 
@@ -826,7 +823,7 @@ instance Show VkShaderStatisticsInfoAMD where
 --   >     , void* pInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetShaderInfoAMD.html vkGetShaderInfoAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetShaderInfoAMD.html vkGetShaderInfoAMD registry at www.khronos.org>
 foreign import ccall unsafe "vkGetShaderInfoAMD" vkGetShaderInfoAMD
                ::
                VkDevice -- ^ device
@@ -836,8 +833,7 @@ foreign import ccall unsafe "vkGetShaderInfoAMD" vkGetShaderInfoAMD
                    VkShaderStageFlagBits -- ^ shaderStage
                                          ->
                      VkShaderInfoTypeAMD -- ^ infoType
-                                         ->
-                       Ptr #{type size_t} -- ^ pInfoSize
+                                         -> Ptr CSize -- ^ pInfoSize
                                                       -> Ptr Void -- ^ pInfo
                                                                   -> IO VkResult
 

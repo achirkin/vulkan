@@ -28,13 +28,12 @@ module Graphics.Vulkan.Ext.VK_KHR_image_format_list
         pattern VK_KHR_IMAGE_FORMAT_LIST_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_IMAGE_FORMAT_LIST_CREATE_INFO_KHR)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           Graphics.Vulkan.Base             (VkImageCreateInfo)
 import           Graphics.Vulkan.Common           (VkFormat,
-                                                   VkStructureType (..), Word32)
+                                                   VkStructureType (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
@@ -47,7 +46,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     const VkFormat*      pViewFormats;
 --   > } VkImageFormatListCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImageFormatListCreateInfoKHR.html VkImageFormatListCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImageFormatListCreateInfoKHR.html VkImageFormatListCreateInfoKHR registry at www.khronos.org>
 data VkImageFormatListCreateInfoKHR = VkImageFormatListCreateInfoKHR## Addr##
                                                                       ByteArray##
 

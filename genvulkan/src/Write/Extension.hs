@@ -16,7 +16,7 @@ import           VkXml.CommonTypes
 import           VkXml.Sections
 -- import           VkXml.Sections.Types as Ts
 -- import           VkXml.Sections.Commands as Cs
-import           VkXml.Sections.Feature
+-- import           VkXml.Sections.Feature
 import           VkXml.Sections.Extensions
 
 import           Write.ModuleWriter
@@ -24,12 +24,12 @@ import           Write.Feature
 import           Write.Types.Struct
 
 
-genExtension :: Monad m => VkExtension -> ModuleWriter m (ClassDeclarations, Maybe T.Text)
+genExtension :: Monad m => VkExtension
+             -> ModuleWriter m (ClassDeclarations, Maybe ProtectDef)
 genExtension (VkExtension VkExtAttrs{..} ereqs) = do
     curlvl <- getCurrentSecLvl
     vkXml <- ask
-    let VkFeature {..} = globFeature vkXml
-        tps = globTypes vkXml
+    let tps = globTypes vkXml
         cmds = globCommands vkXml
     writeSection curlvl $ "Vulkan extension: @" <> unVkExtensionName extName <> "@"
        <:> ("supported: @" <> extSupported <> "@")
@@ -38,11 +38,13 @@ genExtension (VkExtension VkExtAttrs{..} ereqs) = do
        <:> maybe mempty (\s -> "type: @" <> s <> "@") extType
        <:> ("Extension number: @" <> T.pack (show extNumber) <> "@")
        <:> showExts extReqExts
-       <:> maybe mempty (\s -> "Protected by CPP ifdef: @" <> s <> "@") extProtect
+       <:> maybe mempty
+          (\s -> "Protected by CPP ifdef: @" <> unProtectCPP (protectCPP s) <> "@")
+          extProtect
 
     cds <- pushSecLvl $ \lvl -> mconcat <$> mapM (genRequire lvl tps cmds) ereqs
 
     fmap ((,) cds) $
       if extSupported == "disabled"
-      then return $ Just "DISABLED_EXTENSIONS_STUB"
-      else return extProtect
+      then pure $ Just (ProtectDef "DISABLED_EXTENSIONS_STUB"  "disabledExtensionsStub")
+      else pure extProtect

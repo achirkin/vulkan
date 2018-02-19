@@ -33,7 +33,6 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore
         pattern VK_KHR_EXTERNAL_SEMAPHORE_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_EXPORT_SEMAPHORE_CREATE_INFO_KHR)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -52,7 +51,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     VkExternalSemaphoreHandleTypeFlagsKHR handleTypes;
 --   > } VkExportSemaphoreCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExportSemaphoreCreateInfoKHR.html VkExportSemaphoreCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkExportSemaphoreCreateInfoKHR.html VkExportSemaphoreCreateInfoKHR registry at www.khronos.org>
 data VkExportSemaphoreCreateInfoKHR = VkExportSemaphoreCreateInfoKHR## Addr##
                                                                       ByteArray##
 

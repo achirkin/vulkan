@@ -45,7 +45,7 @@ data VkExtAttrs
   , extType      :: Maybe Text
   , extNumber    :: Int
   , extReqExts   :: [VkExtensionName]
-  , extProtect   :: Maybe Text
+  , extProtect   :: Maybe ProtectDef
   } deriving Show
 
 
@@ -77,7 +77,7 @@ parseVkExtAttrs = do
   extContact   <- lift $ attr "contact"
   extAuthor    <- lift $ fmap VkTagName <$> attr "author"
   extType      <- lift $ attr "type"
-  extProtect   <- lift $ attr "protect"
+  extProtect   <- lift (attr "protect") >>= mapM toProtectDef
   extReqExts   <- commaSeparated <$> lift (attr "requires")
                   >>= mapM toHaskellExt
   eextNumber   <- decOrHex <$> forceAttr "number"

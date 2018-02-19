@@ -38,7 +38,6 @@ module Graphics.Vulkan.Ext.VK_NV_external_memory_win32
         pattern VK_STRUCTURE_TYPE_IMPORT_MEMORY_WIN32_HANDLE_INFO_NV,
         pattern VK_STRUCTURE_TYPE_EXPORT_MEMORY_WIN32_HANDLE_INFO_NV)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -56,7 +55,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     HANDLE                           handle;
 --   > } VkImportMemoryWin32HandleInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImportMemoryWin32HandleInfoNV.html VkImportMemoryWin32HandleInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImportMemoryWin32HandleInfoNV.html VkImportMemoryWin32HandleInfoNV registry at www.khronos.org>
 data VkImportMemoryWin32HandleInfoNV = VkImportMemoryWin32HandleInfoNV## Addr##
                                                                         ByteArray##
 
@@ -330,7 +329,7 @@ instance Show VkImportMemoryWin32HandleInfoNV where
 --   >     DWORD                            dwAccess;
 --   > } VkExportMemoryWin32HandleInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExportMemoryWin32HandleInfoNV.html VkExportMemoryWin32HandleInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkExportMemoryWin32HandleInfoNV.html VkExportMemoryWin32HandleInfoNV registry at www.khronos.org>
 data VkExportMemoryWin32HandleInfoNV = VkExportMemoryWin32HandleInfoNV## Addr##
                                                                         ByteArray##
 
@@ -612,7 +611,7 @@ instance Show VkExportMemoryWin32HandleInfoNV where
 --   >     , HANDLE* pHandle
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetMemoryWin32HandleNV.html vkGetMemoryWin32HandleNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetMemoryWin32HandleNV.html vkGetMemoryWin32HandleNV registry at www.khronos.org>
 foreign import ccall unsafe "vkGetMemoryWin32HandleNV"
                vkGetMemoryWin32HandleNV ::
                VkDevice -- ^ device

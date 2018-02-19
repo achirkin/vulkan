@@ -65,7 +65,6 @@ module Graphics.Vulkan.Ext.VK_EXT_blend_operation_advanced
         pattern VK_BLEND_OP_GREEN_EXT, pattern VK_BLEND_OP_BLUE_EXT,
         pattern VK_ACCESS_COLOR_ATTACHMENT_READ_NONCOHERENT_BIT_EXT)
        where
-import           Foreign.C.String                                           (CString)
 import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                                                    (Ptr (..))
@@ -75,8 +74,7 @@ import           Graphics.Vulkan.Common                                     (VkA
                                                                              VkBlendOverlapEXT,
                                                                              VkBool32,
                                                                              VkStructureType,
-                                                                             VkStructureType (..),
-                                                                             Word32)
+                                                                             VkStructureType (..))
 import           Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2 (VkPhysicalDeviceFeatures2KHR,
                                                                              VkPhysicalDeviceProperties2KHR)
 import           Graphics.Vulkan.Marshal
@@ -90,7 +88,7 @@ import           System.IO.Unsafe                                           (uns
 --   >     VkBool32                         advancedBlendCoherentOperations;
 --   > } VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT.html VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT.html VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT registry at www.khronos.org>
 data VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT = VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT## Addr##
                                                                                                             ByteArray##
 
@@ -369,7 +367,7 @@ instance Show VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
 --   >     VkBool32                         advancedBlendAllOperations;
 --   > } VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT.html VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT.html VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT registry at www.khronos.org>
 data VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT = VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT## Addr##
                                                                                                                 ByteArray##
 
@@ -961,7 +959,7 @@ instance Show VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
 --   >     VkBlendOverlapEXT      blendOverlap;
 --   > } VkPipelineColorBlendAdvancedStateCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineColorBlendAdvancedStateCreateInfoEXT.html VkPipelineColorBlendAdvancedStateCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPipelineColorBlendAdvancedStateCreateInfoEXT.html VkPipelineColorBlendAdvancedStateCreateInfoEXT registry at www.khronos.org>
 data VkPipelineColorBlendAdvancedStateCreateInfoEXT = VkPipelineColorBlendAdvancedStateCreateInfoEXT## Addr##
                                                                                                       ByteArray##
 

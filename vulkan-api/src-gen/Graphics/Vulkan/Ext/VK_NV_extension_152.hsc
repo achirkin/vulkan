@@ -21,7 +21,6 @@ module Graphics.Vulkan.Ext.VK_NV_extension_152
         VK_NV_EXTENSION_152_EXTENSION_NAME,
         pattern VK_NV_EXTENSION_152_EXTENSION_NAME)
        where
-import           Foreign.C.String        (CString)
 import           GHC.Ptr                 (Ptr (..))
 import           Graphics.Vulkan.Marshal
 

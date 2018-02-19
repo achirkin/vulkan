@@ -25,18 +25,17 @@ module Graphics.Vulkan.Ext.VK_AMD_draw_indirect_count
         VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME,
         pattern VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME)
        where
-import           Foreign.C.String        (CString)
 import           GHC.Ptr                 (Ptr (..))
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
 
--- | queues: @graphics@
+-- | queues: 'graphics'.
 --
 --   renderpass: @inside@
 --
 --   pipeline: @graphics@
 --
---   > void vkCmdDrawIndirectCountAMD
+--   > () vkCmdDrawIndirectCountAMD
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , VkBuffer buffer
 --   >     , VkDeviceSize offset
@@ -46,7 +45,7 @@ import           Graphics.Vulkan.Marshal
 --   >     , uint32_t stride
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCmdDrawIndirectCountAMD.html vkCmdDrawIndirectCountAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdDrawIndirectCountAMD.html vkCmdDrawIndirectCountAMD registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdDrawIndirectCountAMD"
                vkCmdDrawIndirectCountAMD ::
                VkCommandBuffer -- ^ commandBuffer
@@ -61,13 +60,13 @@ foreign import ccall unsafe "vkCmdDrawIndirectCountAMD"
                                                         -> Word32 -- ^ stride
                                                                   -> IO ()
 
--- | queues: @graphics@
+-- | queues: 'graphics'.
 --
 --   renderpass: @inside@
 --
 --   pipeline: @graphics@
 --
---   > void vkCmdDrawIndexedIndirectCountAMD
+--   > () vkCmdDrawIndexedIndirectCountAMD
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , VkBuffer buffer
 --   >     , VkDeviceSize offset
@@ -77,7 +76,7 @@ foreign import ccall unsafe "vkCmdDrawIndirectCountAMD"
 --   >     , uint32_t stride
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCmdDrawIndexedIndirectCountAMD.html vkCmdDrawIndexedIndirectCountAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdDrawIndexedIndirectCountAMD.html vkCmdDrawIndexedIndirectCountAMD registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdDrawIndexedIndirectCountAMD"
                vkCmdDrawIndexedIndirectCountAMD ::
                VkCommandBuffer -- ^ commandBuffer

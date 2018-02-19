@@ -36,7 +36,6 @@ module Graphics.Vulkan.Ext.VK_MVK_macos_surface
         pattern VK_MVK_MACOS_SURFACE_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_MACOS_SURFACE_CREATE_INFO_MVK)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -54,7 +53,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     const void*                                    pView;
 --   > } VkMacOSSurfaceCreateInfoMVK;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMacOSSurfaceCreateInfoMVK.html VkMacOSSurfaceCreateInfoMVK registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkMacOSSurfaceCreateInfoMVK.html VkMacOSSurfaceCreateInfoMVK registry at www.khronos.org>
 data VkMacOSSurfaceCreateInfoMVK = VkMacOSSurfaceCreateInfoMVK## Addr##
                                                                 ByteArray##
 
@@ -322,7 +321,7 @@ instance Show VkMacOSSurfaceCreateInfoMVK where
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCreateMacOSSurfaceMVK.html vkCreateMacOSSurfaceMVK registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateMacOSSurfaceMVK.html vkCreateMacOSSurfaceMVK registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateMacOSSurfaceMVK"
                vkCreateMacOSSurfaceMVK ::
                VkInstance -- ^ instance

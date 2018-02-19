@@ -33,7 +33,6 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence
         pattern VK_KHR_EXTERNAL_FENCE_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_EXPORT_FENCE_CREATE_INFO_KHR)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -52,7 +51,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     VkExternalFenceHandleTypeFlagsKHR handleTypes;
 --   > } VkExportFenceCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExportFenceCreateInfoKHR.html VkExportFenceCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkExportFenceCreateInfoKHR.html VkExportFenceCreateInfoKHR registry at www.khronos.org>
 data VkExportFenceCreateInfoKHR = VkExportFenceCreateInfoKHR## Addr##
                                                               ByteArray##
 

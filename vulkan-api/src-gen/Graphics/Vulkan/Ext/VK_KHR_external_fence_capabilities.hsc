@@ -39,7 +39,6 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_capabilities
         pattern VK_STRUCTURE_TYPE_EXTERNAL_FENCE_PROPERTIES_KHR,
         pattern VK_LUID_SIZE_KHR, VK_LUID_SIZE_KHR)
        where
-import           Foreign.C.String                                        (CString)
 import           Foreign.Storable                                        (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                                                 (Ptr (..))
@@ -56,7 +55,7 @@ import           System.IO.Unsafe                                        (unsafe
 --   >     VkExternalFenceHandleTypeFlagBitsKHR handleType;
 --   > } VkPhysicalDeviceExternalFenceInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceExternalFenceInfoKHR.html VkPhysicalDeviceExternalFenceInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceExternalFenceInfoKHR.html VkPhysicalDeviceExternalFenceInfoKHR registry at www.khronos.org>
 data VkPhysicalDeviceExternalFenceInfoKHR = VkPhysicalDeviceExternalFenceInfoKHR## Addr##
                                                                                   ByteArray##
 
@@ -294,7 +293,7 @@ instance Show VkPhysicalDeviceExternalFenceInfoKHR where
 --   >     VkExternalFenceFeatureFlagsKHR externalFenceFeatures;
 --   > } VkExternalFencePropertiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalFencePropertiesKHR.html VkExternalFencePropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkExternalFencePropertiesKHR.html VkExternalFencePropertiesKHR registry at www.khronos.org>
 data VkExternalFencePropertiesKHR = VkExternalFencePropertiesKHR## Addr##
                                                                   ByteArray##
 
@@ -617,13 +616,13 @@ instance Show VkExternalFencePropertiesKHR where
                                       showString "vkExternalFenceFeatures = " .
                                         showsPrec d (vkExternalFenceFeatures x) . showChar '}'
 
--- | > void vkGetPhysicalDeviceExternalFencePropertiesKHR
+-- | > () vkGetPhysicalDeviceExternalFencePropertiesKHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , const VkPhysicalDeviceExternalFenceInfoKHR* pExternalFenceInfo
 --   >     , VkExternalFencePropertiesKHR* pExternalFenceProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetPhysicalDeviceExternalFencePropertiesKHR.html vkGetPhysicalDeviceExternalFencePropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceExternalFencePropertiesKHR.html vkGetPhysicalDeviceExternalFencePropertiesKHR registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceExternalFencePropertiesKHR"
                vkGetPhysicalDeviceExternalFencePropertiesKHR ::

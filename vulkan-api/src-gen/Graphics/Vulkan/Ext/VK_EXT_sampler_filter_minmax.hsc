@@ -36,7 +36,6 @@ module Graphics.Vulkan.Ext.VK_EXT_sampler_filter_minmax
         pattern VK_STRUCTURE_TYPE_SAMPLER_REDUCTION_MODE_CREATE_INFO_EXT,
         pattern VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_MINMAX_BIT_EXT)
        where
-import           Foreign.C.String                                           (CString)
 import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                                                    (Ptr (..))
@@ -58,7 +57,7 @@ import           System.IO.Unsafe                                           (uns
 --   >     VkSamplerReductionModeEXT reductionMode;
 --   > } VkSamplerReductionModeCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSamplerReductionModeCreateInfoEXT.html VkSamplerReductionModeCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSamplerReductionModeCreateInfoEXT.html VkSamplerReductionModeCreateInfoEXT registry at www.khronos.org>
 data VkSamplerReductionModeCreateInfoEXT = VkSamplerReductionModeCreateInfoEXT## Addr##
                                                                                 ByteArray##
 
@@ -297,7 +296,7 @@ instance Show VkSamplerReductionModeCreateInfoEXT where
 --   >     VkBool32               filterMinmaxImageComponentMapping;
 --   > } VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT.html VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT.html VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT registry at www.khronos.org>
 data VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT = VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT## Addr##
                                                                                                           ByteArray##
 

@@ -32,7 +32,6 @@ module Graphics.Vulkan.Ext.VK_EXT_acquire_xlib_display
         VK_EXT_ACQUIRE_XLIB_DISPLAY_EXTENSION_NAME,
         pattern VK_EXT_ACQUIRE_XLIB_DISPLAY_EXTENSION_NAME)
        where
-import           Foreign.C.String        (CString)
 import           GHC.Ptr                 (Ptr (..))
 import           Graphics.Vulkan.Common
 import           Graphics.Vulkan.Marshal
@@ -47,7 +46,7 @@ import           Graphics.Vulkan.Marshal
 --   >     , VkDisplayKHR display
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkAcquireXlibDisplayEXT.html vkAcquireXlibDisplayEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkAcquireXlibDisplayEXT.html vkAcquireXlibDisplayEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkAcquireXlibDisplayEXT"
                vkAcquireXlibDisplayEXT ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -64,7 +63,7 @@ foreign import ccall unsafe "vkAcquireXlibDisplayEXT"
 --   >     , VkDisplayKHR* pDisplay
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetRandROutputDisplayEXT.html vkGetRandROutputDisplayEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetRandROutputDisplayEXT.html vkGetRandROutputDisplayEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkGetRandROutputDisplayEXT"
                vkGetRandROutputDisplayEXT ::
                VkPhysicalDevice -- ^ physicalDevice

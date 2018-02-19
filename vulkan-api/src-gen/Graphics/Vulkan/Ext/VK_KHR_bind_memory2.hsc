@@ -32,7 +32,6 @@ module Graphics.Vulkan.Ext.VK_KHR_bind_memory2
         pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_INFO_KHR,
         pattern VK_IMAGE_CREATE_ALIAS_BIT_KHR)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -50,7 +49,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     VkDeviceSize                     memoryOffset;
 --   > } VkBindBufferMemoryInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBindBufferMemoryInfoKHR.html VkBindBufferMemoryInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkBindBufferMemoryInfoKHR.html VkBindBufferMemoryInfoKHR registry at www.khronos.org>
 data VkBindBufferMemoryInfoKHR = VkBindBufferMemoryInfoKHR## Addr##
                                                             ByteArray##
 
@@ -365,7 +364,7 @@ instance Show VkBindBufferMemoryInfoKHR where
 --   >     VkDeviceSize                     memoryOffset;
 --   > } VkBindImageMemoryInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkBindImageMemoryInfoKHR.html VkBindImageMemoryInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkBindImageMemoryInfoKHR.html VkBindImageMemoryInfoKHR registry at www.khronos.org>
 data VkBindImageMemoryInfoKHR = VkBindImageMemoryInfoKHR## Addr##
                                                           ByteArray##
 
@@ -677,7 +676,7 @@ instance Show VkBindImageMemoryInfoKHR where
 --   >     , const VkBindBufferMemoryInfoKHR* pBindInfos
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkBindBufferMemory2KHR.html vkBindBufferMemory2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkBindBufferMemory2KHR.html vkBindBufferMemory2KHR registry at www.khronos.org>
 foreign import ccall unsafe "vkBindBufferMemory2KHR"
                vkBindBufferMemory2KHR ::
                VkDevice -- ^ device
@@ -695,7 +694,7 @@ foreign import ccall unsafe "vkBindBufferMemory2KHR"
 --   >     , const VkBindImageMemoryInfoKHR* pBindInfos
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkBindImageMemory2KHR.html vkBindImageMemory2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkBindImageMemory2KHR.html vkBindImageMemory2KHR registry at www.khronos.org>
 foreign import ccall unsafe "vkBindImageMemory2KHR"
                vkBindImageMemory2KHR ::
                VkDevice -- ^ device

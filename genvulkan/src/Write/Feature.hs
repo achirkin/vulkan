@@ -27,12 +27,11 @@ import           Write.Types.Enum
 import           Write.Types.Struct
 
 
-genFeature :: Monad m => ModuleWriter m ClassDeclarations
-genFeature = do
+genFeature :: Monad m => VkFeature -> ModuleWriter m ClassDeclarations
+genFeature VkFeature {..} = do
     curlvl <- getCurrentSecLvl
     vkXml <- ask
-    let VkFeature {..} = globFeature vkXml
-        tps = globTypes vkXml
+    let tps = globTypes vkXml
         cmds = globCommands vkXml
         -- ens = Map.fromList
         --     . map (\e -> (_vkEnumName e, e))

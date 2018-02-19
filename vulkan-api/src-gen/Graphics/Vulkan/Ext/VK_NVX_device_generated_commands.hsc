@@ -56,7 +56,6 @@ module Graphics.Vulkan.Ext.VK_NVX_device_generated_commands
         pattern VK_OBJECT_TYPE_OBJECT_TABLE_NVX,
         pattern VK_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -73,7 +72,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     VkBool32                         computeBindingPointSupport;
 --   > } VkDeviceGeneratedCommandsFeaturesNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceGeneratedCommandsFeaturesNVX.html VkDeviceGeneratedCommandsFeaturesNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDeviceGeneratedCommandsFeaturesNVX.html VkDeviceGeneratedCommandsFeaturesNVX registry at www.khronos.org>
 data VkDeviceGeneratedCommandsFeaturesNVX = VkDeviceGeneratedCommandsFeaturesNVX## Addr##
                                                                                   ByteArray##
 
@@ -321,7 +320,7 @@ instance Show VkDeviceGeneratedCommandsFeaturesNVX where
 --   >     uint32_t                         minCommandsTokenBufferOffsetAlignment;
 --   > } VkDeviceGeneratedCommandsLimitsNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceGeneratedCommandsLimitsNVX.html VkDeviceGeneratedCommandsLimitsNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDeviceGeneratedCommandsLimitsNVX.html VkDeviceGeneratedCommandsLimitsNVX registry at www.khronos.org>
 data VkDeviceGeneratedCommandsLimitsNVX = VkDeviceGeneratedCommandsLimitsNVX## Addr##
                                                                               ByteArray##
 
@@ -841,7 +840,7 @@ instance Show VkDeviceGeneratedCommandsLimitsNVX where
 --   >     VkDeviceSize                     offset;
 --   > } VkIndirectCommandsTokenNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkIndirectCommandsTokenNVX.html VkIndirectCommandsTokenNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkIndirectCommandsTokenNVX.html VkIndirectCommandsTokenNVX registry at www.khronos.org>
 data VkIndirectCommandsTokenNVX = VkIndirectCommandsTokenNVX## Addr##
                                                               ByteArray##
 
@@ -1054,7 +1053,7 @@ instance Show VkIndirectCommandsTokenNVX where
 --   >     uint32_t                         divisor;
 --   > } VkIndirectCommandsLayoutTokenNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkIndirectCommandsLayoutTokenNVX.html VkIndirectCommandsLayoutTokenNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkIndirectCommandsLayoutTokenNVX.html VkIndirectCommandsLayoutTokenNVX registry at www.khronos.org>
 data VkIndirectCommandsLayoutTokenNVX = VkIndirectCommandsLayoutTokenNVX## Addr##
                                                                           ByteArray##
 
@@ -1344,7 +1343,7 @@ instance Show VkIndirectCommandsLayoutTokenNVX where
 --   >     const VkIndirectCommandsLayoutTokenNVX*  pTokens;
 --   > } VkIndirectCommandsLayoutCreateInfoNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkIndirectCommandsLayoutCreateInfoNVX.html VkIndirectCommandsLayoutCreateInfoNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkIndirectCommandsLayoutCreateInfoNVX.html VkIndirectCommandsLayoutCreateInfoNVX registry at www.khronos.org>
 data VkIndirectCommandsLayoutCreateInfoNVX = VkIndirectCommandsLayoutCreateInfoNVX## Addr##
                                                                                     ByteArray##
 
@@ -1772,7 +1771,7 @@ instance Show VkIndirectCommandsLayoutCreateInfoNVX where
 --   >     VkDeviceSize                             sequencesIndexOffset;
 --   > } VkCmdProcessCommandsInfoNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkCmdProcessCommandsInfoNVX.html VkCmdProcessCommandsInfoNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkCmdProcessCommandsInfoNVX.html VkCmdProcessCommandsInfoNVX registry at www.khronos.org>
 data VkCmdProcessCommandsInfoNVX = VkCmdProcessCommandsInfoNVX## Addr##
                                                                 ByteArray##
 
@@ -2564,7 +2563,7 @@ instance Show VkCmdProcessCommandsInfoNVX where
 --   >     uint32_t                                                 maxSequencesCount;
 --   > } VkCmdReserveSpaceForCommandsInfoNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkCmdReserveSpaceForCommandsInfoNVX.html VkCmdReserveSpaceForCommandsInfoNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkCmdReserveSpaceForCommandsInfoNVX.html VkCmdReserveSpaceForCommandsInfoNVX registry at www.khronos.org>
 data VkCmdReserveSpaceForCommandsInfoNVX = VkCmdReserveSpaceForCommandsInfoNVX## Addr##
                                                                                 ByteArray##
 
@@ -2939,7 +2938,7 @@ instance Show VkCmdReserveSpaceForCommandsInfoNVX where
 --   >     uint32_t maxPipelineLayouts;
 --   > } VkObjectTableCreateInfoNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkObjectTableCreateInfoNVX.html VkObjectTableCreateInfoNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkObjectTableCreateInfoNVX.html VkObjectTableCreateInfoNVX registry at www.khronos.org>
 data VkObjectTableCreateInfoNVX = VkObjectTableCreateInfoNVX## Addr##
                                                               ByteArray##
 
@@ -3675,7 +3674,7 @@ instance Show VkObjectTableCreateInfoNVX where
 --   >     VkObjectEntryUsageFlagsNVX   flags;
 --   > } VkObjectTableEntryNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkObjectTableEntryNVX.html VkObjectTableEntryNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkObjectTableEntryNVX.html VkObjectTableEntryNVX registry at www.khronos.org>
 data VkObjectTableEntryNVX = VkObjectTableEntryNVX## Addr##
                                                     ByteArray##
 
@@ -3829,7 +3828,7 @@ instance Show VkObjectTableEntryNVX where
 --   >     VkPipeline                   pipeline;
 --   > } VkObjectTablePipelineEntryNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkObjectTablePipelineEntryNVX.html VkObjectTablePipelineEntryNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkObjectTablePipelineEntryNVX.html VkObjectTablePipelineEntryNVX registry at www.khronos.org>
 data VkObjectTablePipelineEntryNVX = VkObjectTablePipelineEntryNVX## Addr##
                                                                     ByteArray##
 
@@ -4050,7 +4049,7 @@ instance Show VkObjectTablePipelineEntryNVX where
 --   >     VkDescriptorSet              descriptorSet;
 --   > } VkObjectTableDescriptorSetEntryNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkObjectTableDescriptorSetEntryNVX.html VkObjectTableDescriptorSetEntryNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkObjectTableDescriptorSetEntryNVX.html VkObjectTableDescriptorSetEntryNVX registry at www.khronos.org>
 data VkObjectTableDescriptorSetEntryNVX = VkObjectTableDescriptorSetEntryNVX## Addr##
                                                                               ByteArray##
 
@@ -4348,7 +4347,7 @@ instance Show VkObjectTableDescriptorSetEntryNVX where
 --   >     VkBuffer                     buffer;
 --   > } VkObjectTableVertexBufferEntryNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkObjectTableVertexBufferEntryNVX.html VkObjectTableVertexBufferEntryNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkObjectTableVertexBufferEntryNVX.html VkObjectTableVertexBufferEntryNVX registry at www.khronos.org>
 data VkObjectTableVertexBufferEntryNVX = VkObjectTableVertexBufferEntryNVX## Addr##
                                                                             ByteArray##
 
@@ -4577,7 +4576,7 @@ instance Show VkObjectTableVertexBufferEntryNVX where
 --   >     VkIndexType                  indexType;
 --   > } VkObjectTableIndexBufferEntryNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkObjectTableIndexBufferEntryNVX.html VkObjectTableIndexBufferEntryNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkObjectTableIndexBufferEntryNVX.html VkObjectTableIndexBufferEntryNVX registry at www.khronos.org>
 data VkObjectTableIndexBufferEntryNVX = VkObjectTableIndexBufferEntryNVX## Addr##
                                                                           ByteArray##
 
@@ -4859,7 +4858,7 @@ instance Show VkObjectTableIndexBufferEntryNVX where
 --   >     VkShaderStageFlags           stageFlags;
 --   > } VkObjectTablePushConstantEntryNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkObjectTablePushConstantEntryNVX.html VkObjectTablePushConstantEntryNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkObjectTablePushConstantEntryNVX.html VkObjectTablePushConstantEntryNVX registry at www.khronos.org>
 data VkObjectTablePushConstantEntryNVX = VkObjectTablePushConstantEntryNVX## Addr##
                                                                             ByteArray##
 
@@ -5146,32 +5145,32 @@ instance Show VkObjectTablePushConstantEntryNVX where
                                 showString "vkStageFlags = " .
                                   showsPrec d (vkStageFlags x) . showChar '}'
 
--- | queues: @graphics,compute@
+-- | queues: 'graphics', 'compute'.
 --
 --   renderpass: @inside@
 --
---   > void vkCmdProcessCommandsNVX
+--   > () vkCmdProcessCommandsNVX
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , const VkCmdProcessCommandsInfoNVX* pProcessCommandsInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCmdProcessCommandsNVX.html vkCmdProcessCommandsNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdProcessCommandsNVX.html vkCmdProcessCommandsNVX registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdProcessCommandsNVX"
                vkCmdProcessCommandsNVX ::
                VkCommandBuffer -- ^ commandBuffer
                                -> Ptr VkCmdProcessCommandsInfoNVX -- ^ pProcessCommandsInfo
                                                                   -> IO ()
 
--- | queues: @graphics,compute@
+-- | queues: 'graphics', 'compute'.
 --
 --   renderpass: @inside@
 --
---   > void vkCmdReserveSpaceForCommandsNVX
+--   > () vkCmdReserveSpaceForCommandsNVX
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , const VkCmdReserveSpaceForCommandsInfoNVX* pReserveSpaceInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCmdReserveSpaceForCommandsNVX.html vkCmdReserveSpaceForCommandsNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdReserveSpaceForCommandsNVX.html vkCmdReserveSpaceForCommandsNVX registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdReserveSpaceForCommandsNVX"
                vkCmdReserveSpaceForCommandsNVX ::
                VkCommandBuffer -- ^ commandBuffer
@@ -5189,7 +5188,7 @@ foreign import ccall unsafe "vkCmdReserveSpaceForCommandsNVX"
 --   >     , VkIndirectCommandsLayoutNVX* pIndirectCommandsLayout
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCreateIndirectCommandsLayoutNVX.html vkCreateIndirectCommandsLayoutNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateIndirectCommandsLayoutNVX.html vkCreateIndirectCommandsLayoutNVX registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateIndirectCommandsLayoutNVX"
                vkCreateIndirectCommandsLayoutNVX ::
                VkDevice -- ^ device
@@ -5201,13 +5200,13 @@ foreign import ccall unsafe "vkCreateIndirectCommandsLayoutNVX"
                      Ptr VkIndirectCommandsLayoutNVX -- ^ pIndirectCommandsLayout
                                                      -> IO VkResult
 
--- | > void vkDestroyIndirectCommandsLayoutNVX
+-- | > () vkDestroyIndirectCommandsLayoutNVX
 --   >     ( VkDevice device
 --   >     , VkIndirectCommandsLayoutNVX indirectCommandsLayout
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkDestroyIndirectCommandsLayoutNVX.html vkDestroyIndirectCommandsLayoutNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroyIndirectCommandsLayoutNVX.html vkDestroyIndirectCommandsLayoutNVX registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyIndirectCommandsLayoutNVX"
                vkDestroyIndirectCommandsLayoutNVX ::
                VkDevice -- ^ device
@@ -5227,7 +5226,7 @@ foreign import ccall unsafe "vkDestroyIndirectCommandsLayoutNVX"
 --   >     , VkObjectTableNVX* pObjectTable
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCreateObjectTableNVX.html vkCreateObjectTableNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateObjectTableNVX.html vkCreateObjectTableNVX registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateObjectTableNVX"
                vkCreateObjectTableNVX ::
                VkDevice -- ^ device
@@ -5238,13 +5237,13 @@ foreign import ccall unsafe "vkCreateObjectTableNVX"
                                              -> Ptr VkObjectTableNVX -- ^ pObjectTable
                                                                      -> IO VkResult
 
--- | > void vkDestroyObjectTableNVX
+-- | > () vkDestroyObjectTableNVX
 --   >     ( VkDevice device
 --   >     , VkObjectTableNVX objectTable
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkDestroyObjectTableNVX.html vkDestroyObjectTableNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroyObjectTableNVX.html vkDestroyObjectTableNVX registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyObjectTableNVX"
                vkDestroyObjectTableNVX ::
                VkDevice -- ^ device
@@ -5264,7 +5263,7 @@ foreign import ccall unsafe "vkDestroyObjectTableNVX"
 --   >     , const uint32_t* pObjectIndices
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkRegisterObjectsNVX.html vkRegisterObjectsNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkRegisterObjectsNVX.html vkRegisterObjectsNVX registry at www.khronos.org>
 foreign import ccall unsafe "vkRegisterObjectsNVX"
                vkRegisterObjectsNVX ::
                VkDevice -- ^ device
@@ -5289,7 +5288,7 @@ foreign import ccall unsafe "vkRegisterObjectsNVX"
 --   >     , const uint32_t* pObjectIndices
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkUnregisterObjectsNVX.html vkUnregisterObjectsNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkUnregisterObjectsNVX.html vkUnregisterObjectsNVX registry at www.khronos.org>
 foreign import ccall unsafe "vkUnregisterObjectsNVX"
                vkUnregisterObjectsNVX ::
                VkDevice -- ^ device
@@ -5301,13 +5300,13 @@ foreign import ccall unsafe "vkUnregisterObjectsNVX"
                                                       -> Ptr Word32 -- ^ pObjectIndices
                                                                     -> IO VkResult
 
--- | > void vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
+-- | > () vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkDeviceGeneratedCommandsFeaturesNVX* pFeatures
 --   >     , VkDeviceGeneratedCommandsLimitsNVX* pLimits
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX.html vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX.html vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX"
                vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX ::

@@ -33,7 +33,6 @@ module Graphics.Vulkan.Ext.VK_KHR_variable_pointers
         pattern VK_KHR_VARIABLE_POINTERS_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES_KHR)
        where
-import           Foreign.C.String                                           (CString)
 import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                                                    (Ptr (..))
@@ -53,7 +52,7 @@ import           System.IO.Unsafe                                           (uns
 --   >     VkBool32                         variablePointers;
 --   > } VkPhysicalDeviceVariablePointerFeaturesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceVariablePointerFeaturesKHR.html VkPhysicalDeviceVariablePointerFeaturesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceVariablePointerFeaturesKHR.html VkPhysicalDeviceVariablePointerFeaturesKHR registry at www.khronos.org>
 data VkPhysicalDeviceVariablePointerFeaturesKHR = VkPhysicalDeviceVariablePointerFeaturesKHR## Addr##
                                                                                               ByteArray##
 

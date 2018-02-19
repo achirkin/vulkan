@@ -40,7 +40,6 @@ module Graphics.Vulkan.Ext.VK_EXT_display_control
         pattern VK_STRUCTURE_TYPE_DISPLAY_EVENT_INFO_EXT,
         pattern VK_STRUCTURE_TYPE_SWAPCHAIN_COUNTER_CREATE_INFO_EXT)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -58,7 +57,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     VkDisplayPowerStateEXT           powerState;
 --   > } VkDisplayPowerInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplayPowerInfoEXT.html VkDisplayPowerInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDisplayPowerInfoEXT.html VkDisplayPowerInfoEXT registry at www.khronos.org>
 data VkDisplayPowerInfoEXT = VkDisplayPowerInfoEXT## Addr##
                                                     ByteArray##
 
@@ -264,7 +263,7 @@ instance Show VkDisplayPowerInfoEXT where
 --   >     VkDeviceEventTypeEXT             deviceEvent;
 --   > } VkDeviceEventInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDeviceEventInfoEXT.html VkDeviceEventInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDeviceEventInfoEXT.html VkDeviceEventInfoEXT registry at www.khronos.org>
 data VkDeviceEventInfoEXT = VkDeviceEventInfoEXT## Addr## ByteArray##
 
 instance Eq VkDeviceEventInfoEXT where
@@ -468,7 +467,7 @@ instance Show VkDeviceEventInfoEXT where
 --   >     VkDisplayEventTypeEXT            displayEvent;
 --   > } VkDisplayEventInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplayEventInfoEXT.html VkDisplayEventInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDisplayEventInfoEXT.html VkDisplayEventInfoEXT registry at www.khronos.org>
 data VkDisplayEventInfoEXT = VkDisplayEventInfoEXT## Addr##
                                                     ByteArray##
 
@@ -674,7 +673,7 @@ instance Show VkDisplayEventInfoEXT where
 --   >     VkSurfaceCounterFlagsEXT         surfaceCounters;
 --   > } VkSwapchainCounterCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSwapchainCounterCreateInfoEXT.html VkSwapchainCounterCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSwapchainCounterCreateInfoEXT.html VkSwapchainCounterCreateInfoEXT registry at www.khronos.org>
 data VkSwapchainCounterCreateInfoEXT = VkSwapchainCounterCreateInfoEXT## Addr##
                                                                         ByteArray##
 
@@ -902,7 +901,7 @@ instance Show VkSwapchainCounterCreateInfoEXT where
 --   >     , const VkDisplayPowerInfoEXT* pDisplayPowerInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkDisplayPowerControlEXT.html vkDisplayPowerControlEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDisplayPowerControlEXT.html vkDisplayPowerControlEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkDisplayPowerControlEXT"
                vkDisplayPowerControlEXT ::
                VkDevice -- ^ device
@@ -920,7 +919,7 @@ foreign import ccall unsafe "vkDisplayPowerControlEXT"
 --   >     , VkFence* pFence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkRegisterDeviceEventEXT.html vkRegisterDeviceEventEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkRegisterDeviceEventEXT.html vkRegisterDeviceEventEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkRegisterDeviceEventEXT"
                vkRegisterDeviceEventEXT ::
                VkDevice -- ^ device
@@ -941,7 +940,7 @@ foreign import ccall unsafe "vkRegisterDeviceEventEXT"
 --   >     , VkFence* pFence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkRegisterDisplayEventEXT.html vkRegisterDisplayEventEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkRegisterDisplayEventEXT.html vkRegisterDisplayEventEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkRegisterDisplayEventEXT"
                vkRegisterDisplayEventEXT ::
                VkDevice -- ^ device
@@ -963,7 +962,7 @@ foreign import ccall unsafe "vkRegisterDisplayEventEXT"
 --   >     , uint64_t* pCounterValue
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetSwapchainCounterEXT.html vkGetSwapchainCounterEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetSwapchainCounterEXT.html vkGetSwapchainCounterEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkGetSwapchainCounterEXT"
                vkGetSwapchainCounterEXT ::
                VkDevice -- ^ device

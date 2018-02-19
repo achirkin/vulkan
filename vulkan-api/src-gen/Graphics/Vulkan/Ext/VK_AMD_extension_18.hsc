@@ -21,7 +21,6 @@ module Graphics.Vulkan.Ext.VK_AMD_extension_18
         VK_AMD_EXTENSION_18_EXTENSION_NAME,
         pattern VK_AMD_EXTENSION_18_EXTENSION_NAME)
        where
-import           Foreign.C.String        (CString)
 import           GHC.Ptr                 (Ptr (..))
 import           Graphics.Vulkan.Marshal
 

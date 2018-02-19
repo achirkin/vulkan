@@ -36,7 +36,6 @@ module Graphics.Vulkan.Ext.VK_MVK_ios_surface
         pattern VK_MVK_IOS_SURFACE_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_IOS_SURFACE_CREATE_INFO_MVK)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -54,7 +53,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     const void*                                    pView;
 --   > } VkIOSSurfaceCreateInfoMVK;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkIOSSurfaceCreateInfoMVK.html VkIOSSurfaceCreateInfoMVK registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkIOSSurfaceCreateInfoMVK.html VkIOSSurfaceCreateInfoMVK registry at www.khronos.org>
 data VkIOSSurfaceCreateInfoMVK = VkIOSSurfaceCreateInfoMVK## Addr##
                                                             ByteArray##
 
@@ -319,7 +318,7 @@ instance Show VkIOSSurfaceCreateInfoMVK where
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCreateIOSSurfaceMVK.html vkCreateIOSSurfaceMVK registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateIOSSurfaceMVK.html vkCreateIOSSurfaceMVK registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateIOSSurfaceMVK"
                vkCreateIOSSurfaceMVK ::
                VkInstance -- ^ instance

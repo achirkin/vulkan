@@ -41,7 +41,6 @@ module Graphics.Vulkan.Ext.VK_EXT_external_memory_host
         pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION_BIT_EXT,
         pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY_BIT_EXT)
        where
-import           Foreign.C.String                                           (CString)
 import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                                                    (Ptr (..))
@@ -60,7 +59,7 @@ import           System.IO.Unsafe                                           (uns
 --   >     void* pHostPointer;
 --   > } VkImportMemoryHostPointerInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImportMemoryHostPointerInfoEXT.html VkImportMemoryHostPointerInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImportMemoryHostPointerInfoEXT.html VkImportMemoryHostPointerInfoEXT registry at www.khronos.org>
 data VkImportMemoryHostPointerInfoEXT = VkImportMemoryHostPointerInfoEXT## Addr##
                                                                           ByteArray##
 
@@ -347,7 +346,7 @@ instance Show VkImportMemoryHostPointerInfoEXT where
 --   >     uint32_t memoryTypeBits;
 --   > } VkMemoryHostPointerPropertiesEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryHostPointerPropertiesEXT.html VkMemoryHostPointerPropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkMemoryHostPointerPropertiesEXT.html VkMemoryHostPointerPropertiesEXT registry at www.khronos.org>
 data VkMemoryHostPointerPropertiesEXT = VkMemoryHostPointerPropertiesEXT## Addr##
                                                                           ByteArray##
 
@@ -578,7 +577,7 @@ instance Show VkMemoryHostPointerPropertiesEXT where
 --   >     VkDeviceSize minImportedHostPointerAlignment;
 --   > } VkPhysicalDeviceExternalMemoryHostPropertiesEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceExternalMemoryHostPropertiesEXT.html VkPhysicalDeviceExternalMemoryHostPropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceExternalMemoryHostPropertiesEXT.html VkPhysicalDeviceExternalMemoryHostPropertiesEXT registry at www.khronos.org>
 data VkPhysicalDeviceExternalMemoryHostPropertiesEXT = VkPhysicalDeviceExternalMemoryHostPropertiesEXT## Addr##
                                                                                                         ByteArray##
 
@@ -853,7 +852,7 @@ instance Show VkPhysicalDeviceExternalMemoryHostPropertiesEXT where
 --   >     , VkMemoryHostPointerPropertiesEXT* pMemoryHostPointerProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetMemoryHostPointerPropertiesEXT.html vkGetMemoryHostPointerPropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetMemoryHostPointerPropertiesEXT.html vkGetMemoryHostPointerPropertiesEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkGetMemoryHostPointerPropertiesEXT"
                vkGetMemoryHostPointerPropertiesEXT ::
                VkDevice -- ^ device

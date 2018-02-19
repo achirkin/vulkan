@@ -7,7 +7,7 @@ module Write.Commands
   ( genBaseCommands, genCommand
   ) where
 
-import           Control.Monad                        (forM_, join)
+import           Control.Monad                        (forM_)
 import           Control.Monad.Reader.Class
 import           Data.Maybe                           (isJust)
 import           Data.Semigroup
@@ -30,9 +30,7 @@ genBaseCommands :: Monad m => ModuleWriter m ()
 genBaseCommands = do
     vkXml <- ask
     let featureComms = Set.fromList
-                     . join
-                     . map requireComms
-                     . reqList  $ globFeature vkXml
+                     $ globFeature vkXml >>= reqList >>= requireComms
         extComms = Set.fromList
                      $ Map.elems (globExtensions vkXml)
                        >>= extRequires >>= requireComms

@@ -35,7 +35,6 @@ module Graphics.Vulkan.Ext.VK_KHR_push_descriptor
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES_KHR,
         pattern VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR)
        where
-import           Foreign.C.String                                           (CString)
 import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                                                    (Ptr (..))
@@ -53,7 +52,7 @@ import           System.IO.Unsafe                                           (uns
 --   >     uint32_t                         maxPushDescriptors;
 --   > } VkPhysicalDevicePushDescriptorPropertiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDevicePushDescriptorPropertiesKHR.html VkPhysicalDevicePushDescriptorPropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDevicePushDescriptorPropertiesKHR.html VkPhysicalDevicePushDescriptorPropertiesKHR registry at www.khronos.org>
 data VkPhysicalDevicePushDescriptorPropertiesKHR = VkPhysicalDevicePushDescriptorPropertiesKHR## Addr##
                                                                                                 ByteArray##
 
@@ -309,11 +308,11 @@ instance Show VkPhysicalDevicePushDescriptorPropertiesKHR where
                           showString "vkMaxPushDescriptors = " .
                             showsPrec d (vkMaxPushDescriptors x) . showChar '}'
 
--- | queues: @graphics,compute@
+-- | queues: 'graphics', 'compute'.
 --
 --   renderpass: @both@
 --
---   > void vkCmdPushDescriptorSetKHR
+--   > () vkCmdPushDescriptorSetKHR
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , VkPipelineBindPoint pipelineBindPoint
 --   >     , VkPipelineLayout layout
@@ -322,7 +321,7 @@ instance Show VkPhysicalDevicePushDescriptorPropertiesKHR where
 --   >     , const VkWriteDescriptorSet* pDescriptorWrites
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCmdPushDescriptorSetKHR.html vkCmdPushDescriptorSetKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdPushDescriptorSetKHR.html vkCmdPushDescriptorSetKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdPushDescriptorSetKHR"
                vkCmdPushDescriptorSetKHR ::
                VkCommandBuffer -- ^ commandBuffer

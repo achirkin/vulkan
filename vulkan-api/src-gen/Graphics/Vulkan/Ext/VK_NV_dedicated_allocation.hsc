@@ -32,7 +32,6 @@ module Graphics.Vulkan.Ext.VK_NV_dedicated_allocation
         pattern VK_STRUCTURE_TYPE_DEDICATED_ALLOCATION_BUFFER_CREATE_INFO_NV,
         pattern VK_STRUCTURE_TYPE_DEDICATED_ALLOCATION_MEMORY_ALLOCATE_INFO_NV)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -52,7 +51,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     VkBool32                         dedicatedAllocation;
 --   > } VkDedicatedAllocationImageCreateInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDedicatedAllocationImageCreateInfoNV.html VkDedicatedAllocationImageCreateInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDedicatedAllocationImageCreateInfoNV.html VkDedicatedAllocationImageCreateInfoNV registry at www.khronos.org>
 data VkDedicatedAllocationImageCreateInfoNV = VkDedicatedAllocationImageCreateInfoNV## Addr##
                                                                                       ByteArray##
 
@@ -300,7 +299,7 @@ instance Show VkDedicatedAllocationImageCreateInfoNV where
 --   >     VkBool32                         dedicatedAllocation;
 --   > } VkDedicatedAllocationBufferCreateInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDedicatedAllocationBufferCreateInfoNV.html VkDedicatedAllocationBufferCreateInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDedicatedAllocationBufferCreateInfoNV.html VkDedicatedAllocationBufferCreateInfoNV registry at www.khronos.org>
 data VkDedicatedAllocationBufferCreateInfoNV = VkDedicatedAllocationBufferCreateInfoNV## Addr##
                                                                                         ByteArray##
 
@@ -551,7 +550,7 @@ instance Show VkDedicatedAllocationBufferCreateInfoNV where
 --   >     VkBuffer         buffer;
 --   > } VkDedicatedAllocationMemoryAllocateInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDedicatedAllocationMemoryAllocateInfoNV.html VkDedicatedAllocationMemoryAllocateInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDedicatedAllocationMemoryAllocateInfoNV.html VkDedicatedAllocationMemoryAllocateInfoNV registry at www.khronos.org>
 data VkDedicatedAllocationMemoryAllocateInfoNV = VkDedicatedAllocationMemoryAllocateInfoNV## Addr##
                                                                                             ByteArray##
 

@@ -36,7 +36,6 @@ module Graphics.Vulkan.Ext.VK_KHR_swapchain
         pattern VK_ERROR_OUT_OF_DATE_KHR,
         pattern VK_OBJECT_TYPE_SWAPCHAIN_KHR)
        where
-import           Foreign.C.String        (CString)
 import           GHC.Ptr                 (Ptr (..))
 import           Graphics.Vulkan.Base    (VkAllocationCallbacks (..),
                                           VkPresentInfoKHR (..),
@@ -55,7 +54,7 @@ import           Graphics.Vulkan.Marshal
 --   >     , VkSwapchainKHR* pSwapchain
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCreateSwapchainKHR.html vkCreateSwapchainKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateSwapchainKHR.html vkCreateSwapchainKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateSwapchainKHR"
                vkCreateSwapchainKHR ::
                VkDevice -- ^ device
@@ -66,13 +65,13 @@ foreign import ccall unsafe "vkCreateSwapchainKHR"
                                              -> Ptr VkSwapchainKHR -- ^ pSwapchain
                                                                    -> IO VkResult
 
--- | > void vkDestroySwapchainKHR
+-- | > () vkDestroySwapchainKHR
 --   >     ( VkDevice device
 --   >     , VkSwapchainKHR swapchain
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkDestroySwapchainKHR.html vkDestroySwapchainKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroySwapchainKHR.html vkDestroySwapchainKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroySwapchainKHR"
                vkDestroySwapchainKHR ::
                VkDevice -- ^ device
@@ -91,7 +90,7 @@ foreign import ccall unsafe "vkDestroySwapchainKHR"
 --   >     , VkImage* pSwapchainImages
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetSwapchainImagesKHR.html vkGetSwapchainImagesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetSwapchainImagesKHR.html vkGetSwapchainImagesKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkGetSwapchainImagesKHR"
                vkGetSwapchainImagesKHR ::
                VkDevice -- ^ device
@@ -114,7 +113,7 @@ foreign import ccall unsafe "vkGetSwapchainImagesKHR"
 --   >     , uint32_t* pImageIndex
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkAcquireNextImageKHR.html vkAcquireNextImageKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkAcquireNextImageKHR.html vkAcquireNextImageKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkAcquireNextImageKHR"
                vkAcquireNextImageKHR ::
                VkDevice -- ^ device
@@ -136,7 +135,7 @@ foreign import ccall unsafe "vkAcquireNextImageKHR"
 --   >     , const VkPresentInfoKHR* pPresentInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkQueuePresentKHR.html vkQueuePresentKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkQueuePresentKHR.html vkQueuePresentKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkQueuePresentKHR" vkQueuePresentKHR
                :: VkQueue -- ^ queue
                           -> Ptr VkPresentInfoKHR -- ^ pPresentInfo

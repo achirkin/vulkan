@@ -29,7 +29,6 @@ module Graphics.Vulkan.Ext.VK_EXT_queue_family_foreign
         pattern VK_EXT_QUEUE_FAMILY_FOREIGN_EXTENSION_NAME,
         pattern VK_QUEUE_FAMILY_FOREIGN_EXT, VK_QUEUE_FAMILY_FOREIGN_EXT)
        where
-import           Foreign.C.String        (CString)
 import           GHC.Ptr                 (Ptr (..))
 import           Graphics.Vulkan.Common  (VK_QUEUE_FAMILY_FOREIGN_EXT,
                                           pattern VK_QUEUE_FAMILY_FOREIGN_EXT)

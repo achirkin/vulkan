@@ -28,7 +28,6 @@ module Graphics.Vulkan.Ext.VK_AMD_rasterization_order
         pattern VK_AMD_RASTERIZATION_ORDER_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_RASTERIZATION_ORDER_AMD)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -46,7 +45,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     VkRasterizationOrderAMD          rasterizationOrder;
 --   > } VkPipelineRasterizationStateRasterizationOrderAMD;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineRasterizationStateRasterizationOrderAMD.html VkPipelineRasterizationStateRasterizationOrderAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPipelineRasterizationStateRasterizationOrderAMD.html VkPipelineRasterizationStateRasterizationOrderAMD registry at www.khronos.org>
 data VkPipelineRasterizationStateRasterizationOrderAMD = VkPipelineRasterizationStateRasterizationOrderAMD## Addr##
                                                                                                             ByteArray##
 

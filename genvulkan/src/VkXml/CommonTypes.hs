@@ -9,15 +9,17 @@ module VkXml.CommonTypes
   , VkCommandName (..)
   , Sections (..), VkTagName (..)
   , VkExtensionName (..)
+  , ProtectCPP (..), ProtectFlag (..), ProtectDef (..)
   , parseSections, parseSectionsL
   , (<:>)
   , toType, toQName, qNameTxt
   , moduleName, unqualify
+  , TypeScope (..)
     -- * Initial ident parsing
   , toHaskellType, toHaskellPat, toHaskellVar, toHaskellExt
   , toHaskellComm, toHaskellMemb
   , commaSeparated
-  , toFlagName
+  , toProtectDef
   ) where
 
 import           Control.Monad.State.Class
@@ -62,6 +64,19 @@ newtype VkTagName = VkTagName { unVkTagName :: Text }
 newtype VkExtensionName = VkExtensionName { unVkExtensionName :: Text }
   deriving (Eq, Ord, Show, Read, IsString)
 
+
+newtype ProtectCPP = ProtectCPP { unProtectCPP :: Text }
+  deriving (Eq, Ord, Show, Read, IsString)
+
+
+newtype ProtectFlag = ProtectFlag  { unProtectFlag :: Text }
+  deriving (Eq, Ord, Show, Read, IsString)
+
+data ProtectDef
+  = ProtectDef
+  { protectCPP  :: ProtectCPP
+  , protectFlag :: ProtectFlag
+  } deriving (Eq, Ord, Show, Read)
 
 
 -- | Parse a list of elements interspersed with comments,
@@ -182,21 +197,33 @@ toHaskellMemb t
   | otherwise = parseFailed $ "Invalid haskell member name " ++ show t
 
 
-
-toFlagName :: Text -> Text
+toFlagName :: ProtectCPP -> ProtectFlag
 toFlagName
-    = firstDown
+    = ProtectFlag
+    . firstDown
     . T.pack
     . toCamelCase
     . T.unpack
     . T.toLower
     . removeVk
   where
-    removeVk g = fromMaybe g $ T.stripPrefix "VK_" g
+    removeVk (ProtectCPP g) = fromMaybe g $ T.stripPrefix "VK_" g
 
+toProtectDef :: (VkXmlParser m, HasCallStack) => Text -> m ProtectDef
+toProtectDef t
+    | isHaskellIdent t = pure $ ProtectDef pCPP (toFlagName pCPP)
+    | otherwise = parseFailed
+       $ "Invalid protect key (which should be a CPP macros) " ++ show t
+  where
+    pCPP = ProtectCPP t
 
 commaSeparated :: Maybe Text -> [Text]
 commaSeparated = maybe [] (T.split (',' ==))
+
+
+class TypeScope a where
+  requiresTypes :: a -> [VkTypeName]
+  providesTypes :: a -> [VkTypeName]
 
 -- * Checking type and value names
 

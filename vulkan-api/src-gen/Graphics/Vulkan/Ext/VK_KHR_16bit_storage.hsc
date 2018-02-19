@@ -33,7 +33,6 @@ module Graphics.Vulkan.Ext.VK_KHR_16bit_storage
         pattern VK_KHR_16BIT_STORAGE_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES_KHR)
        where
-import           Foreign.C.String                                           (CString)
 import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                                                    (Ptr (..))
@@ -55,7 +54,7 @@ import           System.IO.Unsafe                                           (uns
 --   >     VkBool32                         storageInputOutput16;
 --   > } VkPhysicalDevice16BitStorageFeaturesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDevice16BitStorageFeaturesKHR.html VkPhysicalDevice16BitStorageFeaturesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDevice16BitStorageFeaturesKHR.html VkPhysicalDevice16BitStorageFeaturesKHR registry at www.khronos.org>
 data VkPhysicalDevice16BitStorageFeaturesKHR = VkPhysicalDevice16BitStorageFeaturesKHR## Addr##
                                                                                         ByteArray##
 

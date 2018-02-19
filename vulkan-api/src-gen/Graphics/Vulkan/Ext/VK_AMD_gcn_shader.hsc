@@ -23,7 +23,6 @@ module Graphics.Vulkan.Ext.VK_AMD_gcn_shader
         VK_AMD_GCN_SHADER_EXTENSION_NAME,
         pattern VK_AMD_GCN_SHADER_EXTENSION_NAME)
        where
-import           Foreign.C.String        (CString)
 import           GHC.Ptr                 (Ptr (..))
 import           Graphics.Vulkan.Marshal
 

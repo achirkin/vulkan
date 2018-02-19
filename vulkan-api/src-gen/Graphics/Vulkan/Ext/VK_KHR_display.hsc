@@ -44,7 +44,6 @@ module Graphics.Vulkan.Ext.VK_KHR_display
         pattern VK_OBJECT_TYPE_DISPLAY_KHR,
         pattern VK_OBJECT_TYPE_DISPLAY_MODE_KHR)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -66,7 +65,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     VkBool32                         persistentContent;
 --   > } VkDisplayPropertiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplayPropertiesKHR.html VkDisplayPropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDisplayPropertiesKHR.html VkDisplayPropertiesKHR registry at www.khronos.org>
 data VkDisplayPropertiesKHR = VkDisplayPropertiesKHR## Addr##
                                                       ByteArray##
 
@@ -468,7 +467,7 @@ instance Show VkDisplayPropertiesKHR where
 --   >     uint32_t                         refreshRate;
 --   > } VkDisplayModeParametersKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplayModeParametersKHR.html VkDisplayModeParametersKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDisplayModeParametersKHR.html VkDisplayModeParametersKHR registry at www.khronos.org>
 data VkDisplayModeParametersKHR = VkDisplayModeParametersKHR## Addr##
                                                               ByteArray##
 
@@ -636,7 +635,7 @@ instance Show VkDisplayModeParametersKHR where
 --   >     VkDisplayModeParametersKHR       parameters;
 --   > } VkDisplayModePropertiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplayModePropertiesKHR.html VkDisplayModePropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDisplayModePropertiesKHR.html VkDisplayModePropertiesKHR registry at www.khronos.org>
 data VkDisplayModePropertiesKHR = VkDisplayModePropertiesKHR## Addr##
                                                               ByteArray##
 
@@ -796,7 +795,7 @@ instance Show VkDisplayModePropertiesKHR where
 --   >     VkDisplayModeParametersKHR       parameters;
 --   > } VkDisplayModeCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplayModeCreateInfoKHR.html VkDisplayModeCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDisplayModeCreateInfoKHR.html VkDisplayModeCreateInfoKHR registry at www.khronos.org>
 data VkDisplayModeCreateInfoKHR = VkDisplayModeCreateInfoKHR## Addr##
                                                               ByteArray##
 
@@ -1068,7 +1067,7 @@ instance Show VkDisplayModeCreateInfoKHR where
 --   >     VkExtent2D                       maxDstExtent;
 --   > } VkDisplayPlaneCapabilitiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplayPlaneCapabilitiesKHR.html VkDisplayPlaneCapabilitiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDisplayPlaneCapabilitiesKHR.html VkDisplayPlaneCapabilitiesKHR registry at www.khronos.org>
 data VkDisplayPlaneCapabilitiesKHR = VkDisplayPlaneCapabilitiesKHR## Addr##
                                                                     ByteArray##
 
@@ -1592,7 +1591,7 @@ instance Show VkDisplayPlaneCapabilitiesKHR where
 --   >     uint32_t                         currentStackIndex;
 --   > } VkDisplayPlanePropertiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplayPlanePropertiesKHR.html VkDisplayPlanePropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDisplayPlanePropertiesKHR.html VkDisplayPlanePropertiesKHR registry at www.khronos.org>
 data VkDisplayPlanePropertiesKHR = VkDisplayPlanePropertiesKHR## Addr##
                                                                 ByteArray##
 
@@ -1762,7 +1761,7 @@ instance Show VkDisplayPlanePropertiesKHR where
 --   >     VkExtent2D                       imageExtent;
 --   > } VkDisplaySurfaceCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDisplaySurfaceCreateInfoKHR.html VkDisplaySurfaceCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDisplaySurfaceCreateInfoKHR.html VkDisplaySurfaceCreateInfoKHR registry at www.khronos.org>
 data VkDisplaySurfaceCreateInfoKHR = VkDisplaySurfaceCreateInfoKHR## Addr##
                                                                     ByteArray##
 
@@ -2374,7 +2373,7 @@ instance Show VkDisplaySurfaceCreateInfoKHR where
 --   >     , VkDisplayPropertiesKHR* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetPhysicalDeviceDisplayPropertiesKHR.html vkGetPhysicalDeviceDisplayPropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceDisplayPropertiesKHR.html vkGetPhysicalDeviceDisplayPropertiesKHR registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceDisplayPropertiesKHR"
                vkGetPhysicalDeviceDisplayPropertiesKHR ::
@@ -2394,7 +2393,7 @@ foreign import ccall unsafe
 --   >     , VkDisplayPlanePropertiesKHR* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetPhysicalDeviceDisplayPlanePropertiesKHR.html vkGetPhysicalDeviceDisplayPlanePropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceDisplayPlanePropertiesKHR.html vkGetPhysicalDeviceDisplayPlanePropertiesKHR registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceDisplayPlanePropertiesKHR"
                vkGetPhysicalDeviceDisplayPlanePropertiesKHR ::
@@ -2415,7 +2414,7 @@ foreign import ccall unsafe
 --   >     , VkDisplayKHR* pDisplays
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetDisplayPlaneSupportedDisplaysKHR.html vkGetDisplayPlaneSupportedDisplaysKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetDisplayPlaneSupportedDisplaysKHR.html vkGetDisplayPlaneSupportedDisplaysKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkGetDisplayPlaneSupportedDisplaysKHR"
                vkGetDisplayPlaneSupportedDisplaysKHR ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -2436,7 +2435,7 @@ foreign import ccall unsafe "vkGetDisplayPlaneSupportedDisplaysKHR"
 --   >     , VkDisplayModePropertiesKHR* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetDisplayModePropertiesKHR.html vkGetDisplayModePropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetDisplayModePropertiesKHR.html vkGetDisplayModePropertiesKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkGetDisplayModePropertiesKHR"
                vkGetDisplayModePropertiesKHR ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -2459,7 +2458,7 @@ foreign import ccall unsafe "vkGetDisplayModePropertiesKHR"
 --   >     , VkDisplayModeKHR* pMode
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCreateDisplayModeKHR.html vkCreateDisplayModeKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateDisplayModeKHR.html vkCreateDisplayModeKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateDisplayModeKHR"
                vkCreateDisplayModeKHR ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -2483,7 +2482,7 @@ foreign import ccall unsafe "vkCreateDisplayModeKHR"
 --   >     , VkDisplayPlaneCapabilitiesKHR* pCapabilities
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetDisplayPlaneCapabilitiesKHR.html vkGetDisplayPlaneCapabilitiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetDisplayPlaneCapabilitiesKHR.html vkGetDisplayPlaneCapabilitiesKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkGetDisplayPlaneCapabilitiesKHR"
                vkGetDisplayPlaneCapabilitiesKHR ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -2505,7 +2504,7 @@ foreign import ccall unsafe "vkGetDisplayPlaneCapabilitiesKHR"
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCreateDisplayPlaneSurfaceKHR.html vkCreateDisplayPlaneSurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateDisplayPlaneSurfaceKHR.html vkCreateDisplayPlaneSurfaceKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateDisplayPlaneSurfaceKHR"
                vkCreateDisplayPlaneSurfaceKHR ::
                VkInstance -- ^ instance

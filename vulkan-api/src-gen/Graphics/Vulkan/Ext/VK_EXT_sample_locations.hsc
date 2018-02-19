@@ -45,7 +45,6 @@ module Graphics.Vulkan.Ext.VK_EXT_sample_locations
         pattern VK_STRUCTURE_TYPE_MULTISAMPLE_PROPERTIES_EXT,
         pattern VK_DYNAMIC_STATE_SAMPLE_LOCATIONS_EXT)
        where
-import           Foreign.C.String                                           (CString)
 import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                                                    (Ptr (..))
@@ -67,7 +66,7 @@ import           System.IO.Unsafe                                           (uns
 --   >     float                            y;
 --   > } VkSampleLocationEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSampleLocationEXT.html VkSampleLocationEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSampleLocationEXT.html VkSampleLocationEXT registry at www.khronos.org>
 data VkSampleLocationEXT = VkSampleLocationEXT## Addr## ByteArray##
 
 instance Eq VkSampleLocationEXT where
@@ -217,7 +216,7 @@ instance Show VkSampleLocationEXT where
 --   >     const VkSampleLocationEXT* pSampleLocations;
 --   > } VkSampleLocationsInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSampleLocationsInfoEXT.html VkSampleLocationsInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSampleLocationsInfoEXT.html VkSampleLocationsInfoEXT registry at www.khronos.org>
 data VkSampleLocationsInfoEXT = VkSampleLocationsInfoEXT## Addr##
                                                           ByteArray##
 
@@ -610,7 +609,7 @@ instance Show VkSampleLocationsInfoEXT where
 --   >     VkSampleLocationsInfoEXT         sampleLocationsInfo;
 --   > } VkAttachmentSampleLocationsEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkAttachmentSampleLocationsEXT.html VkAttachmentSampleLocationsEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkAttachmentSampleLocationsEXT.html VkAttachmentSampleLocationsEXT registry at www.khronos.org>
 data VkAttachmentSampleLocationsEXT = VkAttachmentSampleLocationsEXT## Addr##
                                                                       ByteArray##
 
@@ -790,7 +789,7 @@ instance Show VkAttachmentSampleLocationsEXT where
 --   >     VkSampleLocationsInfoEXT         sampleLocationsInfo;
 --   > } VkSubpassSampleLocationsEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkSubpassSampleLocationsEXT.html VkSubpassSampleLocationsEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSubpassSampleLocationsEXT.html VkSubpassSampleLocationsEXT registry at www.khronos.org>
 data VkSubpassSampleLocationsEXT = VkSubpassSampleLocationsEXT## Addr##
                                                                 ByteArray##
 
@@ -968,7 +967,7 @@ instance Show VkSubpassSampleLocationsEXT where
 --   >     const VkSubpassSampleLocationsEXT* pPostSubpassSampleLocations;
 --   > } VkRenderPassSampleLocationsBeginInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkRenderPassSampleLocationsBeginInfoEXT.html VkRenderPassSampleLocationsBeginInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkRenderPassSampleLocationsBeginInfoEXT.html VkRenderPassSampleLocationsBeginInfoEXT registry at www.khronos.org>
 data VkRenderPassSampleLocationsBeginInfoEXT = VkRenderPassSampleLocationsBeginInfoEXT## Addr##
                                                                                         ByteArray##
 
@@ -1427,7 +1426,7 @@ instance Show VkRenderPassSampleLocationsBeginInfoEXT where
 --   >     VkSampleLocationsInfoEXT         sampleLocationsInfo;
 --   > } VkPipelineSampleLocationsStateCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineSampleLocationsStateCreateInfoEXT.html VkPipelineSampleLocationsStateCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPipelineSampleLocationsStateCreateInfoEXT.html VkPipelineSampleLocationsStateCreateInfoEXT registry at www.khronos.org>
 data VkPipelineSampleLocationsStateCreateInfoEXT = VkPipelineSampleLocationsStateCreateInfoEXT## Addr##
                                                                                                 ByteArray##
 
@@ -1762,7 +1761,7 @@ instance Show VkPipelineSampleLocationsStateCreateInfoEXT where
 --   >     VkBool32                         variableSampleLocations;
 --   > } VkPhysicalDeviceSampleLocationsPropertiesEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceSampleLocationsPropertiesEXT.html VkPhysicalDeviceSampleLocationsPropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceSampleLocationsPropertiesEXT.html VkPhysicalDeviceSampleLocationsPropertiesEXT registry at www.khronos.org>
 data VkPhysicalDeviceSampleLocationsPropertiesEXT = VkPhysicalDeviceSampleLocationsPropertiesEXT## Addr##
                                                                                                   ByteArray##
 
@@ -2291,7 +2290,7 @@ instance Show VkPhysicalDeviceSampleLocationsPropertiesEXT where
 --   >     VkExtent2D                       maxSampleLocationGridSize;
 --   > } VkMultisamplePropertiesEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMultisamplePropertiesEXT.html VkMultisamplePropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkMultisamplePropertiesEXT.html VkMultisamplePropertiesEXT registry at www.khronos.org>
 data VkMultisamplePropertiesEXT = VkMultisamplePropertiesEXT## Addr##
                                                               ByteArray##
 
@@ -2496,29 +2495,29 @@ instance Show VkMultisamplePropertiesEXT where
                           showString "vkMaxSampleLocationGridSize = " .
                             showsPrec d (vkMaxSampleLocationGridSize x) . showChar '}'
 
--- | queues: @graphics@
+-- | queues: 'graphics'.
 --
 --   renderpass: @both@
 --
---   > void vkCmdSetSampleLocationsEXT
+--   > () vkCmdSetSampleLocationsEXT
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , const VkSampleLocationsInfoEXT* pSampleLocationsInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCmdSetSampleLocationsEXT.html vkCmdSetSampleLocationsEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdSetSampleLocationsEXT.html vkCmdSetSampleLocationsEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdSetSampleLocationsEXT"
                vkCmdSetSampleLocationsEXT ::
                VkCommandBuffer -- ^ commandBuffer
                                -> Ptr VkSampleLocationsInfoEXT -- ^ pSampleLocationsInfo
                                                                -> IO ()
 
--- | > void vkGetPhysicalDeviceMultisamplePropertiesEXT
+-- | > () vkGetPhysicalDeviceMultisamplePropertiesEXT
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkSampleCountFlagBits samples
 --   >     , VkMultisamplePropertiesEXT* pMultisampleProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetPhysicalDeviceMultisamplePropertiesEXT.html vkGetPhysicalDeviceMultisamplePropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceMultisamplePropertiesEXT.html vkGetPhysicalDeviceMultisamplePropertiesEXT registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceMultisamplePropertiesEXT"
                vkGetPhysicalDeviceMultisamplePropertiesEXT ::

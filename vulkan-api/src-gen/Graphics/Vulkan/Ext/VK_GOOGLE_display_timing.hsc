@@ -37,7 +37,6 @@ module Graphics.Vulkan.Ext.VK_GOOGLE_display_timing
         pattern VK_GOOGLE_DISPLAY_TIMING_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PRESENT_TIMES_INFO_GOOGLE)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -52,7 +51,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     uint64_t                         refreshDuration;
 --   > } VkRefreshCycleDurationGOOGLE;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkRefreshCycleDurationGOOGLE.html VkRefreshCycleDurationGOOGLE registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkRefreshCycleDurationGOOGLE.html VkRefreshCycleDurationGOOGLE registry at www.khronos.org>
 data VkRefreshCycleDurationGOOGLE = VkRefreshCycleDurationGOOGLE## Addr##
                                                                   ByteArray##
 
@@ -173,7 +172,7 @@ instance Show VkRefreshCycleDurationGOOGLE where
 --   >     uint64_t                         presentMargin;
 --   > } VkPastPresentationTimingGOOGLE;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPastPresentationTimingGOOGLE.html VkPastPresentationTimingGOOGLE registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPastPresentationTimingGOOGLE.html VkPastPresentationTimingGOOGLE registry at www.khronos.org>
 data VkPastPresentationTimingGOOGLE = VkPastPresentationTimingGOOGLE## Addr##
                                                                       ByteArray##
 
@@ -533,7 +532,7 @@ instance Show VkPastPresentationTimingGOOGLE where
 --   >     const VkPresentTimeGOOGLE*   pTimes;
 --   > } VkPresentTimesInfoGOOGLE;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPresentTimesInfoGOOGLE.html VkPresentTimesInfoGOOGLE registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPresentTimesInfoGOOGLE.html VkPresentTimesInfoGOOGLE registry at www.khronos.org>
 data VkPresentTimesInfoGOOGLE = VkPresentTimesInfoGOOGLE## Addr##
                                                           ByteArray##
 
@@ -794,7 +793,7 @@ instance Show VkPresentTimesInfoGOOGLE where
 --   >     uint64_t                         desiredPresentTime;
 --   > } VkPresentTimeGOOGLE;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPresentTimeGOOGLE.html VkPresentTimeGOOGLE registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPresentTimeGOOGLE.html VkPresentTimeGOOGLE registry at www.khronos.org>
 data VkPresentTimeGOOGLE = VkPresentTimeGOOGLE## Addr## ByteArray##
 
 instance Eq VkPresentTimeGOOGLE where
@@ -957,7 +956,7 @@ instance Show VkPresentTimeGOOGLE where
 --   >     , VkRefreshCycleDurationGOOGLE* pDisplayTimingProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetRefreshCycleDurationGOOGLE.html vkGetRefreshCycleDurationGOOGLE registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetRefreshCycleDurationGOOGLE.html vkGetRefreshCycleDurationGOOGLE registry at www.khronos.org>
 foreign import ccall unsafe "vkGetRefreshCycleDurationGOOGLE"
                vkGetRefreshCycleDurationGOOGLE ::
                VkDevice -- ^ device
@@ -977,7 +976,7 @@ foreign import ccall unsafe "vkGetRefreshCycleDurationGOOGLE"
 --   >     , VkPastPresentationTimingGOOGLE* pPresentationTimings
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetPastPresentationTimingGOOGLE.html vkGetPastPresentationTimingGOOGLE registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPastPresentationTimingGOOGLE.html vkGetPastPresentationTimingGOOGLE registry at www.khronos.org>
 foreign import ccall unsafe "vkGetPastPresentationTimingGOOGLE"
                vkGetPastPresentationTimingGOOGLE ::
                VkDevice -- ^ device

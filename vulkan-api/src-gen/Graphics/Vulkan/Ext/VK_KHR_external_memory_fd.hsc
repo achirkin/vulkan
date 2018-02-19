@@ -37,7 +37,6 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_fd
         pattern VK_STRUCTURE_TYPE_MEMORY_FD_PROPERTIES_KHR,
         pattern VK_STRUCTURE_TYPE_MEMORY_GET_FD_INFO_KHR)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -55,7 +54,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     int                              fd;
 --   > } VkImportMemoryFdInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkImportMemoryFdInfoKHR.html VkImportMemoryFdInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImportMemoryFdInfoKHR.html VkImportMemoryFdInfoKHR registry at www.khronos.org>
 data VkImportMemoryFdInfoKHR = VkImportMemoryFdInfoKHR## Addr##
                                                         ByteArray##
 
@@ -247,7 +246,7 @@ instance CanWriteField "handleType" VkImportMemoryFdInfoKHR where
         writeField = writeVkHandleType
 
 instance {-# OVERLAPPING #-} HasVkFd VkImportMemoryFdInfoKHR where
-        type VkFdMType VkImportMemoryFdInfoKHR = #{type int}
+        type VkFdMType VkImportMemoryFdInfoKHR = CInt
 
         {-# NOINLINE vkFd #-}
         vkFd x
@@ -268,8 +267,7 @@ instance {-# OVERLAPPING #-} HasVkFd VkImportMemoryFdInfoKHR where
 
 instance {-# OVERLAPPING #-} HasField "fd" VkImportMemoryFdInfoKHR
          where
-        type FieldType "fd" VkImportMemoryFdInfoKHR =
-             #{type int}
+        type FieldType "fd" VkImportMemoryFdInfoKHR = CInt
         type FieldOptional "fd" VkImportMemoryFdInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "fd" VkImportMemoryFdInfoKHR =
              #{offset VkImportMemoryFdInfoKHR, fd}
@@ -312,7 +310,7 @@ instance Show VkImportMemoryFdInfoKHR where
 --   >     uint32_t                         memoryTypeBits;
 --   > } VkMemoryFdPropertiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryFdPropertiesKHR.html VkMemoryFdPropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkMemoryFdPropertiesKHR.html VkMemoryFdPropertiesKHR registry at www.khronos.org>
 data VkMemoryFdPropertiesKHR = VkMemoryFdPropertiesKHR## Addr##
                                                         ByteArray##
 
@@ -509,7 +507,7 @@ instance Show VkMemoryFdPropertiesKHR where
 --   >     VkExternalMemoryHandleTypeFlagBitsKHR handleType;
 --   > } VkMemoryGetFdInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkMemoryGetFdInfoKHR.html VkMemoryGetFdInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkMemoryGetFdInfoKHR.html VkMemoryGetFdInfoKHR registry at www.khronos.org>
 data VkMemoryGetFdInfoKHR = VkMemoryGetFdInfoKHR## Addr## ByteArray##
 
 instance Eq VkMemoryGetFdInfoKHR where
@@ -766,14 +764,12 @@ instance Show VkMemoryGetFdInfoKHR where
 --   >     , int* pFd
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetMemoryFdKHR.html vkGetMemoryFdKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetMemoryFdKHR.html vkGetMemoryFdKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkGetMemoryFdKHR" vkGetMemoryFdKHR ::
                VkDevice -- ^ device
-                        ->
-                 Ptr VkMemoryGetFdInfoKHR -- ^ pGetFdInfo
-                                          ->
-                   Ptr #{type int} -- ^ pFd
-                                               -> IO VkResult
+                        -> Ptr VkMemoryGetFdInfoKHR -- ^ pGetFdInfo
+                                                    -> Ptr CInt -- ^ pFd
+                                                                -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -786,16 +782,16 @@ foreign import ccall unsafe "vkGetMemoryFdKHR" vkGetMemoryFdKHR ::
 --   >     , VkMemoryFdPropertiesKHR* pMemoryFdProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetMemoryFdPropertiesKHR.html vkGetMemoryFdPropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetMemoryFdPropertiesKHR.html vkGetMemoryFdPropertiesKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkGetMemoryFdPropertiesKHR"
                vkGetMemoryFdPropertiesKHR ::
                VkDevice -- ^ device
                         ->
                  VkExternalMemoryHandleTypeFlagBitsKHR -- ^ handleType
                                                        ->
-                   #{type int} ->
-                     Ptr VkMemoryFdPropertiesKHR -- ^ pMemoryFdProperties
-                                                 -> IO VkResult
+                   CInt -- ^ fd
+                        -> Ptr VkMemoryFdPropertiesKHR -- ^ pMemoryFdProperties
+                                                       -> IO VkResult
 
 pattern VK_KHR_EXTERNAL_MEMORY_FD_SPEC_VERSION :: (Num a, Eq a) =>
         a

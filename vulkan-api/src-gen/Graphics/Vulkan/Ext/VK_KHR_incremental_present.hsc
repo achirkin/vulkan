@@ -33,13 +33,12 @@ module Graphics.Vulkan.Ext.VK_KHR_incremental_present
         pattern VK_KHR_INCREMENTAL_PRESENT_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PRESENT_REGIONS_KHR)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
 import           Graphics.Vulkan.Base             (VkExtent2D, VkOffset2D,
                                                    VkPresentInfoKHR)
-import           Graphics.Vulkan.Common           (VkStructureType (..), Word32)
+import           Graphics.Vulkan.Common           (VkStructureType (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
@@ -52,7 +51,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     const VkPresentRegionKHR*   pRegions;
 --   > } VkPresentRegionsKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPresentRegionsKHR.html VkPresentRegionsKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPresentRegionsKHR.html VkPresentRegionsKHR registry at www.khronos.org>
 data VkPresentRegionsKHR = VkPresentRegionsKHR## Addr## ByteArray##
 
 instance Eq VkPresentRegionsKHR where
@@ -304,7 +303,7 @@ instance Show VkPresentRegionsKHR where
 --   >     const VkRectLayerKHR*   pRectangles;
 --   > } VkPresentRegionKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPresentRegionKHR.html VkPresentRegionKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPresentRegionKHR.html VkPresentRegionKHR registry at www.khronos.org>
 data VkPresentRegionKHR = VkPresentRegionKHR## Addr## ByteArray##
 
 instance Eq VkPresentRegionKHR where
@@ -461,7 +460,7 @@ instance Show VkPresentRegionKHR where
 --   >     uint32_t                         layer;
 --   > } VkRectLayerKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkRectLayerKHR.html VkRectLayerKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkRectLayerKHR.html VkRectLayerKHR registry at www.khronos.org>
 data VkRectLayerKHR = VkRectLayerKHR## Addr## ByteArray##
 
 instance Eq VkRectLayerKHR where

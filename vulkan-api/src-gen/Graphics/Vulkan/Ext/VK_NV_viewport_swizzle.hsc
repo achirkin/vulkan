@@ -29,7 +29,6 @@ module Graphics.Vulkan.Ext.VK_NV_viewport_swizzle
         pattern VK_NV_VIEWPORT_SWIZZLE_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_SWIZZLE_STATE_CREATE_INFO_NV)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -37,8 +36,7 @@ import           Graphics.Vulkan.Base             (VkPipelineViewportStateCreate
 import           Graphics.Vulkan.Common           (VkPipelineViewportSwizzleStateCreateFlagsNV,
                                                    VkStructureType,
                                                    VkStructureType (..),
-                                                   VkViewportCoordinateSwizzleNV,
-                                                   Word32)
+                                                   VkViewportCoordinateSwizzleNV)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
@@ -51,7 +49,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     VkViewportCoordinateSwizzleNV          w;
 --   > } VkViewportSwizzleNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkViewportSwizzleNV.html VkViewportSwizzleNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkViewportSwizzleNV.html VkViewportSwizzleNV registry at www.khronos.org>
 data VkViewportSwizzleNV = VkViewportSwizzleNV## Addr## ByteArray##
 
 instance Eq VkViewportSwizzleNV where
@@ -296,7 +294,7 @@ instance Show VkViewportSwizzleNV where
 --   >     const VkViewportSwizzleNV*      pViewportSwizzles;
 --   > } VkPipelineViewportSwizzleStateCreateInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineViewportSwizzleStateCreateInfoNV.html VkPipelineViewportSwizzleStateCreateInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPipelineViewportSwizzleStateCreateInfoNV.html VkPipelineViewportSwizzleStateCreateInfoNV registry at www.khronos.org>
 data VkPipelineViewportSwizzleStateCreateInfoNV = VkPipelineViewportSwizzleStateCreateInfoNV## Addr##
                                                                                               ByteArray##
 

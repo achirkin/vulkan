@@ -34,7 +34,6 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_report
         pattern VK_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT,
         pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_EXT)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -54,7 +53,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     void*            pUserData;
 --   > } VkDebugReportCallbackCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkDebugReportCallbackCreateInfoEXT.html VkDebugReportCallbackCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDebugReportCallbackCreateInfoEXT.html VkDebugReportCallbackCreateInfoEXT registry at www.khronos.org>
 data VkDebugReportCallbackCreateInfoEXT = VkDebugReportCallbackCreateInfoEXT## Addr##
                                                                               ByteArray##
 
@@ -405,7 +404,7 @@ instance Show VkDebugReportCallbackCreateInfoEXT where
 --   >     , VkDebugReportCallbackEXT* pCallback
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkCreateDebugReportCallbackEXT.html vkCreateDebugReportCallbackEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateDebugReportCallbackEXT.html vkCreateDebugReportCallbackEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateDebugReportCallbackEXT"
                vkCreateDebugReportCallbackEXT ::
                VkInstance -- ^ instance
@@ -417,13 +416,13 @@ foreign import ccall unsafe "vkCreateDebugReportCallbackEXT"
                      Ptr VkDebugReportCallbackEXT -- ^ pCallback
                                                   -> IO VkResult
 
--- | > void vkDestroyDebugReportCallbackEXT
+-- | > () vkDestroyDebugReportCallbackEXT
 --   >     ( VkInstance instance
 --   >     , VkDebugReportCallbackEXT callback
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkDestroyDebugReportCallbackEXT.html vkDestroyDebugReportCallbackEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroyDebugReportCallbackEXT.html vkDestroyDebugReportCallbackEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyDebugReportCallbackEXT"
                vkDestroyDebugReportCallbackEXT ::
                VkInstance -- ^ instance
@@ -432,7 +431,7 @@ foreign import ccall unsafe "vkDestroyDebugReportCallbackEXT"
                                           -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                        -> IO ()
 
--- | > void vkDebugReportMessageEXT
+-- | > () vkDebugReportMessageEXT
 --   >     ( VkInstance instance
 --   >     , VkDebugReportFlagsEXT flags
 --   >     , VkDebugReportObjectTypeEXT objectType
@@ -443,7 +442,7 @@ foreign import ccall unsafe "vkDestroyDebugReportCallbackEXT"
 --   >     , const char* pMessage
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkDebugReportMessageEXT.html vkDebugReportMessageEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDebugReportMessageEXT.html vkDebugReportMessageEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkDebugReportMessageEXT"
                vkDebugReportMessageEXT ::
                VkInstance -- ^ instance
@@ -453,11 +452,11 @@ foreign import ccall unsafe "vkDebugReportMessageEXT"
                    VkDebugReportObjectTypeEXT -- ^ objectType
                                               ->
                      Word64 -- ^ object
-                            ->
-                       #{type size_t} -> Int32 -- ^ messageCode
-                                                           -> CString -- ^ pLayerPrefix
-                                                                      -> CString -- ^ pMessage
-                                                                                 -> IO ()
+                            -> CSize -- ^ location
+                                     -> Int32 -- ^ messageCode
+                                              -> CString -- ^ pLayerPrefix
+                                                         -> CString -- ^ pMessage
+                                                                    -> IO ()
 
 pattern VK_EXT_DEBUG_REPORT_SPEC_VERSION :: (Num a, Eq a) => a
 

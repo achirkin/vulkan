@@ -34,7 +34,6 @@ module Graphics.Vulkan.Ext.VK_EXT_hdr_metadata
         pattern VK_EXT_HDR_METADATA_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_HDR_METADATA_EXT)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -57,7 +56,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     float          maxFrameAverageLightLevel;
 --   > } VkHdrMetadataEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkHdrMetadataEXT.html VkHdrMetadataEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkHdrMetadataEXT.html VkHdrMetadataEXT registry at www.khronos.org>
 data VkHdrMetadataEXT = VkHdrMetadataEXT## Addr## ByteArray##
 
 instance Eq VkHdrMetadataEXT where
@@ -631,7 +630,7 @@ instance Show VkHdrMetadataEXT where
 --   >     float   y;
 --   > } VkXYColorEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkXYColorEXT.html VkXYColorEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkXYColorEXT.html VkXYColorEXT registry at www.khronos.org>
 data VkXYColorEXT = VkXYColorEXT## Addr## ByteArray##
 
 instance Eq VkXYColorEXT where
@@ -768,14 +767,14 @@ instance Show VkXYColorEXT where
                   showString ", " .
                     showString "vkY = " . showsPrec d (vkY x) . showChar '}'
 
--- | > void vkSetHdrMetadataEXT
+-- | > () vkSetHdrMetadataEXT
 --   >     ( VkDevice device
 --   >     , uint32_t swapchainCount
 --   >     , const VkSwapchainKHR* pSwapchains
 --   >     , const VkHdrMetadataEXT* pMetadata
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkSetHdrMetadataEXT.html vkSetHdrMetadataEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkSetHdrMetadataEXT.html vkSetHdrMetadataEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkSetHdrMetadataEXT"
                vkSetHdrMetadataEXT ::
                VkDevice -- ^ device

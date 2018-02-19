@@ -23,7 +23,6 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_explicit_vertex_parameter
         VK_AMD_SHADER_EXPLICIT_VERTEX_PARAMETER_EXTENSION_NAME,
         pattern VK_AMD_SHADER_EXPLICIT_VERTEX_PARAMETER_EXTENSION_NAME)
        where
-import           Foreign.C.String        (CString)
 import           GHC.Ptr                 (Ptr (..))
 import           Graphics.Vulkan.Marshal
 

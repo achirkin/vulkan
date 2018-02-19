@@ -36,76 +36,30 @@ import           Write.ModuleWriter
 import           Write.Types
 import           Write.Types.Enum
 import           Write.Types.Struct
-
+import           Write.Util.DeclaredNames
 
 generateVkSource :: Path b Dir
                  -> Path c File
                  -> VkXml
                  -> IO ()
 generateVkSource outputDir outCabalFile vkXml = do
+  dnames <- generateVkSource' baseDeclaredNames outputDir outCabalFile vkXml
+  void $ generateVkSource' dnames outputDir outCabalFile vkXml
 
+generateVkSource' :: DeclaredNames
+                  -> Path b Dir
+                  -> Path c File
+                  -> VkXml
+                  -> IO DeclaredNames
+generateVkSource' dnames outputDir outCabalFile vkXml = do
+
+  removeDirRecur outputDir
   createDirIfMissing True (outputDir </> [reldir|Graphics|])
   createDirIfMissing True (outputDir </> [reldir|Graphics/Vulkan|])
   createDirIfMissing True (outputDir </> [reldir|Graphics/Vulkan/Ext|])
 
-  let initialDI = ida "Foreign.C.Types" "CChar"
-               <> ida "Foreign.C.Types" "CSize"
-               <> ida "Foreign.C.Types" "CInt"
-               <> ida "Foreign.C.Types" "CULong"
-               <> ida "Foreign.C.Types" "CFloat"
-               <> ida "Foreign.C.Types" "CWchar"
-               <> id0 "Graphics.Vulkan.Marshal" "Ptr"
-               <> iva "Foreign.Ptr" "nullPtr"
-               <> id0 "Graphics.Vulkan.Marshal" "FunPtr"
-               <> id1 "GHC.Ptr" "Ptr"
-               <> id0 "Data.Void" "Void"
-               <> id0 "GHC.Generics" "Generic"
-               <> id0 "Data.Data" "Data"
-               <> ida "Data.Bits" "Bits"
-               <> ida "Data.Bits" "FiniteBits"
-               <> ida "Foreign.Storable" "Storable"
-               <> iva "Text.ParserCombinators.ReadPrec" "(+++)"
-               <> iva "Text.ParserCombinators.ReadPrec" "step"
-               <> iva "Text.ParserCombinators.ReadPrec" "prec"
-               <> iva "Text.Read" "parens"
-               <> ida "Text.Read" "Read"
-               <> iva "GHC.Read" "choose"
-               <> iva "GHC.Read" "expectP"
-               <> ida "Text.Read.Lex" "Lexeme"
-               <> iva "Data.Coerce" "coerce"
-               <> ida "Foreign.C.String" "CString"
-               <> ida "GHC.Types" "IO"
-               <> ida "GHC.Types" "Int"
-               <> ida "GHC.Types" "Word"
-               <> ida "GHC.ForeignPtr" "ForeignPtr"
-               <> ida "GHC.ForeignPtr" "ForeignPtrContents"
-               <> iva "GHC.ForeignPtr" "newForeignPtr_"
-               <> iva "System.IO.Unsafe" "unsafeDupablePerformIO"
-               <> ida "GHC.TypeLits" "ErrorMessage"
-               <> id0 "GHC.TypeLits" "TypeError"
-               <> id0 "GHC.TypeLits" "KnownNat"
-               <> id0 "GHC.TypeLits" "CmpNat"
-               <> iva "GHC.TypeLits" "natVal'"
-
-      ida m t = Map.fromList
-        [ (DIThing t DITAll ,  ModuleName () m)
-        , (DIThing t DITEmpty, ModuleName () m)
-        , (DIThing t DITNo,    ModuleName () m)
-        ]
-      id0 m t = Map.fromList
-        [ (DIThing t DITEmpty, ModuleName () m)
-        , (DIThing t DITNo,    ModuleName () m)
-        ]
-      id1 m t = Map.fromList
-        [ (DIThing t DITAll,   ModuleName () m)
-        ]
-      -- ity m t x = Map.fromList [ (DIThing t x, ModuleName () m) ]
-      iva m t = Map.fromList [ (DIVar t, ModuleName () m) ]
-      -- ipa m t = Map.fromList [ (DIPat t, ModuleName () m) ]
-
-
   exportedNamesCommon <- do
-    ((), mr) <- runModuleWriter vkXml "Graphics.Vulkan.Common" initialDI $ do
+    ((), mr) <- runModuleWriter vkXml "Graphics.Vulkan.Common" dnames $ do
        writePragma "Strict"
        writePragma "DataKinds"
        genApiConstants
@@ -128,12 +82,12 @@ generateVkSource outputDir outCabalFile vkXml = do
     (a, mr) <- runModuleWriter vkXml "Graphics.Vulkan.Core" exportedNamesBase $ do
        writePragma "Strict"
        writePragma "DataKinds"
-       genFeature
+       fmap mconcat $ mapM genFeature $ globFeature vkXml
     writeModule outputDir [relfile|Graphics/Vulkan/Core.hsc|] id mr
     pure (a, globalNames mr)
 
 
-  (_exportedNamesExts, classDeclsExts, eModules)
+  (exportedNamesExts, classDeclsExts, eModules)
     <- aggregateExts exportedNamesCore
                   ( L.sortOn (extNumber . extAttributes)
                   . Map.elems . globExtensions $ vkXml)
@@ -149,7 +103,8 @@ generateVkSource outputDir outCabalFile vkXml = do
     pure (globalNames mr, cds, (T.pack modName, exProtect))
 
   do -- write classes for struct member accessors
-    ((), mr) <- runModuleWriter vkXml "Graphics.Vulkan.StructMembers" exportedNamesCommon $ do
+    ((), mr) <- runModuleWriter vkXml "Graphics.Vulkan.StructMembers"
+                                           exportedNamesCommon $ do
        writePragma "Strict"
        writeFullImport "Graphics.Vulkan.Marshal"
        mapM_ genClassName
@@ -175,39 +130,40 @@ generateVkSource outputDir outCabalFile vkXml = do
 
 
   writeFile (toFilePath outCabalFile) . T.unpack $ genCabalFile eModules
+  return exportedNamesExts
 
 
-aggregateExts :: GlobalNames
+aggregateExts :: DeclaredNames
               -> [VkExtension]
-              -> (GlobalNames -> VkExtension
-                   -> IO (GlobalNames,ClassDeclarations, (Text, Maybe Text))
+              -> (DeclaredNames -> VkExtension
+                   -> IO (DeclaredNames,ClassDeclarations, (Text, Maybe ProtectDef))
                  )
-              -> IO (GlobalNames,ClassDeclarations, [(Text, Maybe Text)])
+              -> IO (DeclaredNames,ClassDeclarations, [(Text, Maybe ProtectDef)])
 aggregateExts gn [] _ = pure (gn, mempty, [])
 aggregateExts gn (x:xs) f = do
   (gn', cd', mp) <- f gn x
   (gn'', cd'', mps) <- aggregateExts gn' xs f
   pure (gn'', cd' <> cd'', mp:mps)
 
-importLine :: (Text, Maybe Text) -> Text
+importLine :: (Text, Maybe ProtectDef) -> Text
 importLine (mname, Nothing) = "import " <> mname
 importLine (mname, Just p)  = T.unlines
-  [ "#ifdef " <> p
+  [ "#ifdef " <> unProtectCPP (protectCPP p)
   , "import " <> mname
   , "#endif"
   ]
 
 
-exportLine :: Char -> (Text, Maybe Text) -> Text
+exportLine :: Char -> (Text, Maybe ProtectDef) -> Text
 exportLine c (mname, Nothing) = "    " <> T.cons c (" module " <> mname)
 exportLine c (mname, Just p)  = T.unlines
-  [ "#ifdef " <> p
+  [ "#ifdef " <> unProtectCPP (protectCPP p)
   , "    " <> T.cons c (" module " <> mname)
   , "#endif"
   ]
 
 
-genCabalFile :: [(Text, Maybe Text)] -> Text
+genCabalFile :: [(Text, Maybe ProtectDef)] -> Text
 genCabalFile eModules = T.unlines $
       ( [text|
           name:                vulkan-api
@@ -274,8 +230,9 @@ genCabalFile eModules = T.unlines $
     splitThem ((Just g , xs):ms) = second ((g, xs):) $ splitThem ms
 
 
-    mkFlagDef (g, _)
-      | f <- toFlagName g
+    mkFlagDef (p, _)
+      | f <- unProtectFlag $ protectFlag p
+      , g <- unProtectCPP $ protectCPP p
       = [text|
           flag $f
               description:
@@ -283,8 +240,9 @@ genCabalFile eModules = T.unlines $
               default: False
         |]
 
-    mkModules (g,ms)
-      | f <- toFlagName g
+    mkModules (p,ms)
+      | f <- unProtectFlag $ protectFlag p
+      , g <- unProtectCPP $ protectCPP p
       = T.unlines
       $ ("    if flag(" <> f <> ")")
       : ("      cpp-options: -D" <> g)

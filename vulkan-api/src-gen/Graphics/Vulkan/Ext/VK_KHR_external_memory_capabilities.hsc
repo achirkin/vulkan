@@ -48,7 +48,6 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_capabilities
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ID_PROPERTIES_KHR,
         pattern VK_LUID_SIZE_KHR, VK_LUID_SIZE_KHR)
        where
-import           Foreign.C.String                                           (CString)
 import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                                                    (Ptr (..))
@@ -69,7 +68,7 @@ import           System.IO.Unsafe                                           (uns
 --   >     VkExternalMemoryHandleTypeFlagsKHR compatibleHandleTypes;
 --   > } VkExternalMemoryPropertiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalMemoryPropertiesKHR.html VkExternalMemoryPropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkExternalMemoryPropertiesKHR.html VkExternalMemoryPropertiesKHR registry at www.khronos.org>
 data VkExternalMemoryPropertiesKHR = VkExternalMemoryPropertiesKHR## Addr##
                                                                     ByteArray##
 
@@ -309,7 +308,7 @@ instance Show VkExternalMemoryPropertiesKHR where
 --   >     VkExternalMemoryHandleTypeFlagBitsKHR handleType;
 --   > } VkPhysicalDeviceExternalImageFormatInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceExternalImageFormatInfoKHR.html VkPhysicalDeviceExternalImageFormatInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceExternalImageFormatInfoKHR.html VkPhysicalDeviceExternalImageFormatInfoKHR registry at www.khronos.org>
 data VkPhysicalDeviceExternalImageFormatInfoKHR = VkPhysicalDeviceExternalImageFormatInfoKHR## Addr##
                                                                                               ByteArray##
 
@@ -565,7 +564,7 @@ instance Show VkPhysicalDeviceExternalImageFormatInfoKHR where
 --   >     VkExternalMemoryPropertiesKHR externalMemoryProperties;
 --   > } VkExternalImageFormatPropertiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalImageFormatPropertiesKHR.html VkExternalImageFormatPropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkExternalImageFormatPropertiesKHR.html VkExternalImageFormatPropertiesKHR registry at www.khronos.org>
 data VkExternalImageFormatPropertiesKHR = VkExternalImageFormatPropertiesKHR## Addr##
                                                                               ByteArray##
 
@@ -793,7 +792,7 @@ instance Show VkExternalImageFormatPropertiesKHR where
 --   >     VkExternalMemoryHandleTypeFlagBitsKHR handleType;
 --   > } VkPhysicalDeviceExternalBufferInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceExternalBufferInfoKHR.html VkPhysicalDeviceExternalBufferInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceExternalBufferInfoKHR.html VkPhysicalDeviceExternalBufferInfoKHR registry at www.khronos.org>
 data VkPhysicalDeviceExternalBufferInfoKHR = VkPhysicalDeviceExternalBufferInfoKHR## Addr##
                                                                                     ByteArray##
 
@@ -1146,7 +1145,7 @@ instance Show VkPhysicalDeviceExternalBufferInfoKHR where
 --   >     VkExternalMemoryPropertiesKHR    externalMemoryProperties;
 --   > } VkExternalBufferPropertiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkExternalBufferPropertiesKHR.html VkExternalBufferPropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkExternalBufferPropertiesKHR.html VkExternalBufferPropertiesKHR registry at www.khronos.org>
 data VkExternalBufferPropertiesKHR = VkExternalBufferPropertiesKHR## Addr##
                                                                     ByteArray##
 
@@ -1363,7 +1362,7 @@ instance Show VkExternalBufferPropertiesKHR where
 --   >     VkBool32                         deviceLUIDValid;
 --   > } VkPhysicalDeviceIDPropertiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPhysicalDeviceIDPropertiesKHR.html VkPhysicalDeviceIDPropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceIDPropertiesKHR.html VkPhysicalDeviceIDPropertiesKHR registry at www.khronos.org>
 data VkPhysicalDeviceIDPropertiesKHR = VkPhysicalDeviceIDPropertiesKHR## Addr##
                                                                         ByteArray##
 
@@ -1871,13 +1870,13 @@ instance Show VkPhysicalDeviceIDPropertiesKHR where
                                                           showsPrec d (vkDeviceLUIDValid x) .
                                                             showChar '}'
 
--- | > void vkGetPhysicalDeviceExternalBufferPropertiesKHR
+-- | > () vkGetPhysicalDeviceExternalBufferPropertiesKHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , const VkPhysicalDeviceExternalBufferInfoKHR* pExternalBufferInfo
 --   >     , VkExternalBufferPropertiesKHR* pExternalBufferProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetPhysicalDeviceExternalBufferPropertiesKHR.html vkGetPhysicalDeviceExternalBufferPropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceExternalBufferPropertiesKHR.html vkGetPhysicalDeviceExternalBufferPropertiesKHR registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceExternalBufferPropertiesKHR"
                vkGetPhysicalDeviceExternalBufferPropertiesKHR ::

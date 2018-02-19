@@ -28,7 +28,6 @@ module Graphics.Vulkan.Ext.VK_NV_framebuffer_mixed_samples
         pattern VK_NV_FRAMEBUFFER_MIXED_SAMPLES_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PIPELINE_COVERAGE_MODULATION_STATE_CREATE_INFO_NV)
        where
-import           Foreign.C.String                 (CString)
 import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           GHC.Ptr                          (Ptr (..))
@@ -37,7 +36,7 @@ import           Graphics.Vulkan.Common           (VkBool32,
                                                    VkCoverageModulationModeNV,
                                                    VkPipelineCoverageModulationStateCreateFlagsNV,
                                                    VkStructureType,
-                                                   VkStructureType (..), Word32)
+                                                   VkStructureType (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.StructMembers
@@ -53,7 +52,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     const float* pCoverageModulationTable;
 --   > } VkPipelineCoverageModulationStateCreateInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/VkPipelineCoverageModulationStateCreateInfoNV.html VkPipelineCoverageModulationStateCreateInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPipelineCoverageModulationStateCreateInfoNV.html VkPipelineCoverageModulationStateCreateInfoNV registry at www.khronos.org>
 data VkPipelineCoverageModulationStateCreateInfoNV = VkPipelineCoverageModulationStateCreateInfoNV## Addr##
                                                                                                     ByteArray##
 

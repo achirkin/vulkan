@@ -24,7 +24,6 @@ module Graphics.Vulkan.Ext.VK_NV_fill_rectangle
         pattern VK_NV_FILL_RECTANGLE_EXTENSION_NAME,
         pattern VK_POLYGON_MODE_FILL_RECTANGLE_NV)
        where
-import           Foreign.C.String        (CString)
 import           GHC.Ptr                 (Ptr (..))
 import           Graphics.Vulkan.Common  (VkPolygonMode (..))
 import           Graphics.Vulkan.Marshal

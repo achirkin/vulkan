@@ -15,6 +15,7 @@ module VkXml.Sections.Commands
 import           Control.Monad.Except
 import           Control.Monad.Trans.Reader (ReaderT (..))
 import           Data.Conduit
+import           Data.List                  (nub)
 import           Data.Map                   (Map)
 import qualified Data.Map                   as Map
 import           Data.Semigroup
@@ -83,6 +84,16 @@ data VkCommandParamAttrs
   , noautovalidity :: Bool
   , len            :: Maybe Text
   } deriving Show
+
+
+instance TypeScope VkCommand where
+  providesTypes _ = []
+  requiresTypes VkCommand {..} =
+    nub $ cReturnType : (cParameters >>= requiresTypes)
+
+instance TypeScope VkCommandParam where
+  providesTypes _ = []
+  requiresTypes VkCommandParam {..} = [paramType]
 
 
 -- * Parsing
