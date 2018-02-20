@@ -14,7 +14,7 @@ module Write.ModuleWriter
   , runModuleWriter, genModule
   , lookupDiModule, isIdentDeclared, lookupDeclared
   , writeImport, writeFullImport, writeExport, writeExportExplicit
-  , writeExportNoScope
+  , writeExportSpec
   , writePragma, writeDecl
   , writeSection --, writeSectionPre
     -- * Helpers
@@ -218,9 +218,12 @@ writePragma pname = ModuleWriter . modify $
 
 
 writeExportExplicit :: Monad m
-                    => DeclaredIdent -> [ImportSpec ()] -> ModuleWriter m ()
-writeExportExplicit di is = do
-  writeExportNoScope di
+                    => DeclaredIdent
+                    -> [ImportSpec ()]
+                    -> [ExportSpec ()]
+                    -> ModuleWriter m ()
+writeExportExplicit di is es = do
+  mapM_ writeExportSpec es
   ModuleWriter . modify $
    \mr -> mr { globalNames = Map.insert di (mName mr, is) (globalNames mr) }
 
@@ -228,7 +231,7 @@ writeExportExplicit di is = do
 -- | Add an export declaration to a module export list
 writeExport :: Monad m => DeclaredIdent -> ModuleWriter m ()
 writeExport di = do
-  writeExportNoScope di
+  writeExportSpec (diToExportSpec di)
   ModuleWriter . modify $
    \mr -> mr
      { globalNames =
@@ -245,14 +248,13 @@ writeExport di = do
       _ -> [di]
 
 -- | Add an export declaration to a module export list
-writeExportNoScope :: Monad m => DeclaredIdent -> ModuleWriter m ()
-writeExportNoScope di = ModuleWriter . modify $
+writeExportSpec :: Monad m => ExportSpec () -> ModuleWriter m ()
+writeExportSpec espec = ModuleWriter . modify $
    \mr -> mr { mExports = mExports mr Seq.|>
                           setComment (f $ pendingSec mr) (Nothing <$ espec)
              , pendingSec = mempty
              }
   where
-    espec = diToExportSpec di
     -- the whole thing below is to compile comments
     f txts = case removeLastNewline . unlines . g $ toList txts >>= normalize of
        "" -> Nothing

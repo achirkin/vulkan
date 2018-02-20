@@ -22,6 +22,7 @@ import           VkXml.Sections.Types
 
 import           Write.ModuleWriter
 
+import Debug.Trace
 
 genFuncpointer :: Monad m => VkType -> ModuleWriter m ()
 genFuncpointer vkt@VkTypeSimple
@@ -46,6 +47,7 @@ genFuncpointer vkt@VkTypeSimple
     writeImport $ DIThing "FunPtr" DITEmpty
     writeImport $ DIThing "Void" DITEmpty
     writeImport $ DIThing "CString" DITNo
+    writeImport $ DIThing "VkFlags" DITAll
     forM_ (requiresTypes vkt) $ \(VkTypeName t) ->
       writeImport $ DIThing t DITAll
     writeDecl . (Nothing <$) $

@@ -41,7 +41,7 @@ genUnion :: Monad m => VkType -> ModuleWriter m ClassDeclarations
 genUnion = genStructOrUnion True
 
 genStructOrUnion :: Monad m => Bool -> VkType -> ModuleWriter m ClassDeclarations
-genStructOrUnion isUnion VkTypeComposite
+genStructOrUnion isUnion structOrUnion@VkTypeComposite
     { name = vkTName
     , attributes = attrs@VkTypeAttrs
         { comment = txt
@@ -53,7 +53,7 @@ genStructOrUnion isUnion VkTypeComposite
   if indeed
   then do
     writeImport tnameDeclared
-    writeExportNoScope tnameDeclared
+    writeExport tnameDeclared
     return mempty
   else do
     writePragma "MagicHash"
@@ -70,7 +70,7 @@ genStructOrUnion isUnion VkTypeComposite
     writeFullImport "GHC.Prim"
     writeFullImport "Graphics.Vulkan.Marshal"
     writeFullImport "Graphics.Vulkan.Marshal.Internal"
-    forM_ (structextends attrs) $ \(VkTypeName n) ->
+    forM_ (requiresTypes structOrUnion) $ \(VkTypeName n) ->
       writeImport $ DIThing n DITNo
 
     let ds = parseDecls [text|

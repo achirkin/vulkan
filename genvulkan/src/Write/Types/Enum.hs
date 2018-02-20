@@ -13,6 +13,7 @@ module Write.Types.Enum
   ) where
 
 import           Control.Monad
+import           Data.Maybe
 import           Control.Monad.Reader.Class
 import qualified Control.Monad.Trans.RWS.Strict       as RWS
 import qualified Data.Map.Strict                      as Map
@@ -32,7 +33,6 @@ import           Write.ModuleWriter
 
 
 
-
 genBitmaskPair :: Monad m
                => VkType
                   -- ^ type category bitmask
@@ -43,7 +43,7 @@ genBitmaskPair tbm te
   = ask >>= \vk -> case Map.lookup (Just bitsName) (globEnums vk) of
       Nothing -> error $ "genBitmaskPair: Could not find a corresponding enum for bits type "
                       ++ show te
-      Just e@VkEnums {..}  -> do
+      Just VkEnums {..}  -> do
         writePragma "GeneralizedNewtypeDeriving"
         writePragma "DeriveDataTypeable"
         writePragma "DeriveGeneric"
@@ -70,6 +70,12 @@ genBitmaskPair tbm te
             type $flagNameTxt = $baseNameTxt FlagMask
             type $bitsNameTxt = $baseNameTxt FlagBit
 
+            pattern $bitsNameTxt :: VkFlags -> $baseNameTxt FlagBit
+            pattern $bitsNameTxt n = $baseNameTxt n
+
+            pattern $flagNameTxt :: VkFlags -> $baseNameTxt FlagMask
+            pattern $flagNameTxt n = $baseNameTxt n
+
             deriving instance Bits       ($baseNameTxt FlagMask)
             deriving instance FiniteBits ($baseNameTxt FlagMask)
             deriving instance Integral   ($baseNameTxt FlagMask)
@@ -87,21 +93,28 @@ genBitmaskPair tbm te
                        (baseNameTxt <> " a")
                         baseNameTxt
                       )  $ items _vkEnumsMembers
-        let patCNames = map (ConName () . Ident () . T.unpack) $ baseNameTxt : pats
+        let patCNames = map (ConName () . Ident () . T.unpack)
+                      $ baseNameTxt : flagNameTxt : bitsNameTxt : pats
+            ilist = IThingAll () (Ident () (T.unpack baseNameTxt))
+            elist = EThingWith () (NoWildcard ())
+                      (UnQual () (Ident () $ T.unpack baseNameTxt))
+                      patCNames
 
-        writeExport $ DIThing baseNameTxt DITAll
+
         writeExport $ DIThing flagNameTxt DITNo
         writeExport $ DIThing bitsNameTxt DITNo
         writeExportExplicit (DIThing flagNameTxt DITAll)
-          [ IThingAll () (Ident () (T.unpack baseNameTxt))
+          [ ilist
           , IAbs () (NoNamespace ()) (Ident () (T.unpack flagNameTxt))]
+          [ elist ]
         writeExportExplicit (DIThing bitsNameTxt DITAll)
-          [ IThingAll () (Ident () (T.unpack baseNameTxt))
+          [ ilist
           , IAbs () (NoNamespace ()) (Ident () (T.unpack bitsNameTxt))]
+          [ ]
   where
     flagName = tname tbm
     bitsName = tname te
-    baseNameTxt = T.replace "Flags" "Flag" flagNameTxt
+    baseNameTxt = T.replace "Flags" "Bitmask" flagNameTxt
     flagNameTxt = unVkTypeName flagName
     bitsNameTxt = unVkTypeName bitsName
     tname = (name :: VkType -> VkTypeName)
@@ -111,6 +124,7 @@ genApiConstants :: Monad m => ModuleWriter m ()
 genApiConstants = do
   glvl <- ModuleWriter $ RWS.gets currentSecLvl
   writeSection glvl "API Constants"
+  writeImport $ DIThing "Word32" DITNo
   vk <- ask
   pushSecLvl . const $ mapM_ genEnums
     (Map.lookup Nothing (globEnums vk))
@@ -129,24 +143,49 @@ genEnums VkEnums {..} = do
     writePragma "GeneralizedNewtypeDeriving"
     writePragma "DeriveDataTypeable"
     writePragma "DeriveGeneric"
+    writeFullImport "Graphics.Vulkan.Marshal"
 
 
-    writeImport $ DIThing "Generic" DITNo
-    writeImport $ DIThing "Data" DITNo
-    writeImport $ DIThing "Storable" DITNo
+    writeImport $ DIThing "Generic" DITEmpty
+    writeImport $ DIThing "Data" DITEmpty
+    writeImport $ DIThing "Storable" DITEmpty
     when _vkEnumsIsBits $ do
       writeImport $ DIThing "Bits" DITNo
       writeImport $ DIThing "FiniteBits" DITNo
 
-    forM_ _vkEnumsTypeName $ \tname -> do
-      newInt32TypeDec tname derives _vkEnumsComment
+    mtname <- forM _vkEnumsTypeName $ \tname -> do
+      regLink <- vkRegistryLink $ unVkTypeName tname
+      let tinsts = T.intercalate ", " derives
+          rezComment = preComment . T.unpack $ _vkEnumsComment <:> regLink
+          tnametxt = unVkTypeName tname
+
+      writeDecl . setComment rezComment $ parseDecl'
+        [text|
+          newtype $tnametxt = $tnametxt $baseType
+            deriving ($tinsts)
+        |]
       genEnumShow tname (unVkTypeName tname) allPNs
       genEnumRead tname (unVkTypeName tname) allPNs
+      return tnametxt
 
-    writeSections enumPattern $ _vkEnumsMembers
+    epats <- (>>= maybeToList) <$> mapM enumPattern (items _vkEnumsMembers)
+    case mtname of
+      Nothing ->
+        mapM_ (writeExport . DIPat) epats
+      Just tnameTxt -> do
+        let patCNames = map (ConName () . Ident () . T.unpack)
+                      $ tnameTxt : epats
+            ilist = IThingAll () (Ident () (T.unpack tnameTxt))
+            elist = EThingWith () (NoWildcard ())
+                      (UnQual () (Ident () $ T.unpack tnameTxt))
+                      patCNames
+        writeExportExplicit (DIThing tnameTxt DITAll)
+          [ ilist ]
+          [ elist ]
   where
     derives = (if _vkEnumsIsBits then ("Bits":).("FiniteBits":) else id)
               ["Eq","Ord","Num","Bounded","Storable","Enum", "Data", "Generic"]
+    baseType = if _vkEnumsIsBits then "VkFlags" else "Int32"
 
     allPNs = map (unVkEnumName . _vkEnumName) . items $ _vkEnumsMembers
 
@@ -204,7 +243,7 @@ genAlias VkTypeSimple
   if indeed
   then do
     writeImport tnameDeclared
-    writeExportNoScope tnameDeclared
+    writeExport tnameDeclared
   else do
     writeImport $ DIThing refname DITNo
     writeDecl . setComment (preComment $ T.unpack txt) $ parseDecl'
@@ -279,26 +318,6 @@ genAlias t = error $ "genAlias: expected a simple enum type, but got: "
 
 
 
-newInt32TypeDec :: Monad m
-                => VkTypeName -> [Text] -> Text -> ModuleWriter m ()
-newInt32TypeDec vkTName insts com = do
-    regLink <- vkRegistryLink $ unVkTypeName vkTName
-    let tinsts = T.intercalate ", " insts
-        rezComment = preComment . T.unpack $ com <:> regLink
-
-    writePragma "GeneralizedNewtypeDeriving"
-    writeFullImport "Graphics.Vulkan.Marshal"
-    writeDecl . setComment rezComment $ parseDecl'
-      [text|
-        newtype $tnametxt = $tnametxt Int32
-          deriving ($tinsts)
-      |]
-
-    writeExport $ DIThing tnametxt DITAll
-  where
-    -- tname = toQName vkTName
-    tnametxt = unVkTypeName vkTName
-
 
 bitmaskPattern :: Monad m => Text -> Text -> VkEnum -> ModuleWriter m Text
 bitmaskPattern tnameTxt constrTxt
@@ -317,13 +336,14 @@ bitmaskPattern tnameTxt constrTxt
 bitmaskPattern _ _ p = error $ "Unexpected bitmask pattern " ++ show p
 
 
-enumPattern :: Monad m => VkEnum -> ModuleWriter m ()
+enumPattern :: Monad m => VkEnum -> ModuleWriter m (Maybe Text)
 enumPattern VkEnum {..} = writePragma "PatternSynonyms" >>
   case _vkEnumValue of
     VkEnumReference -> do
           enames <- lookupDeclared (unVkEnumName _vkEnumName)
           mapM_ writeImport enames
-          mapM_ writeExportNoScope enames
+          mapM_ writeExport enames
+          return Nothing
 
     VkEnumString s
       | tyval <- "\"" <> s <> "\""
@@ -356,6 +376,7 @@ enumPattern VkEnum {..} = writePragma "PatternSynonyms" >>
               |]
           writeExport $ DIThing patnametxt DITNo
           writeExport $ DIPat patnametxt
+          return Nothing
 
     VkEnumIntegral n tnametxt
       | Just (VkTypeName cname) <- _vkEnumTName
@@ -366,7 +387,7 @@ enumPattern VkEnum {..} = writePragma "PatternSynonyms" >>
           writeDecl . setComment rezComment
                     $ parseDecl' [text|pattern $patnametxt :: $tnametxt|]
           writeDecl $ parseDecl' [text|pattern $patnametxt = $cname $patval|]
-          writeExport $ DIPat patnametxt
+          return $ Just patnametxt
 
       | Nothing <- _vkEnumTName
       , patval <- T.pack $ show n
@@ -383,6 +404,7 @@ enumPattern VkEnum {..} = writePragma "PatternSynonyms" >>
               [text|type $patnametxt = $patval|]
             writeExport $ DIThing patnametxt DITNo
           writeExport $ DIPat patnametxt
+          return Nothing
 
     VkEnumFractional r
       | patval <- T.pack $ show (realToFrac r :: Double) -> do
@@ -390,12 +412,14 @@ enumPattern VkEnum {..} = writePragma "PatternSynonyms" >>
                     $ parseDecl' [text|pattern $patnametxt :: (Fractional a, Eq a) => a|]
           writeDecl $ parseDecl' [text|pattern $patnametxt =  $patval|]
           writeExport $ DIPat patnametxt
+          return Nothing
 
     VkEnumAlias (VkEnumName aliasname) -> do
           writeImport $ DIPat aliasname
           writeDecl . setComment rezComment
                     $ parseDecl' [text|pattern $patnametxt = $aliasname|]
           writeExport $ DIPat patnametxt
+          return Nothing
   where
     patname = toQName _vkEnumName
     patnametxt = qNameTxt patname

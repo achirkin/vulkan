@@ -7,7 +7,7 @@ module Write.Commands
   ( genBaseCommands, genCommand
   ) where
 
-import           Control.Monad                        (forM_)
+import           Control.Monad                        (forM_, when)
 import           Control.Monad.Reader.Class
 import           Data.Maybe                           (isJust)
 import           Data.Semigroup
@@ -44,7 +44,7 @@ genBaseCommands = do
 
 
 genCommand :: Monad m => VkCommand -> ModuleWriter m ()
-genCommand VkCommand
+genCommand command@VkCommand
   { cName = vkname
   , cNameOrig = cnameOrigTxt
   , cReturnType = vkrt
@@ -58,13 +58,14 @@ genCommand VkCommand
                  >>= preComment . T.unpack
 
     writePragma "ForeignFunctionInterface"
-    -- writeFullImport "Graphics.Vulkan.Marshal"
-    writeFullImport "Graphics.Vulkan.Common"
-    forM_ (vkrt : map paramType vkpams) $ \p ->
+    forM_ (requiresTypes command) $ \p ->
       let t = unVkTypeName p
           dit = if "Vk" `T.isPrefixOf` t
                 then DITAll else DITNo
-      in writeImport $ DIThing t dit
+      in do
+        when ("Flags" `T.isInfixOf` t || "FlagBits" `T.isInfixOf` t) $
+          writeImport $ DIThing "VkFlags" DITAll
+        writeImport $ DIThing t dit
 
     writeDecl $ ForImp rezComment (CCall Nothing) (Just (PlayRisky Nothing))
                       (Just cnameOrigStr) (Ident Nothing cnameStr) funtype
