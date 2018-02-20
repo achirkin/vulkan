@@ -197,12 +197,12 @@ writeModule' outputDir mw = do
         writeFile pp
           $ fixSourceHooks isHsc rez'
     putStrLn $ "Done: " <> pp
-    return $ T.pack moduleName
+    return $ T.pack modName
   where
     isHsc = "HSC2HS___" `L.isInfixOf` rez
-    moduleName = case mName mw of
+    modName = case mName mw of
       ModuleName () m -> m
-    fileNameStr = map repSym moduleName <> if isHsc then ".hsc" else ".hs"
+    fileNameStr = map repSym modName <> if isHsc then ".hsc" else ".hs"
     repSym '.' = '/'
     repSym c = c
     rez = uncurry exactPrint

@@ -89,7 +89,7 @@ genDefine t@VkTypeSimple
 
   | vkName == VkTypeName "VK_API_VERSION_1_0"
   && c == "// Vulkan 1.0 version number\n#define VK_API_VERSION_1_0 VK_MAKE_VERSION(1, 0, 0)// Patch version should always be set to 0"
-  = enumPattern VkEnum
+  = () <$ enumPattern VkEnum
     { _vkEnumName    = VkEnumName "VK_API_VERSION_1_0"
     , _vkEnumTName   = Nothing
     , _vkEnumComment = T.unlines . map ("> " <>) $ T.lines c
@@ -101,7 +101,7 @@ genDefine t@VkTypeSimple
   | VkTypeName "VK_HEADER_VERSION" <- vkName -- this thing changes more often, so it is better to parse it.
   , mnumber <- snd $ T.breakOnEnd "VK_HEADER_VERSION" c
   , Right (v, _) <- T.decimal $ T.stripStart mnumber
-  = enumPattern VkEnum
+  = () <$ enumPattern VkEnum
     { _vkEnumName    = VkEnumName "VK_HEADER_VERSION"
     , _vkEnumTName   = Nothing
     , _vkEnumComment = T.unlines . map ("> " <>) $ T.lines c

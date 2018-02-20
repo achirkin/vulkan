@@ -7,7 +7,7 @@ module Write.Feature
   ( genFeature, genRequire, showExts
   ) where
 
-import           Control.Monad                        (forM_, forM)
+import           Control.Monad                        (forM_, forM, (>=>))
 import           Control.Monad.Reader.Class
 import qualified Data.Map                             as Map
 import           Data.Semigroup
@@ -66,7 +66,7 @@ genRequire curlvl tps cmds VkRequire {..} = do
   forM_ requireComms $ \cname -> case Map.lookup cname cmds of
         Nothing -> pure ()
         Just t  -> genCommand t
-  forM_ requireEnums enumPattern
+  forM_ requireEnums $ enumPattern >=> mapM_ (writeExport . DIPat)
   return cds
 
 
