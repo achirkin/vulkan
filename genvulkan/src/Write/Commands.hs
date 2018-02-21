@@ -4,46 +4,26 @@
 {-# LANGUAGE RecordWildCards       #-}
 {-# LANGUAGE Strict                #-}
 module Write.Commands
-  ( genBaseCommands, genCommand
+  ( genCommand
   ) where
 
 import           Control.Monad                        (forM_, when)
-import           Control.Monad.Reader.Class
 import           Data.Maybe                           (isJust)
 import           Data.Semigroup
+import           Data.Set                             (Set)
 import qualified Data.Set                             as Set
-import qualified Data.Map                             as Map
 import qualified Data.Text                            as T
 import           Language.Haskell.Exts.SimpleComments
 import           Language.Haskell.Exts.Syntax
 
 import           VkXml.CommonTypes
-import           VkXml.Sections
 import           VkXml.Sections.Commands
-import           VkXml.Sections.Extensions
-import           VkXml.Sections.Feature
 
 import           Write.ModuleWriter
 
 
-genBaseCommands :: Monad m => ModuleWriter m ()
-genBaseCommands = do
-    vkXml <- ask
-    let featureComms = Set.fromList
-                     $ globFeature vkXml >>= reqList >>= requireComms
-        extComms = Set.fromList
-                     $ Map.elems (globExtensions vkXml)
-                       >>= extRequires >>= requireComms
-        excludedComms = Set.union featureComms extComms
 
-    forM_ (globCommands vkXml) $ \c ->
-      if cName c `Set.member` excludedComms
-      then pure ()
-      else genCommand c
-
-
-
-genCommand :: Monad m => VkCommand -> ModuleWriter m ()
+genCommand :: Monad m => VkCommand -> ModuleWriter m (Set VkTypeName)
 genCommand command@VkCommand
   { cName = vkname
   , cNameOrig = cnameOrigTxt
@@ -64,7 +44,8 @@ genCommand command@VkCommand
           dit = if "Vk" `T.isPrefixOf` t
                 then DITAll else DITNo
       in do
-        when ("Flags" `T.isInfixOf` t || "FlagBits" `T.isInfixOf` t) $
+        when ("Flags" `T.isInfixOf` t || "FlagBits" `T.isInfixOf` t) $ do
+          writeOptionsPragma (Just GHC) "-fno-warn-unused-imports"
           writeImport $ DIThing "VkFlags" DITAll
         writeImport $ DIThing t dit
 
@@ -72,6 +53,10 @@ genCommand command@VkCommand
                       (Just cnameOrigStr) (Ident Nothing cnameStr) funtype
 
     writeExport . DIVar $ unVkCommandName vkname
+    -- reexport all dependent types
+    return . Set.fromList
+           . filter (T.isInfixOf "Vk" . unVkTypeName)
+           $ requiresTypes command
   where
     cname = toQName vkname
     cnameStr = T.unpack $ qNameTxt cname

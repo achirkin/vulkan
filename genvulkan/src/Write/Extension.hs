@@ -7,26 +7,22 @@ module Write.Extension
   ( genExtension
   ) where
 
+import           Control.Monad.Morph              (hoist)
 import           Control.Monad.Reader.Class
--- import qualified Data.Map                             as Map
+import           Control.Monad.Trans.State.Strict (evalStateT)
 import           Data.Semigroup
-import qualified Data.Text                            as T
+import qualified Data.Text                        as T
 
 import           VkXml.CommonTypes
 import           VkXml.Sections
--- import           VkXml.Sections.Types as Ts
--- import           VkXml.Sections.Commands as Cs
--- import           VkXml.Sections.Feature
 import           VkXml.Sections.Extensions
-
-import           Write.ModuleWriter
 import           Write.Feature
--- import           Write.Types.Struct
+import           Write.ModuleWriter
 
 
 genExtension :: Monad m => VkExtension
              -> ModuleWriter m (Maybe ProtectDef)
-genExtension (VkExtension VkExtAttrs{..} ereqs) = do
+genExtension (VkExtension VkExtAttrs{..} ereqs) = hoist (`evalStateT` mempty) $ do
     curlvl <- getCurrentSecLvl
     vkXml <- ask
     let tps = globTypes vkXml

@@ -12,7 +12,8 @@ module Write.ModuleWriter
   ( A, DeclaredNames, ModuleWriting (..), ModuleWriter (..)
   , DeclaredIdent (..), DIThingMembers (..)
   , runModuleWriter, genModule
-  , lookupDiModule, isIdentDeclared, lookupDeclared
+  , lookupDiModule, lookupDiModuleImports
+  , isIdentDeclared, lookupDeclared, getCurrentModuleName
   , writeImport, writeFullImport, writeExport, writeExportExplicit
   , writeExportSpec
   , writePragma, writeOptionsPragma, writeDecl
@@ -22,7 +23,7 @@ module Write.ModuleWriter
   , parseDecls, insertDeclComment
   , writeWithComments, vkRegistryLink
   , writeSections
-  , foldSectionsWithComments, pushSecLvl, getCurrentSecLvl
+  , foldSectionsWithComments, pushSecLvl, getCurrentSecLvl, i2espec
   ) where
 
 import           Control.Applicative
@@ -80,7 +81,6 @@ data ModuleWriting
   , pendingSec    :: Seq (Int, Text)
   , currentSecLvl :: Int
   }
-
 
 newtype ModuleWriter m a
   = ModuleWriter
@@ -337,6 +337,9 @@ pushSecLvl f = do
 getCurrentSecLvl :: Monad m => ModuleWriter m Int
 getCurrentSecLvl = ModuleWriter $ gets currentSecLvl
 
+getCurrentModuleName :: Monad m => ModuleWriter m (ModuleName ())
+getCurrentModuleName = ModuleWriter $ gets mName
+
 
 -- | Write section elements interspersed with comments as section delimers
 writeWithComments :: Monad m
@@ -511,3 +514,11 @@ vkRegistryLink tname = do
         <> Feature.number (last $ globFeature vkXml)
         <> "-extensions/man/html/" <> tname <> ".html "
         <> tname <> " registry at www.khronos.org>"
+
+
+
+i2espec :: ImportSpec a -> ExportSpec a
+i2espec (IVar a n) = EVar a (UnQual a n)
+i2espec (IAbs a n m) = EAbs a n (UnQual a m)
+i2espec (IThingAll a n) = EThingWith a (EWildcard a 0) (UnQual a n) []
+i2espec (IThingWith a n cn) = EThingWith a (NoWildcard a) (UnQual a n) cn
