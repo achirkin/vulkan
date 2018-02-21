@@ -15,6 +15,7 @@ import           Control.Monad.State.Class        (MonadState (..))
 import           Control.Monad.Trans.Class        (lift)
 import           Control.Monad.Trans.State.Strict (evalStateT)
 import qualified Data.Map                         as Map
+import           Data.Maybe                       (maybe)
 import           Data.Semigroup
 import           Data.Set                         (Set)
 import qualified Data.Set                         as Set
@@ -33,7 +34,7 @@ import           Write.ModuleWriter
 import           Write.Types
 import           Write.Types.Enum
 import           Write.Types.Struct
-import           Write.Util.DeclaredNames
+-- import           Write.Util.DeclaredNames
 
 
 genFeature :: Monad m => VkFeature -> ModuleWriter m ClassDeclarations
@@ -58,7 +59,7 @@ genFeature VkFeature {..} = hoist (`evalStateT` mempty) $ do
     pushSecLvl $ \lvl -> mconcat <$> mapM (genRequire lvl tps cmds) reqList
 
 
-genRequire :: MonadState (Set VkTypeName) m
+genRequire :: MonadState (Set (ModuleName ())) m
           => Int
           -> Map.Map VkTypeName VkType
           -> Map.Map VkCommandName VkCommand
@@ -74,32 +75,34 @@ genRequire curlvl tps cmds VkRequire {..} = do
         Nothing -> pure mempty
         Just t  -> do
           otn <- lift get
-          if Set.member tname otn
-          then pure mempty
-          else do
-            lift $ put (Set.insert tname otn)
-            genType t
+          mIMod <- lookupDiModule $ DIThing (unVkTypeName tname) DITAll
+          case mIMod of
+            Nothing -> genType t
+            Just imod ->
+              if Set.member imod otn
+              then pure mempty
+              else do
+                lift $ put (Set.insert imod otn)
+                case imod of
+                  ModuleName () m -> writeFullImport m
+                writeExportSpec $ EModuleContents () imod
+                pure mempty
   tNames <- fmap mconcat $
     forM requireComms $ \cname -> case Map.lookup cname cmds of
         Nothing -> pure mempty
         Just t  -> genCommand t
 
+  emodNames <- foldM (\s (VkTypeName n) ->
+                         fmap (Set.union s . maybe mempty Set.singleton)
+                         . lookupDiModule $ DIThing n DITNo
+                     ) mempty tNames
 
-  curM <- getCurrentModuleName
   otNames <- lift get
-  lift $ put (tNames `Set.union` otNames)
-  forM_ (tNames Set.\\ otNames) $ \(VkTypeName t) -> do
-    let tnameDeclared = DIThing t DITAll
-    mdecm <- lookupDiModuleImports tnameDeclared
-    case mdecm of
-      Nothing -> pure ()
-      Just (m, ispecs)  -> when (m /= curM) $ do
-        writeImport tnameDeclared
-        if "FlagBits" `T.isInfixOf` t && length ispecs > 1
-        then
-          writeExportSpec . diToExportSpec $ DIThing t DITNo
-        else
-          mapM_ (writeExportSpec . i2espec) ispecs
+  lift $ put (emodNames `Set.union` otNames)
+  forM_ (emodNames Set.\\ otNames) $ \mm@(ModuleName _ m) -> do
+    writeFullImport m
+    writeExportSpec $ EModuleContents () mm
+
 
   forM_ requireEnums $ enumPattern >=> mapM_ (writeExport . DIPat)
   return cds
