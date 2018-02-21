@@ -1,0 +1,137 @@
+{-# LANGUAGE DataKinds       #-}
+{-# LANGUAGE PatternSynonyms #-}
+{-# LANGUAGE Strict          #-}
+module Graphics.Vulkan.Constants
+       (VK_MAX_PHYSICAL_DEVICE_NAME_SIZE,
+        pattern VK_MAX_PHYSICAL_DEVICE_NAME_SIZE, VK_UUID_SIZE,
+        pattern VK_UUID_SIZE, VK_LUID_SIZE_KHR, pattern VK_LUID_SIZE_KHR,
+        VK_MAX_EXTENSION_NAME_SIZE, pattern VK_MAX_EXTENSION_NAME_SIZE,
+        VK_MAX_DESCRIPTION_SIZE, pattern VK_MAX_DESCRIPTION_SIZE,
+        VK_MAX_MEMORY_TYPES, pattern VK_MAX_MEMORY_TYPES,
+        VK_MAX_MEMORY_HEAPS, pattern VK_MAX_MEMORY_HEAPS,
+        pattern VK_LOD_CLAMP_NONE, VK_REMAINING_MIP_LEVELS,
+        pattern VK_REMAINING_MIP_LEVELS, VK_REMAINING_ARRAY_LAYERS,
+        pattern VK_REMAINING_ARRAY_LAYERS, VK_WHOLE_SIZE,
+        pattern VK_WHOLE_SIZE, VK_ATTACHMENT_UNUSED,
+        pattern VK_ATTACHMENT_UNUSED, VK_TRUE, pattern VK_TRUE, VK_FALSE,
+        pattern VK_FALSE, VK_QUEUE_FAMILY_IGNORED,
+        pattern VK_QUEUE_FAMILY_IGNORED, VK_QUEUE_FAMILY_EXTERNAL_KHR,
+        pattern VK_QUEUE_FAMILY_EXTERNAL_KHR, VK_QUEUE_FAMILY_FOREIGN_EXT,
+        pattern VK_QUEUE_FAMILY_FOREIGN_EXT, VK_SUBPASS_EXTERNAL,
+        pattern VK_SUBPASS_EXTERNAL, VK_MAX_DEVICE_GROUP_SIZE_KHX,
+        pattern VK_MAX_DEVICE_GROUP_SIZE_KHX)
+       where
+import           Graphics.Vulkan.Marshal
+
+pattern VK_MAX_PHYSICAL_DEVICE_NAME_SIZE :: (Num a, Eq a) => a
+
+pattern VK_MAX_PHYSICAL_DEVICE_NAME_SIZE = 256
+
+type VK_MAX_PHYSICAL_DEVICE_NAME_SIZE = 256
+
+pattern VK_UUID_SIZE :: (Num a, Eq a) => a
+
+pattern VK_UUID_SIZE = 16
+
+type VK_UUID_SIZE = 16
+
+pattern VK_LUID_SIZE_KHR :: (Num a, Eq a) => a
+
+pattern VK_LUID_SIZE_KHR = 8
+
+type VK_LUID_SIZE_KHR = 8
+
+pattern VK_MAX_EXTENSION_NAME_SIZE :: (Num a, Eq a) => a
+
+pattern VK_MAX_EXTENSION_NAME_SIZE = 256
+
+type VK_MAX_EXTENSION_NAME_SIZE = 256
+
+pattern VK_MAX_DESCRIPTION_SIZE :: (Num a, Eq a) => a
+
+pattern VK_MAX_DESCRIPTION_SIZE = 256
+
+type VK_MAX_DESCRIPTION_SIZE = 256
+
+pattern VK_MAX_MEMORY_TYPES :: (Num a, Eq a) => a
+
+pattern VK_MAX_MEMORY_TYPES = 32
+
+type VK_MAX_MEMORY_TYPES = 32
+
+-- | The maximum number of unique memory heaps, each of which supporting 1 or more memory types
+pattern VK_MAX_MEMORY_HEAPS :: (Num a, Eq a) => a
+
+pattern VK_MAX_MEMORY_HEAPS = 16
+
+type VK_MAX_MEMORY_HEAPS = 16
+
+pattern VK_LOD_CLAMP_NONE :: (Fractional a, Eq a) => a
+
+pattern VK_LOD_CLAMP_NONE = 1000.0
+
+pattern VK_REMAINING_MIP_LEVELS :: Word32
+
+pattern VK_REMAINING_MIP_LEVELS = 4294967295
+
+type VK_REMAINING_MIP_LEVELS = 4294967295
+
+pattern VK_REMAINING_ARRAY_LAYERS :: Word32
+
+pattern VK_REMAINING_ARRAY_LAYERS = 4294967295
+
+type VK_REMAINING_ARRAY_LAYERS = 4294967295
+
+pattern VK_WHOLE_SIZE :: Word64
+
+pattern VK_WHOLE_SIZE = 18446744073709551615
+
+type VK_WHOLE_SIZE = 18446744073709551615
+
+pattern VK_ATTACHMENT_UNUSED :: Word32
+
+pattern VK_ATTACHMENT_UNUSED = 4294967295
+
+type VK_ATTACHMENT_UNUSED = 4294967295
+
+pattern VK_TRUE :: (Num a, Eq a) => a
+
+pattern VK_TRUE = 1
+
+type VK_TRUE = 1
+
+pattern VK_FALSE :: (Num a, Eq a) => a
+
+pattern VK_FALSE = 0
+
+type VK_FALSE = 0
+
+pattern VK_QUEUE_FAMILY_IGNORED :: Word32
+
+pattern VK_QUEUE_FAMILY_IGNORED = 4294967295
+
+type VK_QUEUE_FAMILY_IGNORED = 4294967295
+
+pattern VK_QUEUE_FAMILY_EXTERNAL_KHR :: Word32
+
+pattern VK_QUEUE_FAMILY_EXTERNAL_KHR = 4294967294
+
+type VK_QUEUE_FAMILY_EXTERNAL_KHR = 4294967294
+
+pattern VK_QUEUE_FAMILY_FOREIGN_EXT :: Word32
+
+pattern VK_QUEUE_FAMILY_FOREIGN_EXT = 4294967293
+
+type VK_QUEUE_FAMILY_FOREIGN_EXT = 4294967293
+
+pattern VK_SUBPASS_EXTERNAL :: Word32
+
+pattern VK_SUBPASS_EXTERNAL = 4294967295
+
+type VK_SUBPASS_EXTERNAL = 4294967295
+
+pattern VK_MAX_DEVICE_GROUP_SIZE_KHX :: (Num a, Eq a) => a
+
+pattern VK_MAX_DEVICE_GROUP_SIZE_KHX = 32
+
+type VK_MAX_DEVICE_GROUP_SIZE_KHX = 32

@@ -23,7 +23,12 @@ Generated haskell bindings for vulkan api.
 # genvulkan
 
 Generate haskell vulkan sources using vk.xml file.
-
+To update the api bindings, run `genvulkan` using stack with this project folder:
+```bash
+cd genvulkan
+stack build
+stack exec genvulkan
+```
 
 # vulkan-examples
 
@@ -49,16 +54,6 @@ sudo apt-get install libvulkan-dev
 
  * [ ] Check if it is safe to do all foreign calls unsafe,
        mark those calls that have to be safe (all calls are unsafe currently).
- * [ ] Check if it is possible to hide `VkPtr` constructor.
- * [ ] Find the best way to represent pairs of `Vk**Flags` and `Vk**FlagBits` types.
-       One way to go:
-
-       1. Find all pairs of `Vk**Flags` and `Vk**FlagBits` types.
-       2. Define type parameters `data VkFlagType = Bit | Mask`.
-       3. Define a common `newtype Vk**FB (a :: VkFlagType) = Vk**FB VkFlags`
-       3. Make all patterns parameter-polymorphic.
-       4. Optionally, make converting functions.
-
  * [ ] `VkXml.Sections.Commands`: parse command parameters more robustly,
        maybe use `language-c` package for that.
        Make parsing more compliant with the registry spec.
