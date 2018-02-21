@@ -50,12 +50,7 @@ generateVkSource outputDir outCabalFile vkXml = do
   createDirIfMissing True (outputDir </> [reldir|Graphics/Vulkan|])
   createDirIfMissing True (outputDir </> [reldir|Graphics/Vulkan/Ext|])
 
-  -- We run writeAllTypes function twice to make sure all cross-module
-  --  dependencies are resolved
-  (_, dnames') <- writeAllTypes vkXml baseDeclaredNames
-  (genTModules, dnames) <- writeAllTypes vkXml dnames'
-  eModules0 <- mapM
-    (\(m, mpdf) -> flip (,) mpdf <$> writeModule outputDir m) genTModules
+  (_, dnames) <- writeAllTypes vkXml baseDeclaredNames
 
   exportedNamesConstants <- do
     ((), mr) <- runModuleWriter vkXml "Graphics.Vulkan.Constants" dnames $ do
@@ -65,8 +60,15 @@ generateVkSource outputDir outCabalFile vkXml = do
     _ <- writeModule outputDir mr
     pure $ globalNames mr
 
+  -- We run writeAllTypes function twice to make sure all cross-module
+  --  dependencies are resolved
+  (genTModules, exportedNamesTypes) <- writeAllTypes vkXml exportedNamesConstants
+  eModules0 <- mapM
+    (\(m, mpdf) -> flip (,) mpdf <$> writeModule outputDir m) genTModules
+
+
   (_classDeclsCore, exportedNamesCore) <- do
-    (a, mr) <- runModuleWriter vkXml "Graphics.Vulkan.Core" exportedNamesConstants $ do
+    (a, mr) <- runModuleWriter vkXml "Graphics.Vulkan.Core" exportedNamesTypes $ do
        writePragma "Strict"
        writePragma "DataKinds"
        fmap mconcat $ mapM genFeature $ globFeature vkXml

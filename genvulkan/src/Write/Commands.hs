@@ -58,7 +58,7 @@ genCommand command@VkCommand
                  >>= preComment . T.unpack
 
     writePragma "ForeignFunctionInterface"
-    writeFullImport "Graphics.Vulkan.Marshal" 
+    writeFullImport "Graphics.Vulkan.Marshal"
     forM_ (requiresTypes command) $ \p ->
       let t = unVkTypeName p
           dit = if "Vk" `T.isPrefixOf` t
