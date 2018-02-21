@@ -1,7 +1,10 @@
-{-# LANGUAGE Strict #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE QuasiQuotes       #-}
+{-# LANGUAGE Strict            #-}
 module ProcessVkXml
   ( processVkXmlFile
   , generateVkSource
+  , processVulkanHFile
   ) where
 
 import           Control.Monad                (unless)
@@ -9,8 +12,10 @@ import           Control.Monad.Trans.Resource
 import           Data.Conduit
 import           Data.Conduit.Binary          (sourceFile)
 import           Data.Semigroup
+import qualified Data.Text.IO                 as Text (readFile, writeFile)
 import           Path
 import           Path.IO
+import           Text.RE.TDFA.Text
 import           Text.XML                     as Xml
 import           Text.XML.Stream.Parse        as Xml
 
@@ -40,3 +45,15 @@ processVkXmlFile vkXmlFile outputDir outCabalFile = do
     return y
   where
     initLoc = defParseLoc vkXmlFile
+
+
+processVulkanHFile ::
+     Path a File -- ^ input file vulkan.h from submodule
+  -> Path b File -- ^ outout file vulkan.h in includes
+  -> IO ()
+processVulkanHFile inputVulkanH outputVulkanH = do
+    doesFileExist inputVulkanH >>= flip unless
+      (error $ "vulkan.h file located at " <> show inputVulkanH <> " is not found!")
+    vulkanHTxt <- Text.readFile (toFilePath inputVulkanH)
+    Text.writeFile (toFilePath outputVulkanH)
+      $ vulkanHTxt *=~/ [ed|^#include[[:space:]]"vk_platform.h"///#include "vulkan/vk_platform.h"|]

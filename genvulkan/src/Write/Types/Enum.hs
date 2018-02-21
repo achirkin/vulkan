@@ -441,6 +441,7 @@ enumPattern VkEnum {..} = writePragma "PatternSynonyms" >>
           return Nothing
 
     VkEnumAlias (VkEnumName aliasname) -> do
+          writeOptionsPragma (Just GHC) "-fno-warn-missing-pattern-synonym-signatures"
           writeImport $ DIPat aliasname
           writeDecl . setComment rezComment
                     $ parseDecl' [text|pattern $patnametxt = $aliasname|]
