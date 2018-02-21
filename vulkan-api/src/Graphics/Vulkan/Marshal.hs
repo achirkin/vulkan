@@ -39,7 +39,7 @@ module Graphics.Vulkan.Marshal
   , Int8, Int16, Int32, Int64
   , Word8, Word16, Word32, Word64
   , Ptr, FunPtr, Void, CString
-  , CInt (..), CSize (..), CChar (..)
+  , CInt (..), CSize (..), CChar (..), CWchar (..), CULong (..)
     -- * Utilities for string types
   , withCStringField, unsafeCStringField
   , getStringField, readStringField, writeStringField
@@ -53,7 +53,7 @@ import           Data.Void                        (Void)
 import           Data.Word                        (Word16, Word32, Word64,
                                                    Word8)
 import           Foreign.C.String                 (CString, peekCString)
-import           Foreign.C.Types                  (CChar (..), CInt (..), CSize (..))
+import           Foreign.C.Types                  (CChar (..), CWchar (..), CInt (..), CSize (..), CULong (..))
 import           Foreign.ForeignPtr               (ForeignPtr,
                                                    addForeignPtrFinalizer,
                                                    mallocForeignPtr,
