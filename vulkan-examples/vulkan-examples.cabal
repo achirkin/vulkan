@@ -104,4 +104,5 @@ executable ve-06-Drawing
 
 source-repository head
   type:     git
-  location: https://github.com/achirkin/genvulkan
+  location: https://github.com/achirkin/vulkan
+  subdir:   vulkan-examples
