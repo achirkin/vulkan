@@ -22,7 +22,6 @@ import           VkXml.Sections.Types
 
 import           Write.ModuleWriter
 
-import Debug.Trace
 
 genFuncpointer :: Monad m => VkType -> ModuleWriter m ()
 genFuncpointer vkt@VkTypeSimple
@@ -43,6 +42,7 @@ genFuncpointer vkt@VkTypeSimple
     , pfuntype <- TyApp () (TyCon () (UnQual () (Ident () "FunPtr")))
                            (TyCon () tfname)
     = do
+    writeFullImport "Graphics.Vulkan.Marshal"
     writeImport $ DIThing "Ptr" DITEmpty
     writeImport $ DIThing "FunPtr" DITEmpty
     writeImport $ DIThing "Void" DITEmpty

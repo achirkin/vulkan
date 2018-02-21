@@ -3,14 +3,10 @@
 --   Instead, it is hand-written to aggregate all generated code.
 module Graphics.Vulkan
   ( module Graphics.Vulkan.Marshal
-  , module Graphics.Vulkan.Common
-  , module Graphics.Vulkan.Base
   , module Graphics.Vulkan.Core
-  , module Graphics.Vulkan.StructMembers
+  , module Graphics.Vulkan.Types.StructMembers
   ) where
 
 import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Common
-import Graphics.Vulkan.Base
 import Graphics.Vulkan.Core
-import Graphics.Vulkan.StructMembers
+import Graphics.Vulkan.Types.StructMembers

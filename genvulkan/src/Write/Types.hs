@@ -17,10 +17,9 @@ import qualified Control.Monad.Trans.RWS.Strict       as RWS
 import           Control.Monad.Trans.State.Strict     (StateT)
 import qualified Control.Monad.Trans.State.Strict     as State
 import qualified Data.Map                             as Map
+import           Data.Maybe                           (isNothing)
 import           Data.Semigroup
-import           Data.Maybe (isNothing)
 import qualified Data.Set                             as Set
-import           Data.Text                            (Text)
 import qualified Data.Text                            as T
 import           Language.Haskell.Exts.SimpleComments
 import           Language.Haskell.Exts.Syntax
@@ -38,7 +37,7 @@ import           Write.Types.Enum
 import           Write.Types.Funcpointer
 import           Write.Types.Handle
 import           Write.Types.Struct
-import           Write.Util.DeclaredNames
+-- import           Write.Util.DeclaredNames
 
 
 -- | Write all types one-per-module in Graphics.Vulkan.Types
@@ -74,16 +73,47 @@ writeAllTypes vkXml@VkXml{..}
         mapM_ genEnum bitmasksNoRequireds
 
     moduleEnums <- forM (Map.elems trueEnums) $ \t ->
-      writeSimpleTypes ("Graphics.Vulkan.Types."
+      writeSimpleTypes ("Graphics.Vulkan.Types.Enum."
                          <> T.unpack (unVkTypeName
                                        $ (name :: VkType -> VkTypeName) t)
                        ) $ genEnum t
 
     moduleBitmasks <- forM (Map.elems bitmasksCouples) $ \(tbm, te) ->
-      writeSimpleTypes ("Graphics.Vulkan.Types."
+      writeSimpleTypes ("Graphics.Vulkan.Types.Enum."
                          <> T.unpack (unVkTypeName
                                        $ (name :: VkType -> VkTypeName) tbm)
                        ) $ genBitmaskPair tbm te
+
+    (classDecls, moduleStructs)
+      <- fmap unzip
+         . forM
+           ( Map.elems
+           . evalProtectedTypes vkXml
+           . removeDisabledTypes vkXml
+           $ typesStructsOrUnions)
+         $ \(t, mpd) -> do
+      mds <- State.get
+      (classDecls, mr) <- runModuleWriter vkXml
+                      ("Graphics.Vulkan.Types.Struct."
+                          <> T.unpack (unVkTypeName
+                          $ (name :: VkType -> VkTypeName) t)
+                      ) mds $ do
+        writePragma "Strict"
+        writePragma "DataKinds"
+        genStructOrUnion (VkTypeCatUnion == vkTypeCat t) t
+      State.put (globalNames mr)
+      return (classDecls, (mr, mpd))
+
+    moduleClassDecls <- do
+      mds <- State.get
+      ((), mr) <- runModuleWriter vkXml
+                  "Graphics.Vulkan.Types.StructMembers" mds $ do
+        writePragma "Strict"
+        writeOptionsPragma (Just GHC) "-fno-warn-missing-methods"
+        writeFullImport "Graphics.Vulkan.Marshal"
+        mapM_ genClassName . Map.toList $ mconcat classDecls
+      State.put (globalNames mr)
+      return (mr, Nothing)
 
 
     return $
@@ -93,7 +123,8 @@ writeAllTypes vkXml@VkXml{..}
       , moduleHandles
       , moduleFuncpointers
       , moduleOrphanBitmasks
-      ] ++ moduleEnums ++ moduleBitmasks
+      , moduleClassDecls
+      ] ++ moduleEnums ++ moduleBitmasks ++ moduleStructs
   | otherwise = error $ "Not all types were processed\n" ++ show allt8
   where
 
