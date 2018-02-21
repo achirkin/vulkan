@@ -29,6 +29,7 @@ import           VkXml.Sections
 import           VkXml.Sections.Enums
 import           VkXml.Sections.Types
 
+import           Write.Util.DeclaredNames
 import           Write.ModuleWriter
 
 
@@ -101,15 +102,30 @@ genBitmaskPair tbm te
                       patCNames
 
 
-        writeExport $ DIThing flagNameTxt DITNo
-        writeExport $ DIThing bitsNameTxt DITNo
+        writeExportExplicit (DIThing baseNameTxt DITNo)
+          [diToImportSpec $ DIThing baseNameTxt DITNo]
+          []
+        writeExportExplicit (DIThing baseNameTxt DITEmpty)
+          [diToImportSpec $ DIThing baseNameTxt DITEmpty] []
+        writeExportExplicit (DIThing baseNameTxt DITAll)
+          [ilist] [elist]
+        writeExportExplicit (DIThing flagNameTxt DITNo)
+          [diToImportSpec $ DIThing flagNameTxt DITNo]
+          [diToExportSpec $ DIThing flagNameTxt DITNo]
+        writeExportExplicit (DIThing flagNameTxt DITEmpty)
+          [diToImportSpec $ DIThing flagNameTxt DITEmpty] []
+        writeExportExplicit (DIThing bitsNameTxt DITNo)
+          [diToImportSpec $ DIThing bitsNameTxt DITNo]
+          [diToExportSpec $ DIThing bitsNameTxt DITNo]
+        writeExportExplicit (DIThing bitsNameTxt DITEmpty)
+          [diToImportSpec $ DIThing bitsNameTxt DITEmpty] []
         writeExportExplicit (DIThing flagNameTxt DITAll)
           [ ilist
-          , IAbs () (NoNamespace ()) (Ident () (T.unpack flagNameTxt))]
-          [ elist ]
+          , diToImportSpec $ DIThing flagNameTxt DITNo]
+          [ ]
         writeExportExplicit (DIThing bitsNameTxt DITAll)
           [ ilist
-          , IAbs () (NoNamespace ()) (Ident () (T.unpack bitsNameTxt))]
+          , diToImportSpec $ DIThing bitsNameTxt DITNo]
           [ ]
   where
     flagName = tname tbm
@@ -175,13 +191,15 @@ genEnums VkEnums {..} = do
       Just tnameTxt -> do
         let patCNames = map (ConName () . Ident () . T.unpack)
                       $ tnameTxt : epats
-            ilist = IThingAll () (Ident () (T.unpack tnameTxt))
             elist = EThingWith () (NoWildcard ())
                       (UnQual () (Ident () $ T.unpack tnameTxt))
                       patCNames
+        writeExportExplicit (DIThing tnameTxt DITNo)
+          [ diToImportSpec $ DIThing tnameTxt DITNo ] []
+        writeExportExplicit (DIThing tnameTxt DITEmpty)
+          [ diToImportSpec $ DIThing tnameTxt DITEmpty ] []
         writeExportExplicit (DIThing tnameTxt DITAll)
-          [ ilist ]
-          [ elist ]
+          [ diToImportSpec $ DIThing tnameTxt DITAll ] [ elist ]
   where
     derives = (if _vkEnumsIsBits then ("Bits":).("FiniteBits":) else id)
               ["Eq","Ord","Num","Bounded","Storable","Enum", "Data", "Generic"]
