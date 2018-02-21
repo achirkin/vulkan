@@ -1,13 +1,11 @@
 #include "vulkan/vulkan.h"
 
+{-# OPTIONS_GHC -fno-warn-unused-imports#-}
+{-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
-{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
-{-# LANGUAGE MagicHash                #-}
-{-# LANGUAGE MultiParamTypeClasses    #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
-{-# LANGUAGE TypeFamilies             #-}
 module Graphics.Vulkan.Core
        (-- * Vulkan core API interface definitions
         -- |
@@ -29,6 +27,7 @@ module Graphics.Vulkan.Core
         --
 
         -- ** API constants
+        module Graphics.Vulkan.Types.Enum.VkPipelineCacheHeaderVersion,
         pattern VK_LOD_CLAMP_NONE, pattern VK_REMAINING_MIP_LEVELS,
         VK_REMAINING_MIP_LEVELS, pattern VK_REMAINING_ARRAY_LAYERS,
         VK_REMAINING_ARRAY_LAYERS, pattern VK_WHOLE_SIZE, VK_WHOLE_SIZE,
@@ -43,152 +42,465 @@ module Graphics.Vulkan.Core
         vkGetPhysicalDeviceProperties,
         vkGetPhysicalDeviceQueueFamilyProperties,
         vkGetPhysicalDeviceMemoryProperties, vkGetInstanceProcAddr,
-        vkGetDeviceProcAddr, -- ** Device commands
-                             vkCreateDevice, vkDestroyDevice,
+        vkGetDeviceProcAddr, module Graphics.Vulkan.Marshal,
+        module Graphics.Vulkan.Types.BaseTypes,
+        module Graphics.Vulkan.Types.Bitmasks,
+        module Graphics.Vulkan.Types.Enum.VkFormat,
+        module Graphics.Vulkan.Types.Enum.VkFormatFeatureFlags,
+        module Graphics.Vulkan.Types.Enum.VkImageCreateFlags,
+        module Graphics.Vulkan.Types.Enum.VkImageTiling,
+        module Graphics.Vulkan.Types.Enum.VkImageType,
+        module Graphics.Vulkan.Types.Enum.VkImageUsageFlags,
+        module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
+        module Graphics.Vulkan.Types.Enum.VkMemoryHeapFlags,
+        module Graphics.Vulkan.Types.Enum.VkMemoryPropertyFlags,
+        module Graphics.Vulkan.Types.Enum.VkPhysicalDeviceType,
+        module Graphics.Vulkan.Types.Enum.VkQueueFlags,
+        module Graphics.Vulkan.Types.Enum.VkResult,
+        module Graphics.Vulkan.Types.Enum.VkSampleCountFlags,
+        module Graphics.Vulkan.Types.Enum.VkStructureType,
+        module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,
+        module Graphics.Vulkan.Types.Funcpointers,
+        module Graphics.Vulkan.Types.Handles,
+        module Graphics.Vulkan.Types.Struct.VkAllocationCallbacks,
+        module Graphics.Vulkan.Types.Struct.VkApplicationInfo,
+        module Graphics.Vulkan.Types.Struct.VkExtent3D,
+        module Graphics.Vulkan.Types.Struct.VkFormatProperties,
+        module Graphics.Vulkan.Types.Struct.VkImageFormatProperties,
+        module Graphics.Vulkan.Types.Struct.VkInstanceCreateInfo,
+        module Graphics.Vulkan.Types.Struct.VkMemoryHeap,
+        module Graphics.Vulkan.Types.Struct.VkMemoryType,
+        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures,
+        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits,
+        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMemoryProperties,
+        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties,
+        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties,
+        module Graphics.Vulkan.Types.Struct.VkQueueFamilyProperties,
+        -- ** Device commands
+        vkCreateDevice, vkDestroyDevice,
+        module Graphics.Vulkan.Types.Struct.VkDeviceCreateInfo,
+        module Graphics.Vulkan.Types.Struct.VkDeviceQueueCreateInfo,
         -- ** Extension discovery commands
         vkEnumerateInstanceExtensionProperties,
         vkEnumerateDeviceExtensionProperties,
+        module Graphics.Vulkan.Types.Struct.VkExtensionProperties,
         -- ** Layer discovery commands
         vkEnumerateInstanceLayerProperties,
-        vkEnumerateDeviceLayerProperties, -- ** queue commands
-                                          vkGetDeviceQueue, vkQueueSubmit,
-        vkQueueWaitIdle, vkDeviceWaitIdle, -- ** Memory commands
-                                           vkAllocateMemory, vkFreeMemory,
-        vkMapMemory, vkUnmapMemory, vkFlushMappedMemoryRanges,
-        vkInvalidateMappedMemoryRanges, vkGetDeviceMemoryCommitment,
+        vkEnumerateDeviceLayerProperties,
+        module Graphics.Vulkan.Types.Struct.VkLayerProperties,
+        -- ** queue commands
+        vkGetDeviceQueue, vkQueueSubmit, vkQueueWaitIdle, vkDeviceWaitIdle,
+        module Graphics.Vulkan.Types.Enum.VkPipelineStageFlags,
+        module Graphics.Vulkan.Types.Struct.VkSubmitInfo, -- ** Memory commands
+                                                          vkAllocateMemory,
+        vkFreeMemory, vkMapMemory, vkUnmapMemory,
+        vkFlushMappedMemoryRanges, vkInvalidateMappedMemoryRanges,
+        vkGetDeviceMemoryCommitment,
+        module Graphics.Vulkan.Types.Struct.VkMappedMemoryRange,
+        module Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo,
         -- ** Memory management API commands
         vkBindBufferMemory, vkBindImageMemory,
         vkGetBufferMemoryRequirements, vkGetImageMemoryRequirements,
+        module Graphics.Vulkan.Types.Struct.VkMemoryRequirements,
         -- ** Sparse resource memory management API commands
         vkGetImageSparseMemoryRequirements,
         vkGetPhysicalDeviceSparseImageFormatProperties, vkQueueBindSparse,
+        module Graphics.Vulkan.Types.Enum.VkImageAspectFlags,
+        module Graphics.Vulkan.Types.Enum.VkSparseImageFormatFlags,
+        module Graphics.Vulkan.Types.Enum.VkSparseMemoryBindFlags,
+        module Graphics.Vulkan.Types.Struct.VkBindSparseInfo,
+        module Graphics.Vulkan.Types.Struct.VkImageSubresource,
+        module Graphics.Vulkan.Types.Struct.VkOffset3D,
+        module Graphics.Vulkan.Types.Struct.VkSparseBufferMemoryBindInfo,
+        module Graphics.Vulkan.Types.Struct.VkSparseImageFormatProperties,
+        module Graphics.Vulkan.Types.Struct.VkSparseImageMemoryBind,
+        module Graphics.Vulkan.Types.Struct.VkSparseImageMemoryBindInfo,
+        module Graphics.Vulkan.Types.Struct.VkSparseImageMemoryRequirements,
+        module Graphics.Vulkan.Types.Struct.VkSparseImageOpaqueMemoryBindInfo,
+        module Graphics.Vulkan.Types.Struct.VkSparseMemoryBind,
         -- ** Fence commands
         vkCreateFence, vkDestroyFence, vkResetFences, vkGetFenceStatus,
-        vkWaitForFences, -- ** Queue semaphore commands
-                         vkCreateSemaphore, vkDestroySemaphore,
+        vkWaitForFences,
+        module Graphics.Vulkan.Types.Enum.VkFenceCreateFlags,
+        module Graphics.Vulkan.Types.Struct.VkFenceCreateInfo,
+        -- ** Queue semaphore commands
+        vkCreateSemaphore, vkDestroySemaphore,
+        module Graphics.Vulkan.Types.Struct.VkSemaphoreCreateInfo,
         -- ** Event commands
         vkCreateEvent, vkDestroyEvent, vkGetEventStatus, vkSetEvent,
-        vkResetEvent, -- ** Query commands
-                      vkCreateQueryPool, vkDestroyQueryPool,
-        vkGetQueryPoolResults, -- ** Buffer commands
-                               vkCreateBuffer, vkDestroyBuffer,
+        vkResetEvent,
+        module Graphics.Vulkan.Types.Struct.VkEventCreateInfo,
+        -- ** Query commands
+        vkCreateQueryPool, vkDestroyQueryPool, vkGetQueryPoolResults,
+        module Graphics.Vulkan.Types.Enum.VkQueryPipelineStatisticFlags,
+        module Graphics.Vulkan.Types.Enum.VkQueryResultFlags,
+        module Graphics.Vulkan.Types.Enum.VkQueryType,
+        module Graphics.Vulkan.Types.Struct.VkQueryPoolCreateInfo,
+        -- ** Buffer commands
+        vkCreateBuffer, vkDestroyBuffer,
+        module Graphics.Vulkan.Types.Enum.VkBufferCreateFlags,
+        module Graphics.Vulkan.Types.Enum.VkBufferUsageFlags,
+        module Graphics.Vulkan.Types.Enum.VkSharingMode,
+        module Graphics.Vulkan.Types.Struct.VkBufferCreateInfo,
         -- ** Buffer view commands
-        vkCreateBufferView, vkDestroyBufferView, -- ** Image commands
-                                                 vkCreateImage,
-        vkDestroyImage, vkGetImageSubresourceLayout, -- ** Image view commands
-                                                     vkCreateImageView,
-        vkDestroyImageView, -- ** Shader commands
-                            vkCreateShaderModule, vkDestroyShaderModule,
+        vkCreateBufferView, vkDestroyBufferView,
+        module Graphics.Vulkan.Types.Struct.VkBufferViewCreateInfo,
+        -- ** Image commands
+        vkCreateImage, vkDestroyImage, vkGetImageSubresourceLayout,
+        module Graphics.Vulkan.Types.Enum.VkImageLayout,
+        module Graphics.Vulkan.Types.Struct.VkImageCreateInfo,
+        module Graphics.Vulkan.Types.Struct.VkSubresourceLayout,
+        -- ** Image view commands
+        vkCreateImageView, vkDestroyImageView,
+        module Graphics.Vulkan.Types.Enum.VkComponentSwizzle,
+        module Graphics.Vulkan.Types.Enum.VkImageViewType,
+        module Graphics.Vulkan.Types.Struct.VkComponentMapping,
+        module Graphics.Vulkan.Types.Struct.VkImageSubresourceRange,
+        module Graphics.Vulkan.Types.Struct.VkImageViewCreateInfo,
+        -- ** Shader commands
+        vkCreateShaderModule, vkDestroyShaderModule,
+        module Graphics.Vulkan.Types.Struct.VkShaderModuleCreateInfo,
         -- ** Pipeline Cache commands
         vkCreatePipelineCache, vkDestroyPipelineCache,
         vkGetPipelineCacheData, vkMergePipelineCaches,
+        module Graphics.Vulkan.Types.Struct.VkPipelineCacheCreateInfo,
         -- ** Pipeline commands
         vkCreateGraphicsPipelines, vkCreateComputePipelines,
-        vkDestroyPipeline, -- ** Pipeline layout commands
-                           vkCreatePipelineLayout, vkDestroyPipelineLayout,
+        vkDestroyPipeline, module Graphics.Vulkan.Types.Enum.VkBlendFactor,
+        module Graphics.Vulkan.Types.Enum.VkBlendOp,
+        module Graphics.Vulkan.Types.Enum.VkColorComponentFlags,
+        module Graphics.Vulkan.Types.Enum.VkCompareOp,
+        module Graphics.Vulkan.Types.Enum.VkCullModeFlags,
+        module Graphics.Vulkan.Types.Enum.VkDynamicState,
+        module Graphics.Vulkan.Types.Enum.VkFrontFace,
+        module Graphics.Vulkan.Types.Enum.VkLogicOp,
+        module Graphics.Vulkan.Types.Enum.VkPipelineCreateFlags,
+        module Graphics.Vulkan.Types.Enum.VkPolygonMode,
+        module Graphics.Vulkan.Types.Enum.VkPrimitiveTopology,
+        module Graphics.Vulkan.Types.Enum.VkShaderStageFlags,
+        module Graphics.Vulkan.Types.Enum.VkStencilOp,
+        module Graphics.Vulkan.Types.Enum.VkVertexInputRate,
+        module Graphics.Vulkan.Types.Struct.VkComputePipelineCreateInfo,
+        module Graphics.Vulkan.Types.Struct.VkExtent2D,
+        module Graphics.Vulkan.Types.Struct.VkGraphicsPipelineCreateInfo,
+        module Graphics.Vulkan.Types.Struct.VkOffset2D,
+        module Graphics.Vulkan.Types.Struct.VkPipelineColorBlendAttachmentState,
+        module Graphics.Vulkan.Types.Struct.VkPipelineColorBlendStateCreateInfo,
+        module Graphics.Vulkan.Types.Struct.VkPipelineDepthStencilStateCreateInfo,
+        module Graphics.Vulkan.Types.Struct.VkPipelineDynamicStateCreateInfo,
+        module Graphics.Vulkan.Types.Struct.VkPipelineInputAssemblyStateCreateInfo,
+        module Graphics.Vulkan.Types.Struct.VkPipelineMultisampleStateCreateInfo,
+        module Graphics.Vulkan.Types.Struct.VkPipelineRasterizationStateCreateInfo,
+        module Graphics.Vulkan.Types.Struct.VkPipelineShaderStageCreateInfo,
+        module Graphics.Vulkan.Types.Struct.VkPipelineTessellationStateCreateInfo,
+        module Graphics.Vulkan.Types.Struct.VkPipelineVertexInputStateCreateInfo,
+        module Graphics.Vulkan.Types.Struct.VkPipelineViewportStateCreateInfo,
+        module Graphics.Vulkan.Types.Struct.VkRect2D,
+        module Graphics.Vulkan.Types.Struct.VkSpecializationInfo,
+        module Graphics.Vulkan.Types.Struct.VkSpecializationMapEntry,
+        module Graphics.Vulkan.Types.Struct.VkStencilOpState,
+        module Graphics.Vulkan.Types.Struct.VkVertexInputAttributeDescription,
+        module Graphics.Vulkan.Types.Struct.VkVertexInputBindingDescription,
+        module Graphics.Vulkan.Types.Struct.VkViewport,
+        -- ** Pipeline layout commands
+        vkCreatePipelineLayout, vkDestroyPipelineLayout,
+        module Graphics.Vulkan.Types.Struct.VkPipelineLayoutCreateInfo,
+        module Graphics.Vulkan.Types.Struct.VkPushConstantRange,
         -- ** Sampler commands
-        vkCreateSampler, vkDestroySampler, -- ** Descriptor set commands
-                                           vkCreateDescriptorSetLayout,
-        vkDestroyDescriptorSetLayout, vkCreateDescriptorPool,
-        vkDestroyDescriptorPool, vkResetDescriptorPool,
-        vkAllocateDescriptorSets, vkFreeDescriptorSets,
-        vkUpdateDescriptorSets, -- ** Pass commands
-                                vkCreateFramebuffer, vkDestroyFramebuffer,
-        vkCreateRenderPass, vkDestroyRenderPass,
-        vkGetRenderAreaGranularity, -- ** Command pool commands
-                                    vkCreateCommandPool,
-        vkDestroyCommandPool, vkResetCommandPool, -- ** Command buffer commands
-                                                  vkAllocateCommandBuffers,
-        vkFreeCommandBuffers, vkBeginCommandBuffer, vkEndCommandBuffer,
-        vkResetCommandBuffer, -- ** Command buffer building commands
-                              vkCmdBindPipeline, vkCmdSetViewport,
-        vkCmdSetScissor, vkCmdSetLineWidth, vkCmdSetDepthBias,
-        vkCmdSetBlendConstants, vkCmdSetDepthBounds,
-        vkCmdSetStencilCompareMask, vkCmdSetStencilWriteMask,
-        vkCmdSetStencilReference, vkCmdBindDescriptorSets,
-        vkCmdBindIndexBuffer, vkCmdBindVertexBuffers, vkCmdDraw,
-        vkCmdDrawIndexed, vkCmdDrawIndirect, vkCmdDrawIndexedIndirect,
-        vkCmdDispatch, vkCmdDispatchIndirect, vkCmdCopyBuffer,
-        vkCmdCopyImage, vkCmdBlitImage, vkCmdCopyBufferToImage,
-        vkCmdCopyImageToBuffer, vkCmdUpdateBuffer, vkCmdFillBuffer,
-        vkCmdClearColorImage, vkCmdClearDepthStencilImage,
-        vkCmdClearAttachments, vkCmdResolveImage, vkCmdSetEvent,
-        vkCmdResetEvent, vkCmdWaitEvents, vkCmdPipelineBarrier,
-        vkCmdBeginQuery, vkCmdEndQuery, vkCmdResetQueryPool,
-        vkCmdWriteTimestamp, vkCmdCopyQueryPoolResults, vkCmdPushConstants,
+        vkCreateSampler, vkDestroySampler,
+        module Graphics.Vulkan.Types.Enum.VkBorderColor,
+        module Graphics.Vulkan.Types.Enum.VkFilter,
+        module Graphics.Vulkan.Types.Enum.VkSamplerAddressMode,
+        module Graphics.Vulkan.Types.Enum.VkSamplerMipmapMode,
+        module Graphics.Vulkan.Types.Struct.VkSamplerCreateInfo,
+        -- ** Descriptor set commands
+        vkCreateDescriptorSetLayout, vkDestroyDescriptorSetLayout,
+        vkCreateDescriptorPool, vkDestroyDescriptorPool,
+        vkResetDescriptorPool, vkAllocateDescriptorSets,
+        vkFreeDescriptorSets, vkUpdateDescriptorSets,
+        module Graphics.Vulkan.Types.Enum.VkDescriptorPoolCreateFlags,
+        module Graphics.Vulkan.Types.Enum.VkDescriptorSetLayoutCreateFlags,
+        module Graphics.Vulkan.Types.Enum.VkDescriptorType,
+        module Graphics.Vulkan.Types.Struct.VkCopyDescriptorSet,
+        module Graphics.Vulkan.Types.Struct.VkDescriptorBufferInfo,
+        module Graphics.Vulkan.Types.Struct.VkDescriptorImageInfo,
+        module Graphics.Vulkan.Types.Struct.VkDescriptorPoolCreateInfo,
+        module Graphics.Vulkan.Types.Struct.VkDescriptorPoolSize,
+        module Graphics.Vulkan.Types.Struct.VkDescriptorSetAllocateInfo,
+        module Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutBinding,
+        module Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutCreateInfo,
+        module Graphics.Vulkan.Types.Struct.VkWriteDescriptorSet,
+        -- ** Pass commands
+        vkCreateFramebuffer, vkDestroyFramebuffer, vkCreateRenderPass,
+        vkDestroyRenderPass, vkGetRenderAreaGranularity,
+        module Graphics.Vulkan.Types.Enum.VkAccessFlags,
+        module Graphics.Vulkan.Types.Enum.VkAttachmentDescriptionFlags,
+        module Graphics.Vulkan.Types.Enum.VkAttachmentLoadOp,
+        module Graphics.Vulkan.Types.Enum.VkAttachmentStoreOp,
+        module Graphics.Vulkan.Types.Enum.VkDependencyFlags,
+        module Graphics.Vulkan.Types.Enum.VkPipelineBindPoint,
+        module Graphics.Vulkan.Types.Enum.VkSubpassDescriptionFlags,
+        module Graphics.Vulkan.Types.Struct.VkAttachmentDescription,
+        module Graphics.Vulkan.Types.Struct.VkAttachmentReference,
+        module Graphics.Vulkan.Types.Struct.VkFramebufferCreateInfo,
+        module Graphics.Vulkan.Types.Struct.VkRenderPassCreateInfo,
+        module Graphics.Vulkan.Types.Struct.VkSubpassDependency,
+        module Graphics.Vulkan.Types.Struct.VkSubpassDescription,
+        -- ** Command pool commands
+        vkCreateCommandPool, vkDestroyCommandPool, vkResetCommandPool,
+        module Graphics.Vulkan.Types.Enum.VkCommandPoolCreateFlags,
+        module Graphics.Vulkan.Types.Enum.VkCommandPoolResetFlags,
+        module Graphics.Vulkan.Types.Struct.VkCommandPoolCreateInfo,
+        -- ** Command buffer commands
+        vkAllocateCommandBuffers, vkFreeCommandBuffers,
+        vkBeginCommandBuffer, vkEndCommandBuffer, vkResetCommandBuffer,
+        module Graphics.Vulkan.Types.Enum.VkCommandBufferLevel,
+        module Graphics.Vulkan.Types.Enum.VkCommandBufferResetFlags,
+        module Graphics.Vulkan.Types.Enum.VkCommandBufferUsageFlags,
+        module Graphics.Vulkan.Types.Enum.VkQueryControlFlags,
+        module Graphics.Vulkan.Types.Struct.VkCommandBufferAllocateInfo,
+        module Graphics.Vulkan.Types.Struct.VkCommandBufferBeginInfo,
+        module Graphics.Vulkan.Types.Struct.VkCommandBufferInheritanceInfo,
+        -- ** Command buffer building commands
+        vkCmdBindPipeline, vkCmdSetViewport, vkCmdSetScissor,
+        vkCmdSetLineWidth, vkCmdSetDepthBias, vkCmdSetBlendConstants,
+        vkCmdSetDepthBounds, vkCmdSetStencilCompareMask,
+        vkCmdSetStencilWriteMask, vkCmdSetStencilReference,
+        vkCmdBindDescriptorSets, vkCmdBindIndexBuffer,
+        vkCmdBindVertexBuffers, vkCmdDraw, vkCmdDrawIndexed,
+        vkCmdDrawIndirect, vkCmdDrawIndexedIndirect, vkCmdDispatch,
+        vkCmdDispatchIndirect, vkCmdCopyBuffer, vkCmdCopyImage,
+        vkCmdBlitImage, vkCmdCopyBufferToImage, vkCmdCopyImageToBuffer,
+        vkCmdUpdateBuffer, vkCmdFillBuffer, vkCmdClearColorImage,
+        vkCmdClearDepthStencilImage, vkCmdClearAttachments,
+        vkCmdResolveImage, vkCmdSetEvent, vkCmdResetEvent, vkCmdWaitEvents,
+        vkCmdPipelineBarrier, vkCmdBeginQuery, vkCmdEndQuery,
+        vkCmdResetQueryPool, vkCmdWriteTimestamp,
+        vkCmdCopyQueryPoolResults, vkCmdPushConstants,
         vkCmdBeginRenderPass, vkCmdNextSubpass, vkCmdEndRenderPass,
-        vkCmdExecuteCommands, -- ** Types not directly used by the API. Include e.g. structs that are not parameter types of commands, but still defined by the API.
-                              VkBufferMemoryBarrier(..),
-        VkDispatchIndirectCommand(..), VkDrawIndexedIndirectCommand(..),
-        VkDrawIndirectCommand(..), VkImageMemoryBarrier(..),
-        VkMemoryBarrier(..))
+        vkCmdExecuteCommands,
+        module Graphics.Vulkan.Types.Enum.VkIndexType,
+        module Graphics.Vulkan.Types.Enum.VkStencilFaceFlags,
+        module Graphics.Vulkan.Types.Enum.VkSubpassContents,
+        module Graphics.Vulkan.Types.Struct.VkBufferCopy,
+        module Graphics.Vulkan.Types.Struct.VkBufferImageCopy,
+        module Graphics.Vulkan.Types.Struct.VkBufferMemoryBarrier,
+        module Graphics.Vulkan.Types.Struct.VkClearAttachment,
+        module Graphics.Vulkan.Types.Struct.VkClearColorValue,
+        module Graphics.Vulkan.Types.Struct.VkClearDepthStencilValue,
+        module Graphics.Vulkan.Types.Struct.VkClearRect,
+        module Graphics.Vulkan.Types.Struct.VkClearValue,
+        module Graphics.Vulkan.Types.Struct.VkImageBlit,
+        module Graphics.Vulkan.Types.Struct.VkImageCopy,
+        module Graphics.Vulkan.Types.Struct.VkImageMemoryBarrier,
+        module Graphics.Vulkan.Types.Struct.VkImageResolve,
+        module Graphics.Vulkan.Types.Struct.VkImageSubresourceLayers,
+        module Graphics.Vulkan.Types.Struct.VkMemoryBarrier,
+        module Graphics.Vulkan.Types.Struct.VkRenderPassBeginInfo,
+        -- ** Types not directly used by the API. Include e.g. structs that are not parameter types of commands, but still defined by the API.
+        module Graphics.Vulkan.Types.Struct.VkDispatchIndirectCommand,
+        module Graphics.Vulkan.Types.Struct.VkDrawIndexedIndirectCommand,
+        module Graphics.Vulkan.Types.Struct.VkDrawIndirectCommand,
+        module Graphics.Vulkan.Types.Enum.VkObjectType)
        where
-import           Foreign.Storable                 (Storable (..))
-import           GHC.Prim
-import           Graphics.Vulkan.Base             (VkAllocationCallbacks (..),
-                                                   VkBindSparseInfo (..),
-                                                   VkBufferCopy (..),
-                                                   VkBufferCreateInfo (..),
-                                                   VkBufferImageCopy (..),
-                                                   VkBufferViewCreateInfo (..),
-                                                   VkClearAttachment (..),
-                                                   VkClearColorValue (..),
-                                                   VkClearDepthStencilValue (..),
-                                                   VkClearRect (..),
-                                                   VkCommandBufferAllocateInfo (..),
-                                                   VkCommandBufferBeginInfo (..),
-                                                   VkCommandPoolCreateInfo (..),
-                                                   VkComputePipelineCreateInfo (..),
-                                                   VkCopyDescriptorSet (..),
-                                                   VkDescriptorPoolCreateInfo (..),
-                                                   VkDescriptorSetAllocateInfo (..),
-                                                   VkDescriptorSetLayoutCreateInfo (..),
-                                                   VkDeviceCreateInfo (..),
-                                                   VkEventCreateInfo (..),
-                                                   VkExtensionProperties (..),
-                                                   VkExtent2D (..),
-                                                   VkFenceCreateInfo (..),
-                                                   VkFormatProperties (..),
-                                                   VkFramebufferCreateInfo (..),
-                                                   VkGraphicsPipelineCreateInfo (..),
-                                                   VkImageBlit (..),
-                                                   VkImageCopy (..),
-                                                   VkImageCreateInfo (..),
-                                                   VkImageFormatProperties (..),
-                                                   VkImageResolve (..),
-                                                   VkImageSubresource (..),
-                                                   VkImageSubresourceRange,
-                                                   VkImageSubresourceRange (..),
-                                                   VkImageViewCreateInfo (..),
-                                                   VkInstanceCreateInfo (..),
-                                                   VkLayerProperties (..),
-                                                   VkMappedMemoryRange (..),
-                                                   VkMemoryAllocateInfo (..),
-                                                   VkMemoryRequirements (..),
-                                                   VkPhysicalDeviceFeatures (..),
-                                                   VkPhysicalDeviceMemoryProperties (..),
-                                                   VkPhysicalDeviceProperties (..),
-                                                   VkPipelineCacheCreateInfo (..),
-                                                   VkPipelineLayoutCreateInfo (..),
-                                                   VkQueryPoolCreateInfo (..),
-                                                   VkQueueFamilyProperties (..),
-                                                   VkRect2D (..),
-                                                   VkRenderPassBeginInfo (..),
-                                                   VkRenderPassCreateInfo (..),
-                                                   VkSamplerCreateInfo (..),
-                                                   VkSemaphoreCreateInfo (..),
-                                                   VkShaderModuleCreateInfo (..),
-                                                   VkSparseImageFormatProperties (..),
-                                                   VkSparseImageMemoryRequirements (..),
-                                                   VkSubmitInfo (..),
-                                                   VkSubresourceLayout (..),
-                                                   VkViewport (..),
-                                                   VkWriteDescriptorSet (..))
-import           Graphics.Vulkan.Common
+import           Graphics.Vulkan.Constants
+                                                                                      (VK_ATTACHMENT_UNUSED,
+                                                                                      pattern VK_ATTACHMENT_UNUSED,
+                                                                                      VK_FALSE,
+                                                                                      pattern VK_FALSE,
+                                                                                      pattern VK_LOD_CLAMP_NONE,
+                                                                                      VK_QUEUE_FAMILY_IGNORED,
+                                                                                      pattern VK_QUEUE_FAMILY_IGNORED,
+                                                                                      VK_REMAINING_ARRAY_LAYERS,
+                                                                                      pattern VK_REMAINING_ARRAY_LAYERS,
+                                                                                      VK_REMAINING_MIP_LEVELS,
+                                                                                      pattern VK_REMAINING_MIP_LEVELS,
+                                                                                      VK_SUBPASS_EXTERNAL,
+                                                                                      pattern VK_SUBPASS_EXTERNAL,
+                                                                                      VK_TRUE,
+                                                                                      pattern VK_TRUE,
+                                                                                      VK_WHOLE_SIZE,
+                                                                                      pattern VK_WHOLE_SIZE)
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.StructMembers
-import           System.IO.Unsafe                 (unsafeDupablePerformIO)
+import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Bitmasks
+import           Graphics.Vulkan.Types.Enum.VkAccessFlags
+import           Graphics.Vulkan.Types.Enum.VkAttachmentDescriptionFlags
+import           Graphics.Vulkan.Types.Enum.VkAttachmentLoadOp
+import           Graphics.Vulkan.Types.Enum.VkAttachmentStoreOp
+import           Graphics.Vulkan.Types.Enum.VkBlendFactor
+import           Graphics.Vulkan.Types.Enum.VkBlendOp
+import           Graphics.Vulkan.Types.Enum.VkBorderColor
+import           Graphics.Vulkan.Types.Enum.VkBufferCreateFlags
+import           Graphics.Vulkan.Types.Enum.VkBufferUsageFlags
+import           Graphics.Vulkan.Types.Enum.VkColorComponentFlags
+import           Graphics.Vulkan.Types.Enum.VkCommandBufferLevel
+import           Graphics.Vulkan.Types.Enum.VkCommandBufferResetFlags
+import           Graphics.Vulkan.Types.Enum.VkCommandBufferUsageFlags
+import           Graphics.Vulkan.Types.Enum.VkCommandPoolCreateFlags
+import           Graphics.Vulkan.Types.Enum.VkCommandPoolResetFlags
+import           Graphics.Vulkan.Types.Enum.VkCompareOp
+import           Graphics.Vulkan.Types.Enum.VkComponentSwizzle
+import           Graphics.Vulkan.Types.Enum.VkCullModeFlags
+import           Graphics.Vulkan.Types.Enum.VkDependencyFlags
+import           Graphics.Vulkan.Types.Enum.VkDescriptorPoolCreateFlags
+import           Graphics.Vulkan.Types.Enum.VkDescriptorSetLayoutCreateFlags
+import           Graphics.Vulkan.Types.Enum.VkDescriptorType
+import           Graphics.Vulkan.Types.Enum.VkDynamicState
+import           Graphics.Vulkan.Types.Enum.VkFenceCreateFlags
+import           Graphics.Vulkan.Types.Enum.VkFilter
+import           Graphics.Vulkan.Types.Enum.VkFormat
+import           Graphics.Vulkan.Types.Enum.VkFormatFeatureFlags
+import           Graphics.Vulkan.Types.Enum.VkFrontFace
+import           Graphics.Vulkan.Types.Enum.VkImageAspectFlags
+import           Graphics.Vulkan.Types.Enum.VkImageCreateFlags
+import           Graphics.Vulkan.Types.Enum.VkImageLayout
+import           Graphics.Vulkan.Types.Enum.VkImageTiling
+import           Graphics.Vulkan.Types.Enum.VkImageType
+import           Graphics.Vulkan.Types.Enum.VkImageUsageFlags
+import           Graphics.Vulkan.Types.Enum.VkImageViewType
+import           Graphics.Vulkan.Types.Enum.VkIndexType
+import           Graphics.Vulkan.Types.Enum.VkInternalAllocationType
+import           Graphics.Vulkan.Types.Enum.VkLogicOp
+import           Graphics.Vulkan.Types.Enum.VkMemoryHeapFlags
+import           Graphics.Vulkan.Types.Enum.VkMemoryPropertyFlags
+import           Graphics.Vulkan.Types.Enum.VkObjectType
+import           Graphics.Vulkan.Types.Enum.VkPhysicalDeviceType
+import           Graphics.Vulkan.Types.Enum.VkPipelineBindPoint
+import           Graphics.Vulkan.Types.Enum.VkPipelineCacheHeaderVersion
+import           Graphics.Vulkan.Types.Enum.VkPipelineCreateFlags
+import           Graphics.Vulkan.Types.Enum.VkPipelineStageFlags
+import           Graphics.Vulkan.Types.Enum.VkPolygonMode
+import           Graphics.Vulkan.Types.Enum.VkPrimitiveTopology
+import           Graphics.Vulkan.Types.Enum.VkQueryControlFlags
+import           Graphics.Vulkan.Types.Enum.VkQueryPipelineStatisticFlags
+import           Graphics.Vulkan.Types.Enum.VkQueryResultFlags
+import           Graphics.Vulkan.Types.Enum.VkQueryType
+import           Graphics.Vulkan.Types.Enum.VkQueueFlags
+import           Graphics.Vulkan.Types.Enum.VkResult
+import           Graphics.Vulkan.Types.Enum.VkSampleCountFlags
+import           Graphics.Vulkan.Types.Enum.VkSamplerAddressMode
+import           Graphics.Vulkan.Types.Enum.VkSamplerMipmapMode
+import           Graphics.Vulkan.Types.Enum.VkShaderStageFlags
+import           Graphics.Vulkan.Types.Enum.VkSharingMode
+import           Graphics.Vulkan.Types.Enum.VkSparseImageFormatFlags
+import           Graphics.Vulkan.Types.Enum.VkSparseMemoryBindFlags
+import           Graphics.Vulkan.Types.Enum.VkStencilFaceFlags
+import           Graphics.Vulkan.Types.Enum.VkStencilOp
+import           Graphics.Vulkan.Types.Enum.VkStructureType
+import           Graphics.Vulkan.Types.Enum.VkSubpassContents
+import           Graphics.Vulkan.Types.Enum.VkSubpassDescriptionFlags
+import           Graphics.Vulkan.Types.Enum.VkSystemAllocationScope
+import           Graphics.Vulkan.Types.Enum.VkVertexInputRate
+import           Graphics.Vulkan.Types.Funcpointers
+import           Graphics.Vulkan.Types.Handles
+import           Graphics.Vulkan.Types.Struct.VkAllocationCallbacks
+import           Graphics.Vulkan.Types.Struct.VkApplicationInfo
+import           Graphics.Vulkan.Types.Struct.VkAttachmentDescription
+import           Graphics.Vulkan.Types.Struct.VkAttachmentReference
+import           Graphics.Vulkan.Types.Struct.VkBindSparseInfo
+import           Graphics.Vulkan.Types.Struct.VkBufferCopy
+import           Graphics.Vulkan.Types.Struct.VkBufferCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkBufferImageCopy
+import           Graphics.Vulkan.Types.Struct.VkBufferMemoryBarrier
+import           Graphics.Vulkan.Types.Struct.VkBufferViewCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkClearAttachment
+import           Graphics.Vulkan.Types.Struct.VkClearColorValue
+import           Graphics.Vulkan.Types.Struct.VkClearDepthStencilValue
+import           Graphics.Vulkan.Types.Struct.VkClearRect
+import           Graphics.Vulkan.Types.Struct.VkClearValue
+import           Graphics.Vulkan.Types.Struct.VkCommandBufferAllocateInfo
+import           Graphics.Vulkan.Types.Struct.VkCommandBufferBeginInfo
+import           Graphics.Vulkan.Types.Struct.VkCommandBufferInheritanceInfo
+import           Graphics.Vulkan.Types.Struct.VkCommandPoolCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkComponentMapping
+import           Graphics.Vulkan.Types.Struct.VkComputePipelineCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkCopyDescriptorSet
+import           Graphics.Vulkan.Types.Struct.VkDescriptorBufferInfo
+import           Graphics.Vulkan.Types.Struct.VkDescriptorImageInfo
+import           Graphics.Vulkan.Types.Struct.VkDescriptorPoolCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkDescriptorPoolSize
+import           Graphics.Vulkan.Types.Struct.VkDescriptorSetAllocateInfo
+import           Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutBinding
+import           Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkDeviceCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkDeviceQueueCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkDispatchIndirectCommand
+import           Graphics.Vulkan.Types.Struct.VkDrawIndexedIndirectCommand
+import           Graphics.Vulkan.Types.Struct.VkDrawIndirectCommand
+import           Graphics.Vulkan.Types.Struct.VkEventCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkExtensionProperties
+import           Graphics.Vulkan.Types.Struct.VkExtent2D
+import           Graphics.Vulkan.Types.Struct.VkExtent3D
+import           Graphics.Vulkan.Types.Struct.VkFenceCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkFormatProperties
+import           Graphics.Vulkan.Types.Struct.VkFramebufferCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkGraphicsPipelineCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkImageBlit
+import           Graphics.Vulkan.Types.Struct.VkImageCopy
+import           Graphics.Vulkan.Types.Struct.VkImageCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkImageFormatProperties
+import           Graphics.Vulkan.Types.Struct.VkImageMemoryBarrier
+import           Graphics.Vulkan.Types.Struct.VkImageResolve
+import           Graphics.Vulkan.Types.Struct.VkImageSubresource
+import           Graphics.Vulkan.Types.Struct.VkImageSubresourceLayers
+import           Graphics.Vulkan.Types.Struct.VkImageSubresourceRange
+import           Graphics.Vulkan.Types.Struct.VkImageViewCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkInstanceCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkLayerProperties
+import           Graphics.Vulkan.Types.Struct.VkMappedMemoryRange
+import           Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo
+import           Graphics.Vulkan.Types.Struct.VkMemoryBarrier
+import           Graphics.Vulkan.Types.Struct.VkMemoryHeap
+import           Graphics.Vulkan.Types.Struct.VkMemoryRequirements
+import           Graphics.Vulkan.Types.Struct.VkMemoryType
+import           Graphics.Vulkan.Types.Struct.VkOffset2D
+import           Graphics.Vulkan.Types.Struct.VkOffset3D
+import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures
+import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits
+import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMemoryProperties
+import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties
+import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties
+import           Graphics.Vulkan.Types.Struct.VkPipelineCacheCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkPipelineColorBlendAttachmentState
+import           Graphics.Vulkan.Types.Struct.VkPipelineColorBlendStateCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkPipelineDepthStencilStateCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkPipelineDynamicStateCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkPipelineInputAssemblyStateCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkPipelineLayoutCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkPipelineMultisampleStateCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkPipelineRasterizationStateCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkPipelineShaderStageCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkPipelineTessellationStateCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkPipelineVertexInputStateCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkPipelineViewportStateCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkPushConstantRange
+import           Graphics.Vulkan.Types.Struct.VkQueryPoolCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkQueueFamilyProperties
+import           Graphics.Vulkan.Types.Struct.VkRect2D
+import           Graphics.Vulkan.Types.Struct.VkRenderPassBeginInfo
+import           Graphics.Vulkan.Types.Struct.VkRenderPassCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkSamplerCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkSemaphoreCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkShaderModuleCreateInfo
+import           Graphics.Vulkan.Types.Struct.VkSparseBufferMemoryBindInfo
+import           Graphics.Vulkan.Types.Struct.VkSparseImageFormatProperties
+import           Graphics.Vulkan.Types.Struct.VkSparseImageMemoryBind
+import           Graphics.Vulkan.Types.Struct.VkSparseImageMemoryBindInfo
+import           Graphics.Vulkan.Types.Struct.VkSparseImageMemoryRequirements
+import           Graphics.Vulkan.Types.Struct.VkSparseImageOpaqueMemoryBindInfo
+import           Graphics.Vulkan.Types.Struct.VkSparseMemoryBind
+import           Graphics.Vulkan.Types.Struct.VkSpecializationInfo
+import           Graphics.Vulkan.Types.Struct.VkSpecializationMapEntry
+import           Graphics.Vulkan.Types.Struct.VkStencilOpState
+import           Graphics.Vulkan.Types.Struct.VkSubmitInfo
+import           Graphics.Vulkan.Types.Struct.VkSubpassDependency
+import           Graphics.Vulkan.Types.Struct.VkSubpassDescription
+import           Graphics.Vulkan.Types.Struct.VkSubresourceLayout
+import           Graphics.Vulkan.Types.Struct.VkVertexInputAttributeDescription
+import           Graphics.Vulkan.Types.Struct.VkVertexInputBindingDescription
+import           Graphics.Vulkan.Types.Struct.VkViewport
+import           Graphics.Vulkan.Types.Struct.VkWriteDescriptorSet
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -2872,2140 +3184,3 @@ foreign import ccall unsafe "vkCmdExecuteCommands"
                                -> Word32 -- ^ commandBufferCount
                                          -> Ptr VkCommandBuffer -- ^ pCommandBuffers
                                                                 -> IO ()
-
--- | > typedef struct VkBufferMemoryBarrier {
---   >     VkStructureType sType;
---   >     const void*            pNext;
---   >     VkAccessFlags          srcAccessMask;
---   >     VkAccessFlags          dstAccessMask;
---   >     uint32_t               srcQueueFamilyIndex;
---   >     uint32_t               dstQueueFamilyIndex;
---   >     VkBuffer               buffer;
---   >     VkDeviceSize           offset;
---   >     VkDeviceSize           size;
---   > } VkBufferMemoryBarrier;
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkBufferMemoryBarrier.html VkBufferMemoryBarrier registry at www.khronos.org>
-data VkBufferMemoryBarrier = VkBufferMemoryBarrier## Addr##
-                                                    ByteArray##
-
-instance Eq VkBufferMemoryBarrier where
-        (VkBufferMemoryBarrier## a _) == x@(VkBufferMemoryBarrier## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
-
-        {-# INLINE (==) #-}
-
-instance Ord VkBufferMemoryBarrier where
-        (VkBufferMemoryBarrier## a _) `compare`
-          x@(VkBufferMemoryBarrier## b _) = cmpBytes## (sizeOf x) a b
-
-        {-# INLINE compare #-}
-
-instance Storable VkBufferMemoryBarrier where
-        sizeOf ~_ = #{size VkBufferMemoryBarrier}
-
-        {-# INLINE sizeOf #-}
-        alignment ~_ = #{alignment VkBufferMemoryBarrier}
-
-        {-# INLINE alignment #-}
-        peek = peekVkData##
-
-        {-# INLINE peek #-}
-        poke = pokeVkData##
-
-        {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkBufferMemoryBarrier where
-        unsafeAddr (VkBufferMemoryBarrier## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkBufferMemoryBarrier## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkBufferMemoryBarrier## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
-
-instance VulkanMarshal VkBufferMemoryBarrier where
-        type StructFields VkBufferMemoryBarrier =
-             '["sType", "pNext", "srcAccessMask", "dstAccessMask", -- ' closing tick for hsc2hs
-               "srcQueueFamilyIndex", "dstQueueFamilyIndex", "buffer", "offset",
-               "size"]
-        type CUnionType VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
-        type ReturnedOnly VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
-        type StructExtends VkBufferMemoryBarrier = '[] -- ' closing tick for hsc2hs
-
-instance {-# OVERLAPPING #-} HasVkSType VkBufferMemoryBarrier where
-        type VkSTypeMType VkBufferMemoryBarrier = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBufferMemoryBarrier, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkBufferMemoryBarrier, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkBufferMemoryBarrier, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkBufferMemoryBarrier, sType}
-
-instance {-# OVERLAPPING #-} HasField "sType" VkBufferMemoryBarrier
-         where
-        type FieldType "sType" VkBufferMemoryBarrier = VkStructureType
-        type FieldOptional "sType" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "sType" VkBufferMemoryBarrier =
-             #{offset VkBufferMemoryBarrier, sType}
-        type FieldIsArray "sType" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset = #{offset VkBufferMemoryBarrier, sType}
-
-instance CanReadField "sType" VkBufferMemoryBarrier where
-        {-# INLINE getField #-}
-        getField = vkSType
-
-        {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkBufferMemoryBarrier where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkBufferMemoryBarrier where
-        type VkPNextMType VkBufferMemoryBarrier = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBufferMemoryBarrier, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkBufferMemoryBarrier, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkBufferMemoryBarrier, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkBufferMemoryBarrier, pNext}
-
-instance {-# OVERLAPPING #-} HasField "pNext" VkBufferMemoryBarrier
-         where
-        type FieldType "pNext" VkBufferMemoryBarrier = Ptr Void
-        type FieldOptional "pNext" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "pNext" VkBufferMemoryBarrier =
-             #{offset VkBufferMemoryBarrier, pNext}
-        type FieldIsArray "pNext" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset = #{offset VkBufferMemoryBarrier, pNext}
-
-instance CanReadField "pNext" VkBufferMemoryBarrier where
-        {-# INLINE getField #-}
-        getField = vkPNext
-
-        {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkBufferMemoryBarrier where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-}
-         HasVkSrcAccessMask VkBufferMemoryBarrier where
-        type VkSrcAccessMaskMType VkBufferMemoryBarrier = VkAccessFlags
-
-        {-# NOINLINE vkSrcAccessMask #-}
-        vkSrcAccessMask x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBufferMemoryBarrier, srcAccessMask})
-
-        {-# INLINE vkSrcAccessMaskByteOffset #-}
-        vkSrcAccessMaskByteOffset ~_
-          = #{offset VkBufferMemoryBarrier, srcAccessMask}
-
-        {-# INLINE readVkSrcAccessMask #-}
-        readVkSrcAccessMask p
-          = peekByteOff p #{offset VkBufferMemoryBarrier, srcAccessMask}
-
-        {-# INLINE writeVkSrcAccessMask #-}
-        writeVkSrcAccessMask p
-          = pokeByteOff p #{offset VkBufferMemoryBarrier, srcAccessMask}
-
-instance {-# OVERLAPPING #-}
-         HasField "srcAccessMask" VkBufferMemoryBarrier where
-        type FieldType "srcAccessMask" VkBufferMemoryBarrier =
-             VkAccessFlags
-        type FieldOptional "srcAccessMask" VkBufferMemoryBarrier = 'True -- ' closing tick for hsc2hs
-        type FieldOffset "srcAccessMask" VkBufferMemoryBarrier =
-             #{offset VkBufferMemoryBarrier, srcAccessMask}
-        type FieldIsArray "srcAccessMask" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = True
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset
-          = #{offset VkBufferMemoryBarrier, srcAccessMask}
-
-instance CanReadField "srcAccessMask" VkBufferMemoryBarrier where
-        {-# INLINE getField #-}
-        getField = vkSrcAccessMask
-
-        {-# INLINE readField #-}
-        readField = readVkSrcAccessMask
-
-instance CanWriteField "srcAccessMask" VkBufferMemoryBarrier where
-        {-# INLINE writeField #-}
-        writeField = writeVkSrcAccessMask
-
-instance {-# OVERLAPPING #-}
-         HasVkDstAccessMask VkBufferMemoryBarrier where
-        type VkDstAccessMaskMType VkBufferMemoryBarrier = VkAccessFlags
-
-        {-# NOINLINE vkDstAccessMask #-}
-        vkDstAccessMask x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBufferMemoryBarrier, dstAccessMask})
-
-        {-# INLINE vkDstAccessMaskByteOffset #-}
-        vkDstAccessMaskByteOffset ~_
-          = #{offset VkBufferMemoryBarrier, dstAccessMask}
-
-        {-# INLINE readVkDstAccessMask #-}
-        readVkDstAccessMask p
-          = peekByteOff p #{offset VkBufferMemoryBarrier, dstAccessMask}
-
-        {-# INLINE writeVkDstAccessMask #-}
-        writeVkDstAccessMask p
-          = pokeByteOff p #{offset VkBufferMemoryBarrier, dstAccessMask}
-
-instance {-# OVERLAPPING #-}
-         HasField "dstAccessMask" VkBufferMemoryBarrier where
-        type FieldType "dstAccessMask" VkBufferMemoryBarrier =
-             VkAccessFlags
-        type FieldOptional "dstAccessMask" VkBufferMemoryBarrier = 'True -- ' closing tick for hsc2hs
-        type FieldOffset "dstAccessMask" VkBufferMemoryBarrier =
-             #{offset VkBufferMemoryBarrier, dstAccessMask}
-        type FieldIsArray "dstAccessMask" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = True
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset
-          = #{offset VkBufferMemoryBarrier, dstAccessMask}
-
-instance CanReadField "dstAccessMask" VkBufferMemoryBarrier where
-        {-# INLINE getField #-}
-        getField = vkDstAccessMask
-
-        {-# INLINE readField #-}
-        readField = readVkDstAccessMask
-
-instance CanWriteField "dstAccessMask" VkBufferMemoryBarrier where
-        {-# INLINE writeField #-}
-        writeField = writeVkDstAccessMask
-
-instance {-# OVERLAPPING #-}
-         HasVkSrcQueueFamilyIndex VkBufferMemoryBarrier where
-        type VkSrcQueueFamilyIndexMType VkBufferMemoryBarrier = Word32
-
-        {-# NOINLINE vkSrcQueueFamilyIndex #-}
-        vkSrcQueueFamilyIndex x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBufferMemoryBarrier, srcQueueFamilyIndex})
-
-        {-# INLINE vkSrcQueueFamilyIndexByteOffset #-}
-        vkSrcQueueFamilyIndexByteOffset ~_
-          = #{offset VkBufferMemoryBarrier, srcQueueFamilyIndex}
-
-        {-# INLINE readVkSrcQueueFamilyIndex #-}
-        readVkSrcQueueFamilyIndex p
-          = peekByteOff p #{offset VkBufferMemoryBarrier, srcQueueFamilyIndex}
-
-        {-# INLINE writeVkSrcQueueFamilyIndex #-}
-        writeVkSrcQueueFamilyIndex p
-          = pokeByteOff p #{offset VkBufferMemoryBarrier, srcQueueFamilyIndex}
-
-instance {-# OVERLAPPING #-}
-         HasField "srcQueueFamilyIndex" VkBufferMemoryBarrier where
-        type FieldType "srcQueueFamilyIndex" VkBufferMemoryBarrier = Word32
-        type FieldOptional "srcQueueFamilyIndex" VkBufferMemoryBarrier =
-             'False -- ' closing tick for hsc2hs
-        type FieldOffset "srcQueueFamilyIndex" VkBufferMemoryBarrier =
-             #{offset VkBufferMemoryBarrier, srcQueueFamilyIndex}
-        type FieldIsArray "srcQueueFamilyIndex" VkBufferMemoryBarrier =
-             'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset
-          = #{offset VkBufferMemoryBarrier, srcQueueFamilyIndex}
-
-instance CanReadField "srcQueueFamilyIndex" VkBufferMemoryBarrier
-         where
-        {-# INLINE getField #-}
-        getField = vkSrcQueueFamilyIndex
-
-        {-# INLINE readField #-}
-        readField = readVkSrcQueueFamilyIndex
-
-instance CanWriteField "srcQueueFamilyIndex" VkBufferMemoryBarrier
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSrcQueueFamilyIndex
-
-instance {-# OVERLAPPING #-}
-         HasVkDstQueueFamilyIndex VkBufferMemoryBarrier where
-        type VkDstQueueFamilyIndexMType VkBufferMemoryBarrier = Word32
-
-        {-# NOINLINE vkDstQueueFamilyIndex #-}
-        vkDstQueueFamilyIndex x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBufferMemoryBarrier, dstQueueFamilyIndex})
-
-        {-# INLINE vkDstQueueFamilyIndexByteOffset #-}
-        vkDstQueueFamilyIndexByteOffset ~_
-          = #{offset VkBufferMemoryBarrier, dstQueueFamilyIndex}
-
-        {-# INLINE readVkDstQueueFamilyIndex #-}
-        readVkDstQueueFamilyIndex p
-          = peekByteOff p #{offset VkBufferMemoryBarrier, dstQueueFamilyIndex}
-
-        {-# INLINE writeVkDstQueueFamilyIndex #-}
-        writeVkDstQueueFamilyIndex p
-          = pokeByteOff p #{offset VkBufferMemoryBarrier, dstQueueFamilyIndex}
-
-instance {-# OVERLAPPING #-}
-         HasField "dstQueueFamilyIndex" VkBufferMemoryBarrier where
-        type FieldType "dstQueueFamilyIndex" VkBufferMemoryBarrier = Word32
-        type FieldOptional "dstQueueFamilyIndex" VkBufferMemoryBarrier =
-             'False -- ' closing tick for hsc2hs
-        type FieldOffset "dstQueueFamilyIndex" VkBufferMemoryBarrier =
-             #{offset VkBufferMemoryBarrier, dstQueueFamilyIndex}
-        type FieldIsArray "dstQueueFamilyIndex" VkBufferMemoryBarrier =
-             'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset
-          = #{offset VkBufferMemoryBarrier, dstQueueFamilyIndex}
-
-instance CanReadField "dstQueueFamilyIndex" VkBufferMemoryBarrier
-         where
-        {-# INLINE getField #-}
-        getField = vkDstQueueFamilyIndex
-
-        {-# INLINE readField #-}
-        readField = readVkDstQueueFamilyIndex
-
-instance CanWriteField "dstQueueFamilyIndex" VkBufferMemoryBarrier
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkDstQueueFamilyIndex
-
-instance {-# OVERLAPPING #-} HasVkBuffer VkBufferMemoryBarrier
-         where
-        type VkBufferMType VkBufferMemoryBarrier = VkBuffer
-
-        {-# NOINLINE vkBuffer #-}
-        vkBuffer x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBufferMemoryBarrier, buffer})
-
-        {-# INLINE vkBufferByteOffset #-}
-        vkBufferByteOffset ~_
-          = #{offset VkBufferMemoryBarrier, buffer}
-
-        {-# INLINE readVkBuffer #-}
-        readVkBuffer p
-          = peekByteOff p #{offset VkBufferMemoryBarrier, buffer}
-
-        {-# INLINE writeVkBuffer #-}
-        writeVkBuffer p
-          = pokeByteOff p #{offset VkBufferMemoryBarrier, buffer}
-
-instance {-# OVERLAPPING #-}
-         HasField "buffer" VkBufferMemoryBarrier where
-        type FieldType "buffer" VkBufferMemoryBarrier = VkBuffer
-        type FieldOptional "buffer" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "buffer" VkBufferMemoryBarrier =
-             #{offset VkBufferMemoryBarrier, buffer}
-        type FieldIsArray "buffer" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset = #{offset VkBufferMemoryBarrier, buffer}
-
-instance CanReadField "buffer" VkBufferMemoryBarrier where
-        {-# INLINE getField #-}
-        getField = vkBuffer
-
-        {-# INLINE readField #-}
-        readField = readVkBuffer
-
-instance CanWriteField "buffer" VkBufferMemoryBarrier where
-        {-# INLINE writeField #-}
-        writeField = writeVkBuffer
-
-instance {-# OVERLAPPING #-} HasVkOffset VkBufferMemoryBarrier
-         where
-        type VkOffsetMType VkBufferMemoryBarrier = VkDeviceSize
-
-        {-# NOINLINE vkOffset #-}
-        vkOffset x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBufferMemoryBarrier, offset})
-
-        {-# INLINE vkOffsetByteOffset #-}
-        vkOffsetByteOffset ~_
-          = #{offset VkBufferMemoryBarrier, offset}
-
-        {-# INLINE readVkOffset #-}
-        readVkOffset p
-          = peekByteOff p #{offset VkBufferMemoryBarrier, offset}
-
-        {-# INLINE writeVkOffset #-}
-        writeVkOffset p
-          = pokeByteOff p #{offset VkBufferMemoryBarrier, offset}
-
-instance {-# OVERLAPPING #-}
-         HasField "offset" VkBufferMemoryBarrier where
-        type FieldType "offset" VkBufferMemoryBarrier = VkDeviceSize
-        type FieldOptional "offset" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "offset" VkBufferMemoryBarrier =
-             #{offset VkBufferMemoryBarrier, offset}
-        type FieldIsArray "offset" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset = #{offset VkBufferMemoryBarrier, offset}
-
-instance CanReadField "offset" VkBufferMemoryBarrier where
-        {-# INLINE getField #-}
-        getField = vkOffset
-
-        {-# INLINE readField #-}
-        readField = readVkOffset
-
-instance CanWriteField "offset" VkBufferMemoryBarrier where
-        {-# INLINE writeField #-}
-        writeField = writeVkOffset
-
-instance {-# OVERLAPPING #-} HasVkSize VkBufferMemoryBarrier where
-        type VkSizeMType VkBufferMemoryBarrier = VkDeviceSize
-
-        {-# NOINLINE vkSize #-}
-        vkSize x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBufferMemoryBarrier, size})
-
-        {-# INLINE vkSizeByteOffset #-}
-        vkSizeByteOffset ~_
-          = #{offset VkBufferMemoryBarrier, size}
-
-        {-# INLINE readVkSize #-}
-        readVkSize p
-          = peekByteOff p #{offset VkBufferMemoryBarrier, size}
-
-        {-# INLINE writeVkSize #-}
-        writeVkSize p
-          = pokeByteOff p #{offset VkBufferMemoryBarrier, size}
-
-instance {-# OVERLAPPING #-} HasField "size" VkBufferMemoryBarrier
-         where
-        type FieldType "size" VkBufferMemoryBarrier = VkDeviceSize
-        type FieldOptional "size" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "size" VkBufferMemoryBarrier =
-             #{offset VkBufferMemoryBarrier, size}
-        type FieldIsArray "size" VkBufferMemoryBarrier = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset = #{offset VkBufferMemoryBarrier, size}
-
-instance CanReadField "size" VkBufferMemoryBarrier where
-        {-# INLINE getField #-}
-        getField = vkSize
-
-        {-# INLINE readField #-}
-        readField = readVkSize
-
-instance CanWriteField "size" VkBufferMemoryBarrier where
-        {-# INLINE writeField #-}
-        writeField = writeVkSize
-
-instance Show VkBufferMemoryBarrier where
-        showsPrec d x
-          = showString "VkBufferMemoryBarrier {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
-                  showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
-                        showString ", " .
-                          showString "vkSrcAccessMask = " .
-                            showsPrec d (vkSrcAccessMask x) .
-                              showString ", " .
-                                showString "vkDstAccessMask = " .
-                                  showsPrec d (vkDstAccessMask x) .
-                                    showString ", " .
-                                      showString "vkSrcQueueFamilyIndex = " .
-                                        showsPrec d (vkSrcQueueFamilyIndex x) .
-                                          showString ", " .
-                                            showString "vkDstQueueFamilyIndex = " .
-                                              showsPrec d (vkDstQueueFamilyIndex x) .
-                                                showString ", " .
-                                                  showString "vkBuffer = " .
-                                                    showsPrec d (vkBuffer x) .
-                                                      showString ", " .
-                                                        showString "vkOffset = " .
-                                                          showsPrec d (vkOffset x) .
-                                                            showString ", " .
-                                                              showString "vkSize = " .
-                                                                showsPrec d (vkSize x) .
-                                                                  showChar '}'
-
--- | > typedef struct VkDispatchIndirectCommand {
---   >     uint32_t               x;
---   >     uint32_t               y;
---   >     uint32_t               z;
---   > } VkDispatchIndirectCommand;
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDispatchIndirectCommand.html VkDispatchIndirectCommand registry at www.khronos.org>
-data VkDispatchIndirectCommand = VkDispatchIndirectCommand## Addr##
-                                                            ByteArray##
-
-instance Eq VkDispatchIndirectCommand where
-        (VkDispatchIndirectCommand## a _) ==
-          x@(VkDispatchIndirectCommand## b _) = EQ == cmpBytes## (sizeOf x) a b
-
-        {-# INLINE (==) #-}
-
-instance Ord VkDispatchIndirectCommand where
-        (VkDispatchIndirectCommand## a _) `compare`
-          x@(VkDispatchIndirectCommand## b _) = cmpBytes## (sizeOf x) a b
-
-        {-# INLINE compare #-}
-
-instance Storable VkDispatchIndirectCommand where
-        sizeOf ~_ = #{size VkDispatchIndirectCommand}
-
-        {-# INLINE sizeOf #-}
-        alignment ~_ = #{alignment VkDispatchIndirectCommand}
-
-        {-# INLINE alignment #-}
-        peek = peekVkData##
-
-        {-# INLINE peek #-}
-        poke = pokeVkData##
-
-        {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDispatchIndirectCommand where
-        unsafeAddr (VkDispatchIndirectCommand## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDispatchIndirectCommand## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDispatchIndirectCommand## (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
-
-instance VulkanMarshal VkDispatchIndirectCommand where
-        type StructFields VkDispatchIndirectCommand = '["x", "y", "z"] -- ' closing tick for hsc2hs
-        type CUnionType VkDispatchIndirectCommand = 'False -- ' closing tick for hsc2hs
-        type ReturnedOnly VkDispatchIndirectCommand = 'False -- ' closing tick for hsc2hs
-        type StructExtends VkDispatchIndirectCommand = '[] -- ' closing tick for hsc2hs
-
-instance {-# OVERLAPPING #-} HasVkX VkDispatchIndirectCommand where
-        type VkXMType VkDispatchIndirectCommand = Word32
-
-        {-# NOINLINE vkX #-}
-        vkX x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDispatchIndirectCommand, x})
-
-        {-# INLINE vkXByteOffset #-}
-        vkXByteOffset ~_
-          = #{offset VkDispatchIndirectCommand, x}
-
-        {-# INLINE readVkX #-}
-        readVkX p
-          = peekByteOff p #{offset VkDispatchIndirectCommand, x}
-
-        {-# INLINE writeVkX #-}
-        writeVkX p
-          = pokeByteOff p #{offset VkDispatchIndirectCommand, x}
-
-instance {-# OVERLAPPING #-} HasField "x" VkDispatchIndirectCommand
-         where
-        type FieldType "x" VkDispatchIndirectCommand = Word32
-        type FieldOptional "x" VkDispatchIndirectCommand = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "x" VkDispatchIndirectCommand =
-             #{offset VkDispatchIndirectCommand, x}
-        type FieldIsArray "x" VkDispatchIndirectCommand = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset = #{offset VkDispatchIndirectCommand, x}
-
-instance CanReadField "x" VkDispatchIndirectCommand where
-        {-# INLINE getField #-}
-        getField = vkX
-
-        {-# INLINE readField #-}
-        readField = readVkX
-
-instance CanWriteField "x" VkDispatchIndirectCommand where
-        {-# INLINE writeField #-}
-        writeField = writeVkX
-
-instance {-# OVERLAPPING #-} HasVkY VkDispatchIndirectCommand where
-        type VkYMType VkDispatchIndirectCommand = Word32
-
-        {-# NOINLINE vkY #-}
-        vkY x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDispatchIndirectCommand, y})
-
-        {-# INLINE vkYByteOffset #-}
-        vkYByteOffset ~_
-          = #{offset VkDispatchIndirectCommand, y}
-
-        {-# INLINE readVkY #-}
-        readVkY p
-          = peekByteOff p #{offset VkDispatchIndirectCommand, y}
-
-        {-# INLINE writeVkY #-}
-        writeVkY p
-          = pokeByteOff p #{offset VkDispatchIndirectCommand, y}
-
-instance {-# OVERLAPPING #-} HasField "y" VkDispatchIndirectCommand
-         where
-        type FieldType "y" VkDispatchIndirectCommand = Word32
-        type FieldOptional "y" VkDispatchIndirectCommand = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "y" VkDispatchIndirectCommand =
-             #{offset VkDispatchIndirectCommand, y}
-        type FieldIsArray "y" VkDispatchIndirectCommand = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset = #{offset VkDispatchIndirectCommand, y}
-
-instance CanReadField "y" VkDispatchIndirectCommand where
-        {-# INLINE getField #-}
-        getField = vkY
-
-        {-# INLINE readField #-}
-        readField = readVkY
-
-instance CanWriteField "y" VkDispatchIndirectCommand where
-        {-# INLINE writeField #-}
-        writeField = writeVkY
-
-instance {-# OVERLAPPING #-} HasVkZ VkDispatchIndirectCommand where
-        type VkZMType VkDispatchIndirectCommand = Word32
-
-        {-# NOINLINE vkZ #-}
-        vkZ x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDispatchIndirectCommand, z})
-
-        {-# INLINE vkZByteOffset #-}
-        vkZByteOffset ~_
-          = #{offset VkDispatchIndirectCommand, z}
-
-        {-# INLINE readVkZ #-}
-        readVkZ p
-          = peekByteOff p #{offset VkDispatchIndirectCommand, z}
-
-        {-# INLINE writeVkZ #-}
-        writeVkZ p
-          = pokeByteOff p #{offset VkDispatchIndirectCommand, z}
-
-instance {-# OVERLAPPING #-} HasField "z" VkDispatchIndirectCommand
-         where
-        type FieldType "z" VkDispatchIndirectCommand = Word32
-        type FieldOptional "z" VkDispatchIndirectCommand = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "z" VkDispatchIndirectCommand =
-             #{offset VkDispatchIndirectCommand, z}
-        type FieldIsArray "z" VkDispatchIndirectCommand = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset = #{offset VkDispatchIndirectCommand, z}
-
-instance CanReadField "z" VkDispatchIndirectCommand where
-        {-# INLINE getField #-}
-        getField = vkZ
-
-        {-# INLINE readField #-}
-        readField = readVkZ
-
-instance CanWriteField "z" VkDispatchIndirectCommand where
-        {-# INLINE writeField #-}
-        writeField = writeVkZ
-
-instance Show VkDispatchIndirectCommand where
-        showsPrec d x
-          = showString "VkDispatchIndirectCommand {" .
-              showString "vkX = " .
-                showsPrec d (vkX x) .
-                  showString ", " .
-                    showString "vkY = " .
-                      showsPrec d (vkY x) .
-                        showString ", " .
-                          showString "vkZ = " . showsPrec d (vkZ x) . showChar '}'
-
--- | > typedef struct VkDrawIndexedIndirectCommand {
---   >     uint32_t               indexCount;
---   >     uint32_t               instanceCount;
---   >     uint32_t               firstIndex;
---   >     int32_t                vertexOffset;
---   >     uint32_t               firstInstance;
---   > } VkDrawIndexedIndirectCommand;
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDrawIndexedIndirectCommand.html VkDrawIndexedIndirectCommand registry at www.khronos.org>
-data VkDrawIndexedIndirectCommand = VkDrawIndexedIndirectCommand## Addr##
-                                                                  ByteArray##
-
-instance Eq VkDrawIndexedIndirectCommand where
-        (VkDrawIndexedIndirectCommand## a _) ==
-          x@(VkDrawIndexedIndirectCommand## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
-
-        {-# INLINE (==) #-}
-
-instance Ord VkDrawIndexedIndirectCommand where
-        (VkDrawIndexedIndirectCommand## a _) `compare`
-          x@(VkDrawIndexedIndirectCommand## b _) = cmpBytes## (sizeOf x) a b
-
-        {-# INLINE compare #-}
-
-instance Storable VkDrawIndexedIndirectCommand where
-        sizeOf ~_ = #{size VkDrawIndexedIndirectCommand}
-
-        {-# INLINE sizeOf #-}
-        alignment ~_
-          = #{alignment VkDrawIndexedIndirectCommand}
-
-        {-# INLINE alignment #-}
-        peek = peekVkData##
-
-        {-# INLINE peek #-}
-        poke = pokeVkData##
-
-        {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDrawIndexedIndirectCommand where
-        unsafeAddr (VkDrawIndexedIndirectCommand## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDrawIndexedIndirectCommand## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDrawIndexedIndirectCommand##
-              (plusAddr## (byteArrayContents## b) off)
-              b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
-
-instance VulkanMarshal VkDrawIndexedIndirectCommand where
-        type StructFields VkDrawIndexedIndirectCommand =
-             '["indexCount", "instanceCount", "firstIndex", "vertexOffset", -- ' closing tick for hsc2hs
-               "firstInstance"]
-        type CUnionType VkDrawIndexedIndirectCommand = 'False -- ' closing tick for hsc2hs
-        type ReturnedOnly VkDrawIndexedIndirectCommand = 'False -- ' closing tick for hsc2hs
-        type StructExtends VkDrawIndexedIndirectCommand = '[] -- ' closing tick for hsc2hs
-
-instance {-# OVERLAPPING #-}
-         HasVkIndexCount VkDrawIndexedIndirectCommand where
-        type VkIndexCountMType VkDrawIndexedIndirectCommand = Word32
-
-        {-# NOINLINE vkIndexCount #-}
-        vkIndexCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDrawIndexedIndirectCommand, indexCount})
-
-        {-# INLINE vkIndexCountByteOffset #-}
-        vkIndexCountByteOffset ~_
-          = #{offset VkDrawIndexedIndirectCommand, indexCount}
-
-        {-# INLINE readVkIndexCount #-}
-        readVkIndexCount p
-          = peekByteOff p #{offset VkDrawIndexedIndirectCommand, indexCount}
-
-        {-# INLINE writeVkIndexCount #-}
-        writeVkIndexCount p
-          = pokeByteOff p #{offset VkDrawIndexedIndirectCommand, indexCount}
-
-instance {-# OVERLAPPING #-}
-         HasField "indexCount" VkDrawIndexedIndirectCommand where
-        type FieldType "indexCount" VkDrawIndexedIndirectCommand = Word32
-        type FieldOptional "indexCount" VkDrawIndexedIndirectCommand =
-             'False -- ' closing tick for hsc2hs
-        type FieldOffset "indexCount" VkDrawIndexedIndirectCommand =
-             #{offset VkDrawIndexedIndirectCommand, indexCount}
-        type FieldIsArray "indexCount" VkDrawIndexedIndirectCommand =
-             'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset
-          = #{offset VkDrawIndexedIndirectCommand, indexCount}
-
-instance CanReadField "indexCount" VkDrawIndexedIndirectCommand
-         where
-        {-# INLINE getField #-}
-        getField = vkIndexCount
-
-        {-# INLINE readField #-}
-        readField = readVkIndexCount
-
-instance CanWriteField "indexCount" VkDrawIndexedIndirectCommand
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkIndexCount
-
-instance {-# OVERLAPPING #-}
-         HasVkInstanceCount VkDrawIndexedIndirectCommand where
-        type VkInstanceCountMType VkDrawIndexedIndirectCommand = Word32
-
-        {-# NOINLINE vkInstanceCount #-}
-        vkInstanceCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDrawIndexedIndirectCommand, instanceCount})
-
-        {-# INLINE vkInstanceCountByteOffset #-}
-        vkInstanceCountByteOffset ~_
-          = #{offset VkDrawIndexedIndirectCommand, instanceCount}
-
-        {-# INLINE readVkInstanceCount #-}
-        readVkInstanceCount p
-          = peekByteOff p #{offset VkDrawIndexedIndirectCommand, instanceCount}
-
-        {-# INLINE writeVkInstanceCount #-}
-        writeVkInstanceCount p
-          = pokeByteOff p #{offset VkDrawIndexedIndirectCommand, instanceCount}
-
-instance {-# OVERLAPPING #-}
-         HasField "instanceCount" VkDrawIndexedIndirectCommand where
-        type FieldType "instanceCount" VkDrawIndexedIndirectCommand =
-             Word32
-        type FieldOptional "instanceCount" VkDrawIndexedIndirectCommand =
-             'False -- ' closing tick for hsc2hs
-        type FieldOffset "instanceCount" VkDrawIndexedIndirectCommand =
-             #{offset VkDrawIndexedIndirectCommand, instanceCount}
-        type FieldIsArray "instanceCount" VkDrawIndexedIndirectCommand =
-             'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset
-          = #{offset VkDrawIndexedIndirectCommand, instanceCount}
-
-instance CanReadField "instanceCount" VkDrawIndexedIndirectCommand
-         where
-        {-# INLINE getField #-}
-        getField = vkInstanceCount
-
-        {-# INLINE readField #-}
-        readField = readVkInstanceCount
-
-instance CanWriteField "instanceCount" VkDrawIndexedIndirectCommand
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkInstanceCount
-
-instance {-# OVERLAPPING #-}
-         HasVkFirstIndex VkDrawIndexedIndirectCommand where
-        type VkFirstIndexMType VkDrawIndexedIndirectCommand = Word32
-
-        {-# NOINLINE vkFirstIndex #-}
-        vkFirstIndex x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDrawIndexedIndirectCommand, firstIndex})
-
-        {-# INLINE vkFirstIndexByteOffset #-}
-        vkFirstIndexByteOffset ~_
-          = #{offset VkDrawIndexedIndirectCommand, firstIndex}
-
-        {-# INLINE readVkFirstIndex #-}
-        readVkFirstIndex p
-          = peekByteOff p #{offset VkDrawIndexedIndirectCommand, firstIndex}
-
-        {-# INLINE writeVkFirstIndex #-}
-        writeVkFirstIndex p
-          = pokeByteOff p #{offset VkDrawIndexedIndirectCommand, firstIndex}
-
-instance {-# OVERLAPPING #-}
-         HasField "firstIndex" VkDrawIndexedIndirectCommand where
-        type FieldType "firstIndex" VkDrawIndexedIndirectCommand = Word32
-        type FieldOptional "firstIndex" VkDrawIndexedIndirectCommand =
-             'False -- ' closing tick for hsc2hs
-        type FieldOffset "firstIndex" VkDrawIndexedIndirectCommand =
-             #{offset VkDrawIndexedIndirectCommand, firstIndex}
-        type FieldIsArray "firstIndex" VkDrawIndexedIndirectCommand =
-             'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset
-          = #{offset VkDrawIndexedIndirectCommand, firstIndex}
-
-instance CanReadField "firstIndex" VkDrawIndexedIndirectCommand
-         where
-        {-# INLINE getField #-}
-        getField = vkFirstIndex
-
-        {-# INLINE readField #-}
-        readField = readVkFirstIndex
-
-instance CanWriteField "firstIndex" VkDrawIndexedIndirectCommand
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFirstIndex
-
-instance {-# OVERLAPPING #-}
-         HasVkVertexOffset VkDrawIndexedIndirectCommand where
-        type VkVertexOffsetMType VkDrawIndexedIndirectCommand = Int32
-
-        {-# NOINLINE vkVertexOffset #-}
-        vkVertexOffset x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDrawIndexedIndirectCommand, vertexOffset})
-
-        {-# INLINE vkVertexOffsetByteOffset #-}
-        vkVertexOffsetByteOffset ~_
-          = #{offset VkDrawIndexedIndirectCommand, vertexOffset}
-
-        {-# INLINE readVkVertexOffset #-}
-        readVkVertexOffset p
-          = peekByteOff p #{offset VkDrawIndexedIndirectCommand, vertexOffset}
-
-        {-# INLINE writeVkVertexOffset #-}
-        writeVkVertexOffset p
-          = pokeByteOff p #{offset VkDrawIndexedIndirectCommand, vertexOffset}
-
-instance {-# OVERLAPPING #-}
-         HasField "vertexOffset" VkDrawIndexedIndirectCommand where
-        type FieldType "vertexOffset" VkDrawIndexedIndirectCommand = Int32
-        type FieldOptional "vertexOffset" VkDrawIndexedIndirectCommand =
-             'False -- ' closing tick for hsc2hs
-        type FieldOffset "vertexOffset" VkDrawIndexedIndirectCommand =
-             #{offset VkDrawIndexedIndirectCommand, vertexOffset}
-        type FieldIsArray "vertexOffset" VkDrawIndexedIndirectCommand =
-             'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset
-          = #{offset VkDrawIndexedIndirectCommand, vertexOffset}
-
-instance CanReadField "vertexOffset" VkDrawIndexedIndirectCommand
-         where
-        {-# INLINE getField #-}
-        getField = vkVertexOffset
-
-        {-# INLINE readField #-}
-        readField = readVkVertexOffset
-
-instance CanWriteField "vertexOffset" VkDrawIndexedIndirectCommand
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkVertexOffset
-
-instance {-# OVERLAPPING #-}
-         HasVkFirstInstance VkDrawIndexedIndirectCommand where
-        type VkFirstInstanceMType VkDrawIndexedIndirectCommand = Word32
-
-        {-# NOINLINE vkFirstInstance #-}
-        vkFirstInstance x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDrawIndexedIndirectCommand, firstInstance})
-
-        {-# INLINE vkFirstInstanceByteOffset #-}
-        vkFirstInstanceByteOffset ~_
-          = #{offset VkDrawIndexedIndirectCommand, firstInstance}
-
-        {-# INLINE readVkFirstInstance #-}
-        readVkFirstInstance p
-          = peekByteOff p #{offset VkDrawIndexedIndirectCommand, firstInstance}
-
-        {-# INLINE writeVkFirstInstance #-}
-        writeVkFirstInstance p
-          = pokeByteOff p #{offset VkDrawIndexedIndirectCommand, firstInstance}
-
-instance {-# OVERLAPPING #-}
-         HasField "firstInstance" VkDrawIndexedIndirectCommand where
-        type FieldType "firstInstance" VkDrawIndexedIndirectCommand =
-             Word32
-        type FieldOptional "firstInstance" VkDrawIndexedIndirectCommand =
-             'False -- ' closing tick for hsc2hs
-        type FieldOffset "firstInstance" VkDrawIndexedIndirectCommand =
-             #{offset VkDrawIndexedIndirectCommand, firstInstance}
-        type FieldIsArray "firstInstance" VkDrawIndexedIndirectCommand =
-             'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset
-          = #{offset VkDrawIndexedIndirectCommand, firstInstance}
-
-instance CanReadField "firstInstance" VkDrawIndexedIndirectCommand
-         where
-        {-# INLINE getField #-}
-        getField = vkFirstInstance
-
-        {-# INLINE readField #-}
-        readField = readVkFirstInstance
-
-instance CanWriteField "firstInstance" VkDrawIndexedIndirectCommand
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFirstInstance
-
-instance Show VkDrawIndexedIndirectCommand where
-        showsPrec d x
-          = showString "VkDrawIndexedIndirectCommand {" .
-              showString "vkIndexCount = " .
-                showsPrec d (vkIndexCount x) .
-                  showString ", " .
-                    showString "vkInstanceCount = " .
-                      showsPrec d (vkInstanceCount x) .
-                        showString ", " .
-                          showString "vkFirstIndex = " .
-                            showsPrec d (vkFirstIndex x) .
-                              showString ", " .
-                                showString "vkVertexOffset = " .
-                                  showsPrec d (vkVertexOffset x) .
-                                    showString ", " .
-                                      showString "vkFirstInstance = " .
-                                        showsPrec d (vkFirstInstance x) . showChar '}'
-
--- | > typedef struct VkDrawIndirectCommand {
---   >     uint32_t               vertexCount;
---   >     uint32_t               instanceCount;
---   >     uint32_t               firstVertex;
---   >     uint32_t               firstInstance;
---   > } VkDrawIndirectCommand;
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDrawIndirectCommand.html VkDrawIndirectCommand registry at www.khronos.org>
-data VkDrawIndirectCommand = VkDrawIndirectCommand## Addr##
-                                                    ByteArray##
-
-instance Eq VkDrawIndirectCommand where
-        (VkDrawIndirectCommand## a _) == x@(VkDrawIndirectCommand## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
-
-        {-# INLINE (==) #-}
-
-instance Ord VkDrawIndirectCommand where
-        (VkDrawIndirectCommand## a _) `compare`
-          x@(VkDrawIndirectCommand## b _) = cmpBytes## (sizeOf x) a b
-
-        {-# INLINE compare #-}
-
-instance Storable VkDrawIndirectCommand where
-        sizeOf ~_ = #{size VkDrawIndirectCommand}
-
-        {-# INLINE sizeOf #-}
-        alignment ~_ = #{alignment VkDrawIndirectCommand}
-
-        {-# INLINE alignment #-}
-        peek = peekVkData##
-
-        {-# INLINE peek #-}
-        poke = pokeVkData##
-
-        {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkDrawIndirectCommand where
-        unsafeAddr (VkDrawIndirectCommand## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkDrawIndirectCommand## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkDrawIndirectCommand## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
-
-instance VulkanMarshal VkDrawIndirectCommand where
-        type StructFields VkDrawIndirectCommand =
-             '["vertexCount", "instanceCount", "firstVertex", "firstInstance"] -- ' closing tick for hsc2hs
-        type CUnionType VkDrawIndirectCommand = 'False -- ' closing tick for hsc2hs
-        type ReturnedOnly VkDrawIndirectCommand = 'False -- ' closing tick for hsc2hs
-        type StructExtends VkDrawIndirectCommand = '[] -- ' closing tick for hsc2hs
-
-instance {-# OVERLAPPING #-} HasVkVertexCount VkDrawIndirectCommand
-         where
-        type VkVertexCountMType VkDrawIndirectCommand = Word32
-
-        {-# NOINLINE vkVertexCount #-}
-        vkVertexCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDrawIndirectCommand, vertexCount})
-
-        {-# INLINE vkVertexCountByteOffset #-}
-        vkVertexCountByteOffset ~_
-          = #{offset VkDrawIndirectCommand, vertexCount}
-
-        {-# INLINE readVkVertexCount #-}
-        readVkVertexCount p
-          = peekByteOff p #{offset VkDrawIndirectCommand, vertexCount}
-
-        {-# INLINE writeVkVertexCount #-}
-        writeVkVertexCount p
-          = pokeByteOff p #{offset VkDrawIndirectCommand, vertexCount}
-
-instance {-# OVERLAPPING #-}
-         HasField "vertexCount" VkDrawIndirectCommand where
-        type FieldType "vertexCount" VkDrawIndirectCommand = Word32
-        type FieldOptional "vertexCount" VkDrawIndirectCommand = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "vertexCount" VkDrawIndirectCommand =
-             #{offset VkDrawIndirectCommand, vertexCount}
-        type FieldIsArray "vertexCount" VkDrawIndirectCommand = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset
-          = #{offset VkDrawIndirectCommand, vertexCount}
-
-instance CanReadField "vertexCount" VkDrawIndirectCommand where
-        {-# INLINE getField #-}
-        getField = vkVertexCount
-
-        {-# INLINE readField #-}
-        readField = readVkVertexCount
-
-instance CanWriteField "vertexCount" VkDrawIndirectCommand where
-        {-# INLINE writeField #-}
-        writeField = writeVkVertexCount
-
-instance {-# OVERLAPPING #-}
-         HasVkInstanceCount VkDrawIndirectCommand where
-        type VkInstanceCountMType VkDrawIndirectCommand = Word32
-
-        {-# NOINLINE vkInstanceCount #-}
-        vkInstanceCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDrawIndirectCommand, instanceCount})
-
-        {-# INLINE vkInstanceCountByteOffset #-}
-        vkInstanceCountByteOffset ~_
-          = #{offset VkDrawIndirectCommand, instanceCount}
-
-        {-# INLINE readVkInstanceCount #-}
-        readVkInstanceCount p
-          = peekByteOff p #{offset VkDrawIndirectCommand, instanceCount}
-
-        {-# INLINE writeVkInstanceCount #-}
-        writeVkInstanceCount p
-          = pokeByteOff p #{offset VkDrawIndirectCommand, instanceCount}
-
-instance {-# OVERLAPPING #-}
-         HasField "instanceCount" VkDrawIndirectCommand where
-        type FieldType "instanceCount" VkDrawIndirectCommand = Word32
-        type FieldOptional "instanceCount" VkDrawIndirectCommand = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "instanceCount" VkDrawIndirectCommand =
-             #{offset VkDrawIndirectCommand, instanceCount}
-        type FieldIsArray "instanceCount" VkDrawIndirectCommand = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset
-          = #{offset VkDrawIndirectCommand, instanceCount}
-
-instance CanReadField "instanceCount" VkDrawIndirectCommand where
-        {-# INLINE getField #-}
-        getField = vkInstanceCount
-
-        {-# INLINE readField #-}
-        readField = readVkInstanceCount
-
-instance CanWriteField "instanceCount" VkDrawIndirectCommand where
-        {-# INLINE writeField #-}
-        writeField = writeVkInstanceCount
-
-instance {-# OVERLAPPING #-} HasVkFirstVertex VkDrawIndirectCommand
-         where
-        type VkFirstVertexMType VkDrawIndirectCommand = Word32
-
-        {-# NOINLINE vkFirstVertex #-}
-        vkFirstVertex x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDrawIndirectCommand, firstVertex})
-
-        {-# INLINE vkFirstVertexByteOffset #-}
-        vkFirstVertexByteOffset ~_
-          = #{offset VkDrawIndirectCommand, firstVertex}
-
-        {-# INLINE readVkFirstVertex #-}
-        readVkFirstVertex p
-          = peekByteOff p #{offset VkDrawIndirectCommand, firstVertex}
-
-        {-# INLINE writeVkFirstVertex #-}
-        writeVkFirstVertex p
-          = pokeByteOff p #{offset VkDrawIndirectCommand, firstVertex}
-
-instance {-# OVERLAPPING #-}
-         HasField "firstVertex" VkDrawIndirectCommand where
-        type FieldType "firstVertex" VkDrawIndirectCommand = Word32
-        type FieldOptional "firstVertex" VkDrawIndirectCommand = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "firstVertex" VkDrawIndirectCommand =
-             #{offset VkDrawIndirectCommand, firstVertex}
-        type FieldIsArray "firstVertex" VkDrawIndirectCommand = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset
-          = #{offset VkDrawIndirectCommand, firstVertex}
-
-instance CanReadField "firstVertex" VkDrawIndirectCommand where
-        {-# INLINE getField #-}
-        getField = vkFirstVertex
-
-        {-# INLINE readField #-}
-        readField = readVkFirstVertex
-
-instance CanWriteField "firstVertex" VkDrawIndirectCommand where
-        {-# INLINE writeField #-}
-        writeField = writeVkFirstVertex
-
-instance {-# OVERLAPPING #-}
-         HasVkFirstInstance VkDrawIndirectCommand where
-        type VkFirstInstanceMType VkDrawIndirectCommand = Word32
-
-        {-# NOINLINE vkFirstInstance #-}
-        vkFirstInstance x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDrawIndirectCommand, firstInstance})
-
-        {-# INLINE vkFirstInstanceByteOffset #-}
-        vkFirstInstanceByteOffset ~_
-          = #{offset VkDrawIndirectCommand, firstInstance}
-
-        {-# INLINE readVkFirstInstance #-}
-        readVkFirstInstance p
-          = peekByteOff p #{offset VkDrawIndirectCommand, firstInstance}
-
-        {-# INLINE writeVkFirstInstance #-}
-        writeVkFirstInstance p
-          = pokeByteOff p #{offset VkDrawIndirectCommand, firstInstance}
-
-instance {-# OVERLAPPING #-}
-         HasField "firstInstance" VkDrawIndirectCommand where
-        type FieldType "firstInstance" VkDrawIndirectCommand = Word32
-        type FieldOptional "firstInstance" VkDrawIndirectCommand = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "firstInstance" VkDrawIndirectCommand =
-             #{offset VkDrawIndirectCommand, firstInstance}
-        type FieldIsArray "firstInstance" VkDrawIndirectCommand = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset
-          = #{offset VkDrawIndirectCommand, firstInstance}
-
-instance CanReadField "firstInstance" VkDrawIndirectCommand where
-        {-# INLINE getField #-}
-        getField = vkFirstInstance
-
-        {-# INLINE readField #-}
-        readField = readVkFirstInstance
-
-instance CanWriteField "firstInstance" VkDrawIndirectCommand where
-        {-# INLINE writeField #-}
-        writeField = writeVkFirstInstance
-
-instance Show VkDrawIndirectCommand where
-        showsPrec d x
-          = showString "VkDrawIndirectCommand {" .
-              showString "vkVertexCount = " .
-                showsPrec d (vkVertexCount x) .
-                  showString ", " .
-                    showString "vkInstanceCount = " .
-                      showsPrec d (vkInstanceCount x) .
-                        showString ", " .
-                          showString "vkFirstVertex = " .
-                            showsPrec d (vkFirstVertex x) .
-                              showString ", " .
-                                showString "vkFirstInstance = " .
-                                  showsPrec d (vkFirstInstance x) . showChar '}'
-
--- | > typedef struct VkImageMemoryBarrier {
---   >     VkStructureType sType;
---   >     const void*            pNext;
---   >     VkAccessFlags          srcAccessMask;
---   >     VkAccessFlags          dstAccessMask;
---   >     VkImageLayout          oldLayout;
---   >     VkImageLayout          newLayout;
---   >     uint32_t               srcQueueFamilyIndex;
---   >     uint32_t               dstQueueFamilyIndex;
---   >     VkImage                image;
---   >     VkImageSubresourceRange subresourceRange;
---   > } VkImageMemoryBarrier;
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImageMemoryBarrier.html VkImageMemoryBarrier registry at www.khronos.org>
-data VkImageMemoryBarrier = VkImageMemoryBarrier## Addr## ByteArray##
-
-instance Eq VkImageMemoryBarrier where
-        (VkImageMemoryBarrier## a _) == x@(VkImageMemoryBarrier## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
-
-        {-# INLINE (==) #-}
-
-instance Ord VkImageMemoryBarrier where
-        (VkImageMemoryBarrier## a _) `compare` x@(VkImageMemoryBarrier## b _)
-          = cmpBytes## (sizeOf x) a b
-
-        {-# INLINE compare #-}
-
-instance Storable VkImageMemoryBarrier where
-        sizeOf ~_ = #{size VkImageMemoryBarrier}
-
-        {-# INLINE sizeOf #-}
-        alignment ~_ = #{alignment VkImageMemoryBarrier}
-
-        {-# INLINE alignment #-}
-        peek = peekVkData##
-
-        {-# INLINE peek #-}
-        poke = pokeVkData##
-
-        {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkImageMemoryBarrier where
-        unsafeAddr (VkImageMemoryBarrier## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkImageMemoryBarrier## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkImageMemoryBarrier## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
-
-instance VulkanMarshal VkImageMemoryBarrier where
-        type StructFields VkImageMemoryBarrier =
-             '["sType", "pNext", "srcAccessMask", "dstAccessMask", "oldLayout", -- ' closing tick for hsc2hs
-               "newLayout", "srcQueueFamilyIndex", "dstQueueFamilyIndex", "image",
-               "subresourceRange"]
-        type CUnionType VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
-        type ReturnedOnly VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
-        type StructExtends VkImageMemoryBarrier = '[] -- ' closing tick for hsc2hs
-
-instance {-# OVERLAPPING #-} HasVkSType VkImageMemoryBarrier where
-        type VkSTypeMType VkImageMemoryBarrier = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageMemoryBarrier, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkImageMemoryBarrier, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkImageMemoryBarrier, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkImageMemoryBarrier, sType}
-
-instance {-# OVERLAPPING #-} HasField "sType" VkImageMemoryBarrier
-         where
-        type FieldType "sType" VkImageMemoryBarrier = VkStructureType
-        type FieldOptional "sType" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "sType" VkImageMemoryBarrier =
-             #{offset VkImageMemoryBarrier, sType}
-        type FieldIsArray "sType" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset = #{offset VkImageMemoryBarrier, sType}
-
-instance CanReadField "sType" VkImageMemoryBarrier where
-        {-# INLINE getField #-}
-        getField = vkSType
-
-        {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkImageMemoryBarrier where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkImageMemoryBarrier where
-        type VkPNextMType VkImageMemoryBarrier = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageMemoryBarrier, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkImageMemoryBarrier, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkImageMemoryBarrier, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkImageMemoryBarrier, pNext}
-
-instance {-# OVERLAPPING #-} HasField "pNext" VkImageMemoryBarrier
-         where
-        type FieldType "pNext" VkImageMemoryBarrier = Ptr Void
-        type FieldOptional "pNext" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "pNext" VkImageMemoryBarrier =
-             #{offset VkImageMemoryBarrier, pNext}
-        type FieldIsArray "pNext" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset = #{offset VkImageMemoryBarrier, pNext}
-
-instance CanReadField "pNext" VkImageMemoryBarrier where
-        {-# INLINE getField #-}
-        getField = vkPNext
-
-        {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkImageMemoryBarrier where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-}
-         HasVkSrcAccessMask VkImageMemoryBarrier where
-        type VkSrcAccessMaskMType VkImageMemoryBarrier = VkAccessFlags
-
-        {-# NOINLINE vkSrcAccessMask #-}
-        vkSrcAccessMask x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageMemoryBarrier, srcAccessMask})
-
-        {-# INLINE vkSrcAccessMaskByteOffset #-}
-        vkSrcAccessMaskByteOffset ~_
-          = #{offset VkImageMemoryBarrier, srcAccessMask}
-
-        {-# INLINE readVkSrcAccessMask #-}
-        readVkSrcAccessMask p
-          = peekByteOff p #{offset VkImageMemoryBarrier, srcAccessMask}
-
-        {-# INLINE writeVkSrcAccessMask #-}
-        writeVkSrcAccessMask p
-          = pokeByteOff p #{offset VkImageMemoryBarrier, srcAccessMask}
-
-instance {-# OVERLAPPING #-}
-         HasField "srcAccessMask" VkImageMemoryBarrier where
-        type FieldType "srcAccessMask" VkImageMemoryBarrier = VkAccessFlags
-        type FieldOptional "srcAccessMask" VkImageMemoryBarrier = 'True -- ' closing tick for hsc2hs
-        type FieldOffset "srcAccessMask" VkImageMemoryBarrier =
-             #{offset VkImageMemoryBarrier, srcAccessMask}
-        type FieldIsArray "srcAccessMask" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = True
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset
-          = #{offset VkImageMemoryBarrier, srcAccessMask}
-
-instance CanReadField "srcAccessMask" VkImageMemoryBarrier where
-        {-# INLINE getField #-}
-        getField = vkSrcAccessMask
-
-        {-# INLINE readField #-}
-        readField = readVkSrcAccessMask
-
-instance CanWriteField "srcAccessMask" VkImageMemoryBarrier where
-        {-# INLINE writeField #-}
-        writeField = writeVkSrcAccessMask
-
-instance {-# OVERLAPPING #-}
-         HasVkDstAccessMask VkImageMemoryBarrier where
-        type VkDstAccessMaskMType VkImageMemoryBarrier = VkAccessFlags
-
-        {-# NOINLINE vkDstAccessMask #-}
-        vkDstAccessMask x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageMemoryBarrier, dstAccessMask})
-
-        {-# INLINE vkDstAccessMaskByteOffset #-}
-        vkDstAccessMaskByteOffset ~_
-          = #{offset VkImageMemoryBarrier, dstAccessMask}
-
-        {-# INLINE readVkDstAccessMask #-}
-        readVkDstAccessMask p
-          = peekByteOff p #{offset VkImageMemoryBarrier, dstAccessMask}
-
-        {-# INLINE writeVkDstAccessMask #-}
-        writeVkDstAccessMask p
-          = pokeByteOff p #{offset VkImageMemoryBarrier, dstAccessMask}
-
-instance {-# OVERLAPPING #-}
-         HasField "dstAccessMask" VkImageMemoryBarrier where
-        type FieldType "dstAccessMask" VkImageMemoryBarrier = VkAccessFlags
-        type FieldOptional "dstAccessMask" VkImageMemoryBarrier = 'True -- ' closing tick for hsc2hs
-        type FieldOffset "dstAccessMask" VkImageMemoryBarrier =
-             #{offset VkImageMemoryBarrier, dstAccessMask}
-        type FieldIsArray "dstAccessMask" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = True
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset
-          = #{offset VkImageMemoryBarrier, dstAccessMask}
-
-instance CanReadField "dstAccessMask" VkImageMemoryBarrier where
-        {-# INLINE getField #-}
-        getField = vkDstAccessMask
-
-        {-# INLINE readField #-}
-        readField = readVkDstAccessMask
-
-instance CanWriteField "dstAccessMask" VkImageMemoryBarrier where
-        {-# INLINE writeField #-}
-        writeField = writeVkDstAccessMask
-
-instance {-# OVERLAPPING #-} HasVkOldLayout VkImageMemoryBarrier
-         where
-        type VkOldLayoutMType VkImageMemoryBarrier = VkImageLayout
-
-        {-# NOINLINE vkOldLayout #-}
-        vkOldLayout x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageMemoryBarrier, oldLayout})
-
-        {-# INLINE vkOldLayoutByteOffset #-}
-        vkOldLayoutByteOffset ~_
-          = #{offset VkImageMemoryBarrier, oldLayout}
-
-        {-# INLINE readVkOldLayout #-}
-        readVkOldLayout p
-          = peekByteOff p #{offset VkImageMemoryBarrier, oldLayout}
-
-        {-# INLINE writeVkOldLayout #-}
-        writeVkOldLayout p
-          = pokeByteOff p #{offset VkImageMemoryBarrier, oldLayout}
-
-instance {-# OVERLAPPING #-}
-         HasField "oldLayout" VkImageMemoryBarrier where
-        type FieldType "oldLayout" VkImageMemoryBarrier = VkImageLayout
-        type FieldOptional "oldLayout" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "oldLayout" VkImageMemoryBarrier =
-             #{offset VkImageMemoryBarrier, oldLayout}
-        type FieldIsArray "oldLayout" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset = #{offset VkImageMemoryBarrier, oldLayout}
-
-instance CanReadField "oldLayout" VkImageMemoryBarrier where
-        {-# INLINE getField #-}
-        getField = vkOldLayout
-
-        {-# INLINE readField #-}
-        readField = readVkOldLayout
-
-instance CanWriteField "oldLayout" VkImageMemoryBarrier where
-        {-# INLINE writeField #-}
-        writeField = writeVkOldLayout
-
-instance {-# OVERLAPPING #-} HasVkNewLayout VkImageMemoryBarrier
-         where
-        type VkNewLayoutMType VkImageMemoryBarrier = VkImageLayout
-
-        {-# NOINLINE vkNewLayout #-}
-        vkNewLayout x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageMemoryBarrier, newLayout})
-
-        {-# INLINE vkNewLayoutByteOffset #-}
-        vkNewLayoutByteOffset ~_
-          = #{offset VkImageMemoryBarrier, newLayout}
-
-        {-# INLINE readVkNewLayout #-}
-        readVkNewLayout p
-          = peekByteOff p #{offset VkImageMemoryBarrier, newLayout}
-
-        {-# INLINE writeVkNewLayout #-}
-        writeVkNewLayout p
-          = pokeByteOff p #{offset VkImageMemoryBarrier, newLayout}
-
-instance {-# OVERLAPPING #-}
-         HasField "newLayout" VkImageMemoryBarrier where
-        type FieldType "newLayout" VkImageMemoryBarrier = VkImageLayout
-        type FieldOptional "newLayout" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "newLayout" VkImageMemoryBarrier =
-             #{offset VkImageMemoryBarrier, newLayout}
-        type FieldIsArray "newLayout" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset = #{offset VkImageMemoryBarrier, newLayout}
-
-instance CanReadField "newLayout" VkImageMemoryBarrier where
-        {-# INLINE getField #-}
-        getField = vkNewLayout
-
-        {-# INLINE readField #-}
-        readField = readVkNewLayout
-
-instance CanWriteField "newLayout" VkImageMemoryBarrier where
-        {-# INLINE writeField #-}
-        writeField = writeVkNewLayout
-
-instance {-# OVERLAPPING #-}
-         HasVkSrcQueueFamilyIndex VkImageMemoryBarrier where
-        type VkSrcQueueFamilyIndexMType VkImageMemoryBarrier = Word32
-
-        {-# NOINLINE vkSrcQueueFamilyIndex #-}
-        vkSrcQueueFamilyIndex x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageMemoryBarrier, srcQueueFamilyIndex})
-
-        {-# INLINE vkSrcQueueFamilyIndexByteOffset #-}
-        vkSrcQueueFamilyIndexByteOffset ~_
-          = #{offset VkImageMemoryBarrier, srcQueueFamilyIndex}
-
-        {-# INLINE readVkSrcQueueFamilyIndex #-}
-        readVkSrcQueueFamilyIndex p
-          = peekByteOff p #{offset VkImageMemoryBarrier, srcQueueFamilyIndex}
-
-        {-# INLINE writeVkSrcQueueFamilyIndex #-}
-        writeVkSrcQueueFamilyIndex p
-          = pokeByteOff p #{offset VkImageMemoryBarrier, srcQueueFamilyIndex}
-
-instance {-# OVERLAPPING #-}
-         HasField "srcQueueFamilyIndex" VkImageMemoryBarrier where
-        type FieldType "srcQueueFamilyIndex" VkImageMemoryBarrier = Word32
-        type FieldOptional "srcQueueFamilyIndex" VkImageMemoryBarrier =
-             'False -- ' closing tick for hsc2hs
-        type FieldOffset "srcQueueFamilyIndex" VkImageMemoryBarrier =
-             #{offset VkImageMemoryBarrier, srcQueueFamilyIndex}
-        type FieldIsArray "srcQueueFamilyIndex" VkImageMemoryBarrier =
-             'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset
-          = #{offset VkImageMemoryBarrier, srcQueueFamilyIndex}
-
-instance CanReadField "srcQueueFamilyIndex" VkImageMemoryBarrier
-         where
-        {-# INLINE getField #-}
-        getField = vkSrcQueueFamilyIndex
-
-        {-# INLINE readField #-}
-        readField = readVkSrcQueueFamilyIndex
-
-instance CanWriteField "srcQueueFamilyIndex" VkImageMemoryBarrier
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSrcQueueFamilyIndex
-
-instance {-# OVERLAPPING #-}
-         HasVkDstQueueFamilyIndex VkImageMemoryBarrier where
-        type VkDstQueueFamilyIndexMType VkImageMemoryBarrier = Word32
-
-        {-# NOINLINE vkDstQueueFamilyIndex #-}
-        vkDstQueueFamilyIndex x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageMemoryBarrier, dstQueueFamilyIndex})
-
-        {-# INLINE vkDstQueueFamilyIndexByteOffset #-}
-        vkDstQueueFamilyIndexByteOffset ~_
-          = #{offset VkImageMemoryBarrier, dstQueueFamilyIndex}
-
-        {-# INLINE readVkDstQueueFamilyIndex #-}
-        readVkDstQueueFamilyIndex p
-          = peekByteOff p #{offset VkImageMemoryBarrier, dstQueueFamilyIndex}
-
-        {-# INLINE writeVkDstQueueFamilyIndex #-}
-        writeVkDstQueueFamilyIndex p
-          = pokeByteOff p #{offset VkImageMemoryBarrier, dstQueueFamilyIndex}
-
-instance {-# OVERLAPPING #-}
-         HasField "dstQueueFamilyIndex" VkImageMemoryBarrier where
-        type FieldType "dstQueueFamilyIndex" VkImageMemoryBarrier = Word32
-        type FieldOptional "dstQueueFamilyIndex" VkImageMemoryBarrier =
-             'False -- ' closing tick for hsc2hs
-        type FieldOffset "dstQueueFamilyIndex" VkImageMemoryBarrier =
-             #{offset VkImageMemoryBarrier, dstQueueFamilyIndex}
-        type FieldIsArray "dstQueueFamilyIndex" VkImageMemoryBarrier =
-             'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset
-          = #{offset VkImageMemoryBarrier, dstQueueFamilyIndex}
-
-instance CanReadField "dstQueueFamilyIndex" VkImageMemoryBarrier
-         where
-        {-# INLINE getField #-}
-        getField = vkDstQueueFamilyIndex
-
-        {-# INLINE readField #-}
-        readField = readVkDstQueueFamilyIndex
-
-instance CanWriteField "dstQueueFamilyIndex" VkImageMemoryBarrier
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkDstQueueFamilyIndex
-
-instance {-# OVERLAPPING #-} HasVkImage VkImageMemoryBarrier where
-        type VkImageMType VkImageMemoryBarrier = VkImage
-
-        {-# NOINLINE vkImage #-}
-        vkImage x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageMemoryBarrier, image})
-
-        {-# INLINE vkImageByteOffset #-}
-        vkImageByteOffset ~_
-          = #{offset VkImageMemoryBarrier, image}
-
-        {-# INLINE readVkImage #-}
-        readVkImage p
-          = peekByteOff p #{offset VkImageMemoryBarrier, image}
-
-        {-# INLINE writeVkImage #-}
-        writeVkImage p
-          = pokeByteOff p #{offset VkImageMemoryBarrier, image}
-
-instance {-# OVERLAPPING #-} HasField "image" VkImageMemoryBarrier
-         where
-        type FieldType "image" VkImageMemoryBarrier = VkImage
-        type FieldOptional "image" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "image" VkImageMemoryBarrier =
-             #{offset VkImageMemoryBarrier, image}
-        type FieldIsArray "image" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset = #{offset VkImageMemoryBarrier, image}
-
-instance CanReadField "image" VkImageMemoryBarrier where
-        {-# INLINE getField #-}
-        getField = vkImage
-
-        {-# INLINE readField #-}
-        readField = readVkImage
-
-instance CanWriteField "image" VkImageMemoryBarrier where
-        {-# INLINE writeField #-}
-        writeField = writeVkImage
-
-instance {-# OVERLAPPING #-}
-         HasVkSubresourceRange VkImageMemoryBarrier where
-        type VkSubresourceRangeMType VkImageMemoryBarrier =
-             VkImageSubresourceRange
-
-        {-# NOINLINE vkSubresourceRange #-}
-        vkSubresourceRange x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageMemoryBarrier, subresourceRange})
-
-        {-# INLINE vkSubresourceRangeByteOffset #-}
-        vkSubresourceRangeByteOffset ~_
-          = #{offset VkImageMemoryBarrier, subresourceRange}
-
-        {-# INLINE readVkSubresourceRange #-}
-        readVkSubresourceRange p
-          = peekByteOff p #{offset VkImageMemoryBarrier, subresourceRange}
-
-        {-# INLINE writeVkSubresourceRange #-}
-        writeVkSubresourceRange p
-          = pokeByteOff p #{offset VkImageMemoryBarrier, subresourceRange}
-
-instance {-# OVERLAPPING #-}
-         HasField "subresourceRange" VkImageMemoryBarrier where
-        type FieldType "subresourceRange" VkImageMemoryBarrier =
-             VkImageSubresourceRange
-        type FieldOptional "subresourceRange" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "subresourceRange" VkImageMemoryBarrier =
-             #{offset VkImageMemoryBarrier, subresourceRange}
-        type FieldIsArray "subresourceRange" VkImageMemoryBarrier = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset
-          = #{offset VkImageMemoryBarrier, subresourceRange}
-
-instance CanReadField "subresourceRange" VkImageMemoryBarrier where
-        {-# INLINE getField #-}
-        getField = vkSubresourceRange
-
-        {-# INLINE readField #-}
-        readField = readVkSubresourceRange
-
-instance CanWriteField "subresourceRange" VkImageMemoryBarrier
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSubresourceRange
-
-instance Show VkImageMemoryBarrier where
-        showsPrec d x
-          = showString "VkImageMemoryBarrier {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
-                  showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
-                        showString ", " .
-                          showString "vkSrcAccessMask = " .
-                            showsPrec d (vkSrcAccessMask x) .
-                              showString ", " .
-                                showString "vkDstAccessMask = " .
-                                  showsPrec d (vkDstAccessMask x) .
-                                    showString ", " .
-                                      showString "vkOldLayout = " .
-                                        showsPrec d (vkOldLayout x) .
-                                          showString ", " .
-                                            showString "vkNewLayout = " .
-                                              showsPrec d (vkNewLayout x) .
-                                                showString ", " .
-                                                  showString "vkSrcQueueFamilyIndex = " .
-                                                    showsPrec d (vkSrcQueueFamilyIndex x) .
-                                                      showString ", " .
-                                                        showString "vkDstQueueFamilyIndex = " .
-                                                          showsPrec d (vkDstQueueFamilyIndex x) .
-                                                            showString ", " .
-                                                              showString "vkImage = " .
-                                                                showsPrec d (vkImage x) .
-                                                                  showString ", " .
-                                                                    showString
-                                                                      "vkSubresourceRange = "
-                                                                      .
-                                                                      showsPrec d
-                                                                        (vkSubresourceRange x)
-                                                                        . showChar '}'
-
--- | > typedef struct VkMemoryBarrier {
---   >     VkStructureType sType;
---   >     const void*            pNext;
---   >     VkAccessFlags          srcAccessMask;
---   >     VkAccessFlags          dstAccessMask;
---   > } VkMemoryBarrier;
---
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkMemoryBarrier.html VkMemoryBarrier registry at www.khronos.org>
-data VkMemoryBarrier = VkMemoryBarrier## Addr## ByteArray##
-
-instance Eq VkMemoryBarrier where
-        (VkMemoryBarrier## a _) == x@(VkMemoryBarrier## b _)
-          = EQ == cmpBytes## (sizeOf x) a b
-
-        {-# INLINE (==) #-}
-
-instance Ord VkMemoryBarrier where
-        (VkMemoryBarrier## a _) `compare` x@(VkMemoryBarrier## b _)
-          = cmpBytes## (sizeOf x) a b
-
-        {-# INLINE compare #-}
-
-instance Storable VkMemoryBarrier where
-        sizeOf ~_ = #{size VkMemoryBarrier}
-
-        {-# INLINE sizeOf #-}
-        alignment ~_ = #{alignment VkMemoryBarrier}
-
-        {-# INLINE alignment #-}
-        peek = peekVkData##
-
-        {-# INLINE peek #-}
-        poke = pokeVkData##
-
-        {-# INLINE poke #-}
-
-instance VulkanMarshalPrim VkMemoryBarrier where
-        unsafeAddr (VkMemoryBarrier## a _) = a
-
-        {-# INLINE unsafeAddr #-}
-        unsafeByteArray (VkMemoryBarrier## _ b) = b
-
-        {-# INLINE unsafeByteArray #-}
-        unsafeFromByteArrayOffset off b
-          = VkMemoryBarrier## (plusAddr## (byteArrayContents## b) off) b
-
-        {-# INLINE unsafeFromByteArrayOffset #-}
-
-instance VulkanMarshal VkMemoryBarrier where
-        type StructFields VkMemoryBarrier =
-             '["sType", "pNext", "srcAccessMask", "dstAccessMask"] -- ' closing tick for hsc2hs
-        type CUnionType VkMemoryBarrier = 'False -- ' closing tick for hsc2hs
-        type ReturnedOnly VkMemoryBarrier = 'False -- ' closing tick for hsc2hs
-        type StructExtends VkMemoryBarrier = '[] -- ' closing tick for hsc2hs
-
-instance {-# OVERLAPPING #-} HasVkSType VkMemoryBarrier where
-        type VkSTypeMType VkMemoryBarrier = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkMemoryBarrier, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_ = #{offset VkMemoryBarrier, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkMemoryBarrier, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkMemoryBarrier, sType}
-
-instance {-# OVERLAPPING #-} HasField "sType" VkMemoryBarrier where
-        type FieldType "sType" VkMemoryBarrier = VkStructureType
-        type FieldOptional "sType" VkMemoryBarrier = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "sType" VkMemoryBarrier =
-             #{offset VkMemoryBarrier, sType}
-        type FieldIsArray "sType" VkMemoryBarrier = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset = #{offset VkMemoryBarrier, sType}
-
-instance CanReadField "sType" VkMemoryBarrier where
-        {-# INLINE getField #-}
-        getField = vkSType
-
-        {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkMemoryBarrier where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkMemoryBarrier where
-        type VkPNextMType VkMemoryBarrier = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkMemoryBarrier, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_ = #{offset VkMemoryBarrier, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkMemoryBarrier, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkMemoryBarrier, pNext}
-
-instance {-# OVERLAPPING #-} HasField "pNext" VkMemoryBarrier where
-        type FieldType "pNext" VkMemoryBarrier = Ptr Void
-        type FieldOptional "pNext" VkMemoryBarrier = 'False -- ' closing tick for hsc2hs
-        type FieldOffset "pNext" VkMemoryBarrier =
-             #{offset VkMemoryBarrier, pNext}
-        type FieldIsArray "pNext" VkMemoryBarrier = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = False
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset = #{offset VkMemoryBarrier, pNext}
-
-instance CanReadField "pNext" VkMemoryBarrier where
-        {-# INLINE getField #-}
-        getField = vkPNext
-
-        {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkMemoryBarrier where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-} HasVkSrcAccessMask VkMemoryBarrier
-         where
-        type VkSrcAccessMaskMType VkMemoryBarrier = VkAccessFlags
-
-        {-# NOINLINE vkSrcAccessMask #-}
-        vkSrcAccessMask x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkMemoryBarrier, srcAccessMask})
-
-        {-# INLINE vkSrcAccessMaskByteOffset #-}
-        vkSrcAccessMaskByteOffset ~_
-          = #{offset VkMemoryBarrier, srcAccessMask}
-
-        {-# INLINE readVkSrcAccessMask #-}
-        readVkSrcAccessMask p
-          = peekByteOff p #{offset VkMemoryBarrier, srcAccessMask}
-
-        {-# INLINE writeVkSrcAccessMask #-}
-        writeVkSrcAccessMask p
-          = pokeByteOff p #{offset VkMemoryBarrier, srcAccessMask}
-
-instance {-# OVERLAPPING #-}
-         HasField "srcAccessMask" VkMemoryBarrier where
-        type FieldType "srcAccessMask" VkMemoryBarrier = VkAccessFlags
-        type FieldOptional "srcAccessMask" VkMemoryBarrier = 'True -- ' closing tick for hsc2hs
-        type FieldOffset "srcAccessMask" VkMemoryBarrier =
-             #{offset VkMemoryBarrier, srcAccessMask}
-        type FieldIsArray "srcAccessMask" VkMemoryBarrier = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = True
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset = #{offset VkMemoryBarrier, srcAccessMask}
-
-instance CanReadField "srcAccessMask" VkMemoryBarrier where
-        {-# INLINE getField #-}
-        getField = vkSrcAccessMask
-
-        {-# INLINE readField #-}
-        readField = readVkSrcAccessMask
-
-instance CanWriteField "srcAccessMask" VkMemoryBarrier where
-        {-# INLINE writeField #-}
-        writeField = writeVkSrcAccessMask
-
-instance {-# OVERLAPPING #-} HasVkDstAccessMask VkMemoryBarrier
-         where
-        type VkDstAccessMaskMType VkMemoryBarrier = VkAccessFlags
-
-        {-# NOINLINE vkDstAccessMask #-}
-        vkDstAccessMask x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkMemoryBarrier, dstAccessMask})
-
-        {-# INLINE vkDstAccessMaskByteOffset #-}
-        vkDstAccessMaskByteOffset ~_
-          = #{offset VkMemoryBarrier, dstAccessMask}
-
-        {-# INLINE readVkDstAccessMask #-}
-        readVkDstAccessMask p
-          = peekByteOff p #{offset VkMemoryBarrier, dstAccessMask}
-
-        {-# INLINE writeVkDstAccessMask #-}
-        writeVkDstAccessMask p
-          = pokeByteOff p #{offset VkMemoryBarrier, dstAccessMask}
-
-instance {-# OVERLAPPING #-}
-         HasField "dstAccessMask" VkMemoryBarrier where
-        type FieldType "dstAccessMask" VkMemoryBarrier = VkAccessFlags
-        type FieldOptional "dstAccessMask" VkMemoryBarrier = 'True -- ' closing tick for hsc2hs
-        type FieldOffset "dstAccessMask" VkMemoryBarrier =
-             #{offset VkMemoryBarrier, dstAccessMask}
-        type FieldIsArray "dstAccessMask" VkMemoryBarrier = 'False -- ' closing tick for hsc2hs
-
-        {-# INLINE fieldOptional #-}
-        fieldOptional = True
-
-        {-# INLINE fieldOffset #-}
-        fieldOffset = #{offset VkMemoryBarrier, dstAccessMask}
-
-instance CanReadField "dstAccessMask" VkMemoryBarrier where
-        {-# INLINE getField #-}
-        getField = vkDstAccessMask
-
-        {-# INLINE readField #-}
-        readField = readVkDstAccessMask
-
-instance CanWriteField "dstAccessMask" VkMemoryBarrier where
-        {-# INLINE writeField #-}
-        writeField = writeVkDstAccessMask
-
-instance Show VkMemoryBarrier where
-        showsPrec d x
-          = showString "VkMemoryBarrier {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
-                  showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
-                        showString ", " .
-                          showString "vkSrcAccessMask = " .
-                            showsPrec d (vkSrcAccessMask x) .
-                              showString ", " .
-                                showString "vkDstAccessMask = " .
-                                  showsPrec d (vkDstAccessMask x) . showChar '}'
