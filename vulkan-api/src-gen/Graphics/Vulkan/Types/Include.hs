@@ -24,8 +24,7 @@ module Graphics.Vulkan.Types.Include
         Window, WlDisplay, WlSurface, XcbConnectionT, XcbVisualidT,
         XcbWindowT)
        where
-import           Foreign.C.Types         (CULong (..), CWchar (..))
-import           Graphics.Vulkan.Marshal (Ptr, Word32)
+import           Graphics.Vulkan.Marshal (CULong (..), CWchar (..), Ptr, Word32)
 
 -- | Requires @android/native_window.h@
 data ANativeWindow
