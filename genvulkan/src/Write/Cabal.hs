@@ -46,7 +46,8 @@ genCabalFile eModules = T.unlines $
           copyright:           Copyright: (c) 2018 Artem Chirkin
           category:            vulkan, bsd3, graphics, library, opengl
           build-type:          Simple
-          cabal-version:       >=1.10
+          cabal-version:       >=1.22
+          extra-source-files:  include/vulkan/vulkan.h
 
         |]
       : map mkFlagDef protectedGroups
