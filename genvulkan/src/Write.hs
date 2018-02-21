@@ -29,13 +29,13 @@ import           VkXml.CommonTypes
 import           VkXml.Sections
 import           VkXml.Sections.Extensions
 import           Write.Cabal
-import           Write.Commands
+-- import           Write.Commands
 import           Write.Extension
 import           Write.Feature
 import           Write.ModuleWriter
 import           Write.Types
 import           Write.Types.Enum
-import           Write.Types.Struct
+-- import           Write.Types.Struct
 import           Write.Util.DeclaredNames
 
 generateVkSource :: Path b Dir
@@ -63,61 +63,49 @@ generateVkSource' dnames' outputDir outCabalFile vkXml = do
   eModules0 <- mapM
     (\(m, mpdf) -> flip (,) mpdf <$> writeModule' outputDir m) genTModules
 
-  exportedNamesCommon <- do
+  exportedNamesConstants <- do
     ((), mr) <- runModuleWriter vkXml "Graphics.Vulkan.Constants" dnames $ do
        writePragma "Strict"
        writePragma "DataKinds"
        genApiConstants
-    writeModule outputDir [relfile|Graphics/Vulkan/Constants.hs|] id mr
+    writeModule outputDir [relfile|Graphics/Vulkan/Constants.hs|] mr
     pure $ globalNames mr
 
-  (classDeclsBase, exportedNamesBase) <- do
-    (a, mr) <- runModuleWriter vkXml "Graphics.Vulkan.Base" exportedNamesCommon $ do
-       writePragma "Strict"
-       writePragma "DataKinds"
-       writeFullImport "Graphics.Vulkan.StructMembers"
-       cds <- genBaseStructs
-       genBaseCommands
-       pure cds
-    writeModule outputDir [relfile|Graphics/Vulkan/Base.hsc|] id mr
-    pure (a, globalNames mr)
-
-  (classDeclsCore, exportedNamesCore) <- do
-    (a, mr) <- runModuleWriter vkXml "Graphics.Vulkan.Core" exportedNamesBase $ do
+  (_classDeclsCore, exportedNamesCore) <- do
+    (a, mr) <- runModuleWriter vkXml "Graphics.Vulkan.Core" exportedNamesConstants $ do
        writePragma "Strict"
        writePragma "DataKinds"
        fmap mconcat $ mapM genFeature $ globFeature vkXml
-    writeModule outputDir [relfile|Graphics/Vulkan/Core.hsc|] id mr
+    writeModule outputDir [relfile|Graphics/Vulkan/Core.hsc|] mr
     pure (a, globalNames mr)
 
 
-  (exportedNamesExts, classDeclsExts, eModules)
+  (exportedNamesExts, eModules)
     <- aggregateExts exportedNamesCore
-                  ( L.sortOn (extNumber . extAttributes)
+                  ( filter (\e -> extSupported (extAttributes e) /= "disabled")
+                  . L.sortOn (extNumber . extAttributes)
                   . Map.elems . globExtensions $ vkXml)
                   $ \gn ext -> do
     let eName = T.unpack . unVkExtensionName . extName $ extAttributes ext
         modName = "Graphics.Vulkan.Ext." <> eName
     fname <- parseRelFile (eName ++ ".hsc")
-    ((cds, exProtect), mr) <- runModuleWriter vkXml modName gn $ do
+    (exProtect, mr) <- runModuleWriter vkXml modName gn $ do
        writePragma "Strict"
        writePragma "DataKinds"
        genExtension ext
-    writeModule outputDir ([reldir|Graphics/Vulkan/Ext|] </> fname) id mr
-    pure (globalNames mr, cds, (T.pack modName, exProtect))
+    writeModule outputDir ([reldir|Graphics/Vulkan/Ext|] </> fname) mr
+    pure (globalNames mr, (T.pack modName, exProtect))
 
-  do -- write classes for struct member accessors
-    ((), mr) <- runModuleWriter vkXml "Graphics.Vulkan.StructMembers"
-                                           exportedNamesCommon $ do
-       writePragma "Strict"
-       writeFullImport "Graphics.Vulkan.Marshal"
-       mapM_ genClassName
-         . Map.toList
-         $ classDeclsBase <> classDeclsCore <> classDeclsExts
-    writeModule outputDir [relfile|Graphics/Vulkan/StructMembers.hs|]
-         ( addOptionsPragma GHC "-fno-warn-missing-methods"
-         ) mr
-    pure ()
+  -- do -- write classes for struct member accessors
+  --   ((), mr) <- runModuleWriter vkXml "Graphics.Vulkan.StructMembers"
+  --                                          exportedNamesCommon $ do
+  --      writePragma "Strict"
+  --      writeFullImport "Graphics.Vulkan.Marshal"
+  --      mapM_ genClassName
+  --        . Map.toList
+  --        $ classDeclsBase <> classDeclsCore <> classDeclsExts
+  --   writeModule outputDir [relfile|Graphics/Vulkan/StructMembers.hs|] mr
+  --   pure ()
 
   writeFile (toFilePath $ outputDir </> [relfile|Graphics/Vulkan/Ext.hs|])
       $ T.unpack $ T.unlines $
@@ -141,14 +129,14 @@ generateVkSource' dnames' outputDir outCabalFile vkXml = do
 aggregateExts :: DeclaredNames
               -> [VkExtension]
               -> (DeclaredNames -> VkExtension
-                   -> IO (DeclaredNames,ClassDeclarations, (Text, Maybe ProtectDef))
+                   -> IO (DeclaredNames, (Text, Maybe ProtectDef))
                  )
-              -> IO (DeclaredNames,ClassDeclarations, [(Text, Maybe ProtectDef)])
-aggregateExts gn [] _ = pure (gn, mempty, [])
+              -> IO (DeclaredNames, [(Text, Maybe ProtectDef)])
+aggregateExts gn [] _ = pure (gn, [])
 aggregateExts gn (x:xs) f = do
-  (gn', cd', mp) <- f gn x
-  (gn'', cd'', mps) <- aggregateExts gn' xs f
-  pure (gn'', cd' <> cd'', mp:mps)
+  (gn', mp) <- f gn x
+  (gn'', mps) <- aggregateExts gn' xs f
+  pure (gn'', mp:mps)
 
 importLine :: (Text, Maybe ProtectDef) -> Text
 importLine (mname, Nothing) = "import " <> mname
@@ -168,14 +156,6 @@ exportLine c (mname, Just p)  = T.unlines
   ]
 
 
-
-addOptionsPragma :: Tool -> String -> Module (Maybe a) -> Module (Maybe a)
-addOptionsPragma tool str (Module a h ps is ds)
-  = Module a h (OptionsPragma Nothing (Just tool) str : ps) is ds
-addOptionsPragma tool str (XmlPage a b ps c d e f)
-  = XmlPage a b (OptionsPragma Nothing (Just tool) str : ps) c d e f
-addOptionsPragma tool str (XmlHybrid a b ps c d e f g h)
-  = XmlHybrid a b (OptionsPragma Nothing (Just tool) str : ps) c d e f g h
 
 writeModule' :: Path b Dir
              -> ModuleWriting
@@ -212,10 +192,9 @@ writeModule' outputDir mw = do
 
 writeModule :: Path b Dir
             -> Path Rel File
-            -> (Module A -> Module A)
             -> ModuleWriting
             -> IO ()
-writeModule outputDir p postF mw = do
+writeModule outputDir p mw = do
     rez `deepseq` putStrLn "Done generating; now apply hfmt to reformat code..."
     frez <- hfmt rez
     case frez of
@@ -234,7 +213,7 @@ writeModule outputDir p postF mw = do
     pp = toFilePath $ outputDir </> p
     rez = uncurry exactPrint
         . ppWithCommentsMode defaultMode
-        . postF $ genModule mw
+        $ genModule mw
 
 -- unfortunately, I have to disable hindent for now,
 --  because it breaks haddock:

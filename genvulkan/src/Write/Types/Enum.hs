@@ -13,9 +13,9 @@ module Write.Types.Enum
   ) where
 
 import           Control.Monad
-import           Data.Maybe
 import           Control.Monad.Reader.Class
-import qualified Control.Monad.Trans.RWS.Strict       as RWS
+import           Data.Maybe
+-- import qualified Control.Monad.Trans.RWS.Strict       as RWS
 import qualified Data.Map.Strict                      as Map
 import           Data.Semigroup
 import           Data.Text                            (Text)
@@ -29,8 +29,8 @@ import           VkXml.Sections
 import           VkXml.Sections.Enums
 import           VkXml.Sections.Types
 
-import           Write.Util.DeclaredNames
 import           Write.ModuleWriter
+import           Write.Util.DeclaredNames
 
 
 
@@ -45,7 +45,6 @@ genBitmaskPair tbm te
       Nothing -> error $ "genBitmaskPair: Could not find a corresponding enum for bits type "
                       ++ show te
       Just VkEnums {..}  -> do
-        writePragma "GeneralizedNewtypeDeriving"
         writePragma "DeriveDataTypeable"
         writePragma "DeriveGeneric"
         writePragma "DataKinds"
@@ -54,13 +53,17 @@ genBitmaskPair tbm te
         writePragma "TypeSynonymInstances"
         writePragma "PatternSynonyms"
         writePragma "FlexibleInstances"
-        writeFullImport "Graphics.Vulkan.Marshal"
-        writeImport $ DIThing "Generic" DITNo
-        writeImport $ DIThing "Data" DITNo
-        writeImport $ DIThing "Storable" DITNo
-        writeImport $ DIThing "Bits" DITNo
-        writeImport $ DIThing "FiniteBits" DITNo
+        writePragma "GeneralizedNewtypeDeriving"
+        writeOptionsPragma (Just HADDOCK) "ignore-exports"
+        writeImport $ DIThing "Data" DITEmpty
+        writeImport $ DIThing "Generic" DITEmpty
+        writeImport $ DIThing "Storable" DITEmpty
+        writeImport $ DIThing "Bits" DITEmpty
+        writeImport $ DIThing "FiniteBits" DITEmpty
         writeImport $ DIThing "VkFlags" DITAll
+        writeImport $ DIThing "FlagType" DITEmpty
+        writeImport $ DIThing "FlagMask" DITNo
+        writeImport $ DIThing "FlagBit" DITNo
 
         let allPNs = map (unVkEnumName . _vkEnumName) . items $ _vkEnumsMembers
         mapM_ writeDecl $ parseDecls
@@ -127,22 +130,22 @@ genBitmaskPair tbm te
           [ ilist
           , diToImportSpec $ DIThing bitsNameTxt DITNo]
           [ ]
+        forM_ pats $ \epat -> writeExportExplicit (DIPat epat)
+          [ ilist ] []
   where
     flagName = tname tbm
     bitsName = tname te
     baseNameTxt = T.replace "Flags" "Bitmask" flagNameTxt
     flagNameTxt = unVkTypeName flagName
     bitsNameTxt = unVkTypeName bitsName
-    tname = (name :: VkType -> VkTypeName)
+    tname = name :: VkType -> VkTypeName
 
 
 genApiConstants :: Monad m => ModuleWriter m ()
 genApiConstants = do
-  glvl <- ModuleWriter $ RWS.gets currentSecLvl
-  writeSection glvl "API Constants"
-  writeImport $ DIThing "Word32" DITNo
   vk <- ask
-  pushSecLvl . const $ mapM_ genEnums
+  writeFullImport "Graphics.Vulkan.Marshal"
+  mapM_ genEnums
     (Map.lookup Nothing (globEnums vk))
 
 
@@ -156,20 +159,23 @@ genEnum t = ask >>= \vk -> case Map.lookup (Just tname) (globEnums vk) of
 
 genEnums :: Monad m => VkEnums -> ModuleWriter m ()
 genEnums VkEnums {..} = do
-    writePragma "GeneralizedNewtypeDeriving"
-    writePragma "DeriveDataTypeable"
-    writePragma "DeriveGeneric"
-    writeFullImport "Graphics.Vulkan.Marshal"
 
-
-    writeImport $ DIThing "Generic" DITEmpty
-    writeImport $ DIThing "Data" DITEmpty
-    writeImport $ DIThing "Storable" DITEmpty
-    when _vkEnumsIsBits $ do
+    if _vkEnumsIsBits
+    then do
       writeImport $ DIThing "Bits" DITNo
       writeImport $ DIThing "FiniteBits" DITNo
+      writeImport $ DIThing "VkFlags" DITNo
+    else
+      writeImport $ DIThing "Int32" DITNo
 
     mtname <- forM _vkEnumsTypeName $ \tname -> do
+      writePragma "GeneralizedNewtypeDeriving"
+      writePragma "DeriveDataTypeable"
+      writePragma "DeriveGeneric"
+      writeOptionsPragma (Just HADDOCK) "ignore-exports"
+      writeImport $ DIThing "Generic" DITEmpty
+      writeImport $ DIThing "Data" DITEmpty
+      writeImport $ DIThing "Storable" DITEmpty
       regLink <- vkRegistryLink $ unVkTypeName tname
       let tinsts = T.intercalate ", " derives
           rezComment = preComment . T.unpack $ _vkEnumsComment <:> regLink
@@ -200,6 +206,8 @@ genEnums VkEnums {..} = do
           [ diToImportSpec $ DIThing tnameTxt DITEmpty ] []
         writeExportExplicit (DIThing tnameTxt DITAll)
           [ diToImportSpec $ DIThing tnameTxt DITAll ] [ elist ]
+        forM_ epats $ \epat -> writeExportExplicit (DIPat epat)
+          [ diToImportSpec $ DIThing tnameTxt DITAll ] []
   where
     derives = (if _vkEnumsIsBits then ("Bits":).("FiniteBits":) else id)
               ["Eq","Ord","Num","Bounded","Storable","Enum", "Data", "Generic"]
@@ -288,11 +296,11 @@ genAlias VkTypeSimple
     writePragma "DeriveGeneric"
 
     writeImport $ DIVar "coerce"
-    writeImport $ DIThing "Generic" DITNo
-    writeImport $ DIThing "Data" DITNo
-    writeImport $ DIThing "Bits" DITNo
-    writeImport $ DIThing "FiniteBits" DITNo
-    writeImport $ DIThing "Storable" DITNo
+    writeImport $ DIThing "Generic" DITEmpty
+    writeImport $ DIThing "Data" DITEmpty
+    writeImport $ DIThing "Bits" DITEmpty
+    writeImport $ DIThing "FiniteBits" DITEmpty
+    writeImport $ DIThing "Storable" DITEmpty
     writeImport $ DIThing treftxt DITNo
 
     writeDecl . setComment rezComment $ parseDecl'

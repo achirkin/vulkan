@@ -11,16 +11,21 @@ module VkXml.Sections
   , reexportedTypesRequire
   , reexportedTypesFeature
   , reexportedTypesExtension
+  , evalProtectedTypes
+  , removeDisabledTypes
   ) where
 
 import           Control.Monad.State.Class
+import           Control.Arrow ((***), second)
 import           Data.Conduit
 import           Data.Conduit.Lift
-import           Data.Maybe (maybeToList)
+import           Data.Maybe
 import           Data.Foldable             (toList)
 import           Data.List                 (nub)
 import           Data.Map.Strict           (Map)
 import qualified Data.Map.Strict           as Map
+import           Data.Set           (Set)
+import qualified Data.Set           as Set
 import           Data.Sequence             (Seq, (|>))
 import qualified Data.Sequence             as Seq
 import           Data.XML.Types
@@ -159,9 +164,51 @@ reexportedTypesExtension vkXml VkExtension {..}
  = nub $ extRequires >>= reexportedTypesRequire vkXml
 
 
--- evalProtectedTypes :: VkXml
---                    -> Map VkTypeName VkType
---                    -> Map VkTypeName (VkType, ProtectDef)
--- evalProtectedTypes vkXml ts =
---   where
---
+evalProtectedTypes :: VkXml
+                   -> Map VkTypeName VkType
+                   -> Map VkTypeName (VkType, Maybe ProtectDef)
+evalProtectedTypes vkXml ts
+    = flip (Set.foldr' $ Map.adjust (second $ const Nothing)) unprotectedL
+    . flip (Map.foldrWithKey' $ \d ->
+              flip (Set.foldr' $ Map.adjust (second . const $ Just d))
+           ) protectedL
+    $ fmap (flip (,) Nothing) ts
+  where
+    ui = Map.unionWith Set.union
+    (unprotectedL, protectedL)
+      = (fromMaybe mempty *** Map.mapKeys fromJust)
+      $ Map.updateLookupWithKey (\_ _ -> Nothing) Nothing protectLists'
+    protectLists' :: Map (Maybe ProtectDef) (Set VkTypeName)
+    protectLists' = Map.singleton Nothing
+      ( foldMap
+        (Set.fromList . reexportedTypesFeature vkXml)
+        $ globFeature vkXml
+      ) `ui`
+      foldl ui mempty (map f $ Map.elems $ globExtensions vkXml)
+    f :: VkExtension -> Map (Maybe ProtectDef) (Set VkTypeName)
+    f e = Map.singleton
+      (extProtect $ extAttributes e)
+      (Set.fromList $ reexportedTypesExtension vkXml e)
+
+
+removeDisabledTypes :: VkXml
+                    -> Map VkTypeName VkType
+                    -> Map VkTypeName VkType
+removeDisabledTypes vkXml ts
+    = Set.foldr Map.delete ts toDisable
+  where
+    toDisable = disabledL Set.\\ enabledL
+    ui = Map.unionWith Set.union
+    disabledL = fromMaybe mempty $ Map.lookup False enablingLists'
+    enabledL = fromMaybe mempty $ Map.lookup True enablingLists'
+    enablingLists' :: Map Bool (Set VkTypeName)
+    enablingLists' = Map.singleton True
+      ( foldMap
+        (Set.fromList . reexportedTypesFeature vkXml)
+        $ globFeature vkXml
+      ) `ui`
+      foldl ui mempty (map f $ Map.elems $ globExtensions vkXml)
+    f :: VkExtension -> Map Bool (Set VkTypeName)
+    f e = Map.singleton
+      (extSupported (extAttributes e) /= "disabled")
+      (Set.fromList $ reexportedTypesExtension vkXml e)

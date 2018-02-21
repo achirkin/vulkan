@@ -7,7 +7,7 @@
 {-# LANGUAGE Strict                #-}
 -- | WIP
 module Write.Types.Struct
-  ( genStruct, genUnion, genClassName
+  ( genStruct, genUnion, genStructOrUnion, genClassName
   , ClassDeclarations
   ) where
 
@@ -66,7 +66,7 @@ genStructOrUnion isUnion structOrUnion@VkTypeComposite
     -- writeImport $ DIThing "ForeignPtrContents" DITAll
     -- writeImport $ DIVar   "newForeignPtr_"
 
-    writeFullImport "Graphics.Vulkan.StructMembers"
+    writeFullImport "Graphics.Vulkan.Types.StructMembers"
     writeFullImport "GHC.Prim"
     writeFullImport "Graphics.Vulkan.Marshal"
     writeFullImport "Graphics.Vulkan.Marshal.Internal"

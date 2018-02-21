@@ -78,6 +78,9 @@ diToExportSpec (DIThing n DITAll)
 baseDeclaredNames :: DeclaredNames
 baseDeclaredNames
     = ida "Graphics.Vulkan.Marshal.Internal" "VulkanMarshalPrim"
+   <> ida "Graphics.Vulkan.Marshal" "FlagType"
+   <> id0 "Graphics.Vulkan.Marshal" "FlagMask"
+   <> id0 "Graphics.Vulkan.Marshal" "FlagBit"
    <> ida "Graphics.Vulkan.Marshal" "VulkanMarshal"
    <> id0 "Graphics.Vulkan.Marshal" "VulkanMarshalPrim"
    <> ida "Graphics.Vulkan.Marshal" "VulkanPtr"

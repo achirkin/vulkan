@@ -15,7 +15,7 @@ module Write.ModuleWriter
   , lookupDiModule, isIdentDeclared, lookupDeclared
   , writeImport, writeFullImport, writeExport, writeExportExplicit
   , writeExportSpec
-  , writePragma, writeDecl
+  , writePragma, writeOptionsPragma, writeDecl
   , writeSection --, writeSectionPre
     -- * Helpers
   , appendComLine, parseDecl', setComment
@@ -74,6 +74,7 @@ data ModuleWriting
   , mImports      :: Map (ModuleName ()) (Set (ImportSpec ()))
   , mFullImports  :: Set (ModuleName ())
   , mPragmas      :: Set String
+  , mOptPragmas   :: Set (Maybe Tool, String)
   , mDecs         :: Seq (Decl A)
   , mExports      :: Seq (ExportSpec A)
   , pendingSec    :: Seq (Int, Text)
@@ -96,7 +97,7 @@ runModuleWriter :: Functor m
                 -> ModuleWriter m a -> m (a, ModuleWriting)
 runModuleWriter vkxml mname gNames mw
     = f <$> runRWST (unModuleWriter mw) vkxml
-                    (ModuleWriting (ModuleName () mname) gNames
+                    (ModuleWriting (ModuleName () mname) gNames mempty
                                    mempty mempty mempty mempty mempty mempty 1)
   where
     f (a,s,_) = (a, s)
@@ -109,13 +110,15 @@ genModule ModuleWriting {..}
         pragmas imports decs
   where
     genPragma s = LanguagePragma Nothing [Ident Nothing s]
+    genOptPr (mt,s) = OptionsPragma Nothing mt s
     genImport (m, specs)
       | not $ m `Set.member` mFullImports
       = [simpleImport (Nothing <$ m) (fmap (const Nothing) <$> toList specs)]
       | otherwise = []
     genFullImport m
       = ImportDecl Nothing (Nothing <$ m) False False False Nothing Nothing Nothing
-    pragmas = genPragma <$> toList mPragmas
+    pragmas = (genOptPr  <$> toList mOptPragmas)
+           ++ (genPragma <$> toList mPragmas)
     imports = (Map.toList mImports >>= genImport)
            ++ (genFullImport <$> Set.toList mFullImports)
     decs = toList mDecs
@@ -227,6 +230,10 @@ writeExportExplicit di is es = do
   ModuleWriter . modify $
    \mr -> mr { globalNames = Map.insert di (mName mr, is) (globalNames mr) }
 
+
+writeOptionsPragma :: Monad m => Maybe Tool -> String -> ModuleWriter m ()
+writeOptionsPragma mt pname = ModuleWriter . modify $
+  \mr -> mr {mOptPragmas = Set.insert (mt, pname) $ mOptPragmas mr}
 
 -- | Add an export declaration to a module export list
 writeExport :: Monad m => DeclaredIdent -> ModuleWriter m ()
