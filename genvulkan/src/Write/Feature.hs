@@ -71,9 +71,11 @@ genRequire curlvl tps cmds VkRequire {..} = do
   writeSection curlvl $
     comment <:> showExts requireExts
   cds <- fmap mconcat $
-    forM requireTypes $ \tname -> case Map.lookup tname tps of
+    forM (Set.toList $ foldMap (findAllRequiredTypes tps) requireTypes)
+       $ \tname -> case Map.lookup tname tps of
         Nothing -> pure mempty
         Just t  -> do
+
           otn <- lift get
           mIMod <- lookupDiModule $ DIThing (unVkTypeName tname) DITAll
           case mIMod of
@@ -95,7 +97,7 @@ genRequire curlvl tps cmds VkRequire {..} = do
   emodNames <- foldM (\s (VkTypeName n) ->
                          fmap (Set.union s . maybe mempty Set.singleton)
                          . lookupDiModule $ DIThing n DITNo
-                     ) mempty tNames
+                     ) mempty $ foldMap (findAllRequiredTypes tps) tNames
 
   otNames <- lift get
   lift $ put (emodNames `Set.union` otNames)
@@ -106,6 +108,21 @@ genRequire curlvl tps cmds VkRequire {..} = do
 
   forM_ requireEnums $ enumPattern >=> mapM_ (writeExport . DIPat)
   return cds
+
+
+findAllRequiredTypes :: Map.Map VkTypeName VkType -> VkTypeName -> Set VkTypeName
+findAllRequiredTypes tps = go . Set.singleton
+  where
+    go tns0 =
+      let tns1 = Set.foldl (\s -> Set.union s
+                                . maybe mempty (Set.fromList . requiresTypes)
+                                . flip Map.lookup tps
+                            ) mempty tns0
+          tnsDiff = tns1 `Set.difference` tns0
+          tnsUnion = tns1 `Set.union` tns0
+      in if Set.null tnsDiff
+         then tnsUnion
+         else go tnsUnion
 
 
 showExts :: [VkExtensionName] -> T.Text
