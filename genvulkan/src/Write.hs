@@ -7,7 +7,6 @@ module Write
   ) where
 
 import           Control.Arrow                        (first)
-import           Control.DeepSeq
 import           Control.Monad
 import           Data.Char
 import qualified Data.List                            as L
@@ -38,20 +37,12 @@ import           Write.Types.Enum
 -- import           Write.Types.Struct
 import           Write.Util.DeclaredNames
 
+
 generateVkSource :: Path b Dir
                  -> Path c File
                  -> VkXml
                  -> IO ()
 generateVkSource outputDir outCabalFile vkXml = do
-  dnames <- generateVkSource' baseDeclaredNames outputDir outCabalFile vkXml
-  void $ generateVkSource' dnames outputDir outCabalFile vkXml
-
-generateVkSource' :: DeclaredNames
-                  -> Path b Dir
-                  -> Path c File
-                  -> VkXml
-                  -> IO DeclaredNames
-generateVkSource' dnames' outputDir outCabalFile vkXml = do
 
 
   removeDirRecur outputDir
@@ -59,16 +50,19 @@ generateVkSource' dnames' outputDir outCabalFile vkXml = do
   createDirIfMissing True (outputDir </> [reldir|Graphics/Vulkan|])
   createDirIfMissing True (outputDir </> [reldir|Graphics/Vulkan/Ext|])
 
+  -- We run writeAllTypes function twice to make sure all cross-module
+  --  dependencies are resolved
+  (_, dnames') <- writeAllTypes vkXml baseDeclaredNames
   (genTModules, dnames) <- writeAllTypes vkXml dnames'
   eModules0 <- mapM
-    (\(m, mpdf) -> flip (,) mpdf <$> writeModule' outputDir m) genTModules
+    (\(m, mpdf) -> flip (,) mpdf <$> writeModule outputDir m) genTModules
 
   exportedNamesConstants <- do
     ((), mr) <- runModuleWriter vkXml "Graphics.Vulkan.Constants" dnames $ do
        writePragma "Strict"
        writePragma "DataKinds"
        genApiConstants
-    writeModule outputDir [relfile|Graphics/Vulkan/Constants.hs|] mr
+    _ <- writeModule outputDir mr
     pure $ globalNames mr
 
   (_classDeclsCore, exportedNamesCore) <- do
@@ -76,11 +70,11 @@ generateVkSource' dnames' outputDir outCabalFile vkXml = do
        writePragma "Strict"
        writePragma "DataKinds"
        fmap mconcat $ mapM genFeature $ globFeature vkXml
-    writeModule outputDir [relfile|Graphics/Vulkan/Core.hsc|] mr
+    _ <- writeModule outputDir mr
     pure (a, globalNames mr)
 
 
-  (exportedNamesExts, eModules)
+  (_exportedNamesExts, eModules)
     <- aggregateExts exportedNamesCore
                   ( filter (\e -> extSupported (extAttributes e) /= "disabled")
                   . L.sortOn (extNumber . extAttributes)
@@ -88,12 +82,11 @@ generateVkSource' dnames' outputDir outCabalFile vkXml = do
                   $ \gn ext -> do
     let eName = T.unpack . unVkExtensionName . extName $ extAttributes ext
         modName = "Graphics.Vulkan.Ext." <> eName
-    fname <- parseRelFile (eName ++ ".hsc")
     (exProtect, mr) <- runModuleWriter vkXml modName gn $ do
        writePragma "Strict"
        writePragma "DataKinds"
        genExtension ext
-    writeModule outputDir ([reldir|Graphics/Vulkan/Ext|] </> fname) mr
+    _ <- writeModule outputDir mr
     pure (globalNames mr, (T.pack modName, exProtect))
 
   -- do -- write classes for struct member accessors
@@ -120,10 +113,9 @@ generateVkSource' dnames' outputDir outCabalFile vkXml = do
      <> map importLine eModules
 
 
-
   writeFile (toFilePath outCabalFile) . T.unpack $ genCabalFile
     $ eModules0 <> eModules
-  return exportedNamesExts
+
 
 
 aggregateExts :: DeclaredNames
@@ -157,11 +149,10 @@ exportLine c (mname, Just p)  = T.unlines
 
 
 
-writeModule' :: Path b Dir
+writeModule :: Path b Dir
              -> ModuleWriting
              -> IO Text
-writeModule' outputDir mw = do
-    rez `deepseq` putStrLn "Done generating; now apply hfmt to reformat code..."
+writeModule outputDir mw = do
     p <- parseRelFile fileNameStr
     let pp = toFilePath $ outputDir </> p
     createDirIfMissing True (parent $ outputDir </> p)
@@ -176,7 +167,7 @@ writeModule' outputDir mw = do
           putStrLn $ "Formatting suggestion:\n    " <> s
         writeFile pp
           $ fixSourceHooks isHsc rez'
-    putStrLn $ "Done: " <> pp
+    putStrLn $ pp
     return $ T.pack modName
   where
     isHsc = "HSC2HS___" `L.isInfixOf` rez
@@ -184,36 +175,12 @@ writeModule' outputDir mw = do
       ModuleName () m -> m
     fileNameStr = map repSym modName <> if isHsc then ".hsc" else ".hs"
     repSym '.' = '/'
-    repSym c = c
+    repSym c   = c
     rez = uncurry exactPrint
         . ppWithCommentsMode defaultMode
         $ genModule mw
 
 
-writeModule :: Path b Dir
-            -> Path Rel File
-            -> ModuleWriting
-            -> IO ()
-writeModule outputDir p mw = do
-    rez `deepseq` putStrLn "Done generating; now apply hfmt to reformat code..."
-    frez <- hfmt rez
-    case frez of
-      Left err -> do
-        putStrLn $ "Could not format the code:\n" <> err
-        writeFile pp
-          $ fixSourceHooks isHsc rez
-      Right (ss, rez') -> do
-        forM_ ss $ \(Suggestion s) ->
-          putStrLn $ "Formatting suggestion:\n    " <> s
-        writeFile pp
-          $ fixSourceHooks isHsc rez'
-    putStrLn $ "Done: " <> pp
-  where
-    isHsc = ".hsc" `L.isSuffixOf` pp
-    pp = toFilePath $ outputDir </> p
-    rez = uncurry exactPrint
-        . ppWithCommentsMode defaultMode
-        $ genModule mw
 
 -- unfortunately, I have to disable hindent for now,
 --  because it breaks haddock:
