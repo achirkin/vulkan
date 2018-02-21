@@ -33,6 +33,15 @@ stack exec genvulkan
 # vulkan-examples
 
 Examples of programs using vulkan-api bindings.
+Consists of several executables implementing steps of vulkan-tutorial.com.
+This is the easiest way to familiarize yourself with the library.
+
+Prerequisites
+  * For validation layers to work, you need to have Vulkan SDK installed,
+    get it on [vulkan.lunarg.com)](https://vulkan.lunarg.com/).
+  * Some examples compile shaders using `glslangValidator` via TH, so the tool must be in your `PATH`
+    (it is included in Vulkan SDK).
+  * Windowing is done via [GLFW](http://www.glfw.org/), so you need to have it on your system, version 3.2 or newer.
 
 
 ## Building
@@ -41,8 +50,7 @@ Examples of programs using vulkan-api bindings.
 Note, you need modern drivers to support ulkan api, e.g. nvidia drivers 367+.
 If your drivers are ok, install vulkan libs and everything should be fine.
 
-Basically, ghc should be able to see vulkan dynamic library
-and to discover "vulkan/vulkan.h" header file.
+Basically, ghc should be able to see vulkan dynamic library and to discover header files.
 
 On ubuntu, these can be installed as follows:
 ```bash

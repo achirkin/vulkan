@@ -672,3 +672,4 @@ library
 source-repository head
     type:     git
     location: https://github.com/achirkin/vulkan
+    subdir:   vulkan-api

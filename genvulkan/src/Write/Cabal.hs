@@ -74,6 +74,7 @@ genCabalFile eModules = T.unlines $
           source-repository head
               type:     git
               location: https://github.com/achirkin/vulkan
+              subdir:   vulkan-api
         |]
       )
   where
