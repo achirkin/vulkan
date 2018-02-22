@@ -38,7 +38,7 @@ This is the easiest way to familiarize yourself with the library.
 
 Prerequisites
   * For validation layers to work, you need to have Vulkan SDK installed,
-    get it on [vulkan.lunarg.com)](https://vulkan.lunarg.com/).
+    get it on [vulkan.lunarg.com](https://vulkan.lunarg.com/).
   * Some examples compile shaders using `glslangValidator` via TH, so the tool must be in your `PATH`
     (it is included in Vulkan SDK).
   * Windowing is done via [GLFW](http://www.glfw.org/), so you may need to have it on your system,
