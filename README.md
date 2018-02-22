@@ -41,7 +41,8 @@ Prerequisites
     get it on [vulkan.lunarg.com)](https://vulkan.lunarg.com/).
   * Some examples compile shaders using `glslangValidator` via TH, so the tool must be in your `PATH`
     (it is included in Vulkan SDK).
-  * Windowing is done via [GLFW](http://www.glfw.org/), so you need to have it on your system, version 3.2 or newer.
+  * Windowing is done via [GLFW](http://www.glfw.org/), so you may need to have it on your system,
+    version 3.2 or newer.
 
 
 ## Building
@@ -60,8 +61,17 @@ sudo apt-get install libvulkan-dev
 
 ## TODO
 
+##### vulkan-api
+
+ * [ ] Try to build it on various platforms, check if specifying foreign code calling
+       convention is necessary.
  * [ ] Check if it is safe to do all foreign calls unsafe,
        mark those calls that have to be safe (all calls are unsafe currently).
+ * [ ] Figure out if it is necessary to have `extra-libraries: vulkan` on various platforms
+       (or, maybe, `extra-ghci-libraries` is enough?)
+
+##### genvulkan
+
  * [ ] `VkXml.Sections.Commands`: parse command parameters more robustly,
        maybe use `language-c` package for that.
        Make parsing more compliant with the registry spec.
