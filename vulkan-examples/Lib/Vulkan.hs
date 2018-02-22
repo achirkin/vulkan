@@ -12,15 +12,15 @@ module Lib.Vulkan
 
 import           Control.Exception
 import           Control.Monad
+import           Data.List                            ((\\))
 import           Foreign.C.String
 import           Foreign.Marshal.Alloc
-import           Foreign.Marshal.Array
-import           Foreign.Storable
 import           Foreign.Ptr
+import           Foreign.Storable
 import           Graphics.Vulkan
 import           Graphics.Vulkan.Ext.VK_KHR_surface
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
-import Data.List ((\\))
+import           Graphics.Vulkan.Marshal.Create
 
 import           Lib.Utils
 
@@ -34,55 +34,49 @@ withVulkanInstance :: String -- ^ program name
                    -> [String]
                       -- ^ required layer names
                    -> (VkInstance -> IO a) -> IO a
-withVulkanInstance progName extensions layers action =
-    -- allocate some strings - names
-    withArrayLen extensions $ \extCount extNames ->
-    withCStringList layers $ \layerCount layerNames ->
-    withCString progName $ \progNamePtr ->
-    withCString "My Perfect Haskell Engine" $ \engineNamePtr -> do
+withVulkanInstance progName extensions layers action = do
+    vkInstance <-
+      createVulkanInstance progName "My perfect Haskell engine"
+                           extensions layers
+    finally (action vkInstance) $ destroyVulkanInstance vkInstance
 
-      -- write VkApplicationInfo
-      appInfo <- newVkData $ \appInfoPtr -> do
-        writeField @"sType"              appInfoPtr VK_STRUCTURE_TYPE_APPLICATION_INFO
-        writeField @"pNext"              appInfoPtr VK_NULL_HANDLE
-        writeField @"pApplicationName"   appInfoPtr progNamePtr
-        writeField @"applicationVersion" appInfoPtr (_VK_MAKE_VERSION 1 0 0)
-        writeField @"pEngineName"        appInfoPtr engineNamePtr
-        writeField @"engineVersion"      appInfoPtr (_VK_MAKE_VERSION 1 0 0)
-        writeField @"apiVersion"         appInfoPtr (_VK_MAKE_VERSION 1 0 68)
-
-      -- write VkInstanceCreateInfo
-      iCreateInfo <- newVkData $ \iCreateInfoPtr -> do
-        writeField @"sType"
-          iCreateInfoPtr VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
-        writeField @"pNext"
-          iCreateInfoPtr VK_NULL_HANDLE
-        writeField @"flags"
-          iCreateInfoPtr 0
-        writeField @"pApplicationInfo"
-          iCreateInfoPtr (unsafePtr appInfo)  -- must keep appInfo alive!
-        writeField @"enabledLayerCount"
-          iCreateInfoPtr (fromIntegral layerCount)
-        writeField @"ppEnabledLayerNames"
-          iCreateInfoPtr layerNames
-        writeField @"enabledExtensionCount"
-          iCreateInfoPtr (fromIntegral extCount)
-        writeField @"ppEnabledExtensionNames"
-          iCreateInfoPtr extNames
-
-      -- execute createInstance
-      vkInstance <- alloca $ \vkInstPtr -> do
+createVulkanInstance :: String -- ^ application name
+                     -> String -- ^ engine name
+                     -> [CString]
+                        -- ^ required extensions
+                        --   passed as a list of CStrings, because they are
+                        --   available either via vulkan-api pattern synonyms,
+                        --   or from GLFW
+                     -> [String]
+                        -- ^ required layer names
+                     -> IO VkInstance
+createVulkanInstance progName engineName extensions layers =
+    withPtr iCreateInfo $ \iciPtr ->
+      alloca $ \vkInstPtr -> do
         throwingVK "vkCreateInstance: Failed to create vkInstance."
-          $ vkCreateInstance (unsafePtr iCreateInfo) VK_NULL_HANDLE vkInstPtr
+          $ vkCreateInstance iciPtr VK_NULL vkInstPtr
         peek vkInstPtr
+  where
+    appInfo = createVk @VkApplicationInfo
+      $  set       @"sType" VK_STRUCTURE_TYPE_APPLICATION_INFO
+      &* set       @"pNext" VK_NULL
+      &* setStrRef @"pApplicationName" progName
+      &* set       @"applicationVersion" (_VK_MAKE_VERSION 1 0 0)
+      &* setStrRef @"pEngineName" engineName
+      &* set       @"engineVersion" (_VK_MAKE_VERSION 1 0 0)
+      &* set       @"apiVersion" (_VK_MAKE_VERSION 1 0 68)
 
+    iCreateInfo = createVk @VkInstanceCreateInfo
+      $  set           @"sType" VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
+      &* set           @"pNext" VK_NULL
+      &* setVkRef      @"pApplicationInfo" appInfo
+      &* set           @"enabledLayerCount" (fromIntegral $ length layers)
+      &* setStrListRef @"ppEnabledLayerNames" layers
+      &* set           @"enabledExtensionCount" (fromIntegral $ length extensions)
+      &* setListRef    @"ppEnabledExtensionNames" extensions
 
-      finally (action vkInstance) $ do
-        vkDestroyInstance vkInstance VK_NULL_HANDLE
-        -- make sure our data structures exist until the end of the program.
-        touchVkData appInfo
-        touchVkData iCreateInfo
-
+destroyVulkanInstance :: VkInstance -> IO ()
+destroyVulkanInstance vkInstance = vkDestroyInstance vkInstance VK_NULL
 
 pickPhysicalDevice :: VkInstance
                    -> Maybe VkSurfaceKHR

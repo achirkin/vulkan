@@ -10,11 +10,11 @@ module Lib.Vulkan.Pipeline
 
 import           Control.Exception
 import           Data.Bits
-import           Foreign.C.String
 import           Foreign.Marshal.Alloc
 import           Foreign.Marshal.Array
 import           Foreign.Storable
 import           Graphics.Vulkan
+import           Graphics.Vulkan.Marshal.Create
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
 
 import           Lib.Utils
@@ -27,34 +27,36 @@ withVkShaderStageCI :: VkDevice
                     -> VkShaderStageFlagBits
                     -> (VkPipelineShaderStageCreateInfo -> IO a)
                     -> IO a
-withVkShaderStageCI dev (codeSize, codePtr) stageBit action =
-  withCString "main" $ \entryNamePtr -> do
+withVkShaderStageCI dev shaderCode stageBit action = do
+    shaderModule <- createVulkanShaderModule dev shaderCode
+    let pssCreateInfo = createVk @VkPipelineShaderStageCreateInfo
+          $  set @"sType"  VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO
+          &* set @"pNext"  VK_NULL
+          &* set @"stage"  stageBit
+          &* set @"module" shaderModule
+          &* setStrRef @"pName" "main"
+    finally (action pssCreateInfo) $ do
+      destroyVulkanShaderModule dev shaderModule
+      touchVkData pssCreateInfo
 
-    smCreateInfo <- newVkData @VkShaderModuleCreateInfo $ \smciPtr -> do
 
-      writeField @"sType"    smciPtr VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO
-      writeField @"pNext"    smciPtr VK_NULL_HANDLE
-      writeField @"codeSize" smciPtr codeSize
-      writeField @"pCode"    smciPtr codePtr
-      writeField @"flags"    smciPtr 0
-
-    shaderModule <- alloca $ \smPtr -> do
+createVulkanShaderModule :: VkDevice -> (CSize, Ptr Word32) -> IO VkShaderModule
+createVulkanShaderModule dev (codeSize, codePtr) =
+    withPtr smCreateInfo $ \smciPtr -> alloca $ \smPtr -> do
       throwingVK "vkCreateShaderModule failed!"
-        $ vkCreateShaderModule dev (unsafePtr smCreateInfo) VK_NULL_HANDLE smPtr
+        $ vkCreateShaderModule dev smciPtr VK_NULL smPtr
       peek smPtr
+  where
+    smCreateInfo = createVk @VkShaderModuleCreateInfo
+      $  set @"sType"    VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO
+      &* set @"pNext"    VK_NULL
+      &* set @"codeSize" codeSize
+      &* set @"pCode"    codePtr
+      &* set @"flags"    0
 
-    ssci <- newVkData $ \psscPtr -> do
-      clearStorable psscPtr
-      writeField @"sType"  psscPtr
-        VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO
-      writeField @"stage"  psscPtr stageBit
-      writeField @"module" psscPtr shaderModule
-      writeField @"pName"  psscPtr entryNamePtr
+destroyVulkanShaderModule :: VkDevice -> VkShaderModule -> IO ()
+destroyVulkanShaderModule dev = flip (vkDestroyShaderModule dev) VK_NULL
 
-    finally (action ssci) $ do
-      touchVkData ssci
-      vkDestroyShaderModule dev shaderModule VK_NULL_HANDLE
-      touchVkData smCreateInfo
 
 
 withGraphicsPipeline :: VkDevice
@@ -64,314 +66,216 @@ withGraphicsPipeline :: VkDevice
                      -> (VkPipeline -> IO ())
                      -> IO ()
 withGraphicsPipeline
-    dev SwapChainImgInfo{..} shaderDescs renderPass action = do
+    dev SwapChainImgInfo{..} shaderDescs renderPass action =
+  let -- vertex input
+      vertexInputInfo = createVk @VkPipelineVertexInputStateCreateInfo
+        $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO
+        &* set @"pNext" VK_NULL
+        &* set @"flags" 0
+        &* set @"vertexBindingDescriptionCount" 0
+        &* set @"pVertexBindingDescriptions" VK_NULL
+        &* set @"vertexAttributeDescriptionCount" 0
+        &* set @"pVertexAttributeDescriptions" VK_NULL
 
-  -- vertex input
-  vertexInputInfo <- newVkData @VkPipelineVertexInputStateCreateInfo
-                               $ \viPtr -> do
-    writeField @"sType" viPtr
-      VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO
-    writeField @"pNext" viPtr VK_NULL_HANDLE
-    writeField @"flags" viPtr 0
-    writeField @"vertexBindingDescriptionCount" viPtr 0
-    writeField @"pVertexBindingDescriptions"    viPtr VK_NULL_HANDLE
-    writeField @"vertexBindingDescriptionCount" viPtr 0
-    writeField @"pVertexAttributeDescriptions"  viPtr VK_NULL_HANDLE
+      -- input assembly
+      inputAssembly = createVk @VkPipelineInputAssemblyStateCreateInfo
+        $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO
+        &* set @"pNext" VK_NULL
+        &* set @"flags" 0
+        &* set @"topology" VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST
+        &* set @"primitiveRestartEnable" VK_FALSE
 
+      -- viewports and scissors
+      viewPort = createVk @VkViewport
+        $  set @"x" 0
+        &* set @"y" 0
+        &* set @"width" (fromIntegral $ getField @"width" swExtent)
+        &* set @"height" (fromIntegral $ getField @"height" swExtent)
+        &* set @"minDepth" 0
+        &* set @"maxDepth" 1
 
-  -- input assembly
-  inputAssembly <- newVkData @VkPipelineInputAssemblyStateCreateInfo
-                               $ \iaPtr -> do
-    writeField @"sType" iaPtr
-      VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO
-    writeField @"pNext" iaPtr VK_NULL_HANDLE
-    writeField @"flags" iaPtr 0
-    writeField @"topology" iaPtr VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST
-    writeField @"primitiveRestartEnable" iaPtr VK_FALSE
+      scissor = createVk @VkRect2D
+        $  set   @"extent" swExtent
+        &* setVk @"offset" ( set @"x" 0 &* set @"y" 0 )
 
+      viewPortState = createVk @VkPipelineViewportStateCreateInfo
+        $ set @"sType"
+          VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO
+        &* set @"pNext" VK_NULL
+        &* set @"flags" 0
+        &* set @"viewportCount" 1
+        &* setVkRef @"pViewports" viewPort
+        &* set @"scissorCount" 1
+        &* setVkRef @"pScissors" scissor
 
-  -- viewports and scissors
-  viewPort <- newVkData @VkViewport $ \vpPtr -> do
-    writeField @"x"        vpPtr 0
-    writeField @"y"        vpPtr 0
-    writeField @"width"    vpPtr (fromIntegral $ getField @"width" swExtent)
-    writeField @"height"   vpPtr (fromIntegral $ getField @"height" swExtent)
-    writeField @"minDepth" vpPtr 0
-    writeField @"maxDepth" vpPtr 1
+      -- rasterizer
+      rasterizer = createVk @VkPipelineRasterizationStateCreateInfo
+        $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO
+        &* set @"pNext" VK_NULL
+        &* set @"flags" 0
+        &* set @"depthClampEnable" VK_FALSE
+        &* set @"rasterizerDiscardEnable" VK_FALSE
+        &* set @"polygonMode" VK_POLYGON_MODE_FILL
+        &* set @"cullMode" VK_CULL_MODE_BACK_BIT
+        &* set @"frontFace" VK_FRONT_FACE_CLOCKWISE
+        &* set @"depthBiasEnable" VK_FALSE
+        &* set @"depthBiasConstantFactor" 0
+        &* set @"depthBiasClamp" 0
+        &* set @"depthBiasSlopeFactor" 0
+        &* set @"lineWidth" 1.0
 
-  scissor <- newVkData @VkRect2D $ \scPtr -> do
-    clearStorable scPtr
-    writeField @"extent" scPtr swExtent
+      -- multisampling
+      multisampling = createVk @VkPipelineMultisampleStateCreateInfo
+        $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO
+        &* set @"pNext" VK_NULL
+        &* set @"flags" 0
+        &* set @"sampleShadingEnable" VK_FALSE
+        &* set @"rasterizationSamples" VK_SAMPLE_COUNT_1_BIT
+        &* set @"minSampleShading" 1.0 -- Optional
+        &* set @"pSampleMask" VK_NULL -- Optional
+        &* set @"alphaToCoverageEnable" VK_FALSE -- Optional
+        &* set @"alphaToOneEnable" VK_FALSE -- Optional
 
-  viewPortState <- newVkData @VkPipelineViewportStateCreateInfo
-                             $ \vpsPtr -> do
-    writeField @"sType" vpsPtr
-      VK_STRUCTURE_TYPE_PIPELINE_VIEWPORT_STATE_CREATE_INFO
-    writeField @"pNext" vpsPtr VK_NULL_HANDLE
-    writeField @"flags" vpsPtr 0
-    writeField @"viewportCount" vpsPtr 1
-    writeField @"pViewports"    vpsPtr (unsafePtr viewPort)
-    writeField @"scissorCount"  vpsPtr 1
-    writeField @"pScissors"     vpsPtr (unsafePtr scissor)
+      -- Depth and stencil testing
+      -- we will pass null pointer in a corresponding place
 
+      -- color blending
+      colorBlendAttachment = createVk @VkPipelineColorBlendAttachmentState
+        $  set @"colorWriteMask"
+            (   VK_COLOR_COMPONENT_R_BIT .|. VK_COLOR_COMPONENT_G_BIT
+            .|. VK_COLOR_COMPONENT_B_BIT .|. VK_COLOR_COMPONENT_A_BIT )
+        &* set @"blendEnable" VK_FALSE
+        &* set @"srcColorBlendFactor" VK_BLEND_FACTOR_ONE -- Optional
+        &* set @"dstColorBlendFactor" VK_BLEND_FACTOR_ZERO -- Optional
+        &* set @"colorBlendOp" VK_BLEND_OP_ADD -- Optional
+        &* set @"srcAlphaBlendFactor" VK_BLEND_FACTOR_ONE -- Optional
+        &* set @"dstAlphaBlendFactor" VK_BLEND_FACTOR_ZERO -- Optional
+        &* set @"alphaBlendOp" VK_BLEND_OP_ADD -- Optional
 
-  -- rasterizer
-  rasterizer <- newVkData @VkPipelineRasterizationStateCreateInfo
-                          $ \rPtr -> do
-    writeField @"sType" rPtr
-      VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO
-    writeField @"pNext" rPtr VK_NULL_HANDLE
-    writeField @"flags" rPtr 0
-    writeField @"depthClampEnable"
-      rPtr VK_FALSE
-    writeField @"rasterizerDiscardEnable"
-      rPtr VK_FALSE
-    writeField @"polygonMode"
-      rPtr VK_POLYGON_MODE_FILL
-    writeField @"cullMode"
-      rPtr VK_CULL_MODE_BACK_BIT
-    writeField @"frontFace"
-      rPtr VK_FRONT_FACE_CLOCKWISE
-    writeField @"depthBiasEnable"
-      rPtr VK_FALSE
-    writeField @"depthBiasConstantFactor"
-      rPtr 0
-    writeField @"depthBiasClamp"
-      rPtr 0
-    writeField @"depthBiasSlopeFactor"
-      rPtr 0
-    writeField @"lineWidth"
-      rPtr 1.0
-
-
-  -- multisampling
-  multisampling <- newVkData @VkPipelineMultisampleStateCreateInfo
-                             $ \msPtr -> do
-    writeField @"sType" msPtr
-      VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO
-    writeField @"pNext" msPtr VK_NULL_HANDLE
-    writeField @"flags" msPtr 0
-    writeField @"sampleShadingEnable"   msPtr VK_FALSE
-    writeField @"rasterizationSamples"  msPtr VK_SAMPLE_COUNT_1_BIT
-    writeField @"minSampleShading"      msPtr 1.0 -- Optional
-    writeField @"pSampleMask"           msPtr VK_NULL_HANDLE -- Optional
-    writeField @"alphaToCoverageEnable" msPtr VK_FALSE -- Optional
-    writeField @"alphaToOneEnable"      msPtr VK_FALSE -- Optional
-
-
-  -- Depth and stencil testing
-  -- we will pass null pointer in a corresponding place
-
-
-  -- color blending
-  colorBlendAttachment <- newVkData @VkPipelineColorBlendAttachmentState
-                                    $ \cbaPtr -> do
-    writeField @"colorWriteMask"
-      cbaPtr $  VK_COLOR_COMPONENT_R_BIT .|. VK_COLOR_COMPONENT_G_BIT
-            .|. VK_COLOR_COMPONENT_B_BIT .|. VK_COLOR_COMPONENT_A_BIT
-    writeField @"blendEnable"
-      cbaPtr VK_FALSE
-    writeField @"srcColorBlendFactor"
-      cbaPtr VK_BLEND_FACTOR_ONE -- Optional
-    writeField @"dstColorBlendFactor"
-      cbaPtr VK_BLEND_FACTOR_ZERO -- Optional
-    writeField @"colorBlendOp"
-      cbaPtr VK_BLEND_OP_ADD -- Optional
-    writeField @"srcAlphaBlendFactor"
-      cbaPtr VK_BLEND_FACTOR_ONE -- Optional
-    writeField @"dstAlphaBlendFactor"
-      cbaPtr VK_BLEND_FACTOR_ZERO -- Optional
-    writeField @"alphaBlendOp"
-      cbaPtr VK_BLEND_OP_ADD -- Optional
-
-  colorBlending <- newVkData @VkPipelineColorBlendStateCreateInfo
-                             $ \cbPtr -> do
-    writeField @"sType" cbPtr
-      VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO
-    writeField @"pNext" cbPtr VK_NULL_HANDLE
-    writeField @"flags" cbPtr 0
-    writeField @"logicOpEnable"
-      cbPtr VK_FALSE
-    writeField @"logicOp"
-      cbPtr VK_LOGIC_OP_COPY -- Optional
-    writeField @"attachmentCount"
-      cbPtr 1
-    writeField @"pAttachments"
-      cbPtr (unsafePtr colorBlendAttachment)
-    writeFieldArray @"blendConstants" @0 cbPtr 0.0 -- Optional
-    writeFieldArray @"blendConstants" @1 cbPtr 0.0 -- Optional
-    writeFieldArray @"blendConstants" @2 cbPtr 0.0 -- Optional
-    writeFieldArray @"blendConstants" @3 cbPtr 0.0 -- Optional
+      colorBlending = createVk @VkPipelineColorBlendStateCreateInfo
+        $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_COLOR_BLEND_STATE_CREATE_INFO
+        &* set @"pNext" VK_NULL
+        &* set @"flags" 0
+        &* set @"logicOpEnable" VK_FALSE
+        &* set @"logicOp" VK_LOGIC_OP_COPY -- Optional
+        &* set @"attachmentCount" 1
+        &* setVkRef @"pAttachments" colorBlendAttachment
+        &* setAt @"blendConstants" @0 0.0 -- Optional
+        &* setAt @"blendConstants" @1 0.0 -- Optional
+        &* setAt @"blendConstants" @2 0.0 -- Optional
+        &* setAt @"blendConstants" @3 0.0 -- Optional
 
 
-  -- finally, create pipeline!
-  withPipelineLayout dev $ \pipelineLayout ->
-    withArrayLen shaderDescs $ \stageCount stagesPtr -> do
+    -- finally, create pipeline!
+  in withPipelineLayout dev $ \pipelineLayout ->
+      withArrayLen shaderDescs $ \stageCount stagesPtr ->
+        let gpCreateInfo = createVk @VkGraphicsPipelineCreateInfo
+              $  set @"sType" VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO
+              &* set @"pNext" VK_NULL
+              &* set @"flags" 0
+              &* set @"stageCount" (fromIntegral stageCount)
+              &* set @"pStages" stagesPtr
+              &* setVkRef @"pVertexInputState" vertexInputInfo
+              &* setVkRef @"pInputAssemblyState" inputAssembly
+              &* set @"pTessellationState" VK_NULL
+              &* setVkRef @"pViewportState" viewPortState
+              &* setVkRef @"pRasterizationState" rasterizer
+              &* setVkRef @"pMultisampleState" multisampling
+              &* set @"pDepthStencilState" VK_NULL
+              &* setVkRef @"pColorBlendState" colorBlending
+              &* set @"pDynamicState" VK_NULL
+              &* set @"layout" pipelineLayout
+              &* set @"renderPass" renderPass
+              &* set @"subpass" 0
+              &* set @"basePipelineHandle" VK_NULL_HANDLE
+              &* set @"basePipelineIndex" (-1)
 
-      pipelineInfo <- newVkData @VkGraphicsPipelineCreateInfo
-                                $ \piPtr -> do
-        writeField @"sType"
-          piPtr VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO
-        writeField @"pNext"
-          piPtr VK_NULL_HANDLE
-        writeField @"flags"
-          piPtr 0
-        writeField @"stageCount"
-          piPtr (fromIntegral stageCount)
-        writeField @"pStages"
-          piPtr stagesPtr
-        writeField @"pVertexInputState"
-          piPtr (unsafePtr vertexInputInfo)
-        writeField @"pInputAssemblyState"
-          piPtr (unsafePtr inputAssembly)
-        writeField @"pTessellationState"
-          piPtr VK_NULL_HANDLE
-        writeField @"pViewportState"
-          piPtr (unsafePtr viewPortState)
-        writeField @"pRasterizationState"
-          piPtr (unsafePtr rasterizer)
-        writeField @"pMultisampleState"
-          piPtr (unsafePtr multisampling)
-        writeField @"pDepthStencilState"
-          piPtr VK_NULL_HANDLE
-        writeField @"pColorBlendState"
-          piPtr (unsafePtr colorBlending)
-        writeField @"pDynamicState"
-          piPtr VK_NULL_HANDLE
-        writeField @"layout"
-          piPtr pipelineLayout
-        writeField @"renderPass"
-          piPtr renderPass
-        writeField @"subpass"
-          piPtr 0
-        writeField @"basePipelineHandle"
-          piPtr VK_NULL_HANDLE
-        writeField @"basePipelineIndex"
-          piPtr (-1)
-
-      graphicsPipeline <- alloca $ \gpPtr -> do
-        throwingVK "vkCreateGraphicsPipelines failed!"
-          $ vkCreateGraphicsPipelines
-              dev VK_NULL_HANDLE 1 (unsafePtr pipelineInfo) VK_NULL_HANDLE gpPtr
-        peek gpPtr
+        in do
+          graphicsPipeline <- withPtr gpCreateInfo
+                $ \gpciPtr -> alloca $ \gpPtr -> do
+            throwingVK "vkCreateGraphicsPipelines failed!"
+              $ vkCreateGraphicsPipelines dev VK_NULL 1 gpciPtr VK_NULL gpPtr
+            peek gpPtr
 
 
-      -- again, run an action and touch all allocated objects to make sure
-      -- they are alive at the moment of vulkan object destruction.
-      finally (action graphicsPipeline) $ do
-        vkDestroyPipeline dev graphicsPipeline VK_NULL_HANDLE
-        touchVkData pipelineInfo
-        touchVkData vertexInputInfo
-        touchVkData inputAssembly
-        touchVkData viewPort
-        touchVkData scissor
-        touchVkData viewPortState
-        touchVkData rasterizer
-        touchVkData multisampling
-        touchVkData colorBlending
-        touchVkData colorBlendAttachment
+          -- again, run an action and touch all allocated objects to make sure
+          -- they are alive at the moment of vulkan object destruction.
+          finally (action graphicsPipeline) $
+            vkDestroyPipeline dev graphicsPipeline VK_NULL
 
 
 withPipelineLayout :: VkDevice -> (VkPipelineLayout -> IO a) -> IO a
 withPipelineLayout dev action = do
-
-  -- pipeline layout
-  pipelineLayoutInfo <- newVkData @VkPipelineLayoutCreateInfo
-                                  $ \pliPtr -> do
-    writeField @"sType" pliPtr
-      VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO
-    writeField @"pNext" pliPtr VK_NULL_HANDLE
-    writeField @"flags" pliPtr 0
-    writeField @"setLayoutCount"         pliPtr 0 -- Optional
-    writeField @"pSetLayouts"            pliPtr VK_NULL_HANDLE -- Optional
-    writeField @"pushConstantRangeCount" pliPtr 0 -- Optional
-    writeField @"pPushConstantRanges"    pliPtr VK_NULL_HANDLE -- Optional
-
-  pipelineLayout <- alloca $ \plPtr -> do
+  pipelineLayout <- withPtr plCreateInfo $ \plciPtr -> alloca $ \plPtr -> do
     throwingVK "vkCreatePipelineLayout failed!"
-      $ vkCreatePipelineLayout dev (unsafePtr pipelineLayoutInfo)
-                               VK_NULL_HANDLE plPtr
+      $ vkCreatePipelineLayout dev plciPtr VK_NULL plPtr
     peek plPtr
-
-  -- again, run an action and touch all allocated objects to make sure they are
-  -- alive at the moment of vulkan object destruction.
-  finally (action pipelineLayout) $ do
-    vkDestroyPipelineLayout dev pipelineLayout VK_NULL_HANDLE
-    touchVkData pipelineLayoutInfo
+  finally (action pipelineLayout) $
+    vkDestroyPipelineLayout dev pipelineLayout VK_NULL
+  where
+    plCreateInfo = createVk @VkPipelineLayoutCreateInfo
+      $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO
+      &* set @"pNext" VK_NULL
+      &* set @"flags" 0
+      &* set @"setLayoutCount"         0       -- Optional
+      &* set @"pSetLayouts"            VK_NULL -- Optional
+      &* set @"pushConstantRangeCount" 0       -- Optional
+      &* set @"pPushConstantRanges"    VK_NULL -- Optional
 
 
 withRenderPass :: VkDevice -> SwapChainImgInfo
                -> (VkRenderPass -> IO a) -> IO a
-withRenderPass dev SwapChainImgInfo{..} action = do
+withRenderPass dev SwapChainImgInfo{..} action =
+  let -- attachment description
+      colorAttachment = createVk @VkAttachmentDescription
+        $  set @"flags" 0
+        &* set @"format" swImgFormat
+        &* set @"samples" VK_SAMPLE_COUNT_1_BIT
+        &* set @"loadOp" VK_ATTACHMENT_LOAD_OP_CLEAR
+        &* set @"storeOp" VK_ATTACHMENT_STORE_OP_STORE
+        &* set @"stencilLoadOp" VK_ATTACHMENT_LOAD_OP_DONT_CARE
+        &* set @"stencilStoreOp" VK_ATTACHMENT_STORE_OP_DONT_CARE
+        &* set @"initialLayout" VK_IMAGE_LAYOUT_UNDEFINED
+        &* set @"finalLayout" VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
 
-  -- attachment description
-  colorAttachment <- newVkData @VkAttachmentDescription
-                               $ \caPtr -> do
-    writeField @"flags"   caPtr 0
-    writeField @"format"  caPtr swImgFormat
-    writeField @"samples" caPtr VK_SAMPLE_COUNT_1_BIT
-    writeField @"loadOp"  caPtr VK_ATTACHMENT_LOAD_OP_CLEAR
-    writeField @"storeOp" caPtr VK_ATTACHMENT_STORE_OP_STORE
-    writeField @"stencilLoadOp"  caPtr VK_ATTACHMENT_LOAD_OP_DONT_CARE
-    writeField @"stencilStoreOp" caPtr VK_ATTACHMENT_STORE_OP_DONT_CARE
-    writeField @"initialLayout"  caPtr VK_IMAGE_LAYOUT_UNDEFINED
-    writeField @"finalLayout"    caPtr VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
+      -- subpasses and attachment references
+      colorAttachmentRef = createVk @VkAttachmentReference
+        $  set @"attachment" 0
+        &* set @"layout" VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
 
+      subpass = createVk @VkSubpassDescription
+        $  set @"pipelineBindPoint" VK_PIPELINE_BIND_POINT_GRAPHICS
+        &* set @"colorAttachmentCount" 1
+        &* setVkRef @"pColorAttachments" colorAttachmentRef
+        &* set @"pPreserveAttachments" VK_NULL
+        &* set @"pInputAttachments" VK_NULL
 
-  -- subpasses and attachment references
-  colorAttachmentRef <- newVkData @VkAttachmentReference
-                                  $ \carPtr -> do
-    writeField @"attachment" carPtr 0
-    writeField @"layout"     carPtr VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL
+      -- subpass dependencies
+      dependency = createVk @VkSubpassDependency
+        $  set @"srcSubpass" VK_SUBPASS_EXTERNAL
+        &* set @"dstSubpass" 0
+        &* set @"srcStageMask" VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT
+        &* set @"srcAccessMask" 0
+        &* set @"dstStageMask" VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT
+        &* set @"dstAccessMask"
+            (   VK_ACCESS_COLOR_ATTACHMENT_READ_BIT
+            .|. VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT )
 
-  subpass <- newVkData @VkSubpassDescription
-                           $ \sdPtr -> do
-    clearStorable sdPtr
-    writeField @"pipelineBindPoint" sdPtr VK_PIPELINE_BIND_POINT_GRAPHICS
-    writeField @"colorAttachmentCount" sdPtr 1
-    writeField @"pColorAttachments" sdPtr (unsafePtr colorAttachmentRef)
+      -- render pass
+      rpCreateInfo = createVk @VkRenderPassCreateInfo
+        $  set @"sType" VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO
+        &* set @"pNext" VK_NULL
+        &* set @"attachmentCount" 1
+        &* setVkRef @"pAttachments" colorAttachment
+        &* set @"subpassCount" 1
+        &* setVkRef @"pSubpasses" subpass
+        &* set @"dependencyCount" 1
+        &* setVkRef @"pDependencies" dependency
 
-
-  -- subpass dependencies
-  dependency <- newVkData @VkSubpassDependency $ \depPtr -> do
-    writeField @"srcSubpass" depPtr VK_SUBPASS_EXTERNAL
-    writeField @"dstSubpass" depPtr 0
-    writeField @"srcStageMask"
-      depPtr VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT
-    writeField @"srcAccessMask"
-      depPtr 0
-    writeField @"dstStageMask"
-      depPtr VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT
-    writeField @"dstAccessMask"
-      depPtr $  VK_ACCESS_COLOR_ATTACHMENT_READ_BIT
-            .|. VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT
-
-
-
-  -- render pass
-  renderPassInfo <- newVkData @VkRenderPassCreateInfo
-                              $ \rpiPtr -> do
-    clearStorable rpiPtr
-    writeField @"sType" rpiPtr VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO
-    writeField @"attachmentCount" rpiPtr 1
-    writeField @"pAttachments" rpiPtr (unsafePtr colorAttachment)
-    writeField @"subpassCount" rpiPtr 1
-    writeField @"pSubpasses" rpiPtr (unsafePtr subpass)
-    writeField @"dependencyCount" rpiPtr 1
-    writeField @"pDependencies"
-      rpiPtr (unsafePtr dependency)
-
-  renderPass <- alloca $ \rpPtr -> do
-    throwingVK "vkCreatePipelineLayout failed!"
-      $ vkCreateRenderPass dev (unsafePtr renderPassInfo)
-                               VK_NULL_HANDLE rpPtr
-    peek rpPtr
-
-
-  finally (action renderPass) $ do
-    vkDestroyRenderPass dev renderPass VK_NULL_HANDLE
-    touchVkData dependency
-    touchVkData renderPassInfo
-    touchVkData subpass
-    touchVkData colorAttachment
-    touchVkData colorAttachmentRef
+  in do
+    renderPass <- withPtr rpCreateInfo $ \rpciPtr -> alloca $ \rpPtr -> do
+      throwingVK "vkCreatePipelineLayout failed!"
+        $ vkCreateRenderPass dev rpciPtr VK_NULL rpPtr
+      peek rpPtr
+    finally (action renderPass) $
+      vkDestroyRenderPass dev renderPass VK_NULL
