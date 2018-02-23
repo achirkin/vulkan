@@ -1,0 +1,18 @@
+resolver: lts-8.21
+ghc-options:
+  vulkan-api:    -O2
+  GLFW-b:        -O2
+  bindings-GLFW: -O2
+
+packages:
+  - .
+  - location: ../vulkan-api
+    extra-dep: true
+  - location:
+      git: https://github.com/achirkin/GLFW-b
+      commit: c57109dfede0a6ca08a7088f371fe29fff315415
+    extra-dep: true
+  - location:
+      git: https://github.com/achirkin/bindings-GLFW.git
+      commit: 29899ded9c0c8bec5bc4b98fced054353d840573
+    extra-dep: true

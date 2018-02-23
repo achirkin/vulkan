@@ -1,0 +1,12 @@
+*.o
+*.hi
+*.summary
+dist/
+.ghc-sandbox/
+.ghcjs-sandbox/
+*.tmp
+*.ps
+*.hp
+*.pdf
+*.prof
+*.aux
