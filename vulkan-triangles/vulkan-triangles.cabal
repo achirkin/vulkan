@@ -1,0 +1,70 @@
+name:                vulkan-triangles
+version:             0.1.0.0
+synopsis:            Haskell-vulkan program rendering triangles
+description:         An example of using vulkan-api bindings to create a GLFW window
+                     and render some simple geometry.
+homepage:            https://github.com/achirkin/genvulkan#readme
+license:             BSD3
+license-file:        LICENSE
+author:              Artem Chirkin
+maintainer:          chirkin@arch.ethz.ch
+copyright:           Copyright: (c) 2018 Artem Chirkin
+category:            vulkan, bsd3, graphics, library, opengl
+build-type:          Simple
+cabal-version:       >=1.22
+extra-source-files:
+    shaders/triangle.frag
+    shaders/triangle.vert
+
+flag dev
+    description:
+        Turn on development settings, such as Vulkan validation layers.
+    default: True
+
+library
+    hs-source-dirs:     src
+    exposed-modules:    Lib
+                        Lib.GLFW
+                        Lib.Program
+                        Lib.Vulkan
+                        Lib.Vulkan.Drawing
+                        Lib.Vulkan.Presentation
+                        Lib.Vulkan.Pipeline
+                        Lib.Utils.TH
+    build-depends:      base >= 4.7 && < 5
+                      , vulkan-api
+                      , GLFW-b
+                      , containers
+                      , template-haskell
+                      , directory
+                      , process
+                      , filepath
+                      , transformers
+                      , mtl
+                      , monad-logger
+    default-language:   Haskell2010
+    if flag(dev)
+        cpp-options: -DDEVELOPMENT
+        ghc-options: -O0 -Wall
+    else
+        ghc-options: -O2
+
+executable vulkan-triangles
+    hs-source-dirs:      app
+    main-is:             Main.hs
+    ghc-options:         -Wall
+    build-depends:       base
+                       , vulkan-triangles
+    default-language:    Haskell2010
+    if flag(dev)
+        cpp-options: -DDEVELOPMENT
+        ghc-options: -O0 -Wall
+    else
+        ghc-options: -O2
+
+
+
+source-repository head
+    type:     git
+    location: https://github.com/achirkin/vulkan
+    subdir:   vulkan-triangles

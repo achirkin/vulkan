@@ -45,6 +45,10 @@ Prerequisites
     version 3.2 or newer.
 
 
+# vulkan-triangles
+
+A more haskell-style example of a vulkan program.
+
 ## Building
 
 
