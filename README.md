@@ -48,6 +48,7 @@ Prerequisites
 # vulkan-triangles
 
 A more haskell-style example of a vulkan program.
+This is a combined result of programs in `vulkan-examples` with a little cleaner code.
 
 ## Building
 
