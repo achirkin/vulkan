@@ -122,6 +122,10 @@ instance CanReadField "display" VkDisplayPropertiesKHR where
         {-# INLINE readField #-}
         readField = readVkDisplay
 
+instance CanWriteField "display" VkDisplayPropertiesKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkDisplay
+
 instance {-# OVERLAPPING #-}
          HasVkDisplayName VkDisplayPropertiesKHR where
         type VkDisplayNameMType VkDisplayPropertiesKHR = CString
@@ -164,6 +168,10 @@ instance CanReadField "displayName" VkDisplayPropertiesKHR where
 
         {-# INLINE readField #-}
         readField = readVkDisplayName
+
+instance CanWriteField "displayName" VkDisplayPropertiesKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkDisplayName
 
 instance {-# OVERLAPPING #-}
          HasVkPhysicalDimensions VkDisplayPropertiesKHR where
@@ -212,6 +220,11 @@ instance CanReadField "physicalDimensions" VkDisplayPropertiesKHR
         {-# INLINE readField #-}
         readField = readVkPhysicalDimensions
 
+instance CanWriteField "physicalDimensions" VkDisplayPropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPhysicalDimensions
+
 instance {-# OVERLAPPING #-}
          HasVkPhysicalResolution VkDisplayPropertiesKHR where
         type VkPhysicalResolutionMType VkDisplayPropertiesKHR = VkExtent2D
@@ -258,6 +271,11 @@ instance CanReadField "physicalResolution" VkDisplayPropertiesKHR
 
         {-# INLINE readField #-}
         readField = readVkPhysicalResolution
+
+instance CanWriteField "physicalResolution" VkDisplayPropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPhysicalResolution
 
 instance {-# OVERLAPPING #-}
          HasVkSupportedTransforms VkDisplayPropertiesKHR where
@@ -307,6 +325,11 @@ instance CanReadField "supportedTransforms" VkDisplayPropertiesKHR
         {-# INLINE readField #-}
         readField = readVkSupportedTransforms
 
+instance CanWriteField "supportedTransforms" VkDisplayPropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSupportedTransforms
+
 instance {-# OVERLAPPING #-}
          HasVkPlaneReorderPossible VkDisplayPropertiesKHR where
         type VkPlaneReorderPossibleMType VkDisplayPropertiesKHR = VkBool32
@@ -354,6 +377,12 @@ instance CanReadField "planeReorderPossible" VkDisplayPropertiesKHR
         {-# INLINE readField #-}
         readField = readVkPlaneReorderPossible
 
+instance CanWriteField "planeReorderPossible"
+           VkDisplayPropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPlaneReorderPossible
+
 instance {-# OVERLAPPING #-}
          HasVkPersistentContent VkDisplayPropertiesKHR where
         type VkPersistentContentMType VkDisplayPropertiesKHR = VkBool32
@@ -400,6 +429,11 @@ instance CanReadField "persistentContent" VkDisplayPropertiesKHR
 
         {-# INLINE readField #-}
         readField = readVkPersistentContent
+
+instance CanWriteField "persistentContent" VkDisplayPropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPersistentContent
 
 instance Show VkDisplayPropertiesKHR where
         showsPrec d x

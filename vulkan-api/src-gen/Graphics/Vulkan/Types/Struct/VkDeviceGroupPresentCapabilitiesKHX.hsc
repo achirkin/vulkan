@@ -135,6 +135,11 @@ instance CanReadField "sType" VkDeviceGroupPresentCapabilitiesKHX
         {-# INLINE readField #-}
         readField = readVkSType
 
+instance CanWriteField "sType" VkDeviceGroupPresentCapabilitiesKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-}
          HasVkPNext VkDeviceGroupPresentCapabilitiesKHX where
         type VkPNextMType VkDeviceGroupPresentCapabilitiesKHX = Ptr Void
@@ -181,6 +186,11 @@ instance CanReadField "pNext" VkDeviceGroupPresentCapabilitiesKHX
 
         {-# INLINE readField #-}
         readField = readVkPNext
+
+instance CanWriteField "pNext" VkDeviceGroupPresentCapabilitiesKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkPresentMaskArray VkDeviceGroupPresentCapabilitiesKHX where
@@ -272,6 +282,37 @@ instance (KnownNat idx,
           = readVkPresentMaskArray x
               (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
+instance (KnownNat idx,
+          IndexInBounds "presentMask" idx
+            VkDeviceGroupPresentCapabilitiesKHX) =>
+         CanWriteFieldArray "presentMask" idx
+           VkDeviceGroupPresentCapabilitiesKHX
+         where
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "presentMask" 0
+                         VkDeviceGroupPresentCapabilitiesKHX
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "presentMask" 1
+                         VkDeviceGroupPresentCapabilitiesKHX
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "presentMask" 2
+                         VkDeviceGroupPresentCapabilitiesKHX
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "presentMask" 3
+                         VkDeviceGroupPresentCapabilitiesKHX
+                       #-}
+
+        {-# INLINE writeFieldArray #-}
+        writeFieldArray x
+          = writeVkPresentMaskArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
 instance {-# OVERLAPPING #-}
          HasVkModes VkDeviceGroupPresentCapabilitiesKHX where
         type VkModesMType VkDeviceGroupPresentCapabilitiesKHX =
@@ -319,6 +360,11 @@ instance CanReadField "modes" VkDeviceGroupPresentCapabilitiesKHX
 
         {-# INLINE readField #-}
         readField = readVkModes
+
+instance CanWriteField "modes" VkDeviceGroupPresentCapabilitiesKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkModes
 
 instance Show VkDeviceGroupPresentCapabilitiesKHX where
         showsPrec d x

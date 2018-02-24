@@ -111,6 +111,10 @@ instance CanReadField "size" VkMemoryRequirements where
         {-# INLINE readField #-}
         readField = readVkSize
 
+instance CanWriteField "size" VkMemoryRequirements where
+        {-# INLINE writeField #-}
+        writeField = writeVkSize
+
 instance {-# OVERLAPPING #-} HasVkAlignment VkMemoryRequirements
          where
         type VkAlignmentMType VkMemoryRequirements = VkDeviceSize
@@ -152,6 +156,10 @@ instance CanReadField "alignment" VkMemoryRequirements where
 
         {-# INLINE readField #-}
         readField = readVkAlignment
+
+instance CanWriteField "alignment" VkMemoryRequirements where
+        {-# INLINE writeField #-}
+        writeField = writeVkAlignment
 
 instance {-# OVERLAPPING #-}
          HasVkMemoryTypeBits VkMemoryRequirements where
@@ -195,6 +203,10 @@ instance CanReadField "memoryTypeBits" VkMemoryRequirements where
 
         {-# INLINE readField #-}
         readField = readVkMemoryTypeBits
+
+instance CanWriteField "memoryTypeBits" VkMemoryRequirements where
+        {-# INLINE writeField #-}
+        writeField = writeVkMemoryTypeBits
 
 instance Show VkMemoryRequirements where
         showsPrec d x

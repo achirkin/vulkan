@@ -128,6 +128,11 @@ instance CanReadField "sType" VkMemoryDedicatedRequirementsKHR
         {-# INLINE readField #-}
         readField = readVkSType
 
+instance CanWriteField "sType" VkMemoryDedicatedRequirementsKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-}
          HasVkPNext VkMemoryDedicatedRequirementsKHR where
         type VkPNextMType VkMemoryDedicatedRequirementsKHR = Ptr Void
@@ -172,6 +177,11 @@ instance CanReadField "pNext" VkMemoryDedicatedRequirementsKHR
 
         {-# INLINE readField #-}
         readField = readVkPNext
+
+instance CanWriteField "pNext" VkMemoryDedicatedRequirementsKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkPrefersDedicatedAllocation VkMemoryDedicatedRequirementsKHR
@@ -231,6 +241,12 @@ instance CanReadField "prefersDedicatedAllocation"
         {-# INLINE readField #-}
         readField = readVkPrefersDedicatedAllocation
 
+instance CanWriteField "prefersDedicatedAllocation"
+           VkMemoryDedicatedRequirementsKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPrefersDedicatedAllocation
+
 instance {-# OVERLAPPING #-}
          HasVkRequiresDedicatedAllocation VkMemoryDedicatedRequirementsKHR
          where
@@ -288,6 +304,12 @@ instance CanReadField "requiresDedicatedAllocation"
 
         {-# INLINE readField #-}
         readField = readVkRequiresDedicatedAllocation
+
+instance CanWriteField "requiresDedicatedAllocation"
+           VkMemoryDedicatedRequirementsKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkRequiresDedicatedAllocation
 
 instance Show VkMemoryDedicatedRequirementsKHR where
         showsPrec d x

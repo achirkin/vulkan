@@ -113,6 +113,10 @@ instance CanReadField "sType" VkMemoryFdPropertiesKHR where
         {-# INLINE readField #-}
         readField = readVkSType
 
+instance CanWriteField "sType" VkMemoryFdPropertiesKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkMemoryFdPropertiesKHR
          where
         type VkPNextMType VkMemoryFdPropertiesKHR = Ptr Void
@@ -154,6 +158,10 @@ instance CanReadField "pNext" VkMemoryFdPropertiesKHR where
 
         {-# INLINE readField #-}
         readField = readVkPNext
+
+instance CanWriteField "pNext" VkMemoryFdPropertiesKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkMemoryTypeBits VkMemoryFdPropertiesKHR where
@@ -199,6 +207,11 @@ instance CanReadField "memoryTypeBits" VkMemoryFdPropertiesKHR
 
         {-# INLINE readField #-}
         readField = readVkMemoryTypeBits
+
+instance CanWriteField "memoryTypeBits" VkMemoryFdPropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMemoryTypeBits
 
 instance Show VkMemoryFdPropertiesKHR where
         showsPrec d x

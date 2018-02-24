@@ -156,6 +156,12 @@ instance CanReadField "sType"
         {-# INLINE readField #-}
         readField = readVkSType
 
+instance CanWriteField "sType"
+           VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-}
          HasVkPNext VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
          where
@@ -213,6 +219,12 @@ instance CanReadField "pNext"
 
         {-# INLINE readField #-}
         readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkPerViewPositionAllComponents
@@ -272,6 +284,12 @@ instance CanReadField "perViewPositionAllComponents"
 
         {-# INLINE readField #-}
         readField = readVkPerViewPositionAllComponents
+
+instance CanWriteField "perViewPositionAllComponents"
+           VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPerViewPositionAllComponents
 
 instance Show
            VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX

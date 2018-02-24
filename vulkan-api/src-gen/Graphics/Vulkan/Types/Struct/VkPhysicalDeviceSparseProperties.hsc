@@ -139,6 +139,12 @@ instance CanReadField "residencyStandard2DBlockShape"
         {-# INLINE readField #-}
         readField = readVkResidencyStandard2DBlockShape
 
+instance CanWriteField "residencyStandard2DBlockShape"
+           VkPhysicalDeviceSparseProperties
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkResidencyStandard2DBlockShape
+
 instance {-# OVERLAPPING #-}
          HasVkResidencyStandard2DMultisampleBlockShape
            VkPhysicalDeviceSparseProperties
@@ -198,6 +204,12 @@ instance CanReadField "residencyStandard2DMultisampleBlockShape"
         {-# INLINE readField #-}
         readField = readVkResidencyStandard2DMultisampleBlockShape
 
+instance CanWriteField "residencyStandard2DMultisampleBlockShape"
+           VkPhysicalDeviceSparseProperties
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkResidencyStandard2DMultisampleBlockShape
+
 instance {-# OVERLAPPING #-}
          HasVkResidencyStandard3DBlockShape VkPhysicalDeviceSparseProperties
          where
@@ -256,6 +268,12 @@ instance CanReadField "residencyStandard3DBlockShape"
         {-# INLINE readField #-}
         readField = readVkResidencyStandard3DBlockShape
 
+instance CanWriteField "residencyStandard3DBlockShape"
+           VkPhysicalDeviceSparseProperties
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkResidencyStandard3DBlockShape
+
 instance {-# OVERLAPPING #-}
          HasVkResidencyAlignedMipSize VkPhysicalDeviceSparseProperties where
         type VkResidencyAlignedMipSizeMType
@@ -311,6 +329,12 @@ instance CanReadField "residencyAlignedMipSize"
 
         {-# INLINE readField #-}
         readField = readVkResidencyAlignedMipSize
+
+instance CanWriteField "residencyAlignedMipSize"
+           VkPhysicalDeviceSparseProperties
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkResidencyAlignedMipSize
 
 instance {-# OVERLAPPING #-}
          HasVkResidencyNonResidentStrict VkPhysicalDeviceSparseProperties
@@ -369,6 +393,12 @@ instance CanReadField "residencyNonResidentStrict"
 
         {-# INLINE readField #-}
         readField = readVkResidencyNonResidentStrict
+
+instance CanWriteField "residencyNonResidentStrict"
+           VkPhysicalDeviceSparseProperties
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkResidencyNonResidentStrict
 
 instance Show VkPhysicalDeviceSparseProperties where
         showsPrec d x

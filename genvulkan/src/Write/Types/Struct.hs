@@ -213,7 +213,7 @@ genStructField :: Monad m
                -> Exp () -- ^ offset
                -> StructFieldInfo
                -> ModuleWriter m (QName (), [Decl A])
-genStructField structAttrs structNameTxt structType VkTypeMember{..} _offsetE SFI{..}
+genStructField _structAttrs structNameTxt structType VkTypeMember{..} _offsetE SFI{..}
     = genClass <$ genInstance
   where
     -- exportName = ExportType $ unqualify className
@@ -334,7 +334,9 @@ genStructField structAttrs structNameTxt structType VkTypeMember{..} _offsetE SF
                   (fromInteger $ natVal' (proxy# :: Proxy# idx) )
               |]
           dsWrite =
-            if returnedonly structAttrs
+            if False -- returnedonly structAttrs
+                     -- TODO: what to do? sometimes we need to create such structs
+                     -- e.g. VkSurfaceFormatKHR
             then []
             else case sfiTyElemN of
               Nothing -> parseDecls [text|

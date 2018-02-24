@@ -117,6 +117,10 @@ instance CanReadField "queueFlags" VkQueueFamilyProperties where
         {-# INLINE readField #-}
         readField = readVkQueueFlags
 
+instance CanWriteField "queueFlags" VkQueueFamilyProperties where
+        {-# INLINE writeField #-}
+        writeField = writeVkQueueFlags
+
 instance {-# OVERLAPPING #-}
          HasVkQueueCount VkQueueFamilyProperties where
         type VkQueueCountMType VkQueueFamilyProperties = Word32
@@ -159,6 +163,10 @@ instance CanReadField "queueCount" VkQueueFamilyProperties where
 
         {-# INLINE readField #-}
         readField = readVkQueueCount
+
+instance CanWriteField "queueCount" VkQueueFamilyProperties where
+        {-# INLINE writeField #-}
+        writeField = writeVkQueueCount
 
 instance {-# OVERLAPPING #-}
          HasVkTimestampValidBits VkQueueFamilyProperties where
@@ -206,6 +214,11 @@ instance CanReadField "timestampValidBits" VkQueueFamilyProperties
 
         {-# INLINE readField #-}
         readField = readVkTimestampValidBits
+
+instance CanWriteField "timestampValidBits" VkQueueFamilyProperties
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkTimestampValidBits
 
 instance {-# OVERLAPPING #-}
          HasVkMinImageTransferGranularity VkQueueFamilyProperties where
@@ -261,6 +274,12 @@ instance CanReadField "minImageTransferGranularity"
 
         {-# INLINE readField #-}
         readField = readVkMinImageTransferGranularity
+
+instance CanWriteField "minImageTransferGranularity"
+           VkQueueFamilyProperties
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMinImageTransferGranularity
 
 instance Show VkQueueFamilyProperties where
         showsPrec d x

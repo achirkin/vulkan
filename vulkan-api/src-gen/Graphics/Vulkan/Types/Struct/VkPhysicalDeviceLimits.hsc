@@ -287,6 +287,11 @@ instance CanReadField "maxImageDimension1D" VkPhysicalDeviceLimits
         {-# INLINE readField #-}
         readField = readVkMaxImageDimension1D
 
+instance CanWriteField "maxImageDimension1D" VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxImageDimension1D
+
 instance {-# OVERLAPPING #-}
          HasVkMaxImageDimension2D VkPhysicalDeviceLimits where
         type VkMaxImageDimension2DMType VkPhysicalDeviceLimits = Word32
@@ -334,6 +339,11 @@ instance CanReadField "maxImageDimension2D" VkPhysicalDeviceLimits
         {-# INLINE readField #-}
         readField = readVkMaxImageDimension2D
 
+instance CanWriteField "maxImageDimension2D" VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxImageDimension2D
+
 instance {-# OVERLAPPING #-}
          HasVkMaxImageDimension3D VkPhysicalDeviceLimits where
         type VkMaxImageDimension3DMType VkPhysicalDeviceLimits = Word32
@@ -380,6 +390,11 @@ instance CanReadField "maxImageDimension3D" VkPhysicalDeviceLimits
 
         {-# INLINE readField #-}
         readField = readVkMaxImageDimension3D
+
+instance CanWriteField "maxImageDimension3D" VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxImageDimension3D
 
 instance {-# OVERLAPPING #-}
          HasVkMaxImageDimensionCube VkPhysicalDeviceLimits where
@@ -429,6 +444,12 @@ instance CanReadField "maxImageDimensionCube"
         {-# INLINE readField #-}
         readField = readVkMaxImageDimensionCube
 
+instance CanWriteField "maxImageDimensionCube"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxImageDimensionCube
+
 instance {-# OVERLAPPING #-}
          HasVkMaxImageArrayLayers VkPhysicalDeviceLimits where
         type VkMaxImageArrayLayersMType VkPhysicalDeviceLimits = Word32
@@ -475,6 +496,11 @@ instance CanReadField "maxImageArrayLayers" VkPhysicalDeviceLimits
 
         {-# INLINE readField #-}
         readField = readVkMaxImageArrayLayers
+
+instance CanWriteField "maxImageArrayLayers" VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxImageArrayLayers
 
 instance {-# OVERLAPPING #-}
          HasVkMaxTexelBufferElements VkPhysicalDeviceLimits where
@@ -524,6 +550,12 @@ instance CanReadField "maxTexelBufferElements"
         {-# INLINE readField #-}
         readField = readVkMaxTexelBufferElements
 
+instance CanWriteField "maxTexelBufferElements"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxTexelBufferElements
+
 instance {-# OVERLAPPING #-}
          HasVkMaxUniformBufferRange VkPhysicalDeviceLimits where
         type VkMaxUniformBufferRangeMType VkPhysicalDeviceLimits = Word32
@@ -571,6 +603,12 @@ instance CanReadField "maxUniformBufferRange"
 
         {-# INLINE readField #-}
         readField = readVkMaxUniformBufferRange
+
+instance CanWriteField "maxUniformBufferRange"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxUniformBufferRange
 
 instance {-# OVERLAPPING #-}
          HasVkMaxStorageBufferRange VkPhysicalDeviceLimits where
@@ -620,6 +658,12 @@ instance CanReadField "maxStorageBufferRange"
         {-# INLINE readField #-}
         readField = readVkMaxStorageBufferRange
 
+instance CanWriteField "maxStorageBufferRange"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxStorageBufferRange
+
 instance {-# OVERLAPPING #-}
          HasVkMaxPushConstantsSize VkPhysicalDeviceLimits where
         type VkMaxPushConstantsSizeMType VkPhysicalDeviceLimits = Word32
@@ -666,6 +710,12 @@ instance CanReadField "maxPushConstantsSize" VkPhysicalDeviceLimits
 
         {-# INLINE readField #-}
         readField = readVkMaxPushConstantsSize
+
+instance CanWriteField "maxPushConstantsSize"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxPushConstantsSize
 
 instance {-# OVERLAPPING #-}
          HasVkMaxMemoryAllocationCount VkPhysicalDeviceLimits where
@@ -717,6 +767,12 @@ instance CanReadField "maxMemoryAllocationCount"
 
         {-# INLINE readField #-}
         readField = readVkMaxMemoryAllocationCount
+
+instance CanWriteField "maxMemoryAllocationCount"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxMemoryAllocationCount
 
 instance {-# OVERLAPPING #-}
          HasVkMaxSamplerAllocationCount VkPhysicalDeviceLimits where
@@ -770,6 +826,12 @@ instance CanReadField "maxSamplerAllocationCount"
         {-# INLINE readField #-}
         readField = readVkMaxSamplerAllocationCount
 
+instance CanWriteField "maxSamplerAllocationCount"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxSamplerAllocationCount
+
 instance {-# OVERLAPPING #-}
          HasVkBufferImageGranularity VkPhysicalDeviceLimits where
         type VkBufferImageGranularityMType VkPhysicalDeviceLimits =
@@ -818,6 +880,12 @@ instance CanReadField "bufferImageGranularity"
 
         {-# INLINE readField #-}
         readField = readVkBufferImageGranularity
+
+instance CanWriteField "bufferImageGranularity"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkBufferImageGranularity
 
 instance {-# OVERLAPPING #-}
          HasVkSparseAddressSpaceSize VkPhysicalDeviceLimits where
@@ -868,6 +936,12 @@ instance CanReadField "sparseAddressSpaceSize"
         {-# INLINE readField #-}
         readField = readVkSparseAddressSpaceSize
 
+instance CanWriteField "sparseAddressSpaceSize"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSparseAddressSpaceSize
+
 instance {-# OVERLAPPING #-}
          HasVkMaxBoundDescriptorSets VkPhysicalDeviceLimits where
         type VkMaxBoundDescriptorSetsMType VkPhysicalDeviceLimits = Word32
@@ -915,6 +989,12 @@ instance CanReadField "maxBoundDescriptorSets"
 
         {-# INLINE readField #-}
         readField = readVkMaxBoundDescriptorSets
+
+instance CanWriteField "maxBoundDescriptorSets"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxBoundDescriptorSets
 
 instance {-# OVERLAPPING #-}
          HasVkMaxPerStageDescriptorSamplers VkPhysicalDeviceLimits where
@@ -970,6 +1050,12 @@ instance CanReadField "maxPerStageDescriptorSamplers"
 
         {-# INLINE readField #-}
         readField = readVkMaxPerStageDescriptorSamplers
+
+instance CanWriteField "maxPerStageDescriptorSamplers"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxPerStageDescriptorSamplers
 
 instance {-# OVERLAPPING #-}
          HasVkMaxPerStageDescriptorUniformBuffers VkPhysicalDeviceLimits
@@ -1029,6 +1115,12 @@ instance CanReadField "maxPerStageDescriptorUniformBuffers"
         {-# INLINE readField #-}
         readField = readVkMaxPerStageDescriptorUniformBuffers
 
+instance CanWriteField "maxPerStageDescriptorUniformBuffers"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxPerStageDescriptorUniformBuffers
+
 instance {-# OVERLAPPING #-}
          HasVkMaxPerStageDescriptorStorageBuffers VkPhysicalDeviceLimits
          where
@@ -1086,6 +1178,12 @@ instance CanReadField "maxPerStageDescriptorStorageBuffers"
 
         {-# INLINE readField #-}
         readField = readVkMaxPerStageDescriptorStorageBuffers
+
+instance CanWriteField "maxPerStageDescriptorStorageBuffers"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxPerStageDescriptorStorageBuffers
 
 instance {-# OVERLAPPING #-}
          HasVkMaxPerStageDescriptorSampledImages VkPhysicalDeviceLimits
@@ -1145,6 +1243,12 @@ instance CanReadField "maxPerStageDescriptorSampledImages"
         {-# INLINE readField #-}
         readField = readVkMaxPerStageDescriptorSampledImages
 
+instance CanWriteField "maxPerStageDescriptorSampledImages"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxPerStageDescriptorSampledImages
+
 instance {-# OVERLAPPING #-}
          HasVkMaxPerStageDescriptorStorageImages VkPhysicalDeviceLimits
          where
@@ -1202,6 +1306,12 @@ instance CanReadField "maxPerStageDescriptorStorageImages"
 
         {-# INLINE readField #-}
         readField = readVkMaxPerStageDescriptorStorageImages
+
+instance CanWriteField "maxPerStageDescriptorStorageImages"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxPerStageDescriptorStorageImages
 
 instance {-# OVERLAPPING #-}
          HasVkMaxPerStageDescriptorInputAttachments VkPhysicalDeviceLimits
@@ -1261,6 +1371,12 @@ instance CanReadField "maxPerStageDescriptorInputAttachments"
         {-# INLINE readField #-}
         readField = readVkMaxPerStageDescriptorInputAttachments
 
+instance CanWriteField "maxPerStageDescriptorInputAttachments"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxPerStageDescriptorInputAttachments
+
 instance {-# OVERLAPPING #-}
          HasVkMaxPerStageResources VkPhysicalDeviceLimits where
         type VkMaxPerStageResourcesMType VkPhysicalDeviceLimits = Word32
@@ -1307,6 +1423,12 @@ instance CanReadField "maxPerStageResources" VkPhysicalDeviceLimits
 
         {-# INLINE readField #-}
         readField = readVkMaxPerStageResources
+
+instance CanWriteField "maxPerStageResources"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxPerStageResources
 
 instance {-# OVERLAPPING #-}
          HasVkMaxDescriptorSetSamplers VkPhysicalDeviceLimits where
@@ -1358,6 +1480,12 @@ instance CanReadField "maxDescriptorSetSamplers"
 
         {-# INLINE readField #-}
         readField = readVkMaxDescriptorSetSamplers
+
+instance CanWriteField "maxDescriptorSetSamplers"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxDescriptorSetSamplers
 
 instance {-# OVERLAPPING #-}
          HasVkMaxDescriptorSetUniformBuffers VkPhysicalDeviceLimits where
@@ -1413,6 +1541,12 @@ instance CanReadField "maxDescriptorSetUniformBuffers"
 
         {-# INLINE readField #-}
         readField = readVkMaxDescriptorSetUniformBuffers
+
+instance CanWriteField "maxDescriptorSetUniformBuffers"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxDescriptorSetUniformBuffers
 
 instance {-# OVERLAPPING #-}
          HasVkMaxDescriptorSetUniformBuffersDynamic VkPhysicalDeviceLimits
@@ -1472,6 +1606,12 @@ instance CanReadField "maxDescriptorSetUniformBuffersDynamic"
         {-# INLINE readField #-}
         readField = readVkMaxDescriptorSetUniformBuffersDynamic
 
+instance CanWriteField "maxDescriptorSetUniformBuffersDynamic"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxDescriptorSetUniformBuffersDynamic
+
 instance {-# OVERLAPPING #-}
          HasVkMaxDescriptorSetStorageBuffers VkPhysicalDeviceLimits where
         type VkMaxDescriptorSetStorageBuffersMType VkPhysicalDeviceLimits =
@@ -1526,6 +1666,12 @@ instance CanReadField "maxDescriptorSetStorageBuffers"
 
         {-# INLINE readField #-}
         readField = readVkMaxDescriptorSetStorageBuffers
+
+instance CanWriteField "maxDescriptorSetStorageBuffers"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxDescriptorSetStorageBuffers
 
 instance {-# OVERLAPPING #-}
          HasVkMaxDescriptorSetStorageBuffersDynamic VkPhysicalDeviceLimits
@@ -1585,6 +1731,12 @@ instance CanReadField "maxDescriptorSetStorageBuffersDynamic"
         {-# INLINE readField #-}
         readField = readVkMaxDescriptorSetStorageBuffersDynamic
 
+instance CanWriteField "maxDescriptorSetStorageBuffersDynamic"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxDescriptorSetStorageBuffersDynamic
+
 instance {-# OVERLAPPING #-}
          HasVkMaxDescriptorSetSampledImages VkPhysicalDeviceLimits where
         type VkMaxDescriptorSetSampledImagesMType VkPhysicalDeviceLimits =
@@ -1639,6 +1791,12 @@ instance CanReadField "maxDescriptorSetSampledImages"
 
         {-# INLINE readField #-}
         readField = readVkMaxDescriptorSetSampledImages
+
+instance CanWriteField "maxDescriptorSetSampledImages"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxDescriptorSetSampledImages
 
 instance {-# OVERLAPPING #-}
          HasVkMaxDescriptorSetStorageImages VkPhysicalDeviceLimits where
@@ -1695,6 +1853,12 @@ instance CanReadField "maxDescriptorSetStorageImages"
         {-# INLINE readField #-}
         readField = readVkMaxDescriptorSetStorageImages
 
+instance CanWriteField "maxDescriptorSetStorageImages"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxDescriptorSetStorageImages
+
 instance {-# OVERLAPPING #-}
          HasVkMaxDescriptorSetInputAttachments VkPhysicalDeviceLimits where
         type VkMaxDescriptorSetInputAttachmentsMType VkPhysicalDeviceLimits
@@ -1750,6 +1914,12 @@ instance CanReadField "maxDescriptorSetInputAttachments"
         {-# INLINE readField #-}
         readField = readVkMaxDescriptorSetInputAttachments
 
+instance CanWriteField "maxDescriptorSetInputAttachments"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxDescriptorSetInputAttachments
+
 instance {-# OVERLAPPING #-}
          HasVkMaxVertexInputAttributes VkPhysicalDeviceLimits where
         type VkMaxVertexInputAttributesMType VkPhysicalDeviceLimits =
@@ -1801,6 +1971,12 @@ instance CanReadField "maxVertexInputAttributes"
         {-# INLINE readField #-}
         readField = readVkMaxVertexInputAttributes
 
+instance CanWriteField "maxVertexInputAttributes"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxVertexInputAttributes
+
 instance {-# OVERLAPPING #-}
          HasVkMaxVertexInputBindings VkPhysicalDeviceLimits where
         type VkMaxVertexInputBindingsMType VkPhysicalDeviceLimits = Word32
@@ -1848,6 +2024,12 @@ instance CanReadField "maxVertexInputBindings"
 
         {-# INLINE readField #-}
         readField = readVkMaxVertexInputBindings
+
+instance CanWriteField "maxVertexInputBindings"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxVertexInputBindings
 
 instance {-# OVERLAPPING #-}
          HasVkMaxVertexInputAttributeOffset VkPhysicalDeviceLimits where
@@ -1904,6 +2086,12 @@ instance CanReadField "maxVertexInputAttributeOffset"
         {-# INLINE readField #-}
         readField = readVkMaxVertexInputAttributeOffset
 
+instance CanWriteField "maxVertexInputAttributeOffset"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxVertexInputAttributeOffset
+
 instance {-# OVERLAPPING #-}
          HasVkMaxVertexInputBindingStride VkPhysicalDeviceLimits where
         type VkMaxVertexInputBindingStrideMType VkPhysicalDeviceLimits =
@@ -1957,6 +2145,12 @@ instance CanReadField "maxVertexInputBindingStride"
         {-# INLINE readField #-}
         readField = readVkMaxVertexInputBindingStride
 
+instance CanWriteField "maxVertexInputBindingStride"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxVertexInputBindingStride
+
 instance {-# OVERLAPPING #-}
          HasVkMaxVertexOutputComponents VkPhysicalDeviceLimits where
         type VkMaxVertexOutputComponentsMType VkPhysicalDeviceLimits =
@@ -2008,6 +2202,12 @@ instance CanReadField "maxVertexOutputComponents"
 
         {-# INLINE readField #-}
         readField = readVkMaxVertexOutputComponents
+
+instance CanWriteField "maxVertexOutputComponents"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxVertexOutputComponents
 
 instance {-# OVERLAPPING #-}
          HasVkMaxTessellationGenerationLevel VkPhysicalDeviceLimits where
@@ -2064,6 +2264,12 @@ instance CanReadField "maxTessellationGenerationLevel"
         {-# INLINE readField #-}
         readField = readVkMaxTessellationGenerationLevel
 
+instance CanWriteField "maxTessellationGenerationLevel"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxTessellationGenerationLevel
+
 instance {-# OVERLAPPING #-}
          HasVkMaxTessellationPatchSize VkPhysicalDeviceLimits where
         type VkMaxTessellationPatchSizeMType VkPhysicalDeviceLimits =
@@ -2114,6 +2320,12 @@ instance CanReadField "maxTessellationPatchSize"
 
         {-# INLINE readField #-}
         readField = readVkMaxTessellationPatchSize
+
+instance CanWriteField "maxTessellationPatchSize"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxTessellationPatchSize
 
 instance {-# OVERLAPPING #-}
          HasVkMaxTessellationControlPerVertexInputComponents
@@ -2176,6 +2388,13 @@ instance CanReadField
 
         {-# INLINE readField #-}
         readField = readVkMaxTessellationControlPerVertexInputComponents
+
+instance CanWriteField
+           "maxTessellationControlPerVertexInputComponents"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxTessellationControlPerVertexInputComponents
 
 instance {-# OVERLAPPING #-}
          HasVkMaxTessellationControlPerVertexOutputComponents
@@ -2241,6 +2460,13 @@ instance CanReadField
         {-# INLINE readField #-}
         readField = readVkMaxTessellationControlPerVertexOutputComponents
 
+instance CanWriteField
+           "maxTessellationControlPerVertexOutputComponents"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxTessellationControlPerVertexOutputComponents
+
 instance {-# OVERLAPPING #-}
          HasVkMaxTessellationControlPerPatchOutputComponents
            VkPhysicalDeviceLimits
@@ -2303,6 +2529,13 @@ instance CanReadField
         {-# INLINE readField #-}
         readField = readVkMaxTessellationControlPerPatchOutputComponents
 
+instance CanWriteField
+           "maxTessellationControlPerPatchOutputComponents"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxTessellationControlPerPatchOutputComponents
+
 instance {-# OVERLAPPING #-}
          HasVkMaxTessellationControlTotalOutputComponents
            VkPhysicalDeviceLimits
@@ -2363,6 +2596,13 @@ instance CanReadField "maxTessellationControlTotalOutputComponents"
         {-# INLINE readField #-}
         readField = readVkMaxTessellationControlTotalOutputComponents
 
+instance CanWriteField
+           "maxTessellationControlTotalOutputComponents"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxTessellationControlTotalOutputComponents
+
 instance {-# OVERLAPPING #-}
          HasVkMaxTessellationEvaluationInputComponents
            VkPhysicalDeviceLimits
@@ -2421,6 +2661,12 @@ instance CanReadField "maxTessellationEvaluationInputComponents"
 
         {-# INLINE readField #-}
         readField = readVkMaxTessellationEvaluationInputComponents
+
+instance CanWriteField "maxTessellationEvaluationInputComponents"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxTessellationEvaluationInputComponents
 
 instance {-# OVERLAPPING #-}
          HasVkMaxTessellationEvaluationOutputComponents
@@ -2482,6 +2728,12 @@ instance CanReadField "maxTessellationEvaluationOutputComponents"
         {-# INLINE readField #-}
         readField = readVkMaxTessellationEvaluationOutputComponents
 
+instance CanWriteField "maxTessellationEvaluationOutputComponents"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxTessellationEvaluationOutputComponents
+
 instance {-# OVERLAPPING #-}
          HasVkMaxGeometryShaderInvocations VkPhysicalDeviceLimits where
         type VkMaxGeometryShaderInvocationsMType VkPhysicalDeviceLimits =
@@ -2537,6 +2789,12 @@ instance CanReadField "maxGeometryShaderInvocations"
         {-# INLINE readField #-}
         readField = readVkMaxGeometryShaderInvocations
 
+instance CanWriteField "maxGeometryShaderInvocations"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxGeometryShaderInvocations
+
 instance {-# OVERLAPPING #-}
          HasVkMaxGeometryInputComponents VkPhysicalDeviceLimits where
         type VkMaxGeometryInputComponentsMType VkPhysicalDeviceLimits =
@@ -2589,6 +2847,12 @@ instance CanReadField "maxGeometryInputComponents"
 
         {-# INLINE readField #-}
         readField = readVkMaxGeometryInputComponents
+
+instance CanWriteField "maxGeometryInputComponents"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxGeometryInputComponents
 
 instance {-# OVERLAPPING #-}
          HasVkMaxGeometryOutputComponents VkPhysicalDeviceLimits where
@@ -2643,6 +2907,12 @@ instance CanReadField "maxGeometryOutputComponents"
         {-# INLINE readField #-}
         readField = readVkMaxGeometryOutputComponents
 
+instance CanWriteField "maxGeometryOutputComponents"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxGeometryOutputComponents
+
 instance {-# OVERLAPPING #-}
          HasVkMaxGeometryOutputVertices VkPhysicalDeviceLimits where
         type VkMaxGeometryOutputVerticesMType VkPhysicalDeviceLimits =
@@ -2694,6 +2964,12 @@ instance CanReadField "maxGeometryOutputVertices"
 
         {-# INLINE readField #-}
         readField = readVkMaxGeometryOutputVertices
+
+instance CanWriteField "maxGeometryOutputVertices"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxGeometryOutputVertices
 
 instance {-# OVERLAPPING #-}
          HasVkMaxGeometryTotalOutputComponents VkPhysicalDeviceLimits where
@@ -2750,6 +3026,12 @@ instance CanReadField "maxGeometryTotalOutputComponents"
         {-# INLINE readField #-}
         readField = readVkMaxGeometryTotalOutputComponents
 
+instance CanWriteField "maxGeometryTotalOutputComponents"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxGeometryTotalOutputComponents
+
 instance {-# OVERLAPPING #-}
          HasVkMaxFragmentInputComponents VkPhysicalDeviceLimits where
         type VkMaxFragmentInputComponentsMType VkPhysicalDeviceLimits =
@@ -2802,6 +3084,12 @@ instance CanReadField "maxFragmentInputComponents"
 
         {-# INLINE readField #-}
         readField = readVkMaxFragmentInputComponents
+
+instance CanWriteField "maxFragmentInputComponents"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxFragmentInputComponents
 
 instance {-# OVERLAPPING #-}
          HasVkMaxFragmentOutputAttachments VkPhysicalDeviceLimits where
@@ -2858,6 +3146,12 @@ instance CanReadField "maxFragmentOutputAttachments"
         {-# INLINE readField #-}
         readField = readVkMaxFragmentOutputAttachments
 
+instance CanWriteField "maxFragmentOutputAttachments"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxFragmentOutputAttachments
+
 instance {-# OVERLAPPING #-}
          HasVkMaxFragmentDualSrcAttachments VkPhysicalDeviceLimits where
         type VkMaxFragmentDualSrcAttachmentsMType VkPhysicalDeviceLimits =
@@ -2912,6 +3206,12 @@ instance CanReadField "maxFragmentDualSrcAttachments"
 
         {-# INLINE readField #-}
         readField = readVkMaxFragmentDualSrcAttachments
+
+instance CanWriteField "maxFragmentDualSrcAttachments"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxFragmentDualSrcAttachments
 
 instance {-# OVERLAPPING #-}
          HasVkMaxFragmentCombinedOutputResources VkPhysicalDeviceLimits
@@ -2971,6 +3271,12 @@ instance CanReadField "maxFragmentCombinedOutputResources"
         {-# INLINE readField #-}
         readField = readVkMaxFragmentCombinedOutputResources
 
+instance CanWriteField "maxFragmentCombinedOutputResources"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxFragmentCombinedOutputResources
+
 instance {-# OVERLAPPING #-}
          HasVkMaxComputeSharedMemorySize VkPhysicalDeviceLimits where
         type VkMaxComputeSharedMemorySizeMType VkPhysicalDeviceLimits =
@@ -3023,6 +3329,12 @@ instance CanReadField "maxComputeSharedMemorySize"
 
         {-# INLINE readField #-}
         readField = readVkMaxComputeSharedMemorySize
+
+instance CanWriteField "maxComputeSharedMemorySize"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxComputeSharedMemorySize
 
 instance {-# OVERLAPPING #-}
          HasVkMaxComputeWorkGroupCountArray VkPhysicalDeviceLimits where
@@ -3109,6 +3421,32 @@ instance (KnownNat idx,
           = readVkMaxComputeWorkGroupCountArray x
               (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
+instance (KnownNat idx,
+          IndexInBounds "maxComputeWorkGroupCount" idx
+            VkPhysicalDeviceLimits) =>
+         CanWriteFieldArray "maxComputeWorkGroupCount" idx
+           VkPhysicalDeviceLimits
+         where
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "maxComputeWorkGroupCount" 0
+                         VkPhysicalDeviceLimits
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "maxComputeWorkGroupCount" 1
+                         VkPhysicalDeviceLimits
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "maxComputeWorkGroupCount" 2
+                         VkPhysicalDeviceLimits
+                       #-}
+
+        {-# INLINE writeFieldArray #-}
+        writeFieldArray x
+          = writeVkMaxComputeWorkGroupCountArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
 instance {-# OVERLAPPING #-}
          HasVkMaxComputeWorkGroupInvocations VkPhysicalDeviceLimits where
         type VkMaxComputeWorkGroupInvocationsMType VkPhysicalDeviceLimits =
@@ -3163,6 +3501,12 @@ instance CanReadField "maxComputeWorkGroupInvocations"
 
         {-# INLINE readField #-}
         readField = readVkMaxComputeWorkGroupInvocations
+
+instance CanWriteField "maxComputeWorkGroupInvocations"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxComputeWorkGroupInvocations
 
 instance {-# OVERLAPPING #-}
          HasVkMaxComputeWorkGroupSizeArray VkPhysicalDeviceLimits where
@@ -3247,6 +3591,32 @@ instance (KnownNat idx,
           = readVkMaxComputeWorkGroupSizeArray x
               (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
+instance (KnownNat idx,
+          IndexInBounds "maxComputeWorkGroupSize" idx
+            VkPhysicalDeviceLimits) =>
+         CanWriteFieldArray "maxComputeWorkGroupSize" idx
+           VkPhysicalDeviceLimits
+         where
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "maxComputeWorkGroupSize" 0
+                         VkPhysicalDeviceLimits
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "maxComputeWorkGroupSize" 1
+                         VkPhysicalDeviceLimits
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "maxComputeWorkGroupSize" 2
+                         VkPhysicalDeviceLimits
+                       #-}
+
+        {-# INLINE writeFieldArray #-}
+        writeFieldArray x
+          = writeVkMaxComputeWorkGroupSizeArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
 instance {-# OVERLAPPING #-}
          HasVkSubPixelPrecisionBits VkPhysicalDeviceLimits where
         type VkSubPixelPrecisionBitsMType VkPhysicalDeviceLimits = Word32
@@ -3294,6 +3664,12 @@ instance CanReadField "subPixelPrecisionBits"
 
         {-# INLINE readField #-}
         readField = readVkSubPixelPrecisionBits
+
+instance CanWriteField "subPixelPrecisionBits"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSubPixelPrecisionBits
 
 instance {-# OVERLAPPING #-}
          HasVkSubTexelPrecisionBits VkPhysicalDeviceLimits where
@@ -3343,6 +3719,12 @@ instance CanReadField "subTexelPrecisionBits"
         {-# INLINE readField #-}
         readField = readVkSubTexelPrecisionBits
 
+instance CanWriteField "subTexelPrecisionBits"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSubTexelPrecisionBits
+
 instance {-# OVERLAPPING #-}
          HasVkMipmapPrecisionBits VkPhysicalDeviceLimits where
         type VkMipmapPrecisionBitsMType VkPhysicalDeviceLimits = Word32
@@ -3389,6 +3771,11 @@ instance CanReadField "mipmapPrecisionBits" VkPhysicalDeviceLimits
 
         {-# INLINE readField #-}
         readField = readVkMipmapPrecisionBits
+
+instance CanWriteField "mipmapPrecisionBits" VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMipmapPrecisionBits
 
 instance {-# OVERLAPPING #-}
          HasVkMaxDrawIndexedIndexValue VkPhysicalDeviceLimits where
@@ -3441,6 +3828,12 @@ instance CanReadField "maxDrawIndexedIndexValue"
         {-# INLINE readField #-}
         readField = readVkMaxDrawIndexedIndexValue
 
+instance CanWriteField "maxDrawIndexedIndexValue"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxDrawIndexedIndexValue
+
 instance {-# OVERLAPPING #-}
          HasVkMaxDrawIndirectCount VkPhysicalDeviceLimits where
         type VkMaxDrawIndirectCountMType VkPhysicalDeviceLimits = Word32
@@ -3487,6 +3880,12 @@ instance CanReadField "maxDrawIndirectCount" VkPhysicalDeviceLimits
 
         {-# INLINE readField #-}
         readField = readVkMaxDrawIndirectCount
+
+instance CanWriteField "maxDrawIndirectCount"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxDrawIndirectCount
 
 instance {-# OVERLAPPING #-}
          HasVkMaxSamplerLodBias VkPhysicalDeviceLimits where
@@ -3536,6 +3935,11 @@ instance CanReadField "maxSamplerLodBias" VkPhysicalDeviceLimits
         {-# INLINE readField #-}
         readField = readVkMaxSamplerLodBias
 
+instance CanWriteField "maxSamplerLodBias" VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxSamplerLodBias
+
 instance {-# OVERLAPPING #-}
          HasVkMaxSamplerAnisotropy VkPhysicalDeviceLimits where
         type VkMaxSamplerAnisotropyMType VkPhysicalDeviceLimits =
@@ -3584,6 +3988,12 @@ instance CanReadField "maxSamplerAnisotropy" VkPhysicalDeviceLimits
         {-# INLINE readField #-}
         readField = readVkMaxSamplerAnisotropy
 
+instance CanWriteField "maxSamplerAnisotropy"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxSamplerAnisotropy
+
 instance {-# OVERLAPPING #-}
          HasVkMaxViewports VkPhysicalDeviceLimits where
         type VkMaxViewportsMType VkPhysicalDeviceLimits = Word32
@@ -3626,6 +4036,10 @@ instance CanReadField "maxViewports" VkPhysicalDeviceLimits where
 
         {-# INLINE readField #-}
         readField = readVkMaxViewports
+
+instance CanWriteField "maxViewports" VkPhysicalDeviceLimits where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxViewports
 
 instance {-# OVERLAPPING #-}
          HasVkMaxViewportDimensionsArray VkPhysicalDeviceLimits where
@@ -3703,6 +4117,25 @@ instance (KnownNat idx,
           = readVkMaxViewportDimensionsArray x
               (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
+instance (KnownNat idx,
+          IndexInBounds "maxViewportDimensions" idx
+            VkPhysicalDeviceLimits) =>
+         CanWriteFieldArray "maxViewportDimensions" idx
+           VkPhysicalDeviceLimits
+         where
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "maxViewportDimensions" 0 VkPhysicalDeviceLimits
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "maxViewportDimensions" 1 VkPhysicalDeviceLimits
+                       #-}
+
+        {-# INLINE writeFieldArray #-}
+        writeFieldArray x
+          = writeVkMaxViewportDimensionsArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
 instance {-# OVERLAPPING #-}
          HasVkViewportBoundsRangeArray VkPhysicalDeviceLimits where
         type VkViewportBoundsRangeArrayMType VkPhysicalDeviceLimits =
@@ -3776,6 +4209,23 @@ instance (KnownNat idx,
           = readVkViewportBoundsRangeArray x
               (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
+instance (KnownNat idx,
+          IndexInBounds "viewportBoundsRange" idx VkPhysicalDeviceLimits) =>
+         CanWriteFieldArray "viewportBoundsRange" idx VkPhysicalDeviceLimits
+         where
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "viewportBoundsRange" 0 VkPhysicalDeviceLimits
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "viewportBoundsRange" 1 VkPhysicalDeviceLimits
+                       #-}
+
+        {-# INLINE writeFieldArray #-}
+        writeFieldArray x
+          = writeVkViewportBoundsRangeArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
 instance {-# OVERLAPPING #-}
          HasVkViewportSubPixelBits VkPhysicalDeviceLimits where
         type VkViewportSubPixelBitsMType VkPhysicalDeviceLimits = Word32
@@ -3822,6 +4272,12 @@ instance CanReadField "viewportSubPixelBits" VkPhysicalDeviceLimits
 
         {-# INLINE readField #-}
         readField = readVkViewportSubPixelBits
+
+instance CanWriteField "viewportSubPixelBits"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkViewportSubPixelBits
 
 instance {-# OVERLAPPING #-}
          HasVkMinMemoryMapAlignment VkPhysicalDeviceLimits where
@@ -3870,6 +4326,12 @@ instance CanReadField "minMemoryMapAlignment"
 
         {-# INLINE readField #-}
         readField = readVkMinMemoryMapAlignment
+
+instance CanWriteField "minMemoryMapAlignment"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMinMemoryMapAlignment
 
 instance {-# OVERLAPPING #-}
          HasVkMinTexelBufferOffsetAlignment VkPhysicalDeviceLimits where
@@ -3926,6 +4388,12 @@ instance CanReadField "minTexelBufferOffsetAlignment"
         {-# INLINE readField #-}
         readField = readVkMinTexelBufferOffsetAlignment
 
+instance CanWriteField "minTexelBufferOffsetAlignment"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMinTexelBufferOffsetAlignment
+
 instance {-# OVERLAPPING #-}
          HasVkMinUniformBufferOffsetAlignment VkPhysicalDeviceLimits where
         type VkMinUniformBufferOffsetAlignmentMType VkPhysicalDeviceLimits
@@ -3980,6 +4448,12 @@ instance CanReadField "minUniformBufferOffsetAlignment"
 
         {-# INLINE readField #-}
         readField = readVkMinUniformBufferOffsetAlignment
+
+instance CanWriteField "minUniformBufferOffsetAlignment"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMinUniformBufferOffsetAlignment
 
 instance {-# OVERLAPPING #-}
          HasVkMinStorageBufferOffsetAlignment VkPhysicalDeviceLimits where
@@ -4036,6 +4510,12 @@ instance CanReadField "minStorageBufferOffsetAlignment"
         {-# INLINE readField #-}
         readField = readVkMinStorageBufferOffsetAlignment
 
+instance CanWriteField "minStorageBufferOffsetAlignment"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMinStorageBufferOffsetAlignment
+
 instance {-# OVERLAPPING #-}
          HasVkMinTexelOffset VkPhysicalDeviceLimits where
         type VkMinTexelOffsetMType VkPhysicalDeviceLimits = Int32
@@ -4079,6 +4559,11 @@ instance CanReadField "minTexelOffset" VkPhysicalDeviceLimits where
         {-# INLINE readField #-}
         readField = readVkMinTexelOffset
 
+instance CanWriteField "minTexelOffset" VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMinTexelOffset
+
 instance {-# OVERLAPPING #-}
          HasVkMaxTexelOffset VkPhysicalDeviceLimits where
         type VkMaxTexelOffsetMType VkPhysicalDeviceLimits = Word32
@@ -4121,6 +4606,11 @@ instance CanReadField "maxTexelOffset" VkPhysicalDeviceLimits where
 
         {-# INLINE readField #-}
         readField = readVkMaxTexelOffset
+
+instance CanWriteField "maxTexelOffset" VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxTexelOffset
 
 instance {-# OVERLAPPING #-}
          HasVkMinTexelGatherOffset VkPhysicalDeviceLimits where
@@ -4169,6 +4659,12 @@ instance CanReadField "minTexelGatherOffset" VkPhysicalDeviceLimits
         {-# INLINE readField #-}
         readField = readVkMinTexelGatherOffset
 
+instance CanWriteField "minTexelGatherOffset"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMinTexelGatherOffset
+
 instance {-# OVERLAPPING #-}
          HasVkMaxTexelGatherOffset VkPhysicalDeviceLimits where
         type VkMaxTexelGatherOffsetMType VkPhysicalDeviceLimits = Word32
@@ -4215,6 +4711,12 @@ instance CanReadField "maxTexelGatherOffset" VkPhysicalDeviceLimits
 
         {-# INLINE readField #-}
         readField = readVkMaxTexelGatherOffset
+
+instance CanWriteField "maxTexelGatherOffset"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxTexelGatherOffset
 
 instance {-# OVERLAPPING #-}
          HasVkMinInterpolationOffset VkPhysicalDeviceLimits where
@@ -4265,6 +4767,12 @@ instance CanReadField "minInterpolationOffset"
         {-# INLINE readField #-}
         readField = readVkMinInterpolationOffset
 
+instance CanWriteField "minInterpolationOffset"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMinInterpolationOffset
+
 instance {-# OVERLAPPING #-}
          HasVkMaxInterpolationOffset VkPhysicalDeviceLimits where
         type VkMaxInterpolationOffsetMType VkPhysicalDeviceLimits =
@@ -4313,6 +4821,12 @@ instance CanReadField "maxInterpolationOffset"
 
         {-# INLINE readField #-}
         readField = readVkMaxInterpolationOffset
+
+instance CanWriteField "maxInterpolationOffset"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxInterpolationOffset
 
 instance {-# OVERLAPPING #-}
          HasVkSubPixelInterpolationOffsetBits VkPhysicalDeviceLimits where
@@ -4369,6 +4883,12 @@ instance CanReadField "subPixelInterpolationOffsetBits"
         {-# INLINE readField #-}
         readField = readVkSubPixelInterpolationOffsetBits
 
+instance CanWriteField "subPixelInterpolationOffsetBits"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSubPixelInterpolationOffsetBits
+
 instance {-# OVERLAPPING #-}
          HasVkMaxFramebufferWidth VkPhysicalDeviceLimits where
         type VkMaxFramebufferWidthMType VkPhysicalDeviceLimits = Word32
@@ -4415,6 +4935,11 @@ instance CanReadField "maxFramebufferWidth" VkPhysicalDeviceLimits
 
         {-# INLINE readField #-}
         readField = readVkMaxFramebufferWidth
+
+instance CanWriteField "maxFramebufferWidth" VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxFramebufferWidth
 
 instance {-# OVERLAPPING #-}
          HasVkMaxFramebufferHeight VkPhysicalDeviceLimits where
@@ -4463,6 +4988,12 @@ instance CanReadField "maxFramebufferHeight" VkPhysicalDeviceLimits
         {-# INLINE readField #-}
         readField = readVkMaxFramebufferHeight
 
+instance CanWriteField "maxFramebufferHeight"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxFramebufferHeight
+
 instance {-# OVERLAPPING #-}
          HasVkMaxFramebufferLayers VkPhysicalDeviceLimits where
         type VkMaxFramebufferLayersMType VkPhysicalDeviceLimits = Word32
@@ -4509,6 +5040,12 @@ instance CanReadField "maxFramebufferLayers" VkPhysicalDeviceLimits
 
         {-# INLINE readField #-}
         readField = readVkMaxFramebufferLayers
+
+instance CanWriteField "maxFramebufferLayers"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxFramebufferLayers
 
 instance {-# OVERLAPPING #-}
          HasVkFramebufferColorSampleCounts VkPhysicalDeviceLimits where
@@ -4565,6 +5102,12 @@ instance CanReadField "framebufferColorSampleCounts"
         {-# INLINE readField #-}
         readField = readVkFramebufferColorSampleCounts
 
+instance CanWriteField "framebufferColorSampleCounts"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkFramebufferColorSampleCounts
+
 instance {-# OVERLAPPING #-}
          HasVkFramebufferDepthSampleCounts VkPhysicalDeviceLimits where
         type VkFramebufferDepthSampleCountsMType VkPhysicalDeviceLimits =
@@ -4620,6 +5163,12 @@ instance CanReadField "framebufferDepthSampleCounts"
         {-# INLINE readField #-}
         readField = readVkFramebufferDepthSampleCounts
 
+instance CanWriteField "framebufferDepthSampleCounts"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkFramebufferDepthSampleCounts
+
 instance {-# OVERLAPPING #-}
          HasVkFramebufferStencilSampleCounts VkPhysicalDeviceLimits where
         type VkFramebufferStencilSampleCountsMType VkPhysicalDeviceLimits =
@@ -4674,6 +5223,12 @@ instance CanReadField "framebufferStencilSampleCounts"
 
         {-# INLINE readField #-}
         readField = readVkFramebufferStencilSampleCounts
+
+instance CanWriteField "framebufferStencilSampleCounts"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkFramebufferStencilSampleCounts
 
 instance {-# OVERLAPPING #-}
          HasVkFramebufferNoAttachmentsSampleCounts VkPhysicalDeviceLimits
@@ -4733,6 +5288,12 @@ instance CanReadField "framebufferNoAttachmentsSampleCounts"
         {-# INLINE readField #-}
         readField = readVkFramebufferNoAttachmentsSampleCounts
 
+instance CanWriteField "framebufferNoAttachmentsSampleCounts"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkFramebufferNoAttachmentsSampleCounts
+
 instance {-# OVERLAPPING #-}
          HasVkMaxColorAttachments VkPhysicalDeviceLimits where
         type VkMaxColorAttachmentsMType VkPhysicalDeviceLimits = Word32
@@ -4779,6 +5340,11 @@ instance CanReadField "maxColorAttachments" VkPhysicalDeviceLimits
 
         {-# INLINE readField #-}
         readField = readVkMaxColorAttachments
+
+instance CanWriteField "maxColorAttachments" VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxColorAttachments
 
 instance {-# OVERLAPPING #-}
          HasVkSampledImageColorSampleCounts VkPhysicalDeviceLimits where
@@ -4835,6 +5401,12 @@ instance CanReadField "sampledImageColorSampleCounts"
         {-# INLINE readField #-}
         readField = readVkSampledImageColorSampleCounts
 
+instance CanWriteField "sampledImageColorSampleCounts"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSampledImageColorSampleCounts
+
 instance {-# OVERLAPPING #-}
          HasVkSampledImageIntegerSampleCounts VkPhysicalDeviceLimits where
         type VkSampledImageIntegerSampleCountsMType VkPhysicalDeviceLimits
@@ -4889,6 +5461,12 @@ instance CanReadField "sampledImageIntegerSampleCounts"
 
         {-# INLINE readField #-}
         readField = readVkSampledImageIntegerSampleCounts
+
+instance CanWriteField "sampledImageIntegerSampleCounts"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSampledImageIntegerSampleCounts
 
 instance {-# OVERLAPPING #-}
          HasVkSampledImageDepthSampleCounts VkPhysicalDeviceLimits where
@@ -4945,6 +5523,12 @@ instance CanReadField "sampledImageDepthSampleCounts"
         {-# INLINE readField #-}
         readField = readVkSampledImageDepthSampleCounts
 
+instance CanWriteField "sampledImageDepthSampleCounts"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSampledImageDepthSampleCounts
+
 instance {-# OVERLAPPING #-}
          HasVkSampledImageStencilSampleCounts VkPhysicalDeviceLimits where
         type VkSampledImageStencilSampleCountsMType VkPhysicalDeviceLimits
@@ -5000,6 +5584,12 @@ instance CanReadField "sampledImageStencilSampleCounts"
         {-# INLINE readField #-}
         readField = readVkSampledImageStencilSampleCounts
 
+instance CanWriteField "sampledImageStencilSampleCounts"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSampledImageStencilSampleCounts
+
 instance {-# OVERLAPPING #-}
          HasVkStorageImageSampleCounts VkPhysicalDeviceLimits where
         type VkStorageImageSampleCountsMType VkPhysicalDeviceLimits =
@@ -5051,6 +5641,12 @@ instance CanReadField "storageImageSampleCounts"
         {-# INLINE readField #-}
         readField = readVkStorageImageSampleCounts
 
+instance CanWriteField "storageImageSampleCounts"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkStorageImageSampleCounts
+
 instance {-# OVERLAPPING #-}
          HasVkMaxSampleMaskWords VkPhysicalDeviceLimits where
         type VkMaxSampleMaskWordsMType VkPhysicalDeviceLimits = Word32
@@ -5096,6 +5692,11 @@ instance CanReadField "maxSampleMaskWords" VkPhysicalDeviceLimits
 
         {-# INLINE readField #-}
         readField = readVkMaxSampleMaskWords
+
+instance CanWriteField "maxSampleMaskWords" VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxSampleMaskWords
 
 instance {-# OVERLAPPING #-}
          HasVkTimestampComputeAndGraphics VkPhysicalDeviceLimits where
@@ -5150,6 +5751,12 @@ instance CanReadField "timestampComputeAndGraphics"
         {-# INLINE readField #-}
         readField = readVkTimestampComputeAndGraphics
 
+instance CanWriteField "timestampComputeAndGraphics"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkTimestampComputeAndGraphics
+
 instance {-# OVERLAPPING #-}
          HasVkTimestampPeriod VkPhysicalDeviceLimits where
         type VkTimestampPeriodMType VkPhysicalDeviceLimits =
@@ -5197,6 +5804,11 @@ instance CanReadField "timestampPeriod" VkPhysicalDeviceLimits
         {-# INLINE readField #-}
         readField = readVkTimestampPeriod
 
+instance CanWriteField "timestampPeriod" VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkTimestampPeriod
+
 instance {-# OVERLAPPING #-}
          HasVkMaxClipDistances VkPhysicalDeviceLimits where
         type VkMaxClipDistancesMType VkPhysicalDeviceLimits = Word32
@@ -5243,6 +5855,11 @@ instance CanReadField "maxClipDistances" VkPhysicalDeviceLimits
         {-# INLINE readField #-}
         readField = readVkMaxClipDistances
 
+instance CanWriteField "maxClipDistances" VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxClipDistances
+
 instance {-# OVERLAPPING #-}
          HasVkMaxCullDistances VkPhysicalDeviceLimits where
         type VkMaxCullDistancesMType VkPhysicalDeviceLimits = Word32
@@ -5288,6 +5905,11 @@ instance CanReadField "maxCullDistances" VkPhysicalDeviceLimits
 
         {-# INLINE readField #-}
         readField = readVkMaxCullDistances
+
+instance CanWriteField "maxCullDistances" VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxCullDistances
 
 instance {-# OVERLAPPING #-}
          HasVkMaxCombinedClipAndCullDistances VkPhysicalDeviceLimits where
@@ -5344,6 +5966,12 @@ instance CanReadField "maxCombinedClipAndCullDistances"
         {-# INLINE readField #-}
         readField = readVkMaxCombinedClipAndCullDistances
 
+instance CanWriteField "maxCombinedClipAndCullDistances"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxCombinedClipAndCullDistances
+
 instance {-# OVERLAPPING #-}
          HasVkDiscreteQueuePriorities VkPhysicalDeviceLimits where
         type VkDiscreteQueuePrioritiesMType VkPhysicalDeviceLimits = Word32
@@ -5391,6 +6019,12 @@ instance CanReadField "discreteQueuePriorities"
 
         {-# INLINE readField #-}
         readField = readVkDiscreteQueuePriorities
+
+instance CanWriteField "discreteQueuePriorities"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkDiscreteQueuePriorities
 
 instance {-# OVERLAPPING #-}
          HasVkPointSizeRangeArray VkPhysicalDeviceLimits where
@@ -5458,6 +6092,21 @@ instance (KnownNat idx,
         {-# INLINE readFieldArray #-}
         readFieldArray x
           = readVkPointSizeRangeArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
+instance (KnownNat idx,
+          IndexInBounds "pointSizeRange" idx VkPhysicalDeviceLimits) =>
+         CanWriteFieldArray "pointSizeRange" idx VkPhysicalDeviceLimits
+         where
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "pointSizeRange" 0 VkPhysicalDeviceLimits #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "pointSizeRange" 1 VkPhysicalDeviceLimits #-}
+
+        {-# INLINE writeFieldArray #-}
+        writeFieldArray x
+          = writeVkPointSizeRangeArray x
               (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
@@ -5528,6 +6177,21 @@ instance (KnownNat idx,
           = readVkLineWidthRangeArray x
               (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
+instance (KnownNat idx,
+          IndexInBounds "lineWidthRange" idx VkPhysicalDeviceLimits) =>
+         CanWriteFieldArray "lineWidthRange" idx VkPhysicalDeviceLimits
+         where
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "lineWidthRange" 0 VkPhysicalDeviceLimits #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "lineWidthRange" 1 VkPhysicalDeviceLimits #-}
+
+        {-# INLINE writeFieldArray #-}
+        writeFieldArray x
+          = writeVkLineWidthRangeArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
 instance {-# OVERLAPPING #-}
          HasVkPointSizeGranularity VkPhysicalDeviceLimits where
         type VkPointSizeGranularityMType VkPhysicalDeviceLimits =
@@ -5575,6 +6239,12 @@ instance CanReadField "pointSizeGranularity" VkPhysicalDeviceLimits
 
         {-# INLINE readField #-}
         readField = readVkPointSizeGranularity
+
+instance CanWriteField "pointSizeGranularity"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPointSizeGranularity
 
 instance {-# OVERLAPPING #-}
          HasVkLineWidthGranularity VkPhysicalDeviceLimits where
@@ -5624,6 +6294,12 @@ instance CanReadField "lineWidthGranularity" VkPhysicalDeviceLimits
         {-# INLINE readField #-}
         readField = readVkLineWidthGranularity
 
+instance CanWriteField "lineWidthGranularity"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkLineWidthGranularity
+
 instance {-# OVERLAPPING #-}
          HasVkStrictLines VkPhysicalDeviceLimits where
         type VkStrictLinesMType VkPhysicalDeviceLimits = VkBool32
@@ -5666,6 +6342,10 @@ instance CanReadField "strictLines" VkPhysicalDeviceLimits where
 
         {-# INLINE readField #-}
         readField = readVkStrictLines
+
+instance CanWriteField "strictLines" VkPhysicalDeviceLimits where
+        {-# INLINE writeField #-}
+        writeField = writeVkStrictLines
 
 instance {-# OVERLAPPING #-}
          HasVkStandardSampleLocations VkPhysicalDeviceLimits where
@@ -5715,6 +6395,12 @@ instance CanReadField "standardSampleLocations"
 
         {-# INLINE readField #-}
         readField = readVkStandardSampleLocations
+
+instance CanWriteField "standardSampleLocations"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkStandardSampleLocations
 
 instance {-# OVERLAPPING #-}
          HasVkOptimalBufferCopyOffsetAlignment VkPhysicalDeviceLimits where
@@ -5770,6 +6456,12 @@ instance CanReadField "optimalBufferCopyOffsetAlignment"
 
         {-# INLINE readField #-}
         readField = readVkOptimalBufferCopyOffsetAlignment
+
+instance CanWriteField "optimalBufferCopyOffsetAlignment"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkOptimalBufferCopyOffsetAlignment
 
 instance {-# OVERLAPPING #-}
          HasVkOptimalBufferCopyRowPitchAlignment VkPhysicalDeviceLimits
@@ -5829,6 +6521,12 @@ instance CanReadField "optimalBufferCopyRowPitchAlignment"
         {-# INLINE readField #-}
         readField = readVkOptimalBufferCopyRowPitchAlignment
 
+instance CanWriteField "optimalBufferCopyRowPitchAlignment"
+           VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkOptimalBufferCopyRowPitchAlignment
+
 instance {-# OVERLAPPING #-}
          HasVkNonCoherentAtomSize VkPhysicalDeviceLimits where
         type VkNonCoherentAtomSizeMType VkPhysicalDeviceLimits =
@@ -5876,6 +6574,11 @@ instance CanReadField "nonCoherentAtomSize" VkPhysicalDeviceLimits
 
         {-# INLINE readField #-}
         readField = readVkNonCoherentAtomSize
+
+instance CanWriteField "nonCoherentAtomSize" VkPhysicalDeviceLimits
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkNonCoherentAtomSize
 
 instance Show VkPhysicalDeviceLimits where
         showsPrec d x

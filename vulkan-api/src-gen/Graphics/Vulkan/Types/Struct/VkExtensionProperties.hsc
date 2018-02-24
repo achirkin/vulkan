@@ -149,6 +149,27 @@ instance (KnownNat idx,
           = readVkExtensionNameArray x
               (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
+instance (KnownNat idx,
+          IndexInBounds "extensionName" idx VkExtensionProperties) =>
+         CanWriteFieldArray "extensionName" idx VkExtensionProperties
+         where
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "extensionName" 0 VkExtensionProperties #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "extensionName" 1 VkExtensionProperties #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "extensionName" 2 VkExtensionProperties #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "extensionName" 3 VkExtensionProperties #-}
+
+        {-# INLINE writeFieldArray #-}
+        writeFieldArray x
+          = writeVkExtensionNameArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
 instance {-# OVERLAPPING #-} HasVkSpecVersion VkExtensionProperties
          where
         type VkSpecVersionMType VkExtensionProperties = Word32
@@ -191,6 +212,10 @@ instance CanReadField "specVersion" VkExtensionProperties where
 
         {-# INLINE readField #-}
         readField = readVkSpecVersion
+
+instance CanWriteField "specVersion" VkExtensionProperties where
+        {-# INLINE writeField #-}
+        writeField = writeVkSpecVersion
 
 instance Show VkExtensionProperties where
         showsPrec d x

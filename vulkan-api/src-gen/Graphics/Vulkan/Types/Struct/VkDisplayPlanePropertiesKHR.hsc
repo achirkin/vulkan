@@ -121,6 +121,11 @@ instance CanReadField "currentDisplay" VkDisplayPlanePropertiesKHR
         {-# INLINE readField #-}
         readField = readVkCurrentDisplay
 
+instance CanWriteField "currentDisplay" VkDisplayPlanePropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkCurrentDisplay
+
 instance {-# OVERLAPPING #-}
          HasVkCurrentStackIndex VkDisplayPlanePropertiesKHR where
         type VkCurrentStackIndexMType VkDisplayPlanePropertiesKHR = Word32
@@ -168,6 +173,12 @@ instance CanReadField "currentStackIndex"
 
         {-# INLINE readField #-}
         readField = readVkCurrentStackIndex
+
+instance CanWriteField "currentStackIndex"
+           VkDisplayPlanePropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkCurrentStackIndex
 
 instance Show VkDisplayPlanePropertiesKHR where
         showsPrec d x

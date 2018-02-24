@@ -154,6 +154,12 @@ instance CanReadField "sType"
         {-# INLINE readField #-}
         readField = readVkSType
 
+instance CanWriteField "sType"
+           VkPhysicalDeviceSampleLocationsPropertiesEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-}
          HasVkPNext VkPhysicalDeviceSampleLocationsPropertiesEXT where
         type VkPNextMType VkPhysicalDeviceSampleLocationsPropertiesEXT =
@@ -206,6 +212,12 @@ instance CanReadField "pNext"
 
         {-# INLINE readField #-}
         readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkPhysicalDeviceSampleLocationsPropertiesEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkSampleLocationSampleCounts
@@ -266,6 +278,12 @@ instance CanReadField "sampleLocationSampleCounts"
         {-# INLINE readField #-}
         readField = readVkSampleLocationSampleCounts
 
+instance CanWriteField "sampleLocationSampleCounts"
+           VkPhysicalDeviceSampleLocationsPropertiesEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSampleLocationSampleCounts
+
 instance {-# OVERLAPPING #-}
          HasVkMaxSampleLocationGridSize
            VkPhysicalDeviceSampleLocationsPropertiesEXT
@@ -324,6 +342,12 @@ instance CanReadField "maxSampleLocationGridSize"
 
         {-# INLINE readField #-}
         readField = readVkMaxSampleLocationGridSize
+
+instance CanWriteField "maxSampleLocationGridSize"
+           VkPhysicalDeviceSampleLocationsPropertiesEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxSampleLocationGridSize
 
 instance {-# OVERLAPPING #-}
          HasVkSampleLocationCoordinateRangeArray
@@ -413,6 +437,27 @@ instance (KnownNat idx,
           = readVkSampleLocationCoordinateRangeArray x
               (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
+instance (KnownNat idx,
+          IndexInBounds "sampleLocationCoordinateRange" idx
+            VkPhysicalDeviceSampleLocationsPropertiesEXT) =>
+         CanWriteFieldArray "sampleLocationCoordinateRange" idx
+           VkPhysicalDeviceSampleLocationsPropertiesEXT
+         where
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "sampleLocationCoordinateRange" 0
+                         VkPhysicalDeviceSampleLocationsPropertiesEXT
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "sampleLocationCoordinateRange" 1
+                         VkPhysicalDeviceSampleLocationsPropertiesEXT
+                       #-}
+
+        {-# INLINE writeFieldArray #-}
+        writeFieldArray x
+          = writeVkSampleLocationCoordinateRangeArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
 instance {-# OVERLAPPING #-}
          HasVkSampleLocationSubPixelBits
            VkPhysicalDeviceSampleLocationsPropertiesEXT
@@ -472,6 +517,12 @@ instance CanReadField "sampleLocationSubPixelBits"
         {-# INLINE readField #-}
         readField = readVkSampleLocationSubPixelBits
 
+instance CanWriteField "sampleLocationSubPixelBits"
+           VkPhysicalDeviceSampleLocationsPropertiesEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSampleLocationSubPixelBits
+
 instance {-# OVERLAPPING #-}
          HasVkVariableSampleLocations
            VkPhysicalDeviceSampleLocationsPropertiesEXT
@@ -530,6 +581,12 @@ instance CanReadField "variableSampleLocations"
 
         {-# INLINE readField #-}
         readField = readVkVariableSampleLocations
+
+instance CanWriteField "variableSampleLocations"
+           VkPhysicalDeviceSampleLocationsPropertiesEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkVariableSampleLocations
 
 instance Show VkPhysicalDeviceSampleLocationsPropertiesEXT where
         showsPrec d x

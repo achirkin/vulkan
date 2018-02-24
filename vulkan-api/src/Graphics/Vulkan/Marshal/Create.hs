@@ -2,6 +2,7 @@
 {-# LANGUAGE BangPatterns          #-}
 {-# LANGUAGE ConstraintKinds       #-}
 {-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE ExplicitNamespaces    #-}
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE KindSignatures        #-}
@@ -28,12 +29,13 @@ module Graphics.Vulkan.Marshal.Create
 
 import           Data.Coerce
 import           Data.Kind                        (Constraint, Type)
-import           Data.Type.Bool                   (If)
+import           Data.Type.Bool                   (If, type (||))
+import           Data.Type.Equality               (type (==))
 import           Foreign.C.String                 (newCString)
 import           Foreign.C.Types                  (CChar)
 import           Foreign.Marshal.Alloc            (finalizerFree, free)
 import           Foreign.Marshal.Array            (newArray, pokeArray0)
-import           Foreign.Ptr                      (plusPtr, nullPtr)
+import           Foreign.Ptr                      (nullPtr, plusPtr)
 import           Foreign.Storable                 (Storable)
 import           GHC.Base                         (IO (..))
 import           GHC.Prim
@@ -43,6 +45,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
+import           Graphics.Vulkan.Types.BaseTypes  (VkBool32)
 
 
 -- | Safely fill-in a new vulkan structure
@@ -315,7 +318,8 @@ instance ( SetOptionalFields x fs
                               )
 
 type family FieldMustBeOptional (f :: Symbol) (x :: Type) :: Constraint where
-  FieldMustBeOptional f x = If (FieldOptional f x) (() :: Constraint)
+  FieldMustBeOptional f x
+    = If (FieldOptional f x || FieldType f x == VkBool32) (() :: Constraint)
     ( TypeError
       ( 'Text "Non-optional field " ':<>: 'ShowType f
         ':<>: 'Text " of structure " ':<>: 'ShowType x

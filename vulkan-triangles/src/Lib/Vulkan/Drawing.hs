@@ -4,14 +4,13 @@
 {-# LANGUAGE TypeApplications #-}
 module Lib.Vulkan.Drawing
   ( RenderData (..)
-  , withFramebuffers
-  , withCommandPool
-  , withCommandBuffers
-  , withSemaphore
+  , createFramebuffers
+  , createCommandPool
+  , createCommandBuffers
+  , createSemaphore
   , drawFrame
   ) where
 
-import           Control.Exception
 import           Control.Monad                        (forM_)
 import           Foreign.Marshal.Alloc
 import           Foreign.Marshal.Array
@@ -21,24 +20,22 @@ import           Graphics.Vulkan
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
 import           Graphics.Vulkan.Marshal.Create
 
-import           Lib.Utils
+import           Lib.Program
 import           Lib.Vulkan.Presentation
 
 
-withFramebuffers :: VkDevice
-                 -> VkRenderPass
-                 -> SwapChainImgInfo
-                 -> [VkImageView]
-                 -> ([VkFramebuffer] -> IO a)
-                 -> IO a
-withFramebuffers dev renderPass SwapChainImgInfo{..} imgviews action = do
-    bufs <- mapM createFB imgviews
-    finally (action bufs) $
-      forM_ bufs $ \fb ->
-        vkDestroyFramebuffer dev fb VK_NULL_HANDLE
+createFramebuffers :: VkDevice
+                   -> VkRenderPass
+                   -> SwapChainImgInfo
+                   -> [VkImageView]
+                   -> Program r [VkFramebuffer]
+createFramebuffers dev renderPass SwapChainImgInfo{..} imgviews =
+    allocResource
+      (liftIO . mapM_  (\fb -> vkDestroyFramebuffer dev fb VK_NULL) )
+      (mapM createFB imgviews)
   where
     createFB imgView =
-      let fbci = createVk
+      let fbci = createVk @VkFramebufferCreateInfo
             $  set @"sType" VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO
             &* set @"pNext" VK_NULL
             &* set @"flags" 0
@@ -48,45 +45,39 @@ withFramebuffers dev renderPass SwapChainImgInfo{..} imgviews action = do
             &* set @"width" (getField @"width" swExtent)
             &* set @"height" (getField @"height" swExtent)
             &* set @"layers" 1
-      in alloca $ \fbPtr -> withPtr fbci $ \fbciPtr -> do
-        throwingVK "vkCreateFramebuffer failed!"
-          $ vkCreateFramebuffer dev fbciPtr VK_NULL fbPtr
-        peek fbPtr
+      in allocaPeek $ \fbPtr -> withVkPtr fbci $ \fbciPtr ->
+          runVk $ vkCreateFramebuffer dev fbciPtr VK_NULL fbPtr
 
 
-withCommandPool :: VkDevice -> DevQueues
-                -> (VkCommandPool -> IO a)
-                -> IO a
-withCommandPool dev DevQueues{..} action = do
-
-  commandPool <- alloca $ \pPtr -> do
-    withPtr
+createCommandPool :: VkDevice -> DevQueues -> Program r VkCommandPool
+createCommandPool dev DevQueues{..} =
+  allocResource (liftIO . flip (vkDestroyCommandPool dev) VK_NULL) $
+    allocaPeek $ \pPtr -> withVkPtr
       ( createVk
         $  set @"sType" VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO
         &* set @"pNext" VK_NULL
         &* set @"flags" 0
         &* set @"queueFamilyIndex" graphicsFamIdx
-      ) $ \ciPtr ->
-      throwingVK "vkCreateCommandPool failed!"
-        $ vkCreateCommandPool dev ciPtr VK_NULL pPtr
-    peek pPtr
+      ) $ \ciPtr -> runVk $ vkCreateCommandPool dev ciPtr VK_NULL pPtr
 
-  finally (action commandPool) $
-    vkDestroyCommandPool dev commandPool VK_NULL
 
-withCommandBuffers :: VkDevice
-                   -> VkPipeline
-                   -> VkCommandPool
-                   -> VkRenderPass
-                   -> SwapChainImgInfo
-                   -> [VkFramebuffer]
-                   -> ([VkCommandBuffer] -> IO a)
-                   -> IO a
-withCommandBuffers
-    dev pipeline commandPool rpass  SwapChainImgInfo{..} fbs action
+createCommandBuffers :: VkDevice
+                     -> VkPipeline
+                     -> VkCommandPool
+                     -> VkRenderPass
+                     -> SwapChainImgInfo
+                     -> [VkFramebuffer]
+                     -> Program r [VkCommandBuffer]
+createCommandBuffers
+    dev pipeline commandPool rpass  SwapChainImgInfo{..} fbs
   | buffersCount <- length fbs =
   -- allocate a pointer to an array of command buffer handles
-  allocaArray buffersCount $ \cbsPtr -> do
+  fmap snd $ allocResource
+    ( \(cbsPtr, _) -> liftIO $ do
+      vkFreeCommandBuffers dev commandPool (fromIntegral buffersCount) cbsPtr
+      free cbsPtr
+    ) $ do
+    cbsPtr <- liftIO $ mallocArray buffersCount
 
     let allocInfo = createVk @VkCommandBufferAllocateInfo
           $  set @"sType" VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO
@@ -95,10 +86,9 @@ withCommandBuffers
           &* set @"level" VK_COMMAND_BUFFER_LEVEL_PRIMARY
           &* set @"commandBufferCount" (fromIntegral buffersCount)
 
-    withPtr allocInfo $ \aiPtr ->
-      throwingVK "vkAllocateCommandBuffers failed!"
-        $ vkAllocateCommandBuffers dev aiPtr cbsPtr
-    commandBuffers <- peekArray buffersCount cbsPtr
+    withVkPtr allocInfo $ \aiPtr ->
+      runVk $ vkAllocateCommandBuffers dev aiPtr cbsPtr
+    commandBuffers <- liftIO $ peekArray buffersCount cbsPtr
 
     -- record command buffers
     forM_ (zip fbs commandBuffers) $ \(frameBuffer, cmdBuffer) -> do
@@ -109,9 +99,8 @@ withCommandBuffers
             &* set @"pNext" VK_NULL
             &* set @"flags" VK_COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT
 
-      withPtr cmdBufBeginInfo
-        $ throwingVK "vkBeginCommandBuffer failed!"
-        . vkBeginCommandBuffer cmdBuffer
+      withVkPtr cmdBufBeginInfo
+        $ runVk . vkBeginCommandBuffer cmdBuffer
 
       -- render pass
       let renderPassBeginInfo = createVk @VkRenderPassBeginInfo
@@ -133,41 +122,32 @@ withCommandBuffers
                   &* setAt @"float32" @3 1
                )
 
-      withPtr renderPassBeginInfo $ \rpibPtr ->
-        vkCmdBeginRenderPass cmdBuffer rpibPtr VK_SUBPASS_CONTENTS_INLINE
+      withVkPtr renderPassBeginInfo $ \rpibPtr ->
+        liftIO $ vkCmdBeginRenderPass cmdBuffer rpibPtr VK_SUBPASS_CONTENTS_INLINE
 
       -- basic drawing commands
-      vkCmdBindPipeline cmdBuffer VK_PIPELINE_BIND_POINT_GRAPHICS pipeline
-      vkCmdDraw cmdBuffer 3 1 0 0
+      liftIO $ vkCmdBindPipeline cmdBuffer VK_PIPELINE_BIND_POINT_GRAPHICS pipeline
+      liftIO $ vkCmdDraw cmdBuffer 3 1 0 0
 
       -- finishing up
-      vkCmdEndRenderPass cmdBuffer
+      liftIO $ vkCmdEndRenderPass cmdBuffer
 
-      throwingVK "vkEndCommandBuffer failed!"
-        $ vkEndCommandBuffer cmdBuffer
+      runVk $ vkEndCommandBuffer cmdBuffer
 
-
-    finally (action commandBuffers) $
-      vkFreeCommandBuffers dev commandPool (fromIntegral buffersCount) cbsPtr
+    return (cbsPtr, commandBuffers)
 
 
-withSemaphore :: VkDevice
-              -> (VkSemaphore -> IO a)
-              -> IO a
-withSemaphore dev action = do
-
-  semaphore <- alloca $ \sPtr -> do
-    withPtr
+createSemaphore :: VkDevice -> Program r VkSemaphore
+createSemaphore dev =
+  allocResource
+    (liftIO .  flip (vkDestroySemaphore dev) VK_NULL)
+    $ allocaPeek $ \sPtr -> withVkPtr
       ( createVk
         $  set @"sType" VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO
         &* set @"pNext" VK_NULL
         &* set @"flags" 0
-      ) $ \ciPtr -> throwingVK "vkCreateSemaphore failed!"
-                      $ vkCreateSemaphore dev ciPtr VK_NULL sPtr
-    peek sPtr
+      ) $ \ciPtr -> runVk $ vkCreateSemaphore dev ciPtr VK_NULL sPtr
 
-  finally (action semaphore) $
-    vkDestroySemaphore dev semaphore VK_NULL
 
 
 data RenderData
@@ -182,29 +162,27 @@ data RenderData
   }
 
 
-drawFrame :: RenderData -> IO ()
-drawFrame RenderData {..} =
-    withArray commandBuffers
-      $ \commandBuffersPtr -> do
+drawFrame :: RenderData -> Program r ()
+drawFrame RenderData {..} = do
+    commandBuffersPtr <- allocResource
+      (liftIO . free)
+      (liftIO $ newArray commandBuffers)
 
     -- Acquiring an image from the swap chain
-    throwingVK "vkAcquireNextImageKHR failed!"
-      $ vkAcquireNextImageKHR
+    runVk $ vkAcquireNextImageKHR
           device swapchain maxBound
           imageAvailable VK_NULL_HANDLE imgIndexPtr
     bufPtr <- (\i -> commandBuffersPtr `plusPtr`
                         (fromIntegral i * sizeOf (undefined :: VkCommandBuffer))
-              ) <$> peek imgIndexPtr
+              ) <$> liftIO (peek imgIndexPtr)
 
     -- Submitting the command buffer
-    withPtr (mkSubmitInfo bufPtr) $ \siPtr ->
-      throwingVK "vkQueueSubmit failed!"
-        $ vkQueueSubmit graphicsQueue 1 siPtr VK_NULL
-
+    withVkPtr (mkSubmitInfo bufPtr) $ \siPtr ->
+      runVk $ vkQueueSubmit graphicsQueue 1 siPtr VK_NULL
 
     -- RENDERRR!!!
-    withPtr presentInfo $
-      throwingVK "vkQueuePresentKHR failed!" . vkQueuePresentKHR presentQueue
+    withVkPtr presentInfo $
+      runVk . vkQueuePresentKHR presentQueue
   where
     SwapChainImgInfo {..} = swapChainInfo
     DevQueues {..} = deviceQueues

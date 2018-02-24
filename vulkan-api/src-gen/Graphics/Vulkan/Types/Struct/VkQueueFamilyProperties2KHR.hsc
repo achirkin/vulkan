@@ -119,6 +119,10 @@ instance CanReadField "sType" VkQueueFamilyProperties2KHR where
         {-# INLINE readField #-}
         readField = readVkSType
 
+instance CanWriteField "sType" VkQueueFamilyProperties2KHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkQueueFamilyProperties2KHR
          where
         type VkPNextMType VkQueueFamilyProperties2KHR = Ptr Void
@@ -161,6 +165,10 @@ instance CanReadField "pNext" VkQueueFamilyProperties2KHR where
 
         {-# INLINE readField #-}
         readField = readVkPNext
+
+instance CanWriteField "pNext" VkQueueFamilyProperties2KHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkQueueFamilyProperties VkQueueFamilyProperties2KHR where
@@ -214,6 +222,12 @@ instance CanReadField "queueFamilyProperties"
 
         {-# INLINE readField #-}
         readField = readVkQueueFamilyProperties
+
+instance CanWriteField "queueFamilyProperties"
+           VkQueueFamilyProperties2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkQueueFamilyProperties
 
 instance Show VkQueueFamilyProperties2KHR where
         showsPrec d x

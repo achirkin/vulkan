@@ -108,6 +108,10 @@ instance CanReadField "size" VkMemoryHeap where
         {-# INLINE readField #-}
         readField = readVkSize
 
+instance CanWriteField "size" VkMemoryHeap where
+        {-# INLINE writeField #-}
+        writeField = writeVkSize
+
 instance {-# OVERLAPPING #-} HasVkFlags VkMemoryHeap where
         type VkFlagsMType VkMemoryHeap = VkMemoryHeapFlags
 
@@ -146,6 +150,10 @@ instance CanReadField "flags" VkMemoryHeap where
 
         {-# INLINE readField #-}
         readField = readVkFlags
+
+instance CanWriteField "flags" VkMemoryHeap where
+        {-# INLINE writeField #-}
+        writeField = writeVkFlags
 
 instance Show VkMemoryHeap where
         showsPrec d x

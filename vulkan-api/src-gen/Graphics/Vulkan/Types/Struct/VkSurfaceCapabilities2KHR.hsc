@@ -116,6 +116,10 @@ instance CanReadField "sType" VkSurfaceCapabilities2KHR where
         {-# INLINE readField #-}
         readField = readVkSType
 
+instance CanWriteField "sType" VkSurfaceCapabilities2KHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkSurfaceCapabilities2KHR
          where
         type VkPNextMType VkSurfaceCapabilities2KHR = Ptr Void
@@ -158,6 +162,10 @@ instance CanReadField "pNext" VkSurfaceCapabilities2KHR where
 
         {-# INLINE readField #-}
         readField = readVkPNext
+
+instance CanWriteField "pNext" VkSurfaceCapabilities2KHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkSurfaceCapabilities VkSurfaceCapabilities2KHR where
@@ -207,6 +215,12 @@ instance CanReadField "surfaceCapabilities"
 
         {-# INLINE readField #-}
         readField = readVkSurfaceCapabilities
+
+instance CanWriteField "surfaceCapabilities"
+           VkSurfaceCapabilities2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSurfaceCapabilities
 
 instance Show VkSurfaceCapabilities2KHR where
         showsPrec d x

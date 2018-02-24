@@ -131,6 +131,12 @@ instance CanReadField "formatProperties"
         {-# INLINE readField #-}
         readField = readVkFormatProperties
 
+instance CanWriteField "formatProperties"
+           VkSparseImageMemoryRequirements
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkFormatProperties
+
 instance {-# OVERLAPPING #-}
          HasVkImageMipTailFirstLod VkSparseImageMemoryRequirements where
         type VkImageMipTailFirstLodMType VkSparseImageMemoryRequirements =
@@ -186,6 +192,12 @@ instance CanReadField "imageMipTailFirstLod"
         {-# INLINE readField #-}
         readField = readVkImageMipTailFirstLod
 
+instance CanWriteField "imageMipTailFirstLod"
+           VkSparseImageMemoryRequirements
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkImageMipTailFirstLod
+
 instance {-# OVERLAPPING #-}
          HasVkImageMipTailSize VkSparseImageMemoryRequirements where
         type VkImageMipTailSizeMType VkSparseImageMemoryRequirements =
@@ -237,6 +249,12 @@ instance CanReadField "imageMipTailSize"
 
         {-# INLINE readField #-}
         readField = readVkImageMipTailSize
+
+instance CanWriteField "imageMipTailSize"
+           VkSparseImageMemoryRequirements
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkImageMipTailSize
 
 instance {-# OVERLAPPING #-}
          HasVkImageMipTailOffset VkSparseImageMemoryRequirements where
@@ -291,6 +309,12 @@ instance CanReadField "imageMipTailOffset"
         {-# INLINE readField #-}
         readField = readVkImageMipTailOffset
 
+instance CanWriteField "imageMipTailOffset"
+           VkSparseImageMemoryRequirements
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkImageMipTailOffset
+
 instance {-# OVERLAPPING #-}
          HasVkImageMipTailStride VkSparseImageMemoryRequirements where
         type VkImageMipTailStrideMType VkSparseImageMemoryRequirements =
@@ -343,6 +367,12 @@ instance CanReadField "imageMipTailStride"
 
         {-# INLINE readField #-}
         readField = readVkImageMipTailStride
+
+instance CanWriteField "imageMipTailStride"
+           VkSparseImageMemoryRequirements
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkImageMipTailStride
 
 instance Show VkSparseImageMemoryRequirements where
         showsPrec d x

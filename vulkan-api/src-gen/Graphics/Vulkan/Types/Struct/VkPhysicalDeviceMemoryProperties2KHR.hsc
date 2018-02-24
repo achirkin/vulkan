@@ -127,6 +127,11 @@ instance CanReadField "sType" VkPhysicalDeviceMemoryProperties2KHR
         {-# INLINE readField #-}
         readField = readVkSType
 
+instance CanWriteField "sType" VkPhysicalDeviceMemoryProperties2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-}
          HasVkPNext VkPhysicalDeviceMemoryProperties2KHR where
         type VkPNextMType VkPhysicalDeviceMemoryProperties2KHR = Ptr Void
@@ -173,6 +178,11 @@ instance CanReadField "pNext" VkPhysicalDeviceMemoryProperties2KHR
 
         {-# INLINE readField #-}
         readField = readVkPNext
+
+instance CanWriteField "pNext" VkPhysicalDeviceMemoryProperties2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkMemoryProperties VkPhysicalDeviceMemoryProperties2KHR where
@@ -228,6 +238,12 @@ instance CanReadField "memoryProperties"
 
         {-# INLINE readField #-}
         readField = readVkMemoryProperties
+
+instance CanWriteField "memoryProperties"
+           VkPhysicalDeviceMemoryProperties2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMemoryProperties
 
 instance Show VkPhysicalDeviceMemoryProperties2KHR where
         showsPrec d x

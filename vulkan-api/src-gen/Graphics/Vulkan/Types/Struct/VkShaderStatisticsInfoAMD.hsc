@@ -133,6 +133,11 @@ instance CanReadField "shaderStageMask" VkShaderStatisticsInfoAMD
         {-# INLINE readField #-}
         readField = readVkShaderStageMask
 
+instance CanWriteField "shaderStageMask" VkShaderStatisticsInfoAMD
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkShaderStageMask
+
 instance {-# OVERLAPPING #-}
          HasVkResourceUsage VkShaderStatisticsInfoAMD where
         type VkResourceUsageMType VkShaderStatisticsInfoAMD =
@@ -181,6 +186,11 @@ instance CanReadField "resourceUsage" VkShaderStatisticsInfoAMD
         {-# INLINE readField #-}
         readField = readVkResourceUsage
 
+instance CanWriteField "resourceUsage" VkShaderStatisticsInfoAMD
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkResourceUsage
+
 instance {-# OVERLAPPING #-}
          HasVkNumPhysicalVgprs VkShaderStatisticsInfoAMD where
         type VkNumPhysicalVgprsMType VkShaderStatisticsInfoAMD = Word32
@@ -227,6 +237,11 @@ instance CanReadField "numPhysicalVgprs" VkShaderStatisticsInfoAMD
 
         {-# INLINE readField #-}
         readField = readVkNumPhysicalVgprs
+
+instance CanWriteField "numPhysicalVgprs" VkShaderStatisticsInfoAMD
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkNumPhysicalVgprs
 
 instance {-# OVERLAPPING #-}
          HasVkNumPhysicalSgprs VkShaderStatisticsInfoAMD where
@@ -275,6 +290,11 @@ instance CanReadField "numPhysicalSgprs" VkShaderStatisticsInfoAMD
         {-# INLINE readField #-}
         readField = readVkNumPhysicalSgprs
 
+instance CanWriteField "numPhysicalSgprs" VkShaderStatisticsInfoAMD
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkNumPhysicalSgprs
+
 instance {-# OVERLAPPING #-}
          HasVkNumAvailableVgprs VkShaderStatisticsInfoAMD where
         type VkNumAvailableVgprsMType VkShaderStatisticsInfoAMD = Word32
@@ -322,6 +342,12 @@ instance CanReadField "numAvailableVgprs" VkShaderStatisticsInfoAMD
         {-# INLINE readField #-}
         readField = readVkNumAvailableVgprs
 
+instance CanWriteField "numAvailableVgprs"
+           VkShaderStatisticsInfoAMD
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkNumAvailableVgprs
+
 instance {-# OVERLAPPING #-}
          HasVkNumAvailableSgprs VkShaderStatisticsInfoAMD where
         type VkNumAvailableSgprsMType VkShaderStatisticsInfoAMD = Word32
@@ -368,6 +394,12 @@ instance CanReadField "numAvailableSgprs" VkShaderStatisticsInfoAMD
 
         {-# INLINE readField #-}
         readField = readVkNumAvailableSgprs
+
+instance CanWriteField "numAvailableSgprs"
+           VkShaderStatisticsInfoAMD
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkNumAvailableSgprs
 
 instance {-# OVERLAPPING #-}
          HasVkComputeWorkGroupSizeArray VkShaderStatisticsInfoAMD where
@@ -450,6 +482,32 @@ instance (KnownNat idx,
         {-# INLINE readFieldArray #-}
         readFieldArray x
           = readVkComputeWorkGroupSizeArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
+instance (KnownNat idx,
+          IndexInBounds "computeWorkGroupSize" idx
+            VkShaderStatisticsInfoAMD) =>
+         CanWriteFieldArray "computeWorkGroupSize" idx
+           VkShaderStatisticsInfoAMD
+         where
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "computeWorkGroupSize" 0
+                         VkShaderStatisticsInfoAMD
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "computeWorkGroupSize" 1
+                         VkShaderStatisticsInfoAMD
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "computeWorkGroupSize" 2
+                         VkShaderStatisticsInfoAMD
+                       #-}
+
+        {-# INLINE writeFieldArray #-}
+        writeFieldArray x
+          = writeVkComputeWorkGroupSizeArray x
               (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
 instance Show VkShaderStatisticsInfoAMD where

@@ -135,6 +135,10 @@ instance CanReadField "sType" VkSurfaceCapabilities2EXT where
         {-# INLINE readField #-}
         readField = readVkSType
 
+instance CanWriteField "sType" VkSurfaceCapabilities2EXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkSurfaceCapabilities2EXT
          where
         type VkPNextMType VkSurfaceCapabilities2EXT = Ptr Void
@@ -177,6 +181,10 @@ instance CanReadField "pNext" VkSurfaceCapabilities2EXT where
 
         {-# INLINE readField #-}
         readField = readVkPNext
+
+instance CanWriteField "pNext" VkSurfaceCapabilities2EXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkMinImageCount VkSurfaceCapabilities2EXT where
@@ -224,6 +232,11 @@ instance CanReadField "minImageCount" VkSurfaceCapabilities2EXT
         {-# INLINE readField #-}
         readField = readVkMinImageCount
 
+instance CanWriteField "minImageCount" VkSurfaceCapabilities2EXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMinImageCount
+
 instance {-# OVERLAPPING #-}
          HasVkMaxImageCount VkSurfaceCapabilities2EXT where
         type VkMaxImageCountMType VkSurfaceCapabilities2EXT = Word32
@@ -269,6 +282,11 @@ instance CanReadField "maxImageCount" VkSurfaceCapabilities2EXT
 
         {-# INLINE readField #-}
         readField = readVkMaxImageCount
+
+instance CanWriteField "maxImageCount" VkSurfaceCapabilities2EXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxImageCount
 
 instance {-# OVERLAPPING #-}
          HasVkCurrentExtent VkSurfaceCapabilities2EXT where
@@ -317,6 +335,11 @@ instance CanReadField "currentExtent" VkSurfaceCapabilities2EXT
         {-# INLINE readField #-}
         readField = readVkCurrentExtent
 
+instance CanWriteField "currentExtent" VkSurfaceCapabilities2EXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkCurrentExtent
+
 instance {-# OVERLAPPING #-}
          HasVkMinImageExtent VkSurfaceCapabilities2EXT where
         type VkMinImageExtentMType VkSurfaceCapabilities2EXT = VkExtent2D
@@ -363,6 +386,11 @@ instance CanReadField "minImageExtent" VkSurfaceCapabilities2EXT
 
         {-# INLINE readField #-}
         readField = readVkMinImageExtent
+
+instance CanWriteField "minImageExtent" VkSurfaceCapabilities2EXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMinImageExtent
 
 instance {-# OVERLAPPING #-}
          HasVkMaxImageExtent VkSurfaceCapabilities2EXT where
@@ -411,6 +439,11 @@ instance CanReadField "maxImageExtent" VkSurfaceCapabilities2EXT
         {-# INLINE readField #-}
         readField = readVkMaxImageExtent
 
+instance CanWriteField "maxImageExtent" VkSurfaceCapabilities2EXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxImageExtent
+
 instance {-# OVERLAPPING #-}
          HasVkMaxImageArrayLayers VkSurfaceCapabilities2EXT where
         type VkMaxImageArrayLayersMType VkSurfaceCapabilities2EXT = Word32
@@ -458,6 +491,12 @@ instance CanReadField "maxImageArrayLayers"
 
         {-# INLINE readField #-}
         readField = readVkMaxImageArrayLayers
+
+instance CanWriteField "maxImageArrayLayers"
+           VkSurfaceCapabilities2EXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxImageArrayLayers
 
 instance {-# OVERLAPPING #-}
          HasVkSupportedTransforms VkSurfaceCapabilities2EXT where
@@ -508,6 +547,12 @@ instance CanReadField "supportedTransforms"
         {-# INLINE readField #-}
         readField = readVkSupportedTransforms
 
+instance CanWriteField "supportedTransforms"
+           VkSurfaceCapabilities2EXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSupportedTransforms
+
 instance {-# OVERLAPPING #-}
          HasVkCurrentTransform VkSurfaceCapabilities2EXT where
         type VkCurrentTransformMType VkSurfaceCapabilities2EXT =
@@ -555,6 +600,11 @@ instance CanReadField "currentTransform" VkSurfaceCapabilities2EXT
 
         {-# INLINE readField #-}
         readField = readVkCurrentTransform
+
+instance CanWriteField "currentTransform" VkSurfaceCapabilities2EXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkCurrentTransform
 
 instance {-# OVERLAPPING #-}
          HasVkSupportedCompositeAlpha VkSurfaceCapabilities2EXT where
@@ -609,6 +659,12 @@ instance CanReadField "supportedCompositeAlpha"
         {-# INLINE readField #-}
         readField = readVkSupportedCompositeAlpha
 
+instance CanWriteField "supportedCompositeAlpha"
+           VkSurfaceCapabilities2EXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSupportedCompositeAlpha
+
 instance {-# OVERLAPPING #-}
          HasVkSupportedUsageFlags VkSurfaceCapabilities2EXT where
         type VkSupportedUsageFlagsMType VkSurfaceCapabilities2EXT =
@@ -657,6 +713,12 @@ instance CanReadField "supportedUsageFlags"
 
         {-# INLINE readField #-}
         readField = readVkSupportedUsageFlags
+
+instance CanWriteField "supportedUsageFlags"
+           VkSurfaceCapabilities2EXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSupportedUsageFlags
 
 instance {-# OVERLAPPING #-}
          HasVkSupportedSurfaceCounters VkSurfaceCapabilities2EXT where
@@ -710,6 +772,12 @@ instance CanReadField "supportedSurfaceCounters"
 
         {-# INLINE readField #-}
         readField = readVkSupportedSurfaceCounters
+
+instance CanWriteField "supportedSurfaceCounters"
+           VkSurfaceCapabilities2EXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSupportedSurfaceCounters
 
 instance Show VkSurfaceCapabilities2EXT where
         showsPrec d x

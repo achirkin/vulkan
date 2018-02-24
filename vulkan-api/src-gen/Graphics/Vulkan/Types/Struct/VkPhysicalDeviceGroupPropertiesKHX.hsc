@@ -136,6 +136,11 @@ instance CanReadField "sType" VkPhysicalDeviceGroupPropertiesKHX
         {-# INLINE readField #-}
         readField = readVkSType
 
+instance CanWriteField "sType" VkPhysicalDeviceGroupPropertiesKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-}
          HasVkPNext VkPhysicalDeviceGroupPropertiesKHX where
         type VkPNextMType VkPhysicalDeviceGroupPropertiesKHX = Ptr Void
@@ -182,6 +187,11 @@ instance CanReadField "pNext" VkPhysicalDeviceGroupPropertiesKHX
 
         {-# INLINE readField #-}
         readField = readVkPNext
+
+instance CanWriteField "pNext" VkPhysicalDeviceGroupPropertiesKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkPhysicalDeviceCount VkPhysicalDeviceGroupPropertiesKHX where
@@ -237,6 +247,12 @@ instance CanReadField "physicalDeviceCount"
 
         {-# INLINE readField #-}
         readField = readVkPhysicalDeviceCount
+
+instance CanWriteField "physicalDeviceCount"
+           VkPhysicalDeviceGroupPropertiesKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPhysicalDeviceCount
 
 instance {-# OVERLAPPING #-}
          HasVkPhysicalDevicesArray VkPhysicalDeviceGroupPropertiesKHX where
@@ -330,6 +346,37 @@ instance (KnownNat idx,
           = readVkPhysicalDevicesArray x
               (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
+instance (KnownNat idx,
+          IndexInBounds "physicalDevices" idx
+            VkPhysicalDeviceGroupPropertiesKHX) =>
+         CanWriteFieldArray "physicalDevices" idx
+           VkPhysicalDeviceGroupPropertiesKHX
+         where
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "physicalDevices" 0
+                         VkPhysicalDeviceGroupPropertiesKHX
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "physicalDevices" 1
+                         VkPhysicalDeviceGroupPropertiesKHX
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "physicalDevices" 2
+                         VkPhysicalDeviceGroupPropertiesKHX
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "physicalDevices" 3
+                         VkPhysicalDeviceGroupPropertiesKHX
+                       #-}
+
+        {-# INLINE writeFieldArray #-}
+        writeFieldArray x
+          = writeVkPhysicalDevicesArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
 instance {-# OVERLAPPING #-}
          HasVkSubsetAllocation VkPhysicalDeviceGroupPropertiesKHX where
         type VkSubsetAllocationMType VkPhysicalDeviceGroupPropertiesKHX =
@@ -384,6 +431,12 @@ instance CanReadField "subsetAllocation"
 
         {-# INLINE readField #-}
         readField = readVkSubsetAllocation
+
+instance CanWriteField "subsetAllocation"
+           VkPhysicalDeviceGroupPropertiesKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSubsetAllocation
 
 instance Show VkPhysicalDeviceGroupPropertiesKHX where
         showsPrec d x

@@ -11,20 +11,23 @@ import           Graphics.UI.GLFW      (ClientAPI (..), WindowHint (..))
 import qualified Graphics.UI.GLFW      as GLFW
 import           Graphics.Vulkan
 
+import           Lib.Program
 import           Lib.Vulkan
 
-import           Lib.Program
 
 initGLFWWindow :: Int -- ^ Window width
                -> Int -- ^ Window height
                -> String -- ^ Window name
                -> Program r GLFW.Window
 initGLFWWindow w h n = do
-  liftIO GLFW.init >>= flip unless
-    (throwVkMsg "Failed to initialize GLFW.")
 
-  -- even if something bad happens, we need to terminate GLFW
-  flip finally (liftIO GLFW.terminate >> logInfo "Terminated GLFW.") $ do
+    -- even if something bad happens, we need to terminate GLFW
+    allocResource
+      (\() -> liftIO GLFW.terminate >> logInfo "Terminated GLFW.")
+      ( liftIO GLFW.init >>= flip unless
+          (throwVkMsg "Failed to initialize GLFW.")
+      )
+
     liftIO GLFW.getVersionString >>= mapM_ (logInfo . ("GLFW version: " ++))
 
     liftIO GLFW.vulkanSupported >>= flip unless
@@ -65,4 +68,4 @@ createGLFWVulkanInstance progName = do
       progName
       "My perfect Haskell engine"
       glfwReqExts
-      ["VK_LAYER_LUNARG_standard_validation" | isDev]
+      []

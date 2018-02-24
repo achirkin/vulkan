@@ -137,6 +137,12 @@ instance CanReadField "sType"
         {-# INLINE readField #-}
         readField = readVkSType
 
+instance CanWriteField "sType"
+           VkPhysicalDevicePointClippingPropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-}
          HasVkPNext VkPhysicalDevicePointClippingPropertiesKHR where
         type VkPNextMType VkPhysicalDevicePointClippingPropertiesKHR =
@@ -188,6 +194,12 @@ instance CanReadField "pNext"
 
         {-# INLINE readField #-}
         readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkPhysicalDevicePointClippingPropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkPointClippingBehavior
@@ -247,6 +259,12 @@ instance CanReadField "pointClippingBehavior"
 
         {-# INLINE readField #-}
         readField = readVkPointClippingBehavior
+
+instance CanWriteField "pointClippingBehavior"
+           VkPhysicalDevicePointClippingPropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPointClippingBehavior
 
 instance Show VkPhysicalDevicePointClippingPropertiesKHR where
         showsPrec d x

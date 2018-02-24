@@ -124,6 +124,10 @@ instance CanReadField "sType" VkExternalFencePropertiesKHR where
         {-# INLINE readField #-}
         readField = readVkSType
 
+instance CanWriteField "sType" VkExternalFencePropertiesKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-}
          HasVkPNext VkExternalFencePropertiesKHR where
         type VkPNextMType VkExternalFencePropertiesKHR = Ptr Void
@@ -166,6 +170,10 @@ instance CanReadField "pNext" VkExternalFencePropertiesKHR where
 
         {-# INLINE readField #-}
         readField = readVkPNext
+
+instance CanWriteField "pNext" VkExternalFencePropertiesKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkExportFromImportedHandleTypes VkExternalFencePropertiesKHR
@@ -225,6 +233,12 @@ instance CanReadField "exportFromImportedHandleTypes"
         {-# INLINE readField #-}
         readField = readVkExportFromImportedHandleTypes
 
+instance CanWriteField "exportFromImportedHandleTypes"
+           VkExternalFencePropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkExportFromImportedHandleTypes
+
 instance {-# OVERLAPPING #-}
          HasVkCompatibleHandleTypes VkExternalFencePropertiesKHR where
         type VkCompatibleHandleTypesMType VkExternalFencePropertiesKHR =
@@ -278,6 +292,12 @@ instance CanReadField "compatibleHandleTypes"
         {-# INLINE readField #-}
         readField = readVkCompatibleHandleTypes
 
+instance CanWriteField "compatibleHandleTypes"
+           VkExternalFencePropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkCompatibleHandleTypes
+
 instance {-# OVERLAPPING #-}
          HasVkExternalFenceFeatures VkExternalFencePropertiesKHR where
         type VkExternalFenceFeaturesMType VkExternalFencePropertiesKHR =
@@ -330,6 +350,12 @@ instance CanReadField "externalFenceFeatures"
 
         {-# INLINE readField #-}
         readField = readVkExternalFenceFeatures
+
+instance CanWriteField "externalFenceFeatures"
+           VkExternalFencePropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkExternalFenceFeatures
 
 instance Show VkExternalFencePropertiesKHR where
         showsPrec d x

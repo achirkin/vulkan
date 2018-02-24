@@ -119,6 +119,11 @@ instance CanReadField "linearTilingFeatures" VkFormatProperties
         {-# INLINE readField #-}
         readField = readVkLinearTilingFeatures
 
+instance CanWriteField "linearTilingFeatures" VkFormatProperties
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkLinearTilingFeatures
+
 instance {-# OVERLAPPING #-}
          HasVkOptimalTilingFeatures VkFormatProperties where
         type VkOptimalTilingFeaturesMType VkFormatProperties =
@@ -167,6 +172,11 @@ instance CanReadField "optimalTilingFeatures" VkFormatProperties
         {-# INLINE readField #-}
         readField = readVkOptimalTilingFeatures
 
+instance CanWriteField "optimalTilingFeatures" VkFormatProperties
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkOptimalTilingFeatures
+
 instance {-# OVERLAPPING #-} HasVkBufferFeatures VkFormatProperties
          where
         type VkBufferFeaturesMType VkFormatProperties =
@@ -211,6 +221,10 @@ instance CanReadField "bufferFeatures" VkFormatProperties where
 
         {-# INLINE readField #-}
         readField = readVkBufferFeatures
+
+instance CanWriteField "bufferFeatures" VkFormatProperties where
+        {-# INLINE writeField #-}
+        writeField = writeVkBufferFeatures
 
 instance Show VkFormatProperties where
         showsPrec d x

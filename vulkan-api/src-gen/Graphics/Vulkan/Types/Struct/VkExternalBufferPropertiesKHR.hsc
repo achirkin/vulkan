@@ -120,6 +120,10 @@ instance CanReadField "sType" VkExternalBufferPropertiesKHR where
         {-# INLINE readField #-}
         readField = readVkSType
 
+instance CanWriteField "sType" VkExternalBufferPropertiesKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-}
          HasVkPNext VkExternalBufferPropertiesKHR where
         type VkPNextMType VkExternalBufferPropertiesKHR = Ptr Void
@@ -162,6 +166,10 @@ instance CanReadField "pNext" VkExternalBufferPropertiesKHR where
 
         {-# INLINE readField #-}
         readField = readVkPNext
+
+instance CanWriteField "pNext" VkExternalBufferPropertiesKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkExternalMemoryProperties VkExternalBufferPropertiesKHR where
@@ -217,6 +225,12 @@ instance CanReadField "externalMemoryProperties"
 
         {-# INLINE readField #-}
         readField = readVkExternalMemoryProperties
+
+instance CanWriteField "externalMemoryProperties"
+           VkExternalBufferPropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkExternalMemoryProperties
 
 instance Show VkExternalBufferPropertiesKHR where
         showsPrec d x

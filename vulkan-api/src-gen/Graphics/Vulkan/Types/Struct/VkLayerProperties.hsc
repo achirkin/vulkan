@@ -150,6 +150,27 @@ instance (KnownNat idx,
           = readVkLayerNameArray x
               (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
+instance (KnownNat idx,
+          IndexInBounds "layerName" idx VkLayerProperties) =>
+         CanWriteFieldArray "layerName" idx VkLayerProperties
+         where
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "layerName" 0 VkLayerProperties #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "layerName" 1 VkLayerProperties #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "layerName" 2 VkLayerProperties #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "layerName" 3 VkLayerProperties #-}
+
+        {-# INLINE writeFieldArray #-}
+        writeFieldArray x
+          = writeVkLayerNameArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
 instance {-# OVERLAPPING #-} HasVkSpecVersion VkLayerProperties
          where
         type VkSpecVersionMType VkLayerProperties = Word32
@@ -191,6 +212,10 @@ instance CanReadField "specVersion" VkLayerProperties where
 
         {-# INLINE readField #-}
         readField = readVkSpecVersion
+
+instance CanWriteField "specVersion" VkLayerProperties where
+        {-# INLINE writeField #-}
+        writeField = writeVkSpecVersion
 
 instance {-# OVERLAPPING #-}
          HasVkImplementationVersion VkLayerProperties where
@@ -237,6 +262,11 @@ instance CanReadField "implementationVersion" VkLayerProperties
 
         {-# INLINE readField #-}
         readField = readVkImplementationVersion
+
+instance CanWriteField "implementationVersion" VkLayerProperties
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkImplementationVersion
 
 instance {-# OVERLAPPING #-}
          HasVkDescriptionArray VkLayerProperties where
@@ -308,6 +338,27 @@ instance (KnownNat idx,
         {-# INLINE readFieldArray #-}
         readFieldArray x
           = readVkDescriptionArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
+instance (KnownNat idx,
+          IndexInBounds "description" idx VkLayerProperties) =>
+         CanWriteFieldArray "description" idx VkLayerProperties
+         where
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "description" 0 VkLayerProperties #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "description" 1 VkLayerProperties #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "description" 2 VkLayerProperties #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "description" 3 VkLayerProperties #-}
+
+        {-# INLINE writeFieldArray #-}
+        writeFieldArray x
+          = writeVkDescriptionArray x
               (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
 instance Show VkLayerProperties where

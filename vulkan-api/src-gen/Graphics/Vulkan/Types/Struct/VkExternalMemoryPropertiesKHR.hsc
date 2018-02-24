@@ -132,6 +132,12 @@ instance CanReadField "externalMemoryFeatures"
         {-# INLINE readField #-}
         readField = readVkExternalMemoryFeatures
 
+instance CanWriteField "externalMemoryFeatures"
+           VkExternalMemoryPropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkExternalMemoryFeatures
+
 instance {-# OVERLAPPING #-}
          HasVkExportFromImportedHandleTypes VkExternalMemoryPropertiesKHR
          where
@@ -190,6 +196,12 @@ instance CanReadField "exportFromImportedHandleTypes"
         {-# INLINE readField #-}
         readField = readVkExportFromImportedHandleTypes
 
+instance CanWriteField "exportFromImportedHandleTypes"
+           VkExternalMemoryPropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkExportFromImportedHandleTypes
+
 instance {-# OVERLAPPING #-}
          HasVkCompatibleHandleTypes VkExternalMemoryPropertiesKHR where
         type VkCompatibleHandleTypesMType VkExternalMemoryPropertiesKHR =
@@ -244,6 +256,12 @@ instance CanReadField "compatibleHandleTypes"
 
         {-# INLINE readField #-}
         readField = readVkCompatibleHandleTypes
+
+instance CanWriteField "compatibleHandleTypes"
+           VkExternalMemoryPropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkCompatibleHandleTypes
 
 instance Show VkExternalMemoryPropertiesKHR where
         showsPrec d x

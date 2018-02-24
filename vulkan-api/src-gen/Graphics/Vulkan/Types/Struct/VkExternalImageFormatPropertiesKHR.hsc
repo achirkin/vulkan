@@ -127,6 +127,11 @@ instance CanReadField "sType" VkExternalImageFormatPropertiesKHR
         {-# INLINE readField #-}
         readField = readVkSType
 
+instance CanWriteField "sType" VkExternalImageFormatPropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-}
          HasVkPNext VkExternalImageFormatPropertiesKHR where
         type VkPNextMType VkExternalImageFormatPropertiesKHR = Ptr Void
@@ -173,6 +178,11 @@ instance CanReadField "pNext" VkExternalImageFormatPropertiesKHR
 
         {-# INLINE readField #-}
         readField = readVkPNext
+
+instance CanWriteField "pNext" VkExternalImageFormatPropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkExternalMemoryProperties VkExternalImageFormatPropertiesKHR
@@ -231,6 +241,12 @@ instance CanReadField "externalMemoryProperties"
 
         {-# INLINE readField #-}
         readField = readVkExternalMemoryProperties
+
+instance CanWriteField "externalMemoryProperties"
+           VkExternalImageFormatPropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkExternalMemoryProperties
 
 instance Show VkExternalImageFormatPropertiesKHR where
         showsPrec d x

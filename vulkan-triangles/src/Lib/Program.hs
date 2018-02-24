@@ -2,7 +2,13 @@
 {-# LANGUAGE FlexibleContexts      #-}
 {-# LANGUAGE LambdaCase            #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE Strict                #-}
+{-# LANGUAGE StrictData            #-}
+-- | Provide a `Program` monad to execute vulkan actions, carry state,
+--   manage allocated resources, and process exceptions.
+--
+--   Note the strictness: we don't want to pile up unevaluated thunks in
+--   the program state, but @Strict@ pragma would ruin continuation monad;
+--   thus, we have to keep a careful balance between strict and lazy functions.
 module Lib.Program
     ( Program (..), Program', runProgram
     , MonadIO (..)
@@ -35,25 +41,25 @@ import qualified Control.Monad.Logger.CallStack as LoggerCS
 import           Control.Monad.State.Class
 import           Data.IORef
 import           Data.String                    (fromString)
+import           Data.Tuple                     (swap)
 import qualified Foreign.Marshal.Alloc          as Foreign
 import qualified Foreign.Marshal.Array          as Foreign
 import           Foreign.Storable               (Storable)
 import qualified Foreign.Storable               as Storable
 import           GHC.Stack
-import qualified Graphics.UI.GLFW               as GLFW
 import           Graphics.Vulkan
 
 
 data ProgramState
   = ProgramState
-  { vkInstance    :: VkInstance
-  , windowRef     :: Maybe GLFW.Window
-  , currentStatus :: VkResult
-    -- ^ Result of the last vulkan command
+  { currentStatus :: VkResult
+    -- ^ Result of the last vulkan command.
+    --   We may need it to check if result is some non-zero non-error code.
   , loggingFunc   :: Logger.Loc
                   -> Logger.LogSource
                   -> Logger.LogLevel
                   -> Logger.LogStr -> IO ()
+    -- ^ Enable monad-logger.
   }
 
 iProgState :: IO ProgramState
@@ -61,9 +67,7 @@ iProgState = do
   -- get logger function from Control.Monad.Logger transformer
   logFun <- Logger.runStdoutLoggingT $ Logger.LoggingT pure
   return ProgramState
-    { vkInstance    = VK_NULL
-    , windowRef     = Nothing
-    , currentStatus = VK_SUCCESS
+    { currentStatus = VK_SUCCESS
     , loggingFunc   = logFun
     }
 
@@ -131,10 +135,7 @@ instance MonadIO (Program r) where
 instance MonadState ProgramState (Program r) where
   get = Program $ \ref -> (Right <$> readIORef ref >>=)
   put s = Program $ \ref -> (Right <$> writeIORef ref s >>=)
-  state f = Program $ \ref -> (Right <$> atomicModifyIORef' ref g >>=)
-    where
-      g s = case f s of
-        (a, s') -> (s', a)
+  state f = Program $ \ref -> (Right <$> atomicModifyIORef' ref (swap . f) >>=)
 
 
 -- | Use this to throw all exceptions in this project
@@ -219,7 +220,7 @@ runVk :: HasCallStack => IO VkResult -> Program r ()
 runVk action = do
   r <- liftIO action
   state $ \s -> ((), s { currentStatus = r })
-  when (r >= 0) . throwError . VulkanException (Just r)
+  when (r < 0) . throwError . VulkanException (Just r)
     $ "Vulkan command returned an error VkResult\n"
     ++ prettyCallStack callStack
 
@@ -231,16 +232,24 @@ instance Logger.MonadLogger (Program r) where
 
 
 logDebug :: HasCallStack => String -> Program r ()
+#ifdef DEVELOPMENT
 logDebug = LoggerCS.logDebug . fromString
+#else
+logDebug = const (pure ())
+#endif
+{-# INLINE logDebug #-}
 
 logInfo :: HasCallStack => String -> Program r ()
 logInfo = LoggerCS.logInfo . fromString
+{-# INLINE logInfo #-}
 
 logWarn :: HasCallStack => String -> Program r ()
 logWarn = LoggerCS.logWarn . fromString
+{-# INLINE logWarn #-}
 
 logError :: HasCallStack => String -> Program r ()
 logError = LoggerCS.logError . fromString
+{-# INLINE logError #-}
 
 
 isDev :: Bool

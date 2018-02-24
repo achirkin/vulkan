@@ -139,6 +139,12 @@ instance CanReadField "memoryTypeCount"
         {-# INLINE readField #-}
         readField = readVkMemoryTypeCount
 
+instance CanWriteField "memoryTypeCount"
+           VkPhysicalDeviceMemoryProperties
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMemoryTypeCount
+
 instance {-# OVERLAPPING #-}
          HasVkMemoryTypesArray VkPhysicalDeviceMemoryProperties where
         type VkMemoryTypesArrayMType VkPhysicalDeviceMemoryProperties =
@@ -223,6 +229,33 @@ instance (KnownNat idx,
           = readVkMemoryTypesArray x
               (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
+instance (KnownNat idx,
+          IndexInBounds "memoryTypes" idx
+            VkPhysicalDeviceMemoryProperties) =>
+         CanWriteFieldArray "memoryTypes" idx
+           VkPhysicalDeviceMemoryProperties
+         where
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "memoryTypes" 0 VkPhysicalDeviceMemoryProperties
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "memoryTypes" 1 VkPhysicalDeviceMemoryProperties
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "memoryTypes" 2 VkPhysicalDeviceMemoryProperties
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "memoryTypes" 3 VkPhysicalDeviceMemoryProperties
+                       #-}
+
+        {-# INLINE writeFieldArray #-}
+        writeFieldArray x
+          = writeVkMemoryTypesArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
 instance {-# OVERLAPPING #-}
          HasVkMemoryHeapCount VkPhysicalDeviceMemoryProperties where
         type VkMemoryHeapCountMType VkPhysicalDeviceMemoryProperties =
@@ -274,6 +307,12 @@ instance CanReadField "memoryHeapCount"
 
         {-# INLINE readField #-}
         readField = readVkMemoryHeapCount
+
+instance CanWriteField "memoryHeapCount"
+           VkPhysicalDeviceMemoryProperties
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMemoryHeapCount
 
 instance {-# OVERLAPPING #-}
          HasVkMemoryHeapsArray VkPhysicalDeviceMemoryProperties where
@@ -357,6 +396,33 @@ instance (KnownNat idx,
         {-# INLINE readFieldArray #-}
         readFieldArray x
           = readVkMemoryHeapsArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
+instance (KnownNat idx,
+          IndexInBounds "memoryHeaps" idx
+            VkPhysicalDeviceMemoryProperties) =>
+         CanWriteFieldArray "memoryHeaps" idx
+           VkPhysicalDeviceMemoryProperties
+         where
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "memoryHeaps" 0 VkPhysicalDeviceMemoryProperties
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "memoryHeaps" 1 VkPhysicalDeviceMemoryProperties
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "memoryHeaps" 2 VkPhysicalDeviceMemoryProperties
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "memoryHeaps" 3 VkPhysicalDeviceMemoryProperties
+                       #-}
+
+        {-# INLINE writeFieldArray #-}
+        writeFieldArray x
+          = writeVkMemoryHeapsArray x
               (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
 instance Show VkPhysicalDeviceMemoryProperties where

@@ -113,6 +113,10 @@ instance CanReadField "offset" VkSubresourceLayout where
         {-# INLINE readField #-}
         readField = readVkOffset
 
+instance CanWriteField "offset" VkSubresourceLayout where
+        {-# INLINE writeField #-}
+        writeField = writeVkOffset
+
 instance {-# OVERLAPPING #-} HasVkSize VkSubresourceLayout where
         type VkSizeMType VkSubresourceLayout = VkDeviceSize
 
@@ -153,6 +157,10 @@ instance CanReadField "size" VkSubresourceLayout where
 
         {-# INLINE readField #-}
         readField = readVkSize
+
+instance CanWriteField "size" VkSubresourceLayout where
+        {-# INLINE writeField #-}
+        writeField = writeVkSize
 
 instance {-# OVERLAPPING #-} HasVkRowPitch VkSubresourceLayout
          where
@@ -196,6 +204,10 @@ instance CanReadField "rowPitch" VkSubresourceLayout where
         {-# INLINE readField #-}
         readField = readVkRowPitch
 
+instance CanWriteField "rowPitch" VkSubresourceLayout where
+        {-# INLINE writeField #-}
+        writeField = writeVkRowPitch
+
 instance {-# OVERLAPPING #-} HasVkArrayPitch VkSubresourceLayout
          where
         type VkArrayPitchMType VkSubresourceLayout = VkDeviceSize
@@ -238,6 +250,10 @@ instance CanReadField "arrayPitch" VkSubresourceLayout where
         {-# INLINE readField #-}
         readField = readVkArrayPitch
 
+instance CanWriteField "arrayPitch" VkSubresourceLayout where
+        {-# INLINE writeField #-}
+        writeField = writeVkArrayPitch
+
 instance {-# OVERLAPPING #-} HasVkDepthPitch VkSubresourceLayout
          where
         type VkDepthPitchMType VkSubresourceLayout = VkDeviceSize
@@ -279,6 +295,10 @@ instance CanReadField "depthPitch" VkSubresourceLayout where
 
         {-# INLINE readField #-}
         readField = readVkDepthPitch
+
+instance CanWriteField "depthPitch" VkSubresourceLayout where
+        {-# INLINE writeField #-}
+        writeField = writeVkDepthPitch
 
 instance Show VkSubresourceLayout where
         showsPrec d x

@@ -129,6 +129,12 @@ instance CanReadField "sType" VkSharedPresentSurfaceCapabilitiesKHR
         {-# INLINE readField #-}
         readField = readVkSType
 
+instance CanWriteField "sType"
+           VkSharedPresentSurfaceCapabilitiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-}
          HasVkPNext VkSharedPresentSurfaceCapabilitiesKHR where
         type VkPNextMType VkSharedPresentSurfaceCapabilitiesKHR = Ptr Void
@@ -175,6 +181,12 @@ instance CanReadField "pNext" VkSharedPresentSurfaceCapabilitiesKHR
 
         {-# INLINE readField #-}
         readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkSharedPresentSurfaceCapabilitiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkSharedPresentSupportedUsageFlags
@@ -234,6 +246,12 @@ instance CanReadField "sharedPresentSupportedUsageFlags"
 
         {-# INLINE readField #-}
         readField = readVkSharedPresentSupportedUsageFlags
+
+instance CanWriteField "sharedPresentSupportedUsageFlags"
+           VkSharedPresentSurfaceCapabilitiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSharedPresentSupportedUsageFlags
 
 instance Show VkSharedPresentSurfaceCapabilitiesKHR where
         showsPrec d x
