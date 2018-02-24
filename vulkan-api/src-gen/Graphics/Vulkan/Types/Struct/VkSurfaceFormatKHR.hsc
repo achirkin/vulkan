@@ -110,6 +110,10 @@ instance CanReadField "format" VkSurfaceFormatKHR where
         {-# INLINE readField #-}
         readField = readVkFormat
 
+instance CanWriteField "format" VkSurfaceFormatKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkFormat
+
 instance {-# OVERLAPPING #-} HasVkColorSpace VkSurfaceFormatKHR
          where
         type VkColorSpaceMType VkSurfaceFormatKHR = VkColorSpaceKHR
@@ -151,6 +155,10 @@ instance CanReadField "colorSpace" VkSurfaceFormatKHR where
 
         {-# INLINE readField #-}
         readField = readVkColorSpace
+
+instance CanWriteField "colorSpace" VkSurfaceFormatKHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkColorSpace
 
 instance Show VkSurfaceFormatKHR where
         showsPrec d x

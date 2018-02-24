@@ -134,6 +134,12 @@ instance CanReadField "supportedAlpha"
         {-# INLINE readField #-}
         readField = readVkSupportedAlpha
 
+instance CanWriteField "supportedAlpha"
+           VkDisplayPlaneCapabilitiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSupportedAlpha
+
 instance {-# OVERLAPPING #-}
          HasVkMinSrcPosition VkDisplayPlaneCapabilitiesKHR where
         type VkMinSrcPositionMType VkDisplayPlaneCapabilitiesKHR =
@@ -182,6 +188,12 @@ instance CanReadField "minSrcPosition"
 
         {-# INLINE readField #-}
         readField = readVkMinSrcPosition
+
+instance CanWriteField "minSrcPosition"
+           VkDisplayPlaneCapabilitiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMinSrcPosition
 
 instance {-# OVERLAPPING #-}
          HasVkMaxSrcPosition VkDisplayPlaneCapabilitiesKHR where
@@ -232,6 +244,12 @@ instance CanReadField "maxSrcPosition"
         {-# INLINE readField #-}
         readField = readVkMaxSrcPosition
 
+instance CanWriteField "maxSrcPosition"
+           VkDisplayPlaneCapabilitiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxSrcPosition
+
 instance {-# OVERLAPPING #-}
          HasVkMinSrcExtent VkDisplayPlaneCapabilitiesKHR where
         type VkMinSrcExtentMType VkDisplayPlaneCapabilitiesKHR = VkExtent2D
@@ -279,6 +297,11 @@ instance CanReadField "minSrcExtent" VkDisplayPlaneCapabilitiesKHR
         {-# INLINE readField #-}
         readField = readVkMinSrcExtent
 
+instance CanWriteField "minSrcExtent" VkDisplayPlaneCapabilitiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMinSrcExtent
+
 instance {-# OVERLAPPING #-}
          HasVkMaxSrcExtent VkDisplayPlaneCapabilitiesKHR where
         type VkMaxSrcExtentMType VkDisplayPlaneCapabilitiesKHR = VkExtent2D
@@ -325,6 +348,11 @@ instance CanReadField "maxSrcExtent" VkDisplayPlaneCapabilitiesKHR
 
         {-# INLINE readField #-}
         readField = readVkMaxSrcExtent
+
+instance CanWriteField "maxSrcExtent" VkDisplayPlaneCapabilitiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxSrcExtent
 
 instance {-# OVERLAPPING #-}
          HasVkMinDstPosition VkDisplayPlaneCapabilitiesKHR where
@@ -375,6 +403,12 @@ instance CanReadField "minDstPosition"
         {-# INLINE readField #-}
         readField = readVkMinDstPosition
 
+instance CanWriteField "minDstPosition"
+           VkDisplayPlaneCapabilitiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMinDstPosition
+
 instance {-# OVERLAPPING #-}
          HasVkMaxDstPosition VkDisplayPlaneCapabilitiesKHR where
         type VkMaxDstPositionMType VkDisplayPlaneCapabilitiesKHR =
@@ -424,6 +458,12 @@ instance CanReadField "maxDstPosition"
         {-# INLINE readField #-}
         readField = readVkMaxDstPosition
 
+instance CanWriteField "maxDstPosition"
+           VkDisplayPlaneCapabilitiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxDstPosition
+
 instance {-# OVERLAPPING #-}
          HasVkMinDstExtent VkDisplayPlaneCapabilitiesKHR where
         type VkMinDstExtentMType VkDisplayPlaneCapabilitiesKHR = VkExtent2D
@@ -471,6 +511,11 @@ instance CanReadField "minDstExtent" VkDisplayPlaneCapabilitiesKHR
         {-# INLINE readField #-}
         readField = readVkMinDstExtent
 
+instance CanWriteField "minDstExtent" VkDisplayPlaneCapabilitiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMinDstExtent
+
 instance {-# OVERLAPPING #-}
          HasVkMaxDstExtent VkDisplayPlaneCapabilitiesKHR where
         type VkMaxDstExtentMType VkDisplayPlaneCapabilitiesKHR = VkExtent2D
@@ -517,6 +562,11 @@ instance CanReadField "maxDstExtent" VkDisplayPlaneCapabilitiesKHR
 
         {-# INLINE readField #-}
         readField = readVkMaxDstExtent
+
+instance CanWriteField "maxDstExtent" VkDisplayPlaneCapabilitiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxDstExtent
 
 instance Show VkDisplayPlaneCapabilitiesKHR where
         showsPrec d x

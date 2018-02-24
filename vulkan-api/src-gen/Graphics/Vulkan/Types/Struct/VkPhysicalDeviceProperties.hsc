@@ -137,6 +137,11 @@ instance CanReadField "apiVersion" VkPhysicalDeviceProperties where
         {-# INLINE readField #-}
         readField = readVkApiVersion
 
+instance CanWriteField "apiVersion" VkPhysicalDeviceProperties
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkApiVersion
+
 instance {-# OVERLAPPING #-}
          HasVkDriverVersion VkPhysicalDeviceProperties where
         type VkDriverVersionMType VkPhysicalDeviceProperties = Word32
@@ -183,6 +188,11 @@ instance CanReadField "driverVersion" VkPhysicalDeviceProperties
         {-# INLINE readField #-}
         readField = readVkDriverVersion
 
+instance CanWriteField "driverVersion" VkPhysicalDeviceProperties
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkDriverVersion
+
 instance {-# OVERLAPPING #-}
          HasVkVendorID VkPhysicalDeviceProperties where
         type VkVendorIDMType VkPhysicalDeviceProperties = Word32
@@ -226,6 +236,10 @@ instance CanReadField "vendorID" VkPhysicalDeviceProperties where
         {-# INLINE readField #-}
         readField = readVkVendorID
 
+instance CanWriteField "vendorID" VkPhysicalDeviceProperties where
+        {-# INLINE writeField #-}
+        writeField = writeVkVendorID
+
 instance {-# OVERLAPPING #-}
          HasVkDeviceID VkPhysicalDeviceProperties where
         type VkDeviceIDMType VkPhysicalDeviceProperties = Word32
@@ -268,6 +282,10 @@ instance CanReadField "deviceID" VkPhysicalDeviceProperties where
 
         {-# INLINE readField #-}
         readField = readVkDeviceID
+
+instance CanWriteField "deviceID" VkPhysicalDeviceProperties where
+        {-# INLINE writeField #-}
+        writeField = writeVkDeviceID
 
 instance {-# OVERLAPPING #-}
          HasVkDeviceType VkPhysicalDeviceProperties where
@@ -313,6 +331,11 @@ instance CanReadField "deviceType" VkPhysicalDeviceProperties where
 
         {-# INLINE readField #-}
         readField = readVkDeviceType
+
+instance CanWriteField "deviceType" VkPhysicalDeviceProperties
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkDeviceType
 
 instance {-# OVERLAPPING #-}
          HasVkDeviceNameArray VkPhysicalDeviceProperties where
@@ -385,6 +408,27 @@ instance (KnownNat idx,
         {-# INLINE readFieldArray #-}
         readFieldArray x
           = readVkDeviceNameArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
+instance (KnownNat idx,
+          IndexInBounds "deviceName" idx VkPhysicalDeviceProperties) =>
+         CanWriteFieldArray "deviceName" idx VkPhysicalDeviceProperties
+         where
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "deviceName" 0 VkPhysicalDeviceProperties #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "deviceName" 1 VkPhysicalDeviceProperties #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "deviceName" 2 VkPhysicalDeviceProperties #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "deviceName" 3 VkPhysicalDeviceProperties #-}
+
+        {-# INLINE writeFieldArray #-}
+        writeFieldArray x
+          = writeVkDeviceNameArray x
               (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
@@ -471,6 +515,33 @@ instance (KnownNat idx,
           = readVkPipelineCacheUUIDArray x
               (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
+instance (KnownNat idx,
+          IndexInBounds "pipelineCacheUUID" idx
+            VkPhysicalDeviceProperties) =>
+         CanWriteFieldArray "pipelineCacheUUID" idx
+           VkPhysicalDeviceProperties
+         where
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "pipelineCacheUUID" 0 VkPhysicalDeviceProperties
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "pipelineCacheUUID" 1 VkPhysicalDeviceProperties
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "pipelineCacheUUID" 2 VkPhysicalDeviceProperties
+                       #-}
+
+        {-# SPECIALISE instance
+                       CanWriteFieldArray "pipelineCacheUUID" 3 VkPhysicalDeviceProperties
+                       #-}
+
+        {-# INLINE writeFieldArray #-}
+        writeFieldArray x
+          = writeVkPipelineCacheUUIDArray x
+              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+
 instance {-# OVERLAPPING #-} HasVkLimits VkPhysicalDeviceProperties
          where
         type VkLimitsMType VkPhysicalDeviceProperties =
@@ -515,6 +586,10 @@ instance CanReadField "limits" VkPhysicalDeviceProperties where
 
         {-# INLINE readField #-}
         readField = readVkLimits
+
+instance CanWriteField "limits" VkPhysicalDeviceProperties where
+        {-# INLINE writeField #-}
+        writeField = writeVkLimits
 
 instance {-# OVERLAPPING #-}
          HasVkSparseProperties VkPhysicalDeviceProperties where
@@ -563,6 +638,12 @@ instance CanReadField "sparseProperties" VkPhysicalDeviceProperties
 
         {-# INLINE readField #-}
         readField = readVkSparseProperties
+
+instance CanWriteField "sparseProperties"
+           VkPhysicalDeviceProperties
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSparseProperties
 
 instance Show VkPhysicalDeviceProperties where
         showsPrec d x

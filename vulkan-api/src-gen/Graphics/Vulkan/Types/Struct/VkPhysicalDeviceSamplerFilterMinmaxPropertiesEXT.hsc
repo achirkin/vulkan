@@ -147,6 +147,12 @@ instance CanReadField "sType"
         {-# INLINE readField #-}
         readField = readVkSType
 
+instance CanWriteField "sType"
+           VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-}
          HasVkPNext VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT where
         type VkPNextMType VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
@@ -201,6 +207,12 @@ instance CanReadField "pNext"
 
         {-# INLINE readField #-}
         readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkFilterMinmaxSingleComponentFormats
@@ -261,6 +273,12 @@ instance CanReadField "filterMinmaxSingleComponentFormats"
         {-# INLINE readField #-}
         readField = readVkFilterMinmaxSingleComponentFormats
 
+instance CanWriteField "filterMinmaxSingleComponentFormats"
+           VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkFilterMinmaxSingleComponentFormats
+
 instance {-# OVERLAPPING #-}
          HasVkFilterMinmaxImageComponentMapping
            VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
@@ -319,6 +337,12 @@ instance CanReadField "filterMinmaxImageComponentMapping"
 
         {-# INLINE readField #-}
         readField = readVkFilterMinmaxImageComponentMapping
+
+instance CanWriteField "filterMinmaxImageComponentMapping"
+           VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkFilterMinmaxImageComponentMapping
 
 instance Show VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
          where

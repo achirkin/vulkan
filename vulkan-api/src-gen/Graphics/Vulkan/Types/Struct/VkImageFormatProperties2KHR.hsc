@@ -119,6 +119,10 @@ instance CanReadField "sType" VkImageFormatProperties2KHR where
         {-# INLINE readField #-}
         readField = readVkSType
 
+instance CanWriteField "sType" VkImageFormatProperties2KHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkImageFormatProperties2KHR
          where
         type VkPNextMType VkImageFormatProperties2KHR = Ptr Void
@@ -161,6 +165,10 @@ instance CanReadField "pNext" VkImageFormatProperties2KHR where
 
         {-# INLINE readField #-}
         readField = readVkPNext
+
+instance CanWriteField "pNext" VkImageFormatProperties2KHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkImageFormatProperties VkImageFormatProperties2KHR where
@@ -214,6 +222,12 @@ instance CanReadField "imageFormatProperties"
 
         {-# INLINE readField #-}
         readField = readVkImageFormatProperties
+
+instance CanWriteField "imageFormatProperties"
+           VkImageFormatProperties2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkImageFormatProperties
 
 instance Show VkImageFormatProperties2KHR where
         showsPrec d x

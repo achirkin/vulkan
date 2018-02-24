@@ -3,49 +3,43 @@
 {-# LANGUAGE Strict           #-}
 {-# LANGUAGE TypeApplications #-}
 module Lib.Vulkan.Pipeline
-  ( withVkShaderStageCI
-  , withGraphicsPipeline
-  , withRenderPass
+  ( createVkShaderStageCI
+  , createGraphicsPipeline
+  , createRenderPass
   ) where
 
-import           Control.Exception
 import           Data.Bits
-import           Foreign.Marshal.Alloc
-import           Foreign.Marshal.Array
-import           Foreign.Storable
 import           Graphics.Vulkan
-import           Graphics.Vulkan.Marshal.Create
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
+import           Graphics.Vulkan.Marshal.Create
 
-import           Lib.Utils
+import           Lib.Program
 import           Lib.Vulkan.Presentation
 
 
 
-withVkShaderStageCI :: VkDevice
-                    -> (CSize, Ptr Word32)
-                    -> VkShaderStageFlagBits
-                    -> (VkPipelineShaderStageCreateInfo -> IO a)
-                    -> IO a
-withVkShaderStageCI dev shaderCode stageBit action = do
+createVkShaderStageCI :: VkDevice
+                      -> (CSize, Ptr Word32)
+                      -> VkShaderStageFlagBits
+                      -> Program r VkPipelineShaderStageCreateInfo
+createVkShaderStageCI dev shaderCode stageBit = do
     shaderModule <- createVulkanShaderModule dev shaderCode
-    let pssCreateInfo = createVk @VkPipelineShaderStageCreateInfo
+    return $ createVk @VkPipelineShaderStageCreateInfo
           $  set @"sType"  VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO
           &* set @"pNext"  VK_NULL
           &* set @"stage"  stageBit
           &* set @"module" shaderModule
           &* setStrRef @"pName" "main"
-    finally (action pssCreateInfo) $ do
-      destroyVulkanShaderModule dev shaderModule
-      touchVkData pssCreateInfo
 
 
-createVulkanShaderModule :: VkDevice -> (CSize, Ptr Word32) -> IO VkShaderModule
+createVulkanShaderModule :: VkDevice
+                         -> (CSize, Ptr Word32)
+                         -> Program r VkShaderModule
 createVulkanShaderModule dev (codeSize, codePtr) =
-    withPtr smCreateInfo $ \smciPtr -> alloca $ \smPtr -> do
-      throwingVK "vkCreateShaderModule failed!"
-        $ vkCreateShaderModule dev smciPtr VK_NULL smPtr
-      peek smPtr
+    allocResource
+      (\sm -> liftIO $ vkDestroyShaderModule dev sm VK_NULL) $
+      withVkPtr smCreateInfo $ \smciPtr -> allocaPeek $
+        runVk . vkCreateShaderModule dev smciPtr VK_NULL
   where
     smCreateInfo = createVk @VkShaderModuleCreateInfo
       $  set @"sType"    VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO
@@ -54,19 +48,15 @@ createVulkanShaderModule dev (codeSize, codePtr) =
       &* set @"pCode"    codePtr
       &* set @"flags"    0
 
-destroyVulkanShaderModule :: VkDevice -> VkShaderModule -> IO ()
-destroyVulkanShaderModule dev = flip (vkDestroyShaderModule dev) VK_NULL
 
 
-
-withGraphicsPipeline :: VkDevice
-                     -> SwapChainImgInfo
-                     -> [VkPipelineShaderStageCreateInfo]
-                     -> VkRenderPass
-                     -> (VkPipeline -> IO ())
-                     -> IO ()
-withGraphicsPipeline
-    dev SwapChainImgInfo{..} shaderDescs renderPass action =
+createGraphicsPipeline :: VkDevice
+                       -> SwapChainImgInfo
+                       -> [VkPipelineShaderStageCreateInfo]
+                       -> VkRenderPass
+                       -> Program r VkPipeline
+createGraphicsPipeline
+    dev SwapChainImgInfo{..} shaderDescs renderPass =
   let -- vertex input
       vertexInputInfo = createVk @VkPipelineVertexInputStateCreateInfo
         $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO
@@ -167,51 +157,42 @@ withGraphicsPipeline
 
 
     -- finally, create pipeline!
-  in withPipelineLayout dev $ \pipelineLayout ->
-      withArrayLen shaderDescs $ \stageCount stagesPtr ->
-        let gpCreateInfo = createVk @VkGraphicsPipelineCreateInfo
-              $  set @"sType" VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO
-              &* set @"pNext" VK_NULL
-              &* set @"flags" 0
-              &* set @"stageCount" (fromIntegral stageCount)
-              &* set @"pStages" stagesPtr
-              &* setVkRef @"pVertexInputState" vertexInputInfo
-              &* setVkRef @"pInputAssemblyState" inputAssembly
-              &* set @"pTessellationState" VK_NULL
-              &* setVkRef @"pViewportState" viewPortState
-              &* setVkRef @"pRasterizationState" rasterizer
-              &* setVkRef @"pMultisampleState" multisampling
-              &* set @"pDepthStencilState" VK_NULL
-              &* setVkRef @"pColorBlendState" colorBlending
-              &* set @"pDynamicState" VK_NULL
-              &* set @"layout" pipelineLayout
-              &* set @"renderPass" renderPass
-              &* set @"subpass" 0
-              &* set @"basePipelineHandle" VK_NULL_HANDLE
-              &* set @"basePipelineIndex" (-1)
+  in do
+    pipelineLayout <- createPipelineLayout dev
 
-        in do
-          graphicsPipeline <- withPtr gpCreateInfo
-                $ \gpciPtr -> alloca $ \gpPtr -> do
-            throwingVK "vkCreateGraphicsPipelines failed!"
-              $ vkCreateGraphicsPipelines dev VK_NULL 1 gpciPtr VK_NULL gpPtr
-            peek gpPtr
+    let gpCreateInfo = createVk @VkGraphicsPipelineCreateInfo
+          $  set @"sType" VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO
+          &* set @"pNext" VK_NULL
+          &* set @"flags" 0
+          &* set @"stageCount" (fromIntegral $ length shaderDescs)
+          &* setListRef @"pStages" shaderDescs
+          &* setVkRef @"pVertexInputState" vertexInputInfo
+          &* setVkRef @"pInputAssemblyState" inputAssembly
+          &* set @"pTessellationState" VK_NULL
+          &* setVkRef @"pViewportState" viewPortState
+          &* setVkRef @"pRasterizationState" rasterizer
+          &* setVkRef @"pMultisampleState" multisampling
+          &* set @"pDepthStencilState" VK_NULL
+          &* setVkRef @"pColorBlendState" colorBlending
+          &* set @"pDynamicState" VK_NULL
+          &* set @"layout" pipelineLayout
+          &* set @"renderPass" renderPass
+          &* set @"subpass" 0
+          &* set @"basePipelineHandle" VK_NULL_HANDLE
+          &* set @"basePipelineIndex" (-1)
 
-
-          -- again, run an action and touch all allocated objects to make sure
-          -- they are alive at the moment of vulkan object destruction.
-          finally (action graphicsPipeline) $
-            vkDestroyPipeline dev graphicsPipeline VK_NULL
+    allocResource
+      (\gp -> liftIO $ vkDestroyPipeline dev gp VK_NULL) $
+      withVkPtr gpCreateInfo $ \gpciPtr -> allocaPeek $
+        runVk . vkCreateGraphicsPipelines dev VK_NULL 1 gpciPtr VK_NULL
 
 
-withPipelineLayout :: VkDevice -> (VkPipelineLayout -> IO a) -> IO a
-withPipelineLayout dev action = do
-  pipelineLayout <- withPtr plCreateInfo $ \plciPtr -> alloca $ \plPtr -> do
-    throwingVK "vkCreatePipelineLayout failed!"
-      $ vkCreatePipelineLayout dev plciPtr VK_NULL plPtr
-    peek plPtr
-  finally (action pipelineLayout) $
-    vkDestroyPipelineLayout dev pipelineLayout VK_NULL
+createPipelineLayout :: VkDevice -> Program r VkPipelineLayout
+createPipelineLayout dev =
+  allocResource
+    (\pl -> liftIO $ vkDestroyPipelineLayout dev pl VK_NULL) $
+    withVkPtr plCreateInfo $ \plciPtr -> allocaPeek $
+      runVk . vkCreatePipelineLayout dev plciPtr VK_NULL
   where
     plCreateInfo = createVk @VkPipelineLayoutCreateInfo
       $  set @"sType" VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO
@@ -223,9 +204,9 @@ withPipelineLayout dev action = do
       &* set @"pPushConstantRanges"    VK_NULL -- Optional
 
 
-withRenderPass :: VkDevice -> SwapChainImgInfo
-               -> (VkRenderPass -> IO a) -> IO a
-withRenderPass dev SwapChainImgInfo{..} action =
+createRenderPass :: VkDevice -> SwapChainImgInfo
+                 -> Program r VkRenderPass
+createRenderPass dev SwapChainImgInfo{..} =
   let -- attachment description
       colorAttachment = createVk @VkAttachmentDescription
         $  set @"flags" 0
@@ -272,10 +253,7 @@ withRenderPass dev SwapChainImgInfo{..} action =
         &* set @"dependencyCount" 1
         &* setVkRef @"pDependencies" dependency
 
-  in do
-    renderPass <- withPtr rpCreateInfo $ \rpciPtr -> alloca $ \rpPtr -> do
-      throwingVK "vkCreatePipelineLayout failed!"
-        $ vkCreateRenderPass dev rpciPtr VK_NULL rpPtr
-      peek rpPtr
-    finally (action renderPass) $
-      vkDestroyRenderPass dev renderPass VK_NULL
+  in allocResource
+       (\rp -> liftIO $ vkDestroyRenderPass dev rp VK_NULL) $
+       withVkPtr rpCreateInfo $ \rpciPtr -> allocaPeek $
+         runVk . vkCreateRenderPass dev rpciPtr VK_NULL

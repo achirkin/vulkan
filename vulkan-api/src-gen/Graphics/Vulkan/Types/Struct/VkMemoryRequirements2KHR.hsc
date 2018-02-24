@@ -115,6 +115,10 @@ instance CanReadField "sType" VkMemoryRequirements2KHR where
         {-# INLINE readField #-}
         readField = readVkSType
 
+instance CanWriteField "sType" VkMemoryRequirements2KHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkMemoryRequirements2KHR
          where
         type VkPNextMType VkMemoryRequirements2KHR = Ptr Void
@@ -156,6 +160,10 @@ instance CanReadField "pNext" VkMemoryRequirements2KHR where
 
         {-# INLINE readField #-}
         readField = readVkPNext
+
+instance CanWriteField "pNext" VkMemoryRequirements2KHR where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkMemoryRequirements VkMemoryRequirements2KHR where
@@ -204,6 +212,12 @@ instance CanReadField "memoryRequirements" VkMemoryRequirements2KHR
 
         {-# INLINE readField #-}
         readField = readVkMemoryRequirements
+
+instance CanWriteField "memoryRequirements"
+           VkMemoryRequirements2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMemoryRequirements
 
 instance Show VkMemoryRequirements2KHR where
         showsPrec d x

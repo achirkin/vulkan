@@ -164,6 +164,12 @@ instance CanReadField "sType"
         {-# INLINE readField #-}
         readField = readVkSType
 
+instance CanWriteField "sType"
+           VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-}
          HasVkPNext VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
          where
@@ -221,6 +227,12 @@ instance CanReadField "pNext"
 
         {-# INLINE readField #-}
         readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkAdvancedBlendMaxColorAttachments
@@ -281,6 +293,12 @@ instance CanReadField "advancedBlendMaxColorAttachments"
         {-# INLINE readField #-}
         readField = readVkAdvancedBlendMaxColorAttachments
 
+instance CanWriteField "advancedBlendMaxColorAttachments"
+           VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkAdvancedBlendMaxColorAttachments
+
 instance {-# OVERLAPPING #-}
          HasVkAdvancedBlendIndependentBlend
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
@@ -339,6 +357,12 @@ instance CanReadField "advancedBlendIndependentBlend"
 
         {-# INLINE readField #-}
         readField = readVkAdvancedBlendIndependentBlend
+
+instance CanWriteField "advancedBlendIndependentBlend"
+           VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkAdvancedBlendIndependentBlend
 
 instance {-# OVERLAPPING #-}
          HasVkAdvancedBlendNonPremultipliedSrcColor
@@ -399,6 +423,12 @@ instance CanReadField "advancedBlendNonPremultipliedSrcColor"
         {-# INLINE readField #-}
         readField = readVkAdvancedBlendNonPremultipliedSrcColor
 
+instance CanWriteField "advancedBlendNonPremultipliedSrcColor"
+           VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkAdvancedBlendNonPremultipliedSrcColor
+
 instance {-# OVERLAPPING #-}
          HasVkAdvancedBlendNonPremultipliedDstColor
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
@@ -457,6 +487,12 @@ instance CanReadField "advancedBlendNonPremultipliedDstColor"
 
         {-# INLINE readField #-}
         readField = readVkAdvancedBlendNonPremultipliedDstColor
+
+instance CanWriteField "advancedBlendNonPremultipliedDstColor"
+           VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkAdvancedBlendNonPremultipliedDstColor
 
 instance {-# OVERLAPPING #-}
          HasVkAdvancedBlendCorrelatedOverlap
@@ -517,6 +553,12 @@ instance CanReadField "advancedBlendCorrelatedOverlap"
         {-# INLINE readField #-}
         readField = readVkAdvancedBlendCorrelatedOverlap
 
+instance CanWriteField "advancedBlendCorrelatedOverlap"
+           VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkAdvancedBlendCorrelatedOverlap
+
 instance {-# OVERLAPPING #-}
          HasVkAdvancedBlendAllOperations
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
@@ -575,6 +617,12 @@ instance CanReadField "advancedBlendAllOperations"
 
         {-# INLINE readField #-}
         readField = readVkAdvancedBlendAllOperations
+
+instance CanWriteField "advancedBlendAllOperations"
+           VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkAdvancedBlendAllOperations
 
 instance Show VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
          where

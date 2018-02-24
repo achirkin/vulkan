@@ -118,6 +118,10 @@ instance CanReadField "sType" VkMultisamplePropertiesEXT where
         {-# INLINE readField #-}
         readField = readVkSType
 
+instance CanWriteField "sType" VkMultisamplePropertiesEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-} HasVkPNext VkMultisamplePropertiesEXT
          where
         type VkPNextMType VkMultisamplePropertiesEXT = Ptr Void
@@ -160,6 +164,10 @@ instance CanReadField "pNext" VkMultisamplePropertiesEXT where
 
         {-# INLINE readField #-}
         readField = readVkPNext
+
+instance CanWriteField "pNext" VkMultisamplePropertiesEXT where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkMaxSampleLocationGridSize VkMultisamplePropertiesEXT where
@@ -215,6 +223,12 @@ instance CanReadField "maxSampleLocationGridSize"
 
         {-# INLINE readField #-}
         readField = readVkMaxSampleLocationGridSize
+
+instance CanWriteField "maxSampleLocationGridSize"
+           VkMultisamplePropertiesEXT
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxSampleLocationGridSize
 
 instance Show VkMultisamplePropertiesEXT where
         showsPrec d x

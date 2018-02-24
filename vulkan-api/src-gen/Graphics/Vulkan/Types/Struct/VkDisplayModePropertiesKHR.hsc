@@ -121,6 +121,11 @@ instance CanReadField "displayMode" VkDisplayModePropertiesKHR
         {-# INLINE readField #-}
         readField = readVkDisplayMode
 
+instance CanWriteField "displayMode" VkDisplayModePropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkDisplayMode
+
 instance {-# OVERLAPPING #-}
          HasVkParameters VkDisplayModePropertiesKHR where
         type VkParametersMType VkDisplayModePropertiesKHR =
@@ -165,6 +170,11 @@ instance CanReadField "parameters" VkDisplayModePropertiesKHR where
 
         {-# INLINE readField #-}
         readField = readVkParameters
+
+instance CanWriteField "parameters" VkDisplayModePropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkParameters
 
 instance Show VkDisplayModePropertiesKHR where
         showsPrec d x

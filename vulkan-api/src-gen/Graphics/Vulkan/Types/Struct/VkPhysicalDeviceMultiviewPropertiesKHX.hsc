@@ -131,6 +131,12 @@ instance CanReadField "sType"
         {-# INLINE readField #-}
         readField = readVkSType
 
+instance CanWriteField "sType"
+           VkPhysicalDeviceMultiviewPropertiesKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-}
          HasVkPNext VkPhysicalDeviceMultiviewPropertiesKHX where
         type VkPNextMType VkPhysicalDeviceMultiviewPropertiesKHX = Ptr Void
@@ -178,6 +184,12 @@ instance CanReadField "pNext"
 
         {-# INLINE readField #-}
         readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkPhysicalDeviceMultiviewPropertiesKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkMaxMultiviewViewCount VkPhysicalDeviceMultiviewPropertiesKHX
@@ -237,6 +249,12 @@ instance CanReadField "maxMultiviewViewCount"
         {-# INLINE readField #-}
         readField = readVkMaxMultiviewViewCount
 
+instance CanWriteField "maxMultiviewViewCount"
+           VkPhysicalDeviceMultiviewPropertiesKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxMultiviewViewCount
+
 instance {-# OVERLAPPING #-}
          HasVkMaxMultiviewInstanceIndex
            VkPhysicalDeviceMultiviewPropertiesKHX
@@ -295,6 +313,12 @@ instance CanReadField "maxMultiviewInstanceIndex"
 
         {-# INLINE readField #-}
         readField = readVkMaxMultiviewInstanceIndex
+
+instance CanWriteField "maxMultiviewInstanceIndex"
+           VkPhysicalDeviceMultiviewPropertiesKHX
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxMultiviewInstanceIndex
 
 instance Show VkPhysicalDeviceMultiviewPropertiesKHX where
         showsPrec d x

@@ -126,6 +126,11 @@ instance CanReadField "sType" VkSparseImageMemoryRequirements2KHR
         {-# INLINE readField #-}
         readField = readVkSType
 
+instance CanWriteField "sType" VkSparseImageMemoryRequirements2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-}
          HasVkPNext VkSparseImageMemoryRequirements2KHR where
         type VkPNextMType VkSparseImageMemoryRequirements2KHR = Ptr Void
@@ -172,6 +177,11 @@ instance CanReadField "pNext" VkSparseImageMemoryRequirements2KHR
 
         {-# INLINE readField #-}
         readField = readVkPNext
+
+instance CanWriteField "pNext" VkSparseImageMemoryRequirements2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkMemoryRequirements VkSparseImageMemoryRequirements2KHR where
@@ -227,6 +237,12 @@ instance CanReadField "memoryRequirements"
 
         {-# INLINE readField #-}
         readField = readVkMemoryRequirements
+
+instance CanWriteField "memoryRequirements"
+           VkSparseImageMemoryRequirements2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMemoryRequirements
 
 instance Show VkSparseImageMemoryRequirements2KHR where
         showsPrec d x

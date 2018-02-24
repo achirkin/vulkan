@@ -109,6 +109,10 @@ instance CanReadField "propertyFlags" VkMemoryType where
         {-# INLINE readField #-}
         readField = readVkPropertyFlags
 
+instance CanWriteField "propertyFlags" VkMemoryType where
+        {-# INLINE writeField #-}
+        writeField = writeVkPropertyFlags
+
 instance {-# OVERLAPPING #-} HasVkHeapIndex VkMemoryType where
         type VkHeapIndexMType VkMemoryType = Word32
 
@@ -149,6 +153,10 @@ instance CanReadField "heapIndex" VkMemoryType where
 
         {-# INLINE readField #-}
         readField = readVkHeapIndex
+
+instance CanWriteField "heapIndex" VkMemoryType where
+        {-# INLINE writeField #-}
+        writeField = writeVkHeapIndex
 
 instance Show VkMemoryType where
         showsPrec d x

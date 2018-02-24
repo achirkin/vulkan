@@ -119,6 +119,10 @@ instance CanReadField "maxExtent" VkImageFormatProperties where
         {-# INLINE readField #-}
         readField = readVkMaxExtent
 
+instance CanWriteField "maxExtent" VkImageFormatProperties where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxExtent
+
 instance {-# OVERLAPPING #-}
          HasVkMaxMipLevels VkImageFormatProperties where
         type VkMaxMipLevelsMType VkImageFormatProperties = Word32
@@ -161,6 +165,10 @@ instance CanReadField "maxMipLevels" VkImageFormatProperties where
 
         {-# INLINE readField #-}
         readField = readVkMaxMipLevels
+
+instance CanWriteField "maxMipLevels" VkImageFormatProperties where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxMipLevels
 
 instance {-# OVERLAPPING #-}
          HasVkMaxArrayLayers VkImageFormatProperties where
@@ -207,6 +215,11 @@ instance CanReadField "maxArrayLayers" VkImageFormatProperties
         {-# INLINE readField #-}
         readField = readVkMaxArrayLayers
 
+instance CanWriteField "maxArrayLayers" VkImageFormatProperties
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxArrayLayers
+
 instance {-# OVERLAPPING #-}
          HasVkSampleCounts VkImageFormatProperties where
         type VkSampleCountsMType VkImageFormatProperties =
@@ -251,6 +264,10 @@ instance CanReadField "sampleCounts" VkImageFormatProperties where
 
         {-# INLINE readField #-}
         readField = readVkSampleCounts
+
+instance CanWriteField "sampleCounts" VkImageFormatProperties where
+        {-# INLINE writeField #-}
+        writeField = writeVkSampleCounts
 
 instance {-# OVERLAPPING #-}
          HasVkMaxResourceSize VkImageFormatProperties where
@@ -298,6 +315,11 @@ instance CanReadField "maxResourceSize" VkImageFormatProperties
 
         {-# INLINE readField #-}
         readField = readVkMaxResourceSize
+
+instance CanWriteField "maxResourceSize" VkImageFormatProperties
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkMaxResourceSize
 
 instance Show VkImageFormatProperties where
         showsPrec d x

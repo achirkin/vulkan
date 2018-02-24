@@ -129,6 +129,12 @@ instance CanReadField "sType" VkTextureLODGatherFormatPropertiesAMD
         {-# INLINE readField #-}
         readField = readVkSType
 
+instance CanWriteField "sType"
+           VkTextureLODGatherFormatPropertiesAMD
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-}
          HasVkPNext VkTextureLODGatherFormatPropertiesAMD where
         type VkPNextMType VkTextureLODGatherFormatPropertiesAMD = Ptr Void
@@ -175,6 +181,12 @@ instance CanReadField "pNext" VkTextureLODGatherFormatPropertiesAMD
 
         {-# INLINE readField #-}
         readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkTextureLODGatherFormatPropertiesAMD
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkSupportsTextureGatherLODBiasAMD
@@ -234,6 +246,12 @@ instance CanReadField "supportsTextureGatherLODBiasAMD"
 
         {-# INLINE readField #-}
         readField = readVkSupportsTextureGatherLODBiasAMD
+
+instance CanWriteField "supportsTextureGatherLODBiasAMD"
+           VkTextureLODGatherFormatPropertiesAMD
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSupportsTextureGatherLODBiasAMD
 
 instance Show VkTextureLODGatherFormatPropertiesAMD where
         showsPrec d x

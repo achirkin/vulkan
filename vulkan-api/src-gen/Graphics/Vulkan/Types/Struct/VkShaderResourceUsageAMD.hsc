@@ -117,6 +117,11 @@ instance CanReadField "numUsedVgprs" VkShaderResourceUsageAMD where
         {-# INLINE readField #-}
         readField = readVkNumUsedVgprs
 
+instance CanWriteField "numUsedVgprs" VkShaderResourceUsageAMD
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkNumUsedVgprs
+
 instance {-# OVERLAPPING #-}
          HasVkNumUsedSgprs VkShaderResourceUsageAMD where
         type VkNumUsedSgprsMType VkShaderResourceUsageAMD = Word32
@@ -159,6 +164,11 @@ instance CanReadField "numUsedSgprs" VkShaderResourceUsageAMD where
 
         {-# INLINE readField #-}
         readField = readVkNumUsedSgprs
+
+instance CanWriteField "numUsedSgprs" VkShaderResourceUsageAMD
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkNumUsedSgprs
 
 instance {-# OVERLAPPING #-}
          HasVkLdsSizePerLocalWorkGroup VkShaderResourceUsageAMD where
@@ -213,6 +223,12 @@ instance CanReadField "ldsSizePerLocalWorkGroup"
         {-# INLINE readField #-}
         readField = readVkLdsSizePerLocalWorkGroup
 
+instance CanWriteField "ldsSizePerLocalWorkGroup"
+           VkShaderResourceUsageAMD
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkLdsSizePerLocalWorkGroup
+
 instance {-# OVERLAPPING #-}
          HasVkLdsUsageSizeInBytes VkShaderResourceUsageAMD where
         type VkLdsUsageSizeInBytesMType VkShaderResourceUsageAMD = CSize
@@ -260,6 +276,12 @@ instance CanReadField "ldsUsageSizeInBytes"
 
         {-# INLINE readField #-}
         readField = readVkLdsUsageSizeInBytes
+
+instance CanWriteField "ldsUsageSizeInBytes"
+           VkShaderResourceUsageAMD
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkLdsUsageSizeInBytes
 
 instance {-# OVERLAPPING #-}
          HasVkScratchMemUsageInBytes VkShaderResourceUsageAMD where
@@ -310,6 +332,12 @@ instance CanReadField "scratchMemUsageInBytes"
 
         {-# INLINE readField #-}
         readField = readVkScratchMemUsageInBytes
+
+instance CanWriteField "scratchMemUsageInBytes"
+           VkShaderResourceUsageAMD
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkScratchMemUsageInBytes
 
 instance Show VkShaderResourceUsageAMD where
         showsPrec d x

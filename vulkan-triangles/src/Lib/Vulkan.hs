@@ -8,21 +8,19 @@ module Lib.Vulkan
     , isDeviceSuitable
     , SwapChainSupportDetails (..), querySwapChainSupport
     , checkDeviceExtensionSupport
+    , defaultLayers
     ) where
 
--- import           Control.Exception
 import           Control.Monad
 import           Data.List                            ((\\))
 import           Foreign.C.String
--- import           Foreign.Marshal.Alloc
 import           Foreign.Ptr
--- import           Foreign.Storable
 import           Graphics.Vulkan
 import           Graphics.Vulkan.Ext.VK_KHR_surface
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
 import           Graphics.Vulkan.Marshal.Create
 
-import Lib.Program
+import           Lib.Program
 
 -- | Run an action with vulkan instance
 createVulkanInstance :: String -- ^ application name
@@ -35,12 +33,20 @@ createVulkanInstance :: String -- ^ application name
                      -> [String]
                         -- ^ required layer names
                      -> Program r VkInstance
-createVulkanInstance progName engineName extensions layers =
-   allocResource destroyVulkanInstance $
+createVulkanInstance progName engineName extensions layers' =
+  allocResource destroyVulkanInstance $ do
+
+    extStrings <- liftIO $ mapM peekCString extensions
+    logDebug $ unlines
+      $ "Enabling instance extensions: " : map ("  " ++) extStrings
+
+    logDebug $ unlines
+      $ "Enabling instance layers: " : map ("  " ++) layers
+
     withVkPtr iCreateInfo $ \iciPtr ->
-      allocaPeek $ \vkInstPtr ->
-        runVk $ vkCreateInstance iciPtr VK_NULL vkInstPtr
+      allocaPeek $ runVk . vkCreateInstance iciPtr VK_NULL
   where
+    layers = layers' ++ defaultLayers
     appInfo = createVk @VkApplicationInfo
       $  set       @"sType" VK_STRUCTURE_TYPE_APPLICATION_INFO
       &* set       @"pNext" VK_NULL
@@ -114,13 +120,9 @@ checkDeviceExtensionSupport pdev extensions = do
   reqExts <- liftIO $ mapM peekCString extensions
   availExtsC <- asListVk
     $ \x -> runVk . vkEnumerateDeviceExtensionProperties pdev VK_NULL_HANDLE x
-  availExts <- liftIO
-             $ mapM ( peekCString
-                    . castPtr
-                    . ( `plusPtr`
-                          fieldOffset @"extensionName" @VkExtensionProperties
-                      )
-                    . unsafePtr) availExtsC
+  availExts <- forM availExtsC . flip withVkPtr $
+    liftIO . peekCString . castPtr
+           . ( `plusPtr` fieldOffset @"extensionName" @VkExtensionProperties)
   return . null $ reqExts \\ availExts
 
 
@@ -144,3 +146,8 @@ isDeviceSuitable mVkSurf pdev = do
               )
 
   pure (mscsd, extsGood && surfGood)
+
+
+defaultLayers :: [String]
+defaultLayers
+  = ["VK_LAYER_LUNARG_standard_validation" | isDev]

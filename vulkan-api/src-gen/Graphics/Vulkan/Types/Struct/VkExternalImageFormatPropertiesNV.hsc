@@ -135,6 +135,12 @@ instance CanReadField "imageFormatProperties"
         {-# INLINE readField #-}
         readField = readVkImageFormatProperties
 
+instance CanWriteField "imageFormatProperties"
+           VkExternalImageFormatPropertiesNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkImageFormatProperties
+
 instance {-# OVERLAPPING #-}
          HasVkExternalMemoryFeatures VkExternalImageFormatPropertiesNV where
         type VkExternalMemoryFeaturesMType
@@ -190,6 +196,12 @@ instance CanReadField "externalMemoryFeatures"
 
         {-# INLINE readField #-}
         readField = readVkExternalMemoryFeatures
+
+instance CanWriteField "externalMemoryFeatures"
+           VkExternalImageFormatPropertiesNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkExternalMemoryFeatures
 
 instance {-# OVERLAPPING #-}
          HasVkExportFromImportedHandleTypes
@@ -250,6 +262,12 @@ instance CanReadField "exportFromImportedHandleTypes"
         {-# INLINE readField #-}
         readField = readVkExportFromImportedHandleTypes
 
+instance CanWriteField "exportFromImportedHandleTypes"
+           VkExternalImageFormatPropertiesNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkExportFromImportedHandleTypes
+
 instance {-# OVERLAPPING #-}
          HasVkCompatibleHandleTypes VkExternalImageFormatPropertiesNV where
         type VkCompatibleHandleTypesMType VkExternalImageFormatPropertiesNV
@@ -304,6 +322,12 @@ instance CanReadField "compatibleHandleTypes"
 
         {-# INLINE readField #-}
         readField = readVkCompatibleHandleTypes
+
+instance CanWriteField "compatibleHandleTypes"
+           VkExternalImageFormatPropertiesNV
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkCompatibleHandleTypes
 
 instance Show VkExternalImageFormatPropertiesNV where
         showsPrec d x

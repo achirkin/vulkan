@@ -143,6 +143,12 @@ instance CanReadField "sType"
         {-# INLINE readField #-}
         readField = readVkSType
 
+instance CanWriteField "sType"
+           VkSamplerYcbcrConversionImageFormatPropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-}
          HasVkPNext VkSamplerYcbcrConversionImageFormatPropertiesKHR where
         type VkPNextMType VkSamplerYcbcrConversionImageFormatPropertiesKHR
@@ -197,6 +203,12 @@ instance CanReadField "pNext"
 
         {-# INLINE readField #-}
         readField = readVkPNext
+
+instance CanWriteField "pNext"
+           VkSamplerYcbcrConversionImageFormatPropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkCombinedImageSamplerDescriptorCount
@@ -256,6 +268,12 @@ instance CanReadField "combinedImageSamplerDescriptorCount"
 
         {-# INLINE readField #-}
         readField = readVkCombinedImageSamplerDescriptorCount
+
+instance CanWriteField "combinedImageSamplerDescriptorCount"
+           VkSamplerYcbcrConversionImageFormatPropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkCombinedImageSamplerDescriptorCount
 
 instance Show VkSamplerYcbcrConversionImageFormatPropertiesKHR
          where

@@ -125,6 +125,11 @@ instance CanReadField "aspectMask" VkSparseImageFormatProperties
         {-# INLINE readField #-}
         readField = readVkAspectMask
 
+instance CanWriteField "aspectMask" VkSparseImageFormatProperties
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkAspectMask
+
 instance {-# OVERLAPPING #-}
          HasVkImageGranularity VkSparseImageFormatProperties where
         type VkImageGranularityMType VkSparseImageFormatProperties =
@@ -174,6 +179,12 @@ instance CanReadField "imageGranularity"
         {-# INLINE readField #-}
         readField = readVkImageGranularity
 
+instance CanWriteField "imageGranularity"
+           VkSparseImageFormatProperties
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkImageGranularity
+
 instance {-# OVERLAPPING #-}
          HasVkFlags VkSparseImageFormatProperties where
         type VkFlagsMType VkSparseImageFormatProperties =
@@ -218,6 +229,10 @@ instance CanReadField "flags" VkSparseImageFormatProperties where
 
         {-# INLINE readField #-}
         readField = readVkFlags
+
+instance CanWriteField "flags" VkSparseImageFormatProperties where
+        {-# INLINE writeField #-}
+        writeField = writeVkFlags
 
 instance Show VkSparseImageFormatProperties where
         showsPrec d x

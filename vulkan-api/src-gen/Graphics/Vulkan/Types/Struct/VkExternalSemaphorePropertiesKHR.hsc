@@ -133,6 +133,11 @@ instance CanReadField "sType" VkExternalSemaphorePropertiesKHR
         {-# INLINE readField #-}
         readField = readVkSType
 
+instance CanWriteField "sType" VkExternalSemaphorePropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkSType
+
 instance {-# OVERLAPPING #-}
          HasVkPNext VkExternalSemaphorePropertiesKHR where
         type VkPNextMType VkExternalSemaphorePropertiesKHR = Ptr Void
@@ -177,6 +182,11 @@ instance CanReadField "pNext" VkExternalSemaphorePropertiesKHR
 
         {-# INLINE readField #-}
         readField = readVkPNext
+
+instance CanWriteField "pNext" VkExternalSemaphorePropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkPNext
 
 instance {-# OVERLAPPING #-}
          HasVkExportFromImportedHandleTypes VkExternalSemaphorePropertiesKHR
@@ -236,6 +246,12 @@ instance CanReadField "exportFromImportedHandleTypes"
         {-# INLINE readField #-}
         readField = readVkExportFromImportedHandleTypes
 
+instance CanWriteField "exportFromImportedHandleTypes"
+           VkExternalSemaphorePropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkExportFromImportedHandleTypes
+
 instance {-# OVERLAPPING #-}
          HasVkCompatibleHandleTypes VkExternalSemaphorePropertiesKHR where
         type VkCompatibleHandleTypesMType VkExternalSemaphorePropertiesKHR
@@ -290,6 +306,12 @@ instance CanReadField "compatibleHandleTypes"
 
         {-# INLINE readField #-}
         readField = readVkCompatibleHandleTypes
+
+instance CanWriteField "compatibleHandleTypes"
+           VkExternalSemaphorePropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkCompatibleHandleTypes
 
 instance {-# OVERLAPPING #-}
          HasVkExternalSemaphoreFeatures VkExternalSemaphorePropertiesKHR
@@ -348,6 +370,12 @@ instance CanReadField "externalSemaphoreFeatures"
 
         {-# INLINE readField #-}
         readField = readVkExternalSemaphoreFeatures
+
+instance CanWriteField "externalSemaphoreFeatures"
+           VkExternalSemaphorePropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField = writeVkExternalSemaphoreFeatures
 
 instance Show VkExternalSemaphorePropertiesKHR where
         showsPrec d x
