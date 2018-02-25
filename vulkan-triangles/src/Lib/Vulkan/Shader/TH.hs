@@ -1,5 +1,5 @@
 {-# LANGUAGE TemplateHaskell #-}
-module Lib.Utils.TH
+module Lib.Vulkan.Shader.TH
     ( compileGLSL
     ) where
 

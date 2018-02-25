@@ -26,11 +26,13 @@ library
     exposed-modules:    Lib
                         Lib.GLFW
                         Lib.Program
-                        Lib.Vulkan
+                        Lib.Vulkan.Device
                         Lib.Vulkan.Drawing
-                        Lib.Vulkan.Presentation
+                        Lib.Vulkan.Instance
                         Lib.Vulkan.Pipeline
-                        Lib.Utils.TH
+                        Lib.Vulkan.Presentation
+                        Lib.Vulkan.Shader
+                        Lib.Vulkan.Shader.TH
     build-depends:      base >= 4.7 && < 5
                       , vulkan-api
                       , GLFW-b
