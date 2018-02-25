@@ -26,6 +26,7 @@ library
     exposed-modules:    Lib
                         Lib.GLFW
                         Lib.Program
+                        Lib.Program.Foreign
                         Lib.Vulkan.Device
                         Lib.Vulkan.Drawing
                         Lib.Vulkan.Instance

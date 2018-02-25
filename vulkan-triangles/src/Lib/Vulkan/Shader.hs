@@ -10,6 +10,7 @@ import           Graphics.Vulkan
 import           Graphics.Vulkan.Marshal.Create
 
 import           Lib.Program
+import           Lib.Program.Foreign
 
 
 

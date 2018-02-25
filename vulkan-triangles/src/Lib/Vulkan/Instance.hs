@@ -11,6 +11,7 @@ import           Graphics.Vulkan
 import           Graphics.Vulkan.Marshal.Create
 
 import           Lib.Program
+import           Lib.Program.Foreign
 
 -- | Run an action with vulkan instance
 createVulkanInstance :: String -- ^ application name

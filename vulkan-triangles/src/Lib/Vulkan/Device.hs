@@ -12,12 +12,12 @@ module Lib.Vulkan.Device
 import           Control.Monad
 import           Data.List                            ((\\))
 import           Foreign.C.String
-import           Foreign.Ptr
 import           Graphics.Vulkan
 import           Graphics.Vulkan.Ext.VK_KHR_surface
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
 
 import           Lib.Program
+import           Lib.Program.Foreign
 
 data SwapChainSupportDetails
   = SwapChainSupportDetails
@@ -71,7 +71,7 @@ checkDeviceExtensionSupport pdev extensions = do
   availExtsC <- asListVk
     $ \x -> runVk . vkEnumerateDeviceExtensionProperties pdev VK_NULL_HANDLE x
   availExts <- forM availExtsC . flip withVkPtr $
-    liftIO . peekCString . castPtr
+    liftIO . peekCString
            . ( `plusPtr` fieldOffset @"extensionName" @VkExtensionProperties)
   return . null $ reqExts \\ availExts
 

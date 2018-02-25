@@ -16,8 +16,6 @@ import           Data.Bits
 import qualified Data.Map                             as Map
 import           Data.Maybe                           (fromMaybe)
 import           Data.Semigroup
-import qualified Foreign.Marshal.Alloc                as Foreign
-import qualified Foreign.Marshal.Array                as Foreign
 import qualified Graphics.UI.GLFW                     as GLFW
 import           Graphics.Vulkan
 import           Graphics.Vulkan.Ext.VK_KHR_surface
@@ -25,6 +23,7 @@ import           Graphics.Vulkan.Ext.VK_KHR_swapchain
 import           Graphics.Vulkan.Marshal.Create
 
 import           Lib.Program
+import           Lib.Program.Foreign
 import           Lib.Vulkan.Device
 import           Lib.Vulkan.Instance
 
@@ -100,8 +99,7 @@ createGraphicsDevice pdev surf
   (gFamIdx, _gFam) <- selectGraphicsFamily qfams
   (pFamIdx, _pFam) <- selectPresentationFamily pdev surf qfams
   let qFamIndices = Map.fromList [(gFamIdx, gFamIdx), (pFamIdx, pFamIdx)]
-  famIndsPtr <- allocResource (liftIO . Foreign.free) $
-    liftIO $ Foreign.newArray (Map.elems qFamIndices)
+  famIndsPtr <- newArrayRes $ Map.elems qFamIndices
 
   let qcInfoMap = flip fmap qFamIndices $ \qFamIdx ->
                createVk @VkDeviceQueueCreateInfo
