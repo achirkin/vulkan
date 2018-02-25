@@ -396,7 +396,7 @@ enumPattern VkEnum {..} = writePragma "PatternSynonyms" >>
 
                 {-# INLINE $is_patnametxt #-}
                 $is_patnametxt :: CString -> Bool
-                $is_patnametxt = eqCStrings $_patnametxt
+                $is_patnametxt = (EQ ==) . cmpCStrings $_patnametxt
 
                 type $patnametxt = $tyval
               |]
