@@ -191,10 +191,8 @@ pokeVkData# (Ptr addr) x
 cmpBytes# :: Int -> Addr# -> Addr# -> Ordering
 cmpBytes# n a b
   | isTrue# (eqAddr# a b) = EQ
-  | otherwise = case c_memcmp a b (fromIntegral n) of
-     r | r > 0 -> GT
-       | r < 0 -> LT
-       | otherwise -> EQ
+  | otherwise = c_memcmp a b (fromIntegral n) `compare` 0
+
 
 foreign import ccall unsafe "memcmp"
   c_memcmp :: Addr# -> Addr# -> CSize -> CInt

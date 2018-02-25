@@ -43,7 +43,7 @@ module Graphics.Vulkan.Marshal
     -- * Utilities for string types
   , withCStringField, unsafeCStringField
   , getStringField, readStringField, writeStringField
-  , eqCStrings, eqCStringsN
+  , cmpCStrings, cmpCStringsN
   ) where
 
 import           Data.Data                        (Data)
@@ -399,20 +399,18 @@ takeForce n (x:xs) = seq x $ (x:) <$> takeForce (n-1) xs
 
 -- | Check first if two CString point to the same memory location.
 --   Otherwise, compare them using C @strcmp@ function.
-eqCStrings :: CString -> CString -> Bool
-eqCStrings a b
-  | a == b = True
-  | c_strcmp a b == 0 = True
-  | otherwise = False
+cmpCStrings :: CString -> CString -> Ordering
+cmpCStrings a b
+  | a == b = EQ
+  | otherwise = c_strcmp a b `compare` 0
 
 -- | Check first if two CString point to the same memory location.
 --   Otherwise, compare them using C @strncmp@ function.
 --   It may be useful to provide maximum number of characters to compare.
-eqCStringsN :: CString -> CString -> Int -> Bool
-eqCStringsN a b n
-  | a == b = True
-  | c_strncmp a b (fromIntegral n) == 0 = True
-  | otherwise = False
+cmpCStringsN :: CString -> CString -> Int -> Ordering
+cmpCStringsN a b n
+  | a == b = EQ
+  | otherwise = c_strncmp a b (fromIntegral n) `compare` 0
 
 
 foreign import ccall unsafe "strncmp"
