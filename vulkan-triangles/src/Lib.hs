@@ -12,11 +12,12 @@ import           Graphics.Vulkan
 
 import           Lib.GLFW
 import           Lib.Program
-import           Lib.Utils.TH
-import           Lib.Vulkan
+import           Lib.Vulkan.Device
 import           Lib.Vulkan.Drawing
 import           Lib.Vulkan.Pipeline
 import           Lib.Vulkan.Presentation
+import           Lib.Vulkan.Shader
+import           Lib.Vulkan.Shader.TH
 
 
 windowWidth, windowHeight :: Num a => a
@@ -30,7 +31,7 @@ runVulkanProgram = runProgram checkStatus $ do
   vulkanInstance <- createGLFWVulkanInstance "05-GraphicsPipeline"
 
   vulkanSurface <- createSurface vulkanInstance window
-  
+
   (Just scsd, pdev)
       <- pickPhysicalDevice vulkanInstance (Just vulkanSurface)
   (dev, queues) <- createGraphicsDevice pdev vulkanSurface

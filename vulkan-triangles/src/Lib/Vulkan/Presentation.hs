@@ -25,7 +25,8 @@ import           Graphics.Vulkan.Ext.VK_KHR_swapchain
 import           Graphics.Vulkan.Marshal.Create
 
 import           Lib.Program
-import           Lib.Vulkan
+import           Lib.Vulkan.Device
+import           Lib.Vulkan.Instance
 
 
 createSurface :: VkInstance -> GLFW.Window -> Program r VkSurfaceKHR

@@ -2,13 +2,11 @@
 {-# LANGUAGE RecordWildCards  #-}
 {-# LANGUAGE Strict           #-}
 {-# LANGUAGE TypeApplications #-}
-module Lib.Vulkan
-    ( createVulkanInstance
-    , pickPhysicalDevice
+module Lib.Vulkan.Device
+    ( pickPhysicalDevice
     , isDeviceSuitable
     , SwapChainSupportDetails (..), querySwapChainSupport
     , checkDeviceExtensionSupport
-    , defaultLayers
     ) where
 
 import           Control.Monad
@@ -18,57 +16,16 @@ import           Foreign.Ptr
 import           Graphics.Vulkan
 import           Graphics.Vulkan.Ext.VK_KHR_surface
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
-import           Graphics.Vulkan.Marshal.Create
 
 import           Lib.Program
 
--- | Run an action with vulkan instance
-createVulkanInstance :: String -- ^ application name
-                     -> String -- ^ engine name
-                     -> [CString]
-                        -- ^ required extensions
-                        --   passed as a list of CStrings, because they are
-                        --   available either via vulkan-api pattern synonyms,
-                        --   or from GLFW
-                     -> [String]
-                        -- ^ required layer names
-                     -> Program r VkInstance
-createVulkanInstance progName engineName extensions layers' =
-  allocResource destroyVulkanInstance $ do
+data SwapChainSupportDetails
+  = SwapChainSupportDetails
+  { capabilities :: VkSurfaceCapabilitiesKHR
+  , formats      :: [VkSurfaceFormatKHR]
+  , presentModes :: [VkPresentModeKHR]
+  } deriving (Eq, Show)
 
-    extStrings <- liftIO $ mapM peekCString extensions
-    logDebug $ unlines
-      $ "Enabling instance extensions: " : map ("  " ++) extStrings
-
-    logDebug $ unlines
-      $ "Enabling instance layers: " : map ("  " ++) layers
-
-    withVkPtr iCreateInfo $ \iciPtr ->
-      allocaPeek $ runVk . vkCreateInstance iciPtr VK_NULL
-  where
-    layers = layers' ++ defaultLayers
-    appInfo = createVk @VkApplicationInfo
-      $  set       @"sType" VK_STRUCTURE_TYPE_APPLICATION_INFO
-      &* set       @"pNext" VK_NULL
-      &* setStrRef @"pApplicationName" progName
-      &* set       @"applicationVersion" (_VK_MAKE_VERSION 1 0 0)
-      &* setStrRef @"pEngineName" engineName
-      &* set       @"engineVersion" (_VK_MAKE_VERSION 1 0 0)
-      &* set       @"apiVersion" (_VK_MAKE_VERSION 1 0 68)
-
-    iCreateInfo = createVk @VkInstanceCreateInfo
-      $  set           @"sType" VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
-      &* set           @"pNext" VK_NULL
-      &* setVkRef      @"pApplicationInfo" appInfo
-      &* set           @"enabledLayerCount" (fromIntegral $ length layers)
-      &* setStrListRef @"ppEnabledLayerNames" layers
-      &* set           @"enabledExtensionCount" (fromIntegral $ length extensions)
-      &* setListRef    @"ppEnabledExtensionNames" extensions
-
-destroyVulkanInstance :: VkInstance -> Program r ()
-destroyVulkanInstance vkInstance
-  = liftIO (vkDestroyInstance vkInstance VK_NULL)
-  >> inDev (logDebug "Destroyed vkInstance.")
 
 pickPhysicalDevice :: VkInstance
                    -> Maybe VkSurfaceKHR
@@ -87,13 +44,6 @@ pickPhysicalDevice vkInstance mVkSurf = do
       (mscsd, indeed) <- isDeviceSuitable mVkSurf x
       if indeed then pure (mscsd, x)
                 else selectFirstSuitable xs
-
-data SwapChainSupportDetails
-  = SwapChainSupportDetails
-  { capabilities :: VkSurfaceCapabilitiesKHR
-  , formats      :: [VkSurfaceFormatKHR]
-  , presentModes :: [VkPresentModeKHR]
-  } deriving (Eq, Show)
 
 
 querySwapChainSupport :: VkPhysicalDevice
@@ -146,8 +96,3 @@ isDeviceSuitable mVkSurf pdev = do
               )
 
   pure (mscsd, extsGood && surfGood)
-
-
-defaultLayers :: [String]
-defaultLayers
-  = ["VK_LAYER_LUNARG_standard_validation" | isDev]

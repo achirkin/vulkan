@@ -12,7 +12,7 @@ import qualified Graphics.UI.GLFW      as GLFW
 import           Graphics.Vulkan
 
 import           Lib.Program
-import           Lib.Vulkan
+import           Lib.Vulkan.Instance
 
 
 initGLFWWindow :: Int -- ^ Window width
