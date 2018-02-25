@@ -24,13 +24,10 @@ module Lib.Program
       -- * Development build and debugging
     , isDev, inDev
       -- * Vulkan marshal utilies
-    , liftIOWith, withVkPtr, alloca, allocaArray
-    , asListVk
-    , allocaPeek, allocaPeekVk
+    , liftIOWith, withVkPtr
     ) where
 
 
-import           Control.Concurrent.MVar
 import           Control.Exception              (Exception)
 import qualified Control.Exception              as Exception
 import           Control.Monad
@@ -42,10 +39,6 @@ import           Control.Monad.State.Class
 import           Data.IORef
 import           Data.String                    (fromString)
 import           Data.Tuple                     (swap)
-import qualified Foreign.Marshal.Alloc          as Foreign
-import qualified Foreign.Marshal.Array          as Foreign
-import           Foreign.Storable               (Storable)
-import qualified Foreign.Storable               as Storable
 import           GHC.Stack
 import           Graphics.Vulkan
 
@@ -283,46 +276,3 @@ withVkPtr :: VulkanMarshal a
           -> (Ptr a -> Program' b)
           -> Program r b
 withVkPtr x = liftIOWith (withPtr x)
-
-
-alloca :: Storable a
-       => (Ptr a -> Program' b)
-       -> Program r b
-alloca = liftIOWith Foreign.alloca
-
--- | Despite its name, this command does not copy data from a created pointer.
---   It uses `newVkData` function inside.
-allocaPeekVk :: VulkanMarshal a
-             => (Ptr a -> Program () ())
-             -> Program r a
-allocaPeekVk pf = Program $ \ref c -> do
-  locVar <- liftIO newEmptyMVar
-  a <- newVkData (\ptr -> unProgram (pf ptr) ref (putMVar locVar))
-  takeMVar locVar >>= c . (a <$)
-
-allocaArray :: Storable a
-            => Int
-            -> (Ptr a -> Program' b)
-            -> Program r b
-allocaArray = liftIOWith . Foreign.allocaArray
-
-
-allocaPeek :: Storable a
-           => (Ptr a -> Program (Either VulkanException a) ())
-           -> Program r a
-allocaPeek f = alloca $ \ptr -> f ptr >> liftIO (Storable.peek ptr)
-
-
--- | Get size of action output and then get the result,
---   performing data copy.
-asListVk :: Storable x
-         => (Ptr Word32 -> Ptr x -> Program (Either VulkanException [x]) ())
-         -> Program r [x]
-asListVk action = alloca $ \counterPtr -> do
-  action counterPtr VK_NULL_HANDLE
-  counter <- liftIO $ fromIntegral <$> Storable.peek counterPtr
-  if counter <= 0
-  then pure []
-  else allocaArray counter $ \valPtr -> do
-    action counterPtr valPtr
-    liftIO $ Foreign.peekArray counter valPtr

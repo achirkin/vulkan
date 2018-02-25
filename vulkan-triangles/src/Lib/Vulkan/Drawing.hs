@@ -12,15 +12,12 @@ module Lib.Vulkan.Drawing
   ) where
 
 import           Control.Monad                        (forM_)
-import           Foreign.Marshal.Alloc
-import           Foreign.Marshal.Array
-import           Foreign.Ptr
-import           Foreign.Storable
 import           Graphics.Vulkan
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
 import           Graphics.Vulkan.Marshal.Create
 
 import           Lib.Program
+import           Lib.Program.Foreign
 import           Lib.Vulkan.Presentation
 
 
@@ -70,15 +67,14 @@ createCommandBuffers :: VkDevice
                      -> Program r [VkCommandBuffer]
 createCommandBuffers
     dev pipeline commandPool rpass  SwapChainImgInfo{..} fbs
-  | buffersCount <- length fbs =
+  | buffersCount <- length fbs = do
   -- allocate a pointer to an array of command buffer handles
-  fmap snd $ allocResource
-    ( \(cbsPtr, _) -> liftIO $ do
-      vkFreeCommandBuffers dev commandPool (fromIntegral buffersCount) cbsPtr
-      free cbsPtr
-    ) $ do
-    cbsPtr <- liftIO $ mallocArray buffersCount
+  cbsPtr <- mallocArrayRes buffersCount
 
+  allocResource
+    ( \_ -> liftIO $
+      vkFreeCommandBuffers dev commandPool (fromIntegral buffersCount) cbsPtr
+    ) $ do
     let allocInfo = createVk @VkCommandBufferAllocateInfo
           $  set @"sType" VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO
           &* set @"pNext" VK_NULL
@@ -88,7 +84,7 @@ createCommandBuffers
 
     withVkPtr allocInfo $ \aiPtr ->
       runVk $ vkAllocateCommandBuffers dev aiPtr cbsPtr
-    commandBuffers <- liftIO $ peekArray buffersCount cbsPtr
+    commandBuffers <- peekArray buffersCount cbsPtr
 
     -- record command buffers
     forM_ (zip fbs commandBuffers) $ \(frameBuffer, cmdBuffer) -> do
@@ -134,7 +130,7 @@ createCommandBuffers
 
       runVk $ vkEndCommandBuffer cmdBuffer
 
-    return (cbsPtr, commandBuffers)
+    return commandBuffers
 
 
 createSemaphore :: VkDevice -> Program r VkSemaphore
@@ -164,9 +160,7 @@ data RenderData
 
 drawFrame :: RenderData -> Program r ()
 drawFrame RenderData {..} = do
-    commandBuffersPtr <- allocResource
-      (liftIO . free)
-      (liftIO $ newArray commandBuffers)
+    commandBuffersPtr <- newArrayRes commandBuffers
 
     -- Acquiring an image from the swap chain
     runVk $ vkAcquireNextImageKHR
@@ -174,7 +168,7 @@ drawFrame RenderData {..} = do
           imageAvailable VK_NULL_HANDLE imgIndexPtr
     bufPtr <- (\i -> commandBuffersPtr `plusPtr`
                         (fromIntegral i * sizeOf (undefined :: VkCommandBuffer))
-              ) <$> liftIO (peek imgIndexPtr)
+              ) <$> peek imgIndexPtr
 
     -- Submitting the command buffer
     withVkPtr (mkSubmitInfo bufPtr) $ \siPtr ->

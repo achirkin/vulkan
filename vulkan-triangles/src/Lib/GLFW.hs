@@ -5,13 +5,13 @@ module Lib.GLFW
     , glfwMainLoop
     ) where
 
-import           Control.Monad         (unless)
-import           Foreign.Marshal.Array
-import           Graphics.UI.GLFW      (ClientAPI (..), WindowHint (..))
-import qualified Graphics.UI.GLFW      as GLFW
+import           Control.Monad       (unless)
+import           Graphics.UI.GLFW    (ClientAPI (..), WindowHint (..))
+import qualified Graphics.UI.GLFW    as GLFW
 import           Graphics.Vulkan
 
 import           Lib.Program
+import           Lib.Program.Foreign
 import           Lib.Vulkan.Instance
 
 
@@ -62,8 +62,8 @@ glfwMainLoop w action = go
 createGLFWVulkanInstance :: String -> Program r VkInstance
 createGLFWVulkanInstance progName = do
     -- get required extension names from GLFW
-    glfwReqExts <- liftIO $
-      GLFW.getRequiredInstanceExtensions >>= uncurry (peekArray . fromIntegral)
+    glfwReqExts <- liftIO GLFW.getRequiredInstanceExtensions
+      >>= uncurry (peekArray . fromIntegral)
     createVulkanInstance
       progName
       "My perfect Haskell engine"

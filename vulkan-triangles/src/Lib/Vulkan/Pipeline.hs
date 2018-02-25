@@ -13,6 +13,7 @@ import           Graphics.Vulkan.Ext.VK_KHR_swapchain
 import           Graphics.Vulkan.Marshal.Create
 
 import           Lib.Program
+import           Lib.Program.Foreign
 import           Lib.Vulkan.Presentation
 
 

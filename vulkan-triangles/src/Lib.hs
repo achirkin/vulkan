@@ -6,12 +6,11 @@
 module Lib (runVulkanProgram) where
 
 import           Control.Exception       (displayException)
-import           Control.Monad.IO.Class
-import           Foreign.Marshal.Alloc   (free, malloc)
 import           Graphics.Vulkan
 
 import           Lib.GLFW
 import           Lib.Program
+import           Lib.Program.Foreign
 import           Lib.Vulkan.Device
 import           Lib.Vulkan.Drawing
 import           Lib.Vulkan.Pipeline
@@ -62,18 +61,16 @@ runVulkanProgram = runProgram checkStatus $ do
   rendFinS <- createSemaphore dev
   imAvailS <- createSemaphore dev
 
-  rdata <- allocResource
-    (liftIO . free . imgIndexPtr) $ do
-      imgIPtr <- liftIO malloc
-      return RenderData
-              { renderFinished = rendFinS
-              , imageAvailable = imAvailS
-              , device         = dev
-              , swapChainInfo  = swInfo
-              , deviceQueues   = queues
-              , imgIndexPtr    = imgIPtr
-              , commandBuffers = cmdBuffers
-              }
+  imgIPtr <- mallocRes
+  let rdata = RenderData
+        { renderFinished = rendFinS
+        , imageAvailable = imAvailS
+        , device         = dev
+        , swapChainInfo  = swInfo
+        , deviceQueues   = queues
+        , imgIndexPtr    = imgIPtr
+        , commandBuffers = cmdBuffers
+        }
 
   logInfo $ "Selected physical device: " ++ show pdev
   logInfo $ "Createad surface: " ++ show vulkanSurface
