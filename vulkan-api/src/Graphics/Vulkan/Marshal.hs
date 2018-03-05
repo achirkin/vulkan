@@ -32,7 +32,8 @@ module Graphics.Vulkan.Marshal
   , clearStorable, withPtr
     -- * Type-indexed access to struct members
   , HasField (..), CanReadField (..), CanWriteField (..)
-  , CanReadFieldArray (..), CanWriteFieldArray (..), IndexInBounds
+  , CanReadFieldArray (..), CanWriteFieldArray (..)
+  , IsFieldArray, IndexInBounds
     -- * Re-exported functions from 'Foreign.ForeignPtr'
   , mallocForeignPtr, withForeignPtr, addForeignPtrFinalizer
     -- * Re-exported common types
@@ -68,6 +69,7 @@ import           GHC.TypeLits
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 import           Graphics.Vulkan.Marshal.Internal
+
 
 -- | Distinguish single bits and bitmasks in vulkan flags
 data FlagType = FlagMask | FlagBit
@@ -275,7 +277,9 @@ class HasField (fname :: Symbol) (a :: Type) where
   -- | Offset of a field in bytes.
   fieldOffset :: Int
 
-class HasField fname a => CanReadField (fname :: Symbol) (a :: Type) where
+class ( HasField fname a
+      , IsFieldArray fname a 'False
+      ) => CanReadField (fname :: Symbol) (a :: Type) where
   getField :: a -> FieldType fname a
   readField :: Ptr a -> IO (FieldType fname a)
 
@@ -284,7 +288,7 @@ class CanReadField fname a => CanWriteField (fname :: Symbol) (a :: Type) where
 
 class ( HasField fname a
       , IndexInBounds fname idx a
-      , FieldIsArray fname a ~ 'True
+      , IsFieldArray fname a 'True
       ) => CanReadFieldArray (fname :: Symbol) (idx :: Nat) (a :: Type) where
   -- | Length of an array that is a field of a structure or union
   type FieldArrayLength fname a :: Nat
@@ -298,26 +302,28 @@ class CanReadFieldArray fname idx a
   writeFieldArray :: Ptr a -> FieldType fname a -> IO ()
 
 instance {-# OVERLAPPABLE #-}
-         TypeError (NoField fname a) => HasField fname a where
+         TypeError (ErrorNoSuchField fname a) => HasField fname a where
+
 instance {-# OVERLAPPABLE #-}
-         TypeError (NoField fname a) => CanReadField fname a where
+         ( HasField fname a
+         , IsFieldArray fname a 'False
+         , TypeError (ErrorNotReadableField fname a)
+         ) => CanReadField fname a where
 instance {-# OVERLAPPABLE #-}
-         TypeError (NoField fname a) => CanWriteField fname a where
+         ( CanReadField fname a
+         , TypeError (ErrorNotWritableField fname a)
+         ) => CanWriteField fname a where
 instance {-# OVERLAPPABLE #-}
-         ( TypeError (NoField fname a)
+         ( HasField fname a
+         , IsFieldArray fname a 'True
          , IndexInBounds fname idx a
-         , FieldIsArray fname a ~ 'True
+         , TypeError (ErrorNotReadableField fname a)
          ) => CanReadFieldArray fname idx a where
 instance {-# OVERLAPPABLE #-}
-         ( TypeError (NoField fname a)
-         , IndexInBounds fname idx a
-         , FieldIsArray fname a ~ 'True
+         ( CanReadFieldArray fname idx a
+         , TypeError (ErrorNotWritableField fname a)
          ) => CanWriteFieldArray fname idx a where
 
-type NoField (s :: Symbol) (a :: Type) = 'Text "Structure " ':<>: 'ShowType a
-  ':<>: 'Text " does not have field " ':<>: 'ShowType s ':<>: 'Text "."
-  ':$$: 'Text "Note, this structure has following fields: "
-        ':<>: 'ShowType (StructFields a)
 
 type IndexInBounds (s :: Symbol) (i :: Nat) (a :: Type)
   = IndexInBounds' s i a (CmpNat i (FieldArrayLength s a))
@@ -326,14 +332,76 @@ type family IndexInBounds' (s :: Symbol)
                            (i :: Nat)
                            (a :: Type) (r :: Ordering) :: Constraint where
   IndexInBounds' _ _ _ 'LT = ()
-  IndexInBounds' s i a _ = TypeError
-    ( 'Text "Array index " ':<>: 'ShowType i
-     ':<>: 'Text " is out of bounds for '"
-     ':<>: 'Text s ':<>: 'Text "',  member of type "
-     ':<>: 'ShowType a ':<>: 'Text "."
-     ':$$: 'Text "Note: the array size is "
-        ':<>: 'ShowType (FieldArrayLength s a) ':<>: 'Text "."
-    )
+  IndexInBounds' s i a _ = TypeError ( ErrorIndexOutOfBounds s i a )
+
+
+type IsFieldArray s a e = IsFieldArray' s a (FieldIsArray s a) e
+
+type family IsFieldArray' (s :: Symbol)
+                          (a :: Type)
+                          (actual :: Bool)
+                          (expected :: Bool) :: Constraint where
+  IsFieldArray' _ _ 'True  'True  = ()
+  IsFieldArray' _ _ 'False 'False = ()
+  IsFieldArray' s a 'True  'False = TypeError (ErrorIsArrayField s a)
+  IsFieldArray' s a 'False 'True  = TypeError (ErrorIsNotArrayField s a)
+
+
+--------------------------------------------------------------------------------
+-- * Type-level errors
+--------------------------------------------------------------------------------
+
+
+type ErrorNoSuchField (s :: Symbol) (a :: Type)
+  = 'Text "Structure " ':<>: 'ShowType a
+  ':<>: 'Text " does not have field " ':<>: 'ShowType s ':<>: 'Text "."
+  ':$$: 'Text "Note, this structure has following fields: "
+        ':<>: 'ShowType (StructFields a)
+
+
+type ErrorIsNotArrayField (s :: Symbol) (a :: Type)
+  = 'Text "Field " ':<>: 'ShowType s ':<>:
+    'Text " of structure " ':<>: 'ShowType a ':<>:
+    'Text " is not an array field."
+  ':$$: 'Text "Don't use ***FieldArray functions on it."
+
+type ErrorIsArrayField (s :: Symbol) (a :: Type)
+  = 'Text "Field " ':<>: 'ShowType s ':<>:
+    'Text " of structure " ':<>: 'ShowType a ':<>:
+    'Text " is an array field."
+  ':$$: 'Text "Use ***FieldArray functions on it."
+
+type ErrorIndexOutOfBounds (s :: Symbol) (i :: Nat) (a :: Type)
+  = 'Text "Array index " ':<>: 'ShowType i ':<>:
+    'Text " is out of bounds for '" ':<>:
+    'Text s ':<>: 'Text "',  member of type " ':<>: 'ShowType a ':<>: 'Text "."
+  ':$$:
+    'Text "Note: the array size is "
+      ':<>: 'ShowType (FieldArrayLength s a) ':<>: 'Text "."
+
+type ErrorNotReadableField (s :: Symbol) (a :: Type)
+  = 'Text "Field " ':<>: 'ShowType s ':<>:
+    'Text " of structure " ':<>: 'ShowType a ':<>:
+    'Text " is not readable."
+
+type ErrorNotWritableField (s :: Symbol) (a :: Type)
+  = 'Text "Field " ':<>: 'ShowType s ':<>:
+    'Text " of structure " ':<>: 'ShowType a ':<>:
+    'Text " is not writable."
+
+
+--------------------------------------------------------------------------------
+-- * Utilities for CString
+--------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
 -- | Perform an action on a C string field.
 --   The string pointers should not be used outside the callback.
