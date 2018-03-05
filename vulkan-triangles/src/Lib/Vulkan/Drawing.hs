@@ -72,8 +72,10 @@ createCommandBuffers
   cbsPtr <- mallocArrayRes buffersCount
 
   allocResource
-    ( \_ -> liftIO $
-      vkFreeCommandBuffers dev commandPool (fromIntegral buffersCount) cbsPtr
+    ( \_ -> do
+      runVk $ vkDeviceWaitIdle dev
+      liftIO $
+        vkFreeCommandBuffers dev commandPool (fromIntegral buffersCount) cbsPtr
     ) $ do
     let allocInfo = createVk @VkCommandBufferAllocateInfo
           $  set @"sType" VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO
