@@ -7,6 +7,7 @@ module Lib (runVulkanProgram) where
 
 import           Control.Exception       (displayException)
 import           Graphics.Vulkan
+import           Graphics.Vulkan.Ext.VK_KHR_swapchain
 
 import           Lib.GLFW
 import           Lib.Program
@@ -19,82 +20,98 @@ import           Lib.Vulkan.Shader
 import           Lib.Vulkan.Shader.TH
 
 
-windowWidth, windowHeight :: Num a => a
-windowWidth = 800
-windowHeight = 600
-
 runVulkanProgram :: IO ()
 runVulkanProgram = runProgram checkStatus $ do
-  window <- initGLFWWindow windowWidth windowHeight "05-GraphicsPipeline-Window"
+    window <- initGLFWWindow 800 600 "05-GraphicsPipeline-Window"
 
-  vulkanInstance <- createGLFWVulkanInstance "05-GraphicsPipeline"
+    vulkanInstance <- createGLFWVulkanInstance "05-GraphicsPipeline"
 
-  vulkanSurface <- createSurface vulkanInstance window
+    vulkanSurface <- createSurface vulkanInstance window
+    logInfo $ "Createad surface: " ++ show vulkanSurface
 
-  (Just scsd, pdev)
-      <- pickPhysicalDevice vulkanInstance (Just vulkanSurface)
-  (dev, queues) <- createGraphicsDevice pdev vulkanSurface
-  swInfo <- createSwapChain dev scsd queues vulkanSurface
-  imgViews <- createImageViews dev swInfo
+    (_, pdev) <- pickPhysicalDevice vulkanInstance (Just vulkanSurface)
+    logInfo $ "Selected physical device: " ++ show pdev
 
-  shaderVert
-    <- createVkShaderStageCI dev
-          $(compileGLSL "shaders/triangle.vert")
-          VK_SHADER_STAGE_VERTEX_BIT
+    (dev, queues) <- createGraphicsDevice pdev vulkanSurface
+    logInfo $ "Createad device: " ++ show dev
+    logInfo $ "Createad queues: " ++ show queues
 
-  shaderFrag
-    <- createVkShaderStageCI dev
-          $(compileGLSL "shaders/triangle.frag")
-          VK_SHADER_STAGE_FRAGMENT_BIT
+    shaderVert
+      <- createVkShaderStageCI dev
+            $(compileGLSL "shaders/triangle.vert")
+            VK_SHADER_STAGE_VERTEX_BIT
 
-  renderPass <- createRenderPass dev swInfo
-  graphicsPipeline
-    <- createGraphicsPipeline dev swInfo [shaderVert, shaderFrag] renderPass
+    shaderFrag
+      <- createVkShaderStageCI dev
+            $(compileGLSL "shaders/triangle.frag")
+            VK_SHADER_STAGE_FRAGMENT_BIT
 
-  framebuffers
-    <- createFramebuffers dev renderPass swInfo imgViews
+    logInfo $ "Createad vertex shader module: " ++ show shaderVert
+    logInfo $ "Createad fragment shader module: " ++ show shaderFrag
 
-  commandPool <- createCommandPool dev queues
-  cmdBuffers <- createCommandBuffers dev graphicsPipeline commandPool
-                                     renderPass swInfo framebuffers
+    rendFinS <- createSemaphore dev
+    imAvailS <- createSemaphore dev
+    commandPool <- createCommandPool dev queues
+    logInfo $ "Createad command pool: " ++ show commandPool
 
-  rendFinS <- createSemaphore dev
-  imAvailS <- createSemaphore dev
+    -- we need this later, but don't want to realloc every swapchain recreation.
+    imgIPtr <- mallocRes
 
-  imgIPtr <- mallocRes
-  let rdata = RenderData
-        { renderFinished = rendFinS
-        , imageAvailable = imAvailS
-        , device         = dev
-        , swapChainInfo  = swInfo
-        , deviceQueues   = queues
-        , imgIndexPtr    = imgIPtr
-        , commandBuffers = cmdBuffers
-        }
+    -- The code below re-runs on every VK_ERROR_OUT_OF_DATE_KHR error
+    --  (window resize event kind-of).
+    redoOnOutdate $ do
+      scsd <- querySwapChainSupport pdev vulkanSurface
+      swInfo <- createSwapChain dev scsd queues vulkanSurface
+      imgViews <- createImageViews dev swInfo
 
-  logInfo $ "Selected physical device: " ++ show pdev
-  logInfo $ "Createad surface: " ++ show vulkanSurface
-  logInfo $ "Createad device: " ++ show dev
-  logInfo $ "Createad queues: " ++ show queues
-  logInfo $ "Createad swapchain: " ++ show swInfo
-  logInfo $ "Createad image views: " ++ show imgViews
-  logInfo $ "Createad vertex shader module: " ++ show shaderVert
-  logInfo $ "Createad fragment shader module: " ++ show shaderFrag
-  logInfo $ "Createad renderpass: " ++ show renderPass
-  logInfo $ "Createad pipeline: " ++ show graphicsPipeline
-  logInfo $ "Createad framebuffers: " ++ show framebuffers
-  logInfo $ "Createad command pool: " ++ show commandPool
-  logInfo $ "Createad command buffers: " ++ show cmdBuffers
+      renderPass <- createRenderPass dev swInfo
+      graphicsPipeline
+        <- createGraphicsPipeline dev swInfo [shaderVert, shaderFrag] renderPass
 
-  glfwMainLoop window $ do
-    return () -- do some app logic
+      framebuffers
+        <- createFramebuffers dev renderPass swInfo imgViews
 
-    runVk $ vkQueueWaitIdle . presentQueue $ deviceQueues rdata
+      cmdBuffers <- createCommandBuffers dev graphicsPipeline commandPool
+                                         renderPass swInfo framebuffers
 
-    drawFrame rdata
+      let rdata = RenderData
+            { renderFinished = rendFinS
+            , imageAvailable = imAvailS
+            , device         = dev
+            , swapChainInfo  = swInfo
+            , deviceQueues   = queues
+            , imgIndexPtr    = imgIPtr
+            , commandBuffers = cmdBuffers
+            }
 
-    runVk $ vkDeviceWaitIdle dev
+      logInfo $ "Createad image views: " ++ show imgViews
+      logInfo $ "Createad renderpass: " ++ show renderPass
+      logInfo $ "Createad pipeline: " ++ show graphicsPipeline
+      logInfo $ "Createad framebuffers: " ++ show framebuffers
+      logInfo $ "Createad command buffers: " ++ show cmdBuffers
+
+      glfwMainLoop window $ do
+        return () -- do some app logic
+
+        runVk $ vkQueueWaitIdle . presentQueue $ deviceQueues rdata
+
+        drawFrame rdata
+
+        runVk $ vkDeviceWaitIdle dev
 
 checkStatus :: Either VulkanException () -> IO ()
 checkStatus (Right ()) = pure ()
 checkStatus (Left err) = putStrLn $ displayException err
+
+-- | Run the whole sequence of commands one more time if a particular error happens.
+--   Run that sequence locally, so that all acquired resources are released
+--   before running it again.
+redoOnOutdate :: Program' a -> Program r a
+redoOnOutdate action =
+  locally action `catchError` ( \err@(VulkanException ecode _) ->
+    case ecode of
+      Just VK_ERROR_OUT_OF_DATE_KHR -> do
+        logInfo "Have got a VK_ERROR_OUT_OF_DATE_KHR error, retrying..."
+        redoOnOutdate action
+      _ -> throwError err
+  )

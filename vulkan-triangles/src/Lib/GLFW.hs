@@ -34,7 +34,7 @@ initGLFWWindow w h n = do
       (throwVkMsg "GLFW reports that vulkan is not supported!")
 
     liftIO . GLFW.windowHint $ WindowHint'ClientAPI ClientAPI'NoAPI
-    liftIO . GLFW.windowHint $ WindowHint'Resizable False
+    liftIO . GLFW.windowHint $ WindowHint'Resizable True
 
     allocResource
       ( \window -> do
