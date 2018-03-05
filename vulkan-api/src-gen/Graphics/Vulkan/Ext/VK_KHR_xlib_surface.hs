@@ -32,8 +32,9 @@ module Graphics.Vulkan.Ext.VK_KHR_xlib_surface
         -- > #include "vk_platform.h"
         --
         -- > #include <X11/Xlib.h>
-        vkCreateXlibSurfaceKHR,
+        vkCreateXlibSurfaceKHR, vkCreateXlibSurfaceKHRSafe,
         vkGetPhysicalDeviceXlibPresentationSupportKHR,
+        vkGetPhysicalDeviceXlibPresentationSupportKHRSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
@@ -84,6 +85,28 @@ foreign import ccall unsafe "vkCreateXlibSurfaceKHR"
                                              -> Ptr VkSurfaceKHR -- ^ pSurface
                                                                  -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkCreateXlibSurfaceKHR
+--   >     ( VkInstance instance
+--   >     , const VkXlibSurfaceCreateInfoKHR* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkSurfaceKHR* pSurface
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateXlibSurfaceKHR.html vkCreateXlibSurfaceKHR registry at www.khronos.org>
+foreign import ccall safe "vkCreateXlibSurfaceKHR"
+               vkCreateXlibSurfaceKHRSafe ::
+               VkInstance -- ^ instance
+                          ->
+                 Ptr VkXlibSurfaceCreateInfoKHR -- ^ pCreateInfo
+                                                ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                                 -> IO VkResult
+
 -- | > VkBool32 vkGetPhysicalDeviceXlibPresentationSupportKHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , uint32_t queueFamilyIndex
@@ -95,6 +118,24 @@ foreign import ccall unsafe "vkCreateXlibSurfaceKHR"
 foreign import ccall unsafe
                "vkGetPhysicalDeviceXlibPresentationSupportKHR"
                vkGetPhysicalDeviceXlibPresentationSupportKHR ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                ->
+                 Word32 -- ^ queueFamilyIndex
+                        -> Ptr Display -- ^ dpy
+                                       -> VisualID -- ^ visualID
+                                                   -> IO VkBool32
+
+-- | > VkBool32 vkGetPhysicalDeviceXlibPresentationSupportKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , uint32_t queueFamilyIndex
+--   >     , Display* dpy
+--   >     , VisualID visualID
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceXlibPresentationSupportKHR.html vkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
+foreign import ccall safe
+               "vkGetPhysicalDeviceXlibPresentationSupportKHR"
+               vkGetPhysicalDeviceXlibPresentationSupportKHRSafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  Word32 -- ^ queueFamilyIndex

@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceVariablePointerFeaturesKHR
        (VkPhysicalDeviceVariablePointerFeaturesKHR(..)) where
@@ -16,7 +17,6 @@ import           Graphics.Vulkan.Types.BaseTypes                           (VkBo
 import           Graphics.Vulkan.Types.Enum.VkStructureType                (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkDeviceCreateInfo           (VkDeviceCreateInfo)
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures2KHR (VkPhysicalDeviceFeatures2KHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                          (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDeviceVariablePointerFeaturesKHR {
@@ -89,28 +89,6 @@ instance VulkanMarshal VkPhysicalDeviceVariablePointerFeaturesKHR
              '[VkPhysicalDeviceFeatures2KHR, VkDeviceCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPhysicalDeviceVariablePointerFeaturesKHR where
-        type VkSTypeMType VkPhysicalDeviceVariablePointerFeaturesKHR =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPhysicalDeviceVariablePointerFeaturesKHR where
         type FieldType "sType" VkPhysicalDeviceVariablePointerFeaturesKHR =
              VkStructureType
@@ -131,42 +109,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, sType}
 
-instance CanReadField "sType"
-           VkPhysicalDeviceVariablePointerFeaturesKHR
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkPhysicalDeviceVariablePointerFeaturesKHR
          where
-        {-# INLINE getField #-}
-        getField = vkSType
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType"
-           VkPhysicalDeviceVariablePointerFeaturesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkPhysicalDeviceVariablePointerFeaturesKHR where
-        type VkPNextMType VkPhysicalDeviceVariablePointerFeaturesKHR =
-             Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, pNext}
+         CanWriteField "sType" VkPhysicalDeviceVariablePointerFeaturesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPhysicalDeviceVariablePointerFeaturesKHR where
@@ -189,45 +149,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, pNext}
 
-instance CanReadField "pNext"
-           VkPhysicalDeviceVariablePointerFeaturesKHR
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkPhysicalDeviceVariablePointerFeaturesKHR
          where
-        {-# INLINE getField #-}
-        getField = vkPNext
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext"
-           VkPhysicalDeviceVariablePointerFeaturesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkVariablePointersStorageBuffer
-           VkPhysicalDeviceVariablePointerFeaturesKHR
+         CanWriteField "pNext" VkPhysicalDeviceVariablePointerFeaturesKHR
          where
-        type VkVariablePointersStorageBufferMType
-               VkPhysicalDeviceVariablePointerFeaturesKHR
-             = VkBool32
-
-        {-# NOINLINE vkVariablePointersStorageBuffer #-}
-        vkVariablePointersStorageBuffer x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, variablePointersStorageBuffer})
-
-        {-# INLINE vkVariablePointersStorageBufferByteOffset #-}
-        vkVariablePointersStorageBufferByteOffset ~_
-          = #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, variablePointersStorageBuffer}
-
-        {-# INLINE readVkVariablePointersStorageBuffer #-}
-        readVkVariablePointersStorageBuffer p
-          = peekByteOff p #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, variablePointersStorageBuffer}
-
-        {-# INLINE writeVkVariablePointersStorageBuffer #-}
-        writeVkVariablePointersStorageBuffer p
-          = pokeByteOff p #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, variablePointersStorageBuffer}
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "variablePointersStorageBuffer"
@@ -254,44 +193,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, variablePointersStorageBuffer}
 
-instance CanReadField "variablePointersStorageBuffer"
+instance {-# OVERLAPPING #-}
+         CanReadField "variablePointersStorageBuffer"
            VkPhysicalDeviceVariablePointerFeaturesKHR
          where
-        {-# INLINE getField #-}
-        getField = vkVariablePointersStorageBuffer
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, variablePointersStorageBuffer})
 
         {-# INLINE readField #-}
-        readField = readVkVariablePointersStorageBuffer
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, variablePointersStorageBuffer}
 
-instance CanWriteField "variablePointersStorageBuffer"
+instance {-# OVERLAPPING #-}
+         CanWriteField "variablePointersStorageBuffer"
            VkPhysicalDeviceVariablePointerFeaturesKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkVariablePointersStorageBuffer
-
-instance {-# OVERLAPPING #-}
-         HasVkVariablePointers VkPhysicalDeviceVariablePointerFeaturesKHR
-         where
-        type VkVariablePointersMType
-               VkPhysicalDeviceVariablePointerFeaturesKHR
-             = VkBool32
-
-        {-# NOINLINE vkVariablePointers #-}
-        vkVariablePointers x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, variablePointers})
-
-        {-# INLINE vkVariablePointersByteOffset #-}
-        vkVariablePointersByteOffset ~_
-          = #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, variablePointers}
-
-        {-# INLINE readVkVariablePointers #-}
-        readVkVariablePointers p
-          = peekByteOff p #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, variablePointers}
-
-        {-# INLINE writeVkVariablePointers #-}
-        writeVkVariablePointers p
-          = pokeByteOff p #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, variablePointers}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, variablePointersStorageBuffer}
 
 instance {-# OVERLAPPING #-}
          HasField "variablePointers"
@@ -318,32 +239,38 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, variablePointers}
 
-instance CanReadField "variablePointers"
+instance {-# OVERLAPPING #-}
+         CanReadField "variablePointers"
            VkPhysicalDeviceVariablePointerFeaturesKHR
          where
-        {-# INLINE getField #-}
-        getField = vkVariablePointers
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, variablePointers})
 
         {-# INLINE readField #-}
-        readField = readVkVariablePointers
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, variablePointers}
 
-instance CanWriteField "variablePointers"
+instance {-# OVERLAPPING #-}
+         CanWriteField "variablePointers"
            VkPhysicalDeviceVariablePointerFeaturesKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkVariablePointers
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceVariablePointerFeaturesKHR, variablePointers}
 
 instance Show VkPhysicalDeviceVariablePointerFeaturesKHR where
         showsPrec d x
           = showString "VkPhysicalDeviceVariablePointerFeaturesKHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkVariablePointersStorageBuffer = " .
-                            showsPrec d (vkVariablePointersStorageBuffer x) .
+                          showString "variablePointersStorageBuffer = " .
+                            showsPrec d (getField @"variablePointersStorageBuffer" x) .
                               showString ", " .
-                                showString "vkVariablePointers = " .
-                                  showsPrec d (vkVariablePointers x) . showChar '}'
+                                showString "variablePointers = " .
+                                  showsPrec d (getField @"variablePointers" x) . showChar '}'

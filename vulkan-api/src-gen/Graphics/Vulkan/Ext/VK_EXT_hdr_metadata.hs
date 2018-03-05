@@ -27,7 +27,8 @@ module Graphics.Vulkan.Ext.VK_EXT_hdr_metadata
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         module Graphics.Vulkan.Types.Struct.VkXYColorEXT,
         -- > #include "vk_platform.h"
-        vkSetHdrMetadataEXT, module Graphics.Vulkan.Types.Handles,
+        vkSetHdrMetadataEXT, vkSetHdrMetadataEXTSafe,
+        module Graphics.Vulkan.Types.Handles,
         VK_EXT_HDR_METADATA_SPEC_VERSION,
         pattern VK_EXT_HDR_METADATA_SPEC_VERSION,
         VK_EXT_HDR_METADATA_EXTENSION_NAME,
@@ -51,6 +52,23 @@ import           Graphics.Vulkan.Types.Struct.VkXYColorEXT
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkSetHdrMetadataEXT.html vkSetHdrMetadataEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkSetHdrMetadataEXT"
                vkSetHdrMetadataEXT ::
+               VkDevice -- ^ device
+                        ->
+                 Word32 -- ^ swapchainCount
+                        -> Ptr VkSwapchainKHR -- ^ pSwapchains
+                                              -> Ptr VkHdrMetadataEXT -- ^ pMetadata
+                                                                      -> IO ()
+
+-- | > () vkSetHdrMetadataEXT
+--   >     ( VkDevice device
+--   >     , uint32_t swapchainCount
+--   >     , const VkSwapchainKHR* pSwapchains
+--   >     , const VkHdrMetadataEXT* pMetadata
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkSetHdrMetadataEXT.html vkSetHdrMetadataEXT registry at www.khronos.org>
+foreign import ccall safe "vkSetHdrMetadataEXT"
+               vkSetHdrMetadataEXTSafe ::
                VkDevice -- ^ device
                         ->
                  Word32 -- ^ swapchainCount

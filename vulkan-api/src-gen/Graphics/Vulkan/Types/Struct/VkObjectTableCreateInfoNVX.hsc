@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkObjectTableCreateInfoNVX
        (VkObjectTableCreateInfoNVX(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkObjectEntryTypeNVX       (VkObjectEntryTypeNVX)
 import           Graphics.Vulkan.Types.Enum.VkObjectEntryUsageFlagsNVX (VkObjectEntryUsageFlagsNVX)
 import           Graphics.Vulkan.Types.Enum.VkStructureType            (VkStructureType)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                      (unsafeDupablePerformIO)
 
 -- | > typedef struct VkObjectTableCreateInfoNVX {
@@ -88,27 +88,6 @@ instance VulkanMarshal VkObjectTableCreateInfoNVX where
         type ReturnedOnly VkObjectTableCreateInfoNVX = 'False -- ' closing tick for hsc2hs
         type StructExtends VkObjectTableCreateInfoNVX = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkObjectTableCreateInfoNVX
-         where
-        type VkSTypeMType VkObjectTableCreateInfoNVX = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkObjectTableCreateInfoNVX, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkObjectTableCreateInfoNVX, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkObjectTableCreateInfoNVX, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, sType}
-
 instance {-# OVERLAPPING #-}
          HasField "sType" VkObjectTableCreateInfoNVX where
         type FieldType "sType" VkObjectTableCreateInfoNVX = VkStructureType
@@ -124,37 +103,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkObjectTableCreateInfoNVX, sType}
 
-instance CanReadField "sType" VkObjectTableCreateInfoNVX where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkObjectTableCreateInfoNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkObjectTableCreateInfoNVX, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkObjectTableCreateInfoNVX, sType}
 
-instance CanWriteField "sType" VkObjectTableCreateInfoNVX where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkObjectTableCreateInfoNVX where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkObjectTableCreateInfoNVX
-         where
-        type VkPNextMType VkObjectTableCreateInfoNVX = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkObjectTableCreateInfoNVX, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkObjectTableCreateInfoNVX, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkObjectTableCreateInfoNVX, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkObjectTableCreateInfoNVX where
@@ -171,37 +135,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkObjectTableCreateInfoNVX, pNext}
 
-instance CanReadField "pNext" VkObjectTableCreateInfoNVX where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkObjectTableCreateInfoNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkObjectTableCreateInfoNVX, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkObjectTableCreateInfoNVX where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkObjectTableCreateInfoNVX, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkObjectCount VkObjectTableCreateInfoNVX where
-        type VkObjectCountMType VkObjectTableCreateInfoNVX = Word32
-
-        {-# NOINLINE vkObjectCount #-}
-        vkObjectCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkObjectTableCreateInfoNVX, objectCount})
-
-        {-# INLINE vkObjectCountByteOffset #-}
-        vkObjectCountByteOffset ~_
-          = #{offset VkObjectTableCreateInfoNVX, objectCount}
-
-        {-# INLINE readVkObjectCount #-}
-        readVkObjectCount p
-          = peekByteOff p #{offset VkObjectTableCreateInfoNVX, objectCount}
-
-        {-# INLINE writeVkObjectCount #-}
-        writeVkObjectCount p
-          = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, objectCount}
+         CanWriteField "pNext" VkObjectTableCreateInfoNVX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "objectCount" VkObjectTableCreateInfoNVX where
@@ -219,40 +168,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkObjectTableCreateInfoNVX, objectCount}
 
-instance CanReadField "objectCount" VkObjectTableCreateInfoNVX
-         where
-        {-# INLINE getField #-}
-        getField = vkObjectCount
+instance {-# OVERLAPPING #-}
+         CanReadField "objectCount" VkObjectTableCreateInfoNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkObjectTableCreateInfoNVX, objectCount})
 
         {-# INLINE readField #-}
-        readField = readVkObjectCount
-
-instance CanWriteField "objectCount" VkObjectTableCreateInfoNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkObjectCount
+        readField p
+          = peekByteOff p #{offset VkObjectTableCreateInfoNVX, objectCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPObjectEntryTypes VkObjectTableCreateInfoNVX where
-        type VkPObjectEntryTypesMType VkObjectTableCreateInfoNVX =
-             Ptr VkObjectEntryTypeNVX
-
-        {-# NOINLINE vkPObjectEntryTypes #-}
-        vkPObjectEntryTypes x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkObjectTableCreateInfoNVX, pObjectEntryTypes})
-
-        {-# INLINE vkPObjectEntryTypesByteOffset #-}
-        vkPObjectEntryTypesByteOffset ~_
-          = #{offset VkObjectTableCreateInfoNVX, pObjectEntryTypes}
-
-        {-# INLINE readVkPObjectEntryTypes #-}
-        readVkPObjectEntryTypes p
-          = peekByteOff p #{offset VkObjectTableCreateInfoNVX, pObjectEntryTypes}
-
-        {-# INLINE writeVkPObjectEntryTypes #-}
-        writeVkPObjectEntryTypes p
-          = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, pObjectEntryTypes}
+         CanWriteField "objectCount" VkObjectTableCreateInfoNVX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, objectCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pObjectEntryTypes" VkObjectTableCreateInfoNVX where
@@ -272,42 +203,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkObjectTableCreateInfoNVX, pObjectEntryTypes}
 
-instance CanReadField "pObjectEntryTypes"
-           VkObjectTableCreateInfoNVX
-         where
-        {-# INLINE getField #-}
-        getField = vkPObjectEntryTypes
+instance {-# OVERLAPPING #-}
+         CanReadField "pObjectEntryTypes" VkObjectTableCreateInfoNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkObjectTableCreateInfoNVX, pObjectEntryTypes})
 
         {-# INLINE readField #-}
-        readField = readVkPObjectEntryTypes
-
-instance CanWriteField "pObjectEntryTypes"
-           VkObjectTableCreateInfoNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPObjectEntryTypes
+        readField p
+          = peekByteOff p #{offset VkObjectTableCreateInfoNVX, pObjectEntryTypes}
 
 instance {-# OVERLAPPING #-}
-         HasVkPObjectEntryCounts VkObjectTableCreateInfoNVX where
-        type VkPObjectEntryCountsMType VkObjectTableCreateInfoNVX =
-             Ptr Word32
-
-        {-# NOINLINE vkPObjectEntryCounts #-}
-        vkPObjectEntryCounts x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkObjectTableCreateInfoNVX, pObjectEntryCounts})
-
-        {-# INLINE vkPObjectEntryCountsByteOffset #-}
-        vkPObjectEntryCountsByteOffset ~_
-          = #{offset VkObjectTableCreateInfoNVX, pObjectEntryCounts}
-
-        {-# INLINE readVkPObjectEntryCounts #-}
-        readVkPObjectEntryCounts p
-          = peekByteOff p #{offset VkObjectTableCreateInfoNVX, pObjectEntryCounts}
-
-        {-# INLINE writeVkPObjectEntryCounts #-}
-        writeVkPObjectEntryCounts p
-          = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, pObjectEntryCounts}
+         CanWriteField "pObjectEntryTypes" VkObjectTableCreateInfoNVX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, pObjectEntryTypes}
 
 instance {-# OVERLAPPING #-}
          HasField "pObjectEntryCounts" VkObjectTableCreateInfoNVX where
@@ -327,42 +238,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkObjectTableCreateInfoNVX, pObjectEntryCounts}
 
-instance CanReadField "pObjectEntryCounts"
-           VkObjectTableCreateInfoNVX
-         where
-        {-# INLINE getField #-}
-        getField = vkPObjectEntryCounts
+instance {-# OVERLAPPING #-}
+         CanReadField "pObjectEntryCounts" VkObjectTableCreateInfoNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkObjectTableCreateInfoNVX, pObjectEntryCounts})
 
         {-# INLINE readField #-}
-        readField = readVkPObjectEntryCounts
-
-instance CanWriteField "pObjectEntryCounts"
-           VkObjectTableCreateInfoNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPObjectEntryCounts
+        readField p
+          = peekByteOff p #{offset VkObjectTableCreateInfoNVX, pObjectEntryCounts}
 
 instance {-# OVERLAPPING #-}
-         HasVkPObjectEntryUsageFlags VkObjectTableCreateInfoNVX where
-        type VkPObjectEntryUsageFlagsMType VkObjectTableCreateInfoNVX =
-             Ptr VkObjectEntryUsageFlagsNVX
-
-        {-# NOINLINE vkPObjectEntryUsageFlags #-}
-        vkPObjectEntryUsageFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkObjectTableCreateInfoNVX, pObjectEntryUsageFlags})
-
-        {-# INLINE vkPObjectEntryUsageFlagsByteOffset #-}
-        vkPObjectEntryUsageFlagsByteOffset ~_
-          = #{offset VkObjectTableCreateInfoNVX, pObjectEntryUsageFlags}
-
-        {-# INLINE readVkPObjectEntryUsageFlags #-}
-        readVkPObjectEntryUsageFlags p
-          = peekByteOff p #{offset VkObjectTableCreateInfoNVX, pObjectEntryUsageFlags}
-
-        {-# INLINE writeVkPObjectEntryUsageFlags #-}
-        writeVkPObjectEntryUsageFlags p
-          = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, pObjectEntryUsageFlags}
+         CanWriteField "pObjectEntryCounts" VkObjectTableCreateInfoNVX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, pObjectEntryCounts}
 
 instance {-# OVERLAPPING #-}
          HasField "pObjectEntryUsageFlags" VkObjectTableCreateInfoNVX where
@@ -386,44 +277,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkObjectTableCreateInfoNVX, pObjectEntryUsageFlags}
 
-instance CanReadField "pObjectEntryUsageFlags"
-           VkObjectTableCreateInfoNVX
+instance {-# OVERLAPPING #-}
+         CanReadField "pObjectEntryUsageFlags" VkObjectTableCreateInfoNVX
          where
-        {-# INLINE getField #-}
-        getField = vkPObjectEntryUsageFlags
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkObjectTableCreateInfoNVX, pObjectEntryUsageFlags})
 
         {-# INLINE readField #-}
-        readField = readVkPObjectEntryUsageFlags
-
-instance CanWriteField "pObjectEntryUsageFlags"
-           VkObjectTableCreateInfoNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPObjectEntryUsageFlags
+        readField p
+          = peekByteOff p #{offset VkObjectTableCreateInfoNVX, pObjectEntryUsageFlags}
 
 instance {-# OVERLAPPING #-}
-         HasVkMaxUniformBuffersPerDescriptor VkObjectTableCreateInfoNVX
+         CanWriteField "pObjectEntryUsageFlags" VkObjectTableCreateInfoNVX
          where
-        type VkMaxUniformBuffersPerDescriptorMType
-               VkObjectTableCreateInfoNVX
-             = Word32
-
-        {-# NOINLINE vkMaxUniformBuffersPerDescriptor #-}
-        vkMaxUniformBuffersPerDescriptor x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkObjectTableCreateInfoNVX, maxUniformBuffersPerDescriptor})
-
-        {-# INLINE vkMaxUniformBuffersPerDescriptorByteOffset #-}
-        vkMaxUniformBuffersPerDescriptorByteOffset ~_
-          = #{offset VkObjectTableCreateInfoNVX, maxUniformBuffersPerDescriptor}
-
-        {-# INLINE readVkMaxUniformBuffersPerDescriptor #-}
-        readVkMaxUniformBuffersPerDescriptor p
-          = peekByteOff p #{offset VkObjectTableCreateInfoNVX, maxUniformBuffersPerDescriptor}
-
-        {-# INLINE writeVkMaxUniformBuffersPerDescriptor #-}
-        writeVkMaxUniformBuffersPerDescriptor p
-          = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, maxUniformBuffersPerDescriptor}
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, pObjectEntryUsageFlags}
 
 instance {-# OVERLAPPING #-}
          HasField "maxUniformBuffersPerDescriptor"
@@ -450,44 +321,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkObjectTableCreateInfoNVX, maxUniformBuffersPerDescriptor}
 
-instance CanReadField "maxUniformBuffersPerDescriptor"
+instance {-# OVERLAPPING #-}
+         CanReadField "maxUniformBuffersPerDescriptor"
            VkObjectTableCreateInfoNVX
          where
-        {-# INLINE getField #-}
-        getField = vkMaxUniformBuffersPerDescriptor
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkObjectTableCreateInfoNVX, maxUniformBuffersPerDescriptor})
 
         {-# INLINE readField #-}
-        readField = readVkMaxUniformBuffersPerDescriptor
+        readField p
+          = peekByteOff p #{offset VkObjectTableCreateInfoNVX, maxUniformBuffersPerDescriptor}
 
-instance CanWriteField "maxUniformBuffersPerDescriptor"
+instance {-# OVERLAPPING #-}
+         CanWriteField "maxUniformBuffersPerDescriptor"
            VkObjectTableCreateInfoNVX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkMaxUniformBuffersPerDescriptor
-
-instance {-# OVERLAPPING #-}
-         HasVkMaxStorageBuffersPerDescriptor VkObjectTableCreateInfoNVX
-         where
-        type VkMaxStorageBuffersPerDescriptorMType
-               VkObjectTableCreateInfoNVX
-             = Word32
-
-        {-# NOINLINE vkMaxStorageBuffersPerDescriptor #-}
-        vkMaxStorageBuffersPerDescriptor x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkObjectTableCreateInfoNVX, maxStorageBuffersPerDescriptor})
-
-        {-# INLINE vkMaxStorageBuffersPerDescriptorByteOffset #-}
-        vkMaxStorageBuffersPerDescriptorByteOffset ~_
-          = #{offset VkObjectTableCreateInfoNVX, maxStorageBuffersPerDescriptor}
-
-        {-# INLINE readVkMaxStorageBuffersPerDescriptor #-}
-        readVkMaxStorageBuffersPerDescriptor p
-          = peekByteOff p #{offset VkObjectTableCreateInfoNVX, maxStorageBuffersPerDescriptor}
-
-        {-# INLINE writeVkMaxStorageBuffersPerDescriptor #-}
-        writeVkMaxStorageBuffersPerDescriptor p
-          = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, maxStorageBuffersPerDescriptor}
+        writeField p
+          = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, maxUniformBuffersPerDescriptor}
 
 instance {-# OVERLAPPING #-}
          HasField "maxStorageBuffersPerDescriptor"
@@ -514,43 +367,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkObjectTableCreateInfoNVX, maxStorageBuffersPerDescriptor}
 
-instance CanReadField "maxStorageBuffersPerDescriptor"
+instance {-# OVERLAPPING #-}
+         CanReadField "maxStorageBuffersPerDescriptor"
            VkObjectTableCreateInfoNVX
          where
-        {-# INLINE getField #-}
-        getField = vkMaxStorageBuffersPerDescriptor
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkObjectTableCreateInfoNVX, maxStorageBuffersPerDescriptor})
 
         {-# INLINE readField #-}
-        readField = readVkMaxStorageBuffersPerDescriptor
+        readField p
+          = peekByteOff p #{offset VkObjectTableCreateInfoNVX, maxStorageBuffersPerDescriptor}
 
-instance CanWriteField "maxStorageBuffersPerDescriptor"
+instance {-# OVERLAPPING #-}
+         CanWriteField "maxStorageBuffersPerDescriptor"
            VkObjectTableCreateInfoNVX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkMaxStorageBuffersPerDescriptor
-
-instance {-# OVERLAPPING #-}
-         HasVkMaxStorageImagesPerDescriptor VkObjectTableCreateInfoNVX where
-        type VkMaxStorageImagesPerDescriptorMType
-               VkObjectTableCreateInfoNVX
-             = Word32
-
-        {-# NOINLINE vkMaxStorageImagesPerDescriptor #-}
-        vkMaxStorageImagesPerDescriptor x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkObjectTableCreateInfoNVX, maxStorageImagesPerDescriptor})
-
-        {-# INLINE vkMaxStorageImagesPerDescriptorByteOffset #-}
-        vkMaxStorageImagesPerDescriptorByteOffset ~_
-          = #{offset VkObjectTableCreateInfoNVX, maxStorageImagesPerDescriptor}
-
-        {-# INLINE readVkMaxStorageImagesPerDescriptor #-}
-        readVkMaxStorageImagesPerDescriptor p
-          = peekByteOff p #{offset VkObjectTableCreateInfoNVX, maxStorageImagesPerDescriptor}
-
-        {-# INLINE writeVkMaxStorageImagesPerDescriptor #-}
-        writeVkMaxStorageImagesPerDescriptor p
-          = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, maxStorageImagesPerDescriptor}
+        writeField p
+          = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, maxStorageBuffersPerDescriptor}
 
 instance {-# OVERLAPPING #-}
          HasField "maxStorageImagesPerDescriptor" VkObjectTableCreateInfoNVX
@@ -576,43 +412,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkObjectTableCreateInfoNVX, maxStorageImagesPerDescriptor}
 
-instance CanReadField "maxStorageImagesPerDescriptor"
+instance {-# OVERLAPPING #-}
+         CanReadField "maxStorageImagesPerDescriptor"
            VkObjectTableCreateInfoNVX
          where
-        {-# INLINE getField #-}
-        getField = vkMaxStorageImagesPerDescriptor
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkObjectTableCreateInfoNVX, maxStorageImagesPerDescriptor})
 
         {-# INLINE readField #-}
-        readField = readVkMaxStorageImagesPerDescriptor
+        readField p
+          = peekByteOff p #{offset VkObjectTableCreateInfoNVX, maxStorageImagesPerDescriptor}
 
-instance CanWriteField "maxStorageImagesPerDescriptor"
+instance {-# OVERLAPPING #-}
+         CanWriteField "maxStorageImagesPerDescriptor"
            VkObjectTableCreateInfoNVX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkMaxStorageImagesPerDescriptor
-
-instance {-# OVERLAPPING #-}
-         HasVkMaxSampledImagesPerDescriptor VkObjectTableCreateInfoNVX where
-        type VkMaxSampledImagesPerDescriptorMType
-               VkObjectTableCreateInfoNVX
-             = Word32
-
-        {-# NOINLINE vkMaxSampledImagesPerDescriptor #-}
-        vkMaxSampledImagesPerDescriptor x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkObjectTableCreateInfoNVX, maxSampledImagesPerDescriptor})
-
-        {-# INLINE vkMaxSampledImagesPerDescriptorByteOffset #-}
-        vkMaxSampledImagesPerDescriptorByteOffset ~_
-          = #{offset VkObjectTableCreateInfoNVX, maxSampledImagesPerDescriptor}
-
-        {-# INLINE readVkMaxSampledImagesPerDescriptor #-}
-        readVkMaxSampledImagesPerDescriptor p
-          = peekByteOff p #{offset VkObjectTableCreateInfoNVX, maxSampledImagesPerDescriptor}
-
-        {-# INLINE writeVkMaxSampledImagesPerDescriptor #-}
-        writeVkMaxSampledImagesPerDescriptor p
-          = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, maxSampledImagesPerDescriptor}
+        writeField p
+          = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, maxStorageImagesPerDescriptor}
 
 instance {-# OVERLAPPING #-}
          HasField "maxSampledImagesPerDescriptor" VkObjectTableCreateInfoNVX
@@ -638,41 +457,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkObjectTableCreateInfoNVX, maxSampledImagesPerDescriptor}
 
-instance CanReadField "maxSampledImagesPerDescriptor"
+instance {-# OVERLAPPING #-}
+         CanReadField "maxSampledImagesPerDescriptor"
            VkObjectTableCreateInfoNVX
          where
-        {-# INLINE getField #-}
-        getField = vkMaxSampledImagesPerDescriptor
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkObjectTableCreateInfoNVX, maxSampledImagesPerDescriptor})
 
         {-# INLINE readField #-}
-        readField = readVkMaxSampledImagesPerDescriptor
+        readField p
+          = peekByteOff p #{offset VkObjectTableCreateInfoNVX, maxSampledImagesPerDescriptor}
 
-instance CanWriteField "maxSampledImagesPerDescriptor"
+instance {-# OVERLAPPING #-}
+         CanWriteField "maxSampledImagesPerDescriptor"
            VkObjectTableCreateInfoNVX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkMaxSampledImagesPerDescriptor
-
-instance {-# OVERLAPPING #-}
-         HasVkMaxPipelineLayouts VkObjectTableCreateInfoNVX where
-        type VkMaxPipelineLayoutsMType VkObjectTableCreateInfoNVX = Word32
-
-        {-# NOINLINE vkMaxPipelineLayouts #-}
-        vkMaxPipelineLayouts x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkObjectTableCreateInfoNVX, maxPipelineLayouts})
-
-        {-# INLINE vkMaxPipelineLayoutsByteOffset #-}
-        vkMaxPipelineLayoutsByteOffset ~_
-          = #{offset VkObjectTableCreateInfoNVX, maxPipelineLayouts}
-
-        {-# INLINE readVkMaxPipelineLayouts #-}
-        readVkMaxPipelineLayouts p
-          = peekByteOff p #{offset VkObjectTableCreateInfoNVX, maxPipelineLayouts}
-
-        {-# INLINE writeVkMaxPipelineLayouts #-}
-        writeVkMaxPipelineLayouts p
-          = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, maxPipelineLayouts}
+        writeField p
+          = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, maxSampledImagesPerDescriptor}
 
 instance {-# OVERLAPPING #-}
          HasField "maxPipelineLayouts" VkObjectTableCreateInfoNVX where
@@ -692,73 +496,81 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkObjectTableCreateInfoNVX, maxPipelineLayouts}
 
-instance CanReadField "maxPipelineLayouts"
-           VkObjectTableCreateInfoNVX
-         where
-        {-# INLINE getField #-}
-        getField = vkMaxPipelineLayouts
+instance {-# OVERLAPPING #-}
+         CanReadField "maxPipelineLayouts" VkObjectTableCreateInfoNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkObjectTableCreateInfoNVX, maxPipelineLayouts})
 
         {-# INLINE readField #-}
-        readField = readVkMaxPipelineLayouts
+        readField p
+          = peekByteOff p #{offset VkObjectTableCreateInfoNVX, maxPipelineLayouts}
 
-instance CanWriteField "maxPipelineLayouts"
-           VkObjectTableCreateInfoNVX
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "maxPipelineLayouts" VkObjectTableCreateInfoNVX where
         {-# INLINE writeField #-}
-        writeField = writeVkMaxPipelineLayouts
+        writeField p
+          = pokeByteOff p #{offset VkObjectTableCreateInfoNVX, maxPipelineLayouts}
 
 instance Show VkObjectTableCreateInfoNVX where
         showsPrec d x
           = showString "VkObjectTableCreateInfoNVX {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkObjectCount = " .
-                            showsPrec d (vkObjectCount x) .
+                          showString "objectCount = " .
+                            showsPrec d (getField @"objectCount" x) .
                               showString ", " .
-                                showString "vkPObjectEntryTypes = " .
-                                  showsPrec d (vkPObjectEntryTypes x) .
+                                showString "pObjectEntryTypes = " .
+                                  showsPrec d (getField @"pObjectEntryTypes" x) .
                                     showString ", " .
-                                      showString "vkPObjectEntryCounts = " .
-                                        showsPrec d (vkPObjectEntryCounts x) .
+                                      showString "pObjectEntryCounts = " .
+                                        showsPrec d (getField @"pObjectEntryCounts" x) .
                                           showString ", " .
-                                            showString "vkPObjectEntryUsageFlags = " .
-                                              showsPrec d (vkPObjectEntryUsageFlags x) .
+                                            showString "pObjectEntryUsageFlags = " .
+                                              showsPrec d (getField @"pObjectEntryUsageFlags" x) .
                                                 showString ", " .
-                                                  showString "vkMaxUniformBuffersPerDescriptor = " .
-                                                    showsPrec d (vkMaxUniformBuffersPerDescriptor x)
+                                                  showString "maxUniformBuffersPerDescriptor = " .
+                                                    showsPrec d
+                                                      (getField @"maxUniformBuffersPerDescriptor" x)
                                                       .
                                                       showString ", " .
                                                         showString
-                                                          "vkMaxStorageBuffersPerDescriptor = "
+                                                          "maxStorageBuffersPerDescriptor = "
                                                           .
                                                           showsPrec d
-                                                            (vkMaxStorageBuffersPerDescriptor x)
+                                                            (getField
+                                                               @"maxStorageBuffersPerDescriptor"
+                                                               x)
                                                             .
                                                             showString ", " .
                                                               showString
-                                                                "vkMaxStorageImagesPerDescriptor = "
+                                                                "maxStorageImagesPerDescriptor = "
                                                                 .
                                                                 showsPrec d
-                                                                  (vkMaxStorageImagesPerDescriptor
+                                                                  (getField
+                                                                     @"maxStorageImagesPerDescriptor"
                                                                      x)
                                                                   .
                                                                   showString ", " .
                                                                     showString
-                                                                      "vkMaxSampledImagesPerDescriptor = "
+                                                                      "maxSampledImagesPerDescriptor = "
                                                                       .
                                                                       showsPrec d
-                                                                        (vkMaxSampledImagesPerDescriptor
+                                                                        (getField
+                                                                           @"maxSampledImagesPerDescriptor"
                                                                            x)
                                                                         .
                                                                         showString ", " .
                                                                           showString
-                                                                            "vkMaxPipelineLayouts = "
+                                                                            "maxPipelineLayouts = "
                                                                             .
                                                                             showsPrec d
-                                                                              (vkMaxPipelineLayouts
+                                                                              (getField
+                                                                                 @"maxPipelineLayouts"
                                                                                  x)
                                                                               . showChar '}'

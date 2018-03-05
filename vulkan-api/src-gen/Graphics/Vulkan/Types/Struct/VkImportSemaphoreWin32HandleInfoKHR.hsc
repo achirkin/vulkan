@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkImportSemaphoreWin32HandleInfoKHR
        (VkImportSemaphoreWin32HandleInfoKHR(..)) where
@@ -24,7 +25,6 @@ import           Graphics.Vulkan.Types.Handles
 import           Graphics.Vulkan.Types.Include
                                                                                    (HANDLE,
                                                                                    LPCWSTR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe
                                                                                    (unsafeDupablePerformIO)
 
@@ -95,28 +95,6 @@ instance VulkanMarshal VkImportSemaphoreWin32HandleInfoKHR where
         type StructExtends VkImportSemaphoreWin32HandleInfoKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkImportSemaphoreWin32HandleInfoKHR where
-        type VkSTypeMType VkImportSemaphoreWin32HandleInfoKHR =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImportSemaphoreWin32HandleInfoKHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkImportSemaphoreWin32HandleInfoKHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkImportSemaphoreWin32HandleInfoKHR where
         type FieldType "sType" VkImportSemaphoreWin32HandleInfoKHR =
              VkStructureType
@@ -134,39 +112,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkImportSemaphoreWin32HandleInfoKHR, sType}
 
-instance CanReadField "sType" VkImportSemaphoreWin32HandleInfoKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkImportSemaphoreWin32HandleInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImportSemaphoreWin32HandleInfoKHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkImportSemaphoreWin32HandleInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkImportSemaphoreWin32HandleInfoKHR where
-        type VkPNextMType VkImportSemaphoreWin32HandleInfoKHR = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImportSemaphoreWin32HandleInfoKHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkImportSemaphoreWin32HandleInfoKHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, pNext}
+         CanWriteField "sType" VkImportSemaphoreWin32HandleInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkImportSemaphoreWin32HandleInfoKHR where
@@ -186,40 +147,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkImportSemaphoreWin32HandleInfoKHR, pNext}
 
-instance CanReadField "pNext" VkImportSemaphoreWin32HandleInfoKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkImportSemaphoreWin32HandleInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImportSemaphoreWin32HandleInfoKHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkImportSemaphoreWin32HandleInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkSemaphore VkImportSemaphoreWin32HandleInfoKHR where
-        type VkSemaphoreMType VkImportSemaphoreWin32HandleInfoKHR =
-             VkSemaphore
-
-        {-# NOINLINE vkSemaphore #-}
-        vkSemaphore x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImportSemaphoreWin32HandleInfoKHR, semaphore})
-
-        {-# INLINE vkSemaphoreByteOffset #-}
-        vkSemaphoreByteOffset ~_
-          = #{offset VkImportSemaphoreWin32HandleInfoKHR, semaphore}
-
-        {-# INLINE readVkSemaphore #-}
-        readVkSemaphore p
-          = peekByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, semaphore}
-
-        {-# INLINE writeVkSemaphore #-}
-        writeVkSemaphore p
-          = pokeByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, semaphore}
+         CanWriteField "pNext" VkImportSemaphoreWin32HandleInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "semaphore" VkImportSemaphoreWin32HandleInfoKHR where
@@ -239,42 +182,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkImportSemaphoreWin32HandleInfoKHR, semaphore}
 
-instance CanReadField "semaphore"
-           VkImportSemaphoreWin32HandleInfoKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkSemaphore
+instance {-# OVERLAPPING #-}
+         CanReadField "semaphore" VkImportSemaphoreWin32HandleInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImportSemaphoreWin32HandleInfoKHR, semaphore})
 
         {-# INLINE readField #-}
-        readField = readVkSemaphore
-
-instance CanWriteField "semaphore"
-           VkImportSemaphoreWin32HandleInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSemaphore
+        readField p
+          = peekByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, semaphore}
 
 instance {-# OVERLAPPING #-}
-         HasVkFlags VkImportSemaphoreWin32HandleInfoKHR where
-        type VkFlagsMType VkImportSemaphoreWin32HandleInfoKHR =
-             VkSemaphoreImportFlagsKHR
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImportSemaphoreWin32HandleInfoKHR, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkImportSemaphoreWin32HandleInfoKHR, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, flags}
+         CanWriteField "semaphore" VkImportSemaphoreWin32HandleInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, semaphore}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkImportSemaphoreWin32HandleInfoKHR where
@@ -294,40 +217,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkImportSemaphoreWin32HandleInfoKHR, flags}
 
-instance CanReadField "flags" VkImportSemaphoreWin32HandleInfoKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkImportSemaphoreWin32HandleInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImportSemaphoreWin32HandleInfoKHR, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags" VkImportSemaphoreWin32HandleInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkHandleType VkImportSemaphoreWin32HandleInfoKHR where
-        type VkHandleTypeMType VkImportSemaphoreWin32HandleInfoKHR =
-             VkExternalSemaphoreHandleTypeFlagBitsKHR
-
-        {-# NOINLINE vkHandleType #-}
-        vkHandleType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImportSemaphoreWin32HandleInfoKHR, handleType})
-
-        {-# INLINE vkHandleTypeByteOffset #-}
-        vkHandleTypeByteOffset ~_
-          = #{offset VkImportSemaphoreWin32HandleInfoKHR, handleType}
-
-        {-# INLINE readVkHandleType #-}
-        readVkHandleType p
-          = peekByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, handleType}
-
-        {-# INLINE writeVkHandleType #-}
-        writeVkHandleType p
-          = pokeByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, handleType}
+         CanWriteField "flags" VkImportSemaphoreWin32HandleInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "handleType" VkImportSemaphoreWin32HandleInfoKHR where
@@ -347,41 +252,23 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkImportSemaphoreWin32HandleInfoKHR, handleType}
 
-instance CanReadField "handleType"
-           VkImportSemaphoreWin32HandleInfoKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkHandleType
+instance {-# OVERLAPPING #-}
+         CanReadField "handleType" VkImportSemaphoreWin32HandleInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImportSemaphoreWin32HandleInfoKHR, handleType})
 
         {-# INLINE readField #-}
-        readField = readVkHandleType
-
-instance CanWriteField "handleType"
-           VkImportSemaphoreWin32HandleInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkHandleType
+        readField p
+          = peekByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, handleType}
 
 instance {-# OVERLAPPING #-}
-         HasVkHandle VkImportSemaphoreWin32HandleInfoKHR where
-        type VkHandleMType VkImportSemaphoreWin32HandleInfoKHR = HANDLE
-
-        {-# NOINLINE vkHandle #-}
-        vkHandle x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImportSemaphoreWin32HandleInfoKHR, handle})
-
-        {-# INLINE vkHandleByteOffset #-}
-        vkHandleByteOffset ~_
-          = #{offset VkImportSemaphoreWin32HandleInfoKHR, handle}
-
-        {-# INLINE readVkHandle #-}
-        readVkHandle p
-          = peekByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, handle}
-
-        {-# INLINE writeVkHandle #-}
-        writeVkHandle p
-          = pokeByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, handle}
+         CanWriteField "handleType" VkImportSemaphoreWin32HandleInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, handleType}
 
 instance {-# OVERLAPPING #-}
          HasField "handle" VkImportSemaphoreWin32HandleInfoKHR where
@@ -401,39 +288,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkImportSemaphoreWin32HandleInfoKHR, handle}
 
-instance CanReadField "handle" VkImportSemaphoreWin32HandleInfoKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkHandle
+instance {-# OVERLAPPING #-}
+         CanReadField "handle" VkImportSemaphoreWin32HandleInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImportSemaphoreWin32HandleInfoKHR, handle})
 
         {-# INLINE readField #-}
-        readField = readVkHandle
-
-instance CanWriteField "handle" VkImportSemaphoreWin32HandleInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkHandle
+        readField p
+          = peekByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, handle}
 
 instance {-# OVERLAPPING #-}
-         HasVkName VkImportSemaphoreWin32HandleInfoKHR where
-        type VkNameMType VkImportSemaphoreWin32HandleInfoKHR = LPCWSTR
-
-        {-# NOINLINE vkName #-}
-        vkName x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImportSemaphoreWin32HandleInfoKHR, name})
-
-        {-# INLINE vkNameByteOffset #-}
-        vkNameByteOffset ~_
-          = #{offset VkImportSemaphoreWin32HandleInfoKHR, name}
-
-        {-# INLINE readVkName #-}
-        readVkName p
-          = peekByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, name}
-
-        {-# INLINE writeVkName #-}
-        writeVkName p
-          = pokeByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, name}
+         CanWriteField "handle" VkImportSemaphoreWin32HandleInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, handle}
 
 instance {-# OVERLAPPING #-}
          HasField "name" VkImportSemaphoreWin32HandleInfoKHR where
@@ -452,39 +322,43 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkImportSemaphoreWin32HandleInfoKHR, name}
 
-instance CanReadField "name" VkImportSemaphoreWin32HandleInfoKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkName
+instance {-# OVERLAPPING #-}
+         CanReadField "name" VkImportSemaphoreWin32HandleInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImportSemaphoreWin32HandleInfoKHR, name})
 
         {-# INLINE readField #-}
-        readField = readVkName
+        readField p
+          = peekByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, name}
 
-instance CanWriteField "name" VkImportSemaphoreWin32HandleInfoKHR
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "name" VkImportSemaphoreWin32HandleInfoKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkName
+        writeField p
+          = pokeByteOff p #{offset VkImportSemaphoreWin32HandleInfoKHR, name}
 
 instance Show VkImportSemaphoreWin32HandleInfoKHR where
         showsPrec d x
           = showString "VkImportSemaphoreWin32HandleInfoKHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkSemaphore = " .
-                            showsPrec d (vkSemaphore x) .
+                          showString "semaphore = " .
+                            showsPrec d (getField @"semaphore" x) .
                               showString ", " .
-                                showString "vkFlags = " .
-                                  showsPrec d (vkFlags x) .
+                                showString "flags = " .
+                                  showsPrec d (getField @"flags" x) .
                                     showString ", " .
-                                      showString "vkHandleType = " .
-                                        showsPrec d (vkHandleType x) .
+                                      showString "handleType = " .
+                                        showsPrec d (getField @"handleType" x) .
                                           showString ", " .
-                                            showString "vkHandle = " .
-                                              showsPrec d (vkHandle x) .
+                                            showString "handle = " .
+                                              showsPrec d (getField @"handle" x) .
                                                 showString ", " .
-                                                  showString "vkName = " .
-                                                    showsPrec d (vkName x) . showChar '}'
+                                                  showString "name = " .
+                                                    showsPrec d (getField @"name" x) . showChar '}'

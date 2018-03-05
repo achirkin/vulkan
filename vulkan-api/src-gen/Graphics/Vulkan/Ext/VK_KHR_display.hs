@@ -40,10 +40,16 @@ module Graphics.Vulkan.Ext.VK_KHR_display
         module Graphics.Vulkan.Types.Enum.VkSurfaceTransformFlagsKHR,
         -- > #include "vk_platform.h"
         vkGetPhysicalDeviceDisplayPropertiesKHR,
+        vkGetPhysicalDeviceDisplayPropertiesKHRSafe,
         vkGetPhysicalDeviceDisplayPlanePropertiesKHR,
+        vkGetPhysicalDeviceDisplayPlanePropertiesKHRSafe,
         vkGetDisplayPlaneSupportedDisplaysKHR,
-        vkGetDisplayModePropertiesKHR, vkCreateDisplayModeKHR,
-        vkGetDisplayPlaneCapabilitiesKHR, vkCreateDisplayPlaneSurfaceKHR,
+        vkGetDisplayPlaneSupportedDisplaysKHRSafe,
+        vkGetDisplayModePropertiesKHR, vkGetDisplayModePropertiesKHRSafe,
+        vkCreateDisplayModeKHR, vkCreateDisplayModeKHRSafe,
+        vkGetDisplayPlaneCapabilitiesKHR,
+        vkGetDisplayPlaneCapabilitiesKHRSafe,
+        vkCreateDisplayPlaneSurfaceKHR, vkCreateDisplayPlaneSurfaceKHRSafe,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,
@@ -106,6 +112,25 @@ foreign import ccall unsafe
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
+--   > VkResult vkGetPhysicalDeviceDisplayPropertiesKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , uint32_t* pPropertyCount
+--   >     , VkDisplayPropertiesKHR* pProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceDisplayPropertiesKHR.html vkGetPhysicalDeviceDisplayPropertiesKHR registry at www.khronos.org>
+foreign import ccall safe "vkGetPhysicalDeviceDisplayPropertiesKHR"
+               vkGetPhysicalDeviceDisplayPropertiesKHRSafe ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                ->
+                 Ptr Word32 -- ^ pPropertyCount
+                            -> Ptr VkDisplayPropertiesKHR -- ^ pProperties
+                                                          -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
 --   > VkResult vkGetPhysicalDeviceDisplayPlanePropertiesKHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , uint32_t* pPropertyCount
@@ -116,6 +141,26 @@ foreign import ccall unsafe
 foreign import ccall unsafe
                "vkGetPhysicalDeviceDisplayPlanePropertiesKHR"
                vkGetPhysicalDeviceDisplayPlanePropertiesKHR ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                ->
+                 Ptr Word32 -- ^ pPropertyCount
+                            -> Ptr VkDisplayPlanePropertiesKHR -- ^ pProperties
+                                                               -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkGetPhysicalDeviceDisplayPlanePropertiesKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , uint32_t* pPropertyCount
+--   >     , VkDisplayPlanePropertiesKHR* pProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceDisplayPlanePropertiesKHR.html vkGetPhysicalDeviceDisplayPlanePropertiesKHR registry at www.khronos.org>
+foreign import ccall safe
+               "vkGetPhysicalDeviceDisplayPlanePropertiesKHR"
+               vkGetPhysicalDeviceDisplayPlanePropertiesKHRSafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  Ptr Word32 -- ^ pPropertyCount
@@ -147,6 +192,27 @@ foreign import ccall unsafe "vkGetDisplayPlaneSupportedDisplaysKHR"
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
+--   > VkResult vkGetDisplayPlaneSupportedDisplaysKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , uint32_t planeIndex
+--   >     , uint32_t* pDisplayCount
+--   >     , VkDisplayKHR* pDisplays
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetDisplayPlaneSupportedDisplaysKHR.html vkGetDisplayPlaneSupportedDisplaysKHR registry at www.khronos.org>
+foreign import ccall safe "vkGetDisplayPlaneSupportedDisplaysKHR"
+               vkGetDisplayPlaneSupportedDisplaysKHRSafe ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                ->
+                 Word32 -- ^ planeIndex
+                        -> Ptr Word32 -- ^ pDisplayCount
+                                      -> Ptr VkDisplayKHR -- ^ pDisplays
+                                                          -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
 --   > VkResult vkGetDisplayModePropertiesKHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkDisplayKHR display
@@ -157,6 +223,28 @@ foreign import ccall unsafe "vkGetDisplayPlaneSupportedDisplaysKHR"
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetDisplayModePropertiesKHR.html vkGetDisplayModePropertiesKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkGetDisplayModePropertiesKHR"
                vkGetDisplayModePropertiesKHR ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                ->
+                 VkDisplayKHR -- ^ display
+                              ->
+                   Ptr Word32 -- ^ pPropertyCount
+                              -> Ptr VkDisplayModePropertiesKHR -- ^ pProperties
+                                                                -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkGetDisplayModePropertiesKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , VkDisplayKHR display
+--   >     , uint32_t* pPropertyCount
+--   >     , VkDisplayModePropertiesKHR* pProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetDisplayModePropertiesKHR.html vkGetDisplayModePropertiesKHR registry at www.khronos.org>
+foreign import ccall safe "vkGetDisplayModePropertiesKHR"
+               vkGetDisplayModePropertiesKHRSafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  VkDisplayKHR -- ^ display
@@ -180,6 +268,31 @@ foreign import ccall unsafe "vkGetDisplayModePropertiesKHR"
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateDisplayModeKHR.html vkCreateDisplayModeKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateDisplayModeKHR"
                vkCreateDisplayModeKHR ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                ->
+                 VkDisplayKHR -- ^ display
+                              ->
+                   Ptr VkDisplayModeCreateInfoKHR -- ^ pCreateInfo
+                                                  ->
+                     Ptr VkAllocationCallbacks -- ^ pAllocator
+                                               -> Ptr VkDisplayModeKHR -- ^ pMode
+                                                                       -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INITIALIZATION_FAILED'.
+--
+--   > VkResult vkCreateDisplayModeKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , VkDisplayKHR display
+--   >     , const VkDisplayModeCreateInfoKHR* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkDisplayModeKHR* pMode
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateDisplayModeKHR.html vkCreateDisplayModeKHR registry at www.khronos.org>
+foreign import ccall safe "vkCreateDisplayModeKHR"
+               vkCreateDisplayModeKHRSafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  VkDisplayKHR -- ^ display
@@ -216,6 +329,28 @@ foreign import ccall unsafe "vkGetDisplayPlaneCapabilitiesKHR"
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
+--   > VkResult vkGetDisplayPlaneCapabilitiesKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , VkDisplayModeKHR mode
+--   >     , uint32_t planeIndex
+--   >     , VkDisplayPlaneCapabilitiesKHR* pCapabilities
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetDisplayPlaneCapabilitiesKHR.html vkGetDisplayPlaneCapabilitiesKHR registry at www.khronos.org>
+foreign import ccall safe "vkGetDisplayPlaneCapabilitiesKHR"
+               vkGetDisplayPlaneCapabilitiesKHRSafe ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                ->
+                 VkDisplayModeKHR -- ^ mode
+                                  ->
+                   Word32 -- ^ planeIndex
+                          -> Ptr VkDisplayPlaneCapabilitiesKHR -- ^ pCapabilities
+                                                               -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
 --   > VkResult vkCreateDisplayPlaneSurfaceKHR
 --   >     ( VkInstance instance
 --   >     , const VkDisplaySurfaceCreateInfoKHR* pCreateInfo
@@ -226,6 +361,28 @@ foreign import ccall unsafe "vkGetDisplayPlaneCapabilitiesKHR"
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateDisplayPlaneSurfaceKHR.html vkCreateDisplayPlaneSurfaceKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateDisplayPlaneSurfaceKHR"
                vkCreateDisplayPlaneSurfaceKHR ::
+               VkInstance -- ^ instance
+                          ->
+                 Ptr VkDisplaySurfaceCreateInfoKHR -- ^ pCreateInfo
+                                                   ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                                 -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkCreateDisplayPlaneSurfaceKHR
+--   >     ( VkInstance instance
+--   >     , const VkDisplaySurfaceCreateInfoKHR* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkSurfaceKHR* pSurface
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateDisplayPlaneSurfaceKHR.html vkCreateDisplayPlaneSurfaceKHR registry at www.khronos.org>
+foreign import ccall safe "vkCreateDisplayPlaneSurfaceKHR"
+               vkCreateDisplayPlaneSurfaceKHRSafe ::
                VkInstance -- ^ instance
                           ->
                  Ptr VkDisplaySurfaceCreateInfoKHR -- ^ pCreateInfo

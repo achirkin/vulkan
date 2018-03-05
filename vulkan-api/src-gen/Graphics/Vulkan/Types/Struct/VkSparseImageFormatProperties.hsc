@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkSparseImageFormatProperties
        (VkSparseImageFormatProperties(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkImageAspectFlags       (VkImageAspectFlags)
 import           Graphics.Vulkan.Types.Enum.VkSparseImageFormatFlags (VkSparseImageFormatFlags)
 import           Graphics.Vulkan.Types.Struct.VkExtent3D             (VkExtent3D)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                    (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSparseImageFormatProperties {
@@ -78,28 +78,6 @@ instance VulkanMarshal VkSparseImageFormatProperties where
         type StructExtends VkSparseImageFormatProperties = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkAspectMask VkSparseImageFormatProperties where
-        type VkAspectMaskMType VkSparseImageFormatProperties =
-             VkImageAspectFlags
-
-        {-# NOINLINE vkAspectMask #-}
-        vkAspectMask x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSparseImageFormatProperties, aspectMask})
-
-        {-# INLINE vkAspectMaskByteOffset #-}
-        vkAspectMaskByteOffset ~_
-          = #{offset VkSparseImageFormatProperties, aspectMask}
-
-        {-# INLINE readVkAspectMask #-}
-        readVkAspectMask p
-          = peekByteOff p #{offset VkSparseImageFormatProperties, aspectMask}
-
-        {-# INLINE writeVkAspectMask #-}
-        writeVkAspectMask p
-          = pokeByteOff p #{offset VkSparseImageFormatProperties, aspectMask}
-
-instance {-# OVERLAPPING #-}
          HasField "aspectMask" VkSparseImageFormatProperties where
         type FieldType "aspectMask" VkSparseImageFormatProperties =
              VkImageAspectFlags
@@ -117,40 +95,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSparseImageFormatProperties, aspectMask}
 
-instance CanReadField "aspectMask" VkSparseImageFormatProperties
-         where
-        {-# INLINE getField #-}
-        getField = vkAspectMask
+instance {-# OVERLAPPING #-}
+         CanReadField "aspectMask" VkSparseImageFormatProperties where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSparseImageFormatProperties, aspectMask})
 
         {-# INLINE readField #-}
-        readField = readVkAspectMask
-
-instance CanWriteField "aspectMask" VkSparseImageFormatProperties
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkAspectMask
+        readField p
+          = peekByteOff p #{offset VkSparseImageFormatProperties, aspectMask}
 
 instance {-# OVERLAPPING #-}
-         HasVkImageGranularity VkSparseImageFormatProperties where
-        type VkImageGranularityMType VkSparseImageFormatProperties =
-             VkExtent3D
-
-        {-# NOINLINE vkImageGranularity #-}
-        vkImageGranularity x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSparseImageFormatProperties, imageGranularity})
-
-        {-# INLINE vkImageGranularityByteOffset #-}
-        vkImageGranularityByteOffset ~_
-          = #{offset VkSparseImageFormatProperties, imageGranularity}
-
-        {-# INLINE readVkImageGranularity #-}
-        readVkImageGranularity p
-          = peekByteOff p #{offset VkSparseImageFormatProperties, imageGranularity}
-
-        {-# INLINE writeVkImageGranularity #-}
-        writeVkImageGranularity p
-          = pokeByteOff p #{offset VkSparseImageFormatProperties, imageGranularity}
+         CanWriteField "aspectMask" VkSparseImageFormatProperties where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSparseImageFormatProperties, aspectMask}
 
 instance {-# OVERLAPPING #-}
          HasField "imageGranularity" VkSparseImageFormatProperties where
@@ -170,42 +130,23 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSparseImageFormatProperties, imageGranularity}
 
-instance CanReadField "imageGranularity"
-           VkSparseImageFormatProperties
-         where
-        {-# INLINE getField #-}
-        getField = vkImageGranularity
+instance {-# OVERLAPPING #-}
+         CanReadField "imageGranularity" VkSparseImageFormatProperties where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSparseImageFormatProperties, imageGranularity})
 
         {-# INLINE readField #-}
-        readField = readVkImageGranularity
-
-instance CanWriteField "imageGranularity"
-           VkSparseImageFormatProperties
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkImageGranularity
+        readField p
+          = peekByteOff p #{offset VkSparseImageFormatProperties, imageGranularity}
 
 instance {-# OVERLAPPING #-}
-         HasVkFlags VkSparseImageFormatProperties where
-        type VkFlagsMType VkSparseImageFormatProperties =
-             VkSparseImageFormatFlags
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSparseImageFormatProperties, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkSparseImageFormatProperties, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkSparseImageFormatProperties, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkSparseImageFormatProperties, flags}
+         CanWriteField "imageGranularity" VkSparseImageFormatProperties
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSparseImageFormatProperties, imageGranularity}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkSparseImageFormatProperties where
@@ -223,24 +164,31 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSparseImageFormatProperties, flags}
 
-instance CanReadField "flags" VkSparseImageFormatProperties where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkSparseImageFormatProperties where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSparseImageFormatProperties, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
+        readField p
+          = peekByteOff p #{offset VkSparseImageFormatProperties, flags}
 
-instance CanWriteField "flags" VkSparseImageFormatProperties where
+instance {-# OVERLAPPING #-}
+         CanWriteField "flags" VkSparseImageFormatProperties where
         {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        writeField p
+          = pokeByteOff p #{offset VkSparseImageFormatProperties, flags}
 
 instance Show VkSparseImageFormatProperties where
         showsPrec d x
           = showString "VkSparseImageFormatProperties {" .
-              showString "vkAspectMask = " .
-                showsPrec d (vkAspectMask x) .
+              showString "aspectMask = " .
+                showsPrec d (getField @"aspectMask" x) .
                   showString ", " .
-                    showString "vkImageGranularity = " .
-                      showsPrec d (vkImageGranularity x) .
+                    showString "imageGranularity = " .
+                      showsPrec d (getField @"imageGranularity" x) .
                         showString ", " .
-                          showString "vkFlags = " . showsPrec d (vkFlags x) . showChar '}'
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) . showChar '}'

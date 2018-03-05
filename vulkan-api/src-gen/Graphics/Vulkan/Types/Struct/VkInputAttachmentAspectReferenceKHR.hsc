@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkInputAttachmentAspectReferenceKHR
        (VkInputAttachmentAspectReferenceKHR(..)) where
@@ -13,7 +14,6 @@ import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkImageAspectFlags (VkImageAspectFlags)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                              (unsafeDupablePerformIO)
 
 -- | > typedef struct VkInputAttachmentAspectReferenceKHR {
@@ -78,27 +78,6 @@ instance VulkanMarshal VkInputAttachmentAspectReferenceKHR where
         type StructExtends VkInputAttachmentAspectReferenceKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSubpass VkInputAttachmentAspectReferenceKHR where
-        type VkSubpassMType VkInputAttachmentAspectReferenceKHR = Word32
-
-        {-# NOINLINE vkSubpass #-}
-        vkSubpass x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkInputAttachmentAspectReferenceKHR, subpass})
-
-        {-# INLINE vkSubpassByteOffset #-}
-        vkSubpassByteOffset ~_
-          = #{offset VkInputAttachmentAspectReferenceKHR, subpass}
-
-        {-# INLINE readVkSubpass #-}
-        readVkSubpass p
-          = peekByteOff p #{offset VkInputAttachmentAspectReferenceKHR, subpass}
-
-        {-# INLINE writeVkSubpass #-}
-        writeVkSubpass p
-          = pokeByteOff p #{offset VkInputAttachmentAspectReferenceKHR, subpass}
-
-instance {-# OVERLAPPING #-}
          HasField "subpass" VkInputAttachmentAspectReferenceKHR where
         type FieldType "subpass" VkInputAttachmentAspectReferenceKHR =
              Word32
@@ -116,42 +95,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkInputAttachmentAspectReferenceKHR, subpass}
 
-instance CanReadField "subpass" VkInputAttachmentAspectReferenceKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkSubpass
+instance {-# OVERLAPPING #-}
+         CanReadField "subpass" VkInputAttachmentAspectReferenceKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkInputAttachmentAspectReferenceKHR, subpass})
 
         {-# INLINE readField #-}
-        readField = readVkSubpass
-
-instance CanWriteField "subpass"
-           VkInputAttachmentAspectReferenceKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSubpass
+        readField p
+          = peekByteOff p #{offset VkInputAttachmentAspectReferenceKHR, subpass}
 
 instance {-# OVERLAPPING #-}
-         HasVkInputAttachmentIndex VkInputAttachmentAspectReferenceKHR where
-        type VkInputAttachmentIndexMType
-               VkInputAttachmentAspectReferenceKHR
-             = Word32
-
-        {-# NOINLINE vkInputAttachmentIndex #-}
-        vkInputAttachmentIndex x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkInputAttachmentAspectReferenceKHR, inputAttachmentIndex})
-
-        {-# INLINE vkInputAttachmentIndexByteOffset #-}
-        vkInputAttachmentIndexByteOffset ~_
-          = #{offset VkInputAttachmentAspectReferenceKHR, inputAttachmentIndex}
-
-        {-# INLINE readVkInputAttachmentIndex #-}
-        readVkInputAttachmentIndex p
-          = peekByteOff p #{offset VkInputAttachmentAspectReferenceKHR, inputAttachmentIndex}
-
-        {-# INLINE writeVkInputAttachmentIndex #-}
-        writeVkInputAttachmentIndex p
-          = pokeByteOff p #{offset VkInputAttachmentAspectReferenceKHR, inputAttachmentIndex}
+         CanWriteField "subpass" VkInputAttachmentAspectReferenceKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkInputAttachmentAspectReferenceKHR, subpass}
 
 instance {-# OVERLAPPING #-}
          HasField "inputAttachmentIndex" VkInputAttachmentAspectReferenceKHR
@@ -177,42 +136,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkInputAttachmentAspectReferenceKHR, inputAttachmentIndex}
 
-instance CanReadField "inputAttachmentIndex"
+instance {-# OVERLAPPING #-}
+         CanReadField "inputAttachmentIndex"
            VkInputAttachmentAspectReferenceKHR
          where
-        {-# INLINE getField #-}
-        getField = vkInputAttachmentIndex
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkInputAttachmentAspectReferenceKHR, inputAttachmentIndex})
 
         {-# INLINE readField #-}
-        readField = readVkInputAttachmentIndex
+        readField p
+          = peekByteOff p #{offset VkInputAttachmentAspectReferenceKHR, inputAttachmentIndex}
 
-instance CanWriteField "inputAttachmentIndex"
+instance {-# OVERLAPPING #-}
+         CanWriteField "inputAttachmentIndex"
            VkInputAttachmentAspectReferenceKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkInputAttachmentIndex
-
-instance {-# OVERLAPPING #-}
-         HasVkAspectMask VkInputAttachmentAspectReferenceKHR where
-        type VkAspectMaskMType VkInputAttachmentAspectReferenceKHR =
-             VkImageAspectFlags
-
-        {-# NOINLINE vkAspectMask #-}
-        vkAspectMask x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkInputAttachmentAspectReferenceKHR, aspectMask})
-
-        {-# INLINE vkAspectMaskByteOffset #-}
-        vkAspectMaskByteOffset ~_
-          = #{offset VkInputAttachmentAspectReferenceKHR, aspectMask}
-
-        {-# INLINE readVkAspectMask #-}
-        readVkAspectMask p
-          = peekByteOff p #{offset VkInputAttachmentAspectReferenceKHR, aspectMask}
-
-        {-# INLINE writeVkAspectMask #-}
-        writeVkAspectMask p
-          = pokeByteOff p #{offset VkInputAttachmentAspectReferenceKHR, aspectMask}
+        writeField p
+          = pokeByteOff p #{offset VkInputAttachmentAspectReferenceKHR, inputAttachmentIndex}
 
 instance {-# OVERLAPPING #-}
          HasField "aspectMask" VkInputAttachmentAspectReferenceKHR where
@@ -232,29 +175,32 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkInputAttachmentAspectReferenceKHR, aspectMask}
 
-instance CanReadField "aspectMask"
-           VkInputAttachmentAspectReferenceKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkAspectMask
+instance {-# OVERLAPPING #-}
+         CanReadField "aspectMask" VkInputAttachmentAspectReferenceKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkInputAttachmentAspectReferenceKHR, aspectMask})
 
         {-# INLINE readField #-}
-        readField = readVkAspectMask
+        readField p
+          = peekByteOff p #{offset VkInputAttachmentAspectReferenceKHR, aspectMask}
 
-instance CanWriteField "aspectMask"
-           VkInputAttachmentAspectReferenceKHR
+instance {-# OVERLAPPING #-}
+         CanWriteField "aspectMask" VkInputAttachmentAspectReferenceKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkAspectMask
+        writeField p
+          = pokeByteOff p #{offset VkInputAttachmentAspectReferenceKHR, aspectMask}
 
 instance Show VkInputAttachmentAspectReferenceKHR where
         showsPrec d x
           = showString "VkInputAttachmentAspectReferenceKHR {" .
-              showString "vkSubpass = " .
-                showsPrec d (vkSubpass x) .
+              showString "subpass = " .
+                showsPrec d (getField @"subpass" x) .
                   showString ", " .
-                    showString "vkInputAttachmentIndex = " .
-                      showsPrec d (vkInputAttachmentIndex x) .
+                    showString "inputAttachmentIndex = " .
+                      showsPrec d (getField @"inputAttachmentIndex" x) .
                         showString ", " .
-                          showString "vkAspectMask = " .
-                            showsPrec d (vkAspectMask x) . showChar '}'
+                          showString "aspectMask = " .
+                            showsPrec d (getField @"aspectMask" x) . showChar '}'

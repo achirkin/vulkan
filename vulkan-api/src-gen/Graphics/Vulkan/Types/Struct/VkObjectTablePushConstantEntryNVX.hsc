@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkObjectTablePushConstantEntryNVX
        (VkObjectTablePushConstantEntryNVX(..)) where
@@ -16,7 +17,6 @@ import           Graphics.Vulkan.Types.Enum.VkObjectEntryTypeNVX       (VkObject
 import           Graphics.Vulkan.Types.Enum.VkObjectEntryUsageFlagsNVX (VkObjectEntryUsageFlagsNVX)
 import           Graphics.Vulkan.Types.Enum.VkShaderStageFlags         (VkShaderStageFlags)
 import           Graphics.Vulkan.Types.Handles                         (VkPipelineLayout)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                      (unsafeDupablePerformIO)
 
 -- | > typedef struct VkObjectTablePushConstantEntryNVX {
@@ -81,28 +81,6 @@ instance VulkanMarshal VkObjectTablePushConstantEntryNVX where
         type StructExtends VkObjectTablePushConstantEntryNVX = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkType VkObjectTablePushConstantEntryNVX where
-        type VkTypeMType VkObjectTablePushConstantEntryNVX =
-             VkObjectEntryTypeNVX
-
-        {-# NOINLINE vkType #-}
-        vkType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkObjectTablePushConstantEntryNVX, type})
-
-        {-# INLINE vkTypeByteOffset #-}
-        vkTypeByteOffset ~_
-          = #{offset VkObjectTablePushConstantEntryNVX, type}
-
-        {-# INLINE readVkType #-}
-        readVkType p
-          = peekByteOff p #{offset VkObjectTablePushConstantEntryNVX, type}
-
-        {-# INLINE writeVkType #-}
-        writeVkType p
-          = pokeByteOff p #{offset VkObjectTablePushConstantEntryNVX, type}
-
-instance {-# OVERLAPPING #-}
          HasField "type" VkObjectTablePushConstantEntryNVX where
         type FieldType "type" VkObjectTablePushConstantEntryNVX =
              VkObjectEntryTypeNVX
@@ -119,40 +97,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkObjectTablePushConstantEntryNVX, type}
 
-instance CanReadField "type" VkObjectTablePushConstantEntryNVX
-         where
-        {-# INLINE getField #-}
-        getField = vkType
+instance {-# OVERLAPPING #-}
+         CanReadField "type" VkObjectTablePushConstantEntryNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkObjectTablePushConstantEntryNVX, type})
 
         {-# INLINE readField #-}
-        readField = readVkType
-
-instance CanWriteField "type" VkObjectTablePushConstantEntryNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkType
+        readField p
+          = peekByteOff p #{offset VkObjectTablePushConstantEntryNVX, type}
 
 instance {-# OVERLAPPING #-}
-         HasVkFlags VkObjectTablePushConstantEntryNVX where
-        type VkFlagsMType VkObjectTablePushConstantEntryNVX =
-             VkObjectEntryUsageFlagsNVX
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkObjectTablePushConstantEntryNVX, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkObjectTablePushConstantEntryNVX, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkObjectTablePushConstantEntryNVX, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkObjectTablePushConstantEntryNVX, flags}
+         CanWriteField "type" VkObjectTablePushConstantEntryNVX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkObjectTablePushConstantEntryNVX, type}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkObjectTablePushConstantEntryNVX where
@@ -172,40 +132,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkObjectTablePushConstantEntryNVX, flags}
 
-instance CanReadField "flags" VkObjectTablePushConstantEntryNVX
-         where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkObjectTablePushConstantEntryNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkObjectTablePushConstantEntryNVX, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags" VkObjectTablePushConstantEntryNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkObjectTablePushConstantEntryNVX, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkPipelineLayout VkObjectTablePushConstantEntryNVX where
-        type VkPipelineLayoutMType VkObjectTablePushConstantEntryNVX =
-             VkPipelineLayout
-
-        {-# NOINLINE vkPipelineLayout #-}
-        vkPipelineLayout x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkObjectTablePushConstantEntryNVX, pipelineLayout})
-
-        {-# INLINE vkPipelineLayoutByteOffset #-}
-        vkPipelineLayoutByteOffset ~_
-          = #{offset VkObjectTablePushConstantEntryNVX, pipelineLayout}
-
-        {-# INLINE readVkPipelineLayout #-}
-        readVkPipelineLayout p
-          = peekByteOff p #{offset VkObjectTablePushConstantEntryNVX, pipelineLayout}
-
-        {-# INLINE writeVkPipelineLayout #-}
-        writeVkPipelineLayout p
-          = pokeByteOff p #{offset VkObjectTablePushConstantEntryNVX, pipelineLayout}
+         CanWriteField "flags" VkObjectTablePushConstantEntryNVX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkObjectTablePushConstantEntryNVX, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "pipelineLayout" VkObjectTablePushConstantEntryNVX where
@@ -228,42 +170,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkObjectTablePushConstantEntryNVX, pipelineLayout}
 
-instance CanReadField "pipelineLayout"
-           VkObjectTablePushConstantEntryNVX
+instance {-# OVERLAPPING #-}
+         CanReadField "pipelineLayout" VkObjectTablePushConstantEntryNVX
          where
-        {-# INLINE getField #-}
-        getField = vkPipelineLayout
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkObjectTablePushConstantEntryNVX, pipelineLayout})
 
         {-# INLINE readField #-}
-        readField = readVkPipelineLayout
-
-instance CanWriteField "pipelineLayout"
-           VkObjectTablePushConstantEntryNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPipelineLayout
+        readField p
+          = peekByteOff p #{offset VkObjectTablePushConstantEntryNVX, pipelineLayout}
 
 instance {-# OVERLAPPING #-}
-         HasVkStageFlags VkObjectTablePushConstantEntryNVX where
-        type VkStageFlagsMType VkObjectTablePushConstantEntryNVX =
-             VkShaderStageFlags
-
-        {-# NOINLINE vkStageFlags #-}
-        vkStageFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkObjectTablePushConstantEntryNVX, stageFlags})
-
-        {-# INLINE vkStageFlagsByteOffset #-}
-        vkStageFlagsByteOffset ~_
-          = #{offset VkObjectTablePushConstantEntryNVX, stageFlags}
-
-        {-# INLINE readVkStageFlags #-}
-        readVkStageFlags p
-          = peekByteOff p #{offset VkObjectTablePushConstantEntryNVX, stageFlags}
-
-        {-# INLINE writeVkStageFlags #-}
-        writeVkStageFlags p
-          = pokeByteOff p #{offset VkObjectTablePushConstantEntryNVX, stageFlags}
+         CanWriteField "pipelineLayout" VkObjectTablePushConstantEntryNVX
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkObjectTablePushConstantEntryNVX, pipelineLayout}
 
 instance {-# OVERLAPPING #-}
          HasField "stageFlags" VkObjectTablePushConstantEntryNVX where
@@ -283,32 +207,34 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkObjectTablePushConstantEntryNVX, stageFlags}
 
-instance CanReadField "stageFlags"
-           VkObjectTablePushConstantEntryNVX
-         where
-        {-# INLINE getField #-}
-        getField = vkStageFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "stageFlags" VkObjectTablePushConstantEntryNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkObjectTablePushConstantEntryNVX, stageFlags})
 
         {-# INLINE readField #-}
-        readField = readVkStageFlags
+        readField p
+          = peekByteOff p #{offset VkObjectTablePushConstantEntryNVX, stageFlags}
 
-instance CanWriteField "stageFlags"
-           VkObjectTablePushConstantEntryNVX
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "stageFlags" VkObjectTablePushConstantEntryNVX where
         {-# INLINE writeField #-}
-        writeField = writeVkStageFlags
+        writeField p
+          = pokeByteOff p #{offset VkObjectTablePushConstantEntryNVX, stageFlags}
 
 instance Show VkObjectTablePushConstantEntryNVX where
         showsPrec d x
           = showString "VkObjectTablePushConstantEntryNVX {" .
-              showString "vkType = " .
-                showsPrec d (vkType x) .
+              showString "type = " .
+                showsPrec d (getField @"type" x) .
                   showString ", " .
-                    showString "vkFlags = " .
-                      showsPrec d (vkFlags x) .
+                    showString "flags = " .
+                      showsPrec d (getField @"flags" x) .
                         showString ", " .
-                          showString "vkPipelineLayout = " .
-                            showsPrec d (vkPipelineLayout x) .
+                          showString "pipelineLayout = " .
+                            showsPrec d (getField @"pipelineLayout" x) .
                               showString ", " .
-                                showString "vkStageFlags = " .
-                                  showsPrec d (vkStageFlags x) . showChar '}'
+                                showString "stageFlags = " .
+                                  showsPrec d (getField @"stageFlags" x) . showChar '}'

@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkAttachmentDescription
        (VkAttachmentDescription(..)) where
@@ -18,7 +19,6 @@ import           Graphics.Vulkan.Types.Enum.VkAttachmentStoreOp          (VkAtta
 import           Graphics.Vulkan.Types.Enum.VkFormat                     (VkFormat)
 import           Graphics.Vulkan.Types.Enum.VkImageLayout                (VkImageLayout)
 import           Graphics.Vulkan.Types.Enum.VkSampleCountFlags           (VkSampleCountFlagBits)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                        (unsafeDupablePerformIO)
 
 -- | > typedef struct VkAttachmentDescription {
@@ -83,28 +83,6 @@ instance VulkanMarshal VkAttachmentDescription where
         type ReturnedOnly VkAttachmentDescription = 'False -- ' closing tick for hsc2hs
         type StructExtends VkAttachmentDescription = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkFlags VkAttachmentDescription
-         where
-        type VkFlagsMType VkAttachmentDescription =
-             VkAttachmentDescriptionFlags
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAttachmentDescription, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkAttachmentDescription, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkAttachmentDescription, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkAttachmentDescription, flags}
-
 instance {-# OVERLAPPING #-}
          HasField "flags" VkAttachmentDescription where
         type FieldType "flags" VkAttachmentDescription =
@@ -120,37 +98,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkAttachmentDescription, flags}
 
-instance CanReadField "flags" VkAttachmentDescription where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkAttachmentDescription where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAttachmentDescription, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
+        readField p
+          = peekByteOff p #{offset VkAttachmentDescription, flags}
 
-instance CanWriteField "flags" VkAttachmentDescription where
+instance {-# OVERLAPPING #-}
+         CanWriteField "flags" VkAttachmentDescription where
         {-# INLINE writeField #-}
-        writeField = writeVkFlags
-
-instance {-# OVERLAPPING #-} HasVkFormat VkAttachmentDescription
-         where
-        type VkFormatMType VkAttachmentDescription = VkFormat
-
-        {-# NOINLINE vkFormat #-}
-        vkFormat x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAttachmentDescription, format})
-
-        {-# INLINE vkFormatByteOffset #-}
-        vkFormatByteOffset ~_
-          = #{offset VkAttachmentDescription, format}
-
-        {-# INLINE readVkFormat #-}
-        readVkFormat p
-          = peekByteOff p #{offset VkAttachmentDescription, format}
-
-        {-# INLINE writeVkFormat #-}
-        writeVkFormat p
-          = pokeByteOff p #{offset VkAttachmentDescription, format}
+        writeField p
+          = pokeByteOff p #{offset VkAttachmentDescription, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "format" VkAttachmentDescription where
@@ -166,37 +129,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkAttachmentDescription, format}
 
-instance CanReadField "format" VkAttachmentDescription where
-        {-# INLINE getField #-}
-        getField = vkFormat
+instance {-# OVERLAPPING #-}
+         CanReadField "format" VkAttachmentDescription where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAttachmentDescription, format})
 
         {-# INLINE readField #-}
-        readField = readVkFormat
+        readField p
+          = peekByteOff p #{offset VkAttachmentDescription, format}
 
-instance CanWriteField "format" VkAttachmentDescription where
+instance {-# OVERLAPPING #-}
+         CanWriteField "format" VkAttachmentDescription where
         {-# INLINE writeField #-}
-        writeField = writeVkFormat
-
-instance {-# OVERLAPPING #-} HasVkSamples VkAttachmentDescription
-         where
-        type VkSamplesMType VkAttachmentDescription = VkSampleCountFlagBits
-
-        {-# NOINLINE vkSamples #-}
-        vkSamples x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAttachmentDescription, samples})
-
-        {-# INLINE vkSamplesByteOffset #-}
-        vkSamplesByteOffset ~_
-          = #{offset VkAttachmentDescription, samples}
-
-        {-# INLINE readVkSamples #-}
-        readVkSamples p
-          = peekByteOff p #{offset VkAttachmentDescription, samples}
-
-        {-# INLINE writeVkSamples #-}
-        writeVkSamples p
-          = pokeByteOff p #{offset VkAttachmentDescription, samples}
+        writeField p
+          = pokeByteOff p #{offset VkAttachmentDescription, format}
 
 instance {-# OVERLAPPING #-}
          HasField "samples" VkAttachmentDescription where
@@ -214,37 +162,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkAttachmentDescription, samples}
 
-instance CanReadField "samples" VkAttachmentDescription where
-        {-# INLINE getField #-}
-        getField = vkSamples
+instance {-# OVERLAPPING #-}
+         CanReadField "samples" VkAttachmentDescription where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAttachmentDescription, samples})
 
         {-# INLINE readField #-}
-        readField = readVkSamples
+        readField p
+          = peekByteOff p #{offset VkAttachmentDescription, samples}
 
-instance CanWriteField "samples" VkAttachmentDescription where
+instance {-# OVERLAPPING #-}
+         CanWriteField "samples" VkAttachmentDescription where
         {-# INLINE writeField #-}
-        writeField = writeVkSamples
-
-instance {-# OVERLAPPING #-} HasVkLoadOp VkAttachmentDescription
-         where
-        type VkLoadOpMType VkAttachmentDescription = VkAttachmentLoadOp
-
-        {-# NOINLINE vkLoadOp #-}
-        vkLoadOp x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAttachmentDescription, loadOp})
-
-        {-# INLINE vkLoadOpByteOffset #-}
-        vkLoadOpByteOffset ~_
-          = #{offset VkAttachmentDescription, loadOp}
-
-        {-# INLINE readVkLoadOp #-}
-        readVkLoadOp p
-          = peekByteOff p #{offset VkAttachmentDescription, loadOp}
-
-        {-# INLINE writeVkLoadOp #-}
-        writeVkLoadOp p
-          = pokeByteOff p #{offset VkAttachmentDescription, loadOp}
+        writeField p
+          = pokeByteOff p #{offset VkAttachmentDescription, samples}
 
 instance {-# OVERLAPPING #-}
          HasField "loadOp" VkAttachmentDescription where
@@ -261,37 +194,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkAttachmentDescription, loadOp}
 
-instance CanReadField "loadOp" VkAttachmentDescription where
-        {-# INLINE getField #-}
-        getField = vkLoadOp
+instance {-# OVERLAPPING #-}
+         CanReadField "loadOp" VkAttachmentDescription where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAttachmentDescription, loadOp})
 
         {-# INLINE readField #-}
-        readField = readVkLoadOp
+        readField p
+          = peekByteOff p #{offset VkAttachmentDescription, loadOp}
 
-instance CanWriteField "loadOp" VkAttachmentDescription where
+instance {-# OVERLAPPING #-}
+         CanWriteField "loadOp" VkAttachmentDescription where
         {-# INLINE writeField #-}
-        writeField = writeVkLoadOp
-
-instance {-# OVERLAPPING #-} HasVkStoreOp VkAttachmentDescription
-         where
-        type VkStoreOpMType VkAttachmentDescription = VkAttachmentStoreOp
-
-        {-# NOINLINE vkStoreOp #-}
-        vkStoreOp x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAttachmentDescription, storeOp})
-
-        {-# INLINE vkStoreOpByteOffset #-}
-        vkStoreOpByteOffset ~_
-          = #{offset VkAttachmentDescription, storeOp}
-
-        {-# INLINE readVkStoreOp #-}
-        readVkStoreOp p
-          = peekByteOff p #{offset VkAttachmentDescription, storeOp}
-
-        {-# INLINE writeVkStoreOp #-}
-        writeVkStoreOp p
-          = pokeByteOff p #{offset VkAttachmentDescription, storeOp}
+        writeField p
+          = pokeByteOff p #{offset VkAttachmentDescription, loadOp}
 
 instance {-# OVERLAPPING #-}
          HasField "storeOp" VkAttachmentDescription where
@@ -309,38 +227,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkAttachmentDescription, storeOp}
 
-instance CanReadField "storeOp" VkAttachmentDescription where
-        {-# INLINE getField #-}
-        getField = vkStoreOp
+instance {-# OVERLAPPING #-}
+         CanReadField "storeOp" VkAttachmentDescription where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAttachmentDescription, storeOp})
 
         {-# INLINE readField #-}
-        readField = readVkStoreOp
-
-instance CanWriteField "storeOp" VkAttachmentDescription where
-        {-# INLINE writeField #-}
-        writeField = writeVkStoreOp
+        readField p
+          = peekByteOff p #{offset VkAttachmentDescription, storeOp}
 
 instance {-# OVERLAPPING #-}
-         HasVkStencilLoadOp VkAttachmentDescription where
-        type VkStencilLoadOpMType VkAttachmentDescription =
-             VkAttachmentLoadOp
-
-        {-# NOINLINE vkStencilLoadOp #-}
-        vkStencilLoadOp x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAttachmentDescription, stencilLoadOp})
-
-        {-# INLINE vkStencilLoadOpByteOffset #-}
-        vkStencilLoadOpByteOffset ~_
-          = #{offset VkAttachmentDescription, stencilLoadOp}
-
-        {-# INLINE readVkStencilLoadOp #-}
-        readVkStencilLoadOp p
-          = peekByteOff p #{offset VkAttachmentDescription, stencilLoadOp}
-
-        {-# INLINE writeVkStencilLoadOp #-}
-        writeVkStencilLoadOp p
-          = pokeByteOff p #{offset VkAttachmentDescription, stencilLoadOp}
+         CanWriteField "storeOp" VkAttachmentDescription where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkAttachmentDescription, storeOp}
 
 instance {-# OVERLAPPING #-}
          HasField "stencilLoadOp" VkAttachmentDescription where
@@ -358,39 +260,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkAttachmentDescription, stencilLoadOp}
 
-instance CanReadField "stencilLoadOp" VkAttachmentDescription where
-        {-# INLINE getField #-}
-        getField = vkStencilLoadOp
+instance {-# OVERLAPPING #-}
+         CanReadField "stencilLoadOp" VkAttachmentDescription where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAttachmentDescription, stencilLoadOp})
 
         {-# INLINE readField #-}
-        readField = readVkStencilLoadOp
-
-instance CanWriteField "stencilLoadOp" VkAttachmentDescription
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkStencilLoadOp
+        readField p
+          = peekByteOff p #{offset VkAttachmentDescription, stencilLoadOp}
 
 instance {-# OVERLAPPING #-}
-         HasVkStencilStoreOp VkAttachmentDescription where
-        type VkStencilStoreOpMType VkAttachmentDescription =
-             VkAttachmentStoreOp
-
-        {-# NOINLINE vkStencilStoreOp #-}
-        vkStencilStoreOp x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAttachmentDescription, stencilStoreOp})
-
-        {-# INLINE vkStencilStoreOpByteOffset #-}
-        vkStencilStoreOpByteOffset ~_
-          = #{offset VkAttachmentDescription, stencilStoreOp}
-
-        {-# INLINE readVkStencilStoreOp #-}
-        readVkStencilStoreOp p
-          = peekByteOff p #{offset VkAttachmentDescription, stencilStoreOp}
-
-        {-# INLINE writeVkStencilStoreOp #-}
-        writeVkStencilStoreOp p
-          = pokeByteOff p #{offset VkAttachmentDescription, stencilStoreOp}
+         CanWriteField "stencilLoadOp" VkAttachmentDescription where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkAttachmentDescription, stencilLoadOp}
 
 instance {-# OVERLAPPING #-}
          HasField "stencilStoreOp" VkAttachmentDescription where
@@ -409,39 +294,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkAttachmentDescription, stencilStoreOp}
 
-instance CanReadField "stencilStoreOp" VkAttachmentDescription
-         where
-        {-# INLINE getField #-}
-        getField = vkStencilStoreOp
+instance {-# OVERLAPPING #-}
+         CanReadField "stencilStoreOp" VkAttachmentDescription where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAttachmentDescription, stencilStoreOp})
 
         {-# INLINE readField #-}
-        readField = readVkStencilStoreOp
-
-instance CanWriteField "stencilStoreOp" VkAttachmentDescription
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkStencilStoreOp
+        readField p
+          = peekByteOff p #{offset VkAttachmentDescription, stencilStoreOp}
 
 instance {-# OVERLAPPING #-}
-         HasVkInitialLayout VkAttachmentDescription where
-        type VkInitialLayoutMType VkAttachmentDescription = VkImageLayout
-
-        {-# NOINLINE vkInitialLayout #-}
-        vkInitialLayout x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAttachmentDescription, initialLayout})
-
-        {-# INLINE vkInitialLayoutByteOffset #-}
-        vkInitialLayoutByteOffset ~_
-          = #{offset VkAttachmentDescription, initialLayout}
-
-        {-# INLINE readVkInitialLayout #-}
-        readVkInitialLayout p
-          = peekByteOff p #{offset VkAttachmentDescription, initialLayout}
-
-        {-# INLINE writeVkInitialLayout #-}
-        writeVkInitialLayout p
-          = pokeByteOff p #{offset VkAttachmentDescription, initialLayout}
+         CanWriteField "stencilStoreOp" VkAttachmentDescription where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkAttachmentDescription, stencilStoreOp}
 
 instance {-# OVERLAPPING #-}
          HasField "initialLayout" VkAttachmentDescription where
@@ -459,38 +327,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkAttachmentDescription, initialLayout}
 
-instance CanReadField "initialLayout" VkAttachmentDescription where
-        {-# INLINE getField #-}
-        getField = vkInitialLayout
+instance {-# OVERLAPPING #-}
+         CanReadField "initialLayout" VkAttachmentDescription where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAttachmentDescription, initialLayout})
 
         {-# INLINE readField #-}
-        readField = readVkInitialLayout
-
-instance CanWriteField "initialLayout" VkAttachmentDescription
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkInitialLayout
+        readField p
+          = peekByteOff p #{offset VkAttachmentDescription, initialLayout}
 
 instance {-# OVERLAPPING #-}
-         HasVkFinalLayout VkAttachmentDescription where
-        type VkFinalLayoutMType VkAttachmentDescription = VkImageLayout
-
-        {-# NOINLINE vkFinalLayout #-}
-        vkFinalLayout x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAttachmentDescription, finalLayout})
-
-        {-# INLINE vkFinalLayoutByteOffset #-}
-        vkFinalLayoutByteOffset ~_
-          = #{offset VkAttachmentDescription, finalLayout}
-
-        {-# INLINE readVkFinalLayout #-}
-        readVkFinalLayout p
-          = peekByteOff p #{offset VkAttachmentDescription, finalLayout}
-
-        {-# INLINE writeVkFinalLayout #-}
-        writeVkFinalLayout p
-          = pokeByteOff p #{offset VkAttachmentDescription, finalLayout}
+         CanWriteField "initialLayout" VkAttachmentDescription where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkAttachmentDescription, initialLayout}
 
 instance {-# OVERLAPPING #-}
          HasField "finalLayout" VkAttachmentDescription where
@@ -508,44 +360,52 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkAttachmentDescription, finalLayout}
 
-instance CanReadField "finalLayout" VkAttachmentDescription where
-        {-# INLINE getField #-}
-        getField = vkFinalLayout
+instance {-# OVERLAPPING #-}
+         CanReadField "finalLayout" VkAttachmentDescription where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAttachmentDescription, finalLayout})
 
         {-# INLINE readField #-}
-        readField = readVkFinalLayout
+        readField p
+          = peekByteOff p #{offset VkAttachmentDescription, finalLayout}
 
-instance CanWriteField "finalLayout" VkAttachmentDescription where
+instance {-# OVERLAPPING #-}
+         CanWriteField "finalLayout" VkAttachmentDescription where
         {-# INLINE writeField #-}
-        writeField = writeVkFinalLayout
+        writeField p
+          = pokeByteOff p #{offset VkAttachmentDescription, finalLayout}
 
 instance Show VkAttachmentDescription where
         showsPrec d x
           = showString "VkAttachmentDescription {" .
-              showString "vkFlags = " .
-                showsPrec d (vkFlags x) .
+              showString "flags = " .
+                showsPrec d (getField @"flags" x) .
                   showString ", " .
-                    showString "vkFormat = " .
-                      showsPrec d (vkFormat x) .
+                    showString "format = " .
+                      showsPrec d (getField @"format" x) .
                         showString ", " .
-                          showString "vkSamples = " .
-                            showsPrec d (vkSamples x) .
+                          showString "samples = " .
+                            showsPrec d (getField @"samples" x) .
                               showString ", " .
-                                showString "vkLoadOp = " .
-                                  showsPrec d (vkLoadOp x) .
+                                showString "loadOp = " .
+                                  showsPrec d (getField @"loadOp" x) .
                                     showString ", " .
-                                      showString "vkStoreOp = " .
-                                        showsPrec d (vkStoreOp x) .
+                                      showString "storeOp = " .
+                                        showsPrec d (getField @"storeOp" x) .
                                           showString ", " .
-                                            showString "vkStencilLoadOp = " .
-                                              showsPrec d (vkStencilLoadOp x) .
+                                            showString "stencilLoadOp = " .
+                                              showsPrec d (getField @"stencilLoadOp" x) .
                                                 showString ", " .
-                                                  showString "vkStencilStoreOp = " .
-                                                    showsPrec d (vkStencilStoreOp x) .
+                                                  showString "stencilStoreOp = " .
+                                                    showsPrec d (getField @"stencilStoreOp" x) .
                                                       showString ", " .
-                                                        showString "vkInitialLayout = " .
-                                                          showsPrec d (vkInitialLayout x) .
+                                                        showString "initialLayout = " .
+                                                          showsPrec d (getField @"initialLayout" x)
+                                                            .
                                                             showString ", " .
-                                                              showString "vkFinalLayout = " .
-                                                                showsPrec d (vkFinalLayout x) .
-                                                                  showChar '}'
+                                                              showString "finalLayout = " .
+                                                                showsPrec d
+                                                                  (getField @"finalLayout" x)
+                                                                  . showChar '}'

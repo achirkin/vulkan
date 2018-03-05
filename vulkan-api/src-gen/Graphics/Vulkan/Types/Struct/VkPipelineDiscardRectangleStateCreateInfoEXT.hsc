@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPipelineDiscardRectangleStateCreateInfoEXT
        (VkPipelineDiscardRectangleStateCreateInfoEXT(..)) where
@@ -17,7 +18,6 @@ import           Graphics.Vulkan.Types.Enum.VkDiscardRectangleModeEXT      (VkDi
 import           Graphics.Vulkan.Types.Enum.VkStructureType                (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkGraphicsPipelineCreateInfo (VkGraphicsPipelineCreateInfo)
 import           Graphics.Vulkan.Types.Struct.VkRect2D                     (VkRect2D)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                          (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPipelineDiscardRectangleStateCreateInfoEXT {
@@ -94,28 +94,6 @@ instance VulkanMarshal VkPipelineDiscardRectangleStateCreateInfoEXT
              '[VkGraphicsPipelineCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPipelineDiscardRectangleStateCreateInfoEXT where
-        type VkSTypeMType VkPipelineDiscardRectangleStateCreateInfoEXT =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPipelineDiscardRectangleStateCreateInfoEXT where
         type FieldType "sType" VkPipelineDiscardRectangleStateCreateInfoEXT
              = VkStructureType
@@ -137,42 +115,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, sType}
 
-instance CanReadField "sType"
-           VkPipelineDiscardRectangleStateCreateInfoEXT
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkPipelineDiscardRectangleStateCreateInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkSType
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType"
-           VkPipelineDiscardRectangleStateCreateInfoEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkPipelineDiscardRectangleStateCreateInfoEXT where
-        type VkPNextMType VkPipelineDiscardRectangleStateCreateInfoEXT =
-             Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, pNext}
+         CanWriteField "sType" VkPipelineDiscardRectangleStateCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPipelineDiscardRectangleStateCreateInfoEXT where
@@ -196,42 +156,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, pNext}
 
-instance CanReadField "pNext"
-           VkPipelineDiscardRectangleStateCreateInfoEXT
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkPipelineDiscardRectangleStateCreateInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkPNext
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext"
-           VkPipelineDiscardRectangleStateCreateInfoEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkFlags VkPipelineDiscardRectangleStateCreateInfoEXT where
-        type VkFlagsMType VkPipelineDiscardRectangleStateCreateInfoEXT =
-             VkPipelineDiscardRectangleStateCreateFlagsEXT
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, flags}
+         CanWriteField "pNext" VkPipelineDiscardRectangleStateCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkPipelineDiscardRectangleStateCreateInfoEXT where
@@ -255,45 +197,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, flags}
 
-instance CanReadField "flags"
-           VkPipelineDiscardRectangleStateCreateInfoEXT
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkPipelineDiscardRectangleStateCreateInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkFlags
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags"
-           VkPipelineDiscardRectangleStateCreateInfoEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkDiscardRectangleMode
-           VkPipelineDiscardRectangleStateCreateInfoEXT
+         CanWriteField "flags" VkPipelineDiscardRectangleStateCreateInfoEXT
          where
-        type VkDiscardRectangleModeMType
-               VkPipelineDiscardRectangleStateCreateInfoEXT
-             = VkDiscardRectangleModeEXT
-
-        {-# NOINLINE vkDiscardRectangleMode #-}
-        vkDiscardRectangleMode x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, discardRectangleMode})
-
-        {-# INLINE vkDiscardRectangleModeByteOffset #-}
-        vkDiscardRectangleModeByteOffset ~_
-          = #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, discardRectangleMode}
-
-        {-# INLINE readVkDiscardRectangleMode #-}
-        readVkDiscardRectangleMode p
-          = peekByteOff p #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, discardRectangleMode}
-
-        {-# INLINE writeVkDiscardRectangleMode #-}
-        writeVkDiscardRectangleMode p
-          = pokeByteOff p #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, discardRectangleMode}
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "discardRectangleMode"
@@ -320,45 +241,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, discardRectangleMode}
 
-instance CanReadField "discardRectangleMode"
+instance {-# OVERLAPPING #-}
+         CanReadField "discardRectangleMode"
            VkPipelineDiscardRectangleStateCreateInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkDiscardRectangleMode
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, discardRectangleMode})
 
         {-# INLINE readField #-}
-        readField = readVkDiscardRectangleMode
+        readField p
+          = peekByteOff p #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, discardRectangleMode}
 
-instance CanWriteField "discardRectangleMode"
+instance {-# OVERLAPPING #-}
+         CanWriteField "discardRectangleMode"
            VkPipelineDiscardRectangleStateCreateInfoEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkDiscardRectangleMode
-
-instance {-# OVERLAPPING #-}
-         HasVkDiscardRectangleCount
-           VkPipelineDiscardRectangleStateCreateInfoEXT
-         where
-        type VkDiscardRectangleCountMType
-               VkPipelineDiscardRectangleStateCreateInfoEXT
-             = Word32
-
-        {-# NOINLINE vkDiscardRectangleCount #-}
-        vkDiscardRectangleCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, discardRectangleCount})
-
-        {-# INLINE vkDiscardRectangleCountByteOffset #-}
-        vkDiscardRectangleCountByteOffset ~_
-          = #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, discardRectangleCount}
-
-        {-# INLINE readVkDiscardRectangleCount #-}
-        readVkDiscardRectangleCount p
-          = peekByteOff p #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, discardRectangleCount}
-
-        {-# INLINE writeVkDiscardRectangleCount #-}
-        writeVkDiscardRectangleCount p
-          = pokeByteOff p #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, discardRectangleCount}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, discardRectangleMode}
 
 instance {-# OVERLAPPING #-}
          HasField "discardRectangleCount"
@@ -385,45 +287,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, discardRectangleCount}
 
-instance CanReadField "discardRectangleCount"
+instance {-# OVERLAPPING #-}
+         CanReadField "discardRectangleCount"
            VkPipelineDiscardRectangleStateCreateInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkDiscardRectangleCount
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, discardRectangleCount})
 
         {-# INLINE readField #-}
-        readField = readVkDiscardRectangleCount
+        readField p
+          = peekByteOff p #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, discardRectangleCount}
 
-instance CanWriteField "discardRectangleCount"
+instance {-# OVERLAPPING #-}
+         CanWriteField "discardRectangleCount"
            VkPipelineDiscardRectangleStateCreateInfoEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkDiscardRectangleCount
-
-instance {-# OVERLAPPING #-}
-         HasVkPDiscardRectangles
-           VkPipelineDiscardRectangleStateCreateInfoEXT
-         where
-        type VkPDiscardRectanglesMType
-               VkPipelineDiscardRectangleStateCreateInfoEXT
-             = Ptr VkRect2D
-
-        {-# NOINLINE vkPDiscardRectangles #-}
-        vkPDiscardRectangles x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, pDiscardRectangles})
-
-        {-# INLINE vkPDiscardRectanglesByteOffset #-}
-        vkPDiscardRectanglesByteOffset ~_
-          = #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, pDiscardRectangles}
-
-        {-# INLINE readVkPDiscardRectangles #-}
-        readVkPDiscardRectangles p
-          = peekByteOff p #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, pDiscardRectangles}
-
-        {-# INLINE writeVkPDiscardRectangles #-}
-        writeVkPDiscardRectangles p
-          = pokeByteOff p #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, pDiscardRectangles}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, discardRectangleCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pDiscardRectangles"
@@ -450,38 +333,45 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, pDiscardRectangles}
 
-instance CanReadField "pDiscardRectangles"
+instance {-# OVERLAPPING #-}
+         CanReadField "pDiscardRectangles"
            VkPipelineDiscardRectangleStateCreateInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkPDiscardRectangles
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, pDiscardRectangles})
 
         {-# INLINE readField #-}
-        readField = readVkPDiscardRectangles
+        readField p
+          = peekByteOff p #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, pDiscardRectangles}
 
-instance CanWriteField "pDiscardRectangles"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pDiscardRectangles"
            VkPipelineDiscardRectangleStateCreateInfoEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPDiscardRectangles
+        writeField p
+          = pokeByteOff p #{offset VkPipelineDiscardRectangleStateCreateInfoEXT, pDiscardRectangles}
 
 instance Show VkPipelineDiscardRectangleStateCreateInfoEXT where
         showsPrec d x
           = showString "VkPipelineDiscardRectangleStateCreateInfoEXT {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkDiscardRectangleMode = " .
-                                  showsPrec d (vkDiscardRectangleMode x) .
+                                showString "discardRectangleMode = " .
+                                  showsPrec d (getField @"discardRectangleMode" x) .
                                     showString ", " .
-                                      showString "vkDiscardRectangleCount = " .
-                                        showsPrec d (vkDiscardRectangleCount x) .
+                                      showString "discardRectangleCount = " .
+                                        showsPrec d (getField @"discardRectangleCount" x) .
                                           showString ", " .
-                                            showString "vkPDiscardRectangles = " .
-                                              showsPrec d (vkPDiscardRectangles x) . showChar '}'
+                                            showString "pDiscardRectangles = " .
+                                              showsPrec d (getField @"pDiscardRectangles" x) .
+                                                showChar '}'

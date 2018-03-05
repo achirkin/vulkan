@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkDeviceGroupSwapchainCreateInfoKHX
        (VkDeviceGroupSwapchainCreateInfoKHX(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkDeviceGroupPresentModeFlagsKHX (VkDeviceGroupPresentModeFlagsKHX)
 import           Graphics.Vulkan.Types.Enum.VkStructureType                  (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkSwapchainCreateInfoKHR       (VkSwapchainCreateInfoKHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                            (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDeviceGroupSwapchainCreateInfoKHX {
@@ -81,28 +81,6 @@ instance VulkanMarshal VkDeviceGroupSwapchainCreateInfoKHX where
              '[VkSwapchainCreateInfoKHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkDeviceGroupSwapchainCreateInfoKHX where
-        type VkSTypeMType VkDeviceGroupSwapchainCreateInfoKHX =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupSwapchainCreateInfoKHX, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkDeviceGroupSwapchainCreateInfoKHX, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkDeviceGroupSwapchainCreateInfoKHX, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkDeviceGroupSwapchainCreateInfoKHX, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkDeviceGroupSwapchainCreateInfoKHX where
         type FieldType "sType" VkDeviceGroupSwapchainCreateInfoKHX =
              VkStructureType
@@ -120,39 +98,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGroupSwapchainCreateInfoKHX, sType}
 
-instance CanReadField "sType" VkDeviceGroupSwapchainCreateInfoKHX
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkDeviceGroupSwapchainCreateInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupSwapchainCreateInfoKHX, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkDeviceGroupSwapchainCreateInfoKHX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkDeviceGroupSwapchainCreateInfoKHX, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkDeviceGroupSwapchainCreateInfoKHX where
-        type VkPNextMType VkDeviceGroupSwapchainCreateInfoKHX = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupSwapchainCreateInfoKHX, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkDeviceGroupSwapchainCreateInfoKHX, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkDeviceGroupSwapchainCreateInfoKHX, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkDeviceGroupSwapchainCreateInfoKHX, pNext}
+         CanWriteField "sType" VkDeviceGroupSwapchainCreateInfoKHX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGroupSwapchainCreateInfoKHX, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkDeviceGroupSwapchainCreateInfoKHX where
@@ -172,40 +133,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGroupSwapchainCreateInfoKHX, pNext}
 
-instance CanReadField "pNext" VkDeviceGroupSwapchainCreateInfoKHX
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkDeviceGroupSwapchainCreateInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupSwapchainCreateInfoKHX, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkDeviceGroupSwapchainCreateInfoKHX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkDeviceGroupSwapchainCreateInfoKHX, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkModes VkDeviceGroupSwapchainCreateInfoKHX where
-        type VkModesMType VkDeviceGroupSwapchainCreateInfoKHX =
-             VkDeviceGroupPresentModeFlagsKHX
-
-        {-# NOINLINE vkModes #-}
-        vkModes x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupSwapchainCreateInfoKHX, modes})
-
-        {-# INLINE vkModesByteOffset #-}
-        vkModesByteOffset ~_
-          = #{offset VkDeviceGroupSwapchainCreateInfoKHX, modes}
-
-        {-# INLINE readVkModes #-}
-        readVkModes p
-          = peekByteOff p #{offset VkDeviceGroupSwapchainCreateInfoKHX, modes}
-
-        {-# INLINE writeVkModes #-}
-        writeVkModes p
-          = pokeByteOff p #{offset VkDeviceGroupSwapchainCreateInfoKHX, modes}
+         CanWriteField "pNext" VkDeviceGroupSwapchainCreateInfoKHX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGroupSwapchainCreateInfoKHX, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "modes" VkDeviceGroupSwapchainCreateInfoKHX where
@@ -225,26 +168,31 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGroupSwapchainCreateInfoKHX, modes}
 
-instance CanReadField "modes" VkDeviceGroupSwapchainCreateInfoKHX
-         where
-        {-# INLINE getField #-}
-        getField = vkModes
+instance {-# OVERLAPPING #-}
+         CanReadField "modes" VkDeviceGroupSwapchainCreateInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupSwapchainCreateInfoKHX, modes})
 
         {-# INLINE readField #-}
-        readField = readVkModes
+        readField p
+          = peekByteOff p #{offset VkDeviceGroupSwapchainCreateInfoKHX, modes}
 
-instance CanWriteField "modes" VkDeviceGroupSwapchainCreateInfoKHX
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "modes" VkDeviceGroupSwapchainCreateInfoKHX where
         {-# INLINE writeField #-}
-        writeField = writeVkModes
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGroupSwapchainCreateInfoKHX, modes}
 
 instance Show VkDeviceGroupSwapchainCreateInfoKHX where
         showsPrec d x
           = showString "VkDeviceGroupSwapchainCreateInfoKHX {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkModes = " . showsPrec d (vkModes x) . showChar '}'
+                          showString "modes = " .
+                            showsPrec d (getField @"modes" x) . showChar '}'

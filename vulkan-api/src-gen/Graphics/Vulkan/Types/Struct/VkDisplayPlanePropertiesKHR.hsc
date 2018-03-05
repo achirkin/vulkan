@@ -5,16 +5,16 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkDisplayPlanePropertiesKHR
        (VkDisplayPlanePropertiesKHR(..)) where
-import           Foreign.Storable                    (Storable (..))
+import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Handles       (VkDisplayKHR)
-import           Graphics.Vulkan.Types.StructMembers
-import           System.IO.Unsafe                    (unsafeDupablePerformIO)
+import           Graphics.Vulkan.Types.Handles    (VkDisplayKHR)
+import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDisplayPlanePropertiesKHR {
 --   >     VkDisplayKHR                     currentDisplay;
@@ -74,28 +74,6 @@ instance VulkanMarshal VkDisplayPlanePropertiesKHR where
         type StructExtends VkDisplayPlanePropertiesKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkCurrentDisplay VkDisplayPlanePropertiesKHR where
-        type VkCurrentDisplayMType VkDisplayPlanePropertiesKHR =
-             VkDisplayKHR
-
-        {-# NOINLINE vkCurrentDisplay #-}
-        vkCurrentDisplay x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayPlanePropertiesKHR, currentDisplay})
-
-        {-# INLINE vkCurrentDisplayByteOffset #-}
-        vkCurrentDisplayByteOffset ~_
-          = #{offset VkDisplayPlanePropertiesKHR, currentDisplay}
-
-        {-# INLINE readVkCurrentDisplay #-}
-        readVkCurrentDisplay p
-          = peekByteOff p #{offset VkDisplayPlanePropertiesKHR, currentDisplay}
-
-        {-# INLINE writeVkCurrentDisplay #-}
-        writeVkCurrentDisplay p
-          = pokeByteOff p #{offset VkDisplayPlanePropertiesKHR, currentDisplay}
-
-instance {-# OVERLAPPING #-}
          HasField "currentDisplay" VkDisplayPlanePropertiesKHR where
         type FieldType "currentDisplay" VkDisplayPlanePropertiesKHR =
              VkDisplayKHR
@@ -113,39 +91,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDisplayPlanePropertiesKHR, currentDisplay}
 
-instance CanReadField "currentDisplay" VkDisplayPlanePropertiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkCurrentDisplay
+instance {-# OVERLAPPING #-}
+         CanReadField "currentDisplay" VkDisplayPlanePropertiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPlanePropertiesKHR, currentDisplay})
 
         {-# INLINE readField #-}
-        readField = readVkCurrentDisplay
-
-instance CanWriteField "currentDisplay" VkDisplayPlanePropertiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkCurrentDisplay
+        readField p
+          = peekByteOff p #{offset VkDisplayPlanePropertiesKHR, currentDisplay}
 
 instance {-# OVERLAPPING #-}
-         HasVkCurrentStackIndex VkDisplayPlanePropertiesKHR where
-        type VkCurrentStackIndexMType VkDisplayPlanePropertiesKHR = Word32
-
-        {-# NOINLINE vkCurrentStackIndex #-}
-        vkCurrentStackIndex x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayPlanePropertiesKHR, currentStackIndex})
-
-        {-# INLINE vkCurrentStackIndexByteOffset #-}
-        vkCurrentStackIndexByteOffset ~_
-          = #{offset VkDisplayPlanePropertiesKHR, currentStackIndex}
-
-        {-# INLINE readVkCurrentStackIndex #-}
-        readVkCurrentStackIndex p
-          = peekByteOff p #{offset VkDisplayPlanePropertiesKHR, currentStackIndex}
-
-        {-# INLINE writeVkCurrentStackIndex #-}
-        writeVkCurrentStackIndex p
-          = pokeByteOff p #{offset VkDisplayPlanePropertiesKHR, currentStackIndex}
+         CanWriteField "currentDisplay" VkDisplayPlanePropertiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPlanePropertiesKHR, currentDisplay}
 
 instance {-# OVERLAPPING #-}
          HasField "currentStackIndex" VkDisplayPlanePropertiesKHR where
@@ -165,26 +126,28 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDisplayPlanePropertiesKHR, currentStackIndex}
 
-instance CanReadField "currentStackIndex"
-           VkDisplayPlanePropertiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkCurrentStackIndex
+instance {-# OVERLAPPING #-}
+         CanReadField "currentStackIndex" VkDisplayPlanePropertiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPlanePropertiesKHR, currentStackIndex})
 
         {-# INLINE readField #-}
-        readField = readVkCurrentStackIndex
+        readField p
+          = peekByteOff p #{offset VkDisplayPlanePropertiesKHR, currentStackIndex}
 
-instance CanWriteField "currentStackIndex"
-           VkDisplayPlanePropertiesKHR
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "currentStackIndex" VkDisplayPlanePropertiesKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkCurrentStackIndex
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPlanePropertiesKHR, currentStackIndex}
 
 instance Show VkDisplayPlanePropertiesKHR where
         showsPrec d x
           = showString "VkDisplayPlanePropertiesKHR {" .
-              showString "vkCurrentDisplay = " .
-                showsPrec d (vkCurrentDisplay x) .
+              showString "currentDisplay = " .
+                showsPrec d (getField @"currentDisplay" x) .
                   showString ", " .
-                    showString "vkCurrentStackIndex = " .
-                      showsPrec d (vkCurrentStackIndex x) . showChar '}'
+                    showString "currentStackIndex = " .
+                      showsPrec d (getField @"currentStackIndex" x) . showChar '}'

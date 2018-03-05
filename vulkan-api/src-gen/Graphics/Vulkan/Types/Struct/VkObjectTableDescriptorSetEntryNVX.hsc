@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkObjectTableDescriptorSetEntryNVX
        (VkObjectTableDescriptorSetEntryNVX(..)) where
@@ -16,7 +17,6 @@ import           Graphics.Vulkan.Types.Enum.VkObjectEntryTypeNVX       (VkObject
 import           Graphics.Vulkan.Types.Enum.VkObjectEntryUsageFlagsNVX (VkObjectEntryUsageFlagsNVX)
 import           Graphics.Vulkan.Types.Handles                         (VkDescriptorSet,
                                                                         VkPipelineLayout)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                      (unsafeDupablePerformIO)
 
 -- | > typedef struct VkObjectTableDescriptorSetEntryNVX {
@@ -81,28 +81,6 @@ instance VulkanMarshal VkObjectTableDescriptorSetEntryNVX where
         type StructExtends VkObjectTableDescriptorSetEntryNVX = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkType VkObjectTableDescriptorSetEntryNVX where
-        type VkTypeMType VkObjectTableDescriptorSetEntryNVX =
-             VkObjectEntryTypeNVX
-
-        {-# NOINLINE vkType #-}
-        vkType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkObjectTableDescriptorSetEntryNVX, type})
-
-        {-# INLINE vkTypeByteOffset #-}
-        vkTypeByteOffset ~_
-          = #{offset VkObjectTableDescriptorSetEntryNVX, type}
-
-        {-# INLINE readVkType #-}
-        readVkType p
-          = peekByteOff p #{offset VkObjectTableDescriptorSetEntryNVX, type}
-
-        {-# INLINE writeVkType #-}
-        writeVkType p
-          = pokeByteOff p #{offset VkObjectTableDescriptorSetEntryNVX, type}
-
-instance {-# OVERLAPPING #-}
          HasField "type" VkObjectTableDescriptorSetEntryNVX where
         type FieldType "type" VkObjectTableDescriptorSetEntryNVX =
              VkObjectEntryTypeNVX
@@ -120,40 +98,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkObjectTableDescriptorSetEntryNVX, type}
 
-instance CanReadField "type" VkObjectTableDescriptorSetEntryNVX
-         where
-        {-# INLINE getField #-}
-        getField = vkType
+instance {-# OVERLAPPING #-}
+         CanReadField "type" VkObjectTableDescriptorSetEntryNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkObjectTableDescriptorSetEntryNVX, type})
 
         {-# INLINE readField #-}
-        readField = readVkType
-
-instance CanWriteField "type" VkObjectTableDescriptorSetEntryNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkType
+        readField p
+          = peekByteOff p #{offset VkObjectTableDescriptorSetEntryNVX, type}
 
 instance {-# OVERLAPPING #-}
-         HasVkFlags VkObjectTableDescriptorSetEntryNVX where
-        type VkFlagsMType VkObjectTableDescriptorSetEntryNVX =
-             VkObjectEntryUsageFlagsNVX
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkObjectTableDescriptorSetEntryNVX, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkObjectTableDescriptorSetEntryNVX, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkObjectTableDescriptorSetEntryNVX, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkObjectTableDescriptorSetEntryNVX, flags}
+         CanWriteField "type" VkObjectTableDescriptorSetEntryNVX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkObjectTableDescriptorSetEntryNVX, type}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkObjectTableDescriptorSetEntryNVX where
@@ -173,40 +133,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkObjectTableDescriptorSetEntryNVX, flags}
 
-instance CanReadField "flags" VkObjectTableDescriptorSetEntryNVX
-         where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkObjectTableDescriptorSetEntryNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkObjectTableDescriptorSetEntryNVX, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags" VkObjectTableDescriptorSetEntryNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkObjectTableDescriptorSetEntryNVX, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkPipelineLayout VkObjectTableDescriptorSetEntryNVX where
-        type VkPipelineLayoutMType VkObjectTableDescriptorSetEntryNVX =
-             VkPipelineLayout
-
-        {-# NOINLINE vkPipelineLayout #-}
-        vkPipelineLayout x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkObjectTableDescriptorSetEntryNVX, pipelineLayout})
-
-        {-# INLINE vkPipelineLayoutByteOffset #-}
-        vkPipelineLayoutByteOffset ~_
-          = #{offset VkObjectTableDescriptorSetEntryNVX, pipelineLayout}
-
-        {-# INLINE readVkPipelineLayout #-}
-        readVkPipelineLayout p
-          = peekByteOff p #{offset VkObjectTableDescriptorSetEntryNVX, pipelineLayout}
-
-        {-# INLINE writeVkPipelineLayout #-}
-        writeVkPipelineLayout p
-          = pokeByteOff p #{offset VkObjectTableDescriptorSetEntryNVX, pipelineLayout}
+         CanWriteField "flags" VkObjectTableDescriptorSetEntryNVX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkObjectTableDescriptorSetEntryNVX, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "pipelineLayout" VkObjectTableDescriptorSetEntryNVX where
@@ -230,42 +172,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkObjectTableDescriptorSetEntryNVX, pipelineLayout}
 
-instance CanReadField "pipelineLayout"
-           VkObjectTableDescriptorSetEntryNVX
+instance {-# OVERLAPPING #-}
+         CanReadField "pipelineLayout" VkObjectTableDescriptorSetEntryNVX
          where
-        {-# INLINE getField #-}
-        getField = vkPipelineLayout
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkObjectTableDescriptorSetEntryNVX, pipelineLayout})
 
         {-# INLINE readField #-}
-        readField = readVkPipelineLayout
-
-instance CanWriteField "pipelineLayout"
-           VkObjectTableDescriptorSetEntryNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPipelineLayout
+        readField p
+          = peekByteOff p #{offset VkObjectTableDescriptorSetEntryNVX, pipelineLayout}
 
 instance {-# OVERLAPPING #-}
-         HasVkDescriptorSet VkObjectTableDescriptorSetEntryNVX where
-        type VkDescriptorSetMType VkObjectTableDescriptorSetEntryNVX =
-             VkDescriptorSet
-
-        {-# NOINLINE vkDescriptorSet #-}
-        vkDescriptorSet x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkObjectTableDescriptorSetEntryNVX, descriptorSet})
-
-        {-# INLINE vkDescriptorSetByteOffset #-}
-        vkDescriptorSetByteOffset ~_
-          = #{offset VkObjectTableDescriptorSetEntryNVX, descriptorSet}
-
-        {-# INLINE readVkDescriptorSet #-}
-        readVkDescriptorSet p
-          = peekByteOff p #{offset VkObjectTableDescriptorSetEntryNVX, descriptorSet}
-
-        {-# INLINE writeVkDescriptorSet #-}
-        writeVkDescriptorSet p
-          = pokeByteOff p #{offset VkObjectTableDescriptorSetEntryNVX, descriptorSet}
+         CanWriteField "pipelineLayout" VkObjectTableDescriptorSetEntryNVX
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkObjectTableDescriptorSetEntryNVX, pipelineLayout}
 
 instance {-# OVERLAPPING #-}
          HasField "descriptorSet" VkObjectTableDescriptorSetEntryNVX where
@@ -288,32 +212,36 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkObjectTableDescriptorSetEntryNVX, descriptorSet}
 
-instance CanReadField "descriptorSet"
-           VkObjectTableDescriptorSetEntryNVX
+instance {-# OVERLAPPING #-}
+         CanReadField "descriptorSet" VkObjectTableDescriptorSetEntryNVX
          where
-        {-# INLINE getField #-}
-        getField = vkDescriptorSet
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkObjectTableDescriptorSetEntryNVX, descriptorSet})
 
         {-# INLINE readField #-}
-        readField = readVkDescriptorSet
+        readField p
+          = peekByteOff p #{offset VkObjectTableDescriptorSetEntryNVX, descriptorSet}
 
-instance CanWriteField "descriptorSet"
-           VkObjectTableDescriptorSetEntryNVX
+instance {-# OVERLAPPING #-}
+         CanWriteField "descriptorSet" VkObjectTableDescriptorSetEntryNVX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkDescriptorSet
+        writeField p
+          = pokeByteOff p #{offset VkObjectTableDescriptorSetEntryNVX, descriptorSet}
 
 instance Show VkObjectTableDescriptorSetEntryNVX where
         showsPrec d x
           = showString "VkObjectTableDescriptorSetEntryNVX {" .
-              showString "vkType = " .
-                showsPrec d (vkType x) .
+              showString "type = " .
+                showsPrec d (getField @"type" x) .
                   showString ", " .
-                    showString "vkFlags = " .
-                      showsPrec d (vkFlags x) .
+                    showString "flags = " .
+                      showsPrec d (getField @"flags" x) .
                         showString ", " .
-                          showString "vkPipelineLayout = " .
-                            showsPrec d (vkPipelineLayout x) .
+                          showString "pipelineLayout = " .
+                            showsPrec d (getField @"pipelineLayout" x) .
                               showString ", " .
-                                showString "vkDescriptorSet = " .
-                                  showsPrec d (vkDescriptorSet x) . showChar '}'
+                                showString "descriptorSet = " .
+                                  showsPrec d (getField @"descriptorSet" x) . showChar '}'

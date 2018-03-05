@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkDeviceGroupDeviceCreateInfoKHX
        (VkDeviceGroupDeviceCreateInfoKHX(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType      (VkStructureType)
 import           Graphics.Vulkan.Types.Handles                   (VkPhysicalDevice)
 import           Graphics.Vulkan.Types.Struct.VkDeviceCreateInfo (VkDeviceCreateInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDeviceGroupDeviceCreateInfoKHX {
@@ -81,28 +81,6 @@ instance VulkanMarshal VkDeviceGroupDeviceCreateInfoKHX where
              '[VkDeviceCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkDeviceGroupDeviceCreateInfoKHX where
-        type VkSTypeMType VkDeviceGroupDeviceCreateInfoKHX =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupDeviceCreateInfoKHX, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkDeviceGroupDeviceCreateInfoKHX, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkDeviceGroupDeviceCreateInfoKHX, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkDeviceGroupDeviceCreateInfoKHX, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkDeviceGroupDeviceCreateInfoKHX where
         type FieldType "sType" VkDeviceGroupDeviceCreateInfoKHX =
              VkStructureType
@@ -119,39 +97,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGroupDeviceCreateInfoKHX, sType}
 
-instance CanReadField "sType" VkDeviceGroupDeviceCreateInfoKHX
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkDeviceGroupDeviceCreateInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupDeviceCreateInfoKHX, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkDeviceGroupDeviceCreateInfoKHX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkDeviceGroupDeviceCreateInfoKHX, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkDeviceGroupDeviceCreateInfoKHX where
-        type VkPNextMType VkDeviceGroupDeviceCreateInfoKHX = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupDeviceCreateInfoKHX, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkDeviceGroupDeviceCreateInfoKHX, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkDeviceGroupDeviceCreateInfoKHX, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkDeviceGroupDeviceCreateInfoKHX, pNext}
+         CanWriteField "sType" VkDeviceGroupDeviceCreateInfoKHX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGroupDeviceCreateInfoKHX, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkDeviceGroupDeviceCreateInfoKHX where
@@ -169,40 +130,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGroupDeviceCreateInfoKHX, pNext}
 
-instance CanReadField "pNext" VkDeviceGroupDeviceCreateInfoKHX
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkDeviceGroupDeviceCreateInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupDeviceCreateInfoKHX, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkDeviceGroupDeviceCreateInfoKHX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkDeviceGroupDeviceCreateInfoKHX, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkPhysicalDeviceCount VkDeviceGroupDeviceCreateInfoKHX where
-        type VkPhysicalDeviceCountMType VkDeviceGroupDeviceCreateInfoKHX =
-             Word32
-
-        {-# NOINLINE vkPhysicalDeviceCount #-}
-        vkPhysicalDeviceCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupDeviceCreateInfoKHX, physicalDeviceCount})
-
-        {-# INLINE vkPhysicalDeviceCountByteOffset #-}
-        vkPhysicalDeviceCountByteOffset ~_
-          = #{offset VkDeviceGroupDeviceCreateInfoKHX, physicalDeviceCount}
-
-        {-# INLINE readVkPhysicalDeviceCount #-}
-        readVkPhysicalDeviceCount p
-          = peekByteOff p #{offset VkDeviceGroupDeviceCreateInfoKHX, physicalDeviceCount}
-
-        {-# INLINE writeVkPhysicalDeviceCount #-}
-        writeVkPhysicalDeviceCount p
-          = pokeByteOff p #{offset VkDeviceGroupDeviceCreateInfoKHX, physicalDeviceCount}
+         CanWriteField "pNext" VkDeviceGroupDeviceCreateInfoKHX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGroupDeviceCreateInfoKHX, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "physicalDeviceCount" VkDeviceGroupDeviceCreateInfoKHX
@@ -228,42 +171,25 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGroupDeviceCreateInfoKHX, physicalDeviceCount}
 
-instance CanReadField "physicalDeviceCount"
-           VkDeviceGroupDeviceCreateInfoKHX
+instance {-# OVERLAPPING #-}
+         CanReadField "physicalDeviceCount" VkDeviceGroupDeviceCreateInfoKHX
          where
-        {-# INLINE getField #-}
-        getField = vkPhysicalDeviceCount
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupDeviceCreateInfoKHX, physicalDeviceCount})
 
         {-# INLINE readField #-}
-        readField = readVkPhysicalDeviceCount
+        readField p
+          = peekByteOff p #{offset VkDeviceGroupDeviceCreateInfoKHX, physicalDeviceCount}
 
-instance CanWriteField "physicalDeviceCount"
+instance {-# OVERLAPPING #-}
+         CanWriteField "physicalDeviceCount"
            VkDeviceGroupDeviceCreateInfoKHX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPhysicalDeviceCount
-
-instance {-# OVERLAPPING #-}
-         HasVkPPhysicalDevices VkDeviceGroupDeviceCreateInfoKHX where
-        type VkPPhysicalDevicesMType VkDeviceGroupDeviceCreateInfoKHX =
-             Ptr VkPhysicalDevice
-
-        {-# NOINLINE vkPPhysicalDevices #-}
-        vkPPhysicalDevices x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupDeviceCreateInfoKHX, pPhysicalDevices})
-
-        {-# INLINE vkPPhysicalDevicesByteOffset #-}
-        vkPPhysicalDevicesByteOffset ~_
-          = #{offset VkDeviceGroupDeviceCreateInfoKHX, pPhysicalDevices}
-
-        {-# INLINE readVkPPhysicalDevices #-}
-        readVkPPhysicalDevices p
-          = peekByteOff p #{offset VkDeviceGroupDeviceCreateInfoKHX, pPhysicalDevices}
-
-        {-# INLINE writeVkPPhysicalDevices #-}
-        writeVkPPhysicalDevices p
-          = pokeByteOff p #{offset VkDeviceGroupDeviceCreateInfoKHX, pPhysicalDevices}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGroupDeviceCreateInfoKHX, physicalDeviceCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pPhysicalDevices" VkDeviceGroupDeviceCreateInfoKHX where
@@ -287,32 +213,36 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGroupDeviceCreateInfoKHX, pPhysicalDevices}
 
-instance CanReadField "pPhysicalDevices"
-           VkDeviceGroupDeviceCreateInfoKHX
+instance {-# OVERLAPPING #-}
+         CanReadField "pPhysicalDevices" VkDeviceGroupDeviceCreateInfoKHX
          where
-        {-# INLINE getField #-}
-        getField = vkPPhysicalDevices
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupDeviceCreateInfoKHX, pPhysicalDevices})
 
         {-# INLINE readField #-}
-        readField = readVkPPhysicalDevices
+        readField p
+          = peekByteOff p #{offset VkDeviceGroupDeviceCreateInfoKHX, pPhysicalDevices}
 
-instance CanWriteField "pPhysicalDevices"
-           VkDeviceGroupDeviceCreateInfoKHX
+instance {-# OVERLAPPING #-}
+         CanWriteField "pPhysicalDevices" VkDeviceGroupDeviceCreateInfoKHX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPPhysicalDevices
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGroupDeviceCreateInfoKHX, pPhysicalDevices}
 
 instance Show VkDeviceGroupDeviceCreateInfoKHX where
         showsPrec d x
           = showString "VkDeviceGroupDeviceCreateInfoKHX {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkPhysicalDeviceCount = " .
-                            showsPrec d (vkPhysicalDeviceCount x) .
+                          showString "physicalDeviceCount = " .
+                            showsPrec d (getField @"physicalDeviceCount" x) .
                               showString ", " .
-                                showString "vkPPhysicalDevices = " .
-                                  showsPrec d (vkPPhysicalDevices x) . showChar '}'
+                                showString "pPhysicalDevices = " .
+                                  showsPrec d (getField @"pPhysicalDevices" x) . showChar '}'

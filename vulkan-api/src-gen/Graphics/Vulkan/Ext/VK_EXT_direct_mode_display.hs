@@ -23,7 +23,8 @@ module Graphics.Vulkan.Ext.VK_EXT_direct_mode_display
         --
 
         -- ** Required extensions: 'VK_KHR_display'.
-        vkReleaseDisplayEXT, module Graphics.Vulkan.Types.Enum.VkResult,
+        vkReleaseDisplayEXT, vkReleaseDisplayEXTSafe,
+        module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_EXT_DIRECT_MODE_DISPLAY_SPEC_VERSION,
         pattern VK_EXT_DIRECT_MODE_DISPLAY_SPEC_VERSION,
@@ -45,6 +46,20 @@ import           Graphics.Vulkan.Types.Handles
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkReleaseDisplayEXT.html vkReleaseDisplayEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkReleaseDisplayEXT"
                vkReleaseDisplayEXT ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                -> VkDisplayKHR -- ^ display
+                                                -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   > VkResult vkReleaseDisplayEXT
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , VkDisplayKHR display
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkReleaseDisplayEXT.html vkReleaseDisplayEXT registry at www.khronos.org>
+foreign import ccall safe "vkReleaseDisplayEXT"
+               vkReleaseDisplayEXTSafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 -> VkDisplayKHR -- ^ display
                                                 -> IO VkResult

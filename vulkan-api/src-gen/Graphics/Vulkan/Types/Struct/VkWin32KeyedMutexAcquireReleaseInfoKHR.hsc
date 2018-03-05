@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkWin32KeyedMutexAcquireReleaseInfoKHR
        (VkWin32KeyedMutexAcquireReleaseInfoKHR(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
 import           Graphics.Vulkan.Types.Handles              (VkDeviceMemory)
 import           Graphics.Vulkan.Types.Struct.VkSubmitInfo  (VkSubmitInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkWin32KeyedMutexAcquireReleaseInfoKHR {
@@ -90,28 +90,6 @@ instance VulkanMarshal VkWin32KeyedMutexAcquireReleaseInfoKHR where
              '[VkSubmitInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkWin32KeyedMutexAcquireReleaseInfoKHR where
-        type VkSTypeMType VkWin32KeyedMutexAcquireReleaseInfoKHR =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkWin32KeyedMutexAcquireReleaseInfoKHR where
         type FieldType "sType" VkWin32KeyedMutexAcquireReleaseInfoKHR =
              VkStructureType
@@ -129,41 +107,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, sType}
 
-instance CanReadField "sType"
-           VkWin32KeyedMutexAcquireReleaseInfoKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkWin32KeyedMutexAcquireReleaseInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType"
-           VkWin32KeyedMutexAcquireReleaseInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkWin32KeyedMutexAcquireReleaseInfoKHR where
-        type VkPNextMType VkWin32KeyedMutexAcquireReleaseInfoKHR = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pNext}
+         CanWriteField "sType" VkWin32KeyedMutexAcquireReleaseInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkWin32KeyedMutexAcquireReleaseInfoKHR where
@@ -183,42 +142,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pNext}
 
-instance CanReadField "pNext"
-           VkWin32KeyedMutexAcquireReleaseInfoKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkWin32KeyedMutexAcquireReleaseInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext"
-           VkWin32KeyedMutexAcquireReleaseInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkAcquireCount VkWin32KeyedMutexAcquireReleaseInfoKHR where
-        type VkAcquireCountMType VkWin32KeyedMutexAcquireReleaseInfoKHR =
-             Word32
-
-        {-# NOINLINE vkAcquireCount #-}
-        vkAcquireCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, acquireCount})
-
-        {-# INLINE vkAcquireCountByteOffset #-}
-        vkAcquireCountByteOffset ~_
-          = #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, acquireCount}
-
-        {-# INLINE readVkAcquireCount #-}
-        readVkAcquireCount p
-          = peekByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, acquireCount}
-
-        {-# INLINE writeVkAcquireCount #-}
-        writeVkAcquireCount p
-          = pokeByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, acquireCount}
+         CanWriteField "pNext" VkWin32KeyedMutexAcquireReleaseInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "acquireCount" VkWin32KeyedMutexAcquireReleaseInfoKHR
@@ -244,42 +183,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, acquireCount}
 
-instance CanReadField "acquireCount"
-           VkWin32KeyedMutexAcquireReleaseInfoKHR
+instance {-# OVERLAPPING #-}
+         CanReadField "acquireCount" VkWin32KeyedMutexAcquireReleaseInfoKHR
          where
-        {-# INLINE getField #-}
-        getField = vkAcquireCount
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, acquireCount})
 
         {-# INLINE readField #-}
-        readField = readVkAcquireCount
-
-instance CanWriteField "acquireCount"
-           VkWin32KeyedMutexAcquireReleaseInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkAcquireCount
+        readField p
+          = peekByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, acquireCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPAcquireSyncs VkWin32KeyedMutexAcquireReleaseInfoKHR where
-        type VkPAcquireSyncsMType VkWin32KeyedMutexAcquireReleaseInfoKHR =
-             Ptr VkDeviceMemory
-
-        {-# NOINLINE vkPAcquireSyncs #-}
-        vkPAcquireSyncs x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pAcquireSyncs})
-
-        {-# INLINE vkPAcquireSyncsByteOffset #-}
-        vkPAcquireSyncsByteOffset ~_
-          = #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pAcquireSyncs}
-
-        {-# INLINE readVkPAcquireSyncs #-}
-        readVkPAcquireSyncs p
-          = peekByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pAcquireSyncs}
-
-        {-# INLINE writeVkPAcquireSyncs #-}
-        writeVkPAcquireSyncs p
-          = pokeByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pAcquireSyncs}
+         CanWriteField "acquireCount" VkWin32KeyedMutexAcquireReleaseInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, acquireCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pAcquireSyncs" VkWin32KeyedMutexAcquireReleaseInfoKHR
@@ -305,42 +226,25 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pAcquireSyncs}
 
-instance CanReadField "pAcquireSyncs"
-           VkWin32KeyedMutexAcquireReleaseInfoKHR
+instance {-# OVERLAPPING #-}
+         CanReadField "pAcquireSyncs" VkWin32KeyedMutexAcquireReleaseInfoKHR
          where
-        {-# INLINE getField #-}
-        getField = vkPAcquireSyncs
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pAcquireSyncs})
 
         {-# INLINE readField #-}
-        readField = readVkPAcquireSyncs
+        readField p
+          = peekByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pAcquireSyncs}
 
-instance CanWriteField "pAcquireSyncs"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pAcquireSyncs"
            VkWin32KeyedMutexAcquireReleaseInfoKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPAcquireSyncs
-
-instance {-# OVERLAPPING #-}
-         HasVkPAcquireKeys VkWin32KeyedMutexAcquireReleaseInfoKHR where
-        type VkPAcquireKeysMType VkWin32KeyedMutexAcquireReleaseInfoKHR =
-             Ptr Word64
-
-        {-# NOINLINE vkPAcquireKeys #-}
-        vkPAcquireKeys x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pAcquireKeys})
-
-        {-# INLINE vkPAcquireKeysByteOffset #-}
-        vkPAcquireKeysByteOffset ~_
-          = #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pAcquireKeys}
-
-        {-# INLINE readVkPAcquireKeys #-}
-        readVkPAcquireKeys p
-          = peekByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pAcquireKeys}
-
-        {-# INLINE writeVkPAcquireKeys #-}
-        writeVkPAcquireKeys p
-          = pokeByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pAcquireKeys}
+        writeField p
+          = pokeByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pAcquireSyncs}
 
 instance {-# OVERLAPPING #-}
          HasField "pAcquireKeys" VkWin32KeyedMutexAcquireReleaseInfoKHR
@@ -366,42 +270,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pAcquireKeys}
 
-instance CanReadField "pAcquireKeys"
-           VkWin32KeyedMutexAcquireReleaseInfoKHR
+instance {-# OVERLAPPING #-}
+         CanReadField "pAcquireKeys" VkWin32KeyedMutexAcquireReleaseInfoKHR
          where
-        {-# INLINE getField #-}
-        getField = vkPAcquireKeys
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pAcquireKeys})
 
         {-# INLINE readField #-}
-        readField = readVkPAcquireKeys
-
-instance CanWriteField "pAcquireKeys"
-           VkWin32KeyedMutexAcquireReleaseInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPAcquireKeys
+        readField p
+          = peekByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pAcquireKeys}
 
 instance {-# OVERLAPPING #-}
-         HasVkPAcquireTimeouts VkWin32KeyedMutexAcquireReleaseInfoKHR where
-        type VkPAcquireTimeoutsMType VkWin32KeyedMutexAcquireReleaseInfoKHR
-             = Ptr Word32
-
-        {-# NOINLINE vkPAcquireTimeouts #-}
-        vkPAcquireTimeouts x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pAcquireTimeouts})
-
-        {-# INLINE vkPAcquireTimeoutsByteOffset #-}
-        vkPAcquireTimeoutsByteOffset ~_
-          = #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pAcquireTimeouts}
-
-        {-# INLINE readVkPAcquireTimeouts #-}
-        readVkPAcquireTimeouts p
-          = peekByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pAcquireTimeouts}
-
-        {-# INLINE writeVkPAcquireTimeouts #-}
-        writeVkPAcquireTimeouts p
-          = pokeByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pAcquireTimeouts}
+         CanWriteField "pAcquireKeys" VkWin32KeyedMutexAcquireReleaseInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pAcquireKeys}
 
 instance {-# OVERLAPPING #-}
          HasField "pAcquireTimeouts" VkWin32KeyedMutexAcquireReleaseInfoKHR
@@ -427,42 +313,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pAcquireTimeouts}
 
-instance CanReadField "pAcquireTimeouts"
+instance {-# OVERLAPPING #-}
+         CanReadField "pAcquireTimeouts"
            VkWin32KeyedMutexAcquireReleaseInfoKHR
          where
-        {-# INLINE getField #-}
-        getField = vkPAcquireTimeouts
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pAcquireTimeouts})
 
         {-# INLINE readField #-}
-        readField = readVkPAcquireTimeouts
+        readField p
+          = peekByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pAcquireTimeouts}
 
-instance CanWriteField "pAcquireTimeouts"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pAcquireTimeouts"
            VkWin32KeyedMutexAcquireReleaseInfoKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPAcquireTimeouts
-
-instance {-# OVERLAPPING #-}
-         HasVkReleaseCount VkWin32KeyedMutexAcquireReleaseInfoKHR where
-        type VkReleaseCountMType VkWin32KeyedMutexAcquireReleaseInfoKHR =
-             Word32
-
-        {-# NOINLINE vkReleaseCount #-}
-        vkReleaseCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, releaseCount})
-
-        {-# INLINE vkReleaseCountByteOffset #-}
-        vkReleaseCountByteOffset ~_
-          = #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, releaseCount}
-
-        {-# INLINE readVkReleaseCount #-}
-        readVkReleaseCount p
-          = peekByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, releaseCount}
-
-        {-# INLINE writeVkReleaseCount #-}
-        writeVkReleaseCount p
-          = pokeByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, releaseCount}
+        writeField p
+          = pokeByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pAcquireTimeouts}
 
 instance {-# OVERLAPPING #-}
          HasField "releaseCount" VkWin32KeyedMutexAcquireReleaseInfoKHR
@@ -488,42 +358,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, releaseCount}
 
-instance CanReadField "releaseCount"
-           VkWin32KeyedMutexAcquireReleaseInfoKHR
+instance {-# OVERLAPPING #-}
+         CanReadField "releaseCount" VkWin32KeyedMutexAcquireReleaseInfoKHR
          where
-        {-# INLINE getField #-}
-        getField = vkReleaseCount
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, releaseCount})
 
         {-# INLINE readField #-}
-        readField = readVkReleaseCount
-
-instance CanWriteField "releaseCount"
-           VkWin32KeyedMutexAcquireReleaseInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkReleaseCount
+        readField p
+          = peekByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, releaseCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPReleaseSyncs VkWin32KeyedMutexAcquireReleaseInfoKHR where
-        type VkPReleaseSyncsMType VkWin32KeyedMutexAcquireReleaseInfoKHR =
-             Ptr VkDeviceMemory
-
-        {-# NOINLINE vkPReleaseSyncs #-}
-        vkPReleaseSyncs x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pReleaseSyncs})
-
-        {-# INLINE vkPReleaseSyncsByteOffset #-}
-        vkPReleaseSyncsByteOffset ~_
-          = #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pReleaseSyncs}
-
-        {-# INLINE readVkPReleaseSyncs #-}
-        readVkPReleaseSyncs p
-          = peekByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pReleaseSyncs}
-
-        {-# INLINE writeVkPReleaseSyncs #-}
-        writeVkPReleaseSyncs p
-          = pokeByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pReleaseSyncs}
+         CanWriteField "releaseCount" VkWin32KeyedMutexAcquireReleaseInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, releaseCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pReleaseSyncs" VkWin32KeyedMutexAcquireReleaseInfoKHR
@@ -549,42 +401,25 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pReleaseSyncs}
 
-instance CanReadField "pReleaseSyncs"
-           VkWin32KeyedMutexAcquireReleaseInfoKHR
+instance {-# OVERLAPPING #-}
+         CanReadField "pReleaseSyncs" VkWin32KeyedMutexAcquireReleaseInfoKHR
          where
-        {-# INLINE getField #-}
-        getField = vkPReleaseSyncs
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pReleaseSyncs})
 
         {-# INLINE readField #-}
-        readField = readVkPReleaseSyncs
+        readField p
+          = peekByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pReleaseSyncs}
 
-instance CanWriteField "pReleaseSyncs"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pReleaseSyncs"
            VkWin32KeyedMutexAcquireReleaseInfoKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPReleaseSyncs
-
-instance {-# OVERLAPPING #-}
-         HasVkPReleaseKeys VkWin32KeyedMutexAcquireReleaseInfoKHR where
-        type VkPReleaseKeysMType VkWin32KeyedMutexAcquireReleaseInfoKHR =
-             Ptr Word64
-
-        {-# NOINLINE vkPReleaseKeys #-}
-        vkPReleaseKeys x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pReleaseKeys})
-
-        {-# INLINE vkPReleaseKeysByteOffset #-}
-        vkPReleaseKeysByteOffset ~_
-          = #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pReleaseKeys}
-
-        {-# INLINE readVkPReleaseKeys #-}
-        readVkPReleaseKeys p
-          = peekByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pReleaseKeys}
-
-        {-# INLINE writeVkPReleaseKeys #-}
-        writeVkPReleaseKeys p
-          = pokeByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pReleaseKeys}
+        writeField p
+          = pokeByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pReleaseSyncs}
 
 instance {-# OVERLAPPING #-}
          HasField "pReleaseKeys" VkWin32KeyedMutexAcquireReleaseInfoKHR
@@ -610,48 +445,54 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pReleaseKeys}
 
-instance CanReadField "pReleaseKeys"
-           VkWin32KeyedMutexAcquireReleaseInfoKHR
+instance {-# OVERLAPPING #-}
+         CanReadField "pReleaseKeys" VkWin32KeyedMutexAcquireReleaseInfoKHR
          where
-        {-# INLINE getField #-}
-        getField = vkPReleaseKeys
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pReleaseKeys})
 
         {-# INLINE readField #-}
-        readField = readVkPReleaseKeys
+        readField p
+          = peekByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pReleaseKeys}
 
-instance CanWriteField "pReleaseKeys"
-           VkWin32KeyedMutexAcquireReleaseInfoKHR
+instance {-# OVERLAPPING #-}
+         CanWriteField "pReleaseKeys" VkWin32KeyedMutexAcquireReleaseInfoKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPReleaseKeys
+        writeField p
+          = pokeByteOff p #{offset VkWin32KeyedMutexAcquireReleaseInfoKHR, pReleaseKeys}
 
 instance Show VkWin32KeyedMutexAcquireReleaseInfoKHR where
         showsPrec d x
           = showString "VkWin32KeyedMutexAcquireReleaseInfoKHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkAcquireCount = " .
-                            showsPrec d (vkAcquireCount x) .
+                          showString "acquireCount = " .
+                            showsPrec d (getField @"acquireCount" x) .
                               showString ", " .
-                                showString "vkPAcquireSyncs = " .
-                                  showsPrec d (vkPAcquireSyncs x) .
+                                showString "pAcquireSyncs = " .
+                                  showsPrec d (getField @"pAcquireSyncs" x) .
                                     showString ", " .
-                                      showString "vkPAcquireKeys = " .
-                                        showsPrec d (vkPAcquireKeys x) .
+                                      showString "pAcquireKeys = " .
+                                        showsPrec d (getField @"pAcquireKeys" x) .
                                           showString ", " .
-                                            showString "vkPAcquireTimeouts = " .
-                                              showsPrec d (vkPAcquireTimeouts x) .
+                                            showString "pAcquireTimeouts = " .
+                                              showsPrec d (getField @"pAcquireTimeouts" x) .
                                                 showString ", " .
-                                                  showString "vkReleaseCount = " .
-                                                    showsPrec d (vkReleaseCount x) .
+                                                  showString "releaseCount = " .
+                                                    showsPrec d (getField @"releaseCount" x) .
                                                       showString ", " .
-                                                        showString "vkPReleaseSyncs = " .
-                                                          showsPrec d (vkPReleaseSyncs x) .
+                                                        showString "pReleaseSyncs = " .
+                                                          showsPrec d (getField @"pReleaseSyncs" x)
+                                                            .
                                                             showString ", " .
-                                                              showString "vkPReleaseKeys = " .
-                                                                showsPrec d (vkPReleaseKeys x) .
-                                                                  showChar '}'
+                                                              showString "pReleaseKeys = " .
+                                                                showsPrec d
+                                                                  (getField @"pReleaseKeys" x)
+                                                                  . showChar '}'

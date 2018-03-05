@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkDeviceGroupRenderPassBeginInfoKHX
        (VkDeviceGroupRenderPassBeginInfoKHX(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType         (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkRect2D              (VkRect2D)
 import           Graphics.Vulkan.Types.Struct.VkRenderPassBeginInfo (VkRenderPassBeginInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                   (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDeviceGroupRenderPassBeginInfoKHX {
@@ -84,28 +84,6 @@ instance VulkanMarshal VkDeviceGroupRenderPassBeginInfoKHX where
              '[VkRenderPassBeginInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkDeviceGroupRenderPassBeginInfoKHX where
-        type VkSTypeMType VkDeviceGroupRenderPassBeginInfoKHX =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupRenderPassBeginInfoKHX, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkDeviceGroupRenderPassBeginInfoKHX, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkDeviceGroupRenderPassBeginInfoKHX, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkDeviceGroupRenderPassBeginInfoKHX, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkDeviceGroupRenderPassBeginInfoKHX where
         type FieldType "sType" VkDeviceGroupRenderPassBeginInfoKHX =
              VkStructureType
@@ -123,39 +101,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGroupRenderPassBeginInfoKHX, sType}
 
-instance CanReadField "sType" VkDeviceGroupRenderPassBeginInfoKHX
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkDeviceGroupRenderPassBeginInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupRenderPassBeginInfoKHX, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkDeviceGroupRenderPassBeginInfoKHX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkDeviceGroupRenderPassBeginInfoKHX, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkDeviceGroupRenderPassBeginInfoKHX where
-        type VkPNextMType VkDeviceGroupRenderPassBeginInfoKHX = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupRenderPassBeginInfoKHX, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkDeviceGroupRenderPassBeginInfoKHX, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkDeviceGroupRenderPassBeginInfoKHX, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkDeviceGroupRenderPassBeginInfoKHX, pNext}
+         CanWriteField "sType" VkDeviceGroupRenderPassBeginInfoKHX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGroupRenderPassBeginInfoKHX, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkDeviceGroupRenderPassBeginInfoKHX where
@@ -175,39 +136,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGroupRenderPassBeginInfoKHX, pNext}
 
-instance CanReadField "pNext" VkDeviceGroupRenderPassBeginInfoKHX
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkDeviceGroupRenderPassBeginInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupRenderPassBeginInfoKHX, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkDeviceGroupRenderPassBeginInfoKHX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkDeviceGroupRenderPassBeginInfoKHX, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkDeviceMask VkDeviceGroupRenderPassBeginInfoKHX where
-        type VkDeviceMaskMType VkDeviceGroupRenderPassBeginInfoKHX = Word32
-
-        {-# NOINLINE vkDeviceMask #-}
-        vkDeviceMask x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupRenderPassBeginInfoKHX, deviceMask})
-
-        {-# INLINE vkDeviceMaskByteOffset #-}
-        vkDeviceMaskByteOffset ~_
-          = #{offset VkDeviceGroupRenderPassBeginInfoKHX, deviceMask}
-
-        {-# INLINE readVkDeviceMask #-}
-        readVkDeviceMask p
-          = peekByteOff p #{offset VkDeviceGroupRenderPassBeginInfoKHX, deviceMask}
-
-        {-# INLINE writeVkDeviceMask #-}
-        writeVkDeviceMask p
-          = pokeByteOff p #{offset VkDeviceGroupRenderPassBeginInfoKHX, deviceMask}
+         CanWriteField "pNext" VkDeviceGroupRenderPassBeginInfoKHX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGroupRenderPassBeginInfoKHX, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "deviceMask" VkDeviceGroupRenderPassBeginInfoKHX where
@@ -227,44 +171,23 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGroupRenderPassBeginInfoKHX, deviceMask}
 
-instance CanReadField "deviceMask"
-           VkDeviceGroupRenderPassBeginInfoKHX
-         where
-        {-# INLINE getField #-}
-        getField = vkDeviceMask
+instance {-# OVERLAPPING #-}
+         CanReadField "deviceMask" VkDeviceGroupRenderPassBeginInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupRenderPassBeginInfoKHX, deviceMask})
 
         {-# INLINE readField #-}
-        readField = readVkDeviceMask
-
-instance CanWriteField "deviceMask"
-           VkDeviceGroupRenderPassBeginInfoKHX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkDeviceMask
+        readField p
+          = peekByteOff p #{offset VkDeviceGroupRenderPassBeginInfoKHX, deviceMask}
 
 instance {-# OVERLAPPING #-}
-         HasVkDeviceRenderAreaCount VkDeviceGroupRenderPassBeginInfoKHX
+         CanWriteField "deviceMask" VkDeviceGroupRenderPassBeginInfoKHX
          where
-        type VkDeviceRenderAreaCountMType
-               VkDeviceGroupRenderPassBeginInfoKHX
-             = Word32
-
-        {-# NOINLINE vkDeviceRenderAreaCount #-}
-        vkDeviceRenderAreaCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupRenderPassBeginInfoKHX, deviceRenderAreaCount})
-
-        {-# INLINE vkDeviceRenderAreaCountByteOffset #-}
-        vkDeviceRenderAreaCountByteOffset ~_
-          = #{offset VkDeviceGroupRenderPassBeginInfoKHX, deviceRenderAreaCount}
-
-        {-# INLINE readVkDeviceRenderAreaCount #-}
-        readVkDeviceRenderAreaCount p
-          = peekByteOff p #{offset VkDeviceGroupRenderPassBeginInfoKHX, deviceRenderAreaCount}
-
-        {-# INLINE writeVkDeviceRenderAreaCount #-}
-        writeVkDeviceRenderAreaCount p
-          = pokeByteOff p #{offset VkDeviceGroupRenderPassBeginInfoKHX, deviceRenderAreaCount}
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGroupRenderPassBeginInfoKHX, deviceMask}
 
 instance {-# OVERLAPPING #-}
          HasField "deviceRenderAreaCount"
@@ -291,42 +214,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGroupRenderPassBeginInfoKHX, deviceRenderAreaCount}
 
-instance CanReadField "deviceRenderAreaCount"
+instance {-# OVERLAPPING #-}
+         CanReadField "deviceRenderAreaCount"
            VkDeviceGroupRenderPassBeginInfoKHX
          where
-        {-# INLINE getField #-}
-        getField = vkDeviceRenderAreaCount
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupRenderPassBeginInfoKHX, deviceRenderAreaCount})
 
         {-# INLINE readField #-}
-        readField = readVkDeviceRenderAreaCount
+        readField p
+          = peekByteOff p #{offset VkDeviceGroupRenderPassBeginInfoKHX, deviceRenderAreaCount}
 
-instance CanWriteField "deviceRenderAreaCount"
+instance {-# OVERLAPPING #-}
+         CanWriteField "deviceRenderAreaCount"
            VkDeviceGroupRenderPassBeginInfoKHX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkDeviceRenderAreaCount
-
-instance {-# OVERLAPPING #-}
-         HasVkPDeviceRenderAreas VkDeviceGroupRenderPassBeginInfoKHX where
-        type VkPDeviceRenderAreasMType VkDeviceGroupRenderPassBeginInfoKHX
-             = Ptr VkRect2D
-
-        {-# NOINLINE vkPDeviceRenderAreas #-}
-        vkPDeviceRenderAreas x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupRenderPassBeginInfoKHX, pDeviceRenderAreas})
-
-        {-# INLINE vkPDeviceRenderAreasByteOffset #-}
-        vkPDeviceRenderAreasByteOffset ~_
-          = #{offset VkDeviceGroupRenderPassBeginInfoKHX, pDeviceRenderAreas}
-
-        {-# INLINE readVkPDeviceRenderAreas #-}
-        readVkPDeviceRenderAreas p
-          = peekByteOff p #{offset VkDeviceGroupRenderPassBeginInfoKHX, pDeviceRenderAreas}
-
-        {-# INLINE writeVkPDeviceRenderAreas #-}
-        writeVkPDeviceRenderAreas p
-          = pokeByteOff p #{offset VkDeviceGroupRenderPassBeginInfoKHX, pDeviceRenderAreas}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGroupRenderPassBeginInfoKHX, deviceRenderAreaCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pDeviceRenderAreas" VkDeviceGroupRenderPassBeginInfoKHX
@@ -352,35 +259,42 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGroupRenderPassBeginInfoKHX, pDeviceRenderAreas}
 
-instance CanReadField "pDeviceRenderAreas"
+instance {-# OVERLAPPING #-}
+         CanReadField "pDeviceRenderAreas"
            VkDeviceGroupRenderPassBeginInfoKHX
          where
-        {-# INLINE getField #-}
-        getField = vkPDeviceRenderAreas
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupRenderPassBeginInfoKHX, pDeviceRenderAreas})
 
         {-# INLINE readField #-}
-        readField = readVkPDeviceRenderAreas
+        readField p
+          = peekByteOff p #{offset VkDeviceGroupRenderPassBeginInfoKHX, pDeviceRenderAreas}
 
-instance CanWriteField "pDeviceRenderAreas"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pDeviceRenderAreas"
            VkDeviceGroupRenderPassBeginInfoKHX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPDeviceRenderAreas
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGroupRenderPassBeginInfoKHX, pDeviceRenderAreas}
 
 instance Show VkDeviceGroupRenderPassBeginInfoKHX where
         showsPrec d x
           = showString "VkDeviceGroupRenderPassBeginInfoKHX {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkDeviceMask = " .
-                            showsPrec d (vkDeviceMask x) .
+                          showString "deviceMask = " .
+                            showsPrec d (getField @"deviceMask" x) .
                               showString ", " .
-                                showString "vkDeviceRenderAreaCount = " .
-                                  showsPrec d (vkDeviceRenderAreaCount x) .
+                                showString "deviceRenderAreaCount = " .
+                                  showsPrec d (getField @"deviceRenderAreaCount" x) .
                                     showString ", " .
-                                      showString "vkPDeviceRenderAreas = " .
-                                        showsPrec d (vkPDeviceRenderAreas x) . showChar '}'
+                                      showString "pDeviceRenderAreas = " .
+                                        showsPrec d (getField @"pDeviceRenderAreas" x) .
+                                          showChar '}'

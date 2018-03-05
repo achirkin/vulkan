@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkExternalMemoryImageCreateInfoKHR
        (VkExternalMemoryImageCreateInfoKHR(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagsKHR (VkExternalMemoryHandleTypeFlagsKHR)
 import           Graphics.Vulkan.Types.Enum.VkStructureType                    (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkImageCreateInfo                (VkImageCreateInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                              (unsafeDupablePerformIO)
 
 -- | > typedef struct VkExternalMemoryImageCreateInfoKHR {
@@ -80,28 +80,6 @@ instance VulkanMarshal VkExternalMemoryImageCreateInfoKHR where
              '[VkImageCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkExternalMemoryImageCreateInfoKHR where
-        type VkSTypeMType VkExternalMemoryImageCreateInfoKHR =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkExternalMemoryImageCreateInfoKHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkExternalMemoryImageCreateInfoKHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkExternalMemoryImageCreateInfoKHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkExternalMemoryImageCreateInfoKHR, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkExternalMemoryImageCreateInfoKHR where
         type FieldType "sType" VkExternalMemoryImageCreateInfoKHR =
              VkStructureType
@@ -119,39 +97,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkExternalMemoryImageCreateInfoKHR, sType}
 
-instance CanReadField "sType" VkExternalMemoryImageCreateInfoKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkExternalMemoryImageCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkExternalMemoryImageCreateInfoKHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkExternalMemoryImageCreateInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkExternalMemoryImageCreateInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkExternalMemoryImageCreateInfoKHR where
-        type VkPNextMType VkExternalMemoryImageCreateInfoKHR = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkExternalMemoryImageCreateInfoKHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkExternalMemoryImageCreateInfoKHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkExternalMemoryImageCreateInfoKHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkExternalMemoryImageCreateInfoKHR, pNext}
+         CanWriteField "sType" VkExternalMemoryImageCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkExternalMemoryImageCreateInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkExternalMemoryImageCreateInfoKHR where
@@ -171,40 +132,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkExternalMemoryImageCreateInfoKHR, pNext}
 
-instance CanReadField "pNext" VkExternalMemoryImageCreateInfoKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkExternalMemoryImageCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkExternalMemoryImageCreateInfoKHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkExternalMemoryImageCreateInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkExternalMemoryImageCreateInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkHandleTypes VkExternalMemoryImageCreateInfoKHR where
-        type VkHandleTypesMType VkExternalMemoryImageCreateInfoKHR =
-             VkExternalMemoryHandleTypeFlagsKHR
-
-        {-# NOINLINE vkHandleTypes #-}
-        vkHandleTypes x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkExternalMemoryImageCreateInfoKHR, handleTypes})
-
-        {-# INLINE vkHandleTypesByteOffset #-}
-        vkHandleTypesByteOffset ~_
-          = #{offset VkExternalMemoryImageCreateInfoKHR, handleTypes}
-
-        {-# INLINE readVkHandleTypes #-}
-        readVkHandleTypes p
-          = peekByteOff p #{offset VkExternalMemoryImageCreateInfoKHR, handleTypes}
-
-        {-# INLINE writeVkHandleTypes #-}
-        writeVkHandleTypes p
-          = pokeByteOff p #{offset VkExternalMemoryImageCreateInfoKHR, handleTypes}
+         CanWriteField "pNext" VkExternalMemoryImageCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkExternalMemoryImageCreateInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "handleTypes" VkExternalMemoryImageCreateInfoKHR where
@@ -224,29 +167,32 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkExternalMemoryImageCreateInfoKHR, handleTypes}
 
-instance CanReadField "handleTypes"
-           VkExternalMemoryImageCreateInfoKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkHandleTypes
+instance {-# OVERLAPPING #-}
+         CanReadField "handleTypes" VkExternalMemoryImageCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkExternalMemoryImageCreateInfoKHR, handleTypes})
 
         {-# INLINE readField #-}
-        readField = readVkHandleTypes
+        readField p
+          = peekByteOff p #{offset VkExternalMemoryImageCreateInfoKHR, handleTypes}
 
-instance CanWriteField "handleTypes"
-           VkExternalMemoryImageCreateInfoKHR
+instance {-# OVERLAPPING #-}
+         CanWriteField "handleTypes" VkExternalMemoryImageCreateInfoKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkHandleTypes
+        writeField p
+          = pokeByteOff p #{offset VkExternalMemoryImageCreateInfoKHR, handleTypes}
 
 instance Show VkExternalMemoryImageCreateInfoKHR where
         showsPrec d x
           = showString "VkExternalMemoryImageCreateInfoKHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkHandleTypes = " .
-                            showsPrec d (vkHandleTypes x) . showChar '}'
+                          showString "handleTypes = " .
+                            showsPrec d (getField @"handleTypes" x) . showChar '}'

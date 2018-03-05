@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkSamplerReductionModeCreateInfoEXT
        (VkSamplerReductionModeCreateInfoEXT(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkSamplerReductionModeEXT (VkSamplerReductionModeEXT)
 import           Graphics.Vulkan.Types.Enum.VkStructureType           (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkSamplerCreateInfo     (VkSamplerCreateInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                     (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSamplerReductionModeCreateInfoEXT {
@@ -81,28 +81,6 @@ instance VulkanMarshal VkSamplerReductionModeCreateInfoEXT where
              '[VkSamplerCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkSamplerReductionModeCreateInfoEXT where
-        type VkSTypeMType VkSamplerReductionModeCreateInfoEXT =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSamplerReductionModeCreateInfoEXT, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkSamplerReductionModeCreateInfoEXT, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkSamplerReductionModeCreateInfoEXT, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkSamplerReductionModeCreateInfoEXT, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkSamplerReductionModeCreateInfoEXT where
         type FieldType "sType" VkSamplerReductionModeCreateInfoEXT =
              VkStructureType
@@ -120,39 +98,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSamplerReductionModeCreateInfoEXT, sType}
 
-instance CanReadField "sType" VkSamplerReductionModeCreateInfoEXT
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkSamplerReductionModeCreateInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSamplerReductionModeCreateInfoEXT, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkSamplerReductionModeCreateInfoEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkSamplerReductionModeCreateInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkSamplerReductionModeCreateInfoEXT where
-        type VkPNextMType VkSamplerReductionModeCreateInfoEXT = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSamplerReductionModeCreateInfoEXT, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkSamplerReductionModeCreateInfoEXT, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkSamplerReductionModeCreateInfoEXT, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkSamplerReductionModeCreateInfoEXT, pNext}
+         CanWriteField "sType" VkSamplerReductionModeCreateInfoEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSamplerReductionModeCreateInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkSamplerReductionModeCreateInfoEXT where
@@ -172,40 +133,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSamplerReductionModeCreateInfoEXT, pNext}
 
-instance CanReadField "pNext" VkSamplerReductionModeCreateInfoEXT
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkSamplerReductionModeCreateInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSamplerReductionModeCreateInfoEXT, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkSamplerReductionModeCreateInfoEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkSamplerReductionModeCreateInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkReductionMode VkSamplerReductionModeCreateInfoEXT where
-        type VkReductionModeMType VkSamplerReductionModeCreateInfoEXT =
-             VkSamplerReductionModeEXT
-
-        {-# NOINLINE vkReductionMode #-}
-        vkReductionMode x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSamplerReductionModeCreateInfoEXT, reductionMode})
-
-        {-# INLINE vkReductionModeByteOffset #-}
-        vkReductionModeByteOffset ~_
-          = #{offset VkSamplerReductionModeCreateInfoEXT, reductionMode}
-
-        {-# INLINE readVkReductionMode #-}
-        readVkReductionMode p
-          = peekByteOff p #{offset VkSamplerReductionModeCreateInfoEXT, reductionMode}
-
-        {-# INLINE writeVkReductionMode #-}
-        writeVkReductionMode p
-          = pokeByteOff p #{offset VkSamplerReductionModeCreateInfoEXT, reductionMode}
+         CanWriteField "pNext" VkSamplerReductionModeCreateInfoEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSamplerReductionModeCreateInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "reductionMode" VkSamplerReductionModeCreateInfoEXT where
@@ -229,29 +172,33 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSamplerReductionModeCreateInfoEXT, reductionMode}
 
-instance CanReadField "reductionMode"
-           VkSamplerReductionModeCreateInfoEXT
+instance {-# OVERLAPPING #-}
+         CanReadField "reductionMode" VkSamplerReductionModeCreateInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkReductionMode
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSamplerReductionModeCreateInfoEXT, reductionMode})
 
         {-# INLINE readField #-}
-        readField = readVkReductionMode
+        readField p
+          = peekByteOff p #{offset VkSamplerReductionModeCreateInfoEXT, reductionMode}
 
-instance CanWriteField "reductionMode"
-           VkSamplerReductionModeCreateInfoEXT
+instance {-# OVERLAPPING #-}
+         CanWriteField "reductionMode" VkSamplerReductionModeCreateInfoEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkReductionMode
+        writeField p
+          = pokeByteOff p #{offset VkSamplerReductionModeCreateInfoEXT, reductionMode}
 
 instance Show VkSamplerReductionModeCreateInfoEXT where
         showsPrec d x
           = showString "VkSamplerReductionModeCreateInfoEXT {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkReductionMode = " .
-                            showsPrec d (vkReductionMode x) . showChar '}'
+                          showString "reductionMode = " .
+                            showsPrec d (getField @"reductionMode" x) . showChar '}'

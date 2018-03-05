@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkDebugReportCallbackCreateInfoEXT
        (VkDebugReportCallbackCreateInfoEXT(..)) where
@@ -16,7 +17,6 @@ import           Graphics.Vulkan.Types.Enum.VkDebugReportFlagsEXT  (VkDebugRepor
 import           Graphics.Vulkan.Types.Enum.VkStructureType        (VkStructureType)
 import           Graphics.Vulkan.Types.Funcpointers                (PFN_vkDebugReportCallbackEXT)
 import           Graphics.Vulkan.Types.Struct.VkInstanceCreateInfo (VkInstanceCreateInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                  (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDebugReportCallbackCreateInfoEXT {
@@ -83,28 +83,6 @@ instance VulkanMarshal VkDebugReportCallbackCreateInfoEXT where
              '[VkInstanceCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkDebugReportCallbackCreateInfoEXT where
-        type VkSTypeMType VkDebugReportCallbackCreateInfoEXT =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDebugReportCallbackCreateInfoEXT, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkDebugReportCallbackCreateInfoEXT, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkDebugReportCallbackCreateInfoEXT, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkDebugReportCallbackCreateInfoEXT, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkDebugReportCallbackCreateInfoEXT where
         type FieldType "sType" VkDebugReportCallbackCreateInfoEXT =
              VkStructureType
@@ -122,39 +100,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDebugReportCallbackCreateInfoEXT, sType}
 
-instance CanReadField "sType" VkDebugReportCallbackCreateInfoEXT
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkDebugReportCallbackCreateInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDebugReportCallbackCreateInfoEXT, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkDebugReportCallbackCreateInfoEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkDebugReportCallbackCreateInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkDebugReportCallbackCreateInfoEXT where
-        type VkPNextMType VkDebugReportCallbackCreateInfoEXT = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDebugReportCallbackCreateInfoEXT, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkDebugReportCallbackCreateInfoEXT, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkDebugReportCallbackCreateInfoEXT, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkDebugReportCallbackCreateInfoEXT, pNext}
+         CanWriteField "sType" VkDebugReportCallbackCreateInfoEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDebugReportCallbackCreateInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkDebugReportCallbackCreateInfoEXT where
@@ -174,40 +135,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDebugReportCallbackCreateInfoEXT, pNext}
 
-instance CanReadField "pNext" VkDebugReportCallbackCreateInfoEXT
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkDebugReportCallbackCreateInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDebugReportCallbackCreateInfoEXT, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkDebugReportCallbackCreateInfoEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkDebugReportCallbackCreateInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkFlags VkDebugReportCallbackCreateInfoEXT where
-        type VkFlagsMType VkDebugReportCallbackCreateInfoEXT =
-             VkDebugReportFlagsEXT
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDebugReportCallbackCreateInfoEXT, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkDebugReportCallbackCreateInfoEXT, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkDebugReportCallbackCreateInfoEXT, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkDebugReportCallbackCreateInfoEXT, flags}
+         CanWriteField "pNext" VkDebugReportCallbackCreateInfoEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDebugReportCallbackCreateInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkDebugReportCallbackCreateInfoEXT where
@@ -227,40 +170,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDebugReportCallbackCreateInfoEXT, flags}
 
-instance CanReadField "flags" VkDebugReportCallbackCreateInfoEXT
-         where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkDebugReportCallbackCreateInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDebugReportCallbackCreateInfoEXT, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags" VkDebugReportCallbackCreateInfoEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkDebugReportCallbackCreateInfoEXT, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkPfnCallback VkDebugReportCallbackCreateInfoEXT where
-        type VkPfnCallbackMType VkDebugReportCallbackCreateInfoEXT =
-             PFN_vkDebugReportCallbackEXT
-
-        {-# NOINLINE vkPfnCallback #-}
-        vkPfnCallback x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDebugReportCallbackCreateInfoEXT, pfnCallback})
-
-        {-# INLINE vkPfnCallbackByteOffset #-}
-        vkPfnCallbackByteOffset ~_
-          = #{offset VkDebugReportCallbackCreateInfoEXT, pfnCallback}
-
-        {-# INLINE readVkPfnCallback #-}
-        readVkPfnCallback p
-          = peekByteOff p #{offset VkDebugReportCallbackCreateInfoEXT, pfnCallback}
-
-        {-# INLINE writeVkPfnCallback #-}
-        writeVkPfnCallback p
-          = pokeByteOff p #{offset VkDebugReportCallbackCreateInfoEXT, pfnCallback}
+         CanWriteField "flags" VkDebugReportCallbackCreateInfoEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDebugReportCallbackCreateInfoEXT, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "pfnCallback" VkDebugReportCallbackCreateInfoEXT where
@@ -280,41 +205,23 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDebugReportCallbackCreateInfoEXT, pfnCallback}
 
-instance CanReadField "pfnCallback"
-           VkDebugReportCallbackCreateInfoEXT
-         where
-        {-# INLINE getField #-}
-        getField = vkPfnCallback
+instance {-# OVERLAPPING #-}
+         CanReadField "pfnCallback" VkDebugReportCallbackCreateInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDebugReportCallbackCreateInfoEXT, pfnCallback})
 
         {-# INLINE readField #-}
-        readField = readVkPfnCallback
-
-instance CanWriteField "pfnCallback"
-           VkDebugReportCallbackCreateInfoEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPfnCallback
+        readField p
+          = peekByteOff p #{offset VkDebugReportCallbackCreateInfoEXT, pfnCallback}
 
 instance {-# OVERLAPPING #-}
-         HasVkPUserData VkDebugReportCallbackCreateInfoEXT where
-        type VkPUserDataMType VkDebugReportCallbackCreateInfoEXT = Ptr Void
-
-        {-# NOINLINE vkPUserData #-}
-        vkPUserData x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDebugReportCallbackCreateInfoEXT, pUserData})
-
-        {-# INLINE vkPUserDataByteOffset #-}
-        vkPUserDataByteOffset ~_
-          = #{offset VkDebugReportCallbackCreateInfoEXT, pUserData}
-
-        {-# INLINE readVkPUserData #-}
-        readVkPUserData p
-          = peekByteOff p #{offset VkDebugReportCallbackCreateInfoEXT, pUserData}
-
-        {-# INLINE writeVkPUserData #-}
-        writeVkPUserData p
-          = pokeByteOff p #{offset VkDebugReportCallbackCreateInfoEXT, pUserData}
+         CanWriteField "pfnCallback" VkDebugReportCallbackCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDebugReportCallbackCreateInfoEXT, pfnCallback}
 
 instance {-# OVERLAPPING #-}
          HasField "pUserData" VkDebugReportCallbackCreateInfoEXT where
@@ -334,35 +241,37 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDebugReportCallbackCreateInfoEXT, pUserData}
 
-instance CanReadField "pUserData"
-           VkDebugReportCallbackCreateInfoEXT
-         where
-        {-# INLINE getField #-}
-        getField = vkPUserData
+instance {-# OVERLAPPING #-}
+         CanReadField "pUserData" VkDebugReportCallbackCreateInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDebugReportCallbackCreateInfoEXT, pUserData})
 
         {-# INLINE readField #-}
-        readField = readVkPUserData
+        readField p
+          = peekByteOff p #{offset VkDebugReportCallbackCreateInfoEXT, pUserData}
 
-instance CanWriteField "pUserData"
-           VkDebugReportCallbackCreateInfoEXT
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pUserData" VkDebugReportCallbackCreateInfoEXT where
         {-# INLINE writeField #-}
-        writeField = writeVkPUserData
+        writeField p
+          = pokeByteOff p #{offset VkDebugReportCallbackCreateInfoEXT, pUserData}
 
 instance Show VkDebugReportCallbackCreateInfoEXT where
         showsPrec d x
           = showString "VkDebugReportCallbackCreateInfoEXT {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkPfnCallback = " .
-                                  showsPrec d (vkPfnCallback x) .
+                                showString "pfnCallback = " .
+                                  showsPrec d (getField @"pfnCallback" x) .
                                     showString ", " .
-                                      showString "vkPUserData = " .
-                                        showsPrec d (vkPUserData x) . showChar '}'
+                                      showString "pUserData = " .
+                                        showsPrec d (getField @"pUserData" x) . showChar '}'

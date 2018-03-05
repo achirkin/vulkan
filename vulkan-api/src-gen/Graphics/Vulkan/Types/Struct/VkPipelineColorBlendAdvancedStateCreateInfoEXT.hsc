@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPipelineColorBlendAdvancedStateCreateInfoEXT
        (VkPipelineColorBlendAdvancedStateCreateInfoEXT(..)) where
@@ -21,7 +22,6 @@ import           Graphics.Vulkan.Types.Enum.VkStructureType
                                                                                    (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkPipelineColorBlendStateCreateInfo
                                                                                    (VkPipelineColorBlendStateCreateInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe
                                                                                    (unsafeDupablePerformIO)
 
@@ -100,28 +100,6 @@ instance VulkanMarshal
              '[VkPipelineColorBlendStateCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPipelineColorBlendAdvancedStateCreateInfoEXT where
-        type VkSTypeMType VkPipelineColorBlendAdvancedStateCreateInfoEXT =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPipelineColorBlendAdvancedStateCreateInfoEXT
          where
         type FieldType "sType"
@@ -145,42 +123,25 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, sType}
 
-instance CanReadField "sType"
-           VkPipelineColorBlendAdvancedStateCreateInfoEXT
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkPipelineColorBlendAdvancedStateCreateInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkSType
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, sType}
 
-instance CanWriteField "sType"
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType"
            VkPipelineColorBlendAdvancedStateCreateInfoEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-}
-         HasVkPNext VkPipelineColorBlendAdvancedStateCreateInfoEXT where
-        type VkPNextMType VkPipelineColorBlendAdvancedStateCreateInfoEXT =
-             Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPipelineColorBlendAdvancedStateCreateInfoEXT
@@ -206,45 +167,25 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, pNext}
 
-instance CanReadField "pNext"
-           VkPipelineColorBlendAdvancedStateCreateInfoEXT
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkPipelineColorBlendAdvancedStateCreateInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkPNext
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, pNext}
 
-instance CanWriteField "pNext"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext"
            VkPipelineColorBlendAdvancedStateCreateInfoEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-}
-         HasVkSrcPremultiplied
-           VkPipelineColorBlendAdvancedStateCreateInfoEXT
-         where
-        type VkSrcPremultipliedMType
-               VkPipelineColorBlendAdvancedStateCreateInfoEXT
-             = VkBool32
-
-        {-# NOINLINE vkSrcPremultiplied #-}
-        vkSrcPremultiplied x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, srcPremultiplied})
-
-        {-# INLINE vkSrcPremultipliedByteOffset #-}
-        vkSrcPremultipliedByteOffset ~_
-          = #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, srcPremultiplied}
-
-        {-# INLINE readVkSrcPremultiplied #-}
-        readVkSrcPremultiplied p
-          = peekByteOff p #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, srcPremultiplied}
-
-        {-# INLINE writeVkSrcPremultiplied #-}
-        writeVkSrcPremultiplied p
-          = pokeByteOff p #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, srcPremultiplied}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "srcPremultiplied"
@@ -271,45 +212,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, srcPremultiplied}
 
-instance CanReadField "srcPremultiplied"
+instance {-# OVERLAPPING #-}
+         CanReadField "srcPremultiplied"
            VkPipelineColorBlendAdvancedStateCreateInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkSrcPremultiplied
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, srcPremultiplied})
 
         {-# INLINE readField #-}
-        readField = readVkSrcPremultiplied
+        readField p
+          = peekByteOff p #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, srcPremultiplied}
 
-instance CanWriteField "srcPremultiplied"
+instance {-# OVERLAPPING #-}
+         CanWriteField "srcPremultiplied"
            VkPipelineColorBlendAdvancedStateCreateInfoEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSrcPremultiplied
-
-instance {-# OVERLAPPING #-}
-         HasVkDstPremultiplied
-           VkPipelineColorBlendAdvancedStateCreateInfoEXT
-         where
-        type VkDstPremultipliedMType
-               VkPipelineColorBlendAdvancedStateCreateInfoEXT
-             = VkBool32
-
-        {-# NOINLINE vkDstPremultiplied #-}
-        vkDstPremultiplied x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, dstPremultiplied})
-
-        {-# INLINE vkDstPremultipliedByteOffset #-}
-        vkDstPremultipliedByteOffset ~_
-          = #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, dstPremultiplied}
-
-        {-# INLINE readVkDstPremultiplied #-}
-        readVkDstPremultiplied p
-          = peekByteOff p #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, dstPremultiplied}
-
-        {-# INLINE writeVkDstPremultiplied #-}
-        writeVkDstPremultiplied p
-          = pokeByteOff p #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, dstPremultiplied}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, srcPremultiplied}
 
 instance {-# OVERLAPPING #-}
          HasField "dstPremultiplied"
@@ -336,44 +258,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, dstPremultiplied}
 
-instance CanReadField "dstPremultiplied"
+instance {-# OVERLAPPING #-}
+         CanReadField "dstPremultiplied"
            VkPipelineColorBlendAdvancedStateCreateInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkDstPremultiplied
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, dstPremultiplied})
 
         {-# INLINE readField #-}
-        readField = readVkDstPremultiplied
+        readField p
+          = peekByteOff p #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, dstPremultiplied}
 
-instance CanWriteField "dstPremultiplied"
+instance {-# OVERLAPPING #-}
+         CanWriteField "dstPremultiplied"
            VkPipelineColorBlendAdvancedStateCreateInfoEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkDstPremultiplied
-
-instance {-# OVERLAPPING #-}
-         HasVkBlendOverlap VkPipelineColorBlendAdvancedStateCreateInfoEXT
-         where
-        type VkBlendOverlapMType
-               VkPipelineColorBlendAdvancedStateCreateInfoEXT
-             = VkBlendOverlapEXT
-
-        {-# NOINLINE vkBlendOverlap #-}
-        vkBlendOverlap x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, blendOverlap})
-
-        {-# INLINE vkBlendOverlapByteOffset #-}
-        vkBlendOverlapByteOffset ~_
-          = #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, blendOverlap}
-
-        {-# INLINE readVkBlendOverlap #-}
-        readVkBlendOverlap p
-          = peekByteOff p #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, blendOverlap}
-
-        {-# INLINE writeVkBlendOverlap #-}
-        writeVkBlendOverlap p
-          = pokeByteOff p #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, blendOverlap}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, dstPremultiplied}
 
 instance {-# OVERLAPPING #-}
          HasField "blendOverlap"
@@ -400,35 +304,41 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, blendOverlap}
 
-instance CanReadField "blendOverlap"
+instance {-# OVERLAPPING #-}
+         CanReadField "blendOverlap"
            VkPipelineColorBlendAdvancedStateCreateInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkBlendOverlap
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, blendOverlap})
 
         {-# INLINE readField #-}
-        readField = readVkBlendOverlap
+        readField p
+          = peekByteOff p #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, blendOverlap}
 
-instance CanWriteField "blendOverlap"
+instance {-# OVERLAPPING #-}
+         CanWriteField "blendOverlap"
            VkPipelineColorBlendAdvancedStateCreateInfoEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkBlendOverlap
+        writeField p
+          = pokeByteOff p #{offset VkPipelineColorBlendAdvancedStateCreateInfoEXT, blendOverlap}
 
 instance Show VkPipelineColorBlendAdvancedStateCreateInfoEXT where
         showsPrec d x
           = showString "VkPipelineColorBlendAdvancedStateCreateInfoEXT {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkSrcPremultiplied = " .
-                            showsPrec d (vkSrcPremultiplied x) .
+                          showString "srcPremultiplied = " .
+                            showsPrec d (getField @"srcPremultiplied" x) .
                               showString ", " .
-                                showString "vkDstPremultiplied = " .
-                                  showsPrec d (vkDstPremultiplied x) .
+                                showString "dstPremultiplied = " .
+                                  showsPrec d (getField @"dstPremultiplied" x) .
                                     showString ", " .
-                                      showString "vkBlendOverlap = " .
-                                        showsPrec d (vkBlendOverlap x) . showChar '}'
+                                      showString "blendOverlap = " .
+                                        showsPrec d (getField @"blendOverlap" x) . showChar '}'

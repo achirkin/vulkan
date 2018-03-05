@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPushConstantRange
        (VkPushConstantRange(..)) where
@@ -13,7 +14,6 @@ import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkShaderStageFlags (VkShaderStageFlags)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                              (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPushConstantRange {
@@ -70,27 +70,6 @@ instance VulkanMarshal VkPushConstantRange where
         type ReturnedOnly VkPushConstantRange = 'False -- ' closing tick for hsc2hs
         type StructExtends VkPushConstantRange = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkStageFlags VkPushConstantRange
-         where
-        type VkStageFlagsMType VkPushConstantRange = VkShaderStageFlags
-
-        {-# NOINLINE vkStageFlags #-}
-        vkStageFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPushConstantRange, stageFlags})
-
-        {-# INLINE vkStageFlagsByteOffset #-}
-        vkStageFlagsByteOffset ~_
-          = #{offset VkPushConstantRange, stageFlags}
-
-        {-# INLINE readVkStageFlags #-}
-        readVkStageFlags p
-          = peekByteOff p #{offset VkPushConstantRange, stageFlags}
-
-        {-# INLINE writeVkStageFlags #-}
-        writeVkStageFlags p
-          = pokeByteOff p #{offset VkPushConstantRange, stageFlags}
-
 instance {-# OVERLAPPING #-}
          HasField "stageFlags" VkPushConstantRange where
         type FieldType "stageFlags" VkPushConstantRange =
@@ -106,36 +85,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkPushConstantRange, stageFlags}
 
-instance CanReadField "stageFlags" VkPushConstantRange where
-        {-# INLINE getField #-}
-        getField = vkStageFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "stageFlags" VkPushConstantRange where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPushConstantRange, stageFlags})
 
         {-# INLINE readField #-}
-        readField = readVkStageFlags
+        readField p
+          = peekByteOff p #{offset VkPushConstantRange, stageFlags}
 
-instance CanWriteField "stageFlags" VkPushConstantRange where
+instance {-# OVERLAPPING #-}
+         CanWriteField "stageFlags" VkPushConstantRange where
         {-# INLINE writeField #-}
-        writeField = writeVkStageFlags
-
-instance {-# OVERLAPPING #-} HasVkOffset VkPushConstantRange where
-        type VkOffsetMType VkPushConstantRange = Word32
-
-        {-# NOINLINE vkOffset #-}
-        vkOffset x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPushConstantRange, offset})
-
-        {-# INLINE vkOffsetByteOffset #-}
-        vkOffsetByteOffset ~_
-          = #{offset VkPushConstantRange, offset}
-
-        {-# INLINE readVkOffset #-}
-        readVkOffset p
-          = peekByteOff p #{offset VkPushConstantRange, offset}
-
-        {-# INLINE writeVkOffset #-}
-        writeVkOffset p
-          = pokeByteOff p #{offset VkPushConstantRange, offset}
+        writeField p
+          = pokeByteOff p #{offset VkPushConstantRange, stageFlags}
 
 instance {-# OVERLAPPING #-} HasField "offset" VkPushConstantRange
          where
@@ -151,36 +116,22 @@ instance {-# OVERLAPPING #-} HasField "offset" VkPushConstantRange
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkPushConstantRange, offset}
 
-instance CanReadField "offset" VkPushConstantRange where
-        {-# INLINE getField #-}
-        getField = vkOffset
+instance {-# OVERLAPPING #-}
+         CanReadField "offset" VkPushConstantRange where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPushConstantRange, offset})
 
         {-# INLINE readField #-}
-        readField = readVkOffset
+        readField p
+          = peekByteOff p #{offset VkPushConstantRange, offset}
 
-instance CanWriteField "offset" VkPushConstantRange where
+instance {-# OVERLAPPING #-}
+         CanWriteField "offset" VkPushConstantRange where
         {-# INLINE writeField #-}
-        writeField = writeVkOffset
-
-instance {-# OVERLAPPING #-} HasVkSize VkPushConstantRange where
-        type VkSizeMType VkPushConstantRange = Word32
-
-        {-# NOINLINE vkSize #-}
-        vkSize x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPushConstantRange, size})
-
-        {-# INLINE vkSizeByteOffset #-}
-        vkSizeByteOffset ~_
-          = #{offset VkPushConstantRange, size}
-
-        {-# INLINE readVkSize #-}
-        readVkSize p
-          = peekByteOff p #{offset VkPushConstantRange, size}
-
-        {-# INLINE writeVkSize #-}
-        writeVkSize p
-          = pokeByteOff p #{offset VkPushConstantRange, size}
+        writeField p
+          = pokeByteOff p #{offset VkPushConstantRange, offset}
 
 instance {-# OVERLAPPING #-} HasField "size" VkPushConstantRange
          where
@@ -196,24 +147,31 @@ instance {-# OVERLAPPING #-} HasField "size" VkPushConstantRange
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkPushConstantRange, size}
 
-instance CanReadField "size" VkPushConstantRange where
-        {-# INLINE getField #-}
-        getField = vkSize
+instance {-# OVERLAPPING #-}
+         CanReadField "size" VkPushConstantRange where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPushConstantRange, size})
 
         {-# INLINE readField #-}
-        readField = readVkSize
+        readField p
+          = peekByteOff p #{offset VkPushConstantRange, size}
 
-instance CanWriteField "size" VkPushConstantRange where
+instance {-# OVERLAPPING #-}
+         CanWriteField "size" VkPushConstantRange where
         {-# INLINE writeField #-}
-        writeField = writeVkSize
+        writeField p
+          = pokeByteOff p #{offset VkPushConstantRange, size}
 
 instance Show VkPushConstantRange where
         showsPrec d x
           = showString "VkPushConstantRange {" .
-              showString "vkStageFlags = " .
-                showsPrec d (vkStageFlags x) .
+              showString "stageFlags = " .
+                showsPrec d (getField @"stageFlags" x) .
                   showString ", " .
-                    showString "vkOffset = " .
-                      showsPrec d (vkOffset x) .
+                    showString "offset = " .
+                      showsPrec d (getField @"offset" x) .
                         showString ", " .
-                          showString "vkSize = " . showsPrec d (vkSize x) . showChar '}'
+                          showString "size = " .
+                            showsPrec d (getField @"size" x) . showChar '}'

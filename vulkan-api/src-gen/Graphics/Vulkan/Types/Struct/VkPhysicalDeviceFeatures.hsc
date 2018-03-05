@@ -5,16 +5,16 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures
        (VkPhysicalDeviceFeatures(..)) where
-import           Foreign.Storable                    (Storable (..))
+import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.BaseTypes     (VkBool32)
-import           Graphics.Vulkan.Types.StructMembers
-import           System.IO.Unsafe                    (unsafeDupablePerformIO)
+import           Graphics.Vulkan.Types.BaseTypes  (VkBool32)
+import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDeviceFeatures {
 --   >     VkBool32               robustBufferAccess;
@@ -150,27 +150,6 @@ instance VulkanMarshal VkPhysicalDeviceFeatures where
         type StructExtends VkPhysicalDeviceFeatures = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkRobustBufferAccess VkPhysicalDeviceFeatures where
-        type VkRobustBufferAccessMType VkPhysicalDeviceFeatures = VkBool32
-
-        {-# NOINLINE vkRobustBufferAccess #-}
-        vkRobustBufferAccess x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, robustBufferAccess})
-
-        {-# INLINE vkRobustBufferAccessByteOffset #-}
-        vkRobustBufferAccessByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, robustBufferAccess}
-
-        {-# INLINE readVkRobustBufferAccess #-}
-        readVkRobustBufferAccess p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, robustBufferAccess}
-
-        {-# INLINE writeVkRobustBufferAccess #-}
-        writeVkRobustBufferAccess p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, robustBufferAccess}
-
-instance {-# OVERLAPPING #-}
          HasField "robustBufferAccess" VkPhysicalDeviceFeatures where
         type FieldType "robustBufferAccess" VkPhysicalDeviceFeatures =
              VkBool32
@@ -188,40 +167,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, robustBufferAccess}
 
-instance CanReadField "robustBufferAccess" VkPhysicalDeviceFeatures
-         where
-        {-# INLINE getField #-}
-        getField = vkRobustBufferAccess
+instance {-# OVERLAPPING #-}
+         CanReadField "robustBufferAccess" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, robustBufferAccess})
 
         {-# INLINE readField #-}
-        readField = readVkRobustBufferAccess
-
-instance CanWriteField "robustBufferAccess"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkRobustBufferAccess
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, robustBufferAccess}
 
 instance {-# OVERLAPPING #-}
-         HasVkFullDrawIndexUint32 VkPhysicalDeviceFeatures where
-        type VkFullDrawIndexUint32MType VkPhysicalDeviceFeatures = VkBool32
-
-        {-# NOINLINE vkFullDrawIndexUint32 #-}
-        vkFullDrawIndexUint32 x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, fullDrawIndexUint32})
-
-        {-# INLINE vkFullDrawIndexUint32ByteOffset #-}
-        vkFullDrawIndexUint32ByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, fullDrawIndexUint32}
-
-        {-# INLINE readVkFullDrawIndexUint32 #-}
-        readVkFullDrawIndexUint32 p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, fullDrawIndexUint32}
-
-        {-# INLINE writeVkFullDrawIndexUint32 #-}
-        writeVkFullDrawIndexUint32 p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, fullDrawIndexUint32}
+         CanWriteField "robustBufferAccess" VkPhysicalDeviceFeatures where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, robustBufferAccess}
 
 instance {-# OVERLAPPING #-}
          HasField "fullDrawIndexUint32" VkPhysicalDeviceFeatures where
@@ -241,41 +202,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, fullDrawIndexUint32}
 
-instance CanReadField "fullDrawIndexUint32"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE getField #-}
-        getField = vkFullDrawIndexUint32
+instance {-# OVERLAPPING #-}
+         CanReadField "fullDrawIndexUint32" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, fullDrawIndexUint32})
 
         {-# INLINE readField #-}
-        readField = readVkFullDrawIndexUint32
-
-instance CanWriteField "fullDrawIndexUint32"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFullDrawIndexUint32
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, fullDrawIndexUint32}
 
 instance {-# OVERLAPPING #-}
-         HasVkImageCubeArray VkPhysicalDeviceFeatures where
-        type VkImageCubeArrayMType VkPhysicalDeviceFeatures = VkBool32
-
-        {-# NOINLINE vkImageCubeArray #-}
-        vkImageCubeArray x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, imageCubeArray})
-
-        {-# INLINE vkImageCubeArrayByteOffset #-}
-        vkImageCubeArrayByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, imageCubeArray}
-
-        {-# INLINE readVkImageCubeArray #-}
-        readVkImageCubeArray p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, imageCubeArray}
-
-        {-# INLINE writeVkImageCubeArray #-}
-        writeVkImageCubeArray p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, imageCubeArray}
+         CanWriteField "fullDrawIndexUint32" VkPhysicalDeviceFeatures where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, fullDrawIndexUint32}
 
 instance {-# OVERLAPPING #-}
          HasField "imageCubeArray" VkPhysicalDeviceFeatures where
@@ -294,39 +236,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, imageCubeArray}
 
-instance CanReadField "imageCubeArray" VkPhysicalDeviceFeatures
-         where
-        {-# INLINE getField #-}
-        getField = vkImageCubeArray
+instance {-# OVERLAPPING #-}
+         CanReadField "imageCubeArray" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, imageCubeArray})
 
         {-# INLINE readField #-}
-        readField = readVkImageCubeArray
-
-instance CanWriteField "imageCubeArray" VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkImageCubeArray
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, imageCubeArray}
 
 instance {-# OVERLAPPING #-}
-         HasVkIndependentBlend VkPhysicalDeviceFeatures where
-        type VkIndependentBlendMType VkPhysicalDeviceFeatures = VkBool32
-
-        {-# NOINLINE vkIndependentBlend #-}
-        vkIndependentBlend x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, independentBlend})
-
-        {-# INLINE vkIndependentBlendByteOffset #-}
-        vkIndependentBlendByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, independentBlend}
-
-        {-# INLINE readVkIndependentBlend #-}
-        readVkIndependentBlend p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, independentBlend}
-
-        {-# INLINE writeVkIndependentBlend #-}
-        writeVkIndependentBlend p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, independentBlend}
+         CanWriteField "imageCubeArray" VkPhysicalDeviceFeatures where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, imageCubeArray}
 
 instance {-# OVERLAPPING #-}
          HasField "independentBlend" VkPhysicalDeviceFeatures where
@@ -346,39 +271,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, independentBlend}
 
-instance CanReadField "independentBlend" VkPhysicalDeviceFeatures
-         where
-        {-# INLINE getField #-}
-        getField = vkIndependentBlend
+instance {-# OVERLAPPING #-}
+         CanReadField "independentBlend" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, independentBlend})
 
         {-# INLINE readField #-}
-        readField = readVkIndependentBlend
-
-instance CanWriteField "independentBlend" VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkIndependentBlend
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, independentBlend}
 
 instance {-# OVERLAPPING #-}
-         HasVkGeometryShader VkPhysicalDeviceFeatures where
-        type VkGeometryShaderMType VkPhysicalDeviceFeatures = VkBool32
-
-        {-# NOINLINE vkGeometryShader #-}
-        vkGeometryShader x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, geometryShader})
-
-        {-# INLINE vkGeometryShaderByteOffset #-}
-        vkGeometryShaderByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, geometryShader}
-
-        {-# INLINE readVkGeometryShader #-}
-        readVkGeometryShader p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, geometryShader}
-
-        {-# INLINE writeVkGeometryShader #-}
-        writeVkGeometryShader p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, geometryShader}
+         CanWriteField "independentBlend" VkPhysicalDeviceFeatures where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, independentBlend}
 
 instance {-# OVERLAPPING #-}
          HasField "geometryShader" VkPhysicalDeviceFeatures where
@@ -397,39 +305,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, geometryShader}
 
-instance CanReadField "geometryShader" VkPhysicalDeviceFeatures
-         where
-        {-# INLINE getField #-}
-        getField = vkGeometryShader
+instance {-# OVERLAPPING #-}
+         CanReadField "geometryShader" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, geometryShader})
 
         {-# INLINE readField #-}
-        readField = readVkGeometryShader
-
-instance CanWriteField "geometryShader" VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkGeometryShader
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, geometryShader}
 
 instance {-# OVERLAPPING #-}
-         HasVkTessellationShader VkPhysicalDeviceFeatures where
-        type VkTessellationShaderMType VkPhysicalDeviceFeatures = VkBool32
-
-        {-# NOINLINE vkTessellationShader #-}
-        vkTessellationShader x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, tessellationShader})
-
-        {-# INLINE vkTessellationShaderByteOffset #-}
-        vkTessellationShaderByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, tessellationShader}
-
-        {-# INLINE readVkTessellationShader #-}
-        readVkTessellationShader p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, tessellationShader}
-
-        {-# INLINE writeVkTessellationShader #-}
-        writeVkTessellationShader p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, tessellationShader}
+         CanWriteField "geometryShader" VkPhysicalDeviceFeatures where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, geometryShader}
 
 instance {-# OVERLAPPING #-}
          HasField "tessellationShader" VkPhysicalDeviceFeatures where
@@ -449,40 +340,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, tessellationShader}
 
-instance CanReadField "tessellationShader" VkPhysicalDeviceFeatures
-         where
-        {-# INLINE getField #-}
-        getField = vkTessellationShader
+instance {-# OVERLAPPING #-}
+         CanReadField "tessellationShader" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, tessellationShader})
 
         {-# INLINE readField #-}
-        readField = readVkTessellationShader
-
-instance CanWriteField "tessellationShader"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkTessellationShader
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, tessellationShader}
 
 instance {-# OVERLAPPING #-}
-         HasVkSampleRateShading VkPhysicalDeviceFeatures where
-        type VkSampleRateShadingMType VkPhysicalDeviceFeatures = VkBool32
-
-        {-# NOINLINE vkSampleRateShading #-}
-        vkSampleRateShading x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, sampleRateShading})
-
-        {-# INLINE vkSampleRateShadingByteOffset #-}
-        vkSampleRateShadingByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, sampleRateShading}
-
-        {-# INLINE readVkSampleRateShading #-}
-        readVkSampleRateShading p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, sampleRateShading}
-
-        {-# INLINE writeVkSampleRateShading #-}
-        writeVkSampleRateShading p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, sampleRateShading}
+         CanWriteField "tessellationShader" VkPhysicalDeviceFeatures where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, tessellationShader}
 
 instance {-# OVERLAPPING #-}
          HasField "sampleRateShading" VkPhysicalDeviceFeatures where
@@ -502,39 +375,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, sampleRateShading}
 
-instance CanReadField "sampleRateShading" VkPhysicalDeviceFeatures
-         where
-        {-# INLINE getField #-}
-        getField = vkSampleRateShading
+instance {-# OVERLAPPING #-}
+         CanReadField "sampleRateShading" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, sampleRateShading})
 
         {-# INLINE readField #-}
-        readField = readVkSampleRateShading
-
-instance CanWriteField "sampleRateShading" VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSampleRateShading
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, sampleRateShading}
 
 instance {-# OVERLAPPING #-}
-         HasVkDualSrcBlend VkPhysicalDeviceFeatures where
-        type VkDualSrcBlendMType VkPhysicalDeviceFeatures = VkBool32
-
-        {-# NOINLINE vkDualSrcBlend #-}
-        vkDualSrcBlend x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, dualSrcBlend})
-
-        {-# INLINE vkDualSrcBlendByteOffset #-}
-        vkDualSrcBlendByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, dualSrcBlend}
-
-        {-# INLINE readVkDualSrcBlend #-}
-        readVkDualSrcBlend p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, dualSrcBlend}
-
-        {-# INLINE writeVkDualSrcBlend #-}
-        writeVkDualSrcBlend p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, dualSrcBlend}
+         CanWriteField "sampleRateShading" VkPhysicalDeviceFeatures where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, sampleRateShading}
 
 instance {-# OVERLAPPING #-}
          HasField "dualSrcBlend" VkPhysicalDeviceFeatures where
@@ -551,38 +407,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, dualSrcBlend}
 
-instance CanReadField "dualSrcBlend" VkPhysicalDeviceFeatures where
-        {-# INLINE getField #-}
-        getField = vkDualSrcBlend
+instance {-# OVERLAPPING #-}
+         CanReadField "dualSrcBlend" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, dualSrcBlend})
 
         {-# INLINE readField #-}
-        readField = readVkDualSrcBlend
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, dualSrcBlend}
 
-instance CanWriteField "dualSrcBlend" VkPhysicalDeviceFeatures
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "dualSrcBlend" VkPhysicalDeviceFeatures where
         {-# INLINE writeField #-}
-        writeField = writeVkDualSrcBlend
-
-instance {-# OVERLAPPING #-} HasVkLogicOp VkPhysicalDeviceFeatures
-         where
-        type VkLogicOpMType VkPhysicalDeviceFeatures = VkBool32
-
-        {-# NOINLINE vkLogicOp #-}
-        vkLogicOp x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, logicOp})
-
-        {-# INLINE vkLogicOpByteOffset #-}
-        vkLogicOpByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, logicOp}
-
-        {-# INLINE readVkLogicOp #-}
-        readVkLogicOp p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, logicOp}
-
-        {-# INLINE writeVkLogicOp #-}
-        writeVkLogicOp p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, logicOp}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, dualSrcBlend}
 
 instance {-# OVERLAPPING #-}
          HasField "logicOp" VkPhysicalDeviceFeatures where
@@ -599,37 +439,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, logicOp}
 
-instance CanReadField "logicOp" VkPhysicalDeviceFeatures where
-        {-# INLINE getField #-}
-        getField = vkLogicOp
+instance {-# OVERLAPPING #-}
+         CanReadField "logicOp" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, logicOp})
 
         {-# INLINE readField #-}
-        readField = readVkLogicOp
-
-instance CanWriteField "logicOp" VkPhysicalDeviceFeatures where
-        {-# INLINE writeField #-}
-        writeField = writeVkLogicOp
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, logicOp}
 
 instance {-# OVERLAPPING #-}
-         HasVkMultiDrawIndirect VkPhysicalDeviceFeatures where
-        type VkMultiDrawIndirectMType VkPhysicalDeviceFeatures = VkBool32
-
-        {-# NOINLINE vkMultiDrawIndirect #-}
-        vkMultiDrawIndirect x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, multiDrawIndirect})
-
-        {-# INLINE vkMultiDrawIndirectByteOffset #-}
-        vkMultiDrawIndirectByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, multiDrawIndirect}
-
-        {-# INLINE readVkMultiDrawIndirect #-}
-        readVkMultiDrawIndirect p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, multiDrawIndirect}
-
-        {-# INLINE writeVkMultiDrawIndirect #-}
-        writeVkMultiDrawIndirect p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, multiDrawIndirect}
+         CanWriteField "logicOp" VkPhysicalDeviceFeatures where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, logicOp}
 
 instance {-# OVERLAPPING #-}
          HasField "multiDrawIndirect" VkPhysicalDeviceFeatures where
@@ -649,40 +474,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, multiDrawIndirect}
 
-instance CanReadField "multiDrawIndirect" VkPhysicalDeviceFeatures
-         where
-        {-# INLINE getField #-}
-        getField = vkMultiDrawIndirect
+instance {-# OVERLAPPING #-}
+         CanReadField "multiDrawIndirect" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, multiDrawIndirect})
 
         {-# INLINE readField #-}
-        readField = readVkMultiDrawIndirect
-
-instance CanWriteField "multiDrawIndirect" VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkMultiDrawIndirect
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, multiDrawIndirect}
 
 instance {-# OVERLAPPING #-}
-         HasVkDrawIndirectFirstInstance VkPhysicalDeviceFeatures where
-        type VkDrawIndirectFirstInstanceMType VkPhysicalDeviceFeatures =
-             VkBool32
-
-        {-# NOINLINE vkDrawIndirectFirstInstance #-}
-        vkDrawIndirectFirstInstance x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, drawIndirectFirstInstance})
-
-        {-# INLINE vkDrawIndirectFirstInstanceByteOffset #-}
-        vkDrawIndirectFirstInstanceByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, drawIndirectFirstInstance}
-
-        {-# INLINE readVkDrawIndirectFirstInstance #-}
-        readVkDrawIndirectFirstInstance p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, drawIndirectFirstInstance}
-
-        {-# INLINE writeVkDrawIndirectFirstInstance #-}
-        writeVkDrawIndirectFirstInstance p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, drawIndirectFirstInstance}
+         CanWriteField "multiDrawIndirect" VkPhysicalDeviceFeatures where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, multiDrawIndirect}
 
 instance {-# OVERLAPPING #-}
          HasField "drawIndirectFirstInstance" VkPhysicalDeviceFeatures where
@@ -706,41 +513,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, drawIndirectFirstInstance}
 
-instance CanReadField "drawIndirectFirstInstance"
-           VkPhysicalDeviceFeatures
+instance {-# OVERLAPPING #-}
+         CanReadField "drawIndirectFirstInstance" VkPhysicalDeviceFeatures
          where
-        {-# INLINE getField #-}
-        getField = vkDrawIndirectFirstInstance
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, drawIndirectFirstInstance})
 
         {-# INLINE readField #-}
-        readField = readVkDrawIndirectFirstInstance
-
-instance CanWriteField "drawIndirectFirstInstance"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkDrawIndirectFirstInstance
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, drawIndirectFirstInstance}
 
 instance {-# OVERLAPPING #-}
-         HasVkDepthClamp VkPhysicalDeviceFeatures where
-        type VkDepthClampMType VkPhysicalDeviceFeatures = VkBool32
-
-        {-# NOINLINE vkDepthClamp #-}
-        vkDepthClamp x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, depthClamp})
-
-        {-# INLINE vkDepthClampByteOffset #-}
-        vkDepthClampByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, depthClamp}
-
-        {-# INLINE readVkDepthClamp #-}
-        readVkDepthClamp p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, depthClamp}
-
-        {-# INLINE writeVkDepthClamp #-}
-        writeVkDepthClamp p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, depthClamp}
+         CanWriteField "drawIndirectFirstInstance" VkPhysicalDeviceFeatures
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, drawIndirectFirstInstance}
 
 instance {-# OVERLAPPING #-}
          HasField "depthClamp" VkPhysicalDeviceFeatures where
@@ -757,37 +547,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, depthClamp}
 
-instance CanReadField "depthClamp" VkPhysicalDeviceFeatures where
-        {-# INLINE getField #-}
-        getField = vkDepthClamp
+instance {-# OVERLAPPING #-}
+         CanReadField "depthClamp" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, depthClamp})
 
         {-# INLINE readField #-}
-        readField = readVkDepthClamp
-
-instance CanWriteField "depthClamp" VkPhysicalDeviceFeatures where
-        {-# INLINE writeField #-}
-        writeField = writeVkDepthClamp
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, depthClamp}
 
 instance {-# OVERLAPPING #-}
-         HasVkDepthBiasClamp VkPhysicalDeviceFeatures where
-        type VkDepthBiasClampMType VkPhysicalDeviceFeatures = VkBool32
-
-        {-# NOINLINE vkDepthBiasClamp #-}
-        vkDepthBiasClamp x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, depthBiasClamp})
-
-        {-# INLINE vkDepthBiasClampByteOffset #-}
-        vkDepthBiasClampByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, depthBiasClamp}
-
-        {-# INLINE readVkDepthBiasClamp #-}
-        readVkDepthBiasClamp p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, depthBiasClamp}
-
-        {-# INLINE writeVkDepthBiasClamp #-}
-        writeVkDepthBiasClamp p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, depthBiasClamp}
+         CanWriteField "depthClamp" VkPhysicalDeviceFeatures where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, depthClamp}
 
 instance {-# OVERLAPPING #-}
          HasField "depthBiasClamp" VkPhysicalDeviceFeatures where
@@ -806,39 +581,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, depthBiasClamp}
 
-instance CanReadField "depthBiasClamp" VkPhysicalDeviceFeatures
-         where
-        {-# INLINE getField #-}
-        getField = vkDepthBiasClamp
+instance {-# OVERLAPPING #-}
+         CanReadField "depthBiasClamp" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, depthBiasClamp})
 
         {-# INLINE readField #-}
-        readField = readVkDepthBiasClamp
-
-instance CanWriteField "depthBiasClamp" VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkDepthBiasClamp
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, depthBiasClamp}
 
 instance {-# OVERLAPPING #-}
-         HasVkFillModeNonSolid VkPhysicalDeviceFeatures where
-        type VkFillModeNonSolidMType VkPhysicalDeviceFeatures = VkBool32
-
-        {-# NOINLINE vkFillModeNonSolid #-}
-        vkFillModeNonSolid x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, fillModeNonSolid})
-
-        {-# INLINE vkFillModeNonSolidByteOffset #-}
-        vkFillModeNonSolidByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, fillModeNonSolid}
-
-        {-# INLINE readVkFillModeNonSolid #-}
-        readVkFillModeNonSolid p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, fillModeNonSolid}
-
-        {-# INLINE writeVkFillModeNonSolid #-}
-        writeVkFillModeNonSolid p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, fillModeNonSolid}
+         CanWriteField "depthBiasClamp" VkPhysicalDeviceFeatures where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, depthBiasClamp}
 
 instance {-# OVERLAPPING #-}
          HasField "fillModeNonSolid" VkPhysicalDeviceFeatures where
@@ -858,39 +616,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, fillModeNonSolid}
 
-instance CanReadField "fillModeNonSolid" VkPhysicalDeviceFeatures
-         where
-        {-# INLINE getField #-}
-        getField = vkFillModeNonSolid
+instance {-# OVERLAPPING #-}
+         CanReadField "fillModeNonSolid" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, fillModeNonSolid})
 
         {-# INLINE readField #-}
-        readField = readVkFillModeNonSolid
-
-instance CanWriteField "fillModeNonSolid" VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFillModeNonSolid
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, fillModeNonSolid}
 
 instance {-# OVERLAPPING #-}
-         HasVkDepthBounds VkPhysicalDeviceFeatures where
-        type VkDepthBoundsMType VkPhysicalDeviceFeatures = VkBool32
-
-        {-# NOINLINE vkDepthBounds #-}
-        vkDepthBounds x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, depthBounds})
-
-        {-# INLINE vkDepthBoundsByteOffset #-}
-        vkDepthBoundsByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, depthBounds}
-
-        {-# INLINE readVkDepthBounds #-}
-        readVkDepthBounds p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, depthBounds}
-
-        {-# INLINE writeVkDepthBounds #-}
-        writeVkDepthBounds p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, depthBounds}
+         CanWriteField "fillModeNonSolid" VkPhysicalDeviceFeatures where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, fillModeNonSolid}
 
 instance {-# OVERLAPPING #-}
          HasField "depthBounds" VkPhysicalDeviceFeatures where
@@ -907,37 +648,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, depthBounds}
 
-instance CanReadField "depthBounds" VkPhysicalDeviceFeatures where
-        {-# INLINE getField #-}
-        getField = vkDepthBounds
+instance {-# OVERLAPPING #-}
+         CanReadField "depthBounds" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, depthBounds})
 
         {-# INLINE readField #-}
-        readField = readVkDepthBounds
-
-instance CanWriteField "depthBounds" VkPhysicalDeviceFeatures where
-        {-# INLINE writeField #-}
-        writeField = writeVkDepthBounds
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, depthBounds}
 
 instance {-# OVERLAPPING #-}
-         HasVkWideLines VkPhysicalDeviceFeatures where
-        type VkWideLinesMType VkPhysicalDeviceFeatures = VkBool32
-
-        {-# NOINLINE vkWideLines #-}
-        vkWideLines x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, wideLines})
-
-        {-# INLINE vkWideLinesByteOffset #-}
-        vkWideLinesByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, wideLines}
-
-        {-# INLINE readVkWideLines #-}
-        readVkWideLines p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, wideLines}
-
-        {-# INLINE writeVkWideLines #-}
-        writeVkWideLines p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, wideLines}
+         CanWriteField "depthBounds" VkPhysicalDeviceFeatures where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, depthBounds}
 
 instance {-# OVERLAPPING #-}
          HasField "wideLines" VkPhysicalDeviceFeatures where
@@ -954,37 +680,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, wideLines}
 
-instance CanReadField "wideLines" VkPhysicalDeviceFeatures where
-        {-# INLINE getField #-}
-        getField = vkWideLines
+instance {-# OVERLAPPING #-}
+         CanReadField "wideLines" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, wideLines})
 
         {-# INLINE readField #-}
-        readField = readVkWideLines
-
-instance CanWriteField "wideLines" VkPhysicalDeviceFeatures where
-        {-# INLINE writeField #-}
-        writeField = writeVkWideLines
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, wideLines}
 
 instance {-# OVERLAPPING #-}
-         HasVkLargePoints VkPhysicalDeviceFeatures where
-        type VkLargePointsMType VkPhysicalDeviceFeatures = VkBool32
-
-        {-# NOINLINE vkLargePoints #-}
-        vkLargePoints x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, largePoints})
-
-        {-# INLINE vkLargePointsByteOffset #-}
-        vkLargePointsByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, largePoints}
-
-        {-# INLINE readVkLargePoints #-}
-        readVkLargePoints p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, largePoints}
-
-        {-# INLINE writeVkLargePoints #-}
-        writeVkLargePoints p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, largePoints}
+         CanWriteField "wideLines" VkPhysicalDeviceFeatures where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, wideLines}
 
 instance {-# OVERLAPPING #-}
          HasField "largePoints" VkPhysicalDeviceFeatures where
@@ -1001,37 +712,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, largePoints}
 
-instance CanReadField "largePoints" VkPhysicalDeviceFeatures where
-        {-# INLINE getField #-}
-        getField = vkLargePoints
+instance {-# OVERLAPPING #-}
+         CanReadField "largePoints" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, largePoints})
 
         {-# INLINE readField #-}
-        readField = readVkLargePoints
-
-instance CanWriteField "largePoints" VkPhysicalDeviceFeatures where
-        {-# INLINE writeField #-}
-        writeField = writeVkLargePoints
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, largePoints}
 
 instance {-# OVERLAPPING #-}
-         HasVkAlphaToOne VkPhysicalDeviceFeatures where
-        type VkAlphaToOneMType VkPhysicalDeviceFeatures = VkBool32
-
-        {-# NOINLINE vkAlphaToOne #-}
-        vkAlphaToOne x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, alphaToOne})
-
-        {-# INLINE vkAlphaToOneByteOffset #-}
-        vkAlphaToOneByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, alphaToOne}
-
-        {-# INLINE readVkAlphaToOne #-}
-        readVkAlphaToOne p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, alphaToOne}
-
-        {-# INLINE writeVkAlphaToOne #-}
-        writeVkAlphaToOne p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, alphaToOne}
+         CanWriteField "largePoints" VkPhysicalDeviceFeatures where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, largePoints}
 
 instance {-# OVERLAPPING #-}
          HasField "alphaToOne" VkPhysicalDeviceFeatures where
@@ -1048,37 +744,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, alphaToOne}
 
-instance CanReadField "alphaToOne" VkPhysicalDeviceFeatures where
-        {-# INLINE getField #-}
-        getField = vkAlphaToOne
+instance {-# OVERLAPPING #-}
+         CanReadField "alphaToOne" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, alphaToOne})
 
         {-# INLINE readField #-}
-        readField = readVkAlphaToOne
-
-instance CanWriteField "alphaToOne" VkPhysicalDeviceFeatures where
-        {-# INLINE writeField #-}
-        writeField = writeVkAlphaToOne
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, alphaToOne}
 
 instance {-# OVERLAPPING #-}
-         HasVkMultiViewport VkPhysicalDeviceFeatures where
-        type VkMultiViewportMType VkPhysicalDeviceFeatures = VkBool32
-
-        {-# NOINLINE vkMultiViewport #-}
-        vkMultiViewport x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, multiViewport})
-
-        {-# INLINE vkMultiViewportByteOffset #-}
-        vkMultiViewportByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, multiViewport}
-
-        {-# INLINE readVkMultiViewport #-}
-        readVkMultiViewport p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, multiViewport}
-
-        {-# INLINE writeVkMultiViewport #-}
-        writeVkMultiViewport p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, multiViewport}
+         CanWriteField "alphaToOne" VkPhysicalDeviceFeatures where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, alphaToOne}
 
 instance {-# OVERLAPPING #-}
          HasField "multiViewport" VkPhysicalDeviceFeatures where
@@ -1096,39 +777,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, multiViewport}
 
-instance CanReadField "multiViewport" VkPhysicalDeviceFeatures
-         where
-        {-# INLINE getField #-}
-        getField = vkMultiViewport
+instance {-# OVERLAPPING #-}
+         CanReadField "multiViewport" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, multiViewport})
 
         {-# INLINE readField #-}
-        readField = readVkMultiViewport
-
-instance CanWriteField "multiViewport" VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkMultiViewport
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, multiViewport}
 
 instance {-# OVERLAPPING #-}
-         HasVkSamplerAnisotropy VkPhysicalDeviceFeatures where
-        type VkSamplerAnisotropyMType VkPhysicalDeviceFeatures = VkBool32
-
-        {-# NOINLINE vkSamplerAnisotropy #-}
-        vkSamplerAnisotropy x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, samplerAnisotropy})
-
-        {-# INLINE vkSamplerAnisotropyByteOffset #-}
-        vkSamplerAnisotropyByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, samplerAnisotropy}
-
-        {-# INLINE readVkSamplerAnisotropy #-}
-        readVkSamplerAnisotropy p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, samplerAnisotropy}
-
-        {-# INLINE writeVkSamplerAnisotropy #-}
-        writeVkSamplerAnisotropy p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, samplerAnisotropy}
+         CanWriteField "multiViewport" VkPhysicalDeviceFeatures where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, multiViewport}
 
 instance {-# OVERLAPPING #-}
          HasField "samplerAnisotropy" VkPhysicalDeviceFeatures where
@@ -1148,40 +812,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, samplerAnisotropy}
 
-instance CanReadField "samplerAnisotropy" VkPhysicalDeviceFeatures
-         where
-        {-# INLINE getField #-}
-        getField = vkSamplerAnisotropy
+instance {-# OVERLAPPING #-}
+         CanReadField "samplerAnisotropy" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, samplerAnisotropy})
 
         {-# INLINE readField #-}
-        readField = readVkSamplerAnisotropy
-
-instance CanWriteField "samplerAnisotropy" VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSamplerAnisotropy
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, samplerAnisotropy}
 
 instance {-# OVERLAPPING #-}
-         HasVkTextureCompressionETC2 VkPhysicalDeviceFeatures where
-        type VkTextureCompressionETC2MType VkPhysicalDeviceFeatures =
-             VkBool32
-
-        {-# NOINLINE vkTextureCompressionETC2 #-}
-        vkTextureCompressionETC2 x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, textureCompressionETC2})
-
-        {-# INLINE vkTextureCompressionETC2ByteOffset #-}
-        vkTextureCompressionETC2ByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, textureCompressionETC2}
-
-        {-# INLINE readVkTextureCompressionETC2 #-}
-        readVkTextureCompressionETC2 p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, textureCompressionETC2}
-
-        {-# INLINE writeVkTextureCompressionETC2 #-}
-        writeVkTextureCompressionETC2 p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, textureCompressionETC2}
+         CanWriteField "samplerAnisotropy" VkPhysicalDeviceFeatures where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, samplerAnisotropy}
 
 instance {-# OVERLAPPING #-}
          HasField "textureCompressionETC2" VkPhysicalDeviceFeatures where
@@ -1203,42 +849,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, textureCompressionETC2}
 
-instance CanReadField "textureCompressionETC2"
-           VkPhysicalDeviceFeatures
+instance {-# OVERLAPPING #-}
+         CanReadField "textureCompressionETC2" VkPhysicalDeviceFeatures
          where
-        {-# INLINE getField #-}
-        getField = vkTextureCompressionETC2
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, textureCompressionETC2})
 
         {-# INLINE readField #-}
-        readField = readVkTextureCompressionETC2
-
-instance CanWriteField "textureCompressionETC2"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkTextureCompressionETC2
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, textureCompressionETC2}
 
 instance {-# OVERLAPPING #-}
-         HasVkTextureCompressionASTC_LDR VkPhysicalDeviceFeatures where
-        type VkTextureCompressionASTC_LDRMType VkPhysicalDeviceFeatures =
-             VkBool32
-
-        {-# NOINLINE vkTextureCompressionASTC_LDR #-}
-        vkTextureCompressionASTC_LDR x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, textureCompressionASTC_LDR})
-
-        {-# INLINE vkTextureCompressionASTC_LDRByteOffset #-}
-        vkTextureCompressionASTC_LDRByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, textureCompressionASTC_LDR}
-
-        {-# INLINE readVkTextureCompressionASTC_LDR #-}
-        readVkTextureCompressionASTC_LDR p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, textureCompressionASTC_LDR}
-
-        {-# INLINE writeVkTextureCompressionASTC_LDR #-}
-        writeVkTextureCompressionASTC_LDR p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, textureCompressionASTC_LDR}
+         CanWriteField "textureCompressionETC2" VkPhysicalDeviceFeatures
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, textureCompressionETC2}
 
 instance {-# OVERLAPPING #-}
          HasField "textureCompressionASTC_LDR" VkPhysicalDeviceFeatures
@@ -1264,42 +892,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, textureCompressionASTC_LDR}
 
-instance CanReadField "textureCompressionASTC_LDR"
-           VkPhysicalDeviceFeatures
+instance {-# OVERLAPPING #-}
+         CanReadField "textureCompressionASTC_LDR" VkPhysicalDeviceFeatures
          where
-        {-# INLINE getField #-}
-        getField = vkTextureCompressionASTC_LDR
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, textureCompressionASTC_LDR})
 
         {-# INLINE readField #-}
-        readField = readVkTextureCompressionASTC_LDR
-
-instance CanWriteField "textureCompressionASTC_LDR"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkTextureCompressionASTC_LDR
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, textureCompressionASTC_LDR}
 
 instance {-# OVERLAPPING #-}
-         HasVkTextureCompressionBC VkPhysicalDeviceFeatures where
-        type VkTextureCompressionBCMType VkPhysicalDeviceFeatures =
-             VkBool32
-
-        {-# NOINLINE vkTextureCompressionBC #-}
-        vkTextureCompressionBC x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, textureCompressionBC})
-
-        {-# INLINE vkTextureCompressionBCByteOffset #-}
-        vkTextureCompressionBCByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, textureCompressionBC}
-
-        {-# INLINE readVkTextureCompressionBC #-}
-        readVkTextureCompressionBC p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, textureCompressionBC}
-
-        {-# INLINE writeVkTextureCompressionBC #-}
-        writeVkTextureCompressionBC p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, textureCompressionBC}
+         CanWriteField "textureCompressionASTC_LDR" VkPhysicalDeviceFeatures
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, textureCompressionASTC_LDR}
 
 instance {-# OVERLAPPING #-}
          HasField "textureCompressionBC" VkPhysicalDeviceFeatures where
@@ -1319,42 +929,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, textureCompressionBC}
 
-instance CanReadField "textureCompressionBC"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE getField #-}
-        getField = vkTextureCompressionBC
+instance {-# OVERLAPPING #-}
+         CanReadField "textureCompressionBC" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, textureCompressionBC})
 
         {-# INLINE readField #-}
-        readField = readVkTextureCompressionBC
-
-instance CanWriteField "textureCompressionBC"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkTextureCompressionBC
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, textureCompressionBC}
 
 instance {-# OVERLAPPING #-}
-         HasVkOcclusionQueryPrecise VkPhysicalDeviceFeatures where
-        type VkOcclusionQueryPreciseMType VkPhysicalDeviceFeatures =
-             VkBool32
-
-        {-# NOINLINE vkOcclusionQueryPrecise #-}
-        vkOcclusionQueryPrecise x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, occlusionQueryPrecise})
-
-        {-# INLINE vkOcclusionQueryPreciseByteOffset #-}
-        vkOcclusionQueryPreciseByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, occlusionQueryPrecise}
-
-        {-# INLINE readVkOcclusionQueryPrecise #-}
-        readVkOcclusionQueryPrecise p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, occlusionQueryPrecise}
-
-        {-# INLINE writeVkOcclusionQueryPrecise #-}
-        writeVkOcclusionQueryPrecise p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, occlusionQueryPrecise}
+         CanWriteField "textureCompressionBC" VkPhysicalDeviceFeatures where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, textureCompressionBC}
 
 instance {-# OVERLAPPING #-}
          HasField "occlusionQueryPrecise" VkPhysicalDeviceFeatures where
@@ -1374,42 +964,23 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, occlusionQueryPrecise}
 
-instance CanReadField "occlusionQueryPrecise"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE getField #-}
-        getField = vkOcclusionQueryPrecise
+instance {-# OVERLAPPING #-}
+         CanReadField "occlusionQueryPrecise" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, occlusionQueryPrecise})
 
         {-# INLINE readField #-}
-        readField = readVkOcclusionQueryPrecise
-
-instance CanWriteField "occlusionQueryPrecise"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkOcclusionQueryPrecise
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, occlusionQueryPrecise}
 
 instance {-# OVERLAPPING #-}
-         HasVkPipelineStatisticsQuery VkPhysicalDeviceFeatures where
-        type VkPipelineStatisticsQueryMType VkPhysicalDeviceFeatures =
-             VkBool32
-
-        {-# NOINLINE vkPipelineStatisticsQuery #-}
-        vkPipelineStatisticsQuery x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, pipelineStatisticsQuery})
-
-        {-# INLINE vkPipelineStatisticsQueryByteOffset #-}
-        vkPipelineStatisticsQueryByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, pipelineStatisticsQuery}
-
-        {-# INLINE readVkPipelineStatisticsQuery #-}
-        readVkPipelineStatisticsQuery p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, pipelineStatisticsQuery}
-
-        {-# INLINE writeVkPipelineStatisticsQuery #-}
-        writeVkPipelineStatisticsQuery p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, pipelineStatisticsQuery}
+         CanWriteField "occlusionQueryPrecise" VkPhysicalDeviceFeatures
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, occlusionQueryPrecise}
 
 instance {-# OVERLAPPING #-}
          HasField "pipelineStatisticsQuery" VkPhysicalDeviceFeatures where
@@ -1432,42 +1003,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, pipelineStatisticsQuery}
 
-instance CanReadField "pipelineStatisticsQuery"
-           VkPhysicalDeviceFeatures
+instance {-# OVERLAPPING #-}
+         CanReadField "pipelineStatisticsQuery" VkPhysicalDeviceFeatures
          where
-        {-# INLINE getField #-}
-        getField = vkPipelineStatisticsQuery
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, pipelineStatisticsQuery})
 
         {-# INLINE readField #-}
-        readField = readVkPipelineStatisticsQuery
-
-instance CanWriteField "pipelineStatisticsQuery"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPipelineStatisticsQuery
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, pipelineStatisticsQuery}
 
 instance {-# OVERLAPPING #-}
-         HasVkVertexPipelineStoresAndAtomics VkPhysicalDeviceFeatures where
-        type VkVertexPipelineStoresAndAtomicsMType VkPhysicalDeviceFeatures
-             = VkBool32
-
-        {-# NOINLINE vkVertexPipelineStoresAndAtomics #-}
-        vkVertexPipelineStoresAndAtomics x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, vertexPipelineStoresAndAtomics})
-
-        {-# INLINE vkVertexPipelineStoresAndAtomicsByteOffset #-}
-        vkVertexPipelineStoresAndAtomicsByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, vertexPipelineStoresAndAtomics}
-
-        {-# INLINE readVkVertexPipelineStoresAndAtomics #-}
-        readVkVertexPipelineStoresAndAtomics p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, vertexPipelineStoresAndAtomics}
-
-        {-# INLINE writeVkVertexPipelineStoresAndAtomics #-}
-        writeVkVertexPipelineStoresAndAtomics p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, vertexPipelineStoresAndAtomics}
+         CanWriteField "pipelineStatisticsQuery" VkPhysicalDeviceFeatures
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, pipelineStatisticsQuery}
 
 instance {-# OVERLAPPING #-}
          HasField "vertexPipelineStoresAndAtomics" VkPhysicalDeviceFeatures
@@ -1493,42 +1046,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, vertexPipelineStoresAndAtomics}
 
-instance CanReadField "vertexPipelineStoresAndAtomics"
+instance {-# OVERLAPPING #-}
+         CanReadField "vertexPipelineStoresAndAtomics"
            VkPhysicalDeviceFeatures
          where
-        {-# INLINE getField #-}
-        getField = vkVertexPipelineStoresAndAtomics
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, vertexPipelineStoresAndAtomics})
 
         {-# INLINE readField #-}
-        readField = readVkVertexPipelineStoresAndAtomics
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, vertexPipelineStoresAndAtomics}
 
-instance CanWriteField "vertexPipelineStoresAndAtomics"
+instance {-# OVERLAPPING #-}
+         CanWriteField "vertexPipelineStoresAndAtomics"
            VkPhysicalDeviceFeatures
          where
         {-# INLINE writeField #-}
-        writeField = writeVkVertexPipelineStoresAndAtomics
-
-instance {-# OVERLAPPING #-}
-         HasVkFragmentStoresAndAtomics VkPhysicalDeviceFeatures where
-        type VkFragmentStoresAndAtomicsMType VkPhysicalDeviceFeatures =
-             VkBool32
-
-        {-# NOINLINE vkFragmentStoresAndAtomics #-}
-        vkFragmentStoresAndAtomics x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, fragmentStoresAndAtomics})
-
-        {-# INLINE vkFragmentStoresAndAtomicsByteOffset #-}
-        vkFragmentStoresAndAtomicsByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, fragmentStoresAndAtomics}
-
-        {-# INLINE readVkFragmentStoresAndAtomics #-}
-        readVkFragmentStoresAndAtomics p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, fragmentStoresAndAtomics}
-
-        {-# INLINE writeVkFragmentStoresAndAtomics #-}
-        writeVkFragmentStoresAndAtomics p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, fragmentStoresAndAtomics}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, vertexPipelineStoresAndAtomics}
 
 instance {-# OVERLAPPING #-}
          HasField "fragmentStoresAndAtomics" VkPhysicalDeviceFeatures where
@@ -1552,45 +1089,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, fragmentStoresAndAtomics}
 
-instance CanReadField "fragmentStoresAndAtomics"
-           VkPhysicalDeviceFeatures
+instance {-# OVERLAPPING #-}
+         CanReadField "fragmentStoresAndAtomics" VkPhysicalDeviceFeatures
          where
-        {-# INLINE getField #-}
-        getField = vkFragmentStoresAndAtomics
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, fragmentStoresAndAtomics})
 
         {-# INLINE readField #-}
-        readField = readVkFragmentStoresAndAtomics
-
-instance CanWriteField "fragmentStoresAndAtomics"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFragmentStoresAndAtomics
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, fragmentStoresAndAtomics}
 
 instance {-# OVERLAPPING #-}
-         HasVkShaderTessellationAndGeometryPointSize
-           VkPhysicalDeviceFeatures
+         CanWriteField "fragmentStoresAndAtomics" VkPhysicalDeviceFeatures
          where
-        type VkShaderTessellationAndGeometryPointSizeMType
-               VkPhysicalDeviceFeatures
-             = VkBool32
-
-        {-# NOINLINE vkShaderTessellationAndGeometryPointSize #-}
-        vkShaderTessellationAndGeometryPointSize x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderTessellationAndGeometryPointSize})
-
-        {-# INLINE vkShaderTessellationAndGeometryPointSizeByteOffset #-}
-        vkShaderTessellationAndGeometryPointSizeByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, shaderTessellationAndGeometryPointSize}
-
-        {-# INLINE readVkShaderTessellationAndGeometryPointSize #-}
-        readVkShaderTessellationAndGeometryPointSize p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderTessellationAndGeometryPointSize}
-
-        {-# INLINE writeVkShaderTessellationAndGeometryPointSize #-}
-        writeVkShaderTessellationAndGeometryPointSize p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderTessellationAndGeometryPointSize}
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, fragmentStoresAndAtomics}
 
 instance {-# OVERLAPPING #-}
          HasField "shaderTessellationAndGeometryPointSize"
@@ -1617,42 +1133,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, shaderTessellationAndGeometryPointSize}
 
-instance CanReadField "shaderTessellationAndGeometryPointSize"
+instance {-# OVERLAPPING #-}
+         CanReadField "shaderTessellationAndGeometryPointSize"
            VkPhysicalDeviceFeatures
          where
-        {-# INLINE getField #-}
-        getField = vkShaderTessellationAndGeometryPointSize
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderTessellationAndGeometryPointSize})
 
         {-# INLINE readField #-}
-        readField = readVkShaderTessellationAndGeometryPointSize
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderTessellationAndGeometryPointSize}
 
-instance CanWriteField "shaderTessellationAndGeometryPointSize"
+instance {-# OVERLAPPING #-}
+         CanWriteField "shaderTessellationAndGeometryPointSize"
            VkPhysicalDeviceFeatures
          where
         {-# INLINE writeField #-}
-        writeField = writeVkShaderTessellationAndGeometryPointSize
-
-instance {-# OVERLAPPING #-}
-         HasVkShaderImageGatherExtended VkPhysicalDeviceFeatures where
-        type VkShaderImageGatherExtendedMType VkPhysicalDeviceFeatures =
-             VkBool32
-
-        {-# NOINLINE vkShaderImageGatherExtended #-}
-        vkShaderImageGatherExtended x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderImageGatherExtended})
-
-        {-# INLINE vkShaderImageGatherExtendedByteOffset #-}
-        vkShaderImageGatherExtendedByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, shaderImageGatherExtended}
-
-        {-# INLINE readVkShaderImageGatherExtended #-}
-        readVkShaderImageGatherExtended p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderImageGatherExtended}
-
-        {-# INLINE writeVkShaderImageGatherExtended #-}
-        writeVkShaderImageGatherExtended p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderImageGatherExtended}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderTessellationAndGeometryPointSize}
 
 instance {-# OVERLAPPING #-}
          HasField "shaderImageGatherExtended" VkPhysicalDeviceFeatures where
@@ -1676,44 +1176,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, shaderImageGatherExtended}
 
-instance CanReadField "shaderImageGatherExtended"
-           VkPhysicalDeviceFeatures
+instance {-# OVERLAPPING #-}
+         CanReadField "shaderImageGatherExtended" VkPhysicalDeviceFeatures
          where
-        {-# INLINE getField #-}
-        getField = vkShaderImageGatherExtended
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderImageGatherExtended})
 
         {-# INLINE readField #-}
-        readField = readVkShaderImageGatherExtended
-
-instance CanWriteField "shaderImageGatherExtended"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkShaderImageGatherExtended
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderImageGatherExtended}
 
 instance {-# OVERLAPPING #-}
-         HasVkShaderStorageImageExtendedFormats VkPhysicalDeviceFeatures
+         CanWriteField "shaderImageGatherExtended" VkPhysicalDeviceFeatures
          where
-        type VkShaderStorageImageExtendedFormatsMType
-               VkPhysicalDeviceFeatures
-             = VkBool32
-
-        {-# NOINLINE vkShaderStorageImageExtendedFormats #-}
-        vkShaderStorageImageExtendedFormats x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderStorageImageExtendedFormats})
-
-        {-# INLINE vkShaderStorageImageExtendedFormatsByteOffset #-}
-        vkShaderStorageImageExtendedFormatsByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, shaderStorageImageExtendedFormats}
-
-        {-# INLINE readVkShaderStorageImageExtendedFormats #-}
-        readVkShaderStorageImageExtendedFormats p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderStorageImageExtendedFormats}
-
-        {-# INLINE writeVkShaderStorageImageExtendedFormats #-}
-        writeVkShaderStorageImageExtendedFormats p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderStorageImageExtendedFormats}
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderImageGatherExtended}
 
 instance {-# OVERLAPPING #-}
          HasField "shaderStorageImageExtendedFormats"
@@ -1740,42 +1220,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, shaderStorageImageExtendedFormats}
 
-instance CanReadField "shaderStorageImageExtendedFormats"
+instance {-# OVERLAPPING #-}
+         CanReadField "shaderStorageImageExtendedFormats"
            VkPhysicalDeviceFeatures
          where
-        {-# INLINE getField #-}
-        getField = vkShaderStorageImageExtendedFormats
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderStorageImageExtendedFormats})
 
         {-# INLINE readField #-}
-        readField = readVkShaderStorageImageExtendedFormats
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderStorageImageExtendedFormats}
 
-instance CanWriteField "shaderStorageImageExtendedFormats"
+instance {-# OVERLAPPING #-}
+         CanWriteField "shaderStorageImageExtendedFormats"
            VkPhysicalDeviceFeatures
          where
         {-# INLINE writeField #-}
-        writeField = writeVkShaderStorageImageExtendedFormats
-
-instance {-# OVERLAPPING #-}
-         HasVkShaderStorageImageMultisample VkPhysicalDeviceFeatures where
-        type VkShaderStorageImageMultisampleMType VkPhysicalDeviceFeatures
-             = VkBool32
-
-        {-# NOINLINE vkShaderStorageImageMultisample #-}
-        vkShaderStorageImageMultisample x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderStorageImageMultisample})
-
-        {-# INLINE vkShaderStorageImageMultisampleByteOffset #-}
-        vkShaderStorageImageMultisampleByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, shaderStorageImageMultisample}
-
-        {-# INLINE readVkShaderStorageImageMultisample #-}
-        readVkShaderStorageImageMultisample p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderStorageImageMultisample}
-
-        {-# INLINE writeVkShaderStorageImageMultisample #-}
-        writeVkShaderStorageImageMultisample p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderStorageImageMultisample}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderStorageImageExtendedFormats}
 
 instance {-# OVERLAPPING #-}
          HasField "shaderStorageImageMultisample" VkPhysicalDeviceFeatures
@@ -1801,44 +1265,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, shaderStorageImageMultisample}
 
-instance CanReadField "shaderStorageImageMultisample"
+instance {-# OVERLAPPING #-}
+         CanReadField "shaderStorageImageMultisample"
            VkPhysicalDeviceFeatures
          where
-        {-# INLINE getField #-}
-        getField = vkShaderStorageImageMultisample
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderStorageImageMultisample})
 
         {-# INLINE readField #-}
-        readField = readVkShaderStorageImageMultisample
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderStorageImageMultisample}
 
-instance CanWriteField "shaderStorageImageMultisample"
+instance {-# OVERLAPPING #-}
+         CanWriteField "shaderStorageImageMultisample"
            VkPhysicalDeviceFeatures
          where
         {-# INLINE writeField #-}
-        writeField = writeVkShaderStorageImageMultisample
-
-instance {-# OVERLAPPING #-}
-         HasVkShaderStorageImageReadWithoutFormat VkPhysicalDeviceFeatures
-         where
-        type VkShaderStorageImageReadWithoutFormatMType
-               VkPhysicalDeviceFeatures
-             = VkBool32
-
-        {-# NOINLINE vkShaderStorageImageReadWithoutFormat #-}
-        vkShaderStorageImageReadWithoutFormat x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderStorageImageReadWithoutFormat})
-
-        {-# INLINE vkShaderStorageImageReadWithoutFormatByteOffset #-}
-        vkShaderStorageImageReadWithoutFormatByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, shaderStorageImageReadWithoutFormat}
-
-        {-# INLINE readVkShaderStorageImageReadWithoutFormat #-}
-        readVkShaderStorageImageReadWithoutFormat p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderStorageImageReadWithoutFormat}
-
-        {-# INLINE writeVkShaderStorageImageReadWithoutFormat #-}
-        writeVkShaderStorageImageReadWithoutFormat p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderStorageImageReadWithoutFormat}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderStorageImageMultisample}
 
 instance {-# OVERLAPPING #-}
          HasField "shaderStorageImageReadWithoutFormat"
@@ -1865,44 +1311,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, shaderStorageImageReadWithoutFormat}
 
-instance CanReadField "shaderStorageImageReadWithoutFormat"
+instance {-# OVERLAPPING #-}
+         CanReadField "shaderStorageImageReadWithoutFormat"
            VkPhysicalDeviceFeatures
          where
-        {-# INLINE getField #-}
-        getField = vkShaderStorageImageReadWithoutFormat
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderStorageImageReadWithoutFormat})
 
         {-# INLINE readField #-}
-        readField = readVkShaderStorageImageReadWithoutFormat
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderStorageImageReadWithoutFormat}
 
-instance CanWriteField "shaderStorageImageReadWithoutFormat"
+instance {-# OVERLAPPING #-}
+         CanWriteField "shaderStorageImageReadWithoutFormat"
            VkPhysicalDeviceFeatures
          where
         {-# INLINE writeField #-}
-        writeField = writeVkShaderStorageImageReadWithoutFormat
-
-instance {-# OVERLAPPING #-}
-         HasVkShaderStorageImageWriteWithoutFormat VkPhysicalDeviceFeatures
-         where
-        type VkShaderStorageImageWriteWithoutFormatMType
-               VkPhysicalDeviceFeatures
-             = VkBool32
-
-        {-# NOINLINE vkShaderStorageImageWriteWithoutFormat #-}
-        vkShaderStorageImageWriteWithoutFormat x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderStorageImageWriteWithoutFormat})
-
-        {-# INLINE vkShaderStorageImageWriteWithoutFormatByteOffset #-}
-        vkShaderStorageImageWriteWithoutFormatByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, shaderStorageImageWriteWithoutFormat}
-
-        {-# INLINE readVkShaderStorageImageWriteWithoutFormat #-}
-        readVkShaderStorageImageWriteWithoutFormat p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderStorageImageWriteWithoutFormat}
-
-        {-# INLINE writeVkShaderStorageImageWriteWithoutFormat #-}
-        writeVkShaderStorageImageWriteWithoutFormat p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderStorageImageWriteWithoutFormat}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderStorageImageReadWithoutFormat}
 
 instance {-# OVERLAPPING #-}
          HasField "shaderStorageImageWriteWithoutFormat"
@@ -1929,45 +1357,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, shaderStorageImageWriteWithoutFormat}
 
-instance CanReadField "shaderStorageImageWriteWithoutFormat"
+instance {-# OVERLAPPING #-}
+         CanReadField "shaderStorageImageWriteWithoutFormat"
            VkPhysicalDeviceFeatures
          where
-        {-# INLINE getField #-}
-        getField = vkShaderStorageImageWriteWithoutFormat
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderStorageImageWriteWithoutFormat})
 
         {-# INLINE readField #-}
-        readField = readVkShaderStorageImageWriteWithoutFormat
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderStorageImageWriteWithoutFormat}
 
-instance CanWriteField "shaderStorageImageWriteWithoutFormat"
+instance {-# OVERLAPPING #-}
+         CanWriteField "shaderStorageImageWriteWithoutFormat"
            VkPhysicalDeviceFeatures
          where
         {-# INLINE writeField #-}
-        writeField = writeVkShaderStorageImageWriteWithoutFormat
-
-instance {-# OVERLAPPING #-}
-         HasVkShaderUniformBufferArrayDynamicIndexing
-           VkPhysicalDeviceFeatures
-         where
-        type VkShaderUniformBufferArrayDynamicIndexingMType
-               VkPhysicalDeviceFeatures
-             = VkBool32
-
-        {-# NOINLINE vkShaderUniformBufferArrayDynamicIndexing #-}
-        vkShaderUniformBufferArrayDynamicIndexing x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderUniformBufferArrayDynamicIndexing})
-
-        {-# INLINE vkShaderUniformBufferArrayDynamicIndexingByteOffset #-}
-        vkShaderUniformBufferArrayDynamicIndexingByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, shaderUniformBufferArrayDynamicIndexing}
-
-        {-# INLINE readVkShaderUniformBufferArrayDynamicIndexing #-}
-        readVkShaderUniformBufferArrayDynamicIndexing p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderUniformBufferArrayDynamicIndexing}
-
-        {-# INLINE writeVkShaderUniformBufferArrayDynamicIndexing #-}
-        writeVkShaderUniformBufferArrayDynamicIndexing p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderUniformBufferArrayDynamicIndexing}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderStorageImageWriteWithoutFormat}
 
 instance {-# OVERLAPPING #-}
          HasField "shaderUniformBufferArrayDynamicIndexing"
@@ -1994,45 +1403,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, shaderUniformBufferArrayDynamicIndexing}
 
-instance CanReadField "shaderUniformBufferArrayDynamicIndexing"
+instance {-# OVERLAPPING #-}
+         CanReadField "shaderUniformBufferArrayDynamicIndexing"
            VkPhysicalDeviceFeatures
          where
-        {-# INLINE getField #-}
-        getField = vkShaderUniformBufferArrayDynamicIndexing
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderUniformBufferArrayDynamicIndexing})
 
         {-# INLINE readField #-}
-        readField = readVkShaderUniformBufferArrayDynamicIndexing
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderUniformBufferArrayDynamicIndexing}
 
-instance CanWriteField "shaderUniformBufferArrayDynamicIndexing"
+instance {-# OVERLAPPING #-}
+         CanWriteField "shaderUniformBufferArrayDynamicIndexing"
            VkPhysicalDeviceFeatures
          where
         {-# INLINE writeField #-}
-        writeField = writeVkShaderUniformBufferArrayDynamicIndexing
-
-instance {-# OVERLAPPING #-}
-         HasVkShaderSampledImageArrayDynamicIndexing
-           VkPhysicalDeviceFeatures
-         where
-        type VkShaderSampledImageArrayDynamicIndexingMType
-               VkPhysicalDeviceFeatures
-             = VkBool32
-
-        {-# NOINLINE vkShaderSampledImageArrayDynamicIndexing #-}
-        vkShaderSampledImageArrayDynamicIndexing x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderSampledImageArrayDynamicIndexing})
-
-        {-# INLINE vkShaderSampledImageArrayDynamicIndexingByteOffset #-}
-        vkShaderSampledImageArrayDynamicIndexingByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, shaderSampledImageArrayDynamicIndexing}
-
-        {-# INLINE readVkShaderSampledImageArrayDynamicIndexing #-}
-        readVkShaderSampledImageArrayDynamicIndexing p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderSampledImageArrayDynamicIndexing}
-
-        {-# INLINE writeVkShaderSampledImageArrayDynamicIndexing #-}
-        writeVkShaderSampledImageArrayDynamicIndexing p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderSampledImageArrayDynamicIndexing}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderUniformBufferArrayDynamicIndexing}
 
 instance {-# OVERLAPPING #-}
          HasField "shaderSampledImageArrayDynamicIndexing"
@@ -2059,45 +1449,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, shaderSampledImageArrayDynamicIndexing}
 
-instance CanReadField "shaderSampledImageArrayDynamicIndexing"
+instance {-# OVERLAPPING #-}
+         CanReadField "shaderSampledImageArrayDynamicIndexing"
            VkPhysicalDeviceFeatures
          where
-        {-# INLINE getField #-}
-        getField = vkShaderSampledImageArrayDynamicIndexing
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderSampledImageArrayDynamicIndexing})
 
         {-# INLINE readField #-}
-        readField = readVkShaderSampledImageArrayDynamicIndexing
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderSampledImageArrayDynamicIndexing}
 
-instance CanWriteField "shaderSampledImageArrayDynamicIndexing"
+instance {-# OVERLAPPING #-}
+         CanWriteField "shaderSampledImageArrayDynamicIndexing"
            VkPhysicalDeviceFeatures
          where
         {-# INLINE writeField #-}
-        writeField = writeVkShaderSampledImageArrayDynamicIndexing
-
-instance {-# OVERLAPPING #-}
-         HasVkShaderStorageBufferArrayDynamicIndexing
-           VkPhysicalDeviceFeatures
-         where
-        type VkShaderStorageBufferArrayDynamicIndexingMType
-               VkPhysicalDeviceFeatures
-             = VkBool32
-
-        {-# NOINLINE vkShaderStorageBufferArrayDynamicIndexing #-}
-        vkShaderStorageBufferArrayDynamicIndexing x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderStorageBufferArrayDynamicIndexing})
-
-        {-# INLINE vkShaderStorageBufferArrayDynamicIndexingByteOffset #-}
-        vkShaderStorageBufferArrayDynamicIndexingByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, shaderStorageBufferArrayDynamicIndexing}
-
-        {-# INLINE readVkShaderStorageBufferArrayDynamicIndexing #-}
-        readVkShaderStorageBufferArrayDynamicIndexing p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderStorageBufferArrayDynamicIndexing}
-
-        {-# INLINE writeVkShaderStorageBufferArrayDynamicIndexing #-}
-        writeVkShaderStorageBufferArrayDynamicIndexing p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderStorageBufferArrayDynamicIndexing}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderSampledImageArrayDynamicIndexing}
 
 instance {-# OVERLAPPING #-}
          HasField "shaderStorageBufferArrayDynamicIndexing"
@@ -2124,45 +1495,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, shaderStorageBufferArrayDynamicIndexing}
 
-instance CanReadField "shaderStorageBufferArrayDynamicIndexing"
+instance {-# OVERLAPPING #-}
+         CanReadField "shaderStorageBufferArrayDynamicIndexing"
            VkPhysicalDeviceFeatures
          where
-        {-# INLINE getField #-}
-        getField = vkShaderStorageBufferArrayDynamicIndexing
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderStorageBufferArrayDynamicIndexing})
 
         {-# INLINE readField #-}
-        readField = readVkShaderStorageBufferArrayDynamicIndexing
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderStorageBufferArrayDynamicIndexing}
 
-instance CanWriteField "shaderStorageBufferArrayDynamicIndexing"
+instance {-# OVERLAPPING #-}
+         CanWriteField "shaderStorageBufferArrayDynamicIndexing"
            VkPhysicalDeviceFeatures
          where
         {-# INLINE writeField #-}
-        writeField = writeVkShaderStorageBufferArrayDynamicIndexing
-
-instance {-# OVERLAPPING #-}
-         HasVkShaderStorageImageArrayDynamicIndexing
-           VkPhysicalDeviceFeatures
-         where
-        type VkShaderStorageImageArrayDynamicIndexingMType
-               VkPhysicalDeviceFeatures
-             = VkBool32
-
-        {-# NOINLINE vkShaderStorageImageArrayDynamicIndexing #-}
-        vkShaderStorageImageArrayDynamicIndexing x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderStorageImageArrayDynamicIndexing})
-
-        {-# INLINE vkShaderStorageImageArrayDynamicIndexingByteOffset #-}
-        vkShaderStorageImageArrayDynamicIndexingByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, shaderStorageImageArrayDynamicIndexing}
-
-        {-# INLINE readVkShaderStorageImageArrayDynamicIndexing #-}
-        readVkShaderStorageImageArrayDynamicIndexing p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderStorageImageArrayDynamicIndexing}
-
-        {-# INLINE writeVkShaderStorageImageArrayDynamicIndexing #-}
-        writeVkShaderStorageImageArrayDynamicIndexing p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderStorageImageArrayDynamicIndexing}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderStorageBufferArrayDynamicIndexing}
 
 instance {-# OVERLAPPING #-}
          HasField "shaderStorageImageArrayDynamicIndexing"
@@ -2189,41 +1541,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, shaderStorageImageArrayDynamicIndexing}
 
-instance CanReadField "shaderStorageImageArrayDynamicIndexing"
+instance {-# OVERLAPPING #-}
+         CanReadField "shaderStorageImageArrayDynamicIndexing"
            VkPhysicalDeviceFeatures
          where
-        {-# INLINE getField #-}
-        getField = vkShaderStorageImageArrayDynamicIndexing
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderStorageImageArrayDynamicIndexing})
 
         {-# INLINE readField #-}
-        readField = readVkShaderStorageImageArrayDynamicIndexing
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderStorageImageArrayDynamicIndexing}
 
-instance CanWriteField "shaderStorageImageArrayDynamicIndexing"
+instance {-# OVERLAPPING #-}
+         CanWriteField "shaderStorageImageArrayDynamicIndexing"
            VkPhysicalDeviceFeatures
          where
         {-# INLINE writeField #-}
-        writeField = writeVkShaderStorageImageArrayDynamicIndexing
-
-instance {-# OVERLAPPING #-}
-         HasVkShaderClipDistance VkPhysicalDeviceFeatures where
-        type VkShaderClipDistanceMType VkPhysicalDeviceFeatures = VkBool32
-
-        {-# NOINLINE vkShaderClipDistance #-}
-        vkShaderClipDistance x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderClipDistance})
-
-        {-# INLINE vkShaderClipDistanceByteOffset #-}
-        vkShaderClipDistanceByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, shaderClipDistance}
-
-        {-# INLINE readVkShaderClipDistance #-}
-        readVkShaderClipDistance p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderClipDistance}
-
-        {-# INLINE writeVkShaderClipDistance #-}
-        writeVkShaderClipDistance p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderClipDistance}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderStorageImageArrayDynamicIndexing}
 
 instance {-# OVERLAPPING #-}
          HasField "shaderClipDistance" VkPhysicalDeviceFeatures where
@@ -2243,40 +1580,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, shaderClipDistance}
 
-instance CanReadField "shaderClipDistance" VkPhysicalDeviceFeatures
-         where
-        {-# INLINE getField #-}
-        getField = vkShaderClipDistance
+instance {-# OVERLAPPING #-}
+         CanReadField "shaderClipDistance" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderClipDistance})
 
         {-# INLINE readField #-}
-        readField = readVkShaderClipDistance
-
-instance CanWriteField "shaderClipDistance"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkShaderClipDistance
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderClipDistance}
 
 instance {-# OVERLAPPING #-}
-         HasVkShaderCullDistance VkPhysicalDeviceFeatures where
-        type VkShaderCullDistanceMType VkPhysicalDeviceFeatures = VkBool32
-
-        {-# NOINLINE vkShaderCullDistance #-}
-        vkShaderCullDistance x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderCullDistance})
-
-        {-# INLINE vkShaderCullDistanceByteOffset #-}
-        vkShaderCullDistanceByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, shaderCullDistance}
-
-        {-# INLINE readVkShaderCullDistance #-}
-        readVkShaderCullDistance p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderCullDistance}
-
-        {-# INLINE writeVkShaderCullDistance #-}
-        writeVkShaderCullDistance p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderCullDistance}
+         CanWriteField "shaderClipDistance" VkPhysicalDeviceFeatures where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderClipDistance}
 
 instance {-# OVERLAPPING #-}
          HasField "shaderCullDistance" VkPhysicalDeviceFeatures where
@@ -2296,40 +1615,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, shaderCullDistance}
 
-instance CanReadField "shaderCullDistance" VkPhysicalDeviceFeatures
-         where
-        {-# INLINE getField #-}
-        getField = vkShaderCullDistance
+instance {-# OVERLAPPING #-}
+         CanReadField "shaderCullDistance" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderCullDistance})
 
         {-# INLINE readField #-}
-        readField = readVkShaderCullDistance
-
-instance CanWriteField "shaderCullDistance"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkShaderCullDistance
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderCullDistance}
 
 instance {-# OVERLAPPING #-}
-         HasVkShaderFloat64 VkPhysicalDeviceFeatures where
-        type VkShaderFloat64MType VkPhysicalDeviceFeatures = VkBool32
-
-        {-# NOINLINE vkShaderFloat64 #-}
-        vkShaderFloat64 x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderFloat64})
-
-        {-# INLINE vkShaderFloat64ByteOffset #-}
-        vkShaderFloat64ByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, shaderFloat64}
-
-        {-# INLINE readVkShaderFloat64 #-}
-        readVkShaderFloat64 p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderFloat64}
-
-        {-# INLINE writeVkShaderFloat64 #-}
-        writeVkShaderFloat64 p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderFloat64}
+         CanWriteField "shaderCullDistance" VkPhysicalDeviceFeatures where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderCullDistance}
 
 instance {-# OVERLAPPING #-}
          HasField "shaderFloat64" VkPhysicalDeviceFeatures where
@@ -2347,39 +1648,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, shaderFloat64}
 
-instance CanReadField "shaderFloat64" VkPhysicalDeviceFeatures
-         where
-        {-# INLINE getField #-}
-        getField = vkShaderFloat64
+instance {-# OVERLAPPING #-}
+         CanReadField "shaderFloat64" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderFloat64})
 
         {-# INLINE readField #-}
-        readField = readVkShaderFloat64
-
-instance CanWriteField "shaderFloat64" VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkShaderFloat64
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderFloat64}
 
 instance {-# OVERLAPPING #-}
-         HasVkShaderInt64 VkPhysicalDeviceFeatures where
-        type VkShaderInt64MType VkPhysicalDeviceFeatures = VkBool32
-
-        {-# NOINLINE vkShaderInt64 #-}
-        vkShaderInt64 x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderInt64})
-
-        {-# INLINE vkShaderInt64ByteOffset #-}
-        vkShaderInt64ByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, shaderInt64}
-
-        {-# INLINE readVkShaderInt64 #-}
-        readVkShaderInt64 p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderInt64}
-
-        {-# INLINE writeVkShaderInt64 #-}
-        writeVkShaderInt64 p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderInt64}
+         CanWriteField "shaderFloat64" VkPhysicalDeviceFeatures where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderFloat64}
 
 instance {-# OVERLAPPING #-}
          HasField "shaderInt64" VkPhysicalDeviceFeatures where
@@ -2396,37 +1680,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, shaderInt64}
 
-instance CanReadField "shaderInt64" VkPhysicalDeviceFeatures where
-        {-# INLINE getField #-}
-        getField = vkShaderInt64
+instance {-# OVERLAPPING #-}
+         CanReadField "shaderInt64" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderInt64})
 
         {-# INLINE readField #-}
-        readField = readVkShaderInt64
-
-instance CanWriteField "shaderInt64" VkPhysicalDeviceFeatures where
-        {-# INLINE writeField #-}
-        writeField = writeVkShaderInt64
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderInt64}
 
 instance {-# OVERLAPPING #-}
-         HasVkShaderInt16 VkPhysicalDeviceFeatures where
-        type VkShaderInt16MType VkPhysicalDeviceFeatures = VkBool32
-
-        {-# NOINLINE vkShaderInt16 #-}
-        vkShaderInt16 x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderInt16})
-
-        {-# INLINE vkShaderInt16ByteOffset #-}
-        vkShaderInt16ByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, shaderInt16}
-
-        {-# INLINE readVkShaderInt16 #-}
-        readVkShaderInt16 p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderInt16}
-
-        {-# INLINE writeVkShaderInt16 #-}
-        writeVkShaderInt16 p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderInt16}
+         CanWriteField "shaderInt64" VkPhysicalDeviceFeatures where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderInt64}
 
 instance {-# OVERLAPPING #-}
          HasField "shaderInt16" VkPhysicalDeviceFeatures where
@@ -2443,38 +1712,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, shaderInt16}
 
-instance CanReadField "shaderInt16" VkPhysicalDeviceFeatures where
-        {-# INLINE getField #-}
-        getField = vkShaderInt16
+instance {-# OVERLAPPING #-}
+         CanReadField "shaderInt16" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderInt16})
 
         {-# INLINE readField #-}
-        readField = readVkShaderInt16
-
-instance CanWriteField "shaderInt16" VkPhysicalDeviceFeatures where
-        {-# INLINE writeField #-}
-        writeField = writeVkShaderInt16
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderInt16}
 
 instance {-# OVERLAPPING #-}
-         HasVkShaderResourceResidency VkPhysicalDeviceFeatures where
-        type VkShaderResourceResidencyMType VkPhysicalDeviceFeatures =
-             VkBool32
-
-        {-# NOINLINE vkShaderResourceResidency #-}
-        vkShaderResourceResidency x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderResourceResidency})
-
-        {-# INLINE vkShaderResourceResidencyByteOffset #-}
-        vkShaderResourceResidencyByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, shaderResourceResidency}
-
-        {-# INLINE readVkShaderResourceResidency #-}
-        readVkShaderResourceResidency p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderResourceResidency}
-
-        {-# INLINE writeVkShaderResourceResidency #-}
-        writeVkShaderResourceResidency p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderResourceResidency}
+         CanWriteField "shaderInt16" VkPhysicalDeviceFeatures where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderInt16}
 
 instance {-# OVERLAPPING #-}
          HasField "shaderResourceResidency" VkPhysicalDeviceFeatures where
@@ -2497,42 +1750,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, shaderResourceResidency}
 
-instance CanReadField "shaderResourceResidency"
-           VkPhysicalDeviceFeatures
+instance {-# OVERLAPPING #-}
+         CanReadField "shaderResourceResidency" VkPhysicalDeviceFeatures
          where
-        {-# INLINE getField #-}
-        getField = vkShaderResourceResidency
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderResourceResidency})
 
         {-# INLINE readField #-}
-        readField = readVkShaderResourceResidency
-
-instance CanWriteField "shaderResourceResidency"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkShaderResourceResidency
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderResourceResidency}
 
 instance {-# OVERLAPPING #-}
-         HasVkShaderResourceMinLod VkPhysicalDeviceFeatures where
-        type VkShaderResourceMinLodMType VkPhysicalDeviceFeatures =
-             VkBool32
-
-        {-# NOINLINE vkShaderResourceMinLod #-}
-        vkShaderResourceMinLod x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderResourceMinLod})
-
-        {-# INLINE vkShaderResourceMinLodByteOffset #-}
-        vkShaderResourceMinLodByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, shaderResourceMinLod}
-
-        {-# INLINE readVkShaderResourceMinLod #-}
-        readVkShaderResourceMinLod p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderResourceMinLod}
-
-        {-# INLINE writeVkShaderResourceMinLod #-}
-        writeVkShaderResourceMinLod p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderResourceMinLod}
+         CanWriteField "shaderResourceResidency" VkPhysicalDeviceFeatures
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderResourceResidency}
 
 instance {-# OVERLAPPING #-}
          HasField "shaderResourceMinLod" VkPhysicalDeviceFeatures where
@@ -2552,41 +1787,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, shaderResourceMinLod}
 
-instance CanReadField "shaderResourceMinLod"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE getField #-}
-        getField = vkShaderResourceMinLod
+instance {-# OVERLAPPING #-}
+         CanReadField "shaderResourceMinLod" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, shaderResourceMinLod})
 
         {-# INLINE readField #-}
-        readField = readVkShaderResourceMinLod
-
-instance CanWriteField "shaderResourceMinLod"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkShaderResourceMinLod
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, shaderResourceMinLod}
 
 instance {-# OVERLAPPING #-}
-         HasVkSparseBinding VkPhysicalDeviceFeatures where
-        type VkSparseBindingMType VkPhysicalDeviceFeatures = VkBool32
-
-        {-# NOINLINE vkSparseBinding #-}
-        vkSparseBinding x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, sparseBinding})
-
-        {-# INLINE vkSparseBindingByteOffset #-}
-        vkSparseBindingByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, sparseBinding}
-
-        {-# INLINE readVkSparseBinding #-}
-        readVkSparseBinding p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, sparseBinding}
-
-        {-# INLINE writeVkSparseBinding #-}
-        writeVkSparseBinding p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, sparseBinding}
+         CanWriteField "shaderResourceMinLod" VkPhysicalDeviceFeatures where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, shaderResourceMinLod}
 
 instance {-# OVERLAPPING #-}
          HasField "sparseBinding" VkPhysicalDeviceFeatures where
@@ -2604,40 +1820,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, sparseBinding}
 
-instance CanReadField "sparseBinding" VkPhysicalDeviceFeatures
-         where
-        {-# INLINE getField #-}
-        getField = vkSparseBinding
+instance {-# OVERLAPPING #-}
+         CanReadField "sparseBinding" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, sparseBinding})
 
         {-# INLINE readField #-}
-        readField = readVkSparseBinding
-
-instance CanWriteField "sparseBinding" VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSparseBinding
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, sparseBinding}
 
 instance {-# OVERLAPPING #-}
-         HasVkSparseResidencyBuffer VkPhysicalDeviceFeatures where
-        type VkSparseResidencyBufferMType VkPhysicalDeviceFeatures =
-             VkBool32
-
-        {-# NOINLINE vkSparseResidencyBuffer #-}
-        vkSparseResidencyBuffer x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, sparseResidencyBuffer})
-
-        {-# INLINE vkSparseResidencyBufferByteOffset #-}
-        vkSparseResidencyBufferByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, sparseResidencyBuffer}
-
-        {-# INLINE readVkSparseResidencyBuffer #-}
-        readVkSparseResidencyBuffer p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidencyBuffer}
-
-        {-# INLINE writeVkSparseResidencyBuffer #-}
-        writeVkSparseResidencyBuffer p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidencyBuffer}
+         CanWriteField "sparseBinding" VkPhysicalDeviceFeatures where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, sparseBinding}
 
 instance {-# OVERLAPPING #-}
          HasField "sparseResidencyBuffer" VkPhysicalDeviceFeatures where
@@ -2657,42 +1855,23 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, sparseResidencyBuffer}
 
-instance CanReadField "sparseResidencyBuffer"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE getField #-}
-        getField = vkSparseResidencyBuffer
+instance {-# OVERLAPPING #-}
+         CanReadField "sparseResidencyBuffer" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, sparseResidencyBuffer})
 
         {-# INLINE readField #-}
-        readField = readVkSparseResidencyBuffer
-
-instance CanWriteField "sparseResidencyBuffer"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSparseResidencyBuffer
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidencyBuffer}
 
 instance {-# OVERLAPPING #-}
-         HasVkSparseResidencyImage2D VkPhysicalDeviceFeatures where
-        type VkSparseResidencyImage2DMType VkPhysicalDeviceFeatures =
-             VkBool32
-
-        {-# NOINLINE vkSparseResidencyImage2D #-}
-        vkSparseResidencyImage2D x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, sparseResidencyImage2D})
-
-        {-# INLINE vkSparseResidencyImage2DByteOffset #-}
-        vkSparseResidencyImage2DByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, sparseResidencyImage2D}
-
-        {-# INLINE readVkSparseResidencyImage2D #-}
-        readVkSparseResidencyImage2D p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidencyImage2D}
-
-        {-# INLINE writeVkSparseResidencyImage2D #-}
-        writeVkSparseResidencyImage2D p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidencyImage2D}
+         CanWriteField "sparseResidencyBuffer" VkPhysicalDeviceFeatures
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidencyBuffer}
 
 instance {-# OVERLAPPING #-}
          HasField "sparseResidencyImage2D" VkPhysicalDeviceFeatures where
@@ -2714,42 +1893,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, sparseResidencyImage2D}
 
-instance CanReadField "sparseResidencyImage2D"
-           VkPhysicalDeviceFeatures
+instance {-# OVERLAPPING #-}
+         CanReadField "sparseResidencyImage2D" VkPhysicalDeviceFeatures
          where
-        {-# INLINE getField #-}
-        getField = vkSparseResidencyImage2D
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, sparseResidencyImage2D})
 
         {-# INLINE readField #-}
-        readField = readVkSparseResidencyImage2D
-
-instance CanWriteField "sparseResidencyImage2D"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSparseResidencyImage2D
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidencyImage2D}
 
 instance {-# OVERLAPPING #-}
-         HasVkSparseResidencyImage3D VkPhysicalDeviceFeatures where
-        type VkSparseResidencyImage3DMType VkPhysicalDeviceFeatures =
-             VkBool32
-
-        {-# NOINLINE vkSparseResidencyImage3D #-}
-        vkSparseResidencyImage3D x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, sparseResidencyImage3D})
-
-        {-# INLINE vkSparseResidencyImage3DByteOffset #-}
-        vkSparseResidencyImage3DByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, sparseResidencyImage3D}
-
-        {-# INLINE readVkSparseResidencyImage3D #-}
-        readVkSparseResidencyImage3D p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidencyImage3D}
-
-        {-# INLINE writeVkSparseResidencyImage3D #-}
-        writeVkSparseResidencyImage3D p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidencyImage3D}
+         CanWriteField "sparseResidencyImage2D" VkPhysicalDeviceFeatures
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidencyImage2D}
 
 instance {-# OVERLAPPING #-}
          HasField "sparseResidencyImage3D" VkPhysicalDeviceFeatures where
@@ -2771,42 +1932,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, sparseResidencyImage3D}
 
-instance CanReadField "sparseResidencyImage3D"
-           VkPhysicalDeviceFeatures
+instance {-# OVERLAPPING #-}
+         CanReadField "sparseResidencyImage3D" VkPhysicalDeviceFeatures
          where
-        {-# INLINE getField #-}
-        getField = vkSparseResidencyImage3D
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, sparseResidencyImage3D})
 
         {-# INLINE readField #-}
-        readField = readVkSparseResidencyImage3D
-
-instance CanWriteField "sparseResidencyImage3D"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSparseResidencyImage3D
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidencyImage3D}
 
 instance {-# OVERLAPPING #-}
-         HasVkSparseResidency2Samples VkPhysicalDeviceFeatures where
-        type VkSparseResidency2SamplesMType VkPhysicalDeviceFeatures =
-             VkBool32
-
-        {-# NOINLINE vkSparseResidency2Samples #-}
-        vkSparseResidency2Samples x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, sparseResidency2Samples})
-
-        {-# INLINE vkSparseResidency2SamplesByteOffset #-}
-        vkSparseResidency2SamplesByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, sparseResidency2Samples}
-
-        {-# INLINE readVkSparseResidency2Samples #-}
-        readVkSparseResidency2Samples p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidency2Samples}
-
-        {-# INLINE writeVkSparseResidency2Samples #-}
-        writeVkSparseResidency2Samples p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidency2Samples}
+         CanWriteField "sparseResidencyImage3D" VkPhysicalDeviceFeatures
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidencyImage3D}
 
 instance {-# OVERLAPPING #-}
          HasField "sparseResidency2Samples" VkPhysicalDeviceFeatures where
@@ -2829,42 +1972,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, sparseResidency2Samples}
 
-instance CanReadField "sparseResidency2Samples"
-           VkPhysicalDeviceFeatures
+instance {-# OVERLAPPING #-}
+         CanReadField "sparseResidency2Samples" VkPhysicalDeviceFeatures
          where
-        {-# INLINE getField #-}
-        getField = vkSparseResidency2Samples
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, sparseResidency2Samples})
 
         {-# INLINE readField #-}
-        readField = readVkSparseResidency2Samples
-
-instance CanWriteField "sparseResidency2Samples"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSparseResidency2Samples
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidency2Samples}
 
 instance {-# OVERLAPPING #-}
-         HasVkSparseResidency4Samples VkPhysicalDeviceFeatures where
-        type VkSparseResidency4SamplesMType VkPhysicalDeviceFeatures =
-             VkBool32
-
-        {-# NOINLINE vkSparseResidency4Samples #-}
-        vkSparseResidency4Samples x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, sparseResidency4Samples})
-
-        {-# INLINE vkSparseResidency4SamplesByteOffset #-}
-        vkSparseResidency4SamplesByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, sparseResidency4Samples}
-
-        {-# INLINE readVkSparseResidency4Samples #-}
-        readVkSparseResidency4Samples p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidency4Samples}
-
-        {-# INLINE writeVkSparseResidency4Samples #-}
-        writeVkSparseResidency4Samples p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidency4Samples}
+         CanWriteField "sparseResidency2Samples" VkPhysicalDeviceFeatures
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidency2Samples}
 
 instance {-# OVERLAPPING #-}
          HasField "sparseResidency4Samples" VkPhysicalDeviceFeatures where
@@ -2887,42 +2012,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, sparseResidency4Samples}
 
-instance CanReadField "sparseResidency4Samples"
-           VkPhysicalDeviceFeatures
+instance {-# OVERLAPPING #-}
+         CanReadField "sparseResidency4Samples" VkPhysicalDeviceFeatures
          where
-        {-# INLINE getField #-}
-        getField = vkSparseResidency4Samples
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, sparseResidency4Samples})
 
         {-# INLINE readField #-}
-        readField = readVkSparseResidency4Samples
-
-instance CanWriteField "sparseResidency4Samples"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSparseResidency4Samples
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidency4Samples}
 
 instance {-# OVERLAPPING #-}
-         HasVkSparseResidency8Samples VkPhysicalDeviceFeatures where
-        type VkSparseResidency8SamplesMType VkPhysicalDeviceFeatures =
-             VkBool32
-
-        {-# NOINLINE vkSparseResidency8Samples #-}
-        vkSparseResidency8Samples x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, sparseResidency8Samples})
-
-        {-# INLINE vkSparseResidency8SamplesByteOffset #-}
-        vkSparseResidency8SamplesByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, sparseResidency8Samples}
-
-        {-# INLINE readVkSparseResidency8Samples #-}
-        readVkSparseResidency8Samples p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidency8Samples}
-
-        {-# INLINE writeVkSparseResidency8Samples #-}
-        writeVkSparseResidency8Samples p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidency8Samples}
+         CanWriteField "sparseResidency4Samples" VkPhysicalDeviceFeatures
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidency4Samples}
 
 instance {-# OVERLAPPING #-}
          HasField "sparseResidency8Samples" VkPhysicalDeviceFeatures where
@@ -2945,42 +2052,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, sparseResidency8Samples}
 
-instance CanReadField "sparseResidency8Samples"
-           VkPhysicalDeviceFeatures
+instance {-# OVERLAPPING #-}
+         CanReadField "sparseResidency8Samples" VkPhysicalDeviceFeatures
          where
-        {-# INLINE getField #-}
-        getField = vkSparseResidency8Samples
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, sparseResidency8Samples})
 
         {-# INLINE readField #-}
-        readField = readVkSparseResidency8Samples
-
-instance CanWriteField "sparseResidency8Samples"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSparseResidency8Samples
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidency8Samples}
 
 instance {-# OVERLAPPING #-}
-         HasVkSparseResidency16Samples VkPhysicalDeviceFeatures where
-        type VkSparseResidency16SamplesMType VkPhysicalDeviceFeatures =
-             VkBool32
-
-        {-# NOINLINE vkSparseResidency16Samples #-}
-        vkSparseResidency16Samples x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, sparseResidency16Samples})
-
-        {-# INLINE vkSparseResidency16SamplesByteOffset #-}
-        vkSparseResidency16SamplesByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, sparseResidency16Samples}
-
-        {-# INLINE readVkSparseResidency16Samples #-}
-        readVkSparseResidency16Samples p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidency16Samples}
-
-        {-# INLINE writeVkSparseResidency16Samples #-}
-        writeVkSparseResidency16Samples p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidency16Samples}
+         CanWriteField "sparseResidency8Samples" VkPhysicalDeviceFeatures
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidency8Samples}
 
 instance {-# OVERLAPPING #-}
          HasField "sparseResidency16Samples" VkPhysicalDeviceFeatures where
@@ -3004,42 +2093,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, sparseResidency16Samples}
 
-instance CanReadField "sparseResidency16Samples"
-           VkPhysicalDeviceFeatures
+instance {-# OVERLAPPING #-}
+         CanReadField "sparseResidency16Samples" VkPhysicalDeviceFeatures
          where
-        {-# INLINE getField #-}
-        getField = vkSparseResidency16Samples
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, sparseResidency16Samples})
 
         {-# INLINE readField #-}
-        readField = readVkSparseResidency16Samples
-
-instance CanWriteField "sparseResidency16Samples"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSparseResidency16Samples
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidency16Samples}
 
 instance {-# OVERLAPPING #-}
-         HasVkSparseResidencyAliased VkPhysicalDeviceFeatures where
-        type VkSparseResidencyAliasedMType VkPhysicalDeviceFeatures =
-             VkBool32
-
-        {-# NOINLINE vkSparseResidencyAliased #-}
-        vkSparseResidencyAliased x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, sparseResidencyAliased})
-
-        {-# INLINE vkSparseResidencyAliasedByteOffset #-}
-        vkSparseResidencyAliasedByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, sparseResidencyAliased}
-
-        {-# INLINE readVkSparseResidencyAliased #-}
-        readVkSparseResidencyAliased p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidencyAliased}
-
-        {-# INLINE writeVkSparseResidencyAliased #-}
-        writeVkSparseResidencyAliased p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidencyAliased}
+         CanWriteField "sparseResidency16Samples" VkPhysicalDeviceFeatures
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidency16Samples}
 
 instance {-# OVERLAPPING #-}
          HasField "sparseResidencyAliased" VkPhysicalDeviceFeatures where
@@ -3061,42 +2132,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, sparseResidencyAliased}
 
-instance CanReadField "sparseResidencyAliased"
-           VkPhysicalDeviceFeatures
+instance {-# OVERLAPPING #-}
+         CanReadField "sparseResidencyAliased" VkPhysicalDeviceFeatures
          where
-        {-# INLINE getField #-}
-        getField = vkSparseResidencyAliased
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, sparseResidencyAliased})
 
         {-# INLINE readField #-}
-        readField = readVkSparseResidencyAliased
-
-instance CanWriteField "sparseResidencyAliased"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSparseResidencyAliased
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidencyAliased}
 
 instance {-# OVERLAPPING #-}
-         HasVkVariableMultisampleRate VkPhysicalDeviceFeatures where
-        type VkVariableMultisampleRateMType VkPhysicalDeviceFeatures =
-             VkBool32
-
-        {-# NOINLINE vkVariableMultisampleRate #-}
-        vkVariableMultisampleRate x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, variableMultisampleRate})
-
-        {-# INLINE vkVariableMultisampleRateByteOffset #-}
-        vkVariableMultisampleRateByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, variableMultisampleRate}
-
-        {-# INLINE readVkVariableMultisampleRate #-}
-        readVkVariableMultisampleRate p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, variableMultisampleRate}
-
-        {-# INLINE writeVkVariableMultisampleRate #-}
-        writeVkVariableMultisampleRate p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, variableMultisampleRate}
+         CanWriteField "sparseResidencyAliased" VkPhysicalDeviceFeatures
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, sparseResidencyAliased}
 
 instance {-# OVERLAPPING #-}
          HasField "variableMultisampleRate" VkPhysicalDeviceFeatures where
@@ -3119,41 +2172,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, variableMultisampleRate}
 
-instance CanReadField "variableMultisampleRate"
-           VkPhysicalDeviceFeatures
+instance {-# OVERLAPPING #-}
+         CanReadField "variableMultisampleRate" VkPhysicalDeviceFeatures
          where
-        {-# INLINE getField #-}
-        getField = vkVariableMultisampleRate
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, variableMultisampleRate})
 
         {-# INLINE readField #-}
-        readField = readVkVariableMultisampleRate
-
-instance CanWriteField "variableMultisampleRate"
-           VkPhysicalDeviceFeatures
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkVariableMultisampleRate
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, variableMultisampleRate}
 
 instance {-# OVERLAPPING #-}
-         HasVkInheritedQueries VkPhysicalDeviceFeatures where
-        type VkInheritedQueriesMType VkPhysicalDeviceFeatures = VkBool32
-
-        {-# NOINLINE vkInheritedQueries #-}
-        vkInheritedQueries x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, inheritedQueries})
-
-        {-# INLINE vkInheritedQueriesByteOffset #-}
-        vkInheritedQueriesByteOffset ~_
-          = #{offset VkPhysicalDeviceFeatures, inheritedQueries}
-
-        {-# INLINE readVkInheritedQueries #-}
-        readVkInheritedQueries p
-          = peekByteOff p #{offset VkPhysicalDeviceFeatures, inheritedQueries}
-
-        {-# INLINE writeVkInheritedQueries #-}
-        writeVkInheritedQueries p
-          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, inheritedQueries}
+         CanWriteField "variableMultisampleRate" VkPhysicalDeviceFeatures
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, variableMultisampleRate}
 
 instance {-# OVERLAPPING #-}
          HasField "inheritedQueries" VkPhysicalDeviceFeatures where
@@ -3173,539 +2209,592 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceFeatures, inheritedQueries}
 
-instance CanReadField "inheritedQueries" VkPhysicalDeviceFeatures
-         where
-        {-# INLINE getField #-}
-        getField = vkInheritedQueries
+instance {-# OVERLAPPING #-}
+         CanReadField "inheritedQueries" VkPhysicalDeviceFeatures where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceFeatures, inheritedQueries})
 
         {-# INLINE readField #-}
-        readField = readVkInheritedQueries
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceFeatures, inheritedQueries}
 
-instance CanWriteField "inheritedQueries" VkPhysicalDeviceFeatures
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "inheritedQueries" VkPhysicalDeviceFeatures where
         {-# INLINE writeField #-}
-        writeField = writeVkInheritedQueries
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceFeatures, inheritedQueries}
 
 instance Show VkPhysicalDeviceFeatures where
         showsPrec d x
           = showString "VkPhysicalDeviceFeatures {" .
-              showString "vkRobustBufferAccess = " .
-                showsPrec d (vkRobustBufferAccess x) .
+              showString "robustBufferAccess = " .
+                showsPrec d (getField @"robustBufferAccess" x) .
                   showString ", " .
-                    showString "vkFullDrawIndexUint32 = " .
-                      showsPrec d (vkFullDrawIndexUint32 x) .
+                    showString "fullDrawIndexUint32 = " .
+                      showsPrec d (getField @"fullDrawIndexUint32" x) .
                         showString ", " .
-                          showString "vkImageCubeArray = " .
-                            showsPrec d (vkImageCubeArray x) .
+                          showString "imageCubeArray = " .
+                            showsPrec d (getField @"imageCubeArray" x) .
                               showString ", " .
-                                showString "vkIndependentBlend = " .
-                                  showsPrec d (vkIndependentBlend x) .
+                                showString "independentBlend = " .
+                                  showsPrec d (getField @"independentBlend" x) .
                                     showString ", " .
-                                      showString "vkGeometryShader = " .
-                                        showsPrec d (vkGeometryShader x) .
+                                      showString "geometryShader = " .
+                                        showsPrec d (getField @"geometryShader" x) .
                                           showString ", " .
-                                            showString "vkTessellationShader = " .
-                                              showsPrec d (vkTessellationShader x) .
+                                            showString "tessellationShader = " .
+                                              showsPrec d (getField @"tessellationShader" x) .
                                                 showString ", " .
-                                                  showString "vkSampleRateShading = " .
-                                                    showsPrec d (vkSampleRateShading x) .
+                                                  showString "sampleRateShading = " .
+                                                    showsPrec d (getField @"sampleRateShading" x) .
                                                       showString ", " .
-                                                        showString "vkDualSrcBlend = " .
-                                                          showsPrec d (vkDualSrcBlend x) .
+                                                        showString "dualSrcBlend = " .
+                                                          showsPrec d (getField @"dualSrcBlend" x) .
                                                             showString ", " .
-                                                              showString "vkLogicOp = " .
-                                                                showsPrec d (vkLogicOp x) .
+                                                              showString "logicOp = " .
+                                                                showsPrec d (getField @"logicOp" x)
+                                                                  .
                                                                   showString ", " .
                                                                     showString
-                                                                      "vkMultiDrawIndirect = "
+                                                                      "multiDrawIndirect = "
                                                                       .
                                                                       showsPrec d
-                                                                        (vkMultiDrawIndirect x)
+                                                                        (getField
+                                                                           @"multiDrawIndirect"
+                                                                           x)
                                                                         .
                                                                         showString ", " .
                                                                           showString
-                                                                            "vkDrawIndirectFirstInstance = "
+                                                                            "drawIndirectFirstInstance = "
                                                                             .
                                                                             showsPrec d
-                                                                              (vkDrawIndirectFirstInstance
+                                                                              (getField
+                                                                                 @"drawIndirectFirstInstance"
                                                                                  x)
                                                                               .
                                                                               showString ", " .
                                                                                 showString
-                                                                                  "vkDepthClamp = "
+                                                                                  "depthClamp = "
                                                                                   .
                                                                                   showsPrec d
-                                                                                    (vkDepthClamp x)
+                                                                                    (getField
+                                                                                       @"depthClamp"
+                                                                                       x)
                                                                                     .
                                                                                     showString ", "
                                                                                       .
                                                                                       showString
-                                                                                        "vkDepthBiasClamp = "
+                                                                                        "depthBiasClamp = "
                                                                                         .
                                                                                         showsPrec d
-                                                                                          (vkDepthBiasClamp
+                                                                                          (getField
+                                                                                             @"depthBiasClamp"
                                                                                              x)
                                                                                           .
                                                                                           showString
                                                                                             ", "
                                                                                             .
                                                                                             showString
-                                                                                              "vkFillModeNonSolid = "
+                                                                                              "fillModeNonSolid = "
                                                                                               .
                                                                                               showsPrec
                                                                                                 d
-                                                                                                (vkFillModeNonSolid
+                                                                                                (getField
+                                                                                                   @"fillModeNonSolid"
                                                                                                    x)
                                                                                                 .
                                                                                                 showString
                                                                                                   ", "
                                                                                                   .
                                                                                                   showString
-                                                                                                    "vkDepthBounds = "
+                                                                                                    "depthBounds = "
                                                                                                     .
                                                                                                     showsPrec
                                                                                                       d
-                                                                                                      (vkDepthBounds
+                                                                                                      (getField
+                                                                                                         @"depthBounds"
                                                                                                          x)
                                                                                                       .
                                                                                                       showString
                                                                                                         ", "
                                                                                                         .
                                                                                                         showString
-                                                                                                          "vkWideLines = "
+                                                                                                          "wideLines = "
                                                                                                           .
                                                                                                           showsPrec
                                                                                                             d
-                                                                                                            (vkWideLines
+                                                                                                            (getField
+                                                                                                               @"wideLines"
                                                                                                                x)
                                                                                                             .
                                                                                                             showString
                                                                                                               ", "
                                                                                                               .
                                                                                                               showString
-                                                                                                                "vkLargePoints = "
+                                                                                                                "largePoints = "
                                                                                                                 .
                                                                                                                 showsPrec
                                                                                                                   d
-                                                                                                                  (vkLargePoints
+                                                                                                                  (getField
+                                                                                                                     @"largePoints"
                                                                                                                      x)
                                                                                                                   .
                                                                                                                   showString
                                                                                                                     ", "
                                                                                                                     .
                                                                                                                     showString
-                                                                                                                      "vkAlphaToOne = "
+                                                                                                                      "alphaToOne = "
                                                                                                                       .
                                                                                                                       showsPrec
                                                                                                                         d
-                                                                                                                        (vkAlphaToOne
+                                                                                                                        (getField
+                                                                                                                           @"alphaToOne"
                                                                                                                            x)
                                                                                                                         .
                                                                                                                         showString
                                                                                                                           ", "
                                                                                                                           .
                                                                                                                           showString
-                                                                                                                            "vkMultiViewport = "
+                                                                                                                            "multiViewport = "
                                                                                                                             .
                                                                                                                             showsPrec
                                                                                                                               d
-                                                                                                                              (vkMultiViewport
+                                                                                                                              (getField
+                                                                                                                                 @"multiViewport"
                                                                                                                                  x)
                                                                                                                               .
                                                                                                                               showString
                                                                                                                                 ", "
                                                                                                                                 .
                                                                                                                                 showString
-                                                                                                                                  "vkSamplerAnisotropy = "
+                                                                                                                                  "samplerAnisotropy = "
                                                                                                                                   .
                                                                                                                                   showsPrec
                                                                                                                                     d
-                                                                                                                                    (vkSamplerAnisotropy
+                                                                                                                                    (getField
+                                                                                                                                       @"samplerAnisotropy"
                                                                                                                                        x)
                                                                                                                                     .
                                                                                                                                     showString
                                                                                                                                       ", "
                                                                                                                                       .
                                                                                                                                       showString
-                                                                                                                                        "vkTextureCompressionETC2 = "
+                                                                                                                                        "textureCompressionETC2 = "
                                                                                                                                         .
                                                                                                                                         showsPrec
                                                                                                                                           d
-                                                                                                                                          (vkTextureCompressionETC2
+                                                                                                                                          (getField
+                                                                                                                                             @"textureCompressionETC2"
                                                                                                                                              x)
                                                                                                                                           .
                                                                                                                                           showString
                                                                                                                                             ", "
                                                                                                                                             .
                                                                                                                                             showString
-                                                                                                                                              "vkTextureCompressionASTC_LDR = "
+                                                                                                                                              "textureCompressionASTC_LDR = "
                                                                                                                                               .
                                                                                                                                               showsPrec
                                                                                                                                                 d
-                                                                                                                                                (vkTextureCompressionASTC_LDR
+                                                                                                                                                (getField
+                                                                                                                                                   @"textureCompressionASTC_LDR"
                                                                                                                                                    x)
                                                                                                                                                 .
                                                                                                                                                 showString
                                                                                                                                                   ", "
                                                                                                                                                   .
                                                                                                                                                   showString
-                                                                                                                                                    "vkTextureCompressionBC = "
+                                                                                                                                                    "textureCompressionBC = "
                                                                                                                                                     .
                                                                                                                                                     showsPrec
                                                                                                                                                       d
-                                                                                                                                                      (vkTextureCompressionBC
+                                                                                                                                                      (getField
+                                                                                                                                                         @"textureCompressionBC"
                                                                                                                                                          x)
                                                                                                                                                       .
                                                                                                                                                       showString
                                                                                                                                                         ", "
                                                                                                                                                         .
                                                                                                                                                         showString
-                                                                                                                                                          "vkOcclusionQueryPrecise = "
+                                                                                                                                                          "occlusionQueryPrecise = "
                                                                                                                                                           .
                                                                                                                                                           showsPrec
                                                                                                                                                             d
-                                                                                                                                                            (vkOcclusionQueryPrecise
+                                                                                                                                                            (getField
+                                                                                                                                                               @"occlusionQueryPrecise"
                                                                                                                                                                x)
                                                                                                                                                             .
                                                                                                                                                             showString
                                                                                                                                                               ", "
                                                                                                                                                               .
                                                                                                                                                               showString
-                                                                                                                                                                "vkPipelineStatisticsQuery = "
+                                                                                                                                                                "pipelineStatisticsQuery = "
                                                                                                                                                                 .
                                                                                                                                                                 showsPrec
                                                                                                                                                                   d
-                                                                                                                                                                  (vkPipelineStatisticsQuery
+                                                                                                                                                                  (getField
+                                                                                                                                                                     @"pipelineStatisticsQuery"
                                                                                                                                                                      x)
                                                                                                                                                                   .
                                                                                                                                                                   showString
                                                                                                                                                                     ", "
                                                                                                                                                                     .
                                                                                                                                                                     showString
-                                                                                                                                                                      "vkVertexPipelineStoresAndAtomics = "
+                                                                                                                                                                      "vertexPipelineStoresAndAtomics = "
                                                                                                                                                                       .
                                                                                                                                                                       showsPrec
                                                                                                                                                                         d
-                                                                                                                                                                        (vkVertexPipelineStoresAndAtomics
+                                                                                                                                                                        (getField
+                                                                                                                                                                           @"vertexPipelineStoresAndAtomics"
                                                                                                                                                                            x)
                                                                                                                                                                         .
                                                                                                                                                                         showString
                                                                                                                                                                           ", "
                                                                                                                                                                           .
                                                                                                                                                                           showString
-                                                                                                                                                                            "vkFragmentStoresAndAtomics = "
+                                                                                                                                                                            "fragmentStoresAndAtomics = "
                                                                                                                                                                             .
                                                                                                                                                                             showsPrec
                                                                                                                                                                               d
-                                                                                                                                                                              (vkFragmentStoresAndAtomics
+                                                                                                                                                                              (getField
+                                                                                                                                                                                 @"fragmentStoresAndAtomics"
                                                                                                                                                                                  x)
                                                                                                                                                                               .
                                                                                                                                                                               showString
                                                                                                                                                                                 ", "
                                                                                                                                                                                 .
                                                                                                                                                                                 showString
-                                                                                                                                                                                  "vkShaderTessellationAndGeometryPointSize = "
+                                                                                                                                                                                  "shaderTessellationAndGeometryPointSize = "
                                                                                                                                                                                   .
                                                                                                                                                                                   showsPrec
                                                                                                                                                                                     d
-                                                                                                                                                                                    (vkShaderTessellationAndGeometryPointSize
+                                                                                                                                                                                    (getField
+                                                                                                                                                                                       @"shaderTessellationAndGeometryPointSize"
                                                                                                                                                                                        x)
                                                                                                                                                                                     .
                                                                                                                                                                                     showString
                                                                                                                                                                                       ", "
                                                                                                                                                                                       .
                                                                                                                                                                                       showString
-                                                                                                                                                                                        "vkShaderImageGatherExtended = "
+                                                                                                                                                                                        "shaderImageGatherExtended = "
                                                                                                                                                                                         .
                                                                                                                                                                                         showsPrec
                                                                                                                                                                                           d
-                                                                                                                                                                                          (vkShaderImageGatherExtended
+                                                                                                                                                                                          (getField
+                                                                                                                                                                                             @"shaderImageGatherExtended"
                                                                                                                                                                                              x)
                                                                                                                                                                                           .
                                                                                                                                                                                           showString
                                                                                                                                                                                             ", "
                                                                                                                                                                                             .
                                                                                                                                                                                             showString
-                                                                                                                                                                                              "vkShaderStorageImageExtendedFormats = "
+                                                                                                                                                                                              "shaderStorageImageExtendedFormats = "
                                                                                                                                                                                               .
                                                                                                                                                                                               showsPrec
                                                                                                                                                                                                 d
-                                                                                                                                                                                                (vkShaderStorageImageExtendedFormats
+                                                                                                                                                                                                (getField
+                                                                                                                                                                                                   @"shaderStorageImageExtendedFormats"
                                                                                                                                                                                                    x)
                                                                                                                                                                                                 .
                                                                                                                                                                                                 showString
                                                                                                                                                                                                   ", "
                                                                                                                                                                                                   .
                                                                                                                                                                                                   showString
-                                                                                                                                                                                                    "vkShaderStorageImageMultisample = "
+                                                                                                                                                                                                    "shaderStorageImageMultisample = "
                                                                                                                                                                                                     .
                                                                                                                                                                                                     showsPrec
                                                                                                                                                                                                       d
-                                                                                                                                                                                                      (vkShaderStorageImageMultisample
+                                                                                                                                                                                                      (getField
+                                                                                                                                                                                                         @"shaderStorageImageMultisample"
                                                                                                                                                                                                          x)
                                                                                                                                                                                                       .
                                                                                                                                                                                                       showString
                                                                                                                                                                                                         ", "
                                                                                                                                                                                                         .
                                                                                                                                                                                                         showString
-                                                                                                                                                                                                          "vkShaderStorageImageReadWithoutFormat = "
+                                                                                                                                                                                                          "shaderStorageImageReadWithoutFormat = "
                                                                                                                                                                                                           .
                                                                                                                                                                                                           showsPrec
                                                                                                                                                                                                             d
-                                                                                                                                                                                                            (vkShaderStorageImageReadWithoutFormat
+                                                                                                                                                                                                            (getField
+                                                                                                                                                                                                               @"shaderStorageImageReadWithoutFormat"
                                                                                                                                                                                                                x)
                                                                                                                                                                                                             .
                                                                                                                                                                                                             showString
                                                                                                                                                                                                               ", "
                                                                                                                                                                                                               .
                                                                                                                                                                                                               showString
-                                                                                                                                                                                                                "vkShaderStorageImageWriteWithoutFormat = "
+                                                                                                                                                                                                                "shaderStorageImageWriteWithoutFormat = "
                                                                                                                                                                                                                 .
                                                                                                                                                                                                                 showsPrec
                                                                                                                                                                                                                   d
-                                                                                                                                                                                                                  (vkShaderStorageImageWriteWithoutFormat
+                                                                                                                                                                                                                  (getField
+                                                                                                                                                                                                                     @"shaderStorageImageWriteWithoutFormat"
                                                                                                                                                                                                                      x)
                                                                                                                                                                                                                   .
                                                                                                                                                                                                                   showString
                                                                                                                                                                                                                     ", "
                                                                                                                                                                                                                     .
                                                                                                                                                                                                                     showString
-                                                                                                                                                                                                                      "vkShaderUniformBufferArrayDynamicIndexing = "
+                                                                                                                                                                                                                      "shaderUniformBufferArrayDynamicIndexing = "
                                                                                                                                                                                                                       .
                                                                                                                                                                                                                       showsPrec
                                                                                                                                                                                                                         d
-                                                                                                                                                                                                                        (vkShaderUniformBufferArrayDynamicIndexing
+                                                                                                                                                                                                                        (getField
+                                                                                                                                                                                                                           @"shaderUniformBufferArrayDynamicIndexing"
                                                                                                                                                                                                                            x)
                                                                                                                                                                                                                         .
                                                                                                                                                                                                                         showString
                                                                                                                                                                                                                           ", "
                                                                                                                                                                                                                           .
                                                                                                                                                                                                                           showString
-                                                                                                                                                                                                                            "vkShaderSampledImageArrayDynamicIndexing = "
+                                                                                                                                                                                                                            "shaderSampledImageArrayDynamicIndexing = "
                                                                                                                                                                                                                             .
                                                                                                                                                                                                                             showsPrec
                                                                                                                                                                                                                               d
-                                                                                                                                                                                                                              (vkShaderSampledImageArrayDynamicIndexing
+                                                                                                                                                                                                                              (getField
+                                                                                                                                                                                                                                 @"shaderSampledImageArrayDynamicIndexing"
                                                                                                                                                                                                                                  x)
                                                                                                                                                                                                                               .
                                                                                                                                                                                                                               showString
                                                                                                                                                                                                                                 ", "
                                                                                                                                                                                                                                 .
                                                                                                                                                                                                                                 showString
-                                                                                                                                                                                                                                  "vkShaderStorageBufferArrayDynamicIndexing = "
+                                                                                                                                                                                                                                  "shaderStorageBufferArrayDynamicIndexing = "
                                                                                                                                                                                                                                   .
                                                                                                                                                                                                                                   showsPrec
                                                                                                                                                                                                                                     d
-                                                                                                                                                                                                                                    (vkShaderStorageBufferArrayDynamicIndexing
+                                                                                                                                                                                                                                    (getField
+                                                                                                                                                                                                                                       @"shaderStorageBufferArrayDynamicIndexing"
                                                                                                                                                                                                                                        x)
                                                                                                                                                                                                                                     .
                                                                                                                                                                                                                                     showString
                                                                                                                                                                                                                                       ", "
                                                                                                                                                                                                                                       .
                                                                                                                                                                                                                                       showString
-                                                                                                                                                                                                                                        "vkShaderStorageImageArrayDynamicIndexing = "
+                                                                                                                                                                                                                                        "shaderStorageImageArrayDynamicIndexing = "
                                                                                                                                                                                                                                         .
                                                                                                                                                                                                                                         showsPrec
                                                                                                                                                                                                                                           d
-                                                                                                                                                                                                                                          (vkShaderStorageImageArrayDynamicIndexing
+                                                                                                                                                                                                                                          (getField
+                                                                                                                                                                                                                                             @"shaderStorageImageArrayDynamicIndexing"
                                                                                                                                                                                                                                              x)
                                                                                                                                                                                                                                           .
                                                                                                                                                                                                                                           showString
                                                                                                                                                                                                                                             ", "
                                                                                                                                                                                                                                             .
                                                                                                                                                                                                                                             showString
-                                                                                                                                                                                                                                              "vkShaderClipDistance = "
+                                                                                                                                                                                                                                              "shaderClipDistance = "
                                                                                                                                                                                                                                               .
                                                                                                                                                                                                                                               showsPrec
                                                                                                                                                                                                                                                 d
-                                                                                                                                                                                                                                                (vkShaderClipDistance
+                                                                                                                                                                                                                                                (getField
+                                                                                                                                                                                                                                                   @"shaderClipDistance"
                                                                                                                                                                                                                                                    x)
                                                                                                                                                                                                                                                 .
                                                                                                                                                                                                                                                 showString
                                                                                                                                                                                                                                                   ", "
                                                                                                                                                                                                                                                   .
                                                                                                                                                                                                                                                   showString
-                                                                                                                                                                                                                                                    "vkShaderCullDistance = "
+                                                                                                                                                                                                                                                    "shaderCullDistance = "
                                                                                                                                                                                                                                                     .
                                                                                                                                                                                                                                                     showsPrec
                                                                                                                                                                                                                                                       d
-                                                                                                                                                                                                                                                      (vkShaderCullDistance
+                                                                                                                                                                                                                                                      (getField
+                                                                                                                                                                                                                                                         @"shaderCullDistance"
                                                                                                                                                                                                                                                          x)
                                                                                                                                                                                                                                                       .
                                                                                                                                                                                                                                                       showString
                                                                                                                                                                                                                                                         ", "
                                                                                                                                                                                                                                                         .
                                                                                                                                                                                                                                                         showString
-                                                                                                                                                                                                                                                          "vkShaderFloat64 = "
+                                                                                                                                                                                                                                                          "shaderFloat64 = "
                                                                                                                                                                                                                                                           .
                                                                                                                                                                                                                                                           showsPrec
                                                                                                                                                                                                                                                             d
-                                                                                                                                                                                                                                                            (vkShaderFloat64
+                                                                                                                                                                                                                                                            (getField
+                                                                                                                                                                                                                                                               @"shaderFloat64"
                                                                                                                                                                                                                                                                x)
                                                                                                                                                                                                                                                             .
                                                                                                                                                                                                                                                             showString
                                                                                                                                                                                                                                                               ", "
                                                                                                                                                                                                                                                               .
                                                                                                                                                                                                                                                               showString
-                                                                                                                                                                                                                                                                "vkShaderInt64 = "
+                                                                                                                                                                                                                                                                "shaderInt64 = "
                                                                                                                                                                                                                                                                 .
                                                                                                                                                                                                                                                                 showsPrec
                                                                                                                                                                                                                                                                   d
-                                                                                                                                                                                                                                                                  (vkShaderInt64
+                                                                                                                                                                                                                                                                  (getField
+                                                                                                                                                                                                                                                                     @"shaderInt64"
                                                                                                                                                                                                                                                                      x)
                                                                                                                                                                                                                                                                   .
                                                                                                                                                                                                                                                                   showString
                                                                                                                                                                                                                                                                     ", "
                                                                                                                                                                                                                                                                     .
                                                                                                                                                                                                                                                                     showString
-                                                                                                                                                                                                                                                                      "vkShaderInt16 = "
+                                                                                                                                                                                                                                                                      "shaderInt16 = "
                                                                                                                                                                                                                                                                       .
                                                                                                                                                                                                                                                                       showsPrec
                                                                                                                                                                                                                                                                         d
-                                                                                                                                                                                                                                                                        (vkShaderInt16
+                                                                                                                                                                                                                                                                        (getField
+                                                                                                                                                                                                                                                                           @"shaderInt16"
                                                                                                                                                                                                                                                                            x)
                                                                                                                                                                                                                                                                         .
                                                                                                                                                                                                                                                                         showString
                                                                                                                                                                                                                                                                           ", "
                                                                                                                                                                                                                                                                           .
                                                                                                                                                                                                                                                                           showString
-                                                                                                                                                                                                                                                                            "vkShaderResourceResidency = "
+                                                                                                                                                                                                                                                                            "shaderResourceResidency = "
                                                                                                                                                                                                                                                                             .
                                                                                                                                                                                                                                                                             showsPrec
                                                                                                                                                                                                                                                                               d
-                                                                                                                                                                                                                                                                              (vkShaderResourceResidency
+                                                                                                                                                                                                                                                                              (getField
+                                                                                                                                                                                                                                                                                 @"shaderResourceResidency"
                                                                                                                                                                                                                                                                                  x)
                                                                                                                                                                                                                                                                               .
                                                                                                                                                                                                                                                                               showString
                                                                                                                                                                                                                                                                                 ", "
                                                                                                                                                                                                                                                                                 .
                                                                                                                                                                                                                                                                                 showString
-                                                                                                                                                                                                                                                                                  "vkShaderResourceMinLod = "
+                                                                                                                                                                                                                                                                                  "shaderResourceMinLod = "
                                                                                                                                                                                                                                                                                   .
                                                                                                                                                                                                                                                                                   showsPrec
                                                                                                                                                                                                                                                                                     d
-                                                                                                                                                                                                                                                                                    (vkShaderResourceMinLod
+                                                                                                                                                                                                                                                                                    (getField
+                                                                                                                                                                                                                                                                                       @"shaderResourceMinLod"
                                                                                                                                                                                                                                                                                        x)
                                                                                                                                                                                                                                                                                     .
                                                                                                                                                                                                                                                                                     showString
                                                                                                                                                                                                                                                                                       ", "
                                                                                                                                                                                                                                                                                       .
                                                                                                                                                                                                                                                                                       showString
-                                                                                                                                                                                                                                                                                        "vkSparseBinding = "
+                                                                                                                                                                                                                                                                                        "sparseBinding = "
                                                                                                                                                                                                                                                                                         .
                                                                                                                                                                                                                                                                                         showsPrec
                                                                                                                                                                                                                                                                                           d
-                                                                                                                                                                                                                                                                                          (vkSparseBinding
+                                                                                                                                                                                                                                                                                          (getField
+                                                                                                                                                                                                                                                                                             @"sparseBinding"
                                                                                                                                                                                                                                                                                              x)
                                                                                                                                                                                                                                                                                           .
                                                                                                                                                                                                                                                                                           showString
                                                                                                                                                                                                                                                                                             ", "
                                                                                                                                                                                                                                                                                             .
                                                                                                                                                                                                                                                                                             showString
-                                                                                                                                                                                                                                                                                              "vkSparseResidencyBuffer = "
+                                                                                                                                                                                                                                                                                              "sparseResidencyBuffer = "
                                                                                                                                                                                                                                                                                               .
                                                                                                                                                                                                                                                                                               showsPrec
                                                                                                                                                                                                                                                                                                 d
-                                                                                                                                                                                                                                                                                                (vkSparseResidencyBuffer
+                                                                                                                                                                                                                                                                                                (getField
+                                                                                                                                                                                                                                                                                                   @"sparseResidencyBuffer"
                                                                                                                                                                                                                                                                                                    x)
                                                                                                                                                                                                                                                                                                 .
                                                                                                                                                                                                                                                                                                 showString
                                                                                                                                                                                                                                                                                                   ", "
                                                                                                                                                                                                                                                                                                   .
                                                                                                                                                                                                                                                                                                   showString
-                                                                                                                                                                                                                                                                                                    "vkSparseResidencyImage2D = "
+                                                                                                                                                                                                                                                                                                    "sparseResidencyImage2D = "
                                                                                                                                                                                                                                                                                                     .
                                                                                                                                                                                                                                                                                                     showsPrec
                                                                                                                                                                                                                                                                                                       d
-                                                                                                                                                                                                                                                                                                      (vkSparseResidencyImage2D
+                                                                                                                                                                                                                                                                                                      (getField
+                                                                                                                                                                                                                                                                                                         @"sparseResidencyImage2D"
                                                                                                                                                                                                                                                                                                          x)
                                                                                                                                                                                                                                                                                                       .
                                                                                                                                                                                                                                                                                                       showString
                                                                                                                                                                                                                                                                                                         ", "
                                                                                                                                                                                                                                                                                                         .
                                                                                                                                                                                                                                                                                                         showString
-                                                                                                                                                                                                                                                                                                          "vkSparseResidencyImage3D = "
+                                                                                                                                                                                                                                                                                                          "sparseResidencyImage3D = "
                                                                                                                                                                                                                                                                                                           .
                                                                                                                                                                                                                                                                                                           showsPrec
                                                                                                                                                                                                                                                                                                             d
-                                                                                                                                                                                                                                                                                                            (vkSparseResidencyImage3D
+                                                                                                                                                                                                                                                                                                            (getField
+                                                                                                                                                                                                                                                                                                               @"sparseResidencyImage3D"
                                                                                                                                                                                                                                                                                                                x)
                                                                                                                                                                                                                                                                                                             .
                                                                                                                                                                                                                                                                                                             showString
                                                                                                                                                                                                                                                                                                               ", "
                                                                                                                                                                                                                                                                                                               .
                                                                                                                                                                                                                                                                                                               showString
-                                                                                                                                                                                                                                                                                                                "vkSparseResidency2Samples = "
+                                                                                                                                                                                                                                                                                                                "sparseResidency2Samples = "
                                                                                                                                                                                                                                                                                                                 .
                                                                                                                                                                                                                                                                                                                 showsPrec
                                                                                                                                                                                                                                                                                                                   d
-                                                                                                                                                                                                                                                                                                                  (vkSparseResidency2Samples
+                                                                                                                                                                                                                                                                                                                  (getField
+                                                                                                                                                                                                                                                                                                                     @"sparseResidency2Samples"
                                                                                                                                                                                                                                                                                                                      x)
                                                                                                                                                                                                                                                                                                                   .
                                                                                                                                                                                                                                                                                                                   showString
                                                                                                                                                                                                                                                                                                                     ", "
                                                                                                                                                                                                                                                                                                                     .
                                                                                                                                                                                                                                                                                                                     showString
-                                                                                                                                                                                                                                                                                                                      "vkSparseResidency4Samples = "
+                                                                                                                                                                                                                                                                                                                      "sparseResidency4Samples = "
                                                                                                                                                                                                                                                                                                                       .
                                                                                                                                                                                                                                                                                                                       showsPrec
                                                                                                                                                                                                                                                                                                                         d
-                                                                                                                                                                                                                                                                                                                        (vkSparseResidency4Samples
+                                                                                                                                                                                                                                                                                                                        (getField
+                                                                                                                                                                                                                                                                                                                           @"sparseResidency4Samples"
                                                                                                                                                                                                                                                                                                                            x)
                                                                                                                                                                                                                                                                                                                         .
                                                                                                                                                                                                                                                                                                                         showString
                                                                                                                                                                                                                                                                                                                           ", "
                                                                                                                                                                                                                                                                                                                           .
                                                                                                                                                                                                                                                                                                                           showString
-                                                                                                                                                                                                                                                                                                                            "vkSparseResidency8Samples = "
+                                                                                                                                                                                                                                                                                                                            "sparseResidency8Samples = "
                                                                                                                                                                                                                                                                                                                             .
                                                                                                                                                                                                                                                                                                                             showsPrec
                                                                                                                                                                                                                                                                                                                               d
-                                                                                                                                                                                                                                                                                                                              (vkSparseResidency8Samples
+                                                                                                                                                                                                                                                                                                                              (getField
+                                                                                                                                                                                                                                                                                                                                 @"sparseResidency8Samples"
                                                                                                                                                                                                                                                                                                                                  x)
                                                                                                                                                                                                                                                                                                                               .
                                                                                                                                                                                                                                                                                                                               showString
                                                                                                                                                                                                                                                                                                                                 ", "
                                                                                                                                                                                                                                                                                                                                 .
                                                                                                                                                                                                                                                                                                                                 showString
-                                                                                                                                                                                                                                                                                                                                  "vkSparseResidency16Samples = "
+                                                                                                                                                                                                                                                                                                                                  "sparseResidency16Samples = "
                                                                                                                                                                                                                                                                                                                                   .
                                                                                                                                                                                                                                                                                                                                   showsPrec
                                                                                                                                                                                                                                                                                                                                     d
-                                                                                                                                                                                                                                                                                                                                    (vkSparseResidency16Samples
+                                                                                                                                                                                                                                                                                                                                    (getField
+                                                                                                                                                                                                                                                                                                                                       @"sparseResidency16Samples"
                                                                                                                                                                                                                                                                                                                                        x)
                                                                                                                                                                                                                                                                                                                                     .
                                                                                                                                                                                                                                                                                                                                     showString
                                                                                                                                                                                                                                                                                                                                       ", "
                                                                                                                                                                                                                                                                                                                                       .
                                                                                                                                                                                                                                                                                                                                       showString
-                                                                                                                                                                                                                                                                                                                                        "vkSparseResidencyAliased = "
+                                                                                                                                                                                                                                                                                                                                        "sparseResidencyAliased = "
                                                                                                                                                                                                                                                                                                                                         .
                                                                                                                                                                                                                                                                                                                                         showsPrec
                                                                                                                                                                                                                                                                                                                                           d
-                                                                                                                                                                                                                                                                                                                                          (vkSparseResidencyAliased
+                                                                                                                                                                                                                                                                                                                                          (getField
+                                                                                                                                                                                                                                                                                                                                             @"sparseResidencyAliased"
                                                                                                                                                                                                                                                                                                                                              x)
                                                                                                                                                                                                                                                                                                                                           .
                                                                                                                                                                                                                                                                                                                                           showString
                                                                                                                                                                                                                                                                                                                                             ", "
                                                                                                                                                                                                                                                                                                                                             .
                                                                                                                                                                                                                                                                                                                                             showString
-                                                                                                                                                                                                                                                                                                                                              "vkVariableMultisampleRate = "
+                                                                                                                                                                                                                                                                                                                                              "variableMultisampleRate = "
                                                                                                                                                                                                                                                                                                                                               .
                                                                                                                                                                                                                                                                                                                                               showsPrec
                                                                                                                                                                                                                                                                                                                                                 d
-                                                                                                                                                                                                                                                                                                                                                (vkVariableMultisampleRate
+                                                                                                                                                                                                                                                                                                                                                (getField
+                                                                                                                                                                                                                                                                                                                                                   @"variableMultisampleRate"
                                                                                                                                                                                                                                                                                                                                                    x)
                                                                                                                                                                                                                                                                                                                                                 .
                                                                                                                                                                                                                                                                                                                                                 showString
                                                                                                                                                                                                                                                                                                                                                   ", "
                                                                                                                                                                                                                                                                                                                                                   .
                                                                                                                                                                                                                                                                                                                                                   showString
-                                                                                                                                                                                                                                                                                                                                                    "vkInheritedQueries = "
+                                                                                                                                                                                                                                                                                                                                                    "inheritedQueries = "
                                                                                                                                                                                                                                                                                                                                                     .
                                                                                                                                                                                                                                                                                                                                                     showsPrec
                                                                                                                                                                                                                                                                                                                                                       d
-                                                                                                                                                                                                                                                                                                                                                      (vkInheritedQueries
+                                                                                                                                                                                                                                                                                                                                                      (getField
+                                                                                                                                                                                                                                                                                                                                                         @"inheritedQueries"
                                                                                                                                                                                                                                                                                                                                                          x)
                                                                                                                                                                                                                                                                                                                                                       .
                                                                                                                                                                                                                                                                                                                                                       showChar

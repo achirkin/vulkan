@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkSharedPresentSurfaceCapabilitiesKHR
        (VkSharedPresentSurfaceCapabilitiesKHR(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkImageUsageFlags           (VkImageUsageFlags)
 import           Graphics.Vulkan.Types.Enum.VkStructureType             (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkSurfaceCapabilities2KHR (VkSurfaceCapabilities2KHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                       (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSharedPresentSurfaceCapabilitiesKHR {
@@ -82,28 +82,6 @@ instance VulkanMarshal VkSharedPresentSurfaceCapabilitiesKHR where
              '[VkSurfaceCapabilities2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkSharedPresentSurfaceCapabilitiesKHR where
-        type VkSTypeMType VkSharedPresentSurfaceCapabilitiesKHR =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSharedPresentSurfaceCapabilitiesKHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkSharedPresentSurfaceCapabilitiesKHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkSharedPresentSurfaceCapabilitiesKHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkSharedPresentSurfaceCapabilitiesKHR, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkSharedPresentSurfaceCapabilitiesKHR where
         type FieldType "sType" VkSharedPresentSurfaceCapabilitiesKHR =
              VkStructureType
@@ -121,40 +99,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSharedPresentSurfaceCapabilitiesKHR, sType}
 
-instance CanReadField "sType" VkSharedPresentSurfaceCapabilitiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkSharedPresentSurfaceCapabilitiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSharedPresentSurfaceCapabilitiesKHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType"
-           VkSharedPresentSurfaceCapabilitiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkSharedPresentSurfaceCapabilitiesKHR, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkSharedPresentSurfaceCapabilitiesKHR where
-        type VkPNextMType VkSharedPresentSurfaceCapabilitiesKHR = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSharedPresentSurfaceCapabilitiesKHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkSharedPresentSurfaceCapabilitiesKHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkSharedPresentSurfaceCapabilitiesKHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkSharedPresentSurfaceCapabilitiesKHR, pNext}
+         CanWriteField "sType" VkSharedPresentSurfaceCapabilitiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSharedPresentSurfaceCapabilitiesKHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkSharedPresentSurfaceCapabilitiesKHR where
@@ -174,44 +134,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSharedPresentSurfaceCapabilitiesKHR, pNext}
 
-instance CanReadField "pNext" VkSharedPresentSurfaceCapabilitiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkSharedPresentSurfaceCapabilitiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSharedPresentSurfaceCapabilitiesKHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext"
-           VkSharedPresentSurfaceCapabilitiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkSharedPresentSurfaceCapabilitiesKHR, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkSharedPresentSupportedUsageFlags
-           VkSharedPresentSurfaceCapabilitiesKHR
-         where
-        type VkSharedPresentSupportedUsageFlagsMType
-               VkSharedPresentSurfaceCapabilitiesKHR
-             = VkImageUsageFlags
-
-        {-# NOINLINE vkSharedPresentSupportedUsageFlags #-}
-        vkSharedPresentSupportedUsageFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSharedPresentSurfaceCapabilitiesKHR, sharedPresentSupportedUsageFlags})
-
-        {-# INLINE vkSharedPresentSupportedUsageFlagsByteOffset #-}
-        vkSharedPresentSupportedUsageFlagsByteOffset ~_
-          = #{offset VkSharedPresentSurfaceCapabilitiesKHR, sharedPresentSupportedUsageFlags}
-
-        {-# INLINE readVkSharedPresentSupportedUsageFlags #-}
-        readVkSharedPresentSupportedUsageFlags p
-          = peekByteOff p #{offset VkSharedPresentSurfaceCapabilitiesKHR, sharedPresentSupportedUsageFlags}
-
-        {-# INLINE writeVkSharedPresentSupportedUsageFlags #-}
-        writeVkSharedPresentSupportedUsageFlags p
-          = pokeByteOff p #{offset VkSharedPresentSurfaceCapabilitiesKHR, sharedPresentSupportedUsageFlags}
+         CanWriteField "pNext" VkSharedPresentSurfaceCapabilitiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSharedPresentSurfaceCapabilitiesKHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "sharedPresentSupportedUsageFlags"
@@ -238,29 +176,36 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSharedPresentSurfaceCapabilitiesKHR, sharedPresentSupportedUsageFlags}
 
-instance CanReadField "sharedPresentSupportedUsageFlags"
+instance {-# OVERLAPPING #-}
+         CanReadField "sharedPresentSupportedUsageFlags"
            VkSharedPresentSurfaceCapabilitiesKHR
          where
-        {-# INLINE getField #-}
-        getField = vkSharedPresentSupportedUsageFlags
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSharedPresentSurfaceCapabilitiesKHR, sharedPresentSupportedUsageFlags})
 
         {-# INLINE readField #-}
-        readField = readVkSharedPresentSupportedUsageFlags
+        readField p
+          = peekByteOff p #{offset VkSharedPresentSurfaceCapabilitiesKHR, sharedPresentSupportedUsageFlags}
 
-instance CanWriteField "sharedPresentSupportedUsageFlags"
+instance {-# OVERLAPPING #-}
+         CanWriteField "sharedPresentSupportedUsageFlags"
            VkSharedPresentSurfaceCapabilitiesKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSharedPresentSupportedUsageFlags
+        writeField p
+          = pokeByteOff p #{offset VkSharedPresentSurfaceCapabilitiesKHR, sharedPresentSupportedUsageFlags}
 
 instance Show VkSharedPresentSurfaceCapabilitiesKHR where
         showsPrec d x
           = showString "VkSharedPresentSurfaceCapabilitiesKHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkSharedPresentSupportedUsageFlags = " .
-                            showsPrec d (vkSharedPresentSupportedUsageFlags x) . showChar '}'
+                          showString "sharedPresentSupportedUsageFlags = " .
+                            showsPrec d (getField @"sharedPresentSupportedUsageFlags" x) .
+                              showChar '}'

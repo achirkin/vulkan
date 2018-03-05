@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkExternalMemoryImageCreateInfoNV
        (VkExternalMemoryImageCreateInfoNV(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagsNV (VkExternalMemoryHandleTypeFlagsNV)
 import           Graphics.Vulkan.Types.Enum.VkStructureType                   (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkImageCreateInfo               (VkImageCreateInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                             (unsafeDupablePerformIO)
 
 -- | > typedef struct VkExternalMemoryImageCreateInfoNV {
@@ -80,28 +80,6 @@ instance VulkanMarshal VkExternalMemoryImageCreateInfoNV where
              '[VkImageCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkExternalMemoryImageCreateInfoNV where
-        type VkSTypeMType VkExternalMemoryImageCreateInfoNV =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkExternalMemoryImageCreateInfoNV, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkExternalMemoryImageCreateInfoNV, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkExternalMemoryImageCreateInfoNV, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkExternalMemoryImageCreateInfoNV, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkExternalMemoryImageCreateInfoNV where
         type FieldType "sType" VkExternalMemoryImageCreateInfoNV =
              VkStructureType
@@ -119,39 +97,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkExternalMemoryImageCreateInfoNV, sType}
 
-instance CanReadField "sType" VkExternalMemoryImageCreateInfoNV
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkExternalMemoryImageCreateInfoNV where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkExternalMemoryImageCreateInfoNV, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkExternalMemoryImageCreateInfoNV
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkExternalMemoryImageCreateInfoNV, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkExternalMemoryImageCreateInfoNV where
-        type VkPNextMType VkExternalMemoryImageCreateInfoNV = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkExternalMemoryImageCreateInfoNV, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkExternalMemoryImageCreateInfoNV, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkExternalMemoryImageCreateInfoNV, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkExternalMemoryImageCreateInfoNV, pNext}
+         CanWriteField "sType" VkExternalMemoryImageCreateInfoNV where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkExternalMemoryImageCreateInfoNV, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkExternalMemoryImageCreateInfoNV where
@@ -170,40 +131,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkExternalMemoryImageCreateInfoNV, pNext}
 
-instance CanReadField "pNext" VkExternalMemoryImageCreateInfoNV
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkExternalMemoryImageCreateInfoNV where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkExternalMemoryImageCreateInfoNV, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkExternalMemoryImageCreateInfoNV
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkExternalMemoryImageCreateInfoNV, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkHandleTypes VkExternalMemoryImageCreateInfoNV where
-        type VkHandleTypesMType VkExternalMemoryImageCreateInfoNV =
-             VkExternalMemoryHandleTypeFlagsNV
-
-        {-# NOINLINE vkHandleTypes #-}
-        vkHandleTypes x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkExternalMemoryImageCreateInfoNV, handleTypes})
-
-        {-# INLINE vkHandleTypesByteOffset #-}
-        vkHandleTypesByteOffset ~_
-          = #{offset VkExternalMemoryImageCreateInfoNV, handleTypes}
-
-        {-# INLINE readVkHandleTypes #-}
-        readVkHandleTypes p
-          = peekByteOff p #{offset VkExternalMemoryImageCreateInfoNV, handleTypes}
-
-        {-# INLINE writeVkHandleTypes #-}
-        writeVkHandleTypes p
-          = pokeByteOff p #{offset VkExternalMemoryImageCreateInfoNV, handleTypes}
+         CanWriteField "pNext" VkExternalMemoryImageCreateInfoNV where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkExternalMemoryImageCreateInfoNV, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "handleTypes" VkExternalMemoryImageCreateInfoNV where
@@ -223,29 +166,31 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkExternalMemoryImageCreateInfoNV, handleTypes}
 
-instance CanReadField "handleTypes"
-           VkExternalMemoryImageCreateInfoNV
-         where
-        {-# INLINE getField #-}
-        getField = vkHandleTypes
+instance {-# OVERLAPPING #-}
+         CanReadField "handleTypes" VkExternalMemoryImageCreateInfoNV where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkExternalMemoryImageCreateInfoNV, handleTypes})
 
         {-# INLINE readField #-}
-        readField = readVkHandleTypes
+        readField p
+          = peekByteOff p #{offset VkExternalMemoryImageCreateInfoNV, handleTypes}
 
-instance CanWriteField "handleTypes"
-           VkExternalMemoryImageCreateInfoNV
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "handleTypes" VkExternalMemoryImageCreateInfoNV where
         {-# INLINE writeField #-}
-        writeField = writeVkHandleTypes
+        writeField p
+          = pokeByteOff p #{offset VkExternalMemoryImageCreateInfoNV, handleTypes}
 
 instance Show VkExternalMemoryImageCreateInfoNV where
         showsPrec d x
           = showString "VkExternalMemoryImageCreateInfoNV {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkHandleTypes = " .
-                            showsPrec d (vkHandleTypes x) . showChar '}'
+                          showString "handleTypes = " .
+                            showsPrec d (getField @"handleTypes" x) . showChar '}'

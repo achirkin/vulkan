@@ -8,6 +8,7 @@
 {-# LANGUAGE PatternSynonyms       #-}
 {-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 {-# LANGUAGE UndecidableInstances  #-}
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMemoryProperties
@@ -22,7 +23,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Struct.VkMemoryHeap (VkMemoryHeap)
 import           Graphics.Vulkan.Types.Struct.VkMemoryType (VkMemoryType)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                          (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDeviceMemoryProperties {
@@ -88,28 +88,6 @@ instance VulkanMarshal VkPhysicalDeviceMemoryProperties where
         type StructExtends VkPhysicalDeviceMemoryProperties = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkMemoryTypeCount VkPhysicalDeviceMemoryProperties where
-        type VkMemoryTypeCountMType VkPhysicalDeviceMemoryProperties =
-             Word32
-
-        {-# NOINLINE vkMemoryTypeCount #-}
-        vkMemoryTypeCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceMemoryProperties, memoryTypeCount})
-
-        {-# INLINE vkMemoryTypeCountByteOffset #-}
-        vkMemoryTypeCountByteOffset ~_
-          = #{offset VkPhysicalDeviceMemoryProperties, memoryTypeCount}
-
-        {-# INLINE readVkMemoryTypeCount #-}
-        readVkMemoryTypeCount p
-          = peekByteOff p #{offset VkPhysicalDeviceMemoryProperties, memoryTypeCount}
-
-        {-# INLINE writeVkMemoryTypeCount #-}
-        writeVkMemoryTypeCount p
-          = pokeByteOff p #{offset VkPhysicalDeviceMemoryProperties, memoryTypeCount}
-
-instance {-# OVERLAPPING #-}
          HasField "memoryTypeCount" VkPhysicalDeviceMemoryProperties where
         type FieldType "memoryTypeCount" VkPhysicalDeviceMemoryProperties =
              Word32
@@ -130,48 +108,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceMemoryProperties, memoryTypeCount}
 
-instance CanReadField "memoryTypeCount"
-           VkPhysicalDeviceMemoryProperties
+instance {-# OVERLAPPING #-}
+         CanReadField "memoryTypeCount" VkPhysicalDeviceMemoryProperties
          where
-        {-# INLINE getField #-}
-        getField = vkMemoryTypeCount
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceMemoryProperties, memoryTypeCount})
 
         {-# INLINE readField #-}
-        readField = readVkMemoryTypeCount
-
-instance CanWriteField "memoryTypeCount"
-           VkPhysicalDeviceMemoryProperties
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkMemoryTypeCount
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceMemoryProperties, memoryTypeCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkMemoryTypesArray VkPhysicalDeviceMemoryProperties where
-        type VkMemoryTypesArrayMType VkPhysicalDeviceMemoryProperties =
-             VkMemoryType
-
-        {-# NOINLINE vkMemoryTypesArray #-}
-        vkMemoryTypesArray x idx
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 (idx * sizeOf (undefined :: VkMemoryType) +
-                    #{offset VkPhysicalDeviceMemoryProperties, memoryTypes}))
-
-        {-# INLINE vkMemoryTypesArrayByteOffset #-}
-        vkMemoryTypesArrayByteOffset ~_
-          = #{offset VkPhysicalDeviceMemoryProperties, memoryTypes}
-
-        {-# INLINE readVkMemoryTypesArray #-}
-        readVkMemoryTypesArray p idx
-          = peekByteOff p
-              (idx * sizeOf (undefined :: VkMemoryType) +
-                 #{offset VkPhysicalDeviceMemoryProperties, memoryTypes})
-
-        {-# INLINE writeVkMemoryTypesArray #-}
-        writeVkMemoryTypesArray p idx
-          = pokeByteOff p
-              (idx * sizeOf (undefined :: VkMemoryType) +
-                 #{offset VkPhysicalDeviceMemoryProperties, memoryTypes})
+         CanWriteField "memoryTypeCount" VkPhysicalDeviceMemoryProperties
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceMemoryProperties, memoryTypeCount}
 
 instance {-# OVERLAPPING #-}
          HasField "memoryTypes" VkPhysicalDeviceMemoryProperties where
@@ -191,7 +145,8 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceMemoryProperties, memoryTypes}
 
-instance (KnownNat idx,
+instance {-# OVERLAPPING #-}
+         (KnownNat idx,
           IndexInBounds "memoryTypes" idx
             VkPhysicalDeviceMemoryProperties) =>
          CanReadFieldArray "memoryTypes" idx
@@ -220,16 +175,25 @@ instance (KnownNat idx,
         fieldArrayLength = VK_MAX_MEMORY_TYPES
 
         {-# INLINE getFieldArray #-}
-        getFieldArray x
-          = vkMemoryTypesArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+        getFieldArray = f
+          where {-# NOINLINE f #-}
+                f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
+                off
+                  = #{offset VkPhysicalDeviceMemoryProperties, memoryTypes}
+                      +
+                      sizeOf (undefined :: VkMemoryType) *
+                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
         {-# INLINE readFieldArray #-}
-        readFieldArray x
-          = readVkMemoryTypesArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+        readFieldArray p
+          = peekByteOff p
+              (#{offset VkPhysicalDeviceMemoryProperties, memoryTypes}
+                 +
+                 sizeOf (undefined :: VkMemoryType) *
+                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
 
-instance (KnownNat idx,
+instance {-# OVERLAPPING #-}
+         (KnownNat idx,
           IndexInBounds "memoryTypes" idx
             VkPhysicalDeviceMemoryProperties) =>
          CanWriteFieldArray "memoryTypes" idx
@@ -252,31 +216,12 @@ instance (KnownNat idx,
                        #-}
 
         {-# INLINE writeFieldArray #-}
-        writeFieldArray x
-          = writeVkMemoryTypesArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
-
-instance {-# OVERLAPPING #-}
-         HasVkMemoryHeapCount VkPhysicalDeviceMemoryProperties where
-        type VkMemoryHeapCountMType VkPhysicalDeviceMemoryProperties =
-             Word32
-
-        {-# NOINLINE vkMemoryHeapCount #-}
-        vkMemoryHeapCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceMemoryProperties, memoryHeapCount})
-
-        {-# INLINE vkMemoryHeapCountByteOffset #-}
-        vkMemoryHeapCountByteOffset ~_
-          = #{offset VkPhysicalDeviceMemoryProperties, memoryHeapCount}
-
-        {-# INLINE readVkMemoryHeapCount #-}
-        readVkMemoryHeapCount p
-          = peekByteOff p #{offset VkPhysicalDeviceMemoryProperties, memoryHeapCount}
-
-        {-# INLINE writeVkMemoryHeapCount #-}
-        writeVkMemoryHeapCount p
-          = pokeByteOff p #{offset VkPhysicalDeviceMemoryProperties, memoryHeapCount}
+        writeFieldArray p
+          = pokeByteOff p
+              (#{offset VkPhysicalDeviceMemoryProperties, memoryTypes}
+                 +
+                 sizeOf (undefined :: VkMemoryType) *
+                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasField "memoryHeapCount" VkPhysicalDeviceMemoryProperties where
@@ -299,48 +244,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceMemoryProperties, memoryHeapCount}
 
-instance CanReadField "memoryHeapCount"
-           VkPhysicalDeviceMemoryProperties
+instance {-# OVERLAPPING #-}
+         CanReadField "memoryHeapCount" VkPhysicalDeviceMemoryProperties
          where
-        {-# INLINE getField #-}
-        getField = vkMemoryHeapCount
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceMemoryProperties, memoryHeapCount})
 
         {-# INLINE readField #-}
-        readField = readVkMemoryHeapCount
-
-instance CanWriteField "memoryHeapCount"
-           VkPhysicalDeviceMemoryProperties
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkMemoryHeapCount
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceMemoryProperties, memoryHeapCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkMemoryHeapsArray VkPhysicalDeviceMemoryProperties where
-        type VkMemoryHeapsArrayMType VkPhysicalDeviceMemoryProperties =
-             VkMemoryHeap
-
-        {-# NOINLINE vkMemoryHeapsArray #-}
-        vkMemoryHeapsArray x idx
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 (idx * sizeOf (undefined :: VkMemoryHeap) +
-                    #{offset VkPhysicalDeviceMemoryProperties, memoryHeaps}))
-
-        {-# INLINE vkMemoryHeapsArrayByteOffset #-}
-        vkMemoryHeapsArrayByteOffset ~_
-          = #{offset VkPhysicalDeviceMemoryProperties, memoryHeaps}
-
-        {-# INLINE readVkMemoryHeapsArray #-}
-        readVkMemoryHeapsArray p idx
-          = peekByteOff p
-              (idx * sizeOf (undefined :: VkMemoryHeap) +
-                 #{offset VkPhysicalDeviceMemoryProperties, memoryHeaps})
-
-        {-# INLINE writeVkMemoryHeapsArray #-}
-        writeVkMemoryHeapsArray p idx
-          = pokeByteOff p
-              (idx * sizeOf (undefined :: VkMemoryHeap) +
-                 #{offset VkPhysicalDeviceMemoryProperties, memoryHeaps})
+         CanWriteField "memoryHeapCount" VkPhysicalDeviceMemoryProperties
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceMemoryProperties, memoryHeapCount}
 
 instance {-# OVERLAPPING #-}
          HasField "memoryHeaps" VkPhysicalDeviceMemoryProperties where
@@ -360,7 +281,8 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceMemoryProperties, memoryHeaps}
 
-instance (KnownNat idx,
+instance {-# OVERLAPPING #-}
+         (KnownNat idx,
           IndexInBounds "memoryHeaps" idx
             VkPhysicalDeviceMemoryProperties) =>
          CanReadFieldArray "memoryHeaps" idx
@@ -389,16 +311,25 @@ instance (KnownNat idx,
         fieldArrayLength = VK_MAX_MEMORY_HEAPS
 
         {-# INLINE getFieldArray #-}
-        getFieldArray x
-          = vkMemoryHeapsArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+        getFieldArray = f
+          where {-# NOINLINE f #-}
+                f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
+                off
+                  = #{offset VkPhysicalDeviceMemoryProperties, memoryHeaps}
+                      +
+                      sizeOf (undefined :: VkMemoryHeap) *
+                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
         {-# INLINE readFieldArray #-}
-        readFieldArray x
-          = readVkMemoryHeapsArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+        readFieldArray p
+          = peekByteOff p
+              (#{offset VkPhysicalDeviceMemoryProperties, memoryHeaps}
+                 +
+                 sizeOf (undefined :: VkMemoryHeap) *
+                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
 
-instance (KnownNat idx,
+instance {-# OVERLAPPING #-}
+         (KnownNat idx,
           IndexInBounds "memoryHeaps" idx
             VkPhysicalDeviceMemoryProperties) =>
          CanWriteFieldArray "memoryHeaps" idx
@@ -421,25 +352,52 @@ instance (KnownNat idx,
                        #-}
 
         {-# INLINE writeFieldArray #-}
-        writeFieldArray x
-          = writeVkMemoryHeapsArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+        writeFieldArray p
+          = pokeByteOff p
+              (#{offset VkPhysicalDeviceMemoryProperties, memoryHeaps}
+                 +
+                 sizeOf (undefined :: VkMemoryHeap) *
+                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
 
 instance Show VkPhysicalDeviceMemoryProperties where
         showsPrec d x
           = showString "VkPhysicalDeviceMemoryProperties {" .
-              showString "vkMemoryTypeCount = " .
-                showsPrec d (vkMemoryTypeCount x) .
+              showString "memoryTypeCount = " .
+                showsPrec d (getField @"memoryTypeCount" x) .
                   showString ", " .
-                    showString "vkMemoryTypesArray = [" .
-                      showsPrec d (map (vkMemoryTypesArray x) [1 .. VK_MAX_MEMORY_TYPES])
-                        .
-                        showChar ']' .
-                          showString ", " .
-                            showString "vkMemoryHeapCount = " .
-                              showsPrec d (vkMemoryHeapCount x) .
-                                showString ", " .
-                                  showString "vkMemoryHeapsArray = [" .
-                                    showsPrec d
-                                      (map (vkMemoryHeapsArray x) [1 .. VK_MAX_MEMORY_HEAPS])
-                                      . showChar ']' . showChar '}'
+                    (showString "memoryTypes = [" .
+                       showsPrec d
+                         (let s = sizeOf
+                                    (undefined ::
+                                       FieldType "memoryTypes" VkPhysicalDeviceMemoryProperties)
+                              o = fieldOffset @"memoryTypes" @VkPhysicalDeviceMemoryProperties
+                              f i
+                                = peekByteOff (unsafePtr x) i ::
+                                    IO (FieldType "memoryTypes" VkPhysicalDeviceMemoryProperties)
+                            in
+                            unsafeDupablePerformIO . mapM f $
+                              map (\ i -> o + i * s) [0 .. VK_MAX_MEMORY_TYPES - 1])
+                         . showChar ']')
+                      .
+                      showString ", " .
+                        showString "memoryHeapCount = " .
+                          showsPrec d (getField @"memoryHeapCount" x) .
+                            showString ", " .
+                              (showString "memoryHeaps = [" .
+                                 showsPrec d
+                                   (let s = sizeOf
+                                              (undefined ::
+                                                 FieldType "memoryHeaps"
+                                                   VkPhysicalDeviceMemoryProperties)
+                                        o = fieldOffset @"memoryHeaps"
+                                              @VkPhysicalDeviceMemoryProperties
+                                        f i
+                                          = peekByteOff (unsafePtr x) i ::
+                                              IO
+                                                (FieldType "memoryHeaps"
+                                                   VkPhysicalDeviceMemoryProperties)
+                                      in
+                                      unsafeDupablePerformIO . mapM f $
+                                        map (\ i -> o + i * s) [0 .. VK_MAX_MEMORY_HEAPS - 1])
+                                   . showChar ']')
+                                . showChar '}'

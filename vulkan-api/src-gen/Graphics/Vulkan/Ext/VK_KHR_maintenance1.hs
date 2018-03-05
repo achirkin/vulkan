@@ -19,7 +19,8 @@ module Graphics.Vulkan.Ext.VK_KHR_maintenance1
         -- type: @device@
         --
         -- Extension number: @70@
-        vkTrimCommandPoolKHR, module Graphics.Vulkan.Marshal,
+        vkTrimCommandPoolKHR, vkTrimCommandPoolKHRSafe,
+        module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Bitmasks,
         module Graphics.Vulkan.Types.Handles,
@@ -52,6 +53,20 @@ import           Graphics.Vulkan.Types.Handles
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkTrimCommandPoolKHR.html vkTrimCommandPoolKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkTrimCommandPoolKHR"
                vkTrimCommandPoolKHR ::
+               VkDevice -- ^ device
+                        -> VkCommandPool -- ^ commandPool
+                                         -> VkCommandPoolTrimFlagsKHR -- ^ flags
+                                                                      -> IO ()
+
+-- | > () vkTrimCommandPoolKHR
+--   >     ( VkDevice device
+--   >     , VkCommandPool commandPool
+--   >     , VkCommandPoolTrimFlagsKHR flags
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkTrimCommandPoolKHR.html vkTrimCommandPoolKHR registry at www.khronos.org>
+foreign import ccall safe "vkTrimCommandPoolKHR"
+               vkTrimCommandPoolKHRSafe ::
                VkDevice -- ^ device
                         -> VkCommandPool -- ^ commandPool
                                          -> VkCommandPoolTrimFlagsKHR -- ^ flags

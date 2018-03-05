@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkFenceCreateInfo
        (VkFenceCreateInfo(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkFenceCreateFlags (VkFenceCreateFlags)
 import           Graphics.Vulkan.Types.Enum.VkStructureType    (VkStructureType)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                              (unsafeDupablePerformIO)
 
 -- | > typedef struct VkFenceCreateInfo {
@@ -70,26 +70,6 @@ instance VulkanMarshal VkFenceCreateInfo where
         type ReturnedOnly VkFenceCreateInfo = 'False -- ' closing tick for hsc2hs
         type StructExtends VkFenceCreateInfo = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkFenceCreateInfo where
-        type VkSTypeMType VkFenceCreateInfo = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkFenceCreateInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkFenceCreateInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkFenceCreateInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkFenceCreateInfo, sType}
-
 instance {-# OVERLAPPING #-} HasField "sType" VkFenceCreateInfo
          where
         type FieldType "sType" VkFenceCreateInfo = VkStructureType
@@ -104,36 +84,22 @@ instance {-# OVERLAPPING #-} HasField "sType" VkFenceCreateInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkFenceCreateInfo, sType}
 
-instance CanReadField "sType" VkFenceCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-} CanReadField "sType" VkFenceCreateInfo
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkFenceCreateInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkFenceCreateInfo, sType}
 
-instance CanWriteField "sType" VkFenceCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkFenceCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkFenceCreateInfo where
-        type VkPNextMType VkFenceCreateInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkFenceCreateInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkFenceCreateInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkFenceCreateInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkFenceCreateInfo, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkFenceCreateInfo, sType}
 
 instance {-# OVERLAPPING #-} HasField "pNext" VkFenceCreateInfo
          where
@@ -149,36 +115,22 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkFenceCreateInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkFenceCreateInfo, pNext}
 
-instance CanReadField "pNext" VkFenceCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-} CanReadField "pNext" VkFenceCreateInfo
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkFenceCreateInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkFenceCreateInfo, pNext}
 
-instance CanWriteField "pNext" VkFenceCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext" VkFenceCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-} HasVkFlags VkFenceCreateInfo where
-        type VkFlagsMType VkFenceCreateInfo = VkFenceCreateFlags
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkFenceCreateInfo, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkFenceCreateInfo, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkFenceCreateInfo, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkFenceCreateInfo, flags}
+        writeField p
+          = pokeByteOff p #{offset VkFenceCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-} HasField "flags" VkFenceCreateInfo
          where
@@ -194,24 +146,31 @@ instance {-# OVERLAPPING #-} HasField "flags" VkFenceCreateInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkFenceCreateInfo, flags}
 
-instance CanReadField "flags" VkFenceCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-} CanReadField "flags" VkFenceCreateInfo
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkFenceCreateInfo, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
+        readField p
+          = peekByteOff p #{offset VkFenceCreateInfo, flags}
 
-instance CanWriteField "flags" VkFenceCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "flags" VkFenceCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        writeField p
+          = pokeByteOff p #{offset VkFenceCreateInfo, flags}
 
 instance Show VkFenceCreateInfo where
         showsPrec d x
           = showString "VkFenceCreateInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " . showsPrec d (vkFlags x) . showChar '}'
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) . showChar '}'

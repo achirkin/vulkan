@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
        (VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR(..)) where
@@ -16,7 +17,6 @@ import           Graphics.Vulkan.Types.BaseTypes                           (VkBo
 import           Graphics.Vulkan.Types.Enum.VkStructureType                (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkDeviceCreateInfo           (VkDeviceCreateInfo)
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures2KHR (VkPhysicalDeviceFeatures2KHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                          (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR {
@@ -93,28 +93,6 @@ instance VulkanMarshal
              = '[VkPhysicalDeviceFeatures2KHR, VkDeviceCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR where
-        type VkSTypeMType VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
-             = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
          where
         type FieldType "sType"
@@ -138,42 +116,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, sType}
 
-instance CanReadField "sType"
+instance {-# OVERLAPPING #-}
+         CanReadField "sType"
            VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
          where
-        {-# INLINE getField #-}
-        getField = vkSType
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, sType}
 
-instance CanWriteField "sType"
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType"
            VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-}
-         HasVkPNext VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR where
-        type VkPNextMType VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
-             = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
@@ -199,45 +161,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, pNext}
 
-instance CanReadField "pNext"
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext"
            VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
          where
-        {-# INLINE getField #-}
-        getField = vkPNext
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, pNext}
 
-instance CanWriteField "pNext"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext"
            VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-}
-         HasVkSamplerYcbcrConversion
-           VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
-         where
-        type VkSamplerYcbcrConversionMType
-               VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
-             = VkBool32
-
-        {-# NOINLINE vkSamplerYcbcrConversion #-}
-        vkSamplerYcbcrConversion x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, samplerYcbcrConversion})
-
-        {-# INLINE vkSamplerYcbcrConversionByteOffset #-}
-        vkSamplerYcbcrConversionByteOffset ~_
-          = #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, samplerYcbcrConversion}
-
-        {-# INLINE readVkSamplerYcbcrConversion #-}
-        readVkSamplerYcbcrConversion p
-          = peekByteOff p #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, samplerYcbcrConversion}
-
-        {-# INLINE writeVkSamplerYcbcrConversion #-}
-        writeVkSamplerYcbcrConversion p
-          = pokeByteOff p #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, samplerYcbcrConversion}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "samplerYcbcrConversion"
@@ -264,31 +207,37 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, samplerYcbcrConversion}
 
-instance CanReadField "samplerYcbcrConversion"
+instance {-# OVERLAPPING #-}
+         CanReadField "samplerYcbcrConversion"
            VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
          where
-        {-# INLINE getField #-}
-        getField = vkSamplerYcbcrConversion
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, samplerYcbcrConversion})
 
         {-# INLINE readField #-}
-        readField = readVkSamplerYcbcrConversion
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, samplerYcbcrConversion}
 
-instance CanWriteField "samplerYcbcrConversion"
+instance {-# OVERLAPPING #-}
+         CanWriteField "samplerYcbcrConversion"
            VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSamplerYcbcrConversion
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR, samplerYcbcrConversion}
 
 instance Show VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR
          where
         showsPrec d x
           = showString "VkPhysicalDeviceSamplerYcbcrConversionFeaturesKHR {"
               .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkSamplerYcbcrConversion = " .
-                            showsPrec d (vkSamplerYcbcrConversion x) . showChar '}'
+                          showString "samplerYcbcrConversion = " .
+                            showsPrec d (getField @"samplerYcbcrConversion" x) . showChar '}'

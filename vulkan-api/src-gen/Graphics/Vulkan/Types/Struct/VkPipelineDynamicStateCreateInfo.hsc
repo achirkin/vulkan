@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPipelineDynamicStateCreateInfo
        (VkPipelineDynamicStateCreateInfo(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Bitmasks             (VkPipelineDynamicStateCreateFlags)
 import           Graphics.Vulkan.Types.Enum.VkDynamicState  (VkDynamicState)
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPipelineDynamicStateCreateInfo {
@@ -81,28 +81,6 @@ instance VulkanMarshal VkPipelineDynamicStateCreateInfo where
         type StructExtends VkPipelineDynamicStateCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPipelineDynamicStateCreateInfo where
-        type VkSTypeMType VkPipelineDynamicStateCreateInfo =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineDynamicStateCreateInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPipelineDynamicStateCreateInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPipelineDynamicStateCreateInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPipelineDynamicStateCreateInfo, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPipelineDynamicStateCreateInfo where
         type FieldType "sType" VkPipelineDynamicStateCreateInfo =
              VkStructureType
@@ -119,39 +97,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineDynamicStateCreateInfo, sType}
 
-instance CanReadField "sType" VkPipelineDynamicStateCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkPipelineDynamicStateCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineDynamicStateCreateInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkPipelineDynamicStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkPipelineDynamicStateCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkPipelineDynamicStateCreateInfo where
-        type VkPNextMType VkPipelineDynamicStateCreateInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineDynamicStateCreateInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPipelineDynamicStateCreateInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPipelineDynamicStateCreateInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPipelineDynamicStateCreateInfo, pNext}
+         CanWriteField "sType" VkPipelineDynamicStateCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineDynamicStateCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPipelineDynamicStateCreateInfo where
@@ -169,40 +130,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineDynamicStateCreateInfo, pNext}
 
-instance CanReadField "pNext" VkPipelineDynamicStateCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkPipelineDynamicStateCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineDynamicStateCreateInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkPipelineDynamicStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkPipelineDynamicStateCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkFlags VkPipelineDynamicStateCreateInfo where
-        type VkFlagsMType VkPipelineDynamicStateCreateInfo =
-             VkPipelineDynamicStateCreateFlags
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineDynamicStateCreateInfo, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkPipelineDynamicStateCreateInfo, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkPipelineDynamicStateCreateInfo, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkPipelineDynamicStateCreateInfo, flags}
+         CanWriteField "pNext" VkPipelineDynamicStateCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineDynamicStateCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkPipelineDynamicStateCreateInfo where
@@ -220,40 +163,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineDynamicStateCreateInfo, flags}
 
-instance CanReadField "flags" VkPipelineDynamicStateCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkPipelineDynamicStateCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineDynamicStateCreateInfo, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags" VkPipelineDynamicStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkPipelineDynamicStateCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkDynamicStateCount VkPipelineDynamicStateCreateInfo where
-        type VkDynamicStateCountMType VkPipelineDynamicStateCreateInfo =
-             Word32
-
-        {-# NOINLINE vkDynamicStateCount #-}
-        vkDynamicStateCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineDynamicStateCreateInfo, dynamicStateCount})
-
-        {-# INLINE vkDynamicStateCountByteOffset #-}
-        vkDynamicStateCountByteOffset ~_
-          = #{offset VkPipelineDynamicStateCreateInfo, dynamicStateCount}
-
-        {-# INLINE readVkDynamicStateCount #-}
-        readVkDynamicStateCount p
-          = peekByteOff p #{offset VkPipelineDynamicStateCreateInfo, dynamicStateCount}
-
-        {-# INLINE writeVkDynamicStateCount #-}
-        writeVkDynamicStateCount p
-          = pokeByteOff p #{offset VkPipelineDynamicStateCreateInfo, dynamicStateCount}
+         CanWriteField "flags" VkPipelineDynamicStateCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineDynamicStateCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "dynamicStateCount" VkPipelineDynamicStateCreateInfo where
@@ -277,42 +202,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineDynamicStateCreateInfo, dynamicStateCount}
 
-instance CanReadField "dynamicStateCount"
-           VkPipelineDynamicStateCreateInfo
+instance {-# OVERLAPPING #-}
+         CanReadField "dynamicStateCount" VkPipelineDynamicStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkDynamicStateCount
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineDynamicStateCreateInfo, dynamicStateCount})
 
         {-# INLINE readField #-}
-        readField = readVkDynamicStateCount
-
-instance CanWriteField "dynamicStateCount"
-           VkPipelineDynamicStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkDynamicStateCount
+        readField p
+          = peekByteOff p #{offset VkPipelineDynamicStateCreateInfo, dynamicStateCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPDynamicStates VkPipelineDynamicStateCreateInfo where
-        type VkPDynamicStatesMType VkPipelineDynamicStateCreateInfo =
-             Ptr VkDynamicState
-
-        {-# NOINLINE vkPDynamicStates #-}
-        vkPDynamicStates x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineDynamicStateCreateInfo, pDynamicStates})
-
-        {-# INLINE vkPDynamicStatesByteOffset #-}
-        vkPDynamicStatesByteOffset ~_
-          = #{offset VkPipelineDynamicStateCreateInfo, pDynamicStates}
-
-        {-# INLINE readVkPDynamicStates #-}
-        readVkPDynamicStates p
-          = peekByteOff p #{offset VkPipelineDynamicStateCreateInfo, pDynamicStates}
-
-        {-# INLINE writeVkPDynamicStates #-}
-        writeVkPDynamicStates p
-          = pokeByteOff p #{offset VkPipelineDynamicStateCreateInfo, pDynamicStates}
+         CanWriteField "dynamicStateCount" VkPipelineDynamicStateCreateInfo
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineDynamicStateCreateInfo, dynamicStateCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pDynamicStates" VkPipelineDynamicStateCreateInfo where
@@ -334,35 +241,39 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineDynamicStateCreateInfo, pDynamicStates}
 
-instance CanReadField "pDynamicStates"
-           VkPipelineDynamicStateCreateInfo
+instance {-# OVERLAPPING #-}
+         CanReadField "pDynamicStates" VkPipelineDynamicStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkPDynamicStates
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineDynamicStateCreateInfo, pDynamicStates})
 
         {-# INLINE readField #-}
-        readField = readVkPDynamicStates
+        readField p
+          = peekByteOff p #{offset VkPipelineDynamicStateCreateInfo, pDynamicStates}
 
-instance CanWriteField "pDynamicStates"
-           VkPipelineDynamicStateCreateInfo
+instance {-# OVERLAPPING #-}
+         CanWriteField "pDynamicStates" VkPipelineDynamicStateCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPDynamicStates
+        writeField p
+          = pokeByteOff p #{offset VkPipelineDynamicStateCreateInfo, pDynamicStates}
 
 instance Show VkPipelineDynamicStateCreateInfo where
         showsPrec d x
           = showString "VkPipelineDynamicStateCreateInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkDynamicStateCount = " .
-                                  showsPrec d (vkDynamicStateCount x) .
+                                showString "dynamicStateCount = " .
+                                  showsPrec d (getField @"dynamicStateCount" x) .
                                     showString ", " .
-                                      showString "vkPDynamicStates = " .
-                                        showsPrec d (vkPDynamicStates x) . showChar '}'
+                                      showString "pDynamicStates = " .
+                                        showsPrec d (getField @"pDynamicStates" x) . showChar '}'

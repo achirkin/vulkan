@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkRenderPassMultiviewCreateInfoKHX
        (VkRenderPassMultiviewCreateInfoKHX(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType          (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkRenderPassCreateInfo (VkRenderPassCreateInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                    (unsafeDupablePerformIO)
 
 -- | > typedef struct VkRenderPassMultiviewCreateInfoKHX {
@@ -86,28 +86,6 @@ instance VulkanMarshal VkRenderPassMultiviewCreateInfoKHX where
              '[VkRenderPassCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkRenderPassMultiviewCreateInfoKHX where
-        type VkSTypeMType VkRenderPassMultiviewCreateInfoKHX =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassMultiviewCreateInfoKHX, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkRenderPassMultiviewCreateInfoKHX, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkRenderPassMultiviewCreateInfoKHX where
         type FieldType "sType" VkRenderPassMultiviewCreateInfoKHX =
              VkStructureType
@@ -125,39 +103,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassMultiviewCreateInfoKHX, sType}
 
-instance CanReadField "sType" VkRenderPassMultiviewCreateInfoKHX
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkRenderPassMultiviewCreateInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassMultiviewCreateInfoKHX, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkRenderPassMultiviewCreateInfoKHX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkRenderPassMultiviewCreateInfoKHX where
-        type VkPNextMType VkRenderPassMultiviewCreateInfoKHX = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassMultiviewCreateInfoKHX, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkRenderPassMultiviewCreateInfoKHX, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, pNext}
+         CanWriteField "sType" VkRenderPassMultiviewCreateInfoKHX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkRenderPassMultiviewCreateInfoKHX where
@@ -177,40 +138,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassMultiviewCreateInfoKHX, pNext}
 
-instance CanReadField "pNext" VkRenderPassMultiviewCreateInfoKHX
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkRenderPassMultiviewCreateInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassMultiviewCreateInfoKHX, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkRenderPassMultiviewCreateInfoKHX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkSubpassCount VkRenderPassMultiviewCreateInfoKHX where
-        type VkSubpassCountMType VkRenderPassMultiviewCreateInfoKHX =
-             Word32
-
-        {-# NOINLINE vkSubpassCount #-}
-        vkSubpassCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassMultiviewCreateInfoKHX, subpassCount})
-
-        {-# INLINE vkSubpassCountByteOffset #-}
-        vkSubpassCountByteOffset ~_
-          = #{offset VkRenderPassMultiviewCreateInfoKHX, subpassCount}
-
-        {-# INLINE readVkSubpassCount #-}
-        readVkSubpassCount p
-          = peekByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, subpassCount}
-
-        {-# INLINE writeVkSubpassCount #-}
-        writeVkSubpassCount p
-          = pokeByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, subpassCount}
+         CanWriteField "pNext" VkRenderPassMultiviewCreateInfoKHX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "subpassCount" VkRenderPassMultiviewCreateInfoKHX where
@@ -232,42 +175,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassMultiviewCreateInfoKHX, subpassCount}
 
-instance CanReadField "subpassCount"
-           VkRenderPassMultiviewCreateInfoKHX
+instance {-# OVERLAPPING #-}
+         CanReadField "subpassCount" VkRenderPassMultiviewCreateInfoKHX
          where
-        {-# INLINE getField #-}
-        getField = vkSubpassCount
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassMultiviewCreateInfoKHX, subpassCount})
 
         {-# INLINE readField #-}
-        readField = readVkSubpassCount
-
-instance CanWriteField "subpassCount"
-           VkRenderPassMultiviewCreateInfoKHX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSubpassCount
+        readField p
+          = peekByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, subpassCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPViewMasks VkRenderPassMultiviewCreateInfoKHX where
-        type VkPViewMasksMType VkRenderPassMultiviewCreateInfoKHX =
-             Ptr Word32
-
-        {-# NOINLINE vkPViewMasks #-}
-        vkPViewMasks x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassMultiviewCreateInfoKHX, pViewMasks})
-
-        {-# INLINE vkPViewMasksByteOffset #-}
-        vkPViewMasksByteOffset ~_
-          = #{offset VkRenderPassMultiviewCreateInfoKHX, pViewMasks}
-
-        {-# INLINE readVkPViewMasks #-}
-        readVkPViewMasks p
-          = peekByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, pViewMasks}
-
-        {-# INLINE writeVkPViewMasks #-}
-        writeVkPViewMasks p
-          = pokeByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, pViewMasks}
+         CanWriteField "subpassCount" VkRenderPassMultiviewCreateInfoKHX
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, subpassCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pViewMasks" VkRenderPassMultiviewCreateInfoKHX where
@@ -287,42 +212,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassMultiviewCreateInfoKHX, pViewMasks}
 
-instance CanReadField "pViewMasks"
-           VkRenderPassMultiviewCreateInfoKHX
-         where
-        {-# INLINE getField #-}
-        getField = vkPViewMasks
+instance {-# OVERLAPPING #-}
+         CanReadField "pViewMasks" VkRenderPassMultiviewCreateInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassMultiviewCreateInfoKHX, pViewMasks})
 
         {-# INLINE readField #-}
-        readField = readVkPViewMasks
-
-instance CanWriteField "pViewMasks"
-           VkRenderPassMultiviewCreateInfoKHX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPViewMasks
+        readField p
+          = peekByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, pViewMasks}
 
 instance {-# OVERLAPPING #-}
-         HasVkDependencyCount VkRenderPassMultiviewCreateInfoKHX where
-        type VkDependencyCountMType VkRenderPassMultiviewCreateInfoKHX =
-             Word32
-
-        {-# NOINLINE vkDependencyCount #-}
-        vkDependencyCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassMultiviewCreateInfoKHX, dependencyCount})
-
-        {-# INLINE vkDependencyCountByteOffset #-}
-        vkDependencyCountByteOffset ~_
-          = #{offset VkRenderPassMultiviewCreateInfoKHX, dependencyCount}
-
-        {-# INLINE readVkDependencyCount #-}
-        readVkDependencyCount p
-          = peekByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, dependencyCount}
-
-        {-# INLINE writeVkDependencyCount #-}
-        writeVkDependencyCount p
-          = pokeByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, dependencyCount}
+         CanWriteField "pViewMasks" VkRenderPassMultiviewCreateInfoKHX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, pViewMasks}
 
 instance {-# OVERLAPPING #-}
          HasField "dependencyCount" VkRenderPassMultiviewCreateInfoKHX where
@@ -346,42 +251,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassMultiviewCreateInfoKHX, dependencyCount}
 
-instance CanReadField "dependencyCount"
-           VkRenderPassMultiviewCreateInfoKHX
+instance {-# OVERLAPPING #-}
+         CanReadField "dependencyCount" VkRenderPassMultiviewCreateInfoKHX
          where
-        {-# INLINE getField #-}
-        getField = vkDependencyCount
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassMultiviewCreateInfoKHX, dependencyCount})
 
         {-# INLINE readField #-}
-        readField = readVkDependencyCount
-
-instance CanWriteField "dependencyCount"
-           VkRenderPassMultiviewCreateInfoKHX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkDependencyCount
+        readField p
+          = peekByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, dependencyCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPViewOffsets VkRenderPassMultiviewCreateInfoKHX where
-        type VkPViewOffsetsMType VkRenderPassMultiviewCreateInfoKHX =
-             Ptr Int32
-
-        {-# NOINLINE vkPViewOffsets #-}
-        vkPViewOffsets x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassMultiviewCreateInfoKHX, pViewOffsets})
-
-        {-# INLINE vkPViewOffsetsByteOffset #-}
-        vkPViewOffsetsByteOffset ~_
-          = #{offset VkRenderPassMultiviewCreateInfoKHX, pViewOffsets}
-
-        {-# INLINE readVkPViewOffsets #-}
-        readVkPViewOffsets p
-          = peekByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, pViewOffsets}
-
-        {-# INLINE writeVkPViewOffsets #-}
-        writeVkPViewOffsets p
-          = pokeByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, pViewOffsets}
+         CanWriteField "dependencyCount" VkRenderPassMultiviewCreateInfoKHX
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, dependencyCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pViewOffsets" VkRenderPassMultiviewCreateInfoKHX where
@@ -403,42 +290,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassMultiviewCreateInfoKHX, pViewOffsets}
 
-instance CanReadField "pViewOffsets"
-           VkRenderPassMultiviewCreateInfoKHX
+instance {-# OVERLAPPING #-}
+         CanReadField "pViewOffsets" VkRenderPassMultiviewCreateInfoKHX
          where
-        {-# INLINE getField #-}
-        getField = vkPViewOffsets
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassMultiviewCreateInfoKHX, pViewOffsets})
 
         {-# INLINE readField #-}
-        readField = readVkPViewOffsets
-
-instance CanWriteField "pViewOffsets"
-           VkRenderPassMultiviewCreateInfoKHX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPViewOffsets
+        readField p
+          = peekByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, pViewOffsets}
 
 instance {-# OVERLAPPING #-}
-         HasVkCorrelationMaskCount VkRenderPassMultiviewCreateInfoKHX where
-        type VkCorrelationMaskCountMType VkRenderPassMultiviewCreateInfoKHX
-             = Word32
-
-        {-# NOINLINE vkCorrelationMaskCount #-}
-        vkCorrelationMaskCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassMultiviewCreateInfoKHX, correlationMaskCount})
-
-        {-# INLINE vkCorrelationMaskCountByteOffset #-}
-        vkCorrelationMaskCountByteOffset ~_
-          = #{offset VkRenderPassMultiviewCreateInfoKHX, correlationMaskCount}
-
-        {-# INLINE readVkCorrelationMaskCount #-}
-        readVkCorrelationMaskCount p
-          = peekByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, correlationMaskCount}
-
-        {-# INLINE writeVkCorrelationMaskCount #-}
-        writeVkCorrelationMaskCount p
-          = pokeByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, correlationMaskCount}
+         CanWriteField "pViewOffsets" VkRenderPassMultiviewCreateInfoKHX
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, pViewOffsets}
 
 instance {-# OVERLAPPING #-}
          HasField "correlationMaskCount" VkRenderPassMultiviewCreateInfoKHX
@@ -464,42 +333,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassMultiviewCreateInfoKHX, correlationMaskCount}
 
-instance CanReadField "correlationMaskCount"
+instance {-# OVERLAPPING #-}
+         CanReadField "correlationMaskCount"
            VkRenderPassMultiviewCreateInfoKHX
          where
-        {-# INLINE getField #-}
-        getField = vkCorrelationMaskCount
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassMultiviewCreateInfoKHX, correlationMaskCount})
 
         {-# INLINE readField #-}
-        readField = readVkCorrelationMaskCount
+        readField p
+          = peekByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, correlationMaskCount}
 
-instance CanWriteField "correlationMaskCount"
+instance {-# OVERLAPPING #-}
+         CanWriteField "correlationMaskCount"
            VkRenderPassMultiviewCreateInfoKHX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkCorrelationMaskCount
-
-instance {-# OVERLAPPING #-}
-         HasVkPCorrelationMasks VkRenderPassMultiviewCreateInfoKHX where
-        type VkPCorrelationMasksMType VkRenderPassMultiviewCreateInfoKHX =
-             Ptr Word32
-
-        {-# NOINLINE vkPCorrelationMasks #-}
-        vkPCorrelationMasks x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassMultiviewCreateInfoKHX, pCorrelationMasks})
-
-        {-# INLINE vkPCorrelationMasksByteOffset #-}
-        vkPCorrelationMasksByteOffset ~_
-          = #{offset VkRenderPassMultiviewCreateInfoKHX, pCorrelationMasks}
-
-        {-# INLINE readVkPCorrelationMasks #-}
-        readVkPCorrelationMasks p
-          = peekByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, pCorrelationMasks}
-
-        {-# INLINE writeVkPCorrelationMasks #-}
-        writeVkPCorrelationMasks p
-          = pokeByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, pCorrelationMasks}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, correlationMaskCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pCorrelationMasks" VkRenderPassMultiviewCreateInfoKHX
@@ -525,45 +378,52 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassMultiviewCreateInfoKHX, pCorrelationMasks}
 
-instance CanReadField "pCorrelationMasks"
-           VkRenderPassMultiviewCreateInfoKHX
+instance {-# OVERLAPPING #-}
+         CanReadField "pCorrelationMasks" VkRenderPassMultiviewCreateInfoKHX
          where
-        {-# INLINE getField #-}
-        getField = vkPCorrelationMasks
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassMultiviewCreateInfoKHX, pCorrelationMasks})
 
         {-# INLINE readField #-}
-        readField = readVkPCorrelationMasks
+        readField p
+          = peekByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, pCorrelationMasks}
 
-instance CanWriteField "pCorrelationMasks"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pCorrelationMasks"
            VkRenderPassMultiviewCreateInfoKHX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPCorrelationMasks
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassMultiviewCreateInfoKHX, pCorrelationMasks}
 
 instance Show VkRenderPassMultiviewCreateInfoKHX where
         showsPrec d x
           = showString "VkRenderPassMultiviewCreateInfoKHX {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkSubpassCount = " .
-                            showsPrec d (vkSubpassCount x) .
+                          showString "subpassCount = " .
+                            showsPrec d (getField @"subpassCount" x) .
                               showString ", " .
-                                showString "vkPViewMasks = " .
-                                  showsPrec d (vkPViewMasks x) .
+                                showString "pViewMasks = " .
+                                  showsPrec d (getField @"pViewMasks" x) .
                                     showString ", " .
-                                      showString "vkDependencyCount = " .
-                                        showsPrec d (vkDependencyCount x) .
+                                      showString "dependencyCount = " .
+                                        showsPrec d (getField @"dependencyCount" x) .
                                           showString ", " .
-                                            showString "vkPViewOffsets = " .
-                                              showsPrec d (vkPViewOffsets x) .
+                                            showString "pViewOffsets = " .
+                                              showsPrec d (getField @"pViewOffsets" x) .
                                                 showString ", " .
-                                                  showString "vkCorrelationMaskCount = " .
-                                                    showsPrec d (vkCorrelationMaskCount x) .
+                                                  showString "correlationMaskCount = " .
+                                                    showsPrec d (getField @"correlationMaskCount" x)
+                                                      .
                                                       showString ", " .
-                                                        showString "vkPCorrelationMasks = " .
-                                                          showsPrec d (vkPCorrelationMasks x) .
-                                                            showChar '}'
+                                                        showString "pCorrelationMasks = " .
+                                                          showsPrec d
+                                                            (getField @"pCorrelationMasks" x)
+                                                            . showChar '}'

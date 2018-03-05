@@ -32,7 +32,8 @@ module Graphics.Vulkan.Ext.VK_KHR_android_surface
         -- > #include "vk_platform.h"
         --
         -- > #include <android/native_window.h>
-        vkCreateAndroidSurfaceKHR, module Graphics.Vulkan.Marshal,
+        vkCreateAndroidSurfaceKHR, vkCreateAndroidSurfaceKHRSafe,
+        module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,
@@ -74,6 +75,28 @@ import           Graphics.Vulkan.Types.Struct.VkAndroidSurfaceCreateInfoKHR
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateAndroidSurfaceKHR.html vkCreateAndroidSurfaceKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateAndroidSurfaceKHR"
                vkCreateAndroidSurfaceKHR ::
+               VkInstance -- ^ instance
+                          ->
+                 Ptr VkAndroidSurfaceCreateInfoKHR -- ^ pCreateInfo
+                                                   ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                                 -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
+--
+--   > VkResult vkCreateAndroidSurfaceKHR
+--   >     ( VkInstance instance
+--   >     , const VkAndroidSurfaceCreateInfoKHR* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkSurfaceKHR* pSurface
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateAndroidSurfaceKHR.html vkCreateAndroidSurfaceKHR registry at www.khronos.org>
+foreign import ccall safe "vkCreateAndroidSurfaceKHR"
+               vkCreateAndroidSurfaceKHRSafe ::
                VkInstance -- ^ instance
                           ->
                  Ptr VkAndroidSurfaceCreateInfoKHR -- ^ pCreateInfo

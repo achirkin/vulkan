@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceConservativeRasterizationPropertiesEXT
        (VkPhysicalDeviceConservativeRasterizationPropertiesEXT(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes                             (VkBool32)
 import           Graphics.Vulkan.Types.Enum.VkStructureType                  (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR (VkPhysicalDeviceProperties2KHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                            (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDeviceConservativeRasterizationPropertiesEXT {
@@ -114,30 +114,6 @@ instance VulkanMarshal
              = '[VkPhysicalDeviceProperties2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPhysicalDeviceConservativeRasterizationPropertiesEXT
-         where
-        type VkSTypeMType
-               VkPhysicalDeviceConservativeRasterizationPropertiesEXT
-             = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType"
            VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
@@ -162,44 +138,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, sType}
 
-instance CanReadField "sType"
+instance {-# OVERLAPPING #-}
+         CanReadField "sType"
            VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkSType
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, sType}
 
-instance CanWriteField "sType"
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType"
            VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-}
-         HasVkPNext VkPhysicalDeviceConservativeRasterizationPropertiesEXT
-         where
-        type VkPNextMType
-               VkPhysicalDeviceConservativeRasterizationPropertiesEXT
-             = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext"
@@ -226,45 +184,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, pNext}
 
-instance CanReadField "pNext"
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext"
            VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkPNext
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, pNext}
 
-instance CanWriteField "pNext"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext"
            VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-}
-         HasVkPrimitiveOverestimationSize
-           VkPhysicalDeviceConservativeRasterizationPropertiesEXT
-         where
-        type VkPrimitiveOverestimationSizeMType
-               VkPhysicalDeviceConservativeRasterizationPropertiesEXT
-             = #{type float}
-
-        {-# NOINLINE vkPrimitiveOverestimationSize #-}
-        vkPrimitiveOverestimationSize x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, primitiveOverestimationSize})
-
-        {-# INLINE vkPrimitiveOverestimationSizeByteOffset #-}
-        vkPrimitiveOverestimationSizeByteOffset ~_
-          = #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, primitiveOverestimationSize}
-
-        {-# INLINE readVkPrimitiveOverestimationSize #-}
-        readVkPrimitiveOverestimationSize p
-          = peekByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, primitiveOverestimationSize}
-
-        {-# INLINE writeVkPrimitiveOverestimationSize #-}
-        writeVkPrimitiveOverestimationSize p
-          = pokeByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, primitiveOverestimationSize}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "primitiveOverestimationSize"
@@ -291,45 +230,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, primitiveOverestimationSize}
 
-instance CanReadField "primitiveOverestimationSize"
+instance {-# OVERLAPPING #-}
+         CanReadField "primitiveOverestimationSize"
            VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkPrimitiveOverestimationSize
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, primitiveOverestimationSize})
 
         {-# INLINE readField #-}
-        readField = readVkPrimitiveOverestimationSize
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, primitiveOverestimationSize}
 
-instance CanWriteField "primitiveOverestimationSize"
+instance {-# OVERLAPPING #-}
+         CanWriteField "primitiveOverestimationSize"
            VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPrimitiveOverestimationSize
-
-instance {-# OVERLAPPING #-}
-         HasVkMaxExtraPrimitiveOverestimationSize
-           VkPhysicalDeviceConservativeRasterizationPropertiesEXT
-         where
-        type VkMaxExtraPrimitiveOverestimationSizeMType
-               VkPhysicalDeviceConservativeRasterizationPropertiesEXT
-             = #{type float}
-
-        {-# NOINLINE vkMaxExtraPrimitiveOverestimationSize #-}
-        vkMaxExtraPrimitiveOverestimationSize x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, maxExtraPrimitiveOverestimationSize})
-
-        {-# INLINE vkMaxExtraPrimitiveOverestimationSizeByteOffset #-}
-        vkMaxExtraPrimitiveOverestimationSizeByteOffset ~_
-          = #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, maxExtraPrimitiveOverestimationSize}
-
-        {-# INLINE readVkMaxExtraPrimitiveOverestimationSize #-}
-        readVkMaxExtraPrimitiveOverestimationSize p
-          = peekByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, maxExtraPrimitiveOverestimationSize}
-
-        {-# INLINE writeVkMaxExtraPrimitiveOverestimationSize #-}
-        writeVkMaxExtraPrimitiveOverestimationSize p
-          = pokeByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, maxExtraPrimitiveOverestimationSize}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, primitiveOverestimationSize}
 
 instance {-# OVERLAPPING #-}
          HasField "maxExtraPrimitiveOverestimationSize"
@@ -356,46 +276,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, maxExtraPrimitiveOverestimationSize}
 
-instance CanReadField "maxExtraPrimitiveOverestimationSize"
+instance {-# OVERLAPPING #-}
+         CanReadField "maxExtraPrimitiveOverestimationSize"
            VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkMaxExtraPrimitiveOverestimationSize
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, maxExtraPrimitiveOverestimationSize})
 
         {-# INLINE readField #-}
-        readField = readVkMaxExtraPrimitiveOverestimationSize
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, maxExtraPrimitiveOverestimationSize}
 
-instance CanWriteField "maxExtraPrimitiveOverestimationSize"
+instance {-# OVERLAPPING #-}
+         CanWriteField "maxExtraPrimitiveOverestimationSize"
            VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkMaxExtraPrimitiveOverestimationSize
-
-instance {-# OVERLAPPING #-}
-         HasVkExtraPrimitiveOverestimationSizeGranularity
-           VkPhysicalDeviceConservativeRasterizationPropertiesEXT
-         where
-        type VkExtraPrimitiveOverestimationSizeGranularityMType
-               VkPhysicalDeviceConservativeRasterizationPropertiesEXT
-             = #{type float}
-
-        {-# NOINLINE vkExtraPrimitiveOverestimationSizeGranularity #-}
-        vkExtraPrimitiveOverestimationSizeGranularity x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, extraPrimitiveOverestimationSizeGranularity})
-
-        {-# INLINE vkExtraPrimitiveOverestimationSizeGranularityByteOffset
-                   #-}
-        vkExtraPrimitiveOverestimationSizeGranularityByteOffset ~_
-          = #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, extraPrimitiveOverestimationSizeGranularity}
-
-        {-# INLINE readVkExtraPrimitiveOverestimationSizeGranularity #-}
-        readVkExtraPrimitiveOverestimationSizeGranularity p
-          = peekByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, extraPrimitiveOverestimationSizeGranularity}
-
-        {-# INLINE writeVkExtraPrimitiveOverestimationSizeGranularity #-}
-        writeVkExtraPrimitiveOverestimationSizeGranularity p
-          = pokeByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, extraPrimitiveOverestimationSizeGranularity}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, maxExtraPrimitiveOverestimationSize}
 
 instance {-# OVERLAPPING #-}
          HasField "extraPrimitiveOverestimationSizeGranularity"
@@ -422,46 +322,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, extraPrimitiveOverestimationSizeGranularity}
 
-instance CanReadField "extraPrimitiveOverestimationSizeGranularity"
+instance {-# OVERLAPPING #-}
+         CanReadField "extraPrimitiveOverestimationSizeGranularity"
            VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkExtraPrimitiveOverestimationSizeGranularity
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, extraPrimitiveOverestimationSizeGranularity})
 
         {-# INLINE readField #-}
-        readField = readVkExtraPrimitiveOverestimationSizeGranularity
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, extraPrimitiveOverestimationSizeGranularity}
 
-instance CanWriteField
-           "extraPrimitiveOverestimationSizeGranularity"
+instance {-# OVERLAPPING #-}
+         CanWriteField "extraPrimitiveOverestimationSizeGranularity"
            VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkExtraPrimitiveOverestimationSizeGranularity
-
-instance {-# OVERLAPPING #-}
-         HasVkPrimitiveUnderestimation
-           VkPhysicalDeviceConservativeRasterizationPropertiesEXT
-         where
-        type VkPrimitiveUnderestimationMType
-               VkPhysicalDeviceConservativeRasterizationPropertiesEXT
-             = VkBool32
-
-        {-# NOINLINE vkPrimitiveUnderestimation #-}
-        vkPrimitiveUnderestimation x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, primitiveUnderestimation})
-
-        {-# INLINE vkPrimitiveUnderestimationByteOffset #-}
-        vkPrimitiveUnderestimationByteOffset ~_
-          = #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, primitiveUnderestimation}
-
-        {-# INLINE readVkPrimitiveUnderestimation #-}
-        readVkPrimitiveUnderestimation p
-          = peekByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, primitiveUnderestimation}
-
-        {-# INLINE writeVkPrimitiveUnderestimation #-}
-        writeVkPrimitiveUnderestimation p
-          = pokeByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, primitiveUnderestimation}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, extraPrimitiveOverestimationSizeGranularity}
 
 instance {-# OVERLAPPING #-}
          HasField "primitiveUnderestimation"
@@ -488,45 +368,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, primitiveUnderestimation}
 
-instance CanReadField "primitiveUnderestimation"
+instance {-# OVERLAPPING #-}
+         CanReadField "primitiveUnderestimation"
            VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkPrimitiveUnderestimation
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, primitiveUnderestimation})
 
         {-# INLINE readField #-}
-        readField = readVkPrimitiveUnderestimation
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, primitiveUnderestimation}
 
-instance CanWriteField "primitiveUnderestimation"
+instance {-# OVERLAPPING #-}
+         CanWriteField "primitiveUnderestimation"
            VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPrimitiveUnderestimation
-
-instance {-# OVERLAPPING #-}
-         HasVkConservativePointAndLineRasterization
-           VkPhysicalDeviceConservativeRasterizationPropertiesEXT
-         where
-        type VkConservativePointAndLineRasterizationMType
-               VkPhysicalDeviceConservativeRasterizationPropertiesEXT
-             = VkBool32
-
-        {-# NOINLINE vkConservativePointAndLineRasterization #-}
-        vkConservativePointAndLineRasterization x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, conservativePointAndLineRasterization})
-
-        {-# INLINE vkConservativePointAndLineRasterizationByteOffset #-}
-        vkConservativePointAndLineRasterizationByteOffset ~_
-          = #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, conservativePointAndLineRasterization}
-
-        {-# INLINE readVkConservativePointAndLineRasterization #-}
-        readVkConservativePointAndLineRasterization p
-          = peekByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, conservativePointAndLineRasterization}
-
-        {-# INLINE writeVkConservativePointAndLineRasterization #-}
-        writeVkConservativePointAndLineRasterization p
-          = pokeByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, conservativePointAndLineRasterization}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, primitiveUnderestimation}
 
 instance {-# OVERLAPPING #-}
          HasField "conservativePointAndLineRasterization"
@@ -553,45 +414,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, conservativePointAndLineRasterization}
 
-instance CanReadField "conservativePointAndLineRasterization"
+instance {-# OVERLAPPING #-}
+         CanReadField "conservativePointAndLineRasterization"
            VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkConservativePointAndLineRasterization
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, conservativePointAndLineRasterization})
 
         {-# INLINE readField #-}
-        readField = readVkConservativePointAndLineRasterization
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, conservativePointAndLineRasterization}
 
-instance CanWriteField "conservativePointAndLineRasterization"
+instance {-# OVERLAPPING #-}
+         CanWriteField "conservativePointAndLineRasterization"
            VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkConservativePointAndLineRasterization
-
-instance {-# OVERLAPPING #-}
-         HasVkDegenerateTrianglesRasterized
-           VkPhysicalDeviceConservativeRasterizationPropertiesEXT
-         where
-        type VkDegenerateTrianglesRasterizedMType
-               VkPhysicalDeviceConservativeRasterizationPropertiesEXT
-             = VkBool32
-
-        {-# NOINLINE vkDegenerateTrianglesRasterized #-}
-        vkDegenerateTrianglesRasterized x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, degenerateTrianglesRasterized})
-
-        {-# INLINE vkDegenerateTrianglesRasterizedByteOffset #-}
-        vkDegenerateTrianglesRasterizedByteOffset ~_
-          = #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, degenerateTrianglesRasterized}
-
-        {-# INLINE readVkDegenerateTrianglesRasterized #-}
-        readVkDegenerateTrianglesRasterized p
-          = peekByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, degenerateTrianglesRasterized}
-
-        {-# INLINE writeVkDegenerateTrianglesRasterized #-}
-        writeVkDegenerateTrianglesRasterized p
-          = pokeByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, degenerateTrianglesRasterized}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, conservativePointAndLineRasterization}
 
 instance {-# OVERLAPPING #-}
          HasField "degenerateTrianglesRasterized"
@@ -618,45 +460,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, degenerateTrianglesRasterized}
 
-instance CanReadField "degenerateTrianglesRasterized"
+instance {-# OVERLAPPING #-}
+         CanReadField "degenerateTrianglesRasterized"
            VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkDegenerateTrianglesRasterized
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, degenerateTrianglesRasterized})
 
         {-# INLINE readField #-}
-        readField = readVkDegenerateTrianglesRasterized
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, degenerateTrianglesRasterized}
 
-instance CanWriteField "degenerateTrianglesRasterized"
+instance {-# OVERLAPPING #-}
+         CanWriteField "degenerateTrianglesRasterized"
            VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkDegenerateTrianglesRasterized
-
-instance {-# OVERLAPPING #-}
-         HasVkDegenerateLinesRasterized
-           VkPhysicalDeviceConservativeRasterizationPropertiesEXT
-         where
-        type VkDegenerateLinesRasterizedMType
-               VkPhysicalDeviceConservativeRasterizationPropertiesEXT
-             = VkBool32
-
-        {-# NOINLINE vkDegenerateLinesRasterized #-}
-        vkDegenerateLinesRasterized x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, degenerateLinesRasterized})
-
-        {-# INLINE vkDegenerateLinesRasterizedByteOffset #-}
-        vkDegenerateLinesRasterizedByteOffset ~_
-          = #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, degenerateLinesRasterized}
-
-        {-# INLINE readVkDegenerateLinesRasterized #-}
-        readVkDegenerateLinesRasterized p
-          = peekByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, degenerateLinesRasterized}
-
-        {-# INLINE writeVkDegenerateLinesRasterized #-}
-        writeVkDegenerateLinesRasterized p
-          = pokeByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, degenerateLinesRasterized}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, degenerateTrianglesRasterized}
 
 instance {-# OVERLAPPING #-}
          HasField "degenerateLinesRasterized"
@@ -683,45 +506,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, degenerateLinesRasterized}
 
-instance CanReadField "degenerateLinesRasterized"
+instance {-# OVERLAPPING #-}
+         CanReadField "degenerateLinesRasterized"
            VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkDegenerateLinesRasterized
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, degenerateLinesRasterized})
 
         {-# INLINE readField #-}
-        readField = readVkDegenerateLinesRasterized
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, degenerateLinesRasterized}
 
-instance CanWriteField "degenerateLinesRasterized"
+instance {-# OVERLAPPING #-}
+         CanWriteField "degenerateLinesRasterized"
            VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkDegenerateLinesRasterized
-
-instance {-# OVERLAPPING #-}
-         HasVkFullyCoveredFragmentShaderInputVariable
-           VkPhysicalDeviceConservativeRasterizationPropertiesEXT
-         where
-        type VkFullyCoveredFragmentShaderInputVariableMType
-               VkPhysicalDeviceConservativeRasterizationPropertiesEXT
-             = VkBool32
-
-        {-# NOINLINE vkFullyCoveredFragmentShaderInputVariable #-}
-        vkFullyCoveredFragmentShaderInputVariable x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, fullyCoveredFragmentShaderInputVariable})
-
-        {-# INLINE vkFullyCoveredFragmentShaderInputVariableByteOffset #-}
-        vkFullyCoveredFragmentShaderInputVariableByteOffset ~_
-          = #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, fullyCoveredFragmentShaderInputVariable}
-
-        {-# INLINE readVkFullyCoveredFragmentShaderInputVariable #-}
-        readVkFullyCoveredFragmentShaderInputVariable p
-          = peekByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, fullyCoveredFragmentShaderInputVariable}
-
-        {-# INLINE writeVkFullyCoveredFragmentShaderInputVariable #-}
-        writeVkFullyCoveredFragmentShaderInputVariable p
-          = pokeByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, fullyCoveredFragmentShaderInputVariable}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, degenerateLinesRasterized}
 
 instance {-# OVERLAPPING #-}
          HasField "fullyCoveredFragmentShaderInputVariable"
@@ -748,46 +552,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, fullyCoveredFragmentShaderInputVariable}
 
-instance CanReadField "fullyCoveredFragmentShaderInputVariable"
+instance {-# OVERLAPPING #-}
+         CanReadField "fullyCoveredFragmentShaderInputVariable"
            VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkFullyCoveredFragmentShaderInputVariable
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, fullyCoveredFragmentShaderInputVariable})
 
         {-# INLINE readField #-}
-        readField = readVkFullyCoveredFragmentShaderInputVariable
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, fullyCoveredFragmentShaderInputVariable}
 
-instance CanWriteField "fullyCoveredFragmentShaderInputVariable"
+instance {-# OVERLAPPING #-}
+         CanWriteField "fullyCoveredFragmentShaderInputVariable"
            VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkFullyCoveredFragmentShaderInputVariable
-
-instance {-# OVERLAPPING #-}
-         HasVkConservativeRasterizationPostDepthCoverage
-           VkPhysicalDeviceConservativeRasterizationPropertiesEXT
-         where
-        type VkConservativeRasterizationPostDepthCoverageMType
-               VkPhysicalDeviceConservativeRasterizationPropertiesEXT
-             = VkBool32
-
-        {-# NOINLINE vkConservativeRasterizationPostDepthCoverage #-}
-        vkConservativeRasterizationPostDepthCoverage x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, conservativeRasterizationPostDepthCoverage})
-
-        {-# INLINE vkConservativeRasterizationPostDepthCoverageByteOffset
-                   #-}
-        vkConservativeRasterizationPostDepthCoverageByteOffset ~_
-          = #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, conservativeRasterizationPostDepthCoverage}
-
-        {-# INLINE readVkConservativeRasterizationPostDepthCoverage #-}
-        readVkConservativeRasterizationPostDepthCoverage p
-          = peekByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, conservativeRasterizationPostDepthCoverage}
-
-        {-# INLINE writeVkConservativeRasterizationPostDepthCoverage #-}
-        writeVkConservativeRasterizationPostDepthCoverage p
-          = pokeByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, conservativeRasterizationPostDepthCoverage}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, fullyCoveredFragmentShaderInputVariable}
 
 instance {-# OVERLAPPING #-}
          HasField "conservativeRasterizationPostDepthCoverage"
@@ -814,20 +598,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, conservativeRasterizationPostDepthCoverage}
 
-instance CanReadField "conservativeRasterizationPostDepthCoverage"
+instance {-# OVERLAPPING #-}
+         CanReadField "conservativeRasterizationPostDepthCoverage"
            VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkConservativeRasterizationPostDepthCoverage
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, conservativeRasterizationPostDepthCoverage})
 
         {-# INLINE readField #-}
-        readField = readVkConservativeRasterizationPostDepthCoverage
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, conservativeRasterizationPostDepthCoverage}
 
-instance CanWriteField "conservativeRasterizationPostDepthCoverage"
+instance {-# OVERLAPPING #-}
+         CanWriteField "conservativeRasterizationPostDepthCoverage"
            VkPhysicalDeviceConservativeRasterizationPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkConservativeRasterizationPostDepthCoverage
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceConservativeRasterizationPropertiesEXT, conservativeRasterizationPostDepthCoverage}
 
 instance Show
            VkPhysicalDeviceConservativeRasterizationPropertiesEXT
@@ -836,60 +626,68 @@ instance Show
           = showString
               "VkPhysicalDeviceConservativeRasterizationPropertiesEXT {"
               .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkPrimitiveOverestimationSize = " .
-                            showsPrec d (vkPrimitiveOverestimationSize x) .
+                          showString "primitiveOverestimationSize = " .
+                            showsPrec d (getField @"primitiveOverestimationSize" x) .
                               showString ", " .
-                                showString "vkMaxExtraPrimitiveOverestimationSize = " .
-                                  showsPrec d (vkMaxExtraPrimitiveOverestimationSize x) .
+                                showString "maxExtraPrimitiveOverestimationSize = " .
+                                  showsPrec d (getField @"maxExtraPrimitiveOverestimationSize" x) .
                                     showString ", " .
-                                      showString "vkExtraPrimitiveOverestimationSizeGranularity = "
-                                        .
+                                      showString "extraPrimitiveOverestimationSizeGranularity = " .
                                         showsPrec d
-                                          (vkExtraPrimitiveOverestimationSizeGranularity x)
+                                          (getField @"extraPrimitiveOverestimationSizeGranularity"
+                                             x)
                                           .
                                           showString ", " .
-                                            showString "vkPrimitiveUnderestimation = " .
-                                              showsPrec d (vkPrimitiveUnderestimation x) .
+                                            showString "primitiveUnderestimation = " .
+                                              showsPrec d (getField @"primitiveUnderestimation" x) .
                                                 showString ", " .
                                                   showString
-                                                    "vkConservativePointAndLineRasterization = "
+                                                    "conservativePointAndLineRasterization = "
                                                     .
                                                     showsPrec d
-                                                      (vkConservativePointAndLineRasterization x)
+                                                      (getField
+                                                         @"conservativePointAndLineRasterization"
+                                                         x)
                                                       .
                                                       showString ", " .
                                                         showString
-                                                          "vkDegenerateTrianglesRasterized = "
+                                                          "degenerateTrianglesRasterized = "
                                                           .
                                                           showsPrec d
-                                                            (vkDegenerateTrianglesRasterized x)
+                                                            (getField
+                                                               @"degenerateTrianglesRasterized"
+                                                               x)
                                                             .
                                                             showString ", " .
                                                               showString
-                                                                "vkDegenerateLinesRasterized = "
+                                                                "degenerateLinesRasterized = "
                                                                 .
                                                                 showsPrec d
-                                                                  (vkDegenerateLinesRasterized x)
+                                                                  (getField
+                                                                     @"degenerateLinesRasterized"
+                                                                     x)
                                                                   .
                                                                   showString ", " .
                                                                     showString
-                                                                      "vkFullyCoveredFragmentShaderInputVariable = "
+                                                                      "fullyCoveredFragmentShaderInputVariable = "
                                                                       .
                                                                       showsPrec d
-                                                                        (vkFullyCoveredFragmentShaderInputVariable
+                                                                        (getField
+                                                                           @"fullyCoveredFragmentShaderInputVariable"
                                                                            x)
                                                                         .
                                                                         showString ", " .
                                                                           showString
-                                                                            "vkConservativeRasterizationPostDepthCoverage = "
+                                                                            "conservativeRasterizationPostDepthCoverage = "
                                                                             .
                                                                             showsPrec d
-                                                                              (vkConservativeRasterizationPostDepthCoverage
+                                                                              (getField
+                                                                                 @"conservativeRasterizationPostDepthCoverage"
                                                                                  x)
                                                                               . showChar '}'

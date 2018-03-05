@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkExternalMemoryBufferCreateInfoKHR
        (VkExternalMemoryBufferCreateInfoKHR(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagsKHR (VkExternalMemoryHandleTypeFlagsKHR)
 import           Graphics.Vulkan.Types.Enum.VkStructureType                    (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkBufferCreateInfo               (VkBufferCreateInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                              (unsafeDupablePerformIO)
 
 -- | > typedef struct VkExternalMemoryBufferCreateInfoKHR {
@@ -81,28 +81,6 @@ instance VulkanMarshal VkExternalMemoryBufferCreateInfoKHR where
              '[VkBufferCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkExternalMemoryBufferCreateInfoKHR where
-        type VkSTypeMType VkExternalMemoryBufferCreateInfoKHR =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkExternalMemoryBufferCreateInfoKHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkExternalMemoryBufferCreateInfoKHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkExternalMemoryBufferCreateInfoKHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkExternalMemoryBufferCreateInfoKHR, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkExternalMemoryBufferCreateInfoKHR where
         type FieldType "sType" VkExternalMemoryBufferCreateInfoKHR =
              VkStructureType
@@ -120,39 +98,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkExternalMemoryBufferCreateInfoKHR, sType}
 
-instance CanReadField "sType" VkExternalMemoryBufferCreateInfoKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkExternalMemoryBufferCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkExternalMemoryBufferCreateInfoKHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkExternalMemoryBufferCreateInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkExternalMemoryBufferCreateInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkExternalMemoryBufferCreateInfoKHR where
-        type VkPNextMType VkExternalMemoryBufferCreateInfoKHR = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkExternalMemoryBufferCreateInfoKHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkExternalMemoryBufferCreateInfoKHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkExternalMemoryBufferCreateInfoKHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkExternalMemoryBufferCreateInfoKHR, pNext}
+         CanWriteField "sType" VkExternalMemoryBufferCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkExternalMemoryBufferCreateInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkExternalMemoryBufferCreateInfoKHR where
@@ -172,40 +133,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkExternalMemoryBufferCreateInfoKHR, pNext}
 
-instance CanReadField "pNext" VkExternalMemoryBufferCreateInfoKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkExternalMemoryBufferCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkExternalMemoryBufferCreateInfoKHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkExternalMemoryBufferCreateInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkExternalMemoryBufferCreateInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkHandleTypes VkExternalMemoryBufferCreateInfoKHR where
-        type VkHandleTypesMType VkExternalMemoryBufferCreateInfoKHR =
-             VkExternalMemoryHandleTypeFlagsKHR
-
-        {-# NOINLINE vkHandleTypes #-}
-        vkHandleTypes x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkExternalMemoryBufferCreateInfoKHR, handleTypes})
-
-        {-# INLINE vkHandleTypesByteOffset #-}
-        vkHandleTypesByteOffset ~_
-          = #{offset VkExternalMemoryBufferCreateInfoKHR, handleTypes}
-
-        {-# INLINE readVkHandleTypes #-}
-        readVkHandleTypes p
-          = peekByteOff p #{offset VkExternalMemoryBufferCreateInfoKHR, handleTypes}
-
-        {-# INLINE writeVkHandleTypes #-}
-        writeVkHandleTypes p
-          = pokeByteOff p #{offset VkExternalMemoryBufferCreateInfoKHR, handleTypes}
+         CanWriteField "pNext" VkExternalMemoryBufferCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkExternalMemoryBufferCreateInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "handleTypes" VkExternalMemoryBufferCreateInfoKHR where
@@ -227,29 +170,33 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkExternalMemoryBufferCreateInfoKHR, handleTypes}
 
-instance CanReadField "handleTypes"
-           VkExternalMemoryBufferCreateInfoKHR
+instance {-# OVERLAPPING #-}
+         CanReadField "handleTypes" VkExternalMemoryBufferCreateInfoKHR
          where
-        {-# INLINE getField #-}
-        getField = vkHandleTypes
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkExternalMemoryBufferCreateInfoKHR, handleTypes})
 
         {-# INLINE readField #-}
-        readField = readVkHandleTypes
+        readField p
+          = peekByteOff p #{offset VkExternalMemoryBufferCreateInfoKHR, handleTypes}
 
-instance CanWriteField "handleTypes"
-           VkExternalMemoryBufferCreateInfoKHR
+instance {-# OVERLAPPING #-}
+         CanWriteField "handleTypes" VkExternalMemoryBufferCreateInfoKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkHandleTypes
+        writeField p
+          = pokeByteOff p #{offset VkExternalMemoryBufferCreateInfoKHR, handleTypes}
 
 instance Show VkExternalMemoryBufferCreateInfoKHR where
         showsPrec d x
           = showString "VkExternalMemoryBufferCreateInfoKHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkHandleTypes = " .
-                            showsPrec d (vkHandleTypes x) . showChar '}'
+                          showString "handleTypes = " .
+                            showsPrec d (getField @"handleTypes" x) . showChar '}'

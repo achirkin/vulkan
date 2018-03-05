@@ -8,6 +8,7 @@
 {-# LANGUAGE PatternSynonyms       #-}
 {-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 {-# LANGUAGE UndecidableInstances  #-}
 module Graphics.Vulkan.Types.Struct.VkPipelineColorBlendStateCreateInfo
@@ -30,7 +31,6 @@ import           Graphics.Vulkan.Types.Enum.VkStructureType
                                                                                    (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkPipelineColorBlendAttachmentState
                                                                                    (VkPipelineColorBlendAttachmentState)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe
                                                                                    (unsafeDupablePerformIO)
 
@@ -102,28 +102,6 @@ instance VulkanMarshal VkPipelineColorBlendStateCreateInfo where
         type StructExtends VkPipelineColorBlendStateCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPipelineColorBlendStateCreateInfo where
-        type VkSTypeMType VkPipelineColorBlendStateCreateInfo =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendStateCreateInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPipelineColorBlendStateCreateInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPipelineColorBlendStateCreateInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPipelineColorBlendStateCreateInfo, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPipelineColorBlendStateCreateInfo where
         type FieldType "sType" VkPipelineColorBlendStateCreateInfo =
              VkStructureType
@@ -141,39 +119,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineColorBlendStateCreateInfo, sType}
 
-instance CanReadField "sType" VkPipelineColorBlendStateCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkPipelineColorBlendStateCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendStateCreateInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkPipelineColorBlendStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkPipelineColorBlendStateCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkPipelineColorBlendStateCreateInfo where
-        type VkPNextMType VkPipelineColorBlendStateCreateInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendStateCreateInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPipelineColorBlendStateCreateInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPipelineColorBlendStateCreateInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPipelineColorBlendStateCreateInfo, pNext}
+         CanWriteField "sType" VkPipelineColorBlendStateCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineColorBlendStateCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPipelineColorBlendStateCreateInfo where
@@ -193,40 +154,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineColorBlendStateCreateInfo, pNext}
 
-instance CanReadField "pNext" VkPipelineColorBlendStateCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkPipelineColorBlendStateCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendStateCreateInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkPipelineColorBlendStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkPipelineColorBlendStateCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkFlags VkPipelineColorBlendStateCreateInfo where
-        type VkFlagsMType VkPipelineColorBlendStateCreateInfo =
-             VkPipelineColorBlendStateCreateFlags
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendStateCreateInfo, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkPipelineColorBlendStateCreateInfo, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkPipelineColorBlendStateCreateInfo, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkPipelineColorBlendStateCreateInfo, flags}
+         CanWriteField "pNext" VkPipelineColorBlendStateCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineColorBlendStateCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkPipelineColorBlendStateCreateInfo where
@@ -246,40 +189,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineColorBlendStateCreateInfo, flags}
 
-instance CanReadField "flags" VkPipelineColorBlendStateCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkPipelineColorBlendStateCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendStateCreateInfo, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags" VkPipelineColorBlendStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkPipelineColorBlendStateCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkLogicOpEnable VkPipelineColorBlendStateCreateInfo where
-        type VkLogicOpEnableMType VkPipelineColorBlendStateCreateInfo =
-             VkBool32
-
-        {-# NOINLINE vkLogicOpEnable #-}
-        vkLogicOpEnable x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendStateCreateInfo, logicOpEnable})
-
-        {-# INLINE vkLogicOpEnableByteOffset #-}
-        vkLogicOpEnableByteOffset ~_
-          = #{offset VkPipelineColorBlendStateCreateInfo, logicOpEnable}
-
-        {-# INLINE readVkLogicOpEnable #-}
-        readVkLogicOpEnable p
-          = peekByteOff p #{offset VkPipelineColorBlendStateCreateInfo, logicOpEnable}
-
-        {-# INLINE writeVkLogicOpEnable #-}
-        writeVkLogicOpEnable p
-          = pokeByteOff p #{offset VkPipelineColorBlendStateCreateInfo, logicOpEnable}
+         CanWriteField "flags" VkPipelineColorBlendStateCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineColorBlendStateCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "logicOpEnable" VkPipelineColorBlendStateCreateInfo where
@@ -303,41 +228,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineColorBlendStateCreateInfo, logicOpEnable}
 
-instance CanReadField "logicOpEnable"
-           VkPipelineColorBlendStateCreateInfo
+instance {-# OVERLAPPING #-}
+         CanReadField "logicOpEnable" VkPipelineColorBlendStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkLogicOpEnable
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendStateCreateInfo, logicOpEnable})
 
         {-# INLINE readField #-}
-        readField = readVkLogicOpEnable
-
-instance CanWriteField "logicOpEnable"
-           VkPipelineColorBlendStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkLogicOpEnable
+        readField p
+          = peekByteOff p #{offset VkPipelineColorBlendStateCreateInfo, logicOpEnable}
 
 instance {-# OVERLAPPING #-}
-         HasVkLogicOp VkPipelineColorBlendStateCreateInfo where
-        type VkLogicOpMType VkPipelineColorBlendStateCreateInfo = VkLogicOp
-
-        {-# NOINLINE vkLogicOp #-}
-        vkLogicOp x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendStateCreateInfo, logicOp})
-
-        {-# INLINE vkLogicOpByteOffset #-}
-        vkLogicOpByteOffset ~_
-          = #{offset VkPipelineColorBlendStateCreateInfo, logicOp}
-
-        {-# INLINE readVkLogicOp #-}
-        readVkLogicOp p
-          = peekByteOff p #{offset VkPipelineColorBlendStateCreateInfo, logicOp}
-
-        {-# INLINE writeVkLogicOp #-}
-        writeVkLogicOp p
-          = pokeByteOff p #{offset VkPipelineColorBlendStateCreateInfo, logicOp}
+         CanWriteField "logicOpEnable" VkPipelineColorBlendStateCreateInfo
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineColorBlendStateCreateInfo, logicOpEnable}
 
 instance {-# OVERLAPPING #-}
          HasField "logicOp" VkPipelineColorBlendStateCreateInfo where
@@ -357,41 +265,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineColorBlendStateCreateInfo, logicOp}
 
-instance CanReadField "logicOp" VkPipelineColorBlendStateCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkLogicOp
+instance {-# OVERLAPPING #-}
+         CanReadField "logicOp" VkPipelineColorBlendStateCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendStateCreateInfo, logicOp})
 
         {-# INLINE readField #-}
-        readField = readVkLogicOp
-
-instance CanWriteField "logicOp"
-           VkPipelineColorBlendStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkLogicOp
+        readField p
+          = peekByteOff p #{offset VkPipelineColorBlendStateCreateInfo, logicOp}
 
 instance {-# OVERLAPPING #-}
-         HasVkAttachmentCount VkPipelineColorBlendStateCreateInfo where
-        type VkAttachmentCountMType VkPipelineColorBlendStateCreateInfo =
-             Word32
-
-        {-# NOINLINE vkAttachmentCount #-}
-        vkAttachmentCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendStateCreateInfo, attachmentCount})
-
-        {-# INLINE vkAttachmentCountByteOffset #-}
-        vkAttachmentCountByteOffset ~_
-          = #{offset VkPipelineColorBlendStateCreateInfo, attachmentCount}
-
-        {-# INLINE readVkAttachmentCount #-}
-        readVkAttachmentCount p
-          = peekByteOff p #{offset VkPipelineColorBlendStateCreateInfo, attachmentCount}
-
-        {-# INLINE writeVkAttachmentCount #-}
-        writeVkAttachmentCount p
-          = pokeByteOff p #{offset VkPipelineColorBlendStateCreateInfo, attachmentCount}
+         CanWriteField "logicOp" VkPipelineColorBlendStateCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineColorBlendStateCreateInfo, logicOp}
 
 instance {-# OVERLAPPING #-}
          HasField "attachmentCount" VkPipelineColorBlendStateCreateInfo
@@ -417,42 +306,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineColorBlendStateCreateInfo, attachmentCount}
 
-instance CanReadField "attachmentCount"
-           VkPipelineColorBlendStateCreateInfo
+instance {-# OVERLAPPING #-}
+         CanReadField "attachmentCount" VkPipelineColorBlendStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkAttachmentCount
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendStateCreateInfo, attachmentCount})
 
         {-# INLINE readField #-}
-        readField = readVkAttachmentCount
-
-instance CanWriteField "attachmentCount"
-           VkPipelineColorBlendStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkAttachmentCount
+        readField p
+          = peekByteOff p #{offset VkPipelineColorBlendStateCreateInfo, attachmentCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPAttachments VkPipelineColorBlendStateCreateInfo where
-        type VkPAttachmentsMType VkPipelineColorBlendStateCreateInfo =
-             Ptr VkPipelineColorBlendAttachmentState
-
-        {-# NOINLINE vkPAttachments #-}
-        vkPAttachments x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendStateCreateInfo, pAttachments})
-
-        {-# INLINE vkPAttachmentsByteOffset #-}
-        vkPAttachmentsByteOffset ~_
-          = #{offset VkPipelineColorBlendStateCreateInfo, pAttachments}
-
-        {-# INLINE readVkPAttachments #-}
-        readVkPAttachments p
-          = peekByteOff p #{offset VkPipelineColorBlendStateCreateInfo, pAttachments}
-
-        {-# INLINE writeVkPAttachments #-}
-        writeVkPAttachments p
-          = pokeByteOff p #{offset VkPipelineColorBlendStateCreateInfo, pAttachments}
+         CanWriteField "attachmentCount" VkPipelineColorBlendStateCreateInfo
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineColorBlendStateCreateInfo, attachmentCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pAttachments" VkPipelineColorBlendStateCreateInfo where
@@ -475,48 +346,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineColorBlendStateCreateInfo, pAttachments}
 
-instance CanReadField "pAttachments"
-           VkPipelineColorBlendStateCreateInfo
+instance {-# OVERLAPPING #-}
+         CanReadField "pAttachments" VkPipelineColorBlendStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkPAttachments
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendStateCreateInfo, pAttachments})
 
         {-# INLINE readField #-}
-        readField = readVkPAttachments
-
-instance CanWriteField "pAttachments"
-           VkPipelineColorBlendStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPAttachments
+        readField p
+          = peekByteOff p #{offset VkPipelineColorBlendStateCreateInfo, pAttachments}
 
 instance {-# OVERLAPPING #-}
-         HasVkBlendConstantsArray VkPipelineColorBlendStateCreateInfo where
-        type VkBlendConstantsArrayMType VkPipelineColorBlendStateCreateInfo
-             = #{type float}
-
-        {-# NOINLINE vkBlendConstantsArray #-}
-        vkBlendConstantsArray x idx
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 (idx * sizeOf (undefined :: #{type float}) +
-                    #{offset VkPipelineColorBlendStateCreateInfo, blendConstants}))
-
-        {-# INLINE vkBlendConstantsArrayByteOffset #-}
-        vkBlendConstantsArrayByteOffset ~_
-          = #{offset VkPipelineColorBlendStateCreateInfo, blendConstants}
-
-        {-# INLINE readVkBlendConstantsArray #-}
-        readVkBlendConstantsArray p idx
-          = peekByteOff p
-              (idx * sizeOf (undefined :: #{type float}) +
-                 #{offset VkPipelineColorBlendStateCreateInfo, blendConstants})
-
-        {-# INLINE writeVkBlendConstantsArray #-}
-        writeVkBlendConstantsArray p idx
-          = pokeByteOff p
-              (idx * sizeOf (undefined :: #{type float}) +
-                 #{offset VkPipelineColorBlendStateCreateInfo, blendConstants})
+         CanWriteField "pAttachments" VkPipelineColorBlendStateCreateInfo
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineColorBlendStateCreateInfo, pAttachments}
 
 instance {-# OVERLAPPING #-}
          HasField "blendConstants" VkPipelineColorBlendStateCreateInfo where
@@ -540,7 +387,8 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineColorBlendStateCreateInfo, blendConstants}
 
-instance (KnownNat idx,
+instance {-# OVERLAPPING #-}
+         (KnownNat idx,
           IndexInBounds "blendConstants" idx
             VkPipelineColorBlendStateCreateInfo) =>
          CanReadFieldArray "blendConstants" idx
@@ -573,16 +421,25 @@ instance (KnownNat idx,
         fieldArrayLength = 4
 
         {-# INLINE getFieldArray #-}
-        getFieldArray x
-          = vkBlendConstantsArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+        getFieldArray = f
+          where {-# NOINLINE f #-}
+                f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
+                off
+                  = #{offset VkPipelineColorBlendStateCreateInfo, blendConstants}
+                      +
+                      sizeOf (undefined :: #{type float}) *
+                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
         {-# INLINE readFieldArray #-}
-        readFieldArray x
-          = readVkBlendConstantsArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+        readFieldArray p
+          = peekByteOff p
+              (#{offset VkPipelineColorBlendStateCreateInfo, blendConstants}
+                 +
+                 sizeOf (undefined :: #{type float}) *
+                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
 
-instance (KnownNat idx,
+instance {-# OVERLAPPING #-}
+         (KnownNat idx,
           IndexInBounds "blendConstants" idx
             VkPipelineColorBlendStateCreateInfo) =>
          CanWriteFieldArray "blendConstants" idx
@@ -609,35 +466,55 @@ instance (KnownNat idx,
                        #-}
 
         {-# INLINE writeFieldArray #-}
-        writeFieldArray x
-          = writeVkBlendConstantsArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+        writeFieldArray p
+          = pokeByteOff p
+              (#{offset VkPipelineColorBlendStateCreateInfo, blendConstants}
+                 +
+                 sizeOf (undefined :: #{type float}) *
+                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
 
 instance Show VkPipelineColorBlendStateCreateInfo where
         showsPrec d x
           = showString "VkPipelineColorBlendStateCreateInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkLogicOpEnable = " .
-                                  showsPrec d (vkLogicOpEnable x) .
+                                showString "logicOpEnable = " .
+                                  showsPrec d (getField @"logicOpEnable" x) .
                                     showString ", " .
-                                      showString "vkLogicOp = " .
-                                        showsPrec d (vkLogicOp x) .
+                                      showString "logicOp = " .
+                                        showsPrec d (getField @"logicOp" x) .
                                           showString ", " .
-                                            showString "vkAttachmentCount = " .
-                                              showsPrec d (vkAttachmentCount x) .
+                                            showString "attachmentCount = " .
+                                              showsPrec d (getField @"attachmentCount" x) .
                                                 showString ", " .
-                                                  showString "vkPAttachments = " .
-                                                    showsPrec d (vkPAttachments x) .
+                                                  showString "pAttachments = " .
+                                                    showsPrec d (getField @"pAttachments" x) .
                                                       showString ", " .
-                                                        showString "vkBlendConstantsArray = [" .
-                                                          showsPrec d
-                                                            (map (vkBlendConstantsArray x) [1 .. 4])
-                                                            . showChar ']' . showChar '}'
+                                                        (showString "blendConstants = [" .
+                                                           showsPrec d
+                                                             (let s = sizeOf
+                                                                        (undefined ::
+                                                                           FieldType
+                                                                             "blendConstants"
+                                                                             VkPipelineColorBlendStateCreateInfo)
+                                                                  o = fieldOffset @"blendConstants"
+                                                                        @VkPipelineColorBlendStateCreateInfo
+                                                                  f i
+                                                                    = peekByteOff (unsafePtr x) i ::
+                                                                        IO
+                                                                          (FieldType
+                                                                             "blendConstants"
+                                                                             VkPipelineColorBlendStateCreateInfo)
+                                                                in
+                                                                unsafeDupablePerformIO . mapM f $
+                                                                  map (\ i -> o + i * s)
+                                                                    [0 .. 4 - 1])
+                                                             . showChar ']')
+                                                          . showChar '}'

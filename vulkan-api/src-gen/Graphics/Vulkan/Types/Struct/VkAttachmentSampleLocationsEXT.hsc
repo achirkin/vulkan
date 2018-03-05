@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkAttachmentSampleLocationsEXT
        (VkAttachmentSampleLocationsEXT(..)) where
@@ -13,7 +14,6 @@ import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Struct.VkSampleLocationsInfoEXT (VkSampleLocationsInfoEXT)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                      (unsafeDupablePerformIO)
 
 -- | > typedef struct VkAttachmentSampleLocationsEXT {
@@ -75,27 +75,6 @@ instance VulkanMarshal VkAttachmentSampleLocationsEXT where
         type StructExtends VkAttachmentSampleLocationsEXT = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkAttachmentIndex VkAttachmentSampleLocationsEXT where
-        type VkAttachmentIndexMType VkAttachmentSampleLocationsEXT = Word32
-
-        {-# NOINLINE vkAttachmentIndex #-}
-        vkAttachmentIndex x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAttachmentSampleLocationsEXT, attachmentIndex})
-
-        {-# INLINE vkAttachmentIndexByteOffset #-}
-        vkAttachmentIndexByteOffset ~_
-          = #{offset VkAttachmentSampleLocationsEXT, attachmentIndex}
-
-        {-# INLINE readVkAttachmentIndex #-}
-        readVkAttachmentIndex p
-          = peekByteOff p #{offset VkAttachmentSampleLocationsEXT, attachmentIndex}
-
-        {-# INLINE writeVkAttachmentIndex #-}
-        writeVkAttachmentIndex p
-          = pokeByteOff p #{offset VkAttachmentSampleLocationsEXT, attachmentIndex}
-
-instance {-# OVERLAPPING #-}
          HasField "attachmentIndex" VkAttachmentSampleLocationsEXT where
         type FieldType "attachmentIndex" VkAttachmentSampleLocationsEXT =
              Word32
@@ -113,42 +92,23 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkAttachmentSampleLocationsEXT, attachmentIndex}
 
-instance CanReadField "attachmentIndex"
-           VkAttachmentSampleLocationsEXT
-         where
-        {-# INLINE getField #-}
-        getField = vkAttachmentIndex
+instance {-# OVERLAPPING #-}
+         CanReadField "attachmentIndex" VkAttachmentSampleLocationsEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAttachmentSampleLocationsEXT, attachmentIndex})
 
         {-# INLINE readField #-}
-        readField = readVkAttachmentIndex
-
-instance CanWriteField "attachmentIndex"
-           VkAttachmentSampleLocationsEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkAttachmentIndex
+        readField p
+          = peekByteOff p #{offset VkAttachmentSampleLocationsEXT, attachmentIndex}
 
 instance {-# OVERLAPPING #-}
-         HasVkSampleLocationsInfo VkAttachmentSampleLocationsEXT where
-        type VkSampleLocationsInfoMType VkAttachmentSampleLocationsEXT =
-             VkSampleLocationsInfoEXT
-
-        {-# NOINLINE vkSampleLocationsInfo #-}
-        vkSampleLocationsInfo x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAttachmentSampleLocationsEXT, sampleLocationsInfo})
-
-        {-# INLINE vkSampleLocationsInfoByteOffset #-}
-        vkSampleLocationsInfoByteOffset ~_
-          = #{offset VkAttachmentSampleLocationsEXT, sampleLocationsInfo}
-
-        {-# INLINE readVkSampleLocationsInfo #-}
-        readVkSampleLocationsInfo p
-          = peekByteOff p #{offset VkAttachmentSampleLocationsEXT, sampleLocationsInfo}
-
-        {-# INLINE writeVkSampleLocationsInfo #-}
-        writeVkSampleLocationsInfo p
-          = pokeByteOff p #{offset VkAttachmentSampleLocationsEXT, sampleLocationsInfo}
+         CanWriteField "attachmentIndex" VkAttachmentSampleLocationsEXT
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkAttachmentSampleLocationsEXT, attachmentIndex}
 
 instance {-# OVERLAPPING #-}
          HasField "sampleLocationsInfo" VkAttachmentSampleLocationsEXT where
@@ -172,26 +132,30 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkAttachmentSampleLocationsEXT, sampleLocationsInfo}
 
-instance CanReadField "sampleLocationsInfo"
-           VkAttachmentSampleLocationsEXT
+instance {-# OVERLAPPING #-}
+         CanReadField "sampleLocationsInfo" VkAttachmentSampleLocationsEXT
          where
-        {-# INLINE getField #-}
-        getField = vkSampleLocationsInfo
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAttachmentSampleLocationsEXT, sampleLocationsInfo})
 
         {-# INLINE readField #-}
-        readField = readVkSampleLocationsInfo
+        readField p
+          = peekByteOff p #{offset VkAttachmentSampleLocationsEXT, sampleLocationsInfo}
 
-instance CanWriteField "sampleLocationsInfo"
-           VkAttachmentSampleLocationsEXT
+instance {-# OVERLAPPING #-}
+         CanWriteField "sampleLocationsInfo" VkAttachmentSampleLocationsEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSampleLocationsInfo
+        writeField p
+          = pokeByteOff p #{offset VkAttachmentSampleLocationsEXT, sampleLocationsInfo}
 
 instance Show VkAttachmentSampleLocationsEXT where
         showsPrec d x
           = showString "VkAttachmentSampleLocationsEXT {" .
-              showString "vkAttachmentIndex = " .
-                showsPrec d (vkAttachmentIndex x) .
+              showString "attachmentIndex = " .
+                showsPrec d (getField @"attachmentIndex" x) .
                   showString ", " .
-                    showString "vkSampleLocationsInfo = " .
-                      showsPrec d (vkSampleLocationsInfo x) . showChar '}'
+                    showString "sampleLocationsInfo = " .
+                      showsPrec d (getField @"sampleLocationsInfo" x) . showChar '}'

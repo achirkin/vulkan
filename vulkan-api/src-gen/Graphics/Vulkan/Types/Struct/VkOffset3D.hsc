@@ -5,15 +5,15 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkOffset3D (VkOffset3D(..))
        where
-import           Foreign.Storable                    (Storable (..))
+import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.StructMembers
-import           System.IO.Unsafe                    (unsafeDupablePerformIO)
+import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkOffset3D {
 --   >     int32_t        x;
@@ -68,23 +68,6 @@ instance VulkanMarshal VkOffset3D where
         type ReturnedOnly VkOffset3D = 'False -- ' closing tick for hsc2hs
         type StructExtends VkOffset3D = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkX VkOffset3D where
-        type VkXMType VkOffset3D = Int32
-
-        {-# NOINLINE vkX #-}
-        vkX x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkOffset3D, x})
-
-        {-# INLINE vkXByteOffset #-}
-        vkXByteOffset ~_ = #{offset VkOffset3D, x}
-
-        {-# INLINE readVkX #-}
-        readVkX p = peekByteOff p #{offset VkOffset3D, x}
-
-        {-# INLINE writeVkX #-}
-        writeVkX p = pokeByteOff p #{offset VkOffset3D, x}
-
 instance {-# OVERLAPPING #-} HasField "x" VkOffset3D where
         type FieldType "x" VkOffset3D = Int32
         type FieldOptional "x" VkOffset3D = 'False -- ' closing tick for hsc2hs
@@ -98,33 +81,18 @@ instance {-# OVERLAPPING #-} HasField "x" VkOffset3D where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkOffset3D, x}
 
-instance CanReadField "x" VkOffset3D where
-        {-# INLINE getField #-}
-        getField = vkX
+instance {-# OVERLAPPING #-} CanReadField "x" VkOffset3D where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkOffset3D, x})
 
         {-# INLINE readField #-}
-        readField = readVkX
+        readField p = peekByteOff p #{offset VkOffset3D, x}
 
-instance CanWriteField "x" VkOffset3D where
+instance {-# OVERLAPPING #-} CanWriteField "x" VkOffset3D where
         {-# INLINE writeField #-}
-        writeField = writeVkX
-
-instance {-# OVERLAPPING #-} HasVkY VkOffset3D where
-        type VkYMType VkOffset3D = Int32
-
-        {-# NOINLINE vkY #-}
-        vkY x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkOffset3D, y})
-
-        {-# INLINE vkYByteOffset #-}
-        vkYByteOffset ~_ = #{offset VkOffset3D, y}
-
-        {-# INLINE readVkY #-}
-        readVkY p = peekByteOff p #{offset VkOffset3D, y}
-
-        {-# INLINE writeVkY #-}
-        writeVkY p = pokeByteOff p #{offset VkOffset3D, y}
+        writeField p = pokeByteOff p #{offset VkOffset3D, x}
 
 instance {-# OVERLAPPING #-} HasField "y" VkOffset3D where
         type FieldType "y" VkOffset3D = Int32
@@ -139,33 +107,18 @@ instance {-# OVERLAPPING #-} HasField "y" VkOffset3D where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkOffset3D, y}
 
-instance CanReadField "y" VkOffset3D where
-        {-# INLINE getField #-}
-        getField = vkY
+instance {-# OVERLAPPING #-} CanReadField "y" VkOffset3D where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkOffset3D, y})
 
         {-# INLINE readField #-}
-        readField = readVkY
+        readField p = peekByteOff p #{offset VkOffset3D, y}
 
-instance CanWriteField "y" VkOffset3D where
+instance {-# OVERLAPPING #-} CanWriteField "y" VkOffset3D where
         {-# INLINE writeField #-}
-        writeField = writeVkY
-
-instance {-# OVERLAPPING #-} HasVkZ VkOffset3D where
-        type VkZMType VkOffset3D = Int32
-
-        {-# NOINLINE vkZ #-}
-        vkZ x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkOffset3D, z})
-
-        {-# INLINE vkZByteOffset #-}
-        vkZByteOffset ~_ = #{offset VkOffset3D, z}
-
-        {-# INLINE readVkZ #-}
-        readVkZ p = peekByteOff p #{offset VkOffset3D, z}
-
-        {-# INLINE writeVkZ #-}
-        writeVkZ p = pokeByteOff p #{offset VkOffset3D, z}
+        writeField p = pokeByteOff p #{offset VkOffset3D, y}
 
 instance {-# OVERLAPPING #-} HasField "z" VkOffset3D where
         type FieldType "z" VkOffset3D = Int32
@@ -180,24 +133,26 @@ instance {-# OVERLAPPING #-} HasField "z" VkOffset3D where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkOffset3D, z}
 
-instance CanReadField "z" VkOffset3D where
-        {-# INLINE getField #-}
-        getField = vkZ
+instance {-# OVERLAPPING #-} CanReadField "z" VkOffset3D where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkOffset3D, z})
 
         {-# INLINE readField #-}
-        readField = readVkZ
+        readField p = peekByteOff p #{offset VkOffset3D, z}
 
-instance CanWriteField "z" VkOffset3D where
+instance {-# OVERLAPPING #-} CanWriteField "z" VkOffset3D where
         {-# INLINE writeField #-}
-        writeField = writeVkZ
+        writeField p = pokeByteOff p #{offset VkOffset3D, z}
 
 instance Show VkOffset3D where
         showsPrec d x
           = showString "VkOffset3D {" .
-              showString "vkX = " .
-                showsPrec d (vkX x) .
+              showString "x = " .
+                showsPrec d (getField @"x" x) .
                   showString ", " .
-                    showString "vkY = " .
-                      showsPrec d (vkY x) .
+                    showString "y = " .
+                      showsPrec d (getField @"y" x) .
                         showString ", " .
-                          showString "vkZ = " . showsPrec d (vkZ x) . showChar '}'
+                          showString "z = " . showsPrec d (getField @"z" x) . showChar '}'

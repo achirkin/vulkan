@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkDebugMarkerObjectNameInfoEXT
        (VkDebugMarkerObjectNameInfoEXT(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkDebugReportObjectTypeEXT (VkDebugReportObjectTypeEXT)
 import           Graphics.Vulkan.Types.Enum.VkStructureType            (VkStructureType)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                      (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDebugMarkerObjectNameInfoEXT {
@@ -79,27 +79,6 @@ instance VulkanMarshal VkDebugMarkerObjectNameInfoEXT where
         type StructExtends VkDebugMarkerObjectNameInfoEXT = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkDebugMarkerObjectNameInfoEXT where
-        type VkSTypeMType VkDebugMarkerObjectNameInfoEXT = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerObjectNameInfoEXT, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkDebugMarkerObjectNameInfoEXT, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkDebugMarkerObjectNameInfoEXT, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkDebugMarkerObjectNameInfoEXT, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkDebugMarkerObjectNameInfoEXT where
         type FieldType "sType" VkDebugMarkerObjectNameInfoEXT =
              VkStructureType
@@ -115,37 +94,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDebugMarkerObjectNameInfoEXT, sType}
 
-instance CanReadField "sType" VkDebugMarkerObjectNameInfoEXT where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkDebugMarkerObjectNameInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerObjectNameInfoEXT, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkDebugMarkerObjectNameInfoEXT where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkDebugMarkerObjectNameInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkDebugMarkerObjectNameInfoEXT where
-        type VkPNextMType VkDebugMarkerObjectNameInfoEXT = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerObjectNameInfoEXT, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkDebugMarkerObjectNameInfoEXT, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkDebugMarkerObjectNameInfoEXT, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkDebugMarkerObjectNameInfoEXT, pNext}
+         CanWriteField "sType" VkDebugMarkerObjectNameInfoEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDebugMarkerObjectNameInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkDebugMarkerObjectNameInfoEXT where
@@ -162,38 +126,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDebugMarkerObjectNameInfoEXT, pNext}
 
-instance CanReadField "pNext" VkDebugMarkerObjectNameInfoEXT where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkDebugMarkerObjectNameInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerObjectNameInfoEXT, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkDebugMarkerObjectNameInfoEXT where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkDebugMarkerObjectNameInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkObjectType VkDebugMarkerObjectNameInfoEXT where
-        type VkObjectTypeMType VkDebugMarkerObjectNameInfoEXT =
-             VkDebugReportObjectTypeEXT
-
-        {-# NOINLINE vkObjectType #-}
-        vkObjectType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerObjectNameInfoEXT, objectType})
-
-        {-# INLINE vkObjectTypeByteOffset #-}
-        vkObjectTypeByteOffset ~_
-          = #{offset VkDebugMarkerObjectNameInfoEXT, objectType}
-
-        {-# INLINE readVkObjectType #-}
-        readVkObjectType p
-          = peekByteOff p #{offset VkDebugMarkerObjectNameInfoEXT, objectType}
-
-        {-# INLINE writeVkObjectType #-}
-        writeVkObjectType p
-          = pokeByteOff p #{offset VkDebugMarkerObjectNameInfoEXT, objectType}
+         CanWriteField "pNext" VkDebugMarkerObjectNameInfoEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDebugMarkerObjectNameInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "objectType" VkDebugMarkerObjectNameInfoEXT where
@@ -213,39 +161,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDebugMarkerObjectNameInfoEXT, objectType}
 
-instance CanReadField "objectType" VkDebugMarkerObjectNameInfoEXT
-         where
-        {-# INLINE getField #-}
-        getField = vkObjectType
+instance {-# OVERLAPPING #-}
+         CanReadField "objectType" VkDebugMarkerObjectNameInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerObjectNameInfoEXT, objectType})
 
         {-# INLINE readField #-}
-        readField = readVkObjectType
-
-instance CanWriteField "objectType" VkDebugMarkerObjectNameInfoEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkObjectType
+        readField p
+          = peekByteOff p #{offset VkDebugMarkerObjectNameInfoEXT, objectType}
 
 instance {-# OVERLAPPING #-}
-         HasVkObject VkDebugMarkerObjectNameInfoEXT where
-        type VkObjectMType VkDebugMarkerObjectNameInfoEXT = Word64
-
-        {-# NOINLINE vkObject #-}
-        vkObject x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerObjectNameInfoEXT, object})
-
-        {-# INLINE vkObjectByteOffset #-}
-        vkObjectByteOffset ~_
-          = #{offset VkDebugMarkerObjectNameInfoEXT, object}
-
-        {-# INLINE readVkObject #-}
-        readVkObject p
-          = peekByteOff p #{offset VkDebugMarkerObjectNameInfoEXT, object}
-
-        {-# INLINE writeVkObject #-}
-        writeVkObject p
-          = pokeByteOff p #{offset VkDebugMarkerObjectNameInfoEXT, object}
+         CanWriteField "objectType" VkDebugMarkerObjectNameInfoEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDebugMarkerObjectNameInfoEXT, objectType}
 
 instance {-# OVERLAPPING #-}
          HasField "object" VkDebugMarkerObjectNameInfoEXT where
@@ -262,38 +193,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDebugMarkerObjectNameInfoEXT, object}
 
-instance CanReadField "object" VkDebugMarkerObjectNameInfoEXT where
-        {-# INLINE getField #-}
-        getField = vkObject
+instance {-# OVERLAPPING #-}
+         CanReadField "object" VkDebugMarkerObjectNameInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerObjectNameInfoEXT, object})
 
         {-# INLINE readField #-}
-        readField = readVkObject
-
-instance CanWriteField "object" VkDebugMarkerObjectNameInfoEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkObject
+        readField p
+          = peekByteOff p #{offset VkDebugMarkerObjectNameInfoEXT, object}
 
 instance {-# OVERLAPPING #-}
-         HasVkPObjectName VkDebugMarkerObjectNameInfoEXT where
-        type VkPObjectNameMType VkDebugMarkerObjectNameInfoEXT = CString
-
-        {-# NOINLINE vkPObjectName #-}
-        vkPObjectName x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerObjectNameInfoEXT, pObjectName})
-
-        {-# INLINE vkPObjectNameByteOffset #-}
-        vkPObjectNameByteOffset ~_
-          = #{offset VkDebugMarkerObjectNameInfoEXT, pObjectName}
-
-        {-# INLINE readVkPObjectName #-}
-        readVkPObjectName p
-          = peekByteOff p #{offset VkDebugMarkerObjectNameInfoEXT, pObjectName}
-
-        {-# INLINE writeVkPObjectName #-}
-        writeVkPObjectName p
-          = pokeByteOff p #{offset VkDebugMarkerObjectNameInfoEXT, pObjectName}
+         CanWriteField "object" VkDebugMarkerObjectNameInfoEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDebugMarkerObjectNameInfoEXT, object}
 
 instance {-# OVERLAPPING #-}
          HasField "pObjectName" VkDebugMarkerObjectNameInfoEXT where
@@ -313,33 +228,37 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDebugMarkerObjectNameInfoEXT, pObjectName}
 
-instance CanReadField "pObjectName" VkDebugMarkerObjectNameInfoEXT
-         where
-        {-# INLINE getField #-}
-        getField = vkPObjectName
+instance {-# OVERLAPPING #-}
+         CanReadField "pObjectName" VkDebugMarkerObjectNameInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerObjectNameInfoEXT, pObjectName})
 
         {-# INLINE readField #-}
-        readField = readVkPObjectName
+        readField p
+          = peekByteOff p #{offset VkDebugMarkerObjectNameInfoEXT, pObjectName}
 
-instance CanWriteField "pObjectName" VkDebugMarkerObjectNameInfoEXT
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pObjectName" VkDebugMarkerObjectNameInfoEXT where
         {-# INLINE writeField #-}
-        writeField = writeVkPObjectName
+        writeField p
+          = pokeByteOff p #{offset VkDebugMarkerObjectNameInfoEXT, pObjectName}
 
 instance Show VkDebugMarkerObjectNameInfoEXT where
         showsPrec d x
           = showString "VkDebugMarkerObjectNameInfoEXT {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkObjectType = " .
-                            showsPrec d (vkObjectType x) .
+                          showString "objectType = " .
+                            showsPrec d (getField @"objectType" x) .
                               showString ", " .
-                                showString "vkObject = " .
-                                  showsPrec d (vkObject x) .
+                                showString "object = " .
+                                  showsPrec d (getField @"object" x) .
                                     showString ", " .
-                                      showString "vkPObjectName = " .
-                                        showsPrec d (vkPObjectName x) . showChar '}'
+                                      showString "pObjectName = " .
+                                        showsPrec d (getField @"pObjectName" x) . showChar '}'

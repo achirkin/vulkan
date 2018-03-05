@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkValidationFlagsEXT
        (VkValidationFlagsEXT(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType        (VkStructureType)
 import           Graphics.Vulkan.Types.Enum.VkValidationCheckEXT   (VkValidationCheckEXT)
 import           Graphics.Vulkan.Types.Struct.VkInstanceCreateInfo (VkInstanceCreateInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                  (unsafeDupablePerformIO)
 
 -- | > typedef struct VkValidationFlagsEXT {
@@ -74,26 +74,6 @@ instance VulkanMarshal VkValidationFlagsEXT where
         type ReturnedOnly VkValidationFlagsEXT = 'False -- ' closing tick for hsc2hs
         type StructExtends VkValidationFlagsEXT = '[VkInstanceCreateInfo] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkValidationFlagsEXT where
-        type VkSTypeMType VkValidationFlagsEXT = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkValidationFlagsEXT, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkValidationFlagsEXT, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkValidationFlagsEXT, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkValidationFlagsEXT, sType}
-
 instance {-# OVERLAPPING #-} HasField "sType" VkValidationFlagsEXT
          where
         type FieldType "sType" VkValidationFlagsEXT = VkStructureType
@@ -108,36 +88,22 @@ instance {-# OVERLAPPING #-} HasField "sType" VkValidationFlagsEXT
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkValidationFlagsEXT, sType}
 
-instance CanReadField "sType" VkValidationFlagsEXT where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkValidationFlagsEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkValidationFlagsEXT, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkValidationFlagsEXT, sType}
 
-instance CanWriteField "sType" VkValidationFlagsEXT where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkValidationFlagsEXT where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkValidationFlagsEXT where
-        type VkPNextMType VkValidationFlagsEXT = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkValidationFlagsEXT, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkValidationFlagsEXT, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkValidationFlagsEXT, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkValidationFlagsEXT, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkValidationFlagsEXT, sType}
 
 instance {-# OVERLAPPING #-} HasField "pNext" VkValidationFlagsEXT
          where
@@ -153,38 +119,22 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkValidationFlagsEXT
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkValidationFlagsEXT, pNext}
 
-instance CanReadField "pNext" VkValidationFlagsEXT where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkValidationFlagsEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkValidationFlagsEXT, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkValidationFlagsEXT where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkValidationFlagsEXT, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkDisabledValidationCheckCount VkValidationFlagsEXT where
-        type VkDisabledValidationCheckCountMType VkValidationFlagsEXT =
-             Word32
-
-        {-# NOINLINE vkDisabledValidationCheckCount #-}
-        vkDisabledValidationCheckCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkValidationFlagsEXT, disabledValidationCheckCount})
-
-        {-# INLINE vkDisabledValidationCheckCountByteOffset #-}
-        vkDisabledValidationCheckCountByteOffset ~_
-          = #{offset VkValidationFlagsEXT, disabledValidationCheckCount}
-
-        {-# INLINE readVkDisabledValidationCheckCount #-}
-        readVkDisabledValidationCheckCount p
-          = peekByteOff p #{offset VkValidationFlagsEXT, disabledValidationCheckCount}
-
-        {-# INLINE writeVkDisabledValidationCheckCount #-}
-        writeVkDisabledValidationCheckCount p
-          = pokeByteOff p #{offset VkValidationFlagsEXT, disabledValidationCheckCount}
+         CanWriteField "pNext" VkValidationFlagsEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkValidationFlagsEXT, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "disabledValidationCheckCount" VkValidationFlagsEXT where
@@ -208,42 +158,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkValidationFlagsEXT, disabledValidationCheckCount}
 
-instance CanReadField "disabledValidationCheckCount"
-           VkValidationFlagsEXT
+instance {-# OVERLAPPING #-}
+         CanReadField "disabledValidationCheckCount" VkValidationFlagsEXT
          where
-        {-# INLINE getField #-}
-        getField = vkDisabledValidationCheckCount
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkValidationFlagsEXT, disabledValidationCheckCount})
 
         {-# INLINE readField #-}
-        readField = readVkDisabledValidationCheckCount
-
-instance CanWriteField "disabledValidationCheckCount"
-           VkValidationFlagsEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkDisabledValidationCheckCount
+        readField p
+          = peekByteOff p #{offset VkValidationFlagsEXT, disabledValidationCheckCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPDisabledValidationChecks VkValidationFlagsEXT where
-        type VkPDisabledValidationChecksMType VkValidationFlagsEXT =
-             Ptr VkValidationCheckEXT
-
-        {-# NOINLINE vkPDisabledValidationChecks #-}
-        vkPDisabledValidationChecks x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkValidationFlagsEXT, pDisabledValidationChecks})
-
-        {-# INLINE vkPDisabledValidationChecksByteOffset #-}
-        vkPDisabledValidationChecksByteOffset ~_
-          = #{offset VkValidationFlagsEXT, pDisabledValidationChecks}
-
-        {-# INLINE readVkPDisabledValidationChecks #-}
-        readVkPDisabledValidationChecks p
-          = peekByteOff p #{offset VkValidationFlagsEXT, pDisabledValidationChecks}
-
-        {-# INLINE writeVkPDisabledValidationChecks #-}
-        writeVkPDisabledValidationChecks p
-          = pokeByteOff p #{offset VkValidationFlagsEXT, pDisabledValidationChecks}
+         CanWriteField "disabledValidationCheckCount" VkValidationFlagsEXT
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkValidationFlagsEXT, disabledValidationCheckCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pDisabledValidationChecks" VkValidationFlagsEXT where
@@ -263,32 +195,36 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkValidationFlagsEXT, pDisabledValidationChecks}
 
-instance CanReadField "pDisabledValidationChecks"
-           VkValidationFlagsEXT
-         where
-        {-# INLINE getField #-}
-        getField = vkPDisabledValidationChecks
+instance {-# OVERLAPPING #-}
+         CanReadField "pDisabledValidationChecks" VkValidationFlagsEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkValidationFlagsEXT, pDisabledValidationChecks})
 
         {-# INLINE readField #-}
-        readField = readVkPDisabledValidationChecks
+        readField p
+          = peekByteOff p #{offset VkValidationFlagsEXT, pDisabledValidationChecks}
 
-instance CanWriteField "pDisabledValidationChecks"
-           VkValidationFlagsEXT
+instance {-# OVERLAPPING #-}
+         CanWriteField "pDisabledValidationChecks" VkValidationFlagsEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPDisabledValidationChecks
+        writeField p
+          = pokeByteOff p #{offset VkValidationFlagsEXT, pDisabledValidationChecks}
 
 instance Show VkValidationFlagsEXT where
         showsPrec d x
           = showString "VkValidationFlagsEXT {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkDisabledValidationCheckCount = " .
-                            showsPrec d (vkDisabledValidationCheckCount x) .
+                          showString "disabledValidationCheckCount = " .
+                            showsPrec d (getField @"disabledValidationCheckCount" x) .
                               showString ", " .
-                                showString "vkPDisabledValidationChecks = " .
-                                  showsPrec d (vkPDisabledValidationChecks x) . showChar '}'
+                                showString "pDisabledValidationChecks = " .
+                                  showsPrec d (getField @"pDisabledValidationChecks" x) .
+                                    showChar '}'

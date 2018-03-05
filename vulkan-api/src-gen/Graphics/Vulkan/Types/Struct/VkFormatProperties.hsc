@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkFormatProperties
        (VkFormatProperties(..)) where
@@ -13,7 +14,6 @@ import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkFormatFeatureFlags (VkFormatFeatureFlags)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                (unsafeDupablePerformIO)
 
 -- | > typedef struct VkFormatProperties {
@@ -72,28 +72,6 @@ instance VulkanMarshal VkFormatProperties where
         type StructExtends VkFormatProperties = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkLinearTilingFeatures VkFormatProperties where
-        type VkLinearTilingFeaturesMType VkFormatProperties =
-             VkFormatFeatureFlags
-
-        {-# NOINLINE vkLinearTilingFeatures #-}
-        vkLinearTilingFeatures x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkFormatProperties, linearTilingFeatures})
-
-        {-# INLINE vkLinearTilingFeaturesByteOffset #-}
-        vkLinearTilingFeaturesByteOffset ~_
-          = #{offset VkFormatProperties, linearTilingFeatures}
-
-        {-# INLINE readVkLinearTilingFeatures #-}
-        readVkLinearTilingFeatures p
-          = peekByteOff p #{offset VkFormatProperties, linearTilingFeatures}
-
-        {-# INLINE writeVkLinearTilingFeatures #-}
-        writeVkLinearTilingFeatures p
-          = pokeByteOff p #{offset VkFormatProperties, linearTilingFeatures}
-
-instance {-# OVERLAPPING #-}
          HasField "linearTilingFeatures" VkFormatProperties where
         type FieldType "linearTilingFeatures" VkFormatProperties =
              VkFormatFeatureFlags
@@ -111,40 +89,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkFormatProperties, linearTilingFeatures}
 
-instance CanReadField "linearTilingFeatures" VkFormatProperties
-         where
-        {-# INLINE getField #-}
-        getField = vkLinearTilingFeatures
+instance {-# OVERLAPPING #-}
+         CanReadField "linearTilingFeatures" VkFormatProperties where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkFormatProperties, linearTilingFeatures})
 
         {-# INLINE readField #-}
-        readField = readVkLinearTilingFeatures
-
-instance CanWriteField "linearTilingFeatures" VkFormatProperties
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkLinearTilingFeatures
+        readField p
+          = peekByteOff p #{offset VkFormatProperties, linearTilingFeatures}
 
 instance {-# OVERLAPPING #-}
-         HasVkOptimalTilingFeatures VkFormatProperties where
-        type VkOptimalTilingFeaturesMType VkFormatProperties =
-             VkFormatFeatureFlags
-
-        {-# NOINLINE vkOptimalTilingFeatures #-}
-        vkOptimalTilingFeatures x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkFormatProperties, optimalTilingFeatures})
-
-        {-# INLINE vkOptimalTilingFeaturesByteOffset #-}
-        vkOptimalTilingFeaturesByteOffset ~_
-          = #{offset VkFormatProperties, optimalTilingFeatures}
-
-        {-# INLINE readVkOptimalTilingFeatures #-}
-        readVkOptimalTilingFeatures p
-          = peekByteOff p #{offset VkFormatProperties, optimalTilingFeatures}
-
-        {-# INLINE writeVkOptimalTilingFeatures #-}
-        writeVkOptimalTilingFeatures p
-          = pokeByteOff p #{offset VkFormatProperties, optimalTilingFeatures}
+         CanWriteField "linearTilingFeatures" VkFormatProperties where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkFormatProperties, linearTilingFeatures}
 
 instance {-# OVERLAPPING #-}
          HasField "optimalTilingFeatures" VkFormatProperties where
@@ -164,40 +124,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkFormatProperties, optimalTilingFeatures}
 
-instance CanReadField "optimalTilingFeatures" VkFormatProperties
-         where
-        {-# INLINE getField #-}
-        getField = vkOptimalTilingFeatures
+instance {-# OVERLAPPING #-}
+         CanReadField "optimalTilingFeatures" VkFormatProperties where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkFormatProperties, optimalTilingFeatures})
 
         {-# INLINE readField #-}
-        readField = readVkOptimalTilingFeatures
+        readField p
+          = peekByteOff p #{offset VkFormatProperties, optimalTilingFeatures}
 
-instance CanWriteField "optimalTilingFeatures" VkFormatProperties
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "optimalTilingFeatures" VkFormatProperties where
         {-# INLINE writeField #-}
-        writeField = writeVkOptimalTilingFeatures
-
-instance {-# OVERLAPPING #-} HasVkBufferFeatures VkFormatProperties
-         where
-        type VkBufferFeaturesMType VkFormatProperties =
-             VkFormatFeatureFlags
-
-        {-# NOINLINE vkBufferFeatures #-}
-        vkBufferFeatures x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkFormatProperties, bufferFeatures})
-
-        {-# INLINE vkBufferFeaturesByteOffset #-}
-        vkBufferFeaturesByteOffset ~_
-          = #{offset VkFormatProperties, bufferFeatures}
-
-        {-# INLINE readVkBufferFeatures #-}
-        readVkBufferFeatures p
-          = peekByteOff p #{offset VkFormatProperties, bufferFeatures}
-
-        {-# INLINE writeVkBufferFeatures #-}
-        writeVkBufferFeatures p
-          = pokeByteOff p #{offset VkFormatProperties, bufferFeatures}
+        writeField p
+          = pokeByteOff p #{offset VkFormatProperties, optimalTilingFeatures}
 
 instance {-# OVERLAPPING #-}
          HasField "bufferFeatures" VkFormatProperties where
@@ -215,25 +157,31 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkFormatProperties, bufferFeatures}
 
-instance CanReadField "bufferFeatures" VkFormatProperties where
-        {-# INLINE getField #-}
-        getField = vkBufferFeatures
+instance {-# OVERLAPPING #-}
+         CanReadField "bufferFeatures" VkFormatProperties where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkFormatProperties, bufferFeatures})
 
         {-# INLINE readField #-}
-        readField = readVkBufferFeatures
+        readField p
+          = peekByteOff p #{offset VkFormatProperties, bufferFeatures}
 
-instance CanWriteField "bufferFeatures" VkFormatProperties where
+instance {-# OVERLAPPING #-}
+         CanWriteField "bufferFeatures" VkFormatProperties where
         {-# INLINE writeField #-}
-        writeField = writeVkBufferFeatures
+        writeField p
+          = pokeByteOff p #{offset VkFormatProperties, bufferFeatures}
 
 instance Show VkFormatProperties where
         showsPrec d x
           = showString "VkFormatProperties {" .
-              showString "vkLinearTilingFeatures = " .
-                showsPrec d (vkLinearTilingFeatures x) .
+              showString "linearTilingFeatures = " .
+                showsPrec d (getField @"linearTilingFeatures" x) .
                   showString ", " .
-                    showString "vkOptimalTilingFeatures = " .
-                      showsPrec d (vkOptimalTilingFeatures x) .
+                    showString "optimalTilingFeatures = " .
+                      showsPrec d (getField @"optimalTilingFeatures" x) .
                         showString ", " .
-                          showString "vkBufferFeatures = " .
-                            showsPrec d (vkBufferFeatures x) . showChar '}'
+                          showString "bufferFeatures = " .
+                            showsPrec d (getField @"bufferFeatures" x) . showChar '}'

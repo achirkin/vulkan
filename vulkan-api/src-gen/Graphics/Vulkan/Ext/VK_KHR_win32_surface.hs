@@ -32,8 +32,9 @@ module Graphics.Vulkan.Ext.VK_KHR_win32_surface
         -- > #include "vk_platform.h"
         --
         -- > #include <windows.h>
-        vkCreateWin32SurfaceKHR,
+        vkCreateWin32SurfaceKHR, vkCreateWin32SurfaceKHRSafe,
         vkGetPhysicalDeviceWin32PresentationSupportKHR,
+        vkGetPhysicalDeviceWin32PresentationSupportKHRSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
@@ -84,6 +85,28 @@ foreign import ccall unsafe "vkCreateWin32SurfaceKHR"
                                              -> Ptr VkSurfaceKHR -- ^ pSurface
                                                                  -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkCreateWin32SurfaceKHR
+--   >     ( VkInstance instance
+--   >     , const VkWin32SurfaceCreateInfoKHR* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkSurfaceKHR* pSurface
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateWin32SurfaceKHR.html vkCreateWin32SurfaceKHR registry at www.khronos.org>
+foreign import ccall safe "vkCreateWin32SurfaceKHR"
+               vkCreateWin32SurfaceKHRSafe ::
+               VkInstance -- ^ instance
+                          ->
+                 Ptr VkWin32SurfaceCreateInfoKHR -- ^ pCreateInfo
+                                                 ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                                 -> IO VkResult
+
 -- | > VkBool32 vkGetPhysicalDeviceWin32PresentationSupportKHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , uint32_t queueFamilyIndex
@@ -93,6 +116,19 @@ foreign import ccall unsafe "vkCreateWin32SurfaceKHR"
 foreign import ccall unsafe
                "vkGetPhysicalDeviceWin32PresentationSupportKHR"
                vkGetPhysicalDeviceWin32PresentationSupportKHR ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                -> Word32 -- ^ queueFamilyIndex
+                                          -> IO VkBool32
+
+-- | > VkBool32 vkGetPhysicalDeviceWin32PresentationSupportKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , uint32_t queueFamilyIndex
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceWin32PresentationSupportKHR.html vkGetPhysicalDeviceWin32PresentationSupportKHR registry at www.khronos.org>
+foreign import ccall safe
+               "vkGetPhysicalDeviceWin32PresentationSupportKHR"
+               vkGetPhysicalDeviceWin32PresentationSupportKHRSafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 -> Word32 -- ^ queueFamilyIndex
                                           -> IO VkBool32

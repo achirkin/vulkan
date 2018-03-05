@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMultiviewFeaturesKHX
        (VkPhysicalDeviceMultiviewFeaturesKHX(..)) where
@@ -16,7 +17,6 @@ import           Graphics.Vulkan.Types.BaseTypes                           (VkBo
 import           Graphics.Vulkan.Types.Enum.VkStructureType                (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkDeviceCreateInfo           (VkDeviceCreateInfo)
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures2KHR (VkPhysicalDeviceFeatures2KHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                          (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDeviceMultiviewFeaturesKHX {
@@ -86,28 +86,6 @@ instance VulkanMarshal VkPhysicalDeviceMultiviewFeaturesKHX where
              '[VkPhysicalDeviceFeatures2KHR, VkDeviceCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPhysicalDeviceMultiviewFeaturesKHX where
-        type VkSTypeMType VkPhysicalDeviceMultiviewFeaturesKHX =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceMultiviewFeaturesKHX, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPhysicalDeviceMultiviewFeaturesKHX, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPhysicalDeviceMultiviewFeaturesKHX, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPhysicalDeviceMultiviewFeaturesKHX, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPhysicalDeviceMultiviewFeaturesKHX where
         type FieldType "sType" VkPhysicalDeviceMultiviewFeaturesKHX =
              VkStructureType
@@ -125,39 +103,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceMultiviewFeaturesKHX, sType}
 
-instance CanReadField "sType" VkPhysicalDeviceMultiviewFeaturesKHX
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkPhysicalDeviceMultiviewFeaturesKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceMultiviewFeaturesKHX, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkPhysicalDeviceMultiviewFeaturesKHX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceMultiviewFeaturesKHX, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkPhysicalDeviceMultiviewFeaturesKHX where
-        type VkPNextMType VkPhysicalDeviceMultiviewFeaturesKHX = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceMultiviewFeaturesKHX, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPhysicalDeviceMultiviewFeaturesKHX, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPhysicalDeviceMultiviewFeaturesKHX, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPhysicalDeviceMultiviewFeaturesKHX, pNext}
+         CanWriteField "sType" VkPhysicalDeviceMultiviewFeaturesKHX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceMultiviewFeaturesKHX, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPhysicalDeviceMultiviewFeaturesKHX where
@@ -177,40 +138,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceMultiviewFeaturesKHX, pNext}
 
-instance CanReadField "pNext" VkPhysicalDeviceMultiviewFeaturesKHX
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkPhysicalDeviceMultiviewFeaturesKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceMultiviewFeaturesKHX, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkPhysicalDeviceMultiviewFeaturesKHX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceMultiviewFeaturesKHX, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkMultiview VkPhysicalDeviceMultiviewFeaturesKHX where
-        type VkMultiviewMType VkPhysicalDeviceMultiviewFeaturesKHX =
-             VkBool32
-
-        {-# NOINLINE vkMultiview #-}
-        vkMultiview x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiview})
-
-        {-# INLINE vkMultiviewByteOffset #-}
-        vkMultiviewByteOffset ~_
-          = #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiview}
-
-        {-# INLINE readVkMultiview #-}
-        readVkMultiview p
-          = peekByteOff p #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiview}
-
-        {-# INLINE writeVkMultiview #-}
-        writeVkMultiview p
-          = pokeByteOff p #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiview}
+         CanWriteField "pNext" VkPhysicalDeviceMultiviewFeaturesKHX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceMultiviewFeaturesKHX, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "multiview" VkPhysicalDeviceMultiviewFeaturesKHX where
@@ -230,44 +173,23 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiview}
 
-instance CanReadField "multiview"
-           VkPhysicalDeviceMultiviewFeaturesKHX
-         where
-        {-# INLINE getField #-}
-        getField = vkMultiview
+instance {-# OVERLAPPING #-}
+         CanReadField "multiview" VkPhysicalDeviceMultiviewFeaturesKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiview})
 
         {-# INLINE readField #-}
-        readField = readVkMultiview
-
-instance CanWriteField "multiview"
-           VkPhysicalDeviceMultiviewFeaturesKHX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkMultiview
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiview}
 
 instance {-# OVERLAPPING #-}
-         HasVkMultiviewGeometryShader VkPhysicalDeviceMultiviewFeaturesKHX
+         CanWriteField "multiview" VkPhysicalDeviceMultiviewFeaturesKHX
          where
-        type VkMultiviewGeometryShaderMType
-               VkPhysicalDeviceMultiviewFeaturesKHX
-             = VkBool32
-
-        {-# NOINLINE vkMultiviewGeometryShader #-}
-        vkMultiviewGeometryShader x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiviewGeometryShader})
-
-        {-# INLINE vkMultiviewGeometryShaderByteOffset #-}
-        vkMultiviewGeometryShaderByteOffset ~_
-          = #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiviewGeometryShader}
-
-        {-# INLINE readVkMultiviewGeometryShader #-}
-        readVkMultiviewGeometryShader p
-          = peekByteOff p #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiviewGeometryShader}
-
-        {-# INLINE writeVkMultiviewGeometryShader #-}
-        writeVkMultiviewGeometryShader p
-          = pokeByteOff p #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiviewGeometryShader}
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiview}
 
 instance {-# OVERLAPPING #-}
          HasField "multiviewGeometryShader"
@@ -294,45 +216,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiviewGeometryShader}
 
-instance CanReadField "multiviewGeometryShader"
+instance {-# OVERLAPPING #-}
+         CanReadField "multiviewGeometryShader"
            VkPhysicalDeviceMultiviewFeaturesKHX
          where
-        {-# INLINE getField #-}
-        getField = vkMultiviewGeometryShader
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiviewGeometryShader})
 
         {-# INLINE readField #-}
-        readField = readVkMultiviewGeometryShader
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiviewGeometryShader}
 
-instance CanWriteField "multiviewGeometryShader"
+instance {-# OVERLAPPING #-}
+         CanWriteField "multiviewGeometryShader"
            VkPhysicalDeviceMultiviewFeaturesKHX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkMultiviewGeometryShader
-
-instance {-# OVERLAPPING #-}
-         HasVkMultiviewTessellationShader
-           VkPhysicalDeviceMultiviewFeaturesKHX
-         where
-        type VkMultiviewTessellationShaderMType
-               VkPhysicalDeviceMultiviewFeaturesKHX
-             = VkBool32
-
-        {-# NOINLINE vkMultiviewTessellationShader #-}
-        vkMultiviewTessellationShader x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiviewTessellationShader})
-
-        {-# INLINE vkMultiviewTessellationShaderByteOffset #-}
-        vkMultiviewTessellationShaderByteOffset ~_
-          = #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiviewTessellationShader}
-
-        {-# INLINE readVkMultiviewTessellationShader #-}
-        readVkMultiviewTessellationShader p
-          = peekByteOff p #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiviewTessellationShader}
-
-        {-# INLINE writeVkMultiviewTessellationShader #-}
-        writeVkMultiviewTessellationShader p
-          = pokeByteOff p #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiviewTessellationShader}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiviewGeometryShader}
 
 instance {-# OVERLAPPING #-}
          HasField "multiviewTessellationShader"
@@ -359,35 +262,42 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiviewTessellationShader}
 
-instance CanReadField "multiviewTessellationShader"
+instance {-# OVERLAPPING #-}
+         CanReadField "multiviewTessellationShader"
            VkPhysicalDeviceMultiviewFeaturesKHX
          where
-        {-# INLINE getField #-}
-        getField = vkMultiviewTessellationShader
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiviewTessellationShader})
 
         {-# INLINE readField #-}
-        readField = readVkMultiviewTessellationShader
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiviewTessellationShader}
 
-instance CanWriteField "multiviewTessellationShader"
+instance {-# OVERLAPPING #-}
+         CanWriteField "multiviewTessellationShader"
            VkPhysicalDeviceMultiviewFeaturesKHX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkMultiviewTessellationShader
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceMultiviewFeaturesKHX, multiviewTessellationShader}
 
 instance Show VkPhysicalDeviceMultiviewFeaturesKHX where
         showsPrec d x
           = showString "VkPhysicalDeviceMultiviewFeaturesKHX {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkMultiview = " .
-                            showsPrec d (vkMultiview x) .
+                          showString "multiview = " .
+                            showsPrec d (getField @"multiview" x) .
                               showString ", " .
-                                showString "vkMultiviewGeometryShader = " .
-                                  showsPrec d (vkMultiviewGeometryShader x) .
+                                showString "multiviewGeometryShader = " .
+                                  showsPrec d (getField @"multiviewGeometryShader" x) .
                                     showString ", " .
-                                      showString "vkMultiviewTessellationShader = " .
-                                        showsPrec d (vkMultiviewTessellationShader x) . showChar '}'
+                                      showString "multiviewTessellationShader = " .
+                                        showsPrec d (getField @"multiviewTessellationShader" x) .
+                                          showChar '}'

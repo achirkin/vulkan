@@ -25,7 +25,8 @@ module Graphics.Vulkan.Ext.VK_EXT_acquire_xlib_display
         --
 
         -- ** Required extensions: 'VK_EXT_direct_mode_display'.
-        vkAcquireXlibDisplayEXT, vkGetRandROutputDisplayEXT,
+        vkAcquireXlibDisplayEXT, vkAcquireXlibDisplayEXTSafe,
+        vkGetRandROutputDisplayEXT, vkGetRandROutputDisplayEXTSafe,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_EXT_ACQUIRE_XLIB_DISPLAY_SPEC_VERSION,
@@ -59,6 +60,24 @@ foreign import ccall unsafe "vkAcquireXlibDisplayEXT"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
+--   Error codes: 'VK_ERROR_INITIALIZATION_FAILED'.
+--
+--   > VkResult vkAcquireXlibDisplayEXT
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , Display* dpy
+--   >     , VkDisplayKHR display
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkAcquireXlibDisplayEXT.html vkAcquireXlibDisplayEXT registry at www.khronos.org>
+foreign import ccall safe "vkAcquireXlibDisplayEXT"
+               vkAcquireXlibDisplayEXTSafe ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                -> Ptr Display -- ^ dpy
+                                               -> VkDisplayKHR -- ^ display
+                                                               -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
 --   > VkResult vkGetRandROutputDisplayEXT
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , Display* dpy
@@ -69,6 +88,25 @@ foreign import ccall unsafe "vkAcquireXlibDisplayEXT"
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetRandROutputDisplayEXT.html vkGetRandROutputDisplayEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkGetRandROutputDisplayEXT"
                vkGetRandROutputDisplayEXT ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                ->
+                 Ptr Display -- ^ dpy
+                             -> RROutput -- ^ rrOutput
+                                         -> Ptr VkDisplayKHR -- ^ pDisplay
+                                                             -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   > VkResult vkGetRandROutputDisplayEXT
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , Display* dpy
+--   >     , RROutput rrOutput
+--   >     , VkDisplayKHR* pDisplay
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetRandROutputDisplayEXT.html vkGetRandROutputDisplayEXT registry at www.khronos.org>
+foreign import ccall safe "vkGetRandROutputDisplayEXT"
+               vkGetRandROutputDisplayEXTSafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  Ptr Display -- ^ dpy

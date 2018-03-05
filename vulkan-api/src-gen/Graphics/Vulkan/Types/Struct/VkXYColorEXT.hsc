@@ -5,15 +5,15 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkXYColorEXT (VkXYColorEXT(..))
        where
-import           Foreign.Storable                    (Storable (..))
+import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.StructMembers
-import           System.IO.Unsafe                    (unsafeDupablePerformIO)
+import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | Chromaticity coordinate
 --
@@ -69,23 +69,6 @@ instance VulkanMarshal VkXYColorEXT where
         type ReturnedOnly VkXYColorEXT = 'False -- ' closing tick for hsc2hs
         type StructExtends VkXYColorEXT = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkX VkXYColorEXT where
-        type VkXMType VkXYColorEXT = #{type float}
-
-        {-# NOINLINE vkX #-}
-        vkX x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkXYColorEXT, x})
-
-        {-# INLINE vkXByteOffset #-}
-        vkXByteOffset ~_ = #{offset VkXYColorEXT, x}
-
-        {-# INLINE readVkX #-}
-        readVkX p = peekByteOff p #{offset VkXYColorEXT, x}
-
-        {-# INLINE writeVkX #-}
-        writeVkX p = pokeByteOff p #{offset VkXYColorEXT, x}
-
 instance {-# OVERLAPPING #-} HasField "x" VkXYColorEXT where
         type FieldType "x" VkXYColorEXT = #{type float}
         type FieldOptional "x" VkXYColorEXT = 'False -- ' closing tick for hsc2hs
@@ -99,33 +82,18 @@ instance {-# OVERLAPPING #-} HasField "x" VkXYColorEXT where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkXYColorEXT, x}
 
-instance CanReadField "x" VkXYColorEXT where
-        {-# INLINE getField #-}
-        getField = vkX
+instance {-# OVERLAPPING #-} CanReadField "x" VkXYColorEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkXYColorEXT, x})
 
         {-# INLINE readField #-}
-        readField = readVkX
+        readField p = peekByteOff p #{offset VkXYColorEXT, x}
 
-instance CanWriteField "x" VkXYColorEXT where
+instance {-# OVERLAPPING #-} CanWriteField "x" VkXYColorEXT where
         {-# INLINE writeField #-}
-        writeField = writeVkX
-
-instance {-# OVERLAPPING #-} HasVkY VkXYColorEXT where
-        type VkYMType VkXYColorEXT = #{type float}
-
-        {-# NOINLINE vkY #-}
-        vkY x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkXYColorEXT, y})
-
-        {-# INLINE vkYByteOffset #-}
-        vkYByteOffset ~_ = #{offset VkXYColorEXT, y}
-
-        {-# INLINE readVkY #-}
-        readVkY p = peekByteOff p #{offset VkXYColorEXT, y}
-
-        {-# INLINE writeVkY #-}
-        writeVkY p = pokeByteOff p #{offset VkXYColorEXT, y}
+        writeField p = pokeByteOff p #{offset VkXYColorEXT, x}
 
 instance {-# OVERLAPPING #-} HasField "y" VkXYColorEXT where
         type FieldType "y" VkXYColorEXT = #{type float}
@@ -140,21 +108,23 @@ instance {-# OVERLAPPING #-} HasField "y" VkXYColorEXT where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkXYColorEXT, y}
 
-instance CanReadField "y" VkXYColorEXT where
-        {-# INLINE getField #-}
-        getField = vkY
+instance {-# OVERLAPPING #-} CanReadField "y" VkXYColorEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkXYColorEXT, y})
 
         {-# INLINE readField #-}
-        readField = readVkY
+        readField p = peekByteOff p #{offset VkXYColorEXT, y}
 
-instance CanWriteField "y" VkXYColorEXT where
+instance {-# OVERLAPPING #-} CanWriteField "y" VkXYColorEXT where
         {-# INLINE writeField #-}
-        writeField = writeVkY
+        writeField p = pokeByteOff p #{offset VkXYColorEXT, y}
 
 instance Show VkXYColorEXT where
         showsPrec d x
           = showString "VkXYColorEXT {" .
-              showString "vkX = " .
-                showsPrec d (vkX x) .
+              showString "x = " .
+                showsPrec d (getField @"x" x) .
                   showString ", " .
-                    showString "vkY = " . showsPrec d (vkY x) . showChar '}'
+                    showString "y = " . showsPrec d (getField @"y" x) . showChar '}'

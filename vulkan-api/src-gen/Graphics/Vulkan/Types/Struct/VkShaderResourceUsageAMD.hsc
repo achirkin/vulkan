@@ -5,15 +5,15 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkShaderResourceUsageAMD
        (VkShaderResourceUsageAMD(..)) where
-import           Foreign.Storable                    (Storable (..))
+import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.StructMembers
-import           System.IO.Unsafe                    (unsafeDupablePerformIO)
+import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkShaderResourceUsageAMD {
 --   >     uint32_t numUsedVgprs;
@@ -75,27 +75,6 @@ instance VulkanMarshal VkShaderResourceUsageAMD where
         type StructExtends VkShaderResourceUsageAMD = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkNumUsedVgprs VkShaderResourceUsageAMD where
-        type VkNumUsedVgprsMType VkShaderResourceUsageAMD = Word32
-
-        {-# NOINLINE vkNumUsedVgprs #-}
-        vkNumUsedVgprs x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkShaderResourceUsageAMD, numUsedVgprs})
-
-        {-# INLINE vkNumUsedVgprsByteOffset #-}
-        vkNumUsedVgprsByteOffset ~_
-          = #{offset VkShaderResourceUsageAMD, numUsedVgprs}
-
-        {-# INLINE readVkNumUsedVgprs #-}
-        readVkNumUsedVgprs p
-          = peekByteOff p #{offset VkShaderResourceUsageAMD, numUsedVgprs}
-
-        {-# INLINE writeVkNumUsedVgprs #-}
-        writeVkNumUsedVgprs p
-          = pokeByteOff p #{offset VkShaderResourceUsageAMD, numUsedVgprs}
-
-instance {-# OVERLAPPING #-}
          HasField "numUsedVgprs" VkShaderResourceUsageAMD where
         type FieldType "numUsedVgprs" VkShaderResourceUsageAMD = Word32
         type FieldOptional "numUsedVgprs" VkShaderResourceUsageAMD = 'False -- ' closing tick for hsc2hs
@@ -110,38 +89,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkShaderResourceUsageAMD, numUsedVgprs}
 
-instance CanReadField "numUsedVgprs" VkShaderResourceUsageAMD where
-        {-# INLINE getField #-}
-        getField = vkNumUsedVgprs
+instance {-# OVERLAPPING #-}
+         CanReadField "numUsedVgprs" VkShaderResourceUsageAMD where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkShaderResourceUsageAMD, numUsedVgprs})
 
         {-# INLINE readField #-}
-        readField = readVkNumUsedVgprs
-
-instance CanWriteField "numUsedVgprs" VkShaderResourceUsageAMD
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkNumUsedVgprs
+        readField p
+          = peekByteOff p #{offset VkShaderResourceUsageAMD, numUsedVgprs}
 
 instance {-# OVERLAPPING #-}
-         HasVkNumUsedSgprs VkShaderResourceUsageAMD where
-        type VkNumUsedSgprsMType VkShaderResourceUsageAMD = Word32
-
-        {-# NOINLINE vkNumUsedSgprs #-}
-        vkNumUsedSgprs x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkShaderResourceUsageAMD, numUsedSgprs})
-
-        {-# INLINE vkNumUsedSgprsByteOffset #-}
-        vkNumUsedSgprsByteOffset ~_
-          = #{offset VkShaderResourceUsageAMD, numUsedSgprs}
-
-        {-# INLINE readVkNumUsedSgprs #-}
-        readVkNumUsedSgprs p
-          = peekByteOff p #{offset VkShaderResourceUsageAMD, numUsedSgprs}
-
-        {-# INLINE writeVkNumUsedSgprs #-}
-        writeVkNumUsedSgprs p
-          = pokeByteOff p #{offset VkShaderResourceUsageAMD, numUsedSgprs}
+         CanWriteField "numUsedVgprs" VkShaderResourceUsageAMD where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkShaderResourceUsageAMD, numUsedVgprs}
 
 instance {-# OVERLAPPING #-}
          HasField "numUsedSgprs" VkShaderResourceUsageAMD where
@@ -158,39 +121,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkShaderResourceUsageAMD, numUsedSgprs}
 
-instance CanReadField "numUsedSgprs" VkShaderResourceUsageAMD where
-        {-# INLINE getField #-}
-        getField = vkNumUsedSgprs
+instance {-# OVERLAPPING #-}
+         CanReadField "numUsedSgprs" VkShaderResourceUsageAMD where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkShaderResourceUsageAMD, numUsedSgprs})
 
         {-# INLINE readField #-}
-        readField = readVkNumUsedSgprs
-
-instance CanWriteField "numUsedSgprs" VkShaderResourceUsageAMD
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkNumUsedSgprs
+        readField p
+          = peekByteOff p #{offset VkShaderResourceUsageAMD, numUsedSgprs}
 
 instance {-# OVERLAPPING #-}
-         HasVkLdsSizePerLocalWorkGroup VkShaderResourceUsageAMD where
-        type VkLdsSizePerLocalWorkGroupMType VkShaderResourceUsageAMD =
-             Word32
-
-        {-# NOINLINE vkLdsSizePerLocalWorkGroup #-}
-        vkLdsSizePerLocalWorkGroup x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkShaderResourceUsageAMD, ldsSizePerLocalWorkGroup})
-
-        {-# INLINE vkLdsSizePerLocalWorkGroupByteOffset #-}
-        vkLdsSizePerLocalWorkGroupByteOffset ~_
-          = #{offset VkShaderResourceUsageAMD, ldsSizePerLocalWorkGroup}
-
-        {-# INLINE readVkLdsSizePerLocalWorkGroup #-}
-        readVkLdsSizePerLocalWorkGroup p
-          = peekByteOff p #{offset VkShaderResourceUsageAMD, ldsSizePerLocalWorkGroup}
-
-        {-# INLINE writeVkLdsSizePerLocalWorkGroup #-}
-        writeVkLdsSizePerLocalWorkGroup p
-          = pokeByteOff p #{offset VkShaderResourceUsageAMD, ldsSizePerLocalWorkGroup}
+         CanWriteField "numUsedSgprs" VkShaderResourceUsageAMD where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkShaderResourceUsageAMD, numUsedSgprs}
 
 instance {-# OVERLAPPING #-}
          HasField "ldsSizePerLocalWorkGroup" VkShaderResourceUsageAMD where
@@ -214,41 +160,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkShaderResourceUsageAMD, ldsSizePerLocalWorkGroup}
 
-instance CanReadField "ldsSizePerLocalWorkGroup"
-           VkShaderResourceUsageAMD
+instance {-# OVERLAPPING #-}
+         CanReadField "ldsSizePerLocalWorkGroup" VkShaderResourceUsageAMD
          where
-        {-# INLINE getField #-}
-        getField = vkLdsSizePerLocalWorkGroup
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkShaderResourceUsageAMD, ldsSizePerLocalWorkGroup})
 
         {-# INLINE readField #-}
-        readField = readVkLdsSizePerLocalWorkGroup
-
-instance CanWriteField "ldsSizePerLocalWorkGroup"
-           VkShaderResourceUsageAMD
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkLdsSizePerLocalWorkGroup
+        readField p
+          = peekByteOff p #{offset VkShaderResourceUsageAMD, ldsSizePerLocalWorkGroup}
 
 instance {-# OVERLAPPING #-}
-         HasVkLdsUsageSizeInBytes VkShaderResourceUsageAMD where
-        type VkLdsUsageSizeInBytesMType VkShaderResourceUsageAMD = CSize
-
-        {-# NOINLINE vkLdsUsageSizeInBytes #-}
-        vkLdsUsageSizeInBytes x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkShaderResourceUsageAMD, ldsUsageSizeInBytes})
-
-        {-# INLINE vkLdsUsageSizeInBytesByteOffset #-}
-        vkLdsUsageSizeInBytesByteOffset ~_
-          = #{offset VkShaderResourceUsageAMD, ldsUsageSizeInBytes}
-
-        {-# INLINE readVkLdsUsageSizeInBytes #-}
-        readVkLdsUsageSizeInBytes p
-          = peekByteOff p #{offset VkShaderResourceUsageAMD, ldsUsageSizeInBytes}
-
-        {-# INLINE writeVkLdsUsageSizeInBytes #-}
-        writeVkLdsUsageSizeInBytes p
-          = pokeByteOff p #{offset VkShaderResourceUsageAMD, ldsUsageSizeInBytes}
+         CanWriteField "ldsSizePerLocalWorkGroup" VkShaderResourceUsageAMD
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkShaderResourceUsageAMD, ldsSizePerLocalWorkGroup}
 
 instance {-# OVERLAPPING #-}
          HasField "ldsUsageSizeInBytes" VkShaderResourceUsageAMD where
@@ -268,41 +197,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkShaderResourceUsageAMD, ldsUsageSizeInBytes}
 
-instance CanReadField "ldsUsageSizeInBytes"
-           VkShaderResourceUsageAMD
-         where
-        {-# INLINE getField #-}
-        getField = vkLdsUsageSizeInBytes
+instance {-# OVERLAPPING #-}
+         CanReadField "ldsUsageSizeInBytes" VkShaderResourceUsageAMD where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkShaderResourceUsageAMD, ldsUsageSizeInBytes})
 
         {-# INLINE readField #-}
-        readField = readVkLdsUsageSizeInBytes
-
-instance CanWriteField "ldsUsageSizeInBytes"
-           VkShaderResourceUsageAMD
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkLdsUsageSizeInBytes
+        readField p
+          = peekByteOff p #{offset VkShaderResourceUsageAMD, ldsUsageSizeInBytes}
 
 instance {-# OVERLAPPING #-}
-         HasVkScratchMemUsageInBytes VkShaderResourceUsageAMD where
-        type VkScratchMemUsageInBytesMType VkShaderResourceUsageAMD = CSize
-
-        {-# NOINLINE vkScratchMemUsageInBytes #-}
-        vkScratchMemUsageInBytes x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkShaderResourceUsageAMD, scratchMemUsageInBytes})
-
-        {-# INLINE vkScratchMemUsageInBytesByteOffset #-}
-        vkScratchMemUsageInBytesByteOffset ~_
-          = #{offset VkShaderResourceUsageAMD, scratchMemUsageInBytes}
-
-        {-# INLINE readVkScratchMemUsageInBytes #-}
-        readVkScratchMemUsageInBytes p
-          = peekByteOff p #{offset VkShaderResourceUsageAMD, scratchMemUsageInBytes}
-
-        {-# INLINE writeVkScratchMemUsageInBytes #-}
-        writeVkScratchMemUsageInBytes p
-          = pokeByteOff p #{offset VkShaderResourceUsageAMD, scratchMemUsageInBytes}
+         CanWriteField "ldsUsageSizeInBytes" VkShaderResourceUsageAMD where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkShaderResourceUsageAMD, ldsUsageSizeInBytes}
 
 instance {-# OVERLAPPING #-}
          HasField "scratchMemUsageInBytes" VkShaderResourceUsageAMD where
@@ -324,35 +234,40 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkShaderResourceUsageAMD, scratchMemUsageInBytes}
 
-instance CanReadField "scratchMemUsageInBytes"
-           VkShaderResourceUsageAMD
+instance {-# OVERLAPPING #-}
+         CanReadField "scratchMemUsageInBytes" VkShaderResourceUsageAMD
          where
-        {-# INLINE getField #-}
-        getField = vkScratchMemUsageInBytes
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkShaderResourceUsageAMD, scratchMemUsageInBytes})
 
         {-# INLINE readField #-}
-        readField = readVkScratchMemUsageInBytes
+        readField p
+          = peekByteOff p #{offset VkShaderResourceUsageAMD, scratchMemUsageInBytes}
 
-instance CanWriteField "scratchMemUsageInBytes"
-           VkShaderResourceUsageAMD
+instance {-# OVERLAPPING #-}
+         CanWriteField "scratchMemUsageInBytes" VkShaderResourceUsageAMD
          where
         {-# INLINE writeField #-}
-        writeField = writeVkScratchMemUsageInBytes
+        writeField p
+          = pokeByteOff p #{offset VkShaderResourceUsageAMD, scratchMemUsageInBytes}
 
 instance Show VkShaderResourceUsageAMD where
         showsPrec d x
           = showString "VkShaderResourceUsageAMD {" .
-              showString "vkNumUsedVgprs = " .
-                showsPrec d (vkNumUsedVgprs x) .
+              showString "numUsedVgprs = " .
+                showsPrec d (getField @"numUsedVgprs" x) .
                   showString ", " .
-                    showString "vkNumUsedSgprs = " .
-                      showsPrec d (vkNumUsedSgprs x) .
+                    showString "numUsedSgprs = " .
+                      showsPrec d (getField @"numUsedSgprs" x) .
                         showString ", " .
-                          showString "vkLdsSizePerLocalWorkGroup = " .
-                            showsPrec d (vkLdsSizePerLocalWorkGroup x) .
+                          showString "ldsSizePerLocalWorkGroup = " .
+                            showsPrec d (getField @"ldsSizePerLocalWorkGroup" x) .
                               showString ", " .
-                                showString "vkLdsUsageSizeInBytes = " .
-                                  showsPrec d (vkLdsUsageSizeInBytes x) .
+                                showString "ldsUsageSizeInBytes = " .
+                                  showsPrec d (getField @"ldsUsageSizeInBytes" x) .
                                     showString ", " .
-                                      showString "vkScratchMemUsageInBytes = " .
-                                        showsPrec d (vkScratchMemUsageInBytes x) . showChar '}'
+                                      showString "scratchMemUsageInBytes = " .
+                                        showsPrec d (getField @"scratchMemUsageInBytes" x) .
+                                          showChar '}'

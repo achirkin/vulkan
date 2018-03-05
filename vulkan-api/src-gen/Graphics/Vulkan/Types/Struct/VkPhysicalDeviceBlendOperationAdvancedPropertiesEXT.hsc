@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
        (VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes                             (VkBool32)
 import           Graphics.Vulkan.Types.Enum.VkStructureType                  (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR (VkPhysicalDeviceProperties2KHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                            (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT {
@@ -107,30 +107,6 @@ instance VulkanMarshal
              = '[VkPhysicalDeviceProperties2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
-         where
-        type VkSTypeMType
-               VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
-             = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType"
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
          where
@@ -155,44 +131,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, sType}
 
-instance CanReadField "sType"
+instance {-# OVERLAPPING #-}
+         CanReadField "sType"
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkSType
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, sType}
 
-instance CanWriteField "sType"
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType"
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-}
-         HasVkPNext VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
-         where
-        type VkPNextMType
-               VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
-             = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext"
@@ -219,45 +177,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, pNext}
 
-instance CanReadField "pNext"
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext"
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkPNext
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, pNext}
 
-instance CanWriteField "pNext"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext"
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-}
-         HasVkAdvancedBlendMaxColorAttachments
-           VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
-         where
-        type VkAdvancedBlendMaxColorAttachmentsMType
-               VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
-             = Word32
-
-        {-# NOINLINE vkAdvancedBlendMaxColorAttachments #-}
-        vkAdvancedBlendMaxColorAttachments x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendMaxColorAttachments})
-
-        {-# INLINE vkAdvancedBlendMaxColorAttachmentsByteOffset #-}
-        vkAdvancedBlendMaxColorAttachmentsByteOffset ~_
-          = #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendMaxColorAttachments}
-
-        {-# INLINE readVkAdvancedBlendMaxColorAttachments #-}
-        readVkAdvancedBlendMaxColorAttachments p
-          = peekByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendMaxColorAttachments}
-
-        {-# INLINE writeVkAdvancedBlendMaxColorAttachments #-}
-        writeVkAdvancedBlendMaxColorAttachments p
-          = pokeByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendMaxColorAttachments}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "advancedBlendMaxColorAttachments"
@@ -284,45 +223,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendMaxColorAttachments}
 
-instance CanReadField "advancedBlendMaxColorAttachments"
+instance {-# OVERLAPPING #-}
+         CanReadField "advancedBlendMaxColorAttachments"
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkAdvancedBlendMaxColorAttachments
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendMaxColorAttachments})
 
         {-# INLINE readField #-}
-        readField = readVkAdvancedBlendMaxColorAttachments
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendMaxColorAttachments}
 
-instance CanWriteField "advancedBlendMaxColorAttachments"
+instance {-# OVERLAPPING #-}
+         CanWriteField "advancedBlendMaxColorAttachments"
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkAdvancedBlendMaxColorAttachments
-
-instance {-# OVERLAPPING #-}
-         HasVkAdvancedBlendIndependentBlend
-           VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
-         where
-        type VkAdvancedBlendIndependentBlendMType
-               VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
-             = VkBool32
-
-        {-# NOINLINE vkAdvancedBlendIndependentBlend #-}
-        vkAdvancedBlendIndependentBlend x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendIndependentBlend})
-
-        {-# INLINE vkAdvancedBlendIndependentBlendByteOffset #-}
-        vkAdvancedBlendIndependentBlendByteOffset ~_
-          = #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendIndependentBlend}
-
-        {-# INLINE readVkAdvancedBlendIndependentBlend #-}
-        readVkAdvancedBlendIndependentBlend p
-          = peekByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendIndependentBlend}
-
-        {-# INLINE writeVkAdvancedBlendIndependentBlend #-}
-        writeVkAdvancedBlendIndependentBlend p
-          = pokeByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendIndependentBlend}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendMaxColorAttachments}
 
 instance {-# OVERLAPPING #-}
          HasField "advancedBlendIndependentBlend"
@@ -349,45 +269,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendIndependentBlend}
 
-instance CanReadField "advancedBlendIndependentBlend"
+instance {-# OVERLAPPING #-}
+         CanReadField "advancedBlendIndependentBlend"
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkAdvancedBlendIndependentBlend
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendIndependentBlend})
 
         {-# INLINE readField #-}
-        readField = readVkAdvancedBlendIndependentBlend
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendIndependentBlend}
 
-instance CanWriteField "advancedBlendIndependentBlend"
+instance {-# OVERLAPPING #-}
+         CanWriteField "advancedBlendIndependentBlend"
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkAdvancedBlendIndependentBlend
-
-instance {-# OVERLAPPING #-}
-         HasVkAdvancedBlendNonPremultipliedSrcColor
-           VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
-         where
-        type VkAdvancedBlendNonPremultipliedSrcColorMType
-               VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
-             = VkBool32
-
-        {-# NOINLINE vkAdvancedBlendNonPremultipliedSrcColor #-}
-        vkAdvancedBlendNonPremultipliedSrcColor x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendNonPremultipliedSrcColor})
-
-        {-# INLINE vkAdvancedBlendNonPremultipliedSrcColorByteOffset #-}
-        vkAdvancedBlendNonPremultipliedSrcColorByteOffset ~_
-          = #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendNonPremultipliedSrcColor}
-
-        {-# INLINE readVkAdvancedBlendNonPremultipliedSrcColor #-}
-        readVkAdvancedBlendNonPremultipliedSrcColor p
-          = peekByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendNonPremultipliedSrcColor}
-
-        {-# INLINE writeVkAdvancedBlendNonPremultipliedSrcColor #-}
-        writeVkAdvancedBlendNonPremultipliedSrcColor p
-          = pokeByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendNonPremultipliedSrcColor}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendIndependentBlend}
 
 instance {-# OVERLAPPING #-}
          HasField "advancedBlendNonPremultipliedSrcColor"
@@ -414,45 +315,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendNonPremultipliedSrcColor}
 
-instance CanReadField "advancedBlendNonPremultipliedSrcColor"
+instance {-# OVERLAPPING #-}
+         CanReadField "advancedBlendNonPremultipliedSrcColor"
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkAdvancedBlendNonPremultipliedSrcColor
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendNonPremultipliedSrcColor})
 
         {-# INLINE readField #-}
-        readField = readVkAdvancedBlendNonPremultipliedSrcColor
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendNonPremultipliedSrcColor}
 
-instance CanWriteField "advancedBlendNonPremultipliedSrcColor"
+instance {-# OVERLAPPING #-}
+         CanWriteField "advancedBlendNonPremultipliedSrcColor"
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkAdvancedBlendNonPremultipliedSrcColor
-
-instance {-# OVERLAPPING #-}
-         HasVkAdvancedBlendNonPremultipliedDstColor
-           VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
-         where
-        type VkAdvancedBlendNonPremultipliedDstColorMType
-               VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
-             = VkBool32
-
-        {-# NOINLINE vkAdvancedBlendNonPremultipliedDstColor #-}
-        vkAdvancedBlendNonPremultipliedDstColor x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendNonPremultipliedDstColor})
-
-        {-# INLINE vkAdvancedBlendNonPremultipliedDstColorByteOffset #-}
-        vkAdvancedBlendNonPremultipliedDstColorByteOffset ~_
-          = #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendNonPremultipliedDstColor}
-
-        {-# INLINE readVkAdvancedBlendNonPremultipliedDstColor #-}
-        readVkAdvancedBlendNonPremultipliedDstColor p
-          = peekByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendNonPremultipliedDstColor}
-
-        {-# INLINE writeVkAdvancedBlendNonPremultipliedDstColor #-}
-        writeVkAdvancedBlendNonPremultipliedDstColor p
-          = pokeByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendNonPremultipliedDstColor}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendNonPremultipliedSrcColor}
 
 instance {-# OVERLAPPING #-}
          HasField "advancedBlendNonPremultipliedDstColor"
@@ -479,45 +361,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendNonPremultipliedDstColor}
 
-instance CanReadField "advancedBlendNonPremultipliedDstColor"
+instance {-# OVERLAPPING #-}
+         CanReadField "advancedBlendNonPremultipliedDstColor"
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkAdvancedBlendNonPremultipliedDstColor
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendNonPremultipliedDstColor})
 
         {-# INLINE readField #-}
-        readField = readVkAdvancedBlendNonPremultipliedDstColor
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendNonPremultipliedDstColor}
 
-instance CanWriteField "advancedBlendNonPremultipliedDstColor"
+instance {-# OVERLAPPING #-}
+         CanWriteField "advancedBlendNonPremultipliedDstColor"
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkAdvancedBlendNonPremultipliedDstColor
-
-instance {-# OVERLAPPING #-}
-         HasVkAdvancedBlendCorrelatedOverlap
-           VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
-         where
-        type VkAdvancedBlendCorrelatedOverlapMType
-               VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
-             = VkBool32
-
-        {-# NOINLINE vkAdvancedBlendCorrelatedOverlap #-}
-        vkAdvancedBlendCorrelatedOverlap x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendCorrelatedOverlap})
-
-        {-# INLINE vkAdvancedBlendCorrelatedOverlapByteOffset #-}
-        vkAdvancedBlendCorrelatedOverlapByteOffset ~_
-          = #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendCorrelatedOverlap}
-
-        {-# INLINE readVkAdvancedBlendCorrelatedOverlap #-}
-        readVkAdvancedBlendCorrelatedOverlap p
-          = peekByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendCorrelatedOverlap}
-
-        {-# INLINE writeVkAdvancedBlendCorrelatedOverlap #-}
-        writeVkAdvancedBlendCorrelatedOverlap p
-          = pokeByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendCorrelatedOverlap}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendNonPremultipliedDstColor}
 
 instance {-# OVERLAPPING #-}
          HasField "advancedBlendCorrelatedOverlap"
@@ -544,45 +407,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendCorrelatedOverlap}
 
-instance CanReadField "advancedBlendCorrelatedOverlap"
+instance {-# OVERLAPPING #-}
+         CanReadField "advancedBlendCorrelatedOverlap"
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkAdvancedBlendCorrelatedOverlap
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendCorrelatedOverlap})
 
         {-# INLINE readField #-}
-        readField = readVkAdvancedBlendCorrelatedOverlap
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendCorrelatedOverlap}
 
-instance CanWriteField "advancedBlendCorrelatedOverlap"
+instance {-# OVERLAPPING #-}
+         CanWriteField "advancedBlendCorrelatedOverlap"
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkAdvancedBlendCorrelatedOverlap
-
-instance {-# OVERLAPPING #-}
-         HasVkAdvancedBlendAllOperations
-           VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
-         where
-        type VkAdvancedBlendAllOperationsMType
-               VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
-             = VkBool32
-
-        {-# NOINLINE vkAdvancedBlendAllOperations #-}
-        vkAdvancedBlendAllOperations x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendAllOperations})
-
-        {-# INLINE vkAdvancedBlendAllOperationsByteOffset #-}
-        vkAdvancedBlendAllOperationsByteOffset ~_
-          = #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendAllOperations}
-
-        {-# INLINE readVkAdvancedBlendAllOperations #-}
-        readVkAdvancedBlendAllOperations p
-          = peekByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendAllOperations}
-
-        {-# INLINE writeVkAdvancedBlendAllOperations #-}
-        writeVkAdvancedBlendAllOperations p
-          = pokeByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendAllOperations}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendCorrelatedOverlap}
 
 instance {-# OVERLAPPING #-}
          HasField "advancedBlendAllOperations"
@@ -609,20 +453,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendAllOperations}
 
-instance CanReadField "advancedBlendAllOperations"
+instance {-# OVERLAPPING #-}
+         CanReadField "advancedBlendAllOperations"
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkAdvancedBlendAllOperations
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendAllOperations})
 
         {-# INLINE readField #-}
-        readField = readVkAdvancedBlendAllOperations
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendAllOperations}
 
-instance CanWriteField "advancedBlendAllOperations"
+instance {-# OVERLAPPING #-}
+         CanWriteField "advancedBlendAllOperations"
            VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkAdvancedBlendAllOperations
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT, advancedBlendAllOperations}
 
 instance Show VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
          where
@@ -630,33 +480,36 @@ instance Show VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
           = showString
               "VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT {"
               .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkAdvancedBlendMaxColorAttachments = " .
-                            showsPrec d (vkAdvancedBlendMaxColorAttachments x) .
+                          showString "advancedBlendMaxColorAttachments = " .
+                            showsPrec d (getField @"advancedBlendMaxColorAttachments" x) .
                               showString ", " .
-                                showString "vkAdvancedBlendIndependentBlend = " .
-                                  showsPrec d (vkAdvancedBlendIndependentBlend x) .
+                                showString "advancedBlendIndependentBlend = " .
+                                  showsPrec d (getField @"advancedBlendIndependentBlend" x) .
                                     showString ", " .
-                                      showString "vkAdvancedBlendNonPremultipliedSrcColor = " .
-                                        showsPrec d (vkAdvancedBlendNonPremultipliedSrcColor x) .
+                                      showString "advancedBlendNonPremultipliedSrcColor = " .
+                                        showsPrec d
+                                          (getField @"advancedBlendNonPremultipliedSrcColor" x)
+                                          .
                                           showString ", " .
-                                            showString "vkAdvancedBlendNonPremultipliedDstColor = "
-                                              .
+                                            showString "advancedBlendNonPremultipliedDstColor = " .
                                               showsPrec d
-                                                (vkAdvancedBlendNonPremultipliedDstColor x)
+                                                (getField @"advancedBlendNonPremultipliedDstColor"
+                                                   x)
                                                 .
                                                 showString ", " .
-                                                  showString "vkAdvancedBlendCorrelatedOverlap = " .
-                                                    showsPrec d (vkAdvancedBlendCorrelatedOverlap x)
+                                                  showString "advancedBlendCorrelatedOverlap = " .
+                                                    showsPrec d
+                                                      (getField @"advancedBlendCorrelatedOverlap" x)
                                                       .
                                                       showString ", " .
-                                                        showString "vkAdvancedBlendAllOperations = "
-                                                          .
+                                                        showString "advancedBlendAllOperations = " .
                                                           showsPrec d
-                                                            (vkAdvancedBlendAllOperations x)
+                                                            (getField @"advancedBlendAllOperations"
+                                                               x)
                                                             . showChar '}'

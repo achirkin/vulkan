@@ -8,6 +8,7 @@
 {-# LANGUAGE PatternSynonyms       #-}
 {-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 {-# LANGUAGE UndecidableInstances  #-}
 module Graphics.Vulkan.Types.Struct.VkImageBlit (VkImageBlit(..))
@@ -20,7 +21,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Struct.VkImageSubresourceLayers (VkImageSubresourceLayers)
 import           Graphics.Vulkan.Types.Struct.VkOffset3D               (VkOffset3D)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                      (unsafeDupablePerformIO)
 
 -- | > typedef struct VkImageBlit {
@@ -78,26 +78,6 @@ instance VulkanMarshal VkImageBlit where
         type ReturnedOnly VkImageBlit = 'False -- ' closing tick for hsc2hs
         type StructExtends VkImageBlit = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSrcSubresource VkImageBlit where
-        type VkSrcSubresourceMType VkImageBlit = VkImageSubresourceLayers
-
-        {-# NOINLINE vkSrcSubresource #-}
-        vkSrcSubresource x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageBlit, srcSubresource})
-
-        {-# INLINE vkSrcSubresourceByteOffset #-}
-        vkSrcSubresourceByteOffset ~_
-          = #{offset VkImageBlit, srcSubresource}
-
-        {-# INLINE readVkSrcSubresource #-}
-        readVkSrcSubresource p
-          = peekByteOff p #{offset VkImageBlit, srcSubresource}
-
-        {-# INLINE writeVkSrcSubresource #-}
-        writeVkSrcSubresource p
-          = pokeByteOff p #{offset VkImageBlit, srcSubresource}
-
 instance {-# OVERLAPPING #-} HasField "srcSubresource" VkImageBlit
          where
         type FieldType "srcSubresource" VkImageBlit =
@@ -113,42 +93,22 @@ instance {-# OVERLAPPING #-} HasField "srcSubresource" VkImageBlit
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkImageBlit, srcSubresource}
 
-instance CanReadField "srcSubresource" VkImageBlit where
-        {-# INLINE getField #-}
-        getField = vkSrcSubresource
+instance {-# OVERLAPPING #-}
+         CanReadField "srcSubresource" VkImageBlit where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageBlit, srcSubresource})
 
         {-# INLINE readField #-}
-        readField = readVkSrcSubresource
+        readField p
+          = peekByteOff p #{offset VkImageBlit, srcSubresource}
 
-instance CanWriteField "srcSubresource" VkImageBlit where
+instance {-# OVERLAPPING #-}
+         CanWriteField "srcSubresource" VkImageBlit where
         {-# INLINE writeField #-}
-        writeField = writeVkSrcSubresource
-
-instance {-# OVERLAPPING #-} HasVkSrcOffsetsArray VkImageBlit where
-        type VkSrcOffsetsArrayMType VkImageBlit = VkOffset3D
-
-        {-# NOINLINE vkSrcOffsetsArray #-}
-        vkSrcOffsetsArray x idx
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 (idx * sizeOf (undefined :: VkOffset3D) +
-                    #{offset VkImageBlit, srcOffsets}))
-
-        {-# INLINE vkSrcOffsetsArrayByteOffset #-}
-        vkSrcOffsetsArrayByteOffset ~_
-          = #{offset VkImageBlit, srcOffsets}
-
-        {-# INLINE readVkSrcOffsetsArray #-}
-        readVkSrcOffsetsArray p idx
-          = peekByteOff p
-              (idx * sizeOf (undefined :: VkOffset3D) +
-                 #{offset VkImageBlit, srcOffsets})
-
-        {-# INLINE writeVkSrcOffsetsArray #-}
-        writeVkSrcOffsetsArray p idx
-          = pokeByteOff p
-              (idx * sizeOf (undefined :: VkOffset3D) +
-                 #{offset VkImageBlit, srcOffsets})
+        writeField p
+          = pokeByteOff p #{offset VkImageBlit, srcSubresource}
 
 instance {-# OVERLAPPING #-} HasField "srcOffsets" VkImageBlit
          where
@@ -164,8 +124,8 @@ instance {-# OVERLAPPING #-} HasField "srcOffsets" VkImageBlit
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkImageBlit, srcOffsets}
 
-instance (KnownNat idx,
-          IndexInBounds "srcOffsets" idx VkImageBlit) =>
+instance {-# OVERLAPPING #-}
+         (KnownNat idx, IndexInBounds "srcOffsets" idx VkImageBlit) =>
          CanReadFieldArray "srcOffsets" idx VkImageBlit
          where
         {-# SPECIALISE instance
@@ -179,17 +139,23 @@ instance (KnownNat idx,
         fieldArrayLength = 2
 
         {-# INLINE getFieldArray #-}
-        getFieldArray x
-          = vkSrcOffsetsArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+        getFieldArray = f
+          where {-# NOINLINE f #-}
+                f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
+                off
+                  = #{offset VkImageBlit, srcOffsets} +
+                      sizeOf (undefined :: VkOffset3D) *
+                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
         {-# INLINE readFieldArray #-}
-        readFieldArray x
-          = readVkSrcOffsetsArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+        readFieldArray p
+          = peekByteOff p
+              (#{offset VkImageBlit, srcOffsets} +
+                 sizeOf (undefined :: VkOffset3D) *
+                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
 
-instance (KnownNat idx,
-          IndexInBounds "srcOffsets" idx VkImageBlit) =>
+instance {-# OVERLAPPING #-}
+         (KnownNat idx, IndexInBounds "srcOffsets" idx VkImageBlit) =>
          CanWriteFieldArray "srcOffsets" idx VkImageBlit
          where
         {-# SPECIALISE instance
@@ -199,29 +165,11 @@ instance (KnownNat idx,
                        CanWriteFieldArray "srcOffsets" 1 VkImageBlit #-}
 
         {-# INLINE writeFieldArray #-}
-        writeFieldArray x
-          = writeVkSrcOffsetsArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
-
-instance {-# OVERLAPPING #-} HasVkDstSubresource VkImageBlit where
-        type VkDstSubresourceMType VkImageBlit = VkImageSubresourceLayers
-
-        {-# NOINLINE vkDstSubresource #-}
-        vkDstSubresource x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageBlit, dstSubresource})
-
-        {-# INLINE vkDstSubresourceByteOffset #-}
-        vkDstSubresourceByteOffset ~_
-          = #{offset VkImageBlit, dstSubresource}
-
-        {-# INLINE readVkDstSubresource #-}
-        readVkDstSubresource p
-          = peekByteOff p #{offset VkImageBlit, dstSubresource}
-
-        {-# INLINE writeVkDstSubresource #-}
-        writeVkDstSubresource p
-          = pokeByteOff p #{offset VkImageBlit, dstSubresource}
+        writeFieldArray p
+          = pokeByteOff p
+              (#{offset VkImageBlit, srcOffsets} +
+                 sizeOf (undefined :: VkOffset3D) *
+                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-} HasField "dstSubresource" VkImageBlit
          where
@@ -238,42 +186,22 @@ instance {-# OVERLAPPING #-} HasField "dstSubresource" VkImageBlit
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkImageBlit, dstSubresource}
 
-instance CanReadField "dstSubresource" VkImageBlit where
-        {-# INLINE getField #-}
-        getField = vkDstSubresource
+instance {-# OVERLAPPING #-}
+         CanReadField "dstSubresource" VkImageBlit where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageBlit, dstSubresource})
 
         {-# INLINE readField #-}
-        readField = readVkDstSubresource
+        readField p
+          = peekByteOff p #{offset VkImageBlit, dstSubresource}
 
-instance CanWriteField "dstSubresource" VkImageBlit where
+instance {-# OVERLAPPING #-}
+         CanWriteField "dstSubresource" VkImageBlit where
         {-# INLINE writeField #-}
-        writeField = writeVkDstSubresource
-
-instance {-# OVERLAPPING #-} HasVkDstOffsetsArray VkImageBlit where
-        type VkDstOffsetsArrayMType VkImageBlit = VkOffset3D
-
-        {-# NOINLINE vkDstOffsetsArray #-}
-        vkDstOffsetsArray x idx
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 (idx * sizeOf (undefined :: VkOffset3D) +
-                    #{offset VkImageBlit, dstOffsets}))
-
-        {-# INLINE vkDstOffsetsArrayByteOffset #-}
-        vkDstOffsetsArrayByteOffset ~_
-          = #{offset VkImageBlit, dstOffsets}
-
-        {-# INLINE readVkDstOffsetsArray #-}
-        readVkDstOffsetsArray p idx
-          = peekByteOff p
-              (idx * sizeOf (undefined :: VkOffset3D) +
-                 #{offset VkImageBlit, dstOffsets})
-
-        {-# INLINE writeVkDstOffsetsArray #-}
-        writeVkDstOffsetsArray p idx
-          = pokeByteOff p
-              (idx * sizeOf (undefined :: VkOffset3D) +
-                 #{offset VkImageBlit, dstOffsets})
+        writeField p
+          = pokeByteOff p #{offset VkImageBlit, dstSubresource}
 
 instance {-# OVERLAPPING #-} HasField "dstOffsets" VkImageBlit
          where
@@ -289,8 +217,8 @@ instance {-# OVERLAPPING #-} HasField "dstOffsets" VkImageBlit
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkImageBlit, dstOffsets}
 
-instance (KnownNat idx,
-          IndexInBounds "dstOffsets" idx VkImageBlit) =>
+instance {-# OVERLAPPING #-}
+         (KnownNat idx, IndexInBounds "dstOffsets" idx VkImageBlit) =>
          CanReadFieldArray "dstOffsets" idx VkImageBlit
          where
         {-# SPECIALISE instance
@@ -304,17 +232,23 @@ instance (KnownNat idx,
         fieldArrayLength = 2
 
         {-# INLINE getFieldArray #-}
-        getFieldArray x
-          = vkDstOffsetsArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+        getFieldArray = f
+          where {-# NOINLINE f #-}
+                f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
+                off
+                  = #{offset VkImageBlit, dstOffsets} +
+                      sizeOf (undefined :: VkOffset3D) *
+                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
         {-# INLINE readFieldArray #-}
-        readFieldArray x
-          = readVkDstOffsetsArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+        readFieldArray p
+          = peekByteOff p
+              (#{offset VkImageBlit, dstOffsets} +
+                 sizeOf (undefined :: VkOffset3D) *
+                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
 
-instance (KnownNat idx,
-          IndexInBounds "dstOffsets" idx VkImageBlit) =>
+instance {-# OVERLAPPING #-}
+         (KnownNat idx, IndexInBounds "dstOffsets" idx VkImageBlit) =>
          CanWriteFieldArray "dstOffsets" idx VkImageBlit
          where
         {-# SPECIALISE instance
@@ -324,23 +258,43 @@ instance (KnownNat idx,
                        CanWriteFieldArray "dstOffsets" 1 VkImageBlit #-}
 
         {-# INLINE writeFieldArray #-}
-        writeFieldArray x
-          = writeVkDstOffsetsArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+        writeFieldArray p
+          = pokeByteOff p
+              (#{offset VkImageBlit, dstOffsets} +
+                 sizeOf (undefined :: VkOffset3D) *
+                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
 
 instance Show VkImageBlit where
         showsPrec d x
           = showString "VkImageBlit {" .
-              showString "vkSrcSubresource = " .
-                showsPrec d (vkSrcSubresource x) .
+              showString "srcSubresource = " .
+                showsPrec d (getField @"srcSubresource" x) .
                   showString ", " .
-                    showString "vkSrcOffsetsArray = [" .
-                      showsPrec d (map (vkSrcOffsetsArray x) [1 .. 2]) .
-                        showChar ']' .
-                          showString ", " .
-                            showString "vkDstSubresource = " .
-                              showsPrec d (vkDstSubresource x) .
-                                showString ", " .
-                                  showString "vkDstOffsetsArray = [" .
-                                    showsPrec d (map (vkDstOffsetsArray x) [1 .. 2]) .
-                                      showChar ']' . showChar '}'
+                    (showString "srcOffsets = [" .
+                       showsPrec d
+                         (let s = sizeOf (undefined :: FieldType "srcOffsets" VkImageBlit)
+                              o = fieldOffset @"srcOffsets" @VkImageBlit
+                              f i
+                                = peekByteOff (unsafePtr x) i ::
+                                    IO (FieldType "srcOffsets" VkImageBlit)
+                            in
+                            unsafeDupablePerformIO . mapM f $
+                              map (\ i -> o + i * s) [0 .. 2 - 1])
+                         . showChar ']')
+                      .
+                      showString ", " .
+                        showString "dstSubresource = " .
+                          showsPrec d (getField @"dstSubresource" x) .
+                            showString ", " .
+                              (showString "dstOffsets = [" .
+                                 showsPrec d
+                                   (let s = sizeOf (undefined :: FieldType "dstOffsets" VkImageBlit)
+                                        o = fieldOffset @"dstOffsets" @VkImageBlit
+                                        f i
+                                          = peekByteOff (unsafePtr x) i ::
+                                              IO (FieldType "dstOffsets" VkImageBlit)
+                                      in
+                                      unsafeDupablePerformIO . mapM f $
+                                        map (\ i -> o + i * s) [0 .. 2 - 1])
+                                   . showChar ']')
+                                . showChar '}'

@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalImageFormatInfoKHR
        (VkPhysicalDeviceExternalImageFormatInfoKHR(..)) where
@@ -19,7 +20,6 @@ import           Graphics.Vulkan.Types.Enum.VkStructureType
                                                                                    (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceImageFormatInfo2KHR
                                                                                    (VkPhysicalDeviceImageFormatInfo2KHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe
                                                                                    (unsafeDupablePerformIO)
 
@@ -91,28 +91,6 @@ instance VulkanMarshal VkPhysicalDeviceExternalImageFormatInfoKHR
              '[VkPhysicalDeviceImageFormatInfo2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPhysicalDeviceExternalImageFormatInfoKHR where
-        type VkSTypeMType VkPhysicalDeviceExternalImageFormatInfoKHR =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPhysicalDeviceExternalImageFormatInfoKHR where
         type FieldType "sType" VkPhysicalDeviceExternalImageFormatInfoKHR =
              VkStructureType
@@ -133,42 +111,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, sType}
 
-instance CanReadField "sType"
-           VkPhysicalDeviceExternalImageFormatInfoKHR
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkPhysicalDeviceExternalImageFormatInfoKHR
          where
-        {-# INLINE getField #-}
-        getField = vkSType
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType"
-           VkPhysicalDeviceExternalImageFormatInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkPhysicalDeviceExternalImageFormatInfoKHR where
-        type VkPNextMType VkPhysicalDeviceExternalImageFormatInfoKHR =
-             Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, pNext}
+         CanWriteField "sType" VkPhysicalDeviceExternalImageFormatInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPhysicalDeviceExternalImageFormatInfoKHR where
@@ -191,42 +151,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, pNext}
 
-instance CanReadField "pNext"
-           VkPhysicalDeviceExternalImageFormatInfoKHR
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkPhysicalDeviceExternalImageFormatInfoKHR
          where
-        {-# INLINE getField #-}
-        getField = vkPNext
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext"
-           VkPhysicalDeviceExternalImageFormatInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkHandleType VkPhysicalDeviceExternalImageFormatInfoKHR where
-        type VkHandleTypeMType VkPhysicalDeviceExternalImageFormatInfoKHR =
-             VkExternalMemoryHandleTypeFlagBitsKHR
-
-        {-# NOINLINE vkHandleType #-}
-        vkHandleType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, handleType})
-
-        {-# INLINE vkHandleTypeByteOffset #-}
-        vkHandleTypeByteOffset ~_
-          = #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, handleType}
-
-        {-# INLINE readVkHandleType #-}
-        readVkHandleType p
-          = peekByteOff p #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, handleType}
-
-        {-# INLINE writeVkHandleType #-}
-        writeVkHandleType p
-          = pokeByteOff p #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, handleType}
+         CanWriteField "pNext" VkPhysicalDeviceExternalImageFormatInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "handleType" VkPhysicalDeviceExternalImageFormatInfoKHR
@@ -252,29 +194,35 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, handleType}
 
-instance CanReadField "handleType"
+instance {-# OVERLAPPING #-}
+         CanReadField "handleType"
            VkPhysicalDeviceExternalImageFormatInfoKHR
          where
-        {-# INLINE getField #-}
-        getField = vkHandleType
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, handleType})
 
         {-# INLINE readField #-}
-        readField = readVkHandleType
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, handleType}
 
-instance CanWriteField "handleType"
+instance {-# OVERLAPPING #-}
+         CanWriteField "handleType"
            VkPhysicalDeviceExternalImageFormatInfoKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkHandleType
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceExternalImageFormatInfoKHR, handleType}
 
 instance Show VkPhysicalDeviceExternalImageFormatInfoKHR where
         showsPrec d x
           = showString "VkPhysicalDeviceExternalImageFormatInfoKHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkHandleType = " .
-                            showsPrec d (vkHandleType x) . showChar '}'
+                          showString "handleType = " .
+                            showsPrec d (getField @"handleType" x) . showChar '}'

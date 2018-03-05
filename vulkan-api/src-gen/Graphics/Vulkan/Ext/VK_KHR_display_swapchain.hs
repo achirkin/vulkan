@@ -32,7 +32,8 @@ module Graphics.Vulkan.Ext.VK_KHR_display_swapchain
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
-        vkCreateSharedSwapchainsKHR, module Graphics.Vulkan.Marshal,
+        vkCreateSharedSwapchainsKHR, vkCreateSharedSwapchainsKHRSafe,
+        module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkColorSpaceKHR,
         module Graphics.Vulkan.Types.Enum.VkCompositeAlphaFlagsKHR,
         module Graphics.Vulkan.Types.Enum.VkFormat,
@@ -94,6 +95,31 @@ import           Graphics.Vulkan.Types.Struct.VkSwapchainCreateInfoKHR
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateSharedSwapchainsKHR.html vkCreateSharedSwapchainsKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateSharedSwapchainsKHR"
                vkCreateSharedSwapchainsKHR ::
+               VkDevice -- ^ device
+                        ->
+                 Word32 -- ^ swapchainCount
+                        ->
+                   Ptr VkSwapchainCreateInfoKHR -- ^ pCreateInfos
+                                                ->
+                     Ptr VkAllocationCallbacks -- ^ pAllocator
+                                               -> Ptr VkSwapchainKHR -- ^ pSwapchains
+                                                                     -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INCOMPATIBLE_DISPLAY_KHR', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR'.
+--
+--   > VkResult vkCreateSharedSwapchainsKHR
+--   >     ( VkDevice device
+--   >     , uint32_t swapchainCount
+--   >     , const VkSwapchainCreateInfoKHR* pCreateInfos
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkSwapchainKHR* pSwapchains
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateSharedSwapchainsKHR.html vkCreateSharedSwapchainsKHR registry at www.khronos.org>
+foreign import ccall safe "vkCreateSharedSwapchainsKHR"
+               vkCreateSharedSwapchainsKHRSafe ::
                VkDevice -- ^ device
                         ->
                  Word32 -- ^ swapchainCount

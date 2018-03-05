@@ -42,12 +42,19 @@ module Graphics.Vulkan.Ext.VK_NVX_device_generated_commands
         module Graphics.Vulkan.Types.Enum.VkShaderStageFlags,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
-        vkCmdProcessCommandsNVX, vkCmdReserveSpaceForCommandsNVX,
+        vkCmdProcessCommandsNVX, vkCmdProcessCommandsNVXSafe,
+        vkCmdReserveSpaceForCommandsNVX,
+        vkCmdReserveSpaceForCommandsNVXSafe,
         vkCreateIndirectCommandsLayoutNVX,
-        vkDestroyIndirectCommandsLayoutNVX, vkCreateObjectTableNVX,
-        vkDestroyObjectTableNVX, vkRegisterObjectsNVX,
-        vkUnregisterObjectsNVX,
+        vkCreateIndirectCommandsLayoutNVXSafe,
+        vkDestroyIndirectCommandsLayoutNVX,
+        vkDestroyIndirectCommandsLayoutNVXSafe, vkCreateObjectTableNVX,
+        vkCreateObjectTableNVXSafe, vkDestroyObjectTableNVX,
+        vkDestroyObjectTableNVXSafe, vkRegisterObjectsNVX,
+        vkRegisterObjectsNVXSafe, vkUnregisterObjectsNVX,
+        vkUnregisterObjectsNVXSafe,
         vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX,
+        vkGetPhysicalDeviceGeneratedCommandsPropertiesNVXSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
@@ -132,6 +139,22 @@ foreign import ccall unsafe "vkCmdProcessCommandsNVX"
 --
 --   renderpass: @inside@
 --
+--   > () vkCmdProcessCommandsNVX
+--   >     ( VkCommandBuffer commandBuffer
+--   >     , const VkCmdProcessCommandsInfoNVX* pProcessCommandsInfo
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdProcessCommandsNVX.html vkCmdProcessCommandsNVX registry at www.khronos.org>
+foreign import ccall safe "vkCmdProcessCommandsNVX"
+               vkCmdProcessCommandsNVXSafe ::
+               VkCommandBuffer -- ^ commandBuffer
+                               -> Ptr VkCmdProcessCommandsInfoNVX -- ^ pProcessCommandsInfo
+                                                                  -> IO ()
+
+-- | queues: 'graphics', 'compute'.
+--
+--   renderpass: @inside@
+--
 --   > () vkCmdReserveSpaceForCommandsNVX
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , const VkCmdReserveSpaceForCommandsInfoNVX* pReserveSpaceInfo
@@ -140,6 +163,22 @@ foreign import ccall unsafe "vkCmdProcessCommandsNVX"
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdReserveSpaceForCommandsNVX.html vkCmdReserveSpaceForCommandsNVX registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdReserveSpaceForCommandsNVX"
                vkCmdReserveSpaceForCommandsNVX ::
+               VkCommandBuffer -- ^ commandBuffer
+                               -> Ptr VkCmdReserveSpaceForCommandsInfoNVX -- ^ pReserveSpaceInfo
+                                                                          -> IO ()
+
+-- | queues: 'graphics', 'compute'.
+--
+--   renderpass: @inside@
+--
+--   > () vkCmdReserveSpaceForCommandsNVX
+--   >     ( VkCommandBuffer commandBuffer
+--   >     , const VkCmdReserveSpaceForCommandsInfoNVX* pReserveSpaceInfo
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdReserveSpaceForCommandsNVX.html vkCmdReserveSpaceForCommandsNVX registry at www.khronos.org>
+foreign import ccall safe "vkCmdReserveSpaceForCommandsNVX"
+               vkCmdReserveSpaceForCommandsNVXSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                -> Ptr VkCmdReserveSpaceForCommandsInfoNVX -- ^ pReserveSpaceInfo
                                                                           -> IO ()
@@ -167,6 +206,29 @@ foreign import ccall unsafe "vkCreateIndirectCommandsLayoutNVX"
                      Ptr VkIndirectCommandsLayoutNVX -- ^ pIndirectCommandsLayout
                                                      -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkCreateIndirectCommandsLayoutNVX
+--   >     ( VkDevice device
+--   >     , const VkIndirectCommandsLayoutCreateInfoNVX* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkIndirectCommandsLayoutNVX* pIndirectCommandsLayout
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateIndirectCommandsLayoutNVX.html vkCreateIndirectCommandsLayoutNVX registry at www.khronos.org>
+foreign import ccall safe "vkCreateIndirectCommandsLayoutNVX"
+               vkCreateIndirectCommandsLayoutNVXSafe ::
+               VkDevice -- ^ device
+                        ->
+                 Ptr VkIndirectCommandsLayoutCreateInfoNVX -- ^ pCreateInfo
+                                                           ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             ->
+                     Ptr VkIndirectCommandsLayoutNVX -- ^ pIndirectCommandsLayout
+                                                     -> IO VkResult
+
 -- | > () vkDestroyIndirectCommandsLayoutNVX
 --   >     ( VkDevice device
 --   >     , VkIndirectCommandsLayoutNVX indirectCommandsLayout
@@ -176,6 +238,21 @@ foreign import ccall unsafe "vkCreateIndirectCommandsLayoutNVX"
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroyIndirectCommandsLayoutNVX.html vkDestroyIndirectCommandsLayoutNVX registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyIndirectCommandsLayoutNVX"
                vkDestroyIndirectCommandsLayoutNVX ::
+               VkDevice -- ^ device
+                        ->
+                 VkIndirectCommandsLayoutNVX -- ^ indirectCommandsLayout
+                                             -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                          -> IO ()
+
+-- | > () vkDestroyIndirectCommandsLayoutNVX
+--   >     ( VkDevice device
+--   >     , VkIndirectCommandsLayoutNVX indirectCommandsLayout
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroyIndirectCommandsLayoutNVX.html vkDestroyIndirectCommandsLayoutNVX registry at www.khronos.org>
+foreign import ccall safe "vkDestroyIndirectCommandsLayoutNVX"
+               vkDestroyIndirectCommandsLayoutNVXSafe ::
                VkDevice -- ^ device
                         ->
                  VkIndirectCommandsLayoutNVX -- ^ indirectCommandsLayout
@@ -204,6 +281,28 @@ foreign import ccall unsafe "vkCreateObjectTableNVX"
                                              -> Ptr VkObjectTableNVX -- ^ pObjectTable
                                                                      -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkCreateObjectTableNVX
+--   >     ( VkDevice device
+--   >     , const VkObjectTableCreateInfoNVX* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkObjectTableNVX* pObjectTable
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateObjectTableNVX.html vkCreateObjectTableNVX registry at www.khronos.org>
+foreign import ccall safe "vkCreateObjectTableNVX"
+               vkCreateObjectTableNVXSafe ::
+               VkDevice -- ^ device
+                        ->
+                 Ptr VkObjectTableCreateInfoNVX -- ^ pCreateInfo
+                                                ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkObjectTableNVX -- ^ pObjectTable
+                                                                     -> IO VkResult
+
 -- | > () vkDestroyObjectTableNVX
 --   >     ( VkDevice device
 --   >     , VkObjectTableNVX objectTable
@@ -213,6 +312,20 @@ foreign import ccall unsafe "vkCreateObjectTableNVX"
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroyObjectTableNVX.html vkDestroyObjectTableNVX registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyObjectTableNVX"
                vkDestroyObjectTableNVX ::
+               VkDevice -- ^ device
+                        -> VkObjectTableNVX -- ^ objectTable
+                                            -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                         -> IO ()
+
+-- | > () vkDestroyObjectTableNVX
+--   >     ( VkDevice device
+--   >     , VkObjectTableNVX objectTable
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroyObjectTableNVX.html vkDestroyObjectTableNVX registry at www.khronos.org>
+foreign import ccall safe "vkDestroyObjectTableNVX"
+               vkDestroyObjectTableNVXSafe ::
                VkDevice -- ^ device
                         -> VkObjectTableNVX -- ^ objectTable
                                             -> Ptr VkAllocationCallbacks -- ^ pAllocator
@@ -247,6 +360,31 @@ foreign import ccall unsafe "vkRegisterObjectsNVX"
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
+--   > VkResult vkRegisterObjectsNVX
+--   >     ( VkDevice device
+--   >     , VkObjectTableNVX objectTable
+--   >     , uint32_t objectCount
+--   >     , const VkObjectTableEntryNVX* const*    ppObjectTableEntries
+--   >     , const uint32_t* pObjectIndices
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkRegisterObjectsNVX.html vkRegisterObjectsNVX registry at www.khronos.org>
+foreign import ccall safe "vkRegisterObjectsNVX"
+               vkRegisterObjectsNVXSafe ::
+               VkDevice -- ^ device
+                        ->
+                 VkObjectTableNVX -- ^ objectTable
+                                  ->
+                   Word32 -- ^ objectCount
+                          ->
+                     Ptr (Ptr VkObjectTableEntryNVX) -- ^ ppObjectTableEntries
+                                                     -> Ptr Word32 -- ^ pObjectIndices
+                                                                   -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
 --   > VkResult vkUnregisterObjectsNVX
 --   >     ( VkDevice device
 --   >     , VkObjectTableNVX objectTable
@@ -267,6 +405,30 @@ foreign import ccall unsafe "vkUnregisterObjectsNVX"
                                                       -> Ptr Word32 -- ^ pObjectIndices
                                                                     -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkUnregisterObjectsNVX
+--   >     ( VkDevice device
+--   >     , VkObjectTableNVX objectTable
+--   >     , uint32_t objectCount
+--   >     , const VkObjectEntryTypeNVX* pObjectEntryTypes
+--   >     , const uint32_t* pObjectIndices
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkUnregisterObjectsNVX.html vkUnregisterObjectsNVX registry at www.khronos.org>
+foreign import ccall safe "vkUnregisterObjectsNVX"
+               vkUnregisterObjectsNVXSafe ::
+               VkDevice -- ^ device
+                        ->
+                 VkObjectTableNVX -- ^ objectTable
+                                  ->
+                   Word32 -- ^ objectCount
+                          -> Ptr VkObjectEntryTypeNVX -- ^ pObjectEntryTypes
+                                                      -> Ptr Word32 -- ^ pObjectIndices
+                                                                    -> IO VkResult
+
 -- | > () vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkDeviceGeneratedCommandsFeaturesNVX* pFeatures
@@ -277,6 +439,23 @@ foreign import ccall unsafe "vkUnregisterObjectsNVX"
 foreign import ccall unsafe
                "vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX"
                vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                ->
+                 Ptr VkDeviceGeneratedCommandsFeaturesNVX -- ^ pFeatures
+                                                          ->
+                   Ptr VkDeviceGeneratedCommandsLimitsNVX -- ^ pLimits
+                                                          -> IO ()
+
+-- | > () vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , VkDeviceGeneratedCommandsFeaturesNVX* pFeatures
+--   >     , VkDeviceGeneratedCommandsLimitsNVX* pLimits
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX.html vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX registry at www.khronos.org>
+foreign import ccall safe
+               "vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX"
+               vkGetPhysicalDeviceGeneratedCommandsPropertiesNVXSafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  Ptr VkDeviceGeneratedCommandsFeaturesNVX -- ^ pFeatures

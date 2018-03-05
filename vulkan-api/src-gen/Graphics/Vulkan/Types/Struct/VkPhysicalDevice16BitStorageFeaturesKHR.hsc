@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPhysicalDevice16BitStorageFeaturesKHR
        (VkPhysicalDevice16BitStorageFeaturesKHR(..)) where
@@ -16,7 +17,6 @@ import           Graphics.Vulkan.Types.BaseTypes                           (VkBo
 import           Graphics.Vulkan.Types.Enum.VkStructureType                (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkDeviceCreateInfo           (VkDeviceCreateInfo)
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures2KHR (VkPhysicalDeviceFeatures2KHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                          (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDevice16BitStorageFeaturesKHR {
@@ -89,28 +89,6 @@ instance VulkanMarshal VkPhysicalDevice16BitStorageFeaturesKHR
              '[VkPhysicalDeviceFeatures2KHR, VkDeviceCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPhysicalDevice16BitStorageFeaturesKHR where
-        type VkSTypeMType VkPhysicalDevice16BitStorageFeaturesKHR =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDevice16BitStorageFeaturesKHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPhysicalDevice16BitStorageFeaturesKHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPhysicalDevice16BitStorageFeaturesKHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPhysicalDevice16BitStorageFeaturesKHR, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPhysicalDevice16BitStorageFeaturesKHR where
         type FieldType "sType" VkPhysicalDevice16BitStorageFeaturesKHR =
              VkStructureType
@@ -128,42 +106,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDevice16BitStorageFeaturesKHR, sType}
 
-instance CanReadField "sType"
-           VkPhysicalDevice16BitStorageFeaturesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkPhysicalDevice16BitStorageFeaturesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDevice16BitStorageFeaturesKHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType"
-           VkPhysicalDevice16BitStorageFeaturesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkPhysicalDevice16BitStorageFeaturesKHR, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkPhysicalDevice16BitStorageFeaturesKHR where
-        type VkPNextMType VkPhysicalDevice16BitStorageFeaturesKHR =
-             Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDevice16BitStorageFeaturesKHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPhysicalDevice16BitStorageFeaturesKHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPhysicalDevice16BitStorageFeaturesKHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPhysicalDevice16BitStorageFeaturesKHR, pNext}
+         CanWriteField "sType" VkPhysicalDevice16BitStorageFeaturesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDevice16BitStorageFeaturesKHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPhysicalDevice16BitStorageFeaturesKHR where
@@ -183,45 +141,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDevice16BitStorageFeaturesKHR, pNext}
 
-instance CanReadField "pNext"
-           VkPhysicalDevice16BitStorageFeaturesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkPhysicalDevice16BitStorageFeaturesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDevice16BitStorageFeaturesKHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext"
-           VkPhysicalDevice16BitStorageFeaturesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkPhysicalDevice16BitStorageFeaturesKHR, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkStorageBuffer16BitAccess
-           VkPhysicalDevice16BitStorageFeaturesKHR
-         where
-        type VkStorageBuffer16BitAccessMType
-               VkPhysicalDevice16BitStorageFeaturesKHR
-             = VkBool32
-
-        {-# NOINLINE vkStorageBuffer16BitAccess #-}
-        vkStorageBuffer16BitAccess x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storageBuffer16BitAccess})
-
-        {-# INLINE vkStorageBuffer16BitAccessByteOffset #-}
-        vkStorageBuffer16BitAccessByteOffset ~_
-          = #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storageBuffer16BitAccess}
-
-        {-# INLINE readVkStorageBuffer16BitAccess #-}
-        readVkStorageBuffer16BitAccess p
-          = peekByteOff p #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storageBuffer16BitAccess}
-
-        {-# INLINE writeVkStorageBuffer16BitAccess #-}
-        writeVkStorageBuffer16BitAccess p
-          = pokeByteOff p #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storageBuffer16BitAccess}
+         CanWriteField "pNext" VkPhysicalDevice16BitStorageFeaturesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDevice16BitStorageFeaturesKHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "storageBuffer16BitAccess"
@@ -248,45 +183,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storageBuffer16BitAccess}
 
-instance CanReadField "storageBuffer16BitAccess"
+instance {-# OVERLAPPING #-}
+         CanReadField "storageBuffer16BitAccess"
            VkPhysicalDevice16BitStorageFeaturesKHR
          where
-        {-# INLINE getField #-}
-        getField = vkStorageBuffer16BitAccess
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storageBuffer16BitAccess})
 
         {-# INLINE readField #-}
-        readField = readVkStorageBuffer16BitAccess
+        readField p
+          = peekByteOff p #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storageBuffer16BitAccess}
 
-instance CanWriteField "storageBuffer16BitAccess"
+instance {-# OVERLAPPING #-}
+         CanWriteField "storageBuffer16BitAccess"
            VkPhysicalDevice16BitStorageFeaturesKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkStorageBuffer16BitAccess
-
-instance {-# OVERLAPPING #-}
-         HasVkUniformAndStorageBuffer16BitAccess
-           VkPhysicalDevice16BitStorageFeaturesKHR
-         where
-        type VkUniformAndStorageBuffer16BitAccessMType
-               VkPhysicalDevice16BitStorageFeaturesKHR
-             = VkBool32
-
-        {-# NOINLINE vkUniformAndStorageBuffer16BitAccess #-}
-        vkUniformAndStorageBuffer16BitAccess x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDevice16BitStorageFeaturesKHR, uniformAndStorageBuffer16BitAccess})
-
-        {-# INLINE vkUniformAndStorageBuffer16BitAccessByteOffset #-}
-        vkUniformAndStorageBuffer16BitAccessByteOffset ~_
-          = #{offset VkPhysicalDevice16BitStorageFeaturesKHR, uniformAndStorageBuffer16BitAccess}
-
-        {-# INLINE readVkUniformAndStorageBuffer16BitAccess #-}
-        readVkUniformAndStorageBuffer16BitAccess p
-          = peekByteOff p #{offset VkPhysicalDevice16BitStorageFeaturesKHR, uniformAndStorageBuffer16BitAccess}
-
-        {-# INLINE writeVkUniformAndStorageBuffer16BitAccess #-}
-        writeVkUniformAndStorageBuffer16BitAccess p
-          = pokeByteOff p #{offset VkPhysicalDevice16BitStorageFeaturesKHR, uniformAndStorageBuffer16BitAccess}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storageBuffer16BitAccess}
 
 instance {-# OVERLAPPING #-}
          HasField "uniformAndStorageBuffer16BitAccess"
@@ -313,44 +229,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDevice16BitStorageFeaturesKHR, uniformAndStorageBuffer16BitAccess}
 
-instance CanReadField "uniformAndStorageBuffer16BitAccess"
+instance {-# OVERLAPPING #-}
+         CanReadField "uniformAndStorageBuffer16BitAccess"
            VkPhysicalDevice16BitStorageFeaturesKHR
          where
-        {-# INLINE getField #-}
-        getField = vkUniformAndStorageBuffer16BitAccess
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDevice16BitStorageFeaturesKHR, uniformAndStorageBuffer16BitAccess})
 
         {-# INLINE readField #-}
-        readField = readVkUniformAndStorageBuffer16BitAccess
+        readField p
+          = peekByteOff p #{offset VkPhysicalDevice16BitStorageFeaturesKHR, uniformAndStorageBuffer16BitAccess}
 
-instance CanWriteField "uniformAndStorageBuffer16BitAccess"
+instance {-# OVERLAPPING #-}
+         CanWriteField "uniformAndStorageBuffer16BitAccess"
            VkPhysicalDevice16BitStorageFeaturesKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkUniformAndStorageBuffer16BitAccess
-
-instance {-# OVERLAPPING #-}
-         HasVkStoragePushConstant16 VkPhysicalDevice16BitStorageFeaturesKHR
-         where
-        type VkStoragePushConstant16MType
-               VkPhysicalDevice16BitStorageFeaturesKHR
-             = VkBool32
-
-        {-# NOINLINE vkStoragePushConstant16 #-}
-        vkStoragePushConstant16 x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storagePushConstant16})
-
-        {-# INLINE vkStoragePushConstant16ByteOffset #-}
-        vkStoragePushConstant16ByteOffset ~_
-          = #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storagePushConstant16}
-
-        {-# INLINE readVkStoragePushConstant16 #-}
-        readVkStoragePushConstant16 p
-          = peekByteOff p #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storagePushConstant16}
-
-        {-# INLINE writeVkStoragePushConstant16 #-}
-        writeVkStoragePushConstant16 p
-          = pokeByteOff p #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storagePushConstant16}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDevice16BitStorageFeaturesKHR, uniformAndStorageBuffer16BitAccess}
 
 instance {-# OVERLAPPING #-}
          HasField "storagePushConstant16"
@@ -377,44 +275,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storagePushConstant16}
 
-instance CanReadField "storagePushConstant16"
+instance {-# OVERLAPPING #-}
+         CanReadField "storagePushConstant16"
            VkPhysicalDevice16BitStorageFeaturesKHR
          where
-        {-# INLINE getField #-}
-        getField = vkStoragePushConstant16
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storagePushConstant16})
 
         {-# INLINE readField #-}
-        readField = readVkStoragePushConstant16
+        readField p
+          = peekByteOff p #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storagePushConstant16}
 
-instance CanWriteField "storagePushConstant16"
+instance {-# OVERLAPPING #-}
+         CanWriteField "storagePushConstant16"
            VkPhysicalDevice16BitStorageFeaturesKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkStoragePushConstant16
-
-instance {-# OVERLAPPING #-}
-         HasVkStorageInputOutput16 VkPhysicalDevice16BitStorageFeaturesKHR
-         where
-        type VkStorageInputOutput16MType
-               VkPhysicalDevice16BitStorageFeaturesKHR
-             = VkBool32
-
-        {-# NOINLINE vkStorageInputOutput16 #-}
-        vkStorageInputOutput16 x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storageInputOutput16})
-
-        {-# INLINE vkStorageInputOutput16ByteOffset #-}
-        vkStorageInputOutput16ByteOffset ~_
-          = #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storageInputOutput16}
-
-        {-# INLINE readVkStorageInputOutput16 #-}
-        readVkStorageInputOutput16 p
-          = peekByteOff p #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storageInputOutput16}
-
-        {-# INLINE writeVkStorageInputOutput16 #-}
-        writeVkStorageInputOutput16 p
-          = pokeByteOff p #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storageInputOutput16}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storagePushConstant16}
 
 instance {-# OVERLAPPING #-}
          HasField "storageInputOutput16"
@@ -441,38 +321,45 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storageInputOutput16}
 
-instance CanReadField "storageInputOutput16"
+instance {-# OVERLAPPING #-}
+         CanReadField "storageInputOutput16"
            VkPhysicalDevice16BitStorageFeaturesKHR
          where
-        {-# INLINE getField #-}
-        getField = vkStorageInputOutput16
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storageInputOutput16})
 
         {-# INLINE readField #-}
-        readField = readVkStorageInputOutput16
+        readField p
+          = peekByteOff p #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storageInputOutput16}
 
-instance CanWriteField "storageInputOutput16"
+instance {-# OVERLAPPING #-}
+         CanWriteField "storageInputOutput16"
            VkPhysicalDevice16BitStorageFeaturesKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkStorageInputOutput16
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDevice16BitStorageFeaturesKHR, storageInputOutput16}
 
 instance Show VkPhysicalDevice16BitStorageFeaturesKHR where
         showsPrec d x
           = showString "VkPhysicalDevice16BitStorageFeaturesKHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkStorageBuffer16BitAccess = " .
-                            showsPrec d (vkStorageBuffer16BitAccess x) .
+                          showString "storageBuffer16BitAccess = " .
+                            showsPrec d (getField @"storageBuffer16BitAccess" x) .
                               showString ", " .
-                                showString "vkUniformAndStorageBuffer16BitAccess = " .
-                                  showsPrec d (vkUniformAndStorageBuffer16BitAccess x) .
+                                showString "uniformAndStorageBuffer16BitAccess = " .
+                                  showsPrec d (getField @"uniformAndStorageBuffer16BitAccess" x) .
                                     showString ", " .
-                                      showString "vkStoragePushConstant16 = " .
-                                        showsPrec d (vkStoragePushConstant16 x) .
+                                      showString "storagePushConstant16 = " .
+                                        showsPrec d (getField @"storagePushConstant16" x) .
                                           showString ", " .
-                                            showString "vkStorageInputOutput16 = " .
-                                              showsPrec d (vkStorageInputOutput16 x) . showChar '}'
+                                            showString "storageInputOutput16 = " .
+                                              showsPrec d (getField @"storageInputOutput16" x) .
+                                                showChar '}'

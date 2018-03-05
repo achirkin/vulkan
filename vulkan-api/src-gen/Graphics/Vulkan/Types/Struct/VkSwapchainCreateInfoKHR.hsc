@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkSwapchainCreateInfoKHR
        (VkSwapchainCreateInfoKHR(..)) where
@@ -25,7 +26,6 @@ import           Graphics.Vulkan.Types.Enum.VkSwapchainCreateFlagsKHR  (VkSwapch
 import           Graphics.Vulkan.Types.Handles                         (VkSurfaceKHR,
                                                                         VkSwapchainKHR)
 import           Graphics.Vulkan.Types.Struct.VkExtent2D               (VkExtent2D)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                      (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSwapchainCreateInfoKHR {
@@ -103,27 +103,6 @@ instance VulkanMarshal VkSwapchainCreateInfoKHR where
         type ReturnedOnly VkSwapchainCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type StructExtends VkSwapchainCreateInfoKHR = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkSwapchainCreateInfoKHR
-         where
-        type VkSTypeMType VkSwapchainCreateInfoKHR = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkSwapchainCreateInfoKHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, sType}
-
 instance {-# OVERLAPPING #-}
          HasField "sType" VkSwapchainCreateInfoKHR where
         type FieldType "sType" VkSwapchainCreateInfoKHR = VkStructureType
@@ -138,37 +117,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSwapchainCreateInfoKHR, sType}
 
-instance CanReadField "sType" VkSwapchainCreateInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkSwapchainCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, sType}
 
-instance CanWriteField "sType" VkSwapchainCreateInfoKHR where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkSwapchainCreateInfoKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkSwapchainCreateInfoKHR
-         where
-        type VkPNextMType VkSwapchainCreateInfoKHR = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkSwapchainCreateInfoKHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkSwapchainCreateInfoKHR where
@@ -184,38 +148,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSwapchainCreateInfoKHR, pNext}
 
-instance CanReadField "pNext" VkSwapchainCreateInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkSwapchainCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, pNext}
 
-instance CanWriteField "pNext" VkSwapchainCreateInfoKHR where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext" VkSwapchainCreateInfoKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-} HasVkFlags VkSwapchainCreateInfoKHR
-         where
-        type VkFlagsMType VkSwapchainCreateInfoKHR =
-             VkSwapchainCreateFlagsKHR
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkSwapchainCreateInfoKHR, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, flags}
+        writeField p
+          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkSwapchainCreateInfoKHR where
@@ -232,37 +180,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSwapchainCreateInfoKHR, flags}
 
-instance CanReadField "flags" VkSwapchainCreateInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkSwapchainCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
+        readField p
+          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, flags}
 
-instance CanWriteField "flags" VkSwapchainCreateInfoKHR where
+instance {-# OVERLAPPING #-}
+         CanWriteField "flags" VkSwapchainCreateInfoKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkFlags
-
-instance {-# OVERLAPPING #-} HasVkSurface VkSwapchainCreateInfoKHR
-         where
-        type VkSurfaceMType VkSwapchainCreateInfoKHR = VkSurfaceKHR
-
-        {-# NOINLINE vkSurface #-}
-        vkSurface x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, surface})
-
-        {-# INLINE vkSurfaceByteOffset #-}
-        vkSurfaceByteOffset ~_
-          = #{offset VkSwapchainCreateInfoKHR, surface}
-
-        {-# INLINE readVkSurface #-}
-        readVkSurface p
-          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, surface}
-
-        {-# INLINE writeVkSurface #-}
-        writeVkSurface p
-          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, surface}
+        writeField p
+          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "surface" VkSwapchainCreateInfoKHR where
@@ -279,37 +212,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSwapchainCreateInfoKHR, surface}
 
-instance CanReadField "surface" VkSwapchainCreateInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkSurface
+instance {-# OVERLAPPING #-}
+         CanReadField "surface" VkSwapchainCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, surface})
 
         {-# INLINE readField #-}
-        readField = readVkSurface
-
-instance CanWriteField "surface" VkSwapchainCreateInfoKHR where
-        {-# INLINE writeField #-}
-        writeField = writeVkSurface
+        readField p
+          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, surface}
 
 instance {-# OVERLAPPING #-}
-         HasVkMinImageCount VkSwapchainCreateInfoKHR where
-        type VkMinImageCountMType VkSwapchainCreateInfoKHR = Word32
-
-        {-# NOINLINE vkMinImageCount #-}
-        vkMinImageCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, minImageCount})
-
-        {-# INLINE vkMinImageCountByteOffset #-}
-        vkMinImageCountByteOffset ~_
-          = #{offset VkSwapchainCreateInfoKHR, minImageCount}
-
-        {-# INLINE readVkMinImageCount #-}
-        readVkMinImageCount p
-          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, minImageCount}
-
-        {-# INLINE writeVkMinImageCount #-}
-        writeVkMinImageCount p
-          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, minImageCount}
+         CanWriteField "surface" VkSwapchainCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, surface}
 
 instance {-# OVERLAPPING #-}
          HasField "minImageCount" VkSwapchainCreateInfoKHR where
@@ -327,39 +245,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSwapchainCreateInfoKHR, minImageCount}
 
-instance CanReadField "minImageCount" VkSwapchainCreateInfoKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkMinImageCount
+instance {-# OVERLAPPING #-}
+         CanReadField "minImageCount" VkSwapchainCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, minImageCount})
 
         {-# INLINE readField #-}
-        readField = readVkMinImageCount
-
-instance CanWriteField "minImageCount" VkSwapchainCreateInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkMinImageCount
+        readField p
+          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, minImageCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkImageFormat VkSwapchainCreateInfoKHR where
-        type VkImageFormatMType VkSwapchainCreateInfoKHR = VkFormat
-
-        {-# NOINLINE vkImageFormat #-}
-        vkImageFormat x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, imageFormat})
-
-        {-# INLINE vkImageFormatByteOffset #-}
-        vkImageFormatByteOffset ~_
-          = #{offset VkSwapchainCreateInfoKHR, imageFormat}
-
-        {-# INLINE readVkImageFormat #-}
-        readVkImageFormat p
-          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, imageFormat}
-
-        {-# INLINE writeVkImageFormat #-}
-        writeVkImageFormat p
-          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, imageFormat}
+         CanWriteField "minImageCount" VkSwapchainCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, minImageCount}
 
 instance {-# OVERLAPPING #-}
          HasField "imageFormat" VkSwapchainCreateInfoKHR where
@@ -376,38 +277,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSwapchainCreateInfoKHR, imageFormat}
 
-instance CanReadField "imageFormat" VkSwapchainCreateInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkImageFormat
+instance {-# OVERLAPPING #-}
+         CanReadField "imageFormat" VkSwapchainCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, imageFormat})
 
         {-# INLINE readField #-}
-        readField = readVkImageFormat
-
-instance CanWriteField "imageFormat" VkSwapchainCreateInfoKHR where
-        {-# INLINE writeField #-}
-        writeField = writeVkImageFormat
+        readField p
+          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, imageFormat}
 
 instance {-# OVERLAPPING #-}
-         HasVkImageColorSpace VkSwapchainCreateInfoKHR where
-        type VkImageColorSpaceMType VkSwapchainCreateInfoKHR =
-             VkColorSpaceKHR
-
-        {-# NOINLINE vkImageColorSpace #-}
-        vkImageColorSpace x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, imageColorSpace})
-
-        {-# INLINE vkImageColorSpaceByteOffset #-}
-        vkImageColorSpaceByteOffset ~_
-          = #{offset VkSwapchainCreateInfoKHR, imageColorSpace}
-
-        {-# INLINE readVkImageColorSpace #-}
-        readVkImageColorSpace p
-          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, imageColorSpace}
-
-        {-# INLINE writeVkImageColorSpace #-}
-        writeVkImageColorSpace p
-          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, imageColorSpace}
+         CanWriteField "imageFormat" VkSwapchainCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, imageFormat}
 
 instance {-# OVERLAPPING #-}
          HasField "imageColorSpace" VkSwapchainCreateInfoKHR where
@@ -427,39 +312,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSwapchainCreateInfoKHR, imageColorSpace}
 
-instance CanReadField "imageColorSpace" VkSwapchainCreateInfoKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkImageColorSpace
+instance {-# OVERLAPPING #-}
+         CanReadField "imageColorSpace" VkSwapchainCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, imageColorSpace})
 
         {-# INLINE readField #-}
-        readField = readVkImageColorSpace
-
-instance CanWriteField "imageColorSpace" VkSwapchainCreateInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkImageColorSpace
+        readField p
+          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, imageColorSpace}
 
 instance {-# OVERLAPPING #-}
-         HasVkImageExtent VkSwapchainCreateInfoKHR where
-        type VkImageExtentMType VkSwapchainCreateInfoKHR = VkExtent2D
-
-        {-# NOINLINE vkImageExtent #-}
-        vkImageExtent x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, imageExtent})
-
-        {-# INLINE vkImageExtentByteOffset #-}
-        vkImageExtentByteOffset ~_
-          = #{offset VkSwapchainCreateInfoKHR, imageExtent}
-
-        {-# INLINE readVkImageExtent #-}
-        readVkImageExtent p
-          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, imageExtent}
-
-        {-# INLINE writeVkImageExtent #-}
-        writeVkImageExtent p
-          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, imageExtent}
+         CanWriteField "imageColorSpace" VkSwapchainCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, imageColorSpace}
 
 instance {-# OVERLAPPING #-}
          HasField "imageExtent" VkSwapchainCreateInfoKHR where
@@ -476,37 +344,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSwapchainCreateInfoKHR, imageExtent}
 
-instance CanReadField "imageExtent" VkSwapchainCreateInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkImageExtent
+instance {-# OVERLAPPING #-}
+         CanReadField "imageExtent" VkSwapchainCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, imageExtent})
 
         {-# INLINE readField #-}
-        readField = readVkImageExtent
-
-instance CanWriteField "imageExtent" VkSwapchainCreateInfoKHR where
-        {-# INLINE writeField #-}
-        writeField = writeVkImageExtent
+        readField p
+          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, imageExtent}
 
 instance {-# OVERLAPPING #-}
-         HasVkImageArrayLayers VkSwapchainCreateInfoKHR where
-        type VkImageArrayLayersMType VkSwapchainCreateInfoKHR = Word32
-
-        {-# NOINLINE vkImageArrayLayers #-}
-        vkImageArrayLayers x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, imageArrayLayers})
-
-        {-# INLINE vkImageArrayLayersByteOffset #-}
-        vkImageArrayLayersByteOffset ~_
-          = #{offset VkSwapchainCreateInfoKHR, imageArrayLayers}
-
-        {-# INLINE readVkImageArrayLayers #-}
-        readVkImageArrayLayers p
-          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, imageArrayLayers}
-
-        {-# INLINE writeVkImageArrayLayers #-}
-        writeVkImageArrayLayers p
-          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, imageArrayLayers}
+         CanWriteField "imageExtent" VkSwapchainCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, imageExtent}
 
 instance {-# OVERLAPPING #-}
          HasField "imageArrayLayers" VkSwapchainCreateInfoKHR where
@@ -525,39 +378,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSwapchainCreateInfoKHR, imageArrayLayers}
 
-instance CanReadField "imageArrayLayers" VkSwapchainCreateInfoKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkImageArrayLayers
+instance {-# OVERLAPPING #-}
+         CanReadField "imageArrayLayers" VkSwapchainCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, imageArrayLayers})
 
         {-# INLINE readField #-}
-        readField = readVkImageArrayLayers
-
-instance CanWriteField "imageArrayLayers" VkSwapchainCreateInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkImageArrayLayers
+        readField p
+          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, imageArrayLayers}
 
 instance {-# OVERLAPPING #-}
-         HasVkImageUsage VkSwapchainCreateInfoKHR where
-        type VkImageUsageMType VkSwapchainCreateInfoKHR = VkImageUsageFlags
-
-        {-# NOINLINE vkImageUsage #-}
-        vkImageUsage x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, imageUsage})
-
-        {-# INLINE vkImageUsageByteOffset #-}
-        vkImageUsageByteOffset ~_
-          = #{offset VkSwapchainCreateInfoKHR, imageUsage}
-
-        {-# INLINE readVkImageUsage #-}
-        readVkImageUsage p
-          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, imageUsage}
-
-        {-# INLINE writeVkImageUsage #-}
-        writeVkImageUsage p
-          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, imageUsage}
+         CanWriteField "imageArrayLayers" VkSwapchainCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, imageArrayLayers}
 
 instance {-# OVERLAPPING #-}
          HasField "imageUsage" VkSwapchainCreateInfoKHR where
@@ -575,38 +411,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSwapchainCreateInfoKHR, imageUsage}
 
-instance CanReadField "imageUsage" VkSwapchainCreateInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkImageUsage
+instance {-# OVERLAPPING #-}
+         CanReadField "imageUsage" VkSwapchainCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, imageUsage})
 
         {-# INLINE readField #-}
-        readField = readVkImageUsage
-
-instance CanWriteField "imageUsage" VkSwapchainCreateInfoKHR where
-        {-# INLINE writeField #-}
-        writeField = writeVkImageUsage
+        readField p
+          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, imageUsage}
 
 instance {-# OVERLAPPING #-}
-         HasVkImageSharingMode VkSwapchainCreateInfoKHR where
-        type VkImageSharingModeMType VkSwapchainCreateInfoKHR =
-             VkSharingMode
-
-        {-# NOINLINE vkImageSharingMode #-}
-        vkImageSharingMode x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, imageSharingMode})
-
-        {-# INLINE vkImageSharingModeByteOffset #-}
-        vkImageSharingModeByteOffset ~_
-          = #{offset VkSwapchainCreateInfoKHR, imageSharingMode}
-
-        {-# INLINE readVkImageSharingMode #-}
-        readVkImageSharingMode p
-          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, imageSharingMode}
-
-        {-# INLINE writeVkImageSharingMode #-}
-        writeVkImageSharingMode p
-          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, imageSharingMode}
+         CanWriteField "imageUsage" VkSwapchainCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, imageUsage}
 
 instance {-# OVERLAPPING #-}
          HasField "imageSharingMode" VkSwapchainCreateInfoKHR where
@@ -626,39 +446,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSwapchainCreateInfoKHR, imageSharingMode}
 
-instance CanReadField "imageSharingMode" VkSwapchainCreateInfoKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkImageSharingMode
+instance {-# OVERLAPPING #-}
+         CanReadField "imageSharingMode" VkSwapchainCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, imageSharingMode})
 
         {-# INLINE readField #-}
-        readField = readVkImageSharingMode
-
-instance CanWriteField "imageSharingMode" VkSwapchainCreateInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkImageSharingMode
+        readField p
+          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, imageSharingMode}
 
 instance {-# OVERLAPPING #-}
-         HasVkQueueFamilyIndexCount VkSwapchainCreateInfoKHR where
-        type VkQueueFamilyIndexCountMType VkSwapchainCreateInfoKHR = Word32
-
-        {-# NOINLINE vkQueueFamilyIndexCount #-}
-        vkQueueFamilyIndexCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, queueFamilyIndexCount})
-
-        {-# INLINE vkQueueFamilyIndexCountByteOffset #-}
-        vkQueueFamilyIndexCountByteOffset ~_
-          = #{offset VkSwapchainCreateInfoKHR, queueFamilyIndexCount}
-
-        {-# INLINE readVkQueueFamilyIndexCount #-}
-        readVkQueueFamilyIndexCount p
-          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, queueFamilyIndexCount}
-
-        {-# INLINE writeVkQueueFamilyIndexCount #-}
-        writeVkQueueFamilyIndexCount p
-          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, queueFamilyIndexCount}
+         CanWriteField "imageSharingMode" VkSwapchainCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, imageSharingMode}
 
 instance {-# OVERLAPPING #-}
          HasField "queueFamilyIndexCount" VkSwapchainCreateInfoKHR where
@@ -678,42 +481,23 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSwapchainCreateInfoKHR, queueFamilyIndexCount}
 
-instance CanReadField "queueFamilyIndexCount"
-           VkSwapchainCreateInfoKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkQueueFamilyIndexCount
+instance {-# OVERLAPPING #-}
+         CanReadField "queueFamilyIndexCount" VkSwapchainCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, queueFamilyIndexCount})
 
         {-# INLINE readField #-}
-        readField = readVkQueueFamilyIndexCount
-
-instance CanWriteField "queueFamilyIndexCount"
-           VkSwapchainCreateInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkQueueFamilyIndexCount
+        readField p
+          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, queueFamilyIndexCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPQueueFamilyIndices VkSwapchainCreateInfoKHR where
-        type VkPQueueFamilyIndicesMType VkSwapchainCreateInfoKHR =
-             Ptr Word32
-
-        {-# NOINLINE vkPQueueFamilyIndices #-}
-        vkPQueueFamilyIndices x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, pQueueFamilyIndices})
-
-        {-# INLINE vkPQueueFamilyIndicesByteOffset #-}
-        vkPQueueFamilyIndicesByteOffset ~_
-          = #{offset VkSwapchainCreateInfoKHR, pQueueFamilyIndices}
-
-        {-# INLINE readVkPQueueFamilyIndices #-}
-        readVkPQueueFamilyIndices p
-          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, pQueueFamilyIndices}
-
-        {-# INLINE writeVkPQueueFamilyIndices #-}
-        writeVkPQueueFamilyIndices p
-          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, pQueueFamilyIndices}
+         CanWriteField "queueFamilyIndexCount" VkSwapchainCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, queueFamilyIndexCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pQueueFamilyIndices" VkSwapchainCreateInfoKHR where
@@ -733,42 +517,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSwapchainCreateInfoKHR, pQueueFamilyIndices}
 
-instance CanReadField "pQueueFamilyIndices"
-           VkSwapchainCreateInfoKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkPQueueFamilyIndices
+instance {-# OVERLAPPING #-}
+         CanReadField "pQueueFamilyIndices" VkSwapchainCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, pQueueFamilyIndices})
 
         {-# INLINE readField #-}
-        readField = readVkPQueueFamilyIndices
-
-instance CanWriteField "pQueueFamilyIndices"
-           VkSwapchainCreateInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPQueueFamilyIndices
+        readField p
+          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, pQueueFamilyIndices}
 
 instance {-# OVERLAPPING #-}
-         HasVkPreTransform VkSwapchainCreateInfoKHR where
-        type VkPreTransformMType VkSwapchainCreateInfoKHR =
-             VkSurfaceTransformFlagBitsKHR
-
-        {-# NOINLINE vkPreTransform #-}
-        vkPreTransform x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, preTransform})
-
-        {-# INLINE vkPreTransformByteOffset #-}
-        vkPreTransformByteOffset ~_
-          = #{offset VkSwapchainCreateInfoKHR, preTransform}
-
-        {-# INLINE readVkPreTransform #-}
-        readVkPreTransform p
-          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, preTransform}
-
-        {-# INLINE writeVkPreTransform #-}
-        writeVkPreTransform p
-          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, preTransform}
+         CanWriteField "pQueueFamilyIndices" VkSwapchainCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, pQueueFamilyIndices}
 
 instance {-# OVERLAPPING #-}
          HasField "preTransform" VkSwapchainCreateInfoKHR where
@@ -786,39 +550,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSwapchainCreateInfoKHR, preTransform}
 
-instance CanReadField "preTransform" VkSwapchainCreateInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkPreTransform
+instance {-# OVERLAPPING #-}
+         CanReadField "preTransform" VkSwapchainCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, preTransform})
 
         {-# INLINE readField #-}
-        readField = readVkPreTransform
-
-instance CanWriteField "preTransform" VkSwapchainCreateInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPreTransform
+        readField p
+          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, preTransform}
 
 instance {-# OVERLAPPING #-}
-         HasVkCompositeAlpha VkSwapchainCreateInfoKHR where
-        type VkCompositeAlphaMType VkSwapchainCreateInfoKHR =
-             VkCompositeAlphaFlagBitsKHR
-
-        {-# NOINLINE vkCompositeAlpha #-}
-        vkCompositeAlpha x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, compositeAlpha})
-
-        {-# INLINE vkCompositeAlphaByteOffset #-}
-        vkCompositeAlphaByteOffset ~_
-          = #{offset VkSwapchainCreateInfoKHR, compositeAlpha}
-
-        {-# INLINE readVkCompositeAlpha #-}
-        readVkCompositeAlpha p
-          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, compositeAlpha}
-
-        {-# INLINE writeVkCompositeAlpha #-}
-        writeVkCompositeAlpha p
-          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, compositeAlpha}
+         CanWriteField "preTransform" VkSwapchainCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, preTransform}
 
 instance {-# OVERLAPPING #-}
          HasField "compositeAlpha" VkSwapchainCreateInfoKHR where
@@ -838,39 +585,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSwapchainCreateInfoKHR, compositeAlpha}
 
-instance CanReadField "compositeAlpha" VkSwapchainCreateInfoKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkCompositeAlpha
+instance {-# OVERLAPPING #-}
+         CanReadField "compositeAlpha" VkSwapchainCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, compositeAlpha})
 
         {-# INLINE readField #-}
-        readField = readVkCompositeAlpha
-
-instance CanWriteField "compositeAlpha" VkSwapchainCreateInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkCompositeAlpha
+        readField p
+          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, compositeAlpha}
 
 instance {-# OVERLAPPING #-}
-         HasVkPresentMode VkSwapchainCreateInfoKHR where
-        type VkPresentModeMType VkSwapchainCreateInfoKHR = VkPresentModeKHR
-
-        {-# NOINLINE vkPresentMode #-}
-        vkPresentMode x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, presentMode})
-
-        {-# INLINE vkPresentModeByteOffset #-}
-        vkPresentModeByteOffset ~_
-          = #{offset VkSwapchainCreateInfoKHR, presentMode}
-
-        {-# INLINE readVkPresentMode #-}
-        readVkPresentMode p
-          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, presentMode}
-
-        {-# INLINE writeVkPresentMode #-}
-        writeVkPresentMode p
-          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, presentMode}
+         CanWriteField "compositeAlpha" VkSwapchainCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, compositeAlpha}
 
 instance {-# OVERLAPPING #-}
          HasField "presentMode" VkSwapchainCreateInfoKHR where
@@ -888,37 +618,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSwapchainCreateInfoKHR, presentMode}
 
-instance CanReadField "presentMode" VkSwapchainCreateInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkPresentMode
+instance {-# OVERLAPPING #-}
+         CanReadField "presentMode" VkSwapchainCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, presentMode})
 
         {-# INLINE readField #-}
-        readField = readVkPresentMode
+        readField p
+          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, presentMode}
 
-instance CanWriteField "presentMode" VkSwapchainCreateInfoKHR where
+instance {-# OVERLAPPING #-}
+         CanWriteField "presentMode" VkSwapchainCreateInfoKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkPresentMode
-
-instance {-# OVERLAPPING #-} HasVkClipped VkSwapchainCreateInfoKHR
-         where
-        type VkClippedMType VkSwapchainCreateInfoKHR = VkBool32
-
-        {-# NOINLINE vkClipped #-}
-        vkClipped x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, clipped})
-
-        {-# INLINE vkClippedByteOffset #-}
-        vkClippedByteOffset ~_
-          = #{offset VkSwapchainCreateInfoKHR, clipped}
-
-        {-# INLINE readVkClipped #-}
-        readVkClipped p
-          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, clipped}
-
-        {-# INLINE writeVkClipped #-}
-        writeVkClipped p
-          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, clipped}
+        writeField p
+          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, presentMode}
 
 instance {-# OVERLAPPING #-}
          HasField "clipped" VkSwapchainCreateInfoKHR where
@@ -935,37 +650,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSwapchainCreateInfoKHR, clipped}
 
-instance CanReadField "clipped" VkSwapchainCreateInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkClipped
+instance {-# OVERLAPPING #-}
+         CanReadField "clipped" VkSwapchainCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, clipped})
 
         {-# INLINE readField #-}
-        readField = readVkClipped
-
-instance CanWriteField "clipped" VkSwapchainCreateInfoKHR where
-        {-# INLINE writeField #-}
-        writeField = writeVkClipped
+        readField p
+          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, clipped}
 
 instance {-# OVERLAPPING #-}
-         HasVkOldSwapchain VkSwapchainCreateInfoKHR where
-        type VkOldSwapchainMType VkSwapchainCreateInfoKHR = VkSwapchainKHR
-
-        {-# NOINLINE vkOldSwapchain #-}
-        vkOldSwapchain x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, oldSwapchain})
-
-        {-# INLINE vkOldSwapchainByteOffset #-}
-        vkOldSwapchainByteOffset ~_
-          = #{offset VkSwapchainCreateInfoKHR, oldSwapchain}
-
-        {-# INLINE readVkOldSwapchain #-}
-        readVkOldSwapchain p
-          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, oldSwapchain}
-
-        {-# INLINE writeVkOldSwapchain #-}
-        writeVkOldSwapchain p
-          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, oldSwapchain}
+         CanWriteField "clipped" VkSwapchainCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, clipped}
 
 instance {-# OVERLAPPING #-}
          HasField "oldSwapchain" VkSwapchainCreateInfoKHR where
@@ -983,127 +683,145 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSwapchainCreateInfoKHR, oldSwapchain}
 
-instance CanReadField "oldSwapchain" VkSwapchainCreateInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkOldSwapchain
+instance {-# OVERLAPPING #-}
+         CanReadField "oldSwapchain" VkSwapchainCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSwapchainCreateInfoKHR, oldSwapchain})
 
         {-# INLINE readField #-}
-        readField = readVkOldSwapchain
+        readField p
+          = peekByteOff p #{offset VkSwapchainCreateInfoKHR, oldSwapchain}
 
-instance CanWriteField "oldSwapchain" VkSwapchainCreateInfoKHR
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "oldSwapchain" VkSwapchainCreateInfoKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkOldSwapchain
+        writeField p
+          = pokeByteOff p #{offset VkSwapchainCreateInfoKHR, oldSwapchain}
 
 instance Show VkSwapchainCreateInfoKHR where
         showsPrec d x
           = showString "VkSwapchainCreateInfoKHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkSurface = " .
-                                  showsPrec d (vkSurface x) .
+                                showString "surface = " .
+                                  showsPrec d (getField @"surface" x) .
                                     showString ", " .
-                                      showString "vkMinImageCount = " .
-                                        showsPrec d (vkMinImageCount x) .
+                                      showString "minImageCount = " .
+                                        showsPrec d (getField @"minImageCount" x) .
                                           showString ", " .
-                                            showString "vkImageFormat = " .
-                                              showsPrec d (vkImageFormat x) .
+                                            showString "imageFormat = " .
+                                              showsPrec d (getField @"imageFormat" x) .
                                                 showString ", " .
-                                                  showString "vkImageColorSpace = " .
-                                                    showsPrec d (vkImageColorSpace x) .
+                                                  showString "imageColorSpace = " .
+                                                    showsPrec d (getField @"imageColorSpace" x) .
                                                       showString ", " .
-                                                        showString "vkImageExtent = " .
-                                                          showsPrec d (vkImageExtent x) .
+                                                        showString "imageExtent = " .
+                                                          showsPrec d (getField @"imageExtent" x) .
                                                             showString ", " .
-                                                              showString "vkImageArrayLayers = " .
-                                                                showsPrec d (vkImageArrayLayers x) .
+                                                              showString "imageArrayLayers = " .
+                                                                showsPrec d
+                                                                  (getField @"imageArrayLayers" x)
+                                                                  .
                                                                   showString ", " .
-                                                                    showString "vkImageUsage = " .
-                                                                      showsPrec d (vkImageUsage x) .
+                                                                    showString "imageUsage = " .
+                                                                      showsPrec d
+                                                                        (getField @"imageUsage" x)
+                                                                        .
                                                                         showString ", " .
                                                                           showString
-                                                                            "vkImageSharingMode = "
+                                                                            "imageSharingMode = "
                                                                             .
                                                                             showsPrec d
-                                                                              (vkImageSharingMode x)
+                                                                              (getField
+                                                                                 @"imageSharingMode"
+                                                                                 x)
                                                                               .
                                                                               showString ", " .
                                                                                 showString
-                                                                                  "vkQueueFamilyIndexCount = "
+                                                                                  "queueFamilyIndexCount = "
                                                                                   .
                                                                                   showsPrec d
-                                                                                    (vkQueueFamilyIndexCount
+                                                                                    (getField
+                                                                                       @"queueFamilyIndexCount"
                                                                                        x)
                                                                                     .
                                                                                     showString ", "
                                                                                       .
                                                                                       showString
-                                                                                        "vkPQueueFamilyIndices = "
+                                                                                        "pQueueFamilyIndices = "
                                                                                         .
                                                                                         showsPrec d
-                                                                                          (vkPQueueFamilyIndices
+                                                                                          (getField
+                                                                                             @"pQueueFamilyIndices"
                                                                                              x)
                                                                                           .
                                                                                           showString
                                                                                             ", "
                                                                                             .
                                                                                             showString
-                                                                                              "vkPreTransform = "
+                                                                                              "preTransform = "
                                                                                               .
                                                                                               showsPrec
                                                                                                 d
-                                                                                                (vkPreTransform
+                                                                                                (getField
+                                                                                                   @"preTransform"
                                                                                                    x)
                                                                                                 .
                                                                                                 showString
                                                                                                   ", "
                                                                                                   .
                                                                                                   showString
-                                                                                                    "vkCompositeAlpha = "
+                                                                                                    "compositeAlpha = "
                                                                                                     .
                                                                                                     showsPrec
                                                                                                       d
-                                                                                                      (vkCompositeAlpha
+                                                                                                      (getField
+                                                                                                         @"compositeAlpha"
                                                                                                          x)
                                                                                                       .
                                                                                                       showString
                                                                                                         ", "
                                                                                                         .
                                                                                                         showString
-                                                                                                          "vkPresentMode = "
+                                                                                                          "presentMode = "
                                                                                                           .
                                                                                                           showsPrec
                                                                                                             d
-                                                                                                            (vkPresentMode
+                                                                                                            (getField
+                                                                                                               @"presentMode"
                                                                                                                x)
                                                                                                             .
                                                                                                             showString
                                                                                                               ", "
                                                                                                               .
                                                                                                               showString
-                                                                                                                "vkClipped = "
+                                                                                                                "clipped = "
                                                                                                                 .
                                                                                                                 showsPrec
                                                                                                                   d
-                                                                                                                  (vkClipped
+                                                                                                                  (getField
+                                                                                                                     @"clipped"
                                                                                                                      x)
                                                                                                                   .
                                                                                                                   showString
                                                                                                                     ", "
                                                                                                                     .
                                                                                                                     showString
-                                                                                                                      "vkOldSwapchain = "
+                                                                                                                      "oldSwapchain = "
                                                                                                                       .
                                                                                                                       showsPrec
                                                                                                                         d
-                                                                                                                        (vkOldSwapchain
+                                                                                                                        (getField
+                                                                                                                           @"oldSwapchain"
                                                                                                                            x)
                                                                                                                         .
                                                                                                                         showChar

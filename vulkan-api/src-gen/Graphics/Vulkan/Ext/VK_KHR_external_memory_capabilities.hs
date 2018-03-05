@@ -53,6 +53,7 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_capabilities
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
         vkGetPhysicalDeviceExternalBufferPropertiesKHR,
+        vkGetPhysicalDeviceExternalBufferPropertiesKHRSafe,
         module Graphics.Vulkan.Types.Handles,
         VK_KHR_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION,
         pattern VK_KHR_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION,
@@ -110,6 +111,23 @@ import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties
 foreign import ccall unsafe
                "vkGetPhysicalDeviceExternalBufferPropertiesKHR"
                vkGetPhysicalDeviceExternalBufferPropertiesKHR ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                ->
+                 Ptr VkPhysicalDeviceExternalBufferInfoKHR -- ^ pExternalBufferInfo
+                                                           ->
+                   Ptr VkExternalBufferPropertiesKHR -- ^ pExternalBufferProperties
+                                                     -> IO ()
+
+-- | > () vkGetPhysicalDeviceExternalBufferPropertiesKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , const VkPhysicalDeviceExternalBufferInfoKHR* pExternalBufferInfo
+--   >     , VkExternalBufferPropertiesKHR* pExternalBufferProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceExternalBufferPropertiesKHR.html vkGetPhysicalDeviceExternalBufferPropertiesKHR registry at www.khronos.org>
+foreign import ccall safe
+               "vkGetPhysicalDeviceExternalBufferPropertiesKHR"
+               vkGetPhysicalDeviceExternalBufferPropertiesKHRSafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  Ptr VkPhysicalDeviceExternalBufferInfoKHR -- ^ pExternalBufferInfo

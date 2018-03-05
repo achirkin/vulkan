@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkImageCreateInfo
        (VkImageCreateInfo(..)) where
@@ -22,7 +23,6 @@ import           Graphics.Vulkan.Types.Enum.VkSampleCountFlags (VkSampleCountFla
 import           Graphics.Vulkan.Types.Enum.VkSharingMode      (VkSharingMode)
 import           Graphics.Vulkan.Types.Enum.VkStructureType    (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkExtent3D       (VkExtent3D)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                              (unsafeDupablePerformIO)
 
 -- | > typedef struct VkImageCreateInfo {
@@ -94,26 +94,6 @@ instance VulkanMarshal VkImageCreateInfo where
         type ReturnedOnly VkImageCreateInfo = 'False -- ' closing tick for hsc2hs
         type StructExtends VkImageCreateInfo = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkImageCreateInfo where
-        type VkSTypeMType VkImageCreateInfo = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkImageCreateInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkImageCreateInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkImageCreateInfo, sType}
-
 instance {-# OVERLAPPING #-} HasField "sType" VkImageCreateInfo
          where
         type FieldType "sType" VkImageCreateInfo = VkStructureType
@@ -128,36 +108,22 @@ instance {-# OVERLAPPING #-} HasField "sType" VkImageCreateInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkImageCreateInfo, sType}
 
-instance CanReadField "sType" VkImageCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-} CanReadField "sType" VkImageCreateInfo
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkImageCreateInfo, sType}
 
-instance CanWriteField "sType" VkImageCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkImageCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkImageCreateInfo where
-        type VkPNextMType VkImageCreateInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkImageCreateInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkImageCreateInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkImageCreateInfo, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkImageCreateInfo, sType}
 
 instance {-# OVERLAPPING #-} HasField "pNext" VkImageCreateInfo
          where
@@ -173,36 +139,22 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkImageCreateInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkImageCreateInfo, pNext}
 
-instance CanReadField "pNext" VkImageCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-} CanReadField "pNext" VkImageCreateInfo
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkImageCreateInfo, pNext}
 
-instance CanWriteField "pNext" VkImageCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext" VkImageCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-} HasVkFlags VkImageCreateInfo where
-        type VkFlagsMType VkImageCreateInfo = VkImageCreateFlags
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkImageCreateInfo, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkImageCreateInfo, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkImageCreateInfo, flags}
+        writeField p
+          = pokeByteOff p #{offset VkImageCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-} HasField "flags" VkImageCreateInfo
          where
@@ -218,36 +170,22 @@ instance {-# OVERLAPPING #-} HasField "flags" VkImageCreateInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkImageCreateInfo, flags}
 
-instance CanReadField "flags" VkImageCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-} CanReadField "flags" VkImageCreateInfo
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
+        readField p
+          = peekByteOff p #{offset VkImageCreateInfo, flags}
 
-instance CanWriteField "flags" VkImageCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "flags" VkImageCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkFlags
-
-instance {-# OVERLAPPING #-} HasVkImageType VkImageCreateInfo where
-        type VkImageTypeMType VkImageCreateInfo = VkImageType
-
-        {-# NOINLINE vkImageType #-}
-        vkImageType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, imageType})
-
-        {-# INLINE vkImageTypeByteOffset #-}
-        vkImageTypeByteOffset ~_
-          = #{offset VkImageCreateInfo, imageType}
-
-        {-# INLINE readVkImageType #-}
-        readVkImageType p
-          = peekByteOff p #{offset VkImageCreateInfo, imageType}
-
-        {-# INLINE writeVkImageType #-}
-        writeVkImageType p
-          = pokeByteOff p #{offset VkImageCreateInfo, imageType}
+        writeField p
+          = pokeByteOff p #{offset VkImageCreateInfo, flags}
 
 instance {-# OVERLAPPING #-} HasField "imageType" VkImageCreateInfo
          where
@@ -263,36 +201,22 @@ instance {-# OVERLAPPING #-} HasField "imageType" VkImageCreateInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkImageCreateInfo, imageType}
 
-instance CanReadField "imageType" VkImageCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkImageType
+instance {-# OVERLAPPING #-}
+         CanReadField "imageType" VkImageCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, imageType})
 
         {-# INLINE readField #-}
-        readField = readVkImageType
+        readField p
+          = peekByteOff p #{offset VkImageCreateInfo, imageType}
 
-instance CanWriteField "imageType" VkImageCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "imageType" VkImageCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkImageType
-
-instance {-# OVERLAPPING #-} HasVkFormat VkImageCreateInfo where
-        type VkFormatMType VkImageCreateInfo = VkFormat
-
-        {-# NOINLINE vkFormat #-}
-        vkFormat x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, format})
-
-        {-# INLINE vkFormatByteOffset #-}
-        vkFormatByteOffset ~_
-          = #{offset VkImageCreateInfo, format}
-
-        {-# INLINE readVkFormat #-}
-        readVkFormat p
-          = peekByteOff p #{offset VkImageCreateInfo, format}
-
-        {-# INLINE writeVkFormat #-}
-        writeVkFormat p
-          = pokeByteOff p #{offset VkImageCreateInfo, format}
+        writeField p
+          = pokeByteOff p #{offset VkImageCreateInfo, imageType}
 
 instance {-# OVERLAPPING #-} HasField "format" VkImageCreateInfo
          where
@@ -308,36 +232,22 @@ instance {-# OVERLAPPING #-} HasField "format" VkImageCreateInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkImageCreateInfo, format}
 
-instance CanReadField "format" VkImageCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkFormat
+instance {-# OVERLAPPING #-}
+         CanReadField "format" VkImageCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, format})
 
         {-# INLINE readField #-}
-        readField = readVkFormat
+        readField p
+          = peekByteOff p #{offset VkImageCreateInfo, format}
 
-instance CanWriteField "format" VkImageCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "format" VkImageCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkFormat
-
-instance {-# OVERLAPPING #-} HasVkExtent VkImageCreateInfo where
-        type VkExtentMType VkImageCreateInfo = VkExtent3D
-
-        {-# NOINLINE vkExtent #-}
-        vkExtent x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, extent})
-
-        {-# INLINE vkExtentByteOffset #-}
-        vkExtentByteOffset ~_
-          = #{offset VkImageCreateInfo, extent}
-
-        {-# INLINE readVkExtent #-}
-        readVkExtent p
-          = peekByteOff p #{offset VkImageCreateInfo, extent}
-
-        {-# INLINE writeVkExtent #-}
-        writeVkExtent p
-          = pokeByteOff p #{offset VkImageCreateInfo, extent}
+        writeField p
+          = pokeByteOff p #{offset VkImageCreateInfo, format}
 
 instance {-# OVERLAPPING #-} HasField "extent" VkImageCreateInfo
          where
@@ -353,36 +263,22 @@ instance {-# OVERLAPPING #-} HasField "extent" VkImageCreateInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkImageCreateInfo, extent}
 
-instance CanReadField "extent" VkImageCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkExtent
+instance {-# OVERLAPPING #-}
+         CanReadField "extent" VkImageCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, extent})
 
         {-# INLINE readField #-}
-        readField = readVkExtent
+        readField p
+          = peekByteOff p #{offset VkImageCreateInfo, extent}
 
-instance CanWriteField "extent" VkImageCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "extent" VkImageCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkExtent
-
-instance {-# OVERLAPPING #-} HasVkMipLevels VkImageCreateInfo where
-        type VkMipLevelsMType VkImageCreateInfo = Word32
-
-        {-# NOINLINE vkMipLevels #-}
-        vkMipLevels x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, mipLevels})
-
-        {-# INLINE vkMipLevelsByteOffset #-}
-        vkMipLevelsByteOffset ~_
-          = #{offset VkImageCreateInfo, mipLevels}
-
-        {-# INLINE readVkMipLevels #-}
-        readVkMipLevels p
-          = peekByteOff p #{offset VkImageCreateInfo, mipLevels}
-
-        {-# INLINE writeVkMipLevels #-}
-        writeVkMipLevels p
-          = pokeByteOff p #{offset VkImageCreateInfo, mipLevels}
+        writeField p
+          = pokeByteOff p #{offset VkImageCreateInfo, extent}
 
 instance {-# OVERLAPPING #-} HasField "mipLevels" VkImageCreateInfo
          where
@@ -398,37 +294,22 @@ instance {-# OVERLAPPING #-} HasField "mipLevels" VkImageCreateInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkImageCreateInfo, mipLevels}
 
-instance CanReadField "mipLevels" VkImageCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkMipLevels
+instance {-# OVERLAPPING #-}
+         CanReadField "mipLevels" VkImageCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, mipLevels})
 
         {-# INLINE readField #-}
-        readField = readVkMipLevels
+        readField p
+          = peekByteOff p #{offset VkImageCreateInfo, mipLevels}
 
-instance CanWriteField "mipLevels" VkImageCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "mipLevels" VkImageCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkMipLevels
-
-instance {-# OVERLAPPING #-} HasVkArrayLayers VkImageCreateInfo
-         where
-        type VkArrayLayersMType VkImageCreateInfo = Word32
-
-        {-# NOINLINE vkArrayLayers #-}
-        vkArrayLayers x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, arrayLayers})
-
-        {-# INLINE vkArrayLayersByteOffset #-}
-        vkArrayLayersByteOffset ~_
-          = #{offset VkImageCreateInfo, arrayLayers}
-
-        {-# INLINE readVkArrayLayers #-}
-        readVkArrayLayers p
-          = peekByteOff p #{offset VkImageCreateInfo, arrayLayers}
-
-        {-# INLINE writeVkArrayLayers #-}
-        writeVkArrayLayers p
-          = pokeByteOff p #{offset VkImageCreateInfo, arrayLayers}
+        writeField p
+          = pokeByteOff p #{offset VkImageCreateInfo, mipLevels}
 
 instance {-# OVERLAPPING #-}
          HasField "arrayLayers" VkImageCreateInfo where
@@ -444,36 +325,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkImageCreateInfo, arrayLayers}
 
-instance CanReadField "arrayLayers" VkImageCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkArrayLayers
+instance {-# OVERLAPPING #-}
+         CanReadField "arrayLayers" VkImageCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, arrayLayers})
 
         {-# INLINE readField #-}
-        readField = readVkArrayLayers
+        readField p
+          = peekByteOff p #{offset VkImageCreateInfo, arrayLayers}
 
-instance CanWriteField "arrayLayers" VkImageCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "arrayLayers" VkImageCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkArrayLayers
-
-instance {-# OVERLAPPING #-} HasVkSamples VkImageCreateInfo where
-        type VkSamplesMType VkImageCreateInfo = VkSampleCountFlagBits
-
-        {-# NOINLINE vkSamples #-}
-        vkSamples x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, samples})
-
-        {-# INLINE vkSamplesByteOffset #-}
-        vkSamplesByteOffset ~_
-          = #{offset VkImageCreateInfo, samples}
-
-        {-# INLINE readVkSamples #-}
-        readVkSamples p
-          = peekByteOff p #{offset VkImageCreateInfo, samples}
-
-        {-# INLINE writeVkSamples #-}
-        writeVkSamples p
-          = pokeByteOff p #{offset VkImageCreateInfo, samples}
+        writeField p
+          = pokeByteOff p #{offset VkImageCreateInfo, arrayLayers}
 
 instance {-# OVERLAPPING #-} HasField "samples" VkImageCreateInfo
          where
@@ -489,36 +356,22 @@ instance {-# OVERLAPPING #-} HasField "samples" VkImageCreateInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkImageCreateInfo, samples}
 
-instance CanReadField "samples" VkImageCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkSamples
+instance {-# OVERLAPPING #-}
+         CanReadField "samples" VkImageCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, samples})
 
         {-# INLINE readField #-}
-        readField = readVkSamples
+        readField p
+          = peekByteOff p #{offset VkImageCreateInfo, samples}
 
-instance CanWriteField "samples" VkImageCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "samples" VkImageCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkSamples
-
-instance {-# OVERLAPPING #-} HasVkTiling VkImageCreateInfo where
-        type VkTilingMType VkImageCreateInfo = VkImageTiling
-
-        {-# NOINLINE vkTiling #-}
-        vkTiling x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, tiling})
-
-        {-# INLINE vkTilingByteOffset #-}
-        vkTilingByteOffset ~_
-          = #{offset VkImageCreateInfo, tiling}
-
-        {-# INLINE readVkTiling #-}
-        readVkTiling p
-          = peekByteOff p #{offset VkImageCreateInfo, tiling}
-
-        {-# INLINE writeVkTiling #-}
-        writeVkTiling p
-          = pokeByteOff p #{offset VkImageCreateInfo, tiling}
+        writeField p
+          = pokeByteOff p #{offset VkImageCreateInfo, samples}
 
 instance {-# OVERLAPPING #-} HasField "tiling" VkImageCreateInfo
          where
@@ -534,36 +387,22 @@ instance {-# OVERLAPPING #-} HasField "tiling" VkImageCreateInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkImageCreateInfo, tiling}
 
-instance CanReadField "tiling" VkImageCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkTiling
+instance {-# OVERLAPPING #-}
+         CanReadField "tiling" VkImageCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, tiling})
 
         {-# INLINE readField #-}
-        readField = readVkTiling
+        readField p
+          = peekByteOff p #{offset VkImageCreateInfo, tiling}
 
-instance CanWriteField "tiling" VkImageCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "tiling" VkImageCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkTiling
-
-instance {-# OVERLAPPING #-} HasVkUsage VkImageCreateInfo where
-        type VkUsageMType VkImageCreateInfo = VkImageUsageFlags
-
-        {-# NOINLINE vkUsage #-}
-        vkUsage x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, usage})
-
-        {-# INLINE vkUsageByteOffset #-}
-        vkUsageByteOffset ~_
-          = #{offset VkImageCreateInfo, usage}
-
-        {-# INLINE readVkUsage #-}
-        readVkUsage p
-          = peekByteOff p #{offset VkImageCreateInfo, usage}
-
-        {-# INLINE writeVkUsage #-}
-        writeVkUsage p
-          = pokeByteOff p #{offset VkImageCreateInfo, usage}
+        writeField p
+          = pokeByteOff p #{offset VkImageCreateInfo, tiling}
 
 instance {-# OVERLAPPING #-} HasField "usage" VkImageCreateInfo
          where
@@ -579,37 +418,22 @@ instance {-# OVERLAPPING #-} HasField "usage" VkImageCreateInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkImageCreateInfo, usage}
 
-instance CanReadField "usage" VkImageCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkUsage
+instance {-# OVERLAPPING #-} CanReadField "usage" VkImageCreateInfo
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, usage})
 
         {-# INLINE readField #-}
-        readField = readVkUsage
+        readField p
+          = peekByteOff p #{offset VkImageCreateInfo, usage}
 
-instance CanWriteField "usage" VkImageCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "usage" VkImageCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkUsage
-
-instance {-# OVERLAPPING #-} HasVkSharingMode VkImageCreateInfo
-         where
-        type VkSharingModeMType VkImageCreateInfo = VkSharingMode
-
-        {-# NOINLINE vkSharingMode #-}
-        vkSharingMode x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, sharingMode})
-
-        {-# INLINE vkSharingModeByteOffset #-}
-        vkSharingModeByteOffset ~_
-          = #{offset VkImageCreateInfo, sharingMode}
-
-        {-# INLINE readVkSharingMode #-}
-        readVkSharingMode p
-          = peekByteOff p #{offset VkImageCreateInfo, sharingMode}
-
-        {-# INLINE writeVkSharingMode #-}
-        writeVkSharingMode p
-          = pokeByteOff p #{offset VkImageCreateInfo, sharingMode}
+        writeField p
+          = pokeByteOff p #{offset VkImageCreateInfo, usage}
 
 instance {-# OVERLAPPING #-}
          HasField "sharingMode" VkImageCreateInfo where
@@ -625,37 +449,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkImageCreateInfo, sharingMode}
 
-instance CanReadField "sharingMode" VkImageCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkSharingMode
+instance {-# OVERLAPPING #-}
+         CanReadField "sharingMode" VkImageCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, sharingMode})
 
         {-# INLINE readField #-}
-        readField = readVkSharingMode
-
-instance CanWriteField "sharingMode" VkImageCreateInfo where
-        {-# INLINE writeField #-}
-        writeField = writeVkSharingMode
+        readField p
+          = peekByteOff p #{offset VkImageCreateInfo, sharingMode}
 
 instance {-# OVERLAPPING #-}
-         HasVkQueueFamilyIndexCount VkImageCreateInfo where
-        type VkQueueFamilyIndexCountMType VkImageCreateInfo = Word32
-
-        {-# NOINLINE vkQueueFamilyIndexCount #-}
-        vkQueueFamilyIndexCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, queueFamilyIndexCount})
-
-        {-# INLINE vkQueueFamilyIndexCountByteOffset #-}
-        vkQueueFamilyIndexCountByteOffset ~_
-          = #{offset VkImageCreateInfo, queueFamilyIndexCount}
-
-        {-# INLINE readVkQueueFamilyIndexCount #-}
-        readVkQueueFamilyIndexCount p
-          = peekByteOff p #{offset VkImageCreateInfo, queueFamilyIndexCount}
-
-        {-# INLINE writeVkQueueFamilyIndexCount #-}
-        writeVkQueueFamilyIndexCount p
-          = pokeByteOff p #{offset VkImageCreateInfo, queueFamilyIndexCount}
+         CanWriteField "sharingMode" VkImageCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkImageCreateInfo, sharingMode}
 
 instance {-# OVERLAPPING #-}
          HasField "queueFamilyIndexCount" VkImageCreateInfo where
@@ -674,39 +483,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkImageCreateInfo, queueFamilyIndexCount}
 
-instance CanReadField "queueFamilyIndexCount" VkImageCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkQueueFamilyIndexCount
+instance {-# OVERLAPPING #-}
+         CanReadField "queueFamilyIndexCount" VkImageCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, queueFamilyIndexCount})
 
         {-# INLINE readField #-}
-        readField = readVkQueueFamilyIndexCount
-
-instance CanWriteField "queueFamilyIndexCount" VkImageCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkQueueFamilyIndexCount
+        readField p
+          = peekByteOff p #{offset VkImageCreateInfo, queueFamilyIndexCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPQueueFamilyIndices VkImageCreateInfo where
-        type VkPQueueFamilyIndicesMType VkImageCreateInfo = Ptr Word32
-
-        {-# NOINLINE vkPQueueFamilyIndices #-}
-        vkPQueueFamilyIndices x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, pQueueFamilyIndices})
-
-        {-# INLINE vkPQueueFamilyIndicesByteOffset #-}
-        vkPQueueFamilyIndicesByteOffset ~_
-          = #{offset VkImageCreateInfo, pQueueFamilyIndices}
-
-        {-# INLINE readVkPQueueFamilyIndices #-}
-        readVkPQueueFamilyIndices p
-          = peekByteOff p #{offset VkImageCreateInfo, pQueueFamilyIndices}
-
-        {-# INLINE writeVkPQueueFamilyIndices #-}
-        writeVkPQueueFamilyIndices p
-          = pokeByteOff p #{offset VkImageCreateInfo, pQueueFamilyIndices}
+         CanWriteField "queueFamilyIndexCount" VkImageCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkImageCreateInfo, queueFamilyIndexCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pQueueFamilyIndices" VkImageCreateInfo where
@@ -723,38 +515,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkImageCreateInfo, pQueueFamilyIndices}
 
-instance CanReadField "pQueueFamilyIndices" VkImageCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkPQueueFamilyIndices
+instance {-# OVERLAPPING #-}
+         CanReadField "pQueueFamilyIndices" VkImageCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, pQueueFamilyIndices})
 
         {-# INLINE readField #-}
-        readField = readVkPQueueFamilyIndices
+        readField p
+          = peekByteOff p #{offset VkImageCreateInfo, pQueueFamilyIndices}
 
-instance CanWriteField "pQueueFamilyIndices" VkImageCreateInfo
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pQueueFamilyIndices" VkImageCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPQueueFamilyIndices
-
-instance {-# OVERLAPPING #-} HasVkInitialLayout VkImageCreateInfo
-         where
-        type VkInitialLayoutMType VkImageCreateInfo = VkImageLayout
-
-        {-# NOINLINE vkInitialLayout #-}
-        vkInitialLayout x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, initialLayout})
-
-        {-# INLINE vkInitialLayoutByteOffset #-}
-        vkInitialLayoutByteOffset ~_
-          = #{offset VkImageCreateInfo, initialLayout}
-
-        {-# INLINE readVkInitialLayout #-}
-        readVkInitialLayout p
-          = peekByteOff p #{offset VkImageCreateInfo, initialLayout}
-
-        {-# INLINE writeVkInitialLayout #-}
-        writeVkInitialLayout p
-          = pokeByteOff p #{offset VkImageCreateInfo, initialLayout}
+        writeField p
+          = pokeByteOff p #{offset VkImageCreateInfo, pQueueFamilyIndices}
 
 instance {-# OVERLAPPING #-}
          HasField "initialLayout" VkImageCreateInfo where
@@ -771,90 +547,104 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkImageCreateInfo, initialLayout}
 
-instance CanReadField "initialLayout" VkImageCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkInitialLayout
+instance {-# OVERLAPPING #-}
+         CanReadField "initialLayout" VkImageCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageCreateInfo, initialLayout})
 
         {-# INLINE readField #-}
-        readField = readVkInitialLayout
+        readField p
+          = peekByteOff p #{offset VkImageCreateInfo, initialLayout}
 
-instance CanWriteField "initialLayout" VkImageCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "initialLayout" VkImageCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkInitialLayout
+        writeField p
+          = pokeByteOff p #{offset VkImageCreateInfo, initialLayout}
 
 instance Show VkImageCreateInfo where
         showsPrec d x
           = showString "VkImageCreateInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkImageType = " .
-                                  showsPrec d (vkImageType x) .
+                                showString "imageType = " .
+                                  showsPrec d (getField @"imageType" x) .
                                     showString ", " .
-                                      showString "vkFormat = " .
-                                        showsPrec d (vkFormat x) .
+                                      showString "format = " .
+                                        showsPrec d (getField @"format" x) .
                                           showString ", " .
-                                            showString "vkExtent = " .
-                                              showsPrec d (vkExtent x) .
+                                            showString "extent = " .
+                                              showsPrec d (getField @"extent" x) .
                                                 showString ", " .
-                                                  showString "vkMipLevels = " .
-                                                    showsPrec d (vkMipLevels x) .
+                                                  showString "mipLevels = " .
+                                                    showsPrec d (getField @"mipLevels" x) .
                                                       showString ", " .
-                                                        showString "vkArrayLayers = " .
-                                                          showsPrec d (vkArrayLayers x) .
+                                                        showString "arrayLayers = " .
+                                                          showsPrec d (getField @"arrayLayers" x) .
                                                             showString ", " .
-                                                              showString "vkSamples = " .
-                                                                showsPrec d (vkSamples x) .
+                                                              showString "samples = " .
+                                                                showsPrec d (getField @"samples" x)
+                                                                  .
                                                                   showString ", " .
-                                                                    showString "vkTiling = " .
-                                                                      showsPrec d (vkTiling x) .
+                                                                    showString "tiling = " .
+                                                                      showsPrec d
+                                                                        (getField @"tiling" x)
+                                                                        .
                                                                         showString ", " .
-                                                                          showString "vkUsage = " .
-                                                                            showsPrec d (vkUsage x)
+                                                                          showString "usage = " .
+                                                                            showsPrec d
+                                                                              (getField @"usage" x)
                                                                               .
                                                                               showString ", " .
                                                                                 showString
-                                                                                  "vkSharingMode = "
+                                                                                  "sharingMode = "
                                                                                   .
                                                                                   showsPrec d
-                                                                                    (vkSharingMode
+                                                                                    (getField
+                                                                                       @"sharingMode"
                                                                                        x)
                                                                                     .
                                                                                     showString ", "
                                                                                       .
                                                                                       showString
-                                                                                        "vkQueueFamilyIndexCount = "
+                                                                                        "queueFamilyIndexCount = "
                                                                                         .
                                                                                         showsPrec d
-                                                                                          (vkQueueFamilyIndexCount
+                                                                                          (getField
+                                                                                             @"queueFamilyIndexCount"
                                                                                              x)
                                                                                           .
                                                                                           showString
                                                                                             ", "
                                                                                             .
                                                                                             showString
-                                                                                              "vkPQueueFamilyIndices = "
+                                                                                              "pQueueFamilyIndices = "
                                                                                               .
                                                                                               showsPrec
                                                                                                 d
-                                                                                                (vkPQueueFamilyIndices
+                                                                                                (getField
+                                                                                                   @"pQueueFamilyIndices"
                                                                                                    x)
                                                                                                 .
                                                                                                 showString
                                                                                                   ", "
                                                                                                   .
                                                                                                   showString
-                                                                                                    "vkInitialLayout = "
+                                                                                                    "initialLayout = "
                                                                                                     .
                                                                                                     showsPrec
                                                                                                       d
-                                                                                                      (vkInitialLayout
+                                                                                                      (getField
+                                                                                                         @"initialLayout"
                                                                                                          x)
                                                                                                       .
                                                                                                       showChar

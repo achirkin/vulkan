@@ -39,6 +39,7 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_capabilities
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
         vkGetPhysicalDeviceExternalSemaphorePropertiesKHR,
+        vkGetPhysicalDeviceExternalSemaphorePropertiesKHRSafe,
         module Graphics.Vulkan.Types.Handles,
         VK_KHR_EXTERNAL_SEMAPHORE_CAPABILITIES_SPEC_VERSION,
         pattern VK_KHR_EXTERNAL_SEMAPHORE_CAPABILITIES_SPEC_VERSION,
@@ -79,6 +80,23 @@ import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties
 foreign import ccall unsafe
                "vkGetPhysicalDeviceExternalSemaphorePropertiesKHR"
                vkGetPhysicalDeviceExternalSemaphorePropertiesKHR ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                ->
+                 Ptr VkPhysicalDeviceExternalSemaphoreInfoKHR -- ^ pExternalSemaphoreInfo
+                                                              ->
+                   Ptr VkExternalSemaphorePropertiesKHR -- ^ pExternalSemaphoreProperties
+                                                        -> IO ()
+
+-- | > () vkGetPhysicalDeviceExternalSemaphorePropertiesKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , const VkPhysicalDeviceExternalSemaphoreInfoKHR* pExternalSemaphoreInfo
+--   >     , VkExternalSemaphorePropertiesKHR* pExternalSemaphoreProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceExternalSemaphorePropertiesKHR.html vkGetPhysicalDeviceExternalSemaphorePropertiesKHR registry at www.khronos.org>
+foreign import ccall safe
+               "vkGetPhysicalDeviceExternalSemaphorePropertiesKHR"
+               vkGetPhysicalDeviceExternalSemaphorePropertiesKHRSafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  Ptr VkPhysicalDeviceExternalSemaphoreInfoKHR -- ^ pExternalSemaphoreInfo

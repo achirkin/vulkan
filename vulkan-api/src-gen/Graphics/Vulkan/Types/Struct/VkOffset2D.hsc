@@ -5,15 +5,15 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkOffset2D (VkOffset2D(..))
        where
-import           Foreign.Storable                    (Storable (..))
+import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.StructMembers
-import           System.IO.Unsafe                    (unsafeDupablePerformIO)
+import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkOffset2D {
 --   >     int32_t        x;
@@ -67,23 +67,6 @@ instance VulkanMarshal VkOffset2D where
         type ReturnedOnly VkOffset2D = 'False -- ' closing tick for hsc2hs
         type StructExtends VkOffset2D = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkX VkOffset2D where
-        type VkXMType VkOffset2D = Int32
-
-        {-# NOINLINE vkX #-}
-        vkX x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkOffset2D, x})
-
-        {-# INLINE vkXByteOffset #-}
-        vkXByteOffset ~_ = #{offset VkOffset2D, x}
-
-        {-# INLINE readVkX #-}
-        readVkX p = peekByteOff p #{offset VkOffset2D, x}
-
-        {-# INLINE writeVkX #-}
-        writeVkX p = pokeByteOff p #{offset VkOffset2D, x}
-
 instance {-# OVERLAPPING #-} HasField "x" VkOffset2D where
         type FieldType "x" VkOffset2D = Int32
         type FieldOptional "x" VkOffset2D = 'False -- ' closing tick for hsc2hs
@@ -97,33 +80,18 @@ instance {-# OVERLAPPING #-} HasField "x" VkOffset2D where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkOffset2D, x}
 
-instance CanReadField "x" VkOffset2D where
-        {-# INLINE getField #-}
-        getField = vkX
+instance {-# OVERLAPPING #-} CanReadField "x" VkOffset2D where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkOffset2D, x})
 
         {-# INLINE readField #-}
-        readField = readVkX
+        readField p = peekByteOff p #{offset VkOffset2D, x}
 
-instance CanWriteField "x" VkOffset2D where
+instance {-# OVERLAPPING #-} CanWriteField "x" VkOffset2D where
         {-# INLINE writeField #-}
-        writeField = writeVkX
-
-instance {-# OVERLAPPING #-} HasVkY VkOffset2D where
-        type VkYMType VkOffset2D = Int32
-
-        {-# NOINLINE vkY #-}
-        vkY x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkOffset2D, y})
-
-        {-# INLINE vkYByteOffset #-}
-        vkYByteOffset ~_ = #{offset VkOffset2D, y}
-
-        {-# INLINE readVkY #-}
-        readVkY p = peekByteOff p #{offset VkOffset2D, y}
-
-        {-# INLINE writeVkY #-}
-        writeVkY p = pokeByteOff p #{offset VkOffset2D, y}
+        writeField p = pokeByteOff p #{offset VkOffset2D, x}
 
 instance {-# OVERLAPPING #-} HasField "y" VkOffset2D where
         type FieldType "y" VkOffset2D = Int32
@@ -138,21 +106,23 @@ instance {-# OVERLAPPING #-} HasField "y" VkOffset2D where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkOffset2D, y}
 
-instance CanReadField "y" VkOffset2D where
-        {-# INLINE getField #-}
-        getField = vkY
+instance {-# OVERLAPPING #-} CanReadField "y" VkOffset2D where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkOffset2D, y})
 
         {-# INLINE readField #-}
-        readField = readVkY
+        readField p = peekByteOff p #{offset VkOffset2D, y}
 
-instance CanWriteField "y" VkOffset2D where
+instance {-# OVERLAPPING #-} CanWriteField "y" VkOffset2D where
         {-# INLINE writeField #-}
-        writeField = writeVkY
+        writeField p = pokeByteOff p #{offset VkOffset2D, y}
 
 instance Show VkOffset2D where
         showsPrec d x
           = showString "VkOffset2D {" .
-              showString "vkX = " .
-                showsPrec d (vkX x) .
+              showString "x = " .
+                showsPrec d (getField @"x" x) .
                   showString ", " .
-                    showString "vkY = " . showsPrec d (vkY x) . showChar '}'
+                    showString "y = " . showsPrec d (getField @"y" x) . showChar '}'

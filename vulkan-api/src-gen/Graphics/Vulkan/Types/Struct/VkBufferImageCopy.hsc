@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkBufferImageCopy
        (VkBufferImageCopy(..)) where
@@ -16,7 +17,6 @@ import           Graphics.Vulkan.Types.BaseTypes                       (VkDevice
 import           Graphics.Vulkan.Types.Struct.VkExtent3D               (VkExtent3D)
 import           Graphics.Vulkan.Types.Struct.VkImageSubresourceLayers (VkImageSubresourceLayers)
 import           Graphics.Vulkan.Types.Struct.VkOffset3D               (VkOffset3D)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                      (unsafeDupablePerformIO)
 
 -- | > typedef struct VkBufferImageCopy {
@@ -77,27 +77,6 @@ instance VulkanMarshal VkBufferImageCopy where
         type ReturnedOnly VkBufferImageCopy = 'False -- ' closing tick for hsc2hs
         type StructExtends VkBufferImageCopy = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkBufferOffset VkBufferImageCopy
-         where
-        type VkBufferOffsetMType VkBufferImageCopy = VkDeviceSize
-
-        {-# NOINLINE vkBufferOffset #-}
-        vkBufferOffset x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBufferImageCopy, bufferOffset})
-
-        {-# INLINE vkBufferOffsetByteOffset #-}
-        vkBufferOffsetByteOffset ~_
-          = #{offset VkBufferImageCopy, bufferOffset}
-
-        {-# INLINE readVkBufferOffset #-}
-        readVkBufferOffset p
-          = peekByteOff p #{offset VkBufferImageCopy, bufferOffset}
-
-        {-# INLINE writeVkBufferOffset #-}
-        writeVkBufferOffset p
-          = pokeByteOff p #{offset VkBufferImageCopy, bufferOffset}
-
 instance {-# OVERLAPPING #-}
          HasField "bufferOffset" VkBufferImageCopy where
         type FieldType "bufferOffset" VkBufferImageCopy = VkDeviceSize
@@ -112,37 +91,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkBufferImageCopy, bufferOffset}
 
-instance CanReadField "bufferOffset" VkBufferImageCopy where
-        {-# INLINE getField #-}
-        getField = vkBufferOffset
+instance {-# OVERLAPPING #-}
+         CanReadField "bufferOffset" VkBufferImageCopy where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBufferImageCopy, bufferOffset})
 
         {-# INLINE readField #-}
-        readField = readVkBufferOffset
+        readField p
+          = peekByteOff p #{offset VkBufferImageCopy, bufferOffset}
 
-instance CanWriteField "bufferOffset" VkBufferImageCopy where
+instance {-# OVERLAPPING #-}
+         CanWriteField "bufferOffset" VkBufferImageCopy where
         {-# INLINE writeField #-}
-        writeField = writeVkBufferOffset
-
-instance {-# OVERLAPPING #-} HasVkBufferRowLength VkBufferImageCopy
-         where
-        type VkBufferRowLengthMType VkBufferImageCopy = Word32
-
-        {-# NOINLINE vkBufferRowLength #-}
-        vkBufferRowLength x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBufferImageCopy, bufferRowLength})
-
-        {-# INLINE vkBufferRowLengthByteOffset #-}
-        vkBufferRowLengthByteOffset ~_
-          = #{offset VkBufferImageCopy, bufferRowLength}
-
-        {-# INLINE readVkBufferRowLength #-}
-        readVkBufferRowLength p
-          = peekByteOff p #{offset VkBufferImageCopy, bufferRowLength}
-
-        {-# INLINE writeVkBufferRowLength #-}
-        writeVkBufferRowLength p
-          = pokeByteOff p #{offset VkBufferImageCopy, bufferRowLength}
+        writeField p
+          = pokeByteOff p #{offset VkBufferImageCopy, bufferOffset}
 
 instance {-# OVERLAPPING #-}
          HasField "bufferRowLength" VkBufferImageCopy where
@@ -159,37 +123,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkBufferImageCopy, bufferRowLength}
 
-instance CanReadField "bufferRowLength" VkBufferImageCopy where
-        {-# INLINE getField #-}
-        getField = vkBufferRowLength
+instance {-# OVERLAPPING #-}
+         CanReadField "bufferRowLength" VkBufferImageCopy where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBufferImageCopy, bufferRowLength})
 
         {-# INLINE readField #-}
-        readField = readVkBufferRowLength
-
-instance CanWriteField "bufferRowLength" VkBufferImageCopy where
-        {-# INLINE writeField #-}
-        writeField = writeVkBufferRowLength
+        readField p
+          = peekByteOff p #{offset VkBufferImageCopy, bufferRowLength}
 
 instance {-# OVERLAPPING #-}
-         HasVkBufferImageHeight VkBufferImageCopy where
-        type VkBufferImageHeightMType VkBufferImageCopy = Word32
-
-        {-# NOINLINE vkBufferImageHeight #-}
-        vkBufferImageHeight x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBufferImageCopy, bufferImageHeight})
-
-        {-# INLINE vkBufferImageHeightByteOffset #-}
-        vkBufferImageHeightByteOffset ~_
-          = #{offset VkBufferImageCopy, bufferImageHeight}
-
-        {-# INLINE readVkBufferImageHeight #-}
-        readVkBufferImageHeight p
-          = peekByteOff p #{offset VkBufferImageCopy, bufferImageHeight}
-
-        {-# INLINE writeVkBufferImageHeight #-}
-        writeVkBufferImageHeight p
-          = pokeByteOff p #{offset VkBufferImageCopy, bufferImageHeight}
+         CanWriteField "bufferRowLength" VkBufferImageCopy where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkBufferImageCopy, bufferRowLength}
 
 instance {-# OVERLAPPING #-}
          HasField "bufferImageHeight" VkBufferImageCopy where
@@ -206,38 +155,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkBufferImageCopy, bufferImageHeight}
 
-instance CanReadField "bufferImageHeight" VkBufferImageCopy where
-        {-# INLINE getField #-}
-        getField = vkBufferImageHeight
+instance {-# OVERLAPPING #-}
+         CanReadField "bufferImageHeight" VkBufferImageCopy where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBufferImageCopy, bufferImageHeight})
 
         {-# INLINE readField #-}
-        readField = readVkBufferImageHeight
-
-instance CanWriteField "bufferImageHeight" VkBufferImageCopy where
-        {-# INLINE writeField #-}
-        writeField = writeVkBufferImageHeight
+        readField p
+          = peekByteOff p #{offset VkBufferImageCopy, bufferImageHeight}
 
 instance {-# OVERLAPPING #-}
-         HasVkImageSubresource VkBufferImageCopy where
-        type VkImageSubresourceMType VkBufferImageCopy =
-             VkImageSubresourceLayers
-
-        {-# NOINLINE vkImageSubresource #-}
-        vkImageSubresource x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBufferImageCopy, imageSubresource})
-
-        {-# INLINE vkImageSubresourceByteOffset #-}
-        vkImageSubresourceByteOffset ~_
-          = #{offset VkBufferImageCopy, imageSubresource}
-
-        {-# INLINE readVkImageSubresource #-}
-        readVkImageSubresource p
-          = peekByteOff p #{offset VkBufferImageCopy, imageSubresource}
-
-        {-# INLINE writeVkImageSubresource #-}
-        writeVkImageSubresource p
-          = pokeByteOff p #{offset VkBufferImageCopy, imageSubresource}
+         CanWriteField "bufferImageHeight" VkBufferImageCopy where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkBufferImageCopy, bufferImageHeight}
 
 instance {-# OVERLAPPING #-}
          HasField "imageSubresource" VkBufferImageCopy where
@@ -255,37 +188,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkBufferImageCopy, imageSubresource}
 
-instance CanReadField "imageSubresource" VkBufferImageCopy where
-        {-# INLINE getField #-}
-        getField = vkImageSubresource
+instance {-# OVERLAPPING #-}
+         CanReadField "imageSubresource" VkBufferImageCopy where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBufferImageCopy, imageSubresource})
 
         {-# INLINE readField #-}
-        readField = readVkImageSubresource
+        readField p
+          = peekByteOff p #{offset VkBufferImageCopy, imageSubresource}
 
-instance CanWriteField "imageSubresource" VkBufferImageCopy where
+instance {-# OVERLAPPING #-}
+         CanWriteField "imageSubresource" VkBufferImageCopy where
         {-# INLINE writeField #-}
-        writeField = writeVkImageSubresource
-
-instance {-# OVERLAPPING #-} HasVkImageOffset VkBufferImageCopy
-         where
-        type VkImageOffsetMType VkBufferImageCopy = VkOffset3D
-
-        {-# NOINLINE vkImageOffset #-}
-        vkImageOffset x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBufferImageCopy, imageOffset})
-
-        {-# INLINE vkImageOffsetByteOffset #-}
-        vkImageOffsetByteOffset ~_
-          = #{offset VkBufferImageCopy, imageOffset}
-
-        {-# INLINE readVkImageOffset #-}
-        readVkImageOffset p
-          = peekByteOff p #{offset VkBufferImageCopy, imageOffset}
-
-        {-# INLINE writeVkImageOffset #-}
-        writeVkImageOffset p
-          = pokeByteOff p #{offset VkBufferImageCopy, imageOffset}
+        writeField p
+          = pokeByteOff p #{offset VkBufferImageCopy, imageSubresource}
 
 instance {-# OVERLAPPING #-}
          HasField "imageOffset" VkBufferImageCopy where
@@ -301,37 +219,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkBufferImageCopy, imageOffset}
 
-instance CanReadField "imageOffset" VkBufferImageCopy where
-        {-# INLINE getField #-}
-        getField = vkImageOffset
+instance {-# OVERLAPPING #-}
+         CanReadField "imageOffset" VkBufferImageCopy where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBufferImageCopy, imageOffset})
 
         {-# INLINE readField #-}
-        readField = readVkImageOffset
+        readField p
+          = peekByteOff p #{offset VkBufferImageCopy, imageOffset}
 
-instance CanWriteField "imageOffset" VkBufferImageCopy where
+instance {-# OVERLAPPING #-}
+         CanWriteField "imageOffset" VkBufferImageCopy where
         {-# INLINE writeField #-}
-        writeField = writeVkImageOffset
-
-instance {-# OVERLAPPING #-} HasVkImageExtent VkBufferImageCopy
-         where
-        type VkImageExtentMType VkBufferImageCopy = VkExtent3D
-
-        {-# NOINLINE vkImageExtent #-}
-        vkImageExtent x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBufferImageCopy, imageExtent})
-
-        {-# INLINE vkImageExtentByteOffset #-}
-        vkImageExtentByteOffset ~_
-          = #{offset VkBufferImageCopy, imageExtent}
-
-        {-# INLINE readVkImageExtent #-}
-        readVkImageExtent p
-          = peekByteOff p #{offset VkBufferImageCopy, imageExtent}
-
-        {-# INLINE writeVkImageExtent #-}
-        writeVkImageExtent p
-          = pokeByteOff p #{offset VkBufferImageCopy, imageExtent}
+        writeField p
+          = pokeByteOff p #{offset VkBufferImageCopy, imageOffset}
 
 instance {-# OVERLAPPING #-}
          HasField "imageExtent" VkBufferImageCopy where
@@ -347,34 +250,40 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkBufferImageCopy, imageExtent}
 
-instance CanReadField "imageExtent" VkBufferImageCopy where
-        {-# INLINE getField #-}
-        getField = vkImageExtent
+instance {-# OVERLAPPING #-}
+         CanReadField "imageExtent" VkBufferImageCopy where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBufferImageCopy, imageExtent})
 
         {-# INLINE readField #-}
-        readField = readVkImageExtent
+        readField p
+          = peekByteOff p #{offset VkBufferImageCopy, imageExtent}
 
-instance CanWriteField "imageExtent" VkBufferImageCopy where
+instance {-# OVERLAPPING #-}
+         CanWriteField "imageExtent" VkBufferImageCopy where
         {-# INLINE writeField #-}
-        writeField = writeVkImageExtent
+        writeField p
+          = pokeByteOff p #{offset VkBufferImageCopy, imageExtent}
 
 instance Show VkBufferImageCopy where
         showsPrec d x
           = showString "VkBufferImageCopy {" .
-              showString "vkBufferOffset = " .
-                showsPrec d (vkBufferOffset x) .
+              showString "bufferOffset = " .
+                showsPrec d (getField @"bufferOffset" x) .
                   showString ", " .
-                    showString "vkBufferRowLength = " .
-                      showsPrec d (vkBufferRowLength x) .
+                    showString "bufferRowLength = " .
+                      showsPrec d (getField @"bufferRowLength" x) .
                         showString ", " .
-                          showString "vkBufferImageHeight = " .
-                            showsPrec d (vkBufferImageHeight x) .
+                          showString "bufferImageHeight = " .
+                            showsPrec d (getField @"bufferImageHeight" x) .
                               showString ", " .
-                                showString "vkImageSubresource = " .
-                                  showsPrec d (vkImageSubresource x) .
+                                showString "imageSubresource = " .
+                                  showsPrec d (getField @"imageSubresource" x) .
                                     showString ", " .
-                                      showString "vkImageOffset = " .
-                                        showsPrec d (vkImageOffset x) .
+                                      showString "imageOffset = " .
+                                        showsPrec d (getField @"imageOffset" x) .
                                           showString ", " .
-                                            showString "vkImageExtent = " .
-                                              showsPrec d (vkImageExtent x) . showChar '}'
+                                            showString "imageExtent = " .
+                                              showsPrec d (getField @"imageExtent" x) . showChar '}'

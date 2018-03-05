@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPipelineColorBlendAttachmentState
        (VkPipelineColorBlendAttachmentState(..)) where
@@ -16,7 +17,6 @@ import           Graphics.Vulkan.Types.BaseTypes                  (VkBool32)
 import           Graphics.Vulkan.Types.Enum.VkBlendFactor         (VkBlendFactor)
 import           Graphics.Vulkan.Types.Enum.VkBlendOp             (VkBlendOp)
 import           Graphics.Vulkan.Types.Enum.VkColorComponentFlags (VkColorComponentFlags)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPipelineColorBlendAttachmentState {
@@ -88,28 +88,6 @@ instance VulkanMarshal VkPipelineColorBlendAttachmentState where
         type StructExtends VkPipelineColorBlendAttachmentState = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkBlendEnable VkPipelineColorBlendAttachmentState where
-        type VkBlendEnableMType VkPipelineColorBlendAttachmentState =
-             VkBool32
-
-        {-# NOINLINE vkBlendEnable #-}
-        vkBlendEnable x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendAttachmentState, blendEnable})
-
-        {-# INLINE vkBlendEnableByteOffset #-}
-        vkBlendEnableByteOffset ~_
-          = #{offset VkPipelineColorBlendAttachmentState, blendEnable}
-
-        {-# INLINE readVkBlendEnable #-}
-        readVkBlendEnable p
-          = peekByteOff p #{offset VkPipelineColorBlendAttachmentState, blendEnable}
-
-        {-# INLINE writeVkBlendEnable #-}
-        writeVkBlendEnable p
-          = pokeByteOff p #{offset VkPipelineColorBlendAttachmentState, blendEnable}
-
-instance {-# OVERLAPPING #-}
          HasField "blendEnable" VkPipelineColorBlendAttachmentState where
         type FieldType "blendEnable" VkPipelineColorBlendAttachmentState =
              VkBool32
@@ -129,42 +107,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineColorBlendAttachmentState, blendEnable}
 
-instance CanReadField "blendEnable"
-           VkPipelineColorBlendAttachmentState
+instance {-# OVERLAPPING #-}
+         CanReadField "blendEnable" VkPipelineColorBlendAttachmentState
          where
-        {-# INLINE getField #-}
-        getField = vkBlendEnable
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendAttachmentState, blendEnable})
 
         {-# INLINE readField #-}
-        readField = readVkBlendEnable
-
-instance CanWriteField "blendEnable"
-           VkPipelineColorBlendAttachmentState
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkBlendEnable
+        readField p
+          = peekByteOff p #{offset VkPipelineColorBlendAttachmentState, blendEnable}
 
 instance {-# OVERLAPPING #-}
-         HasVkSrcColorBlendFactor VkPipelineColorBlendAttachmentState where
-        type VkSrcColorBlendFactorMType VkPipelineColorBlendAttachmentState
-             = VkBlendFactor
-
-        {-# NOINLINE vkSrcColorBlendFactor #-}
-        vkSrcColorBlendFactor x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendAttachmentState, srcColorBlendFactor})
-
-        {-# INLINE vkSrcColorBlendFactorByteOffset #-}
-        vkSrcColorBlendFactorByteOffset ~_
-          = #{offset VkPipelineColorBlendAttachmentState, srcColorBlendFactor}
-
-        {-# INLINE readVkSrcColorBlendFactor #-}
-        readVkSrcColorBlendFactor p
-          = peekByteOff p #{offset VkPipelineColorBlendAttachmentState, srcColorBlendFactor}
-
-        {-# INLINE writeVkSrcColorBlendFactor #-}
-        writeVkSrcColorBlendFactor p
-          = pokeByteOff p #{offset VkPipelineColorBlendAttachmentState, srcColorBlendFactor}
+         CanWriteField "blendEnable" VkPipelineColorBlendAttachmentState
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineColorBlendAttachmentState, blendEnable}
 
 instance {-# OVERLAPPING #-}
          HasField "srcColorBlendFactor" VkPipelineColorBlendAttachmentState
@@ -190,42 +150,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineColorBlendAttachmentState, srcColorBlendFactor}
 
-instance CanReadField "srcColorBlendFactor"
+instance {-# OVERLAPPING #-}
+         CanReadField "srcColorBlendFactor"
            VkPipelineColorBlendAttachmentState
          where
-        {-# INLINE getField #-}
-        getField = vkSrcColorBlendFactor
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendAttachmentState, srcColorBlendFactor})
 
         {-# INLINE readField #-}
-        readField = readVkSrcColorBlendFactor
+        readField p
+          = peekByteOff p #{offset VkPipelineColorBlendAttachmentState, srcColorBlendFactor}
 
-instance CanWriteField "srcColorBlendFactor"
+instance {-# OVERLAPPING #-}
+         CanWriteField "srcColorBlendFactor"
            VkPipelineColorBlendAttachmentState
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSrcColorBlendFactor
-
-instance {-# OVERLAPPING #-}
-         HasVkDstColorBlendFactor VkPipelineColorBlendAttachmentState where
-        type VkDstColorBlendFactorMType VkPipelineColorBlendAttachmentState
-             = VkBlendFactor
-
-        {-# NOINLINE vkDstColorBlendFactor #-}
-        vkDstColorBlendFactor x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendAttachmentState, dstColorBlendFactor})
-
-        {-# INLINE vkDstColorBlendFactorByteOffset #-}
-        vkDstColorBlendFactorByteOffset ~_
-          = #{offset VkPipelineColorBlendAttachmentState, dstColorBlendFactor}
-
-        {-# INLINE readVkDstColorBlendFactor #-}
-        readVkDstColorBlendFactor p
-          = peekByteOff p #{offset VkPipelineColorBlendAttachmentState, dstColorBlendFactor}
-
-        {-# INLINE writeVkDstColorBlendFactor #-}
-        writeVkDstColorBlendFactor p
-          = pokeByteOff p #{offset VkPipelineColorBlendAttachmentState, dstColorBlendFactor}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineColorBlendAttachmentState, srcColorBlendFactor}
 
 instance {-# OVERLAPPING #-}
          HasField "dstColorBlendFactor" VkPipelineColorBlendAttachmentState
@@ -251,42 +195,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineColorBlendAttachmentState, dstColorBlendFactor}
 
-instance CanReadField "dstColorBlendFactor"
+instance {-# OVERLAPPING #-}
+         CanReadField "dstColorBlendFactor"
            VkPipelineColorBlendAttachmentState
          where
-        {-# INLINE getField #-}
-        getField = vkDstColorBlendFactor
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendAttachmentState, dstColorBlendFactor})
 
         {-# INLINE readField #-}
-        readField = readVkDstColorBlendFactor
+        readField p
+          = peekByteOff p #{offset VkPipelineColorBlendAttachmentState, dstColorBlendFactor}
 
-instance CanWriteField "dstColorBlendFactor"
+instance {-# OVERLAPPING #-}
+         CanWriteField "dstColorBlendFactor"
            VkPipelineColorBlendAttachmentState
          where
         {-# INLINE writeField #-}
-        writeField = writeVkDstColorBlendFactor
-
-instance {-# OVERLAPPING #-}
-         HasVkColorBlendOp VkPipelineColorBlendAttachmentState where
-        type VkColorBlendOpMType VkPipelineColorBlendAttachmentState =
-             VkBlendOp
-
-        {-# NOINLINE vkColorBlendOp #-}
-        vkColorBlendOp x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendAttachmentState, colorBlendOp})
-
-        {-# INLINE vkColorBlendOpByteOffset #-}
-        vkColorBlendOpByteOffset ~_
-          = #{offset VkPipelineColorBlendAttachmentState, colorBlendOp}
-
-        {-# INLINE readVkColorBlendOp #-}
-        readVkColorBlendOp p
-          = peekByteOff p #{offset VkPipelineColorBlendAttachmentState, colorBlendOp}
-
-        {-# INLINE writeVkColorBlendOp #-}
-        writeVkColorBlendOp p
-          = pokeByteOff p #{offset VkPipelineColorBlendAttachmentState, colorBlendOp}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineColorBlendAttachmentState, dstColorBlendFactor}
 
 instance {-# OVERLAPPING #-}
          HasField "colorBlendOp" VkPipelineColorBlendAttachmentState where
@@ -309,42 +237,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineColorBlendAttachmentState, colorBlendOp}
 
-instance CanReadField "colorBlendOp"
-           VkPipelineColorBlendAttachmentState
+instance {-# OVERLAPPING #-}
+         CanReadField "colorBlendOp" VkPipelineColorBlendAttachmentState
          where
-        {-# INLINE getField #-}
-        getField = vkColorBlendOp
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendAttachmentState, colorBlendOp})
 
         {-# INLINE readField #-}
-        readField = readVkColorBlendOp
-
-instance CanWriteField "colorBlendOp"
-           VkPipelineColorBlendAttachmentState
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkColorBlendOp
+        readField p
+          = peekByteOff p #{offset VkPipelineColorBlendAttachmentState, colorBlendOp}
 
 instance {-# OVERLAPPING #-}
-         HasVkSrcAlphaBlendFactor VkPipelineColorBlendAttachmentState where
-        type VkSrcAlphaBlendFactorMType VkPipelineColorBlendAttachmentState
-             = VkBlendFactor
-
-        {-# NOINLINE vkSrcAlphaBlendFactor #-}
-        vkSrcAlphaBlendFactor x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendAttachmentState, srcAlphaBlendFactor})
-
-        {-# INLINE vkSrcAlphaBlendFactorByteOffset #-}
-        vkSrcAlphaBlendFactorByteOffset ~_
-          = #{offset VkPipelineColorBlendAttachmentState, srcAlphaBlendFactor}
-
-        {-# INLINE readVkSrcAlphaBlendFactor #-}
-        readVkSrcAlphaBlendFactor p
-          = peekByteOff p #{offset VkPipelineColorBlendAttachmentState, srcAlphaBlendFactor}
-
-        {-# INLINE writeVkSrcAlphaBlendFactor #-}
-        writeVkSrcAlphaBlendFactor p
-          = pokeByteOff p #{offset VkPipelineColorBlendAttachmentState, srcAlphaBlendFactor}
+         CanWriteField "colorBlendOp" VkPipelineColorBlendAttachmentState
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineColorBlendAttachmentState, colorBlendOp}
 
 instance {-# OVERLAPPING #-}
          HasField "srcAlphaBlendFactor" VkPipelineColorBlendAttachmentState
@@ -370,42 +280,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineColorBlendAttachmentState, srcAlphaBlendFactor}
 
-instance CanReadField "srcAlphaBlendFactor"
+instance {-# OVERLAPPING #-}
+         CanReadField "srcAlphaBlendFactor"
            VkPipelineColorBlendAttachmentState
          where
-        {-# INLINE getField #-}
-        getField = vkSrcAlphaBlendFactor
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendAttachmentState, srcAlphaBlendFactor})
 
         {-# INLINE readField #-}
-        readField = readVkSrcAlphaBlendFactor
+        readField p
+          = peekByteOff p #{offset VkPipelineColorBlendAttachmentState, srcAlphaBlendFactor}
 
-instance CanWriteField "srcAlphaBlendFactor"
+instance {-# OVERLAPPING #-}
+         CanWriteField "srcAlphaBlendFactor"
            VkPipelineColorBlendAttachmentState
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSrcAlphaBlendFactor
-
-instance {-# OVERLAPPING #-}
-         HasVkDstAlphaBlendFactor VkPipelineColorBlendAttachmentState where
-        type VkDstAlphaBlendFactorMType VkPipelineColorBlendAttachmentState
-             = VkBlendFactor
-
-        {-# NOINLINE vkDstAlphaBlendFactor #-}
-        vkDstAlphaBlendFactor x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendAttachmentState, dstAlphaBlendFactor})
-
-        {-# INLINE vkDstAlphaBlendFactorByteOffset #-}
-        vkDstAlphaBlendFactorByteOffset ~_
-          = #{offset VkPipelineColorBlendAttachmentState, dstAlphaBlendFactor}
-
-        {-# INLINE readVkDstAlphaBlendFactor #-}
-        readVkDstAlphaBlendFactor p
-          = peekByteOff p #{offset VkPipelineColorBlendAttachmentState, dstAlphaBlendFactor}
-
-        {-# INLINE writeVkDstAlphaBlendFactor #-}
-        writeVkDstAlphaBlendFactor p
-          = pokeByteOff p #{offset VkPipelineColorBlendAttachmentState, dstAlphaBlendFactor}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineColorBlendAttachmentState, srcAlphaBlendFactor}
 
 instance {-# OVERLAPPING #-}
          HasField "dstAlphaBlendFactor" VkPipelineColorBlendAttachmentState
@@ -431,42 +325,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineColorBlendAttachmentState, dstAlphaBlendFactor}
 
-instance CanReadField "dstAlphaBlendFactor"
+instance {-# OVERLAPPING #-}
+         CanReadField "dstAlphaBlendFactor"
            VkPipelineColorBlendAttachmentState
          where
-        {-# INLINE getField #-}
-        getField = vkDstAlphaBlendFactor
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendAttachmentState, dstAlphaBlendFactor})
 
         {-# INLINE readField #-}
-        readField = readVkDstAlphaBlendFactor
+        readField p
+          = peekByteOff p #{offset VkPipelineColorBlendAttachmentState, dstAlphaBlendFactor}
 
-instance CanWriteField "dstAlphaBlendFactor"
+instance {-# OVERLAPPING #-}
+         CanWriteField "dstAlphaBlendFactor"
            VkPipelineColorBlendAttachmentState
          where
         {-# INLINE writeField #-}
-        writeField = writeVkDstAlphaBlendFactor
-
-instance {-# OVERLAPPING #-}
-         HasVkAlphaBlendOp VkPipelineColorBlendAttachmentState where
-        type VkAlphaBlendOpMType VkPipelineColorBlendAttachmentState =
-             VkBlendOp
-
-        {-# NOINLINE vkAlphaBlendOp #-}
-        vkAlphaBlendOp x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendAttachmentState, alphaBlendOp})
-
-        {-# INLINE vkAlphaBlendOpByteOffset #-}
-        vkAlphaBlendOpByteOffset ~_
-          = #{offset VkPipelineColorBlendAttachmentState, alphaBlendOp}
-
-        {-# INLINE readVkAlphaBlendOp #-}
-        readVkAlphaBlendOp p
-          = peekByteOff p #{offset VkPipelineColorBlendAttachmentState, alphaBlendOp}
-
-        {-# INLINE writeVkAlphaBlendOp #-}
-        writeVkAlphaBlendOp p
-          = pokeByteOff p #{offset VkPipelineColorBlendAttachmentState, alphaBlendOp}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineColorBlendAttachmentState, dstAlphaBlendFactor}
 
 instance {-# OVERLAPPING #-}
          HasField "alphaBlendOp" VkPipelineColorBlendAttachmentState where
@@ -489,42 +367,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineColorBlendAttachmentState, alphaBlendOp}
 
-instance CanReadField "alphaBlendOp"
-           VkPipelineColorBlendAttachmentState
+instance {-# OVERLAPPING #-}
+         CanReadField "alphaBlendOp" VkPipelineColorBlendAttachmentState
          where
-        {-# INLINE getField #-}
-        getField = vkAlphaBlendOp
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendAttachmentState, alphaBlendOp})
 
         {-# INLINE readField #-}
-        readField = readVkAlphaBlendOp
-
-instance CanWriteField "alphaBlendOp"
-           VkPipelineColorBlendAttachmentState
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkAlphaBlendOp
+        readField p
+          = peekByteOff p #{offset VkPipelineColorBlendAttachmentState, alphaBlendOp}
 
 instance {-# OVERLAPPING #-}
-         HasVkColorWriteMask VkPipelineColorBlendAttachmentState where
-        type VkColorWriteMaskMType VkPipelineColorBlendAttachmentState =
-             VkColorComponentFlags
-
-        {-# NOINLINE vkColorWriteMask #-}
-        vkColorWriteMask x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendAttachmentState, colorWriteMask})
-
-        {-# INLINE vkColorWriteMaskByteOffset #-}
-        vkColorWriteMaskByteOffset ~_
-          = #{offset VkPipelineColorBlendAttachmentState, colorWriteMask}
-
-        {-# INLINE readVkColorWriteMask #-}
-        readVkColorWriteMask p
-          = peekByteOff p #{offset VkPipelineColorBlendAttachmentState, colorWriteMask}
-
-        {-# INLINE writeVkColorWriteMask #-}
-        writeVkColorWriteMask p
-          = pokeByteOff p #{offset VkPipelineColorBlendAttachmentState, colorWriteMask}
+         CanWriteField "alphaBlendOp" VkPipelineColorBlendAttachmentState
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineColorBlendAttachmentState, alphaBlendOp}
 
 instance {-# OVERLAPPING #-}
          HasField "colorWriteMask" VkPipelineColorBlendAttachmentState where
@@ -548,45 +408,49 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineColorBlendAttachmentState, colorWriteMask}
 
-instance CanReadField "colorWriteMask"
-           VkPipelineColorBlendAttachmentState
+instance {-# OVERLAPPING #-}
+         CanReadField "colorWriteMask" VkPipelineColorBlendAttachmentState
          where
-        {-# INLINE getField #-}
-        getField = vkColorWriteMask
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineColorBlendAttachmentState, colorWriteMask})
 
         {-# INLINE readField #-}
-        readField = readVkColorWriteMask
+        readField p
+          = peekByteOff p #{offset VkPipelineColorBlendAttachmentState, colorWriteMask}
 
-instance CanWriteField "colorWriteMask"
-           VkPipelineColorBlendAttachmentState
+instance {-# OVERLAPPING #-}
+         CanWriteField "colorWriteMask" VkPipelineColorBlendAttachmentState
          where
         {-# INLINE writeField #-}
-        writeField = writeVkColorWriteMask
+        writeField p
+          = pokeByteOff p #{offset VkPipelineColorBlendAttachmentState, colorWriteMask}
 
 instance Show VkPipelineColorBlendAttachmentState where
         showsPrec d x
           = showString "VkPipelineColorBlendAttachmentState {" .
-              showString "vkBlendEnable = " .
-                showsPrec d (vkBlendEnable x) .
+              showString "blendEnable = " .
+                showsPrec d (getField @"blendEnable" x) .
                   showString ", " .
-                    showString "vkSrcColorBlendFactor = " .
-                      showsPrec d (vkSrcColorBlendFactor x) .
+                    showString "srcColorBlendFactor = " .
+                      showsPrec d (getField @"srcColorBlendFactor" x) .
                         showString ", " .
-                          showString "vkDstColorBlendFactor = " .
-                            showsPrec d (vkDstColorBlendFactor x) .
+                          showString "dstColorBlendFactor = " .
+                            showsPrec d (getField @"dstColorBlendFactor" x) .
                               showString ", " .
-                                showString "vkColorBlendOp = " .
-                                  showsPrec d (vkColorBlendOp x) .
+                                showString "colorBlendOp = " .
+                                  showsPrec d (getField @"colorBlendOp" x) .
                                     showString ", " .
-                                      showString "vkSrcAlphaBlendFactor = " .
-                                        showsPrec d (vkSrcAlphaBlendFactor x) .
+                                      showString "srcAlphaBlendFactor = " .
+                                        showsPrec d (getField @"srcAlphaBlendFactor" x) .
                                           showString ", " .
-                                            showString "vkDstAlphaBlendFactor = " .
-                                              showsPrec d (vkDstAlphaBlendFactor x) .
+                                            showString "dstAlphaBlendFactor = " .
+                                              showsPrec d (getField @"dstAlphaBlendFactor" x) .
                                                 showString ", " .
-                                                  showString "vkAlphaBlendOp = " .
-                                                    showsPrec d (vkAlphaBlendOp x) .
+                                                  showString "alphaBlendOp = " .
+                                                    showsPrec d (getField @"alphaBlendOp" x) .
                                                       showString ", " .
-                                                        showString "vkColorWriteMask = " .
-                                                          showsPrec d (vkColorWriteMask x) .
-                                                            showChar '}'
+                                                        showString "colorWriteMask = " .
+                                                          showsPrec d (getField @"colorWriteMask" x)
+                                                            . showChar '}'

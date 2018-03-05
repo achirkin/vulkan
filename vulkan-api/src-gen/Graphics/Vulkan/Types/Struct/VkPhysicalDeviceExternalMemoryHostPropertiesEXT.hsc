@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalMemoryHostPropertiesEXT
        (VkPhysicalDeviceExternalMemoryHostPropertiesEXT(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes                             (VkDeviceSize)
 import           Graphics.Vulkan.Types.Enum.VkStructureType                  (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR (VkPhysicalDeviceProperties2KHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                            (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDeviceExternalMemoryHostPropertiesEXT {
@@ -90,28 +90,6 @@ instance VulkanMarshal
              = '[VkPhysicalDeviceProperties2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPhysicalDeviceExternalMemoryHostPropertiesEXT where
-        type VkSTypeMType VkPhysicalDeviceExternalMemoryHostPropertiesEXT =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPhysicalDeviceExternalMemoryHostPropertiesEXT
          where
         type FieldType "sType"
@@ -135,42 +113,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, sType}
 
-instance CanReadField "sType"
+instance {-# OVERLAPPING #-}
+         CanReadField "sType"
            VkPhysicalDeviceExternalMemoryHostPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkSType
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, sType}
 
-instance CanWriteField "sType"
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType"
            VkPhysicalDeviceExternalMemoryHostPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-}
-         HasVkPNext VkPhysicalDeviceExternalMemoryHostPropertiesEXT where
-        type VkPNextMType VkPhysicalDeviceExternalMemoryHostPropertiesEXT =
-             Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPhysicalDeviceExternalMemoryHostPropertiesEXT
@@ -196,45 +158,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, pNext}
 
-instance CanReadField "pNext"
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext"
            VkPhysicalDeviceExternalMemoryHostPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkPNext
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, pNext}
 
-instance CanWriteField "pNext"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext"
            VkPhysicalDeviceExternalMemoryHostPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-}
-         HasVkMinImportedHostPointerAlignment
-           VkPhysicalDeviceExternalMemoryHostPropertiesEXT
-         where
-        type VkMinImportedHostPointerAlignmentMType
-               VkPhysicalDeviceExternalMemoryHostPropertiesEXT
-             = VkDeviceSize
-
-        {-# NOINLINE vkMinImportedHostPointerAlignment #-}
-        vkMinImportedHostPointerAlignment x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, minImportedHostPointerAlignment})
-
-        {-# INLINE vkMinImportedHostPointerAlignmentByteOffset #-}
-        vkMinImportedHostPointerAlignmentByteOffset ~_
-          = #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, minImportedHostPointerAlignment}
-
-        {-# INLINE readVkMinImportedHostPointerAlignment #-}
-        readVkMinImportedHostPointerAlignment p
-          = peekByteOff p #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, minImportedHostPointerAlignment}
-
-        {-# INLINE writeVkMinImportedHostPointerAlignment #-}
-        writeVkMinImportedHostPointerAlignment p
-          = pokeByteOff p #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, minImportedHostPointerAlignment}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "minImportedHostPointerAlignment"
@@ -261,29 +204,36 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, minImportedHostPointerAlignment}
 
-instance CanReadField "minImportedHostPointerAlignment"
+instance {-# OVERLAPPING #-}
+         CanReadField "minImportedHostPointerAlignment"
            VkPhysicalDeviceExternalMemoryHostPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkMinImportedHostPointerAlignment
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, minImportedHostPointerAlignment})
 
         {-# INLINE readField #-}
-        readField = readVkMinImportedHostPointerAlignment
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, minImportedHostPointerAlignment}
 
-instance CanWriteField "minImportedHostPointerAlignment"
+instance {-# OVERLAPPING #-}
+         CanWriteField "minImportedHostPointerAlignment"
            VkPhysicalDeviceExternalMemoryHostPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkMinImportedHostPointerAlignment
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceExternalMemoryHostPropertiesEXT, minImportedHostPointerAlignment}
 
 instance Show VkPhysicalDeviceExternalMemoryHostPropertiesEXT where
         showsPrec d x
           = showString "VkPhysicalDeviceExternalMemoryHostPropertiesEXT {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkMinImportedHostPointerAlignment = " .
-                            showsPrec d (vkMinImportedHostPointerAlignment x) . showChar '}'
+                          showString "minImportedHostPointerAlignment = " .
+                            showsPrec d (getField @"minImportedHostPointerAlignment" x) .
+                              showChar '}'

@@ -5,15 +5,15 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkSpecializationMapEntry
        (VkSpecializationMapEntry(..)) where
-import           Foreign.Storable                    (Storable (..))
+import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.StructMembers
-import           System.IO.Unsafe                    (unsafeDupablePerformIO)
+import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSpecializationMapEntry {
 --   >     uint32_t               constantID;
@@ -72,27 +72,6 @@ instance VulkanMarshal VkSpecializationMapEntry where
         type StructExtends VkSpecializationMapEntry = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkConstantID VkSpecializationMapEntry where
-        type VkConstantIDMType VkSpecializationMapEntry = Word32
-
-        {-# NOINLINE vkConstantID #-}
-        vkConstantID x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSpecializationMapEntry, constantID})
-
-        {-# INLINE vkConstantIDByteOffset #-}
-        vkConstantIDByteOffset ~_
-          = #{offset VkSpecializationMapEntry, constantID}
-
-        {-# INLINE readVkConstantID #-}
-        readVkConstantID p
-          = peekByteOff p #{offset VkSpecializationMapEntry, constantID}
-
-        {-# INLINE writeVkConstantID #-}
-        writeVkConstantID p
-          = pokeByteOff p #{offset VkSpecializationMapEntry, constantID}
-
-instance {-# OVERLAPPING #-}
          HasField "constantID" VkSpecializationMapEntry where
         type FieldType "constantID" VkSpecializationMapEntry = Word32
         type FieldOptional "constantID" VkSpecializationMapEntry = 'False -- ' closing tick for hsc2hs
@@ -107,37 +86,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSpecializationMapEntry, constantID}
 
-instance CanReadField "constantID" VkSpecializationMapEntry where
-        {-# INLINE getField #-}
-        getField = vkConstantID
+instance {-# OVERLAPPING #-}
+         CanReadField "constantID" VkSpecializationMapEntry where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSpecializationMapEntry, constantID})
 
         {-# INLINE readField #-}
-        readField = readVkConstantID
+        readField p
+          = peekByteOff p #{offset VkSpecializationMapEntry, constantID}
 
-instance CanWriteField "constantID" VkSpecializationMapEntry where
+instance {-# OVERLAPPING #-}
+         CanWriteField "constantID" VkSpecializationMapEntry where
         {-# INLINE writeField #-}
-        writeField = writeVkConstantID
-
-instance {-# OVERLAPPING #-} HasVkOffset VkSpecializationMapEntry
-         where
-        type VkOffsetMType VkSpecializationMapEntry = Word32
-
-        {-# NOINLINE vkOffset #-}
-        vkOffset x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSpecializationMapEntry, offset})
-
-        {-# INLINE vkOffsetByteOffset #-}
-        vkOffsetByteOffset ~_
-          = #{offset VkSpecializationMapEntry, offset}
-
-        {-# INLINE readVkOffset #-}
-        readVkOffset p
-          = peekByteOff p #{offset VkSpecializationMapEntry, offset}
-
-        {-# INLINE writeVkOffset #-}
-        writeVkOffset p
-          = pokeByteOff p #{offset VkSpecializationMapEntry, offset}
+        writeField p
+          = pokeByteOff p #{offset VkSpecializationMapEntry, constantID}
 
 instance {-# OVERLAPPING #-}
          HasField "offset" VkSpecializationMapEntry where
@@ -154,37 +118,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSpecializationMapEntry, offset}
 
-instance CanReadField "offset" VkSpecializationMapEntry where
-        {-# INLINE getField #-}
-        getField = vkOffset
+instance {-# OVERLAPPING #-}
+         CanReadField "offset" VkSpecializationMapEntry where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSpecializationMapEntry, offset})
 
         {-# INLINE readField #-}
-        readField = readVkOffset
+        readField p
+          = peekByteOff p #{offset VkSpecializationMapEntry, offset}
 
-instance CanWriteField "offset" VkSpecializationMapEntry where
+instance {-# OVERLAPPING #-}
+         CanWriteField "offset" VkSpecializationMapEntry where
         {-# INLINE writeField #-}
-        writeField = writeVkOffset
-
-instance {-# OVERLAPPING #-} HasVkSize VkSpecializationMapEntry
-         where
-        type VkSizeMType VkSpecializationMapEntry = CSize
-
-        {-# NOINLINE vkSize #-}
-        vkSize x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSpecializationMapEntry, size})
-
-        {-# INLINE vkSizeByteOffset #-}
-        vkSizeByteOffset ~_
-          = #{offset VkSpecializationMapEntry, size}
-
-        {-# INLINE readVkSize #-}
-        readVkSize p
-          = peekByteOff p #{offset VkSpecializationMapEntry, size}
-
-        {-# INLINE writeVkSize #-}
-        writeVkSize p
-          = pokeByteOff p #{offset VkSpecializationMapEntry, size}
+        writeField p
+          = pokeByteOff p #{offset VkSpecializationMapEntry, offset}
 
 instance {-# OVERLAPPING #-}
          HasField "size" VkSpecializationMapEntry where
@@ -200,24 +149,31 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSpecializationMapEntry, size}
 
-instance CanReadField "size" VkSpecializationMapEntry where
-        {-# INLINE getField #-}
-        getField = vkSize
+instance {-# OVERLAPPING #-}
+         CanReadField "size" VkSpecializationMapEntry where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSpecializationMapEntry, size})
 
         {-# INLINE readField #-}
-        readField = readVkSize
+        readField p
+          = peekByteOff p #{offset VkSpecializationMapEntry, size}
 
-instance CanWriteField "size" VkSpecializationMapEntry where
+instance {-# OVERLAPPING #-}
+         CanWriteField "size" VkSpecializationMapEntry where
         {-# INLINE writeField #-}
-        writeField = writeVkSize
+        writeField p
+          = pokeByteOff p #{offset VkSpecializationMapEntry, size}
 
 instance Show VkSpecializationMapEntry where
         showsPrec d x
           = showString "VkSpecializationMapEntry {" .
-              showString "vkConstantID = " .
-                showsPrec d (vkConstantID x) .
+              showString "constantID = " .
+                showsPrec d (getField @"constantID" x) .
                   showString ", " .
-                    showString "vkOffset = " .
-                      showsPrec d (vkOffset x) .
+                    showString "offset = " .
+                      showsPrec d (getField @"offset" x) .
                         showString ", " .
-                          showString "vkSize = " . showsPrec d (vkSize x) . showChar '}'
+                          showString "size = " .
+                            showsPrec d (getField @"size" x) . showChar '}'

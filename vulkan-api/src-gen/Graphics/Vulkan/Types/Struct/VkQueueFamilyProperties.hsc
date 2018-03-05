@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkQueueFamilyProperties
        (VkQueueFamilyProperties(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkQueueFlags (VkQueueFlags)
 import           Graphics.Vulkan.Types.Struct.VkExtent3D (VkExtent3D)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                        (unsafeDupablePerformIO)
 
 -- | > typedef struct VkQueueFamilyProperties {
@@ -75,27 +75,6 @@ instance VulkanMarshal VkQueueFamilyProperties where
         type StructExtends VkQueueFamilyProperties = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkQueueFlags VkQueueFamilyProperties where
-        type VkQueueFlagsMType VkQueueFamilyProperties = VkQueueFlags
-
-        {-# NOINLINE vkQueueFlags #-}
-        vkQueueFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkQueueFamilyProperties, queueFlags})
-
-        {-# INLINE vkQueueFlagsByteOffset #-}
-        vkQueueFlagsByteOffset ~_
-          = #{offset VkQueueFamilyProperties, queueFlags}
-
-        {-# INLINE readVkQueueFlags #-}
-        readVkQueueFlags p
-          = peekByteOff p #{offset VkQueueFamilyProperties, queueFlags}
-
-        {-# INLINE writeVkQueueFlags #-}
-        writeVkQueueFlags p
-          = pokeByteOff p #{offset VkQueueFamilyProperties, queueFlags}
-
-instance {-# OVERLAPPING #-}
          HasField "queueFlags" VkQueueFamilyProperties where
         type FieldType "queueFlags" VkQueueFamilyProperties = VkQueueFlags
         type FieldOptional "queueFlags" VkQueueFamilyProperties = 'True -- ' closing tick for hsc2hs
@@ -110,37 +89,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkQueueFamilyProperties, queueFlags}
 
-instance CanReadField "queueFlags" VkQueueFamilyProperties where
-        {-# INLINE getField #-}
-        getField = vkQueueFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "queueFlags" VkQueueFamilyProperties where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkQueueFamilyProperties, queueFlags})
 
         {-# INLINE readField #-}
-        readField = readVkQueueFlags
-
-instance CanWriteField "queueFlags" VkQueueFamilyProperties where
-        {-# INLINE writeField #-}
-        writeField = writeVkQueueFlags
+        readField p
+          = peekByteOff p #{offset VkQueueFamilyProperties, queueFlags}
 
 instance {-# OVERLAPPING #-}
-         HasVkQueueCount VkQueueFamilyProperties where
-        type VkQueueCountMType VkQueueFamilyProperties = Word32
-
-        {-# NOINLINE vkQueueCount #-}
-        vkQueueCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkQueueFamilyProperties, queueCount})
-
-        {-# INLINE vkQueueCountByteOffset #-}
-        vkQueueCountByteOffset ~_
-          = #{offset VkQueueFamilyProperties, queueCount}
-
-        {-# INLINE readVkQueueCount #-}
-        readVkQueueCount p
-          = peekByteOff p #{offset VkQueueFamilyProperties, queueCount}
-
-        {-# INLINE writeVkQueueCount #-}
-        writeVkQueueCount p
-          = pokeByteOff p #{offset VkQueueFamilyProperties, queueCount}
+         CanWriteField "queueFlags" VkQueueFamilyProperties where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkQueueFamilyProperties, queueFlags}
 
 instance {-# OVERLAPPING #-}
          HasField "queueCount" VkQueueFamilyProperties where
@@ -157,37 +121,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkQueueFamilyProperties, queueCount}
 
-instance CanReadField "queueCount" VkQueueFamilyProperties where
-        {-# INLINE getField #-}
-        getField = vkQueueCount
+instance {-# OVERLAPPING #-}
+         CanReadField "queueCount" VkQueueFamilyProperties where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkQueueFamilyProperties, queueCount})
 
         {-# INLINE readField #-}
-        readField = readVkQueueCount
-
-instance CanWriteField "queueCount" VkQueueFamilyProperties where
-        {-# INLINE writeField #-}
-        writeField = writeVkQueueCount
+        readField p
+          = peekByteOff p #{offset VkQueueFamilyProperties, queueCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkTimestampValidBits VkQueueFamilyProperties where
-        type VkTimestampValidBitsMType VkQueueFamilyProperties = Word32
-
-        {-# NOINLINE vkTimestampValidBits #-}
-        vkTimestampValidBits x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkQueueFamilyProperties, timestampValidBits})
-
-        {-# INLINE vkTimestampValidBitsByteOffset #-}
-        vkTimestampValidBitsByteOffset ~_
-          = #{offset VkQueueFamilyProperties, timestampValidBits}
-
-        {-# INLINE readVkTimestampValidBits #-}
-        readVkTimestampValidBits p
-          = peekByteOff p #{offset VkQueueFamilyProperties, timestampValidBits}
-
-        {-# INLINE writeVkTimestampValidBits #-}
-        writeVkTimestampValidBits p
-          = pokeByteOff p #{offset VkQueueFamilyProperties, timestampValidBits}
+         CanWriteField "queueCount" VkQueueFamilyProperties where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkQueueFamilyProperties, queueCount}
 
 instance {-# OVERLAPPING #-}
          HasField "timestampValidBits" VkQueueFamilyProperties where
@@ -207,40 +156,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkQueueFamilyProperties, timestampValidBits}
 
-instance CanReadField "timestampValidBits" VkQueueFamilyProperties
-         where
-        {-# INLINE getField #-}
-        getField = vkTimestampValidBits
+instance {-# OVERLAPPING #-}
+         CanReadField "timestampValidBits" VkQueueFamilyProperties where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkQueueFamilyProperties, timestampValidBits})
 
         {-# INLINE readField #-}
-        readField = readVkTimestampValidBits
-
-instance CanWriteField "timestampValidBits" VkQueueFamilyProperties
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkTimestampValidBits
+        readField p
+          = peekByteOff p #{offset VkQueueFamilyProperties, timestampValidBits}
 
 instance {-# OVERLAPPING #-}
-         HasVkMinImageTransferGranularity VkQueueFamilyProperties where
-        type VkMinImageTransferGranularityMType VkQueueFamilyProperties =
-             VkExtent3D
-
-        {-# NOINLINE vkMinImageTransferGranularity #-}
-        vkMinImageTransferGranularity x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkQueueFamilyProperties, minImageTransferGranularity})
-
-        {-# INLINE vkMinImageTransferGranularityByteOffset #-}
-        vkMinImageTransferGranularityByteOffset ~_
-          = #{offset VkQueueFamilyProperties, minImageTransferGranularity}
-
-        {-# INLINE readVkMinImageTransferGranularity #-}
-        readVkMinImageTransferGranularity p
-          = peekByteOff p #{offset VkQueueFamilyProperties, minImageTransferGranularity}
-
-        {-# INLINE writeVkMinImageTransferGranularity #-}
-        writeVkMinImageTransferGranularity p
-          = pokeByteOff p #{offset VkQueueFamilyProperties, minImageTransferGranularity}
+         CanWriteField "timestampValidBits" VkQueueFamilyProperties where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkQueueFamilyProperties, timestampValidBits}
 
 instance {-# OVERLAPPING #-}
          HasField "minImageTransferGranularity" VkQueueFamilyProperties
@@ -266,32 +197,37 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkQueueFamilyProperties, minImageTransferGranularity}
 
-instance CanReadField "minImageTransferGranularity"
-           VkQueueFamilyProperties
+instance {-# OVERLAPPING #-}
+         CanReadField "minImageTransferGranularity" VkQueueFamilyProperties
          where
-        {-# INLINE getField #-}
-        getField = vkMinImageTransferGranularity
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkQueueFamilyProperties, minImageTransferGranularity})
 
         {-# INLINE readField #-}
-        readField = readVkMinImageTransferGranularity
+        readField p
+          = peekByteOff p #{offset VkQueueFamilyProperties, minImageTransferGranularity}
 
-instance CanWriteField "minImageTransferGranularity"
-           VkQueueFamilyProperties
+instance {-# OVERLAPPING #-}
+         CanWriteField "minImageTransferGranularity" VkQueueFamilyProperties
          where
         {-# INLINE writeField #-}
-        writeField = writeVkMinImageTransferGranularity
+        writeField p
+          = pokeByteOff p #{offset VkQueueFamilyProperties, minImageTransferGranularity}
 
 instance Show VkQueueFamilyProperties where
         showsPrec d x
           = showString "VkQueueFamilyProperties {" .
-              showString "vkQueueFlags = " .
-                showsPrec d (vkQueueFlags x) .
+              showString "queueFlags = " .
+                showsPrec d (getField @"queueFlags" x) .
                   showString ", " .
-                    showString "vkQueueCount = " .
-                      showsPrec d (vkQueueCount x) .
+                    showString "queueCount = " .
+                      showsPrec d (getField @"queueCount" x) .
                         showString ", " .
-                          showString "vkTimestampValidBits = " .
-                            showsPrec d (vkTimestampValidBits x) .
+                          showString "timestampValidBits = " .
+                            showsPrec d (getField @"timestampValidBits" x) .
                               showString ", " .
-                                showString "vkMinImageTransferGranularity = " .
-                                  showsPrec d (vkMinImageTransferGranularity x) . showChar '}'
+                                showString "minImageTransferGranularity = " .
+                                  showsPrec d (getField @"minImageTransferGranularity" x) .
+                                    showChar '}'

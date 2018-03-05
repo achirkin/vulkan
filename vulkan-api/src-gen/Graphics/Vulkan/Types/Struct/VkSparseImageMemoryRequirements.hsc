@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkSparseImageMemoryRequirements
        (VkSparseImageMemoryRequirements(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes                            (VkDeviceSize)
 import           Graphics.Vulkan.Types.Struct.VkSparseImageFormatProperties (VkSparseImageFormatProperties)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSparseImageMemoryRequirements {
@@ -80,28 +80,6 @@ instance VulkanMarshal VkSparseImageMemoryRequirements where
         type StructExtends VkSparseImageMemoryRequirements = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkFormatProperties VkSparseImageMemoryRequirements where
-        type VkFormatPropertiesMType VkSparseImageMemoryRequirements =
-             VkSparseImageFormatProperties
-
-        {-# NOINLINE vkFormatProperties #-}
-        vkFormatProperties x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSparseImageMemoryRequirements, formatProperties})
-
-        {-# INLINE vkFormatPropertiesByteOffset #-}
-        vkFormatPropertiesByteOffset ~_
-          = #{offset VkSparseImageMemoryRequirements, formatProperties}
-
-        {-# INLINE readVkFormatProperties #-}
-        readVkFormatProperties p
-          = peekByteOff p #{offset VkSparseImageMemoryRequirements, formatProperties}
-
-        {-# INLINE writeVkFormatProperties #-}
-        writeVkFormatProperties p
-          = pokeByteOff p #{offset VkSparseImageMemoryRequirements, formatProperties}
-
-instance {-# OVERLAPPING #-}
          HasField "formatProperties" VkSparseImageMemoryRequirements where
         type FieldType "formatProperties" VkSparseImageMemoryRequirements =
              VkSparseImageFormatProperties
@@ -122,42 +100,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSparseImageMemoryRequirements, formatProperties}
 
-instance CanReadField "formatProperties"
-           VkSparseImageMemoryRequirements
+instance {-# OVERLAPPING #-}
+         CanReadField "formatProperties" VkSparseImageMemoryRequirements
          where
-        {-# INLINE getField #-}
-        getField = vkFormatProperties
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSparseImageMemoryRequirements, formatProperties})
 
         {-# INLINE readField #-}
-        readField = readVkFormatProperties
-
-instance CanWriteField "formatProperties"
-           VkSparseImageMemoryRequirements
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFormatProperties
+        readField p
+          = peekByteOff p #{offset VkSparseImageMemoryRequirements, formatProperties}
 
 instance {-# OVERLAPPING #-}
-         HasVkImageMipTailFirstLod VkSparseImageMemoryRequirements where
-        type VkImageMipTailFirstLodMType VkSparseImageMemoryRequirements =
-             Word32
-
-        {-# NOINLINE vkImageMipTailFirstLod #-}
-        vkImageMipTailFirstLod x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSparseImageMemoryRequirements, imageMipTailFirstLod})
-
-        {-# INLINE vkImageMipTailFirstLodByteOffset #-}
-        vkImageMipTailFirstLodByteOffset ~_
-          = #{offset VkSparseImageMemoryRequirements, imageMipTailFirstLod}
-
-        {-# INLINE readVkImageMipTailFirstLod #-}
-        readVkImageMipTailFirstLod p
-          = peekByteOff p #{offset VkSparseImageMemoryRequirements, imageMipTailFirstLod}
-
-        {-# INLINE writeVkImageMipTailFirstLod #-}
-        writeVkImageMipTailFirstLod p
-          = pokeByteOff p #{offset VkSparseImageMemoryRequirements, imageMipTailFirstLod}
+         CanWriteField "formatProperties" VkSparseImageMemoryRequirements
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSparseImageMemoryRequirements, formatProperties}
 
 instance {-# OVERLAPPING #-}
          HasField "imageMipTailFirstLod" VkSparseImageMemoryRequirements
@@ -183,42 +143,25 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSparseImageMemoryRequirements, imageMipTailFirstLod}
 
-instance CanReadField "imageMipTailFirstLod"
-           VkSparseImageMemoryRequirements
+instance {-# OVERLAPPING #-}
+         CanReadField "imageMipTailFirstLod" VkSparseImageMemoryRequirements
          where
-        {-# INLINE getField #-}
-        getField = vkImageMipTailFirstLod
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSparseImageMemoryRequirements, imageMipTailFirstLod})
 
         {-# INLINE readField #-}
-        readField = readVkImageMipTailFirstLod
+        readField p
+          = peekByteOff p #{offset VkSparseImageMemoryRequirements, imageMipTailFirstLod}
 
-instance CanWriteField "imageMipTailFirstLod"
+instance {-# OVERLAPPING #-}
+         CanWriteField "imageMipTailFirstLod"
            VkSparseImageMemoryRequirements
          where
         {-# INLINE writeField #-}
-        writeField = writeVkImageMipTailFirstLod
-
-instance {-# OVERLAPPING #-}
-         HasVkImageMipTailSize VkSparseImageMemoryRequirements where
-        type VkImageMipTailSizeMType VkSparseImageMemoryRequirements =
-             VkDeviceSize
-
-        {-# NOINLINE vkImageMipTailSize #-}
-        vkImageMipTailSize x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSparseImageMemoryRequirements, imageMipTailSize})
-
-        {-# INLINE vkImageMipTailSizeByteOffset #-}
-        vkImageMipTailSizeByteOffset ~_
-          = #{offset VkSparseImageMemoryRequirements, imageMipTailSize}
-
-        {-# INLINE readVkImageMipTailSize #-}
-        readVkImageMipTailSize p
-          = peekByteOff p #{offset VkSparseImageMemoryRequirements, imageMipTailSize}
-
-        {-# INLINE writeVkImageMipTailSize #-}
-        writeVkImageMipTailSize p
-          = pokeByteOff p #{offset VkSparseImageMemoryRequirements, imageMipTailSize}
+        writeField p
+          = pokeByteOff p #{offset VkSparseImageMemoryRequirements, imageMipTailFirstLod}
 
 instance {-# OVERLAPPING #-}
          HasField "imageMipTailSize" VkSparseImageMemoryRequirements where
@@ -241,42 +184,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSparseImageMemoryRequirements, imageMipTailSize}
 
-instance CanReadField "imageMipTailSize"
-           VkSparseImageMemoryRequirements
+instance {-# OVERLAPPING #-}
+         CanReadField "imageMipTailSize" VkSparseImageMemoryRequirements
          where
-        {-# INLINE getField #-}
-        getField = vkImageMipTailSize
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSparseImageMemoryRequirements, imageMipTailSize})
 
         {-# INLINE readField #-}
-        readField = readVkImageMipTailSize
-
-instance CanWriteField "imageMipTailSize"
-           VkSparseImageMemoryRequirements
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkImageMipTailSize
+        readField p
+          = peekByteOff p #{offset VkSparseImageMemoryRequirements, imageMipTailSize}
 
 instance {-# OVERLAPPING #-}
-         HasVkImageMipTailOffset VkSparseImageMemoryRequirements where
-        type VkImageMipTailOffsetMType VkSparseImageMemoryRequirements =
-             VkDeviceSize
-
-        {-# NOINLINE vkImageMipTailOffset #-}
-        vkImageMipTailOffset x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSparseImageMemoryRequirements, imageMipTailOffset})
-
-        {-# INLINE vkImageMipTailOffsetByteOffset #-}
-        vkImageMipTailOffsetByteOffset ~_
-          = #{offset VkSparseImageMemoryRequirements, imageMipTailOffset}
-
-        {-# INLINE readVkImageMipTailOffset #-}
-        readVkImageMipTailOffset p
-          = peekByteOff p #{offset VkSparseImageMemoryRequirements, imageMipTailOffset}
-
-        {-# INLINE writeVkImageMipTailOffset #-}
-        writeVkImageMipTailOffset p
-          = pokeByteOff p #{offset VkSparseImageMemoryRequirements, imageMipTailOffset}
+         CanWriteField "imageMipTailSize" VkSparseImageMemoryRequirements
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSparseImageMemoryRequirements, imageMipTailSize}
 
 instance {-# OVERLAPPING #-}
          HasField "imageMipTailOffset" VkSparseImageMemoryRequirements where
@@ -300,42 +225,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSparseImageMemoryRequirements, imageMipTailOffset}
 
-instance CanReadField "imageMipTailOffset"
-           VkSparseImageMemoryRequirements
+instance {-# OVERLAPPING #-}
+         CanReadField "imageMipTailOffset" VkSparseImageMemoryRequirements
          where
-        {-# INLINE getField #-}
-        getField = vkImageMipTailOffset
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSparseImageMemoryRequirements, imageMipTailOffset})
 
         {-# INLINE readField #-}
-        readField = readVkImageMipTailOffset
-
-instance CanWriteField "imageMipTailOffset"
-           VkSparseImageMemoryRequirements
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkImageMipTailOffset
+        readField p
+          = peekByteOff p #{offset VkSparseImageMemoryRequirements, imageMipTailOffset}
 
 instance {-# OVERLAPPING #-}
-         HasVkImageMipTailStride VkSparseImageMemoryRequirements where
-        type VkImageMipTailStrideMType VkSparseImageMemoryRequirements =
-             VkDeviceSize
-
-        {-# NOINLINE vkImageMipTailStride #-}
-        vkImageMipTailStride x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSparseImageMemoryRequirements, imageMipTailStride})
-
-        {-# INLINE vkImageMipTailStrideByteOffset #-}
-        vkImageMipTailStrideByteOffset ~_
-          = #{offset VkSparseImageMemoryRequirements, imageMipTailStride}
-
-        {-# INLINE readVkImageMipTailStride #-}
-        readVkImageMipTailStride p
-          = peekByteOff p #{offset VkSparseImageMemoryRequirements, imageMipTailStride}
-
-        {-# INLINE writeVkImageMipTailStride #-}
-        writeVkImageMipTailStride p
-          = pokeByteOff p #{offset VkSparseImageMemoryRequirements, imageMipTailStride}
+         CanWriteField "imageMipTailOffset" VkSparseImageMemoryRequirements
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSparseImageMemoryRequirements, imageMipTailOffset}
 
 instance {-# OVERLAPPING #-}
          HasField "imageMipTailStride" VkSparseImageMemoryRequirements where
@@ -359,35 +266,40 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSparseImageMemoryRequirements, imageMipTailStride}
 
-instance CanReadField "imageMipTailStride"
-           VkSparseImageMemoryRequirements
+instance {-# OVERLAPPING #-}
+         CanReadField "imageMipTailStride" VkSparseImageMemoryRequirements
          where
-        {-# INLINE getField #-}
-        getField = vkImageMipTailStride
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSparseImageMemoryRequirements, imageMipTailStride})
 
         {-# INLINE readField #-}
-        readField = readVkImageMipTailStride
+        readField p
+          = peekByteOff p #{offset VkSparseImageMemoryRequirements, imageMipTailStride}
 
-instance CanWriteField "imageMipTailStride"
-           VkSparseImageMemoryRequirements
+instance {-# OVERLAPPING #-}
+         CanWriteField "imageMipTailStride" VkSparseImageMemoryRequirements
          where
         {-# INLINE writeField #-}
-        writeField = writeVkImageMipTailStride
+        writeField p
+          = pokeByteOff p #{offset VkSparseImageMemoryRequirements, imageMipTailStride}
 
 instance Show VkSparseImageMemoryRequirements where
         showsPrec d x
           = showString "VkSparseImageMemoryRequirements {" .
-              showString "vkFormatProperties = " .
-                showsPrec d (vkFormatProperties x) .
+              showString "formatProperties = " .
+                showsPrec d (getField @"formatProperties" x) .
                   showString ", " .
-                    showString "vkImageMipTailFirstLod = " .
-                      showsPrec d (vkImageMipTailFirstLod x) .
+                    showString "imageMipTailFirstLod = " .
+                      showsPrec d (getField @"imageMipTailFirstLod" x) .
                         showString ", " .
-                          showString "vkImageMipTailSize = " .
-                            showsPrec d (vkImageMipTailSize x) .
+                          showString "imageMipTailSize = " .
+                            showsPrec d (getField @"imageMipTailSize" x) .
                               showString ", " .
-                                showString "vkImageMipTailOffset = " .
-                                  showsPrec d (vkImageMipTailOffset x) .
+                                showString "imageMipTailOffset = " .
+                                  showsPrec d (getField @"imageMipTailOffset" x) .
                                     showString ", " .
-                                      showString "vkImageMipTailStride = " .
-                                        showsPrec d (vkImageMipTailStride x) . showChar '}'
+                                      showString "imageMipTailStride = " .
+                                        showsPrec d (getField @"imageMipTailStride" x) .
+                                          showChar '}'

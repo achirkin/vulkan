@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
        (VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes                             (VkBool32)
 import           Graphics.Vulkan.Types.Enum.VkStructureType                  (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR (VkPhysicalDeviceProperties2KHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                            (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT {
@@ -93,28 +93,6 @@ instance VulkanMarshal
              = '[VkPhysicalDeviceProperties2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT where
-        type VkSTypeMType VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
-             = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
          where
         type FieldType "sType"
@@ -138,42 +116,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, sType}
 
-instance CanReadField "sType"
+instance {-# OVERLAPPING #-}
+         CanReadField "sType"
            VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkSType
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, sType}
 
-instance CanWriteField "sType"
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType"
            VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-}
-         HasVkPNext VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT where
-        type VkPNextMType VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
-             = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
@@ -199,45 +161,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, pNext}
 
-instance CanReadField "pNext"
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext"
            VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkPNext
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, pNext}
 
-instance CanWriteField "pNext"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext"
            VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-}
-         HasVkFilterMinmaxSingleComponentFormats
-           VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
-         where
-        type VkFilterMinmaxSingleComponentFormatsMType
-               VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
-             = VkBool32
-
-        {-# NOINLINE vkFilterMinmaxSingleComponentFormats #-}
-        vkFilterMinmaxSingleComponentFormats x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, filterMinmaxSingleComponentFormats})
-
-        {-# INLINE vkFilterMinmaxSingleComponentFormatsByteOffset #-}
-        vkFilterMinmaxSingleComponentFormatsByteOffset ~_
-          = #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, filterMinmaxSingleComponentFormats}
-
-        {-# INLINE readVkFilterMinmaxSingleComponentFormats #-}
-        readVkFilterMinmaxSingleComponentFormats p
-          = peekByteOff p #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, filterMinmaxSingleComponentFormats}
-
-        {-# INLINE writeVkFilterMinmaxSingleComponentFormats #-}
-        writeVkFilterMinmaxSingleComponentFormats p
-          = pokeByteOff p #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, filterMinmaxSingleComponentFormats}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "filterMinmaxSingleComponentFormats"
@@ -264,45 +207,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, filterMinmaxSingleComponentFormats}
 
-instance CanReadField "filterMinmaxSingleComponentFormats"
+instance {-# OVERLAPPING #-}
+         CanReadField "filterMinmaxSingleComponentFormats"
            VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkFilterMinmaxSingleComponentFormats
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, filterMinmaxSingleComponentFormats})
 
         {-# INLINE readField #-}
-        readField = readVkFilterMinmaxSingleComponentFormats
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, filterMinmaxSingleComponentFormats}
 
-instance CanWriteField "filterMinmaxSingleComponentFormats"
+instance {-# OVERLAPPING #-}
+         CanWriteField "filterMinmaxSingleComponentFormats"
            VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkFilterMinmaxSingleComponentFormats
-
-instance {-# OVERLAPPING #-}
-         HasVkFilterMinmaxImageComponentMapping
-           VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
-         where
-        type VkFilterMinmaxImageComponentMappingMType
-               VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
-             = VkBool32
-
-        {-# NOINLINE vkFilterMinmaxImageComponentMapping #-}
-        vkFilterMinmaxImageComponentMapping x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, filterMinmaxImageComponentMapping})
-
-        {-# INLINE vkFilterMinmaxImageComponentMappingByteOffset #-}
-        vkFilterMinmaxImageComponentMappingByteOffset ~_
-          = #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, filterMinmaxImageComponentMapping}
-
-        {-# INLINE readVkFilterMinmaxImageComponentMapping #-}
-        readVkFilterMinmaxImageComponentMapping p
-          = peekByteOff p #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, filterMinmaxImageComponentMapping}
-
-        {-# INLINE writeVkFilterMinmaxImageComponentMapping #-}
-        writeVkFilterMinmaxImageComponentMapping p
-          = pokeByteOff p #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, filterMinmaxImageComponentMapping}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, filterMinmaxSingleComponentFormats}
 
 instance {-# OVERLAPPING #-}
          HasField "filterMinmaxImageComponentMapping"
@@ -329,33 +253,40 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, filterMinmaxImageComponentMapping}
 
-instance CanReadField "filterMinmaxImageComponentMapping"
+instance {-# OVERLAPPING #-}
+         CanReadField "filterMinmaxImageComponentMapping"
            VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkFilterMinmaxImageComponentMapping
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, filterMinmaxImageComponentMapping})
 
         {-# INLINE readField #-}
-        readField = readVkFilterMinmaxImageComponentMapping
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, filterMinmaxImageComponentMapping}
 
-instance CanWriteField "filterMinmaxImageComponentMapping"
+instance {-# OVERLAPPING #-}
+         CanWriteField "filterMinmaxImageComponentMapping"
            VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkFilterMinmaxImageComponentMapping
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT, filterMinmaxImageComponentMapping}
 
 instance Show VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT
          where
         showsPrec d x
           = showString "VkPhysicalDeviceSamplerFilterMinmaxPropertiesEXT {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFilterMinmaxSingleComponentFormats = " .
-                            showsPrec d (vkFilterMinmaxSingleComponentFormats x) .
+                          showString "filterMinmaxSingleComponentFormats = " .
+                            showsPrec d (getField @"filterMinmaxSingleComponentFormats" x) .
                               showString ", " .
-                                showString "vkFilterMinmaxImageComponentMapping = " .
-                                  showsPrec d (vkFilterMinmaxImageComponentMapping x) . showChar '}'
+                                showString "filterMinmaxImageComponentMapping = " .
+                                  showsPrec d (getField @"filterMinmaxImageComponentMapping" x) .
+                                    showChar '}'

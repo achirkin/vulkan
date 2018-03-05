@@ -5,15 +5,15 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkDispatchIndirectCommand
        (VkDispatchIndirectCommand(..)) where
-import           Foreign.Storable                    (Storable (..))
+import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.StructMembers
-import           System.IO.Unsafe                    (unsafeDupablePerformIO)
+import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDispatchIndirectCommand {
 --   >     uint32_t               x;
@@ -70,26 +70,6 @@ instance VulkanMarshal VkDispatchIndirectCommand where
         type ReturnedOnly VkDispatchIndirectCommand = 'False -- ' closing tick for hsc2hs
         type StructExtends VkDispatchIndirectCommand = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkX VkDispatchIndirectCommand where
-        type VkXMType VkDispatchIndirectCommand = Word32
-
-        {-# NOINLINE vkX #-}
-        vkX x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDispatchIndirectCommand, x})
-
-        {-# INLINE vkXByteOffset #-}
-        vkXByteOffset ~_
-          = #{offset VkDispatchIndirectCommand, x}
-
-        {-# INLINE readVkX #-}
-        readVkX p
-          = peekByteOff p #{offset VkDispatchIndirectCommand, x}
-
-        {-# INLINE writeVkX #-}
-        writeVkX p
-          = pokeByteOff p #{offset VkDispatchIndirectCommand, x}
-
 instance {-# OVERLAPPING #-} HasField "x" VkDispatchIndirectCommand
          where
         type FieldType "x" VkDispatchIndirectCommand = Word32
@@ -104,36 +84,22 @@ instance {-# OVERLAPPING #-} HasField "x" VkDispatchIndirectCommand
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkDispatchIndirectCommand, x}
 
-instance CanReadField "x" VkDispatchIndirectCommand where
-        {-# INLINE getField #-}
-        getField = vkX
+instance {-# OVERLAPPING #-}
+         CanReadField "x" VkDispatchIndirectCommand where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDispatchIndirectCommand, x})
 
         {-# INLINE readField #-}
-        readField = readVkX
+        readField p
+          = peekByteOff p #{offset VkDispatchIndirectCommand, x}
 
-instance CanWriteField "x" VkDispatchIndirectCommand where
+instance {-# OVERLAPPING #-}
+         CanWriteField "x" VkDispatchIndirectCommand where
         {-# INLINE writeField #-}
-        writeField = writeVkX
-
-instance {-# OVERLAPPING #-} HasVkY VkDispatchIndirectCommand where
-        type VkYMType VkDispatchIndirectCommand = Word32
-
-        {-# NOINLINE vkY #-}
-        vkY x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDispatchIndirectCommand, y})
-
-        {-# INLINE vkYByteOffset #-}
-        vkYByteOffset ~_
-          = #{offset VkDispatchIndirectCommand, y}
-
-        {-# INLINE readVkY #-}
-        readVkY p
-          = peekByteOff p #{offset VkDispatchIndirectCommand, y}
-
-        {-# INLINE writeVkY #-}
-        writeVkY p
-          = pokeByteOff p #{offset VkDispatchIndirectCommand, y}
+        writeField p
+          = pokeByteOff p #{offset VkDispatchIndirectCommand, x}
 
 instance {-# OVERLAPPING #-} HasField "y" VkDispatchIndirectCommand
          where
@@ -149,36 +115,22 @@ instance {-# OVERLAPPING #-} HasField "y" VkDispatchIndirectCommand
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkDispatchIndirectCommand, y}
 
-instance CanReadField "y" VkDispatchIndirectCommand where
-        {-# INLINE getField #-}
-        getField = vkY
+instance {-# OVERLAPPING #-}
+         CanReadField "y" VkDispatchIndirectCommand where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDispatchIndirectCommand, y})
 
         {-# INLINE readField #-}
-        readField = readVkY
+        readField p
+          = peekByteOff p #{offset VkDispatchIndirectCommand, y}
 
-instance CanWriteField "y" VkDispatchIndirectCommand where
+instance {-# OVERLAPPING #-}
+         CanWriteField "y" VkDispatchIndirectCommand where
         {-# INLINE writeField #-}
-        writeField = writeVkY
-
-instance {-# OVERLAPPING #-} HasVkZ VkDispatchIndirectCommand where
-        type VkZMType VkDispatchIndirectCommand = Word32
-
-        {-# NOINLINE vkZ #-}
-        vkZ x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDispatchIndirectCommand, z})
-
-        {-# INLINE vkZByteOffset #-}
-        vkZByteOffset ~_
-          = #{offset VkDispatchIndirectCommand, z}
-
-        {-# INLINE readVkZ #-}
-        readVkZ p
-          = peekByteOff p #{offset VkDispatchIndirectCommand, z}
-
-        {-# INLINE writeVkZ #-}
-        writeVkZ p
-          = pokeByteOff p #{offset VkDispatchIndirectCommand, z}
+        writeField p
+          = pokeByteOff p #{offset VkDispatchIndirectCommand, y}
 
 instance {-# OVERLAPPING #-} HasField "z" VkDispatchIndirectCommand
          where
@@ -194,24 +146,30 @@ instance {-# OVERLAPPING #-} HasField "z" VkDispatchIndirectCommand
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkDispatchIndirectCommand, z}
 
-instance CanReadField "z" VkDispatchIndirectCommand where
-        {-# INLINE getField #-}
-        getField = vkZ
+instance {-# OVERLAPPING #-}
+         CanReadField "z" VkDispatchIndirectCommand where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDispatchIndirectCommand, z})
 
         {-# INLINE readField #-}
-        readField = readVkZ
+        readField p
+          = peekByteOff p #{offset VkDispatchIndirectCommand, z}
 
-instance CanWriteField "z" VkDispatchIndirectCommand where
+instance {-# OVERLAPPING #-}
+         CanWriteField "z" VkDispatchIndirectCommand where
         {-# INLINE writeField #-}
-        writeField = writeVkZ
+        writeField p
+          = pokeByteOff p #{offset VkDispatchIndirectCommand, z}
 
 instance Show VkDispatchIndirectCommand where
         showsPrec d x
           = showString "VkDispatchIndirectCommand {" .
-              showString "vkX = " .
-                showsPrec d (vkX x) .
+              showString "x = " .
+                showsPrec d (getField @"x" x) .
                   showString ", " .
-                    showString "vkY = " .
-                      showsPrec d (vkY x) .
+                    showString "y = " .
+                      showsPrec d (getField @"y" x) .
                         showString ", " .
-                          showString "vkZ = " . showsPrec d (vkZ x) . showChar '}'
+                          showString "z = " . showsPrec d (getField @"z" x) . showChar '}'

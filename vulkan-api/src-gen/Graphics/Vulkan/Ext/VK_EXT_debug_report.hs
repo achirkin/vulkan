@@ -30,8 +30,10 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_report
         module Graphics.Vulkan.Types.Struct.VkInstanceCreateInfo,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
-        vkCreateDebugReportCallbackEXT, vkDestroyDebugReportCallbackEXT,
-        vkDebugReportMessageEXT,
+        vkCreateDebugReportCallbackEXT, vkCreateDebugReportCallbackEXTSafe,
+        vkDestroyDebugReportCallbackEXT,
+        vkDestroyDebugReportCallbackEXTSafe, vkDebugReportMessageEXT,
+        vkDebugReportMessageEXTSafe,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,
@@ -89,6 +91,29 @@ foreign import ccall unsafe "vkCreateDebugReportCallbackEXT"
                      Ptr VkDebugReportCallbackEXT -- ^ pCallback
                                                   -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY'.
+--
+--   > VkResult vkCreateDebugReportCallbackEXT
+--   >     ( VkInstance instance
+--   >     , const VkDebugReportCallbackCreateInfoEXT* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkDebugReportCallbackEXT* pCallback
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateDebugReportCallbackEXT.html vkCreateDebugReportCallbackEXT registry at www.khronos.org>
+foreign import ccall safe "vkCreateDebugReportCallbackEXT"
+               vkCreateDebugReportCallbackEXTSafe ::
+               VkInstance -- ^ instance
+                          ->
+                 Ptr VkDebugReportCallbackCreateInfoEXT -- ^ pCreateInfo
+                                                        ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             ->
+                     Ptr VkDebugReportCallbackEXT -- ^ pCallback
+                                                  -> IO VkResult
+
 -- | > () vkDestroyDebugReportCallbackEXT
 --   >     ( VkInstance instance
 --   >     , VkDebugReportCallbackEXT callback
@@ -98,6 +123,21 @@ foreign import ccall unsafe "vkCreateDebugReportCallbackEXT"
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroyDebugReportCallbackEXT.html vkDestroyDebugReportCallbackEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyDebugReportCallbackEXT"
                vkDestroyDebugReportCallbackEXT ::
+               VkInstance -- ^ instance
+                          ->
+                 VkDebugReportCallbackEXT -- ^ callback
+                                          -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                       -> IO ()
+
+-- | > () vkDestroyDebugReportCallbackEXT
+--   >     ( VkInstance instance
+--   >     , VkDebugReportCallbackEXT callback
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroyDebugReportCallbackEXT.html vkDestroyDebugReportCallbackEXT registry at www.khronos.org>
+foreign import ccall safe "vkDestroyDebugReportCallbackEXT"
+               vkDestroyDebugReportCallbackEXTSafe ::
                VkInstance -- ^ instance
                           ->
                  VkDebugReportCallbackEXT -- ^ callback
@@ -118,6 +158,33 @@ foreign import ccall unsafe "vkDestroyDebugReportCallbackEXT"
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDebugReportMessageEXT.html vkDebugReportMessageEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkDebugReportMessageEXT"
                vkDebugReportMessageEXT ::
+               VkInstance -- ^ instance
+                          ->
+                 VkDebugReportFlagsEXT -- ^ flags
+                                       ->
+                   VkDebugReportObjectTypeEXT -- ^ objectType
+                                              ->
+                     Word64 -- ^ object
+                            -> CSize -- ^ location
+                                     -> Int32 -- ^ messageCode
+                                              -> CString -- ^ pLayerPrefix
+                                                         -> CString -- ^ pMessage
+                                                                    -> IO ()
+
+-- | > () vkDebugReportMessageEXT
+--   >     ( VkInstance instance
+--   >     , VkDebugReportFlagsEXT flags
+--   >     , VkDebugReportObjectTypeEXT objectType
+--   >     , uint64_t object
+--   >     , size_t location
+--   >     , int32_t messageCode
+--   >     , const char* pLayerPrefix
+--   >     , const char* pMessage
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDebugReportMessageEXT.html vkDebugReportMessageEXT registry at www.khronos.org>
+foreign import ccall safe "vkDebugReportMessageEXT"
+               vkDebugReportMessageEXTSafe ::
                VkInstance -- ^ instance
                           ->
                  VkDebugReportFlagsEXT -- ^ flags

@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
        (VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes                           (VkBool32)
 import           Graphics.Vulkan.Types.Enum.VkStructureType                (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures2KHR (VkPhysicalDeviceFeatures2KHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                          (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT {
@@ -92,28 +92,6 @@ instance VulkanMarshal
              = '[VkPhysicalDeviceFeatures2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT where
-        type VkSTypeMType VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
-             = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
          where
         type FieldType "sType"
@@ -137,42 +115,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, sType}
 
-instance CanReadField "sType"
+instance {-# OVERLAPPING #-}
+         CanReadField "sType"
            VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkSType
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, sType}
 
-instance CanWriteField "sType"
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType"
            VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-}
-         HasVkPNext VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT where
-        type VkPNextMType VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
-             = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
@@ -198,45 +160,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, pNext}
 
-instance CanReadField "pNext"
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext"
            VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkPNext
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, pNext}
 
-instance CanWriteField "pNext"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext"
            VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-}
-         HasVkAdvancedBlendCoherentOperations
-           VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
-         where
-        type VkAdvancedBlendCoherentOperationsMType
-               VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
-             = VkBool32
-
-        {-# NOINLINE vkAdvancedBlendCoherentOperations #-}
-        vkAdvancedBlendCoherentOperations x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, advancedBlendCoherentOperations})
-
-        {-# INLINE vkAdvancedBlendCoherentOperationsByteOffset #-}
-        vkAdvancedBlendCoherentOperationsByteOffset ~_
-          = #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, advancedBlendCoherentOperations}
-
-        {-# INLINE readVkAdvancedBlendCoherentOperations #-}
-        readVkAdvancedBlendCoherentOperations p
-          = peekByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, advancedBlendCoherentOperations}
-
-        {-# INLINE writeVkAdvancedBlendCoherentOperations #-}
-        writeVkAdvancedBlendCoherentOperations p
-          = pokeByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, advancedBlendCoherentOperations}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "advancedBlendCoherentOperations"
@@ -263,31 +206,38 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, advancedBlendCoherentOperations}
 
-instance CanReadField "advancedBlendCoherentOperations"
+instance {-# OVERLAPPING #-}
+         CanReadField "advancedBlendCoherentOperations"
            VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkAdvancedBlendCoherentOperations
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, advancedBlendCoherentOperations})
 
         {-# INLINE readField #-}
-        readField = readVkAdvancedBlendCoherentOperations
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, advancedBlendCoherentOperations}
 
-instance CanWriteField "advancedBlendCoherentOperations"
+instance {-# OVERLAPPING #-}
+         CanWriteField "advancedBlendCoherentOperations"
            VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkAdvancedBlendCoherentOperations
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT, advancedBlendCoherentOperations}
 
 instance Show VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
          where
         showsPrec d x
           = showString "VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT {"
               .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkAdvancedBlendCoherentOperations = " .
-                            showsPrec d (vkAdvancedBlendCoherentOperations x) . showChar '}'
+                          showString "advancedBlendCoherentOperations = " .
+                            showsPrec d (getField @"advancedBlendCoherentOperations" x) .
+                              showChar '}'

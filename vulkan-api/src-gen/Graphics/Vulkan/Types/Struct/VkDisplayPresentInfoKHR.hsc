@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkDisplayPresentInfoKHR
        (VkDisplayPresentInfoKHR(..)) where
@@ -16,7 +17,6 @@ import           Graphics.Vulkan.Types.BaseTypes               (VkBool32)
 import           Graphics.Vulkan.Types.Enum.VkStructureType    (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkPresentInfoKHR (VkPresentInfoKHR)
 import           Graphics.Vulkan.Types.Struct.VkRect2D         (VkRect2D)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                              (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDisplayPresentInfoKHR {
@@ -76,27 +76,6 @@ instance VulkanMarshal VkDisplayPresentInfoKHR where
         type ReturnedOnly VkDisplayPresentInfoKHR = 'False -- ' closing tick for hsc2hs
         type StructExtends VkDisplayPresentInfoKHR = '[VkPresentInfoKHR] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkDisplayPresentInfoKHR
-         where
-        type VkSTypeMType VkDisplayPresentInfoKHR = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayPresentInfoKHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkDisplayPresentInfoKHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkDisplayPresentInfoKHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkDisplayPresentInfoKHR, sType}
-
 instance {-# OVERLAPPING #-}
          HasField "sType" VkDisplayPresentInfoKHR where
         type FieldType "sType" VkDisplayPresentInfoKHR = VkStructureType
@@ -111,37 +90,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkDisplayPresentInfoKHR, sType}
 
-instance CanReadField "sType" VkDisplayPresentInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkDisplayPresentInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPresentInfoKHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkDisplayPresentInfoKHR, sType}
 
-instance CanWriteField "sType" VkDisplayPresentInfoKHR where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkDisplayPresentInfoKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkDisplayPresentInfoKHR
-         where
-        type VkPNextMType VkDisplayPresentInfoKHR = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayPresentInfoKHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkDisplayPresentInfoKHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkDisplayPresentInfoKHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkDisplayPresentInfoKHR, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPresentInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkDisplayPresentInfoKHR where
@@ -157,37 +121,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkDisplayPresentInfoKHR, pNext}
 
-instance CanReadField "pNext" VkDisplayPresentInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkDisplayPresentInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPresentInfoKHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkDisplayPresentInfoKHR, pNext}
 
-instance CanWriteField "pNext" VkDisplayPresentInfoKHR where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext" VkDisplayPresentInfoKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-} HasVkSrcRect VkDisplayPresentInfoKHR
-         where
-        type VkSrcRectMType VkDisplayPresentInfoKHR = VkRect2D
-
-        {-# NOINLINE vkSrcRect #-}
-        vkSrcRect x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayPresentInfoKHR, srcRect})
-
-        {-# INLINE vkSrcRectByteOffset #-}
-        vkSrcRectByteOffset ~_
-          = #{offset VkDisplayPresentInfoKHR, srcRect}
-
-        {-# INLINE readVkSrcRect #-}
-        readVkSrcRect p
-          = peekByteOff p #{offset VkDisplayPresentInfoKHR, srcRect}
-
-        {-# INLINE writeVkSrcRect #-}
-        writeVkSrcRect p
-          = pokeByteOff p #{offset VkDisplayPresentInfoKHR, srcRect}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPresentInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "srcRect" VkDisplayPresentInfoKHR where
@@ -204,37 +153,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDisplayPresentInfoKHR, srcRect}
 
-instance CanReadField "srcRect" VkDisplayPresentInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkSrcRect
+instance {-# OVERLAPPING #-}
+         CanReadField "srcRect" VkDisplayPresentInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPresentInfoKHR, srcRect})
 
         {-# INLINE readField #-}
-        readField = readVkSrcRect
+        readField p
+          = peekByteOff p #{offset VkDisplayPresentInfoKHR, srcRect}
 
-instance CanWriteField "srcRect" VkDisplayPresentInfoKHR where
+instance {-# OVERLAPPING #-}
+         CanWriteField "srcRect" VkDisplayPresentInfoKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkSrcRect
-
-instance {-# OVERLAPPING #-} HasVkDstRect VkDisplayPresentInfoKHR
-         where
-        type VkDstRectMType VkDisplayPresentInfoKHR = VkRect2D
-
-        {-# NOINLINE vkDstRect #-}
-        vkDstRect x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayPresentInfoKHR, dstRect})
-
-        {-# INLINE vkDstRectByteOffset #-}
-        vkDstRectByteOffset ~_
-          = #{offset VkDisplayPresentInfoKHR, dstRect}
-
-        {-# INLINE readVkDstRect #-}
-        readVkDstRect p
-          = peekByteOff p #{offset VkDisplayPresentInfoKHR, dstRect}
-
-        {-# INLINE writeVkDstRect #-}
-        writeVkDstRect p
-          = pokeByteOff p #{offset VkDisplayPresentInfoKHR, dstRect}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPresentInfoKHR, srcRect}
 
 instance {-# OVERLAPPING #-}
          HasField "dstRect" VkDisplayPresentInfoKHR where
@@ -251,37 +185,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDisplayPresentInfoKHR, dstRect}
 
-instance CanReadField "dstRect" VkDisplayPresentInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkDstRect
+instance {-# OVERLAPPING #-}
+         CanReadField "dstRect" VkDisplayPresentInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPresentInfoKHR, dstRect})
 
         {-# INLINE readField #-}
-        readField = readVkDstRect
-
-instance CanWriteField "dstRect" VkDisplayPresentInfoKHR where
-        {-# INLINE writeField #-}
-        writeField = writeVkDstRect
+        readField p
+          = peekByteOff p #{offset VkDisplayPresentInfoKHR, dstRect}
 
 instance {-# OVERLAPPING #-}
-         HasVkPersistent VkDisplayPresentInfoKHR where
-        type VkPersistentMType VkDisplayPresentInfoKHR = VkBool32
-
-        {-# NOINLINE vkPersistent #-}
-        vkPersistent x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayPresentInfoKHR, persistent})
-
-        {-# INLINE vkPersistentByteOffset #-}
-        vkPersistentByteOffset ~_
-          = #{offset VkDisplayPresentInfoKHR, persistent}
-
-        {-# INLINE readVkPersistent #-}
-        readVkPersistent p
-          = peekByteOff p #{offset VkDisplayPresentInfoKHR, persistent}
-
-        {-# INLINE writeVkPersistent #-}
-        writeVkPersistent p
-          = pokeByteOff p #{offset VkDisplayPresentInfoKHR, persistent}
+         CanWriteField "dstRect" VkDisplayPresentInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPresentInfoKHR, dstRect}
 
 instance {-# OVERLAPPING #-}
          HasField "persistent" VkDisplayPresentInfoKHR where
@@ -298,31 +217,37 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDisplayPresentInfoKHR, persistent}
 
-instance CanReadField "persistent" VkDisplayPresentInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkPersistent
+instance {-# OVERLAPPING #-}
+         CanReadField "persistent" VkDisplayPresentInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPresentInfoKHR, persistent})
 
         {-# INLINE readField #-}
-        readField = readVkPersistent
+        readField p
+          = peekByteOff p #{offset VkDisplayPresentInfoKHR, persistent}
 
-instance CanWriteField "persistent" VkDisplayPresentInfoKHR where
+instance {-# OVERLAPPING #-}
+         CanWriteField "persistent" VkDisplayPresentInfoKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkPersistent
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPresentInfoKHR, persistent}
 
 instance Show VkDisplayPresentInfoKHR where
         showsPrec d x
           = showString "VkDisplayPresentInfoKHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkSrcRect = " .
-                            showsPrec d (vkSrcRect x) .
+                          showString "srcRect = " .
+                            showsPrec d (getField @"srcRect" x) .
                               showString ", " .
-                                showString "vkDstRect = " .
-                                  showsPrec d (vkDstRect x) .
+                                showString "dstRect = " .
+                                  showsPrec d (getField @"dstRect" x) .
                                     showString ", " .
-                                      showString "vkPersistent = " .
-                                        showsPrec d (vkPersistent x) . showChar '}'
+                                      showString "persistent = " .
+                                        showsPrec d (getField @"persistent" x) . showChar '}'

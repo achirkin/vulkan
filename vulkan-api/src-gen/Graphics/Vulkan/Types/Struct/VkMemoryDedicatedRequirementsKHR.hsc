@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkMemoryDedicatedRequirementsKHR
        (VkMemoryDedicatedRequirementsKHR(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes                       (VkBool32)
 import           Graphics.Vulkan.Types.Enum.VkStructureType            (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkMemoryRequirements2KHR (VkMemoryRequirements2KHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                      (unsafeDupablePerformIO)
 
 -- | > typedef struct VkMemoryDedicatedRequirementsKHR {
@@ -82,28 +82,6 @@ instance VulkanMarshal VkMemoryDedicatedRequirementsKHR where
              '[VkMemoryRequirements2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkMemoryDedicatedRequirementsKHR where
-        type VkSTypeMType VkMemoryDedicatedRequirementsKHR =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkMemoryDedicatedRequirementsKHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkMemoryDedicatedRequirementsKHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkMemoryDedicatedRequirementsKHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkMemoryDedicatedRequirementsKHR, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkMemoryDedicatedRequirementsKHR where
         type FieldType "sType" VkMemoryDedicatedRequirementsKHR =
              VkStructureType
@@ -120,39 +98,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkMemoryDedicatedRequirementsKHR, sType}
 
-instance CanReadField "sType" VkMemoryDedicatedRequirementsKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkMemoryDedicatedRequirementsKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkMemoryDedicatedRequirementsKHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkMemoryDedicatedRequirementsKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkMemoryDedicatedRequirementsKHR, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkMemoryDedicatedRequirementsKHR where
-        type VkPNextMType VkMemoryDedicatedRequirementsKHR = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkMemoryDedicatedRequirementsKHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkMemoryDedicatedRequirementsKHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkMemoryDedicatedRequirementsKHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkMemoryDedicatedRequirementsKHR, pNext}
+         CanWriteField "sType" VkMemoryDedicatedRequirementsKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkMemoryDedicatedRequirementsKHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkMemoryDedicatedRequirementsKHR where
@@ -170,42 +131,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkMemoryDedicatedRequirementsKHR, pNext}
 
-instance CanReadField "pNext" VkMemoryDedicatedRequirementsKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkMemoryDedicatedRequirementsKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkMemoryDedicatedRequirementsKHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkMemoryDedicatedRequirementsKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkMemoryDedicatedRequirementsKHR, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkPrefersDedicatedAllocation VkMemoryDedicatedRequirementsKHR
-         where
-        type VkPrefersDedicatedAllocationMType
-               VkMemoryDedicatedRequirementsKHR
-             = VkBool32
-
-        {-# NOINLINE vkPrefersDedicatedAllocation #-}
-        vkPrefersDedicatedAllocation x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkMemoryDedicatedRequirementsKHR, prefersDedicatedAllocation})
-
-        {-# INLINE vkPrefersDedicatedAllocationByteOffset #-}
-        vkPrefersDedicatedAllocationByteOffset ~_
-          = #{offset VkMemoryDedicatedRequirementsKHR, prefersDedicatedAllocation}
-
-        {-# INLINE readVkPrefersDedicatedAllocation #-}
-        readVkPrefersDedicatedAllocation p
-          = peekByteOff p #{offset VkMemoryDedicatedRequirementsKHR, prefersDedicatedAllocation}
-
-        {-# INLINE writeVkPrefersDedicatedAllocation #-}
-        writeVkPrefersDedicatedAllocation p
-          = pokeByteOff p #{offset VkMemoryDedicatedRequirementsKHR, prefersDedicatedAllocation}
+         CanWriteField "pNext" VkMemoryDedicatedRequirementsKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkMemoryDedicatedRequirementsKHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "prefersDedicatedAllocation"
@@ -232,44 +173,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkMemoryDedicatedRequirementsKHR, prefersDedicatedAllocation}
 
-instance CanReadField "prefersDedicatedAllocation"
+instance {-# OVERLAPPING #-}
+         CanReadField "prefersDedicatedAllocation"
            VkMemoryDedicatedRequirementsKHR
          where
-        {-# INLINE getField #-}
-        getField = vkPrefersDedicatedAllocation
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkMemoryDedicatedRequirementsKHR, prefersDedicatedAllocation})
 
         {-# INLINE readField #-}
-        readField = readVkPrefersDedicatedAllocation
+        readField p
+          = peekByteOff p #{offset VkMemoryDedicatedRequirementsKHR, prefersDedicatedAllocation}
 
-instance CanWriteField "prefersDedicatedAllocation"
+instance {-# OVERLAPPING #-}
+         CanWriteField "prefersDedicatedAllocation"
            VkMemoryDedicatedRequirementsKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPrefersDedicatedAllocation
-
-instance {-# OVERLAPPING #-}
-         HasVkRequiresDedicatedAllocation VkMemoryDedicatedRequirementsKHR
-         where
-        type VkRequiresDedicatedAllocationMType
-               VkMemoryDedicatedRequirementsKHR
-             = VkBool32
-
-        {-# NOINLINE vkRequiresDedicatedAllocation #-}
-        vkRequiresDedicatedAllocation x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkMemoryDedicatedRequirementsKHR, requiresDedicatedAllocation})
-
-        {-# INLINE vkRequiresDedicatedAllocationByteOffset #-}
-        vkRequiresDedicatedAllocationByteOffset ~_
-          = #{offset VkMemoryDedicatedRequirementsKHR, requiresDedicatedAllocation}
-
-        {-# INLINE readVkRequiresDedicatedAllocation #-}
-        readVkRequiresDedicatedAllocation p
-          = peekByteOff p #{offset VkMemoryDedicatedRequirementsKHR, requiresDedicatedAllocation}
-
-        {-# INLINE writeVkRequiresDedicatedAllocation #-}
-        writeVkRequiresDedicatedAllocation p
-          = pokeByteOff p #{offset VkMemoryDedicatedRequirementsKHR, requiresDedicatedAllocation}
+        writeField p
+          = pokeByteOff p #{offset VkMemoryDedicatedRequirementsKHR, prefersDedicatedAllocation}
 
 instance {-# OVERLAPPING #-}
          HasField "requiresDedicatedAllocation"
@@ -296,32 +219,39 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkMemoryDedicatedRequirementsKHR, requiresDedicatedAllocation}
 
-instance CanReadField "requiresDedicatedAllocation"
+instance {-# OVERLAPPING #-}
+         CanReadField "requiresDedicatedAllocation"
            VkMemoryDedicatedRequirementsKHR
          where
-        {-# INLINE getField #-}
-        getField = vkRequiresDedicatedAllocation
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkMemoryDedicatedRequirementsKHR, requiresDedicatedAllocation})
 
         {-# INLINE readField #-}
-        readField = readVkRequiresDedicatedAllocation
+        readField p
+          = peekByteOff p #{offset VkMemoryDedicatedRequirementsKHR, requiresDedicatedAllocation}
 
-instance CanWriteField "requiresDedicatedAllocation"
+instance {-# OVERLAPPING #-}
+         CanWriteField "requiresDedicatedAllocation"
            VkMemoryDedicatedRequirementsKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkRequiresDedicatedAllocation
+        writeField p
+          = pokeByteOff p #{offset VkMemoryDedicatedRequirementsKHR, requiresDedicatedAllocation}
 
 instance Show VkMemoryDedicatedRequirementsKHR where
         showsPrec d x
           = showString "VkMemoryDedicatedRequirementsKHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkPrefersDedicatedAllocation = " .
-                            showsPrec d (vkPrefersDedicatedAllocation x) .
+                          showString "prefersDedicatedAllocation = " .
+                            showsPrec d (getField @"prefersDedicatedAllocation" x) .
                               showString ", " .
-                                showString "vkRequiresDedicatedAllocation = " .
-                                  showsPrec d (vkRequiresDedicatedAllocation x) . showChar '}'
+                                showString "requiresDedicatedAllocation = " .
+                                  showsPrec d (getField @"requiresDedicatedAllocation" x) .
+                                    showChar '}'

@@ -6,6 +6,8 @@ no haskell language extensions, and no libraries other than base and vulkan-api.
 Just plain haskell; c-like simple and verbose.
 
 -}
+{-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE DataKinds #-}
 module Main (main) where
 
 import Graphics.Vulkan
@@ -29,25 +31,25 @@ withVulkanInstance action =
 
     -- write VkApplicationInfo
     appInfo <- newVkData $ \appInfoPtr -> do
-      writeVkEngineVersion      appInfoPtr (_VK_MAKE_VERSION 1 0 0)
-      writeVkPEngineName        appInfoPtr engineNamePtr
-      writeVkApplicationVersion appInfoPtr (_VK_MAKE_VERSION 1 0 0)
-      writeVkPApplicationName   appInfoPtr progNamePtr
-      writeVkPNext              appInfoPtr VK_NULL_HANDLE
-      writeVkSType              appInfoPtr VK_STRUCTURE_TYPE_APPLICATION_INFO
-      writeVkApiVersion         appInfoPtr (_VK_MAKE_VERSION 1 0 68)
+      writeField @"engineVersion"      appInfoPtr (_VK_MAKE_VERSION 1 0 0)
+      writeField @"pEngineName"        appInfoPtr engineNamePtr
+      writeField @"applicationVersion" appInfoPtr (_VK_MAKE_VERSION 1 0 0)
+      writeField @"pApplicationName"   appInfoPtr progNamePtr
+      writeField @"pNext"              appInfoPtr VK_NULL_HANDLE
+      writeField @"sType"              appInfoPtr VK_STRUCTURE_TYPE_APPLICATION_INFO
+      writeField @"apiVersion"         appInfoPtr (_VK_MAKE_VERSION 1 0 68)
 
     -- write VkInstanceCreateInfo
     iCreateInfo <- newVkData $ \iCreateInfoPtr -> do
-      writeVkPApplicationInfo        iCreateInfoPtr
+      writeField @"pApplicationInfo"        iCreateInfoPtr
         (unsafePtr appInfo)  -- must keep appInfo alive!
-      writeVkPpEnabledExtensionNames iCreateInfoPtr VK_NULL_HANDLE
-      writeVkEnabledExtensionCount   iCreateInfoPtr 0
-      writeVkPpEnabledLayerNames     iCreateInfoPtr VK_NULL_HANDLE
-      writeVkEnabledLayerCount       iCreateInfoPtr 0
-      writeVkFlags                   iCreateInfoPtr 0
-      writeVkPNext                   iCreateInfoPtr VK_NULL_HANDLE
-      writeVkSType                   iCreateInfoPtr VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
+      writeField @"ppEnabledExtensionNames" iCreateInfoPtr VK_NULL_HANDLE
+      writeField @"enabledExtensionCount"   iCreateInfoPtr 0
+      writeField @"ppEnabledLayerNames"     iCreateInfoPtr VK_NULL_HANDLE
+      writeField @"enabledLayerCount"       iCreateInfoPtr 0
+      writeField @"flags"                   iCreateInfoPtr 0
+      writeField @"pNext"                   iCreateInfoPtr VK_NULL_HANDLE
+      writeField @"sType"                   iCreateInfoPtr VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO
 
     -- execute createInstance
     (vkResult, vkInstance) <- alloca $ \vkInstPtr -> do

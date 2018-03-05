@@ -19,10 +19,15 @@ module Graphics.Vulkan.Ext.VK_KHR_surface
         -- type: @instance@
         --
         -- Extension number: @1@
-        vkDestroySurfaceKHR, vkGetPhysicalDeviceSurfaceSupportKHR,
+        vkDestroySurfaceKHR, vkDestroySurfaceKHRSafe,
+        vkGetPhysicalDeviceSurfaceSupportKHR,
+        vkGetPhysicalDeviceSurfaceSupportKHRSafe,
         vkGetPhysicalDeviceSurfaceCapabilitiesKHR,
+        vkGetPhysicalDeviceSurfaceCapabilitiesKHRSafe,
         vkGetPhysicalDeviceSurfaceFormatsKHR,
+        vkGetPhysicalDeviceSurfaceFormatsKHRSafe,
         vkGetPhysicalDeviceSurfacePresentModesKHR,
+        vkGetPhysicalDeviceSurfacePresentModesKHRSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.VkColorSpaceKHR,
@@ -82,6 +87,20 @@ foreign import ccall unsafe "vkDestroySurfaceKHR"
                                           -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                        -> IO ()
 
+-- | > () vkDestroySurfaceKHR
+--   >     ( VkInstance instance
+--   >     , VkSurfaceKHR surface
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroySurfaceKHR.html vkDestroySurfaceKHR registry at www.khronos.org>
+foreign import ccall safe "vkDestroySurfaceKHR"
+               vkDestroySurfaceKHRSafe ::
+               VkInstance -- ^ instance
+                          -> VkSurfaceKHR -- ^ surface
+                                          -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                       -> IO ()
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
@@ -107,6 +126,27 @@ foreign import ccall unsafe "vkGetPhysicalDeviceSurfaceSupportKHR"
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
 --
+--   > VkResult vkGetPhysicalDeviceSurfaceSupportKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , uint32_t queueFamilyIndex
+--   >     , VkSurfaceKHR surface
+--   >     , VkBool32* pSupported
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceSurfaceSupportKHR.html vkGetPhysicalDeviceSurfaceSupportKHR registry at www.khronos.org>
+foreign import ccall safe "vkGetPhysicalDeviceSurfaceSupportKHR"
+               vkGetPhysicalDeviceSurfaceSupportKHRSafe ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                ->
+                 Word32 -- ^ queueFamilyIndex
+                        -> VkSurfaceKHR -- ^ surface
+                                        -> Ptr VkBool32 -- ^ pSupported
+                                                        -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
+--
 --   > VkResult vkGetPhysicalDeviceSurfaceCapabilitiesKHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkSurfaceKHR surface
@@ -117,6 +157,26 @@ foreign import ccall unsafe "vkGetPhysicalDeviceSurfaceSupportKHR"
 foreign import ccall unsafe
                "vkGetPhysicalDeviceSurfaceCapabilitiesKHR"
                vkGetPhysicalDeviceSurfaceCapabilitiesKHR ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                ->
+                 VkSurfaceKHR -- ^ surface
+                              -> Ptr VkSurfaceCapabilitiesKHR -- ^ pSurfaceCapabilities
+                                                              -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
+--
+--   > VkResult vkGetPhysicalDeviceSurfaceCapabilitiesKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , VkSurfaceKHR surface
+--   >     , VkSurfaceCapabilitiesKHR* pSurfaceCapabilities
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilitiesKHR.html vkGetPhysicalDeviceSurfaceCapabilitiesKHR registry at www.khronos.org>
+foreign import ccall safe
+               "vkGetPhysicalDeviceSurfaceCapabilitiesKHR"
+               vkGetPhysicalDeviceSurfaceCapabilitiesKHRSafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  VkSurfaceKHR -- ^ surface
@@ -148,6 +208,27 @@ foreign import ccall unsafe "vkGetPhysicalDeviceSurfaceFormatsKHR"
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
 --
+--   > VkResult vkGetPhysicalDeviceSurfaceFormatsKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , VkSurfaceKHR surface
+--   >     , uint32_t* pSurfaceFormatCount
+--   >     , VkSurfaceFormatKHR* pSurfaceFormats
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceSurfaceFormatsKHR.html vkGetPhysicalDeviceSurfaceFormatsKHR registry at www.khronos.org>
+foreign import ccall safe "vkGetPhysicalDeviceSurfaceFormatsKHR"
+               vkGetPhysicalDeviceSurfaceFormatsKHRSafe ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                ->
+                 VkSurfaceKHR -- ^ surface
+                              -> Ptr Word32 -- ^ pSurfaceFormatCount
+                                            -> Ptr VkSurfaceFormatKHR -- ^ pSurfaceFormats
+                                                                      -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
+--
 --   > VkResult vkGetPhysicalDeviceSurfacePresentModesKHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkSurfaceKHR surface
@@ -159,6 +240,28 @@ foreign import ccall unsafe "vkGetPhysicalDeviceSurfaceFormatsKHR"
 foreign import ccall unsafe
                "vkGetPhysicalDeviceSurfacePresentModesKHR"
                vkGetPhysicalDeviceSurfacePresentModesKHR ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                ->
+                 VkSurfaceKHR -- ^ surface
+                              -> Ptr Word32 -- ^ pPresentModeCount
+                                            -> Ptr VkPresentModeKHR -- ^ pPresentModes
+                                                                    -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
+--
+--   > VkResult vkGetPhysicalDeviceSurfacePresentModesKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , VkSurfaceKHR surface
+--   >     , uint32_t* pPresentModeCount
+--   >     , VkPresentModeKHR* pPresentModes
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceSurfacePresentModesKHR.html vkGetPhysicalDeviceSurfacePresentModesKHR registry at www.khronos.org>
+foreign import ccall safe
+               "vkGetPhysicalDeviceSurfacePresentModesKHR"
+               vkGetPhysicalDeviceSurfacePresentModesKHRSafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  VkSurfaceKHR -- ^ surface

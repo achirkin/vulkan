@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkShaderModuleValidationCacheCreateInfoEXT
        (VkShaderModuleValidationCacheCreateInfoEXT(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType            (VkStructureType)
 import           Graphics.Vulkan.Types.Handles                         (VkValidationCacheEXT)
 import           Graphics.Vulkan.Types.Struct.VkShaderModuleCreateInfo (VkShaderModuleCreateInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                      (unsafeDupablePerformIO)
 
 -- | > typedef struct VkShaderModuleValidationCacheCreateInfoEXT {
@@ -86,28 +86,6 @@ instance VulkanMarshal VkShaderModuleValidationCacheCreateInfoEXT
              '[VkShaderModuleCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkShaderModuleValidationCacheCreateInfoEXT where
-        type VkSTypeMType VkShaderModuleValidationCacheCreateInfoEXT =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkShaderModuleValidationCacheCreateInfoEXT, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkShaderModuleValidationCacheCreateInfoEXT, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkShaderModuleValidationCacheCreateInfoEXT, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkShaderModuleValidationCacheCreateInfoEXT, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkShaderModuleValidationCacheCreateInfoEXT where
         type FieldType "sType" VkShaderModuleValidationCacheCreateInfoEXT =
              VkStructureType
@@ -128,42 +106,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkShaderModuleValidationCacheCreateInfoEXT, sType}
 
-instance CanReadField "sType"
-           VkShaderModuleValidationCacheCreateInfoEXT
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkShaderModuleValidationCacheCreateInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkSType
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkShaderModuleValidationCacheCreateInfoEXT, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType"
-           VkShaderModuleValidationCacheCreateInfoEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkShaderModuleValidationCacheCreateInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkShaderModuleValidationCacheCreateInfoEXT where
-        type VkPNextMType VkShaderModuleValidationCacheCreateInfoEXT =
-             Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkShaderModuleValidationCacheCreateInfoEXT, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkShaderModuleValidationCacheCreateInfoEXT, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkShaderModuleValidationCacheCreateInfoEXT, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkShaderModuleValidationCacheCreateInfoEXT, pNext}
+         CanWriteField "sType" VkShaderModuleValidationCacheCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkShaderModuleValidationCacheCreateInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkShaderModuleValidationCacheCreateInfoEXT where
@@ -186,44 +146,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkShaderModuleValidationCacheCreateInfoEXT, pNext}
 
-instance CanReadField "pNext"
-           VkShaderModuleValidationCacheCreateInfoEXT
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkShaderModuleValidationCacheCreateInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkPNext
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkShaderModuleValidationCacheCreateInfoEXT, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext"
-           VkShaderModuleValidationCacheCreateInfoEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkShaderModuleValidationCacheCreateInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkValidationCache VkShaderModuleValidationCacheCreateInfoEXT
+         CanWriteField "pNext" VkShaderModuleValidationCacheCreateInfoEXT
          where
-        type VkValidationCacheMType
-               VkShaderModuleValidationCacheCreateInfoEXT
-             = VkValidationCacheEXT
-
-        {-# NOINLINE vkValidationCache #-}
-        vkValidationCache x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkShaderModuleValidationCacheCreateInfoEXT, validationCache})
-
-        {-# INLINE vkValidationCacheByteOffset #-}
-        vkValidationCacheByteOffset ~_
-          = #{offset VkShaderModuleValidationCacheCreateInfoEXT, validationCache}
-
-        {-# INLINE readVkValidationCache #-}
-        readVkValidationCache p
-          = peekByteOff p #{offset VkShaderModuleValidationCacheCreateInfoEXT, validationCache}
-
-        {-# INLINE writeVkValidationCache #-}
-        writeVkValidationCache p
-          = pokeByteOff p #{offset VkShaderModuleValidationCacheCreateInfoEXT, validationCache}
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkShaderModuleValidationCacheCreateInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "validationCache"
@@ -250,29 +190,35 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkShaderModuleValidationCacheCreateInfoEXT, validationCache}
 
-instance CanReadField "validationCache"
+instance {-# OVERLAPPING #-}
+         CanReadField "validationCache"
            VkShaderModuleValidationCacheCreateInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkValidationCache
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkShaderModuleValidationCacheCreateInfoEXT, validationCache})
 
         {-# INLINE readField #-}
-        readField = readVkValidationCache
+        readField p
+          = peekByteOff p #{offset VkShaderModuleValidationCacheCreateInfoEXT, validationCache}
 
-instance CanWriteField "validationCache"
+instance {-# OVERLAPPING #-}
+         CanWriteField "validationCache"
            VkShaderModuleValidationCacheCreateInfoEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkValidationCache
+        writeField p
+          = pokeByteOff p #{offset VkShaderModuleValidationCacheCreateInfoEXT, validationCache}
 
 instance Show VkShaderModuleValidationCacheCreateInfoEXT where
         showsPrec d x
           = showString "VkShaderModuleValidationCacheCreateInfoEXT {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkValidationCache = " .
-                            showsPrec d (vkValidationCache x) . showChar '}'
+                          showString "validationCache = " .
+                            showsPrec d (getField @"validationCache" x) . showChar '}'

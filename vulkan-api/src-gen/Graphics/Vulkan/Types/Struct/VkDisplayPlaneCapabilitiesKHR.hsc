@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkDisplayPlaneCapabilitiesKHR
        (VkDisplayPlaneCapabilitiesKHR(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkDisplayPlaneAlphaFlagsKHR (VkDisplayPlaneAlphaFlagsKHR)
 import           Graphics.Vulkan.Types.Struct.VkExtent2D                (VkExtent2D)
 import           Graphics.Vulkan.Types.Struct.VkOffset2D                (VkOffset2D)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                       (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDisplayPlaneCapabilitiesKHR {
@@ -86,28 +86,6 @@ instance VulkanMarshal VkDisplayPlaneCapabilitiesKHR where
         type StructExtends VkDisplayPlaneCapabilitiesKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSupportedAlpha VkDisplayPlaneCapabilitiesKHR where
-        type VkSupportedAlphaMType VkDisplayPlaneCapabilitiesKHR =
-             VkDisplayPlaneAlphaFlagsKHR
-
-        {-# NOINLINE vkSupportedAlpha #-}
-        vkSupportedAlpha x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneCapabilitiesKHR, supportedAlpha})
-
-        {-# INLINE vkSupportedAlphaByteOffset #-}
-        vkSupportedAlphaByteOffset ~_
-          = #{offset VkDisplayPlaneCapabilitiesKHR, supportedAlpha}
-
-        {-# INLINE readVkSupportedAlpha #-}
-        readVkSupportedAlpha p
-          = peekByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, supportedAlpha}
-
-        {-# INLINE writeVkSupportedAlpha #-}
-        writeVkSupportedAlpha p
-          = pokeByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, supportedAlpha}
-
-instance {-# OVERLAPPING #-}
          HasField "supportedAlpha" VkDisplayPlaneCapabilitiesKHR where
         type FieldType "supportedAlpha" VkDisplayPlaneCapabilitiesKHR =
              VkDisplayPlaneAlphaFlagsKHR
@@ -125,42 +103,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDisplayPlaneCapabilitiesKHR, supportedAlpha}
 
-instance CanReadField "supportedAlpha"
-           VkDisplayPlaneCapabilitiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkSupportedAlpha
+instance {-# OVERLAPPING #-}
+         CanReadField "supportedAlpha" VkDisplayPlaneCapabilitiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneCapabilitiesKHR, supportedAlpha})
 
         {-# INLINE readField #-}
-        readField = readVkSupportedAlpha
-
-instance CanWriteField "supportedAlpha"
-           VkDisplayPlaneCapabilitiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSupportedAlpha
+        readField p
+          = peekByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, supportedAlpha}
 
 instance {-# OVERLAPPING #-}
-         HasVkMinSrcPosition VkDisplayPlaneCapabilitiesKHR where
-        type VkMinSrcPositionMType VkDisplayPlaneCapabilitiesKHR =
-             VkOffset2D
-
-        {-# NOINLINE vkMinSrcPosition #-}
-        vkMinSrcPosition x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneCapabilitiesKHR, minSrcPosition})
-
-        {-# INLINE vkMinSrcPositionByteOffset #-}
-        vkMinSrcPositionByteOffset ~_
-          = #{offset VkDisplayPlaneCapabilitiesKHR, minSrcPosition}
-
-        {-# INLINE readVkMinSrcPosition #-}
-        readVkMinSrcPosition p
-          = peekByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, minSrcPosition}
-
-        {-# INLINE writeVkMinSrcPosition #-}
-        writeVkMinSrcPosition p
-          = pokeByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, minSrcPosition}
+         CanWriteField "supportedAlpha" VkDisplayPlaneCapabilitiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, supportedAlpha}
 
 instance {-# OVERLAPPING #-}
          HasField "minSrcPosition" VkDisplayPlaneCapabilitiesKHR where
@@ -180,42 +138,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDisplayPlaneCapabilitiesKHR, minSrcPosition}
 
-instance CanReadField "minSrcPosition"
-           VkDisplayPlaneCapabilitiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkMinSrcPosition
+instance {-# OVERLAPPING #-}
+         CanReadField "minSrcPosition" VkDisplayPlaneCapabilitiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneCapabilitiesKHR, minSrcPosition})
 
         {-# INLINE readField #-}
-        readField = readVkMinSrcPosition
-
-instance CanWriteField "minSrcPosition"
-           VkDisplayPlaneCapabilitiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkMinSrcPosition
+        readField p
+          = peekByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, minSrcPosition}
 
 instance {-# OVERLAPPING #-}
-         HasVkMaxSrcPosition VkDisplayPlaneCapabilitiesKHR where
-        type VkMaxSrcPositionMType VkDisplayPlaneCapabilitiesKHR =
-             VkOffset2D
-
-        {-# NOINLINE vkMaxSrcPosition #-}
-        vkMaxSrcPosition x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneCapabilitiesKHR, maxSrcPosition})
-
-        {-# INLINE vkMaxSrcPositionByteOffset #-}
-        vkMaxSrcPositionByteOffset ~_
-          = #{offset VkDisplayPlaneCapabilitiesKHR, maxSrcPosition}
-
-        {-# INLINE readVkMaxSrcPosition #-}
-        readVkMaxSrcPosition p
-          = peekByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, maxSrcPosition}
-
-        {-# INLINE writeVkMaxSrcPosition #-}
-        writeVkMaxSrcPosition p
-          = pokeByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, maxSrcPosition}
+         CanWriteField "minSrcPosition" VkDisplayPlaneCapabilitiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, minSrcPosition}
 
 instance {-# OVERLAPPING #-}
          HasField "maxSrcPosition" VkDisplayPlaneCapabilitiesKHR where
@@ -235,41 +173,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDisplayPlaneCapabilitiesKHR, maxSrcPosition}
 
-instance CanReadField "maxSrcPosition"
-           VkDisplayPlaneCapabilitiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkMaxSrcPosition
+instance {-# OVERLAPPING #-}
+         CanReadField "maxSrcPosition" VkDisplayPlaneCapabilitiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneCapabilitiesKHR, maxSrcPosition})
 
         {-# INLINE readField #-}
-        readField = readVkMaxSrcPosition
-
-instance CanWriteField "maxSrcPosition"
-           VkDisplayPlaneCapabilitiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkMaxSrcPosition
+        readField p
+          = peekByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, maxSrcPosition}
 
 instance {-# OVERLAPPING #-}
-         HasVkMinSrcExtent VkDisplayPlaneCapabilitiesKHR where
-        type VkMinSrcExtentMType VkDisplayPlaneCapabilitiesKHR = VkExtent2D
-
-        {-# NOINLINE vkMinSrcExtent #-}
-        vkMinSrcExtent x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneCapabilitiesKHR, minSrcExtent})
-
-        {-# INLINE vkMinSrcExtentByteOffset #-}
-        vkMinSrcExtentByteOffset ~_
-          = #{offset VkDisplayPlaneCapabilitiesKHR, minSrcExtent}
-
-        {-# INLINE readVkMinSrcExtent #-}
-        readVkMinSrcExtent p
-          = peekByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, minSrcExtent}
-
-        {-# INLINE writeVkMinSrcExtent #-}
-        writeVkMinSrcExtent p
-          = pokeByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, minSrcExtent}
+         CanWriteField "maxSrcPosition" VkDisplayPlaneCapabilitiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, maxSrcPosition}
 
 instance {-# OVERLAPPING #-}
          HasField "minSrcExtent" VkDisplayPlaneCapabilitiesKHR where
@@ -289,39 +208,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDisplayPlaneCapabilitiesKHR, minSrcExtent}
 
-instance CanReadField "minSrcExtent" VkDisplayPlaneCapabilitiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkMinSrcExtent
+instance {-# OVERLAPPING #-}
+         CanReadField "minSrcExtent" VkDisplayPlaneCapabilitiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneCapabilitiesKHR, minSrcExtent})
 
         {-# INLINE readField #-}
-        readField = readVkMinSrcExtent
-
-instance CanWriteField "minSrcExtent" VkDisplayPlaneCapabilitiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkMinSrcExtent
+        readField p
+          = peekByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, minSrcExtent}
 
 instance {-# OVERLAPPING #-}
-         HasVkMaxSrcExtent VkDisplayPlaneCapabilitiesKHR where
-        type VkMaxSrcExtentMType VkDisplayPlaneCapabilitiesKHR = VkExtent2D
-
-        {-# NOINLINE vkMaxSrcExtent #-}
-        vkMaxSrcExtent x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneCapabilitiesKHR, maxSrcExtent})
-
-        {-# INLINE vkMaxSrcExtentByteOffset #-}
-        vkMaxSrcExtentByteOffset ~_
-          = #{offset VkDisplayPlaneCapabilitiesKHR, maxSrcExtent}
-
-        {-# INLINE readVkMaxSrcExtent #-}
-        readVkMaxSrcExtent p
-          = peekByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, maxSrcExtent}
-
-        {-# INLINE writeVkMaxSrcExtent #-}
-        writeVkMaxSrcExtent p
-          = pokeByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, maxSrcExtent}
+         CanWriteField "minSrcExtent" VkDisplayPlaneCapabilitiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, minSrcExtent}
 
 instance {-# OVERLAPPING #-}
          HasField "maxSrcExtent" VkDisplayPlaneCapabilitiesKHR where
@@ -341,40 +243,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDisplayPlaneCapabilitiesKHR, maxSrcExtent}
 
-instance CanReadField "maxSrcExtent" VkDisplayPlaneCapabilitiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkMaxSrcExtent
+instance {-# OVERLAPPING #-}
+         CanReadField "maxSrcExtent" VkDisplayPlaneCapabilitiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneCapabilitiesKHR, maxSrcExtent})
 
         {-# INLINE readField #-}
-        readField = readVkMaxSrcExtent
-
-instance CanWriteField "maxSrcExtent" VkDisplayPlaneCapabilitiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkMaxSrcExtent
+        readField p
+          = peekByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, maxSrcExtent}
 
 instance {-# OVERLAPPING #-}
-         HasVkMinDstPosition VkDisplayPlaneCapabilitiesKHR where
-        type VkMinDstPositionMType VkDisplayPlaneCapabilitiesKHR =
-             VkOffset2D
-
-        {-# NOINLINE vkMinDstPosition #-}
-        vkMinDstPosition x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneCapabilitiesKHR, minDstPosition})
-
-        {-# INLINE vkMinDstPositionByteOffset #-}
-        vkMinDstPositionByteOffset ~_
-          = #{offset VkDisplayPlaneCapabilitiesKHR, minDstPosition}
-
-        {-# INLINE readVkMinDstPosition #-}
-        readVkMinDstPosition p
-          = peekByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, minDstPosition}
-
-        {-# INLINE writeVkMinDstPosition #-}
-        writeVkMinDstPosition p
-          = pokeByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, minDstPosition}
+         CanWriteField "maxSrcExtent" VkDisplayPlaneCapabilitiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, maxSrcExtent}
 
 instance {-# OVERLAPPING #-}
          HasField "minDstPosition" VkDisplayPlaneCapabilitiesKHR where
@@ -394,42 +278,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDisplayPlaneCapabilitiesKHR, minDstPosition}
 
-instance CanReadField "minDstPosition"
-           VkDisplayPlaneCapabilitiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkMinDstPosition
+instance {-# OVERLAPPING #-}
+         CanReadField "minDstPosition" VkDisplayPlaneCapabilitiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneCapabilitiesKHR, minDstPosition})
 
         {-# INLINE readField #-}
-        readField = readVkMinDstPosition
-
-instance CanWriteField "minDstPosition"
-           VkDisplayPlaneCapabilitiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkMinDstPosition
+        readField p
+          = peekByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, minDstPosition}
 
 instance {-# OVERLAPPING #-}
-         HasVkMaxDstPosition VkDisplayPlaneCapabilitiesKHR where
-        type VkMaxDstPositionMType VkDisplayPlaneCapabilitiesKHR =
-             VkOffset2D
-
-        {-# NOINLINE vkMaxDstPosition #-}
-        vkMaxDstPosition x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneCapabilitiesKHR, maxDstPosition})
-
-        {-# INLINE vkMaxDstPositionByteOffset #-}
-        vkMaxDstPositionByteOffset ~_
-          = #{offset VkDisplayPlaneCapabilitiesKHR, maxDstPosition}
-
-        {-# INLINE readVkMaxDstPosition #-}
-        readVkMaxDstPosition p
-          = peekByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, maxDstPosition}
-
-        {-# INLINE writeVkMaxDstPosition #-}
-        writeVkMaxDstPosition p
-          = pokeByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, maxDstPosition}
+         CanWriteField "minDstPosition" VkDisplayPlaneCapabilitiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, minDstPosition}
 
 instance {-# OVERLAPPING #-}
          HasField "maxDstPosition" VkDisplayPlaneCapabilitiesKHR where
@@ -449,41 +313,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDisplayPlaneCapabilitiesKHR, maxDstPosition}
 
-instance CanReadField "maxDstPosition"
-           VkDisplayPlaneCapabilitiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkMaxDstPosition
+instance {-# OVERLAPPING #-}
+         CanReadField "maxDstPosition" VkDisplayPlaneCapabilitiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneCapabilitiesKHR, maxDstPosition})
 
         {-# INLINE readField #-}
-        readField = readVkMaxDstPosition
-
-instance CanWriteField "maxDstPosition"
-           VkDisplayPlaneCapabilitiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkMaxDstPosition
+        readField p
+          = peekByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, maxDstPosition}
 
 instance {-# OVERLAPPING #-}
-         HasVkMinDstExtent VkDisplayPlaneCapabilitiesKHR where
-        type VkMinDstExtentMType VkDisplayPlaneCapabilitiesKHR = VkExtent2D
-
-        {-# NOINLINE vkMinDstExtent #-}
-        vkMinDstExtent x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneCapabilitiesKHR, minDstExtent})
-
-        {-# INLINE vkMinDstExtentByteOffset #-}
-        vkMinDstExtentByteOffset ~_
-          = #{offset VkDisplayPlaneCapabilitiesKHR, minDstExtent}
-
-        {-# INLINE readVkMinDstExtent #-}
-        readVkMinDstExtent p
-          = peekByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, minDstExtent}
-
-        {-# INLINE writeVkMinDstExtent #-}
-        writeVkMinDstExtent p
-          = pokeByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, minDstExtent}
+         CanWriteField "maxDstPosition" VkDisplayPlaneCapabilitiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, maxDstPosition}
 
 instance {-# OVERLAPPING #-}
          HasField "minDstExtent" VkDisplayPlaneCapabilitiesKHR where
@@ -503,39 +348,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDisplayPlaneCapabilitiesKHR, minDstExtent}
 
-instance CanReadField "minDstExtent" VkDisplayPlaneCapabilitiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkMinDstExtent
+instance {-# OVERLAPPING #-}
+         CanReadField "minDstExtent" VkDisplayPlaneCapabilitiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneCapabilitiesKHR, minDstExtent})
 
         {-# INLINE readField #-}
-        readField = readVkMinDstExtent
-
-instance CanWriteField "minDstExtent" VkDisplayPlaneCapabilitiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkMinDstExtent
+        readField p
+          = peekByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, minDstExtent}
 
 instance {-# OVERLAPPING #-}
-         HasVkMaxDstExtent VkDisplayPlaneCapabilitiesKHR where
-        type VkMaxDstExtentMType VkDisplayPlaneCapabilitiesKHR = VkExtent2D
-
-        {-# NOINLINE vkMaxDstExtent #-}
-        vkMaxDstExtent x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneCapabilitiesKHR, maxDstExtent})
-
-        {-# INLINE vkMaxDstExtentByteOffset #-}
-        vkMaxDstExtentByteOffset ~_
-          = #{offset VkDisplayPlaneCapabilitiesKHR, maxDstExtent}
-
-        {-# INLINE readVkMaxDstExtent #-}
-        readVkMaxDstExtent p
-          = peekByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, maxDstExtent}
-
-        {-# INLINE writeVkMaxDstExtent #-}
-        writeVkMaxDstExtent p
-          = pokeByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, maxDstExtent}
+         CanWriteField "minDstExtent" VkDisplayPlaneCapabilitiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, minDstExtent}
 
 instance {-# OVERLAPPING #-}
          HasField "maxDstExtent" VkDisplayPlaneCapabilitiesKHR where
@@ -555,46 +383,51 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDisplayPlaneCapabilitiesKHR, maxDstExtent}
 
-instance CanReadField "maxDstExtent" VkDisplayPlaneCapabilitiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkMaxDstExtent
+instance {-# OVERLAPPING #-}
+         CanReadField "maxDstExtent" VkDisplayPlaneCapabilitiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPlaneCapabilitiesKHR, maxDstExtent})
 
         {-# INLINE readField #-}
-        readField = readVkMaxDstExtent
+        readField p
+          = peekByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, maxDstExtent}
 
-instance CanWriteField "maxDstExtent" VkDisplayPlaneCapabilitiesKHR
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "maxDstExtent" VkDisplayPlaneCapabilitiesKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkMaxDstExtent
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPlaneCapabilitiesKHR, maxDstExtent}
 
 instance Show VkDisplayPlaneCapabilitiesKHR where
         showsPrec d x
           = showString "VkDisplayPlaneCapabilitiesKHR {" .
-              showString "vkSupportedAlpha = " .
-                showsPrec d (vkSupportedAlpha x) .
+              showString "supportedAlpha = " .
+                showsPrec d (getField @"supportedAlpha" x) .
                   showString ", " .
-                    showString "vkMinSrcPosition = " .
-                      showsPrec d (vkMinSrcPosition x) .
+                    showString "minSrcPosition = " .
+                      showsPrec d (getField @"minSrcPosition" x) .
                         showString ", " .
-                          showString "vkMaxSrcPosition = " .
-                            showsPrec d (vkMaxSrcPosition x) .
+                          showString "maxSrcPosition = " .
+                            showsPrec d (getField @"maxSrcPosition" x) .
                               showString ", " .
-                                showString "vkMinSrcExtent = " .
-                                  showsPrec d (vkMinSrcExtent x) .
+                                showString "minSrcExtent = " .
+                                  showsPrec d (getField @"minSrcExtent" x) .
                                     showString ", " .
-                                      showString "vkMaxSrcExtent = " .
-                                        showsPrec d (vkMaxSrcExtent x) .
+                                      showString "maxSrcExtent = " .
+                                        showsPrec d (getField @"maxSrcExtent" x) .
                                           showString ", " .
-                                            showString "vkMinDstPosition = " .
-                                              showsPrec d (vkMinDstPosition x) .
+                                            showString "minDstPosition = " .
+                                              showsPrec d (getField @"minDstPosition" x) .
                                                 showString ", " .
-                                                  showString "vkMaxDstPosition = " .
-                                                    showsPrec d (vkMaxDstPosition x) .
+                                                  showString "maxDstPosition = " .
+                                                    showsPrec d (getField @"maxDstPosition" x) .
                                                       showString ", " .
-                                                        showString "vkMinDstExtent = " .
-                                                          showsPrec d (vkMinDstExtent x) .
+                                                        showString "minDstExtent = " .
+                                                          showsPrec d (getField @"minDstExtent" x) .
                                                             showString ", " .
-                                                              showString "vkMaxDstExtent = " .
-                                                                showsPrec d (vkMaxDstExtent x) .
-                                                                  showChar '}'
+                                                              showString "maxDstExtent = " .
+                                                                showsPrec d
+                                                                  (getField @"maxDstExtent" x)
+                                                                  . showChar '}'

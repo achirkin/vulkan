@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkExportMemoryAllocateInfoNV
        (VkExportMemoryAllocateInfoNV(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagsNV (VkExternalMemoryHandleTypeFlagsNV)
 import           Graphics.Vulkan.Types.Enum.VkStructureType                   (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo            (VkMemoryAllocateInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                             (unsafeDupablePerformIO)
 
 -- | > typedef struct VkExportMemoryAllocateInfoNV {
@@ -79,27 +79,6 @@ instance VulkanMarshal VkExportMemoryAllocateInfoNV where
              '[VkMemoryAllocateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkExportMemoryAllocateInfoNV where
-        type VkSTypeMType VkExportMemoryAllocateInfoNV = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkExportMemoryAllocateInfoNV, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkExportMemoryAllocateInfoNV, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkExportMemoryAllocateInfoNV, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkExportMemoryAllocateInfoNV, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkExportMemoryAllocateInfoNV where
         type FieldType "sType" VkExportMemoryAllocateInfoNV =
              VkStructureType
@@ -115,37 +94,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkExportMemoryAllocateInfoNV, sType}
 
-instance CanReadField "sType" VkExportMemoryAllocateInfoNV where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkExportMemoryAllocateInfoNV where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkExportMemoryAllocateInfoNV, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkExportMemoryAllocateInfoNV where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkExportMemoryAllocateInfoNV, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkExportMemoryAllocateInfoNV where
-        type VkPNextMType VkExportMemoryAllocateInfoNV = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkExportMemoryAllocateInfoNV, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkExportMemoryAllocateInfoNV, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkExportMemoryAllocateInfoNV, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkExportMemoryAllocateInfoNV, pNext}
+         CanWriteField "sType" VkExportMemoryAllocateInfoNV where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkExportMemoryAllocateInfoNV, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkExportMemoryAllocateInfoNV where
@@ -162,38 +126,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkExportMemoryAllocateInfoNV, pNext}
 
-instance CanReadField "pNext" VkExportMemoryAllocateInfoNV where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkExportMemoryAllocateInfoNV where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkExportMemoryAllocateInfoNV, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkExportMemoryAllocateInfoNV where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkExportMemoryAllocateInfoNV, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkHandleTypes VkExportMemoryAllocateInfoNV where
-        type VkHandleTypesMType VkExportMemoryAllocateInfoNV =
-             VkExternalMemoryHandleTypeFlagsNV
-
-        {-# NOINLINE vkHandleTypes #-}
-        vkHandleTypes x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkExportMemoryAllocateInfoNV, handleTypes})
-
-        {-# INLINE vkHandleTypesByteOffset #-}
-        vkHandleTypesByteOffset ~_
-          = #{offset VkExportMemoryAllocateInfoNV, handleTypes}
-
-        {-# INLINE readVkHandleTypes #-}
-        readVkHandleTypes p
-          = peekByteOff p #{offset VkExportMemoryAllocateInfoNV, handleTypes}
-
-        {-# INLINE writeVkHandleTypes #-}
-        writeVkHandleTypes p
-          = pokeByteOff p #{offset VkExportMemoryAllocateInfoNV, handleTypes}
+         CanWriteField "pNext" VkExportMemoryAllocateInfoNV where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkExportMemoryAllocateInfoNV, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "handleTypes" VkExportMemoryAllocateInfoNV where
@@ -213,27 +161,31 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkExportMemoryAllocateInfoNV, handleTypes}
 
-instance CanReadField "handleTypes" VkExportMemoryAllocateInfoNV
-         where
-        {-# INLINE getField #-}
-        getField = vkHandleTypes
+instance {-# OVERLAPPING #-}
+         CanReadField "handleTypes" VkExportMemoryAllocateInfoNV where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkExportMemoryAllocateInfoNV, handleTypes})
 
         {-# INLINE readField #-}
-        readField = readVkHandleTypes
+        readField p
+          = peekByteOff p #{offset VkExportMemoryAllocateInfoNV, handleTypes}
 
-instance CanWriteField "handleTypes" VkExportMemoryAllocateInfoNV
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "handleTypes" VkExportMemoryAllocateInfoNV where
         {-# INLINE writeField #-}
-        writeField = writeVkHandleTypes
+        writeField p
+          = pokeByteOff p #{offset VkExportMemoryAllocateInfoNV, handleTypes}
 
 instance Show VkExportMemoryAllocateInfoNV where
         showsPrec d x
           = showString "VkExportMemoryAllocateInfoNV {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkHandleTypes = " .
-                            showsPrec d (vkHandleTypes x) . showChar '}'
+                          showString "handleTypes = " .
+                            showsPrec d (getField @"handleTypes" x) . showChar '}'

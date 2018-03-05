@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkDeviceGroupSubmitInfoKHX
        (VkDeviceGroupSubmitInfoKHX(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkSubmitInfo  (VkSubmitInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDeviceGroupSubmitInfoKHX {
@@ -83,27 +83,6 @@ instance VulkanMarshal VkDeviceGroupSubmitInfoKHX where
         type ReturnedOnly VkDeviceGroupSubmitInfoKHX = 'False -- ' closing tick for hsc2hs
         type StructExtends VkDeviceGroupSubmitInfoKHX = '[VkSubmitInfo] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkDeviceGroupSubmitInfoKHX
-         where
-        type VkSTypeMType VkDeviceGroupSubmitInfoKHX = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupSubmitInfoKHX, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkDeviceGroupSubmitInfoKHX, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkDeviceGroupSubmitInfoKHX, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkDeviceGroupSubmitInfoKHX, sType}
-
 instance {-# OVERLAPPING #-}
          HasField "sType" VkDeviceGroupSubmitInfoKHX where
         type FieldType "sType" VkDeviceGroupSubmitInfoKHX = VkStructureType
@@ -119,37 +98,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGroupSubmitInfoKHX, sType}
 
-instance CanReadField "sType" VkDeviceGroupSubmitInfoKHX where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkDeviceGroupSubmitInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupSubmitInfoKHX, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkDeviceGroupSubmitInfoKHX, sType}
 
-instance CanWriteField "sType" VkDeviceGroupSubmitInfoKHX where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkDeviceGroupSubmitInfoKHX where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkDeviceGroupSubmitInfoKHX
-         where
-        type VkPNextMType VkDeviceGroupSubmitInfoKHX = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupSubmitInfoKHX, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkDeviceGroupSubmitInfoKHX, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkDeviceGroupSubmitInfoKHX, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkDeviceGroupSubmitInfoKHX, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGroupSubmitInfoKHX, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkDeviceGroupSubmitInfoKHX where
@@ -166,37 +130,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGroupSubmitInfoKHX, pNext}
 
-instance CanReadField "pNext" VkDeviceGroupSubmitInfoKHX where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkDeviceGroupSubmitInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupSubmitInfoKHX, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkDeviceGroupSubmitInfoKHX where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkDeviceGroupSubmitInfoKHX, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkWaitSemaphoreCount VkDeviceGroupSubmitInfoKHX where
-        type VkWaitSemaphoreCountMType VkDeviceGroupSubmitInfoKHX = Word32
-
-        {-# NOINLINE vkWaitSemaphoreCount #-}
-        vkWaitSemaphoreCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupSubmitInfoKHX, waitSemaphoreCount})
-
-        {-# INLINE vkWaitSemaphoreCountByteOffset #-}
-        vkWaitSemaphoreCountByteOffset ~_
-          = #{offset VkDeviceGroupSubmitInfoKHX, waitSemaphoreCount}
-
-        {-# INLINE readVkWaitSemaphoreCount #-}
-        readVkWaitSemaphoreCount p
-          = peekByteOff p #{offset VkDeviceGroupSubmitInfoKHX, waitSemaphoreCount}
-
-        {-# INLINE writeVkWaitSemaphoreCount #-}
-        writeVkWaitSemaphoreCount p
-          = pokeByteOff p #{offset VkDeviceGroupSubmitInfoKHX, waitSemaphoreCount}
+         CanWriteField "pNext" VkDeviceGroupSubmitInfoKHX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGroupSubmitInfoKHX, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "waitSemaphoreCount" VkDeviceGroupSubmitInfoKHX where
@@ -216,42 +165,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGroupSubmitInfoKHX, waitSemaphoreCount}
 
-instance CanReadField "waitSemaphoreCount"
-           VkDeviceGroupSubmitInfoKHX
-         where
-        {-# INLINE getField #-}
-        getField = vkWaitSemaphoreCount
+instance {-# OVERLAPPING #-}
+         CanReadField "waitSemaphoreCount" VkDeviceGroupSubmitInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupSubmitInfoKHX, waitSemaphoreCount})
 
         {-# INLINE readField #-}
-        readField = readVkWaitSemaphoreCount
-
-instance CanWriteField "waitSemaphoreCount"
-           VkDeviceGroupSubmitInfoKHX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkWaitSemaphoreCount
+        readField p
+          = peekByteOff p #{offset VkDeviceGroupSubmitInfoKHX, waitSemaphoreCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPWaitSemaphoreDeviceIndices VkDeviceGroupSubmitInfoKHX where
-        type VkPWaitSemaphoreDeviceIndicesMType VkDeviceGroupSubmitInfoKHX
-             = Ptr Word32
-
-        {-# NOINLINE vkPWaitSemaphoreDeviceIndices #-}
-        vkPWaitSemaphoreDeviceIndices x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupSubmitInfoKHX, pWaitSemaphoreDeviceIndices})
-
-        {-# INLINE vkPWaitSemaphoreDeviceIndicesByteOffset #-}
-        vkPWaitSemaphoreDeviceIndicesByteOffset ~_
-          = #{offset VkDeviceGroupSubmitInfoKHX, pWaitSemaphoreDeviceIndices}
-
-        {-# INLINE readVkPWaitSemaphoreDeviceIndices #-}
-        readVkPWaitSemaphoreDeviceIndices p
-          = peekByteOff p #{offset VkDeviceGroupSubmitInfoKHX, pWaitSemaphoreDeviceIndices}
-
-        {-# INLINE writeVkPWaitSemaphoreDeviceIndices #-}
-        writeVkPWaitSemaphoreDeviceIndices p
-          = pokeByteOff p #{offset VkDeviceGroupSubmitInfoKHX, pWaitSemaphoreDeviceIndices}
+         CanWriteField "waitSemaphoreCount" VkDeviceGroupSubmitInfoKHX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGroupSubmitInfoKHX, waitSemaphoreCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pWaitSemaphoreDeviceIndices" VkDeviceGroupSubmitInfoKHX
@@ -277,41 +206,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGroupSubmitInfoKHX, pWaitSemaphoreDeviceIndices}
 
-instance CanReadField "pWaitSemaphoreDeviceIndices"
+instance {-# OVERLAPPING #-}
+         CanReadField "pWaitSemaphoreDeviceIndices"
            VkDeviceGroupSubmitInfoKHX
          where
-        {-# INLINE getField #-}
-        getField = vkPWaitSemaphoreDeviceIndices
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupSubmitInfoKHX, pWaitSemaphoreDeviceIndices})
 
         {-# INLINE readField #-}
-        readField = readVkPWaitSemaphoreDeviceIndices
+        readField p
+          = peekByteOff p #{offset VkDeviceGroupSubmitInfoKHX, pWaitSemaphoreDeviceIndices}
 
-instance CanWriteField "pWaitSemaphoreDeviceIndices"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pWaitSemaphoreDeviceIndices"
            VkDeviceGroupSubmitInfoKHX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPWaitSemaphoreDeviceIndices
-
-instance {-# OVERLAPPING #-}
-         HasVkCommandBufferCount VkDeviceGroupSubmitInfoKHX where
-        type VkCommandBufferCountMType VkDeviceGroupSubmitInfoKHX = Word32
-
-        {-# NOINLINE vkCommandBufferCount #-}
-        vkCommandBufferCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupSubmitInfoKHX, commandBufferCount})
-
-        {-# INLINE vkCommandBufferCountByteOffset #-}
-        vkCommandBufferCountByteOffset ~_
-          = #{offset VkDeviceGroupSubmitInfoKHX, commandBufferCount}
-
-        {-# INLINE readVkCommandBufferCount #-}
-        readVkCommandBufferCount p
-          = peekByteOff p #{offset VkDeviceGroupSubmitInfoKHX, commandBufferCount}
-
-        {-# INLINE writeVkCommandBufferCount #-}
-        writeVkCommandBufferCount p
-          = pokeByteOff p #{offset VkDeviceGroupSubmitInfoKHX, commandBufferCount}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGroupSubmitInfoKHX, pWaitSemaphoreDeviceIndices}
 
 instance {-# OVERLAPPING #-}
          HasField "commandBufferCount" VkDeviceGroupSubmitInfoKHX where
@@ -331,42 +245,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGroupSubmitInfoKHX, commandBufferCount}
 
-instance CanReadField "commandBufferCount"
-           VkDeviceGroupSubmitInfoKHX
-         where
-        {-# INLINE getField #-}
-        getField = vkCommandBufferCount
+instance {-# OVERLAPPING #-}
+         CanReadField "commandBufferCount" VkDeviceGroupSubmitInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupSubmitInfoKHX, commandBufferCount})
 
         {-# INLINE readField #-}
-        readField = readVkCommandBufferCount
-
-instance CanWriteField "commandBufferCount"
-           VkDeviceGroupSubmitInfoKHX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkCommandBufferCount
+        readField p
+          = peekByteOff p #{offset VkDeviceGroupSubmitInfoKHX, commandBufferCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPCommandBufferDeviceMasks VkDeviceGroupSubmitInfoKHX where
-        type VkPCommandBufferDeviceMasksMType VkDeviceGroupSubmitInfoKHX =
-             Ptr Word32
-
-        {-# NOINLINE vkPCommandBufferDeviceMasks #-}
-        vkPCommandBufferDeviceMasks x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupSubmitInfoKHX, pCommandBufferDeviceMasks})
-
-        {-# INLINE vkPCommandBufferDeviceMasksByteOffset #-}
-        vkPCommandBufferDeviceMasksByteOffset ~_
-          = #{offset VkDeviceGroupSubmitInfoKHX, pCommandBufferDeviceMasks}
-
-        {-# INLINE readVkPCommandBufferDeviceMasks #-}
-        readVkPCommandBufferDeviceMasks p
-          = peekByteOff p #{offset VkDeviceGroupSubmitInfoKHX, pCommandBufferDeviceMasks}
-
-        {-# INLINE writeVkPCommandBufferDeviceMasks #-}
-        writeVkPCommandBufferDeviceMasks p
-          = pokeByteOff p #{offset VkDeviceGroupSubmitInfoKHX, pCommandBufferDeviceMasks}
+         CanWriteField "commandBufferCount" VkDeviceGroupSubmitInfoKHX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGroupSubmitInfoKHX, commandBufferCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pCommandBufferDeviceMasks" VkDeviceGroupSubmitInfoKHX
@@ -392,42 +286,25 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGroupSubmitInfoKHX, pCommandBufferDeviceMasks}
 
-instance CanReadField "pCommandBufferDeviceMasks"
-           VkDeviceGroupSubmitInfoKHX
+instance {-# OVERLAPPING #-}
+         CanReadField "pCommandBufferDeviceMasks" VkDeviceGroupSubmitInfoKHX
          where
-        {-# INLINE getField #-}
-        getField = vkPCommandBufferDeviceMasks
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupSubmitInfoKHX, pCommandBufferDeviceMasks})
 
         {-# INLINE readField #-}
-        readField = readVkPCommandBufferDeviceMasks
+        readField p
+          = peekByteOff p #{offset VkDeviceGroupSubmitInfoKHX, pCommandBufferDeviceMasks}
 
-instance CanWriteField "pCommandBufferDeviceMasks"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pCommandBufferDeviceMasks"
            VkDeviceGroupSubmitInfoKHX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPCommandBufferDeviceMasks
-
-instance {-# OVERLAPPING #-}
-         HasVkSignalSemaphoreCount VkDeviceGroupSubmitInfoKHX where
-        type VkSignalSemaphoreCountMType VkDeviceGroupSubmitInfoKHX =
-             Word32
-
-        {-# NOINLINE vkSignalSemaphoreCount #-}
-        vkSignalSemaphoreCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupSubmitInfoKHX, signalSemaphoreCount})
-
-        {-# INLINE vkSignalSemaphoreCountByteOffset #-}
-        vkSignalSemaphoreCountByteOffset ~_
-          = #{offset VkDeviceGroupSubmitInfoKHX, signalSemaphoreCount}
-
-        {-# INLINE readVkSignalSemaphoreCount #-}
-        readVkSignalSemaphoreCount p
-          = peekByteOff p #{offset VkDeviceGroupSubmitInfoKHX, signalSemaphoreCount}
-
-        {-# INLINE writeVkSignalSemaphoreCount #-}
-        writeVkSignalSemaphoreCount p
-          = pokeByteOff p #{offset VkDeviceGroupSubmitInfoKHX, signalSemaphoreCount}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGroupSubmitInfoKHX, pCommandBufferDeviceMasks}
 
 instance {-# OVERLAPPING #-}
          HasField "signalSemaphoreCount" VkDeviceGroupSubmitInfoKHX where
@@ -449,43 +326,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGroupSubmitInfoKHX, signalSemaphoreCount}
 
-instance CanReadField "signalSemaphoreCount"
-           VkDeviceGroupSubmitInfoKHX
+instance {-# OVERLAPPING #-}
+         CanReadField "signalSemaphoreCount" VkDeviceGroupSubmitInfoKHX
          where
-        {-# INLINE getField #-}
-        getField = vkSignalSemaphoreCount
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupSubmitInfoKHX, signalSemaphoreCount})
 
         {-# INLINE readField #-}
-        readField = readVkSignalSemaphoreCount
-
-instance CanWriteField "signalSemaphoreCount"
-           VkDeviceGroupSubmitInfoKHX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSignalSemaphoreCount
+        readField p
+          = peekByteOff p #{offset VkDeviceGroupSubmitInfoKHX, signalSemaphoreCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPSignalSemaphoreDeviceIndices VkDeviceGroupSubmitInfoKHX where
-        type VkPSignalSemaphoreDeviceIndicesMType
-               VkDeviceGroupSubmitInfoKHX
-             = Ptr Word32
-
-        {-# NOINLINE vkPSignalSemaphoreDeviceIndices #-}
-        vkPSignalSemaphoreDeviceIndices x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupSubmitInfoKHX, pSignalSemaphoreDeviceIndices})
-
-        {-# INLINE vkPSignalSemaphoreDeviceIndicesByteOffset #-}
-        vkPSignalSemaphoreDeviceIndicesByteOffset ~_
-          = #{offset VkDeviceGroupSubmitInfoKHX, pSignalSemaphoreDeviceIndices}
-
-        {-# INLINE readVkPSignalSemaphoreDeviceIndices #-}
-        readVkPSignalSemaphoreDeviceIndices p
-          = peekByteOff p #{offset VkDeviceGroupSubmitInfoKHX, pSignalSemaphoreDeviceIndices}
-
-        {-# INLINE writeVkPSignalSemaphoreDeviceIndices #-}
-        writeVkPSignalSemaphoreDeviceIndices p
-          = pokeByteOff p #{offset VkDeviceGroupSubmitInfoKHX, pSignalSemaphoreDeviceIndices}
+         CanWriteField "signalSemaphoreCount" VkDeviceGroupSubmitInfoKHX
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGroupSubmitInfoKHX, signalSemaphoreCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pSignalSemaphoreDeviceIndices" VkDeviceGroupSubmitInfoKHX
@@ -511,48 +369,58 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGroupSubmitInfoKHX, pSignalSemaphoreDeviceIndices}
 
-instance CanReadField "pSignalSemaphoreDeviceIndices"
+instance {-# OVERLAPPING #-}
+         CanReadField "pSignalSemaphoreDeviceIndices"
            VkDeviceGroupSubmitInfoKHX
          where
-        {-# INLINE getField #-}
-        getField = vkPSignalSemaphoreDeviceIndices
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGroupSubmitInfoKHX, pSignalSemaphoreDeviceIndices})
 
         {-# INLINE readField #-}
-        readField = readVkPSignalSemaphoreDeviceIndices
+        readField p
+          = peekByteOff p #{offset VkDeviceGroupSubmitInfoKHX, pSignalSemaphoreDeviceIndices}
 
-instance CanWriteField "pSignalSemaphoreDeviceIndices"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pSignalSemaphoreDeviceIndices"
            VkDeviceGroupSubmitInfoKHX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPSignalSemaphoreDeviceIndices
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGroupSubmitInfoKHX, pSignalSemaphoreDeviceIndices}
 
 instance Show VkDeviceGroupSubmitInfoKHX where
         showsPrec d x
           = showString "VkDeviceGroupSubmitInfoKHX {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkWaitSemaphoreCount = " .
-                            showsPrec d (vkWaitSemaphoreCount x) .
+                          showString "waitSemaphoreCount = " .
+                            showsPrec d (getField @"waitSemaphoreCount" x) .
                               showString ", " .
-                                showString "vkPWaitSemaphoreDeviceIndices = " .
-                                  showsPrec d (vkPWaitSemaphoreDeviceIndices x) .
+                                showString "pWaitSemaphoreDeviceIndices = " .
+                                  showsPrec d (getField @"pWaitSemaphoreDeviceIndices" x) .
                                     showString ", " .
-                                      showString "vkCommandBufferCount = " .
-                                        showsPrec d (vkCommandBufferCount x) .
+                                      showString "commandBufferCount = " .
+                                        showsPrec d (getField @"commandBufferCount" x) .
                                           showString ", " .
-                                            showString "vkPCommandBufferDeviceMasks = " .
-                                              showsPrec d (vkPCommandBufferDeviceMasks x) .
+                                            showString "pCommandBufferDeviceMasks = " .
+                                              showsPrec d (getField @"pCommandBufferDeviceMasks" x)
+                                                .
                                                 showString ", " .
-                                                  showString "vkSignalSemaphoreCount = " .
-                                                    showsPrec d (vkSignalSemaphoreCount x) .
+                                                  showString "signalSemaphoreCount = " .
+                                                    showsPrec d (getField @"signalSemaphoreCount" x)
+                                                      .
                                                       showString ", " .
                                                         showString
-                                                          "vkPSignalSemaphoreDeviceIndices = "
+                                                          "pSignalSemaphoreDeviceIndices = "
                                                           .
                                                           showsPrec d
-                                                            (vkPSignalSemaphoreDeviceIndices x)
+                                                            (getField
+                                                               @"pSignalSemaphoreDeviceIndices"
+                                                               x)
                                                             . showChar '}'

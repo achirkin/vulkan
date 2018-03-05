@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkSubpassDependency
        (VkSubpassDependency(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkAccessFlags        (VkAccessFlags)
 import           Graphics.Vulkan.Types.Enum.VkDependencyFlags    (VkDependencyFlags)
 import           Graphics.Vulkan.Types.Enum.VkPipelineStageFlags (VkPipelineStageFlags)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSubpassDependency {
@@ -77,27 +77,6 @@ instance VulkanMarshal VkSubpassDependency where
         type ReturnedOnly VkSubpassDependency = 'False -- ' closing tick for hsc2hs
         type StructExtends VkSubpassDependency = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSrcSubpass VkSubpassDependency
-         where
-        type VkSrcSubpassMType VkSubpassDependency = Word32
-
-        {-# NOINLINE vkSrcSubpass #-}
-        vkSrcSubpass x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubpassDependency, srcSubpass})
-
-        {-# INLINE vkSrcSubpassByteOffset #-}
-        vkSrcSubpassByteOffset ~_
-          = #{offset VkSubpassDependency, srcSubpass}
-
-        {-# INLINE readVkSrcSubpass #-}
-        readVkSrcSubpass p
-          = peekByteOff p #{offset VkSubpassDependency, srcSubpass}
-
-        {-# INLINE writeVkSrcSubpass #-}
-        writeVkSrcSubpass p
-          = pokeByteOff p #{offset VkSubpassDependency, srcSubpass}
-
 instance {-# OVERLAPPING #-}
          HasField "srcSubpass" VkSubpassDependency where
         type FieldType "srcSubpass" VkSubpassDependency = Word32
@@ -112,37 +91,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSubpassDependency, srcSubpass}
 
-instance CanReadField "srcSubpass" VkSubpassDependency where
-        {-# INLINE getField #-}
-        getField = vkSrcSubpass
+instance {-# OVERLAPPING #-}
+         CanReadField "srcSubpass" VkSubpassDependency where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubpassDependency, srcSubpass})
 
         {-# INLINE readField #-}
-        readField = readVkSrcSubpass
+        readField p
+          = peekByteOff p #{offset VkSubpassDependency, srcSubpass}
 
-instance CanWriteField "srcSubpass" VkSubpassDependency where
+instance {-# OVERLAPPING #-}
+         CanWriteField "srcSubpass" VkSubpassDependency where
         {-# INLINE writeField #-}
-        writeField = writeVkSrcSubpass
-
-instance {-# OVERLAPPING #-} HasVkDstSubpass VkSubpassDependency
-         where
-        type VkDstSubpassMType VkSubpassDependency = Word32
-
-        {-# NOINLINE vkDstSubpass #-}
-        vkDstSubpass x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubpassDependency, dstSubpass})
-
-        {-# INLINE vkDstSubpassByteOffset #-}
-        vkDstSubpassByteOffset ~_
-          = #{offset VkSubpassDependency, dstSubpass}
-
-        {-# INLINE readVkDstSubpass #-}
-        readVkDstSubpass p
-          = peekByteOff p #{offset VkSubpassDependency, dstSubpass}
-
-        {-# INLINE writeVkDstSubpass #-}
-        writeVkDstSubpass p
-          = pokeByteOff p #{offset VkSubpassDependency, dstSubpass}
+        writeField p
+          = pokeByteOff p #{offset VkSubpassDependency, srcSubpass}
 
 instance {-# OVERLAPPING #-}
          HasField "dstSubpass" VkSubpassDependency where
@@ -158,37 +122,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSubpassDependency, dstSubpass}
 
-instance CanReadField "dstSubpass" VkSubpassDependency where
-        {-# INLINE getField #-}
-        getField = vkDstSubpass
+instance {-# OVERLAPPING #-}
+         CanReadField "dstSubpass" VkSubpassDependency where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubpassDependency, dstSubpass})
 
         {-# INLINE readField #-}
-        readField = readVkDstSubpass
+        readField p
+          = peekByteOff p #{offset VkSubpassDependency, dstSubpass}
 
-instance CanWriteField "dstSubpass" VkSubpassDependency where
+instance {-# OVERLAPPING #-}
+         CanWriteField "dstSubpass" VkSubpassDependency where
         {-# INLINE writeField #-}
-        writeField = writeVkDstSubpass
-
-instance {-# OVERLAPPING #-} HasVkSrcStageMask VkSubpassDependency
-         where
-        type VkSrcStageMaskMType VkSubpassDependency = VkPipelineStageFlags
-
-        {-# NOINLINE vkSrcStageMask #-}
-        vkSrcStageMask x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubpassDependency, srcStageMask})
-
-        {-# INLINE vkSrcStageMaskByteOffset #-}
-        vkSrcStageMaskByteOffset ~_
-          = #{offset VkSubpassDependency, srcStageMask}
-
-        {-# INLINE readVkSrcStageMask #-}
-        readVkSrcStageMask p
-          = peekByteOff p #{offset VkSubpassDependency, srcStageMask}
-
-        {-# INLINE writeVkSrcStageMask #-}
-        writeVkSrcStageMask p
-          = pokeByteOff p #{offset VkSubpassDependency, srcStageMask}
+        writeField p
+          = pokeByteOff p #{offset VkSubpassDependency, dstSubpass}
 
 instance {-# OVERLAPPING #-}
          HasField "srcStageMask" VkSubpassDependency where
@@ -206,37 +155,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSubpassDependency, srcStageMask}
 
-instance CanReadField "srcStageMask" VkSubpassDependency where
-        {-# INLINE getField #-}
-        getField = vkSrcStageMask
+instance {-# OVERLAPPING #-}
+         CanReadField "srcStageMask" VkSubpassDependency where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubpassDependency, srcStageMask})
 
         {-# INLINE readField #-}
-        readField = readVkSrcStageMask
+        readField p
+          = peekByteOff p #{offset VkSubpassDependency, srcStageMask}
 
-instance CanWriteField "srcStageMask" VkSubpassDependency where
+instance {-# OVERLAPPING #-}
+         CanWriteField "srcStageMask" VkSubpassDependency where
         {-# INLINE writeField #-}
-        writeField = writeVkSrcStageMask
-
-instance {-# OVERLAPPING #-} HasVkDstStageMask VkSubpassDependency
-         where
-        type VkDstStageMaskMType VkSubpassDependency = VkPipelineStageFlags
-
-        {-# NOINLINE vkDstStageMask #-}
-        vkDstStageMask x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubpassDependency, dstStageMask})
-
-        {-# INLINE vkDstStageMaskByteOffset #-}
-        vkDstStageMaskByteOffset ~_
-          = #{offset VkSubpassDependency, dstStageMask}
-
-        {-# INLINE readVkDstStageMask #-}
-        readVkDstStageMask p
-          = peekByteOff p #{offset VkSubpassDependency, dstStageMask}
-
-        {-# INLINE writeVkDstStageMask #-}
-        writeVkDstStageMask p
-          = pokeByteOff p #{offset VkSubpassDependency, dstStageMask}
+        writeField p
+          = pokeByteOff p #{offset VkSubpassDependency, srcStageMask}
 
 instance {-# OVERLAPPING #-}
          HasField "dstStageMask" VkSubpassDependency where
@@ -254,37 +188,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSubpassDependency, dstStageMask}
 
-instance CanReadField "dstStageMask" VkSubpassDependency where
-        {-# INLINE getField #-}
-        getField = vkDstStageMask
+instance {-# OVERLAPPING #-}
+         CanReadField "dstStageMask" VkSubpassDependency where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubpassDependency, dstStageMask})
 
         {-# INLINE readField #-}
-        readField = readVkDstStageMask
+        readField p
+          = peekByteOff p #{offset VkSubpassDependency, dstStageMask}
 
-instance CanWriteField "dstStageMask" VkSubpassDependency where
+instance {-# OVERLAPPING #-}
+         CanWriteField "dstStageMask" VkSubpassDependency where
         {-# INLINE writeField #-}
-        writeField = writeVkDstStageMask
-
-instance {-# OVERLAPPING #-} HasVkSrcAccessMask VkSubpassDependency
-         where
-        type VkSrcAccessMaskMType VkSubpassDependency = VkAccessFlags
-
-        {-# NOINLINE vkSrcAccessMask #-}
-        vkSrcAccessMask x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubpassDependency, srcAccessMask})
-
-        {-# INLINE vkSrcAccessMaskByteOffset #-}
-        vkSrcAccessMaskByteOffset ~_
-          = #{offset VkSubpassDependency, srcAccessMask}
-
-        {-# INLINE readVkSrcAccessMask #-}
-        readVkSrcAccessMask p
-          = peekByteOff p #{offset VkSubpassDependency, srcAccessMask}
-
-        {-# INLINE writeVkSrcAccessMask #-}
-        writeVkSrcAccessMask p
-          = pokeByteOff p #{offset VkSubpassDependency, srcAccessMask}
+        writeField p
+          = pokeByteOff p #{offset VkSubpassDependency, dstStageMask}
 
 instance {-# OVERLAPPING #-}
          HasField "srcAccessMask" VkSubpassDependency where
@@ -301,37 +220,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSubpassDependency, srcAccessMask}
 
-instance CanReadField "srcAccessMask" VkSubpassDependency where
-        {-# INLINE getField #-}
-        getField = vkSrcAccessMask
+instance {-# OVERLAPPING #-}
+         CanReadField "srcAccessMask" VkSubpassDependency where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubpassDependency, srcAccessMask})
 
         {-# INLINE readField #-}
-        readField = readVkSrcAccessMask
+        readField p
+          = peekByteOff p #{offset VkSubpassDependency, srcAccessMask}
 
-instance CanWriteField "srcAccessMask" VkSubpassDependency where
+instance {-# OVERLAPPING #-}
+         CanWriteField "srcAccessMask" VkSubpassDependency where
         {-# INLINE writeField #-}
-        writeField = writeVkSrcAccessMask
-
-instance {-# OVERLAPPING #-} HasVkDstAccessMask VkSubpassDependency
-         where
-        type VkDstAccessMaskMType VkSubpassDependency = VkAccessFlags
-
-        {-# NOINLINE vkDstAccessMask #-}
-        vkDstAccessMask x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubpassDependency, dstAccessMask})
-
-        {-# INLINE vkDstAccessMaskByteOffset #-}
-        vkDstAccessMaskByteOffset ~_
-          = #{offset VkSubpassDependency, dstAccessMask}
-
-        {-# INLINE readVkDstAccessMask #-}
-        readVkDstAccessMask p
-          = peekByteOff p #{offset VkSubpassDependency, dstAccessMask}
-
-        {-# INLINE writeVkDstAccessMask #-}
-        writeVkDstAccessMask p
-          = pokeByteOff p #{offset VkSubpassDependency, dstAccessMask}
+        writeField p
+          = pokeByteOff p #{offset VkSubpassDependency, srcAccessMask}
 
 instance {-# OVERLAPPING #-}
          HasField "dstAccessMask" VkSubpassDependency where
@@ -348,37 +252,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSubpassDependency, dstAccessMask}
 
-instance CanReadField "dstAccessMask" VkSubpassDependency where
-        {-# INLINE getField #-}
-        getField = vkDstAccessMask
+instance {-# OVERLAPPING #-}
+         CanReadField "dstAccessMask" VkSubpassDependency where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubpassDependency, dstAccessMask})
 
         {-# INLINE readField #-}
-        readField = readVkDstAccessMask
-
-instance CanWriteField "dstAccessMask" VkSubpassDependency where
-        {-# INLINE writeField #-}
-        writeField = writeVkDstAccessMask
+        readField p
+          = peekByteOff p #{offset VkSubpassDependency, dstAccessMask}
 
 instance {-# OVERLAPPING #-}
-         HasVkDependencyFlags VkSubpassDependency where
-        type VkDependencyFlagsMType VkSubpassDependency = VkDependencyFlags
-
-        {-# NOINLINE vkDependencyFlags #-}
-        vkDependencyFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubpassDependency, dependencyFlags})
-
-        {-# INLINE vkDependencyFlagsByteOffset #-}
-        vkDependencyFlagsByteOffset ~_
-          = #{offset VkSubpassDependency, dependencyFlags}
-
-        {-# INLINE readVkDependencyFlags #-}
-        readVkDependencyFlags p
-          = peekByteOff p #{offset VkSubpassDependency, dependencyFlags}
-
-        {-# INLINE writeVkDependencyFlags #-}
-        writeVkDependencyFlags p
-          = pokeByteOff p #{offset VkSubpassDependency, dependencyFlags}
+         CanWriteField "dstAccessMask" VkSubpassDependency where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSubpassDependency, dstAccessMask}
 
 instance {-# OVERLAPPING #-}
          HasField "dependencyFlags" VkSubpassDependency where
@@ -396,37 +285,44 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSubpassDependency, dependencyFlags}
 
-instance CanReadField "dependencyFlags" VkSubpassDependency where
-        {-# INLINE getField #-}
-        getField = vkDependencyFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "dependencyFlags" VkSubpassDependency where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubpassDependency, dependencyFlags})
 
         {-# INLINE readField #-}
-        readField = readVkDependencyFlags
+        readField p
+          = peekByteOff p #{offset VkSubpassDependency, dependencyFlags}
 
-instance CanWriteField "dependencyFlags" VkSubpassDependency where
+instance {-# OVERLAPPING #-}
+         CanWriteField "dependencyFlags" VkSubpassDependency where
         {-# INLINE writeField #-}
-        writeField = writeVkDependencyFlags
+        writeField p
+          = pokeByteOff p #{offset VkSubpassDependency, dependencyFlags}
 
 instance Show VkSubpassDependency where
         showsPrec d x
           = showString "VkSubpassDependency {" .
-              showString "vkSrcSubpass = " .
-                showsPrec d (vkSrcSubpass x) .
+              showString "srcSubpass = " .
+                showsPrec d (getField @"srcSubpass" x) .
                   showString ", " .
-                    showString "vkDstSubpass = " .
-                      showsPrec d (vkDstSubpass x) .
+                    showString "dstSubpass = " .
+                      showsPrec d (getField @"dstSubpass" x) .
                         showString ", " .
-                          showString "vkSrcStageMask = " .
-                            showsPrec d (vkSrcStageMask x) .
+                          showString "srcStageMask = " .
+                            showsPrec d (getField @"srcStageMask" x) .
                               showString ", " .
-                                showString "vkDstStageMask = " .
-                                  showsPrec d (vkDstStageMask x) .
+                                showString "dstStageMask = " .
+                                  showsPrec d (getField @"dstStageMask" x) .
                                     showString ", " .
-                                      showString "vkSrcAccessMask = " .
-                                        showsPrec d (vkSrcAccessMask x) .
+                                      showString "srcAccessMask = " .
+                                        showsPrec d (getField @"srcAccessMask" x) .
                                           showString ", " .
-                                            showString "vkDstAccessMask = " .
-                                              showsPrec d (vkDstAccessMask x) .
+                                            showString "dstAccessMask = " .
+                                              showsPrec d (getField @"dstAccessMask" x) .
                                                 showString ", " .
-                                                  showString "vkDependencyFlags = " .
-                                                    showsPrec d (vkDependencyFlags x) . showChar '}'
+                                                  showString "dependencyFlags = " .
+                                                    showsPrec d (getField @"dependencyFlags" x) .
+                                                      showChar '}'

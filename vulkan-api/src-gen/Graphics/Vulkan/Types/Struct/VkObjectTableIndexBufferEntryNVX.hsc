@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkObjectTableIndexBufferEntryNVX
        (VkObjectTableIndexBufferEntryNVX(..)) where
@@ -16,7 +17,6 @@ import           Graphics.Vulkan.Types.Enum.VkIndexType                (VkIndexT
 import           Graphics.Vulkan.Types.Enum.VkObjectEntryTypeNVX       (VkObjectEntryTypeNVX)
 import           Graphics.Vulkan.Types.Enum.VkObjectEntryUsageFlagsNVX (VkObjectEntryUsageFlagsNVX)
 import           Graphics.Vulkan.Types.Handles                         (VkBuffer)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                      (unsafeDupablePerformIO)
 
 -- | > typedef struct VkObjectTableIndexBufferEntryNVX {
@@ -81,28 +81,6 @@ instance VulkanMarshal VkObjectTableIndexBufferEntryNVX where
         type StructExtends VkObjectTableIndexBufferEntryNVX = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkType VkObjectTableIndexBufferEntryNVX where
-        type VkTypeMType VkObjectTableIndexBufferEntryNVX =
-             VkObjectEntryTypeNVX
-
-        {-# NOINLINE vkType #-}
-        vkType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkObjectTableIndexBufferEntryNVX, type})
-
-        {-# INLINE vkTypeByteOffset #-}
-        vkTypeByteOffset ~_
-          = #{offset VkObjectTableIndexBufferEntryNVX, type}
-
-        {-# INLINE readVkType #-}
-        readVkType p
-          = peekByteOff p #{offset VkObjectTableIndexBufferEntryNVX, type}
-
-        {-# INLINE writeVkType #-}
-        writeVkType p
-          = pokeByteOff p #{offset VkObjectTableIndexBufferEntryNVX, type}
-
-instance {-# OVERLAPPING #-}
          HasField "type" VkObjectTableIndexBufferEntryNVX where
         type FieldType "type" VkObjectTableIndexBufferEntryNVX =
              VkObjectEntryTypeNVX
@@ -118,39 +96,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkObjectTableIndexBufferEntryNVX, type}
 
-instance CanReadField "type" VkObjectTableIndexBufferEntryNVX where
-        {-# INLINE getField #-}
-        getField = vkType
+instance {-# OVERLAPPING #-}
+         CanReadField "type" VkObjectTableIndexBufferEntryNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkObjectTableIndexBufferEntryNVX, type})
 
         {-# INLINE readField #-}
-        readField = readVkType
-
-instance CanWriteField "type" VkObjectTableIndexBufferEntryNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkType
+        readField p
+          = peekByteOff p #{offset VkObjectTableIndexBufferEntryNVX, type}
 
 instance {-# OVERLAPPING #-}
-         HasVkFlags VkObjectTableIndexBufferEntryNVX where
-        type VkFlagsMType VkObjectTableIndexBufferEntryNVX =
-             VkObjectEntryUsageFlagsNVX
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkObjectTableIndexBufferEntryNVX, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkObjectTableIndexBufferEntryNVX, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkObjectTableIndexBufferEntryNVX, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkObjectTableIndexBufferEntryNVX, flags}
+         CanWriteField "type" VkObjectTableIndexBufferEntryNVX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkObjectTableIndexBufferEntryNVX, type}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkObjectTableIndexBufferEntryNVX where
@@ -169,39 +130,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkObjectTableIndexBufferEntryNVX, flags}
 
-instance CanReadField "flags" VkObjectTableIndexBufferEntryNVX
-         where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkObjectTableIndexBufferEntryNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkObjectTableIndexBufferEntryNVX, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags" VkObjectTableIndexBufferEntryNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkObjectTableIndexBufferEntryNVX, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkBuffer VkObjectTableIndexBufferEntryNVX where
-        type VkBufferMType VkObjectTableIndexBufferEntryNVX = VkBuffer
-
-        {-# NOINLINE vkBuffer #-}
-        vkBuffer x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkObjectTableIndexBufferEntryNVX, buffer})
-
-        {-# INLINE vkBufferByteOffset #-}
-        vkBufferByteOffset ~_
-          = #{offset VkObjectTableIndexBufferEntryNVX, buffer}
-
-        {-# INLINE readVkBuffer #-}
-        readVkBuffer p
-          = peekByteOff p #{offset VkObjectTableIndexBufferEntryNVX, buffer}
-
-        {-# INLINE writeVkBuffer #-}
-        writeVkBuffer p
-          = pokeByteOff p #{offset VkObjectTableIndexBufferEntryNVX, buffer}
+         CanWriteField "flags" VkObjectTableIndexBufferEntryNVX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkObjectTableIndexBufferEntryNVX, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "buffer" VkObjectTableIndexBufferEntryNVX where
@@ -220,40 +164,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkObjectTableIndexBufferEntryNVX, buffer}
 
-instance CanReadField "buffer" VkObjectTableIndexBufferEntryNVX
-         where
-        {-# INLINE getField #-}
-        getField = vkBuffer
+instance {-# OVERLAPPING #-}
+         CanReadField "buffer" VkObjectTableIndexBufferEntryNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkObjectTableIndexBufferEntryNVX, buffer})
 
         {-# INLINE readField #-}
-        readField = readVkBuffer
-
-instance CanWriteField "buffer" VkObjectTableIndexBufferEntryNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkBuffer
+        readField p
+          = peekByteOff p #{offset VkObjectTableIndexBufferEntryNVX, buffer}
 
 instance {-# OVERLAPPING #-}
-         HasVkIndexType VkObjectTableIndexBufferEntryNVX where
-        type VkIndexTypeMType VkObjectTableIndexBufferEntryNVX =
-             VkIndexType
-
-        {-# NOINLINE vkIndexType #-}
-        vkIndexType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkObjectTableIndexBufferEntryNVX, indexType})
-
-        {-# INLINE vkIndexTypeByteOffset #-}
-        vkIndexTypeByteOffset ~_
-          = #{offset VkObjectTableIndexBufferEntryNVX, indexType}
-
-        {-# INLINE readVkIndexType #-}
-        readVkIndexType p
-          = peekByteOff p #{offset VkObjectTableIndexBufferEntryNVX, indexType}
-
-        {-# INLINE writeVkIndexType #-}
-        writeVkIndexType p
-          = pokeByteOff p #{offset VkObjectTableIndexBufferEntryNVX, indexType}
+         CanWriteField "buffer" VkObjectTableIndexBufferEntryNVX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkObjectTableIndexBufferEntryNVX, buffer}
 
 instance {-# OVERLAPPING #-}
          HasField "indexType" VkObjectTableIndexBufferEntryNVX where
@@ -273,30 +199,34 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkObjectTableIndexBufferEntryNVX, indexType}
 
-instance CanReadField "indexType" VkObjectTableIndexBufferEntryNVX
-         where
-        {-# INLINE getField #-}
-        getField = vkIndexType
+instance {-# OVERLAPPING #-}
+         CanReadField "indexType" VkObjectTableIndexBufferEntryNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkObjectTableIndexBufferEntryNVX, indexType})
 
         {-# INLINE readField #-}
-        readField = readVkIndexType
+        readField p
+          = peekByteOff p #{offset VkObjectTableIndexBufferEntryNVX, indexType}
 
-instance CanWriteField "indexType" VkObjectTableIndexBufferEntryNVX
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "indexType" VkObjectTableIndexBufferEntryNVX where
         {-# INLINE writeField #-}
-        writeField = writeVkIndexType
+        writeField p
+          = pokeByteOff p #{offset VkObjectTableIndexBufferEntryNVX, indexType}
 
 instance Show VkObjectTableIndexBufferEntryNVX where
         showsPrec d x
           = showString "VkObjectTableIndexBufferEntryNVX {" .
-              showString "vkType = " .
-                showsPrec d (vkType x) .
+              showString "type = " .
+                showsPrec d (getField @"type" x) .
                   showString ", " .
-                    showString "vkFlags = " .
-                      showsPrec d (vkFlags x) .
+                    showString "flags = " .
+                      showsPrec d (getField @"flags" x) .
                         showString ", " .
-                          showString "vkBuffer = " .
-                            showsPrec d (vkBuffer x) .
+                          showString "buffer = " .
+                            showsPrec d (getField @"buffer" x) .
                               showString ", " .
-                                showString "vkIndexType = " .
-                                  showsPrec d (vkIndexType x) . showChar '}'
+                                showString "indexType = " .
+                                  showsPrec d (getField @"indexType" x) . showChar '}'

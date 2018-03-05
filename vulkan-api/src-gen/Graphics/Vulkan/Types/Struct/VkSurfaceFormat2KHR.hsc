@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkSurfaceFormat2KHR
        (VkSurfaceFormat2KHR(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType      (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkSurfaceFormatKHR (VkSurfaceFormatKHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSurfaceFormat2KHR {
@@ -71,26 +71,6 @@ instance VulkanMarshal VkSurfaceFormat2KHR where
         type ReturnedOnly VkSurfaceFormat2KHR = 'True -- ' closing tick for hsc2hs
         type StructExtends VkSurfaceFormat2KHR = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkSurfaceFormat2KHR where
-        type VkSTypeMType VkSurfaceFormat2KHR = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSurfaceFormat2KHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkSurfaceFormat2KHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkSurfaceFormat2KHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkSurfaceFormat2KHR, sType}
-
 instance {-# OVERLAPPING #-} HasField "sType" VkSurfaceFormat2KHR
          where
         type FieldType "sType" VkSurfaceFormat2KHR = VkStructureType
@@ -105,36 +85,22 @@ instance {-# OVERLAPPING #-} HasField "sType" VkSurfaceFormat2KHR
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSurfaceFormat2KHR, sType}
 
-instance CanReadField "sType" VkSurfaceFormat2KHR where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkSurfaceFormat2KHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSurfaceFormat2KHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkSurfaceFormat2KHR, sType}
 
-instance CanWriteField "sType" VkSurfaceFormat2KHR where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkSurfaceFormat2KHR where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkSurfaceFormat2KHR where
-        type VkPNextMType VkSurfaceFormat2KHR = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSurfaceFormat2KHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkSurfaceFormat2KHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkSurfaceFormat2KHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkSurfaceFormat2KHR, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkSurfaceFormat2KHR, sType}
 
 instance {-# OVERLAPPING #-} HasField "pNext" VkSurfaceFormat2KHR
          where
@@ -150,37 +116,22 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkSurfaceFormat2KHR
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSurfaceFormat2KHR, pNext}
 
-instance CanReadField "pNext" VkSurfaceFormat2KHR where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkSurfaceFormat2KHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSurfaceFormat2KHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkSurfaceFormat2KHR, pNext}
 
-instance CanWriteField "pNext" VkSurfaceFormat2KHR where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext" VkSurfaceFormat2KHR where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-} HasVkSurfaceFormat VkSurfaceFormat2KHR
-         where
-        type VkSurfaceFormatMType VkSurfaceFormat2KHR = VkSurfaceFormatKHR
-
-        {-# NOINLINE vkSurfaceFormat #-}
-        vkSurfaceFormat x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSurfaceFormat2KHR, surfaceFormat})
-
-        {-# INLINE vkSurfaceFormatByteOffset #-}
-        vkSurfaceFormatByteOffset ~_
-          = #{offset VkSurfaceFormat2KHR, surfaceFormat}
-
-        {-# INLINE readVkSurfaceFormat #-}
-        readVkSurfaceFormat p
-          = peekByteOff p #{offset VkSurfaceFormat2KHR, surfaceFormat}
-
-        {-# INLINE writeVkSurfaceFormat #-}
-        writeVkSurfaceFormat p
-          = pokeByteOff p #{offset VkSurfaceFormat2KHR, surfaceFormat}
+        writeField p
+          = pokeByteOff p #{offset VkSurfaceFormat2KHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "surfaceFormat" VkSurfaceFormat2KHR where
@@ -198,25 +149,31 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSurfaceFormat2KHR, surfaceFormat}
 
-instance CanReadField "surfaceFormat" VkSurfaceFormat2KHR where
-        {-# INLINE getField #-}
-        getField = vkSurfaceFormat
+instance {-# OVERLAPPING #-}
+         CanReadField "surfaceFormat" VkSurfaceFormat2KHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSurfaceFormat2KHR, surfaceFormat})
 
         {-# INLINE readField #-}
-        readField = readVkSurfaceFormat
+        readField p
+          = peekByteOff p #{offset VkSurfaceFormat2KHR, surfaceFormat}
 
-instance CanWriteField "surfaceFormat" VkSurfaceFormat2KHR where
+instance {-# OVERLAPPING #-}
+         CanWriteField "surfaceFormat" VkSurfaceFormat2KHR where
         {-# INLINE writeField #-}
-        writeField = writeVkSurfaceFormat
+        writeField p
+          = pokeByteOff p #{offset VkSurfaceFormat2KHR, surfaceFormat}
 
 instance Show VkSurfaceFormat2KHR where
         showsPrec d x
           = showString "VkSurfaceFormat2KHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkSurfaceFormat = " .
-                            showsPrec d (vkSurfaceFormat x) . showChar '}'
+                          showString "surfaceFormat = " .
+                            showsPrec d (getField @"surfaceFormat" x) . showChar '}'

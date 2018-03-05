@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceDiscardRectanglePropertiesEXT
        (VkPhysicalDeviceDiscardRectanglePropertiesEXT(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType                  (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR (VkPhysicalDeviceProperties2KHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                            (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDeviceDiscardRectanglePropertiesEXT {
@@ -88,28 +88,6 @@ instance VulkanMarshal
              '[VkPhysicalDeviceProperties2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPhysicalDeviceDiscardRectanglePropertiesEXT where
-        type VkSTypeMType VkPhysicalDeviceDiscardRectanglePropertiesEXT =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPhysicalDeviceDiscardRectanglePropertiesEXT
          where
         type FieldType "sType"
@@ -133,42 +111,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, sType}
 
-instance CanReadField "sType"
-           VkPhysicalDeviceDiscardRectanglePropertiesEXT
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkPhysicalDeviceDiscardRectanglePropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkSType
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType"
-           VkPhysicalDeviceDiscardRectanglePropertiesEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkPhysicalDeviceDiscardRectanglePropertiesEXT where
-        type VkPNextMType VkPhysicalDeviceDiscardRectanglePropertiesEXT =
-             Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, pNext}
+         CanWriteField "sType" VkPhysicalDeviceDiscardRectanglePropertiesEXT
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPhysicalDeviceDiscardRectanglePropertiesEXT
@@ -194,45 +154,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, pNext}
 
-instance CanReadField "pNext"
-           VkPhysicalDeviceDiscardRectanglePropertiesEXT
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkPhysicalDeviceDiscardRectanglePropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkPNext
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext"
-           VkPhysicalDeviceDiscardRectanglePropertiesEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkMaxDiscardRectangles
-           VkPhysicalDeviceDiscardRectanglePropertiesEXT
+         CanWriteField "pNext" VkPhysicalDeviceDiscardRectanglePropertiesEXT
          where
-        type VkMaxDiscardRectanglesMType
-               VkPhysicalDeviceDiscardRectanglePropertiesEXT
-             = Word32
-
-        {-# NOINLINE vkMaxDiscardRectangles #-}
-        vkMaxDiscardRectangles x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, maxDiscardRectangles})
-
-        {-# INLINE vkMaxDiscardRectanglesByteOffset #-}
-        vkMaxDiscardRectanglesByteOffset ~_
-          = #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, maxDiscardRectangles}
-
-        {-# INLINE readVkMaxDiscardRectangles #-}
-        readVkMaxDiscardRectangles p
-          = peekByteOff p #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, maxDiscardRectangles}
-
-        {-# INLINE writeVkMaxDiscardRectangles #-}
-        writeVkMaxDiscardRectangles p
-          = pokeByteOff p #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, maxDiscardRectangles}
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "maxDiscardRectangles"
@@ -259,29 +198,35 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, maxDiscardRectangles}
 
-instance CanReadField "maxDiscardRectangles"
+instance {-# OVERLAPPING #-}
+         CanReadField "maxDiscardRectangles"
            VkPhysicalDeviceDiscardRectanglePropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkMaxDiscardRectangles
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, maxDiscardRectangles})
 
         {-# INLINE readField #-}
-        readField = readVkMaxDiscardRectangles
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, maxDiscardRectangles}
 
-instance CanWriteField "maxDiscardRectangles"
+instance {-# OVERLAPPING #-}
+         CanWriteField "maxDiscardRectangles"
            VkPhysicalDeviceDiscardRectanglePropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkMaxDiscardRectangles
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceDiscardRectanglePropertiesEXT, maxDiscardRectangles}
 
 instance Show VkPhysicalDeviceDiscardRectanglePropertiesEXT where
         showsPrec d x
           = showString "VkPhysicalDeviceDiscardRectanglePropertiesEXT {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkMaxDiscardRectangles = " .
-                            showsPrec d (vkMaxDiscardRectangles x) . showChar '}'
+                          showString "maxDiscardRectangles = " .
+                            showsPrec d (getField @"maxDiscardRectangles" x) . showChar '}'

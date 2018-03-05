@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkRectLayerKHR
        (VkRectLayerKHR(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Struct.VkExtent2D (VkExtent2D)
 import           Graphics.Vulkan.Types.Struct.VkOffset2D (VkOffset2D)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                        (unsafeDupablePerformIO)
 
 -- | > typedef struct VkRectLayerKHR {
@@ -70,26 +70,6 @@ instance VulkanMarshal VkRectLayerKHR where
         type ReturnedOnly VkRectLayerKHR = 'False -- ' closing tick for hsc2hs
         type StructExtends VkRectLayerKHR = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkOffset VkRectLayerKHR where
-        type VkOffsetMType VkRectLayerKHR = VkOffset2D
-
-        {-# NOINLINE vkOffset #-}
-        vkOffset x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRectLayerKHR, offset})
-
-        {-# INLINE vkOffsetByteOffset #-}
-        vkOffsetByteOffset ~_
-          = #{offset VkRectLayerKHR, offset}
-
-        {-# INLINE readVkOffset #-}
-        readVkOffset p
-          = peekByteOff p #{offset VkRectLayerKHR, offset}
-
-        {-# INLINE writeVkOffset #-}
-        writeVkOffset p
-          = pokeByteOff p #{offset VkRectLayerKHR, offset}
-
 instance {-# OVERLAPPING #-} HasField "offset" VkRectLayerKHR where
         type FieldType "offset" VkRectLayerKHR = VkOffset2D
         type FieldOptional "offset" VkRectLayerKHR = 'False -- ' closing tick for hsc2hs
@@ -103,36 +83,22 @@ instance {-# OVERLAPPING #-} HasField "offset" VkRectLayerKHR where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkRectLayerKHR, offset}
 
-instance CanReadField "offset" VkRectLayerKHR where
-        {-# INLINE getField #-}
-        getField = vkOffset
+instance {-# OVERLAPPING #-} CanReadField "offset" VkRectLayerKHR
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRectLayerKHR, offset})
 
         {-# INLINE readField #-}
-        readField = readVkOffset
+        readField p
+          = peekByteOff p #{offset VkRectLayerKHR, offset}
 
-instance CanWriteField "offset" VkRectLayerKHR where
+instance {-# OVERLAPPING #-} CanWriteField "offset" VkRectLayerKHR
+         where
         {-# INLINE writeField #-}
-        writeField = writeVkOffset
-
-instance {-# OVERLAPPING #-} HasVkExtent VkRectLayerKHR where
-        type VkExtentMType VkRectLayerKHR = VkExtent2D
-
-        {-# NOINLINE vkExtent #-}
-        vkExtent x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRectLayerKHR, extent})
-
-        {-# INLINE vkExtentByteOffset #-}
-        vkExtentByteOffset ~_
-          = #{offset VkRectLayerKHR, extent}
-
-        {-# INLINE readVkExtent #-}
-        readVkExtent p
-          = peekByteOff p #{offset VkRectLayerKHR, extent}
-
-        {-# INLINE writeVkExtent #-}
-        writeVkExtent p
-          = pokeByteOff p #{offset VkRectLayerKHR, extent}
+        writeField p
+          = pokeByteOff p #{offset VkRectLayerKHR, offset}
 
 instance {-# OVERLAPPING #-} HasField "extent" VkRectLayerKHR where
         type FieldType "extent" VkRectLayerKHR = VkExtent2D
@@ -147,35 +113,22 @@ instance {-# OVERLAPPING #-} HasField "extent" VkRectLayerKHR where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkRectLayerKHR, extent}
 
-instance CanReadField "extent" VkRectLayerKHR where
-        {-# INLINE getField #-}
-        getField = vkExtent
+instance {-# OVERLAPPING #-} CanReadField "extent" VkRectLayerKHR
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRectLayerKHR, extent})
 
         {-# INLINE readField #-}
-        readField = readVkExtent
+        readField p
+          = peekByteOff p #{offset VkRectLayerKHR, extent}
 
-instance CanWriteField "extent" VkRectLayerKHR where
+instance {-# OVERLAPPING #-} CanWriteField "extent" VkRectLayerKHR
+         where
         {-# INLINE writeField #-}
-        writeField = writeVkExtent
-
-instance {-# OVERLAPPING #-} HasVkLayer VkRectLayerKHR where
-        type VkLayerMType VkRectLayerKHR = Word32
-
-        {-# NOINLINE vkLayer #-}
-        vkLayer x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRectLayerKHR, layer})
-
-        {-# INLINE vkLayerByteOffset #-}
-        vkLayerByteOffset ~_ = #{offset VkRectLayerKHR, layer}
-
-        {-# INLINE readVkLayer #-}
-        readVkLayer p
-          = peekByteOff p #{offset VkRectLayerKHR, layer}
-
-        {-# INLINE writeVkLayer #-}
-        writeVkLayer p
-          = pokeByteOff p #{offset VkRectLayerKHR, layer}
+        writeField p
+          = pokeByteOff p #{offset VkRectLayerKHR, extent}
 
 instance {-# OVERLAPPING #-} HasField "layer" VkRectLayerKHR where
         type FieldType "layer" VkRectLayerKHR = Word32
@@ -190,24 +143,31 @@ instance {-# OVERLAPPING #-} HasField "layer" VkRectLayerKHR where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkRectLayerKHR, layer}
 
-instance CanReadField "layer" VkRectLayerKHR where
-        {-# INLINE getField #-}
-        getField = vkLayer
+instance {-# OVERLAPPING #-} CanReadField "layer" VkRectLayerKHR
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRectLayerKHR, layer})
 
         {-# INLINE readField #-}
-        readField = readVkLayer
+        readField p
+          = peekByteOff p #{offset VkRectLayerKHR, layer}
 
-instance CanWriteField "layer" VkRectLayerKHR where
+instance {-# OVERLAPPING #-} CanWriteField "layer" VkRectLayerKHR
+         where
         {-# INLINE writeField #-}
-        writeField = writeVkLayer
+        writeField p
+          = pokeByteOff p #{offset VkRectLayerKHR, layer}
 
 instance Show VkRectLayerKHR where
         showsPrec d x
           = showString "VkRectLayerKHR {" .
-              showString "vkOffset = " .
-                showsPrec d (vkOffset x) .
+              showString "offset = " .
+                showsPrec d (getField @"offset" x) .
                   showString ", " .
-                    showString "vkExtent = " .
-                      showsPrec d (vkExtent x) .
+                    showString "extent = " .
+                      showsPrec d (getField @"extent" x) .
                         showString ", " .
-                          showString "vkLayer = " . showsPrec d (vkLayer x) . showChar '}'
+                          showString "layer = " .
+                            showsPrec d (getField @"layer" x) . showChar '}'

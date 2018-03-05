@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkSubpassSampleLocationsEXT
        (VkSubpassSampleLocationsEXT(..)) where
@@ -13,7 +14,6 @@ import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Struct.VkSampleLocationsInfoEXT (VkSampleLocationsInfoEXT)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                      (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSubpassSampleLocationsEXT {
@@ -74,27 +74,6 @@ instance VulkanMarshal VkSubpassSampleLocationsEXT where
         type StructExtends VkSubpassSampleLocationsEXT = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSubpassIndex VkSubpassSampleLocationsEXT where
-        type VkSubpassIndexMType VkSubpassSampleLocationsEXT = Word32
-
-        {-# NOINLINE vkSubpassIndex #-}
-        vkSubpassIndex x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubpassSampleLocationsEXT, subpassIndex})
-
-        {-# INLINE vkSubpassIndexByteOffset #-}
-        vkSubpassIndexByteOffset ~_
-          = #{offset VkSubpassSampleLocationsEXT, subpassIndex}
-
-        {-# INLINE readVkSubpassIndex #-}
-        readVkSubpassIndex p
-          = peekByteOff p #{offset VkSubpassSampleLocationsEXT, subpassIndex}
-
-        {-# INLINE writeVkSubpassIndex #-}
-        writeVkSubpassIndex p
-          = pokeByteOff p #{offset VkSubpassSampleLocationsEXT, subpassIndex}
-
-instance {-# OVERLAPPING #-}
          HasField "subpassIndex" VkSubpassSampleLocationsEXT where
         type FieldType "subpassIndex" VkSubpassSampleLocationsEXT = Word32
         type FieldOptional "subpassIndex" VkSubpassSampleLocationsEXT =
@@ -111,40 +90,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSubpassSampleLocationsEXT, subpassIndex}
 
-instance CanReadField "subpassIndex" VkSubpassSampleLocationsEXT
-         where
-        {-# INLINE getField #-}
-        getField = vkSubpassIndex
+instance {-# OVERLAPPING #-}
+         CanReadField "subpassIndex" VkSubpassSampleLocationsEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubpassSampleLocationsEXT, subpassIndex})
 
         {-# INLINE readField #-}
-        readField = readVkSubpassIndex
-
-instance CanWriteField "subpassIndex" VkSubpassSampleLocationsEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSubpassIndex
+        readField p
+          = peekByteOff p #{offset VkSubpassSampleLocationsEXT, subpassIndex}
 
 instance {-# OVERLAPPING #-}
-         HasVkSampleLocationsInfo VkSubpassSampleLocationsEXT where
-        type VkSampleLocationsInfoMType VkSubpassSampleLocationsEXT =
-             VkSampleLocationsInfoEXT
-
-        {-# NOINLINE vkSampleLocationsInfo #-}
-        vkSampleLocationsInfo x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubpassSampleLocationsEXT, sampleLocationsInfo})
-
-        {-# INLINE vkSampleLocationsInfoByteOffset #-}
-        vkSampleLocationsInfoByteOffset ~_
-          = #{offset VkSubpassSampleLocationsEXT, sampleLocationsInfo}
-
-        {-# INLINE readVkSampleLocationsInfo #-}
-        readVkSampleLocationsInfo p
-          = peekByteOff p #{offset VkSubpassSampleLocationsEXT, sampleLocationsInfo}
-
-        {-# INLINE writeVkSampleLocationsInfo #-}
-        writeVkSampleLocationsInfo p
-          = pokeByteOff p #{offset VkSubpassSampleLocationsEXT, sampleLocationsInfo}
+         CanWriteField "subpassIndex" VkSubpassSampleLocationsEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSubpassSampleLocationsEXT, subpassIndex}
 
 instance {-# OVERLAPPING #-}
          HasField "sampleLocationsInfo" VkSubpassSampleLocationsEXT where
@@ -166,26 +127,30 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSubpassSampleLocationsEXT, sampleLocationsInfo}
 
-instance CanReadField "sampleLocationsInfo"
-           VkSubpassSampleLocationsEXT
+instance {-# OVERLAPPING #-}
+         CanReadField "sampleLocationsInfo" VkSubpassSampleLocationsEXT
          where
-        {-# INLINE getField #-}
-        getField = vkSampleLocationsInfo
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubpassSampleLocationsEXT, sampleLocationsInfo})
 
         {-# INLINE readField #-}
-        readField = readVkSampleLocationsInfo
+        readField p
+          = peekByteOff p #{offset VkSubpassSampleLocationsEXT, sampleLocationsInfo}
 
-instance CanWriteField "sampleLocationsInfo"
-           VkSubpassSampleLocationsEXT
+instance {-# OVERLAPPING #-}
+         CanWriteField "sampleLocationsInfo" VkSubpassSampleLocationsEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSampleLocationsInfo
+        writeField p
+          = pokeByteOff p #{offset VkSubpassSampleLocationsEXT, sampleLocationsInfo}
 
 instance Show VkSubpassSampleLocationsEXT where
         showsPrec d x
           = showString "VkSubpassSampleLocationsEXT {" .
-              showString "vkSubpassIndex = " .
-                showsPrec d (vkSubpassIndex x) .
+              showString "subpassIndex = " .
+                showsPrec d (getField @"subpassIndex" x) .
                   showString ", " .
-                    showString "vkSampleLocationsInfo = " .
-                      showsPrec d (vkSampleLocationsInfo x) . showChar '}'
+                    showString "sampleLocationsInfo = " .
+                      showsPrec d (getField @"sampleLocationsInfo" x) . showChar '}'

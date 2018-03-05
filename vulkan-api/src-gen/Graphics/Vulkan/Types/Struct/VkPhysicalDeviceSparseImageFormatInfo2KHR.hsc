@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseImageFormatInfo2KHR
        (VkPhysicalDeviceSparseImageFormatInfo2KHR(..)) where
@@ -18,7 +19,6 @@ import           Graphics.Vulkan.Types.Enum.VkImageType        (VkImageType)
 import           Graphics.Vulkan.Types.Enum.VkImageUsageFlags  (VkImageUsageFlags)
 import           Graphics.Vulkan.Types.Enum.VkSampleCountFlags (VkSampleCountFlagBits)
 import           Graphics.Vulkan.Types.Enum.VkStructureType    (VkStructureType)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                              (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDeviceSparseImageFormatInfo2KHR {
@@ -92,28 +92,6 @@ instance VulkanMarshal VkPhysicalDeviceSparseImageFormatInfo2KHR
         type StructExtends VkPhysicalDeviceSparseImageFormatInfo2KHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPhysicalDeviceSparseImageFormatInfo2KHR where
-        type VkSTypeMType VkPhysicalDeviceSparseImageFormatInfo2KHR =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPhysicalDeviceSparseImageFormatInfo2KHR where
         type FieldType "sType" VkPhysicalDeviceSparseImageFormatInfo2KHR =
              VkStructureType
@@ -133,42 +111,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, sType}
 
-instance CanReadField "sType"
-           VkPhysicalDeviceSparseImageFormatInfo2KHR
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkPhysicalDeviceSparseImageFormatInfo2KHR
          where
-        {-# INLINE getField #-}
-        getField = vkSType
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType"
-           VkPhysicalDeviceSparseImageFormatInfo2KHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkPhysicalDeviceSparseImageFormatInfo2KHR where
-        type VkPNextMType VkPhysicalDeviceSparseImageFormatInfo2KHR =
-             Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, pNext}
+         CanWriteField "sType" VkPhysicalDeviceSparseImageFormatInfo2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPhysicalDeviceSparseImageFormatInfo2KHR where
@@ -190,42 +150,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, pNext}
 
-instance CanReadField "pNext"
-           VkPhysicalDeviceSparseImageFormatInfo2KHR
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkPhysicalDeviceSparseImageFormatInfo2KHR
          where
-        {-# INLINE getField #-}
-        getField = vkPNext
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext"
-           VkPhysicalDeviceSparseImageFormatInfo2KHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkFormat VkPhysicalDeviceSparseImageFormatInfo2KHR where
-        type VkFormatMType VkPhysicalDeviceSparseImageFormatInfo2KHR =
-             VkFormat
-
-        {-# NOINLINE vkFormat #-}
-        vkFormat x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, format})
-
-        {-# INLINE vkFormatByteOffset #-}
-        vkFormatByteOffset ~_
-          = #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, format}
-
-        {-# INLINE readVkFormat #-}
-        readVkFormat p
-          = peekByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, format}
-
-        {-# INLINE writeVkFormat #-}
-        writeVkFormat p
-          = pokeByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, format}
+         CanWriteField "pNext" VkPhysicalDeviceSparseImageFormatInfo2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "format" VkPhysicalDeviceSparseImageFormatInfo2KHR where
@@ -248,42 +190,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, format}
 
-instance CanReadField "format"
-           VkPhysicalDeviceSparseImageFormatInfo2KHR
+instance {-# OVERLAPPING #-}
+         CanReadField "format" VkPhysicalDeviceSparseImageFormatInfo2KHR
          where
-        {-# INLINE getField #-}
-        getField = vkFormat
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, format})
 
         {-# INLINE readField #-}
-        readField = readVkFormat
-
-instance CanWriteField "format"
-           VkPhysicalDeviceSparseImageFormatInfo2KHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFormat
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, format}
 
 instance {-# OVERLAPPING #-}
-         HasVkType VkPhysicalDeviceSparseImageFormatInfo2KHR where
-        type VkTypeMType VkPhysicalDeviceSparseImageFormatInfo2KHR =
-             VkImageType
-
-        {-# NOINLINE vkType #-}
-        vkType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, type})
-
-        {-# INLINE vkTypeByteOffset #-}
-        vkTypeByteOffset ~_
-          = #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, type}
-
-        {-# INLINE readVkType #-}
-        readVkType p
-          = peekByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, type}
-
-        {-# INLINE writeVkType #-}
-        writeVkType p
-          = pokeByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, type}
+         CanWriteField "format" VkPhysicalDeviceSparseImageFormatInfo2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, format}
 
 instance {-# OVERLAPPING #-}
          HasField "type" VkPhysicalDeviceSparseImageFormatInfo2KHR where
@@ -303,42 +227,23 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, type}
 
-instance CanReadField "type"
-           VkPhysicalDeviceSparseImageFormatInfo2KHR
-         where
-        {-# INLINE getField #-}
-        getField = vkType
+instance {-# OVERLAPPING #-}
+         CanReadField "type" VkPhysicalDeviceSparseImageFormatInfo2KHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, type})
 
         {-# INLINE readField #-}
-        readField = readVkType
-
-instance CanWriteField "type"
-           VkPhysicalDeviceSparseImageFormatInfo2KHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkType
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, type}
 
 instance {-# OVERLAPPING #-}
-         HasVkSamples VkPhysicalDeviceSparseImageFormatInfo2KHR where
-        type VkSamplesMType VkPhysicalDeviceSparseImageFormatInfo2KHR =
-             VkSampleCountFlagBits
-
-        {-# NOINLINE vkSamples #-}
-        vkSamples x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, samples})
-
-        {-# INLINE vkSamplesByteOffset #-}
-        vkSamplesByteOffset ~_
-          = #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, samples}
-
-        {-# INLINE readVkSamples #-}
-        readVkSamples p
-          = peekByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, samples}
-
-        {-# INLINE writeVkSamples #-}
-        writeVkSamples p
-          = pokeByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, samples}
+         CanWriteField "type" VkPhysicalDeviceSparseImageFormatInfo2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, type}
 
 instance {-# OVERLAPPING #-}
          HasField "samples" VkPhysicalDeviceSparseImageFormatInfo2KHR where
@@ -362,42 +267,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, samples}
 
-instance CanReadField "samples"
-           VkPhysicalDeviceSparseImageFormatInfo2KHR
+instance {-# OVERLAPPING #-}
+         CanReadField "samples" VkPhysicalDeviceSparseImageFormatInfo2KHR
          where
-        {-# INLINE getField #-}
-        getField = vkSamples
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, samples})
 
         {-# INLINE readField #-}
-        readField = readVkSamples
-
-instance CanWriteField "samples"
-           VkPhysicalDeviceSparseImageFormatInfo2KHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSamples
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, samples}
 
 instance {-# OVERLAPPING #-}
-         HasVkUsage VkPhysicalDeviceSparseImageFormatInfo2KHR where
-        type VkUsageMType VkPhysicalDeviceSparseImageFormatInfo2KHR =
-             VkImageUsageFlags
-
-        {-# NOINLINE vkUsage #-}
-        vkUsage x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, usage})
-
-        {-# INLINE vkUsageByteOffset #-}
-        vkUsageByteOffset ~_
-          = #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, usage}
-
-        {-# INLINE readVkUsage #-}
-        readVkUsage p
-          = peekByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, usage}
-
-        {-# INLINE writeVkUsage #-}
-        writeVkUsage p
-          = pokeByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, usage}
+         CanWriteField "samples" VkPhysicalDeviceSparseImageFormatInfo2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, samples}
 
 instance {-# OVERLAPPING #-}
          HasField "usage" VkPhysicalDeviceSparseImageFormatInfo2KHR where
@@ -419,42 +306,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, usage}
 
-instance CanReadField "usage"
-           VkPhysicalDeviceSparseImageFormatInfo2KHR
+instance {-# OVERLAPPING #-}
+         CanReadField "usage" VkPhysicalDeviceSparseImageFormatInfo2KHR
          where
-        {-# INLINE getField #-}
-        getField = vkUsage
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, usage})
 
         {-# INLINE readField #-}
-        readField = readVkUsage
-
-instance CanWriteField "usage"
-           VkPhysicalDeviceSparseImageFormatInfo2KHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkUsage
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, usage}
 
 instance {-# OVERLAPPING #-}
-         HasVkTiling VkPhysicalDeviceSparseImageFormatInfo2KHR where
-        type VkTilingMType VkPhysicalDeviceSparseImageFormatInfo2KHR =
-             VkImageTiling
-
-        {-# NOINLINE vkTiling #-}
-        vkTiling x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, tiling})
-
-        {-# INLINE vkTilingByteOffset #-}
-        vkTilingByteOffset ~_
-          = #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, tiling}
-
-        {-# INLINE readVkTiling #-}
-        readVkTiling p
-          = peekByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, tiling}
-
-        {-# INLINE writeVkTiling #-}
-        writeVkTiling p
-          = pokeByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, tiling}
+         CanWriteField "usage" VkPhysicalDeviceSparseImageFormatInfo2KHR
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, usage}
 
 instance {-# OVERLAPPING #-}
          HasField "tiling" VkPhysicalDeviceSparseImageFormatInfo2KHR where
@@ -477,41 +346,46 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, tiling}
 
-instance CanReadField "tiling"
-           VkPhysicalDeviceSparseImageFormatInfo2KHR
+instance {-# OVERLAPPING #-}
+         CanReadField "tiling" VkPhysicalDeviceSparseImageFormatInfo2KHR
          where
-        {-# INLINE getField #-}
-        getField = vkTiling
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, tiling})
 
         {-# INLINE readField #-}
-        readField = readVkTiling
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, tiling}
 
-instance CanWriteField "tiling"
-           VkPhysicalDeviceSparseImageFormatInfo2KHR
+instance {-# OVERLAPPING #-}
+         CanWriteField "tiling" VkPhysicalDeviceSparseImageFormatInfo2KHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkTiling
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceSparseImageFormatInfo2KHR, tiling}
 
 instance Show VkPhysicalDeviceSparseImageFormatInfo2KHR where
         showsPrec d x
           = showString "VkPhysicalDeviceSparseImageFormatInfo2KHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFormat = " .
-                            showsPrec d (vkFormat x) .
+                          showString "format = " .
+                            showsPrec d (getField @"format" x) .
                               showString ", " .
-                                showString "vkType = " .
-                                  showsPrec d (vkType x) .
+                                showString "type = " .
+                                  showsPrec d (getField @"type" x) .
                                     showString ", " .
-                                      showString "vkSamples = " .
-                                        showsPrec d (vkSamples x) .
+                                      showString "samples = " .
+                                        showsPrec d (getField @"samples" x) .
                                           showString ", " .
-                                            showString "vkUsage = " .
-                                              showsPrec d (vkUsage x) .
+                                            showString "usage = " .
+                                              showsPrec d (getField @"usage" x) .
                                                 showString ", " .
-                                                  showString "vkTiling = " .
-                                                    showsPrec d (vkTiling x) . showChar '}'
+                                                  showString "tiling = " .
+                                                    showsPrec d (getField @"tiling" x) .
+                                                      showChar '}'

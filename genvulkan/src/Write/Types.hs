@@ -84,16 +84,15 @@ writeAllTypes vkXml@VkXml{..}
                                        $ (name :: VkType -> VkTypeName) tbm)
                        ) $ genBitmaskPair tbm te
 
-    (classDecls, moduleStructs)
-      <- fmap unzip
-         . forM
+    moduleStructs
+      <- forM
            ( Map.elems
            . evalProtectedTypes vkXml
            . removeDisabledTypes vkXml
            $ typesStructsOrUnions)
          $ \(t, mpd) -> do
       mds <- State.get
-      (classDecls, mr) <- runModuleWriter vkXml
+      ((), mr) <- runModuleWriter vkXml
                       ("Graphics.Vulkan.Types.Struct."
                           <> T.unpack (unVkTypeName
                           $ (name :: VkType -> VkTypeName) t)
@@ -102,18 +101,8 @@ writeAllTypes vkXml@VkXml{..}
         writePragma "DataKinds"
         genStructOrUnion (VkTypeCatUnion == vkTypeCat t) t
       State.put (globalNames mr)
-      return (classDecls, (mr, mpd))
+      return (mr, mpd)
 
-    moduleClassDecls <- do
-      mds <- State.get
-      ((), mr) <- runModuleWriter vkXml
-                  "Graphics.Vulkan.Types.StructMembers" mds $ do
-        writePragma "Strict"
-        writeOptionsPragma (Just GHC) "-fno-warn-missing-methods"
-        writeFullImport "Graphics.Vulkan.Marshal"
-        mapM_ genClassName . Map.toList $ mconcat classDecls
-      State.put (globalNames mr)
-      return (mr, Nothing)
 
 
     return $
@@ -123,7 +112,6 @@ writeAllTypes vkXml@VkXml{..}
       , moduleHandles
       , moduleFuncpointers
       , moduleOrphanBitmasks
-      , moduleClassDecls
       ] ++ moduleEnums ++ moduleBitmasks ++ moduleStructs
   | otherwise = error $ "Not all types were processed\n" ++ show allt8
   where
@@ -233,7 +221,7 @@ genBaseTypes' = do
               VkTypeCatUnion       -> return ()
 
 
-genBaseStructs :: Monad m => ModuleWriter m ClassDeclarations
+genBaseStructs :: Monad m => ModuleWriter m ()
 genBaseStructs = do
     vkXml <- ask
     let featureTypes = Set.fromList
@@ -243,8 +231,7 @@ genBaseStructs = do
                           >>= extRequires >>= requireTypes
         excludedTypes = Set.union featureTypes extTypes
 
-    fmap mconcat
-      $ forM (Map.elems $ globTypes vkXml) $ \t ->
+    forM_ (Map.elems $ globTypes vkXml) $ \t ->
         if (name :: VkType -> VkTypeName) t `Set.member` excludedTypes
         then pure mempty
         else case vkTypeCat t of
@@ -261,7 +248,7 @@ genBaseStructs = do
 
 
 
-genType :: Monad m => VkType -> ModuleWriter m ClassDeclarations
+genType :: Monad m => VkType -> ModuleWriter m ()
 genType t = case vkTypeCat t of
   VkTypeNoCat          -> return mempty
   VkTypeCatInclude     -> mempty <$ genInclude t

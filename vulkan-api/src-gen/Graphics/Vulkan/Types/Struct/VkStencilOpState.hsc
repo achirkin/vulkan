@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkStencilOpState
        (VkStencilOpState(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkCompareOp (VkCompareOp)
 import           Graphics.Vulkan.Types.Enum.VkStencilOp (VkStencilOp)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                       (unsafeDupablePerformIO)
 
 -- | > typedef struct VkStencilOpState {
@@ -76,26 +76,6 @@ instance VulkanMarshal VkStencilOpState where
         type ReturnedOnly VkStencilOpState = 'False -- ' closing tick for hsc2hs
         type StructExtends VkStencilOpState = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkFailOp VkStencilOpState where
-        type VkFailOpMType VkStencilOpState = VkStencilOp
-
-        {-# NOINLINE vkFailOp #-}
-        vkFailOp x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkStencilOpState, failOp})
-
-        {-# INLINE vkFailOpByteOffset #-}
-        vkFailOpByteOffset ~_
-          = #{offset VkStencilOpState, failOp}
-
-        {-# INLINE readVkFailOp #-}
-        readVkFailOp p
-          = peekByteOff p #{offset VkStencilOpState, failOp}
-
-        {-# INLINE writeVkFailOp #-}
-        writeVkFailOp p
-          = pokeByteOff p #{offset VkStencilOpState, failOp}
-
 instance {-# OVERLAPPING #-} HasField "failOp" VkStencilOpState
          where
         type FieldType "failOp" VkStencilOpState = VkStencilOp
@@ -110,36 +90,22 @@ instance {-# OVERLAPPING #-} HasField "failOp" VkStencilOpState
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkStencilOpState, failOp}
 
-instance CanReadField "failOp" VkStencilOpState where
-        {-# INLINE getField #-}
-        getField = vkFailOp
+instance {-# OVERLAPPING #-} CanReadField "failOp" VkStencilOpState
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkStencilOpState, failOp})
 
         {-# INLINE readField #-}
-        readField = readVkFailOp
+        readField p
+          = peekByteOff p #{offset VkStencilOpState, failOp}
 
-instance CanWriteField "failOp" VkStencilOpState where
+instance {-# OVERLAPPING #-}
+         CanWriteField "failOp" VkStencilOpState where
         {-# INLINE writeField #-}
-        writeField = writeVkFailOp
-
-instance {-# OVERLAPPING #-} HasVkPassOp VkStencilOpState where
-        type VkPassOpMType VkStencilOpState = VkStencilOp
-
-        {-# NOINLINE vkPassOp #-}
-        vkPassOp x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkStencilOpState, passOp})
-
-        {-# INLINE vkPassOpByteOffset #-}
-        vkPassOpByteOffset ~_
-          = #{offset VkStencilOpState, passOp}
-
-        {-# INLINE readVkPassOp #-}
-        readVkPassOp p
-          = peekByteOff p #{offset VkStencilOpState, passOp}
-
-        {-# INLINE writeVkPassOp #-}
-        writeVkPassOp p
-          = pokeByteOff p #{offset VkStencilOpState, passOp}
+        writeField p
+          = pokeByteOff p #{offset VkStencilOpState, failOp}
 
 instance {-# OVERLAPPING #-} HasField "passOp" VkStencilOpState
          where
@@ -155,37 +121,22 @@ instance {-# OVERLAPPING #-} HasField "passOp" VkStencilOpState
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkStencilOpState, passOp}
 
-instance CanReadField "passOp" VkStencilOpState where
-        {-# INLINE getField #-}
-        getField = vkPassOp
+instance {-# OVERLAPPING #-} CanReadField "passOp" VkStencilOpState
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkStencilOpState, passOp})
 
         {-# INLINE readField #-}
-        readField = readVkPassOp
+        readField p
+          = peekByteOff p #{offset VkStencilOpState, passOp}
 
-instance CanWriteField "passOp" VkStencilOpState where
+instance {-# OVERLAPPING #-}
+         CanWriteField "passOp" VkStencilOpState where
         {-# INLINE writeField #-}
-        writeField = writeVkPassOp
-
-instance {-# OVERLAPPING #-} HasVkDepthFailOp VkStencilOpState
-         where
-        type VkDepthFailOpMType VkStencilOpState = VkStencilOp
-
-        {-# NOINLINE vkDepthFailOp #-}
-        vkDepthFailOp x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkStencilOpState, depthFailOp})
-
-        {-# INLINE vkDepthFailOpByteOffset #-}
-        vkDepthFailOpByteOffset ~_
-          = #{offset VkStencilOpState, depthFailOp}
-
-        {-# INLINE readVkDepthFailOp #-}
-        readVkDepthFailOp p
-          = peekByteOff p #{offset VkStencilOpState, depthFailOp}
-
-        {-# INLINE writeVkDepthFailOp #-}
-        writeVkDepthFailOp p
-          = pokeByteOff p #{offset VkStencilOpState, depthFailOp}
+        writeField p
+          = pokeByteOff p #{offset VkStencilOpState, passOp}
 
 instance {-# OVERLAPPING #-}
          HasField "depthFailOp" VkStencilOpState where
@@ -201,36 +152,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkStencilOpState, depthFailOp}
 
-instance CanReadField "depthFailOp" VkStencilOpState where
-        {-# INLINE getField #-}
-        getField = vkDepthFailOp
+instance {-# OVERLAPPING #-}
+         CanReadField "depthFailOp" VkStencilOpState where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkStencilOpState, depthFailOp})
 
         {-# INLINE readField #-}
-        readField = readVkDepthFailOp
+        readField p
+          = peekByteOff p #{offset VkStencilOpState, depthFailOp}
 
-instance CanWriteField "depthFailOp" VkStencilOpState where
+instance {-# OVERLAPPING #-}
+         CanWriteField "depthFailOp" VkStencilOpState where
         {-# INLINE writeField #-}
-        writeField = writeVkDepthFailOp
-
-instance {-# OVERLAPPING #-} HasVkCompareOp VkStencilOpState where
-        type VkCompareOpMType VkStencilOpState = VkCompareOp
-
-        {-# NOINLINE vkCompareOp #-}
-        vkCompareOp x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkStencilOpState, compareOp})
-
-        {-# INLINE vkCompareOpByteOffset #-}
-        vkCompareOpByteOffset ~_
-          = #{offset VkStencilOpState, compareOp}
-
-        {-# INLINE readVkCompareOp #-}
-        readVkCompareOp p
-          = peekByteOff p #{offset VkStencilOpState, compareOp}
-
-        {-# INLINE writeVkCompareOp #-}
-        writeVkCompareOp p
-          = pokeByteOff p #{offset VkStencilOpState, compareOp}
+        writeField p
+          = pokeByteOff p #{offset VkStencilOpState, depthFailOp}
 
 instance {-# OVERLAPPING #-} HasField "compareOp" VkStencilOpState
          where
@@ -246,37 +183,22 @@ instance {-# OVERLAPPING #-} HasField "compareOp" VkStencilOpState
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkStencilOpState, compareOp}
 
-instance CanReadField "compareOp" VkStencilOpState where
-        {-# INLINE getField #-}
-        getField = vkCompareOp
+instance {-# OVERLAPPING #-}
+         CanReadField "compareOp" VkStencilOpState where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkStencilOpState, compareOp})
 
         {-# INLINE readField #-}
-        readField = readVkCompareOp
+        readField p
+          = peekByteOff p #{offset VkStencilOpState, compareOp}
 
-instance CanWriteField "compareOp" VkStencilOpState where
+instance {-# OVERLAPPING #-}
+         CanWriteField "compareOp" VkStencilOpState where
         {-# INLINE writeField #-}
-        writeField = writeVkCompareOp
-
-instance {-# OVERLAPPING #-} HasVkCompareMask VkStencilOpState
-         where
-        type VkCompareMaskMType VkStencilOpState = Word32
-
-        {-# NOINLINE vkCompareMask #-}
-        vkCompareMask x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkStencilOpState, compareMask})
-
-        {-# INLINE vkCompareMaskByteOffset #-}
-        vkCompareMaskByteOffset ~_
-          = #{offset VkStencilOpState, compareMask}
-
-        {-# INLINE readVkCompareMask #-}
-        readVkCompareMask p
-          = peekByteOff p #{offset VkStencilOpState, compareMask}
-
-        {-# INLINE writeVkCompareMask #-}
-        writeVkCompareMask p
-          = pokeByteOff p #{offset VkStencilOpState, compareMask}
+        writeField p
+          = pokeByteOff p #{offset VkStencilOpState, compareOp}
 
 instance {-# OVERLAPPING #-}
          HasField "compareMask" VkStencilOpState where
@@ -292,36 +214,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkStencilOpState, compareMask}
 
-instance CanReadField "compareMask" VkStencilOpState where
-        {-# INLINE getField #-}
-        getField = vkCompareMask
+instance {-# OVERLAPPING #-}
+         CanReadField "compareMask" VkStencilOpState where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkStencilOpState, compareMask})
 
         {-# INLINE readField #-}
-        readField = readVkCompareMask
+        readField p
+          = peekByteOff p #{offset VkStencilOpState, compareMask}
 
-instance CanWriteField "compareMask" VkStencilOpState where
+instance {-# OVERLAPPING #-}
+         CanWriteField "compareMask" VkStencilOpState where
         {-# INLINE writeField #-}
-        writeField = writeVkCompareMask
-
-instance {-# OVERLAPPING #-} HasVkWriteMask VkStencilOpState where
-        type VkWriteMaskMType VkStencilOpState = Word32
-
-        {-# NOINLINE vkWriteMask #-}
-        vkWriteMask x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkStencilOpState, writeMask})
-
-        {-# INLINE vkWriteMaskByteOffset #-}
-        vkWriteMaskByteOffset ~_
-          = #{offset VkStencilOpState, writeMask}
-
-        {-# INLINE readVkWriteMask #-}
-        readVkWriteMask p
-          = peekByteOff p #{offset VkStencilOpState, writeMask}
-
-        {-# INLINE writeVkWriteMask #-}
-        writeVkWriteMask p
-          = pokeByteOff p #{offset VkStencilOpState, writeMask}
+        writeField p
+          = pokeByteOff p #{offset VkStencilOpState, compareMask}
 
 instance {-# OVERLAPPING #-} HasField "writeMask" VkStencilOpState
          where
@@ -337,36 +245,22 @@ instance {-# OVERLAPPING #-} HasField "writeMask" VkStencilOpState
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkStencilOpState, writeMask}
 
-instance CanReadField "writeMask" VkStencilOpState where
-        {-# INLINE getField #-}
-        getField = vkWriteMask
+instance {-# OVERLAPPING #-}
+         CanReadField "writeMask" VkStencilOpState where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkStencilOpState, writeMask})
 
         {-# INLINE readField #-}
-        readField = readVkWriteMask
+        readField p
+          = peekByteOff p #{offset VkStencilOpState, writeMask}
 
-instance CanWriteField "writeMask" VkStencilOpState where
+instance {-# OVERLAPPING #-}
+         CanWriteField "writeMask" VkStencilOpState where
         {-# INLINE writeField #-}
-        writeField = writeVkWriteMask
-
-instance {-# OVERLAPPING #-} HasVkReference VkStencilOpState where
-        type VkReferenceMType VkStencilOpState = Word32
-
-        {-# NOINLINE vkReference #-}
-        vkReference x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkStencilOpState, reference})
-
-        {-# INLINE vkReferenceByteOffset #-}
-        vkReferenceByteOffset ~_
-          = #{offset VkStencilOpState, reference}
-
-        {-# INLINE readVkReference #-}
-        readVkReference p
-          = peekByteOff p #{offset VkStencilOpState, reference}
-
-        {-# INLINE writeVkReference #-}
-        writeVkReference p
-          = pokeByteOff p #{offset VkStencilOpState, reference}
+        writeField p
+          = pokeByteOff p #{offset VkStencilOpState, writeMask}
 
 instance {-# OVERLAPPING #-} HasField "reference" VkStencilOpState
          where
@@ -382,37 +276,44 @@ instance {-# OVERLAPPING #-} HasField "reference" VkStencilOpState
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkStencilOpState, reference}
 
-instance CanReadField "reference" VkStencilOpState where
-        {-# INLINE getField #-}
-        getField = vkReference
+instance {-# OVERLAPPING #-}
+         CanReadField "reference" VkStencilOpState where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkStencilOpState, reference})
 
         {-# INLINE readField #-}
-        readField = readVkReference
+        readField p
+          = peekByteOff p #{offset VkStencilOpState, reference}
 
-instance CanWriteField "reference" VkStencilOpState where
+instance {-# OVERLAPPING #-}
+         CanWriteField "reference" VkStencilOpState where
         {-# INLINE writeField #-}
-        writeField = writeVkReference
+        writeField p
+          = pokeByteOff p #{offset VkStencilOpState, reference}
 
 instance Show VkStencilOpState where
         showsPrec d x
           = showString "VkStencilOpState {" .
-              showString "vkFailOp = " .
-                showsPrec d (vkFailOp x) .
+              showString "failOp = " .
+                showsPrec d (getField @"failOp" x) .
                   showString ", " .
-                    showString "vkPassOp = " .
-                      showsPrec d (vkPassOp x) .
+                    showString "passOp = " .
+                      showsPrec d (getField @"passOp" x) .
                         showString ", " .
-                          showString "vkDepthFailOp = " .
-                            showsPrec d (vkDepthFailOp x) .
+                          showString "depthFailOp = " .
+                            showsPrec d (getField @"depthFailOp" x) .
                               showString ", " .
-                                showString "vkCompareOp = " .
-                                  showsPrec d (vkCompareOp x) .
+                                showString "compareOp = " .
+                                  showsPrec d (getField @"compareOp" x) .
                                     showString ", " .
-                                      showString "vkCompareMask = " .
-                                        showsPrec d (vkCompareMask x) .
+                                      showString "compareMask = " .
+                                        showsPrec d (getField @"compareMask" x) .
                                           showString ", " .
-                                            showString "vkWriteMask = " .
-                                              showsPrec d (vkWriteMask x) .
+                                            showString "writeMask = " .
+                                              showsPrec d (getField @"writeMask" x) .
                                                 showString ", " .
-                                                  showString "vkReference = " .
-                                                    showsPrec d (vkReference x) . showChar '}'
+                                                  showString "reference = " .
+                                                    showsPrec d (getField @"reference" x) .
+                                                      showChar '}'

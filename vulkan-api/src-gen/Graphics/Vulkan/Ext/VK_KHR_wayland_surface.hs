@@ -32,8 +32,9 @@ module Graphics.Vulkan.Ext.VK_KHR_wayland_surface
         -- > #include "vk_platform.h"
         --
         -- > #include <wayland-client.h>
-        vkCreateWaylandSurfaceKHR,
+        vkCreateWaylandSurfaceKHR, vkCreateWaylandSurfaceKHRSafe,
         vkGetPhysicalDeviceWaylandPresentationSupportKHR,
+        vkGetPhysicalDeviceWaylandPresentationSupportKHRSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
@@ -84,6 +85,28 @@ foreign import ccall unsafe "vkCreateWaylandSurfaceKHR"
                                              -> Ptr VkSurfaceKHR -- ^ pSurface
                                                                  -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkCreateWaylandSurfaceKHR
+--   >     ( VkInstance instance
+--   >     , const VkWaylandSurfaceCreateInfoKHR* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkSurfaceKHR* pSurface
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateWaylandSurfaceKHR.html vkCreateWaylandSurfaceKHR registry at www.khronos.org>
+foreign import ccall safe "vkCreateWaylandSurfaceKHR"
+               vkCreateWaylandSurfaceKHRSafe ::
+               VkInstance -- ^ instance
+                          ->
+                 Ptr VkWaylandSurfaceCreateInfoKHR -- ^ pCreateInfo
+                                                   ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                                 -> IO VkResult
+
 -- | > VkBool32 vkGetPhysicalDeviceWaylandPresentationSupportKHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , uint32_t queueFamilyIndex
@@ -94,6 +117,21 @@ foreign import ccall unsafe "vkCreateWaylandSurfaceKHR"
 foreign import ccall unsafe
                "vkGetPhysicalDeviceWaylandPresentationSupportKHR"
                vkGetPhysicalDeviceWaylandPresentationSupportKHR ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                -> Word32 -- ^ queueFamilyIndex
+                                          -> Ptr WlDisplay -- ^ display
+                                                           -> IO VkBool32
+
+-- | > VkBool32 vkGetPhysicalDeviceWaylandPresentationSupportKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , uint32_t queueFamilyIndex
+--   >     , struct wl_display* display
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceWaylandPresentationSupportKHR.html vkGetPhysicalDeviceWaylandPresentationSupportKHR registry at www.khronos.org>
+foreign import ccall safe
+               "vkGetPhysicalDeviceWaylandPresentationSupportKHR"
+               vkGetPhysicalDeviceWaylandPresentationSupportKHRSafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 -> Word32 -- ^ queueFamilyIndex
                                           -> Ptr WlDisplay -- ^ display

@@ -37,7 +37,8 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_win32
         -- > #include "vk_platform.h"
         --
         -- > #include <windows.h>
-        vkImportFenceWin32HandleKHR, vkGetFenceWin32HandleKHR,
+        vkImportFenceWin32HandleKHR, vkImportFenceWin32HandleKHRSafe,
+        vkGetFenceWin32HandleKHR, vkGetFenceWin32HandleKHRSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
@@ -83,6 +84,22 @@ foreign import ccall unsafe "vkImportFenceWin32HandleKHR"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR'.
+--
+--   > VkResult vkImportFenceWin32HandleKHR
+--   >     ( VkDevice device
+--   >     , const VkImportFenceWin32HandleInfoKHR* pImportFenceWin32HandleInfo
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkImportFenceWin32HandleKHR.html vkImportFenceWin32HandleKHR registry at www.khronos.org>
+foreign import ccall safe "vkImportFenceWin32HandleKHR"
+               vkImportFenceWin32HandleKHRSafe ::
+               VkDevice -- ^ device
+                        -> Ptr VkImportFenceWin32HandleInfoKHR -- ^ pImportFenceWin32HandleInfo
+                                                               -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
 --   Error codes: 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
 --
 --   > VkResult vkGetFenceWin32HandleKHR
@@ -94,6 +111,25 @@ foreign import ccall unsafe "vkImportFenceWin32HandleKHR"
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetFenceWin32HandleKHR.html vkGetFenceWin32HandleKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkGetFenceWin32HandleKHR"
                vkGetFenceWin32HandleKHR ::
+               VkDevice -- ^ device
+                        ->
+                 Ptr VkFenceGetWin32HandleInfoKHR -- ^ pGetWin32HandleInfo
+                                                  -> Ptr HANDLE -- ^ pHandle
+                                                                -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
+--
+--   > VkResult vkGetFenceWin32HandleKHR
+--   >     ( VkDevice device
+--   >     , const VkFenceGetWin32HandleInfoKHR* pGetWin32HandleInfo
+--   >     , HANDLE* pHandle
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetFenceWin32HandleKHR.html vkGetFenceWin32HandleKHR registry at www.khronos.org>
+foreign import ccall safe "vkGetFenceWin32HandleKHR"
+               vkGetFenceWin32HandleKHRSafe ::
                VkDevice -- ^ device
                         ->
                  Ptr VkFenceGetWin32HandleInfoKHR -- ^ pGetWin32HandleInfo

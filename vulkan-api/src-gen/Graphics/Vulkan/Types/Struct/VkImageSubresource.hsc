@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkImageSubresource
        (VkImageSubresource(..)) where
@@ -13,7 +14,6 @@ import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkImageAspectFlags (VkImageAspectFlags)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                              (unsafeDupablePerformIO)
 
 -- | > typedef struct VkImageSubresource {
@@ -70,27 +70,6 @@ instance VulkanMarshal VkImageSubresource where
         type ReturnedOnly VkImageSubresource = 'False -- ' closing tick for hsc2hs
         type StructExtends VkImageSubresource = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkAspectMask VkImageSubresource
-         where
-        type VkAspectMaskMType VkImageSubresource = VkImageAspectFlags
-
-        {-# NOINLINE vkAspectMask #-}
-        vkAspectMask x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageSubresource, aspectMask})
-
-        {-# INLINE vkAspectMaskByteOffset #-}
-        vkAspectMaskByteOffset ~_
-          = #{offset VkImageSubresource, aspectMask}
-
-        {-# INLINE readVkAspectMask #-}
-        readVkAspectMask p
-          = peekByteOff p #{offset VkImageSubresource, aspectMask}
-
-        {-# INLINE writeVkAspectMask #-}
-        writeVkAspectMask p
-          = pokeByteOff p #{offset VkImageSubresource, aspectMask}
-
 instance {-# OVERLAPPING #-}
          HasField "aspectMask" VkImageSubresource where
         type FieldType "aspectMask" VkImageSubresource = VkImageAspectFlags
@@ -105,36 +84,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkImageSubresource, aspectMask}
 
-instance CanReadField "aspectMask" VkImageSubresource where
-        {-# INLINE getField #-}
-        getField = vkAspectMask
+instance {-# OVERLAPPING #-}
+         CanReadField "aspectMask" VkImageSubresource where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageSubresource, aspectMask})
 
         {-# INLINE readField #-}
-        readField = readVkAspectMask
+        readField p
+          = peekByteOff p #{offset VkImageSubresource, aspectMask}
 
-instance CanWriteField "aspectMask" VkImageSubresource where
+instance {-# OVERLAPPING #-}
+         CanWriteField "aspectMask" VkImageSubresource where
         {-# INLINE writeField #-}
-        writeField = writeVkAspectMask
-
-instance {-# OVERLAPPING #-} HasVkMipLevel VkImageSubresource where
-        type VkMipLevelMType VkImageSubresource = Word32
-
-        {-# NOINLINE vkMipLevel #-}
-        vkMipLevel x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageSubresource, mipLevel})
-
-        {-# INLINE vkMipLevelByteOffset #-}
-        vkMipLevelByteOffset ~_
-          = #{offset VkImageSubresource, mipLevel}
-
-        {-# INLINE readVkMipLevel #-}
-        readVkMipLevel p
-          = peekByteOff p #{offset VkImageSubresource, mipLevel}
-
-        {-# INLINE writeVkMipLevel #-}
-        writeVkMipLevel p
-          = pokeByteOff p #{offset VkImageSubresource, mipLevel}
+        writeField p
+          = pokeByteOff p #{offset VkImageSubresource, aspectMask}
 
 instance {-# OVERLAPPING #-} HasField "mipLevel" VkImageSubresource
          where
@@ -150,37 +115,22 @@ instance {-# OVERLAPPING #-} HasField "mipLevel" VkImageSubresource
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkImageSubresource, mipLevel}
 
-instance CanReadField "mipLevel" VkImageSubresource where
-        {-# INLINE getField #-}
-        getField = vkMipLevel
+instance {-# OVERLAPPING #-}
+         CanReadField "mipLevel" VkImageSubresource where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageSubresource, mipLevel})
 
         {-# INLINE readField #-}
-        readField = readVkMipLevel
+        readField p
+          = peekByteOff p #{offset VkImageSubresource, mipLevel}
 
-instance CanWriteField "mipLevel" VkImageSubresource where
+instance {-# OVERLAPPING #-}
+         CanWriteField "mipLevel" VkImageSubresource where
         {-# INLINE writeField #-}
-        writeField = writeVkMipLevel
-
-instance {-# OVERLAPPING #-} HasVkArrayLayer VkImageSubresource
-         where
-        type VkArrayLayerMType VkImageSubresource = Word32
-
-        {-# NOINLINE vkArrayLayer #-}
-        vkArrayLayer x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageSubresource, arrayLayer})
-
-        {-# INLINE vkArrayLayerByteOffset #-}
-        vkArrayLayerByteOffset ~_
-          = #{offset VkImageSubresource, arrayLayer}
-
-        {-# INLINE readVkArrayLayer #-}
-        readVkArrayLayer p
-          = peekByteOff p #{offset VkImageSubresource, arrayLayer}
-
-        {-# INLINE writeVkArrayLayer #-}
-        writeVkArrayLayer p
-          = pokeByteOff p #{offset VkImageSubresource, arrayLayer}
+        writeField p
+          = pokeByteOff p #{offset VkImageSubresource, mipLevel}
 
 instance {-# OVERLAPPING #-}
          HasField "arrayLayer" VkImageSubresource where
@@ -196,25 +146,31 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkImageSubresource, arrayLayer}
 
-instance CanReadField "arrayLayer" VkImageSubresource where
-        {-# INLINE getField #-}
-        getField = vkArrayLayer
+instance {-# OVERLAPPING #-}
+         CanReadField "arrayLayer" VkImageSubresource where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageSubresource, arrayLayer})
 
         {-# INLINE readField #-}
-        readField = readVkArrayLayer
+        readField p
+          = peekByteOff p #{offset VkImageSubresource, arrayLayer}
 
-instance CanWriteField "arrayLayer" VkImageSubresource where
+instance {-# OVERLAPPING #-}
+         CanWriteField "arrayLayer" VkImageSubresource where
         {-# INLINE writeField #-}
-        writeField = writeVkArrayLayer
+        writeField p
+          = pokeByteOff p #{offset VkImageSubresource, arrayLayer}
 
 instance Show VkImageSubresource where
         showsPrec d x
           = showString "VkImageSubresource {" .
-              showString "vkAspectMask = " .
-                showsPrec d (vkAspectMask x) .
+              showString "aspectMask = " .
+                showsPrec d (getField @"aspectMask" x) .
                   showString ", " .
-                    showString "vkMipLevel = " .
-                      showsPrec d (vkMipLevel x) .
+                    showString "mipLevel = " .
+                      showsPrec d (getField @"mipLevel" x) .
                         showString ", " .
-                          showString "vkArrayLayer = " .
-                            showsPrec d (vkArrayLayer x) . showChar '}'
+                          showString "arrayLayer = " .
+                            showsPrec d (getField @"arrayLayer" x) . showChar '}'

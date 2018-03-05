@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkSurfaceCapabilitiesKHR
        (VkSurfaceCapabilitiesKHR(..)) where
@@ -17,7 +18,6 @@ import           Graphics.Vulkan.Types.Enum.VkImageUsageFlags          (VkImageU
 import           Graphics.Vulkan.Types.Enum.VkSurfaceTransformFlagsKHR (VkSurfaceTransformFlagBitsKHR,
                                                                         VkSurfaceTransformFlagsKHR)
 import           Graphics.Vulkan.Types.Struct.VkExtent2D               (VkExtent2D)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                      (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSurfaceCapabilitiesKHR {
@@ -87,27 +87,6 @@ instance VulkanMarshal VkSurfaceCapabilitiesKHR where
         type StructExtends VkSurfaceCapabilitiesKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkMinImageCount VkSurfaceCapabilitiesKHR where
-        type VkMinImageCountMType VkSurfaceCapabilitiesKHR = Word32
-
-        {-# NOINLINE vkMinImageCount #-}
-        vkMinImageCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSurfaceCapabilitiesKHR, minImageCount})
-
-        {-# INLINE vkMinImageCountByteOffset #-}
-        vkMinImageCountByteOffset ~_
-          = #{offset VkSurfaceCapabilitiesKHR, minImageCount}
-
-        {-# INLINE readVkMinImageCount #-}
-        readVkMinImageCount p
-          = peekByteOff p #{offset VkSurfaceCapabilitiesKHR, minImageCount}
-
-        {-# INLINE writeVkMinImageCount #-}
-        writeVkMinImageCount p
-          = pokeByteOff p #{offset VkSurfaceCapabilitiesKHR, minImageCount}
-
-instance {-# OVERLAPPING #-}
          HasField "minImageCount" VkSurfaceCapabilitiesKHR where
         type FieldType "minImageCount" VkSurfaceCapabilitiesKHR = Word32
         type FieldOptional "minImageCount" VkSurfaceCapabilitiesKHR =
@@ -123,39 +102,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSurfaceCapabilitiesKHR, minImageCount}
 
-instance CanReadField "minImageCount" VkSurfaceCapabilitiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkMinImageCount
+instance {-# OVERLAPPING #-}
+         CanReadField "minImageCount" VkSurfaceCapabilitiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSurfaceCapabilitiesKHR, minImageCount})
 
         {-# INLINE readField #-}
-        readField = readVkMinImageCount
-
-instance CanWriteField "minImageCount" VkSurfaceCapabilitiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkMinImageCount
+        readField p
+          = peekByteOff p #{offset VkSurfaceCapabilitiesKHR, minImageCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkMaxImageCount VkSurfaceCapabilitiesKHR where
-        type VkMaxImageCountMType VkSurfaceCapabilitiesKHR = Word32
-
-        {-# NOINLINE vkMaxImageCount #-}
-        vkMaxImageCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSurfaceCapabilitiesKHR, maxImageCount})
-
-        {-# INLINE vkMaxImageCountByteOffset #-}
-        vkMaxImageCountByteOffset ~_
-          = #{offset VkSurfaceCapabilitiesKHR, maxImageCount}
-
-        {-# INLINE readVkMaxImageCount #-}
-        readVkMaxImageCount p
-          = peekByteOff p #{offset VkSurfaceCapabilitiesKHR, maxImageCount}
-
-        {-# INLINE writeVkMaxImageCount #-}
-        writeVkMaxImageCount p
-          = pokeByteOff p #{offset VkSurfaceCapabilitiesKHR, maxImageCount}
+         CanWriteField "minImageCount" VkSurfaceCapabilitiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSurfaceCapabilitiesKHR, minImageCount}
 
 instance {-# OVERLAPPING #-}
          HasField "maxImageCount" VkSurfaceCapabilitiesKHR where
@@ -173,39 +135,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSurfaceCapabilitiesKHR, maxImageCount}
 
-instance CanReadField "maxImageCount" VkSurfaceCapabilitiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkMaxImageCount
+instance {-# OVERLAPPING #-}
+         CanReadField "maxImageCount" VkSurfaceCapabilitiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSurfaceCapabilitiesKHR, maxImageCount})
 
         {-# INLINE readField #-}
-        readField = readVkMaxImageCount
-
-instance CanWriteField "maxImageCount" VkSurfaceCapabilitiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkMaxImageCount
+        readField p
+          = peekByteOff p #{offset VkSurfaceCapabilitiesKHR, maxImageCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkCurrentExtent VkSurfaceCapabilitiesKHR where
-        type VkCurrentExtentMType VkSurfaceCapabilitiesKHR = VkExtent2D
-
-        {-# NOINLINE vkCurrentExtent #-}
-        vkCurrentExtent x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSurfaceCapabilitiesKHR, currentExtent})
-
-        {-# INLINE vkCurrentExtentByteOffset #-}
-        vkCurrentExtentByteOffset ~_
-          = #{offset VkSurfaceCapabilitiesKHR, currentExtent}
-
-        {-# INLINE readVkCurrentExtent #-}
-        readVkCurrentExtent p
-          = peekByteOff p #{offset VkSurfaceCapabilitiesKHR, currentExtent}
-
-        {-# INLINE writeVkCurrentExtent #-}
-        writeVkCurrentExtent p
-          = pokeByteOff p #{offset VkSurfaceCapabilitiesKHR, currentExtent}
+         CanWriteField "maxImageCount" VkSurfaceCapabilitiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSurfaceCapabilitiesKHR, maxImageCount}
 
 instance {-# OVERLAPPING #-}
          HasField "currentExtent" VkSurfaceCapabilitiesKHR where
@@ -224,39 +169,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSurfaceCapabilitiesKHR, currentExtent}
 
-instance CanReadField "currentExtent" VkSurfaceCapabilitiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkCurrentExtent
+instance {-# OVERLAPPING #-}
+         CanReadField "currentExtent" VkSurfaceCapabilitiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSurfaceCapabilitiesKHR, currentExtent})
 
         {-# INLINE readField #-}
-        readField = readVkCurrentExtent
-
-instance CanWriteField "currentExtent" VkSurfaceCapabilitiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkCurrentExtent
+        readField p
+          = peekByteOff p #{offset VkSurfaceCapabilitiesKHR, currentExtent}
 
 instance {-# OVERLAPPING #-}
-         HasVkMinImageExtent VkSurfaceCapabilitiesKHR where
-        type VkMinImageExtentMType VkSurfaceCapabilitiesKHR = VkExtent2D
-
-        {-# NOINLINE vkMinImageExtent #-}
-        vkMinImageExtent x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSurfaceCapabilitiesKHR, minImageExtent})
-
-        {-# INLINE vkMinImageExtentByteOffset #-}
-        vkMinImageExtentByteOffset ~_
-          = #{offset VkSurfaceCapabilitiesKHR, minImageExtent}
-
-        {-# INLINE readVkMinImageExtent #-}
-        readVkMinImageExtent p
-          = peekByteOff p #{offset VkSurfaceCapabilitiesKHR, minImageExtent}
-
-        {-# INLINE writeVkMinImageExtent #-}
-        writeVkMinImageExtent p
-          = pokeByteOff p #{offset VkSurfaceCapabilitiesKHR, minImageExtent}
+         CanWriteField "currentExtent" VkSurfaceCapabilitiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSurfaceCapabilitiesKHR, currentExtent}
 
 instance {-# OVERLAPPING #-}
          HasField "minImageExtent" VkSurfaceCapabilitiesKHR where
@@ -276,39 +204,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSurfaceCapabilitiesKHR, minImageExtent}
 
-instance CanReadField "minImageExtent" VkSurfaceCapabilitiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkMinImageExtent
+instance {-# OVERLAPPING #-}
+         CanReadField "minImageExtent" VkSurfaceCapabilitiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSurfaceCapabilitiesKHR, minImageExtent})
 
         {-# INLINE readField #-}
-        readField = readVkMinImageExtent
-
-instance CanWriteField "minImageExtent" VkSurfaceCapabilitiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkMinImageExtent
+        readField p
+          = peekByteOff p #{offset VkSurfaceCapabilitiesKHR, minImageExtent}
 
 instance {-# OVERLAPPING #-}
-         HasVkMaxImageExtent VkSurfaceCapabilitiesKHR where
-        type VkMaxImageExtentMType VkSurfaceCapabilitiesKHR = VkExtent2D
-
-        {-# NOINLINE vkMaxImageExtent #-}
-        vkMaxImageExtent x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSurfaceCapabilitiesKHR, maxImageExtent})
-
-        {-# INLINE vkMaxImageExtentByteOffset #-}
-        vkMaxImageExtentByteOffset ~_
-          = #{offset VkSurfaceCapabilitiesKHR, maxImageExtent}
-
-        {-# INLINE readVkMaxImageExtent #-}
-        readVkMaxImageExtent p
-          = peekByteOff p #{offset VkSurfaceCapabilitiesKHR, maxImageExtent}
-
-        {-# INLINE writeVkMaxImageExtent #-}
-        writeVkMaxImageExtent p
-          = pokeByteOff p #{offset VkSurfaceCapabilitiesKHR, maxImageExtent}
+         CanWriteField "minImageExtent" VkSurfaceCapabilitiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSurfaceCapabilitiesKHR, minImageExtent}
 
 instance {-# OVERLAPPING #-}
          HasField "maxImageExtent" VkSurfaceCapabilitiesKHR where
@@ -328,39 +239,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSurfaceCapabilitiesKHR, maxImageExtent}
 
-instance CanReadField "maxImageExtent" VkSurfaceCapabilitiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkMaxImageExtent
+instance {-# OVERLAPPING #-}
+         CanReadField "maxImageExtent" VkSurfaceCapabilitiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSurfaceCapabilitiesKHR, maxImageExtent})
 
         {-# INLINE readField #-}
-        readField = readVkMaxImageExtent
-
-instance CanWriteField "maxImageExtent" VkSurfaceCapabilitiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkMaxImageExtent
+        readField p
+          = peekByteOff p #{offset VkSurfaceCapabilitiesKHR, maxImageExtent}
 
 instance {-# OVERLAPPING #-}
-         HasVkMaxImageArrayLayers VkSurfaceCapabilitiesKHR where
-        type VkMaxImageArrayLayersMType VkSurfaceCapabilitiesKHR = Word32
-
-        {-# NOINLINE vkMaxImageArrayLayers #-}
-        vkMaxImageArrayLayers x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSurfaceCapabilitiesKHR, maxImageArrayLayers})
-
-        {-# INLINE vkMaxImageArrayLayersByteOffset #-}
-        vkMaxImageArrayLayersByteOffset ~_
-          = #{offset VkSurfaceCapabilitiesKHR, maxImageArrayLayers}
-
-        {-# INLINE readVkMaxImageArrayLayers #-}
-        readVkMaxImageArrayLayers p
-          = peekByteOff p #{offset VkSurfaceCapabilitiesKHR, maxImageArrayLayers}
-
-        {-# INLINE writeVkMaxImageArrayLayers #-}
-        writeVkMaxImageArrayLayers p
-          = pokeByteOff p #{offset VkSurfaceCapabilitiesKHR, maxImageArrayLayers}
+         CanWriteField "maxImageExtent" VkSurfaceCapabilitiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSurfaceCapabilitiesKHR, maxImageExtent}
 
 instance {-# OVERLAPPING #-}
          HasField "maxImageArrayLayers" VkSurfaceCapabilitiesKHR where
@@ -380,42 +274,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSurfaceCapabilitiesKHR, maxImageArrayLayers}
 
-instance CanReadField "maxImageArrayLayers"
-           VkSurfaceCapabilitiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkMaxImageArrayLayers
+instance {-# OVERLAPPING #-}
+         CanReadField "maxImageArrayLayers" VkSurfaceCapabilitiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSurfaceCapabilitiesKHR, maxImageArrayLayers})
 
         {-# INLINE readField #-}
-        readField = readVkMaxImageArrayLayers
-
-instance CanWriteField "maxImageArrayLayers"
-           VkSurfaceCapabilitiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkMaxImageArrayLayers
+        readField p
+          = peekByteOff p #{offset VkSurfaceCapabilitiesKHR, maxImageArrayLayers}
 
 instance {-# OVERLAPPING #-}
-         HasVkSupportedTransforms VkSurfaceCapabilitiesKHR where
-        type VkSupportedTransformsMType VkSurfaceCapabilitiesKHR =
-             VkSurfaceTransformFlagsKHR
-
-        {-# NOINLINE vkSupportedTransforms #-}
-        vkSupportedTransforms x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSurfaceCapabilitiesKHR, supportedTransforms})
-
-        {-# INLINE vkSupportedTransformsByteOffset #-}
-        vkSupportedTransformsByteOffset ~_
-          = #{offset VkSurfaceCapabilitiesKHR, supportedTransforms}
-
-        {-# INLINE readVkSupportedTransforms #-}
-        readVkSupportedTransforms p
-          = peekByteOff p #{offset VkSurfaceCapabilitiesKHR, supportedTransforms}
-
-        {-# INLINE writeVkSupportedTransforms #-}
-        writeVkSupportedTransforms p
-          = pokeByteOff p #{offset VkSurfaceCapabilitiesKHR, supportedTransforms}
+         CanWriteField "maxImageArrayLayers" VkSurfaceCapabilitiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSurfaceCapabilitiesKHR, maxImageArrayLayers}
 
 instance {-# OVERLAPPING #-}
          HasField "supportedTransforms" VkSurfaceCapabilitiesKHR where
@@ -435,42 +309,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSurfaceCapabilitiesKHR, supportedTransforms}
 
-instance CanReadField "supportedTransforms"
-           VkSurfaceCapabilitiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkSupportedTransforms
+instance {-# OVERLAPPING #-}
+         CanReadField "supportedTransforms" VkSurfaceCapabilitiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSurfaceCapabilitiesKHR, supportedTransforms})
 
         {-# INLINE readField #-}
-        readField = readVkSupportedTransforms
-
-instance CanWriteField "supportedTransforms"
-           VkSurfaceCapabilitiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSupportedTransforms
+        readField p
+          = peekByteOff p #{offset VkSurfaceCapabilitiesKHR, supportedTransforms}
 
 instance {-# OVERLAPPING #-}
-         HasVkCurrentTransform VkSurfaceCapabilitiesKHR where
-        type VkCurrentTransformMType VkSurfaceCapabilitiesKHR =
-             VkSurfaceTransformFlagBitsKHR
-
-        {-# NOINLINE vkCurrentTransform #-}
-        vkCurrentTransform x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSurfaceCapabilitiesKHR, currentTransform})
-
-        {-# INLINE vkCurrentTransformByteOffset #-}
-        vkCurrentTransformByteOffset ~_
-          = #{offset VkSurfaceCapabilitiesKHR, currentTransform}
-
-        {-# INLINE readVkCurrentTransform #-}
-        readVkCurrentTransform p
-          = peekByteOff p #{offset VkSurfaceCapabilitiesKHR, currentTransform}
-
-        {-# INLINE writeVkCurrentTransform #-}
-        writeVkCurrentTransform p
-          = pokeByteOff p #{offset VkSurfaceCapabilitiesKHR, currentTransform}
+         CanWriteField "supportedTransforms" VkSurfaceCapabilitiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSurfaceCapabilitiesKHR, supportedTransforms}
 
 instance {-# OVERLAPPING #-}
          HasField "currentTransform" VkSurfaceCapabilitiesKHR where
@@ -490,40 +344,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSurfaceCapabilitiesKHR, currentTransform}
 
-instance CanReadField "currentTransform" VkSurfaceCapabilitiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkCurrentTransform
+instance {-# OVERLAPPING #-}
+         CanReadField "currentTransform" VkSurfaceCapabilitiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSurfaceCapabilitiesKHR, currentTransform})
 
         {-# INLINE readField #-}
-        readField = readVkCurrentTransform
-
-instance CanWriteField "currentTransform" VkSurfaceCapabilitiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkCurrentTransform
+        readField p
+          = peekByteOff p #{offset VkSurfaceCapabilitiesKHR, currentTransform}
 
 instance {-# OVERLAPPING #-}
-         HasVkSupportedCompositeAlpha VkSurfaceCapabilitiesKHR where
-        type VkSupportedCompositeAlphaMType VkSurfaceCapabilitiesKHR =
-             VkCompositeAlphaFlagsKHR
-
-        {-# NOINLINE vkSupportedCompositeAlpha #-}
-        vkSupportedCompositeAlpha x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSurfaceCapabilitiesKHR, supportedCompositeAlpha})
-
-        {-# INLINE vkSupportedCompositeAlphaByteOffset #-}
-        vkSupportedCompositeAlphaByteOffset ~_
-          = #{offset VkSurfaceCapabilitiesKHR, supportedCompositeAlpha}
-
-        {-# INLINE readVkSupportedCompositeAlpha #-}
-        readVkSupportedCompositeAlpha p
-          = peekByteOff p #{offset VkSurfaceCapabilitiesKHR, supportedCompositeAlpha}
-
-        {-# INLINE writeVkSupportedCompositeAlpha #-}
-        writeVkSupportedCompositeAlpha p
-          = pokeByteOff p #{offset VkSurfaceCapabilitiesKHR, supportedCompositeAlpha}
+         CanWriteField "currentTransform" VkSurfaceCapabilitiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSurfaceCapabilitiesKHR, currentTransform}
 
 instance {-# OVERLAPPING #-}
          HasField "supportedCompositeAlpha" VkSurfaceCapabilitiesKHR where
@@ -546,42 +382,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSurfaceCapabilitiesKHR, supportedCompositeAlpha}
 
-instance CanReadField "supportedCompositeAlpha"
-           VkSurfaceCapabilitiesKHR
+instance {-# OVERLAPPING #-}
+         CanReadField "supportedCompositeAlpha" VkSurfaceCapabilitiesKHR
          where
-        {-# INLINE getField #-}
-        getField = vkSupportedCompositeAlpha
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSurfaceCapabilitiesKHR, supportedCompositeAlpha})
 
         {-# INLINE readField #-}
-        readField = readVkSupportedCompositeAlpha
-
-instance CanWriteField "supportedCompositeAlpha"
-           VkSurfaceCapabilitiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSupportedCompositeAlpha
+        readField p
+          = peekByteOff p #{offset VkSurfaceCapabilitiesKHR, supportedCompositeAlpha}
 
 instance {-# OVERLAPPING #-}
-         HasVkSupportedUsageFlags VkSurfaceCapabilitiesKHR where
-        type VkSupportedUsageFlagsMType VkSurfaceCapabilitiesKHR =
-             VkImageUsageFlags
-
-        {-# NOINLINE vkSupportedUsageFlags #-}
-        vkSupportedUsageFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSurfaceCapabilitiesKHR, supportedUsageFlags})
-
-        {-# INLINE vkSupportedUsageFlagsByteOffset #-}
-        vkSupportedUsageFlagsByteOffset ~_
-          = #{offset VkSurfaceCapabilitiesKHR, supportedUsageFlags}
-
-        {-# INLINE readVkSupportedUsageFlags #-}
-        readVkSupportedUsageFlags p
-          = peekByteOff p #{offset VkSurfaceCapabilitiesKHR, supportedUsageFlags}
-
-        {-# INLINE writeVkSupportedUsageFlags #-}
-        writeVkSupportedUsageFlags p
-          = pokeByteOff p #{offset VkSurfaceCapabilitiesKHR, supportedUsageFlags}
+         CanWriteField "supportedCompositeAlpha" VkSurfaceCapabilitiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSurfaceCapabilitiesKHR, supportedCompositeAlpha}
 
 instance {-# OVERLAPPING #-}
          HasField "supportedUsageFlags" VkSurfaceCapabilitiesKHR where
@@ -601,58 +419,67 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSurfaceCapabilitiesKHR, supportedUsageFlags}
 
-instance CanReadField "supportedUsageFlags"
-           VkSurfaceCapabilitiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkSupportedUsageFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "supportedUsageFlags" VkSurfaceCapabilitiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSurfaceCapabilitiesKHR, supportedUsageFlags})
 
         {-# INLINE readField #-}
-        readField = readVkSupportedUsageFlags
+        readField p
+          = peekByteOff p #{offset VkSurfaceCapabilitiesKHR, supportedUsageFlags}
 
-instance CanWriteField "supportedUsageFlags"
-           VkSurfaceCapabilitiesKHR
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "supportedUsageFlags" VkSurfaceCapabilitiesKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkSupportedUsageFlags
+        writeField p
+          = pokeByteOff p #{offset VkSurfaceCapabilitiesKHR, supportedUsageFlags}
 
 instance Show VkSurfaceCapabilitiesKHR where
         showsPrec d x
           = showString "VkSurfaceCapabilitiesKHR {" .
-              showString "vkMinImageCount = " .
-                showsPrec d (vkMinImageCount x) .
+              showString "minImageCount = " .
+                showsPrec d (getField @"minImageCount" x) .
                   showString ", " .
-                    showString "vkMaxImageCount = " .
-                      showsPrec d (vkMaxImageCount x) .
+                    showString "maxImageCount = " .
+                      showsPrec d (getField @"maxImageCount" x) .
                         showString ", " .
-                          showString "vkCurrentExtent = " .
-                            showsPrec d (vkCurrentExtent x) .
+                          showString "currentExtent = " .
+                            showsPrec d (getField @"currentExtent" x) .
                               showString ", " .
-                                showString "vkMinImageExtent = " .
-                                  showsPrec d (vkMinImageExtent x) .
+                                showString "minImageExtent = " .
+                                  showsPrec d (getField @"minImageExtent" x) .
                                     showString ", " .
-                                      showString "vkMaxImageExtent = " .
-                                        showsPrec d (vkMaxImageExtent x) .
+                                      showString "maxImageExtent = " .
+                                        showsPrec d (getField @"maxImageExtent" x) .
                                           showString ", " .
-                                            showString "vkMaxImageArrayLayers = " .
-                                              showsPrec d (vkMaxImageArrayLayers x) .
+                                            showString "maxImageArrayLayers = " .
+                                              showsPrec d (getField @"maxImageArrayLayers" x) .
                                                 showString ", " .
-                                                  showString "vkSupportedTransforms = " .
-                                                    showsPrec d (vkSupportedTransforms x) .
+                                                  showString "supportedTransforms = " .
+                                                    showsPrec d (getField @"supportedTransforms" x)
+                                                      .
                                                       showString ", " .
-                                                        showString "vkCurrentTransform = " .
-                                                          showsPrec d (vkCurrentTransform x) .
+                                                        showString "currentTransform = " .
+                                                          showsPrec d
+                                                            (getField @"currentTransform" x)
+                                                            .
                                                             showString ", " .
                                                               showString
-                                                                "vkSupportedCompositeAlpha = "
+                                                                "supportedCompositeAlpha = "
                                                                 .
                                                                 showsPrec d
-                                                                  (vkSupportedCompositeAlpha x)
+                                                                  (getField
+                                                                     @"supportedCompositeAlpha"
+                                                                     x)
                                                                   .
                                                                   showString ", " .
                                                                     showString
-                                                                      "vkSupportedUsageFlags = "
+                                                                      "supportedUsageFlags = "
                                                                       .
                                                                       showsPrec d
-                                                                        (vkSupportedUsageFlags x)
+                                                                        (getField
+                                                                           @"supportedUsageFlags"
+                                                                           x)
                                                                         . showChar '}'

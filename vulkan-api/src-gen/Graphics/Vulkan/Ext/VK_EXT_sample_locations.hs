@@ -51,8 +51,9 @@ module Graphics.Vulkan.Ext.VK_EXT_sample_locations
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         module Graphics.Vulkan.Types.Struct.VkSubpassSampleLocationsEXT,
         -- > #include "vk_platform.h"
-        vkCmdSetSampleLocationsEXT,
+        vkCmdSetSampleLocationsEXT, vkCmdSetSampleLocationsEXTSafe,
         vkGetPhysicalDeviceMultisamplePropertiesEXT,
+        vkGetPhysicalDeviceMultisamplePropertiesEXTSafe,
         module Graphics.Vulkan.Types.Handles,
         VK_EXT_SAMPLE_LOCATIONS_SPEC_VERSION,
         pattern VK_EXT_SAMPLE_LOCATIONS_SPEC_VERSION,
@@ -122,6 +123,22 @@ foreign import ccall unsafe "vkCmdSetSampleLocationsEXT"
                                -> Ptr VkSampleLocationsInfoEXT -- ^ pSampleLocationsInfo
                                                                -> IO ()
 
+-- | queues: 'graphics'.
+--
+--   renderpass: @both@
+--
+--   > () vkCmdSetSampleLocationsEXT
+--   >     ( VkCommandBuffer commandBuffer
+--   >     , const VkSampleLocationsInfoEXT* pSampleLocationsInfo
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdSetSampleLocationsEXT.html vkCmdSetSampleLocationsEXT registry at www.khronos.org>
+foreign import ccall safe "vkCmdSetSampleLocationsEXT"
+               vkCmdSetSampleLocationsEXTSafe ::
+               VkCommandBuffer -- ^ commandBuffer
+                               -> Ptr VkSampleLocationsInfoEXT -- ^ pSampleLocationsInfo
+                                                               -> IO ()
+
 -- | > () vkGetPhysicalDeviceMultisamplePropertiesEXT
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkSampleCountFlagBits samples
@@ -132,6 +149,22 @@ foreign import ccall unsafe "vkCmdSetSampleLocationsEXT"
 foreign import ccall unsafe
                "vkGetPhysicalDeviceMultisamplePropertiesEXT"
                vkGetPhysicalDeviceMultisamplePropertiesEXT ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                ->
+                 VkSampleCountFlagBits -- ^ samples
+                                       -> Ptr VkMultisamplePropertiesEXT -- ^ pMultisampleProperties
+                                                                         -> IO ()
+
+-- | > () vkGetPhysicalDeviceMultisamplePropertiesEXT
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , VkSampleCountFlagBits samples
+--   >     , VkMultisamplePropertiesEXT* pMultisampleProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceMultisamplePropertiesEXT.html vkGetPhysicalDeviceMultisamplePropertiesEXT registry at www.khronos.org>
+foreign import ccall safe
+               "vkGetPhysicalDeviceMultisamplePropertiesEXT"
+               vkGetPhysicalDeviceMultisamplePropertiesEXTSafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  VkSampleCountFlagBits -- ^ samples

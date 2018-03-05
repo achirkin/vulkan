@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPipelineInputAssemblyStateCreateInfo
        (VkPipelineInputAssemblyStateCreateInfo(..)) where
@@ -16,7 +17,6 @@ import           Graphics.Vulkan.Types.BaseTypes                (VkBool32)
 import           Graphics.Vulkan.Types.Bitmasks                 (VkPipelineInputAssemblyStateCreateFlags)
 import           Graphics.Vulkan.Types.Enum.VkPrimitiveTopology (VkPrimitiveTopology)
 import           Graphics.Vulkan.Types.Enum.VkStructureType     (VkStructureType)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                               (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPipelineInputAssemblyStateCreateInfo {
@@ -84,28 +84,6 @@ instance VulkanMarshal VkPipelineInputAssemblyStateCreateInfo where
         type StructExtends VkPipelineInputAssemblyStateCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPipelineInputAssemblyStateCreateInfo where
-        type VkSTypeMType VkPipelineInputAssemblyStateCreateInfo =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineInputAssemblyStateCreateInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPipelineInputAssemblyStateCreateInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPipelineInputAssemblyStateCreateInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPipelineInputAssemblyStateCreateInfo, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPipelineInputAssemblyStateCreateInfo where
         type FieldType "sType" VkPipelineInputAssemblyStateCreateInfo =
              VkStructureType
@@ -123,41 +101,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineInputAssemblyStateCreateInfo, sType}
 
-instance CanReadField "sType"
-           VkPipelineInputAssemblyStateCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkPipelineInputAssemblyStateCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineInputAssemblyStateCreateInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType"
-           VkPipelineInputAssemblyStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkPipelineInputAssemblyStateCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkPipelineInputAssemblyStateCreateInfo where
-        type VkPNextMType VkPipelineInputAssemblyStateCreateInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineInputAssemblyStateCreateInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPipelineInputAssemblyStateCreateInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPipelineInputAssemblyStateCreateInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPipelineInputAssemblyStateCreateInfo, pNext}
+         CanWriteField "sType" VkPipelineInputAssemblyStateCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineInputAssemblyStateCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPipelineInputAssemblyStateCreateInfo where
@@ -177,42 +136,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineInputAssemblyStateCreateInfo, pNext}
 
-instance CanReadField "pNext"
-           VkPipelineInputAssemblyStateCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkPipelineInputAssemblyStateCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineInputAssemblyStateCreateInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext"
-           VkPipelineInputAssemblyStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkPipelineInputAssemblyStateCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkFlags VkPipelineInputAssemblyStateCreateInfo where
-        type VkFlagsMType VkPipelineInputAssemblyStateCreateInfo =
-             VkPipelineInputAssemblyStateCreateFlags
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineInputAssemblyStateCreateInfo, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkPipelineInputAssemblyStateCreateInfo, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkPipelineInputAssemblyStateCreateInfo, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkPipelineInputAssemblyStateCreateInfo, flags}
+         CanWriteField "pNext" VkPipelineInputAssemblyStateCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineInputAssemblyStateCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkPipelineInputAssemblyStateCreateInfo where
@@ -232,42 +171,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineInputAssemblyStateCreateInfo, flags}
 
-instance CanReadField "flags"
-           VkPipelineInputAssemblyStateCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkPipelineInputAssemblyStateCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineInputAssemblyStateCreateInfo, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags"
-           VkPipelineInputAssemblyStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkPipelineInputAssemblyStateCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkTopology VkPipelineInputAssemblyStateCreateInfo where
-        type VkTopologyMType VkPipelineInputAssemblyStateCreateInfo =
-             VkPrimitiveTopology
-
-        {-# NOINLINE vkTopology #-}
-        vkTopology x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineInputAssemblyStateCreateInfo, topology})
-
-        {-# INLINE vkTopologyByteOffset #-}
-        vkTopologyByteOffset ~_
-          = #{offset VkPipelineInputAssemblyStateCreateInfo, topology}
-
-        {-# INLINE readVkTopology #-}
-        readVkTopology p
-          = peekByteOff p #{offset VkPipelineInputAssemblyStateCreateInfo, topology}
-
-        {-# INLINE writeVkTopology #-}
-        writeVkTopology p
-          = pokeByteOff p #{offset VkPipelineInputAssemblyStateCreateInfo, topology}
+         CanWriteField "flags" VkPipelineInputAssemblyStateCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineInputAssemblyStateCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "topology" VkPipelineInputAssemblyStateCreateInfo where
@@ -289,44 +208,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineInputAssemblyStateCreateInfo, topology}
 
-instance CanReadField "topology"
-           VkPipelineInputAssemblyStateCreateInfo
+instance {-# OVERLAPPING #-}
+         CanReadField "topology" VkPipelineInputAssemblyStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkTopology
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineInputAssemblyStateCreateInfo, topology})
 
         {-# INLINE readField #-}
-        readField = readVkTopology
-
-instance CanWriteField "topology"
-           VkPipelineInputAssemblyStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkTopology
+        readField p
+          = peekByteOff p #{offset VkPipelineInputAssemblyStateCreateInfo, topology}
 
 instance {-# OVERLAPPING #-}
-         HasVkPrimitiveRestartEnable VkPipelineInputAssemblyStateCreateInfo
+         CanWriteField "topology" VkPipelineInputAssemblyStateCreateInfo
          where
-        type VkPrimitiveRestartEnableMType
-               VkPipelineInputAssemblyStateCreateInfo
-             = VkBool32
-
-        {-# NOINLINE vkPrimitiveRestartEnable #-}
-        vkPrimitiveRestartEnable x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineInputAssemblyStateCreateInfo, primitiveRestartEnable})
-
-        {-# INLINE vkPrimitiveRestartEnableByteOffset #-}
-        vkPrimitiveRestartEnableByteOffset ~_
-          = #{offset VkPipelineInputAssemblyStateCreateInfo, primitiveRestartEnable}
-
-        {-# INLINE readVkPrimitiveRestartEnable #-}
-        readVkPrimitiveRestartEnable p
-          = peekByteOff p #{offset VkPipelineInputAssemblyStateCreateInfo, primitiveRestartEnable}
-
-        {-# INLINE writeVkPrimitiveRestartEnable #-}
-        writeVkPrimitiveRestartEnable p
-          = pokeByteOff p #{offset VkPipelineInputAssemblyStateCreateInfo, primitiveRestartEnable}
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineInputAssemblyStateCreateInfo, topology}
 
 instance {-# OVERLAPPING #-}
          HasField "primitiveRestartEnable"
@@ -353,35 +252,42 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineInputAssemblyStateCreateInfo, primitiveRestartEnable}
 
-instance CanReadField "primitiveRestartEnable"
+instance {-# OVERLAPPING #-}
+         CanReadField "primitiveRestartEnable"
            VkPipelineInputAssemblyStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkPrimitiveRestartEnable
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineInputAssemblyStateCreateInfo, primitiveRestartEnable})
 
         {-# INLINE readField #-}
-        readField = readVkPrimitiveRestartEnable
+        readField p
+          = peekByteOff p #{offset VkPipelineInputAssemblyStateCreateInfo, primitiveRestartEnable}
 
-instance CanWriteField "primitiveRestartEnable"
+instance {-# OVERLAPPING #-}
+         CanWriteField "primitiveRestartEnable"
            VkPipelineInputAssemblyStateCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPrimitiveRestartEnable
+        writeField p
+          = pokeByteOff p #{offset VkPipelineInputAssemblyStateCreateInfo, primitiveRestartEnable}
 
 instance Show VkPipelineInputAssemblyStateCreateInfo where
         showsPrec d x
           = showString "VkPipelineInputAssemblyStateCreateInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkTopology = " .
-                                  showsPrec d (vkTopology x) .
+                                showString "topology = " .
+                                  showsPrec d (getField @"topology" x) .
                                     showString ", " .
-                                      showString "vkPrimitiveRestartEnable = " .
-                                        showsPrec d (vkPrimitiveRestartEnable x) . showChar '}'
+                                      showString "primitiveRestartEnable = " .
+                                        showsPrec d (getField @"primitiveRestartEnable" x) .
+                                          showChar '}'

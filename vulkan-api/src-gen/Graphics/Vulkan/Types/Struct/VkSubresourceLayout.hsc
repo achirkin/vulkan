@@ -5,16 +5,16 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkSubresourceLayout
        (VkSubresourceLayout(..)) where
-import           Foreign.Storable                    (Storable (..))
+import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.BaseTypes     (VkDeviceSize)
-import           Graphics.Vulkan.Types.StructMembers
-import           System.IO.Unsafe                    (unsafeDupablePerformIO)
+import           Graphics.Vulkan.Types.BaseTypes  (VkDeviceSize)
+import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSubresourceLayout {
 --   >     VkDeviceSize           offset;
@@ -72,26 +72,6 @@ instance VulkanMarshal VkSubresourceLayout where
         type ReturnedOnly VkSubresourceLayout = 'True -- ' closing tick for hsc2hs
         type StructExtends VkSubresourceLayout = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkOffset VkSubresourceLayout where
-        type VkOffsetMType VkSubresourceLayout = VkDeviceSize
-
-        {-# NOINLINE vkOffset #-}
-        vkOffset x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubresourceLayout, offset})
-
-        {-# INLINE vkOffsetByteOffset #-}
-        vkOffsetByteOffset ~_
-          = #{offset VkSubresourceLayout, offset}
-
-        {-# INLINE readVkOffset #-}
-        readVkOffset p
-          = peekByteOff p #{offset VkSubresourceLayout, offset}
-
-        {-# INLINE writeVkOffset #-}
-        writeVkOffset p
-          = pokeByteOff p #{offset VkSubresourceLayout, offset}
-
 instance {-# OVERLAPPING #-} HasField "offset" VkSubresourceLayout
          where
         type FieldType "offset" VkSubresourceLayout = VkDeviceSize
@@ -106,36 +86,22 @@ instance {-# OVERLAPPING #-} HasField "offset" VkSubresourceLayout
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSubresourceLayout, offset}
 
-instance CanReadField "offset" VkSubresourceLayout where
-        {-# INLINE getField #-}
-        getField = vkOffset
+instance {-# OVERLAPPING #-}
+         CanReadField "offset" VkSubresourceLayout where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubresourceLayout, offset})
 
         {-# INLINE readField #-}
-        readField = readVkOffset
+        readField p
+          = peekByteOff p #{offset VkSubresourceLayout, offset}
 
-instance CanWriteField "offset" VkSubresourceLayout where
+instance {-# OVERLAPPING #-}
+         CanWriteField "offset" VkSubresourceLayout where
         {-# INLINE writeField #-}
-        writeField = writeVkOffset
-
-instance {-# OVERLAPPING #-} HasVkSize VkSubresourceLayout where
-        type VkSizeMType VkSubresourceLayout = VkDeviceSize
-
-        {-# NOINLINE vkSize #-}
-        vkSize x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubresourceLayout, size})
-
-        {-# INLINE vkSizeByteOffset #-}
-        vkSizeByteOffset ~_
-          = #{offset VkSubresourceLayout, size}
-
-        {-# INLINE readVkSize #-}
-        readVkSize p
-          = peekByteOff p #{offset VkSubresourceLayout, size}
-
-        {-# INLINE writeVkSize #-}
-        writeVkSize p
-          = pokeByteOff p #{offset VkSubresourceLayout, size}
+        writeField p
+          = pokeByteOff p #{offset VkSubresourceLayout, offset}
 
 instance {-# OVERLAPPING #-} HasField "size" VkSubresourceLayout
          where
@@ -151,37 +117,22 @@ instance {-# OVERLAPPING #-} HasField "size" VkSubresourceLayout
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSubresourceLayout, size}
 
-instance CanReadField "size" VkSubresourceLayout where
-        {-# INLINE getField #-}
-        getField = vkSize
+instance {-# OVERLAPPING #-}
+         CanReadField "size" VkSubresourceLayout where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubresourceLayout, size})
 
         {-# INLINE readField #-}
-        readField = readVkSize
+        readField p
+          = peekByteOff p #{offset VkSubresourceLayout, size}
 
-instance CanWriteField "size" VkSubresourceLayout where
+instance {-# OVERLAPPING #-}
+         CanWriteField "size" VkSubresourceLayout where
         {-# INLINE writeField #-}
-        writeField = writeVkSize
-
-instance {-# OVERLAPPING #-} HasVkRowPitch VkSubresourceLayout
-         where
-        type VkRowPitchMType VkSubresourceLayout = VkDeviceSize
-
-        {-# NOINLINE vkRowPitch #-}
-        vkRowPitch x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubresourceLayout, rowPitch})
-
-        {-# INLINE vkRowPitchByteOffset #-}
-        vkRowPitchByteOffset ~_
-          = #{offset VkSubresourceLayout, rowPitch}
-
-        {-# INLINE readVkRowPitch #-}
-        readVkRowPitch p
-          = peekByteOff p #{offset VkSubresourceLayout, rowPitch}
-
-        {-# INLINE writeVkRowPitch #-}
-        writeVkRowPitch p
-          = pokeByteOff p #{offset VkSubresourceLayout, rowPitch}
+        writeField p
+          = pokeByteOff p #{offset VkSubresourceLayout, size}
 
 instance {-# OVERLAPPING #-}
          HasField "rowPitch" VkSubresourceLayout where
@@ -197,37 +148,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSubresourceLayout, rowPitch}
 
-instance CanReadField "rowPitch" VkSubresourceLayout where
-        {-# INLINE getField #-}
-        getField = vkRowPitch
+instance {-# OVERLAPPING #-}
+         CanReadField "rowPitch" VkSubresourceLayout where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubresourceLayout, rowPitch})
 
         {-# INLINE readField #-}
-        readField = readVkRowPitch
+        readField p
+          = peekByteOff p #{offset VkSubresourceLayout, rowPitch}
 
-instance CanWriteField "rowPitch" VkSubresourceLayout where
+instance {-# OVERLAPPING #-}
+         CanWriteField "rowPitch" VkSubresourceLayout where
         {-# INLINE writeField #-}
-        writeField = writeVkRowPitch
-
-instance {-# OVERLAPPING #-} HasVkArrayPitch VkSubresourceLayout
-         where
-        type VkArrayPitchMType VkSubresourceLayout = VkDeviceSize
-
-        {-# NOINLINE vkArrayPitch #-}
-        vkArrayPitch x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubresourceLayout, arrayPitch})
-
-        {-# INLINE vkArrayPitchByteOffset #-}
-        vkArrayPitchByteOffset ~_
-          = #{offset VkSubresourceLayout, arrayPitch}
-
-        {-# INLINE readVkArrayPitch #-}
-        readVkArrayPitch p
-          = peekByteOff p #{offset VkSubresourceLayout, arrayPitch}
-
-        {-# INLINE writeVkArrayPitch #-}
-        writeVkArrayPitch p
-          = pokeByteOff p #{offset VkSubresourceLayout, arrayPitch}
+        writeField p
+          = pokeByteOff p #{offset VkSubresourceLayout, rowPitch}
 
 instance {-# OVERLAPPING #-}
          HasField "arrayPitch" VkSubresourceLayout where
@@ -243,37 +179,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSubresourceLayout, arrayPitch}
 
-instance CanReadField "arrayPitch" VkSubresourceLayout where
-        {-# INLINE getField #-}
-        getField = vkArrayPitch
+instance {-# OVERLAPPING #-}
+         CanReadField "arrayPitch" VkSubresourceLayout where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubresourceLayout, arrayPitch})
 
         {-# INLINE readField #-}
-        readField = readVkArrayPitch
+        readField p
+          = peekByteOff p #{offset VkSubresourceLayout, arrayPitch}
 
-instance CanWriteField "arrayPitch" VkSubresourceLayout where
+instance {-# OVERLAPPING #-}
+         CanWriteField "arrayPitch" VkSubresourceLayout where
         {-# INLINE writeField #-}
-        writeField = writeVkArrayPitch
-
-instance {-# OVERLAPPING #-} HasVkDepthPitch VkSubresourceLayout
-         where
-        type VkDepthPitchMType VkSubresourceLayout = VkDeviceSize
-
-        {-# NOINLINE vkDepthPitch #-}
-        vkDepthPitch x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubresourceLayout, depthPitch})
-
-        {-# INLINE vkDepthPitchByteOffset #-}
-        vkDepthPitchByteOffset ~_
-          = #{offset VkSubresourceLayout, depthPitch}
-
-        {-# INLINE readVkDepthPitch #-}
-        readVkDepthPitch p
-          = peekByteOff p #{offset VkSubresourceLayout, depthPitch}
-
-        {-# INLINE writeVkDepthPitch #-}
-        writeVkDepthPitch p
-          = pokeByteOff p #{offset VkSubresourceLayout, depthPitch}
+        writeField p
+          = pokeByteOff p #{offset VkSubresourceLayout, arrayPitch}
 
 instance {-# OVERLAPPING #-}
          HasField "depthPitch" VkSubresourceLayout where
@@ -289,31 +210,37 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSubresourceLayout, depthPitch}
 
-instance CanReadField "depthPitch" VkSubresourceLayout where
-        {-# INLINE getField #-}
-        getField = vkDepthPitch
+instance {-# OVERLAPPING #-}
+         CanReadField "depthPitch" VkSubresourceLayout where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubresourceLayout, depthPitch})
 
         {-# INLINE readField #-}
-        readField = readVkDepthPitch
+        readField p
+          = peekByteOff p #{offset VkSubresourceLayout, depthPitch}
 
-instance CanWriteField "depthPitch" VkSubresourceLayout where
+instance {-# OVERLAPPING #-}
+         CanWriteField "depthPitch" VkSubresourceLayout where
         {-# INLINE writeField #-}
-        writeField = writeVkDepthPitch
+        writeField p
+          = pokeByteOff p #{offset VkSubresourceLayout, depthPitch}
 
 instance Show VkSubresourceLayout where
         showsPrec d x
           = showString "VkSubresourceLayout {" .
-              showString "vkOffset = " .
-                showsPrec d (vkOffset x) .
+              showString "offset = " .
+                showsPrec d (getField @"offset" x) .
                   showString ", " .
-                    showString "vkSize = " .
-                      showsPrec d (vkSize x) .
+                    showString "size = " .
+                      showsPrec d (getField @"size" x) .
                         showString ", " .
-                          showString "vkRowPitch = " .
-                            showsPrec d (vkRowPitch x) .
+                          showString "rowPitch = " .
+                            showsPrec d (getField @"rowPitch" x) .
                               showString ", " .
-                                showString "vkArrayPitch = " .
-                                  showsPrec d (vkArrayPitch x) .
+                                showString "arrayPitch = " .
+                                  showsPrec d (getField @"arrayPitch" x) .
                                     showString ", " .
-                                      showString "vkDepthPitch = " .
-                                        showsPrec d (vkDepthPitch x) . showChar '}'
+                                      showString "depthPitch = " .
+                                        showsPrec d (getField @"depthPitch" x) . showChar '}'

@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPipelineLayoutCreateInfo
        (VkPipelineLayoutCreateInfo(..)) where
@@ -16,7 +17,6 @@ import           Graphics.Vulkan.Types.Bitmasks                   (VkPipelineLay
 import           Graphics.Vulkan.Types.Enum.VkStructureType       (VkStructureType)
 import           Graphics.Vulkan.Types.Handles                    (VkDescriptorSetLayout)
 import           Graphics.Vulkan.Types.Struct.VkPushConstantRange (VkPushConstantRange)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPipelineLayoutCreateInfo {
@@ -82,27 +82,6 @@ instance VulkanMarshal VkPipelineLayoutCreateInfo where
         type ReturnedOnly VkPipelineLayoutCreateInfo = 'False -- ' closing tick for hsc2hs
         type StructExtends VkPipelineLayoutCreateInfo = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkPipelineLayoutCreateInfo
-         where
-        type VkSTypeMType VkPipelineLayoutCreateInfo = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineLayoutCreateInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPipelineLayoutCreateInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPipelineLayoutCreateInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPipelineLayoutCreateInfo, sType}
-
 instance {-# OVERLAPPING #-}
          HasField "sType" VkPipelineLayoutCreateInfo where
         type FieldType "sType" VkPipelineLayoutCreateInfo = VkStructureType
@@ -118,37 +97,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineLayoutCreateInfo, sType}
 
-instance CanReadField "sType" VkPipelineLayoutCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkPipelineLayoutCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineLayoutCreateInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkPipelineLayoutCreateInfo, sType}
 
-instance CanWriteField "sType" VkPipelineLayoutCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkPipelineLayoutCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkPipelineLayoutCreateInfo
-         where
-        type VkPNextMType VkPipelineLayoutCreateInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineLayoutCreateInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPipelineLayoutCreateInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPipelineLayoutCreateInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPipelineLayoutCreateInfo, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineLayoutCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPipelineLayoutCreateInfo where
@@ -165,38 +129,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineLayoutCreateInfo, pNext}
 
-instance CanReadField "pNext" VkPipelineLayoutCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkPipelineLayoutCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineLayoutCreateInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkPipelineLayoutCreateInfo, pNext}
 
-instance CanWriteField "pNext" VkPipelineLayoutCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext" VkPipelineLayoutCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-} HasVkFlags VkPipelineLayoutCreateInfo
-         where
-        type VkFlagsMType VkPipelineLayoutCreateInfo =
-             VkPipelineLayoutCreateFlags
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineLayoutCreateInfo, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkPipelineLayoutCreateInfo, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkPipelineLayoutCreateInfo, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkPipelineLayoutCreateInfo, flags}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineLayoutCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkPipelineLayoutCreateInfo where
@@ -214,37 +162,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineLayoutCreateInfo, flags}
 
-instance CanReadField "flags" VkPipelineLayoutCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkPipelineLayoutCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineLayoutCreateInfo, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags" VkPipelineLayoutCreateInfo where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkPipelineLayoutCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkSetLayoutCount VkPipelineLayoutCreateInfo where
-        type VkSetLayoutCountMType VkPipelineLayoutCreateInfo = Word32
-
-        {-# NOINLINE vkSetLayoutCount #-}
-        vkSetLayoutCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineLayoutCreateInfo, setLayoutCount})
-
-        {-# INLINE vkSetLayoutCountByteOffset #-}
-        vkSetLayoutCountByteOffset ~_
-          = #{offset VkPipelineLayoutCreateInfo, setLayoutCount}
-
-        {-# INLINE readVkSetLayoutCount #-}
-        readVkSetLayoutCount p
-          = peekByteOff p #{offset VkPipelineLayoutCreateInfo, setLayoutCount}
-
-        {-# INLINE writeVkSetLayoutCount #-}
-        writeVkSetLayoutCount p
-          = pokeByteOff p #{offset VkPipelineLayoutCreateInfo, setLayoutCount}
+         CanWriteField "flags" VkPipelineLayoutCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineLayoutCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "setLayoutCount" VkPipelineLayoutCreateInfo where
@@ -263,40 +196,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineLayoutCreateInfo, setLayoutCount}
 
-instance CanReadField "setLayoutCount" VkPipelineLayoutCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkSetLayoutCount
+instance {-# OVERLAPPING #-}
+         CanReadField "setLayoutCount" VkPipelineLayoutCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineLayoutCreateInfo, setLayoutCount})
 
         {-# INLINE readField #-}
-        readField = readVkSetLayoutCount
-
-instance CanWriteField "setLayoutCount" VkPipelineLayoutCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSetLayoutCount
+        readField p
+          = peekByteOff p #{offset VkPipelineLayoutCreateInfo, setLayoutCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPSetLayouts VkPipelineLayoutCreateInfo where
-        type VkPSetLayoutsMType VkPipelineLayoutCreateInfo =
-             Ptr VkDescriptorSetLayout
-
-        {-# NOINLINE vkPSetLayouts #-}
-        vkPSetLayouts x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineLayoutCreateInfo, pSetLayouts})
-
-        {-# INLINE vkPSetLayoutsByteOffset #-}
-        vkPSetLayoutsByteOffset ~_
-          = #{offset VkPipelineLayoutCreateInfo, pSetLayouts}
-
-        {-# INLINE readVkPSetLayouts #-}
-        readVkPSetLayouts p
-          = peekByteOff p #{offset VkPipelineLayoutCreateInfo, pSetLayouts}
-
-        {-# INLINE writeVkPSetLayouts #-}
-        writeVkPSetLayouts p
-          = pokeByteOff p #{offset VkPipelineLayoutCreateInfo, pSetLayouts}
+         CanWriteField "setLayoutCount" VkPipelineLayoutCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineLayoutCreateInfo, setLayoutCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pSetLayouts" VkPipelineLayoutCreateInfo where
@@ -315,40 +230,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineLayoutCreateInfo, pSetLayouts}
 
-instance CanReadField "pSetLayouts" VkPipelineLayoutCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkPSetLayouts
+instance {-# OVERLAPPING #-}
+         CanReadField "pSetLayouts" VkPipelineLayoutCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineLayoutCreateInfo, pSetLayouts})
 
         {-# INLINE readField #-}
-        readField = readVkPSetLayouts
-
-instance CanWriteField "pSetLayouts" VkPipelineLayoutCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPSetLayouts
+        readField p
+          = peekByteOff p #{offset VkPipelineLayoutCreateInfo, pSetLayouts}
 
 instance {-# OVERLAPPING #-}
-         HasVkPushConstantRangeCount VkPipelineLayoutCreateInfo where
-        type VkPushConstantRangeCountMType VkPipelineLayoutCreateInfo =
-             Word32
-
-        {-# NOINLINE vkPushConstantRangeCount #-}
-        vkPushConstantRangeCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineLayoutCreateInfo, pushConstantRangeCount})
-
-        {-# INLINE vkPushConstantRangeCountByteOffset #-}
-        vkPushConstantRangeCountByteOffset ~_
-          = #{offset VkPipelineLayoutCreateInfo, pushConstantRangeCount}
-
-        {-# INLINE readVkPushConstantRangeCount #-}
-        readVkPushConstantRangeCount p
-          = peekByteOff p #{offset VkPipelineLayoutCreateInfo, pushConstantRangeCount}
-
-        {-# INLINE writeVkPushConstantRangeCount #-}
-        writeVkPushConstantRangeCount p
-          = pokeByteOff p #{offset VkPipelineLayoutCreateInfo, pushConstantRangeCount}
+         CanWriteField "pSetLayouts" VkPipelineLayoutCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineLayoutCreateInfo, pSetLayouts}
 
 instance {-# OVERLAPPING #-}
          HasField "pushConstantRangeCount" VkPipelineLayoutCreateInfo where
@@ -372,42 +269,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineLayoutCreateInfo, pushConstantRangeCount}
 
-instance CanReadField "pushConstantRangeCount"
-           VkPipelineLayoutCreateInfo
+instance {-# OVERLAPPING #-}
+         CanReadField "pushConstantRangeCount" VkPipelineLayoutCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkPushConstantRangeCount
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineLayoutCreateInfo, pushConstantRangeCount})
 
         {-# INLINE readField #-}
-        readField = readVkPushConstantRangeCount
-
-instance CanWriteField "pushConstantRangeCount"
-           VkPipelineLayoutCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPushConstantRangeCount
+        readField p
+          = peekByteOff p #{offset VkPipelineLayoutCreateInfo, pushConstantRangeCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPPushConstantRanges VkPipelineLayoutCreateInfo where
-        type VkPPushConstantRangesMType VkPipelineLayoutCreateInfo =
-             Ptr VkPushConstantRange
-
-        {-# NOINLINE vkPPushConstantRanges #-}
-        vkPPushConstantRanges x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineLayoutCreateInfo, pPushConstantRanges})
-
-        {-# INLINE vkPPushConstantRangesByteOffset #-}
-        vkPPushConstantRangesByteOffset ~_
-          = #{offset VkPipelineLayoutCreateInfo, pPushConstantRanges}
-
-        {-# INLINE readVkPPushConstantRanges #-}
-        readVkPPushConstantRanges p
-          = peekByteOff p #{offset VkPipelineLayoutCreateInfo, pPushConstantRanges}
-
-        {-# INLINE writeVkPPushConstantRanges #-}
-        writeVkPPushConstantRanges p
-          = pokeByteOff p #{offset VkPipelineLayoutCreateInfo, pPushConstantRanges}
+         CanWriteField "pushConstantRangeCount" VkPipelineLayoutCreateInfo
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineLayoutCreateInfo, pushConstantRangeCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pPushConstantRanges" VkPipelineLayoutCreateInfo where
@@ -427,42 +306,45 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineLayoutCreateInfo, pPushConstantRanges}
 
-instance CanReadField "pPushConstantRanges"
-           VkPipelineLayoutCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkPPushConstantRanges
+instance {-# OVERLAPPING #-}
+         CanReadField "pPushConstantRanges" VkPipelineLayoutCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineLayoutCreateInfo, pPushConstantRanges})
 
         {-# INLINE readField #-}
-        readField = readVkPPushConstantRanges
+        readField p
+          = peekByteOff p #{offset VkPipelineLayoutCreateInfo, pPushConstantRanges}
 
-instance CanWriteField "pPushConstantRanges"
-           VkPipelineLayoutCreateInfo
+instance {-# OVERLAPPING #-}
+         CanWriteField "pPushConstantRanges" VkPipelineLayoutCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPPushConstantRanges
+        writeField p
+          = pokeByteOff p #{offset VkPipelineLayoutCreateInfo, pPushConstantRanges}
 
 instance Show VkPipelineLayoutCreateInfo where
         showsPrec d x
           = showString "VkPipelineLayoutCreateInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkSetLayoutCount = " .
-                                  showsPrec d (vkSetLayoutCount x) .
+                                showString "setLayoutCount = " .
+                                  showsPrec d (getField @"setLayoutCount" x) .
                                     showString ", " .
-                                      showString "vkPSetLayouts = " .
-                                        showsPrec d (vkPSetLayouts x) .
+                                      showString "pSetLayouts = " .
+                                        showsPrec d (getField @"pSetLayouts" x) .
                                           showString ", " .
-                                            showString "vkPushConstantRangeCount = " .
-                                              showsPrec d (vkPushConstantRangeCount x) .
+                                            showString "pushConstantRangeCount = " .
+                                              showsPrec d (getField @"pushConstantRangeCount" x) .
                                                 showString ", " .
-                                                  showString "vkPPushConstantRanges = " .
-                                                    showsPrec d (vkPPushConstantRanges x) .
-                                                      showChar '}'
+                                                  showString "pPushConstantRanges = " .
+                                                    showsPrec d (getField @"pPushConstantRanges" x)
+                                                      . showChar '}'

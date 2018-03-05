@@ -35,7 +35,8 @@ module Graphics.Vulkan.Ext.VK_NV_external_memory_win32
         -- > #include "vk_platform.h"
         --
         -- > #include <windows.h>
-        vkGetMemoryWin32HandleNV, module Graphics.Vulkan.Marshal,
+        vkGetMemoryWin32HandleNV, vkGetMemoryWin32HandleNVSafe,
+        module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_NV_EXTERNAL_MEMORY_WIN32_SPEC_VERSION,
@@ -71,6 +72,28 @@ import           Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetMemoryWin32HandleNV.html vkGetMemoryWin32HandleNV registry at www.khronos.org>
 foreign import ccall unsafe "vkGetMemoryWin32HandleNV"
                vkGetMemoryWin32HandleNV ::
+               VkDevice -- ^ device
+                        ->
+                 VkDeviceMemory -- ^ memory
+                                ->
+                   VkExternalMemoryHandleTypeFlagsNV -- ^ handleType
+                                                     -> Ptr HANDLE -- ^ pHandle
+                                                                   -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
+--
+--   > VkResult vkGetMemoryWin32HandleNV
+--   >     ( VkDevice device
+--   >     , VkDeviceMemory memory
+--   >     , VkExternalMemoryHandleTypeFlagsNV handleType
+--   >     , HANDLE* pHandle
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetMemoryWin32HandleNV.html vkGetMemoryWin32HandleNV registry at www.khronos.org>
+foreign import ccall safe "vkGetMemoryWin32HandleNV"
+               vkGetMemoryWin32HandleNVSafe ::
                VkDevice -- ^ device
                         ->
                  VkDeviceMemory -- ^ memory

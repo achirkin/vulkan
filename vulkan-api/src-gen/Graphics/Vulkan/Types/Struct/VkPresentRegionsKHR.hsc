@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPresentRegionsKHR
        (VkPresentRegionsKHR(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType      (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkPresentInfoKHR   (VkPresentInfoKHR)
 import           Graphics.Vulkan.Types.Struct.VkPresentRegionKHR (VkPresentRegionKHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPresentRegionsKHR {
@@ -73,26 +73,6 @@ instance VulkanMarshal VkPresentRegionsKHR where
         type ReturnedOnly VkPresentRegionsKHR = 'False -- ' closing tick for hsc2hs
         type StructExtends VkPresentRegionsKHR = '[VkPresentInfoKHR] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkPresentRegionsKHR where
-        type VkSTypeMType VkPresentRegionsKHR = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPresentRegionsKHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPresentRegionsKHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPresentRegionsKHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPresentRegionsKHR, sType}
-
 instance {-# OVERLAPPING #-} HasField "sType" VkPresentRegionsKHR
          where
         type FieldType "sType" VkPresentRegionsKHR = VkStructureType
@@ -107,36 +87,22 @@ instance {-# OVERLAPPING #-} HasField "sType" VkPresentRegionsKHR
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkPresentRegionsKHR, sType}
 
-instance CanReadField "sType" VkPresentRegionsKHR where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkPresentRegionsKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPresentRegionsKHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkPresentRegionsKHR, sType}
 
-instance CanWriteField "sType" VkPresentRegionsKHR where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkPresentRegionsKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkPresentRegionsKHR where
-        type VkPNextMType VkPresentRegionsKHR = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPresentRegionsKHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPresentRegionsKHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPresentRegionsKHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPresentRegionsKHR, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkPresentRegionsKHR, sType}
 
 instance {-# OVERLAPPING #-} HasField "pNext" VkPresentRegionsKHR
          where
@@ -152,37 +118,22 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkPresentRegionsKHR
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkPresentRegionsKHR, pNext}
 
-instance CanReadField "pNext" VkPresentRegionsKHR where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkPresentRegionsKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPresentRegionsKHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkPresentRegionsKHR where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkPresentRegionsKHR, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkSwapchainCount VkPresentRegionsKHR where
-        type VkSwapchainCountMType VkPresentRegionsKHR = Word32
-
-        {-# NOINLINE vkSwapchainCount #-}
-        vkSwapchainCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPresentRegionsKHR, swapchainCount})
-
-        {-# INLINE vkSwapchainCountByteOffset #-}
-        vkSwapchainCountByteOffset ~_
-          = #{offset VkPresentRegionsKHR, swapchainCount}
-
-        {-# INLINE readVkSwapchainCount #-}
-        readVkSwapchainCount p
-          = peekByteOff p #{offset VkPresentRegionsKHR, swapchainCount}
-
-        {-# INLINE writeVkSwapchainCount #-}
-        writeVkSwapchainCount p
-          = pokeByteOff p #{offset VkPresentRegionsKHR, swapchainCount}
+         CanWriteField "pNext" VkPresentRegionsKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPresentRegionsKHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "swapchainCount" VkPresentRegionsKHR where
@@ -199,37 +150,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPresentRegionsKHR, swapchainCount}
 
-instance CanReadField "swapchainCount" VkPresentRegionsKHR where
-        {-# INLINE getField #-}
-        getField = vkSwapchainCount
+instance {-# OVERLAPPING #-}
+         CanReadField "swapchainCount" VkPresentRegionsKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPresentRegionsKHR, swapchainCount})
 
         {-# INLINE readField #-}
-        readField = readVkSwapchainCount
+        readField p
+          = peekByteOff p #{offset VkPresentRegionsKHR, swapchainCount}
 
-instance CanWriteField "swapchainCount" VkPresentRegionsKHR where
+instance {-# OVERLAPPING #-}
+         CanWriteField "swapchainCount" VkPresentRegionsKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkSwapchainCount
-
-instance {-# OVERLAPPING #-} HasVkPRegions VkPresentRegionsKHR
-         where
-        type VkPRegionsMType VkPresentRegionsKHR = Ptr VkPresentRegionKHR
-
-        {-# NOINLINE vkPRegions #-}
-        vkPRegions x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPresentRegionsKHR, pRegions})
-
-        {-# INLINE vkPRegionsByteOffset #-}
-        vkPRegionsByteOffset ~_
-          = #{offset VkPresentRegionsKHR, pRegions}
-
-        {-# INLINE readVkPRegions #-}
-        readVkPRegions p
-          = peekByteOff p #{offset VkPresentRegionsKHR, pRegions}
-
-        {-# INLINE writeVkPRegions #-}
-        writeVkPRegions p
-          = pokeByteOff p #{offset VkPresentRegionsKHR, pRegions}
+        writeField p
+          = pokeByteOff p #{offset VkPresentRegionsKHR, swapchainCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pRegions" VkPresentRegionsKHR where
@@ -246,28 +182,34 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkPresentRegionsKHR, pRegions}
 
-instance CanReadField "pRegions" VkPresentRegionsKHR where
-        {-# INLINE getField #-}
-        getField = vkPRegions
+instance {-# OVERLAPPING #-}
+         CanReadField "pRegions" VkPresentRegionsKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPresentRegionsKHR, pRegions})
 
         {-# INLINE readField #-}
-        readField = readVkPRegions
+        readField p
+          = peekByteOff p #{offset VkPresentRegionsKHR, pRegions}
 
-instance CanWriteField "pRegions" VkPresentRegionsKHR where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pRegions" VkPresentRegionsKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkPRegions
+        writeField p
+          = pokeByteOff p #{offset VkPresentRegionsKHR, pRegions}
 
 instance Show VkPresentRegionsKHR where
         showsPrec d x
           = showString "VkPresentRegionsKHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkSwapchainCount = " .
-                            showsPrec d (vkSwapchainCount x) .
+                          showString "swapchainCount = " .
+                            showsPrec d (getField @"swapchainCount" x) .
                               showString ", " .
-                                showString "vkPRegions = " .
-                                  showsPrec d (vkPRegions x) . showChar '}'
+                                showString "pRegions = " .
+                                  showsPrec d (getField @"pRegions" x) . showChar '}'

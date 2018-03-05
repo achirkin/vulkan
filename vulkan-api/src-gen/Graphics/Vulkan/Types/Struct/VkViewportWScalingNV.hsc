@@ -5,15 +5,15 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkViewportWScalingNV
        (VkViewportWScalingNV(..)) where
-import           Foreign.Storable                    (Storable (..))
+import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.StructMembers
-import           System.IO.Unsafe                    (unsafeDupablePerformIO)
+import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkViewportWScalingNV {
 --   >     float          xcoeff;
@@ -67,26 +67,6 @@ instance VulkanMarshal VkViewportWScalingNV where
         type ReturnedOnly VkViewportWScalingNV = 'False -- ' closing tick for hsc2hs
         type StructExtends VkViewportWScalingNV = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkXcoeff VkViewportWScalingNV where
-        type VkXcoeffMType VkViewportWScalingNV = #{type float}
-
-        {-# NOINLINE vkXcoeff #-}
-        vkXcoeff x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkViewportWScalingNV, xcoeff})
-
-        {-# INLINE vkXcoeffByteOffset #-}
-        vkXcoeffByteOffset ~_
-          = #{offset VkViewportWScalingNV, xcoeff}
-
-        {-# INLINE readVkXcoeff #-}
-        readVkXcoeff p
-          = peekByteOff p #{offset VkViewportWScalingNV, xcoeff}
-
-        {-# INLINE writeVkXcoeff #-}
-        writeVkXcoeff p
-          = pokeByteOff p #{offset VkViewportWScalingNV, xcoeff}
-
 instance {-# OVERLAPPING #-} HasField "xcoeff" VkViewportWScalingNV
          where
         type FieldType "xcoeff" VkViewportWScalingNV =
@@ -102,36 +82,22 @@ instance {-# OVERLAPPING #-} HasField "xcoeff" VkViewportWScalingNV
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkViewportWScalingNV, xcoeff}
 
-instance CanReadField "xcoeff" VkViewportWScalingNV where
-        {-# INLINE getField #-}
-        getField = vkXcoeff
+instance {-# OVERLAPPING #-}
+         CanReadField "xcoeff" VkViewportWScalingNV where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkViewportWScalingNV, xcoeff})
 
         {-# INLINE readField #-}
-        readField = readVkXcoeff
+        readField p
+          = peekByteOff p #{offset VkViewportWScalingNV, xcoeff}
 
-instance CanWriteField "xcoeff" VkViewportWScalingNV where
+instance {-# OVERLAPPING #-}
+         CanWriteField "xcoeff" VkViewportWScalingNV where
         {-# INLINE writeField #-}
-        writeField = writeVkXcoeff
-
-instance {-# OVERLAPPING #-} HasVkYcoeff VkViewportWScalingNV where
-        type VkYcoeffMType VkViewportWScalingNV = #{type float}
-
-        {-# NOINLINE vkYcoeff #-}
-        vkYcoeff x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkViewportWScalingNV, ycoeff})
-
-        {-# INLINE vkYcoeffByteOffset #-}
-        vkYcoeffByteOffset ~_
-          = #{offset VkViewportWScalingNV, ycoeff}
-
-        {-# INLINE readVkYcoeff #-}
-        readVkYcoeff p
-          = peekByteOff p #{offset VkViewportWScalingNV, ycoeff}
-
-        {-# INLINE writeVkYcoeff #-}
-        writeVkYcoeff p
-          = pokeByteOff p #{offset VkViewportWScalingNV, ycoeff}
+        writeField p
+          = pokeByteOff p #{offset VkViewportWScalingNV, xcoeff}
 
 instance {-# OVERLAPPING #-} HasField "ycoeff" VkViewportWScalingNV
          where
@@ -148,21 +114,28 @@ instance {-# OVERLAPPING #-} HasField "ycoeff" VkViewportWScalingNV
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkViewportWScalingNV, ycoeff}
 
-instance CanReadField "ycoeff" VkViewportWScalingNV where
-        {-# INLINE getField #-}
-        getField = vkYcoeff
+instance {-# OVERLAPPING #-}
+         CanReadField "ycoeff" VkViewportWScalingNV where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkViewportWScalingNV, ycoeff})
 
         {-# INLINE readField #-}
-        readField = readVkYcoeff
+        readField p
+          = peekByteOff p #{offset VkViewportWScalingNV, ycoeff}
 
-instance CanWriteField "ycoeff" VkViewportWScalingNV where
+instance {-# OVERLAPPING #-}
+         CanWriteField "ycoeff" VkViewportWScalingNV where
         {-# INLINE writeField #-}
-        writeField = writeVkYcoeff
+        writeField p
+          = pokeByteOff p #{offset VkViewportWScalingNV, ycoeff}
 
 instance Show VkViewportWScalingNV where
         showsPrec d x
           = showString "VkViewportWScalingNV {" .
-              showString "vkXcoeff = " .
-                showsPrec d (vkXcoeff x) .
+              showString "xcoeff = " .
+                showsPrec d (getField @"xcoeff" x) .
                   showString ", " .
-                    showString "vkYcoeff = " . showsPrec d (vkYcoeff x) . showChar '}'
+                    showString "ycoeff = " .
+                      showsPrec d (getField @"ycoeff" x) . showChar '}'

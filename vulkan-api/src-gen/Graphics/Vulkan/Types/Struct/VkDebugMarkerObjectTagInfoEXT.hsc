@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkDebugMarkerObjectTagInfoEXT
        (VkDebugMarkerObjectTagInfoEXT(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkDebugReportObjectTypeEXT (VkDebugReportObjectTypeEXT)
 import           Graphics.Vulkan.Types.Enum.VkStructureType            (VkStructureType)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                      (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDebugMarkerObjectTagInfoEXT {
@@ -82,27 +82,6 @@ instance VulkanMarshal VkDebugMarkerObjectTagInfoEXT where
         type StructExtends VkDebugMarkerObjectTagInfoEXT = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkDebugMarkerObjectTagInfoEXT where
-        type VkSTypeMType VkDebugMarkerObjectTagInfoEXT = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerObjectTagInfoEXT, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkDebugMarkerObjectTagInfoEXT, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkDebugMarkerObjectTagInfoEXT where
         type FieldType "sType" VkDebugMarkerObjectTagInfoEXT =
              VkStructureType
@@ -118,37 +97,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDebugMarkerObjectTagInfoEXT, sType}
 
-instance CanReadField "sType" VkDebugMarkerObjectTagInfoEXT where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkDebugMarkerObjectTagInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerObjectTagInfoEXT, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkDebugMarkerObjectTagInfoEXT where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkDebugMarkerObjectTagInfoEXT where
-        type VkPNextMType VkDebugMarkerObjectTagInfoEXT = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerObjectTagInfoEXT, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkDebugMarkerObjectTagInfoEXT, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, pNext}
+         CanWriteField "sType" VkDebugMarkerObjectTagInfoEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkDebugMarkerObjectTagInfoEXT where
@@ -165,38 +129,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDebugMarkerObjectTagInfoEXT, pNext}
 
-instance CanReadField "pNext" VkDebugMarkerObjectTagInfoEXT where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkDebugMarkerObjectTagInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerObjectTagInfoEXT, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkDebugMarkerObjectTagInfoEXT where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkObjectType VkDebugMarkerObjectTagInfoEXT where
-        type VkObjectTypeMType VkDebugMarkerObjectTagInfoEXT =
-             VkDebugReportObjectTypeEXT
-
-        {-# NOINLINE vkObjectType #-}
-        vkObjectType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerObjectTagInfoEXT, objectType})
-
-        {-# INLINE vkObjectTypeByteOffset #-}
-        vkObjectTypeByteOffset ~_
-          = #{offset VkDebugMarkerObjectTagInfoEXT, objectType}
-
-        {-# INLINE readVkObjectType #-}
-        readVkObjectType p
-          = peekByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, objectType}
-
-        {-# INLINE writeVkObjectType #-}
-        writeVkObjectType p
-          = pokeByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, objectType}
+         CanWriteField "pNext" VkDebugMarkerObjectTagInfoEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "objectType" VkDebugMarkerObjectTagInfoEXT where
@@ -216,39 +164,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDebugMarkerObjectTagInfoEXT, objectType}
 
-instance CanReadField "objectType" VkDebugMarkerObjectTagInfoEXT
-         where
-        {-# INLINE getField #-}
-        getField = vkObjectType
+instance {-# OVERLAPPING #-}
+         CanReadField "objectType" VkDebugMarkerObjectTagInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerObjectTagInfoEXT, objectType})
 
         {-# INLINE readField #-}
-        readField = readVkObjectType
-
-instance CanWriteField "objectType" VkDebugMarkerObjectTagInfoEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkObjectType
+        readField p
+          = peekByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, objectType}
 
 instance {-# OVERLAPPING #-}
-         HasVkObject VkDebugMarkerObjectTagInfoEXT where
-        type VkObjectMType VkDebugMarkerObjectTagInfoEXT = Word64
-
-        {-# NOINLINE vkObject #-}
-        vkObject x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerObjectTagInfoEXT, object})
-
-        {-# INLINE vkObjectByteOffset #-}
-        vkObjectByteOffset ~_
-          = #{offset VkDebugMarkerObjectTagInfoEXT, object}
-
-        {-# INLINE readVkObject #-}
-        readVkObject p
-          = peekByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, object}
-
-        {-# INLINE writeVkObject #-}
-        writeVkObject p
-          = pokeByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, object}
+         CanWriteField "objectType" VkDebugMarkerObjectTagInfoEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, objectType}
 
 instance {-# OVERLAPPING #-}
          HasField "object" VkDebugMarkerObjectTagInfoEXT where
@@ -265,37 +196,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDebugMarkerObjectTagInfoEXT, object}
 
-instance CanReadField "object" VkDebugMarkerObjectTagInfoEXT where
-        {-# INLINE getField #-}
-        getField = vkObject
+instance {-# OVERLAPPING #-}
+         CanReadField "object" VkDebugMarkerObjectTagInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerObjectTagInfoEXT, object})
 
         {-# INLINE readField #-}
-        readField = readVkObject
-
-instance CanWriteField "object" VkDebugMarkerObjectTagInfoEXT where
-        {-# INLINE writeField #-}
-        writeField = writeVkObject
+        readField p
+          = peekByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, object}
 
 instance {-# OVERLAPPING #-}
-         HasVkTagName VkDebugMarkerObjectTagInfoEXT where
-        type VkTagNameMType VkDebugMarkerObjectTagInfoEXT = Word64
-
-        {-# NOINLINE vkTagName #-}
-        vkTagName x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerObjectTagInfoEXT, tagName})
-
-        {-# INLINE vkTagNameByteOffset #-}
-        vkTagNameByteOffset ~_
-          = #{offset VkDebugMarkerObjectTagInfoEXT, tagName}
-
-        {-# INLINE readVkTagName #-}
-        readVkTagName p
-          = peekByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, tagName}
-
-        {-# INLINE writeVkTagName #-}
-        writeVkTagName p
-          = pokeByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, tagName}
+         CanWriteField "object" VkDebugMarkerObjectTagInfoEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, object}
 
 instance {-# OVERLAPPING #-}
          HasField "tagName" VkDebugMarkerObjectTagInfoEXT where
@@ -312,38 +228,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDebugMarkerObjectTagInfoEXT, tagName}
 
-instance CanReadField "tagName" VkDebugMarkerObjectTagInfoEXT where
-        {-# INLINE getField #-}
-        getField = vkTagName
+instance {-# OVERLAPPING #-}
+         CanReadField "tagName" VkDebugMarkerObjectTagInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerObjectTagInfoEXT, tagName})
 
         {-# INLINE readField #-}
-        readField = readVkTagName
-
-instance CanWriteField "tagName" VkDebugMarkerObjectTagInfoEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkTagName
+        readField p
+          = peekByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, tagName}
 
 instance {-# OVERLAPPING #-}
-         HasVkTagSize VkDebugMarkerObjectTagInfoEXT where
-        type VkTagSizeMType VkDebugMarkerObjectTagInfoEXT = CSize
-
-        {-# NOINLINE vkTagSize #-}
-        vkTagSize x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerObjectTagInfoEXT, tagSize})
-
-        {-# INLINE vkTagSizeByteOffset #-}
-        vkTagSizeByteOffset ~_
-          = #{offset VkDebugMarkerObjectTagInfoEXT, tagSize}
-
-        {-# INLINE readVkTagSize #-}
-        readVkTagSize p
-          = peekByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, tagSize}
-
-        {-# INLINE writeVkTagSize #-}
-        writeVkTagSize p
-          = pokeByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, tagSize}
+         CanWriteField "tagName" VkDebugMarkerObjectTagInfoEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, tagName}
 
 instance {-# OVERLAPPING #-}
          HasField "tagSize" VkDebugMarkerObjectTagInfoEXT where
@@ -360,38 +260,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDebugMarkerObjectTagInfoEXT, tagSize}
 
-instance CanReadField "tagSize" VkDebugMarkerObjectTagInfoEXT where
-        {-# INLINE getField #-}
-        getField = vkTagSize
+instance {-# OVERLAPPING #-}
+         CanReadField "tagSize" VkDebugMarkerObjectTagInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerObjectTagInfoEXT, tagSize})
 
         {-# INLINE readField #-}
-        readField = readVkTagSize
-
-instance CanWriteField "tagSize" VkDebugMarkerObjectTagInfoEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkTagSize
+        readField p
+          = peekByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, tagSize}
 
 instance {-# OVERLAPPING #-}
-         HasVkPTag VkDebugMarkerObjectTagInfoEXT where
-        type VkPTagMType VkDebugMarkerObjectTagInfoEXT = Ptr Void
-
-        {-# NOINLINE vkPTag #-}
-        vkPTag x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerObjectTagInfoEXT, pTag})
-
-        {-# INLINE vkPTagByteOffset #-}
-        vkPTagByteOffset ~_
-          = #{offset VkDebugMarkerObjectTagInfoEXT, pTag}
-
-        {-# INLINE readVkPTag #-}
-        readVkPTag p
-          = peekByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, pTag}
-
-        {-# INLINE writeVkPTag #-}
-        writeVkPTag p
-          = pokeByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, pTag}
+         CanWriteField "tagSize" VkDebugMarkerObjectTagInfoEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, tagSize}
 
 instance {-# OVERLAPPING #-}
          HasField "pTag" VkDebugMarkerObjectTagInfoEXT where
@@ -408,37 +292,43 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDebugMarkerObjectTagInfoEXT, pTag}
 
-instance CanReadField "pTag" VkDebugMarkerObjectTagInfoEXT where
-        {-# INLINE getField #-}
-        getField = vkPTag
+instance {-# OVERLAPPING #-}
+         CanReadField "pTag" VkDebugMarkerObjectTagInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerObjectTagInfoEXT, pTag})
 
         {-# INLINE readField #-}
-        readField = readVkPTag
+        readField p
+          = peekByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, pTag}
 
-instance CanWriteField "pTag" VkDebugMarkerObjectTagInfoEXT where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pTag" VkDebugMarkerObjectTagInfoEXT where
         {-# INLINE writeField #-}
-        writeField = writeVkPTag
+        writeField p
+          = pokeByteOff p #{offset VkDebugMarkerObjectTagInfoEXT, pTag}
 
 instance Show VkDebugMarkerObjectTagInfoEXT where
         showsPrec d x
           = showString "VkDebugMarkerObjectTagInfoEXT {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkObjectType = " .
-                            showsPrec d (vkObjectType x) .
+                          showString "objectType = " .
+                            showsPrec d (getField @"objectType" x) .
                               showString ", " .
-                                showString "vkObject = " .
-                                  showsPrec d (vkObject x) .
+                                showString "object = " .
+                                  showsPrec d (getField @"object" x) .
                                     showString ", " .
-                                      showString "vkTagName = " .
-                                        showsPrec d (vkTagName x) .
+                                      showString "tagName = " .
+                                        showsPrec d (getField @"tagName" x) .
                                           showString ", " .
-                                            showString "vkTagSize = " .
-                                              showsPrec d (vkTagSize x) .
+                                            showString "tagSize = " .
+                                              showsPrec d (getField @"tagSize" x) .
                                                 showString ", " .
-                                                  showString "vkPTag = " .
-                                                    showsPrec d (vkPTag x) . showChar '}'
+                                                  showString "pTag = " .
+                                                    showsPrec d (getField @"pTag" x) . showChar '}'

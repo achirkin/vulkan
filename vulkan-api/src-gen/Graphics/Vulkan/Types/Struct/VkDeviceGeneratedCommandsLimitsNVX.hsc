@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkDeviceGeneratedCommandsLimitsNVX
        (VkDeviceGeneratedCommandsLimitsNVX(..)) where
@@ -13,7 +14,6 @@ import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDeviceGeneratedCommandsLimitsNVX {
@@ -84,28 +84,6 @@ instance VulkanMarshal VkDeviceGeneratedCommandsLimitsNVX where
         type StructExtends VkDeviceGeneratedCommandsLimitsNVX = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkDeviceGeneratedCommandsLimitsNVX where
-        type VkSTypeMType VkDeviceGeneratedCommandsLimitsNVX =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGeneratedCommandsLimitsNVX, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkDeviceGeneratedCommandsLimitsNVX, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkDeviceGeneratedCommandsLimitsNVX where
         type FieldType "sType" VkDeviceGeneratedCommandsLimitsNVX =
              VkStructureType
@@ -123,39 +101,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGeneratedCommandsLimitsNVX, sType}
 
-instance CanReadField "sType" VkDeviceGeneratedCommandsLimitsNVX
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkDeviceGeneratedCommandsLimitsNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGeneratedCommandsLimitsNVX, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkDeviceGeneratedCommandsLimitsNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkDeviceGeneratedCommandsLimitsNVX where
-        type VkPNextMType VkDeviceGeneratedCommandsLimitsNVX = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGeneratedCommandsLimitsNVX, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkDeviceGeneratedCommandsLimitsNVX, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, pNext}
+         CanWriteField "sType" VkDeviceGeneratedCommandsLimitsNVX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkDeviceGeneratedCommandsLimitsNVX where
@@ -175,43 +136,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGeneratedCommandsLimitsNVX, pNext}
 
-instance CanReadField "pNext" VkDeviceGeneratedCommandsLimitsNVX
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkDeviceGeneratedCommandsLimitsNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGeneratedCommandsLimitsNVX, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkDeviceGeneratedCommandsLimitsNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkMaxIndirectCommandsLayoutTokenCount
-           VkDeviceGeneratedCommandsLimitsNVX
-         where
-        type VkMaxIndirectCommandsLayoutTokenCountMType
-               VkDeviceGeneratedCommandsLimitsNVX
-             = Word32
-
-        {-# NOINLINE vkMaxIndirectCommandsLayoutTokenCount #-}
-        vkMaxIndirectCommandsLayoutTokenCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGeneratedCommandsLimitsNVX, maxIndirectCommandsLayoutTokenCount})
-
-        {-# INLINE vkMaxIndirectCommandsLayoutTokenCountByteOffset #-}
-        vkMaxIndirectCommandsLayoutTokenCountByteOffset ~_
-          = #{offset VkDeviceGeneratedCommandsLimitsNVX, maxIndirectCommandsLayoutTokenCount}
-
-        {-# INLINE readVkMaxIndirectCommandsLayoutTokenCount #-}
-        readVkMaxIndirectCommandsLayoutTokenCount p
-          = peekByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, maxIndirectCommandsLayoutTokenCount}
-
-        {-# INLINE writeVkMaxIndirectCommandsLayoutTokenCount #-}
-        writeVkMaxIndirectCommandsLayoutTokenCount p
-          = pokeByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, maxIndirectCommandsLayoutTokenCount}
+         CanWriteField "pNext" VkDeviceGeneratedCommandsLimitsNVX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "maxIndirectCommandsLayoutTokenCount"
@@ -238,42 +178,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGeneratedCommandsLimitsNVX, maxIndirectCommandsLayoutTokenCount}
 
-instance CanReadField "maxIndirectCommandsLayoutTokenCount"
+instance {-# OVERLAPPING #-}
+         CanReadField "maxIndirectCommandsLayoutTokenCount"
            VkDeviceGeneratedCommandsLimitsNVX
          where
-        {-# INLINE getField #-}
-        getField = vkMaxIndirectCommandsLayoutTokenCount
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGeneratedCommandsLimitsNVX, maxIndirectCommandsLayoutTokenCount})
 
         {-# INLINE readField #-}
-        readField = readVkMaxIndirectCommandsLayoutTokenCount
+        readField p
+          = peekByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, maxIndirectCommandsLayoutTokenCount}
 
-instance CanWriteField "maxIndirectCommandsLayoutTokenCount"
+instance {-# OVERLAPPING #-}
+         CanWriteField "maxIndirectCommandsLayoutTokenCount"
            VkDeviceGeneratedCommandsLimitsNVX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkMaxIndirectCommandsLayoutTokenCount
-
-instance {-# OVERLAPPING #-}
-         HasVkMaxObjectEntryCounts VkDeviceGeneratedCommandsLimitsNVX where
-        type VkMaxObjectEntryCountsMType VkDeviceGeneratedCommandsLimitsNVX
-             = Word32
-
-        {-# NOINLINE vkMaxObjectEntryCounts #-}
-        vkMaxObjectEntryCounts x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGeneratedCommandsLimitsNVX, maxObjectEntryCounts})
-
-        {-# INLINE vkMaxObjectEntryCountsByteOffset #-}
-        vkMaxObjectEntryCountsByteOffset ~_
-          = #{offset VkDeviceGeneratedCommandsLimitsNVX, maxObjectEntryCounts}
-
-        {-# INLINE readVkMaxObjectEntryCounts #-}
-        readVkMaxObjectEntryCounts p
-          = peekByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, maxObjectEntryCounts}
-
-        {-# INLINE writeVkMaxObjectEntryCounts #-}
-        writeVkMaxObjectEntryCounts p
-          = pokeByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, maxObjectEntryCounts}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, maxIndirectCommandsLayoutTokenCount}
 
 instance {-# OVERLAPPING #-}
          HasField "maxObjectEntryCounts" VkDeviceGeneratedCommandsLimitsNVX
@@ -299,45 +223,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGeneratedCommandsLimitsNVX, maxObjectEntryCounts}
 
-instance CanReadField "maxObjectEntryCounts"
+instance {-# OVERLAPPING #-}
+         CanReadField "maxObjectEntryCounts"
            VkDeviceGeneratedCommandsLimitsNVX
          where
-        {-# INLINE getField #-}
-        getField = vkMaxObjectEntryCounts
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGeneratedCommandsLimitsNVX, maxObjectEntryCounts})
 
         {-# INLINE readField #-}
-        readField = readVkMaxObjectEntryCounts
+        readField p
+          = peekByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, maxObjectEntryCounts}
 
-instance CanWriteField "maxObjectEntryCounts"
+instance {-# OVERLAPPING #-}
+         CanWriteField "maxObjectEntryCounts"
            VkDeviceGeneratedCommandsLimitsNVX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkMaxObjectEntryCounts
-
-instance {-# OVERLAPPING #-}
-         HasVkMinSequenceCountBufferOffsetAlignment
-           VkDeviceGeneratedCommandsLimitsNVX
-         where
-        type VkMinSequenceCountBufferOffsetAlignmentMType
-               VkDeviceGeneratedCommandsLimitsNVX
-             = Word32
-
-        {-# NOINLINE vkMinSequenceCountBufferOffsetAlignment #-}
-        vkMinSequenceCountBufferOffsetAlignment x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGeneratedCommandsLimitsNVX, minSequenceCountBufferOffsetAlignment})
-
-        {-# INLINE vkMinSequenceCountBufferOffsetAlignmentByteOffset #-}
-        vkMinSequenceCountBufferOffsetAlignmentByteOffset ~_
-          = #{offset VkDeviceGeneratedCommandsLimitsNVX, minSequenceCountBufferOffsetAlignment}
-
-        {-# INLINE readVkMinSequenceCountBufferOffsetAlignment #-}
-        readVkMinSequenceCountBufferOffsetAlignment p
-          = peekByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, minSequenceCountBufferOffsetAlignment}
-
-        {-# INLINE writeVkMinSequenceCountBufferOffsetAlignment #-}
-        writeVkMinSequenceCountBufferOffsetAlignment p
-          = pokeByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, minSequenceCountBufferOffsetAlignment}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, maxObjectEntryCounts}
 
 instance {-# OVERLAPPING #-}
          HasField "minSequenceCountBufferOffsetAlignment"
@@ -364,45 +269,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGeneratedCommandsLimitsNVX, minSequenceCountBufferOffsetAlignment}
 
-instance CanReadField "minSequenceCountBufferOffsetAlignment"
+instance {-# OVERLAPPING #-}
+         CanReadField "minSequenceCountBufferOffsetAlignment"
            VkDeviceGeneratedCommandsLimitsNVX
          where
-        {-# INLINE getField #-}
-        getField = vkMinSequenceCountBufferOffsetAlignment
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGeneratedCommandsLimitsNVX, minSequenceCountBufferOffsetAlignment})
 
         {-# INLINE readField #-}
-        readField = readVkMinSequenceCountBufferOffsetAlignment
+        readField p
+          = peekByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, minSequenceCountBufferOffsetAlignment}
 
-instance CanWriteField "minSequenceCountBufferOffsetAlignment"
+instance {-# OVERLAPPING #-}
+         CanWriteField "minSequenceCountBufferOffsetAlignment"
            VkDeviceGeneratedCommandsLimitsNVX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkMinSequenceCountBufferOffsetAlignment
-
-instance {-# OVERLAPPING #-}
-         HasVkMinSequenceIndexBufferOffsetAlignment
-           VkDeviceGeneratedCommandsLimitsNVX
-         where
-        type VkMinSequenceIndexBufferOffsetAlignmentMType
-               VkDeviceGeneratedCommandsLimitsNVX
-             = Word32
-
-        {-# NOINLINE vkMinSequenceIndexBufferOffsetAlignment #-}
-        vkMinSequenceIndexBufferOffsetAlignment x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGeneratedCommandsLimitsNVX, minSequenceIndexBufferOffsetAlignment})
-
-        {-# INLINE vkMinSequenceIndexBufferOffsetAlignmentByteOffset #-}
-        vkMinSequenceIndexBufferOffsetAlignmentByteOffset ~_
-          = #{offset VkDeviceGeneratedCommandsLimitsNVX, minSequenceIndexBufferOffsetAlignment}
-
-        {-# INLINE readVkMinSequenceIndexBufferOffsetAlignment #-}
-        readVkMinSequenceIndexBufferOffsetAlignment p
-          = peekByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, minSequenceIndexBufferOffsetAlignment}
-
-        {-# INLINE writeVkMinSequenceIndexBufferOffsetAlignment #-}
-        writeVkMinSequenceIndexBufferOffsetAlignment p
-          = pokeByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, minSequenceIndexBufferOffsetAlignment}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, minSequenceCountBufferOffsetAlignment}
 
 instance {-# OVERLAPPING #-}
          HasField "minSequenceIndexBufferOffsetAlignment"
@@ -429,45 +315,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGeneratedCommandsLimitsNVX, minSequenceIndexBufferOffsetAlignment}
 
-instance CanReadField "minSequenceIndexBufferOffsetAlignment"
+instance {-# OVERLAPPING #-}
+         CanReadField "minSequenceIndexBufferOffsetAlignment"
            VkDeviceGeneratedCommandsLimitsNVX
          where
-        {-# INLINE getField #-}
-        getField = vkMinSequenceIndexBufferOffsetAlignment
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGeneratedCommandsLimitsNVX, minSequenceIndexBufferOffsetAlignment})
 
         {-# INLINE readField #-}
-        readField = readVkMinSequenceIndexBufferOffsetAlignment
+        readField p
+          = peekByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, minSequenceIndexBufferOffsetAlignment}
 
-instance CanWriteField "minSequenceIndexBufferOffsetAlignment"
+instance {-# OVERLAPPING #-}
+         CanWriteField "minSequenceIndexBufferOffsetAlignment"
            VkDeviceGeneratedCommandsLimitsNVX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkMinSequenceIndexBufferOffsetAlignment
-
-instance {-# OVERLAPPING #-}
-         HasVkMinCommandsTokenBufferOffsetAlignment
-           VkDeviceGeneratedCommandsLimitsNVX
-         where
-        type VkMinCommandsTokenBufferOffsetAlignmentMType
-               VkDeviceGeneratedCommandsLimitsNVX
-             = Word32
-
-        {-# NOINLINE vkMinCommandsTokenBufferOffsetAlignment #-}
-        vkMinCommandsTokenBufferOffsetAlignment x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGeneratedCommandsLimitsNVX, minCommandsTokenBufferOffsetAlignment})
-
-        {-# INLINE vkMinCommandsTokenBufferOffsetAlignmentByteOffset #-}
-        vkMinCommandsTokenBufferOffsetAlignmentByteOffset ~_
-          = #{offset VkDeviceGeneratedCommandsLimitsNVX, minCommandsTokenBufferOffsetAlignment}
-
-        {-# INLINE readVkMinCommandsTokenBufferOffsetAlignment #-}
-        readVkMinCommandsTokenBufferOffsetAlignment p
-          = peekByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, minCommandsTokenBufferOffsetAlignment}
-
-        {-# INLINE writeVkMinCommandsTokenBufferOffsetAlignment #-}
-        writeVkMinCommandsTokenBufferOffsetAlignment p
-          = pokeByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, minCommandsTokenBufferOffsetAlignment}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, minSequenceIndexBufferOffsetAlignment}
 
 instance {-# OVERLAPPING #-}
          HasField "minCommandsTokenBufferOffsetAlignment"
@@ -494,48 +361,58 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGeneratedCommandsLimitsNVX, minCommandsTokenBufferOffsetAlignment}
 
-instance CanReadField "minCommandsTokenBufferOffsetAlignment"
+instance {-# OVERLAPPING #-}
+         CanReadField "minCommandsTokenBufferOffsetAlignment"
            VkDeviceGeneratedCommandsLimitsNVX
          where
-        {-# INLINE getField #-}
-        getField = vkMinCommandsTokenBufferOffsetAlignment
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGeneratedCommandsLimitsNVX, minCommandsTokenBufferOffsetAlignment})
 
         {-# INLINE readField #-}
-        readField = readVkMinCommandsTokenBufferOffsetAlignment
+        readField p
+          = peekByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, minCommandsTokenBufferOffsetAlignment}
 
-instance CanWriteField "minCommandsTokenBufferOffsetAlignment"
+instance {-# OVERLAPPING #-}
+         CanWriteField "minCommandsTokenBufferOffsetAlignment"
            VkDeviceGeneratedCommandsLimitsNVX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkMinCommandsTokenBufferOffsetAlignment
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGeneratedCommandsLimitsNVX, minCommandsTokenBufferOffsetAlignment}
 
 instance Show VkDeviceGeneratedCommandsLimitsNVX where
         showsPrec d x
           = showString "VkDeviceGeneratedCommandsLimitsNVX {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkMaxIndirectCommandsLayoutTokenCount = " .
-                            showsPrec d (vkMaxIndirectCommandsLayoutTokenCount x) .
+                          showString "maxIndirectCommandsLayoutTokenCount = " .
+                            showsPrec d (getField @"maxIndirectCommandsLayoutTokenCount" x) .
                               showString ", " .
-                                showString "vkMaxObjectEntryCounts = " .
-                                  showsPrec d (vkMaxObjectEntryCounts x) .
+                                showString "maxObjectEntryCounts = " .
+                                  showsPrec d (getField @"maxObjectEntryCounts" x) .
                                     showString ", " .
-                                      showString "vkMinSequenceCountBufferOffsetAlignment = " .
-                                        showsPrec d (vkMinSequenceCountBufferOffsetAlignment x) .
+                                      showString "minSequenceCountBufferOffsetAlignment = " .
+                                        showsPrec d
+                                          (getField @"minSequenceCountBufferOffsetAlignment" x)
+                                          .
                                           showString ", " .
-                                            showString "vkMinSequenceIndexBufferOffsetAlignment = "
-                                              .
+                                            showString "minSequenceIndexBufferOffsetAlignment = " .
                                               showsPrec d
-                                                (vkMinSequenceIndexBufferOffsetAlignment x)
+                                                (getField @"minSequenceIndexBufferOffsetAlignment"
+                                                   x)
                                                 .
                                                 showString ", " .
                                                   showString
-                                                    "vkMinCommandsTokenBufferOffsetAlignment = "
+                                                    "minCommandsTokenBufferOffsetAlignment = "
                                                     .
                                                     showsPrec d
-                                                      (vkMinCommandsTokenBufferOffsetAlignment x)
+                                                      (getField
+                                                         @"minCommandsTokenBufferOffsetAlignment"
+                                                         x)
                                                       . showChar '}'

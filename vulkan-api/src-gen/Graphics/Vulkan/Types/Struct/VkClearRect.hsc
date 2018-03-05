@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkClearRect (VkClearRect(..))
        where
@@ -13,7 +14,6 @@ import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Struct.VkRect2D (VkRect2D)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                      (unsafeDupablePerformIO)
 
 -- | > typedef struct VkClearRect {
@@ -70,25 +70,6 @@ instance VulkanMarshal VkClearRect where
         type ReturnedOnly VkClearRect = 'False -- ' closing tick for hsc2hs
         type StructExtends VkClearRect = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkRect VkClearRect where
-        type VkRectMType VkClearRect = VkRect2D
-
-        {-# NOINLINE vkRect #-}
-        vkRect x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkClearRect, rect})
-
-        {-# INLINE vkRectByteOffset #-}
-        vkRectByteOffset ~_ = #{offset VkClearRect, rect}
-
-        {-# INLINE readVkRect #-}
-        readVkRect p
-          = peekByteOff p #{offset VkClearRect, rect}
-
-        {-# INLINE writeVkRect #-}
-        writeVkRect p
-          = pokeByteOff p #{offset VkClearRect, rect}
-
 instance {-# OVERLAPPING #-} HasField "rect" VkClearRect where
         type FieldType "rect" VkClearRect = VkRect2D
         type FieldOptional "rect" VkClearRect = 'False -- ' closing tick for hsc2hs
@@ -102,36 +83,19 @@ instance {-# OVERLAPPING #-} HasField "rect" VkClearRect where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkClearRect, rect}
 
-instance CanReadField "rect" VkClearRect where
-        {-# INLINE getField #-}
-        getField = vkRect
+instance {-# OVERLAPPING #-} CanReadField "rect" VkClearRect where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkClearRect, rect})
 
         {-# INLINE readField #-}
-        readField = readVkRect
+        readField p = peekByteOff p #{offset VkClearRect, rect}
 
-instance CanWriteField "rect" VkClearRect where
+instance {-# OVERLAPPING #-} CanWriteField "rect" VkClearRect where
         {-# INLINE writeField #-}
-        writeField = writeVkRect
-
-instance {-# OVERLAPPING #-} HasVkBaseArrayLayer VkClearRect where
-        type VkBaseArrayLayerMType VkClearRect = Word32
-
-        {-# NOINLINE vkBaseArrayLayer #-}
-        vkBaseArrayLayer x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkClearRect, baseArrayLayer})
-
-        {-# INLINE vkBaseArrayLayerByteOffset #-}
-        vkBaseArrayLayerByteOffset ~_
-          = #{offset VkClearRect, baseArrayLayer}
-
-        {-# INLINE readVkBaseArrayLayer #-}
-        readVkBaseArrayLayer p
-          = peekByteOff p #{offset VkClearRect, baseArrayLayer}
-
-        {-# INLINE writeVkBaseArrayLayer #-}
-        writeVkBaseArrayLayer p
-          = pokeByteOff p #{offset VkClearRect, baseArrayLayer}
+        writeField p
+          = pokeByteOff p #{offset VkClearRect, rect}
 
 instance {-# OVERLAPPING #-} HasField "baseArrayLayer" VkClearRect
          where
@@ -147,36 +111,22 @@ instance {-# OVERLAPPING #-} HasField "baseArrayLayer" VkClearRect
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkClearRect, baseArrayLayer}
 
-instance CanReadField "baseArrayLayer" VkClearRect where
-        {-# INLINE getField #-}
-        getField = vkBaseArrayLayer
+instance {-# OVERLAPPING #-}
+         CanReadField "baseArrayLayer" VkClearRect where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkClearRect, baseArrayLayer})
 
         {-# INLINE readField #-}
-        readField = readVkBaseArrayLayer
+        readField p
+          = peekByteOff p #{offset VkClearRect, baseArrayLayer}
 
-instance CanWriteField "baseArrayLayer" VkClearRect where
+instance {-# OVERLAPPING #-}
+         CanWriteField "baseArrayLayer" VkClearRect where
         {-# INLINE writeField #-}
-        writeField = writeVkBaseArrayLayer
-
-instance {-# OVERLAPPING #-} HasVkLayerCount VkClearRect where
-        type VkLayerCountMType VkClearRect = Word32
-
-        {-# NOINLINE vkLayerCount #-}
-        vkLayerCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkClearRect, layerCount})
-
-        {-# INLINE vkLayerCountByteOffset #-}
-        vkLayerCountByteOffset ~_
-          = #{offset VkClearRect, layerCount}
-
-        {-# INLINE readVkLayerCount #-}
-        readVkLayerCount p
-          = peekByteOff p #{offset VkClearRect, layerCount}
-
-        {-# INLINE writeVkLayerCount #-}
-        writeVkLayerCount p
-          = pokeByteOff p #{offset VkClearRect, layerCount}
+        writeField p
+          = pokeByteOff p #{offset VkClearRect, baseArrayLayer}
 
 instance {-# OVERLAPPING #-} HasField "layerCount" VkClearRect
          where
@@ -192,25 +142,31 @@ instance {-# OVERLAPPING #-} HasField "layerCount" VkClearRect
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkClearRect, layerCount}
 
-instance CanReadField "layerCount" VkClearRect where
-        {-# INLINE getField #-}
-        getField = vkLayerCount
+instance {-# OVERLAPPING #-} CanReadField "layerCount" VkClearRect
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkClearRect, layerCount})
 
         {-# INLINE readField #-}
-        readField = readVkLayerCount
+        readField p
+          = peekByteOff p #{offset VkClearRect, layerCount}
 
-instance CanWriteField "layerCount" VkClearRect where
+instance {-# OVERLAPPING #-} CanWriteField "layerCount" VkClearRect
+         where
         {-# INLINE writeField #-}
-        writeField = writeVkLayerCount
+        writeField p
+          = pokeByteOff p #{offset VkClearRect, layerCount}
 
 instance Show VkClearRect where
         showsPrec d x
           = showString "VkClearRect {" .
-              showString "vkRect = " .
-                showsPrec d (vkRect x) .
+              showString "rect = " .
+                showsPrec d (getField @"rect" x) .
                   showString ", " .
-                    showString "vkBaseArrayLayer = " .
-                      showsPrec d (vkBaseArrayLayer x) .
+                    showString "baseArrayLayer = " .
+                      showsPrec d (getField @"baseArrayLayer" x) .
                         showString ", " .
-                          showString "vkLayerCount = " .
-                            showsPrec d (vkLayerCount x) . showChar '}'
+                          showString "layerCount = " .
+                            showsPrec d (getField @"layerCount" x) . showChar '}'

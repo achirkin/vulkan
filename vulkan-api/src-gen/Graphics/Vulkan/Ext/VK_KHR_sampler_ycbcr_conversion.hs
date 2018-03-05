@@ -61,7 +61,9 @@ module Graphics.Vulkan.Ext.VK_KHR_sampler_ycbcr_conversion
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
         vkCreateSamplerYcbcrConversionKHR,
+        vkCreateSamplerYcbcrConversionKHRSafe,
         vkDestroySamplerYcbcrConversionKHR,
+        vkDestroySamplerYcbcrConversionKHRSafe,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,
@@ -204,6 +206,29 @@ foreign import ccall unsafe "vkCreateSamplerYcbcrConversionKHR"
                      Ptr VkSamplerYcbcrConversionKHR -- ^ pYcbcrConversion
                                                      -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkCreateSamplerYcbcrConversionKHR
+--   >     ( VkDevice device
+--   >     , const VkSamplerYcbcrConversionCreateInfoKHR* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkSamplerYcbcrConversionKHR* pYcbcrConversion
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateSamplerYcbcrConversionKHR.html vkCreateSamplerYcbcrConversionKHR registry at www.khronos.org>
+foreign import ccall safe "vkCreateSamplerYcbcrConversionKHR"
+               vkCreateSamplerYcbcrConversionKHRSafe ::
+               VkDevice -- ^ device
+                        ->
+                 Ptr VkSamplerYcbcrConversionCreateInfoKHR -- ^ pCreateInfo
+                                                           ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             ->
+                     Ptr VkSamplerYcbcrConversionKHR -- ^ pYcbcrConversion
+                                                     -> IO VkResult
+
 -- | > () vkDestroySamplerYcbcrConversionKHR
 --   >     ( VkDevice device
 --   >     , VkSamplerYcbcrConversionKHR ycbcrConversion
@@ -213,6 +238,21 @@ foreign import ccall unsafe "vkCreateSamplerYcbcrConversionKHR"
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroySamplerYcbcrConversionKHR.html vkDestroySamplerYcbcrConversionKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroySamplerYcbcrConversionKHR"
                vkDestroySamplerYcbcrConversionKHR ::
+               VkDevice -- ^ device
+                        ->
+                 VkSamplerYcbcrConversionKHR -- ^ ycbcrConversion
+                                             -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                          -> IO ()
+
+-- | > () vkDestroySamplerYcbcrConversionKHR
+--   >     ( VkDevice device
+--   >     , VkSamplerYcbcrConversionKHR ycbcrConversion
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroySamplerYcbcrConversionKHR.html vkDestroySamplerYcbcrConversionKHR registry at www.khronos.org>
+foreign import ccall safe "vkDestroySamplerYcbcrConversionKHR"
+               vkDestroySamplerYcbcrConversionKHRSafe ::
                VkDevice -- ^ device
                         ->
                  VkSamplerYcbcrConversionKHR -- ^ ycbcrConversion

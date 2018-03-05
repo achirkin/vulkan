@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkViewportSwizzleNV
        (VkViewportSwizzleNV(..)) where
@@ -13,7 +14,6 @@ import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkViewportCoordinateSwizzleNV (VkViewportCoordinateSwizzleNV)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkViewportSwizzleNV {
@@ -70,25 +70,6 @@ instance VulkanMarshal VkViewportSwizzleNV where
         type ReturnedOnly VkViewportSwizzleNV = 'False -- ' closing tick for hsc2hs
         type StructExtends VkViewportSwizzleNV = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkX VkViewportSwizzleNV where
-        type VkXMType VkViewportSwizzleNV = VkViewportCoordinateSwizzleNV
-
-        {-# NOINLINE vkX #-}
-        vkX x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkViewportSwizzleNV, x})
-
-        {-# INLINE vkXByteOffset #-}
-        vkXByteOffset ~_ = #{offset VkViewportSwizzleNV, x}
-
-        {-# INLINE readVkX #-}
-        readVkX p
-          = peekByteOff p #{offset VkViewportSwizzleNV, x}
-
-        {-# INLINE writeVkX #-}
-        writeVkX p
-          = pokeByteOff p #{offset VkViewportSwizzleNV, x}
-
 instance {-# OVERLAPPING #-} HasField "x" VkViewportSwizzleNV where
         type FieldType "x" VkViewportSwizzleNV =
              VkViewportCoordinateSwizzleNV
@@ -103,35 +84,22 @@ instance {-# OVERLAPPING #-} HasField "x" VkViewportSwizzleNV where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkViewportSwizzleNV, x}
 
-instance CanReadField "x" VkViewportSwizzleNV where
-        {-# INLINE getField #-}
-        getField = vkX
+instance {-# OVERLAPPING #-} CanReadField "x" VkViewportSwizzleNV
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkViewportSwizzleNV, x})
 
         {-# INLINE readField #-}
-        readField = readVkX
+        readField p
+          = peekByteOff p #{offset VkViewportSwizzleNV, x}
 
-instance CanWriteField "x" VkViewportSwizzleNV where
+instance {-# OVERLAPPING #-} CanWriteField "x" VkViewportSwizzleNV
+         where
         {-# INLINE writeField #-}
-        writeField = writeVkX
-
-instance {-# OVERLAPPING #-} HasVkY VkViewportSwizzleNV where
-        type VkYMType VkViewportSwizzleNV = VkViewportCoordinateSwizzleNV
-
-        {-# NOINLINE vkY #-}
-        vkY x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkViewportSwizzleNV, y})
-
-        {-# INLINE vkYByteOffset #-}
-        vkYByteOffset ~_ = #{offset VkViewportSwizzleNV, y}
-
-        {-# INLINE readVkY #-}
-        readVkY p
-          = peekByteOff p #{offset VkViewportSwizzleNV, y}
-
-        {-# INLINE writeVkY #-}
-        writeVkY p
-          = pokeByteOff p #{offset VkViewportSwizzleNV, y}
+        writeField p
+          = pokeByteOff p #{offset VkViewportSwizzleNV, x}
 
 instance {-# OVERLAPPING #-} HasField "y" VkViewportSwizzleNV where
         type FieldType "y" VkViewportSwizzleNV =
@@ -147,35 +115,22 @@ instance {-# OVERLAPPING #-} HasField "y" VkViewportSwizzleNV where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkViewportSwizzleNV, y}
 
-instance CanReadField "y" VkViewportSwizzleNV where
-        {-# INLINE getField #-}
-        getField = vkY
+instance {-# OVERLAPPING #-} CanReadField "y" VkViewportSwizzleNV
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkViewportSwizzleNV, y})
 
         {-# INLINE readField #-}
-        readField = readVkY
+        readField p
+          = peekByteOff p #{offset VkViewportSwizzleNV, y}
 
-instance CanWriteField "y" VkViewportSwizzleNV where
+instance {-# OVERLAPPING #-} CanWriteField "y" VkViewportSwizzleNV
+         where
         {-# INLINE writeField #-}
-        writeField = writeVkY
-
-instance {-# OVERLAPPING #-} HasVkZ VkViewportSwizzleNV where
-        type VkZMType VkViewportSwizzleNV = VkViewportCoordinateSwizzleNV
-
-        {-# NOINLINE vkZ #-}
-        vkZ x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkViewportSwizzleNV, z})
-
-        {-# INLINE vkZByteOffset #-}
-        vkZByteOffset ~_ = #{offset VkViewportSwizzleNV, z}
-
-        {-# INLINE readVkZ #-}
-        readVkZ p
-          = peekByteOff p #{offset VkViewportSwizzleNV, z}
-
-        {-# INLINE writeVkZ #-}
-        writeVkZ p
-          = pokeByteOff p #{offset VkViewportSwizzleNV, z}
+        writeField p
+          = pokeByteOff p #{offset VkViewportSwizzleNV, y}
 
 instance {-# OVERLAPPING #-} HasField "z" VkViewportSwizzleNV where
         type FieldType "z" VkViewportSwizzleNV =
@@ -191,35 +146,22 @@ instance {-# OVERLAPPING #-} HasField "z" VkViewportSwizzleNV where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkViewportSwizzleNV, z}
 
-instance CanReadField "z" VkViewportSwizzleNV where
-        {-# INLINE getField #-}
-        getField = vkZ
+instance {-# OVERLAPPING #-} CanReadField "z" VkViewportSwizzleNV
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkViewportSwizzleNV, z})
 
         {-# INLINE readField #-}
-        readField = readVkZ
+        readField p
+          = peekByteOff p #{offset VkViewportSwizzleNV, z}
 
-instance CanWriteField "z" VkViewportSwizzleNV where
+instance {-# OVERLAPPING #-} CanWriteField "z" VkViewportSwizzleNV
+         where
         {-# INLINE writeField #-}
-        writeField = writeVkZ
-
-instance {-# OVERLAPPING #-} HasVkW VkViewportSwizzleNV where
-        type VkWMType VkViewportSwizzleNV = VkViewportCoordinateSwizzleNV
-
-        {-# NOINLINE vkW #-}
-        vkW x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkViewportSwizzleNV, w})
-
-        {-# INLINE vkWByteOffset #-}
-        vkWByteOffset ~_ = #{offset VkViewportSwizzleNV, w}
-
-        {-# INLINE readVkW #-}
-        readVkW p
-          = peekByteOff p #{offset VkViewportSwizzleNV, w}
-
-        {-# INLINE writeVkW #-}
-        writeVkW p
-          = pokeByteOff p #{offset VkViewportSwizzleNV, w}
+        writeField p
+          = pokeByteOff p #{offset VkViewportSwizzleNV, z}
 
 instance {-# OVERLAPPING #-} HasField "w" VkViewportSwizzleNV where
         type FieldType "w" VkViewportSwizzleNV =
@@ -235,27 +177,33 @@ instance {-# OVERLAPPING #-} HasField "w" VkViewportSwizzleNV where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkViewportSwizzleNV, w}
 
-instance CanReadField "w" VkViewportSwizzleNV where
-        {-# INLINE getField #-}
-        getField = vkW
+instance {-# OVERLAPPING #-} CanReadField "w" VkViewportSwizzleNV
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkViewportSwizzleNV, w})
 
         {-# INLINE readField #-}
-        readField = readVkW
+        readField p
+          = peekByteOff p #{offset VkViewportSwizzleNV, w}
 
-instance CanWriteField "w" VkViewportSwizzleNV where
+instance {-# OVERLAPPING #-} CanWriteField "w" VkViewportSwizzleNV
+         where
         {-# INLINE writeField #-}
-        writeField = writeVkW
+        writeField p
+          = pokeByteOff p #{offset VkViewportSwizzleNV, w}
 
 instance Show VkViewportSwizzleNV where
         showsPrec d x
           = showString "VkViewportSwizzleNV {" .
-              showString "vkX = " .
-                showsPrec d (vkX x) .
+              showString "x = " .
+                showsPrec d (getField @"x" x) .
                   showString ", " .
-                    showString "vkY = " .
-                      showsPrec d (vkY x) .
+                    showString "y = " .
+                      showsPrec d (getField @"y" x) .
                         showString ", " .
-                          showString "vkZ = " .
-                            showsPrec d (vkZ x) .
+                          showString "z = " .
+                            showsPrec d (getField @"z" x) .
                               showString ", " .
-                                showString "vkW = " . showsPrec d (vkW x) . showChar '}'
+                                showString "w = " . showsPrec d (getField @"w" x) . showChar '}'

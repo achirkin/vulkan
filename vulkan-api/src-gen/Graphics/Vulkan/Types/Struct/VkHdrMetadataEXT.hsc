@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkHdrMetadataEXT
        (VkHdrMetadataEXT(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkXYColorEXT  (VkXYColorEXT)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkHdrMetadataEXT {
@@ -80,26 +80,6 @@ instance VulkanMarshal VkHdrMetadataEXT where
         type ReturnedOnly VkHdrMetadataEXT = 'False -- ' closing tick for hsc2hs
         type StructExtends VkHdrMetadataEXT = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkHdrMetadataEXT where
-        type VkSTypeMType VkHdrMetadataEXT = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkHdrMetadataEXT, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkHdrMetadataEXT, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkHdrMetadataEXT, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkHdrMetadataEXT, sType}
-
 instance {-# OVERLAPPING #-} HasField "sType" VkHdrMetadataEXT
          where
         type FieldType "sType" VkHdrMetadataEXT = VkStructureType
@@ -114,36 +94,22 @@ instance {-# OVERLAPPING #-} HasField "sType" VkHdrMetadataEXT
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkHdrMetadataEXT, sType}
 
-instance CanReadField "sType" VkHdrMetadataEXT where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-} CanReadField "sType" VkHdrMetadataEXT
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkHdrMetadataEXT, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkHdrMetadataEXT, sType}
 
-instance CanWriteField "sType" VkHdrMetadataEXT where
+instance {-# OVERLAPPING #-} CanWriteField "sType" VkHdrMetadataEXT
+         where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkHdrMetadataEXT where
-        type VkPNextMType VkHdrMetadataEXT = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkHdrMetadataEXT, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkHdrMetadataEXT, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkHdrMetadataEXT, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkHdrMetadataEXT, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkHdrMetadataEXT, sType}
 
 instance {-# OVERLAPPING #-} HasField "pNext" VkHdrMetadataEXT
          where
@@ -159,37 +125,22 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkHdrMetadataEXT
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkHdrMetadataEXT, pNext}
 
-instance CanReadField "pNext" VkHdrMetadataEXT where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-} CanReadField "pNext" VkHdrMetadataEXT
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkHdrMetadataEXT, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkHdrMetadataEXT, pNext}
 
-instance CanWriteField "pNext" VkHdrMetadataEXT where
+instance {-# OVERLAPPING #-} CanWriteField "pNext" VkHdrMetadataEXT
+         where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-}
-         HasVkDisplayPrimaryRed VkHdrMetadataEXT where
-        type VkDisplayPrimaryRedMType VkHdrMetadataEXT = VkXYColorEXT
-
-        {-# NOINLINE vkDisplayPrimaryRed #-}
-        vkDisplayPrimaryRed x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkHdrMetadataEXT, displayPrimaryRed})
-
-        {-# INLINE vkDisplayPrimaryRedByteOffset #-}
-        vkDisplayPrimaryRedByteOffset ~_
-          = #{offset VkHdrMetadataEXT, displayPrimaryRed}
-
-        {-# INLINE readVkDisplayPrimaryRed #-}
-        readVkDisplayPrimaryRed p
-          = peekByteOff p #{offset VkHdrMetadataEXT, displayPrimaryRed}
-
-        {-# INLINE writeVkDisplayPrimaryRed #-}
-        writeVkDisplayPrimaryRed p
-          = pokeByteOff p #{offset VkHdrMetadataEXT, displayPrimaryRed}
+        writeField p
+          = pokeByteOff p #{offset VkHdrMetadataEXT, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "displayPrimaryRed" VkHdrMetadataEXT where
@@ -206,37 +157,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkHdrMetadataEXT, displayPrimaryRed}
 
-instance CanReadField "displayPrimaryRed" VkHdrMetadataEXT where
-        {-# INLINE getField #-}
-        getField = vkDisplayPrimaryRed
+instance {-# OVERLAPPING #-}
+         CanReadField "displayPrimaryRed" VkHdrMetadataEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkHdrMetadataEXT, displayPrimaryRed})
 
         {-# INLINE readField #-}
-        readField = readVkDisplayPrimaryRed
-
-instance CanWriteField "displayPrimaryRed" VkHdrMetadataEXT where
-        {-# INLINE writeField #-}
-        writeField = writeVkDisplayPrimaryRed
+        readField p
+          = peekByteOff p #{offset VkHdrMetadataEXT, displayPrimaryRed}
 
 instance {-# OVERLAPPING #-}
-         HasVkDisplayPrimaryGreen VkHdrMetadataEXT where
-        type VkDisplayPrimaryGreenMType VkHdrMetadataEXT = VkXYColorEXT
-
-        {-# NOINLINE vkDisplayPrimaryGreen #-}
-        vkDisplayPrimaryGreen x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkHdrMetadataEXT, displayPrimaryGreen})
-
-        {-# INLINE vkDisplayPrimaryGreenByteOffset #-}
-        vkDisplayPrimaryGreenByteOffset ~_
-          = #{offset VkHdrMetadataEXT, displayPrimaryGreen}
-
-        {-# INLINE readVkDisplayPrimaryGreen #-}
-        readVkDisplayPrimaryGreen p
-          = peekByteOff p #{offset VkHdrMetadataEXT, displayPrimaryGreen}
-
-        {-# INLINE writeVkDisplayPrimaryGreen #-}
-        writeVkDisplayPrimaryGreen p
-          = pokeByteOff p #{offset VkHdrMetadataEXT, displayPrimaryGreen}
+         CanWriteField "displayPrimaryRed" VkHdrMetadataEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkHdrMetadataEXT, displayPrimaryRed}
 
 instance {-# OVERLAPPING #-}
          HasField "displayPrimaryGreen" VkHdrMetadataEXT where
@@ -254,37 +190,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkHdrMetadataEXT, displayPrimaryGreen}
 
-instance CanReadField "displayPrimaryGreen" VkHdrMetadataEXT where
-        {-# INLINE getField #-}
-        getField = vkDisplayPrimaryGreen
+instance {-# OVERLAPPING #-}
+         CanReadField "displayPrimaryGreen" VkHdrMetadataEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkHdrMetadataEXT, displayPrimaryGreen})
 
         {-# INLINE readField #-}
-        readField = readVkDisplayPrimaryGreen
-
-instance CanWriteField "displayPrimaryGreen" VkHdrMetadataEXT where
-        {-# INLINE writeField #-}
-        writeField = writeVkDisplayPrimaryGreen
+        readField p
+          = peekByteOff p #{offset VkHdrMetadataEXT, displayPrimaryGreen}
 
 instance {-# OVERLAPPING #-}
-         HasVkDisplayPrimaryBlue VkHdrMetadataEXT where
-        type VkDisplayPrimaryBlueMType VkHdrMetadataEXT = VkXYColorEXT
-
-        {-# NOINLINE vkDisplayPrimaryBlue #-}
-        vkDisplayPrimaryBlue x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkHdrMetadataEXT, displayPrimaryBlue})
-
-        {-# INLINE vkDisplayPrimaryBlueByteOffset #-}
-        vkDisplayPrimaryBlueByteOffset ~_
-          = #{offset VkHdrMetadataEXT, displayPrimaryBlue}
-
-        {-# INLINE readVkDisplayPrimaryBlue #-}
-        readVkDisplayPrimaryBlue p
-          = peekByteOff p #{offset VkHdrMetadataEXT, displayPrimaryBlue}
-
-        {-# INLINE writeVkDisplayPrimaryBlue #-}
-        writeVkDisplayPrimaryBlue p
-          = pokeByteOff p #{offset VkHdrMetadataEXT, displayPrimaryBlue}
+         CanWriteField "displayPrimaryGreen" VkHdrMetadataEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkHdrMetadataEXT, displayPrimaryGreen}
 
 instance {-# OVERLAPPING #-}
          HasField "displayPrimaryBlue" VkHdrMetadataEXT where
@@ -301,36 +222,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkHdrMetadataEXT, displayPrimaryBlue}
 
-instance CanReadField "displayPrimaryBlue" VkHdrMetadataEXT where
-        {-# INLINE getField #-}
-        getField = vkDisplayPrimaryBlue
+instance {-# OVERLAPPING #-}
+         CanReadField "displayPrimaryBlue" VkHdrMetadataEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkHdrMetadataEXT, displayPrimaryBlue})
 
         {-# INLINE readField #-}
-        readField = readVkDisplayPrimaryBlue
+        readField p
+          = peekByteOff p #{offset VkHdrMetadataEXT, displayPrimaryBlue}
 
-instance CanWriteField "displayPrimaryBlue" VkHdrMetadataEXT where
+instance {-# OVERLAPPING #-}
+         CanWriteField "displayPrimaryBlue" VkHdrMetadataEXT where
         {-# INLINE writeField #-}
-        writeField = writeVkDisplayPrimaryBlue
-
-instance {-# OVERLAPPING #-} HasVkWhitePoint VkHdrMetadataEXT where
-        type VkWhitePointMType VkHdrMetadataEXT = VkXYColorEXT
-
-        {-# NOINLINE vkWhitePoint #-}
-        vkWhitePoint x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkHdrMetadataEXT, whitePoint})
-
-        {-# INLINE vkWhitePointByteOffset #-}
-        vkWhitePointByteOffset ~_
-          = #{offset VkHdrMetadataEXT, whitePoint}
-
-        {-# INLINE readVkWhitePoint #-}
-        readVkWhitePoint p
-          = peekByteOff p #{offset VkHdrMetadataEXT, whitePoint}
-
-        {-# INLINE writeVkWhitePoint #-}
-        writeVkWhitePoint p
-          = pokeByteOff p #{offset VkHdrMetadataEXT, whitePoint}
+        writeField p
+          = pokeByteOff p #{offset VkHdrMetadataEXT, displayPrimaryBlue}
 
 instance {-# OVERLAPPING #-} HasField "whitePoint" VkHdrMetadataEXT
          where
@@ -346,38 +253,22 @@ instance {-# OVERLAPPING #-} HasField "whitePoint" VkHdrMetadataEXT
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkHdrMetadataEXT, whitePoint}
 
-instance CanReadField "whitePoint" VkHdrMetadataEXT where
-        {-# INLINE getField #-}
-        getField = vkWhitePoint
+instance {-# OVERLAPPING #-}
+         CanReadField "whitePoint" VkHdrMetadataEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkHdrMetadataEXT, whitePoint})
 
         {-# INLINE readField #-}
-        readField = readVkWhitePoint
+        readField p
+          = peekByteOff p #{offset VkHdrMetadataEXT, whitePoint}
 
-instance CanWriteField "whitePoint" VkHdrMetadataEXT where
+instance {-# OVERLAPPING #-}
+         CanWriteField "whitePoint" VkHdrMetadataEXT where
         {-# INLINE writeField #-}
-        writeField = writeVkWhitePoint
-
-instance {-# OVERLAPPING #-} HasVkMaxLuminance VkHdrMetadataEXT
-         where
-        type VkMaxLuminanceMType VkHdrMetadataEXT =
-             #{type float}
-
-        {-# NOINLINE vkMaxLuminance #-}
-        vkMaxLuminance x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkHdrMetadataEXT, maxLuminance})
-
-        {-# INLINE vkMaxLuminanceByteOffset #-}
-        vkMaxLuminanceByteOffset ~_
-          = #{offset VkHdrMetadataEXT, maxLuminance}
-
-        {-# INLINE readVkMaxLuminance #-}
-        readVkMaxLuminance p
-          = peekByteOff p #{offset VkHdrMetadataEXT, maxLuminance}
-
-        {-# INLINE writeVkMaxLuminance #-}
-        writeVkMaxLuminance p
-          = pokeByteOff p #{offset VkHdrMetadataEXT, maxLuminance}
+        writeField p
+          = pokeByteOff p #{offset VkHdrMetadataEXT, whitePoint}
 
 instance {-# OVERLAPPING #-}
          HasField "maxLuminance" VkHdrMetadataEXT where
@@ -394,38 +285,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkHdrMetadataEXT, maxLuminance}
 
-instance CanReadField "maxLuminance" VkHdrMetadataEXT where
-        {-# INLINE getField #-}
-        getField = vkMaxLuminance
+instance {-# OVERLAPPING #-}
+         CanReadField "maxLuminance" VkHdrMetadataEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkHdrMetadataEXT, maxLuminance})
 
         {-# INLINE readField #-}
-        readField = readVkMaxLuminance
+        readField p
+          = peekByteOff p #{offset VkHdrMetadataEXT, maxLuminance}
 
-instance CanWriteField "maxLuminance" VkHdrMetadataEXT where
+instance {-# OVERLAPPING #-}
+         CanWriteField "maxLuminance" VkHdrMetadataEXT where
         {-# INLINE writeField #-}
-        writeField = writeVkMaxLuminance
-
-instance {-# OVERLAPPING #-} HasVkMinLuminance VkHdrMetadataEXT
-         where
-        type VkMinLuminanceMType VkHdrMetadataEXT =
-             #{type float}
-
-        {-# NOINLINE vkMinLuminance #-}
-        vkMinLuminance x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkHdrMetadataEXT, minLuminance})
-
-        {-# INLINE vkMinLuminanceByteOffset #-}
-        vkMinLuminanceByteOffset ~_
-          = #{offset VkHdrMetadataEXT, minLuminance}
-
-        {-# INLINE readVkMinLuminance #-}
-        readVkMinLuminance p
-          = peekByteOff p #{offset VkHdrMetadataEXT, minLuminance}
-
-        {-# INLINE writeVkMinLuminance #-}
-        writeVkMinLuminance p
-          = pokeByteOff p #{offset VkHdrMetadataEXT, minLuminance}
+        writeField p
+          = pokeByteOff p #{offset VkHdrMetadataEXT, maxLuminance}
 
 instance {-# OVERLAPPING #-}
          HasField "minLuminance" VkHdrMetadataEXT where
@@ -442,38 +317,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkHdrMetadataEXT, minLuminance}
 
-instance CanReadField "minLuminance" VkHdrMetadataEXT where
-        {-# INLINE getField #-}
-        getField = vkMinLuminance
+instance {-# OVERLAPPING #-}
+         CanReadField "minLuminance" VkHdrMetadataEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkHdrMetadataEXT, minLuminance})
 
         {-# INLINE readField #-}
-        readField = readVkMinLuminance
-
-instance CanWriteField "minLuminance" VkHdrMetadataEXT where
-        {-# INLINE writeField #-}
-        writeField = writeVkMinLuminance
+        readField p
+          = peekByteOff p #{offset VkHdrMetadataEXT, minLuminance}
 
 instance {-# OVERLAPPING #-}
-         HasVkMaxContentLightLevel VkHdrMetadataEXT where
-        type VkMaxContentLightLevelMType VkHdrMetadataEXT =
-             #{type float}
-
-        {-# NOINLINE vkMaxContentLightLevel #-}
-        vkMaxContentLightLevel x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkHdrMetadataEXT, maxContentLightLevel})
-
-        {-# INLINE vkMaxContentLightLevelByteOffset #-}
-        vkMaxContentLightLevelByteOffset ~_
-          = #{offset VkHdrMetadataEXT, maxContentLightLevel}
-
-        {-# INLINE readVkMaxContentLightLevel #-}
-        readVkMaxContentLightLevel p
-          = peekByteOff p #{offset VkHdrMetadataEXT, maxContentLightLevel}
-
-        {-# INLINE writeVkMaxContentLightLevel #-}
-        writeVkMaxContentLightLevel p
-          = pokeByteOff p #{offset VkHdrMetadataEXT, maxContentLightLevel}
+         CanWriteField "minLuminance" VkHdrMetadataEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkHdrMetadataEXT, minLuminance}
 
 instance {-# OVERLAPPING #-}
          HasField "maxContentLightLevel" VkHdrMetadataEXT where
@@ -491,39 +350,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkHdrMetadataEXT, maxContentLightLevel}
 
-instance CanReadField "maxContentLightLevel" VkHdrMetadataEXT where
-        {-# INLINE getField #-}
-        getField = vkMaxContentLightLevel
+instance {-# OVERLAPPING #-}
+         CanReadField "maxContentLightLevel" VkHdrMetadataEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkHdrMetadataEXT, maxContentLightLevel})
 
         {-# INLINE readField #-}
-        readField = readVkMaxContentLightLevel
-
-instance CanWriteField "maxContentLightLevel" VkHdrMetadataEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkMaxContentLightLevel
+        readField p
+          = peekByteOff p #{offset VkHdrMetadataEXT, maxContentLightLevel}
 
 instance {-# OVERLAPPING #-}
-         HasVkMaxFrameAverageLightLevel VkHdrMetadataEXT where
-        type VkMaxFrameAverageLightLevelMType VkHdrMetadataEXT =
-             #{type float}
-
-        {-# NOINLINE vkMaxFrameAverageLightLevel #-}
-        vkMaxFrameAverageLightLevel x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkHdrMetadataEXT, maxFrameAverageLightLevel})
-
-        {-# INLINE vkMaxFrameAverageLightLevelByteOffset #-}
-        vkMaxFrameAverageLightLevelByteOffset ~_
-          = #{offset VkHdrMetadataEXT, maxFrameAverageLightLevel}
-
-        {-# INLINE readVkMaxFrameAverageLightLevel #-}
-        readVkMaxFrameAverageLightLevel p
-          = peekByteOff p #{offset VkHdrMetadataEXT, maxFrameAverageLightLevel}
-
-        {-# INLINE writeVkMaxFrameAverageLightLevel #-}
-        writeVkMaxFrameAverageLightLevel p
-          = pokeByteOff p #{offset VkHdrMetadataEXT, maxFrameAverageLightLevel}
+         CanWriteField "maxContentLightLevel" VkHdrMetadataEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkHdrMetadataEXT, maxContentLightLevel}
 
 instance {-# OVERLAPPING #-}
          HasField "maxFrameAverageLightLevel" VkHdrMetadataEXT where
@@ -543,56 +385,61 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkHdrMetadataEXT, maxFrameAverageLightLevel}
 
-instance CanReadField "maxFrameAverageLightLevel" VkHdrMetadataEXT
-         where
-        {-# INLINE getField #-}
-        getField = vkMaxFrameAverageLightLevel
+instance {-# OVERLAPPING #-}
+         CanReadField "maxFrameAverageLightLevel" VkHdrMetadataEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkHdrMetadataEXT, maxFrameAverageLightLevel})
 
         {-# INLINE readField #-}
-        readField = readVkMaxFrameAverageLightLevel
+        readField p
+          = peekByteOff p #{offset VkHdrMetadataEXT, maxFrameAverageLightLevel}
 
-instance CanWriteField "maxFrameAverageLightLevel" VkHdrMetadataEXT
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "maxFrameAverageLightLevel" VkHdrMetadataEXT where
         {-# INLINE writeField #-}
-        writeField = writeVkMaxFrameAverageLightLevel
+        writeField p
+          = pokeByteOff p #{offset VkHdrMetadataEXT, maxFrameAverageLightLevel}
 
 instance Show VkHdrMetadataEXT where
         showsPrec d x
           = showString "VkHdrMetadataEXT {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkDisplayPrimaryRed = " .
-                            showsPrec d (vkDisplayPrimaryRed x) .
+                          showString "displayPrimaryRed = " .
+                            showsPrec d (getField @"displayPrimaryRed" x) .
                               showString ", " .
-                                showString "vkDisplayPrimaryGreen = " .
-                                  showsPrec d (vkDisplayPrimaryGreen x) .
+                                showString "displayPrimaryGreen = " .
+                                  showsPrec d (getField @"displayPrimaryGreen" x) .
                                     showString ", " .
-                                      showString "vkDisplayPrimaryBlue = " .
-                                        showsPrec d (vkDisplayPrimaryBlue x) .
+                                      showString "displayPrimaryBlue = " .
+                                        showsPrec d (getField @"displayPrimaryBlue" x) .
                                           showString ", " .
-                                            showString "vkWhitePoint = " .
-                                              showsPrec d (vkWhitePoint x) .
+                                            showString "whitePoint = " .
+                                              showsPrec d (getField @"whitePoint" x) .
                                                 showString ", " .
-                                                  showString "vkMaxLuminance = " .
-                                                    showsPrec d (vkMaxLuminance x) .
+                                                  showString "maxLuminance = " .
+                                                    showsPrec d (getField @"maxLuminance" x) .
                                                       showString ", " .
-                                                        showString "vkMinLuminance = " .
-                                                          showsPrec d (vkMinLuminance x) .
+                                                        showString "minLuminance = " .
+                                                          showsPrec d (getField @"minLuminance" x) .
                                                             showString ", " .
-                                                              showString "vkMaxContentLightLevel = "
-                                                                .
+                                                              showString "maxContentLightLevel = " .
                                                                 showsPrec d
-                                                                  (vkMaxContentLightLevel x)
+                                                                  (getField @"maxContentLightLevel"
+                                                                     x)
                                                                   .
                                                                   showString ", " .
                                                                     showString
-                                                                      "vkMaxFrameAverageLightLevel = "
+                                                                      "maxFrameAverageLightLevel = "
                                                                       .
                                                                       showsPrec d
-                                                                        (vkMaxFrameAverageLightLevel
+                                                                        (getField
+                                                                           @"maxFrameAverageLightLevel"
                                                                            x)
                                                                         . showChar '}'
