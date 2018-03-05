@@ -76,7 +76,7 @@ sudo apt-get install libvulkan-dev
        (or, maybe, `extra-ghci-libraries` is enough?)
  * [ ] Make `Graphics.Vulkan.Marshal.Create` fill `sType` fields automatically,
        together with optional fields
- * [ ] Make `Graphics.Vulkan.Marshal.Create` provide more meaningful error
+ * [x] Make `Graphics.Vulkan.Marshal.Create` provide more meaningful error
        messages when types of fields mismatch.
  * [ ] Check whether we can disallow writing `returnedonly` fields.
 
