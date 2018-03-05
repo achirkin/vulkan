@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkApplicationInfo
        (VkApplicationInfo(..)) where
@@ -13,7 +14,6 @@ import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkApplicationInfo {
@@ -75,26 +75,6 @@ instance VulkanMarshal VkApplicationInfo where
         type ReturnedOnly VkApplicationInfo = 'False -- ' closing tick for hsc2hs
         type StructExtends VkApplicationInfo = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkApplicationInfo where
-        type VkSTypeMType VkApplicationInfo = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkApplicationInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkApplicationInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkApplicationInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkApplicationInfo, sType}
-
 instance {-# OVERLAPPING #-} HasField "sType" VkApplicationInfo
          where
         type FieldType "sType" VkApplicationInfo = VkStructureType
@@ -109,36 +89,22 @@ instance {-# OVERLAPPING #-} HasField "sType" VkApplicationInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkApplicationInfo, sType}
 
-instance CanReadField "sType" VkApplicationInfo where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-} CanReadField "sType" VkApplicationInfo
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkApplicationInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkApplicationInfo, sType}
 
-instance CanWriteField "sType" VkApplicationInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkApplicationInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkApplicationInfo where
-        type VkPNextMType VkApplicationInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkApplicationInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkApplicationInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkApplicationInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkApplicationInfo, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkApplicationInfo, sType}
 
 instance {-# OVERLAPPING #-} HasField "pNext" VkApplicationInfo
          where
@@ -154,37 +120,22 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkApplicationInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkApplicationInfo, pNext}
 
-instance CanReadField "pNext" VkApplicationInfo where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-} CanReadField "pNext" VkApplicationInfo
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkApplicationInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkApplicationInfo where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkApplicationInfo, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkPApplicationName VkApplicationInfo where
-        type VkPApplicationNameMType VkApplicationInfo = CString
-
-        {-# NOINLINE vkPApplicationName #-}
-        vkPApplicationName x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkApplicationInfo, pApplicationName})
-
-        {-# INLINE vkPApplicationNameByteOffset #-}
-        vkPApplicationNameByteOffset ~_
-          = #{offset VkApplicationInfo, pApplicationName}
-
-        {-# INLINE readVkPApplicationName #-}
-        readVkPApplicationName p
-          = peekByteOff p #{offset VkApplicationInfo, pApplicationName}
-
-        {-# INLINE writeVkPApplicationName #-}
-        writeVkPApplicationName p
-          = pokeByteOff p #{offset VkApplicationInfo, pApplicationName}
+         CanWriteField "pNext" VkApplicationInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkApplicationInfo, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "pApplicationName" VkApplicationInfo where
@@ -201,37 +152,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkApplicationInfo, pApplicationName}
 
-instance CanReadField "pApplicationName" VkApplicationInfo where
-        {-# INLINE getField #-}
-        getField = vkPApplicationName
+instance {-# OVERLAPPING #-}
+         CanReadField "pApplicationName" VkApplicationInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkApplicationInfo, pApplicationName})
 
         {-# INLINE readField #-}
-        readField = readVkPApplicationName
-
-instance CanWriteField "pApplicationName" VkApplicationInfo where
-        {-# INLINE writeField #-}
-        writeField = writeVkPApplicationName
+        readField p
+          = peekByteOff p #{offset VkApplicationInfo, pApplicationName}
 
 instance {-# OVERLAPPING #-}
-         HasVkApplicationVersion VkApplicationInfo where
-        type VkApplicationVersionMType VkApplicationInfo = Word32
-
-        {-# NOINLINE vkApplicationVersion #-}
-        vkApplicationVersion x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkApplicationInfo, applicationVersion})
-
-        {-# INLINE vkApplicationVersionByteOffset #-}
-        vkApplicationVersionByteOffset ~_
-          = #{offset VkApplicationInfo, applicationVersion}
-
-        {-# INLINE readVkApplicationVersion #-}
-        readVkApplicationVersion p
-          = peekByteOff p #{offset VkApplicationInfo, applicationVersion}
-
-        {-# INLINE writeVkApplicationVersion #-}
-        writeVkApplicationVersion p
-          = pokeByteOff p #{offset VkApplicationInfo, applicationVersion}
+         CanWriteField "pApplicationName" VkApplicationInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkApplicationInfo, pApplicationName}
 
 instance {-# OVERLAPPING #-}
          HasField "applicationVersion" VkApplicationInfo where
@@ -248,37 +184,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkApplicationInfo, applicationVersion}
 
-instance CanReadField "applicationVersion" VkApplicationInfo where
-        {-# INLINE getField #-}
-        getField = vkApplicationVersion
+instance {-# OVERLAPPING #-}
+         CanReadField "applicationVersion" VkApplicationInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkApplicationInfo, applicationVersion})
 
         {-# INLINE readField #-}
-        readField = readVkApplicationVersion
+        readField p
+          = peekByteOff p #{offset VkApplicationInfo, applicationVersion}
 
-instance CanWriteField "applicationVersion" VkApplicationInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "applicationVersion" VkApplicationInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkApplicationVersion
-
-instance {-# OVERLAPPING #-} HasVkPEngineName VkApplicationInfo
-         where
-        type VkPEngineNameMType VkApplicationInfo = CString
-
-        {-# NOINLINE vkPEngineName #-}
-        vkPEngineName x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkApplicationInfo, pEngineName})
-
-        {-# INLINE vkPEngineNameByteOffset #-}
-        vkPEngineNameByteOffset ~_
-          = #{offset VkApplicationInfo, pEngineName}
-
-        {-# INLINE readVkPEngineName #-}
-        readVkPEngineName p
-          = peekByteOff p #{offset VkApplicationInfo, pEngineName}
-
-        {-# INLINE writeVkPEngineName #-}
-        writeVkPEngineName p
-          = pokeByteOff p #{offset VkApplicationInfo, pEngineName}
+        writeField p
+          = pokeByteOff p #{offset VkApplicationInfo, applicationVersion}
 
 instance {-# OVERLAPPING #-}
          HasField "pEngineName" VkApplicationInfo where
@@ -294,37 +215,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkApplicationInfo, pEngineName}
 
-instance CanReadField "pEngineName" VkApplicationInfo where
-        {-# INLINE getField #-}
-        getField = vkPEngineName
+instance {-# OVERLAPPING #-}
+         CanReadField "pEngineName" VkApplicationInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkApplicationInfo, pEngineName})
 
         {-# INLINE readField #-}
-        readField = readVkPEngineName
+        readField p
+          = peekByteOff p #{offset VkApplicationInfo, pEngineName}
 
-instance CanWriteField "pEngineName" VkApplicationInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pEngineName" VkApplicationInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPEngineName
-
-instance {-# OVERLAPPING #-} HasVkEngineVersion VkApplicationInfo
-         where
-        type VkEngineVersionMType VkApplicationInfo = Word32
-
-        {-# NOINLINE vkEngineVersion #-}
-        vkEngineVersion x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkApplicationInfo, engineVersion})
-
-        {-# INLINE vkEngineVersionByteOffset #-}
-        vkEngineVersionByteOffset ~_
-          = #{offset VkApplicationInfo, engineVersion}
-
-        {-# INLINE readVkEngineVersion #-}
-        readVkEngineVersion p
-          = peekByteOff p #{offset VkApplicationInfo, engineVersion}
-
-        {-# INLINE writeVkEngineVersion #-}
-        writeVkEngineVersion p
-          = pokeByteOff p #{offset VkApplicationInfo, engineVersion}
+        writeField p
+          = pokeByteOff p #{offset VkApplicationInfo, pEngineName}
 
 instance {-# OVERLAPPING #-}
          HasField "engineVersion" VkApplicationInfo where
@@ -341,37 +247,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkApplicationInfo, engineVersion}
 
-instance CanReadField "engineVersion" VkApplicationInfo where
-        {-# INLINE getField #-}
-        getField = vkEngineVersion
+instance {-# OVERLAPPING #-}
+         CanReadField "engineVersion" VkApplicationInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkApplicationInfo, engineVersion})
 
         {-# INLINE readField #-}
-        readField = readVkEngineVersion
+        readField p
+          = peekByteOff p #{offset VkApplicationInfo, engineVersion}
 
-instance CanWriteField "engineVersion" VkApplicationInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "engineVersion" VkApplicationInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkEngineVersion
-
-instance {-# OVERLAPPING #-} HasVkApiVersion VkApplicationInfo
-         where
-        type VkApiVersionMType VkApplicationInfo = Word32
-
-        {-# NOINLINE vkApiVersion #-}
-        vkApiVersion x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkApplicationInfo, apiVersion})
-
-        {-# INLINE vkApiVersionByteOffset #-}
-        vkApiVersionByteOffset ~_
-          = #{offset VkApplicationInfo, apiVersion}
-
-        {-# INLINE readVkApiVersion #-}
-        readVkApiVersion p
-          = peekByteOff p #{offset VkApplicationInfo, apiVersion}
-
-        {-# INLINE writeVkApiVersion #-}
-        writeVkApiVersion p
-          = pokeByteOff p #{offset VkApplicationInfo, apiVersion}
+        writeField p
+          = pokeByteOff p #{offset VkApplicationInfo, engineVersion}
 
 instance {-# OVERLAPPING #-}
          HasField "apiVersion" VkApplicationInfo where
@@ -387,37 +278,44 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkApplicationInfo, apiVersion}
 
-instance CanReadField "apiVersion" VkApplicationInfo where
-        {-# INLINE getField #-}
-        getField = vkApiVersion
+instance {-# OVERLAPPING #-}
+         CanReadField "apiVersion" VkApplicationInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkApplicationInfo, apiVersion})
 
         {-# INLINE readField #-}
-        readField = readVkApiVersion
+        readField p
+          = peekByteOff p #{offset VkApplicationInfo, apiVersion}
 
-instance CanWriteField "apiVersion" VkApplicationInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "apiVersion" VkApplicationInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkApiVersion
+        writeField p
+          = pokeByteOff p #{offset VkApplicationInfo, apiVersion}
 
 instance Show VkApplicationInfo where
         showsPrec d x
           = showString "VkApplicationInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkPApplicationName = " .
-                            showsPrec d (vkPApplicationName x) .
+                          showString "pApplicationName = " .
+                            showsPrec d (getField @"pApplicationName" x) .
                               showString ", " .
-                                showString "vkApplicationVersion = " .
-                                  showsPrec d (vkApplicationVersion x) .
+                                showString "applicationVersion = " .
+                                  showsPrec d (getField @"applicationVersion" x) .
                                     showString ", " .
-                                      showString "vkPEngineName = " .
-                                        showsPrec d (vkPEngineName x) .
+                                      showString "pEngineName = " .
+                                        showsPrec d (getField @"pEngineName" x) .
                                           showString ", " .
-                                            showString "vkEngineVersion = " .
-                                              showsPrec d (vkEngineVersion x) .
+                                            showString "engineVersion = " .
+                                              showsPrec d (getField @"engineVersion" x) .
                                                 showString ", " .
-                                                  showString "vkApiVersion = " .
-                                                    showsPrec d (vkApiVersion x) . showChar '}'
+                                                  showString "apiVersion = " .
+                                                    showsPrec d (getField @"apiVersion" x) .
+                                                      showChar '}'

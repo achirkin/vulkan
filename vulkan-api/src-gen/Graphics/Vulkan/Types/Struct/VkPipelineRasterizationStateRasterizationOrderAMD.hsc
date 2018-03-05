@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPipelineRasterizationStateRasterizationOrderAMD
        (VkPipelineRasterizationStateRasterizationOrderAMD(..)) where
@@ -19,7 +20,6 @@ import           Graphics.Vulkan.Types.Enum.VkStructureType
                                                                                       (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkPipelineRasterizationStateCreateInfo
                                                                                       (VkPipelineRasterizationStateCreateInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe
                                                                                       (unsafeDupablePerformIO)
 
@@ -97,28 +97,6 @@ instance VulkanMarshal
              = '[VkPipelineRasterizationStateCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPipelineRasterizationStateRasterizationOrderAMD where
-        type VkSTypeMType VkPipelineRasterizationStateRasterizationOrderAMD
-             = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateRasterizationOrderAMD, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPipelineRasterizationStateRasterizationOrderAMD, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPipelineRasterizationStateRasterizationOrderAMD, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPipelineRasterizationStateRasterizationOrderAMD, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPipelineRasterizationStateRasterizationOrderAMD
          where
         type FieldType "sType"
@@ -142,42 +120,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineRasterizationStateRasterizationOrderAMD, sType}
 
-instance CanReadField "sType"
+instance {-# OVERLAPPING #-}
+         CanReadField "sType"
            VkPipelineRasterizationStateRasterizationOrderAMD
          where
-        {-# INLINE getField #-}
-        getField = vkSType
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateRasterizationOrderAMD, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkPipelineRasterizationStateRasterizationOrderAMD, sType}
 
-instance CanWriteField "sType"
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType"
            VkPipelineRasterizationStateRasterizationOrderAMD
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-}
-         HasVkPNext VkPipelineRasterizationStateRasterizationOrderAMD where
-        type VkPNextMType VkPipelineRasterizationStateRasterizationOrderAMD
-             = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateRasterizationOrderAMD, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPipelineRasterizationStateRasterizationOrderAMD, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPipelineRasterizationStateRasterizationOrderAMD, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPipelineRasterizationStateRasterizationOrderAMD, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineRasterizationStateRasterizationOrderAMD, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPipelineRasterizationStateRasterizationOrderAMD
@@ -203,45 +165,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineRasterizationStateRasterizationOrderAMD, pNext}
 
-instance CanReadField "pNext"
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext"
            VkPipelineRasterizationStateRasterizationOrderAMD
          where
-        {-# INLINE getField #-}
-        getField = vkPNext
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateRasterizationOrderAMD, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkPipelineRasterizationStateRasterizationOrderAMD, pNext}
 
-instance CanWriteField "pNext"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext"
            VkPipelineRasterizationStateRasterizationOrderAMD
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-}
-         HasVkRasterizationOrder
-           VkPipelineRasterizationStateRasterizationOrderAMD
-         where
-        type VkRasterizationOrderMType
-               VkPipelineRasterizationStateRasterizationOrderAMD
-             = VkRasterizationOrderAMD
-
-        {-# NOINLINE vkRasterizationOrder #-}
-        vkRasterizationOrder x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateRasterizationOrderAMD, rasterizationOrder})
-
-        {-# INLINE vkRasterizationOrderByteOffset #-}
-        vkRasterizationOrderByteOffset ~_
-          = #{offset VkPipelineRasterizationStateRasterizationOrderAMD, rasterizationOrder}
-
-        {-# INLINE readVkRasterizationOrder #-}
-        readVkRasterizationOrder p
-          = peekByteOff p #{offset VkPipelineRasterizationStateRasterizationOrderAMD, rasterizationOrder}
-
-        {-# INLINE writeVkRasterizationOrder #-}
-        writeVkRasterizationOrder p
-          = pokeByteOff p #{offset VkPipelineRasterizationStateRasterizationOrderAMD, rasterizationOrder}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineRasterizationStateRasterizationOrderAMD, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "rasterizationOrder"
@@ -268,31 +211,37 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineRasterizationStateRasterizationOrderAMD, rasterizationOrder}
 
-instance CanReadField "rasterizationOrder"
+instance {-# OVERLAPPING #-}
+         CanReadField "rasterizationOrder"
            VkPipelineRasterizationStateRasterizationOrderAMD
          where
-        {-# INLINE getField #-}
-        getField = vkRasterizationOrder
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateRasterizationOrderAMD, rasterizationOrder})
 
         {-# INLINE readField #-}
-        readField = readVkRasterizationOrder
+        readField p
+          = peekByteOff p #{offset VkPipelineRasterizationStateRasterizationOrderAMD, rasterizationOrder}
 
-instance CanWriteField "rasterizationOrder"
+instance {-# OVERLAPPING #-}
+         CanWriteField "rasterizationOrder"
            VkPipelineRasterizationStateRasterizationOrderAMD
          where
         {-# INLINE writeField #-}
-        writeField = writeVkRasterizationOrder
+        writeField p
+          = pokeByteOff p #{offset VkPipelineRasterizationStateRasterizationOrderAMD, rasterizationOrder}
 
 instance Show VkPipelineRasterizationStateRasterizationOrderAMD
          where
         showsPrec d x
           = showString "VkPipelineRasterizationStateRasterizationOrderAMD {"
               .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkRasterizationOrder = " .
-                            showsPrec d (vkRasterizationOrder x) . showChar '}'
+                          showString "rasterizationOrder = " .
+                            showsPrec d (getField @"rasterizationOrder" x) . showChar '}'

@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPipelineVertexInputStateCreateInfo
        (VkPipelineVertexInputStateCreateInfo(..)) where
@@ -16,7 +17,6 @@ import           Graphics.Vulkan.Types.Bitmasks                                 
 import           Graphics.Vulkan.Types.Enum.VkStructureType                     (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkVertexInputAttributeDescription (VkVertexInputAttributeDescription)
 import           Graphics.Vulkan.Types.Struct.VkVertexInputBindingDescription   (VkVertexInputBindingDescription)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                               (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPipelineVertexInputStateCreateInfo {
@@ -88,28 +88,6 @@ instance VulkanMarshal VkPipelineVertexInputStateCreateInfo where
         type StructExtends VkPipelineVertexInputStateCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPipelineVertexInputStateCreateInfo where
-        type VkSTypeMType VkPipelineVertexInputStateCreateInfo =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineVertexInputStateCreateInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPipelineVertexInputStateCreateInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPipelineVertexInputStateCreateInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPipelineVertexInputStateCreateInfo, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPipelineVertexInputStateCreateInfo where
         type FieldType "sType" VkPipelineVertexInputStateCreateInfo =
              VkStructureType
@@ -127,39 +105,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineVertexInputStateCreateInfo, sType}
 
-instance CanReadField "sType" VkPipelineVertexInputStateCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkPipelineVertexInputStateCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineVertexInputStateCreateInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkPipelineVertexInputStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkPipelineVertexInputStateCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkPipelineVertexInputStateCreateInfo where
-        type VkPNextMType VkPipelineVertexInputStateCreateInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineVertexInputStateCreateInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPipelineVertexInputStateCreateInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPipelineVertexInputStateCreateInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPipelineVertexInputStateCreateInfo, pNext}
+         CanWriteField "sType" VkPipelineVertexInputStateCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineVertexInputStateCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPipelineVertexInputStateCreateInfo where
@@ -179,40 +140,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineVertexInputStateCreateInfo, pNext}
 
-instance CanReadField "pNext" VkPipelineVertexInputStateCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkPipelineVertexInputStateCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineVertexInputStateCreateInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkPipelineVertexInputStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkPipelineVertexInputStateCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkFlags VkPipelineVertexInputStateCreateInfo where
-        type VkFlagsMType VkPipelineVertexInputStateCreateInfo =
-             VkPipelineVertexInputStateCreateFlags
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineVertexInputStateCreateInfo, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkPipelineVertexInputStateCreateInfo, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkPipelineVertexInputStateCreateInfo, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkPipelineVertexInputStateCreateInfo, flags}
+         CanWriteField "pNext" VkPipelineVertexInputStateCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineVertexInputStateCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkPipelineVertexInputStateCreateInfo where
@@ -232,43 +175,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineVertexInputStateCreateInfo, flags}
 
-instance CanReadField "flags" VkPipelineVertexInputStateCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkPipelineVertexInputStateCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineVertexInputStateCreateInfo, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags" VkPipelineVertexInputStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkPipelineVertexInputStateCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkVertexBindingDescriptionCount
-           VkPipelineVertexInputStateCreateInfo
-         where
-        type VkVertexBindingDescriptionCountMType
-               VkPipelineVertexInputStateCreateInfo
-             = Word32
-
-        {-# NOINLINE vkVertexBindingDescriptionCount #-}
-        vkVertexBindingDescriptionCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineVertexInputStateCreateInfo, vertexBindingDescriptionCount})
-
-        {-# INLINE vkVertexBindingDescriptionCountByteOffset #-}
-        vkVertexBindingDescriptionCountByteOffset ~_
-          = #{offset VkPipelineVertexInputStateCreateInfo, vertexBindingDescriptionCount}
-
-        {-# INLINE readVkVertexBindingDescriptionCount #-}
-        readVkVertexBindingDescriptionCount p
-          = peekByteOff p #{offset VkPipelineVertexInputStateCreateInfo, vertexBindingDescriptionCount}
-
-        {-# INLINE writeVkVertexBindingDescriptionCount #-}
-        writeVkVertexBindingDescriptionCount p
-          = pokeByteOff p #{offset VkPipelineVertexInputStateCreateInfo, vertexBindingDescriptionCount}
+         CanWriteField "flags" VkPipelineVertexInputStateCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineVertexInputStateCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "vertexBindingDescriptionCount"
@@ -295,45 +217,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineVertexInputStateCreateInfo, vertexBindingDescriptionCount}
 
-instance CanReadField "vertexBindingDescriptionCount"
+instance {-# OVERLAPPING #-}
+         CanReadField "vertexBindingDescriptionCount"
            VkPipelineVertexInputStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkVertexBindingDescriptionCount
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineVertexInputStateCreateInfo, vertexBindingDescriptionCount})
 
         {-# INLINE readField #-}
-        readField = readVkVertexBindingDescriptionCount
+        readField p
+          = peekByteOff p #{offset VkPipelineVertexInputStateCreateInfo, vertexBindingDescriptionCount}
 
-instance CanWriteField "vertexBindingDescriptionCount"
+instance {-# OVERLAPPING #-}
+         CanWriteField "vertexBindingDescriptionCount"
            VkPipelineVertexInputStateCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkVertexBindingDescriptionCount
-
-instance {-# OVERLAPPING #-}
-         HasVkPVertexBindingDescriptions
-           VkPipelineVertexInputStateCreateInfo
-         where
-        type VkPVertexBindingDescriptionsMType
-               VkPipelineVertexInputStateCreateInfo
-             = Ptr VkVertexInputBindingDescription
-
-        {-# NOINLINE vkPVertexBindingDescriptions #-}
-        vkPVertexBindingDescriptions x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineVertexInputStateCreateInfo, pVertexBindingDescriptions})
-
-        {-# INLINE vkPVertexBindingDescriptionsByteOffset #-}
-        vkPVertexBindingDescriptionsByteOffset ~_
-          = #{offset VkPipelineVertexInputStateCreateInfo, pVertexBindingDescriptions}
-
-        {-# INLINE readVkPVertexBindingDescriptions #-}
-        readVkPVertexBindingDescriptions p
-          = peekByteOff p #{offset VkPipelineVertexInputStateCreateInfo, pVertexBindingDescriptions}
-
-        {-# INLINE writeVkPVertexBindingDescriptions #-}
-        writeVkPVertexBindingDescriptions p
-          = pokeByteOff p #{offset VkPipelineVertexInputStateCreateInfo, pVertexBindingDescriptions}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineVertexInputStateCreateInfo, vertexBindingDescriptionCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pVertexBindingDescriptions"
@@ -360,45 +263,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineVertexInputStateCreateInfo, pVertexBindingDescriptions}
 
-instance CanReadField "pVertexBindingDescriptions"
+instance {-# OVERLAPPING #-}
+         CanReadField "pVertexBindingDescriptions"
            VkPipelineVertexInputStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkPVertexBindingDescriptions
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineVertexInputStateCreateInfo, pVertexBindingDescriptions})
 
         {-# INLINE readField #-}
-        readField = readVkPVertexBindingDescriptions
+        readField p
+          = peekByteOff p #{offset VkPipelineVertexInputStateCreateInfo, pVertexBindingDescriptions}
 
-instance CanWriteField "pVertexBindingDescriptions"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pVertexBindingDescriptions"
            VkPipelineVertexInputStateCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPVertexBindingDescriptions
-
-instance {-# OVERLAPPING #-}
-         HasVkVertexAttributeDescriptionCount
-           VkPipelineVertexInputStateCreateInfo
-         where
-        type VkVertexAttributeDescriptionCountMType
-               VkPipelineVertexInputStateCreateInfo
-             = Word32
-
-        {-# NOINLINE vkVertexAttributeDescriptionCount #-}
-        vkVertexAttributeDescriptionCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineVertexInputStateCreateInfo, vertexAttributeDescriptionCount})
-
-        {-# INLINE vkVertexAttributeDescriptionCountByteOffset #-}
-        vkVertexAttributeDescriptionCountByteOffset ~_
-          = #{offset VkPipelineVertexInputStateCreateInfo, vertexAttributeDescriptionCount}
-
-        {-# INLINE readVkVertexAttributeDescriptionCount #-}
-        readVkVertexAttributeDescriptionCount p
-          = peekByteOff p #{offset VkPipelineVertexInputStateCreateInfo, vertexAttributeDescriptionCount}
-
-        {-# INLINE writeVkVertexAttributeDescriptionCount #-}
-        writeVkVertexAttributeDescriptionCount p
-          = pokeByteOff p #{offset VkPipelineVertexInputStateCreateInfo, vertexAttributeDescriptionCount}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineVertexInputStateCreateInfo, pVertexBindingDescriptions}
 
 instance {-# OVERLAPPING #-}
          HasField "vertexAttributeDescriptionCount"
@@ -425,45 +309,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineVertexInputStateCreateInfo, vertexAttributeDescriptionCount}
 
-instance CanReadField "vertexAttributeDescriptionCount"
+instance {-# OVERLAPPING #-}
+         CanReadField "vertexAttributeDescriptionCount"
            VkPipelineVertexInputStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkVertexAttributeDescriptionCount
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineVertexInputStateCreateInfo, vertexAttributeDescriptionCount})
 
         {-# INLINE readField #-}
-        readField = readVkVertexAttributeDescriptionCount
+        readField p
+          = peekByteOff p #{offset VkPipelineVertexInputStateCreateInfo, vertexAttributeDescriptionCount}
 
-instance CanWriteField "vertexAttributeDescriptionCount"
+instance {-# OVERLAPPING #-}
+         CanWriteField "vertexAttributeDescriptionCount"
            VkPipelineVertexInputStateCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkVertexAttributeDescriptionCount
-
-instance {-# OVERLAPPING #-}
-         HasVkPVertexAttributeDescriptions
-           VkPipelineVertexInputStateCreateInfo
-         where
-        type VkPVertexAttributeDescriptionsMType
-               VkPipelineVertexInputStateCreateInfo
-             = Ptr VkVertexInputAttributeDescription
-
-        {-# NOINLINE vkPVertexAttributeDescriptions #-}
-        vkPVertexAttributeDescriptions x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineVertexInputStateCreateInfo, pVertexAttributeDescriptions})
-
-        {-# INLINE vkPVertexAttributeDescriptionsByteOffset #-}
-        vkPVertexAttributeDescriptionsByteOffset ~_
-          = #{offset VkPipelineVertexInputStateCreateInfo, pVertexAttributeDescriptions}
-
-        {-# INLINE readVkPVertexAttributeDescriptions #-}
-        readVkPVertexAttributeDescriptions p
-          = peekByteOff p #{offset VkPipelineVertexInputStateCreateInfo, pVertexAttributeDescriptions}
-
-        {-# INLINE writeVkPVertexAttributeDescriptions #-}
-        writeVkPVertexAttributeDescriptions p
-          = pokeByteOff p #{offset VkPipelineVertexInputStateCreateInfo, pVertexAttributeDescriptions}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineVertexInputStateCreateInfo, vertexAttributeDescriptionCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pVertexAttributeDescriptions"
@@ -490,42 +355,51 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineVertexInputStateCreateInfo, pVertexAttributeDescriptions}
 
-instance CanReadField "pVertexAttributeDescriptions"
+instance {-# OVERLAPPING #-}
+         CanReadField "pVertexAttributeDescriptions"
            VkPipelineVertexInputStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkPVertexAttributeDescriptions
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineVertexInputStateCreateInfo, pVertexAttributeDescriptions})
 
         {-# INLINE readField #-}
-        readField = readVkPVertexAttributeDescriptions
+        readField p
+          = peekByteOff p #{offset VkPipelineVertexInputStateCreateInfo, pVertexAttributeDescriptions}
 
-instance CanWriteField "pVertexAttributeDescriptions"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pVertexAttributeDescriptions"
            VkPipelineVertexInputStateCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPVertexAttributeDescriptions
+        writeField p
+          = pokeByteOff p #{offset VkPipelineVertexInputStateCreateInfo, pVertexAttributeDescriptions}
 
 instance Show VkPipelineVertexInputStateCreateInfo where
         showsPrec d x
           = showString "VkPipelineVertexInputStateCreateInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkVertexBindingDescriptionCount = " .
-                                  showsPrec d (vkVertexBindingDescriptionCount x) .
+                                showString "vertexBindingDescriptionCount = " .
+                                  showsPrec d (getField @"vertexBindingDescriptionCount" x) .
                                     showString ", " .
-                                      showString "vkPVertexBindingDescriptions = " .
-                                        showsPrec d (vkPVertexBindingDescriptions x) .
+                                      showString "pVertexBindingDescriptions = " .
+                                        showsPrec d (getField @"pVertexBindingDescriptions" x) .
                                           showString ", " .
-                                            showString "vkVertexAttributeDescriptionCount = " .
-                                              showsPrec d (vkVertexAttributeDescriptionCount x) .
+                                            showString "vertexAttributeDescriptionCount = " .
+                                              showsPrec d
+                                                (getField @"vertexAttributeDescriptionCount" x)
+                                                .
                                                 showString ", " .
-                                                  showString "vkPVertexAttributeDescriptions = " .
-                                                    showsPrec d (vkPVertexAttributeDescriptions x) .
-                                                      showChar '}'
+                                                  showString "pVertexAttributeDescriptions = " .
+                                                    showsPrec d
+                                                      (getField @"pVertexAttributeDescriptions" x)
+                                                      . showChar '}'

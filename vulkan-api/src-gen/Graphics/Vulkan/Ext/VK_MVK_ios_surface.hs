@@ -30,7 +30,8 @@ module Graphics.Vulkan.Ext.VK_MVK_ios_surface
         module Graphics.Vulkan.Types.Struct.VkIOSSurfaceCreateInfoMVK,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
-        vkCreateIOSSurfaceMVK, module Graphics.Vulkan.Marshal,
+        vkCreateIOSSurfaceMVK, vkCreateIOSSurfaceMVKSafe,
+        module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,
@@ -70,6 +71,28 @@ import           Graphics.Vulkan.Types.Struct.VkIOSSurfaceCreateInfoMVK
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateIOSSurfaceMVK.html vkCreateIOSSurfaceMVK registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateIOSSurfaceMVK"
                vkCreateIOSSurfaceMVK ::
+               VkInstance -- ^ instance
+                          ->
+                 Ptr VkIOSSurfaceCreateInfoMVK -- ^ pCreateInfo
+                                               ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                                 -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
+--
+--   > VkResult vkCreateIOSSurfaceMVK
+--   >     ( VkInstance instance
+--   >     , const VkIOSSurfaceCreateInfoMVK* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkSurfaceKHR* pSurface
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateIOSSurfaceMVK.html vkCreateIOSSurfaceMVK registry at www.khronos.org>
+foreign import ccall safe "vkCreateIOSSurfaceMVK"
+               vkCreateIOSSurfaceMVKSafe ::
                VkInstance -- ^ instance
                           ->
                  Ptr VkIOSSurfaceCreateInfoMVK -- ^ pCreateInfo

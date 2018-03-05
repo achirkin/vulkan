@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPipelineRasterizationStateCreateInfo
        (VkPipelineRasterizationStateCreateInfo(..)) where
@@ -18,7 +19,6 @@ import           Graphics.Vulkan.Types.Enum.VkCullModeFlags (VkCullModeFlags)
 import           Graphics.Vulkan.Types.Enum.VkFrontFace     (VkFrontFace)
 import           Graphics.Vulkan.Types.Enum.VkPolygonMode   (VkPolygonMode)
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPipelineRasterizationStateCreateInfo {
@@ -97,28 +97,6 @@ instance VulkanMarshal VkPipelineRasterizationStateCreateInfo where
         type StructExtends VkPipelineRasterizationStateCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPipelineRasterizationStateCreateInfo where
-        type VkSTypeMType VkPipelineRasterizationStateCreateInfo =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateCreateInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPipelineRasterizationStateCreateInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPipelineRasterizationStateCreateInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPipelineRasterizationStateCreateInfo, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPipelineRasterizationStateCreateInfo where
         type FieldType "sType" VkPipelineRasterizationStateCreateInfo =
              VkStructureType
@@ -136,41 +114,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineRasterizationStateCreateInfo, sType}
 
-instance CanReadField "sType"
-           VkPipelineRasterizationStateCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkPipelineRasterizationStateCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateCreateInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType"
-           VkPipelineRasterizationStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkPipelineRasterizationStateCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkPipelineRasterizationStateCreateInfo where
-        type VkPNextMType VkPipelineRasterizationStateCreateInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateCreateInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPipelineRasterizationStateCreateInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPipelineRasterizationStateCreateInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPipelineRasterizationStateCreateInfo, pNext}
+         CanWriteField "sType" VkPipelineRasterizationStateCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineRasterizationStateCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPipelineRasterizationStateCreateInfo where
@@ -190,42 +149,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineRasterizationStateCreateInfo, pNext}
 
-instance CanReadField "pNext"
-           VkPipelineRasterizationStateCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkPipelineRasterizationStateCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateCreateInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext"
-           VkPipelineRasterizationStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkPipelineRasterizationStateCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkFlags VkPipelineRasterizationStateCreateInfo where
-        type VkFlagsMType VkPipelineRasterizationStateCreateInfo =
-             VkPipelineRasterizationStateCreateFlags
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateCreateInfo, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkPipelineRasterizationStateCreateInfo, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkPipelineRasterizationStateCreateInfo, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkPipelineRasterizationStateCreateInfo, flags}
+         CanWriteField "pNext" VkPipelineRasterizationStateCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineRasterizationStateCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkPipelineRasterizationStateCreateInfo where
@@ -245,42 +184,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineRasterizationStateCreateInfo, flags}
 
-instance CanReadField "flags"
-           VkPipelineRasterizationStateCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkPipelineRasterizationStateCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateCreateInfo, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags"
-           VkPipelineRasterizationStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkPipelineRasterizationStateCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkDepthClampEnable VkPipelineRasterizationStateCreateInfo where
-        type VkDepthClampEnableMType VkPipelineRasterizationStateCreateInfo
-             = VkBool32
-
-        {-# NOINLINE vkDepthClampEnable #-}
-        vkDepthClampEnable x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateCreateInfo, depthClampEnable})
-
-        {-# INLINE vkDepthClampEnableByteOffset #-}
-        vkDepthClampEnableByteOffset ~_
-          = #{offset VkPipelineRasterizationStateCreateInfo, depthClampEnable}
-
-        {-# INLINE readVkDepthClampEnable #-}
-        readVkDepthClampEnable p
-          = peekByteOff p #{offset VkPipelineRasterizationStateCreateInfo, depthClampEnable}
-
-        {-# INLINE writeVkDepthClampEnable #-}
-        writeVkDepthClampEnable p
-          = pokeByteOff p #{offset VkPipelineRasterizationStateCreateInfo, depthClampEnable}
+         CanWriteField "flags" VkPipelineRasterizationStateCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineRasterizationStateCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "depthClampEnable" VkPipelineRasterizationStateCreateInfo
@@ -306,44 +225,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineRasterizationStateCreateInfo, depthClampEnable}
 
-instance CanReadField "depthClampEnable"
+instance {-# OVERLAPPING #-}
+         CanReadField "depthClampEnable"
            VkPipelineRasterizationStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkDepthClampEnable
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateCreateInfo, depthClampEnable})
 
         {-# INLINE readField #-}
-        readField = readVkDepthClampEnable
+        readField p
+          = peekByteOff p #{offset VkPipelineRasterizationStateCreateInfo, depthClampEnable}
 
-instance CanWriteField "depthClampEnable"
+instance {-# OVERLAPPING #-}
+         CanWriteField "depthClampEnable"
            VkPipelineRasterizationStateCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkDepthClampEnable
-
-instance {-# OVERLAPPING #-}
-         HasVkRasterizerDiscardEnable VkPipelineRasterizationStateCreateInfo
-         where
-        type VkRasterizerDiscardEnableMType
-               VkPipelineRasterizationStateCreateInfo
-             = VkBool32
-
-        {-# NOINLINE vkRasterizerDiscardEnable #-}
-        vkRasterizerDiscardEnable x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateCreateInfo, rasterizerDiscardEnable})
-
-        {-# INLINE vkRasterizerDiscardEnableByteOffset #-}
-        vkRasterizerDiscardEnableByteOffset ~_
-          = #{offset VkPipelineRasterizationStateCreateInfo, rasterizerDiscardEnable}
-
-        {-# INLINE readVkRasterizerDiscardEnable #-}
-        readVkRasterizerDiscardEnable p
-          = peekByteOff p #{offset VkPipelineRasterizationStateCreateInfo, rasterizerDiscardEnable}
-
-        {-# INLINE writeVkRasterizerDiscardEnable #-}
-        writeVkRasterizerDiscardEnable p
-          = pokeByteOff p #{offset VkPipelineRasterizationStateCreateInfo, rasterizerDiscardEnable}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineRasterizationStateCreateInfo, depthClampEnable}
 
 instance {-# OVERLAPPING #-}
          HasField "rasterizerDiscardEnable"
@@ -370,42 +271,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineRasterizationStateCreateInfo, rasterizerDiscardEnable}
 
-instance CanReadField "rasterizerDiscardEnable"
+instance {-# OVERLAPPING #-}
+         CanReadField "rasterizerDiscardEnable"
            VkPipelineRasterizationStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkRasterizerDiscardEnable
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateCreateInfo, rasterizerDiscardEnable})
 
         {-# INLINE readField #-}
-        readField = readVkRasterizerDiscardEnable
+        readField p
+          = peekByteOff p #{offset VkPipelineRasterizationStateCreateInfo, rasterizerDiscardEnable}
 
-instance CanWriteField "rasterizerDiscardEnable"
+instance {-# OVERLAPPING #-}
+         CanWriteField "rasterizerDiscardEnable"
            VkPipelineRasterizationStateCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkRasterizerDiscardEnable
-
-instance {-# OVERLAPPING #-}
-         HasVkPolygonMode VkPipelineRasterizationStateCreateInfo where
-        type VkPolygonModeMType VkPipelineRasterizationStateCreateInfo =
-             VkPolygonMode
-
-        {-# NOINLINE vkPolygonMode #-}
-        vkPolygonMode x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateCreateInfo, polygonMode})
-
-        {-# INLINE vkPolygonModeByteOffset #-}
-        vkPolygonModeByteOffset ~_
-          = #{offset VkPipelineRasterizationStateCreateInfo, polygonMode}
-
-        {-# INLINE readVkPolygonMode #-}
-        readVkPolygonMode p
-          = peekByteOff p #{offset VkPipelineRasterizationStateCreateInfo, polygonMode}
-
-        {-# INLINE writeVkPolygonMode #-}
-        writeVkPolygonMode p
-          = pokeByteOff p #{offset VkPipelineRasterizationStateCreateInfo, polygonMode}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineRasterizationStateCreateInfo, rasterizerDiscardEnable}
 
 instance {-# OVERLAPPING #-}
          HasField "polygonMode" VkPipelineRasterizationStateCreateInfo where
@@ -429,42 +314,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineRasterizationStateCreateInfo, polygonMode}
 
-instance CanReadField "polygonMode"
-           VkPipelineRasterizationStateCreateInfo
+instance {-# OVERLAPPING #-}
+         CanReadField "polygonMode" VkPipelineRasterizationStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkPolygonMode
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateCreateInfo, polygonMode})
 
         {-# INLINE readField #-}
-        readField = readVkPolygonMode
-
-instance CanWriteField "polygonMode"
-           VkPipelineRasterizationStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPolygonMode
+        readField p
+          = peekByteOff p #{offset VkPipelineRasterizationStateCreateInfo, polygonMode}
 
 instance {-# OVERLAPPING #-}
-         HasVkCullMode VkPipelineRasterizationStateCreateInfo where
-        type VkCullModeMType VkPipelineRasterizationStateCreateInfo =
-             VkCullModeFlags
-
-        {-# NOINLINE vkCullMode #-}
-        vkCullMode x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateCreateInfo, cullMode})
-
-        {-# INLINE vkCullModeByteOffset #-}
-        vkCullModeByteOffset ~_
-          = #{offset VkPipelineRasterizationStateCreateInfo, cullMode}
-
-        {-# INLINE readVkCullMode #-}
-        readVkCullMode p
-          = peekByteOff p #{offset VkPipelineRasterizationStateCreateInfo, cullMode}
-
-        {-# INLINE writeVkCullMode #-}
-        writeVkCullMode p
-          = pokeByteOff p #{offset VkPipelineRasterizationStateCreateInfo, cullMode}
+         CanWriteField "polygonMode" VkPipelineRasterizationStateCreateInfo
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineRasterizationStateCreateInfo, polygonMode}
 
 instance {-# OVERLAPPING #-}
          HasField "cullMode" VkPipelineRasterizationStateCreateInfo where
@@ -486,42 +353,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineRasterizationStateCreateInfo, cullMode}
 
-instance CanReadField "cullMode"
-           VkPipelineRasterizationStateCreateInfo
+instance {-# OVERLAPPING #-}
+         CanReadField "cullMode" VkPipelineRasterizationStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkCullMode
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateCreateInfo, cullMode})
 
         {-# INLINE readField #-}
-        readField = readVkCullMode
-
-instance CanWriteField "cullMode"
-           VkPipelineRasterizationStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkCullMode
+        readField p
+          = peekByteOff p #{offset VkPipelineRasterizationStateCreateInfo, cullMode}
 
 instance {-# OVERLAPPING #-}
-         HasVkFrontFace VkPipelineRasterizationStateCreateInfo where
-        type VkFrontFaceMType VkPipelineRasterizationStateCreateInfo =
-             VkFrontFace
-
-        {-# NOINLINE vkFrontFace #-}
-        vkFrontFace x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateCreateInfo, frontFace})
-
-        {-# INLINE vkFrontFaceByteOffset #-}
-        vkFrontFaceByteOffset ~_
-          = #{offset VkPipelineRasterizationStateCreateInfo, frontFace}
-
-        {-# INLINE readVkFrontFace #-}
-        readVkFrontFace p
-          = peekByteOff p #{offset VkPipelineRasterizationStateCreateInfo, frontFace}
-
-        {-# INLINE writeVkFrontFace #-}
-        writeVkFrontFace p
-          = pokeByteOff p #{offset VkPipelineRasterizationStateCreateInfo, frontFace}
+         CanWriteField "cullMode" VkPipelineRasterizationStateCreateInfo
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineRasterizationStateCreateInfo, cullMode}
 
 instance {-# OVERLAPPING #-}
          HasField "frontFace" VkPipelineRasterizationStateCreateInfo where
@@ -544,42 +393,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineRasterizationStateCreateInfo, frontFace}
 
-instance CanReadField "frontFace"
-           VkPipelineRasterizationStateCreateInfo
+instance {-# OVERLAPPING #-}
+         CanReadField "frontFace" VkPipelineRasterizationStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkFrontFace
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateCreateInfo, frontFace})
 
         {-# INLINE readField #-}
-        readField = readVkFrontFace
-
-instance CanWriteField "frontFace"
-           VkPipelineRasterizationStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFrontFace
+        readField p
+          = peekByteOff p #{offset VkPipelineRasterizationStateCreateInfo, frontFace}
 
 instance {-# OVERLAPPING #-}
-         HasVkDepthBiasEnable VkPipelineRasterizationStateCreateInfo where
-        type VkDepthBiasEnableMType VkPipelineRasterizationStateCreateInfo
-             = VkBool32
-
-        {-# NOINLINE vkDepthBiasEnable #-}
-        vkDepthBiasEnable x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateCreateInfo, depthBiasEnable})
-
-        {-# INLINE vkDepthBiasEnableByteOffset #-}
-        vkDepthBiasEnableByteOffset ~_
-          = #{offset VkPipelineRasterizationStateCreateInfo, depthBiasEnable}
-
-        {-# INLINE readVkDepthBiasEnable #-}
-        readVkDepthBiasEnable p
-          = peekByteOff p #{offset VkPipelineRasterizationStateCreateInfo, depthBiasEnable}
-
-        {-# INLINE writeVkDepthBiasEnable #-}
-        writeVkDepthBiasEnable p
-          = pokeByteOff p #{offset VkPipelineRasterizationStateCreateInfo, depthBiasEnable}
+         CanWriteField "frontFace" VkPipelineRasterizationStateCreateInfo
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineRasterizationStateCreateInfo, frontFace}
 
 instance {-# OVERLAPPING #-}
          HasField "depthBiasEnable" VkPipelineRasterizationStateCreateInfo
@@ -605,44 +436,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineRasterizationStateCreateInfo, depthBiasEnable}
 
-instance CanReadField "depthBiasEnable"
+instance {-# OVERLAPPING #-}
+         CanReadField "depthBiasEnable"
            VkPipelineRasterizationStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkDepthBiasEnable
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateCreateInfo, depthBiasEnable})
 
         {-# INLINE readField #-}
-        readField = readVkDepthBiasEnable
+        readField p
+          = peekByteOff p #{offset VkPipelineRasterizationStateCreateInfo, depthBiasEnable}
 
-instance CanWriteField "depthBiasEnable"
+instance {-# OVERLAPPING #-}
+         CanWriteField "depthBiasEnable"
            VkPipelineRasterizationStateCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkDepthBiasEnable
-
-instance {-# OVERLAPPING #-}
-         HasVkDepthBiasConstantFactor VkPipelineRasterizationStateCreateInfo
-         where
-        type VkDepthBiasConstantFactorMType
-               VkPipelineRasterizationStateCreateInfo
-             = #{type float}
-
-        {-# NOINLINE vkDepthBiasConstantFactor #-}
-        vkDepthBiasConstantFactor x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateCreateInfo, depthBiasConstantFactor})
-
-        {-# INLINE vkDepthBiasConstantFactorByteOffset #-}
-        vkDepthBiasConstantFactorByteOffset ~_
-          = #{offset VkPipelineRasterizationStateCreateInfo, depthBiasConstantFactor}
-
-        {-# INLINE readVkDepthBiasConstantFactor #-}
-        readVkDepthBiasConstantFactor p
-          = peekByteOff p #{offset VkPipelineRasterizationStateCreateInfo, depthBiasConstantFactor}
-
-        {-# INLINE writeVkDepthBiasConstantFactor #-}
-        writeVkDepthBiasConstantFactor p
-          = pokeByteOff p #{offset VkPipelineRasterizationStateCreateInfo, depthBiasConstantFactor}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineRasterizationStateCreateInfo, depthBiasEnable}
 
 instance {-# OVERLAPPING #-}
          HasField "depthBiasConstantFactor"
@@ -669,42 +482,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineRasterizationStateCreateInfo, depthBiasConstantFactor}
 
-instance CanReadField "depthBiasConstantFactor"
+instance {-# OVERLAPPING #-}
+         CanReadField "depthBiasConstantFactor"
            VkPipelineRasterizationStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkDepthBiasConstantFactor
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateCreateInfo, depthBiasConstantFactor})
 
         {-# INLINE readField #-}
-        readField = readVkDepthBiasConstantFactor
+        readField p
+          = peekByteOff p #{offset VkPipelineRasterizationStateCreateInfo, depthBiasConstantFactor}
 
-instance CanWriteField "depthBiasConstantFactor"
+instance {-# OVERLAPPING #-}
+         CanWriteField "depthBiasConstantFactor"
            VkPipelineRasterizationStateCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkDepthBiasConstantFactor
-
-instance {-# OVERLAPPING #-}
-         HasVkDepthBiasClamp VkPipelineRasterizationStateCreateInfo where
-        type VkDepthBiasClampMType VkPipelineRasterizationStateCreateInfo =
-             #{type float}
-
-        {-# NOINLINE vkDepthBiasClamp #-}
-        vkDepthBiasClamp x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateCreateInfo, depthBiasClamp})
-
-        {-# INLINE vkDepthBiasClampByteOffset #-}
-        vkDepthBiasClampByteOffset ~_
-          = #{offset VkPipelineRasterizationStateCreateInfo, depthBiasClamp}
-
-        {-# INLINE readVkDepthBiasClamp #-}
-        readVkDepthBiasClamp p
-          = peekByteOff p #{offset VkPipelineRasterizationStateCreateInfo, depthBiasClamp}
-
-        {-# INLINE writeVkDepthBiasClamp #-}
-        writeVkDepthBiasClamp p
-          = pokeByteOff p #{offset VkPipelineRasterizationStateCreateInfo, depthBiasClamp}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineRasterizationStateCreateInfo, depthBiasConstantFactor}
 
 instance {-# OVERLAPPING #-}
          HasField "depthBiasClamp" VkPipelineRasterizationStateCreateInfo
@@ -730,44 +527,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineRasterizationStateCreateInfo, depthBiasClamp}
 
-instance CanReadField "depthBiasClamp"
+instance {-# OVERLAPPING #-}
+         CanReadField "depthBiasClamp"
            VkPipelineRasterizationStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkDepthBiasClamp
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateCreateInfo, depthBiasClamp})
 
         {-# INLINE readField #-}
-        readField = readVkDepthBiasClamp
+        readField p
+          = peekByteOff p #{offset VkPipelineRasterizationStateCreateInfo, depthBiasClamp}
 
-instance CanWriteField "depthBiasClamp"
+instance {-# OVERLAPPING #-}
+         CanWriteField "depthBiasClamp"
            VkPipelineRasterizationStateCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkDepthBiasClamp
-
-instance {-# OVERLAPPING #-}
-         HasVkDepthBiasSlopeFactor VkPipelineRasterizationStateCreateInfo
-         where
-        type VkDepthBiasSlopeFactorMType
-               VkPipelineRasterizationStateCreateInfo
-             = #{type float}
-
-        {-# NOINLINE vkDepthBiasSlopeFactor #-}
-        vkDepthBiasSlopeFactor x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateCreateInfo, depthBiasSlopeFactor})
-
-        {-# INLINE vkDepthBiasSlopeFactorByteOffset #-}
-        vkDepthBiasSlopeFactorByteOffset ~_
-          = #{offset VkPipelineRasterizationStateCreateInfo, depthBiasSlopeFactor}
-
-        {-# INLINE readVkDepthBiasSlopeFactor #-}
-        readVkDepthBiasSlopeFactor p
-          = peekByteOff p #{offset VkPipelineRasterizationStateCreateInfo, depthBiasSlopeFactor}
-
-        {-# INLINE writeVkDepthBiasSlopeFactor #-}
-        writeVkDepthBiasSlopeFactor p
-          = pokeByteOff p #{offset VkPipelineRasterizationStateCreateInfo, depthBiasSlopeFactor}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineRasterizationStateCreateInfo, depthBiasClamp}
 
 instance {-# OVERLAPPING #-}
          HasField "depthBiasSlopeFactor"
@@ -794,42 +573,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineRasterizationStateCreateInfo, depthBiasSlopeFactor}
 
-instance CanReadField "depthBiasSlopeFactor"
+instance {-# OVERLAPPING #-}
+         CanReadField "depthBiasSlopeFactor"
            VkPipelineRasterizationStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkDepthBiasSlopeFactor
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateCreateInfo, depthBiasSlopeFactor})
 
         {-# INLINE readField #-}
-        readField = readVkDepthBiasSlopeFactor
+        readField p
+          = peekByteOff p #{offset VkPipelineRasterizationStateCreateInfo, depthBiasSlopeFactor}
 
-instance CanWriteField "depthBiasSlopeFactor"
+instance {-# OVERLAPPING #-}
+         CanWriteField "depthBiasSlopeFactor"
            VkPipelineRasterizationStateCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkDepthBiasSlopeFactor
-
-instance {-# OVERLAPPING #-}
-         HasVkLineWidth VkPipelineRasterizationStateCreateInfo where
-        type VkLineWidthMType VkPipelineRasterizationStateCreateInfo =
-             #{type float}
-
-        {-# NOINLINE vkLineWidth #-}
-        vkLineWidth x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateCreateInfo, lineWidth})
-
-        {-# INLINE vkLineWidthByteOffset #-}
-        vkLineWidthByteOffset ~_
-          = #{offset VkPipelineRasterizationStateCreateInfo, lineWidth}
-
-        {-# INLINE readVkLineWidth #-}
-        readVkLineWidth p
-          = peekByteOff p #{offset VkPipelineRasterizationStateCreateInfo, lineWidth}
-
-        {-# INLINE writeVkLineWidth #-}
-        writeVkLineWidth p
-          = pokeByteOff p #{offset VkPipelineRasterizationStateCreateInfo, lineWidth}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineRasterizationStateCreateInfo, depthBiasSlopeFactor}
 
 instance {-# OVERLAPPING #-}
          HasField "lineWidth" VkPipelineRasterizationStateCreateInfo where
@@ -852,80 +615,91 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineRasterizationStateCreateInfo, lineWidth}
 
-instance CanReadField "lineWidth"
-           VkPipelineRasterizationStateCreateInfo
+instance {-# OVERLAPPING #-}
+         CanReadField "lineWidth" VkPipelineRasterizationStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkLineWidth
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationStateCreateInfo, lineWidth})
 
         {-# INLINE readField #-}
-        readField = readVkLineWidth
+        readField p
+          = peekByteOff p #{offset VkPipelineRasterizationStateCreateInfo, lineWidth}
 
-instance CanWriteField "lineWidth"
-           VkPipelineRasterizationStateCreateInfo
+instance {-# OVERLAPPING #-}
+         CanWriteField "lineWidth" VkPipelineRasterizationStateCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkLineWidth
+        writeField p
+          = pokeByteOff p #{offset VkPipelineRasterizationStateCreateInfo, lineWidth}
 
 instance Show VkPipelineRasterizationStateCreateInfo where
         showsPrec d x
           = showString "VkPipelineRasterizationStateCreateInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkDepthClampEnable = " .
-                                  showsPrec d (vkDepthClampEnable x) .
+                                showString "depthClampEnable = " .
+                                  showsPrec d (getField @"depthClampEnable" x) .
                                     showString ", " .
-                                      showString "vkRasterizerDiscardEnable = " .
-                                        showsPrec d (vkRasterizerDiscardEnable x) .
+                                      showString "rasterizerDiscardEnable = " .
+                                        showsPrec d (getField @"rasterizerDiscardEnable" x) .
                                           showString ", " .
-                                            showString "vkPolygonMode = " .
-                                              showsPrec d (vkPolygonMode x) .
+                                            showString "polygonMode = " .
+                                              showsPrec d (getField @"polygonMode" x) .
                                                 showString ", " .
-                                                  showString "vkCullMode = " .
-                                                    showsPrec d (vkCullMode x) .
+                                                  showString "cullMode = " .
+                                                    showsPrec d (getField @"cullMode" x) .
                                                       showString ", " .
-                                                        showString "vkFrontFace = " .
-                                                          showsPrec d (vkFrontFace x) .
+                                                        showString "frontFace = " .
+                                                          showsPrec d (getField @"frontFace" x) .
                                                             showString ", " .
-                                                              showString "vkDepthBiasEnable = " .
-                                                                showsPrec d (vkDepthBiasEnable x) .
+                                                              showString "depthBiasEnable = " .
+                                                                showsPrec d
+                                                                  (getField @"depthBiasEnable" x)
+                                                                  .
                                                                   showString ", " .
                                                                     showString
-                                                                      "vkDepthBiasConstantFactor = "
+                                                                      "depthBiasConstantFactor = "
                                                                       .
                                                                       showsPrec d
-                                                                        (vkDepthBiasConstantFactor
+                                                                        (getField
+                                                                           @"depthBiasConstantFactor"
                                                                            x)
                                                                         .
                                                                         showString ", " .
                                                                           showString
-                                                                            "vkDepthBiasClamp = "
+                                                                            "depthBiasClamp = "
                                                                             .
                                                                             showsPrec d
-                                                                              (vkDepthBiasClamp x)
+                                                                              (getField
+                                                                                 @"depthBiasClamp"
+                                                                                 x)
                                                                               .
                                                                               showString ", " .
                                                                                 showString
-                                                                                  "vkDepthBiasSlopeFactor = "
+                                                                                  "depthBiasSlopeFactor = "
                                                                                   .
                                                                                   showsPrec d
-                                                                                    (vkDepthBiasSlopeFactor
+                                                                                    (getField
+                                                                                       @"depthBiasSlopeFactor"
                                                                                        x)
                                                                                     .
                                                                                     showString ", "
                                                                                       .
                                                                                       showString
-                                                                                        "vkLineWidth = "
+                                                                                        "lineWidth = "
                                                                                         .
                                                                                         showsPrec d
-                                                                                          (vkLineWidth
+                                                                                          (getField
+                                                                                             @"lineWidth"
                                                                                              x)
                                                                                           .
                                                                                           showChar

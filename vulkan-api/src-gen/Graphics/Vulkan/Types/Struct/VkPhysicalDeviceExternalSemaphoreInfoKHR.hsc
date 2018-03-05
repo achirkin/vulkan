@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalSemaphoreInfoKHR
        (VkPhysicalDeviceExternalSemaphoreInfoKHR(..)) where
@@ -17,7 +18,6 @@ import           Graphics.Vulkan.Types.Enum.VkExternalSemaphoreHandleTypeFlagsKH
                                                                                    (VkExternalSemaphoreHandleTypeFlagBitsKHR)
 import           Graphics.Vulkan.Types.Enum.VkStructureType
                                                                                    (VkStructureType)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe
                                                                                    (unsafeDupablePerformIO)
 
@@ -85,28 +85,6 @@ instance VulkanMarshal VkPhysicalDeviceExternalSemaphoreInfoKHR
         type StructExtends VkPhysicalDeviceExternalSemaphoreInfoKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPhysicalDeviceExternalSemaphoreInfoKHR where
-        type VkSTypeMType VkPhysicalDeviceExternalSemaphoreInfoKHR =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPhysicalDeviceExternalSemaphoreInfoKHR where
         type FieldType "sType" VkPhysicalDeviceExternalSemaphoreInfoKHR =
              VkStructureType
@@ -124,42 +102,23 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, sType}
 
-instance CanReadField "sType"
-           VkPhysicalDeviceExternalSemaphoreInfoKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkPhysicalDeviceExternalSemaphoreInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType"
-           VkPhysicalDeviceExternalSemaphoreInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkPhysicalDeviceExternalSemaphoreInfoKHR where
-        type VkPNextMType VkPhysicalDeviceExternalSemaphoreInfoKHR =
-             Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, pNext}
+         CanWriteField "sType" VkPhysicalDeviceExternalSemaphoreInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPhysicalDeviceExternalSemaphoreInfoKHR where
@@ -179,42 +138,23 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, pNext}
 
-instance CanReadField "pNext"
-           VkPhysicalDeviceExternalSemaphoreInfoKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkPhysicalDeviceExternalSemaphoreInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext"
-           VkPhysicalDeviceExternalSemaphoreInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkHandleType VkPhysicalDeviceExternalSemaphoreInfoKHR where
-        type VkHandleTypeMType VkPhysicalDeviceExternalSemaphoreInfoKHR =
-             VkExternalSemaphoreHandleTypeFlagBitsKHR
-
-        {-# NOINLINE vkHandleType #-}
-        vkHandleType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, handleType})
-
-        {-# INLINE vkHandleTypeByteOffset #-}
-        vkHandleTypeByteOffset ~_
-          = #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, handleType}
-
-        {-# INLINE readVkHandleType #-}
-        readVkHandleType p
-          = peekByteOff p #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, handleType}
-
-        {-# INLINE writeVkHandleType #-}
-        writeVkHandleType p
-          = pokeByteOff p #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, handleType}
+         CanWriteField "pNext" VkPhysicalDeviceExternalSemaphoreInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "handleType" VkPhysicalDeviceExternalSemaphoreInfoKHR
@@ -240,29 +180,33 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, handleType}
 
-instance CanReadField "handleType"
-           VkPhysicalDeviceExternalSemaphoreInfoKHR
+instance {-# OVERLAPPING #-}
+         CanReadField "handleType" VkPhysicalDeviceExternalSemaphoreInfoKHR
          where
-        {-# INLINE getField #-}
-        getField = vkHandleType
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, handleType})
 
         {-# INLINE readField #-}
-        readField = readVkHandleType
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, handleType}
 
-instance CanWriteField "handleType"
-           VkPhysicalDeviceExternalSemaphoreInfoKHR
+instance {-# OVERLAPPING #-}
+         CanWriteField "handleType" VkPhysicalDeviceExternalSemaphoreInfoKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkHandleType
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceExternalSemaphoreInfoKHR, handleType}
 
 instance Show VkPhysicalDeviceExternalSemaphoreInfoKHR where
         showsPrec d x
           = showString "VkPhysicalDeviceExternalSemaphoreInfoKHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkHandleType = " .
-                            showsPrec d (vkHandleType x) . showChar '}'
+                          showString "handleType = " .
+                            showsPrec d (getField @"handleType" x) . showChar '}'

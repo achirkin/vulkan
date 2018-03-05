@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkBindImagePlaneMemoryInfoKHR
        (VkBindImagePlaneMemoryInfoKHR(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkImageAspectFlags         (VkImageAspectFlagBits)
 import           Graphics.Vulkan.Types.Enum.VkStructureType            (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkBindImageMemoryInfoKHR (VkBindImageMemoryInfoKHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                      (unsafeDupablePerformIO)
 
 -- | > typedef struct VkBindImagePlaneMemoryInfoKHR {
@@ -79,27 +79,6 @@ instance VulkanMarshal VkBindImagePlaneMemoryInfoKHR where
              '[VkBindImageMemoryInfoKHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkBindImagePlaneMemoryInfoKHR where
-        type VkSTypeMType VkBindImagePlaneMemoryInfoKHR = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBindImagePlaneMemoryInfoKHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkBindImagePlaneMemoryInfoKHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkBindImagePlaneMemoryInfoKHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkBindImagePlaneMemoryInfoKHR, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkBindImagePlaneMemoryInfoKHR where
         type FieldType "sType" VkBindImagePlaneMemoryInfoKHR =
              VkStructureType
@@ -115,37 +94,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkBindImagePlaneMemoryInfoKHR, sType}
 
-instance CanReadField "sType" VkBindImagePlaneMemoryInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkBindImagePlaneMemoryInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBindImagePlaneMemoryInfoKHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkBindImagePlaneMemoryInfoKHR where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkBindImagePlaneMemoryInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkBindImagePlaneMemoryInfoKHR where
-        type VkPNextMType VkBindImagePlaneMemoryInfoKHR = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBindImagePlaneMemoryInfoKHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkBindImagePlaneMemoryInfoKHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkBindImagePlaneMemoryInfoKHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkBindImagePlaneMemoryInfoKHR, pNext}
+         CanWriteField "sType" VkBindImagePlaneMemoryInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkBindImagePlaneMemoryInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkBindImagePlaneMemoryInfoKHR where
@@ -162,38 +126,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkBindImagePlaneMemoryInfoKHR, pNext}
 
-instance CanReadField "pNext" VkBindImagePlaneMemoryInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkBindImagePlaneMemoryInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBindImagePlaneMemoryInfoKHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkBindImagePlaneMemoryInfoKHR where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkBindImagePlaneMemoryInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkPlaneAspect VkBindImagePlaneMemoryInfoKHR where
-        type VkPlaneAspectMType VkBindImagePlaneMemoryInfoKHR =
-             VkImageAspectFlagBits
-
-        {-# NOINLINE vkPlaneAspect #-}
-        vkPlaneAspect x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBindImagePlaneMemoryInfoKHR, planeAspect})
-
-        {-# INLINE vkPlaneAspectByteOffset #-}
-        vkPlaneAspectByteOffset ~_
-          = #{offset VkBindImagePlaneMemoryInfoKHR, planeAspect}
-
-        {-# INLINE readVkPlaneAspect #-}
-        readVkPlaneAspect p
-          = peekByteOff p #{offset VkBindImagePlaneMemoryInfoKHR, planeAspect}
-
-        {-# INLINE writeVkPlaneAspect #-}
-        writeVkPlaneAspect p
-          = pokeByteOff p #{offset VkBindImagePlaneMemoryInfoKHR, planeAspect}
+         CanWriteField "pNext" VkBindImagePlaneMemoryInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkBindImagePlaneMemoryInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "planeAspect" VkBindImagePlaneMemoryInfoKHR where
@@ -213,27 +161,31 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkBindImagePlaneMemoryInfoKHR, planeAspect}
 
-instance CanReadField "planeAspect" VkBindImagePlaneMemoryInfoKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkPlaneAspect
+instance {-# OVERLAPPING #-}
+         CanReadField "planeAspect" VkBindImagePlaneMemoryInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBindImagePlaneMemoryInfoKHR, planeAspect})
 
         {-# INLINE readField #-}
-        readField = readVkPlaneAspect
+        readField p
+          = peekByteOff p #{offset VkBindImagePlaneMemoryInfoKHR, planeAspect}
 
-instance CanWriteField "planeAspect" VkBindImagePlaneMemoryInfoKHR
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "planeAspect" VkBindImagePlaneMemoryInfoKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkPlaneAspect
+        writeField p
+          = pokeByteOff p #{offset VkBindImagePlaneMemoryInfoKHR, planeAspect}
 
 instance Show VkBindImagePlaneMemoryInfoKHR where
         showsPrec d x
           = showString "VkBindImagePlaneMemoryInfoKHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkPlaneAspect = " .
-                            showsPrec d (vkPlaneAspect x) . showChar '}'
+                          showString "planeAspect = " .
+                            showsPrec d (getField @"planeAspect" x) . showChar '}'

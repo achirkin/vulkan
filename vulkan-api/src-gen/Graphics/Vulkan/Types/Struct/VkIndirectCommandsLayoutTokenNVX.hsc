@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkIndirectCommandsLayoutTokenNVX
        (VkIndirectCommandsLayoutTokenNVX(..)) where
@@ -13,7 +14,6 @@ import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkIndirectCommandsTokenTypeNVX (VkIndirectCommandsTokenTypeNVX)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                          (unsafeDupablePerformIO)
 
 -- | > typedef struct VkIndirectCommandsLayoutTokenNVX {
@@ -78,28 +78,6 @@ instance VulkanMarshal VkIndirectCommandsLayoutTokenNVX where
         type StructExtends VkIndirectCommandsLayoutTokenNVX = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkTokenType VkIndirectCommandsLayoutTokenNVX where
-        type VkTokenTypeMType VkIndirectCommandsLayoutTokenNVX =
-             VkIndirectCommandsTokenTypeNVX
-
-        {-# NOINLINE vkTokenType #-}
-        vkTokenType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkIndirectCommandsLayoutTokenNVX, tokenType})
-
-        {-# INLINE vkTokenTypeByteOffset #-}
-        vkTokenTypeByteOffset ~_
-          = #{offset VkIndirectCommandsLayoutTokenNVX, tokenType}
-
-        {-# INLINE readVkTokenType #-}
-        readVkTokenType p
-          = peekByteOff p #{offset VkIndirectCommandsLayoutTokenNVX, tokenType}
-
-        {-# INLINE writeVkTokenType #-}
-        writeVkTokenType p
-          = pokeByteOff p #{offset VkIndirectCommandsLayoutTokenNVX, tokenType}
-
-instance {-# OVERLAPPING #-}
          HasField "tokenType" VkIndirectCommandsLayoutTokenNVX where
         type FieldType "tokenType" VkIndirectCommandsLayoutTokenNVX =
              VkIndirectCommandsTokenTypeNVX
@@ -117,39 +95,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkIndirectCommandsLayoutTokenNVX, tokenType}
 
-instance CanReadField "tokenType" VkIndirectCommandsLayoutTokenNVX
-         where
-        {-# INLINE getField #-}
-        getField = vkTokenType
+instance {-# OVERLAPPING #-}
+         CanReadField "tokenType" VkIndirectCommandsLayoutTokenNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkIndirectCommandsLayoutTokenNVX, tokenType})
 
         {-# INLINE readField #-}
-        readField = readVkTokenType
-
-instance CanWriteField "tokenType" VkIndirectCommandsLayoutTokenNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkTokenType
+        readField p
+          = peekByteOff p #{offset VkIndirectCommandsLayoutTokenNVX, tokenType}
 
 instance {-# OVERLAPPING #-}
-         HasVkBindingUnit VkIndirectCommandsLayoutTokenNVX where
-        type VkBindingUnitMType VkIndirectCommandsLayoutTokenNVX = Word32
-
-        {-# NOINLINE vkBindingUnit #-}
-        vkBindingUnit x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkIndirectCommandsLayoutTokenNVX, bindingUnit})
-
-        {-# INLINE vkBindingUnitByteOffset #-}
-        vkBindingUnitByteOffset ~_
-          = #{offset VkIndirectCommandsLayoutTokenNVX, bindingUnit}
-
-        {-# INLINE readVkBindingUnit #-}
-        readVkBindingUnit p
-          = peekByteOff p #{offset VkIndirectCommandsLayoutTokenNVX, bindingUnit}
-
-        {-# INLINE writeVkBindingUnit #-}
-        writeVkBindingUnit p
-          = pokeByteOff p #{offset VkIndirectCommandsLayoutTokenNVX, bindingUnit}
+         CanWriteField "tokenType" VkIndirectCommandsLayoutTokenNVX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkIndirectCommandsLayoutTokenNVX, tokenType}
 
 instance {-# OVERLAPPING #-}
          HasField "bindingUnit" VkIndirectCommandsLayoutTokenNVX where
@@ -169,41 +130,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkIndirectCommandsLayoutTokenNVX, bindingUnit}
 
-instance CanReadField "bindingUnit"
-           VkIndirectCommandsLayoutTokenNVX
-         where
-        {-# INLINE getField #-}
-        getField = vkBindingUnit
+instance {-# OVERLAPPING #-}
+         CanReadField "bindingUnit" VkIndirectCommandsLayoutTokenNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkIndirectCommandsLayoutTokenNVX, bindingUnit})
 
         {-# INLINE readField #-}
-        readField = readVkBindingUnit
-
-instance CanWriteField "bindingUnit"
-           VkIndirectCommandsLayoutTokenNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkBindingUnit
+        readField p
+          = peekByteOff p #{offset VkIndirectCommandsLayoutTokenNVX, bindingUnit}
 
 instance {-# OVERLAPPING #-}
-         HasVkDynamicCount VkIndirectCommandsLayoutTokenNVX where
-        type VkDynamicCountMType VkIndirectCommandsLayoutTokenNVX = Word32
-
-        {-# NOINLINE vkDynamicCount #-}
-        vkDynamicCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkIndirectCommandsLayoutTokenNVX, dynamicCount})
-
-        {-# INLINE vkDynamicCountByteOffset #-}
-        vkDynamicCountByteOffset ~_
-          = #{offset VkIndirectCommandsLayoutTokenNVX, dynamicCount}
-
-        {-# INLINE readVkDynamicCount #-}
-        readVkDynamicCount p
-          = peekByteOff p #{offset VkIndirectCommandsLayoutTokenNVX, dynamicCount}
-
-        {-# INLINE writeVkDynamicCount #-}
-        writeVkDynamicCount p
-          = pokeByteOff p #{offset VkIndirectCommandsLayoutTokenNVX, dynamicCount}
+         CanWriteField "bindingUnit" VkIndirectCommandsLayoutTokenNVX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkIndirectCommandsLayoutTokenNVX, bindingUnit}
 
 instance {-# OVERLAPPING #-}
          HasField "dynamicCount" VkIndirectCommandsLayoutTokenNVX where
@@ -223,41 +165,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkIndirectCommandsLayoutTokenNVX, dynamicCount}
 
-instance CanReadField "dynamicCount"
-           VkIndirectCommandsLayoutTokenNVX
-         where
-        {-# INLINE getField #-}
-        getField = vkDynamicCount
+instance {-# OVERLAPPING #-}
+         CanReadField "dynamicCount" VkIndirectCommandsLayoutTokenNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkIndirectCommandsLayoutTokenNVX, dynamicCount})
 
         {-# INLINE readField #-}
-        readField = readVkDynamicCount
-
-instance CanWriteField "dynamicCount"
-           VkIndirectCommandsLayoutTokenNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkDynamicCount
+        readField p
+          = peekByteOff p #{offset VkIndirectCommandsLayoutTokenNVX, dynamicCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkDivisor VkIndirectCommandsLayoutTokenNVX where
-        type VkDivisorMType VkIndirectCommandsLayoutTokenNVX = Word32
-
-        {-# NOINLINE vkDivisor #-}
-        vkDivisor x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkIndirectCommandsLayoutTokenNVX, divisor})
-
-        {-# INLINE vkDivisorByteOffset #-}
-        vkDivisorByteOffset ~_
-          = #{offset VkIndirectCommandsLayoutTokenNVX, divisor}
-
-        {-# INLINE readVkDivisor #-}
-        readVkDivisor p
-          = peekByteOff p #{offset VkIndirectCommandsLayoutTokenNVX, divisor}
-
-        {-# INLINE writeVkDivisor #-}
-        writeVkDivisor p
-          = pokeByteOff p #{offset VkIndirectCommandsLayoutTokenNVX, divisor}
+         CanWriteField "dynamicCount" VkIndirectCommandsLayoutTokenNVX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkIndirectCommandsLayoutTokenNVX, dynamicCount}
 
 instance {-# OVERLAPPING #-}
          HasField "divisor" VkIndirectCommandsLayoutTokenNVX where
@@ -276,30 +199,34 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkIndirectCommandsLayoutTokenNVX, divisor}
 
-instance CanReadField "divisor" VkIndirectCommandsLayoutTokenNVX
-         where
-        {-# INLINE getField #-}
-        getField = vkDivisor
+instance {-# OVERLAPPING #-}
+         CanReadField "divisor" VkIndirectCommandsLayoutTokenNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkIndirectCommandsLayoutTokenNVX, divisor})
 
         {-# INLINE readField #-}
-        readField = readVkDivisor
+        readField p
+          = peekByteOff p #{offset VkIndirectCommandsLayoutTokenNVX, divisor}
 
-instance CanWriteField "divisor" VkIndirectCommandsLayoutTokenNVX
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "divisor" VkIndirectCommandsLayoutTokenNVX where
         {-# INLINE writeField #-}
-        writeField = writeVkDivisor
+        writeField p
+          = pokeByteOff p #{offset VkIndirectCommandsLayoutTokenNVX, divisor}
 
 instance Show VkIndirectCommandsLayoutTokenNVX where
         showsPrec d x
           = showString "VkIndirectCommandsLayoutTokenNVX {" .
-              showString "vkTokenType = " .
-                showsPrec d (vkTokenType x) .
+              showString "tokenType = " .
+                showsPrec d (getField @"tokenType" x) .
                   showString ", " .
-                    showString "vkBindingUnit = " .
-                      showsPrec d (vkBindingUnit x) .
+                    showString "bindingUnit = " .
+                      showsPrec d (getField @"bindingUnit" x) .
                         showString ", " .
-                          showString "vkDynamicCount = " .
-                            showsPrec d (vkDynamicCount x) .
+                          showString "dynamicCount = " .
+                            showsPrec d (getField @"dynamicCount" x) .
                               showString ", " .
-                                showString "vkDivisor = " .
-                                  showsPrec d (vkDivisor x) . showChar '}'
+                                showString "divisor = " .
+                                  showsPrec d (getField @"divisor" x) . showChar '}'

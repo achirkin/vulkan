@@ -5,15 +5,15 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkClearDepthStencilValue
        (VkClearDepthStencilValue(..)) where
-import           Foreign.Storable                    (Storable (..))
+import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.StructMembers
-import           System.IO.Unsafe                    (unsafeDupablePerformIO)
+import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkClearDepthStencilValue {
 --   >     float                  depth;
@@ -69,28 +69,6 @@ instance VulkanMarshal VkClearDepthStencilValue where
         type ReturnedOnly VkClearDepthStencilValue = 'False -- ' closing tick for hsc2hs
         type StructExtends VkClearDepthStencilValue = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkDepth VkClearDepthStencilValue
-         where
-        type VkDepthMType VkClearDepthStencilValue =
-             #{type float}
-
-        {-# NOINLINE vkDepth #-}
-        vkDepth x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkClearDepthStencilValue, depth})
-
-        {-# INLINE vkDepthByteOffset #-}
-        vkDepthByteOffset ~_
-          = #{offset VkClearDepthStencilValue, depth}
-
-        {-# INLINE readVkDepth #-}
-        readVkDepth p
-          = peekByteOff p #{offset VkClearDepthStencilValue, depth}
-
-        {-# INLINE writeVkDepth #-}
-        writeVkDepth p
-          = pokeByteOff p #{offset VkClearDepthStencilValue, depth}
-
 instance {-# OVERLAPPING #-}
          HasField "depth" VkClearDepthStencilValue where
         type FieldType "depth" VkClearDepthStencilValue =
@@ -106,37 +84,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkClearDepthStencilValue, depth}
 
-instance CanReadField "depth" VkClearDepthStencilValue where
-        {-# INLINE getField #-}
-        getField = vkDepth
+instance {-# OVERLAPPING #-}
+         CanReadField "depth" VkClearDepthStencilValue where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkClearDepthStencilValue, depth})
 
         {-# INLINE readField #-}
-        readField = readVkDepth
+        readField p
+          = peekByteOff p #{offset VkClearDepthStencilValue, depth}
 
-instance CanWriteField "depth" VkClearDepthStencilValue where
+instance {-# OVERLAPPING #-}
+         CanWriteField "depth" VkClearDepthStencilValue where
         {-# INLINE writeField #-}
-        writeField = writeVkDepth
-
-instance {-# OVERLAPPING #-} HasVkStencil VkClearDepthStencilValue
-         where
-        type VkStencilMType VkClearDepthStencilValue = Word32
-
-        {-# NOINLINE vkStencil #-}
-        vkStencil x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkClearDepthStencilValue, stencil})
-
-        {-# INLINE vkStencilByteOffset #-}
-        vkStencilByteOffset ~_
-          = #{offset VkClearDepthStencilValue, stencil}
-
-        {-# INLINE readVkStencil #-}
-        readVkStencil p
-          = peekByteOff p #{offset VkClearDepthStencilValue, stencil}
-
-        {-# INLINE writeVkStencil #-}
-        writeVkStencil p
-          = pokeByteOff p #{offset VkClearDepthStencilValue, stencil}
+        writeField p
+          = pokeByteOff p #{offset VkClearDepthStencilValue, depth}
 
 instance {-# OVERLAPPING #-}
          HasField "stencil" VkClearDepthStencilValue where
@@ -153,22 +116,28 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkClearDepthStencilValue, stencil}
 
-instance CanReadField "stencil" VkClearDepthStencilValue where
-        {-# INLINE getField #-}
-        getField = vkStencil
+instance {-# OVERLAPPING #-}
+         CanReadField "stencil" VkClearDepthStencilValue where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkClearDepthStencilValue, stencil})
 
         {-# INLINE readField #-}
-        readField = readVkStencil
+        readField p
+          = peekByteOff p #{offset VkClearDepthStencilValue, stencil}
 
-instance CanWriteField "stencil" VkClearDepthStencilValue where
+instance {-# OVERLAPPING #-}
+         CanWriteField "stencil" VkClearDepthStencilValue where
         {-# INLINE writeField #-}
-        writeField = writeVkStencil
+        writeField p
+          = pokeByteOff p #{offset VkClearDepthStencilValue, stencil}
 
 instance Show VkClearDepthStencilValue where
         showsPrec d x
           = showString "VkClearDepthStencilValue {" .
-              showString "vkDepth = " .
-                showsPrec d (vkDepth x) .
+              showString "depth = " .
+                showsPrec d (getField @"depth" x) .
                   showString ", " .
-                    showString "vkStencil = " .
-                      showsPrec d (vkStencil x) . showChar '}'
+                    showString "stencil = " .
+                      showsPrec d (getField @"stencil" x) . showChar '}'

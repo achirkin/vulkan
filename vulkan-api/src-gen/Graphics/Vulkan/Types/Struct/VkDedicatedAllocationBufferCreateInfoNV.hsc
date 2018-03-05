@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkDedicatedAllocationBufferCreateInfoNV
        (VkDedicatedAllocationBufferCreateInfoNV(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes                 (VkBool32)
 import           Graphics.Vulkan.Types.Enum.VkStructureType      (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkBufferCreateInfo (VkBufferCreateInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDedicatedAllocationBufferCreateInfoNV {
@@ -83,28 +83,6 @@ instance VulkanMarshal VkDedicatedAllocationBufferCreateInfoNV
              '[VkBufferCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkDedicatedAllocationBufferCreateInfoNV where
-        type VkSTypeMType VkDedicatedAllocationBufferCreateInfoNV =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDedicatedAllocationBufferCreateInfoNV, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkDedicatedAllocationBufferCreateInfoNV, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkDedicatedAllocationBufferCreateInfoNV, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkDedicatedAllocationBufferCreateInfoNV, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkDedicatedAllocationBufferCreateInfoNV where
         type FieldType "sType" VkDedicatedAllocationBufferCreateInfoNV =
              VkStructureType
@@ -122,42 +100,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDedicatedAllocationBufferCreateInfoNV, sType}
 
-instance CanReadField "sType"
-           VkDedicatedAllocationBufferCreateInfoNV
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkDedicatedAllocationBufferCreateInfoNV where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDedicatedAllocationBufferCreateInfoNV, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType"
-           VkDedicatedAllocationBufferCreateInfoNV
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkDedicatedAllocationBufferCreateInfoNV, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkDedicatedAllocationBufferCreateInfoNV where
-        type VkPNextMType VkDedicatedAllocationBufferCreateInfoNV =
-             Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDedicatedAllocationBufferCreateInfoNV, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkDedicatedAllocationBufferCreateInfoNV, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkDedicatedAllocationBufferCreateInfoNV, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkDedicatedAllocationBufferCreateInfoNV, pNext}
+         CanWriteField "sType" VkDedicatedAllocationBufferCreateInfoNV where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDedicatedAllocationBufferCreateInfoNV, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkDedicatedAllocationBufferCreateInfoNV where
@@ -177,44 +135,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDedicatedAllocationBufferCreateInfoNV, pNext}
 
-instance CanReadField "pNext"
-           VkDedicatedAllocationBufferCreateInfoNV
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkDedicatedAllocationBufferCreateInfoNV where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDedicatedAllocationBufferCreateInfoNV, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext"
-           VkDedicatedAllocationBufferCreateInfoNV
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkDedicatedAllocationBufferCreateInfoNV, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkDedicatedAllocation VkDedicatedAllocationBufferCreateInfoNV
-         where
-        type VkDedicatedAllocationMType
-               VkDedicatedAllocationBufferCreateInfoNV
-             = VkBool32
-
-        {-# NOINLINE vkDedicatedAllocation #-}
-        vkDedicatedAllocation x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDedicatedAllocationBufferCreateInfoNV, dedicatedAllocation})
-
-        {-# INLINE vkDedicatedAllocationByteOffset #-}
-        vkDedicatedAllocationByteOffset ~_
-          = #{offset VkDedicatedAllocationBufferCreateInfoNV, dedicatedAllocation}
-
-        {-# INLINE readVkDedicatedAllocation #-}
-        readVkDedicatedAllocation p
-          = peekByteOff p #{offset VkDedicatedAllocationBufferCreateInfoNV, dedicatedAllocation}
-
-        {-# INLINE writeVkDedicatedAllocation #-}
-        writeVkDedicatedAllocation p
-          = pokeByteOff p #{offset VkDedicatedAllocationBufferCreateInfoNV, dedicatedAllocation}
+         CanWriteField "pNext" VkDedicatedAllocationBufferCreateInfoNV where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDedicatedAllocationBufferCreateInfoNV, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "dedicatedAllocation"
@@ -241,29 +177,35 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDedicatedAllocationBufferCreateInfoNV, dedicatedAllocation}
 
-instance CanReadField "dedicatedAllocation"
+instance {-# OVERLAPPING #-}
+         CanReadField "dedicatedAllocation"
            VkDedicatedAllocationBufferCreateInfoNV
          where
-        {-# INLINE getField #-}
-        getField = vkDedicatedAllocation
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDedicatedAllocationBufferCreateInfoNV, dedicatedAllocation})
 
         {-# INLINE readField #-}
-        readField = readVkDedicatedAllocation
+        readField p
+          = peekByteOff p #{offset VkDedicatedAllocationBufferCreateInfoNV, dedicatedAllocation}
 
-instance CanWriteField "dedicatedAllocation"
+instance {-# OVERLAPPING #-}
+         CanWriteField "dedicatedAllocation"
            VkDedicatedAllocationBufferCreateInfoNV
          where
         {-# INLINE writeField #-}
-        writeField = writeVkDedicatedAllocation
+        writeField p
+          = pokeByteOff p #{offset VkDedicatedAllocationBufferCreateInfoNV, dedicatedAllocation}
 
 instance Show VkDedicatedAllocationBufferCreateInfoNV where
         showsPrec d x
           = showString "VkDedicatedAllocationBufferCreateInfoNV {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkDedicatedAllocation = " .
-                            showsPrec d (vkDedicatedAllocation x) . showChar '}'
+                          showString "dedicatedAllocation = " .
+                            showsPrec d (getField @"dedicatedAllocation" x) . showChar '}'

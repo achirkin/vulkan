@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkDisplayModeCreateInfoKHR
        (VkDisplayModeCreateInfoKHR(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Bitmasks                          (VkDisplayModeCreateFlagsKHR)
 import           Graphics.Vulkan.Types.Enum.VkStructureType              (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkDisplayModeParametersKHR (VkDisplayModeParametersKHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                        (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDisplayModeCreateInfoKHR {
@@ -77,27 +77,6 @@ instance VulkanMarshal VkDisplayModeCreateInfoKHR where
         type ReturnedOnly VkDisplayModeCreateInfoKHR = 'False -- ' closing tick for hsc2hs
         type StructExtends VkDisplayModeCreateInfoKHR = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkDisplayModeCreateInfoKHR
-         where
-        type VkSTypeMType VkDisplayModeCreateInfoKHR = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayModeCreateInfoKHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkDisplayModeCreateInfoKHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkDisplayModeCreateInfoKHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkDisplayModeCreateInfoKHR, sType}
-
 instance {-# OVERLAPPING #-}
          HasField "sType" VkDisplayModeCreateInfoKHR where
         type FieldType "sType" VkDisplayModeCreateInfoKHR = VkStructureType
@@ -113,37 +92,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDisplayModeCreateInfoKHR, sType}
 
-instance CanReadField "sType" VkDisplayModeCreateInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkDisplayModeCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayModeCreateInfoKHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkDisplayModeCreateInfoKHR, sType}
 
-instance CanWriteField "sType" VkDisplayModeCreateInfoKHR where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkDisplayModeCreateInfoKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkDisplayModeCreateInfoKHR
-         where
-        type VkPNextMType VkDisplayModeCreateInfoKHR = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayModeCreateInfoKHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkDisplayModeCreateInfoKHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkDisplayModeCreateInfoKHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkDisplayModeCreateInfoKHR, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayModeCreateInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkDisplayModeCreateInfoKHR where
@@ -160,38 +124,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDisplayModeCreateInfoKHR, pNext}
 
-instance CanReadField "pNext" VkDisplayModeCreateInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkDisplayModeCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayModeCreateInfoKHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkDisplayModeCreateInfoKHR, pNext}
 
-instance CanWriteField "pNext" VkDisplayModeCreateInfoKHR where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext" VkDisplayModeCreateInfoKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-} HasVkFlags VkDisplayModeCreateInfoKHR
-         where
-        type VkFlagsMType VkDisplayModeCreateInfoKHR =
-             VkDisplayModeCreateFlagsKHR
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayModeCreateInfoKHR, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkDisplayModeCreateInfoKHR, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkDisplayModeCreateInfoKHR, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkDisplayModeCreateInfoKHR, flags}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayModeCreateInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkDisplayModeCreateInfoKHR where
@@ -209,38 +157,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDisplayModeCreateInfoKHR, flags}
 
-instance CanReadField "flags" VkDisplayModeCreateInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkDisplayModeCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayModeCreateInfoKHR, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags" VkDisplayModeCreateInfoKHR where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkDisplayModeCreateInfoKHR, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkParameters VkDisplayModeCreateInfoKHR where
-        type VkParametersMType VkDisplayModeCreateInfoKHR =
-             VkDisplayModeParametersKHR
-
-        {-# NOINLINE vkParameters #-}
-        vkParameters x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayModeCreateInfoKHR, parameters})
-
-        {-# INLINE vkParametersByteOffset #-}
-        vkParametersByteOffset ~_
-          = #{offset VkDisplayModeCreateInfoKHR, parameters}
-
-        {-# INLINE readVkParameters #-}
-        readVkParameters p
-          = peekByteOff p #{offset VkDisplayModeCreateInfoKHR, parameters}
-
-        {-# INLINE writeVkParameters #-}
-        writeVkParameters p
-          = pokeByteOff p #{offset VkDisplayModeCreateInfoKHR, parameters}
+         CanWriteField "flags" VkDisplayModeCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayModeCreateInfoKHR, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "parameters" VkDisplayModeCreateInfoKHR where
@@ -258,29 +190,34 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDisplayModeCreateInfoKHR, parameters}
 
-instance CanReadField "parameters" VkDisplayModeCreateInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkParameters
+instance {-# OVERLAPPING #-}
+         CanReadField "parameters" VkDisplayModeCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayModeCreateInfoKHR, parameters})
 
         {-# INLINE readField #-}
-        readField = readVkParameters
+        readField p
+          = peekByteOff p #{offset VkDisplayModeCreateInfoKHR, parameters}
 
-instance CanWriteField "parameters" VkDisplayModeCreateInfoKHR
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "parameters" VkDisplayModeCreateInfoKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkParameters
+        writeField p
+          = pokeByteOff p #{offset VkDisplayModeCreateInfoKHR, parameters}
 
 instance Show VkDisplayModeCreateInfoKHR where
         showsPrec d x
           = showString "VkDisplayModeCreateInfoKHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkParameters = " .
-                                  showsPrec d (vkParameters x) . showChar '}'
+                                showString "parameters = " .
+                                  showsPrec d (getField @"parameters" x) . showChar '}'

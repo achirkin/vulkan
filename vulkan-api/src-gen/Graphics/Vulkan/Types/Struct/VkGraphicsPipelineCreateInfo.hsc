@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkGraphicsPipelineCreateInfo
        (VkGraphicsPipelineCreateInfo(..)) where
@@ -41,7 +42,6 @@ import           Graphics.Vulkan.Types.Struct.VkPipelineVertexInputStateCreateIn
                                                                                       (VkPipelineVertexInputStateCreateInfo)
 import           Graphics.Vulkan.Types.Struct.VkPipelineViewportStateCreateInfo
                                                                                       (VkPipelineViewportStateCreateInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe
                                                                                       (unsafeDupablePerformIO)
 
@@ -126,27 +126,6 @@ instance VulkanMarshal VkGraphicsPipelineCreateInfo where
         type StructExtends VkGraphicsPipelineCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkGraphicsPipelineCreateInfo where
-        type VkSTypeMType VkGraphicsPipelineCreateInfo = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkGraphicsPipelineCreateInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkGraphicsPipelineCreateInfo where
         type FieldType "sType" VkGraphicsPipelineCreateInfo =
              VkStructureType
@@ -162,37 +141,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkGraphicsPipelineCreateInfo, sType}
 
-instance CanReadField "sType" VkGraphicsPipelineCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkGraphicsPipelineCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkGraphicsPipelineCreateInfo where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkGraphicsPipelineCreateInfo where
-        type VkPNextMType VkGraphicsPipelineCreateInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkGraphicsPipelineCreateInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, pNext}
+         CanWriteField "sType" VkGraphicsPipelineCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkGraphicsPipelineCreateInfo where
@@ -209,38 +173,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkGraphicsPipelineCreateInfo, pNext}
 
-instance CanReadField "pNext" VkGraphicsPipelineCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkGraphicsPipelineCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkGraphicsPipelineCreateInfo where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkFlags VkGraphicsPipelineCreateInfo where
-        type VkFlagsMType VkGraphicsPipelineCreateInfo =
-             VkPipelineCreateFlags
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkGraphicsPipelineCreateInfo, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, flags}
+         CanWriteField "pNext" VkGraphicsPipelineCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkGraphicsPipelineCreateInfo where
@@ -258,37 +206,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkGraphicsPipelineCreateInfo, flags}
 
-instance CanReadField "flags" VkGraphicsPipelineCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkGraphicsPipelineCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags" VkGraphicsPipelineCreateInfo where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkStageCount VkGraphicsPipelineCreateInfo where
-        type VkStageCountMType VkGraphicsPipelineCreateInfo = Word32
-
-        {-# NOINLINE vkStageCount #-}
-        vkStageCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, stageCount})
-
-        {-# INLINE vkStageCountByteOffset #-}
-        vkStageCountByteOffset ~_
-          = #{offset VkGraphicsPipelineCreateInfo, stageCount}
-
-        {-# INLINE readVkStageCount #-}
-        readVkStageCount p
-          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, stageCount}
-
-        {-# INLINE writeVkStageCount #-}
-        writeVkStageCount p
-          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, stageCount}
+         CanWriteField "flags" VkGraphicsPipelineCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "stageCount" VkGraphicsPipelineCreateInfo where
@@ -307,40 +240,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkGraphicsPipelineCreateInfo, stageCount}
 
-instance CanReadField "stageCount" VkGraphicsPipelineCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkStageCount
+instance {-# OVERLAPPING #-}
+         CanReadField "stageCount" VkGraphicsPipelineCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, stageCount})
 
         {-# INLINE readField #-}
-        readField = readVkStageCount
-
-instance CanWriteField "stageCount" VkGraphicsPipelineCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkStageCount
+        readField p
+          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, stageCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPStages VkGraphicsPipelineCreateInfo where
-        type VkPStagesMType VkGraphicsPipelineCreateInfo =
-             Ptr VkPipelineShaderStageCreateInfo
-
-        {-# NOINLINE vkPStages #-}
-        vkPStages x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, pStages})
-
-        {-# INLINE vkPStagesByteOffset #-}
-        vkPStagesByteOffset ~_
-          = #{offset VkGraphicsPipelineCreateInfo, pStages}
-
-        {-# INLINE readVkPStages #-}
-        readVkPStages p
-          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, pStages}
-
-        {-# INLINE writeVkPStages #-}
-        writeVkPStages p
-          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, pStages}
+         CanWriteField "stageCount" VkGraphicsPipelineCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, stageCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pStages" VkGraphicsPipelineCreateInfo where
@@ -358,38 +273,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkGraphicsPipelineCreateInfo, pStages}
 
-instance CanReadField "pStages" VkGraphicsPipelineCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkPStages
+instance {-# OVERLAPPING #-}
+         CanReadField "pStages" VkGraphicsPipelineCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, pStages})
 
         {-# INLINE readField #-}
-        readField = readVkPStages
-
-instance CanWriteField "pStages" VkGraphicsPipelineCreateInfo where
-        {-# INLINE writeField #-}
-        writeField = writeVkPStages
+        readField p
+          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, pStages}
 
 instance {-# OVERLAPPING #-}
-         HasVkPVertexInputState VkGraphicsPipelineCreateInfo where
-        type VkPVertexInputStateMType VkGraphicsPipelineCreateInfo =
-             Ptr VkPipelineVertexInputStateCreateInfo
-
-        {-# NOINLINE vkPVertexInputState #-}
-        vkPVertexInputState x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, pVertexInputState})
-
-        {-# INLINE vkPVertexInputStateByteOffset #-}
-        vkPVertexInputStateByteOffset ~_
-          = #{offset VkGraphicsPipelineCreateInfo, pVertexInputState}
-
-        {-# INLINE readVkPVertexInputState #-}
-        readVkPVertexInputState p
-          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, pVertexInputState}
-
-        {-# INLINE writeVkPVertexInputState #-}
-        writeVkPVertexInputState p
-          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, pVertexInputState}
+         CanWriteField "pStages" VkGraphicsPipelineCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, pStages}
 
 instance {-# OVERLAPPING #-}
          HasField "pVertexInputState" VkGraphicsPipelineCreateInfo where
@@ -409,42 +308,23 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkGraphicsPipelineCreateInfo, pVertexInputState}
 
-instance CanReadField "pVertexInputState"
-           VkGraphicsPipelineCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkPVertexInputState
+instance {-# OVERLAPPING #-}
+         CanReadField "pVertexInputState" VkGraphicsPipelineCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, pVertexInputState})
 
         {-# INLINE readField #-}
-        readField = readVkPVertexInputState
-
-instance CanWriteField "pVertexInputState"
-           VkGraphicsPipelineCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPVertexInputState
+        readField p
+          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, pVertexInputState}
 
 instance {-# OVERLAPPING #-}
-         HasVkPInputAssemblyState VkGraphicsPipelineCreateInfo where
-        type VkPInputAssemblyStateMType VkGraphicsPipelineCreateInfo =
-             Ptr VkPipelineInputAssemblyStateCreateInfo
-
-        {-# NOINLINE vkPInputAssemblyState #-}
-        vkPInputAssemblyState x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, pInputAssemblyState})
-
-        {-# INLINE vkPInputAssemblyStateByteOffset #-}
-        vkPInputAssemblyStateByteOffset ~_
-          = #{offset VkGraphicsPipelineCreateInfo, pInputAssemblyState}
-
-        {-# INLINE readVkPInputAssemblyState #-}
-        readVkPInputAssemblyState p
-          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, pInputAssemblyState}
-
-        {-# INLINE writeVkPInputAssemblyState #-}
-        writeVkPInputAssemblyState p
-          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, pInputAssemblyState}
+         CanWriteField "pVertexInputState" VkGraphicsPipelineCreateInfo
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, pVertexInputState}
 
 instance {-# OVERLAPPING #-}
          HasField "pInputAssemblyState" VkGraphicsPipelineCreateInfo where
@@ -467,42 +347,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkGraphicsPipelineCreateInfo, pInputAssemblyState}
 
-instance CanReadField "pInputAssemblyState"
-           VkGraphicsPipelineCreateInfo
+instance {-# OVERLAPPING #-}
+         CanReadField "pInputAssemblyState" VkGraphicsPipelineCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkPInputAssemblyState
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, pInputAssemblyState})
 
         {-# INLINE readField #-}
-        readField = readVkPInputAssemblyState
-
-instance CanWriteField "pInputAssemblyState"
-           VkGraphicsPipelineCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPInputAssemblyState
+        readField p
+          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, pInputAssemblyState}
 
 instance {-# OVERLAPPING #-}
-         HasVkPTessellationState VkGraphicsPipelineCreateInfo where
-        type VkPTessellationStateMType VkGraphicsPipelineCreateInfo =
-             Ptr VkPipelineTessellationStateCreateInfo
-
-        {-# NOINLINE vkPTessellationState #-}
-        vkPTessellationState x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, pTessellationState})
-
-        {-# INLINE vkPTessellationStateByteOffset #-}
-        vkPTessellationStateByteOffset ~_
-          = #{offset VkGraphicsPipelineCreateInfo, pTessellationState}
-
-        {-# INLINE readVkPTessellationState #-}
-        readVkPTessellationState p
-          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, pTessellationState}
-
-        {-# INLINE writeVkPTessellationState #-}
-        writeVkPTessellationState p
-          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, pTessellationState}
+         CanWriteField "pInputAssemblyState" VkGraphicsPipelineCreateInfo
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, pInputAssemblyState}
 
 instance {-# OVERLAPPING #-}
          HasField "pTessellationState" VkGraphicsPipelineCreateInfo where
@@ -524,42 +386,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkGraphicsPipelineCreateInfo, pTessellationState}
 
-instance CanReadField "pTessellationState"
-           VkGraphicsPipelineCreateInfo
+instance {-# OVERLAPPING #-}
+         CanReadField "pTessellationState" VkGraphicsPipelineCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkPTessellationState
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, pTessellationState})
 
         {-# INLINE readField #-}
-        readField = readVkPTessellationState
-
-instance CanWriteField "pTessellationState"
-           VkGraphicsPipelineCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPTessellationState
+        readField p
+          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, pTessellationState}
 
 instance {-# OVERLAPPING #-}
-         HasVkPViewportState VkGraphicsPipelineCreateInfo where
-        type VkPViewportStateMType VkGraphicsPipelineCreateInfo =
-             Ptr VkPipelineViewportStateCreateInfo
-
-        {-# NOINLINE vkPViewportState #-}
-        vkPViewportState x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, pViewportState})
-
-        {-# INLINE vkPViewportStateByteOffset #-}
-        vkPViewportStateByteOffset ~_
-          = #{offset VkGraphicsPipelineCreateInfo, pViewportState}
-
-        {-# INLINE readVkPViewportState #-}
-        readVkPViewportState p
-          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, pViewportState}
-
-        {-# INLINE writeVkPViewportState #-}
-        writeVkPViewportState p
-          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, pViewportState}
+         CanWriteField "pTessellationState" VkGraphicsPipelineCreateInfo
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, pTessellationState}
 
 instance {-# OVERLAPPING #-}
          HasField "pViewportState" VkGraphicsPipelineCreateInfo where
@@ -579,41 +423,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkGraphicsPipelineCreateInfo, pViewportState}
 
-instance CanReadField "pViewportState" VkGraphicsPipelineCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkPViewportState
+instance {-# OVERLAPPING #-}
+         CanReadField "pViewportState" VkGraphicsPipelineCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, pViewportState})
 
         {-# INLINE readField #-}
-        readField = readVkPViewportState
-
-instance CanWriteField "pViewportState"
-           VkGraphicsPipelineCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPViewportState
+        readField p
+          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, pViewportState}
 
 instance {-# OVERLAPPING #-}
-         HasVkPRasterizationState VkGraphicsPipelineCreateInfo where
-        type VkPRasterizationStateMType VkGraphicsPipelineCreateInfo =
-             Ptr VkPipelineRasterizationStateCreateInfo
-
-        {-# NOINLINE vkPRasterizationState #-}
-        vkPRasterizationState x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, pRasterizationState})
-
-        {-# INLINE vkPRasterizationStateByteOffset #-}
-        vkPRasterizationStateByteOffset ~_
-          = #{offset VkGraphicsPipelineCreateInfo, pRasterizationState}
-
-        {-# INLINE readVkPRasterizationState #-}
-        readVkPRasterizationState p
-          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, pRasterizationState}
-
-        {-# INLINE writeVkPRasterizationState #-}
-        writeVkPRasterizationState p
-          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, pRasterizationState}
+         CanWriteField "pViewportState" VkGraphicsPipelineCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, pViewportState}
 
 instance {-# OVERLAPPING #-}
          HasField "pRasterizationState" VkGraphicsPipelineCreateInfo where
@@ -636,42 +461,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkGraphicsPipelineCreateInfo, pRasterizationState}
 
-instance CanReadField "pRasterizationState"
-           VkGraphicsPipelineCreateInfo
+instance {-# OVERLAPPING #-}
+         CanReadField "pRasterizationState" VkGraphicsPipelineCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkPRasterizationState
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, pRasterizationState})
 
         {-# INLINE readField #-}
-        readField = readVkPRasterizationState
-
-instance CanWriteField "pRasterizationState"
-           VkGraphicsPipelineCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPRasterizationState
+        readField p
+          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, pRasterizationState}
 
 instance {-# OVERLAPPING #-}
-         HasVkPMultisampleState VkGraphicsPipelineCreateInfo where
-        type VkPMultisampleStateMType VkGraphicsPipelineCreateInfo =
-             Ptr VkPipelineMultisampleStateCreateInfo
-
-        {-# NOINLINE vkPMultisampleState #-}
-        vkPMultisampleState x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, pMultisampleState})
-
-        {-# INLINE vkPMultisampleStateByteOffset #-}
-        vkPMultisampleStateByteOffset ~_
-          = #{offset VkGraphicsPipelineCreateInfo, pMultisampleState}
-
-        {-# INLINE readVkPMultisampleState #-}
-        readVkPMultisampleState p
-          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, pMultisampleState}
-
-        {-# INLINE writeVkPMultisampleState #-}
-        writeVkPMultisampleState p
-          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, pMultisampleState}
+         CanWriteField "pRasterizationState" VkGraphicsPipelineCreateInfo
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, pRasterizationState}
 
 instance {-# OVERLAPPING #-}
          HasField "pMultisampleState" VkGraphicsPipelineCreateInfo where
@@ -691,42 +498,23 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkGraphicsPipelineCreateInfo, pMultisampleState}
 
-instance CanReadField "pMultisampleState"
-           VkGraphicsPipelineCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkPMultisampleState
+instance {-# OVERLAPPING #-}
+         CanReadField "pMultisampleState" VkGraphicsPipelineCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, pMultisampleState})
 
         {-# INLINE readField #-}
-        readField = readVkPMultisampleState
-
-instance CanWriteField "pMultisampleState"
-           VkGraphicsPipelineCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPMultisampleState
+        readField p
+          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, pMultisampleState}
 
 instance {-# OVERLAPPING #-}
-         HasVkPDepthStencilState VkGraphicsPipelineCreateInfo where
-        type VkPDepthStencilStateMType VkGraphicsPipelineCreateInfo =
-             Ptr VkPipelineDepthStencilStateCreateInfo
-
-        {-# NOINLINE vkPDepthStencilState #-}
-        vkPDepthStencilState x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, pDepthStencilState})
-
-        {-# INLINE vkPDepthStencilStateByteOffset #-}
-        vkPDepthStencilStateByteOffset ~_
-          = #{offset VkGraphicsPipelineCreateInfo, pDepthStencilState}
-
-        {-# INLINE readVkPDepthStencilState #-}
-        readVkPDepthStencilState p
-          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, pDepthStencilState}
-
-        {-# INLINE writeVkPDepthStencilState #-}
-        writeVkPDepthStencilState p
-          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, pDepthStencilState}
+         CanWriteField "pMultisampleState" VkGraphicsPipelineCreateInfo
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, pMultisampleState}
 
 instance {-# OVERLAPPING #-}
          HasField "pDepthStencilState" VkGraphicsPipelineCreateInfo where
@@ -748,42 +536,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkGraphicsPipelineCreateInfo, pDepthStencilState}
 
-instance CanReadField "pDepthStencilState"
-           VkGraphicsPipelineCreateInfo
+instance {-# OVERLAPPING #-}
+         CanReadField "pDepthStencilState" VkGraphicsPipelineCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkPDepthStencilState
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, pDepthStencilState})
 
         {-# INLINE readField #-}
-        readField = readVkPDepthStencilState
-
-instance CanWriteField "pDepthStencilState"
-           VkGraphicsPipelineCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPDepthStencilState
+        readField p
+          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, pDepthStencilState}
 
 instance {-# OVERLAPPING #-}
-         HasVkPColorBlendState VkGraphicsPipelineCreateInfo where
-        type VkPColorBlendStateMType VkGraphicsPipelineCreateInfo =
-             Ptr VkPipelineColorBlendStateCreateInfo
-
-        {-# NOINLINE vkPColorBlendState #-}
-        vkPColorBlendState x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, pColorBlendState})
-
-        {-# INLINE vkPColorBlendStateByteOffset #-}
-        vkPColorBlendStateByteOffset ~_
-          = #{offset VkGraphicsPipelineCreateInfo, pColorBlendState}
-
-        {-# INLINE readVkPColorBlendState #-}
-        readVkPColorBlendState p
-          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, pColorBlendState}
-
-        {-# INLINE writeVkPColorBlendState #-}
-        writeVkPColorBlendState p
-          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, pColorBlendState}
+         CanWriteField "pDepthStencilState" VkGraphicsPipelineCreateInfo
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, pDepthStencilState}
 
 instance {-# OVERLAPPING #-}
          HasField "pColorBlendState" VkGraphicsPipelineCreateInfo where
@@ -803,42 +573,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkGraphicsPipelineCreateInfo, pColorBlendState}
 
-instance CanReadField "pColorBlendState"
-           VkGraphicsPipelineCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkPColorBlendState
+instance {-# OVERLAPPING #-}
+         CanReadField "pColorBlendState" VkGraphicsPipelineCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, pColorBlendState})
 
         {-# INLINE readField #-}
-        readField = readVkPColorBlendState
-
-instance CanWriteField "pColorBlendState"
-           VkGraphicsPipelineCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPColorBlendState
+        readField p
+          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, pColorBlendState}
 
 instance {-# OVERLAPPING #-}
-         HasVkPDynamicState VkGraphicsPipelineCreateInfo where
-        type VkPDynamicStateMType VkGraphicsPipelineCreateInfo =
-             Ptr VkPipelineDynamicStateCreateInfo
-
-        {-# NOINLINE vkPDynamicState #-}
-        vkPDynamicState x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, pDynamicState})
-
-        {-# INLINE vkPDynamicStateByteOffset #-}
-        vkPDynamicStateByteOffset ~_
-          = #{offset VkGraphicsPipelineCreateInfo, pDynamicState}
-
-        {-# INLINE readVkPDynamicState #-}
-        readVkPDynamicState p
-          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, pDynamicState}
-
-        {-# INLINE writeVkPDynamicState #-}
-        writeVkPDynamicState p
-          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, pDynamicState}
+         CanWriteField "pColorBlendState" VkGraphicsPipelineCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, pColorBlendState}
 
 instance {-# OVERLAPPING #-}
          HasField "pDynamicState" VkGraphicsPipelineCreateInfo where
@@ -858,39 +608,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkGraphicsPipelineCreateInfo, pDynamicState}
 
-instance CanReadField "pDynamicState" VkGraphicsPipelineCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkPDynamicState
+instance {-# OVERLAPPING #-}
+         CanReadField "pDynamicState" VkGraphicsPipelineCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, pDynamicState})
 
         {-# INLINE readField #-}
-        readField = readVkPDynamicState
-
-instance CanWriteField "pDynamicState" VkGraphicsPipelineCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPDynamicState
+        readField p
+          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, pDynamicState}
 
 instance {-# OVERLAPPING #-}
-         HasVkLayout VkGraphicsPipelineCreateInfo where
-        type VkLayoutMType VkGraphicsPipelineCreateInfo = VkPipelineLayout
-
-        {-# NOINLINE vkLayout #-}
-        vkLayout x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, layout})
-
-        {-# INLINE vkLayoutByteOffset #-}
-        vkLayoutByteOffset ~_
-          = #{offset VkGraphicsPipelineCreateInfo, layout}
-
-        {-# INLINE readVkLayout #-}
-        readVkLayout p
-          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, layout}
-
-        {-# INLINE writeVkLayout #-}
-        writeVkLayout p
-          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, layout}
+         CanWriteField "pDynamicState" VkGraphicsPipelineCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, pDynamicState}
 
 instance {-# OVERLAPPING #-}
          HasField "layout" VkGraphicsPipelineCreateInfo where
@@ -908,37 +641,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkGraphicsPipelineCreateInfo, layout}
 
-instance CanReadField "layout" VkGraphicsPipelineCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkLayout
+instance {-# OVERLAPPING #-}
+         CanReadField "layout" VkGraphicsPipelineCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, layout})
 
         {-# INLINE readField #-}
-        readField = readVkLayout
-
-instance CanWriteField "layout" VkGraphicsPipelineCreateInfo where
-        {-# INLINE writeField #-}
-        writeField = writeVkLayout
+        readField p
+          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, layout}
 
 instance {-# OVERLAPPING #-}
-         HasVkRenderPass VkGraphicsPipelineCreateInfo where
-        type VkRenderPassMType VkGraphicsPipelineCreateInfo = VkRenderPass
-
-        {-# NOINLINE vkRenderPass #-}
-        vkRenderPass x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, renderPass})
-
-        {-# INLINE vkRenderPassByteOffset #-}
-        vkRenderPassByteOffset ~_
-          = #{offset VkGraphicsPipelineCreateInfo, renderPass}
-
-        {-# INLINE readVkRenderPass #-}
-        readVkRenderPass p
-          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, renderPass}
-
-        {-# INLINE writeVkRenderPass #-}
-        writeVkRenderPass p
-          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, renderPass}
+         CanWriteField "layout" VkGraphicsPipelineCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, layout}
 
 instance {-# OVERLAPPING #-}
          HasField "renderPass" VkGraphicsPipelineCreateInfo where
@@ -958,39 +676,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkGraphicsPipelineCreateInfo, renderPass}
 
-instance CanReadField "renderPass" VkGraphicsPipelineCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkRenderPass
+instance {-# OVERLAPPING #-}
+         CanReadField "renderPass" VkGraphicsPipelineCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, renderPass})
 
         {-# INLINE readField #-}
-        readField = readVkRenderPass
-
-instance CanWriteField "renderPass" VkGraphicsPipelineCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkRenderPass
+        readField p
+          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, renderPass}
 
 instance {-# OVERLAPPING #-}
-         HasVkSubpass VkGraphicsPipelineCreateInfo where
-        type VkSubpassMType VkGraphicsPipelineCreateInfo = Word32
-
-        {-# NOINLINE vkSubpass #-}
-        vkSubpass x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, subpass})
-
-        {-# INLINE vkSubpassByteOffset #-}
-        vkSubpassByteOffset ~_
-          = #{offset VkGraphicsPipelineCreateInfo, subpass}
-
-        {-# INLINE readVkSubpass #-}
-        readVkSubpass p
-          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, subpass}
-
-        {-# INLINE writeVkSubpass #-}
-        writeVkSubpass p
-          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, subpass}
+         CanWriteField "renderPass" VkGraphicsPipelineCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, renderPass}
 
 instance {-# OVERLAPPING #-}
          HasField "subpass" VkGraphicsPipelineCreateInfo where
@@ -1007,38 +708,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkGraphicsPipelineCreateInfo, subpass}
 
-instance CanReadField "subpass" VkGraphicsPipelineCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkSubpass
+instance {-# OVERLAPPING #-}
+         CanReadField "subpass" VkGraphicsPipelineCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, subpass})
 
         {-# INLINE readField #-}
-        readField = readVkSubpass
-
-instance CanWriteField "subpass" VkGraphicsPipelineCreateInfo where
-        {-# INLINE writeField #-}
-        writeField = writeVkSubpass
+        readField p
+          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, subpass}
 
 instance {-# OVERLAPPING #-}
-         HasVkBasePipelineHandle VkGraphicsPipelineCreateInfo where
-        type VkBasePipelineHandleMType VkGraphicsPipelineCreateInfo =
-             VkPipeline
-
-        {-# NOINLINE vkBasePipelineHandle #-}
-        vkBasePipelineHandle x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, basePipelineHandle})
-
-        {-# INLINE vkBasePipelineHandleByteOffset #-}
-        vkBasePipelineHandleByteOffset ~_
-          = #{offset VkGraphicsPipelineCreateInfo, basePipelineHandle}
-
-        {-# INLINE readVkBasePipelineHandle #-}
-        readVkBasePipelineHandle p
-          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, basePipelineHandle}
-
-        {-# INLINE writeVkBasePipelineHandle #-}
-        writeVkBasePipelineHandle p
-          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, basePipelineHandle}
+         CanWriteField "subpass" VkGraphicsPipelineCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, subpass}
 
 instance {-# OVERLAPPING #-}
          HasField "basePipelineHandle" VkGraphicsPipelineCreateInfo where
@@ -1060,41 +745,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkGraphicsPipelineCreateInfo, basePipelineHandle}
 
-instance CanReadField "basePipelineHandle"
-           VkGraphicsPipelineCreateInfo
+instance {-# OVERLAPPING #-}
+         CanReadField "basePipelineHandle" VkGraphicsPipelineCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkBasePipelineHandle
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, basePipelineHandle})
 
         {-# INLINE readField #-}
-        readField = readVkBasePipelineHandle
-
-instance CanWriteField "basePipelineHandle"
-           VkGraphicsPipelineCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkBasePipelineHandle
+        readField p
+          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, basePipelineHandle}
 
 instance {-# OVERLAPPING #-}
-         HasVkBasePipelineIndex VkGraphicsPipelineCreateInfo where
-        type VkBasePipelineIndexMType VkGraphicsPipelineCreateInfo = Int32
-
-        {-# NOINLINE vkBasePipelineIndex #-}
-        vkBasePipelineIndex x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, basePipelineIndex})
-
-        {-# INLINE vkBasePipelineIndexByteOffset #-}
-        vkBasePipelineIndexByteOffset ~_
-          = #{offset VkGraphicsPipelineCreateInfo, basePipelineIndex}
-
-        {-# INLINE readVkBasePipelineIndex #-}
-        readVkBasePipelineIndex p
-          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, basePipelineIndex}
-
-        {-# INLINE writeVkBasePipelineIndex #-}
-        writeVkBasePipelineIndex p
-          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, basePipelineIndex}
+         CanWriteField "basePipelineHandle" VkGraphicsPipelineCreateInfo
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, basePipelineHandle}
 
 instance {-# OVERLAPPING #-}
          HasField "basePipelineIndex" VkGraphicsPipelineCreateInfo where
@@ -1114,146 +782,165 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkGraphicsPipelineCreateInfo, basePipelineIndex}
 
-instance CanReadField "basePipelineIndex"
-           VkGraphicsPipelineCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkBasePipelineIndex
+instance {-# OVERLAPPING #-}
+         CanReadField "basePipelineIndex" VkGraphicsPipelineCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkGraphicsPipelineCreateInfo, basePipelineIndex})
 
         {-# INLINE readField #-}
-        readField = readVkBasePipelineIndex
+        readField p
+          = peekByteOff p #{offset VkGraphicsPipelineCreateInfo, basePipelineIndex}
 
-instance CanWriteField "basePipelineIndex"
-           VkGraphicsPipelineCreateInfo
+instance {-# OVERLAPPING #-}
+         CanWriteField "basePipelineIndex" VkGraphicsPipelineCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkBasePipelineIndex
+        writeField p
+          = pokeByteOff p #{offset VkGraphicsPipelineCreateInfo, basePipelineIndex}
 
 instance Show VkGraphicsPipelineCreateInfo where
         showsPrec d x
           = showString "VkGraphicsPipelineCreateInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkStageCount = " .
-                                  showsPrec d (vkStageCount x) .
+                                showString "stageCount = " .
+                                  showsPrec d (getField @"stageCount" x) .
                                     showString ", " .
-                                      showString "vkPStages = " .
-                                        showsPrec d (vkPStages x) .
+                                      showString "pStages = " .
+                                        showsPrec d (getField @"pStages" x) .
                                           showString ", " .
-                                            showString "vkPVertexInputState = " .
-                                              showsPrec d (vkPVertexInputState x) .
+                                            showString "pVertexInputState = " .
+                                              showsPrec d (getField @"pVertexInputState" x) .
                                                 showString ", " .
-                                                  showString "vkPInputAssemblyState = " .
-                                                    showsPrec d (vkPInputAssemblyState x) .
+                                                  showString "pInputAssemblyState = " .
+                                                    showsPrec d (getField @"pInputAssemblyState" x)
+                                                      .
                                                       showString ", " .
-                                                        showString "vkPTessellationState = " .
-                                                          showsPrec d (vkPTessellationState x) .
+                                                        showString "pTessellationState = " .
+                                                          showsPrec d
+                                                            (getField @"pTessellationState" x)
+                                                            .
                                                             showString ", " .
-                                                              showString "vkPViewportState = " .
-                                                                showsPrec d (vkPViewportState x) .
+                                                              showString "pViewportState = " .
+                                                                showsPrec d
+                                                                  (getField @"pViewportState" x)
+                                                                  .
                                                                   showString ", " .
                                                                     showString
-                                                                      "vkPRasterizationState = "
+                                                                      "pRasterizationState = "
                                                                       .
                                                                       showsPrec d
-                                                                        (vkPRasterizationState x)
+                                                                        (getField
+                                                                           @"pRasterizationState"
+                                                                           x)
                                                                         .
                                                                         showString ", " .
                                                                           showString
-                                                                            "vkPMultisampleState = "
+                                                                            "pMultisampleState = "
                                                                             .
                                                                             showsPrec d
-                                                                              (vkPMultisampleState
+                                                                              (getField
+                                                                                 @"pMultisampleState"
                                                                                  x)
                                                                               .
                                                                               showString ", " .
                                                                                 showString
-                                                                                  "vkPDepthStencilState = "
+                                                                                  "pDepthStencilState = "
                                                                                   .
                                                                                   showsPrec d
-                                                                                    (vkPDepthStencilState
+                                                                                    (getField
+                                                                                       @"pDepthStencilState"
                                                                                        x)
                                                                                     .
                                                                                     showString ", "
                                                                                       .
                                                                                       showString
-                                                                                        "vkPColorBlendState = "
+                                                                                        "pColorBlendState = "
                                                                                         .
                                                                                         showsPrec d
-                                                                                          (vkPColorBlendState
+                                                                                          (getField
+                                                                                             @"pColorBlendState"
                                                                                              x)
                                                                                           .
                                                                                           showString
                                                                                             ", "
                                                                                             .
                                                                                             showString
-                                                                                              "vkPDynamicState = "
+                                                                                              "pDynamicState = "
                                                                                               .
                                                                                               showsPrec
                                                                                                 d
-                                                                                                (vkPDynamicState
+                                                                                                (getField
+                                                                                                   @"pDynamicState"
                                                                                                    x)
                                                                                                 .
                                                                                                 showString
                                                                                                   ", "
                                                                                                   .
                                                                                                   showString
-                                                                                                    "vkLayout = "
+                                                                                                    "layout = "
                                                                                                     .
                                                                                                     showsPrec
                                                                                                       d
-                                                                                                      (vkLayout
+                                                                                                      (getField
+                                                                                                         @"layout"
                                                                                                          x)
                                                                                                       .
                                                                                                       showString
                                                                                                         ", "
                                                                                                         .
                                                                                                         showString
-                                                                                                          "vkRenderPass = "
+                                                                                                          "renderPass = "
                                                                                                           .
                                                                                                           showsPrec
                                                                                                             d
-                                                                                                            (vkRenderPass
+                                                                                                            (getField
+                                                                                                               @"renderPass"
                                                                                                                x)
                                                                                                             .
                                                                                                             showString
                                                                                                               ", "
                                                                                                               .
                                                                                                               showString
-                                                                                                                "vkSubpass = "
+                                                                                                                "subpass = "
                                                                                                                 .
                                                                                                                 showsPrec
                                                                                                                   d
-                                                                                                                  (vkSubpass
+                                                                                                                  (getField
+                                                                                                                     @"subpass"
                                                                                                                      x)
                                                                                                                   .
                                                                                                                   showString
                                                                                                                     ", "
                                                                                                                     .
                                                                                                                     showString
-                                                                                                                      "vkBasePipelineHandle = "
+                                                                                                                      "basePipelineHandle = "
                                                                                                                       .
                                                                                                                       showsPrec
                                                                                                                         d
-                                                                                                                        (vkBasePipelineHandle
+                                                                                                                        (getField
+                                                                                                                           @"basePipelineHandle"
                                                                                                                            x)
                                                                                                                         .
                                                                                                                         showString
                                                                                                                           ", "
                                                                                                                           .
                                                                                                                           showString
-                                                                                                                            "vkBasePipelineIndex = "
+                                                                                                                            "basePipelineIndex = "
                                                                                                                             .
                                                                                                                             showsPrec
                                                                                                                               d
-                                                                                                                              (vkBasePipelineIndex
+                                                                                                                              (getField
+                                                                                                                                 @"basePipelineIndex"
                                                                                                                                  x)
                                                                                                                               .
                                                                                                                               showChar

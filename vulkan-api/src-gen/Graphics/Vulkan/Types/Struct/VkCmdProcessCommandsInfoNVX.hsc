@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkCmdProcessCommandsInfoNVX
        (VkCmdProcessCommandsInfoNVX(..)) where
@@ -19,7 +20,6 @@ import           Graphics.Vulkan.Types.Handles                           (VkBuff
                                                                           VkIndirectCommandsLayoutNVX,
                                                                           VkObjectTableNVX)
 import           Graphics.Vulkan.Types.Struct.VkIndirectCommandsTokenNVX (VkIndirectCommandsTokenNVX)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                        (unsafeDupablePerformIO)
 
 -- | > typedef struct VkCmdProcessCommandsInfoNVX {
@@ -93,27 +93,6 @@ instance VulkanMarshal VkCmdProcessCommandsInfoNVX where
         type ReturnedOnly VkCmdProcessCommandsInfoNVX = 'False -- ' closing tick for hsc2hs
         type StructExtends VkCmdProcessCommandsInfoNVX = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkCmdProcessCommandsInfoNVX
-         where
-        type VkSTypeMType VkCmdProcessCommandsInfoNVX = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkCmdProcessCommandsInfoNVX, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkCmdProcessCommandsInfoNVX, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkCmdProcessCommandsInfoNVX, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, sType}
-
 instance {-# OVERLAPPING #-}
          HasField "sType" VkCmdProcessCommandsInfoNVX where
         type FieldType "sType" VkCmdProcessCommandsInfoNVX =
@@ -130,37 +109,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkCmdProcessCommandsInfoNVX, sType}
 
-instance CanReadField "sType" VkCmdProcessCommandsInfoNVX where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkCmdProcessCommandsInfoNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkCmdProcessCommandsInfoNVX, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkCmdProcessCommandsInfoNVX, sType}
 
-instance CanWriteField "sType" VkCmdProcessCommandsInfoNVX where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkCmdProcessCommandsInfoNVX where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkCmdProcessCommandsInfoNVX
-         where
-        type VkPNextMType VkCmdProcessCommandsInfoNVX = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkCmdProcessCommandsInfoNVX, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkCmdProcessCommandsInfoNVX, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkCmdProcessCommandsInfoNVX, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkCmdProcessCommandsInfoNVX where
@@ -177,38 +141,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkCmdProcessCommandsInfoNVX, pNext}
 
-instance CanReadField "pNext" VkCmdProcessCommandsInfoNVX where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkCmdProcessCommandsInfoNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkCmdProcessCommandsInfoNVX, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkCmdProcessCommandsInfoNVX where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkCmdProcessCommandsInfoNVX, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkObjectTable VkCmdProcessCommandsInfoNVX where
-        type VkObjectTableMType VkCmdProcessCommandsInfoNVX =
-             VkObjectTableNVX
-
-        {-# NOINLINE vkObjectTable #-}
-        vkObjectTable x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkCmdProcessCommandsInfoNVX, objectTable})
-
-        {-# INLINE vkObjectTableByteOffset #-}
-        vkObjectTableByteOffset ~_
-          = #{offset VkCmdProcessCommandsInfoNVX, objectTable}
-
-        {-# INLINE readVkObjectTable #-}
-        readVkObjectTable p
-          = peekByteOff p #{offset VkCmdProcessCommandsInfoNVX, objectTable}
-
-        {-# INLINE writeVkObjectTable #-}
-        writeVkObjectTable p
-          = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, objectTable}
+         CanWriteField "pNext" VkCmdProcessCommandsInfoNVX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "objectTable" VkCmdProcessCommandsInfoNVX where
@@ -228,40 +176,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkCmdProcessCommandsInfoNVX, objectTable}
 
-instance CanReadField "objectTable" VkCmdProcessCommandsInfoNVX
-         where
-        {-# INLINE getField #-}
-        getField = vkObjectTable
+instance {-# OVERLAPPING #-}
+         CanReadField "objectTable" VkCmdProcessCommandsInfoNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkCmdProcessCommandsInfoNVX, objectTable})
 
         {-# INLINE readField #-}
-        readField = readVkObjectTable
-
-instance CanWriteField "objectTable" VkCmdProcessCommandsInfoNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkObjectTable
+        readField p
+          = peekByteOff p #{offset VkCmdProcessCommandsInfoNVX, objectTable}
 
 instance {-# OVERLAPPING #-}
-         HasVkIndirectCommandsLayout VkCmdProcessCommandsInfoNVX where
-        type VkIndirectCommandsLayoutMType VkCmdProcessCommandsInfoNVX =
-             VkIndirectCommandsLayoutNVX
-
-        {-# NOINLINE vkIndirectCommandsLayout #-}
-        vkIndirectCommandsLayout x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkCmdProcessCommandsInfoNVX, indirectCommandsLayout})
-
-        {-# INLINE vkIndirectCommandsLayoutByteOffset #-}
-        vkIndirectCommandsLayoutByteOffset ~_
-          = #{offset VkCmdProcessCommandsInfoNVX, indirectCommandsLayout}
-
-        {-# INLINE readVkIndirectCommandsLayout #-}
-        readVkIndirectCommandsLayout p
-          = peekByteOff p #{offset VkCmdProcessCommandsInfoNVX, indirectCommandsLayout}
-
-        {-# INLINE writeVkIndirectCommandsLayout #-}
-        writeVkIndirectCommandsLayout p
-          = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, indirectCommandsLayout}
+         CanWriteField "objectTable" VkCmdProcessCommandsInfoNVX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, objectTable}
 
 instance {-# OVERLAPPING #-}
          HasField "indirectCommandsLayout" VkCmdProcessCommandsInfoNVX where
@@ -285,42 +215,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkCmdProcessCommandsInfoNVX, indirectCommandsLayout}
 
-instance CanReadField "indirectCommandsLayout"
-           VkCmdProcessCommandsInfoNVX
+instance {-# OVERLAPPING #-}
+         CanReadField "indirectCommandsLayout" VkCmdProcessCommandsInfoNVX
          where
-        {-# INLINE getField #-}
-        getField = vkIndirectCommandsLayout
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkCmdProcessCommandsInfoNVX, indirectCommandsLayout})
 
         {-# INLINE readField #-}
-        readField = readVkIndirectCommandsLayout
-
-instance CanWriteField "indirectCommandsLayout"
-           VkCmdProcessCommandsInfoNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkIndirectCommandsLayout
+        readField p
+          = peekByteOff p #{offset VkCmdProcessCommandsInfoNVX, indirectCommandsLayout}
 
 instance {-# OVERLAPPING #-}
-         HasVkIndirectCommandsTokenCount VkCmdProcessCommandsInfoNVX where
-        type VkIndirectCommandsTokenCountMType VkCmdProcessCommandsInfoNVX
-             = Word32
-
-        {-# NOINLINE vkIndirectCommandsTokenCount #-}
-        vkIndirectCommandsTokenCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkCmdProcessCommandsInfoNVX, indirectCommandsTokenCount})
-
-        {-# INLINE vkIndirectCommandsTokenCountByteOffset #-}
-        vkIndirectCommandsTokenCountByteOffset ~_
-          = #{offset VkCmdProcessCommandsInfoNVX, indirectCommandsTokenCount}
-
-        {-# INLINE readVkIndirectCommandsTokenCount #-}
-        readVkIndirectCommandsTokenCount p
-          = peekByteOff p #{offset VkCmdProcessCommandsInfoNVX, indirectCommandsTokenCount}
-
-        {-# INLINE writeVkIndirectCommandsTokenCount #-}
-        writeVkIndirectCommandsTokenCount p
-          = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, indirectCommandsTokenCount}
+         CanWriteField "indirectCommandsLayout" VkCmdProcessCommandsInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, indirectCommandsLayout}
 
 instance {-# OVERLAPPING #-}
          HasField "indirectCommandsTokenCount" VkCmdProcessCommandsInfoNVX
@@ -346,42 +258,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkCmdProcessCommandsInfoNVX, indirectCommandsTokenCount}
 
-instance CanReadField "indirectCommandsTokenCount"
+instance {-# OVERLAPPING #-}
+         CanReadField "indirectCommandsTokenCount"
            VkCmdProcessCommandsInfoNVX
          where
-        {-# INLINE getField #-}
-        getField = vkIndirectCommandsTokenCount
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkCmdProcessCommandsInfoNVX, indirectCommandsTokenCount})
 
         {-# INLINE readField #-}
-        readField = readVkIndirectCommandsTokenCount
+        readField p
+          = peekByteOff p #{offset VkCmdProcessCommandsInfoNVX, indirectCommandsTokenCount}
 
-instance CanWriteField "indirectCommandsTokenCount"
+instance {-# OVERLAPPING #-}
+         CanWriteField "indirectCommandsTokenCount"
            VkCmdProcessCommandsInfoNVX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkIndirectCommandsTokenCount
-
-instance {-# OVERLAPPING #-}
-         HasVkPIndirectCommandsTokens VkCmdProcessCommandsInfoNVX where
-        type VkPIndirectCommandsTokensMType VkCmdProcessCommandsInfoNVX =
-             Ptr VkIndirectCommandsTokenNVX
-
-        {-# NOINLINE vkPIndirectCommandsTokens #-}
-        vkPIndirectCommandsTokens x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkCmdProcessCommandsInfoNVX, pIndirectCommandsTokens})
-
-        {-# INLINE vkPIndirectCommandsTokensByteOffset #-}
-        vkPIndirectCommandsTokensByteOffset ~_
-          = #{offset VkCmdProcessCommandsInfoNVX, pIndirectCommandsTokens}
-
-        {-# INLINE readVkPIndirectCommandsTokens #-}
-        readVkPIndirectCommandsTokens p
-          = peekByteOff p #{offset VkCmdProcessCommandsInfoNVX, pIndirectCommandsTokens}
-
-        {-# INLINE writeVkPIndirectCommandsTokens #-}
-        writeVkPIndirectCommandsTokens p
-          = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, pIndirectCommandsTokens}
+        writeField p
+          = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, indirectCommandsTokenCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pIndirectCommandsTokens" VkCmdProcessCommandsInfoNVX
@@ -407,41 +303,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkCmdProcessCommandsInfoNVX, pIndirectCommandsTokens}
 
-instance CanReadField "pIndirectCommandsTokens"
-           VkCmdProcessCommandsInfoNVX
+instance {-# OVERLAPPING #-}
+         CanReadField "pIndirectCommandsTokens" VkCmdProcessCommandsInfoNVX
          where
-        {-# INLINE getField #-}
-        getField = vkPIndirectCommandsTokens
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkCmdProcessCommandsInfoNVX, pIndirectCommandsTokens})
 
         {-# INLINE readField #-}
-        readField = readVkPIndirectCommandsTokens
-
-instance CanWriteField "pIndirectCommandsTokens"
-           VkCmdProcessCommandsInfoNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPIndirectCommandsTokens
+        readField p
+          = peekByteOff p #{offset VkCmdProcessCommandsInfoNVX, pIndirectCommandsTokens}
 
 instance {-# OVERLAPPING #-}
-         HasVkMaxSequencesCount VkCmdProcessCommandsInfoNVX where
-        type VkMaxSequencesCountMType VkCmdProcessCommandsInfoNVX = Word32
-
-        {-# NOINLINE vkMaxSequencesCount #-}
-        vkMaxSequencesCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkCmdProcessCommandsInfoNVX, maxSequencesCount})
-
-        {-# INLINE vkMaxSequencesCountByteOffset #-}
-        vkMaxSequencesCountByteOffset ~_
-          = #{offset VkCmdProcessCommandsInfoNVX, maxSequencesCount}
-
-        {-# INLINE readVkMaxSequencesCount #-}
-        readVkMaxSequencesCount p
-          = peekByteOff p #{offset VkCmdProcessCommandsInfoNVX, maxSequencesCount}
-
-        {-# INLINE writeVkMaxSequencesCount #-}
-        writeVkMaxSequencesCount p
-          = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, maxSequencesCount}
+         CanWriteField "pIndirectCommandsTokens" VkCmdProcessCommandsInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, pIndirectCommandsTokens}
 
 instance {-# OVERLAPPING #-}
          HasField "maxSequencesCount" VkCmdProcessCommandsInfoNVX where
@@ -461,42 +340,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkCmdProcessCommandsInfoNVX, maxSequencesCount}
 
-instance CanReadField "maxSequencesCount"
-           VkCmdProcessCommandsInfoNVX
-         where
-        {-# INLINE getField #-}
-        getField = vkMaxSequencesCount
+instance {-# OVERLAPPING #-}
+         CanReadField "maxSequencesCount" VkCmdProcessCommandsInfoNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkCmdProcessCommandsInfoNVX, maxSequencesCount})
 
         {-# INLINE readField #-}
-        readField = readVkMaxSequencesCount
-
-instance CanWriteField "maxSequencesCount"
-           VkCmdProcessCommandsInfoNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkMaxSequencesCount
+        readField p
+          = peekByteOff p #{offset VkCmdProcessCommandsInfoNVX, maxSequencesCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkTargetCommandBuffer VkCmdProcessCommandsInfoNVX where
-        type VkTargetCommandBufferMType VkCmdProcessCommandsInfoNVX =
-             VkCommandBuffer
-
-        {-# NOINLINE vkTargetCommandBuffer #-}
-        vkTargetCommandBuffer x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkCmdProcessCommandsInfoNVX, targetCommandBuffer})
-
-        {-# INLINE vkTargetCommandBufferByteOffset #-}
-        vkTargetCommandBufferByteOffset ~_
-          = #{offset VkCmdProcessCommandsInfoNVX, targetCommandBuffer}
-
-        {-# INLINE readVkTargetCommandBuffer #-}
-        readVkTargetCommandBuffer p
-          = peekByteOff p #{offset VkCmdProcessCommandsInfoNVX, targetCommandBuffer}
-
-        {-# INLINE writeVkTargetCommandBuffer #-}
-        writeVkTargetCommandBuffer p
-          = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, targetCommandBuffer}
+         CanWriteField "maxSequencesCount" VkCmdProcessCommandsInfoNVX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, maxSequencesCount}
 
 instance {-# OVERLAPPING #-}
          HasField "targetCommandBuffer" VkCmdProcessCommandsInfoNVX where
@@ -518,42 +377,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkCmdProcessCommandsInfoNVX, targetCommandBuffer}
 
-instance CanReadField "targetCommandBuffer"
-           VkCmdProcessCommandsInfoNVX
+instance {-# OVERLAPPING #-}
+         CanReadField "targetCommandBuffer" VkCmdProcessCommandsInfoNVX
          where
-        {-# INLINE getField #-}
-        getField = vkTargetCommandBuffer
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkCmdProcessCommandsInfoNVX, targetCommandBuffer})
 
         {-# INLINE readField #-}
-        readField = readVkTargetCommandBuffer
-
-instance CanWriteField "targetCommandBuffer"
-           VkCmdProcessCommandsInfoNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkTargetCommandBuffer
+        readField p
+          = peekByteOff p #{offset VkCmdProcessCommandsInfoNVX, targetCommandBuffer}
 
 instance {-# OVERLAPPING #-}
-         HasVkSequencesCountBuffer VkCmdProcessCommandsInfoNVX where
-        type VkSequencesCountBufferMType VkCmdProcessCommandsInfoNVX =
-             VkBuffer
-
-        {-# NOINLINE vkSequencesCountBuffer #-}
-        vkSequencesCountBuffer x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkCmdProcessCommandsInfoNVX, sequencesCountBuffer})
-
-        {-# INLINE vkSequencesCountBufferByteOffset #-}
-        vkSequencesCountBufferByteOffset ~_
-          = #{offset VkCmdProcessCommandsInfoNVX, sequencesCountBuffer}
-
-        {-# INLINE readVkSequencesCountBuffer #-}
-        readVkSequencesCountBuffer p
-          = peekByteOff p #{offset VkCmdProcessCommandsInfoNVX, sequencesCountBuffer}
-
-        {-# INLINE writeVkSequencesCountBuffer #-}
-        writeVkSequencesCountBuffer p
-          = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, sequencesCountBuffer}
+         CanWriteField "targetCommandBuffer" VkCmdProcessCommandsInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, targetCommandBuffer}
 
 instance {-# OVERLAPPING #-}
          HasField "sequencesCountBuffer" VkCmdProcessCommandsInfoNVX where
@@ -576,42 +417,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkCmdProcessCommandsInfoNVX, sequencesCountBuffer}
 
-instance CanReadField "sequencesCountBuffer"
-           VkCmdProcessCommandsInfoNVX
+instance {-# OVERLAPPING #-}
+         CanReadField "sequencesCountBuffer" VkCmdProcessCommandsInfoNVX
          where
-        {-# INLINE getField #-}
-        getField = vkSequencesCountBuffer
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkCmdProcessCommandsInfoNVX, sequencesCountBuffer})
 
         {-# INLINE readField #-}
-        readField = readVkSequencesCountBuffer
-
-instance CanWriteField "sequencesCountBuffer"
-           VkCmdProcessCommandsInfoNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSequencesCountBuffer
+        readField p
+          = peekByteOff p #{offset VkCmdProcessCommandsInfoNVX, sequencesCountBuffer}
 
 instance {-# OVERLAPPING #-}
-         HasVkSequencesCountOffset VkCmdProcessCommandsInfoNVX where
-        type VkSequencesCountOffsetMType VkCmdProcessCommandsInfoNVX =
-             VkDeviceSize
-
-        {-# NOINLINE vkSequencesCountOffset #-}
-        vkSequencesCountOffset x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkCmdProcessCommandsInfoNVX, sequencesCountOffset})
-
-        {-# INLINE vkSequencesCountOffsetByteOffset #-}
-        vkSequencesCountOffsetByteOffset ~_
-          = #{offset VkCmdProcessCommandsInfoNVX, sequencesCountOffset}
-
-        {-# INLINE readVkSequencesCountOffset #-}
-        readVkSequencesCountOffset p
-          = peekByteOff p #{offset VkCmdProcessCommandsInfoNVX, sequencesCountOffset}
-
-        {-# INLINE writeVkSequencesCountOffset #-}
-        writeVkSequencesCountOffset p
-          = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, sequencesCountOffset}
+         CanWriteField "sequencesCountBuffer" VkCmdProcessCommandsInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, sequencesCountBuffer}
 
 instance {-# OVERLAPPING #-}
          HasField "sequencesCountOffset" VkCmdProcessCommandsInfoNVX where
@@ -634,42 +457,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkCmdProcessCommandsInfoNVX, sequencesCountOffset}
 
-instance CanReadField "sequencesCountOffset"
-           VkCmdProcessCommandsInfoNVX
+instance {-# OVERLAPPING #-}
+         CanReadField "sequencesCountOffset" VkCmdProcessCommandsInfoNVX
          where
-        {-# INLINE getField #-}
-        getField = vkSequencesCountOffset
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkCmdProcessCommandsInfoNVX, sequencesCountOffset})
 
         {-# INLINE readField #-}
-        readField = readVkSequencesCountOffset
-
-instance CanWriteField "sequencesCountOffset"
-           VkCmdProcessCommandsInfoNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSequencesCountOffset
+        readField p
+          = peekByteOff p #{offset VkCmdProcessCommandsInfoNVX, sequencesCountOffset}
 
 instance {-# OVERLAPPING #-}
-         HasVkSequencesIndexBuffer VkCmdProcessCommandsInfoNVX where
-        type VkSequencesIndexBufferMType VkCmdProcessCommandsInfoNVX =
-             VkBuffer
-
-        {-# NOINLINE vkSequencesIndexBuffer #-}
-        vkSequencesIndexBuffer x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkCmdProcessCommandsInfoNVX, sequencesIndexBuffer})
-
-        {-# INLINE vkSequencesIndexBufferByteOffset #-}
-        vkSequencesIndexBufferByteOffset ~_
-          = #{offset VkCmdProcessCommandsInfoNVX, sequencesIndexBuffer}
-
-        {-# INLINE readVkSequencesIndexBuffer #-}
-        readVkSequencesIndexBuffer p
-          = peekByteOff p #{offset VkCmdProcessCommandsInfoNVX, sequencesIndexBuffer}
-
-        {-# INLINE writeVkSequencesIndexBuffer #-}
-        writeVkSequencesIndexBuffer p
-          = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, sequencesIndexBuffer}
+         CanWriteField "sequencesCountOffset" VkCmdProcessCommandsInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, sequencesCountOffset}
 
 instance {-# OVERLAPPING #-}
          HasField "sequencesIndexBuffer" VkCmdProcessCommandsInfoNVX where
@@ -692,42 +497,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkCmdProcessCommandsInfoNVX, sequencesIndexBuffer}
 
-instance CanReadField "sequencesIndexBuffer"
-           VkCmdProcessCommandsInfoNVX
+instance {-# OVERLAPPING #-}
+         CanReadField "sequencesIndexBuffer" VkCmdProcessCommandsInfoNVX
          where
-        {-# INLINE getField #-}
-        getField = vkSequencesIndexBuffer
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkCmdProcessCommandsInfoNVX, sequencesIndexBuffer})
 
         {-# INLINE readField #-}
-        readField = readVkSequencesIndexBuffer
-
-instance CanWriteField "sequencesIndexBuffer"
-           VkCmdProcessCommandsInfoNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSequencesIndexBuffer
+        readField p
+          = peekByteOff p #{offset VkCmdProcessCommandsInfoNVX, sequencesIndexBuffer}
 
 instance {-# OVERLAPPING #-}
-         HasVkSequencesIndexOffset VkCmdProcessCommandsInfoNVX where
-        type VkSequencesIndexOffsetMType VkCmdProcessCommandsInfoNVX =
-             VkDeviceSize
-
-        {-# NOINLINE vkSequencesIndexOffset #-}
-        vkSequencesIndexOffset x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkCmdProcessCommandsInfoNVX, sequencesIndexOffset})
-
-        {-# INLINE vkSequencesIndexOffsetByteOffset #-}
-        vkSequencesIndexOffsetByteOffset ~_
-          = #{offset VkCmdProcessCommandsInfoNVX, sequencesIndexOffset}
-
-        {-# INLINE readVkSequencesIndexOffset #-}
-        readVkSequencesIndexOffset p
-          = peekByteOff p #{offset VkCmdProcessCommandsInfoNVX, sequencesIndexOffset}
-
-        {-# INLINE writeVkSequencesIndexOffset #-}
-        writeVkSequencesIndexOffset p
-          = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, sequencesIndexOffset}
+         CanWriteField "sequencesIndexBuffer" VkCmdProcessCommandsInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, sequencesIndexBuffer}
 
 instance {-# OVERLAPPING #-}
          HasField "sequencesIndexOffset" VkCmdProcessCommandsInfoNVX where
@@ -750,73 +537,83 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkCmdProcessCommandsInfoNVX, sequencesIndexOffset}
 
-instance CanReadField "sequencesIndexOffset"
-           VkCmdProcessCommandsInfoNVX
+instance {-# OVERLAPPING #-}
+         CanReadField "sequencesIndexOffset" VkCmdProcessCommandsInfoNVX
          where
-        {-# INLINE getField #-}
-        getField = vkSequencesIndexOffset
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkCmdProcessCommandsInfoNVX, sequencesIndexOffset})
 
         {-# INLINE readField #-}
-        readField = readVkSequencesIndexOffset
+        readField p
+          = peekByteOff p #{offset VkCmdProcessCommandsInfoNVX, sequencesIndexOffset}
 
-instance CanWriteField "sequencesIndexOffset"
-           VkCmdProcessCommandsInfoNVX
+instance {-# OVERLAPPING #-}
+         CanWriteField "sequencesIndexOffset" VkCmdProcessCommandsInfoNVX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSequencesIndexOffset
+        writeField p
+          = pokeByteOff p #{offset VkCmdProcessCommandsInfoNVX, sequencesIndexOffset}
 
 instance Show VkCmdProcessCommandsInfoNVX where
         showsPrec d x
           = showString "VkCmdProcessCommandsInfoNVX {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkObjectTable = " .
-                            showsPrec d (vkObjectTable x) .
+                          showString "objectTable = " .
+                            showsPrec d (getField @"objectTable" x) .
                               showString ", " .
-                                showString "vkIndirectCommandsLayout = " .
-                                  showsPrec d (vkIndirectCommandsLayout x) .
+                                showString "indirectCommandsLayout = " .
+                                  showsPrec d (getField @"indirectCommandsLayout" x) .
                                     showString ", " .
-                                      showString "vkIndirectCommandsTokenCount = " .
-                                        showsPrec d (vkIndirectCommandsTokenCount x) .
+                                      showString "indirectCommandsTokenCount = " .
+                                        showsPrec d (getField @"indirectCommandsTokenCount" x) .
                                           showString ", " .
-                                            showString "vkPIndirectCommandsTokens = " .
-                                              showsPrec d (vkPIndirectCommandsTokens x) .
+                                            showString "pIndirectCommandsTokens = " .
+                                              showsPrec d (getField @"pIndirectCommandsTokens" x) .
                                                 showString ", " .
-                                                  showString "vkMaxSequencesCount = " .
-                                                    showsPrec d (vkMaxSequencesCount x) .
+                                                  showString "maxSequencesCount = " .
+                                                    showsPrec d (getField @"maxSequencesCount" x) .
                                                       showString ", " .
-                                                        showString "vkTargetCommandBuffer = " .
-                                                          showsPrec d (vkTargetCommandBuffer x) .
+                                                        showString "targetCommandBuffer = " .
+                                                          showsPrec d
+                                                            (getField @"targetCommandBuffer" x)
+                                                            .
                                                             showString ", " .
-                                                              showString "vkSequencesCountBuffer = "
-                                                                .
+                                                              showString "sequencesCountBuffer = " .
                                                                 showsPrec d
-                                                                  (vkSequencesCountBuffer x)
+                                                                  (getField @"sequencesCountBuffer"
+                                                                     x)
                                                                   .
                                                                   showString ", " .
                                                                     showString
-                                                                      "vkSequencesCountOffset = "
+                                                                      "sequencesCountOffset = "
                                                                       .
                                                                       showsPrec d
-                                                                        (vkSequencesCountOffset x)
+                                                                        (getField
+                                                                           @"sequencesCountOffset"
+                                                                           x)
                                                                         .
                                                                         showString ", " .
                                                                           showString
-                                                                            "vkSequencesIndexBuffer = "
+                                                                            "sequencesIndexBuffer = "
                                                                             .
                                                                             showsPrec d
-                                                                              (vkSequencesIndexBuffer
+                                                                              (getField
+                                                                                 @"sequencesIndexBuffer"
                                                                                  x)
                                                                               .
                                                                               showString ", " .
                                                                                 showString
-                                                                                  "vkSequencesIndexOffset = "
+                                                                                  "sequencesIndexOffset = "
                                                                                   .
                                                                                   showsPrec d
-                                                                                    (vkSequencesIndexOffset
+                                                                                    (getField
+                                                                                       @"sequencesIndexOffset"
                                                                                        x)
                                                                                     . showChar '}'

@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkExternalImageFormatPropertiesKHR
        (VkExternalImageFormatPropertiesKHR(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType                 (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkExternalMemoryPropertiesKHR (VkExternalMemoryPropertiesKHR)
 import           Graphics.Vulkan.Types.Struct.VkImageFormatProperties2KHR   (VkImageFormatProperties2KHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkExternalImageFormatPropertiesKHR {
@@ -80,28 +80,6 @@ instance VulkanMarshal VkExternalImageFormatPropertiesKHR where
              '[VkImageFormatProperties2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkExternalImageFormatPropertiesKHR where
-        type VkSTypeMType VkExternalImageFormatPropertiesKHR =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkExternalImageFormatPropertiesKHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkExternalImageFormatPropertiesKHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkExternalImageFormatPropertiesKHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkExternalImageFormatPropertiesKHR, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkExternalImageFormatPropertiesKHR where
         type FieldType "sType" VkExternalImageFormatPropertiesKHR =
              VkStructureType
@@ -119,39 +97,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkExternalImageFormatPropertiesKHR, sType}
 
-instance CanReadField "sType" VkExternalImageFormatPropertiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkExternalImageFormatPropertiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkExternalImageFormatPropertiesKHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkExternalImageFormatPropertiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkExternalImageFormatPropertiesKHR, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkExternalImageFormatPropertiesKHR where
-        type VkPNextMType VkExternalImageFormatPropertiesKHR = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkExternalImageFormatPropertiesKHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkExternalImageFormatPropertiesKHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkExternalImageFormatPropertiesKHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkExternalImageFormatPropertiesKHR, pNext}
+         CanWriteField "sType" VkExternalImageFormatPropertiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkExternalImageFormatPropertiesKHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkExternalImageFormatPropertiesKHR where
@@ -171,42 +132,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkExternalImageFormatPropertiesKHR, pNext}
 
-instance CanReadField "pNext" VkExternalImageFormatPropertiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkExternalImageFormatPropertiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkExternalImageFormatPropertiesKHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkExternalImageFormatPropertiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkExternalImageFormatPropertiesKHR, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkExternalMemoryProperties VkExternalImageFormatPropertiesKHR
-         where
-        type VkExternalMemoryPropertiesMType
-               VkExternalImageFormatPropertiesKHR
-             = VkExternalMemoryPropertiesKHR
-
-        {-# NOINLINE vkExternalMemoryProperties #-}
-        vkExternalMemoryProperties x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkExternalImageFormatPropertiesKHR, externalMemoryProperties})
-
-        {-# INLINE vkExternalMemoryPropertiesByteOffset #-}
-        vkExternalMemoryPropertiesByteOffset ~_
-          = #{offset VkExternalImageFormatPropertiesKHR, externalMemoryProperties}
-
-        {-# INLINE readVkExternalMemoryProperties #-}
-        readVkExternalMemoryProperties p
-          = peekByteOff p #{offset VkExternalImageFormatPropertiesKHR, externalMemoryProperties}
-
-        {-# INLINE writeVkExternalMemoryProperties #-}
-        writeVkExternalMemoryProperties p
-          = pokeByteOff p #{offset VkExternalImageFormatPropertiesKHR, externalMemoryProperties}
+         CanWriteField "pNext" VkExternalImageFormatPropertiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkExternalImageFormatPropertiesKHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "externalMemoryProperties"
@@ -233,29 +174,35 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkExternalImageFormatPropertiesKHR, externalMemoryProperties}
 
-instance CanReadField "externalMemoryProperties"
+instance {-# OVERLAPPING #-}
+         CanReadField "externalMemoryProperties"
            VkExternalImageFormatPropertiesKHR
          where
-        {-# INLINE getField #-}
-        getField = vkExternalMemoryProperties
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkExternalImageFormatPropertiesKHR, externalMemoryProperties})
 
         {-# INLINE readField #-}
-        readField = readVkExternalMemoryProperties
+        readField p
+          = peekByteOff p #{offset VkExternalImageFormatPropertiesKHR, externalMemoryProperties}
 
-instance CanWriteField "externalMemoryProperties"
+instance {-# OVERLAPPING #-}
+         CanWriteField "externalMemoryProperties"
            VkExternalImageFormatPropertiesKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkExternalMemoryProperties
+        writeField p
+          = pokeByteOff p #{offset VkExternalImageFormatPropertiesKHR, externalMemoryProperties}
 
 instance Show VkExternalImageFormatPropertiesKHR where
         showsPrec d x
           = showString "VkExternalImageFormatPropertiesKHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkExternalMemoryProperties = " .
-                            showsPrec d (vkExternalMemoryProperties x) . showChar '}'
+                          showString "externalMemoryProperties = " .
+                            showsPrec d (getField @"externalMemoryProperties" x) . showChar '}'

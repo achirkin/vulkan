@@ -26,7 +26,8 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_info
         module Graphics.Vulkan.Types.Enum.VkShaderStageFlags,
         module Graphics.Vulkan.Types.Struct.VkShaderStatisticsInfoAMD,
         -- > #include "vk_platform.h"
-        vkGetShaderInfoAMD, module Graphics.Vulkan.Types.Enum.VkResult,
+        vkGetShaderInfoAMD, vkGetShaderInfoAMDSafe,
+        module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_AMD_SHADER_INFO_SPEC_VERSION,
         pattern VK_AMD_SHADER_INFO_SPEC_VERSION,
@@ -59,6 +60,33 @@ import           Graphics.Vulkan.Types.Struct.VkShaderStatisticsInfoAMD
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetShaderInfoAMD.html vkGetShaderInfoAMD registry at www.khronos.org>
 foreign import ccall unsafe "vkGetShaderInfoAMD" vkGetShaderInfoAMD
                ::
+               VkDevice -- ^ device
+                        ->
+                 VkPipeline -- ^ pipeline
+                            ->
+                   VkShaderStageFlagBits -- ^ shaderStage
+                                         ->
+                     VkShaderInfoTypeAMD -- ^ infoType
+                                         -> Ptr CSize -- ^ pInfoSize
+                                                      -> Ptr Void -- ^ pInfo
+                                                                  -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+--   Error codes: 'VK_ERROR_FEATURE_NOT_PRESENT', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
+--
+--   > VkResult vkGetShaderInfoAMD
+--   >     ( VkDevice device
+--   >     , VkPipeline pipeline
+--   >     , VkShaderStageFlagBits shaderStage
+--   >     , VkShaderInfoTypeAMD infoType
+--   >     , size_t* pInfoSize
+--   >     , void* pInfo
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetShaderInfoAMD.html vkGetShaderInfoAMD registry at www.khronos.org>
+foreign import ccall safe "vkGetShaderInfoAMD"
+               vkGetShaderInfoAMDSafe ::
                VkDevice -- ^ device
                         ->
                  VkPipeline -- ^ pipeline

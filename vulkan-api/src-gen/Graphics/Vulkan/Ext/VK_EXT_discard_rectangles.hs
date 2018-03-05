@@ -73,7 +73,8 @@ module Graphics.Vulkan.Ext.VK_EXT_discard_rectangles
         module Graphics.Vulkan.Types.Enum.VkVertexInputRate,
         module Graphics.Vulkan.Types.Struct.VkViewport,
         -- > #include "vk_platform.h"
-        vkCmdSetDiscardRectangleEXT, module Graphics.Vulkan.Types.Handles,
+        vkCmdSetDiscardRectangleEXT, vkCmdSetDiscardRectangleEXTSafe,
+        module Graphics.Vulkan.Types.Handles,
         VK_EXT_DISCARD_RECTANGLES_SPEC_VERSION,
         pattern VK_EXT_DISCARD_RECTANGLES_SPEC_VERSION,
         VK_EXT_DISCARD_RECTANGLES_EXTENSION_NAME,
@@ -149,6 +150,26 @@ import           Graphics.Vulkan.Types.Struct.VkViewport
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdSetDiscardRectangleEXT.html vkCmdSetDiscardRectangleEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdSetDiscardRectangleEXT"
                vkCmdSetDiscardRectangleEXT ::
+               VkCommandBuffer -- ^ commandBuffer
+                               -> Word32 -- ^ firstDiscardRectangle
+                                         -> Word32 -- ^ discardRectangleCount
+                                                   -> Ptr VkRect2D -- ^ pDiscardRectangles
+                                                                   -> IO ()
+
+-- | queues: 'graphics'.
+--
+--   renderpass: @both@
+--
+--   > () vkCmdSetDiscardRectangleEXT
+--   >     ( VkCommandBuffer commandBuffer
+--   >     , uint32_t firstDiscardRectangle
+--   >     , uint32_t discardRectangleCount
+--   >     , const VkRect2D* pDiscardRectangles
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdSetDiscardRectangleEXT.html vkCmdSetDiscardRectangleEXT registry at www.khronos.org>
+foreign import ccall safe "vkCmdSetDiscardRectangleEXT"
+               vkCmdSetDiscardRectangleEXTSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                -> Word32 -- ^ firstDiscardRectangle
                                          -> Word32 -- ^ discardRectangleCount

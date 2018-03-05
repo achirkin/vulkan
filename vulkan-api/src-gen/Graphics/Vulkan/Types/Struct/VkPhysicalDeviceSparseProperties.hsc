@@ -5,16 +5,16 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties
        (VkPhysicalDeviceSparseProperties(..)) where
-import           Foreign.Storable                    (Storable (..))
+import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.BaseTypes     (VkBool32)
-import           Graphics.Vulkan.Types.StructMembers
-import           System.IO.Unsafe                    (unsafeDupablePerformIO)
+import           Graphics.Vulkan.Types.BaseTypes  (VkBool32)
+import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDeviceSparseProperties {
 --   >     VkBool32               residencyStandard2DBlockShape;
@@ -82,30 +82,6 @@ instance VulkanMarshal VkPhysicalDeviceSparseProperties where
         type StructExtends VkPhysicalDeviceSparseProperties = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkResidencyStandard2DBlockShape VkPhysicalDeviceSparseProperties
-         where
-        type VkResidencyStandard2DBlockShapeMType
-               VkPhysicalDeviceSparseProperties
-             = VkBool32
-
-        {-# NOINLINE vkResidencyStandard2DBlockShape #-}
-        vkResidencyStandard2DBlockShape x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSparseProperties, residencyStandard2DBlockShape})
-
-        {-# INLINE vkResidencyStandard2DBlockShapeByteOffset #-}
-        vkResidencyStandard2DBlockShapeByteOffset ~_
-          = #{offset VkPhysicalDeviceSparseProperties, residencyStandard2DBlockShape}
-
-        {-# INLINE readVkResidencyStandard2DBlockShape #-}
-        readVkResidencyStandard2DBlockShape p
-          = peekByteOff p #{offset VkPhysicalDeviceSparseProperties, residencyStandard2DBlockShape}
-
-        {-# INLINE writeVkResidencyStandard2DBlockShape #-}
-        writeVkResidencyStandard2DBlockShape p
-          = pokeByteOff p #{offset VkPhysicalDeviceSparseProperties, residencyStandard2DBlockShape}
-
-instance {-# OVERLAPPING #-}
          HasField "residencyStandard2DBlockShape"
            VkPhysicalDeviceSparseProperties
          where
@@ -130,45 +106,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceSparseProperties, residencyStandard2DBlockShape}
 
-instance CanReadField "residencyStandard2DBlockShape"
+instance {-# OVERLAPPING #-}
+         CanReadField "residencyStandard2DBlockShape"
            VkPhysicalDeviceSparseProperties
          where
-        {-# INLINE getField #-}
-        getField = vkResidencyStandard2DBlockShape
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSparseProperties, residencyStandard2DBlockShape})
 
         {-# INLINE readField #-}
-        readField = readVkResidencyStandard2DBlockShape
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceSparseProperties, residencyStandard2DBlockShape}
 
-instance CanWriteField "residencyStandard2DBlockShape"
+instance {-# OVERLAPPING #-}
+         CanWriteField "residencyStandard2DBlockShape"
            VkPhysicalDeviceSparseProperties
          where
         {-# INLINE writeField #-}
-        writeField = writeVkResidencyStandard2DBlockShape
-
-instance {-# OVERLAPPING #-}
-         HasVkResidencyStandard2DMultisampleBlockShape
-           VkPhysicalDeviceSparseProperties
-         where
-        type VkResidencyStandard2DMultisampleBlockShapeMType
-               VkPhysicalDeviceSparseProperties
-             = VkBool32
-
-        {-# NOINLINE vkResidencyStandard2DMultisampleBlockShape #-}
-        vkResidencyStandard2DMultisampleBlockShape x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSparseProperties, residencyStandard2DMultisampleBlockShape})
-
-        {-# INLINE vkResidencyStandard2DMultisampleBlockShapeByteOffset #-}
-        vkResidencyStandard2DMultisampleBlockShapeByteOffset ~_
-          = #{offset VkPhysicalDeviceSparseProperties, residencyStandard2DMultisampleBlockShape}
-
-        {-# INLINE readVkResidencyStandard2DMultisampleBlockShape #-}
-        readVkResidencyStandard2DMultisampleBlockShape p
-          = peekByteOff p #{offset VkPhysicalDeviceSparseProperties, residencyStandard2DMultisampleBlockShape}
-
-        {-# INLINE writeVkResidencyStandard2DMultisampleBlockShape #-}
-        writeVkResidencyStandard2DMultisampleBlockShape p
-          = pokeByteOff p #{offset VkPhysicalDeviceSparseProperties, residencyStandard2DMultisampleBlockShape}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceSparseProperties, residencyStandard2DBlockShape}
 
 instance {-# OVERLAPPING #-}
          HasField "residencyStandard2DMultisampleBlockShape"
@@ -195,44 +152,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceSparseProperties, residencyStandard2DMultisampleBlockShape}
 
-instance CanReadField "residencyStandard2DMultisampleBlockShape"
+instance {-# OVERLAPPING #-}
+         CanReadField "residencyStandard2DMultisampleBlockShape"
            VkPhysicalDeviceSparseProperties
          where
-        {-# INLINE getField #-}
-        getField = vkResidencyStandard2DMultisampleBlockShape
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSparseProperties, residencyStandard2DMultisampleBlockShape})
 
         {-# INLINE readField #-}
-        readField = readVkResidencyStandard2DMultisampleBlockShape
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceSparseProperties, residencyStandard2DMultisampleBlockShape}
 
-instance CanWriteField "residencyStandard2DMultisampleBlockShape"
+instance {-# OVERLAPPING #-}
+         CanWriteField "residencyStandard2DMultisampleBlockShape"
            VkPhysicalDeviceSparseProperties
          where
         {-# INLINE writeField #-}
-        writeField = writeVkResidencyStandard2DMultisampleBlockShape
-
-instance {-# OVERLAPPING #-}
-         HasVkResidencyStandard3DBlockShape VkPhysicalDeviceSparseProperties
-         where
-        type VkResidencyStandard3DBlockShapeMType
-               VkPhysicalDeviceSparseProperties
-             = VkBool32
-
-        {-# NOINLINE vkResidencyStandard3DBlockShape #-}
-        vkResidencyStandard3DBlockShape x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSparseProperties, residencyStandard3DBlockShape})
-
-        {-# INLINE vkResidencyStandard3DBlockShapeByteOffset #-}
-        vkResidencyStandard3DBlockShapeByteOffset ~_
-          = #{offset VkPhysicalDeviceSparseProperties, residencyStandard3DBlockShape}
-
-        {-# INLINE readVkResidencyStandard3DBlockShape #-}
-        readVkResidencyStandard3DBlockShape p
-          = peekByteOff p #{offset VkPhysicalDeviceSparseProperties, residencyStandard3DBlockShape}
-
-        {-# INLINE writeVkResidencyStandard3DBlockShape #-}
-        writeVkResidencyStandard3DBlockShape p
-          = pokeByteOff p #{offset VkPhysicalDeviceSparseProperties, residencyStandard3DBlockShape}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceSparseProperties, residencyStandard2DMultisampleBlockShape}
 
 instance {-# OVERLAPPING #-}
          HasField "residencyStandard3DBlockShape"
@@ -259,43 +198,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceSparseProperties, residencyStandard3DBlockShape}
 
-instance CanReadField "residencyStandard3DBlockShape"
+instance {-# OVERLAPPING #-}
+         CanReadField "residencyStandard3DBlockShape"
            VkPhysicalDeviceSparseProperties
          where
-        {-# INLINE getField #-}
-        getField = vkResidencyStandard3DBlockShape
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSparseProperties, residencyStandard3DBlockShape})
 
         {-# INLINE readField #-}
-        readField = readVkResidencyStandard3DBlockShape
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceSparseProperties, residencyStandard3DBlockShape}
 
-instance CanWriteField "residencyStandard3DBlockShape"
+instance {-# OVERLAPPING #-}
+         CanWriteField "residencyStandard3DBlockShape"
            VkPhysicalDeviceSparseProperties
          where
         {-# INLINE writeField #-}
-        writeField = writeVkResidencyStandard3DBlockShape
-
-instance {-# OVERLAPPING #-}
-         HasVkResidencyAlignedMipSize VkPhysicalDeviceSparseProperties where
-        type VkResidencyAlignedMipSizeMType
-               VkPhysicalDeviceSparseProperties
-             = VkBool32
-
-        {-# NOINLINE vkResidencyAlignedMipSize #-}
-        vkResidencyAlignedMipSize x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSparseProperties, residencyAlignedMipSize})
-
-        {-# INLINE vkResidencyAlignedMipSizeByteOffset #-}
-        vkResidencyAlignedMipSizeByteOffset ~_
-          = #{offset VkPhysicalDeviceSparseProperties, residencyAlignedMipSize}
-
-        {-# INLINE readVkResidencyAlignedMipSize #-}
-        readVkResidencyAlignedMipSize p
-          = peekByteOff p #{offset VkPhysicalDeviceSparseProperties, residencyAlignedMipSize}
-
-        {-# INLINE writeVkResidencyAlignedMipSize #-}
-        writeVkResidencyAlignedMipSize p
-          = pokeByteOff p #{offset VkPhysicalDeviceSparseProperties, residencyAlignedMipSize}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceSparseProperties, residencyStandard3DBlockShape}
 
 instance {-# OVERLAPPING #-}
          HasField "residencyAlignedMipSize" VkPhysicalDeviceSparseProperties
@@ -321,44 +243,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceSparseProperties, residencyAlignedMipSize}
 
-instance CanReadField "residencyAlignedMipSize"
+instance {-# OVERLAPPING #-}
+         CanReadField "residencyAlignedMipSize"
            VkPhysicalDeviceSparseProperties
          where
-        {-# INLINE getField #-}
-        getField = vkResidencyAlignedMipSize
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSparseProperties, residencyAlignedMipSize})
 
         {-# INLINE readField #-}
-        readField = readVkResidencyAlignedMipSize
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceSparseProperties, residencyAlignedMipSize}
 
-instance CanWriteField "residencyAlignedMipSize"
+instance {-# OVERLAPPING #-}
+         CanWriteField "residencyAlignedMipSize"
            VkPhysicalDeviceSparseProperties
          where
         {-# INLINE writeField #-}
-        writeField = writeVkResidencyAlignedMipSize
-
-instance {-# OVERLAPPING #-}
-         HasVkResidencyNonResidentStrict VkPhysicalDeviceSparseProperties
-         where
-        type VkResidencyNonResidentStrictMType
-               VkPhysicalDeviceSparseProperties
-             = VkBool32
-
-        {-# NOINLINE vkResidencyNonResidentStrict #-}
-        vkResidencyNonResidentStrict x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSparseProperties, residencyNonResidentStrict})
-
-        {-# INLINE vkResidencyNonResidentStrictByteOffset #-}
-        vkResidencyNonResidentStrictByteOffset ~_
-          = #{offset VkPhysicalDeviceSparseProperties, residencyNonResidentStrict}
-
-        {-# INLINE readVkResidencyNonResidentStrict #-}
-        readVkResidencyNonResidentStrict p
-          = peekByteOff p #{offset VkPhysicalDeviceSparseProperties, residencyNonResidentStrict}
-
-        {-# INLINE writeVkResidencyNonResidentStrict #-}
-        writeVkResidencyNonResidentStrict p
-          = pokeByteOff p #{offset VkPhysicalDeviceSparseProperties, residencyNonResidentStrict}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceSparseProperties, residencyAlignedMipSize}
 
 instance {-# OVERLAPPING #-}
          HasField "residencyNonResidentStrict"
@@ -385,35 +289,44 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceSparseProperties, residencyNonResidentStrict}
 
-instance CanReadField "residencyNonResidentStrict"
+instance {-# OVERLAPPING #-}
+         CanReadField "residencyNonResidentStrict"
            VkPhysicalDeviceSparseProperties
          where
-        {-# INLINE getField #-}
-        getField = vkResidencyNonResidentStrict
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSparseProperties, residencyNonResidentStrict})
 
         {-# INLINE readField #-}
-        readField = readVkResidencyNonResidentStrict
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceSparseProperties, residencyNonResidentStrict}
 
-instance CanWriteField "residencyNonResidentStrict"
+instance {-# OVERLAPPING #-}
+         CanWriteField "residencyNonResidentStrict"
            VkPhysicalDeviceSparseProperties
          where
         {-# INLINE writeField #-}
-        writeField = writeVkResidencyNonResidentStrict
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceSparseProperties, residencyNonResidentStrict}
 
 instance Show VkPhysicalDeviceSparseProperties where
         showsPrec d x
           = showString "VkPhysicalDeviceSparseProperties {" .
-              showString "vkResidencyStandard2DBlockShape = " .
-                showsPrec d (vkResidencyStandard2DBlockShape x) .
+              showString "residencyStandard2DBlockShape = " .
+                showsPrec d (getField @"residencyStandard2DBlockShape" x) .
                   showString ", " .
-                    showString "vkResidencyStandard2DMultisampleBlockShape = " .
-                      showsPrec d (vkResidencyStandard2DMultisampleBlockShape x) .
+                    showString "residencyStandard2DMultisampleBlockShape = " .
+                      showsPrec d
+                        (getField @"residencyStandard2DMultisampleBlockShape" x)
+                        .
                         showString ", " .
-                          showString "vkResidencyStandard3DBlockShape = " .
-                            showsPrec d (vkResidencyStandard3DBlockShape x) .
+                          showString "residencyStandard3DBlockShape = " .
+                            showsPrec d (getField @"residencyStandard3DBlockShape" x) .
                               showString ", " .
-                                showString "vkResidencyAlignedMipSize = " .
-                                  showsPrec d (vkResidencyAlignedMipSize x) .
+                                showString "residencyAlignedMipSize = " .
+                                  showsPrec d (getField @"residencyAlignedMipSize" x) .
                                     showString ", " .
-                                      showString "vkResidencyNonResidentStrict = " .
-                                        showsPrec d (vkResidencyNonResidentStrict x) . showChar '}'
+                                      showString "residencyNonResidentStrict = " .
+                                        showsPrec d (getField @"residencyNonResidentStrict" x) .
+                                          showChar '}'

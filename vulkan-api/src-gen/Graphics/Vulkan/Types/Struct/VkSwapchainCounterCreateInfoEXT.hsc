@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkSwapchainCounterCreateInfoEXT
        (VkSwapchainCounterCreateInfoEXT(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType            (VkStructureType)
 import           Graphics.Vulkan.Types.Enum.VkSurfaceCounterFlagsEXT   (VkSurfaceCounterFlagsEXT)
 import           Graphics.Vulkan.Types.Struct.VkSwapchainCreateInfoKHR (VkSwapchainCreateInfoKHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                      (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSwapchainCounterCreateInfoEXT {
@@ -79,27 +79,6 @@ instance VulkanMarshal VkSwapchainCounterCreateInfoEXT where
              '[VkSwapchainCreateInfoKHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkSwapchainCounterCreateInfoEXT where
-        type VkSTypeMType VkSwapchainCounterCreateInfoEXT = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSwapchainCounterCreateInfoEXT, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkSwapchainCounterCreateInfoEXT, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkSwapchainCounterCreateInfoEXT, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkSwapchainCounterCreateInfoEXT, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkSwapchainCounterCreateInfoEXT where
         type FieldType "sType" VkSwapchainCounterCreateInfoEXT =
              VkStructureType
@@ -115,38 +94,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSwapchainCounterCreateInfoEXT, sType}
 
-instance CanReadField "sType" VkSwapchainCounterCreateInfoEXT where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkSwapchainCounterCreateInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSwapchainCounterCreateInfoEXT, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkSwapchainCounterCreateInfoEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkSwapchainCounterCreateInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkSwapchainCounterCreateInfoEXT where
-        type VkPNextMType VkSwapchainCounterCreateInfoEXT = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSwapchainCounterCreateInfoEXT, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkSwapchainCounterCreateInfoEXT, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkSwapchainCounterCreateInfoEXT, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkSwapchainCounterCreateInfoEXT, pNext}
+         CanWriteField "sType" VkSwapchainCounterCreateInfoEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSwapchainCounterCreateInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkSwapchainCounterCreateInfoEXT where
@@ -163,39 +126,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSwapchainCounterCreateInfoEXT, pNext}
 
-instance CanReadField "pNext" VkSwapchainCounterCreateInfoEXT where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkSwapchainCounterCreateInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSwapchainCounterCreateInfoEXT, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkSwapchainCounterCreateInfoEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkSwapchainCounterCreateInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkSurfaceCounters VkSwapchainCounterCreateInfoEXT where
-        type VkSurfaceCountersMType VkSwapchainCounterCreateInfoEXT =
-             VkSurfaceCounterFlagsEXT
-
-        {-# NOINLINE vkSurfaceCounters #-}
-        vkSurfaceCounters x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSwapchainCounterCreateInfoEXT, surfaceCounters})
-
-        {-# INLINE vkSurfaceCountersByteOffset #-}
-        vkSurfaceCountersByteOffset ~_
-          = #{offset VkSwapchainCounterCreateInfoEXT, surfaceCounters}
-
-        {-# INLINE readVkSurfaceCounters #-}
-        readVkSurfaceCounters p
-          = peekByteOff p #{offset VkSwapchainCounterCreateInfoEXT, surfaceCounters}
-
-        {-# INLINE writeVkSurfaceCounters #-}
-        writeVkSurfaceCounters p
-          = pokeByteOff p #{offset VkSwapchainCounterCreateInfoEXT, surfaceCounters}
+         CanWriteField "pNext" VkSwapchainCounterCreateInfoEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSwapchainCounterCreateInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "surfaceCounters" VkSwapchainCounterCreateInfoEXT where
@@ -217,29 +163,33 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSwapchainCounterCreateInfoEXT, surfaceCounters}
 
-instance CanReadField "surfaceCounters"
-           VkSwapchainCounterCreateInfoEXT
+instance {-# OVERLAPPING #-}
+         CanReadField "surfaceCounters" VkSwapchainCounterCreateInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkSurfaceCounters
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSwapchainCounterCreateInfoEXT, surfaceCounters})
 
         {-# INLINE readField #-}
-        readField = readVkSurfaceCounters
+        readField p
+          = peekByteOff p #{offset VkSwapchainCounterCreateInfoEXT, surfaceCounters}
 
-instance CanWriteField "surfaceCounters"
-           VkSwapchainCounterCreateInfoEXT
+instance {-# OVERLAPPING #-}
+         CanWriteField "surfaceCounters" VkSwapchainCounterCreateInfoEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSurfaceCounters
+        writeField p
+          = pokeByteOff p #{offset VkSwapchainCounterCreateInfoEXT, surfaceCounters}
 
 instance Show VkSwapchainCounterCreateInfoEXT where
         showsPrec d x
           = showString "VkSwapchainCounterCreateInfoEXT {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkSurfaceCounters = " .
-                            showsPrec d (vkSurfaceCounters x) . showChar '}'
+                          showString "surfaceCounters = " .
+                            showsPrec d (getField @"surfaceCounters" x) . showChar '}'

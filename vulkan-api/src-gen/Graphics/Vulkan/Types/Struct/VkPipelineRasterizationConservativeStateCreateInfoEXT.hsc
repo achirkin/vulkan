@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPipelineRasterizationConservativeStateCreateInfoEXT
        (VkPipelineRasterizationConservativeStateCreateInfoEXT(..)) where
@@ -21,7 +22,6 @@ import           Graphics.Vulkan.Types.Enum.VkStructureType
                                                                                       (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkPipelineRasterizationStateCreateInfo
                                                                                       (VkPipelineRasterizationStateCreateInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe
                                                                                       (unsafeDupablePerformIO)
 
@@ -109,30 +109,6 @@ instance VulkanMarshal
              = '[VkPipelineRasterizationStateCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPipelineRasterizationConservativeStateCreateInfoEXT
-         where
-        type VkSTypeMType
-               VkPipelineRasterizationConservativeStateCreateInfoEXT
-             = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType"
            VkPipelineRasterizationConservativeStateCreateInfoEXT
          where
@@ -157,44 +133,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, sType}
 
-instance CanReadField "sType"
+instance {-# OVERLAPPING #-}
+         CanReadField "sType"
            VkPipelineRasterizationConservativeStateCreateInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkSType
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, sType}
 
-instance CanWriteField "sType"
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType"
            VkPipelineRasterizationConservativeStateCreateInfoEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-}
-         HasVkPNext VkPipelineRasterizationConservativeStateCreateInfoEXT
-         where
-        type VkPNextMType
-               VkPipelineRasterizationConservativeStateCreateInfoEXT
-             = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext"
@@ -221,44 +179,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, pNext}
 
-instance CanReadField "pNext"
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext"
            VkPipelineRasterizationConservativeStateCreateInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkPNext
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, pNext}
 
-instance CanWriteField "pNext"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext"
            VkPipelineRasterizationConservativeStateCreateInfoEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-}
-         HasVkFlags VkPipelineRasterizationConservativeStateCreateInfoEXT
-         where
-        type VkFlagsMType
-               VkPipelineRasterizationConservativeStateCreateInfoEXT
-             = VkPipelineRasterizationConservativeStateCreateFlagsEXT
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, flags}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "flags"
@@ -285,45 +225,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, flags}
 
-instance CanReadField "flags"
+instance {-# OVERLAPPING #-}
+         CanReadField "flags"
            VkPipelineRasterizationConservativeStateCreateInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkFlags
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
+        readField p
+          = peekByteOff p #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, flags}
 
-instance CanWriteField "flags"
+instance {-# OVERLAPPING #-}
+         CanWriteField "flags"
            VkPipelineRasterizationConservativeStateCreateInfoEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkFlags
-
-instance {-# OVERLAPPING #-}
-         HasVkConservativeRasterizationMode
-           VkPipelineRasterizationConservativeStateCreateInfoEXT
-         where
-        type VkConservativeRasterizationModeMType
-               VkPipelineRasterizationConservativeStateCreateInfoEXT
-             = VkConservativeRasterizationModeEXT
-
-        {-# NOINLINE vkConservativeRasterizationMode #-}
-        vkConservativeRasterizationMode x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, conservativeRasterizationMode})
-
-        {-# INLINE vkConservativeRasterizationModeByteOffset #-}
-        vkConservativeRasterizationModeByteOffset ~_
-          = #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, conservativeRasterizationMode}
-
-        {-# INLINE readVkConservativeRasterizationMode #-}
-        readVkConservativeRasterizationMode p
-          = peekByteOff p #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, conservativeRasterizationMode}
-
-        {-# INLINE writeVkConservativeRasterizationMode #-}
-        writeVkConservativeRasterizationMode p
-          = pokeByteOff p #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, conservativeRasterizationMode}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "conservativeRasterizationMode"
@@ -350,45 +271,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, conservativeRasterizationMode}
 
-instance CanReadField "conservativeRasterizationMode"
+instance {-# OVERLAPPING #-}
+         CanReadField "conservativeRasterizationMode"
            VkPipelineRasterizationConservativeStateCreateInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkConservativeRasterizationMode
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, conservativeRasterizationMode})
 
         {-# INLINE readField #-}
-        readField = readVkConservativeRasterizationMode
+        readField p
+          = peekByteOff p #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, conservativeRasterizationMode}
 
-instance CanWriteField "conservativeRasterizationMode"
+instance {-# OVERLAPPING #-}
+         CanWriteField "conservativeRasterizationMode"
            VkPipelineRasterizationConservativeStateCreateInfoEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkConservativeRasterizationMode
-
-instance {-# OVERLAPPING #-}
-         HasVkExtraPrimitiveOverestimationSize
-           VkPipelineRasterizationConservativeStateCreateInfoEXT
-         where
-        type VkExtraPrimitiveOverestimationSizeMType
-               VkPipelineRasterizationConservativeStateCreateInfoEXT
-             = #{type float}
-
-        {-# NOINLINE vkExtraPrimitiveOverestimationSize #-}
-        vkExtraPrimitiveOverestimationSize x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, extraPrimitiveOverestimationSize})
-
-        {-# INLINE vkExtraPrimitiveOverestimationSizeByteOffset #-}
-        vkExtraPrimitiveOverestimationSizeByteOffset ~_
-          = #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, extraPrimitiveOverestimationSize}
-
-        {-# INLINE readVkExtraPrimitiveOverestimationSize #-}
-        readVkExtraPrimitiveOverestimationSize p
-          = peekByteOff p #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, extraPrimitiveOverestimationSize}
-
-        {-# INLINE writeVkExtraPrimitiveOverestimationSize #-}
-        writeVkExtraPrimitiveOverestimationSize p
-          = pokeByteOff p #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, extraPrimitiveOverestimationSize}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, conservativeRasterizationMode}
 
 instance {-# OVERLAPPING #-}
          HasField "extraPrimitiveOverestimationSize"
@@ -415,20 +317,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, extraPrimitiveOverestimationSize}
 
-instance CanReadField "extraPrimitiveOverestimationSize"
+instance {-# OVERLAPPING #-}
+         CanReadField "extraPrimitiveOverestimationSize"
            VkPipelineRasterizationConservativeStateCreateInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkExtraPrimitiveOverestimationSize
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, extraPrimitiveOverestimationSize})
 
         {-# INLINE readField #-}
-        readField = readVkExtraPrimitiveOverestimationSize
+        readField p
+          = peekByteOff p #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, extraPrimitiveOverestimationSize}
 
-instance CanWriteField "extraPrimitiveOverestimationSize"
+instance {-# OVERLAPPING #-}
+         CanWriteField "extraPrimitiveOverestimationSize"
            VkPipelineRasterizationConservativeStateCreateInfoEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkExtraPrimitiveOverestimationSize
+        writeField p
+          = pokeByteOff p #{offset VkPipelineRasterizationConservativeStateCreateInfoEXT, extraPrimitiveOverestimationSize}
 
 instance Show VkPipelineRasterizationConservativeStateCreateInfoEXT
          where
@@ -436,18 +344,18 @@ instance Show VkPipelineRasterizationConservativeStateCreateInfoEXT
           = showString
               "VkPipelineRasterizationConservativeStateCreateInfoEXT {"
               .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkConservativeRasterizationMode = " .
-                                  showsPrec d (vkConservativeRasterizationMode x) .
+                                showString "conservativeRasterizationMode = " .
+                                  showsPrec d (getField @"conservativeRasterizationMode" x) .
                                     showString ", " .
-                                      showString "vkExtraPrimitiveOverestimationSize = " .
-                                        showsPrec d (vkExtraPrimitiveOverestimationSize x) .
-                                          showChar '}'
+                                      showString "extraPrimitiveOverestimationSize = " .
+                                        showsPrec d (getField @"extraPrimitiveOverestimationSize" x)
+                                          . showChar '}'

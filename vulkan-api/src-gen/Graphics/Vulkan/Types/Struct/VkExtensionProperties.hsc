@@ -8,19 +8,18 @@
 {-# LANGUAGE PatternSynonyms       #-}
 {-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 {-# LANGUAGE UndecidableInstances  #-}
 module Graphics.Vulkan.Types.Struct.VkExtensionProperties
        (VkExtensionProperties(..)) where
-import           Foreign.Storable                    (Storable (..))
+import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
-import           GHC.TypeLits                        (KnownNat, natVal') -- ' closing tick for hsc2hs
-import           Graphics.Vulkan.Constants           (VK_MAX_EXTENSION_NAME_SIZE,
-                                                      pattern VK_MAX_EXTENSION_NAME_SIZE)
+import           GHC.TypeLits                     (KnownNat, natVal') -- ' closing tick for hsc2hs
+import           Graphics.Vulkan.Constants        (VK_MAX_EXTENSION_NAME_SIZE, pattern VK_MAX_EXTENSION_NAME_SIZE)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.StructMembers
-import           System.IO.Unsafe                    (unsafeDupablePerformIO)
+import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkExtensionProperties {
 --   >     char            extensionName[VK_MAX_EXTENSION_NAME_SIZE];
@@ -77,33 +76,6 @@ instance VulkanMarshal VkExtensionProperties where
         type StructExtends VkExtensionProperties = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkExtensionNameArray VkExtensionProperties where
-        type VkExtensionNameArrayMType VkExtensionProperties = CChar
-
-        {-# NOINLINE vkExtensionNameArray #-}
-        vkExtensionNameArray x idx
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 (idx * sizeOf (undefined :: CChar) +
-                    #{offset VkExtensionProperties, extensionName}))
-
-        {-# INLINE vkExtensionNameArrayByteOffset #-}
-        vkExtensionNameArrayByteOffset ~_
-          = #{offset VkExtensionProperties, extensionName}
-
-        {-# INLINE readVkExtensionNameArray #-}
-        readVkExtensionNameArray p idx
-          = peekByteOff p
-              (idx * sizeOf (undefined :: CChar) +
-                 #{offset VkExtensionProperties, extensionName})
-
-        {-# INLINE writeVkExtensionNameArray #-}
-        writeVkExtensionNameArray p idx
-          = pokeByteOff p
-              (idx * sizeOf (undefined :: CChar) +
-                 #{offset VkExtensionProperties, extensionName})
-
-instance {-# OVERLAPPING #-}
          HasField "extensionName" VkExtensionProperties where
         type FieldType "extensionName" VkExtensionProperties = CChar
         type FieldOptional "extensionName" VkExtensionProperties = 'False -- ' closing tick for hsc2hs
@@ -118,7 +90,8 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkExtensionProperties, extensionName}
 
-instance (KnownNat idx,
+instance {-# OVERLAPPING #-}
+         (KnownNat idx,
           IndexInBounds "extensionName" idx VkExtensionProperties) =>
          CanReadFieldArray "extensionName" idx VkExtensionProperties
          where
@@ -140,16 +113,23 @@ instance (KnownNat idx,
         fieldArrayLength = VK_MAX_EXTENSION_NAME_SIZE
 
         {-# INLINE getFieldArray #-}
-        getFieldArray x
-          = vkExtensionNameArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+        getFieldArray = f
+          where {-# NOINLINE f #-}
+                f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
+                off
+                  = #{offset VkExtensionProperties, extensionName} +
+                      sizeOf (undefined :: CChar) *
+                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
         {-# INLINE readFieldArray #-}
-        readFieldArray x
-          = readVkExtensionNameArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+        readFieldArray p
+          = peekByteOff p
+              (#{offset VkExtensionProperties, extensionName} +
+                 sizeOf (undefined :: CChar) *
+                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
 
-instance (KnownNat idx,
+instance {-# OVERLAPPING #-}
+         (KnownNat idx,
           IndexInBounds "extensionName" idx VkExtensionProperties) =>
          CanWriteFieldArray "extensionName" idx VkExtensionProperties
          where
@@ -166,30 +146,11 @@ instance (KnownNat idx,
                        CanWriteFieldArray "extensionName" 3 VkExtensionProperties #-}
 
         {-# INLINE writeFieldArray #-}
-        writeFieldArray x
-          = writeVkExtensionNameArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
-
-instance {-# OVERLAPPING #-} HasVkSpecVersion VkExtensionProperties
-         where
-        type VkSpecVersionMType VkExtensionProperties = Word32
-
-        {-# NOINLINE vkSpecVersion #-}
-        vkSpecVersion x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkExtensionProperties, specVersion})
-
-        {-# INLINE vkSpecVersionByteOffset #-}
-        vkSpecVersionByteOffset ~_
-          = #{offset VkExtensionProperties, specVersion}
-
-        {-# INLINE readVkSpecVersion #-}
-        readVkSpecVersion p
-          = peekByteOff p #{offset VkExtensionProperties, specVersion}
-
-        {-# INLINE writeVkSpecVersion #-}
-        writeVkSpecVersion p
-          = pokeByteOff p #{offset VkExtensionProperties, specVersion}
+        writeFieldArray p
+          = pokeByteOff p
+              (#{offset VkExtensionProperties, extensionName} +
+                 sizeOf (undefined :: CChar) *
+                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasField "specVersion" VkExtensionProperties where
@@ -206,25 +167,39 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkExtensionProperties, specVersion}
 
-instance CanReadField "specVersion" VkExtensionProperties where
-        {-# INLINE getField #-}
-        getField = vkSpecVersion
+instance {-# OVERLAPPING #-}
+         CanReadField "specVersion" VkExtensionProperties where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkExtensionProperties, specVersion})
 
         {-# INLINE readField #-}
-        readField = readVkSpecVersion
+        readField p
+          = peekByteOff p #{offset VkExtensionProperties, specVersion}
 
-instance CanWriteField "specVersion" VkExtensionProperties where
+instance {-# OVERLAPPING #-}
+         CanWriteField "specVersion" VkExtensionProperties where
         {-# INLINE writeField #-}
-        writeField = writeVkSpecVersion
+        writeField p
+          = pokeByteOff p #{offset VkExtensionProperties, specVersion}
 
 instance Show VkExtensionProperties where
         showsPrec d x
           = showString "VkExtensionProperties {" .
-              showString "vkExtensionNameArray = [" .
-                showsPrec d
-                  (map (vkExtensionNameArray x) [1 .. VK_MAX_EXTENSION_NAME_SIZE])
-                  .
-                  showChar ']' .
-                    showString ", " .
-                      showString "vkSpecVersion = " .
-                        showsPrec d (vkSpecVersion x) . showChar '}'
+              (showString "extensionName = [" .
+                 showsPrec d
+                   (let s = sizeOf
+                              (undefined :: FieldType "extensionName" VkExtensionProperties)
+                        o = fieldOffset @"extensionName" @VkExtensionProperties
+                        f i
+                          = peekByteOff (unsafePtr x) i ::
+                              IO (FieldType "extensionName" VkExtensionProperties)
+                      in
+                      unsafeDupablePerformIO . mapM f $
+                        map (\ i -> o + i * s) [0 .. VK_MAX_EXTENSION_NAME_SIZE - 1])
+                   . showChar ']')
+                .
+                showString ", " .
+                  showString "specVersion = " .
+                    showsPrec d (getField @"specVersion" x) . showChar '}'

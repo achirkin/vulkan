@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkDescriptorSetAllocateInfo
        (VkDescriptorSetAllocateInfo(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
 import           Graphics.Vulkan.Types.Handles              (VkDescriptorPool, VkDescriptorSetLayout)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDescriptorSetAllocateInfo {
@@ -78,27 +78,6 @@ instance VulkanMarshal VkDescriptorSetAllocateInfo where
         type ReturnedOnly VkDescriptorSetAllocateInfo = 'False -- ' closing tick for hsc2hs
         type StructExtends VkDescriptorSetAllocateInfo = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkDescriptorSetAllocateInfo
-         where
-        type VkSTypeMType VkDescriptorSetAllocateInfo = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDescriptorSetAllocateInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkDescriptorSetAllocateInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkDescriptorSetAllocateInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkDescriptorSetAllocateInfo, sType}
-
 instance {-# OVERLAPPING #-}
          HasField "sType" VkDescriptorSetAllocateInfo where
         type FieldType "sType" VkDescriptorSetAllocateInfo =
@@ -115,37 +94,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDescriptorSetAllocateInfo, sType}
 
-instance CanReadField "sType" VkDescriptorSetAllocateInfo where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkDescriptorSetAllocateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDescriptorSetAllocateInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkDescriptorSetAllocateInfo, sType}
 
-instance CanWriteField "sType" VkDescriptorSetAllocateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkDescriptorSetAllocateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkDescriptorSetAllocateInfo
-         where
-        type VkPNextMType VkDescriptorSetAllocateInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDescriptorSetAllocateInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkDescriptorSetAllocateInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkDescriptorSetAllocateInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkDescriptorSetAllocateInfo, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkDescriptorSetAllocateInfo, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkDescriptorSetAllocateInfo where
@@ -162,38 +126,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDescriptorSetAllocateInfo, pNext}
 
-instance CanReadField "pNext" VkDescriptorSetAllocateInfo where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkDescriptorSetAllocateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDescriptorSetAllocateInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkDescriptorSetAllocateInfo where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkDescriptorSetAllocateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkDescriptorPool VkDescriptorSetAllocateInfo where
-        type VkDescriptorPoolMType VkDescriptorSetAllocateInfo =
-             VkDescriptorPool
-
-        {-# NOINLINE vkDescriptorPool #-}
-        vkDescriptorPool x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDescriptorSetAllocateInfo, descriptorPool})
-
-        {-# INLINE vkDescriptorPoolByteOffset #-}
-        vkDescriptorPoolByteOffset ~_
-          = #{offset VkDescriptorSetAllocateInfo, descriptorPool}
-
-        {-# INLINE readVkDescriptorPool #-}
-        readVkDescriptorPool p
-          = peekByteOff p #{offset VkDescriptorSetAllocateInfo, descriptorPool}
-
-        {-# INLINE writeVkDescriptorPool #-}
-        writeVkDescriptorPool p
-          = pokeByteOff p #{offset VkDescriptorSetAllocateInfo, descriptorPool}
+         CanWriteField "pNext" VkDescriptorSetAllocateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDescriptorSetAllocateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "descriptorPool" VkDescriptorSetAllocateInfo where
@@ -213,39 +161,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDescriptorSetAllocateInfo, descriptorPool}
 
-instance CanReadField "descriptorPool" VkDescriptorSetAllocateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkDescriptorPool
+instance {-# OVERLAPPING #-}
+         CanReadField "descriptorPool" VkDescriptorSetAllocateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDescriptorSetAllocateInfo, descriptorPool})
 
         {-# INLINE readField #-}
-        readField = readVkDescriptorPool
-
-instance CanWriteField "descriptorPool" VkDescriptorSetAllocateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkDescriptorPool
+        readField p
+          = peekByteOff p #{offset VkDescriptorSetAllocateInfo, descriptorPool}
 
 instance {-# OVERLAPPING #-}
-         HasVkDescriptorSetCount VkDescriptorSetAllocateInfo where
-        type VkDescriptorSetCountMType VkDescriptorSetAllocateInfo = Word32
-
-        {-# NOINLINE vkDescriptorSetCount #-}
-        vkDescriptorSetCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDescriptorSetAllocateInfo, descriptorSetCount})
-
-        {-# INLINE vkDescriptorSetCountByteOffset #-}
-        vkDescriptorSetCountByteOffset ~_
-          = #{offset VkDescriptorSetAllocateInfo, descriptorSetCount}
-
-        {-# INLINE readVkDescriptorSetCount #-}
-        readVkDescriptorSetCount p
-          = peekByteOff p #{offset VkDescriptorSetAllocateInfo, descriptorSetCount}
-
-        {-# INLINE writeVkDescriptorSetCount #-}
-        writeVkDescriptorSetCount p
-          = pokeByteOff p #{offset VkDescriptorSetAllocateInfo, descriptorSetCount}
+         CanWriteField "descriptorPool" VkDescriptorSetAllocateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDescriptorSetAllocateInfo, descriptorPool}
 
 instance {-# OVERLAPPING #-}
          HasField "descriptorSetCount" VkDescriptorSetAllocateInfo where
@@ -265,42 +196,23 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDescriptorSetAllocateInfo, descriptorSetCount}
 
-instance CanReadField "descriptorSetCount"
-           VkDescriptorSetAllocateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkDescriptorSetCount
+instance {-# OVERLAPPING #-}
+         CanReadField "descriptorSetCount" VkDescriptorSetAllocateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDescriptorSetAllocateInfo, descriptorSetCount})
 
         {-# INLINE readField #-}
-        readField = readVkDescriptorSetCount
-
-instance CanWriteField "descriptorSetCount"
-           VkDescriptorSetAllocateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkDescriptorSetCount
+        readField p
+          = peekByteOff p #{offset VkDescriptorSetAllocateInfo, descriptorSetCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPSetLayouts VkDescriptorSetAllocateInfo where
-        type VkPSetLayoutsMType VkDescriptorSetAllocateInfo =
-             Ptr VkDescriptorSetLayout
-
-        {-# NOINLINE vkPSetLayouts #-}
-        vkPSetLayouts x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDescriptorSetAllocateInfo, pSetLayouts})
-
-        {-# INLINE vkPSetLayoutsByteOffset #-}
-        vkPSetLayoutsByteOffset ~_
-          = #{offset VkDescriptorSetAllocateInfo, pSetLayouts}
-
-        {-# INLINE readVkPSetLayouts #-}
-        readVkPSetLayouts p
-          = peekByteOff p #{offset VkDescriptorSetAllocateInfo, pSetLayouts}
-
-        {-# INLINE writeVkPSetLayouts #-}
-        writeVkPSetLayouts p
-          = pokeByteOff p #{offset VkDescriptorSetAllocateInfo, pSetLayouts}
+         CanWriteField "descriptorSetCount" VkDescriptorSetAllocateInfo
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDescriptorSetAllocateInfo, descriptorSetCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pSetLayouts" VkDescriptorSetAllocateInfo where
@@ -320,33 +232,37 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDescriptorSetAllocateInfo, pSetLayouts}
 
-instance CanReadField "pSetLayouts" VkDescriptorSetAllocateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkPSetLayouts
+instance {-# OVERLAPPING #-}
+         CanReadField "pSetLayouts" VkDescriptorSetAllocateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDescriptorSetAllocateInfo, pSetLayouts})
 
         {-# INLINE readField #-}
-        readField = readVkPSetLayouts
+        readField p
+          = peekByteOff p #{offset VkDescriptorSetAllocateInfo, pSetLayouts}
 
-instance CanWriteField "pSetLayouts" VkDescriptorSetAllocateInfo
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pSetLayouts" VkDescriptorSetAllocateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPSetLayouts
+        writeField p
+          = pokeByteOff p #{offset VkDescriptorSetAllocateInfo, pSetLayouts}
 
 instance Show VkDescriptorSetAllocateInfo where
         showsPrec d x
           = showString "VkDescriptorSetAllocateInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkDescriptorPool = " .
-                            showsPrec d (vkDescriptorPool x) .
+                          showString "descriptorPool = " .
+                            showsPrec d (getField @"descriptorPool" x) .
                               showString ", " .
-                                showString "vkDescriptorSetCount = " .
-                                  showsPrec d (vkDescriptorSetCount x) .
+                                showString "descriptorSetCount = " .
+                                  showsPrec d (getField @"descriptorSetCount" x) .
                                     showString ", " .
-                                      showString "vkPSetLayouts = " .
-                                        showsPrec d (vkPSetLayouts x) . showChar '}'
+                                      showString "pSetLayouts = " .
+                                        showsPrec d (getField @"pSetLayouts" x) . showChar '}'

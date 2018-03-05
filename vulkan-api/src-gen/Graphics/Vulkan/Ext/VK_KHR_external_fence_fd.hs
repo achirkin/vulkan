@@ -31,8 +31,8 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_fd
         module Graphics.Vulkan.Types.Struct.VkImportFenceFdInfoKHR,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
-        vkImportFenceFdKHR, vkGetFenceFdKHR,
-        module Graphics.Vulkan.Types.Enum.VkResult,
+        vkImportFenceFdKHR, vkImportFenceFdKHRSafe, vkGetFenceFdKHR,
+        vkGetFenceFdKHRSafe, module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_KHR_EXTERNAL_FENCE_FD_SPEC_VERSION,
         pattern VK_KHR_EXTERNAL_FENCE_FD_SPEC_VERSION,
@@ -69,6 +69,22 @@ foreign import ccall unsafe "vkImportFenceFdKHR" vkImportFenceFdKHR
 
 -- | Success codes: 'VK_SUCCESS'.
 --
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR'.
+--
+--   > VkResult vkImportFenceFdKHR
+--   >     ( VkDevice device
+--   >     , const VkImportFenceFdInfoKHR* pImportFenceFdInfo
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkImportFenceFdKHR.html vkImportFenceFdKHR registry at www.khronos.org>
+foreign import ccall safe "vkImportFenceFdKHR"
+               vkImportFenceFdKHRSafe ::
+               VkDevice -- ^ device
+                        -> Ptr VkImportFenceFdInfoKHR -- ^ pImportFenceFdInfo
+                                                      -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
 --   Error codes: 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
 --
 --   > VkResult vkGetFenceFdKHR
@@ -79,6 +95,23 @@ foreign import ccall unsafe "vkImportFenceFdKHR" vkImportFenceFdKHR
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetFenceFdKHR.html vkGetFenceFdKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkGetFenceFdKHR" vkGetFenceFdKHR ::
+               VkDevice -- ^ device
+                        -> Ptr VkFenceGetFdInfoKHR -- ^ pGetFdInfo
+                                                   -> Ptr CInt -- ^ pFd
+                                                               -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
+--
+--   > VkResult vkGetFenceFdKHR
+--   >     ( VkDevice device
+--   >     , const VkFenceGetFdInfoKHR* pGetFdInfo
+--   >     , int* pFd
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetFenceFdKHR.html vkGetFenceFdKHR registry at www.khronos.org>
+foreign import ccall safe "vkGetFenceFdKHR" vkGetFenceFdKHRSafe ::
                VkDevice -- ^ device
                         -> Ptr VkFenceGetFdInfoKHR -- ^ pGetFdInfo
                                                    -> Ptr CInt -- ^ pFd

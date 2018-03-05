@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkShaderModuleCreateInfo
        (VkShaderModuleCreateInfo(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Bitmasks             (VkShaderModuleCreateFlags)
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkShaderModuleCreateInfo {
@@ -75,27 +75,6 @@ instance VulkanMarshal VkShaderModuleCreateInfo where
         type ReturnedOnly VkShaderModuleCreateInfo = 'False -- ' closing tick for hsc2hs
         type StructExtends VkShaderModuleCreateInfo = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkShaderModuleCreateInfo
-         where
-        type VkSTypeMType VkShaderModuleCreateInfo = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkShaderModuleCreateInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkShaderModuleCreateInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkShaderModuleCreateInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkShaderModuleCreateInfo, sType}
-
 instance {-# OVERLAPPING #-}
          HasField "sType" VkShaderModuleCreateInfo where
         type FieldType "sType" VkShaderModuleCreateInfo = VkStructureType
@@ -110,37 +89,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkShaderModuleCreateInfo, sType}
 
-instance CanReadField "sType" VkShaderModuleCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkShaderModuleCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkShaderModuleCreateInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkShaderModuleCreateInfo, sType}
 
-instance CanWriteField "sType" VkShaderModuleCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkShaderModuleCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkShaderModuleCreateInfo
-         where
-        type VkPNextMType VkShaderModuleCreateInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkShaderModuleCreateInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkShaderModuleCreateInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkShaderModuleCreateInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkShaderModuleCreateInfo, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkShaderModuleCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkShaderModuleCreateInfo where
@@ -156,38 +120,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkShaderModuleCreateInfo, pNext}
 
-instance CanReadField "pNext" VkShaderModuleCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkShaderModuleCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkShaderModuleCreateInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkShaderModuleCreateInfo, pNext}
 
-instance CanWriteField "pNext" VkShaderModuleCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext" VkShaderModuleCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-} HasVkFlags VkShaderModuleCreateInfo
-         where
-        type VkFlagsMType VkShaderModuleCreateInfo =
-             VkShaderModuleCreateFlags
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkShaderModuleCreateInfo, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkShaderModuleCreateInfo, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkShaderModuleCreateInfo, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkShaderModuleCreateInfo, flags}
+        writeField p
+          = pokeByteOff p #{offset VkShaderModuleCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkShaderModuleCreateInfo where
@@ -204,37 +152,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkShaderModuleCreateInfo, flags}
 
-instance CanReadField "flags" VkShaderModuleCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkShaderModuleCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkShaderModuleCreateInfo, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
+        readField p
+          = peekByteOff p #{offset VkShaderModuleCreateInfo, flags}
 
-instance CanWriteField "flags" VkShaderModuleCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "flags" VkShaderModuleCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkFlags
-
-instance {-# OVERLAPPING #-} HasVkCodeSize VkShaderModuleCreateInfo
-         where
-        type VkCodeSizeMType VkShaderModuleCreateInfo = CSize
-
-        {-# NOINLINE vkCodeSize #-}
-        vkCodeSize x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkShaderModuleCreateInfo, codeSize})
-
-        {-# INLINE vkCodeSizeByteOffset #-}
-        vkCodeSizeByteOffset ~_
-          = #{offset VkShaderModuleCreateInfo, codeSize}
-
-        {-# INLINE readVkCodeSize #-}
-        readVkCodeSize p
-          = peekByteOff p #{offset VkShaderModuleCreateInfo, codeSize}
-
-        {-# INLINE writeVkCodeSize #-}
-        writeVkCodeSize p
-          = pokeByteOff p #{offset VkShaderModuleCreateInfo, codeSize}
+        writeField p
+          = pokeByteOff p #{offset VkShaderModuleCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "codeSize" VkShaderModuleCreateInfo where
@@ -251,37 +184,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkShaderModuleCreateInfo, codeSize}
 
-instance CanReadField "codeSize" VkShaderModuleCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkCodeSize
+instance {-# OVERLAPPING #-}
+         CanReadField "codeSize" VkShaderModuleCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkShaderModuleCreateInfo, codeSize})
 
         {-# INLINE readField #-}
-        readField = readVkCodeSize
+        readField p
+          = peekByteOff p #{offset VkShaderModuleCreateInfo, codeSize}
 
-instance CanWriteField "codeSize" VkShaderModuleCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "codeSize" VkShaderModuleCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkCodeSize
-
-instance {-# OVERLAPPING #-} HasVkPCode VkShaderModuleCreateInfo
-         where
-        type VkPCodeMType VkShaderModuleCreateInfo = Ptr Word32
-
-        {-# NOINLINE vkPCode #-}
-        vkPCode x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkShaderModuleCreateInfo, pCode})
-
-        {-# INLINE vkPCodeByteOffset #-}
-        vkPCodeByteOffset ~_
-          = #{offset VkShaderModuleCreateInfo, pCode}
-
-        {-# INLINE readVkPCode #-}
-        readVkPCode p
-          = peekByteOff p #{offset VkShaderModuleCreateInfo, pCode}
-
-        {-# INLINE writeVkPCode #-}
-        writeVkPCode p
-          = pokeByteOff p #{offset VkShaderModuleCreateInfo, pCode}
+        writeField p
+          = pokeByteOff p #{offset VkShaderModuleCreateInfo, codeSize}
 
 instance {-# OVERLAPPING #-}
          HasField "pCode" VkShaderModuleCreateInfo where
@@ -297,31 +215,37 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkShaderModuleCreateInfo, pCode}
 
-instance CanReadField "pCode" VkShaderModuleCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkPCode
+instance {-# OVERLAPPING #-}
+         CanReadField "pCode" VkShaderModuleCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkShaderModuleCreateInfo, pCode})
 
         {-# INLINE readField #-}
-        readField = readVkPCode
+        readField p
+          = peekByteOff p #{offset VkShaderModuleCreateInfo, pCode}
 
-instance CanWriteField "pCode" VkShaderModuleCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pCode" VkShaderModuleCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPCode
+        writeField p
+          = pokeByteOff p #{offset VkShaderModuleCreateInfo, pCode}
 
 instance Show VkShaderModuleCreateInfo where
         showsPrec d x
           = showString "VkShaderModuleCreateInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkCodeSize = " .
-                                  showsPrec d (vkCodeSize x) .
+                                showString "codeSize = " .
+                                  showsPrec d (getField @"codeSize" x) .
                                     showString ", " .
-                                      showString "vkPCode = " .
-                                        showsPrec d (vkPCode x) . showChar '}'
+                                      showString "pCode = " .
+                                        showsPrec d (getField @"pCode" x) . showChar '}'

@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPresentRegionKHR
        (VkPresentRegionKHR(..)) where
@@ -13,7 +14,6 @@ import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Struct.VkRectLayerKHR (VkRectLayerKHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                            (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPresentRegionKHR {
@@ -69,27 +69,6 @@ instance VulkanMarshal VkPresentRegionKHR where
         type ReturnedOnly VkPresentRegionKHR = 'False -- ' closing tick for hsc2hs
         type StructExtends VkPresentRegionKHR = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkRectangleCount VkPresentRegionKHR
-         where
-        type VkRectangleCountMType VkPresentRegionKHR = Word32
-
-        {-# NOINLINE vkRectangleCount #-}
-        vkRectangleCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPresentRegionKHR, rectangleCount})
-
-        {-# INLINE vkRectangleCountByteOffset #-}
-        vkRectangleCountByteOffset ~_
-          = #{offset VkPresentRegionKHR, rectangleCount}
-
-        {-# INLINE readVkRectangleCount #-}
-        readVkRectangleCount p
-          = peekByteOff p #{offset VkPresentRegionKHR, rectangleCount}
-
-        {-# INLINE writeVkRectangleCount #-}
-        writeVkRectangleCount p
-          = pokeByteOff p #{offset VkPresentRegionKHR, rectangleCount}
-
 instance {-# OVERLAPPING #-}
          HasField "rectangleCount" VkPresentRegionKHR where
         type FieldType "rectangleCount" VkPresentRegionKHR = Word32
@@ -105,37 +84,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPresentRegionKHR, rectangleCount}
 
-instance CanReadField "rectangleCount" VkPresentRegionKHR where
-        {-# INLINE getField #-}
-        getField = vkRectangleCount
+instance {-# OVERLAPPING #-}
+         CanReadField "rectangleCount" VkPresentRegionKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPresentRegionKHR, rectangleCount})
 
         {-# INLINE readField #-}
-        readField = readVkRectangleCount
+        readField p
+          = peekByteOff p #{offset VkPresentRegionKHR, rectangleCount}
 
-instance CanWriteField "rectangleCount" VkPresentRegionKHR where
+instance {-# OVERLAPPING #-}
+         CanWriteField "rectangleCount" VkPresentRegionKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkRectangleCount
-
-instance {-# OVERLAPPING #-} HasVkPRectangles VkPresentRegionKHR
-         where
-        type VkPRectanglesMType VkPresentRegionKHR = Ptr VkRectLayerKHR
-
-        {-# NOINLINE vkPRectangles #-}
-        vkPRectangles x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPresentRegionKHR, pRectangles})
-
-        {-# INLINE vkPRectanglesByteOffset #-}
-        vkPRectanglesByteOffset ~_
-          = #{offset VkPresentRegionKHR, pRectangles}
-
-        {-# INLINE readVkPRectangles #-}
-        readVkPRectangles p
-          = peekByteOff p #{offset VkPresentRegionKHR, pRectangles}
-
-        {-# INLINE writeVkPRectangles #-}
-        writeVkPRectangles p
-          = pokeByteOff p #{offset VkPresentRegionKHR, pRectangles}
+        writeField p
+          = pokeByteOff p #{offset VkPresentRegionKHR, rectangleCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pRectangles" VkPresentRegionKHR where
@@ -152,22 +116,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkPresentRegionKHR, pRectangles}
 
-instance CanReadField "pRectangles" VkPresentRegionKHR where
-        {-# INLINE getField #-}
-        getField = vkPRectangles
+instance {-# OVERLAPPING #-}
+         CanReadField "pRectangles" VkPresentRegionKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPresentRegionKHR, pRectangles})
 
         {-# INLINE readField #-}
-        readField = readVkPRectangles
+        readField p
+          = peekByteOff p #{offset VkPresentRegionKHR, pRectangles}
 
-instance CanWriteField "pRectangles" VkPresentRegionKHR where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pRectangles" VkPresentRegionKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkPRectangles
+        writeField p
+          = pokeByteOff p #{offset VkPresentRegionKHR, pRectangles}
 
 instance Show VkPresentRegionKHR where
         showsPrec d x
           = showString "VkPresentRegionKHR {" .
-              showString "vkRectangleCount = " .
-                showsPrec d (vkRectangleCount x) .
+              showString "rectangleCount = " .
+                showsPrec d (getField @"rectangleCount" x) .
                   showString ", " .
-                    showString "vkPRectangles = " .
-                      showsPrec d (vkPRectangles x) . showChar '}'
+                    showString "pRectangles = " .
+                      showsPrec d (getField @"pRectangles" x) . showChar '}'

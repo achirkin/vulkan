@@ -30,7 +30,8 @@ module Graphics.Vulkan.Ext.VK_NN_vi_surface
         module Graphics.Vulkan.Types.Bitmasks,
         module Graphics.Vulkan.Types.Struct.VkViSurfaceCreateInfoNN,
         -- > #include "vk_platform.h"
-        vkCreateViSurfaceNN, module Graphics.Vulkan.Marshal,
+        vkCreateViSurfaceNN, vkCreateViSurfaceNNSafe,
+        module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,
@@ -70,6 +71,28 @@ import           Graphics.Vulkan.Types.Struct.VkViSurfaceCreateInfoNN
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateViSurfaceNN.html vkCreateViSurfaceNN registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateViSurfaceNN"
                vkCreateViSurfaceNN ::
+               VkInstance -- ^ instance
+                          ->
+                 Ptr VkViSurfaceCreateInfoNN -- ^ pCreateInfo
+                                             ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                                 -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
+--
+--   > VkResult vkCreateViSurfaceNN
+--   >     ( VkInstance instance
+--   >     , const VkViSurfaceCreateInfoNN* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkSurfaceKHR* pSurface
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateViSurfaceNN.html vkCreateViSurfaceNN registry at www.khronos.org>
+foreign import ccall safe "vkCreateViSurfaceNN"
+               vkCreateViSurfaceNNSafe ::
                VkInstance -- ^ instance
                           ->
                  Ptr VkViSurfaceCreateInfoNN -- ^ pCreateInfo

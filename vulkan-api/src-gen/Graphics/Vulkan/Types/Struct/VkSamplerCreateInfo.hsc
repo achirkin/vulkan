@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkSamplerCreateInfo
        (VkSamplerCreateInfo(..)) where
@@ -20,7 +21,6 @@ import           Graphics.Vulkan.Types.Enum.VkFilter             (VkFilter)
 import           Graphics.Vulkan.Types.Enum.VkSamplerAddressMode (VkSamplerAddressMode)
 import           Graphics.Vulkan.Types.Enum.VkSamplerMipmapMode  (VkSamplerMipmapMode)
 import           Graphics.Vulkan.Types.Enum.VkStructureType      (VkStructureType)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSamplerCreateInfo {
@@ -96,26 +96,6 @@ instance VulkanMarshal VkSamplerCreateInfo where
         type ReturnedOnly VkSamplerCreateInfo = 'False -- ' closing tick for hsc2hs
         type StructExtends VkSamplerCreateInfo = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkSamplerCreateInfo where
-        type VkSTypeMType VkSamplerCreateInfo = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkSamplerCreateInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkSamplerCreateInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkSamplerCreateInfo, sType}
-
 instance {-# OVERLAPPING #-} HasField "sType" VkSamplerCreateInfo
          where
         type FieldType "sType" VkSamplerCreateInfo = VkStructureType
@@ -130,36 +110,22 @@ instance {-# OVERLAPPING #-} HasField "sType" VkSamplerCreateInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSamplerCreateInfo, sType}
 
-instance CanReadField "sType" VkSamplerCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkSamplerCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkSamplerCreateInfo, sType}
 
-instance CanWriteField "sType" VkSamplerCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkSamplerCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkSamplerCreateInfo where
-        type VkPNextMType VkSamplerCreateInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkSamplerCreateInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkSamplerCreateInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkSamplerCreateInfo, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkSamplerCreateInfo, sType}
 
 instance {-# OVERLAPPING #-} HasField "pNext" VkSamplerCreateInfo
          where
@@ -175,36 +141,22 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkSamplerCreateInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSamplerCreateInfo, pNext}
 
-instance CanReadField "pNext" VkSamplerCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkSamplerCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkSamplerCreateInfo, pNext}
 
-instance CanWriteField "pNext" VkSamplerCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext" VkSamplerCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-} HasVkFlags VkSamplerCreateInfo where
-        type VkFlagsMType VkSamplerCreateInfo = VkSamplerCreateFlags
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkSamplerCreateInfo, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkSamplerCreateInfo, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkSamplerCreateInfo, flags}
+        writeField p
+          = pokeByteOff p #{offset VkSamplerCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-} HasField "flags" VkSamplerCreateInfo
          where
@@ -220,37 +172,22 @@ instance {-# OVERLAPPING #-} HasField "flags" VkSamplerCreateInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSamplerCreateInfo, flags}
 
-instance CanReadField "flags" VkSamplerCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkSamplerCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
+        readField p
+          = peekByteOff p #{offset VkSamplerCreateInfo, flags}
 
-instance CanWriteField "flags" VkSamplerCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "flags" VkSamplerCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkFlags
-
-instance {-# OVERLAPPING #-} HasVkMagFilter VkSamplerCreateInfo
-         where
-        type VkMagFilterMType VkSamplerCreateInfo = VkFilter
-
-        {-# NOINLINE vkMagFilter #-}
-        vkMagFilter x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, magFilter})
-
-        {-# INLINE vkMagFilterByteOffset #-}
-        vkMagFilterByteOffset ~_
-          = #{offset VkSamplerCreateInfo, magFilter}
-
-        {-# INLINE readVkMagFilter #-}
-        readVkMagFilter p
-          = peekByteOff p #{offset VkSamplerCreateInfo, magFilter}
-
-        {-# INLINE writeVkMagFilter #-}
-        writeVkMagFilter p
-          = pokeByteOff p #{offset VkSamplerCreateInfo, magFilter}
+        writeField p
+          = pokeByteOff p #{offset VkSamplerCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "magFilter" VkSamplerCreateInfo where
@@ -266,37 +203,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSamplerCreateInfo, magFilter}
 
-instance CanReadField "magFilter" VkSamplerCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkMagFilter
+instance {-# OVERLAPPING #-}
+         CanReadField "magFilter" VkSamplerCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, magFilter})
 
         {-# INLINE readField #-}
-        readField = readVkMagFilter
+        readField p
+          = peekByteOff p #{offset VkSamplerCreateInfo, magFilter}
 
-instance CanWriteField "magFilter" VkSamplerCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "magFilter" VkSamplerCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkMagFilter
-
-instance {-# OVERLAPPING #-} HasVkMinFilter VkSamplerCreateInfo
-         where
-        type VkMinFilterMType VkSamplerCreateInfo = VkFilter
-
-        {-# NOINLINE vkMinFilter #-}
-        vkMinFilter x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, minFilter})
-
-        {-# INLINE vkMinFilterByteOffset #-}
-        vkMinFilterByteOffset ~_
-          = #{offset VkSamplerCreateInfo, minFilter}
-
-        {-# INLINE readVkMinFilter #-}
-        readVkMinFilter p
-          = peekByteOff p #{offset VkSamplerCreateInfo, minFilter}
-
-        {-# INLINE writeVkMinFilter #-}
-        writeVkMinFilter p
-          = pokeByteOff p #{offset VkSamplerCreateInfo, minFilter}
+        writeField p
+          = pokeByteOff p #{offset VkSamplerCreateInfo, magFilter}
 
 instance {-# OVERLAPPING #-}
          HasField "minFilter" VkSamplerCreateInfo where
@@ -312,37 +234,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSamplerCreateInfo, minFilter}
 
-instance CanReadField "minFilter" VkSamplerCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkMinFilter
+instance {-# OVERLAPPING #-}
+         CanReadField "minFilter" VkSamplerCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, minFilter})
 
         {-# INLINE readField #-}
-        readField = readVkMinFilter
+        readField p
+          = peekByteOff p #{offset VkSamplerCreateInfo, minFilter}
 
-instance CanWriteField "minFilter" VkSamplerCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "minFilter" VkSamplerCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkMinFilter
-
-instance {-# OVERLAPPING #-} HasVkMipmapMode VkSamplerCreateInfo
-         where
-        type VkMipmapModeMType VkSamplerCreateInfo = VkSamplerMipmapMode
-
-        {-# NOINLINE vkMipmapMode #-}
-        vkMipmapMode x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, mipmapMode})
-
-        {-# INLINE vkMipmapModeByteOffset #-}
-        vkMipmapModeByteOffset ~_
-          = #{offset VkSamplerCreateInfo, mipmapMode}
-
-        {-# INLINE readVkMipmapMode #-}
-        readVkMipmapMode p
-          = peekByteOff p #{offset VkSamplerCreateInfo, mipmapMode}
-
-        {-# INLINE writeVkMipmapMode #-}
-        writeVkMipmapMode p
-          = pokeByteOff p #{offset VkSamplerCreateInfo, mipmapMode}
+        writeField p
+          = pokeByteOff p #{offset VkSamplerCreateInfo, minFilter}
 
 instance {-# OVERLAPPING #-}
          HasField "mipmapMode" VkSamplerCreateInfo where
@@ -359,37 +266,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSamplerCreateInfo, mipmapMode}
 
-instance CanReadField "mipmapMode" VkSamplerCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkMipmapMode
+instance {-# OVERLAPPING #-}
+         CanReadField "mipmapMode" VkSamplerCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, mipmapMode})
 
         {-# INLINE readField #-}
-        readField = readVkMipmapMode
+        readField p
+          = peekByteOff p #{offset VkSamplerCreateInfo, mipmapMode}
 
-instance CanWriteField "mipmapMode" VkSamplerCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "mipmapMode" VkSamplerCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkMipmapMode
-
-instance {-# OVERLAPPING #-} HasVkAddressModeU VkSamplerCreateInfo
-         where
-        type VkAddressModeUMType VkSamplerCreateInfo = VkSamplerAddressMode
-
-        {-# NOINLINE vkAddressModeU #-}
-        vkAddressModeU x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, addressModeU})
-
-        {-# INLINE vkAddressModeUByteOffset #-}
-        vkAddressModeUByteOffset ~_
-          = #{offset VkSamplerCreateInfo, addressModeU}
-
-        {-# INLINE readVkAddressModeU #-}
-        readVkAddressModeU p
-          = peekByteOff p #{offset VkSamplerCreateInfo, addressModeU}
-
-        {-# INLINE writeVkAddressModeU #-}
-        writeVkAddressModeU p
-          = pokeByteOff p #{offset VkSamplerCreateInfo, addressModeU}
+        writeField p
+          = pokeByteOff p #{offset VkSamplerCreateInfo, mipmapMode}
 
 instance {-# OVERLAPPING #-}
          HasField "addressModeU" VkSamplerCreateInfo where
@@ -407,37 +299,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSamplerCreateInfo, addressModeU}
 
-instance CanReadField "addressModeU" VkSamplerCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkAddressModeU
+instance {-# OVERLAPPING #-}
+         CanReadField "addressModeU" VkSamplerCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, addressModeU})
 
         {-# INLINE readField #-}
-        readField = readVkAddressModeU
+        readField p
+          = peekByteOff p #{offset VkSamplerCreateInfo, addressModeU}
 
-instance CanWriteField "addressModeU" VkSamplerCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "addressModeU" VkSamplerCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkAddressModeU
-
-instance {-# OVERLAPPING #-} HasVkAddressModeV VkSamplerCreateInfo
-         where
-        type VkAddressModeVMType VkSamplerCreateInfo = VkSamplerAddressMode
-
-        {-# NOINLINE vkAddressModeV #-}
-        vkAddressModeV x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, addressModeV})
-
-        {-# INLINE vkAddressModeVByteOffset #-}
-        vkAddressModeVByteOffset ~_
-          = #{offset VkSamplerCreateInfo, addressModeV}
-
-        {-# INLINE readVkAddressModeV #-}
-        readVkAddressModeV p
-          = peekByteOff p #{offset VkSamplerCreateInfo, addressModeV}
-
-        {-# INLINE writeVkAddressModeV #-}
-        writeVkAddressModeV p
-          = pokeByteOff p #{offset VkSamplerCreateInfo, addressModeV}
+        writeField p
+          = pokeByteOff p #{offset VkSamplerCreateInfo, addressModeU}
 
 instance {-# OVERLAPPING #-}
          HasField "addressModeV" VkSamplerCreateInfo where
@@ -455,37 +332,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSamplerCreateInfo, addressModeV}
 
-instance CanReadField "addressModeV" VkSamplerCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkAddressModeV
+instance {-# OVERLAPPING #-}
+         CanReadField "addressModeV" VkSamplerCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, addressModeV})
 
         {-# INLINE readField #-}
-        readField = readVkAddressModeV
+        readField p
+          = peekByteOff p #{offset VkSamplerCreateInfo, addressModeV}
 
-instance CanWriteField "addressModeV" VkSamplerCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "addressModeV" VkSamplerCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkAddressModeV
-
-instance {-# OVERLAPPING #-} HasVkAddressModeW VkSamplerCreateInfo
-         where
-        type VkAddressModeWMType VkSamplerCreateInfo = VkSamplerAddressMode
-
-        {-# NOINLINE vkAddressModeW #-}
-        vkAddressModeW x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, addressModeW})
-
-        {-# INLINE vkAddressModeWByteOffset #-}
-        vkAddressModeWByteOffset ~_
-          = #{offset VkSamplerCreateInfo, addressModeW}
-
-        {-# INLINE readVkAddressModeW #-}
-        readVkAddressModeW p
-          = peekByteOff p #{offset VkSamplerCreateInfo, addressModeW}
-
-        {-# INLINE writeVkAddressModeW #-}
-        writeVkAddressModeW p
-          = pokeByteOff p #{offset VkSamplerCreateInfo, addressModeW}
+        writeField p
+          = pokeByteOff p #{offset VkSamplerCreateInfo, addressModeV}
 
 instance {-# OVERLAPPING #-}
          HasField "addressModeW" VkSamplerCreateInfo where
@@ -503,38 +365,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSamplerCreateInfo, addressModeW}
 
-instance CanReadField "addressModeW" VkSamplerCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkAddressModeW
+instance {-# OVERLAPPING #-}
+         CanReadField "addressModeW" VkSamplerCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, addressModeW})
 
         {-# INLINE readField #-}
-        readField = readVkAddressModeW
+        readField p
+          = peekByteOff p #{offset VkSamplerCreateInfo, addressModeW}
 
-instance CanWriteField "addressModeW" VkSamplerCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "addressModeW" VkSamplerCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkAddressModeW
-
-instance {-# OVERLAPPING #-} HasVkMipLodBias VkSamplerCreateInfo
-         where
-        type VkMipLodBiasMType VkSamplerCreateInfo =
-             #{type float}
-
-        {-# NOINLINE vkMipLodBias #-}
-        vkMipLodBias x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, mipLodBias})
-
-        {-# INLINE vkMipLodBiasByteOffset #-}
-        vkMipLodBiasByteOffset ~_
-          = #{offset VkSamplerCreateInfo, mipLodBias}
-
-        {-# INLINE readVkMipLodBias #-}
-        readVkMipLodBias p
-          = peekByteOff p #{offset VkSamplerCreateInfo, mipLodBias}
-
-        {-# INLINE writeVkMipLodBias #-}
-        writeVkMipLodBias p
-          = pokeByteOff p #{offset VkSamplerCreateInfo, mipLodBias}
+        writeField p
+          = pokeByteOff p #{offset VkSamplerCreateInfo, addressModeW}
 
 instance {-# OVERLAPPING #-}
          HasField "mipLodBias" VkSamplerCreateInfo where
@@ -551,37 +397,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSamplerCreateInfo, mipLodBias}
 
-instance CanReadField "mipLodBias" VkSamplerCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkMipLodBias
+instance {-# OVERLAPPING #-}
+         CanReadField "mipLodBias" VkSamplerCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, mipLodBias})
 
         {-# INLINE readField #-}
-        readField = readVkMipLodBias
-
-instance CanWriteField "mipLodBias" VkSamplerCreateInfo where
-        {-# INLINE writeField #-}
-        writeField = writeVkMipLodBias
+        readField p
+          = peekByteOff p #{offset VkSamplerCreateInfo, mipLodBias}
 
 instance {-# OVERLAPPING #-}
-         HasVkAnisotropyEnable VkSamplerCreateInfo where
-        type VkAnisotropyEnableMType VkSamplerCreateInfo = VkBool32
-
-        {-# NOINLINE vkAnisotropyEnable #-}
-        vkAnisotropyEnable x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, anisotropyEnable})
-
-        {-# INLINE vkAnisotropyEnableByteOffset #-}
-        vkAnisotropyEnableByteOffset ~_
-          = #{offset VkSamplerCreateInfo, anisotropyEnable}
-
-        {-# INLINE readVkAnisotropyEnable #-}
-        readVkAnisotropyEnable p
-          = peekByteOff p #{offset VkSamplerCreateInfo, anisotropyEnable}
-
-        {-# INLINE writeVkAnisotropyEnable #-}
-        writeVkAnisotropyEnable p
-          = pokeByteOff p #{offset VkSamplerCreateInfo, anisotropyEnable}
+         CanWriteField "mipLodBias" VkSamplerCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSamplerCreateInfo, mipLodBias}
 
 instance {-# OVERLAPPING #-}
          HasField "anisotropyEnable" VkSamplerCreateInfo where
@@ -598,38 +429,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSamplerCreateInfo, anisotropyEnable}
 
-instance CanReadField "anisotropyEnable" VkSamplerCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkAnisotropyEnable
+instance {-# OVERLAPPING #-}
+         CanReadField "anisotropyEnable" VkSamplerCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, anisotropyEnable})
 
         {-# INLINE readField #-}
-        readField = readVkAnisotropyEnable
+        readField p
+          = peekByteOff p #{offset VkSamplerCreateInfo, anisotropyEnable}
 
-instance CanWriteField "anisotropyEnable" VkSamplerCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "anisotropyEnable" VkSamplerCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkAnisotropyEnable
-
-instance {-# OVERLAPPING #-} HasVkMaxAnisotropy VkSamplerCreateInfo
-         where
-        type VkMaxAnisotropyMType VkSamplerCreateInfo =
-             #{type float}
-
-        {-# NOINLINE vkMaxAnisotropy #-}
-        vkMaxAnisotropy x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, maxAnisotropy})
-
-        {-# INLINE vkMaxAnisotropyByteOffset #-}
-        vkMaxAnisotropyByteOffset ~_
-          = #{offset VkSamplerCreateInfo, maxAnisotropy}
-
-        {-# INLINE readVkMaxAnisotropy #-}
-        readVkMaxAnisotropy p
-          = peekByteOff p #{offset VkSamplerCreateInfo, maxAnisotropy}
-
-        {-# INLINE writeVkMaxAnisotropy #-}
-        writeVkMaxAnisotropy p
-          = pokeByteOff p #{offset VkSamplerCreateInfo, maxAnisotropy}
+        writeField p
+          = pokeByteOff p #{offset VkSamplerCreateInfo, anisotropyEnable}
 
 instance {-# OVERLAPPING #-}
          HasField "maxAnisotropy" VkSamplerCreateInfo where
@@ -647,37 +462,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSamplerCreateInfo, maxAnisotropy}
 
-instance CanReadField "maxAnisotropy" VkSamplerCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkMaxAnisotropy
+instance {-# OVERLAPPING #-}
+         CanReadField "maxAnisotropy" VkSamplerCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, maxAnisotropy})
 
         {-# INLINE readField #-}
-        readField = readVkMaxAnisotropy
+        readField p
+          = peekByteOff p #{offset VkSamplerCreateInfo, maxAnisotropy}
 
-instance CanWriteField "maxAnisotropy" VkSamplerCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "maxAnisotropy" VkSamplerCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkMaxAnisotropy
-
-instance {-# OVERLAPPING #-} HasVkCompareEnable VkSamplerCreateInfo
-         where
-        type VkCompareEnableMType VkSamplerCreateInfo = VkBool32
-
-        {-# NOINLINE vkCompareEnable #-}
-        vkCompareEnable x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, compareEnable})
-
-        {-# INLINE vkCompareEnableByteOffset #-}
-        vkCompareEnableByteOffset ~_
-          = #{offset VkSamplerCreateInfo, compareEnable}
-
-        {-# INLINE readVkCompareEnable #-}
-        readVkCompareEnable p
-          = peekByteOff p #{offset VkSamplerCreateInfo, compareEnable}
-
-        {-# INLINE writeVkCompareEnable #-}
-        writeVkCompareEnable p
-          = pokeByteOff p #{offset VkSamplerCreateInfo, compareEnable}
+        writeField p
+          = pokeByteOff p #{offset VkSamplerCreateInfo, maxAnisotropy}
 
 instance {-# OVERLAPPING #-}
          HasField "compareEnable" VkSamplerCreateInfo where
@@ -694,37 +494,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSamplerCreateInfo, compareEnable}
 
-instance CanReadField "compareEnable" VkSamplerCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkCompareEnable
+instance {-# OVERLAPPING #-}
+         CanReadField "compareEnable" VkSamplerCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, compareEnable})
 
         {-# INLINE readField #-}
-        readField = readVkCompareEnable
+        readField p
+          = peekByteOff p #{offset VkSamplerCreateInfo, compareEnable}
 
-instance CanWriteField "compareEnable" VkSamplerCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "compareEnable" VkSamplerCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkCompareEnable
-
-instance {-# OVERLAPPING #-} HasVkCompareOp VkSamplerCreateInfo
-         where
-        type VkCompareOpMType VkSamplerCreateInfo = VkCompareOp
-
-        {-# NOINLINE vkCompareOp #-}
-        vkCompareOp x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, compareOp})
-
-        {-# INLINE vkCompareOpByteOffset #-}
-        vkCompareOpByteOffset ~_
-          = #{offset VkSamplerCreateInfo, compareOp}
-
-        {-# INLINE readVkCompareOp #-}
-        readVkCompareOp p
-          = peekByteOff p #{offset VkSamplerCreateInfo, compareOp}
-
-        {-# INLINE writeVkCompareOp #-}
-        writeVkCompareOp p
-          = pokeByteOff p #{offset VkSamplerCreateInfo, compareOp}
+        writeField p
+          = pokeByteOff p #{offset VkSamplerCreateInfo, compareEnable}
 
 instance {-# OVERLAPPING #-}
          HasField "compareOp" VkSamplerCreateInfo where
@@ -740,36 +525,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSamplerCreateInfo, compareOp}
 
-instance CanReadField "compareOp" VkSamplerCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkCompareOp
+instance {-# OVERLAPPING #-}
+         CanReadField "compareOp" VkSamplerCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, compareOp})
 
         {-# INLINE readField #-}
-        readField = readVkCompareOp
+        readField p
+          = peekByteOff p #{offset VkSamplerCreateInfo, compareOp}
 
-instance CanWriteField "compareOp" VkSamplerCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "compareOp" VkSamplerCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkCompareOp
-
-instance {-# OVERLAPPING #-} HasVkMinLod VkSamplerCreateInfo where
-        type VkMinLodMType VkSamplerCreateInfo = #{type float}
-
-        {-# NOINLINE vkMinLod #-}
-        vkMinLod x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, minLod})
-
-        {-# INLINE vkMinLodByteOffset #-}
-        vkMinLodByteOffset ~_
-          = #{offset VkSamplerCreateInfo, minLod}
-
-        {-# INLINE readVkMinLod #-}
-        readVkMinLod p
-          = peekByteOff p #{offset VkSamplerCreateInfo, minLod}
-
-        {-# INLINE writeVkMinLod #-}
-        writeVkMinLod p
-          = pokeByteOff p #{offset VkSamplerCreateInfo, minLod}
+        writeField p
+          = pokeByteOff p #{offset VkSamplerCreateInfo, compareOp}
 
 instance {-# OVERLAPPING #-} HasField "minLod" VkSamplerCreateInfo
          where
@@ -786,36 +557,22 @@ instance {-# OVERLAPPING #-} HasField "minLod" VkSamplerCreateInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSamplerCreateInfo, minLod}
 
-instance CanReadField "minLod" VkSamplerCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkMinLod
+instance {-# OVERLAPPING #-}
+         CanReadField "minLod" VkSamplerCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, minLod})
 
         {-# INLINE readField #-}
-        readField = readVkMinLod
+        readField p
+          = peekByteOff p #{offset VkSamplerCreateInfo, minLod}
 
-instance CanWriteField "minLod" VkSamplerCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "minLod" VkSamplerCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkMinLod
-
-instance {-# OVERLAPPING #-} HasVkMaxLod VkSamplerCreateInfo where
-        type VkMaxLodMType VkSamplerCreateInfo = #{type float}
-
-        {-# NOINLINE vkMaxLod #-}
-        vkMaxLod x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, maxLod})
-
-        {-# INLINE vkMaxLodByteOffset #-}
-        vkMaxLodByteOffset ~_
-          = #{offset VkSamplerCreateInfo, maxLod}
-
-        {-# INLINE readVkMaxLod #-}
-        readVkMaxLod p
-          = peekByteOff p #{offset VkSamplerCreateInfo, maxLod}
-
-        {-# INLINE writeVkMaxLod #-}
-        writeVkMaxLod p
-          = pokeByteOff p #{offset VkSamplerCreateInfo, maxLod}
+        writeField p
+          = pokeByteOff p #{offset VkSamplerCreateInfo, minLod}
 
 instance {-# OVERLAPPING #-} HasField "maxLod" VkSamplerCreateInfo
          where
@@ -832,37 +589,22 @@ instance {-# OVERLAPPING #-} HasField "maxLod" VkSamplerCreateInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSamplerCreateInfo, maxLod}
 
-instance CanReadField "maxLod" VkSamplerCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkMaxLod
+instance {-# OVERLAPPING #-}
+         CanReadField "maxLod" VkSamplerCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, maxLod})
 
         {-# INLINE readField #-}
-        readField = readVkMaxLod
+        readField p
+          = peekByteOff p #{offset VkSamplerCreateInfo, maxLod}
 
-instance CanWriteField "maxLod" VkSamplerCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "maxLod" VkSamplerCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkMaxLod
-
-instance {-# OVERLAPPING #-} HasVkBorderColor VkSamplerCreateInfo
-         where
-        type VkBorderColorMType VkSamplerCreateInfo = VkBorderColor
-
-        {-# NOINLINE vkBorderColor #-}
-        vkBorderColor x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, borderColor})
-
-        {-# INLINE vkBorderColorByteOffset #-}
-        vkBorderColorByteOffset ~_
-          = #{offset VkSamplerCreateInfo, borderColor}
-
-        {-# INLINE readVkBorderColor #-}
-        readVkBorderColor p
-          = peekByteOff p #{offset VkSamplerCreateInfo, borderColor}
-
-        {-# INLINE writeVkBorderColor #-}
-        writeVkBorderColor p
-          = pokeByteOff p #{offset VkSamplerCreateInfo, borderColor}
+        writeField p
+          = pokeByteOff p #{offset VkSamplerCreateInfo, maxLod}
 
 instance {-# OVERLAPPING #-}
          HasField "borderColor" VkSamplerCreateInfo where
@@ -879,37 +621,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSamplerCreateInfo, borderColor}
 
-instance CanReadField "borderColor" VkSamplerCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkBorderColor
+instance {-# OVERLAPPING #-}
+         CanReadField "borderColor" VkSamplerCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, borderColor})
 
         {-# INLINE readField #-}
-        readField = readVkBorderColor
-
-instance CanWriteField "borderColor" VkSamplerCreateInfo where
-        {-# INLINE writeField #-}
-        writeField = writeVkBorderColor
+        readField p
+          = peekByteOff p #{offset VkSamplerCreateInfo, borderColor}
 
 instance {-# OVERLAPPING #-}
-         HasVkUnnormalizedCoordinates VkSamplerCreateInfo where
-        type VkUnnormalizedCoordinatesMType VkSamplerCreateInfo = VkBool32
-
-        {-# NOINLINE vkUnnormalizedCoordinates #-}
-        vkUnnormalizedCoordinates x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, unnormalizedCoordinates})
-
-        {-# INLINE vkUnnormalizedCoordinatesByteOffset #-}
-        vkUnnormalizedCoordinatesByteOffset ~_
-          = #{offset VkSamplerCreateInfo, unnormalizedCoordinates}
-
-        {-# INLINE readVkUnnormalizedCoordinates #-}
-        readVkUnnormalizedCoordinates p
-          = peekByteOff p #{offset VkSamplerCreateInfo, unnormalizedCoordinates}
-
-        {-# INLINE writeVkUnnormalizedCoordinates #-}
-        writeVkUnnormalizedCoordinates p
-          = pokeByteOff p #{offset VkSamplerCreateInfo, unnormalizedCoordinates}
+         CanWriteField "borderColor" VkSamplerCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSamplerCreateInfo, borderColor}
 
 instance {-# OVERLAPPING #-}
          HasField "unnormalizedCoordinates" VkSamplerCreateInfo where
@@ -929,129 +656,145 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSamplerCreateInfo, unnormalizedCoordinates}
 
-instance CanReadField "unnormalizedCoordinates" VkSamplerCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkUnnormalizedCoordinates
+instance {-# OVERLAPPING #-}
+         CanReadField "unnormalizedCoordinates" VkSamplerCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSamplerCreateInfo, unnormalizedCoordinates})
 
         {-# INLINE readField #-}
-        readField = readVkUnnormalizedCoordinates
+        readField p
+          = peekByteOff p #{offset VkSamplerCreateInfo, unnormalizedCoordinates}
 
-instance CanWriteField "unnormalizedCoordinates"
-           VkSamplerCreateInfo
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "unnormalizedCoordinates" VkSamplerCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkUnnormalizedCoordinates
+        writeField p
+          = pokeByteOff p #{offset VkSamplerCreateInfo, unnormalizedCoordinates}
 
 instance Show VkSamplerCreateInfo where
         showsPrec d x
           = showString "VkSamplerCreateInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkMagFilter = " .
-                                  showsPrec d (vkMagFilter x) .
+                                showString "magFilter = " .
+                                  showsPrec d (getField @"magFilter" x) .
                                     showString ", " .
-                                      showString "vkMinFilter = " .
-                                        showsPrec d (vkMinFilter x) .
+                                      showString "minFilter = " .
+                                        showsPrec d (getField @"minFilter" x) .
                                           showString ", " .
-                                            showString "vkMipmapMode = " .
-                                              showsPrec d (vkMipmapMode x) .
+                                            showString "mipmapMode = " .
+                                              showsPrec d (getField @"mipmapMode" x) .
                                                 showString ", " .
-                                                  showString "vkAddressModeU = " .
-                                                    showsPrec d (vkAddressModeU x) .
+                                                  showString "addressModeU = " .
+                                                    showsPrec d (getField @"addressModeU" x) .
                                                       showString ", " .
-                                                        showString "vkAddressModeV = " .
-                                                          showsPrec d (vkAddressModeV x) .
+                                                        showString "addressModeV = " .
+                                                          showsPrec d (getField @"addressModeV" x) .
                                                             showString ", " .
-                                                              showString "vkAddressModeW = " .
-                                                                showsPrec d (vkAddressModeW x) .
+                                                              showString "addressModeW = " .
+                                                                showsPrec d
+                                                                  (getField @"addressModeW" x)
+                                                                  .
                                                                   showString ", " .
-                                                                    showString "vkMipLodBias = " .
-                                                                      showsPrec d (vkMipLodBias x) .
+                                                                    showString "mipLodBias = " .
+                                                                      showsPrec d
+                                                                        (getField @"mipLodBias" x)
+                                                                        .
                                                                         showString ", " .
                                                                           showString
-                                                                            "vkAnisotropyEnable = "
+                                                                            "anisotropyEnable = "
                                                                             .
                                                                             showsPrec d
-                                                                              (vkAnisotropyEnable x)
+                                                                              (getField
+                                                                                 @"anisotropyEnable"
+                                                                                 x)
                                                                               .
                                                                               showString ", " .
                                                                                 showString
-                                                                                  "vkMaxAnisotropy = "
+                                                                                  "maxAnisotropy = "
                                                                                   .
                                                                                   showsPrec d
-                                                                                    (vkMaxAnisotropy
+                                                                                    (getField
+                                                                                       @"maxAnisotropy"
                                                                                        x)
                                                                                     .
                                                                                     showString ", "
                                                                                       .
                                                                                       showString
-                                                                                        "vkCompareEnable = "
+                                                                                        "compareEnable = "
                                                                                         .
                                                                                         showsPrec d
-                                                                                          (vkCompareEnable
+                                                                                          (getField
+                                                                                             @"compareEnable"
                                                                                              x)
                                                                                           .
                                                                                           showString
                                                                                             ", "
                                                                                             .
                                                                                             showString
-                                                                                              "vkCompareOp = "
+                                                                                              "compareOp = "
                                                                                               .
                                                                                               showsPrec
                                                                                                 d
-                                                                                                (vkCompareOp
+                                                                                                (getField
+                                                                                                   @"compareOp"
                                                                                                    x)
                                                                                                 .
                                                                                                 showString
                                                                                                   ", "
                                                                                                   .
                                                                                                   showString
-                                                                                                    "vkMinLod = "
+                                                                                                    "minLod = "
                                                                                                     .
                                                                                                     showsPrec
                                                                                                       d
-                                                                                                      (vkMinLod
+                                                                                                      (getField
+                                                                                                         @"minLod"
                                                                                                          x)
                                                                                                       .
                                                                                                       showString
                                                                                                         ", "
                                                                                                         .
                                                                                                         showString
-                                                                                                          "vkMaxLod = "
+                                                                                                          "maxLod = "
                                                                                                           .
                                                                                                           showsPrec
                                                                                                             d
-                                                                                                            (vkMaxLod
+                                                                                                            (getField
+                                                                                                               @"maxLod"
                                                                                                                x)
                                                                                                             .
                                                                                                             showString
                                                                                                               ", "
                                                                                                               .
                                                                                                               showString
-                                                                                                                "vkBorderColor = "
+                                                                                                                "borderColor = "
                                                                                                                 .
                                                                                                                 showsPrec
                                                                                                                   d
-                                                                                                                  (vkBorderColor
+                                                                                                                  (getField
+                                                                                                                     @"borderColor"
                                                                                                                      x)
                                                                                                                   .
                                                                                                                   showString
                                                                                                                     ", "
                                                                                                                     .
                                                                                                                     showString
-                                                                                                                      "vkUnnormalizedCoordinates = "
+                                                                                                                      "unnormalizedCoordinates = "
                                                                                                                       .
                                                                                                                       showsPrec
                                                                                                                         d
-                                                                                                                        (vkUnnormalizedCoordinates
+                                                                                                                        (getField
+                                                                                                                           @"unnormalizedCoordinates"
                                                                                                                            x)
                                                                                                                         .
                                                                                                                         showChar

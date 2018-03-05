@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkSparseImageMemoryRequirements2KHR
        (VkSparseImageMemoryRequirements2KHR(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType                   (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkSparseImageMemoryRequirements (VkSparseImageMemoryRequirements)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                             (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSparseImageMemoryRequirements2KHR {
@@ -79,28 +79,6 @@ instance VulkanMarshal VkSparseImageMemoryRequirements2KHR where
         type StructExtends VkSparseImageMemoryRequirements2KHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkSparseImageMemoryRequirements2KHR where
-        type VkSTypeMType VkSparseImageMemoryRequirements2KHR =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSparseImageMemoryRequirements2KHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkSparseImageMemoryRequirements2KHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkSparseImageMemoryRequirements2KHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkSparseImageMemoryRequirements2KHR, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkSparseImageMemoryRequirements2KHR where
         type FieldType "sType" VkSparseImageMemoryRequirements2KHR =
              VkStructureType
@@ -118,39 +96,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSparseImageMemoryRequirements2KHR, sType}
 
-instance CanReadField "sType" VkSparseImageMemoryRequirements2KHR
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkSparseImageMemoryRequirements2KHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSparseImageMemoryRequirements2KHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkSparseImageMemoryRequirements2KHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkSparseImageMemoryRequirements2KHR, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkSparseImageMemoryRequirements2KHR where
-        type VkPNextMType VkSparseImageMemoryRequirements2KHR = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSparseImageMemoryRequirements2KHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkSparseImageMemoryRequirements2KHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkSparseImageMemoryRequirements2KHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkSparseImageMemoryRequirements2KHR, pNext}
+         CanWriteField "sType" VkSparseImageMemoryRequirements2KHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSparseImageMemoryRequirements2KHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkSparseImageMemoryRequirements2KHR where
@@ -170,40 +131,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSparseImageMemoryRequirements2KHR, pNext}
 
-instance CanReadField "pNext" VkSparseImageMemoryRequirements2KHR
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkSparseImageMemoryRequirements2KHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSparseImageMemoryRequirements2KHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkSparseImageMemoryRequirements2KHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkSparseImageMemoryRequirements2KHR, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkMemoryRequirements VkSparseImageMemoryRequirements2KHR where
-        type VkMemoryRequirementsMType VkSparseImageMemoryRequirements2KHR
-             = VkSparseImageMemoryRequirements
-
-        {-# NOINLINE vkMemoryRequirements #-}
-        vkMemoryRequirements x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSparseImageMemoryRequirements2KHR, memoryRequirements})
-
-        {-# INLINE vkMemoryRequirementsByteOffset #-}
-        vkMemoryRequirementsByteOffset ~_
-          = #{offset VkSparseImageMemoryRequirements2KHR, memoryRequirements}
-
-        {-# INLINE readVkMemoryRequirements #-}
-        readVkMemoryRequirements p
-          = peekByteOff p #{offset VkSparseImageMemoryRequirements2KHR, memoryRequirements}
-
-        {-# INLINE writeVkMemoryRequirements #-}
-        writeVkMemoryRequirements p
-          = pokeByteOff p #{offset VkSparseImageMemoryRequirements2KHR, memoryRequirements}
+         CanWriteField "pNext" VkSparseImageMemoryRequirements2KHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSparseImageMemoryRequirements2KHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "memoryRequirements" VkSparseImageMemoryRequirements2KHR
@@ -229,29 +172,35 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSparseImageMemoryRequirements2KHR, memoryRequirements}
 
-instance CanReadField "memoryRequirements"
+instance {-# OVERLAPPING #-}
+         CanReadField "memoryRequirements"
            VkSparseImageMemoryRequirements2KHR
          where
-        {-# INLINE getField #-}
-        getField = vkMemoryRequirements
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSparseImageMemoryRequirements2KHR, memoryRequirements})
 
         {-# INLINE readField #-}
-        readField = readVkMemoryRequirements
+        readField p
+          = peekByteOff p #{offset VkSparseImageMemoryRequirements2KHR, memoryRequirements}
 
-instance CanWriteField "memoryRequirements"
+instance {-# OVERLAPPING #-}
+         CanWriteField "memoryRequirements"
            VkSparseImageMemoryRequirements2KHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkMemoryRequirements
+        writeField p
+          = pokeByteOff p #{offset VkSparseImageMemoryRequirements2KHR, memoryRequirements}
 
 instance Show VkSparseImageMemoryRequirements2KHR where
         showsPrec d x
           = showString "VkSparseImageMemoryRequirements2KHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkMemoryRequirements = " .
-                            showsPrec d (vkMemoryRequirements x) . showChar '}'
+                          showString "memoryRequirements = " .
+                            showsPrec d (getField @"memoryRequirements" x) . showChar '}'

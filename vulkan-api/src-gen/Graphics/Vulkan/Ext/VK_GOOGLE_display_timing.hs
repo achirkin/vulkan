@@ -31,7 +31,10 @@ module Graphics.Vulkan.Ext.VK_GOOGLE_display_timing
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
-        vkGetRefreshCycleDurationGOOGLE, vkGetPastPresentationTimingGOOGLE,
+        vkGetRefreshCycleDurationGOOGLE,
+        vkGetRefreshCycleDurationGOOGLESafe,
+        vkGetPastPresentationTimingGOOGLE,
+        vkGetPastPresentationTimingGOOGLESafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Handles,
         VK_GOOGLE_DISPLAY_TIMING_SPEC_VERSION,
@@ -70,6 +73,25 @@ foreign import ccall unsafe "vkGetRefreshCycleDurationGOOGLE"
                                 -> Ptr VkRefreshCycleDurationGOOGLE -- ^ pDisplayTimingProperties
                                                                     -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR'.
+--
+--   > VkResult vkGetRefreshCycleDurationGOOGLE
+--   >     ( VkDevice device
+--   >     , VkSwapchainKHR swapchain
+--   >     , VkRefreshCycleDurationGOOGLE* pDisplayTimingProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetRefreshCycleDurationGOOGLE.html vkGetRefreshCycleDurationGOOGLE registry at www.khronos.org>
+foreign import ccall safe "vkGetRefreshCycleDurationGOOGLE"
+               vkGetRefreshCycleDurationGOOGLESafe ::
+               VkDevice -- ^ device
+                        ->
+                 VkSwapchainKHR -- ^ swapchain
+                                -> Ptr VkRefreshCycleDurationGOOGLE -- ^ pDisplayTimingProperties
+                                                                    -> IO VkResult
+
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
 --   Error codes: 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
@@ -84,6 +106,28 @@ foreign import ccall unsafe "vkGetRefreshCycleDurationGOOGLE"
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPastPresentationTimingGOOGLE.html vkGetPastPresentationTimingGOOGLE registry at www.khronos.org>
 foreign import ccall unsafe "vkGetPastPresentationTimingGOOGLE"
                vkGetPastPresentationTimingGOOGLE ::
+               VkDevice -- ^ device
+                        ->
+                 VkSwapchainKHR -- ^ swapchain
+                                ->
+                   Ptr Word32 -- ^ pPresentationTimingCount
+                              -> Ptr VkPastPresentationTimingGOOGLE -- ^ pPresentationTimings
+                                                                    -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+--   Error codes: 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+--
+--   > VkResult vkGetPastPresentationTimingGOOGLE
+--   >     ( VkDevice device
+--   >     , VkSwapchainKHR swapchain
+--   >     , uint32_t* pPresentationTimingCount
+--   >     , VkPastPresentationTimingGOOGLE* pPresentationTimings
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPastPresentationTimingGOOGLE.html vkGetPastPresentationTimingGOOGLE registry at www.khronos.org>
+foreign import ccall safe "vkGetPastPresentationTimingGOOGLE"
+               vkGetPastPresentationTimingGOOGLESafe ::
                VkDevice -- ^ device
                         ->
                  VkSwapchainKHR -- ^ swapchain

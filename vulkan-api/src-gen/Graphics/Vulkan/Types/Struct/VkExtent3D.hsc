@@ -5,15 +5,15 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkExtent3D (VkExtent3D(..))
        where
-import           Foreign.Storable                    (Storable (..))
+import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.StructMembers
-import           System.IO.Unsafe                    (unsafeDupablePerformIO)
+import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkExtent3D {
 --   >     uint32_t        width;
@@ -68,25 +68,6 @@ instance VulkanMarshal VkExtent3D where
         type ReturnedOnly VkExtent3D = 'False -- ' closing tick for hsc2hs
         type StructExtends VkExtent3D = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkWidth VkExtent3D where
-        type VkWidthMType VkExtent3D = Word32
-
-        {-# NOINLINE vkWidth #-}
-        vkWidth x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkExtent3D, width})
-
-        {-# INLINE vkWidthByteOffset #-}
-        vkWidthByteOffset ~_ = #{offset VkExtent3D, width}
-
-        {-# INLINE readVkWidth #-}
-        readVkWidth p
-          = peekByteOff p #{offset VkExtent3D, width}
-
-        {-# INLINE writeVkWidth #-}
-        writeVkWidth p
-          = pokeByteOff p #{offset VkExtent3D, width}
-
 instance {-# OVERLAPPING #-} HasField "width" VkExtent3D where
         type FieldType "width" VkExtent3D = Word32
         type FieldOptional "width" VkExtent3D = 'False -- ' closing tick for hsc2hs
@@ -100,35 +81,19 @@ instance {-# OVERLAPPING #-} HasField "width" VkExtent3D where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkExtent3D, width}
 
-instance CanReadField "width" VkExtent3D where
-        {-# INLINE getField #-}
-        getField = vkWidth
+instance {-# OVERLAPPING #-} CanReadField "width" VkExtent3D where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkExtent3D, width})
 
         {-# INLINE readField #-}
-        readField = readVkWidth
+        readField p = peekByteOff p #{offset VkExtent3D, width}
 
-instance CanWriteField "width" VkExtent3D where
+instance {-# OVERLAPPING #-} CanWriteField "width" VkExtent3D where
         {-# INLINE writeField #-}
-        writeField = writeVkWidth
-
-instance {-# OVERLAPPING #-} HasVkHeight VkExtent3D where
-        type VkHeightMType VkExtent3D = Word32
-
-        {-# NOINLINE vkHeight #-}
-        vkHeight x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkExtent3D, height})
-
-        {-# INLINE vkHeightByteOffset #-}
-        vkHeightByteOffset ~_ = #{offset VkExtent3D, height}
-
-        {-# INLINE readVkHeight #-}
-        readVkHeight p
-          = peekByteOff p #{offset VkExtent3D, height}
-
-        {-# INLINE writeVkHeight #-}
-        writeVkHeight p
-          = pokeByteOff p #{offset VkExtent3D, height}
+        writeField p
+          = pokeByteOff p #{offset VkExtent3D, width}
 
 instance {-# OVERLAPPING #-} HasField "height" VkExtent3D where
         type FieldType "height" VkExtent3D = Word32
@@ -143,35 +108,21 @@ instance {-# OVERLAPPING #-} HasField "height" VkExtent3D where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkExtent3D, height}
 
-instance CanReadField "height" VkExtent3D where
-        {-# INLINE getField #-}
-        getField = vkHeight
+instance {-# OVERLAPPING #-} CanReadField "height" VkExtent3D where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkExtent3D, height})
 
         {-# INLINE readField #-}
-        readField = readVkHeight
+        readField p
+          = peekByteOff p #{offset VkExtent3D, height}
 
-instance CanWriteField "height" VkExtent3D where
+instance {-# OVERLAPPING #-} CanWriteField "height" VkExtent3D
+         where
         {-# INLINE writeField #-}
-        writeField = writeVkHeight
-
-instance {-# OVERLAPPING #-} HasVkDepth VkExtent3D where
-        type VkDepthMType VkExtent3D = Word32
-
-        {-# NOINLINE vkDepth #-}
-        vkDepth x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkExtent3D, depth})
-
-        {-# INLINE vkDepthByteOffset #-}
-        vkDepthByteOffset ~_ = #{offset VkExtent3D, depth}
-
-        {-# INLINE readVkDepth #-}
-        readVkDepth p
-          = peekByteOff p #{offset VkExtent3D, depth}
-
-        {-# INLINE writeVkDepth #-}
-        writeVkDepth p
-          = pokeByteOff p #{offset VkExtent3D, depth}
+        writeField p
+          = pokeByteOff p #{offset VkExtent3D, height}
 
 instance {-# OVERLAPPING #-} HasField "depth" VkExtent3D where
         type FieldType "depth" VkExtent3D = Word32
@@ -186,24 +137,28 @@ instance {-# OVERLAPPING #-} HasField "depth" VkExtent3D where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkExtent3D, depth}
 
-instance CanReadField "depth" VkExtent3D where
-        {-# INLINE getField #-}
-        getField = vkDepth
+instance {-# OVERLAPPING #-} CanReadField "depth" VkExtent3D where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkExtent3D, depth})
 
         {-# INLINE readField #-}
-        readField = readVkDepth
+        readField p = peekByteOff p #{offset VkExtent3D, depth}
 
-instance CanWriteField "depth" VkExtent3D where
+instance {-# OVERLAPPING #-} CanWriteField "depth" VkExtent3D where
         {-# INLINE writeField #-}
-        writeField = writeVkDepth
+        writeField p
+          = pokeByteOff p #{offset VkExtent3D, depth}
 
 instance Show VkExtent3D where
         showsPrec d x
           = showString "VkExtent3D {" .
-              showString "vkWidth = " .
-                showsPrec d (vkWidth x) .
+              showString "width = " .
+                showsPrec d (getField @"width" x) .
                   showString ", " .
-                    showString "vkHeight = " .
-                      showsPrec d (vkHeight x) .
+                    showString "height = " .
+                      showsPrec d (getField @"height" x) .
                         showString ", " .
-                          showString "vkDepth = " . showsPrec d (vkDepth x) . showChar '}'
+                          showString "depth = " .
+                            showsPrec d (getField @"depth" x) . showChar '}'

@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkMemoryGetFdInfoKHR
        (VkMemoryGetFdInfoKHR(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagsKHR (VkExternalMemoryHandleTypeFlagBitsKHR)
 import           Graphics.Vulkan.Types.Enum.VkStructureType                    (VkStructureType)
 import           Graphics.Vulkan.Types.Handles                                 (VkDeviceMemory)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                              (unsafeDupablePerformIO)
 
 -- | > typedef struct VkMemoryGetFdInfoKHR {
@@ -73,26 +73,6 @@ instance VulkanMarshal VkMemoryGetFdInfoKHR where
         type ReturnedOnly VkMemoryGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
         type StructExtends VkMemoryGetFdInfoKHR = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkMemoryGetFdInfoKHR where
-        type VkSTypeMType VkMemoryGetFdInfoKHR = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkMemoryGetFdInfoKHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkMemoryGetFdInfoKHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkMemoryGetFdInfoKHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkMemoryGetFdInfoKHR, sType}
-
 instance {-# OVERLAPPING #-} HasField "sType" VkMemoryGetFdInfoKHR
          where
         type FieldType "sType" VkMemoryGetFdInfoKHR = VkStructureType
@@ -107,36 +87,22 @@ instance {-# OVERLAPPING #-} HasField "sType" VkMemoryGetFdInfoKHR
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkMemoryGetFdInfoKHR, sType}
 
-instance CanReadField "sType" VkMemoryGetFdInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkMemoryGetFdInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkMemoryGetFdInfoKHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkMemoryGetFdInfoKHR, sType}
 
-instance CanWriteField "sType" VkMemoryGetFdInfoKHR where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkMemoryGetFdInfoKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkMemoryGetFdInfoKHR where
-        type VkPNextMType VkMemoryGetFdInfoKHR = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkMemoryGetFdInfoKHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkMemoryGetFdInfoKHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkMemoryGetFdInfoKHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkMemoryGetFdInfoKHR, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkMemoryGetFdInfoKHR, sType}
 
 instance {-# OVERLAPPING #-} HasField "pNext" VkMemoryGetFdInfoKHR
          where
@@ -152,36 +118,22 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkMemoryGetFdInfoKHR
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkMemoryGetFdInfoKHR, pNext}
 
-instance CanReadField "pNext" VkMemoryGetFdInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkMemoryGetFdInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkMemoryGetFdInfoKHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkMemoryGetFdInfoKHR, pNext}
 
-instance CanWriteField "pNext" VkMemoryGetFdInfoKHR where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext" VkMemoryGetFdInfoKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-} HasVkMemory VkMemoryGetFdInfoKHR where
-        type VkMemoryMType VkMemoryGetFdInfoKHR = VkDeviceMemory
-
-        {-# NOINLINE vkMemory #-}
-        vkMemory x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkMemoryGetFdInfoKHR, memory})
-
-        {-# INLINE vkMemoryByteOffset #-}
-        vkMemoryByteOffset ~_
-          = #{offset VkMemoryGetFdInfoKHR, memory}
-
-        {-# INLINE readVkMemory #-}
-        readVkMemory p
-          = peekByteOff p #{offset VkMemoryGetFdInfoKHR, memory}
-
-        {-# INLINE writeVkMemory #-}
-        writeVkMemory p
-          = pokeByteOff p #{offset VkMemoryGetFdInfoKHR, memory}
+        writeField p
+          = pokeByteOff p #{offset VkMemoryGetFdInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-} HasField "memory" VkMemoryGetFdInfoKHR
          where
@@ -197,38 +149,22 @@ instance {-# OVERLAPPING #-} HasField "memory" VkMemoryGetFdInfoKHR
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkMemoryGetFdInfoKHR, memory}
 
-instance CanReadField "memory" VkMemoryGetFdInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkMemory
+instance {-# OVERLAPPING #-}
+         CanReadField "memory" VkMemoryGetFdInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkMemoryGetFdInfoKHR, memory})
 
         {-# INLINE readField #-}
-        readField = readVkMemory
+        readField p
+          = peekByteOff p #{offset VkMemoryGetFdInfoKHR, memory}
 
-instance CanWriteField "memory" VkMemoryGetFdInfoKHR where
+instance {-# OVERLAPPING #-}
+         CanWriteField "memory" VkMemoryGetFdInfoKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkMemory
-
-instance {-# OVERLAPPING #-} HasVkHandleType VkMemoryGetFdInfoKHR
-         where
-        type VkHandleTypeMType VkMemoryGetFdInfoKHR =
-             VkExternalMemoryHandleTypeFlagBitsKHR
-
-        {-# NOINLINE vkHandleType #-}
-        vkHandleType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkMemoryGetFdInfoKHR, handleType})
-
-        {-# INLINE vkHandleTypeByteOffset #-}
-        vkHandleTypeByteOffset ~_
-          = #{offset VkMemoryGetFdInfoKHR, handleType}
-
-        {-# INLINE readVkHandleType #-}
-        readVkHandleType p
-          = peekByteOff p #{offset VkMemoryGetFdInfoKHR, handleType}
-
-        {-# INLINE writeVkHandleType #-}
-        writeVkHandleType p
-          = pokeByteOff p #{offset VkMemoryGetFdInfoKHR, handleType}
+        writeField p
+          = pokeByteOff p #{offset VkMemoryGetFdInfoKHR, memory}
 
 instance {-# OVERLAPPING #-}
          HasField "handleType" VkMemoryGetFdInfoKHR where
@@ -246,28 +182,34 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkMemoryGetFdInfoKHR, handleType}
 
-instance CanReadField "handleType" VkMemoryGetFdInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkHandleType
+instance {-# OVERLAPPING #-}
+         CanReadField "handleType" VkMemoryGetFdInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkMemoryGetFdInfoKHR, handleType})
 
         {-# INLINE readField #-}
-        readField = readVkHandleType
+        readField p
+          = peekByteOff p #{offset VkMemoryGetFdInfoKHR, handleType}
 
-instance CanWriteField "handleType" VkMemoryGetFdInfoKHR where
+instance {-# OVERLAPPING #-}
+         CanWriteField "handleType" VkMemoryGetFdInfoKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkHandleType
+        writeField p
+          = pokeByteOff p #{offset VkMemoryGetFdInfoKHR, handleType}
 
 instance Show VkMemoryGetFdInfoKHR where
         showsPrec d x
           = showString "VkMemoryGetFdInfoKHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkMemory = " .
-                            showsPrec d (vkMemory x) .
+                          showString "memory = " .
+                            showsPrec d (getField @"memory" x) .
                               showString ", " .
-                                showString "vkHandleType = " .
-                                  showsPrec d (vkHandleType x) . showChar '}'
+                                showString "handleType = " .
+                                  showsPrec d (getField @"handleType" x) . showChar '}'

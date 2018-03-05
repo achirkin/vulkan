@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPipelineTessellationDomainOriginStateCreateInfoKHR
        (VkPipelineTessellationDomainOriginStateCreateInfoKHR(..)) where
@@ -19,7 +20,6 @@ import           Graphics.Vulkan.Types.Enum.VkTessellationDomainOriginKHR
                                                                                      (VkTessellationDomainOriginKHR)
 import           Graphics.Vulkan.Types.Struct.VkPipelineTessellationStateCreateInfo
                                                                                      (VkPipelineTessellationStateCreateInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe
                                                                                      (unsafeDupablePerformIO)
 
@@ -103,30 +103,6 @@ instance VulkanMarshal
              = '[VkPipelineTessellationStateCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPipelineTessellationDomainOriginStateCreateInfoKHR
-         where
-        type VkSTypeMType
-               VkPipelineTessellationDomainOriginStateCreateInfoKHR
-             = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType"
            VkPipelineTessellationDomainOriginStateCreateInfoKHR
          where
@@ -151,44 +127,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, sType}
 
-instance CanReadField "sType"
+instance {-# OVERLAPPING #-}
+         CanReadField "sType"
            VkPipelineTessellationDomainOriginStateCreateInfoKHR
          where
-        {-# INLINE getField #-}
-        getField = vkSType
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, sType}
 
-instance CanWriteField "sType"
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType"
            VkPipelineTessellationDomainOriginStateCreateInfoKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-}
-         HasVkPNext VkPipelineTessellationDomainOriginStateCreateInfoKHR
-         where
-        type VkPNextMType
-               VkPipelineTessellationDomainOriginStateCreateInfoKHR
-             = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext"
@@ -215,45 +173,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, pNext}
 
-instance CanReadField "pNext"
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext"
            VkPipelineTessellationDomainOriginStateCreateInfoKHR
          where
-        {-# INLINE getField #-}
-        getField = vkPNext
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, pNext}
 
-instance CanWriteField "pNext"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext"
            VkPipelineTessellationDomainOriginStateCreateInfoKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-}
-         HasVkDomainOrigin
-           VkPipelineTessellationDomainOriginStateCreateInfoKHR
-         where
-        type VkDomainOriginMType
-               VkPipelineTessellationDomainOriginStateCreateInfoKHR
-             = VkTessellationDomainOriginKHR
-
-        {-# NOINLINE vkDomainOrigin #-}
-        vkDomainOrigin x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, domainOrigin})
-
-        {-# INLINE vkDomainOriginByteOffset #-}
-        vkDomainOriginByteOffset ~_
-          = #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, domainOrigin}
-
-        {-# INLINE readVkDomainOrigin #-}
-        readVkDomainOrigin p
-          = peekByteOff p #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, domainOrigin}
-
-        {-# INLINE writeVkDomainOrigin #-}
-        writeVkDomainOrigin p
-          = pokeByteOff p #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, domainOrigin}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "domainOrigin"
@@ -280,20 +219,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, domainOrigin}
 
-instance CanReadField "domainOrigin"
+instance {-# OVERLAPPING #-}
+         CanReadField "domainOrigin"
            VkPipelineTessellationDomainOriginStateCreateInfoKHR
          where
-        {-# INLINE getField #-}
-        getField = vkDomainOrigin
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, domainOrigin})
 
         {-# INLINE readField #-}
-        readField = readVkDomainOrigin
+        readField p
+          = peekByteOff p #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, domainOrigin}
 
-instance CanWriteField "domainOrigin"
+instance {-# OVERLAPPING #-}
+         CanWriteField "domainOrigin"
            VkPipelineTessellationDomainOriginStateCreateInfoKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkDomainOrigin
+        writeField p
+          = pokeByteOff p #{offset VkPipelineTessellationDomainOriginStateCreateInfoKHR, domainOrigin}
 
 instance Show VkPipelineTessellationDomainOriginStateCreateInfoKHR
          where
@@ -301,11 +246,11 @@ instance Show VkPipelineTessellationDomainOriginStateCreateInfoKHR
           = showString
               "VkPipelineTessellationDomainOriginStateCreateInfoKHR {"
               .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkDomainOrigin = " .
-                            showsPrec d (vkDomainOrigin x) . showChar '}'
+                          showString "domainOrigin = " .
+                            showsPrec d (getField @"domainOrigin" x) . showChar '}'

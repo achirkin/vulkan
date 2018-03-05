@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkDisplayPropertiesKHR
        (VkDisplayPropertiesKHR(..)) where
@@ -16,7 +17,6 @@ import           Graphics.Vulkan.Types.BaseTypes                       (VkBool32
 import           Graphics.Vulkan.Types.Enum.VkSurfaceTransformFlagsKHR (VkSurfaceTransformFlagsKHR)
 import           Graphics.Vulkan.Types.Handles                         (VkDisplayKHR)
 import           Graphics.Vulkan.Types.Struct.VkExtent2D               (VkExtent2D)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                      (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDisplayPropertiesKHR {
@@ -80,27 +80,6 @@ instance VulkanMarshal VkDisplayPropertiesKHR where
         type ReturnedOnly VkDisplayPropertiesKHR = 'True -- ' closing tick for hsc2hs
         type StructExtends VkDisplayPropertiesKHR = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkDisplay VkDisplayPropertiesKHR
-         where
-        type VkDisplayMType VkDisplayPropertiesKHR = VkDisplayKHR
-
-        {-# NOINLINE vkDisplay #-}
-        vkDisplay x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayPropertiesKHR, display})
-
-        {-# INLINE vkDisplayByteOffset #-}
-        vkDisplayByteOffset ~_
-          = #{offset VkDisplayPropertiesKHR, display}
-
-        {-# INLINE readVkDisplay #-}
-        readVkDisplay p
-          = peekByteOff p #{offset VkDisplayPropertiesKHR, display}
-
-        {-# INLINE writeVkDisplay #-}
-        writeVkDisplay p
-          = pokeByteOff p #{offset VkDisplayPropertiesKHR, display}
-
 instance {-# OVERLAPPING #-}
          HasField "display" VkDisplayPropertiesKHR where
         type FieldType "display" VkDisplayPropertiesKHR = VkDisplayKHR
@@ -115,37 +94,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkDisplayPropertiesKHR, display}
 
-instance CanReadField "display" VkDisplayPropertiesKHR where
-        {-# INLINE getField #-}
-        getField = vkDisplay
+instance {-# OVERLAPPING #-}
+         CanReadField "display" VkDisplayPropertiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPropertiesKHR, display})
 
         {-# INLINE readField #-}
-        readField = readVkDisplay
-
-instance CanWriteField "display" VkDisplayPropertiesKHR where
-        {-# INLINE writeField #-}
-        writeField = writeVkDisplay
+        readField p
+          = peekByteOff p #{offset VkDisplayPropertiesKHR, display}
 
 instance {-# OVERLAPPING #-}
-         HasVkDisplayName VkDisplayPropertiesKHR where
-        type VkDisplayNameMType VkDisplayPropertiesKHR = CString
-
-        {-# NOINLINE vkDisplayName #-}
-        vkDisplayName x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayPropertiesKHR, displayName})
-
-        {-# INLINE vkDisplayNameByteOffset #-}
-        vkDisplayNameByteOffset ~_
-          = #{offset VkDisplayPropertiesKHR, displayName}
-
-        {-# INLINE readVkDisplayName #-}
-        readVkDisplayName p
-          = peekByteOff p #{offset VkDisplayPropertiesKHR, displayName}
-
-        {-# INLINE writeVkDisplayName #-}
-        writeVkDisplayName p
-          = pokeByteOff p #{offset VkDisplayPropertiesKHR, displayName}
+         CanWriteField "display" VkDisplayPropertiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPropertiesKHR, display}
 
 instance {-# OVERLAPPING #-}
          HasField "displayName" VkDisplayPropertiesKHR where
@@ -162,37 +126,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDisplayPropertiesKHR, displayName}
 
-instance CanReadField "displayName" VkDisplayPropertiesKHR where
-        {-# INLINE getField #-}
-        getField = vkDisplayName
+instance {-# OVERLAPPING #-}
+         CanReadField "displayName" VkDisplayPropertiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPropertiesKHR, displayName})
 
         {-# INLINE readField #-}
-        readField = readVkDisplayName
-
-instance CanWriteField "displayName" VkDisplayPropertiesKHR where
-        {-# INLINE writeField #-}
-        writeField = writeVkDisplayName
+        readField p
+          = peekByteOff p #{offset VkDisplayPropertiesKHR, displayName}
 
 instance {-# OVERLAPPING #-}
-         HasVkPhysicalDimensions VkDisplayPropertiesKHR where
-        type VkPhysicalDimensionsMType VkDisplayPropertiesKHR = VkExtent2D
-
-        {-# NOINLINE vkPhysicalDimensions #-}
-        vkPhysicalDimensions x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayPropertiesKHR, physicalDimensions})
-
-        {-# INLINE vkPhysicalDimensionsByteOffset #-}
-        vkPhysicalDimensionsByteOffset ~_
-          = #{offset VkDisplayPropertiesKHR, physicalDimensions}
-
-        {-# INLINE readVkPhysicalDimensions #-}
-        readVkPhysicalDimensions p
-          = peekByteOff p #{offset VkDisplayPropertiesKHR, physicalDimensions}
-
-        {-# INLINE writeVkPhysicalDimensions #-}
-        writeVkPhysicalDimensions p
-          = pokeByteOff p #{offset VkDisplayPropertiesKHR, physicalDimensions}
+         CanWriteField "displayName" VkDisplayPropertiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPropertiesKHR, displayName}
 
 instance {-# OVERLAPPING #-}
          HasField "physicalDimensions" VkDisplayPropertiesKHR where
@@ -212,39 +161,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDisplayPropertiesKHR, physicalDimensions}
 
-instance CanReadField "physicalDimensions" VkDisplayPropertiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkPhysicalDimensions
+instance {-# OVERLAPPING #-}
+         CanReadField "physicalDimensions" VkDisplayPropertiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPropertiesKHR, physicalDimensions})
 
         {-# INLINE readField #-}
-        readField = readVkPhysicalDimensions
-
-instance CanWriteField "physicalDimensions" VkDisplayPropertiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPhysicalDimensions
+        readField p
+          = peekByteOff p #{offset VkDisplayPropertiesKHR, physicalDimensions}
 
 instance {-# OVERLAPPING #-}
-         HasVkPhysicalResolution VkDisplayPropertiesKHR where
-        type VkPhysicalResolutionMType VkDisplayPropertiesKHR = VkExtent2D
-
-        {-# NOINLINE vkPhysicalResolution #-}
-        vkPhysicalResolution x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayPropertiesKHR, physicalResolution})
-
-        {-# INLINE vkPhysicalResolutionByteOffset #-}
-        vkPhysicalResolutionByteOffset ~_
-          = #{offset VkDisplayPropertiesKHR, physicalResolution}
-
-        {-# INLINE readVkPhysicalResolution #-}
-        readVkPhysicalResolution p
-          = peekByteOff p #{offset VkDisplayPropertiesKHR, physicalResolution}
-
-        {-# INLINE writeVkPhysicalResolution #-}
-        writeVkPhysicalResolution p
-          = pokeByteOff p #{offset VkDisplayPropertiesKHR, physicalResolution}
+         CanWriteField "physicalDimensions" VkDisplayPropertiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPropertiesKHR, physicalDimensions}
 
 instance {-# OVERLAPPING #-}
          HasField "physicalResolution" VkDisplayPropertiesKHR where
@@ -264,40 +196,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDisplayPropertiesKHR, physicalResolution}
 
-instance CanReadField "physicalResolution" VkDisplayPropertiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkPhysicalResolution
+instance {-# OVERLAPPING #-}
+         CanReadField "physicalResolution" VkDisplayPropertiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPropertiesKHR, physicalResolution})
 
         {-# INLINE readField #-}
-        readField = readVkPhysicalResolution
-
-instance CanWriteField "physicalResolution" VkDisplayPropertiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPhysicalResolution
+        readField p
+          = peekByteOff p #{offset VkDisplayPropertiesKHR, physicalResolution}
 
 instance {-# OVERLAPPING #-}
-         HasVkSupportedTransforms VkDisplayPropertiesKHR where
-        type VkSupportedTransformsMType VkDisplayPropertiesKHR =
-             VkSurfaceTransformFlagsKHR
-
-        {-# NOINLINE vkSupportedTransforms #-}
-        vkSupportedTransforms x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayPropertiesKHR, supportedTransforms})
-
-        {-# INLINE vkSupportedTransformsByteOffset #-}
-        vkSupportedTransformsByteOffset ~_
-          = #{offset VkDisplayPropertiesKHR, supportedTransforms}
-
-        {-# INLINE readVkSupportedTransforms #-}
-        readVkSupportedTransforms p
-          = peekByteOff p #{offset VkDisplayPropertiesKHR, supportedTransforms}
-
-        {-# INLINE writeVkSupportedTransforms #-}
-        writeVkSupportedTransforms p
-          = pokeByteOff p #{offset VkDisplayPropertiesKHR, supportedTransforms}
+         CanWriteField "physicalResolution" VkDisplayPropertiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPropertiesKHR, physicalResolution}
 
 instance {-# OVERLAPPING #-}
          HasField "supportedTransforms" VkDisplayPropertiesKHR where
@@ -317,39 +231,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDisplayPropertiesKHR, supportedTransforms}
 
-instance CanReadField "supportedTransforms" VkDisplayPropertiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkSupportedTransforms
+instance {-# OVERLAPPING #-}
+         CanReadField "supportedTransforms" VkDisplayPropertiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPropertiesKHR, supportedTransforms})
 
         {-# INLINE readField #-}
-        readField = readVkSupportedTransforms
-
-instance CanWriteField "supportedTransforms" VkDisplayPropertiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSupportedTransforms
+        readField p
+          = peekByteOff p #{offset VkDisplayPropertiesKHR, supportedTransforms}
 
 instance {-# OVERLAPPING #-}
-         HasVkPlaneReorderPossible VkDisplayPropertiesKHR where
-        type VkPlaneReorderPossibleMType VkDisplayPropertiesKHR = VkBool32
-
-        {-# NOINLINE vkPlaneReorderPossible #-}
-        vkPlaneReorderPossible x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayPropertiesKHR, planeReorderPossible})
-
-        {-# INLINE vkPlaneReorderPossibleByteOffset #-}
-        vkPlaneReorderPossibleByteOffset ~_
-          = #{offset VkDisplayPropertiesKHR, planeReorderPossible}
-
-        {-# INLINE readVkPlaneReorderPossible #-}
-        readVkPlaneReorderPossible p
-          = peekByteOff p #{offset VkDisplayPropertiesKHR, planeReorderPossible}
-
-        {-# INLINE writeVkPlaneReorderPossible #-}
-        writeVkPlaneReorderPossible p
-          = pokeByteOff p #{offset VkDisplayPropertiesKHR, planeReorderPossible}
+         CanWriteField "supportedTransforms" VkDisplayPropertiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPropertiesKHR, supportedTransforms}
 
 instance {-# OVERLAPPING #-}
          HasField "planeReorderPossible" VkDisplayPropertiesKHR where
@@ -369,40 +266,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDisplayPropertiesKHR, planeReorderPossible}
 
-instance CanReadField "planeReorderPossible" VkDisplayPropertiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkPlaneReorderPossible
+instance {-# OVERLAPPING #-}
+         CanReadField "planeReorderPossible" VkDisplayPropertiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPropertiesKHR, planeReorderPossible})
 
         {-# INLINE readField #-}
-        readField = readVkPlaneReorderPossible
-
-instance CanWriteField "planeReorderPossible"
-           VkDisplayPropertiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPlaneReorderPossible
+        readField p
+          = peekByteOff p #{offset VkDisplayPropertiesKHR, planeReorderPossible}
 
 instance {-# OVERLAPPING #-}
-         HasVkPersistentContent VkDisplayPropertiesKHR where
-        type VkPersistentContentMType VkDisplayPropertiesKHR = VkBool32
-
-        {-# NOINLINE vkPersistentContent #-}
-        vkPersistentContent x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayPropertiesKHR, persistentContent})
-
-        {-# INLINE vkPersistentContentByteOffset #-}
-        vkPersistentContentByteOffset ~_
-          = #{offset VkDisplayPropertiesKHR, persistentContent}
-
-        {-# INLINE readVkPersistentContent #-}
-        readVkPersistentContent p
-          = peekByteOff p #{offset VkDisplayPropertiesKHR, persistentContent}
-
-        {-# INLINE writeVkPersistentContent #-}
-        writeVkPersistentContent p
-          = pokeByteOff p #{offset VkDisplayPropertiesKHR, persistentContent}
+         CanWriteField "planeReorderPossible" VkDisplayPropertiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPropertiesKHR, planeReorderPossible}
 
 instance {-# OVERLAPPING #-}
          HasField "persistentContent" VkDisplayPropertiesKHR where
@@ -422,40 +301,44 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDisplayPropertiesKHR, persistentContent}
 
-instance CanReadField "persistentContent" VkDisplayPropertiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkPersistentContent
+instance {-# OVERLAPPING #-}
+         CanReadField "persistentContent" VkDisplayPropertiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayPropertiesKHR, persistentContent})
 
         {-# INLINE readField #-}
-        readField = readVkPersistentContent
+        readField p
+          = peekByteOff p #{offset VkDisplayPropertiesKHR, persistentContent}
 
-instance CanWriteField "persistentContent" VkDisplayPropertiesKHR
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "persistentContent" VkDisplayPropertiesKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkPersistentContent
+        writeField p
+          = pokeByteOff p #{offset VkDisplayPropertiesKHR, persistentContent}
 
 instance Show VkDisplayPropertiesKHR where
         showsPrec d x
           = showString "VkDisplayPropertiesKHR {" .
-              showString "vkDisplay = " .
-                showsPrec d (vkDisplay x) .
+              showString "display = " .
+                showsPrec d (getField @"display" x) .
                   showString ", " .
-                    showString "vkDisplayName = " .
-                      showsPrec d (vkDisplayName x) .
+                    showString "displayName = " .
+                      showsPrec d (getField @"displayName" x) .
                         showString ", " .
-                          showString "vkPhysicalDimensions = " .
-                            showsPrec d (vkPhysicalDimensions x) .
+                          showString "physicalDimensions = " .
+                            showsPrec d (getField @"physicalDimensions" x) .
                               showString ", " .
-                                showString "vkPhysicalResolution = " .
-                                  showsPrec d (vkPhysicalResolution x) .
+                                showString "physicalResolution = " .
+                                  showsPrec d (getField @"physicalResolution" x) .
                                     showString ", " .
-                                      showString "vkSupportedTransforms = " .
-                                        showsPrec d (vkSupportedTransforms x) .
+                                      showString "supportedTransforms = " .
+                                        showsPrec d (getField @"supportedTransforms" x) .
                                           showString ", " .
-                                            showString "vkPlaneReorderPossible = " .
-                                              showsPrec d (vkPlaneReorderPossible x) .
+                                            showString "planeReorderPossible = " .
+                                              showsPrec d (getField @"planeReorderPossible" x) .
                                                 showString ", " .
-                                                  showString "vkPersistentContent = " .
-                                                    showsPrec d (vkPersistentContent x) .
+                                                  showString "persistentContent = " .
+                                                    showsPrec d (getField @"persistentContent" x) .
                                                       showChar '}'

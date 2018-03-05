@@ -495,6 +495,7 @@ vkParseMode = defaultParseMode
         , EnableExtension FlexibleContexts
         , EnableExtension FlexibleInstances
         , EnableExtension TypeFamilies
+        , EnableExtension TypeApplications
         , EnableExtension UnliftedFFITypes
         , EnableExtension UndecidableInstances
         , EnableExtension MultiParamTypeClasses

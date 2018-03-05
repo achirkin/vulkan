@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkVertexInputAttributeDescription
        (VkVertexInputAttributeDescription(..)) where
@@ -13,7 +14,6 @@ import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkFormat (VkFormat)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                    (unsafeDupablePerformIO)
 
 -- | > typedef struct VkVertexInputAttributeDescription {
@@ -78,27 +78,6 @@ instance VulkanMarshal VkVertexInputAttributeDescription where
         type StructExtends VkVertexInputAttributeDescription = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkLocation VkVertexInputAttributeDescription where
-        type VkLocationMType VkVertexInputAttributeDescription = Word32
-
-        {-# NOINLINE vkLocation #-}
-        vkLocation x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkVertexInputAttributeDescription, location})
-
-        {-# INLINE vkLocationByteOffset #-}
-        vkLocationByteOffset ~_
-          = #{offset VkVertexInputAttributeDescription, location}
-
-        {-# INLINE readVkLocation #-}
-        readVkLocation p
-          = peekByteOff p #{offset VkVertexInputAttributeDescription, location}
-
-        {-# INLINE writeVkLocation #-}
-        writeVkLocation p
-          = pokeByteOff p #{offset VkVertexInputAttributeDescription, location}
-
-instance {-# OVERLAPPING #-}
          HasField "location" VkVertexInputAttributeDescription where
         type FieldType "location" VkVertexInputAttributeDescription =
              Word32
@@ -116,39 +95,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkVertexInputAttributeDescription, location}
 
-instance CanReadField "location" VkVertexInputAttributeDescription
-         where
-        {-# INLINE getField #-}
-        getField = vkLocation
+instance {-# OVERLAPPING #-}
+         CanReadField "location" VkVertexInputAttributeDescription where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkVertexInputAttributeDescription, location})
 
         {-# INLINE readField #-}
-        readField = readVkLocation
-
-instance CanWriteField "location" VkVertexInputAttributeDescription
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkLocation
+        readField p
+          = peekByteOff p #{offset VkVertexInputAttributeDescription, location}
 
 instance {-# OVERLAPPING #-}
-         HasVkBinding VkVertexInputAttributeDescription where
-        type VkBindingMType VkVertexInputAttributeDescription = Word32
-
-        {-# NOINLINE vkBinding #-}
-        vkBinding x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkVertexInputAttributeDescription, binding})
-
-        {-# INLINE vkBindingByteOffset #-}
-        vkBindingByteOffset ~_
-          = #{offset VkVertexInputAttributeDescription, binding}
-
-        {-# INLINE readVkBinding #-}
-        readVkBinding p
-          = peekByteOff p #{offset VkVertexInputAttributeDescription, binding}
-
-        {-# INLINE writeVkBinding #-}
-        writeVkBinding p
-          = pokeByteOff p #{offset VkVertexInputAttributeDescription, binding}
+         CanWriteField "location" VkVertexInputAttributeDescription where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkVertexInputAttributeDescription, location}
 
 instance {-# OVERLAPPING #-}
          HasField "binding" VkVertexInputAttributeDescription where
@@ -167,39 +129,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkVertexInputAttributeDescription, binding}
 
-instance CanReadField "binding" VkVertexInputAttributeDescription
-         where
-        {-# INLINE getField #-}
-        getField = vkBinding
+instance {-# OVERLAPPING #-}
+         CanReadField "binding" VkVertexInputAttributeDescription where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkVertexInputAttributeDescription, binding})
 
         {-# INLINE readField #-}
-        readField = readVkBinding
-
-instance CanWriteField "binding" VkVertexInputAttributeDescription
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkBinding
+        readField p
+          = peekByteOff p #{offset VkVertexInputAttributeDescription, binding}
 
 instance {-# OVERLAPPING #-}
-         HasVkFormat VkVertexInputAttributeDescription where
-        type VkFormatMType VkVertexInputAttributeDescription = VkFormat
-
-        {-# NOINLINE vkFormat #-}
-        vkFormat x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkVertexInputAttributeDescription, format})
-
-        {-# INLINE vkFormatByteOffset #-}
-        vkFormatByteOffset ~_
-          = #{offset VkVertexInputAttributeDescription, format}
-
-        {-# INLINE readVkFormat #-}
-        readVkFormat p
-          = peekByteOff p #{offset VkVertexInputAttributeDescription, format}
-
-        {-# INLINE writeVkFormat #-}
-        writeVkFormat p
-          = pokeByteOff p #{offset VkVertexInputAttributeDescription, format}
+         CanWriteField "binding" VkVertexInputAttributeDescription where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkVertexInputAttributeDescription, binding}
 
 instance {-# OVERLAPPING #-}
          HasField "format" VkVertexInputAttributeDescription where
@@ -219,39 +164,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkVertexInputAttributeDescription, format}
 
-instance CanReadField "format" VkVertexInputAttributeDescription
-         where
-        {-# INLINE getField #-}
-        getField = vkFormat
+instance {-# OVERLAPPING #-}
+         CanReadField "format" VkVertexInputAttributeDescription where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkVertexInputAttributeDescription, format})
 
         {-# INLINE readField #-}
-        readField = readVkFormat
-
-instance CanWriteField "format" VkVertexInputAttributeDescription
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFormat
+        readField p
+          = peekByteOff p #{offset VkVertexInputAttributeDescription, format}
 
 instance {-# OVERLAPPING #-}
-         HasVkOffset VkVertexInputAttributeDescription where
-        type VkOffsetMType VkVertexInputAttributeDescription = Word32
-
-        {-# NOINLINE vkOffset #-}
-        vkOffset x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkVertexInputAttributeDescription, offset})
-
-        {-# INLINE vkOffsetByteOffset #-}
-        vkOffsetByteOffset ~_
-          = #{offset VkVertexInputAttributeDescription, offset}
-
-        {-# INLINE readVkOffset #-}
-        readVkOffset p
-          = peekByteOff p #{offset VkVertexInputAttributeDescription, offset}
-
-        {-# INLINE writeVkOffset #-}
-        writeVkOffset p
-          = pokeByteOff p #{offset VkVertexInputAttributeDescription, offset}
+         CanWriteField "format" VkVertexInputAttributeDescription where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkVertexInputAttributeDescription, format}
 
 instance {-# OVERLAPPING #-}
          HasField "offset" VkVertexInputAttributeDescription where
@@ -270,29 +198,34 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkVertexInputAttributeDescription, offset}
 
-instance CanReadField "offset" VkVertexInputAttributeDescription
-         where
-        {-# INLINE getField #-}
-        getField = vkOffset
+instance {-# OVERLAPPING #-}
+         CanReadField "offset" VkVertexInputAttributeDescription where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkVertexInputAttributeDescription, offset})
 
         {-# INLINE readField #-}
-        readField = readVkOffset
+        readField p
+          = peekByteOff p #{offset VkVertexInputAttributeDescription, offset}
 
-instance CanWriteField "offset" VkVertexInputAttributeDescription
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "offset" VkVertexInputAttributeDescription where
         {-# INLINE writeField #-}
-        writeField = writeVkOffset
+        writeField p
+          = pokeByteOff p #{offset VkVertexInputAttributeDescription, offset}
 
 instance Show VkVertexInputAttributeDescription where
         showsPrec d x
           = showString "VkVertexInputAttributeDescription {" .
-              showString "vkLocation = " .
-                showsPrec d (vkLocation x) .
+              showString "location = " .
+                showsPrec d (getField @"location" x) .
                   showString ", " .
-                    showString "vkBinding = " .
-                      showsPrec d (vkBinding x) .
+                    showString "binding = " .
+                      showsPrec d (getField @"binding" x) .
                         showString ", " .
-                          showString "vkFormat = " .
-                            showsPrec d (vkFormat x) .
+                          showString "format = " .
+                            showsPrec d (getField @"format" x) .
                               showString ", " .
-                                showString "vkOffset = " . showsPrec d (vkOffset x) . showChar '}'
+                                showString "offset = " .
+                                  showsPrec d (getField @"offset" x) . showChar '}'

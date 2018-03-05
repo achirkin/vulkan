@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkClearAttachment
        (VkClearAttachment(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkImageAspectFlags (VkImageAspectFlags)
 import           Graphics.Vulkan.Types.Struct.VkClearValue     (VkClearValue)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                              (unsafeDupablePerformIO)
 
 -- | > typedef struct VkClearAttachment {
@@ -71,27 +71,6 @@ instance VulkanMarshal VkClearAttachment where
         type ReturnedOnly VkClearAttachment = 'False -- ' closing tick for hsc2hs
         type StructExtends VkClearAttachment = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkAspectMask VkClearAttachment
-         where
-        type VkAspectMaskMType VkClearAttachment = VkImageAspectFlags
-
-        {-# NOINLINE vkAspectMask #-}
-        vkAspectMask x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkClearAttachment, aspectMask})
-
-        {-# INLINE vkAspectMaskByteOffset #-}
-        vkAspectMaskByteOffset ~_
-          = #{offset VkClearAttachment, aspectMask}
-
-        {-# INLINE readVkAspectMask #-}
-        readVkAspectMask p
-          = peekByteOff p #{offset VkClearAttachment, aspectMask}
-
-        {-# INLINE writeVkAspectMask #-}
-        writeVkAspectMask p
-          = pokeByteOff p #{offset VkClearAttachment, aspectMask}
-
 instance {-# OVERLAPPING #-}
          HasField "aspectMask" VkClearAttachment where
         type FieldType "aspectMask" VkClearAttachment = VkImageAspectFlags
@@ -106,37 +85,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkClearAttachment, aspectMask}
 
-instance CanReadField "aspectMask" VkClearAttachment where
-        {-# INLINE getField #-}
-        getField = vkAspectMask
+instance {-# OVERLAPPING #-}
+         CanReadField "aspectMask" VkClearAttachment where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkClearAttachment, aspectMask})
 
         {-# INLINE readField #-}
-        readField = readVkAspectMask
+        readField p
+          = peekByteOff p #{offset VkClearAttachment, aspectMask}
 
-instance CanWriteField "aspectMask" VkClearAttachment where
+instance {-# OVERLAPPING #-}
+         CanWriteField "aspectMask" VkClearAttachment where
         {-# INLINE writeField #-}
-        writeField = writeVkAspectMask
-
-instance {-# OVERLAPPING #-} HasVkColorAttachment VkClearAttachment
-         where
-        type VkColorAttachmentMType VkClearAttachment = Word32
-
-        {-# NOINLINE vkColorAttachment #-}
-        vkColorAttachment x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkClearAttachment, colorAttachment})
-
-        {-# INLINE vkColorAttachmentByteOffset #-}
-        vkColorAttachmentByteOffset ~_
-          = #{offset VkClearAttachment, colorAttachment}
-
-        {-# INLINE readVkColorAttachment #-}
-        readVkColorAttachment p
-          = peekByteOff p #{offset VkClearAttachment, colorAttachment}
-
-        {-# INLINE writeVkColorAttachment #-}
-        writeVkColorAttachment p
-          = pokeByteOff p #{offset VkClearAttachment, colorAttachment}
+        writeField p
+          = pokeByteOff p #{offset VkClearAttachment, aspectMask}
 
 instance {-# OVERLAPPING #-}
          HasField "colorAttachment" VkClearAttachment where
@@ -153,37 +117,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkClearAttachment, colorAttachment}
 
-instance CanReadField "colorAttachment" VkClearAttachment where
-        {-# INLINE getField #-}
-        getField = vkColorAttachment
+instance {-# OVERLAPPING #-}
+         CanReadField "colorAttachment" VkClearAttachment where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkClearAttachment, colorAttachment})
 
         {-# INLINE readField #-}
-        readField = readVkColorAttachment
+        readField p
+          = peekByteOff p #{offset VkClearAttachment, colorAttachment}
 
-instance CanWriteField "colorAttachment" VkClearAttachment where
+instance {-# OVERLAPPING #-}
+         CanWriteField "colorAttachment" VkClearAttachment where
         {-# INLINE writeField #-}
-        writeField = writeVkColorAttachment
-
-instance {-# OVERLAPPING #-} HasVkClearValue VkClearAttachment
-         where
-        type VkClearValueMType VkClearAttachment = VkClearValue
-
-        {-# NOINLINE vkClearValue #-}
-        vkClearValue x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkClearAttachment, clearValue})
-
-        {-# INLINE vkClearValueByteOffset #-}
-        vkClearValueByteOffset ~_
-          = #{offset VkClearAttachment, clearValue}
-
-        {-# INLINE readVkClearValue #-}
-        readVkClearValue p
-          = peekByteOff p #{offset VkClearAttachment, clearValue}
-
-        {-# INLINE writeVkClearValue #-}
-        writeVkClearValue p
-          = pokeByteOff p #{offset VkClearAttachment, clearValue}
+        writeField p
+          = pokeByteOff p #{offset VkClearAttachment, colorAttachment}
 
 instance {-# OVERLAPPING #-}
          HasField "clearValue" VkClearAttachment where
@@ -199,25 +148,31 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkClearAttachment, clearValue}
 
-instance CanReadField "clearValue" VkClearAttachment where
-        {-# INLINE getField #-}
-        getField = vkClearValue
+instance {-# OVERLAPPING #-}
+         CanReadField "clearValue" VkClearAttachment where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkClearAttachment, clearValue})
 
         {-# INLINE readField #-}
-        readField = readVkClearValue
+        readField p
+          = peekByteOff p #{offset VkClearAttachment, clearValue}
 
-instance CanWriteField "clearValue" VkClearAttachment where
+instance {-# OVERLAPPING #-}
+         CanWriteField "clearValue" VkClearAttachment where
         {-# INLINE writeField #-}
-        writeField = writeVkClearValue
+        writeField p
+          = pokeByteOff p #{offset VkClearAttachment, clearValue}
 
 instance Show VkClearAttachment where
         showsPrec d x
           = showString "VkClearAttachment {" .
-              showString "vkAspectMask = " .
-                showsPrec d (vkAspectMask x) .
+              showString "aspectMask = " .
+                showsPrec d (getField @"aspectMask" x) .
                   showString ", " .
-                    showString "vkColorAttachment = " .
-                      showsPrec d (vkColorAttachment x) .
+                    showString "colorAttachment = " .
+                      showsPrec d (getField @"colorAttachment" x) .
                         showString ", " .
-                          showString "vkClearValue = " .
-                            showsPrec d (vkClearValue x) . showChar '}'
+                          showString "clearValue = " .
+                            showsPrec d (getField @"clearValue" x) . showChar '}'

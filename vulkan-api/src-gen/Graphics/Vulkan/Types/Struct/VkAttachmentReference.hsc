@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkAttachmentReference
        (VkAttachmentReference(..)) where
@@ -13,7 +14,6 @@ import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkImageLayout (VkImageLayout)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkAttachmentReference {
@@ -69,27 +69,6 @@ instance VulkanMarshal VkAttachmentReference where
         type ReturnedOnly VkAttachmentReference = 'False -- ' closing tick for hsc2hs
         type StructExtends VkAttachmentReference = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkAttachment VkAttachmentReference
-         where
-        type VkAttachmentMType VkAttachmentReference = Word32
-
-        {-# NOINLINE vkAttachment #-}
-        vkAttachment x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAttachmentReference, attachment})
-
-        {-# INLINE vkAttachmentByteOffset #-}
-        vkAttachmentByteOffset ~_
-          = #{offset VkAttachmentReference, attachment}
-
-        {-# INLINE readVkAttachment #-}
-        readVkAttachment p
-          = peekByteOff p #{offset VkAttachmentReference, attachment}
-
-        {-# INLINE writeVkAttachment #-}
-        writeVkAttachment p
-          = pokeByteOff p #{offset VkAttachmentReference, attachment}
-
 instance {-# OVERLAPPING #-}
          HasField "attachment" VkAttachmentReference where
         type FieldType "attachment" VkAttachmentReference = Word32
@@ -105,37 +84,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkAttachmentReference, attachment}
 
-instance CanReadField "attachment" VkAttachmentReference where
-        {-# INLINE getField #-}
-        getField = vkAttachment
+instance {-# OVERLAPPING #-}
+         CanReadField "attachment" VkAttachmentReference where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAttachmentReference, attachment})
 
         {-# INLINE readField #-}
-        readField = readVkAttachment
+        readField p
+          = peekByteOff p #{offset VkAttachmentReference, attachment}
 
-instance CanWriteField "attachment" VkAttachmentReference where
+instance {-# OVERLAPPING #-}
+         CanWriteField "attachment" VkAttachmentReference where
         {-# INLINE writeField #-}
-        writeField = writeVkAttachment
-
-instance {-# OVERLAPPING #-} HasVkLayout VkAttachmentReference
-         where
-        type VkLayoutMType VkAttachmentReference = VkImageLayout
-
-        {-# NOINLINE vkLayout #-}
-        vkLayout x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAttachmentReference, layout})
-
-        {-# INLINE vkLayoutByteOffset #-}
-        vkLayoutByteOffset ~_
-          = #{offset VkAttachmentReference, layout}
-
-        {-# INLINE readVkLayout #-}
-        readVkLayout p
-          = peekByteOff p #{offset VkAttachmentReference, layout}
-
-        {-# INLINE writeVkLayout #-}
-        writeVkLayout p
-          = pokeByteOff p #{offset VkAttachmentReference, layout}
+        writeField p
+          = pokeByteOff p #{offset VkAttachmentReference, attachment}
 
 instance {-# OVERLAPPING #-}
          HasField "layout" VkAttachmentReference where
@@ -151,21 +115,28 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkAttachmentReference, layout}
 
-instance CanReadField "layout" VkAttachmentReference where
-        {-# INLINE getField #-}
-        getField = vkLayout
+instance {-# OVERLAPPING #-}
+         CanReadField "layout" VkAttachmentReference where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAttachmentReference, layout})
 
         {-# INLINE readField #-}
-        readField = readVkLayout
+        readField p
+          = peekByteOff p #{offset VkAttachmentReference, layout}
 
-instance CanWriteField "layout" VkAttachmentReference where
+instance {-# OVERLAPPING #-}
+         CanWriteField "layout" VkAttachmentReference where
         {-# INLINE writeField #-}
-        writeField = writeVkLayout
+        writeField p
+          = pokeByteOff p #{offset VkAttachmentReference, layout}
 
 instance Show VkAttachmentReference where
         showsPrec d x
           = showString "VkAttachmentReference {" .
-              showString "vkAttachment = " .
-                showsPrec d (vkAttachment x) .
+              showString "attachment = " .
+                showsPrec d (getField @"attachment" x) .
                   showString ", " .
-                    showString "vkLayout = " . showsPrec d (vkLayout x) . showChar '}'
+                    showString "layout = " .
+                      showsPrec d (getField @"layout" x) . showChar '}'

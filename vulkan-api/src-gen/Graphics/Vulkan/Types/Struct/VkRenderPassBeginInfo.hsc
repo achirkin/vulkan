@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkRenderPassBeginInfo
        (VkRenderPassBeginInfo(..)) where
@@ -17,7 +18,6 @@ import           Graphics.Vulkan.Types.Handles              (VkFramebuffer,
                                                              VkRenderPass)
 import           Graphics.Vulkan.Types.Struct.VkClearValue  (VkClearValue)
 import           Graphics.Vulkan.Types.Struct.VkRect2D      (VkRect2D)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkRenderPassBeginInfo {
@@ -80,26 +80,6 @@ instance VulkanMarshal VkRenderPassBeginInfo where
         type ReturnedOnly VkRenderPassBeginInfo = 'False -- ' closing tick for hsc2hs
         type StructExtends VkRenderPassBeginInfo = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkRenderPassBeginInfo where
-        type VkSTypeMType VkRenderPassBeginInfo = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassBeginInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkRenderPassBeginInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkRenderPassBeginInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkRenderPassBeginInfo, sType}
-
 instance {-# OVERLAPPING #-} HasField "sType" VkRenderPassBeginInfo
          where
         type FieldType "sType" VkRenderPassBeginInfo = VkStructureType
@@ -114,36 +94,22 @@ instance {-# OVERLAPPING #-} HasField "sType" VkRenderPassBeginInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkRenderPassBeginInfo, sType}
 
-instance CanReadField "sType" VkRenderPassBeginInfo where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkRenderPassBeginInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassBeginInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkRenderPassBeginInfo, sType}
 
-instance CanWriteField "sType" VkRenderPassBeginInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkRenderPassBeginInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkRenderPassBeginInfo where
-        type VkPNextMType VkRenderPassBeginInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassBeginInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkRenderPassBeginInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkRenderPassBeginInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkRenderPassBeginInfo, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassBeginInfo, sType}
 
 instance {-# OVERLAPPING #-} HasField "pNext" VkRenderPassBeginInfo
          where
@@ -159,37 +125,22 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkRenderPassBeginInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkRenderPassBeginInfo, pNext}
 
-instance CanReadField "pNext" VkRenderPassBeginInfo where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkRenderPassBeginInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassBeginInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkRenderPassBeginInfo, pNext}
 
-instance CanWriteField "pNext" VkRenderPassBeginInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext" VkRenderPassBeginInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-} HasVkRenderPass VkRenderPassBeginInfo
-         where
-        type VkRenderPassMType VkRenderPassBeginInfo = VkRenderPass
-
-        {-# NOINLINE vkRenderPass #-}
-        vkRenderPass x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassBeginInfo, renderPass})
-
-        {-# INLINE vkRenderPassByteOffset #-}
-        vkRenderPassByteOffset ~_
-          = #{offset VkRenderPassBeginInfo, renderPass}
-
-        {-# INLINE readVkRenderPass #-}
-        readVkRenderPass p
-          = peekByteOff p #{offset VkRenderPassBeginInfo, renderPass}
-
-        {-# INLINE writeVkRenderPass #-}
-        writeVkRenderPass p
-          = pokeByteOff p #{offset VkRenderPassBeginInfo, renderPass}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassBeginInfo, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "renderPass" VkRenderPassBeginInfo where
@@ -206,37 +157,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassBeginInfo, renderPass}
 
-instance CanReadField "renderPass" VkRenderPassBeginInfo where
-        {-# INLINE getField #-}
-        getField = vkRenderPass
+instance {-# OVERLAPPING #-}
+         CanReadField "renderPass" VkRenderPassBeginInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassBeginInfo, renderPass})
 
         {-# INLINE readField #-}
-        readField = readVkRenderPass
+        readField p
+          = peekByteOff p #{offset VkRenderPassBeginInfo, renderPass}
 
-instance CanWriteField "renderPass" VkRenderPassBeginInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "renderPass" VkRenderPassBeginInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkRenderPass
-
-instance {-# OVERLAPPING #-} HasVkFramebuffer VkRenderPassBeginInfo
-         where
-        type VkFramebufferMType VkRenderPassBeginInfo = VkFramebuffer
-
-        {-# NOINLINE vkFramebuffer #-}
-        vkFramebuffer x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassBeginInfo, framebuffer})
-
-        {-# INLINE vkFramebufferByteOffset #-}
-        vkFramebufferByteOffset ~_
-          = #{offset VkRenderPassBeginInfo, framebuffer}
-
-        {-# INLINE readVkFramebuffer #-}
-        readVkFramebuffer p
-          = peekByteOff p #{offset VkRenderPassBeginInfo, framebuffer}
-
-        {-# INLINE writeVkFramebuffer #-}
-        writeVkFramebuffer p
-          = pokeByteOff p #{offset VkRenderPassBeginInfo, framebuffer}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassBeginInfo, renderPass}
 
 instance {-# OVERLAPPING #-}
          HasField "framebuffer" VkRenderPassBeginInfo where
@@ -253,37 +189,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassBeginInfo, framebuffer}
 
-instance CanReadField "framebuffer" VkRenderPassBeginInfo where
-        {-# INLINE getField #-}
-        getField = vkFramebuffer
+instance {-# OVERLAPPING #-}
+         CanReadField "framebuffer" VkRenderPassBeginInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassBeginInfo, framebuffer})
 
         {-# INLINE readField #-}
-        readField = readVkFramebuffer
+        readField p
+          = peekByteOff p #{offset VkRenderPassBeginInfo, framebuffer}
 
-instance CanWriteField "framebuffer" VkRenderPassBeginInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "framebuffer" VkRenderPassBeginInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkFramebuffer
-
-instance {-# OVERLAPPING #-} HasVkRenderArea VkRenderPassBeginInfo
-         where
-        type VkRenderAreaMType VkRenderPassBeginInfo = VkRect2D
-
-        {-# NOINLINE vkRenderArea #-}
-        vkRenderArea x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassBeginInfo, renderArea})
-
-        {-# INLINE vkRenderAreaByteOffset #-}
-        vkRenderAreaByteOffset ~_
-          = #{offset VkRenderPassBeginInfo, renderArea}
-
-        {-# INLINE readVkRenderArea #-}
-        readVkRenderArea p
-          = peekByteOff p #{offset VkRenderPassBeginInfo, renderArea}
-
-        {-# INLINE writeVkRenderArea #-}
-        writeVkRenderArea p
-          = pokeByteOff p #{offset VkRenderPassBeginInfo, renderArea}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassBeginInfo, framebuffer}
 
 instance {-# OVERLAPPING #-}
          HasField "renderArea" VkRenderPassBeginInfo where
@@ -300,37 +221,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassBeginInfo, renderArea}
 
-instance CanReadField "renderArea" VkRenderPassBeginInfo where
-        {-# INLINE getField #-}
-        getField = vkRenderArea
+instance {-# OVERLAPPING #-}
+         CanReadField "renderArea" VkRenderPassBeginInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassBeginInfo, renderArea})
 
         {-# INLINE readField #-}
-        readField = readVkRenderArea
-
-instance CanWriteField "renderArea" VkRenderPassBeginInfo where
-        {-# INLINE writeField #-}
-        writeField = writeVkRenderArea
+        readField p
+          = peekByteOff p #{offset VkRenderPassBeginInfo, renderArea}
 
 instance {-# OVERLAPPING #-}
-         HasVkClearValueCount VkRenderPassBeginInfo where
-        type VkClearValueCountMType VkRenderPassBeginInfo = Word32
-
-        {-# NOINLINE vkClearValueCount #-}
-        vkClearValueCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassBeginInfo, clearValueCount})
-
-        {-# INLINE vkClearValueCountByteOffset #-}
-        vkClearValueCountByteOffset ~_
-          = #{offset VkRenderPassBeginInfo, clearValueCount}
-
-        {-# INLINE readVkClearValueCount #-}
-        readVkClearValueCount p
-          = peekByteOff p #{offset VkRenderPassBeginInfo, clearValueCount}
-
-        {-# INLINE writeVkClearValueCount #-}
-        writeVkClearValueCount p
-          = pokeByteOff p #{offset VkRenderPassBeginInfo, clearValueCount}
+         CanWriteField "renderArea" VkRenderPassBeginInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassBeginInfo, renderArea}
 
 instance {-# OVERLAPPING #-}
          HasField "clearValueCount" VkRenderPassBeginInfo where
@@ -347,38 +253,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassBeginInfo, clearValueCount}
 
-instance CanReadField "clearValueCount" VkRenderPassBeginInfo where
-        {-# INLINE getField #-}
-        getField = vkClearValueCount
+instance {-# OVERLAPPING #-}
+         CanReadField "clearValueCount" VkRenderPassBeginInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassBeginInfo, clearValueCount})
 
         {-# INLINE readField #-}
-        readField = readVkClearValueCount
-
-instance CanWriteField "clearValueCount" VkRenderPassBeginInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkClearValueCount
+        readField p
+          = peekByteOff p #{offset VkRenderPassBeginInfo, clearValueCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPClearValues VkRenderPassBeginInfo where
-        type VkPClearValuesMType VkRenderPassBeginInfo = Ptr VkClearValue
-
-        {-# NOINLINE vkPClearValues #-}
-        vkPClearValues x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassBeginInfo, pClearValues})
-
-        {-# INLINE vkPClearValuesByteOffset #-}
-        vkPClearValuesByteOffset ~_
-          = #{offset VkRenderPassBeginInfo, pClearValues}
-
-        {-# INLINE readVkPClearValues #-}
-        readVkPClearValues p
-          = peekByteOff p #{offset VkRenderPassBeginInfo, pClearValues}
-
-        {-# INLINE writeVkPClearValues #-}
-        writeVkPClearValues p
-          = pokeByteOff p #{offset VkRenderPassBeginInfo, pClearValues}
+         CanWriteField "clearValueCount" VkRenderPassBeginInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassBeginInfo, clearValueCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pClearValues" VkRenderPassBeginInfo where
@@ -396,37 +286,44 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassBeginInfo, pClearValues}
 
-instance CanReadField "pClearValues" VkRenderPassBeginInfo where
-        {-# INLINE getField #-}
-        getField = vkPClearValues
+instance {-# OVERLAPPING #-}
+         CanReadField "pClearValues" VkRenderPassBeginInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassBeginInfo, pClearValues})
 
         {-# INLINE readField #-}
-        readField = readVkPClearValues
+        readField p
+          = peekByteOff p #{offset VkRenderPassBeginInfo, pClearValues}
 
-instance CanWriteField "pClearValues" VkRenderPassBeginInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pClearValues" VkRenderPassBeginInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPClearValues
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassBeginInfo, pClearValues}
 
 instance Show VkRenderPassBeginInfo where
         showsPrec d x
           = showString "VkRenderPassBeginInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkRenderPass = " .
-                            showsPrec d (vkRenderPass x) .
+                          showString "renderPass = " .
+                            showsPrec d (getField @"renderPass" x) .
                               showString ", " .
-                                showString "vkFramebuffer = " .
-                                  showsPrec d (vkFramebuffer x) .
+                                showString "framebuffer = " .
+                                  showsPrec d (getField @"framebuffer" x) .
                                     showString ", " .
-                                      showString "vkRenderArea = " .
-                                        showsPrec d (vkRenderArea x) .
+                                      showString "renderArea = " .
+                                        showsPrec d (getField @"renderArea" x) .
                                           showString ", " .
-                                            showString "vkClearValueCount = " .
-                                              showsPrec d (vkClearValueCount x) .
+                                            showString "clearValueCount = " .
+                                              showsPrec d (getField @"clearValueCount" x) .
                                                 showString ", " .
-                                                  showString "vkPClearValues = " .
-                                                    showsPrec d (vkPClearValues x) . showChar '}'
+                                                  showString "pClearValues = " .
+                                                    showsPrec d (getField @"pClearValues" x) .
+                                                      showChar '}'

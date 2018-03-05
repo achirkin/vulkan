@@ -5,15 +5,15 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkExtent2D (VkExtent2D(..))
        where
-import           Foreign.Storable                    (Storable (..))
+import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.StructMembers
-import           System.IO.Unsafe                    (unsafeDupablePerformIO)
+import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkExtent2D {
 --   >     uint32_t        width;
@@ -67,25 +67,6 @@ instance VulkanMarshal VkExtent2D where
         type ReturnedOnly VkExtent2D = 'False -- ' closing tick for hsc2hs
         type StructExtends VkExtent2D = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkWidth VkExtent2D where
-        type VkWidthMType VkExtent2D = Word32
-
-        {-# NOINLINE vkWidth #-}
-        vkWidth x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkExtent2D, width})
-
-        {-# INLINE vkWidthByteOffset #-}
-        vkWidthByteOffset ~_ = #{offset VkExtent2D, width}
-
-        {-# INLINE readVkWidth #-}
-        readVkWidth p
-          = peekByteOff p #{offset VkExtent2D, width}
-
-        {-# INLINE writeVkWidth #-}
-        writeVkWidth p
-          = pokeByteOff p #{offset VkExtent2D, width}
-
 instance {-# OVERLAPPING #-} HasField "width" VkExtent2D where
         type FieldType "width" VkExtent2D = Word32
         type FieldOptional "width" VkExtent2D = 'False -- ' closing tick for hsc2hs
@@ -99,35 +80,19 @@ instance {-# OVERLAPPING #-} HasField "width" VkExtent2D where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkExtent2D, width}
 
-instance CanReadField "width" VkExtent2D where
-        {-# INLINE getField #-}
-        getField = vkWidth
+instance {-# OVERLAPPING #-} CanReadField "width" VkExtent2D where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkExtent2D, width})
 
         {-# INLINE readField #-}
-        readField = readVkWidth
+        readField p = peekByteOff p #{offset VkExtent2D, width}
 
-instance CanWriteField "width" VkExtent2D where
+instance {-# OVERLAPPING #-} CanWriteField "width" VkExtent2D where
         {-# INLINE writeField #-}
-        writeField = writeVkWidth
-
-instance {-# OVERLAPPING #-} HasVkHeight VkExtent2D where
-        type VkHeightMType VkExtent2D = Word32
-
-        {-# NOINLINE vkHeight #-}
-        vkHeight x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkExtent2D, height})
-
-        {-# INLINE vkHeightByteOffset #-}
-        vkHeightByteOffset ~_ = #{offset VkExtent2D, height}
-
-        {-# INLINE readVkHeight #-}
-        readVkHeight p
-          = peekByteOff p #{offset VkExtent2D, height}
-
-        {-# INLINE writeVkHeight #-}
-        writeVkHeight p
-          = pokeByteOff p #{offset VkExtent2D, height}
+        writeField p
+          = pokeByteOff p #{offset VkExtent2D, width}
 
 instance {-# OVERLAPPING #-} HasField "height" VkExtent2D where
         type FieldType "height" VkExtent2D = Word32
@@ -142,21 +107,27 @@ instance {-# OVERLAPPING #-} HasField "height" VkExtent2D where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkExtent2D, height}
 
-instance CanReadField "height" VkExtent2D where
-        {-# INLINE getField #-}
-        getField = vkHeight
+instance {-# OVERLAPPING #-} CanReadField "height" VkExtent2D where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkExtent2D, height})
 
         {-# INLINE readField #-}
-        readField = readVkHeight
+        readField p
+          = peekByteOff p #{offset VkExtent2D, height}
 
-instance CanWriteField "height" VkExtent2D where
+instance {-# OVERLAPPING #-} CanWriteField "height" VkExtent2D
+         where
         {-# INLINE writeField #-}
-        writeField = writeVkHeight
+        writeField p
+          = pokeByteOff p #{offset VkExtent2D, height}
 
 instance Show VkExtent2D where
         showsPrec d x
           = showString "VkExtent2D {" .
-              showString "vkWidth = " .
-                showsPrec d (vkWidth x) .
+              showString "width = " .
+                showsPrec d (getField @"width" x) .
                   showString ", " .
-                    showString "vkHeight = " . showsPrec d (vkHeight x) . showChar '}'
+                    showString "height = " .
+                      showsPrec d (getField @"height" x) . showChar '}'

@@ -5,17 +5,17 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkDescriptorBufferInfo
        (VkDescriptorBufferInfo(..)) where
-import           Foreign.Storable                    (Storable (..))
+import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.BaseTypes     (VkDeviceSize)
-import           Graphics.Vulkan.Types.Handles       (VkBuffer)
-import           Graphics.Vulkan.Types.StructMembers
-import           System.IO.Unsafe                    (unsafeDupablePerformIO)
+import           Graphics.Vulkan.Types.BaseTypes  (VkDeviceSize)
+import           Graphics.Vulkan.Types.Handles    (VkBuffer)
+import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDescriptorBufferInfo {
 --   >     VkBuffer               buffer;
@@ -72,27 +72,6 @@ instance VulkanMarshal VkDescriptorBufferInfo where
         type ReturnedOnly VkDescriptorBufferInfo = 'False -- ' closing tick for hsc2hs
         type StructExtends VkDescriptorBufferInfo = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkBuffer VkDescriptorBufferInfo
-         where
-        type VkBufferMType VkDescriptorBufferInfo = VkBuffer
-
-        {-# NOINLINE vkBuffer #-}
-        vkBuffer x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDescriptorBufferInfo, buffer})
-
-        {-# INLINE vkBufferByteOffset #-}
-        vkBufferByteOffset ~_
-          = #{offset VkDescriptorBufferInfo, buffer}
-
-        {-# INLINE readVkBuffer #-}
-        readVkBuffer p
-          = peekByteOff p #{offset VkDescriptorBufferInfo, buffer}
-
-        {-# INLINE writeVkBuffer #-}
-        writeVkBuffer p
-          = pokeByteOff p #{offset VkDescriptorBufferInfo, buffer}
-
 instance {-# OVERLAPPING #-}
          HasField "buffer" VkDescriptorBufferInfo where
         type FieldType "buffer" VkDescriptorBufferInfo = VkBuffer
@@ -107,37 +86,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkDescriptorBufferInfo, buffer}
 
-instance CanReadField "buffer" VkDescriptorBufferInfo where
-        {-# INLINE getField #-}
-        getField = vkBuffer
+instance {-# OVERLAPPING #-}
+         CanReadField "buffer" VkDescriptorBufferInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDescriptorBufferInfo, buffer})
 
         {-# INLINE readField #-}
-        readField = readVkBuffer
+        readField p
+          = peekByteOff p #{offset VkDescriptorBufferInfo, buffer}
 
-instance CanWriteField "buffer" VkDescriptorBufferInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "buffer" VkDescriptorBufferInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkBuffer
-
-instance {-# OVERLAPPING #-} HasVkOffset VkDescriptorBufferInfo
-         where
-        type VkOffsetMType VkDescriptorBufferInfo = VkDeviceSize
-
-        {-# NOINLINE vkOffset #-}
-        vkOffset x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDescriptorBufferInfo, offset})
-
-        {-# INLINE vkOffsetByteOffset #-}
-        vkOffsetByteOffset ~_
-          = #{offset VkDescriptorBufferInfo, offset}
-
-        {-# INLINE readVkOffset #-}
-        readVkOffset p
-          = peekByteOff p #{offset VkDescriptorBufferInfo, offset}
-
-        {-# INLINE writeVkOffset #-}
-        writeVkOffset p
-          = pokeByteOff p #{offset VkDescriptorBufferInfo, offset}
+        writeField p
+          = pokeByteOff p #{offset VkDescriptorBufferInfo, buffer}
 
 instance {-# OVERLAPPING #-}
          HasField "offset" VkDescriptorBufferInfo where
@@ -153,37 +117,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkDescriptorBufferInfo, offset}
 
-instance CanReadField "offset" VkDescriptorBufferInfo where
-        {-# INLINE getField #-}
-        getField = vkOffset
+instance {-# OVERLAPPING #-}
+         CanReadField "offset" VkDescriptorBufferInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDescriptorBufferInfo, offset})
 
         {-# INLINE readField #-}
-        readField = readVkOffset
+        readField p
+          = peekByteOff p #{offset VkDescriptorBufferInfo, offset}
 
-instance CanWriteField "offset" VkDescriptorBufferInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "offset" VkDescriptorBufferInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkOffset
-
-instance {-# OVERLAPPING #-} HasVkRange VkDescriptorBufferInfo
-         where
-        type VkRangeMType VkDescriptorBufferInfo = VkDeviceSize
-
-        {-# NOINLINE vkRange #-}
-        vkRange x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDescriptorBufferInfo, range})
-
-        {-# INLINE vkRangeByteOffset #-}
-        vkRangeByteOffset ~_
-          = #{offset VkDescriptorBufferInfo, range}
-
-        {-# INLINE readVkRange #-}
-        readVkRange p
-          = peekByteOff p #{offset VkDescriptorBufferInfo, range}
-
-        {-# INLINE writeVkRange #-}
-        writeVkRange p
-          = pokeByteOff p #{offset VkDescriptorBufferInfo, range}
+        writeField p
+          = pokeByteOff p #{offset VkDescriptorBufferInfo, offset}
 
 instance {-# OVERLAPPING #-}
          HasField "range" VkDescriptorBufferInfo where
@@ -199,24 +148,31 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkDescriptorBufferInfo, range}
 
-instance CanReadField "range" VkDescriptorBufferInfo where
-        {-# INLINE getField #-}
-        getField = vkRange
+instance {-# OVERLAPPING #-}
+         CanReadField "range" VkDescriptorBufferInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDescriptorBufferInfo, range})
 
         {-# INLINE readField #-}
-        readField = readVkRange
+        readField p
+          = peekByteOff p #{offset VkDescriptorBufferInfo, range}
 
-instance CanWriteField "range" VkDescriptorBufferInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "range" VkDescriptorBufferInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkRange
+        writeField p
+          = pokeByteOff p #{offset VkDescriptorBufferInfo, range}
 
 instance Show VkDescriptorBufferInfo where
         showsPrec d x
           = showString "VkDescriptorBufferInfo {" .
-              showString "vkBuffer = " .
-                showsPrec d (vkBuffer x) .
+              showString "buffer = " .
+                showsPrec d (getField @"buffer" x) .
                   showString ", " .
-                    showString "vkOffset = " .
-                      showsPrec d (vkOffset x) .
+                    showString "offset = " .
+                      showsPrec d (getField @"offset" x) .
                         showString ", " .
-                          showString "vkRange = " . showsPrec d (vkRange x) . showChar '}'
+                          showString "range = " .
+                            showsPrec d (getField @"range" x) . showChar '}'

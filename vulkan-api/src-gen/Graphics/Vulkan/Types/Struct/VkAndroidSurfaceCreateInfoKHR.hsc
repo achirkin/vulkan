@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkAndroidSurfaceCreateInfoKHR
        (VkAndroidSurfaceCreateInfoKHR(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Bitmasks             (VkAndroidSurfaceCreateFlagsKHR)
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
 import           Graphics.Vulkan.Types.Include              (ANativeWindow)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkAndroidSurfaceCreateInfoKHR {
@@ -79,27 +79,6 @@ instance VulkanMarshal VkAndroidSurfaceCreateInfoKHR where
         type StructExtends VkAndroidSurfaceCreateInfoKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkAndroidSurfaceCreateInfoKHR where
-        type VkSTypeMType VkAndroidSurfaceCreateInfoKHR = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAndroidSurfaceCreateInfoKHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkAndroidSurfaceCreateInfoKHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkAndroidSurfaceCreateInfoKHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkAndroidSurfaceCreateInfoKHR, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkAndroidSurfaceCreateInfoKHR where
         type FieldType "sType" VkAndroidSurfaceCreateInfoKHR =
              VkStructureType
@@ -115,37 +94,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkAndroidSurfaceCreateInfoKHR, sType}
 
-instance CanReadField "sType" VkAndroidSurfaceCreateInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkAndroidSurfaceCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAndroidSurfaceCreateInfoKHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkAndroidSurfaceCreateInfoKHR where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkAndroidSurfaceCreateInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkAndroidSurfaceCreateInfoKHR where
-        type VkPNextMType VkAndroidSurfaceCreateInfoKHR = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAndroidSurfaceCreateInfoKHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkAndroidSurfaceCreateInfoKHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkAndroidSurfaceCreateInfoKHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkAndroidSurfaceCreateInfoKHR, pNext}
+         CanWriteField "sType" VkAndroidSurfaceCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkAndroidSurfaceCreateInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkAndroidSurfaceCreateInfoKHR where
@@ -162,38 +126,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkAndroidSurfaceCreateInfoKHR, pNext}
 
-instance CanReadField "pNext" VkAndroidSurfaceCreateInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkAndroidSurfaceCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAndroidSurfaceCreateInfoKHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkAndroidSurfaceCreateInfoKHR where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkAndroidSurfaceCreateInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkFlags VkAndroidSurfaceCreateInfoKHR where
-        type VkFlagsMType VkAndroidSurfaceCreateInfoKHR =
-             VkAndroidSurfaceCreateFlagsKHR
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAndroidSurfaceCreateInfoKHR, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkAndroidSurfaceCreateInfoKHR, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkAndroidSurfaceCreateInfoKHR, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkAndroidSurfaceCreateInfoKHR, flags}
+         CanWriteField "pNext" VkAndroidSurfaceCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkAndroidSurfaceCreateInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkAndroidSurfaceCreateInfoKHR where
@@ -211,38 +159,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkAndroidSurfaceCreateInfoKHR, flags}
 
-instance CanReadField "flags" VkAndroidSurfaceCreateInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkAndroidSurfaceCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAndroidSurfaceCreateInfoKHR, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags" VkAndroidSurfaceCreateInfoKHR where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkAndroidSurfaceCreateInfoKHR, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkWindow VkAndroidSurfaceCreateInfoKHR where
-        type VkWindowMType VkAndroidSurfaceCreateInfoKHR =
-             Ptr ANativeWindow
-
-        {-# NOINLINE vkWindow #-}
-        vkWindow x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAndroidSurfaceCreateInfoKHR, window})
-
-        {-# INLINE vkWindowByteOffset #-}
-        vkWindowByteOffset ~_
-          = #{offset VkAndroidSurfaceCreateInfoKHR, window}
-
-        {-# INLINE readVkWindow #-}
-        readVkWindow p
-          = peekByteOff p #{offset VkAndroidSurfaceCreateInfoKHR, window}
-
-        {-# INLINE writeVkWindow #-}
-        writeVkWindow p
-          = pokeByteOff p #{offset VkAndroidSurfaceCreateInfoKHR, window}
+         CanWriteField "flags" VkAndroidSurfaceCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkAndroidSurfaceCreateInfoKHR, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "window" VkAndroidSurfaceCreateInfoKHR where
@@ -260,27 +192,34 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkAndroidSurfaceCreateInfoKHR, window}
 
-instance CanReadField "window" VkAndroidSurfaceCreateInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkWindow
+instance {-# OVERLAPPING #-}
+         CanReadField "window" VkAndroidSurfaceCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAndroidSurfaceCreateInfoKHR, window})
 
         {-# INLINE readField #-}
-        readField = readVkWindow
+        readField p
+          = peekByteOff p #{offset VkAndroidSurfaceCreateInfoKHR, window}
 
-instance CanWriteField "window" VkAndroidSurfaceCreateInfoKHR where
+instance {-# OVERLAPPING #-}
+         CanWriteField "window" VkAndroidSurfaceCreateInfoKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkWindow
+        writeField p
+          = pokeByteOff p #{offset VkAndroidSurfaceCreateInfoKHR, window}
 
 instance Show VkAndroidSurfaceCreateInfoKHR where
         showsPrec d x
           = showString "VkAndroidSurfaceCreateInfoKHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkWindow = " . showsPrec d (vkWindow x) . showChar '}'
+                                showString "window = " .
+                                  showsPrec d (getField @"window" x) . showChar '}'

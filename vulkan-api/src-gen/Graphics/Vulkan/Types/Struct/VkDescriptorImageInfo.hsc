@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkDescriptorImageInfo
        (VkDescriptorImageInfo(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkImageLayout (VkImageLayout)
 import           Graphics.Vulkan.Types.Handles            (VkImageView,
                                                            VkSampler)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDescriptorImageInfo {
@@ -73,27 +73,6 @@ instance VulkanMarshal VkDescriptorImageInfo where
         type ReturnedOnly VkDescriptorImageInfo = 'False -- ' closing tick for hsc2hs
         type StructExtends VkDescriptorImageInfo = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSampler VkDescriptorImageInfo
-         where
-        type VkSamplerMType VkDescriptorImageInfo = VkSampler
-
-        {-# NOINLINE vkSampler #-}
-        vkSampler x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDescriptorImageInfo, sampler})
-
-        {-# INLINE vkSamplerByteOffset #-}
-        vkSamplerByteOffset ~_
-          = #{offset VkDescriptorImageInfo, sampler}
-
-        {-# INLINE readVkSampler #-}
-        readVkSampler p
-          = peekByteOff p #{offset VkDescriptorImageInfo, sampler}
-
-        {-# INLINE writeVkSampler #-}
-        writeVkSampler p
-          = pokeByteOff p #{offset VkDescriptorImageInfo, sampler}
-
 instance {-# OVERLAPPING #-}
          HasField "sampler" VkDescriptorImageInfo where
         type FieldType "sampler" VkDescriptorImageInfo = VkSampler
@@ -108,37 +87,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkDescriptorImageInfo, sampler}
 
-instance CanReadField "sampler" VkDescriptorImageInfo where
-        {-# INLINE getField #-}
-        getField = vkSampler
+instance {-# OVERLAPPING #-}
+         CanReadField "sampler" VkDescriptorImageInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDescriptorImageInfo, sampler})
 
         {-# INLINE readField #-}
-        readField = readVkSampler
+        readField p
+          = peekByteOff p #{offset VkDescriptorImageInfo, sampler}
 
-instance CanWriteField "sampler" VkDescriptorImageInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sampler" VkDescriptorImageInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkSampler
-
-instance {-# OVERLAPPING #-} HasVkImageView VkDescriptorImageInfo
-         where
-        type VkImageViewMType VkDescriptorImageInfo = VkImageView
-
-        {-# NOINLINE vkImageView #-}
-        vkImageView x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDescriptorImageInfo, imageView})
-
-        {-# INLINE vkImageViewByteOffset #-}
-        vkImageViewByteOffset ~_
-          = #{offset VkDescriptorImageInfo, imageView}
-
-        {-# INLINE readVkImageView #-}
-        readVkImageView p
-          = peekByteOff p #{offset VkDescriptorImageInfo, imageView}
-
-        {-# INLINE writeVkImageView #-}
-        writeVkImageView p
-          = pokeByteOff p #{offset VkDescriptorImageInfo, imageView}
+        writeField p
+          = pokeByteOff p #{offset VkDescriptorImageInfo, sampler}
 
 instance {-# OVERLAPPING #-}
          HasField "imageView" VkDescriptorImageInfo where
@@ -155,37 +119,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDescriptorImageInfo, imageView}
 
-instance CanReadField "imageView" VkDescriptorImageInfo where
-        {-# INLINE getField #-}
-        getField = vkImageView
+instance {-# OVERLAPPING #-}
+         CanReadField "imageView" VkDescriptorImageInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDescriptorImageInfo, imageView})
 
         {-# INLINE readField #-}
-        readField = readVkImageView
+        readField p
+          = peekByteOff p #{offset VkDescriptorImageInfo, imageView}
 
-instance CanWriteField "imageView" VkDescriptorImageInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "imageView" VkDescriptorImageInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkImageView
-
-instance {-# OVERLAPPING #-} HasVkImageLayout VkDescriptorImageInfo
-         where
-        type VkImageLayoutMType VkDescriptorImageInfo = VkImageLayout
-
-        {-# NOINLINE vkImageLayout #-}
-        vkImageLayout x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDescriptorImageInfo, imageLayout})
-
-        {-# INLINE vkImageLayoutByteOffset #-}
-        vkImageLayoutByteOffset ~_
-          = #{offset VkDescriptorImageInfo, imageLayout}
-
-        {-# INLINE readVkImageLayout #-}
-        readVkImageLayout p
-          = peekByteOff p #{offset VkDescriptorImageInfo, imageLayout}
-
-        {-# INLINE writeVkImageLayout #-}
-        writeVkImageLayout p
-          = pokeByteOff p #{offset VkDescriptorImageInfo, imageLayout}
+        writeField p
+          = pokeByteOff p #{offset VkDescriptorImageInfo, imageView}
 
 instance {-# OVERLAPPING #-}
          HasField "imageLayout" VkDescriptorImageInfo where
@@ -202,25 +151,31 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDescriptorImageInfo, imageLayout}
 
-instance CanReadField "imageLayout" VkDescriptorImageInfo where
-        {-# INLINE getField #-}
-        getField = vkImageLayout
+instance {-# OVERLAPPING #-}
+         CanReadField "imageLayout" VkDescriptorImageInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDescriptorImageInfo, imageLayout})
 
         {-# INLINE readField #-}
-        readField = readVkImageLayout
+        readField p
+          = peekByteOff p #{offset VkDescriptorImageInfo, imageLayout}
 
-instance CanWriteField "imageLayout" VkDescriptorImageInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "imageLayout" VkDescriptorImageInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkImageLayout
+        writeField p
+          = pokeByteOff p #{offset VkDescriptorImageInfo, imageLayout}
 
 instance Show VkDescriptorImageInfo where
         showsPrec d x
           = showString "VkDescriptorImageInfo {" .
-              showString "vkSampler = " .
-                showsPrec d (vkSampler x) .
+              showString "sampler = " .
+                showsPrec d (getField @"sampler" x) .
                   showString ", " .
-                    showString "vkImageView = " .
-                      showsPrec d (vkImageView x) .
+                    showString "imageView = " .
+                      showsPrec d (getField @"imageView" x) .
                         showString ", " .
-                          showString "vkImageLayout = " .
-                            showsPrec d (vkImageLayout x) . showChar '}'
+                          showString "imageLayout = " .
+                            showsPrec d (getField @"imageLayout" x) . showChar '}'

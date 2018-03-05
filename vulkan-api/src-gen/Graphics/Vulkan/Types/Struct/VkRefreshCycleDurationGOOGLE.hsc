@@ -5,15 +5,15 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkRefreshCycleDurationGOOGLE
        (VkRefreshCycleDurationGOOGLE(..)) where
-import           Foreign.Storable                    (Storable (..))
+import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.StructMembers
-import           System.IO.Unsafe                    (unsafeDupablePerformIO)
+import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkRefreshCycleDurationGOOGLE {
 --   >     uint64_t                         refreshDuration;
@@ -73,27 +73,6 @@ instance VulkanMarshal VkRefreshCycleDurationGOOGLE where
         type StructExtends VkRefreshCycleDurationGOOGLE = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkRefreshDuration VkRefreshCycleDurationGOOGLE where
-        type VkRefreshDurationMType VkRefreshCycleDurationGOOGLE = Word64
-
-        {-# NOINLINE vkRefreshDuration #-}
-        vkRefreshDuration x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRefreshCycleDurationGOOGLE, refreshDuration})
-
-        {-# INLINE vkRefreshDurationByteOffset #-}
-        vkRefreshDurationByteOffset ~_
-          = #{offset VkRefreshCycleDurationGOOGLE, refreshDuration}
-
-        {-# INLINE readVkRefreshDuration #-}
-        readVkRefreshDuration p
-          = peekByteOff p #{offset VkRefreshCycleDurationGOOGLE, refreshDuration}
-
-        {-# INLINE writeVkRefreshDuration #-}
-        writeVkRefreshDuration p
-          = pokeByteOff p #{offset VkRefreshCycleDurationGOOGLE, refreshDuration}
-
-instance {-# OVERLAPPING #-}
          HasField "refreshDuration" VkRefreshCycleDurationGOOGLE where
         type FieldType "refreshDuration" VkRefreshCycleDurationGOOGLE =
              Word64
@@ -111,23 +90,25 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRefreshCycleDurationGOOGLE, refreshDuration}
 
-instance CanReadField "refreshDuration"
-           VkRefreshCycleDurationGOOGLE
-         where
-        {-# INLINE getField #-}
-        getField = vkRefreshDuration
+instance {-# OVERLAPPING #-}
+         CanReadField "refreshDuration" VkRefreshCycleDurationGOOGLE where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRefreshCycleDurationGOOGLE, refreshDuration})
 
         {-# INLINE readField #-}
-        readField = readVkRefreshDuration
+        readField p
+          = peekByteOff p #{offset VkRefreshCycleDurationGOOGLE, refreshDuration}
 
-instance CanWriteField "refreshDuration"
-           VkRefreshCycleDurationGOOGLE
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "refreshDuration" VkRefreshCycleDurationGOOGLE where
         {-# INLINE writeField #-}
-        writeField = writeVkRefreshDuration
+        writeField p
+          = pokeByteOff p #{offset VkRefreshCycleDurationGOOGLE, refreshDuration}
 
 instance Show VkRefreshCycleDurationGOOGLE where
         showsPrec d x
           = showString "VkRefreshCycleDurationGOOGLE {" .
-              showString "vkRefreshDuration = " .
-                showsPrec d (vkRefreshDuration x) . showChar '}'
+              showString "refreshDuration = " .
+                showsPrec d (getField @"refreshDuration" x) . showChar '}'

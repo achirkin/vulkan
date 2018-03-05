@@ -29,6 +29,7 @@ module Graphics.Vulkan.Ext.VK_KHX_device_group_creation
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
         vkEnumeratePhysicalDeviceGroupsKHX,
+        vkEnumeratePhysicalDeviceGroupsKHXSafe,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_KHX_DEVICE_GROUP_CREATION_SPEC_VERSION,
@@ -70,6 +71,25 @@ import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceGroupPropertiesKHX
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkEnumeratePhysicalDeviceGroupsKHX.html vkEnumeratePhysicalDeviceGroupsKHX registry at www.khronos.org>
 foreign import ccall unsafe "vkEnumeratePhysicalDeviceGroupsKHX"
                vkEnumeratePhysicalDeviceGroupsKHX ::
+               VkInstance -- ^ instance
+                          ->
+                 Ptr Word32 -- ^ pPhysicalDeviceGroupCount
+                            -> Ptr VkPhysicalDeviceGroupPropertiesKHX -- ^ pPhysicalDeviceGroupProperties
+                                                                      -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INITIALIZATION_FAILED'.
+--
+--   > VkResult vkEnumeratePhysicalDeviceGroupsKHX
+--   >     ( VkInstance instance
+--   >     , uint32_t* pPhysicalDeviceGroupCount
+--   >     , VkPhysicalDeviceGroupPropertiesKHX* pPhysicalDeviceGroupProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkEnumeratePhysicalDeviceGroupsKHX.html vkEnumeratePhysicalDeviceGroupsKHX registry at www.khronos.org>
+foreign import ccall safe "vkEnumeratePhysicalDeviceGroupsKHX"
+               vkEnumeratePhysicalDeviceGroupsKHXSafe ::
                VkInstance -- ^ instance
                           ->
                  Ptr Word32 -- ^ pPhysicalDeviceGroupCount

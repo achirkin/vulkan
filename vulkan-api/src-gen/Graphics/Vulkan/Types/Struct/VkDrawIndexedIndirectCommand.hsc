@@ -5,15 +5,15 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkDrawIndexedIndirectCommand
        (VkDrawIndexedIndirectCommand(..)) where
-import           Foreign.Storable                    (Storable (..))
+import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.StructMembers
-import           System.IO.Unsafe                    (unsafeDupablePerformIO)
+import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDrawIndexedIndirectCommand {
 --   >     uint32_t               indexCount;
@@ -78,27 +78,6 @@ instance VulkanMarshal VkDrawIndexedIndirectCommand where
         type StructExtends VkDrawIndexedIndirectCommand = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkIndexCount VkDrawIndexedIndirectCommand where
-        type VkIndexCountMType VkDrawIndexedIndirectCommand = Word32
-
-        {-# NOINLINE vkIndexCount #-}
-        vkIndexCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDrawIndexedIndirectCommand, indexCount})
-
-        {-# INLINE vkIndexCountByteOffset #-}
-        vkIndexCountByteOffset ~_
-          = #{offset VkDrawIndexedIndirectCommand, indexCount}
-
-        {-# INLINE readVkIndexCount #-}
-        readVkIndexCount p
-          = peekByteOff p #{offset VkDrawIndexedIndirectCommand, indexCount}
-
-        {-# INLINE writeVkIndexCount #-}
-        writeVkIndexCount p
-          = pokeByteOff p #{offset VkDrawIndexedIndirectCommand, indexCount}
-
-instance {-# OVERLAPPING #-}
          HasField "indexCount" VkDrawIndexedIndirectCommand where
         type FieldType "indexCount" VkDrawIndexedIndirectCommand = Word32
         type FieldOptional "indexCount" VkDrawIndexedIndirectCommand =
@@ -115,39 +94,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDrawIndexedIndirectCommand, indexCount}
 
-instance CanReadField "indexCount" VkDrawIndexedIndirectCommand
-         where
-        {-# INLINE getField #-}
-        getField = vkIndexCount
+instance {-# OVERLAPPING #-}
+         CanReadField "indexCount" VkDrawIndexedIndirectCommand where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDrawIndexedIndirectCommand, indexCount})
 
         {-# INLINE readField #-}
-        readField = readVkIndexCount
-
-instance CanWriteField "indexCount" VkDrawIndexedIndirectCommand
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkIndexCount
+        readField p
+          = peekByteOff p #{offset VkDrawIndexedIndirectCommand, indexCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkInstanceCount VkDrawIndexedIndirectCommand where
-        type VkInstanceCountMType VkDrawIndexedIndirectCommand = Word32
-
-        {-# NOINLINE vkInstanceCount #-}
-        vkInstanceCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDrawIndexedIndirectCommand, instanceCount})
-
-        {-# INLINE vkInstanceCountByteOffset #-}
-        vkInstanceCountByteOffset ~_
-          = #{offset VkDrawIndexedIndirectCommand, instanceCount}
-
-        {-# INLINE readVkInstanceCount #-}
-        readVkInstanceCount p
-          = peekByteOff p #{offset VkDrawIndexedIndirectCommand, instanceCount}
-
-        {-# INLINE writeVkInstanceCount #-}
-        writeVkInstanceCount p
-          = pokeByteOff p #{offset VkDrawIndexedIndirectCommand, instanceCount}
+         CanWriteField "indexCount" VkDrawIndexedIndirectCommand where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDrawIndexedIndirectCommand, indexCount}
 
 instance {-# OVERLAPPING #-}
          HasField "instanceCount" VkDrawIndexedIndirectCommand where
@@ -167,39 +129,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDrawIndexedIndirectCommand, instanceCount}
 
-instance CanReadField "instanceCount" VkDrawIndexedIndirectCommand
-         where
-        {-# INLINE getField #-}
-        getField = vkInstanceCount
+instance {-# OVERLAPPING #-}
+         CanReadField "instanceCount" VkDrawIndexedIndirectCommand where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDrawIndexedIndirectCommand, instanceCount})
 
         {-# INLINE readField #-}
-        readField = readVkInstanceCount
-
-instance CanWriteField "instanceCount" VkDrawIndexedIndirectCommand
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkInstanceCount
+        readField p
+          = peekByteOff p #{offset VkDrawIndexedIndirectCommand, instanceCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkFirstIndex VkDrawIndexedIndirectCommand where
-        type VkFirstIndexMType VkDrawIndexedIndirectCommand = Word32
-
-        {-# NOINLINE vkFirstIndex #-}
-        vkFirstIndex x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDrawIndexedIndirectCommand, firstIndex})
-
-        {-# INLINE vkFirstIndexByteOffset #-}
-        vkFirstIndexByteOffset ~_
-          = #{offset VkDrawIndexedIndirectCommand, firstIndex}
-
-        {-# INLINE readVkFirstIndex #-}
-        readVkFirstIndex p
-          = peekByteOff p #{offset VkDrawIndexedIndirectCommand, firstIndex}
-
-        {-# INLINE writeVkFirstIndex #-}
-        writeVkFirstIndex p
-          = pokeByteOff p #{offset VkDrawIndexedIndirectCommand, firstIndex}
+         CanWriteField "instanceCount" VkDrawIndexedIndirectCommand where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDrawIndexedIndirectCommand, instanceCount}
 
 instance {-# OVERLAPPING #-}
          HasField "firstIndex" VkDrawIndexedIndirectCommand where
@@ -218,39 +163,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDrawIndexedIndirectCommand, firstIndex}
 
-instance CanReadField "firstIndex" VkDrawIndexedIndirectCommand
-         where
-        {-# INLINE getField #-}
-        getField = vkFirstIndex
+instance {-# OVERLAPPING #-}
+         CanReadField "firstIndex" VkDrawIndexedIndirectCommand where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDrawIndexedIndirectCommand, firstIndex})
 
         {-# INLINE readField #-}
-        readField = readVkFirstIndex
-
-instance CanWriteField "firstIndex" VkDrawIndexedIndirectCommand
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFirstIndex
+        readField p
+          = peekByteOff p #{offset VkDrawIndexedIndirectCommand, firstIndex}
 
 instance {-# OVERLAPPING #-}
-         HasVkVertexOffset VkDrawIndexedIndirectCommand where
-        type VkVertexOffsetMType VkDrawIndexedIndirectCommand = Int32
-
-        {-# NOINLINE vkVertexOffset #-}
-        vkVertexOffset x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDrawIndexedIndirectCommand, vertexOffset})
-
-        {-# INLINE vkVertexOffsetByteOffset #-}
-        vkVertexOffsetByteOffset ~_
-          = #{offset VkDrawIndexedIndirectCommand, vertexOffset}
-
-        {-# INLINE readVkVertexOffset #-}
-        readVkVertexOffset p
-          = peekByteOff p #{offset VkDrawIndexedIndirectCommand, vertexOffset}
-
-        {-# INLINE writeVkVertexOffset #-}
-        writeVkVertexOffset p
-          = pokeByteOff p #{offset VkDrawIndexedIndirectCommand, vertexOffset}
+         CanWriteField "firstIndex" VkDrawIndexedIndirectCommand where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDrawIndexedIndirectCommand, firstIndex}
 
 instance {-# OVERLAPPING #-}
          HasField "vertexOffset" VkDrawIndexedIndirectCommand where
@@ -269,39 +197,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDrawIndexedIndirectCommand, vertexOffset}
 
-instance CanReadField "vertexOffset" VkDrawIndexedIndirectCommand
-         where
-        {-# INLINE getField #-}
-        getField = vkVertexOffset
+instance {-# OVERLAPPING #-}
+         CanReadField "vertexOffset" VkDrawIndexedIndirectCommand where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDrawIndexedIndirectCommand, vertexOffset})
 
         {-# INLINE readField #-}
-        readField = readVkVertexOffset
-
-instance CanWriteField "vertexOffset" VkDrawIndexedIndirectCommand
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkVertexOffset
+        readField p
+          = peekByteOff p #{offset VkDrawIndexedIndirectCommand, vertexOffset}
 
 instance {-# OVERLAPPING #-}
-         HasVkFirstInstance VkDrawIndexedIndirectCommand where
-        type VkFirstInstanceMType VkDrawIndexedIndirectCommand = Word32
-
-        {-# NOINLINE vkFirstInstance #-}
-        vkFirstInstance x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDrawIndexedIndirectCommand, firstInstance})
-
-        {-# INLINE vkFirstInstanceByteOffset #-}
-        vkFirstInstanceByteOffset ~_
-          = #{offset VkDrawIndexedIndirectCommand, firstInstance}
-
-        {-# INLINE readVkFirstInstance #-}
-        readVkFirstInstance p
-          = peekByteOff p #{offset VkDrawIndexedIndirectCommand, firstInstance}
-
-        {-# INLINE writeVkFirstInstance #-}
-        writeVkFirstInstance p
-          = pokeByteOff p #{offset VkDrawIndexedIndirectCommand, firstInstance}
+         CanWriteField "vertexOffset" VkDrawIndexedIndirectCommand where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDrawIndexedIndirectCommand, vertexOffset}
 
 instance {-# OVERLAPPING #-}
          HasField "firstInstance" VkDrawIndexedIndirectCommand where
@@ -321,33 +232,37 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDrawIndexedIndirectCommand, firstInstance}
 
-instance CanReadField "firstInstance" VkDrawIndexedIndirectCommand
-         where
-        {-# INLINE getField #-}
-        getField = vkFirstInstance
+instance {-# OVERLAPPING #-}
+         CanReadField "firstInstance" VkDrawIndexedIndirectCommand where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDrawIndexedIndirectCommand, firstInstance})
 
         {-# INLINE readField #-}
-        readField = readVkFirstInstance
+        readField p
+          = peekByteOff p #{offset VkDrawIndexedIndirectCommand, firstInstance}
 
-instance CanWriteField "firstInstance" VkDrawIndexedIndirectCommand
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "firstInstance" VkDrawIndexedIndirectCommand where
         {-# INLINE writeField #-}
-        writeField = writeVkFirstInstance
+        writeField p
+          = pokeByteOff p #{offset VkDrawIndexedIndirectCommand, firstInstance}
 
 instance Show VkDrawIndexedIndirectCommand where
         showsPrec d x
           = showString "VkDrawIndexedIndirectCommand {" .
-              showString "vkIndexCount = " .
-                showsPrec d (vkIndexCount x) .
+              showString "indexCount = " .
+                showsPrec d (getField @"indexCount" x) .
                   showString ", " .
-                    showString "vkInstanceCount = " .
-                      showsPrec d (vkInstanceCount x) .
+                    showString "instanceCount = " .
+                      showsPrec d (getField @"instanceCount" x) .
                         showString ", " .
-                          showString "vkFirstIndex = " .
-                            showsPrec d (vkFirstIndex x) .
+                          showString "firstIndex = " .
+                            showsPrec d (getField @"firstIndex" x) .
                               showString ", " .
-                                showString "vkVertexOffset = " .
-                                  showsPrec d (vkVertexOffset x) .
+                                showString "vertexOffset = " .
+                                  showsPrec d (getField @"vertexOffset" x) .
                                     showString ", " .
-                                      showString "vkFirstInstance = " .
-                                        showsPrec d (vkFirstInstance x) . showChar '}'
+                                      showString "firstInstance = " .
+                                        showsPrec d (getField @"firstInstance" x) . showChar '}'

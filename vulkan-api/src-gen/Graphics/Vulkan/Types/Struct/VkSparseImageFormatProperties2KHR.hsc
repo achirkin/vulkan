@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkSparseImageFormatProperties2KHR
        (VkSparseImageFormatProperties2KHR(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType                 (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkSparseImageFormatProperties (VkSparseImageFormatProperties)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSparseImageFormatProperties2KHR {
@@ -78,28 +78,6 @@ instance VulkanMarshal VkSparseImageFormatProperties2KHR where
         type StructExtends VkSparseImageFormatProperties2KHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkSparseImageFormatProperties2KHR where
-        type VkSTypeMType VkSparseImageFormatProperties2KHR =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSparseImageFormatProperties2KHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkSparseImageFormatProperties2KHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkSparseImageFormatProperties2KHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkSparseImageFormatProperties2KHR, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkSparseImageFormatProperties2KHR where
         type FieldType "sType" VkSparseImageFormatProperties2KHR =
              VkStructureType
@@ -117,39 +95,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSparseImageFormatProperties2KHR, sType}
 
-instance CanReadField "sType" VkSparseImageFormatProperties2KHR
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkSparseImageFormatProperties2KHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSparseImageFormatProperties2KHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkSparseImageFormatProperties2KHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkSparseImageFormatProperties2KHR, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkSparseImageFormatProperties2KHR where
-        type VkPNextMType VkSparseImageFormatProperties2KHR = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSparseImageFormatProperties2KHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkSparseImageFormatProperties2KHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkSparseImageFormatProperties2KHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkSparseImageFormatProperties2KHR, pNext}
+         CanWriteField "sType" VkSparseImageFormatProperties2KHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSparseImageFormatProperties2KHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkSparseImageFormatProperties2KHR where
@@ -168,40 +129,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSparseImageFormatProperties2KHR, pNext}
 
-instance CanReadField "pNext" VkSparseImageFormatProperties2KHR
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkSparseImageFormatProperties2KHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSparseImageFormatProperties2KHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkSparseImageFormatProperties2KHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkSparseImageFormatProperties2KHR, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkProperties VkSparseImageFormatProperties2KHR where
-        type VkPropertiesMType VkSparseImageFormatProperties2KHR =
-             VkSparseImageFormatProperties
-
-        {-# NOINLINE vkProperties #-}
-        vkProperties x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSparseImageFormatProperties2KHR, properties})
-
-        {-# INLINE vkPropertiesByteOffset #-}
-        vkPropertiesByteOffset ~_
-          = #{offset VkSparseImageFormatProperties2KHR, properties}
-
-        {-# INLINE readVkProperties #-}
-        readVkProperties p
-          = peekByteOff p #{offset VkSparseImageFormatProperties2KHR, properties}
-
-        {-# INLINE writeVkProperties #-}
-        writeVkProperties p
-          = pokeByteOff p #{offset VkSparseImageFormatProperties2KHR, properties}
+         CanWriteField "pNext" VkSparseImageFormatProperties2KHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSparseImageFormatProperties2KHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "properties" VkSparseImageFormatProperties2KHR where
@@ -221,29 +164,31 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSparseImageFormatProperties2KHR, properties}
 
-instance CanReadField "properties"
-           VkSparseImageFormatProperties2KHR
-         where
-        {-# INLINE getField #-}
-        getField = vkProperties
+instance {-# OVERLAPPING #-}
+         CanReadField "properties" VkSparseImageFormatProperties2KHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSparseImageFormatProperties2KHR, properties})
 
         {-# INLINE readField #-}
-        readField = readVkProperties
+        readField p
+          = peekByteOff p #{offset VkSparseImageFormatProperties2KHR, properties}
 
-instance CanWriteField "properties"
-           VkSparseImageFormatProperties2KHR
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "properties" VkSparseImageFormatProperties2KHR where
         {-# INLINE writeField #-}
-        writeField = writeVkProperties
+        writeField p
+          = pokeByteOff p #{offset VkSparseImageFormatProperties2KHR, properties}
 
 instance Show VkSparseImageFormatProperties2KHR where
         showsPrec d x
           = showString "VkSparseImageFormatProperties2KHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkProperties = " .
-                            showsPrec d (vkProperties x) . showChar '}'
+                          showString "properties = " .
+                            showsPrec d (getField @"properties" x) . showChar '}'

@@ -28,6 +28,7 @@ module Graphics.Vulkan.Ext.VK_NV_external_memory_capabilities
         module Graphics.Vulkan.Types.Enum.VkSampleCountFlags,
         -- > #include "vk_platform.h"
         vkGetPhysicalDeviceExternalImageFormatPropertiesNV,
+        vkGetPhysicalDeviceExternalImageFormatPropertiesNVSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkFormat,
         module Graphics.Vulkan.Types.Enum.VkImageCreateFlags,
@@ -77,6 +78,42 @@ import           Graphics.Vulkan.Types.Struct.VkImageFormatProperties
 foreign import ccall unsafe
                "vkGetPhysicalDeviceExternalImageFormatPropertiesNV"
                vkGetPhysicalDeviceExternalImageFormatPropertiesNV ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                ->
+                 VkFormat -- ^ format
+                          ->
+                   VkImageType -- ^ type
+                               ->
+                     VkImageTiling -- ^ tiling
+                                   ->
+                       VkImageUsageFlags -- ^ usage
+                                         ->
+                         VkImageCreateFlags -- ^ flags
+                                            ->
+                           VkExternalMemoryHandleTypeFlagsNV -- ^ externalHandleType
+                                                             ->
+                             Ptr VkExternalImageFormatPropertiesNV -- ^ pExternalImageFormatProperties
+                                                                   -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_FORMAT_NOT_SUPPORTED'.
+--
+--   > VkResult vkGetPhysicalDeviceExternalImageFormatPropertiesNV
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , VkFormat format
+--   >     , VkImageType type
+--   >     , VkImageTiling tiling
+--   >     , VkImageUsageFlags usage
+--   >     , VkImageCreateFlags flags
+--   >     , VkExternalMemoryHandleTypeFlagsNV externalHandleType
+--   >     , VkExternalImageFormatPropertiesNV* pExternalImageFormatProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceExternalImageFormatPropertiesNV.html vkGetPhysicalDeviceExternalImageFormatPropertiesNV registry at www.khronos.org>
+foreign import ccall safe
+               "vkGetPhysicalDeviceExternalImageFormatPropertiesNV"
+               vkGetPhysicalDeviceExternalImageFormatPropertiesNVSafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  VkFormat -- ^ format

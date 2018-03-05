@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkTextureLODGatherFormatPropertiesAMD
        (VkTextureLODGatherFormatPropertiesAMD(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes                          (VkBool32)
 import           Graphics.Vulkan.Types.Enum.VkStructureType               (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkImageFormatProperties2KHR (VkImageFormatProperties2KHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkTextureLODGatherFormatPropertiesAMD {
@@ -82,28 +82,6 @@ instance VulkanMarshal VkTextureLODGatherFormatPropertiesAMD where
              '[VkImageFormatProperties2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkTextureLODGatherFormatPropertiesAMD where
-        type VkSTypeMType VkTextureLODGatherFormatPropertiesAMD =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkTextureLODGatherFormatPropertiesAMD, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkTextureLODGatherFormatPropertiesAMD, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkTextureLODGatherFormatPropertiesAMD, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkTextureLODGatherFormatPropertiesAMD, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkTextureLODGatherFormatPropertiesAMD where
         type FieldType "sType" VkTextureLODGatherFormatPropertiesAMD =
              VkStructureType
@@ -121,40 +99,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkTextureLODGatherFormatPropertiesAMD, sType}
 
-instance CanReadField "sType" VkTextureLODGatherFormatPropertiesAMD
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkTextureLODGatherFormatPropertiesAMD where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkTextureLODGatherFormatPropertiesAMD, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType"
-           VkTextureLODGatherFormatPropertiesAMD
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkTextureLODGatherFormatPropertiesAMD, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkTextureLODGatherFormatPropertiesAMD where
-        type VkPNextMType VkTextureLODGatherFormatPropertiesAMD = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkTextureLODGatherFormatPropertiesAMD, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkTextureLODGatherFormatPropertiesAMD, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkTextureLODGatherFormatPropertiesAMD, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkTextureLODGatherFormatPropertiesAMD, pNext}
+         CanWriteField "sType" VkTextureLODGatherFormatPropertiesAMD where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkTextureLODGatherFormatPropertiesAMD, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkTextureLODGatherFormatPropertiesAMD where
@@ -174,44 +134,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkTextureLODGatherFormatPropertiesAMD, pNext}
 
-instance CanReadField "pNext" VkTextureLODGatherFormatPropertiesAMD
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkTextureLODGatherFormatPropertiesAMD where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkTextureLODGatherFormatPropertiesAMD, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext"
-           VkTextureLODGatherFormatPropertiesAMD
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkTextureLODGatherFormatPropertiesAMD, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkSupportsTextureGatherLODBiasAMD
-           VkTextureLODGatherFormatPropertiesAMD
-         where
-        type VkSupportsTextureGatherLODBiasAMDMType
-               VkTextureLODGatherFormatPropertiesAMD
-             = VkBool32
-
-        {-# NOINLINE vkSupportsTextureGatherLODBiasAMD #-}
-        vkSupportsTextureGatherLODBiasAMD x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkTextureLODGatherFormatPropertiesAMD, supportsTextureGatherLODBiasAMD})
-
-        {-# INLINE vkSupportsTextureGatherLODBiasAMDByteOffset #-}
-        vkSupportsTextureGatherLODBiasAMDByteOffset ~_
-          = #{offset VkTextureLODGatherFormatPropertiesAMD, supportsTextureGatherLODBiasAMD}
-
-        {-# INLINE readVkSupportsTextureGatherLODBiasAMD #-}
-        readVkSupportsTextureGatherLODBiasAMD p
-          = peekByteOff p #{offset VkTextureLODGatherFormatPropertiesAMD, supportsTextureGatherLODBiasAMD}
-
-        {-# INLINE writeVkSupportsTextureGatherLODBiasAMD #-}
-        writeVkSupportsTextureGatherLODBiasAMD p
-          = pokeByteOff p #{offset VkTextureLODGatherFormatPropertiesAMD, supportsTextureGatherLODBiasAMD}
+         CanWriteField "pNext" VkTextureLODGatherFormatPropertiesAMD where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkTextureLODGatherFormatPropertiesAMD, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "supportsTextureGatherLODBiasAMD"
@@ -238,29 +176,36 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkTextureLODGatherFormatPropertiesAMD, supportsTextureGatherLODBiasAMD}
 
-instance CanReadField "supportsTextureGatherLODBiasAMD"
+instance {-# OVERLAPPING #-}
+         CanReadField "supportsTextureGatherLODBiasAMD"
            VkTextureLODGatherFormatPropertiesAMD
          where
-        {-# INLINE getField #-}
-        getField = vkSupportsTextureGatherLODBiasAMD
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkTextureLODGatherFormatPropertiesAMD, supportsTextureGatherLODBiasAMD})
 
         {-# INLINE readField #-}
-        readField = readVkSupportsTextureGatherLODBiasAMD
+        readField p
+          = peekByteOff p #{offset VkTextureLODGatherFormatPropertiesAMD, supportsTextureGatherLODBiasAMD}
 
-instance CanWriteField "supportsTextureGatherLODBiasAMD"
+instance {-# OVERLAPPING #-}
+         CanWriteField "supportsTextureGatherLODBiasAMD"
            VkTextureLODGatherFormatPropertiesAMD
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSupportsTextureGatherLODBiasAMD
+        writeField p
+          = pokeByteOff p #{offset VkTextureLODGatherFormatPropertiesAMD, supportsTextureGatherLODBiasAMD}
 
 instance Show VkTextureLODGatherFormatPropertiesAMD where
         showsPrec d x
           = showString "VkTextureLODGatherFormatPropertiesAMD {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkSupportsTextureGatherLODBiasAMD = " .
-                            showsPrec d (vkSupportsTextureGatherLODBiasAMD x) . showChar '}'
+                          showString "supportsTextureGatherLODBiasAMD = " .
+                            showsPrec d (getField @"supportsTextureGatherLODBiasAMD" x) .
+                              showChar '}'

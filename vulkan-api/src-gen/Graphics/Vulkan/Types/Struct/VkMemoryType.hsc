@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkMemoryType (VkMemoryType(..))
        where
@@ -13,7 +14,6 @@ import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkMemoryPropertyFlags (VkMemoryPropertyFlags)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkMemoryType {
@@ -68,26 +68,6 @@ instance VulkanMarshal VkMemoryType where
         type ReturnedOnly VkMemoryType = 'True -- ' closing tick for hsc2hs
         type StructExtends VkMemoryType = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkPropertyFlags VkMemoryType where
-        type VkPropertyFlagsMType VkMemoryType = VkMemoryPropertyFlags
-
-        {-# NOINLINE vkPropertyFlags #-}
-        vkPropertyFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkMemoryType, propertyFlags})
-
-        {-# INLINE vkPropertyFlagsByteOffset #-}
-        vkPropertyFlagsByteOffset ~_
-          = #{offset VkMemoryType, propertyFlags}
-
-        {-# INLINE readVkPropertyFlags #-}
-        readVkPropertyFlags p
-          = peekByteOff p #{offset VkMemoryType, propertyFlags}
-
-        {-# INLINE writeVkPropertyFlags #-}
-        writeVkPropertyFlags p
-          = pokeByteOff p #{offset VkMemoryType, propertyFlags}
-
 instance {-# OVERLAPPING #-} HasField "propertyFlags" VkMemoryType
          where
         type FieldType "propertyFlags" VkMemoryType = VkMemoryPropertyFlags
@@ -102,36 +82,22 @@ instance {-# OVERLAPPING #-} HasField "propertyFlags" VkMemoryType
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkMemoryType, propertyFlags}
 
-instance CanReadField "propertyFlags" VkMemoryType where
-        {-# INLINE getField #-}
-        getField = vkPropertyFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "propertyFlags" VkMemoryType where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkMemoryType, propertyFlags})
 
         {-# INLINE readField #-}
-        readField = readVkPropertyFlags
+        readField p
+          = peekByteOff p #{offset VkMemoryType, propertyFlags}
 
-instance CanWriteField "propertyFlags" VkMemoryType where
+instance {-# OVERLAPPING #-}
+         CanWriteField "propertyFlags" VkMemoryType where
         {-# INLINE writeField #-}
-        writeField = writeVkPropertyFlags
-
-instance {-# OVERLAPPING #-} HasVkHeapIndex VkMemoryType where
-        type VkHeapIndexMType VkMemoryType = Word32
-
-        {-# NOINLINE vkHeapIndex #-}
-        vkHeapIndex x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkMemoryType, heapIndex})
-
-        {-# INLINE vkHeapIndexByteOffset #-}
-        vkHeapIndexByteOffset ~_
-          = #{offset VkMemoryType, heapIndex}
-
-        {-# INLINE readVkHeapIndex #-}
-        readVkHeapIndex p
-          = peekByteOff p #{offset VkMemoryType, heapIndex}
-
-        {-# INLINE writeVkHeapIndex #-}
-        writeVkHeapIndex p
-          = pokeByteOff p #{offset VkMemoryType, heapIndex}
+        writeField p
+          = pokeByteOff p #{offset VkMemoryType, propertyFlags}
 
 instance {-# OVERLAPPING #-} HasField "heapIndex" VkMemoryType
          where
@@ -147,22 +113,28 @@ instance {-# OVERLAPPING #-} HasField "heapIndex" VkMemoryType
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkMemoryType, heapIndex}
 
-instance CanReadField "heapIndex" VkMemoryType where
-        {-# INLINE getField #-}
-        getField = vkHeapIndex
+instance {-# OVERLAPPING #-} CanReadField "heapIndex" VkMemoryType
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkMemoryType, heapIndex})
 
         {-# INLINE readField #-}
-        readField = readVkHeapIndex
+        readField p
+          = peekByteOff p #{offset VkMemoryType, heapIndex}
 
-instance CanWriteField "heapIndex" VkMemoryType where
+instance {-# OVERLAPPING #-} CanWriteField "heapIndex" VkMemoryType
+         where
         {-# INLINE writeField #-}
-        writeField = writeVkHeapIndex
+        writeField p
+          = pokeByteOff p #{offset VkMemoryType, heapIndex}
 
 instance Show VkMemoryType where
         showsPrec d x
           = showString "VkMemoryType {" .
-              showString "vkPropertyFlags = " .
-                showsPrec d (vkPropertyFlags x) .
+              showString "propertyFlags = " .
+                showsPrec d (getField @"propertyFlags" x) .
                   showString ", " .
-                    showString "vkHeapIndex = " .
-                      showsPrec d (vkHeapIndex x) . showChar '}'
+                    showString "heapIndex = " .
+                      showsPrec d (getField @"heapIndex" x) . showChar '}'

@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPipelineShaderStageCreateInfo
        (VkPipelineShaderStageCreateInfo(..)) where
@@ -17,7 +18,6 @@ import           Graphics.Vulkan.Types.Enum.VkShaderStageFlags     (VkShaderStag
 import           Graphics.Vulkan.Types.Enum.VkStructureType        (VkStructureType)
 import           Graphics.Vulkan.Types.Handles                     (VkShaderModule)
 import           Graphics.Vulkan.Types.Struct.VkSpecializationInfo (VkSpecializationInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                  (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPipelineShaderStageCreateInfo {
@@ -85,27 +85,6 @@ instance VulkanMarshal VkPipelineShaderStageCreateInfo where
         type StructExtends VkPipelineShaderStageCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPipelineShaderStageCreateInfo where
-        type VkSTypeMType VkPipelineShaderStageCreateInfo = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineShaderStageCreateInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPipelineShaderStageCreateInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPipelineShaderStageCreateInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPipelineShaderStageCreateInfo, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPipelineShaderStageCreateInfo where
         type FieldType "sType" VkPipelineShaderStageCreateInfo =
              VkStructureType
@@ -121,38 +100,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineShaderStageCreateInfo, sType}
 
-instance CanReadField "sType" VkPipelineShaderStageCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkPipelineShaderStageCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineShaderStageCreateInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkPipelineShaderStageCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkPipelineShaderStageCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkPipelineShaderStageCreateInfo where
-        type VkPNextMType VkPipelineShaderStageCreateInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineShaderStageCreateInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPipelineShaderStageCreateInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPipelineShaderStageCreateInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPipelineShaderStageCreateInfo, pNext}
+         CanWriteField "sType" VkPipelineShaderStageCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineShaderStageCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPipelineShaderStageCreateInfo where
@@ -169,39 +132,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineShaderStageCreateInfo, pNext}
 
-instance CanReadField "pNext" VkPipelineShaderStageCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkPipelineShaderStageCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineShaderStageCreateInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkPipelineShaderStageCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkPipelineShaderStageCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkFlags VkPipelineShaderStageCreateInfo where
-        type VkFlagsMType VkPipelineShaderStageCreateInfo =
-             VkPipelineShaderStageCreateFlags
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineShaderStageCreateInfo, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkPipelineShaderStageCreateInfo, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkPipelineShaderStageCreateInfo, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkPipelineShaderStageCreateInfo, flags}
+         CanWriteField "pNext" VkPipelineShaderStageCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineShaderStageCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkPipelineShaderStageCreateInfo where
@@ -219,39 +165,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineShaderStageCreateInfo, flags}
 
-instance CanReadField "flags" VkPipelineShaderStageCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkPipelineShaderStageCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineShaderStageCreateInfo, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags" VkPipelineShaderStageCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkPipelineShaderStageCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkStage VkPipelineShaderStageCreateInfo where
-        type VkStageMType VkPipelineShaderStageCreateInfo =
-             VkShaderStageFlagBits
-
-        {-# NOINLINE vkStage #-}
-        vkStage x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineShaderStageCreateInfo, stage})
-
-        {-# INLINE vkStageByteOffset #-}
-        vkStageByteOffset ~_
-          = #{offset VkPipelineShaderStageCreateInfo, stage}
-
-        {-# INLINE readVkStage #-}
-        readVkStage p
-          = peekByteOff p #{offset VkPipelineShaderStageCreateInfo, stage}
-
-        {-# INLINE writeVkStage #-}
-        writeVkStage p
-          = pokeByteOff p #{offset VkPipelineShaderStageCreateInfo, stage}
+         CanWriteField "flags" VkPipelineShaderStageCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineShaderStageCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "stage" VkPipelineShaderStageCreateInfo where
@@ -269,38 +198,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineShaderStageCreateInfo, stage}
 
-instance CanReadField "stage" VkPipelineShaderStageCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkStage
+instance {-# OVERLAPPING #-}
+         CanReadField "stage" VkPipelineShaderStageCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineShaderStageCreateInfo, stage})
 
         {-# INLINE readField #-}
-        readField = readVkStage
-
-instance CanWriteField "stage" VkPipelineShaderStageCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkStage
+        readField p
+          = peekByteOff p #{offset VkPipelineShaderStageCreateInfo, stage}
 
 instance {-# OVERLAPPING #-}
-         HasVkModule VkPipelineShaderStageCreateInfo where
-        type VkModuleMType VkPipelineShaderStageCreateInfo = VkShaderModule
-
-        {-# NOINLINE vkModule #-}
-        vkModule x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineShaderStageCreateInfo, module})
-
-        {-# INLINE vkModuleByteOffset #-}
-        vkModuleByteOffset ~_
-          = #{offset VkPipelineShaderStageCreateInfo, module}
-
-        {-# INLINE readVkModule #-}
-        readVkModule p
-          = peekByteOff p #{offset VkPipelineShaderStageCreateInfo, module}
-
-        {-# INLINE writeVkModule #-}
-        writeVkModule p
-          = pokeByteOff p #{offset VkPipelineShaderStageCreateInfo, module}
+         CanWriteField "stage" VkPipelineShaderStageCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineShaderStageCreateInfo, stage}
 
 instance {-# OVERLAPPING #-}
          HasField "module" VkPipelineShaderStageCreateInfo where
@@ -319,39 +232,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineShaderStageCreateInfo, module}
 
-instance CanReadField "module" VkPipelineShaderStageCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkModule
+instance {-# OVERLAPPING #-}
+         CanReadField "module" VkPipelineShaderStageCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineShaderStageCreateInfo, module})
 
         {-# INLINE readField #-}
-        readField = readVkModule
-
-instance CanWriteField "module" VkPipelineShaderStageCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkModule
+        readField p
+          = peekByteOff p #{offset VkPipelineShaderStageCreateInfo, module}
 
 instance {-# OVERLAPPING #-}
-         HasVkPName VkPipelineShaderStageCreateInfo where
-        type VkPNameMType VkPipelineShaderStageCreateInfo = CString
-
-        {-# NOINLINE vkPName #-}
-        vkPName x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineShaderStageCreateInfo, pName})
-
-        {-# INLINE vkPNameByteOffset #-}
-        vkPNameByteOffset ~_
-          = #{offset VkPipelineShaderStageCreateInfo, pName}
-
-        {-# INLINE readVkPName #-}
-        readVkPName p
-          = peekByteOff p #{offset VkPipelineShaderStageCreateInfo, pName}
-
-        {-# INLINE writeVkPName #-}
-        writeVkPName p
-          = pokeByteOff p #{offset VkPipelineShaderStageCreateInfo, pName}
+         CanWriteField "module" VkPipelineShaderStageCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineShaderStageCreateInfo, module}
 
 instance {-# OVERLAPPING #-}
          HasField "pName" VkPipelineShaderStageCreateInfo where
@@ -368,39 +264,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineShaderStageCreateInfo, pName}
 
-instance CanReadField "pName" VkPipelineShaderStageCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkPName
+instance {-# OVERLAPPING #-}
+         CanReadField "pName" VkPipelineShaderStageCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineShaderStageCreateInfo, pName})
 
         {-# INLINE readField #-}
-        readField = readVkPName
-
-instance CanWriteField "pName" VkPipelineShaderStageCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPName
+        readField p
+          = peekByteOff p #{offset VkPipelineShaderStageCreateInfo, pName}
 
 instance {-# OVERLAPPING #-}
-         HasVkPSpecializationInfo VkPipelineShaderStageCreateInfo where
-        type VkPSpecializationInfoMType VkPipelineShaderStageCreateInfo =
-             Ptr VkSpecializationInfo
-
-        {-# NOINLINE vkPSpecializationInfo #-}
-        vkPSpecializationInfo x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineShaderStageCreateInfo, pSpecializationInfo})
-
-        {-# INLINE vkPSpecializationInfoByteOffset #-}
-        vkPSpecializationInfoByteOffset ~_
-          = #{offset VkPipelineShaderStageCreateInfo, pSpecializationInfo}
-
-        {-# INLINE readVkPSpecializationInfo #-}
-        readVkPSpecializationInfo p
-          = peekByteOff p #{offset VkPipelineShaderStageCreateInfo, pSpecializationInfo}
-
-        {-# INLINE writeVkPSpecializationInfo #-}
-        writeVkPSpecializationInfo p
-          = pokeByteOff p #{offset VkPipelineShaderStageCreateInfo, pSpecializationInfo}
+         CanWriteField "pName" VkPipelineShaderStageCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineShaderStageCreateInfo, pName}
 
 instance {-# OVERLAPPING #-}
          HasField "pSpecializationInfo" VkPipelineShaderStageCreateInfo
@@ -426,42 +305,46 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineShaderStageCreateInfo, pSpecializationInfo}
 
-instance CanReadField "pSpecializationInfo"
-           VkPipelineShaderStageCreateInfo
+instance {-# OVERLAPPING #-}
+         CanReadField "pSpecializationInfo" VkPipelineShaderStageCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkPSpecializationInfo
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineShaderStageCreateInfo, pSpecializationInfo})
 
         {-# INLINE readField #-}
-        readField = readVkPSpecializationInfo
+        readField p
+          = peekByteOff p #{offset VkPipelineShaderStageCreateInfo, pSpecializationInfo}
 
-instance CanWriteField "pSpecializationInfo"
-           VkPipelineShaderStageCreateInfo
+instance {-# OVERLAPPING #-}
+         CanWriteField "pSpecializationInfo" VkPipelineShaderStageCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPSpecializationInfo
+        writeField p
+          = pokeByteOff p #{offset VkPipelineShaderStageCreateInfo, pSpecializationInfo}
 
 instance Show VkPipelineShaderStageCreateInfo where
         showsPrec d x
           = showString "VkPipelineShaderStageCreateInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkStage = " .
-                                  showsPrec d (vkStage x) .
+                                showString "stage = " .
+                                  showsPrec d (getField @"stage" x) .
                                     showString ", " .
-                                      showString "vkModule = " .
-                                        showsPrec d (vkModule x) .
+                                      showString "module = " .
+                                        showsPrec d (getField @"module" x) .
                                           showString ", " .
-                                            showString "vkPName = " .
-                                              showsPrec d (vkPName x) .
+                                            showString "pName = " .
+                                              showsPrec d (getField @"pName" x) .
                                                 showString ", " .
-                                                  showString "vkPSpecializationInfo = " .
-                                                    showsPrec d (vkPSpecializationInfo x) .
-                                                      showChar '}'
+                                                  showString "pSpecializationInfo = " .
+                                                    showsPrec d (getField @"pSpecializationInfo" x)
+                                                      . showChar '}'

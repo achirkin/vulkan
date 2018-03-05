@@ -23,8 +23,11 @@ module Graphics.Vulkan.Ext.VK_KHR_swapchain
         --
 
         -- ** Required extensions: 'VK_KHR_surface'.
-        vkCreateSwapchainKHR, vkDestroySwapchainKHR,
-        vkGetSwapchainImagesKHR, vkAcquireNextImageKHR, vkQueuePresentKHR,
+        vkCreateSwapchainKHR, vkCreateSwapchainKHRSafe,
+        vkDestroySwapchainKHR, vkDestroySwapchainKHRSafe,
+        vkGetSwapchainImagesKHR, vkGetSwapchainImagesKHRSafe,
+        vkAcquireNextImageKHR, vkAcquireNextImageKHRSafe,
+        vkQueuePresentKHR, vkQueuePresentKHRSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.VkColorSpaceKHR,
@@ -101,6 +104,28 @@ foreign import ccall unsafe "vkCreateSwapchainKHR"
                                              -> Ptr VkSwapchainKHR -- ^ pSwapchain
                                                                    -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
+--
+--   > VkResult vkCreateSwapchainKHR
+--   >     ( VkDevice device
+--   >     , const VkSwapchainCreateInfoKHR* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkSwapchainKHR* pSwapchain
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateSwapchainKHR.html vkCreateSwapchainKHR registry at www.khronos.org>
+foreign import ccall safe "vkCreateSwapchainKHR"
+               vkCreateSwapchainKHRSafe ::
+               VkDevice -- ^ device
+                        ->
+                 Ptr VkSwapchainCreateInfoKHR -- ^ pCreateInfo
+                                              ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkSwapchainKHR -- ^ pSwapchain
+                                                                   -> IO VkResult
+
 -- | > () vkDestroySwapchainKHR
 --   >     ( VkDevice device
 --   >     , VkSwapchainKHR swapchain
@@ -110,6 +135,20 @@ foreign import ccall unsafe "vkCreateSwapchainKHR"
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroySwapchainKHR.html vkDestroySwapchainKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroySwapchainKHR"
                vkDestroySwapchainKHR ::
+               VkDevice -- ^ device
+                        -> VkSwapchainKHR -- ^ swapchain
+                                          -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                       -> IO ()
+
+-- | > () vkDestroySwapchainKHR
+--   >     ( VkDevice device
+--   >     , VkSwapchainKHR swapchain
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroySwapchainKHR.html vkDestroySwapchainKHR registry at www.khronos.org>
+foreign import ccall safe "vkDestroySwapchainKHR"
+               vkDestroySwapchainKHRSafe ::
                VkDevice -- ^ device
                         -> VkSwapchainKHR -- ^ swapchain
                                           -> Ptr VkAllocationCallbacks -- ^ pAllocator
@@ -129,6 +168,27 @@ foreign import ccall unsafe "vkDestroySwapchainKHR"
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetSwapchainImagesKHR.html vkGetSwapchainImagesKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkGetSwapchainImagesKHR"
                vkGetSwapchainImagesKHR ::
+               VkDevice -- ^ device
+                        ->
+                 VkSwapchainKHR -- ^ swapchain
+                                -> Ptr Word32 -- ^ pSwapchainImageCount
+                                              -> Ptr VkImage -- ^ pSwapchainImages
+                                                             -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkGetSwapchainImagesKHR
+--   >     ( VkDevice device
+--   >     , VkSwapchainKHR swapchain
+--   >     , uint32_t* pSwapchainImageCount
+--   >     , VkImage* pSwapchainImages
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetSwapchainImagesKHR.html vkGetSwapchainImagesKHR registry at www.khronos.org>
+foreign import ccall safe "vkGetSwapchainImagesKHR"
+               vkGetSwapchainImagesKHRSafe ::
                VkDevice -- ^ device
                         ->
                  VkSwapchainKHR -- ^ swapchain
@@ -162,6 +222,32 @@ foreign import ccall unsafe "vkAcquireNextImageKHR"
                                                     -> Ptr Word32 -- ^ pImageIndex
                                                                   -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+--
+--   > VkResult vkAcquireNextImageKHR
+--   >     ( VkDevice device
+--   >     , VkSwapchainKHR swapchain
+--   >     , uint64_t timeout
+--   >     , VkSemaphore semaphore
+--   >     , VkFence fence
+--   >     , uint32_t* pImageIndex
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkAcquireNextImageKHR.html vkAcquireNextImageKHR registry at www.khronos.org>
+foreign import ccall safe "vkAcquireNextImageKHR"
+               vkAcquireNextImageKHRSafe ::
+               VkDevice -- ^ device
+                        ->
+                 VkSwapchainKHR -- ^ swapchain
+                                ->
+                   Word64 -- ^ timeout
+                          -> VkSemaphore -- ^ semaphore
+                                         -> VkFence -- ^ fence
+                                                    -> Ptr Word32 -- ^ pImageIndex
+                                                                  -> IO VkResult
+
 -- | Success codes: 'VK_SUCCESS', 'VK_SUBOPTIMAL_KHR'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
@@ -173,6 +259,21 @@ foreign import ccall unsafe "vkAcquireNextImageKHR"
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkQueuePresentKHR.html vkQueuePresentKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkQueuePresentKHR" vkQueuePresentKHR
+               :: VkQueue -- ^ queue
+                          -> Ptr VkPresentInfoKHR -- ^ pPresentInfo
+                                                  -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS', 'VK_SUBOPTIMAL_KHR'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+--
+--   > VkResult vkQueuePresentKHR
+--   >     ( VkQueue queue
+--   >     , const VkPresentInfoKHR* pPresentInfo
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkQueuePresentKHR.html vkQueuePresentKHR registry at www.khronos.org>
+foreign import ccall safe "vkQueuePresentKHR" vkQueuePresentKHRSafe
                :: VkQueue -- ^ queue
                           -> Ptr VkPresentInfoKHR -- ^ pPresentInfo
                                                   -> IO VkResult

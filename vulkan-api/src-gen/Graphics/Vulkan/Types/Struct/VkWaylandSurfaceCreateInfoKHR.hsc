@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkWaylandSurfaceCreateInfoKHR
        (VkWaylandSurfaceCreateInfoKHR(..)) where
@@ -16,7 +17,6 @@ import           Graphics.Vulkan.Types.Bitmasks             (VkWaylandSurfaceCre
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
 import           Graphics.Vulkan.Types.Include              (WlDisplay,
                                                              WlSurface)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkWaylandSurfaceCreateInfoKHR {
@@ -81,27 +81,6 @@ instance VulkanMarshal VkWaylandSurfaceCreateInfoKHR where
         type StructExtends VkWaylandSurfaceCreateInfoKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkWaylandSurfaceCreateInfoKHR where
-        type VkSTypeMType VkWaylandSurfaceCreateInfoKHR = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkWaylandSurfaceCreateInfoKHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkWaylandSurfaceCreateInfoKHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkWaylandSurfaceCreateInfoKHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkWaylandSurfaceCreateInfoKHR, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkWaylandSurfaceCreateInfoKHR where
         type FieldType "sType" VkWaylandSurfaceCreateInfoKHR =
              VkStructureType
@@ -117,37 +96,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkWaylandSurfaceCreateInfoKHR, sType}
 
-instance CanReadField "sType" VkWaylandSurfaceCreateInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkWaylandSurfaceCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkWaylandSurfaceCreateInfoKHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkWaylandSurfaceCreateInfoKHR where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkWaylandSurfaceCreateInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkWaylandSurfaceCreateInfoKHR where
-        type VkPNextMType VkWaylandSurfaceCreateInfoKHR = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkWaylandSurfaceCreateInfoKHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkWaylandSurfaceCreateInfoKHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkWaylandSurfaceCreateInfoKHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkWaylandSurfaceCreateInfoKHR, pNext}
+         CanWriteField "sType" VkWaylandSurfaceCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkWaylandSurfaceCreateInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkWaylandSurfaceCreateInfoKHR where
@@ -164,38 +128,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkWaylandSurfaceCreateInfoKHR, pNext}
 
-instance CanReadField "pNext" VkWaylandSurfaceCreateInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkWaylandSurfaceCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkWaylandSurfaceCreateInfoKHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkWaylandSurfaceCreateInfoKHR where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkWaylandSurfaceCreateInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkFlags VkWaylandSurfaceCreateInfoKHR where
-        type VkFlagsMType VkWaylandSurfaceCreateInfoKHR =
-             VkWaylandSurfaceCreateFlagsKHR
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkWaylandSurfaceCreateInfoKHR, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkWaylandSurfaceCreateInfoKHR, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkWaylandSurfaceCreateInfoKHR, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkWaylandSurfaceCreateInfoKHR, flags}
+         CanWriteField "pNext" VkWaylandSurfaceCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkWaylandSurfaceCreateInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkWaylandSurfaceCreateInfoKHR where
@@ -213,37 +161,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkWaylandSurfaceCreateInfoKHR, flags}
 
-instance CanReadField "flags" VkWaylandSurfaceCreateInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkWaylandSurfaceCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkWaylandSurfaceCreateInfoKHR, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags" VkWaylandSurfaceCreateInfoKHR where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkWaylandSurfaceCreateInfoKHR, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkDisplay VkWaylandSurfaceCreateInfoKHR where
-        type VkDisplayMType VkWaylandSurfaceCreateInfoKHR = Ptr WlDisplay
-
-        {-# NOINLINE vkDisplay #-}
-        vkDisplay x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkWaylandSurfaceCreateInfoKHR, display})
-
-        {-# INLINE vkDisplayByteOffset #-}
-        vkDisplayByteOffset ~_
-          = #{offset VkWaylandSurfaceCreateInfoKHR, display}
-
-        {-# INLINE readVkDisplay #-}
-        readVkDisplay p
-          = peekByteOff p #{offset VkWaylandSurfaceCreateInfoKHR, display}
-
-        {-# INLINE writeVkDisplay #-}
-        writeVkDisplay p
-          = pokeByteOff p #{offset VkWaylandSurfaceCreateInfoKHR, display}
+         CanWriteField "flags" VkWaylandSurfaceCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkWaylandSurfaceCreateInfoKHR, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "display" VkWaylandSurfaceCreateInfoKHR where
@@ -261,38 +194,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkWaylandSurfaceCreateInfoKHR, display}
 
-instance CanReadField "display" VkWaylandSurfaceCreateInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkDisplay
+instance {-# OVERLAPPING #-}
+         CanReadField "display" VkWaylandSurfaceCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkWaylandSurfaceCreateInfoKHR, display})
 
         {-# INLINE readField #-}
-        readField = readVkDisplay
-
-instance CanWriteField "display" VkWaylandSurfaceCreateInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkDisplay
+        readField p
+          = peekByteOff p #{offset VkWaylandSurfaceCreateInfoKHR, display}
 
 instance {-# OVERLAPPING #-}
-         HasVkSurface VkWaylandSurfaceCreateInfoKHR where
-        type VkSurfaceMType VkWaylandSurfaceCreateInfoKHR = Ptr WlSurface
-
-        {-# NOINLINE vkSurface #-}
-        vkSurface x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkWaylandSurfaceCreateInfoKHR, surface})
-
-        {-# INLINE vkSurfaceByteOffset #-}
-        vkSurfaceByteOffset ~_
-          = #{offset VkWaylandSurfaceCreateInfoKHR, surface}
-
-        {-# INLINE readVkSurface #-}
-        readVkSurface p
-          = peekByteOff p #{offset VkWaylandSurfaceCreateInfoKHR, surface}
-
-        {-# INLINE writeVkSurface #-}
-        writeVkSurface p
-          = pokeByteOff p #{offset VkWaylandSurfaceCreateInfoKHR, surface}
+         CanWriteField "display" VkWaylandSurfaceCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkWaylandSurfaceCreateInfoKHR, display}
 
 instance {-# OVERLAPPING #-}
          HasField "surface" VkWaylandSurfaceCreateInfoKHR where
@@ -310,32 +227,37 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkWaylandSurfaceCreateInfoKHR, surface}
 
-instance CanReadField "surface" VkWaylandSurfaceCreateInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkSurface
+instance {-# OVERLAPPING #-}
+         CanReadField "surface" VkWaylandSurfaceCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkWaylandSurfaceCreateInfoKHR, surface})
 
         {-# INLINE readField #-}
-        readField = readVkSurface
+        readField p
+          = peekByteOff p #{offset VkWaylandSurfaceCreateInfoKHR, surface}
 
-instance CanWriteField "surface" VkWaylandSurfaceCreateInfoKHR
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "surface" VkWaylandSurfaceCreateInfoKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkSurface
+        writeField p
+          = pokeByteOff p #{offset VkWaylandSurfaceCreateInfoKHR, surface}
 
 instance Show VkWaylandSurfaceCreateInfoKHR where
         showsPrec d x
           = showString "VkWaylandSurfaceCreateInfoKHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkDisplay = " .
-                                  showsPrec d (vkDisplay x) .
+                                showString "display = " .
+                                  showsPrec d (getField @"display" x) .
                                     showString ", " .
-                                      showString "vkSurface = " .
-                                        showsPrec d (vkSurface x) . showChar '}'
+                                      showString "surface = " .
+                                        showsPrec d (getField @"surface" x) . showChar '}'

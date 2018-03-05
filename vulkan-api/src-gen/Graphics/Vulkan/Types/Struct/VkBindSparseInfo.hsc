@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkBindSparseInfo
        (VkBindSparseInfo(..)) where
@@ -17,7 +18,6 @@ import           Graphics.Vulkan.Types.Handles                                  
 import           Graphics.Vulkan.Types.Struct.VkSparseBufferMemoryBindInfo      (VkSparseBufferMemoryBindInfo)
 import           Graphics.Vulkan.Types.Struct.VkSparseImageMemoryBindInfo       (VkSparseImageMemoryBindInfo)
 import           Graphics.Vulkan.Types.Struct.VkSparseImageOpaqueMemoryBindInfo (VkSparseImageOpaqueMemoryBindInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                               (unsafeDupablePerformIO)
 
 -- | > typedef struct VkBindSparseInfo {
@@ -86,26 +86,6 @@ instance VulkanMarshal VkBindSparseInfo where
         type ReturnedOnly VkBindSparseInfo = 'False -- ' closing tick for hsc2hs
         type StructExtends VkBindSparseInfo = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkBindSparseInfo where
-        type VkSTypeMType VkBindSparseInfo = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBindSparseInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkBindSparseInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkBindSparseInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkBindSparseInfo, sType}
-
 instance {-# OVERLAPPING #-} HasField "sType" VkBindSparseInfo
          where
         type FieldType "sType" VkBindSparseInfo = VkStructureType
@@ -120,36 +100,22 @@ instance {-# OVERLAPPING #-} HasField "sType" VkBindSparseInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkBindSparseInfo, sType}
 
-instance CanReadField "sType" VkBindSparseInfo where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-} CanReadField "sType" VkBindSparseInfo
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBindSparseInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkBindSparseInfo, sType}
 
-instance CanWriteField "sType" VkBindSparseInfo where
+instance {-# OVERLAPPING #-} CanWriteField "sType" VkBindSparseInfo
+         where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkBindSparseInfo where
-        type VkPNextMType VkBindSparseInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBindSparseInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkBindSparseInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkBindSparseInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkBindSparseInfo, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkBindSparseInfo, sType}
 
 instance {-# OVERLAPPING #-} HasField "pNext" VkBindSparseInfo
          where
@@ -165,37 +131,22 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkBindSparseInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkBindSparseInfo, pNext}
 
-instance CanReadField "pNext" VkBindSparseInfo where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-} CanReadField "pNext" VkBindSparseInfo
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBindSparseInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkBindSparseInfo, pNext}
 
-instance CanWriteField "pNext" VkBindSparseInfo where
+instance {-# OVERLAPPING #-} CanWriteField "pNext" VkBindSparseInfo
+         where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-}
-         HasVkWaitSemaphoreCount VkBindSparseInfo where
-        type VkWaitSemaphoreCountMType VkBindSparseInfo = Word32
-
-        {-# NOINLINE vkWaitSemaphoreCount #-}
-        vkWaitSemaphoreCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBindSparseInfo, waitSemaphoreCount})
-
-        {-# INLINE vkWaitSemaphoreCountByteOffset #-}
-        vkWaitSemaphoreCountByteOffset ~_
-          = #{offset VkBindSparseInfo, waitSemaphoreCount}
-
-        {-# INLINE readVkWaitSemaphoreCount #-}
-        readVkWaitSemaphoreCount p
-          = peekByteOff p #{offset VkBindSparseInfo, waitSemaphoreCount}
-
-        {-# INLINE writeVkWaitSemaphoreCount #-}
-        writeVkWaitSemaphoreCount p
-          = pokeByteOff p #{offset VkBindSparseInfo, waitSemaphoreCount}
+        writeField p
+          = pokeByteOff p #{offset VkBindSparseInfo, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "waitSemaphoreCount" VkBindSparseInfo where
@@ -212,37 +163,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkBindSparseInfo, waitSemaphoreCount}
 
-instance CanReadField "waitSemaphoreCount" VkBindSparseInfo where
-        {-# INLINE getField #-}
-        getField = vkWaitSemaphoreCount
+instance {-# OVERLAPPING #-}
+         CanReadField "waitSemaphoreCount" VkBindSparseInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBindSparseInfo, waitSemaphoreCount})
 
         {-# INLINE readField #-}
-        readField = readVkWaitSemaphoreCount
+        readField p
+          = peekByteOff p #{offset VkBindSparseInfo, waitSemaphoreCount}
 
-instance CanWriteField "waitSemaphoreCount" VkBindSparseInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "waitSemaphoreCount" VkBindSparseInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkWaitSemaphoreCount
-
-instance {-# OVERLAPPING #-} HasVkPWaitSemaphores VkBindSparseInfo
-         where
-        type VkPWaitSemaphoresMType VkBindSparseInfo = Ptr VkSemaphore
-
-        {-# NOINLINE vkPWaitSemaphores #-}
-        vkPWaitSemaphores x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBindSparseInfo, pWaitSemaphores})
-
-        {-# INLINE vkPWaitSemaphoresByteOffset #-}
-        vkPWaitSemaphoresByteOffset ~_
-          = #{offset VkBindSparseInfo, pWaitSemaphores}
-
-        {-# INLINE readVkPWaitSemaphores #-}
-        readVkPWaitSemaphores p
-          = peekByteOff p #{offset VkBindSparseInfo, pWaitSemaphores}
-
-        {-# INLINE writeVkPWaitSemaphores #-}
-        writeVkPWaitSemaphores p
-          = pokeByteOff p #{offset VkBindSparseInfo, pWaitSemaphores}
+        writeField p
+          = pokeByteOff p #{offset VkBindSparseInfo, waitSemaphoreCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pWaitSemaphores" VkBindSparseInfo where
@@ -259,37 +195,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkBindSparseInfo, pWaitSemaphores}
 
-instance CanReadField "pWaitSemaphores" VkBindSparseInfo where
-        {-# INLINE getField #-}
-        getField = vkPWaitSemaphores
+instance {-# OVERLAPPING #-}
+         CanReadField "pWaitSemaphores" VkBindSparseInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBindSparseInfo, pWaitSemaphores})
 
         {-# INLINE readField #-}
-        readField = readVkPWaitSemaphores
+        readField p
+          = peekByteOff p #{offset VkBindSparseInfo, pWaitSemaphores}
 
-instance CanWriteField "pWaitSemaphores" VkBindSparseInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pWaitSemaphores" VkBindSparseInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPWaitSemaphores
-
-instance {-# OVERLAPPING #-} HasVkBufferBindCount VkBindSparseInfo
-         where
-        type VkBufferBindCountMType VkBindSparseInfo = Word32
-
-        {-# NOINLINE vkBufferBindCount #-}
-        vkBufferBindCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBindSparseInfo, bufferBindCount})
-
-        {-# INLINE vkBufferBindCountByteOffset #-}
-        vkBufferBindCountByteOffset ~_
-          = #{offset VkBindSparseInfo, bufferBindCount}
-
-        {-# INLINE readVkBufferBindCount #-}
-        readVkBufferBindCount p
-          = peekByteOff p #{offset VkBindSparseInfo, bufferBindCount}
-
-        {-# INLINE writeVkBufferBindCount #-}
-        writeVkBufferBindCount p
-          = pokeByteOff p #{offset VkBindSparseInfo, bufferBindCount}
+        writeField p
+          = pokeByteOff p #{offset VkBindSparseInfo, pWaitSemaphores}
 
 instance {-# OVERLAPPING #-}
          HasField "bufferBindCount" VkBindSparseInfo where
@@ -306,38 +227,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkBindSparseInfo, bufferBindCount}
 
-instance CanReadField "bufferBindCount" VkBindSparseInfo where
-        {-# INLINE getField #-}
-        getField = vkBufferBindCount
+instance {-# OVERLAPPING #-}
+         CanReadField "bufferBindCount" VkBindSparseInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBindSparseInfo, bufferBindCount})
 
         {-# INLINE readField #-}
-        readField = readVkBufferBindCount
+        readField p
+          = peekByteOff p #{offset VkBindSparseInfo, bufferBindCount}
 
-instance CanWriteField "bufferBindCount" VkBindSparseInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "bufferBindCount" VkBindSparseInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkBufferBindCount
-
-instance {-# OVERLAPPING #-} HasVkPBufferBinds VkBindSparseInfo
-         where
-        type VkPBufferBindsMType VkBindSparseInfo =
-             Ptr VkSparseBufferMemoryBindInfo
-
-        {-# NOINLINE vkPBufferBinds #-}
-        vkPBufferBinds x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBindSparseInfo, pBufferBinds})
-
-        {-# INLINE vkPBufferBindsByteOffset #-}
-        vkPBufferBindsByteOffset ~_
-          = #{offset VkBindSparseInfo, pBufferBinds}
-
-        {-# INLINE readVkPBufferBinds #-}
-        readVkPBufferBinds p
-          = peekByteOff p #{offset VkBindSparseInfo, pBufferBinds}
-
-        {-# INLINE writeVkPBufferBinds #-}
-        writeVkPBufferBinds p
-          = pokeByteOff p #{offset VkBindSparseInfo, pBufferBinds}
+        writeField p
+          = pokeByteOff p #{offset VkBindSparseInfo, bufferBindCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pBufferBinds" VkBindSparseInfo where
@@ -354,37 +259,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkBindSparseInfo, pBufferBinds}
 
-instance CanReadField "pBufferBinds" VkBindSparseInfo where
-        {-# INLINE getField #-}
-        getField = vkPBufferBinds
+instance {-# OVERLAPPING #-}
+         CanReadField "pBufferBinds" VkBindSparseInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBindSparseInfo, pBufferBinds})
 
         {-# INLINE readField #-}
-        readField = readVkPBufferBinds
-
-instance CanWriteField "pBufferBinds" VkBindSparseInfo where
-        {-# INLINE writeField #-}
-        writeField = writeVkPBufferBinds
+        readField p
+          = peekByteOff p #{offset VkBindSparseInfo, pBufferBinds}
 
 instance {-# OVERLAPPING #-}
-         HasVkImageOpaqueBindCount VkBindSparseInfo where
-        type VkImageOpaqueBindCountMType VkBindSparseInfo = Word32
-
-        {-# NOINLINE vkImageOpaqueBindCount #-}
-        vkImageOpaqueBindCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBindSparseInfo, imageOpaqueBindCount})
-
-        {-# INLINE vkImageOpaqueBindCountByteOffset #-}
-        vkImageOpaqueBindCountByteOffset ~_
-          = #{offset VkBindSparseInfo, imageOpaqueBindCount}
-
-        {-# INLINE readVkImageOpaqueBindCount #-}
-        readVkImageOpaqueBindCount p
-          = peekByteOff p #{offset VkBindSparseInfo, imageOpaqueBindCount}
-
-        {-# INLINE writeVkImageOpaqueBindCount #-}
-        writeVkImageOpaqueBindCount p
-          = pokeByteOff p #{offset VkBindSparseInfo, imageOpaqueBindCount}
+         CanWriteField "pBufferBinds" VkBindSparseInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkBindSparseInfo, pBufferBinds}
 
 instance {-# OVERLAPPING #-}
          HasField "imageOpaqueBindCount" VkBindSparseInfo where
@@ -401,39 +291,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkBindSparseInfo, imageOpaqueBindCount}
 
-instance CanReadField "imageOpaqueBindCount" VkBindSparseInfo where
-        {-# INLINE getField #-}
-        getField = vkImageOpaqueBindCount
+instance {-# OVERLAPPING #-}
+         CanReadField "imageOpaqueBindCount" VkBindSparseInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBindSparseInfo, imageOpaqueBindCount})
 
         {-# INLINE readField #-}
-        readField = readVkImageOpaqueBindCount
-
-instance CanWriteField "imageOpaqueBindCount" VkBindSparseInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkImageOpaqueBindCount
+        readField p
+          = peekByteOff p #{offset VkBindSparseInfo, imageOpaqueBindCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPImageOpaqueBinds VkBindSparseInfo where
-        type VkPImageOpaqueBindsMType VkBindSparseInfo =
-             Ptr VkSparseImageOpaqueMemoryBindInfo
-
-        {-# NOINLINE vkPImageOpaqueBinds #-}
-        vkPImageOpaqueBinds x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBindSparseInfo, pImageOpaqueBinds})
-
-        {-# INLINE vkPImageOpaqueBindsByteOffset #-}
-        vkPImageOpaqueBindsByteOffset ~_
-          = #{offset VkBindSparseInfo, pImageOpaqueBinds}
-
-        {-# INLINE readVkPImageOpaqueBinds #-}
-        readVkPImageOpaqueBinds p
-          = peekByteOff p #{offset VkBindSparseInfo, pImageOpaqueBinds}
-
-        {-# INLINE writeVkPImageOpaqueBinds #-}
-        writeVkPImageOpaqueBinds p
-          = pokeByteOff p #{offset VkBindSparseInfo, pImageOpaqueBinds}
+         CanWriteField "imageOpaqueBindCount" VkBindSparseInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkBindSparseInfo, imageOpaqueBindCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pImageOpaqueBinds" VkBindSparseInfo where
@@ -451,37 +324,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkBindSparseInfo, pImageOpaqueBinds}
 
-instance CanReadField "pImageOpaqueBinds" VkBindSparseInfo where
-        {-# INLINE getField #-}
-        getField = vkPImageOpaqueBinds
+instance {-# OVERLAPPING #-}
+         CanReadField "pImageOpaqueBinds" VkBindSparseInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBindSparseInfo, pImageOpaqueBinds})
 
         {-# INLINE readField #-}
-        readField = readVkPImageOpaqueBinds
+        readField p
+          = peekByteOff p #{offset VkBindSparseInfo, pImageOpaqueBinds}
 
-instance CanWriteField "pImageOpaqueBinds" VkBindSparseInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pImageOpaqueBinds" VkBindSparseInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPImageOpaqueBinds
-
-instance {-# OVERLAPPING #-} HasVkImageBindCount VkBindSparseInfo
-         where
-        type VkImageBindCountMType VkBindSparseInfo = Word32
-
-        {-# NOINLINE vkImageBindCount #-}
-        vkImageBindCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBindSparseInfo, imageBindCount})
-
-        {-# INLINE vkImageBindCountByteOffset #-}
-        vkImageBindCountByteOffset ~_
-          = #{offset VkBindSparseInfo, imageBindCount}
-
-        {-# INLINE readVkImageBindCount #-}
-        readVkImageBindCount p
-          = peekByteOff p #{offset VkBindSparseInfo, imageBindCount}
-
-        {-# INLINE writeVkImageBindCount #-}
-        writeVkImageBindCount p
-          = pokeByteOff p #{offset VkBindSparseInfo, imageBindCount}
+        writeField p
+          = pokeByteOff p #{offset VkBindSparseInfo, pImageOpaqueBinds}
 
 instance {-# OVERLAPPING #-}
          HasField "imageBindCount" VkBindSparseInfo where
@@ -498,38 +356,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkBindSparseInfo, imageBindCount}
 
-instance CanReadField "imageBindCount" VkBindSparseInfo where
-        {-# INLINE getField #-}
-        getField = vkImageBindCount
+instance {-# OVERLAPPING #-}
+         CanReadField "imageBindCount" VkBindSparseInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBindSparseInfo, imageBindCount})
 
         {-# INLINE readField #-}
-        readField = readVkImageBindCount
+        readField p
+          = peekByteOff p #{offset VkBindSparseInfo, imageBindCount}
 
-instance CanWriteField "imageBindCount" VkBindSparseInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "imageBindCount" VkBindSparseInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkImageBindCount
-
-instance {-# OVERLAPPING #-} HasVkPImageBinds VkBindSparseInfo
-         where
-        type VkPImageBindsMType VkBindSparseInfo =
-             Ptr VkSparseImageMemoryBindInfo
-
-        {-# NOINLINE vkPImageBinds #-}
-        vkPImageBinds x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBindSparseInfo, pImageBinds})
-
-        {-# INLINE vkPImageBindsByteOffset #-}
-        vkPImageBindsByteOffset ~_
-          = #{offset VkBindSparseInfo, pImageBinds}
-
-        {-# INLINE readVkPImageBinds #-}
-        readVkPImageBinds p
-          = peekByteOff p #{offset VkBindSparseInfo, pImageBinds}
-
-        {-# INLINE writeVkPImageBinds #-}
-        writeVkPImageBinds p
-          = pokeByteOff p #{offset VkBindSparseInfo, pImageBinds}
+        writeField p
+          = pokeByteOff p #{offset VkBindSparseInfo, imageBindCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pImageBinds" VkBindSparseInfo where
@@ -546,37 +388,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkBindSparseInfo, pImageBinds}
 
-instance CanReadField "pImageBinds" VkBindSparseInfo where
-        {-# INLINE getField #-}
-        getField = vkPImageBinds
+instance {-# OVERLAPPING #-}
+         CanReadField "pImageBinds" VkBindSparseInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBindSparseInfo, pImageBinds})
 
         {-# INLINE readField #-}
-        readField = readVkPImageBinds
-
-instance CanWriteField "pImageBinds" VkBindSparseInfo where
-        {-# INLINE writeField #-}
-        writeField = writeVkPImageBinds
+        readField p
+          = peekByteOff p #{offset VkBindSparseInfo, pImageBinds}
 
 instance {-# OVERLAPPING #-}
-         HasVkSignalSemaphoreCount VkBindSparseInfo where
-        type VkSignalSemaphoreCountMType VkBindSparseInfo = Word32
-
-        {-# NOINLINE vkSignalSemaphoreCount #-}
-        vkSignalSemaphoreCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBindSparseInfo, signalSemaphoreCount})
-
-        {-# INLINE vkSignalSemaphoreCountByteOffset #-}
-        vkSignalSemaphoreCountByteOffset ~_
-          = #{offset VkBindSparseInfo, signalSemaphoreCount}
-
-        {-# INLINE readVkSignalSemaphoreCount #-}
-        readVkSignalSemaphoreCount p
-          = peekByteOff p #{offset VkBindSparseInfo, signalSemaphoreCount}
-
-        {-# INLINE writeVkSignalSemaphoreCount #-}
-        writeVkSignalSemaphoreCount p
-          = pokeByteOff p #{offset VkBindSparseInfo, signalSemaphoreCount}
+         CanWriteField "pImageBinds" VkBindSparseInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkBindSparseInfo, pImageBinds}
 
 instance {-# OVERLAPPING #-}
          HasField "signalSemaphoreCount" VkBindSparseInfo where
@@ -593,38 +420,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkBindSparseInfo, signalSemaphoreCount}
 
-instance CanReadField "signalSemaphoreCount" VkBindSparseInfo where
-        {-# INLINE getField #-}
-        getField = vkSignalSemaphoreCount
+instance {-# OVERLAPPING #-}
+         CanReadField "signalSemaphoreCount" VkBindSparseInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBindSparseInfo, signalSemaphoreCount})
 
         {-# INLINE readField #-}
-        readField = readVkSignalSemaphoreCount
-
-instance CanWriteField "signalSemaphoreCount" VkBindSparseInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSignalSemaphoreCount
+        readField p
+          = peekByteOff p #{offset VkBindSparseInfo, signalSemaphoreCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPSignalSemaphores VkBindSparseInfo where
-        type VkPSignalSemaphoresMType VkBindSparseInfo = Ptr VkSemaphore
-
-        {-# NOINLINE vkPSignalSemaphores #-}
-        vkPSignalSemaphores x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBindSparseInfo, pSignalSemaphores})
-
-        {-# INLINE vkPSignalSemaphoresByteOffset #-}
-        vkPSignalSemaphoresByteOffset ~_
-          = #{offset VkBindSparseInfo, pSignalSemaphores}
-
-        {-# INLINE readVkPSignalSemaphores #-}
-        readVkPSignalSemaphores p
-          = peekByteOff p #{offset VkBindSparseInfo, pSignalSemaphores}
-
-        {-# INLINE writeVkPSignalSemaphores #-}
-        writeVkPSignalSemaphores p
-          = pokeByteOff p #{offset VkBindSparseInfo, pSignalSemaphores}
+         CanWriteField "signalSemaphoreCount" VkBindSparseInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkBindSparseInfo, signalSemaphoreCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pSignalSemaphores" VkBindSparseInfo where
@@ -642,63 +453,77 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkBindSparseInfo, pSignalSemaphores}
 
-instance CanReadField "pSignalSemaphores" VkBindSparseInfo where
-        {-# INLINE getField #-}
-        getField = vkPSignalSemaphores
+instance {-# OVERLAPPING #-}
+         CanReadField "pSignalSemaphores" VkBindSparseInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBindSparseInfo, pSignalSemaphores})
 
         {-# INLINE readField #-}
-        readField = readVkPSignalSemaphores
+        readField p
+          = peekByteOff p #{offset VkBindSparseInfo, pSignalSemaphores}
 
-instance CanWriteField "pSignalSemaphores" VkBindSparseInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pSignalSemaphores" VkBindSparseInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPSignalSemaphores
+        writeField p
+          = pokeByteOff p #{offset VkBindSparseInfo, pSignalSemaphores}
 
 instance Show VkBindSparseInfo where
         showsPrec d x
           = showString "VkBindSparseInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkWaitSemaphoreCount = " .
-                            showsPrec d (vkWaitSemaphoreCount x) .
+                          showString "waitSemaphoreCount = " .
+                            showsPrec d (getField @"waitSemaphoreCount" x) .
                               showString ", " .
-                                showString "vkPWaitSemaphores = " .
-                                  showsPrec d (vkPWaitSemaphores x) .
+                                showString "pWaitSemaphores = " .
+                                  showsPrec d (getField @"pWaitSemaphores" x) .
                                     showString ", " .
-                                      showString "vkBufferBindCount = " .
-                                        showsPrec d (vkBufferBindCount x) .
+                                      showString "bufferBindCount = " .
+                                        showsPrec d (getField @"bufferBindCount" x) .
                                           showString ", " .
-                                            showString "vkPBufferBinds = " .
-                                              showsPrec d (vkPBufferBinds x) .
+                                            showString "pBufferBinds = " .
+                                              showsPrec d (getField @"pBufferBinds" x) .
                                                 showString ", " .
-                                                  showString "vkImageOpaqueBindCount = " .
-                                                    showsPrec d (vkImageOpaqueBindCount x) .
+                                                  showString "imageOpaqueBindCount = " .
+                                                    showsPrec d (getField @"imageOpaqueBindCount" x)
+                                                      .
                                                       showString ", " .
-                                                        showString "vkPImageOpaqueBinds = " .
-                                                          showsPrec d (vkPImageOpaqueBinds x) .
+                                                        showString "pImageOpaqueBinds = " .
+                                                          showsPrec d
+                                                            (getField @"pImageOpaqueBinds" x)
+                                                            .
                                                             showString ", " .
-                                                              showString "vkImageBindCount = " .
-                                                                showsPrec d (vkImageBindCount x) .
+                                                              showString "imageBindCount = " .
+                                                                showsPrec d
+                                                                  (getField @"imageBindCount" x)
+                                                                  .
                                                                   showString ", " .
-                                                                    showString "vkPImageBinds = " .
-                                                                      showsPrec d (vkPImageBinds x)
+                                                                    showString "pImageBinds = " .
+                                                                      showsPrec d
+                                                                        (getField @"pImageBinds" x)
                                                                         .
                                                                         showString ", " .
                                                                           showString
-                                                                            "vkSignalSemaphoreCount = "
+                                                                            "signalSemaphoreCount = "
                                                                             .
                                                                             showsPrec d
-                                                                              (vkSignalSemaphoreCount
+                                                                              (getField
+                                                                                 @"signalSemaphoreCount"
                                                                                  x)
                                                                               .
                                                                               showString ", " .
                                                                                 showString
-                                                                                  "vkPSignalSemaphores = "
+                                                                                  "pSignalSemaphores = "
                                                                                   .
                                                                                   showsPrec d
-                                                                                    (vkPSignalSemaphores
+                                                                                    (getField
+                                                                                       @"pSignalSemaphores"
                                                                                        x)
                                                                                     . showChar '}'

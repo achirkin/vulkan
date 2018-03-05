@@ -30,9 +30,11 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_marker
         module Graphics.Vulkan.Types.Enum.VkDebugReportObjectTypeEXT,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
-        vkDebugMarkerSetObjectTagEXT, vkDebugMarkerSetObjectNameEXT,
-        vkCmdDebugMarkerBeginEXT, vkCmdDebugMarkerEndEXT,
-        vkCmdDebugMarkerInsertEXT,
+        vkDebugMarkerSetObjectTagEXT, vkDebugMarkerSetObjectTagEXTSafe,
+        vkDebugMarkerSetObjectNameEXT, vkDebugMarkerSetObjectNameEXTSafe,
+        vkCmdDebugMarkerBeginEXT, vkCmdDebugMarkerBeginEXTSafe,
+        vkCmdDebugMarkerEndEXT, vkCmdDebugMarkerEndEXTSafe,
+        vkCmdDebugMarkerInsertEXT, vkCmdDebugMarkerInsertEXTSafe,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_EXT_DEBUG_MARKER_SPEC_VERSION,
@@ -73,6 +75,22 @@ foreign import ccall unsafe "vkDebugMarkerSetObjectTagEXT"
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
+--   > VkResult vkDebugMarkerSetObjectTagEXT
+--   >     ( VkDevice device
+--   >     , const VkDebugMarkerObjectTagInfoEXT* pTagInfo
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDebugMarkerSetObjectTagEXT.html vkDebugMarkerSetObjectTagEXT registry at www.khronos.org>
+foreign import ccall safe "vkDebugMarkerSetObjectTagEXT"
+               vkDebugMarkerSetObjectTagEXTSafe ::
+               VkDevice -- ^ device
+                        -> Ptr VkDebugMarkerObjectTagInfoEXT -- ^ pTagInfo
+                                                             -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
 --   > VkResult vkDebugMarkerSetObjectNameEXT
 --   >     ( VkDevice device
 --   >     , const VkDebugMarkerObjectNameInfoEXT* pNameInfo
@@ -81,6 +99,22 @@ foreign import ccall unsafe "vkDebugMarkerSetObjectTagEXT"
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDebugMarkerSetObjectNameEXT.html vkDebugMarkerSetObjectNameEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkDebugMarkerSetObjectNameEXT"
                vkDebugMarkerSetObjectNameEXT ::
+               VkDevice -- ^ device
+                        -> Ptr VkDebugMarkerObjectNameInfoEXT -- ^ pNameInfo
+                                                              -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkDebugMarkerSetObjectNameEXT
+--   >     ( VkDevice device
+--   >     , const VkDebugMarkerObjectNameInfoEXT* pNameInfo
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDebugMarkerSetObjectNameEXT.html vkDebugMarkerSetObjectNameEXT registry at www.khronos.org>
+foreign import ccall safe "vkDebugMarkerSetObjectNameEXT"
+               vkDebugMarkerSetObjectNameEXTSafe ::
                VkDevice -- ^ device
                         -> Ptr VkDebugMarkerObjectNameInfoEXT -- ^ pNameInfo
                                                               -> IO VkResult
@@ -105,6 +139,22 @@ foreign import ccall unsafe "vkCmdDebugMarkerBeginEXT"
 --
 --   renderpass: @both@
 --
+--   > () vkCmdDebugMarkerBeginEXT
+--   >     ( VkCommandBuffer commandBuffer
+--   >     , const VkDebugMarkerMarkerInfoEXT* pMarkerInfo
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdDebugMarkerBeginEXT.html vkCmdDebugMarkerBeginEXT registry at www.khronos.org>
+foreign import ccall safe "vkCmdDebugMarkerBeginEXT"
+               vkCmdDebugMarkerBeginEXTSafe ::
+               VkCommandBuffer -- ^ commandBuffer
+                               -> Ptr VkDebugMarkerMarkerInfoEXT -- ^ pMarkerInfo
+                                                                 -> IO ()
+
+-- | queues: 'graphics', 'compute'.
+--
+--   renderpass: @both@
+--
 --   > () vkCmdDebugMarkerEndEXT
 --   >     ( VkCommandBuffer commandBuffer
 --   >     )
@@ -118,6 +168,19 @@ foreign import ccall unsafe "vkCmdDebugMarkerEndEXT"
 --
 --   renderpass: @both@
 --
+--   > () vkCmdDebugMarkerEndEXT
+--   >     ( VkCommandBuffer commandBuffer
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdDebugMarkerEndEXT.html vkCmdDebugMarkerEndEXT registry at www.khronos.org>
+foreign import ccall safe "vkCmdDebugMarkerEndEXT"
+               vkCmdDebugMarkerEndEXTSafe :: VkCommandBuffer -- ^ commandBuffer
+                                                             -> IO ()
+
+-- | queues: 'graphics', 'compute'.
+--
+--   renderpass: @both@
+--
 --   > () vkCmdDebugMarkerInsertEXT
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , const VkDebugMarkerMarkerInfoEXT* pMarkerInfo
@@ -126,6 +189,22 @@ foreign import ccall unsafe "vkCmdDebugMarkerEndEXT"
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdDebugMarkerInsertEXT.html vkCmdDebugMarkerInsertEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdDebugMarkerInsertEXT"
                vkCmdDebugMarkerInsertEXT ::
+               VkCommandBuffer -- ^ commandBuffer
+                               -> Ptr VkDebugMarkerMarkerInfoEXT -- ^ pMarkerInfo
+                                                                 -> IO ()
+
+-- | queues: 'graphics', 'compute'.
+--
+--   renderpass: @both@
+--
+--   > () vkCmdDebugMarkerInsertEXT
+--   >     ( VkCommandBuffer commandBuffer
+--   >     , const VkDebugMarkerMarkerInfoEXT* pMarkerInfo
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdDebugMarkerInsertEXT.html vkCmdDebugMarkerInsertEXT registry at www.khronos.org>
+foreign import ccall safe "vkCmdDebugMarkerInsertEXT"
+               vkCmdDebugMarkerInsertEXTSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                -> Ptr VkDebugMarkerMarkerInfoEXT -- ^ pMarkerInfo
                                                                  -> IO ()

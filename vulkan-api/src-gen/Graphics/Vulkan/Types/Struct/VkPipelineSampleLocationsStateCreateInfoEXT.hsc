@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPipelineSampleLocationsStateCreateInfoEXT
        (VkPipelineSampleLocationsStateCreateInfoEXT(..)) where
@@ -21,7 +22,6 @@ import           Graphics.Vulkan.Types.Struct.VkPipelineMultisampleStateCreateIn
                                                                                     (VkPipelineMultisampleStateCreateInfo)
 import           Graphics.Vulkan.Types.Struct.VkSampleLocationsInfoEXT
                                                                                     (VkSampleLocationsInfoEXT)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe
                                                                                     (unsafeDupablePerformIO)
 
@@ -95,28 +95,6 @@ instance VulkanMarshal VkPipelineSampleLocationsStateCreateInfoEXT
              '[VkPipelineMultisampleStateCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPipelineSampleLocationsStateCreateInfoEXT where
-        type VkSTypeMType VkPipelineSampleLocationsStateCreateInfoEXT =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPipelineSampleLocationsStateCreateInfoEXT where
         type FieldType "sType" VkPipelineSampleLocationsStateCreateInfoEXT
              = VkStructureType
@@ -138,42 +116,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sType}
 
-instance CanReadField "sType"
-           VkPipelineSampleLocationsStateCreateInfoEXT
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkPipelineSampleLocationsStateCreateInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkSType
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType"
-           VkPipelineSampleLocationsStateCreateInfoEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkPipelineSampleLocationsStateCreateInfoEXT where
-        type VkPNextMType VkPipelineSampleLocationsStateCreateInfoEXT =
-             Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineSampleLocationsStateCreateInfoEXT, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPipelineSampleLocationsStateCreateInfoEXT, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPipelineSampleLocationsStateCreateInfoEXT, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPipelineSampleLocationsStateCreateInfoEXT, pNext}
+         CanWriteField "sType" VkPipelineSampleLocationsStateCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPipelineSampleLocationsStateCreateInfoEXT where
@@ -197,45 +157,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineSampleLocationsStateCreateInfoEXT, pNext}
 
-instance CanReadField "pNext"
-           VkPipelineSampleLocationsStateCreateInfoEXT
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkPipelineSampleLocationsStateCreateInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkPNext
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineSampleLocationsStateCreateInfoEXT, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext"
-           VkPipelineSampleLocationsStateCreateInfoEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkPipelineSampleLocationsStateCreateInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkSampleLocationsEnable
-           VkPipelineSampleLocationsStateCreateInfoEXT
+         CanWriteField "pNext" VkPipelineSampleLocationsStateCreateInfoEXT
          where
-        type VkSampleLocationsEnableMType
-               VkPipelineSampleLocationsStateCreateInfoEXT
-             = VkBool32
-
-        {-# NOINLINE vkSampleLocationsEnable #-}
-        vkSampleLocationsEnable x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sampleLocationsEnable})
-
-        {-# INLINE vkSampleLocationsEnableByteOffset #-}
-        vkSampleLocationsEnableByteOffset ~_
-          = #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sampleLocationsEnable}
-
-        {-# INLINE readVkSampleLocationsEnable #-}
-        readVkSampleLocationsEnable p
-          = peekByteOff p #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sampleLocationsEnable}
-
-        {-# INLINE writeVkSampleLocationsEnable #-}
-        writeVkSampleLocationsEnable p
-          = pokeByteOff p #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sampleLocationsEnable}
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineSampleLocationsStateCreateInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "sampleLocationsEnable"
@@ -262,45 +201,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sampleLocationsEnable}
 
-instance CanReadField "sampleLocationsEnable"
+instance {-# OVERLAPPING #-}
+         CanReadField "sampleLocationsEnable"
            VkPipelineSampleLocationsStateCreateInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkSampleLocationsEnable
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sampleLocationsEnable})
 
         {-# INLINE readField #-}
-        readField = readVkSampleLocationsEnable
+        readField p
+          = peekByteOff p #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sampleLocationsEnable}
 
-instance CanWriteField "sampleLocationsEnable"
+instance {-# OVERLAPPING #-}
+         CanWriteField "sampleLocationsEnable"
            VkPipelineSampleLocationsStateCreateInfoEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSampleLocationsEnable
-
-instance {-# OVERLAPPING #-}
-         HasVkSampleLocationsInfo
-           VkPipelineSampleLocationsStateCreateInfoEXT
-         where
-        type VkSampleLocationsInfoMType
-               VkPipelineSampleLocationsStateCreateInfoEXT
-             = VkSampleLocationsInfoEXT
-
-        {-# NOINLINE vkSampleLocationsInfo #-}
-        vkSampleLocationsInfo x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sampleLocationsInfo})
-
-        {-# INLINE vkSampleLocationsInfoByteOffset #-}
-        vkSampleLocationsInfoByteOffset ~_
-          = #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sampleLocationsInfo}
-
-        {-# INLINE readVkSampleLocationsInfo #-}
-        readVkSampleLocationsInfo p
-          = peekByteOff p #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sampleLocationsInfo}
-
-        {-# INLINE writeVkSampleLocationsInfo #-}
-        writeVkSampleLocationsInfo p
-          = pokeByteOff p #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sampleLocationsInfo}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sampleLocationsEnable}
 
 instance {-# OVERLAPPING #-}
          HasField "sampleLocationsInfo"
@@ -327,32 +247,38 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sampleLocationsInfo}
 
-instance CanReadField "sampleLocationsInfo"
+instance {-# OVERLAPPING #-}
+         CanReadField "sampleLocationsInfo"
            VkPipelineSampleLocationsStateCreateInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkSampleLocationsInfo
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sampleLocationsInfo})
 
         {-# INLINE readField #-}
-        readField = readVkSampleLocationsInfo
+        readField p
+          = peekByteOff p #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sampleLocationsInfo}
 
-instance CanWriteField "sampleLocationsInfo"
+instance {-# OVERLAPPING #-}
+         CanWriteField "sampleLocationsInfo"
            VkPipelineSampleLocationsStateCreateInfoEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSampleLocationsInfo
+        writeField p
+          = pokeByteOff p #{offset VkPipelineSampleLocationsStateCreateInfoEXT, sampleLocationsInfo}
 
 instance Show VkPipelineSampleLocationsStateCreateInfoEXT where
         showsPrec d x
           = showString "VkPipelineSampleLocationsStateCreateInfoEXT {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkSampleLocationsEnable = " .
-                            showsPrec d (vkSampleLocationsEnable x) .
+                          showString "sampleLocationsEnable = " .
+                            showsPrec d (getField @"sampleLocationsEnable" x) .
                               showString ", " .
-                                showString "vkSampleLocationsInfo = " .
-                                  showsPrec d (vkSampleLocationsInfo x) . showChar '}'
+                                showString "sampleLocationsInfo = " .
+                                  showsPrec d (getField @"sampleLocationsInfo" x) . showChar '}'

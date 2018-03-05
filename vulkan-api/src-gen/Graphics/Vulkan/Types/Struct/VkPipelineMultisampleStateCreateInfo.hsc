@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPipelineMultisampleStateCreateInfo
        (VkPipelineMultisampleStateCreateInfo(..)) where
@@ -17,7 +18,6 @@ import           Graphics.Vulkan.Types.BaseTypes               (VkBool32,
 import           Graphics.Vulkan.Types.Bitmasks                (VkPipelineMultisampleStateCreateFlags)
 import           Graphics.Vulkan.Types.Enum.VkSampleCountFlags (VkSampleCountFlagBits)
 import           Graphics.Vulkan.Types.Enum.VkStructureType    (VkStructureType)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                              (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPipelineMultisampleStateCreateInfo {
@@ -91,28 +91,6 @@ instance VulkanMarshal VkPipelineMultisampleStateCreateInfo where
         type StructExtends VkPipelineMultisampleStateCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPipelineMultisampleStateCreateInfo where
-        type VkSTypeMType VkPipelineMultisampleStateCreateInfo =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineMultisampleStateCreateInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPipelineMultisampleStateCreateInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPipelineMultisampleStateCreateInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPipelineMultisampleStateCreateInfo, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPipelineMultisampleStateCreateInfo where
         type FieldType "sType" VkPipelineMultisampleStateCreateInfo =
              VkStructureType
@@ -130,39 +108,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineMultisampleStateCreateInfo, sType}
 
-instance CanReadField "sType" VkPipelineMultisampleStateCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkPipelineMultisampleStateCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineMultisampleStateCreateInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkPipelineMultisampleStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkPipelineMultisampleStateCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkPipelineMultisampleStateCreateInfo where
-        type VkPNextMType VkPipelineMultisampleStateCreateInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineMultisampleStateCreateInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPipelineMultisampleStateCreateInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPipelineMultisampleStateCreateInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPipelineMultisampleStateCreateInfo, pNext}
+         CanWriteField "sType" VkPipelineMultisampleStateCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineMultisampleStateCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPipelineMultisampleStateCreateInfo where
@@ -182,40 +143,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineMultisampleStateCreateInfo, pNext}
 
-instance CanReadField "pNext" VkPipelineMultisampleStateCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkPipelineMultisampleStateCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineMultisampleStateCreateInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkPipelineMultisampleStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkPipelineMultisampleStateCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkFlags VkPipelineMultisampleStateCreateInfo where
-        type VkFlagsMType VkPipelineMultisampleStateCreateInfo =
-             VkPipelineMultisampleStateCreateFlags
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineMultisampleStateCreateInfo, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkPipelineMultisampleStateCreateInfo, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkPipelineMultisampleStateCreateInfo, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkPipelineMultisampleStateCreateInfo, flags}
+         CanWriteField "pNext" VkPipelineMultisampleStateCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineMultisampleStateCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkPipelineMultisampleStateCreateInfo where
@@ -235,42 +178,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineMultisampleStateCreateInfo, flags}
 
-instance CanReadField "flags" VkPipelineMultisampleStateCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkPipelineMultisampleStateCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineMultisampleStateCreateInfo, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags" VkPipelineMultisampleStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkPipelineMultisampleStateCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkRasterizationSamples VkPipelineMultisampleStateCreateInfo
-         where
-        type VkRasterizationSamplesMType
-               VkPipelineMultisampleStateCreateInfo
-             = VkSampleCountFlagBits
-
-        {-# NOINLINE vkRasterizationSamples #-}
-        vkRasterizationSamples x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineMultisampleStateCreateInfo, rasterizationSamples})
-
-        {-# INLINE vkRasterizationSamplesByteOffset #-}
-        vkRasterizationSamplesByteOffset ~_
-          = #{offset VkPipelineMultisampleStateCreateInfo, rasterizationSamples}
-
-        {-# INLINE readVkRasterizationSamples #-}
-        readVkRasterizationSamples p
-          = peekByteOff p #{offset VkPipelineMultisampleStateCreateInfo, rasterizationSamples}
-
-        {-# INLINE writeVkRasterizationSamples #-}
-        writeVkRasterizationSamples p
-          = pokeByteOff p #{offset VkPipelineMultisampleStateCreateInfo, rasterizationSamples}
+         CanWriteField "flags" VkPipelineMultisampleStateCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineMultisampleStateCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "rasterizationSamples"
@@ -297,43 +220,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineMultisampleStateCreateInfo, rasterizationSamples}
 
-instance CanReadField "rasterizationSamples"
+instance {-# OVERLAPPING #-}
+         CanReadField "rasterizationSamples"
            VkPipelineMultisampleStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkRasterizationSamples
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineMultisampleStateCreateInfo, rasterizationSamples})
 
         {-# INLINE readField #-}
-        readField = readVkRasterizationSamples
+        readField p
+          = peekByteOff p #{offset VkPipelineMultisampleStateCreateInfo, rasterizationSamples}
 
-instance CanWriteField "rasterizationSamples"
+instance {-# OVERLAPPING #-}
+         CanWriteField "rasterizationSamples"
            VkPipelineMultisampleStateCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkRasterizationSamples
-
-instance {-# OVERLAPPING #-}
-         HasVkSampleShadingEnable VkPipelineMultisampleStateCreateInfo where
-        type VkSampleShadingEnableMType
-               VkPipelineMultisampleStateCreateInfo
-             = VkBool32
-
-        {-# NOINLINE vkSampleShadingEnable #-}
-        vkSampleShadingEnable x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineMultisampleStateCreateInfo, sampleShadingEnable})
-
-        {-# INLINE vkSampleShadingEnableByteOffset #-}
-        vkSampleShadingEnableByteOffset ~_
-          = #{offset VkPipelineMultisampleStateCreateInfo, sampleShadingEnable}
-
-        {-# INLINE readVkSampleShadingEnable #-}
-        readVkSampleShadingEnable p
-          = peekByteOff p #{offset VkPipelineMultisampleStateCreateInfo, sampleShadingEnable}
-
-        {-# INLINE writeVkSampleShadingEnable #-}
-        writeVkSampleShadingEnable p
-          = pokeByteOff p #{offset VkPipelineMultisampleStateCreateInfo, sampleShadingEnable}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineMultisampleStateCreateInfo, rasterizationSamples}
 
 instance {-# OVERLAPPING #-}
          HasField "sampleShadingEnable" VkPipelineMultisampleStateCreateInfo
@@ -359,42 +265,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineMultisampleStateCreateInfo, sampleShadingEnable}
 
-instance CanReadField "sampleShadingEnable"
+instance {-# OVERLAPPING #-}
+         CanReadField "sampleShadingEnable"
            VkPipelineMultisampleStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkSampleShadingEnable
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineMultisampleStateCreateInfo, sampleShadingEnable})
 
         {-# INLINE readField #-}
-        readField = readVkSampleShadingEnable
+        readField p
+          = peekByteOff p #{offset VkPipelineMultisampleStateCreateInfo, sampleShadingEnable}
 
-instance CanWriteField "sampleShadingEnable"
+instance {-# OVERLAPPING #-}
+         CanWriteField "sampleShadingEnable"
            VkPipelineMultisampleStateCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSampleShadingEnable
-
-instance {-# OVERLAPPING #-}
-         HasVkMinSampleShading VkPipelineMultisampleStateCreateInfo where
-        type VkMinSampleShadingMType VkPipelineMultisampleStateCreateInfo =
-             #{type float}
-
-        {-# NOINLINE vkMinSampleShading #-}
-        vkMinSampleShading x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineMultisampleStateCreateInfo, minSampleShading})
-
-        {-# INLINE vkMinSampleShadingByteOffset #-}
-        vkMinSampleShadingByteOffset ~_
-          = #{offset VkPipelineMultisampleStateCreateInfo, minSampleShading}
-
-        {-# INLINE readVkMinSampleShading #-}
-        readVkMinSampleShading p
-          = peekByteOff p #{offset VkPipelineMultisampleStateCreateInfo, minSampleShading}
-
-        {-# INLINE writeVkMinSampleShading #-}
-        writeVkMinSampleShading p
-          = pokeByteOff p #{offset VkPipelineMultisampleStateCreateInfo, minSampleShading}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineMultisampleStateCreateInfo, sampleShadingEnable}
 
 instance {-# OVERLAPPING #-}
          HasField "minSampleShading" VkPipelineMultisampleStateCreateInfo
@@ -420,42 +310,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineMultisampleStateCreateInfo, minSampleShading}
 
-instance CanReadField "minSampleShading"
+instance {-# OVERLAPPING #-}
+         CanReadField "minSampleShading"
            VkPipelineMultisampleStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkMinSampleShading
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineMultisampleStateCreateInfo, minSampleShading})
 
         {-# INLINE readField #-}
-        readField = readVkMinSampleShading
+        readField p
+          = peekByteOff p #{offset VkPipelineMultisampleStateCreateInfo, minSampleShading}
 
-instance CanWriteField "minSampleShading"
+instance {-# OVERLAPPING #-}
+         CanWriteField "minSampleShading"
            VkPipelineMultisampleStateCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkMinSampleShading
-
-instance {-# OVERLAPPING #-}
-         HasVkPSampleMask VkPipelineMultisampleStateCreateInfo where
-        type VkPSampleMaskMType VkPipelineMultisampleStateCreateInfo =
-             Ptr VkSampleMask
-
-        {-# NOINLINE vkPSampleMask #-}
-        vkPSampleMask x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineMultisampleStateCreateInfo, pSampleMask})
-
-        {-# INLINE vkPSampleMaskByteOffset #-}
-        vkPSampleMaskByteOffset ~_
-          = #{offset VkPipelineMultisampleStateCreateInfo, pSampleMask}
-
-        {-# INLINE readVkPSampleMask #-}
-        readVkPSampleMask p
-          = peekByteOff p #{offset VkPipelineMultisampleStateCreateInfo, pSampleMask}
-
-        {-# INLINE writeVkPSampleMask #-}
-        writeVkPSampleMask p
-          = pokeByteOff p #{offset VkPipelineMultisampleStateCreateInfo, pSampleMask}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineMultisampleStateCreateInfo, minSampleShading}
 
 instance {-# OVERLAPPING #-}
          HasField "pSampleMask" VkPipelineMultisampleStateCreateInfo where
@@ -478,44 +352,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineMultisampleStateCreateInfo, pSampleMask}
 
-instance CanReadField "pSampleMask"
-           VkPipelineMultisampleStateCreateInfo
+instance {-# OVERLAPPING #-}
+         CanReadField "pSampleMask" VkPipelineMultisampleStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkPSampleMask
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineMultisampleStateCreateInfo, pSampleMask})
 
         {-# INLINE readField #-}
-        readField = readVkPSampleMask
-
-instance CanWriteField "pSampleMask"
-           VkPipelineMultisampleStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPSampleMask
+        readField p
+          = peekByteOff p #{offset VkPipelineMultisampleStateCreateInfo, pSampleMask}
 
 instance {-# OVERLAPPING #-}
-         HasVkAlphaToCoverageEnable VkPipelineMultisampleStateCreateInfo
+         CanWriteField "pSampleMask" VkPipelineMultisampleStateCreateInfo
          where
-        type VkAlphaToCoverageEnableMType
-               VkPipelineMultisampleStateCreateInfo
-             = VkBool32
-
-        {-# NOINLINE vkAlphaToCoverageEnable #-}
-        vkAlphaToCoverageEnable x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineMultisampleStateCreateInfo, alphaToCoverageEnable})
-
-        {-# INLINE vkAlphaToCoverageEnableByteOffset #-}
-        vkAlphaToCoverageEnableByteOffset ~_
-          = #{offset VkPipelineMultisampleStateCreateInfo, alphaToCoverageEnable}
-
-        {-# INLINE readVkAlphaToCoverageEnable #-}
-        readVkAlphaToCoverageEnable p
-          = peekByteOff p #{offset VkPipelineMultisampleStateCreateInfo, alphaToCoverageEnable}
-
-        {-# INLINE writeVkAlphaToCoverageEnable #-}
-        writeVkAlphaToCoverageEnable p
-          = pokeByteOff p #{offset VkPipelineMultisampleStateCreateInfo, alphaToCoverageEnable}
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineMultisampleStateCreateInfo, pSampleMask}
 
 instance {-# OVERLAPPING #-}
          HasField "alphaToCoverageEnable"
@@ -542,42 +396,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineMultisampleStateCreateInfo, alphaToCoverageEnable}
 
-instance CanReadField "alphaToCoverageEnable"
+instance {-# OVERLAPPING #-}
+         CanReadField "alphaToCoverageEnable"
            VkPipelineMultisampleStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkAlphaToCoverageEnable
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineMultisampleStateCreateInfo, alphaToCoverageEnable})
 
         {-# INLINE readField #-}
-        readField = readVkAlphaToCoverageEnable
+        readField p
+          = peekByteOff p #{offset VkPipelineMultisampleStateCreateInfo, alphaToCoverageEnable}
 
-instance CanWriteField "alphaToCoverageEnable"
+instance {-# OVERLAPPING #-}
+         CanWriteField "alphaToCoverageEnable"
            VkPipelineMultisampleStateCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkAlphaToCoverageEnable
-
-instance {-# OVERLAPPING #-}
-         HasVkAlphaToOneEnable VkPipelineMultisampleStateCreateInfo where
-        type VkAlphaToOneEnableMType VkPipelineMultisampleStateCreateInfo =
-             VkBool32
-
-        {-# NOINLINE vkAlphaToOneEnable #-}
-        vkAlphaToOneEnable x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineMultisampleStateCreateInfo, alphaToOneEnable})
-
-        {-# INLINE vkAlphaToOneEnableByteOffset #-}
-        vkAlphaToOneEnableByteOffset ~_
-          = #{offset VkPipelineMultisampleStateCreateInfo, alphaToOneEnable}
-
-        {-# INLINE readVkAlphaToOneEnable #-}
-        readVkAlphaToOneEnable p
-          = peekByteOff p #{offset VkPipelineMultisampleStateCreateInfo, alphaToOneEnable}
-
-        {-# INLINE writeVkAlphaToOneEnable #-}
-        writeVkAlphaToOneEnable p
-          = pokeByteOff p #{offset VkPipelineMultisampleStateCreateInfo, alphaToOneEnable}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineMultisampleStateCreateInfo, alphaToCoverageEnable}
 
 instance {-# OVERLAPPING #-}
          HasField "alphaToOneEnable" VkPipelineMultisampleStateCreateInfo
@@ -603,48 +441,57 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineMultisampleStateCreateInfo, alphaToOneEnable}
 
-instance CanReadField "alphaToOneEnable"
+instance {-# OVERLAPPING #-}
+         CanReadField "alphaToOneEnable"
            VkPipelineMultisampleStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkAlphaToOneEnable
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineMultisampleStateCreateInfo, alphaToOneEnable})
 
         {-# INLINE readField #-}
-        readField = readVkAlphaToOneEnable
+        readField p
+          = peekByteOff p #{offset VkPipelineMultisampleStateCreateInfo, alphaToOneEnable}
 
-instance CanWriteField "alphaToOneEnable"
+instance {-# OVERLAPPING #-}
+         CanWriteField "alphaToOneEnable"
            VkPipelineMultisampleStateCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkAlphaToOneEnable
+        writeField p
+          = pokeByteOff p #{offset VkPipelineMultisampleStateCreateInfo, alphaToOneEnable}
 
 instance Show VkPipelineMultisampleStateCreateInfo where
         showsPrec d x
           = showString "VkPipelineMultisampleStateCreateInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkRasterizationSamples = " .
-                                  showsPrec d (vkRasterizationSamples x) .
+                                showString "rasterizationSamples = " .
+                                  showsPrec d (getField @"rasterizationSamples" x) .
                                     showString ", " .
-                                      showString "vkSampleShadingEnable = " .
-                                        showsPrec d (vkSampleShadingEnable x) .
+                                      showString "sampleShadingEnable = " .
+                                        showsPrec d (getField @"sampleShadingEnable" x) .
                                           showString ", " .
-                                            showString "vkMinSampleShading = " .
-                                              showsPrec d (vkMinSampleShading x) .
+                                            showString "minSampleShading = " .
+                                              showsPrec d (getField @"minSampleShading" x) .
                                                 showString ", " .
-                                                  showString "vkPSampleMask = " .
-                                                    showsPrec d (vkPSampleMask x) .
+                                                  showString "pSampleMask = " .
+                                                    showsPrec d (getField @"pSampleMask" x) .
                                                       showString ", " .
-                                                        showString "vkAlphaToCoverageEnable = " .
-                                                          showsPrec d (vkAlphaToCoverageEnable x) .
+                                                        showString "alphaToCoverageEnable = " .
+                                                          showsPrec d
+                                                            (getField @"alphaToCoverageEnable" x)
+                                                            .
                                                             showString ", " .
-                                                              showString "vkAlphaToOneEnable = " .
-                                                                showsPrec d (vkAlphaToOneEnable x) .
-                                                                  showChar '}'
+                                                              showString "alphaToOneEnable = " .
+                                                                showsPrec d
+                                                                  (getField @"alphaToOneEnable" x)
+                                                                  . showChar '}'

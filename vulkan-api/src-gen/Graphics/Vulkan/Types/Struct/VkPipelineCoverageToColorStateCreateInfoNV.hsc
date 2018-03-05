@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPipelineCoverageToColorStateCreateInfoNV
        (VkPipelineCoverageToColorStateCreateInfoNV(..)) where
@@ -21,7 +22,6 @@ import           Graphics.Vulkan.Types.Enum.VkStructureType
                                                                                     (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkPipelineMultisampleStateCreateInfo
                                                                                     (VkPipelineMultisampleStateCreateInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe
                                                                                     (unsafeDupablePerformIO)
 
@@ -96,28 +96,6 @@ instance VulkanMarshal VkPipelineCoverageToColorStateCreateInfoNV
              '[VkPipelineMultisampleStateCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPipelineCoverageToColorStateCreateInfoNV where
-        type VkSTypeMType VkPipelineCoverageToColorStateCreateInfoNV =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineCoverageToColorStateCreateInfoNV, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPipelineCoverageToColorStateCreateInfoNV, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPipelineCoverageToColorStateCreateInfoNV, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPipelineCoverageToColorStateCreateInfoNV, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPipelineCoverageToColorStateCreateInfoNV where
         type FieldType "sType" VkPipelineCoverageToColorStateCreateInfoNV =
              VkStructureType
@@ -138,42 +116,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineCoverageToColorStateCreateInfoNV, sType}
 
-instance CanReadField "sType"
-           VkPipelineCoverageToColorStateCreateInfoNV
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkPipelineCoverageToColorStateCreateInfoNV
          where
-        {-# INLINE getField #-}
-        getField = vkSType
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineCoverageToColorStateCreateInfoNV, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType"
-           VkPipelineCoverageToColorStateCreateInfoNV
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkPipelineCoverageToColorStateCreateInfoNV, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkPipelineCoverageToColorStateCreateInfoNV where
-        type VkPNextMType VkPipelineCoverageToColorStateCreateInfoNV =
-             Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineCoverageToColorStateCreateInfoNV, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPipelineCoverageToColorStateCreateInfoNV, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPipelineCoverageToColorStateCreateInfoNV, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPipelineCoverageToColorStateCreateInfoNV, pNext}
+         CanWriteField "sType" VkPipelineCoverageToColorStateCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineCoverageToColorStateCreateInfoNV, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPipelineCoverageToColorStateCreateInfoNV where
@@ -196,42 +156,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineCoverageToColorStateCreateInfoNV, pNext}
 
-instance CanReadField "pNext"
-           VkPipelineCoverageToColorStateCreateInfoNV
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkPipelineCoverageToColorStateCreateInfoNV
          where
-        {-# INLINE getField #-}
-        getField = vkPNext
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineCoverageToColorStateCreateInfoNV, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext"
-           VkPipelineCoverageToColorStateCreateInfoNV
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkPipelineCoverageToColorStateCreateInfoNV, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkFlags VkPipelineCoverageToColorStateCreateInfoNV where
-        type VkFlagsMType VkPipelineCoverageToColorStateCreateInfoNV =
-             VkPipelineCoverageToColorStateCreateFlagsNV
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineCoverageToColorStateCreateInfoNV, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkPipelineCoverageToColorStateCreateInfoNV, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkPipelineCoverageToColorStateCreateInfoNV, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkPipelineCoverageToColorStateCreateInfoNV, flags}
+         CanWriteField "pNext" VkPipelineCoverageToColorStateCreateInfoNV
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineCoverageToColorStateCreateInfoNV, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkPipelineCoverageToColorStateCreateInfoNV where
@@ -254,45 +196,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineCoverageToColorStateCreateInfoNV, flags}
 
-instance CanReadField "flags"
-           VkPipelineCoverageToColorStateCreateInfoNV
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkPipelineCoverageToColorStateCreateInfoNV
          where
-        {-# INLINE getField #-}
-        getField = vkFlags
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineCoverageToColorStateCreateInfoNV, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags"
-           VkPipelineCoverageToColorStateCreateInfoNV
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkPipelineCoverageToColorStateCreateInfoNV, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkCoverageToColorEnable
-           VkPipelineCoverageToColorStateCreateInfoNV
+         CanWriteField "flags" VkPipelineCoverageToColorStateCreateInfoNV
          where
-        type VkCoverageToColorEnableMType
-               VkPipelineCoverageToColorStateCreateInfoNV
-             = VkBool32
-
-        {-# NOINLINE vkCoverageToColorEnable #-}
-        vkCoverageToColorEnable x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineCoverageToColorStateCreateInfoNV, coverageToColorEnable})
-
-        {-# INLINE vkCoverageToColorEnableByteOffset #-}
-        vkCoverageToColorEnableByteOffset ~_
-          = #{offset VkPipelineCoverageToColorStateCreateInfoNV, coverageToColorEnable}
-
-        {-# INLINE readVkCoverageToColorEnable #-}
-        readVkCoverageToColorEnable p
-          = peekByteOff p #{offset VkPipelineCoverageToColorStateCreateInfoNV, coverageToColorEnable}
-
-        {-# INLINE writeVkCoverageToColorEnable #-}
-        writeVkCoverageToColorEnable p
-          = pokeByteOff p #{offset VkPipelineCoverageToColorStateCreateInfoNV, coverageToColorEnable}
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineCoverageToColorStateCreateInfoNV, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "coverageToColorEnable"
@@ -319,45 +240,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineCoverageToColorStateCreateInfoNV, coverageToColorEnable}
 
-instance CanReadField "coverageToColorEnable"
+instance {-# OVERLAPPING #-}
+         CanReadField "coverageToColorEnable"
            VkPipelineCoverageToColorStateCreateInfoNV
          where
-        {-# INLINE getField #-}
-        getField = vkCoverageToColorEnable
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineCoverageToColorStateCreateInfoNV, coverageToColorEnable})
 
         {-# INLINE readField #-}
-        readField = readVkCoverageToColorEnable
+        readField p
+          = peekByteOff p #{offset VkPipelineCoverageToColorStateCreateInfoNV, coverageToColorEnable}
 
-instance CanWriteField "coverageToColorEnable"
+instance {-# OVERLAPPING #-}
+         CanWriteField "coverageToColorEnable"
            VkPipelineCoverageToColorStateCreateInfoNV
          where
         {-# INLINE writeField #-}
-        writeField = writeVkCoverageToColorEnable
-
-instance {-# OVERLAPPING #-}
-         HasVkCoverageToColorLocation
-           VkPipelineCoverageToColorStateCreateInfoNV
-         where
-        type VkCoverageToColorLocationMType
-               VkPipelineCoverageToColorStateCreateInfoNV
-             = Word32
-
-        {-# NOINLINE vkCoverageToColorLocation #-}
-        vkCoverageToColorLocation x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineCoverageToColorStateCreateInfoNV, coverageToColorLocation})
-
-        {-# INLINE vkCoverageToColorLocationByteOffset #-}
-        vkCoverageToColorLocationByteOffset ~_
-          = #{offset VkPipelineCoverageToColorStateCreateInfoNV, coverageToColorLocation}
-
-        {-# INLINE readVkCoverageToColorLocation #-}
-        readVkCoverageToColorLocation p
-          = peekByteOff p #{offset VkPipelineCoverageToColorStateCreateInfoNV, coverageToColorLocation}
-
-        {-# INLINE writeVkCoverageToColorLocation #-}
-        writeVkCoverageToColorLocation p
-          = pokeByteOff p #{offset VkPipelineCoverageToColorStateCreateInfoNV, coverageToColorLocation}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineCoverageToColorStateCreateInfoNV, coverageToColorEnable}
 
 instance {-# OVERLAPPING #-}
          HasField "coverageToColorLocation"
@@ -384,35 +286,42 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineCoverageToColorStateCreateInfoNV, coverageToColorLocation}
 
-instance CanReadField "coverageToColorLocation"
+instance {-# OVERLAPPING #-}
+         CanReadField "coverageToColorLocation"
            VkPipelineCoverageToColorStateCreateInfoNV
          where
-        {-# INLINE getField #-}
-        getField = vkCoverageToColorLocation
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineCoverageToColorStateCreateInfoNV, coverageToColorLocation})
 
         {-# INLINE readField #-}
-        readField = readVkCoverageToColorLocation
+        readField p
+          = peekByteOff p #{offset VkPipelineCoverageToColorStateCreateInfoNV, coverageToColorLocation}
 
-instance CanWriteField "coverageToColorLocation"
+instance {-# OVERLAPPING #-}
+         CanWriteField "coverageToColorLocation"
            VkPipelineCoverageToColorStateCreateInfoNV
          where
         {-# INLINE writeField #-}
-        writeField = writeVkCoverageToColorLocation
+        writeField p
+          = pokeByteOff p #{offset VkPipelineCoverageToColorStateCreateInfoNV, coverageToColorLocation}
 
 instance Show VkPipelineCoverageToColorStateCreateInfoNV where
         showsPrec d x
           = showString "VkPipelineCoverageToColorStateCreateInfoNV {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkCoverageToColorEnable = " .
-                                  showsPrec d (vkCoverageToColorEnable x) .
+                                showString "coverageToColorEnable = " .
+                                  showsPrec d (getField @"coverageToColorEnable" x) .
                                     showString ", " .
-                                      showString "vkCoverageToColorLocation = " .
-                                        showsPrec d (vkCoverageToColorLocation x) . showChar '}'
+                                      showString "coverageToColorLocation = " .
+                                        showsPrec d (getField @"coverageToColorLocation" x) .
+                                          showChar '}'

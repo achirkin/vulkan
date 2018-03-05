@@ -9,7 +9,6 @@ module Graphics.Vulkan
   , module Graphics.Vulkan.Types.Funcpointers
   , module Graphics.Vulkan.Types.Handles
   , module Graphics.Vulkan.Types.Include
-  , module Graphics.Vulkan.Types.StructMembers
   ) where
 
 import Graphics.Vulkan.Marshal
@@ -19,4 +18,3 @@ import Graphics.Vulkan.Types.Defines
 import Graphics.Vulkan.Types.Funcpointers
 import Graphics.Vulkan.Types.Handles
 import Graphics.Vulkan.Types.Include
-import Graphics.Vulkan.Types.StructMembers

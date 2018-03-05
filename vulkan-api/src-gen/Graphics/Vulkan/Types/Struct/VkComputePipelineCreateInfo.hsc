@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkComputePipelineCreateInfo
        (VkComputePipelineCreateInfo(..)) where
@@ -17,7 +18,6 @@ import           Graphics.Vulkan.Types.Enum.VkStructureType                   (V
 import           Graphics.Vulkan.Types.Handles                                (VkPipeline,
                                                                                VkPipelineLayout)
 import           Graphics.Vulkan.Types.Struct.VkPipelineShaderStageCreateInfo (VkPipelineShaderStageCreateInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                             (unsafeDupablePerformIO)
 
 -- | > typedef struct VkComputePipelineCreateInfo {
@@ -83,27 +83,6 @@ instance VulkanMarshal VkComputePipelineCreateInfo where
         type ReturnedOnly VkComputePipelineCreateInfo = 'False -- ' closing tick for hsc2hs
         type StructExtends VkComputePipelineCreateInfo = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkComputePipelineCreateInfo
-         where
-        type VkSTypeMType VkComputePipelineCreateInfo = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkComputePipelineCreateInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkComputePipelineCreateInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkComputePipelineCreateInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkComputePipelineCreateInfo, sType}
-
 instance {-# OVERLAPPING #-}
          HasField "sType" VkComputePipelineCreateInfo where
         type FieldType "sType" VkComputePipelineCreateInfo =
@@ -120,37 +99,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkComputePipelineCreateInfo, sType}
 
-instance CanReadField "sType" VkComputePipelineCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkComputePipelineCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkComputePipelineCreateInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkComputePipelineCreateInfo, sType}
 
-instance CanWriteField "sType" VkComputePipelineCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkComputePipelineCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkComputePipelineCreateInfo
-         where
-        type VkPNextMType VkComputePipelineCreateInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkComputePipelineCreateInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkComputePipelineCreateInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkComputePipelineCreateInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkComputePipelineCreateInfo, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkComputePipelineCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkComputePipelineCreateInfo where
@@ -167,38 +131,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkComputePipelineCreateInfo, pNext}
 
-instance CanReadField "pNext" VkComputePipelineCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkComputePipelineCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkComputePipelineCreateInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkComputePipelineCreateInfo, pNext}
 
-instance CanWriteField "pNext" VkComputePipelineCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext" VkComputePipelineCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-} HasVkFlags VkComputePipelineCreateInfo
-         where
-        type VkFlagsMType VkComputePipelineCreateInfo =
-             VkPipelineCreateFlags
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkComputePipelineCreateInfo, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkComputePipelineCreateInfo, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkComputePipelineCreateInfo, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkComputePipelineCreateInfo, flags}
+        writeField p
+          = pokeByteOff p #{offset VkComputePipelineCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkComputePipelineCreateInfo where
@@ -216,38 +164,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkComputePipelineCreateInfo, flags}
 
-instance CanReadField "flags" VkComputePipelineCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkComputePipelineCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkComputePipelineCreateInfo, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
+        readField p
+          = peekByteOff p #{offset VkComputePipelineCreateInfo, flags}
 
-instance CanWriteField "flags" VkComputePipelineCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "flags" VkComputePipelineCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkFlags
-
-instance {-# OVERLAPPING #-} HasVkStage VkComputePipelineCreateInfo
-         where
-        type VkStageMType VkComputePipelineCreateInfo =
-             VkPipelineShaderStageCreateInfo
-
-        {-# NOINLINE vkStage #-}
-        vkStage x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkComputePipelineCreateInfo, stage})
-
-        {-# INLINE vkStageByteOffset #-}
-        vkStageByteOffset ~_
-          = #{offset VkComputePipelineCreateInfo, stage}
-
-        {-# INLINE readVkStage #-}
-        readVkStage p
-          = peekByteOff p #{offset VkComputePipelineCreateInfo, stage}
-
-        {-# INLINE writeVkStage #-}
-        writeVkStage p
-          = pokeByteOff p #{offset VkComputePipelineCreateInfo, stage}
+        writeField p
+          = pokeByteOff p #{offset VkComputePipelineCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "stage" VkComputePipelineCreateInfo where
@@ -265,37 +197,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkComputePipelineCreateInfo, stage}
 
-instance CanReadField "stage" VkComputePipelineCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkStage
+instance {-# OVERLAPPING #-}
+         CanReadField "stage" VkComputePipelineCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkComputePipelineCreateInfo, stage})
 
         {-# INLINE readField #-}
-        readField = readVkStage
-
-instance CanWriteField "stage" VkComputePipelineCreateInfo where
-        {-# INLINE writeField #-}
-        writeField = writeVkStage
+        readField p
+          = peekByteOff p #{offset VkComputePipelineCreateInfo, stage}
 
 instance {-# OVERLAPPING #-}
-         HasVkLayout VkComputePipelineCreateInfo where
-        type VkLayoutMType VkComputePipelineCreateInfo = VkPipelineLayout
-
-        {-# NOINLINE vkLayout #-}
-        vkLayout x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkComputePipelineCreateInfo, layout})
-
-        {-# INLINE vkLayoutByteOffset #-}
-        vkLayoutByteOffset ~_
-          = #{offset VkComputePipelineCreateInfo, layout}
-
-        {-# INLINE readVkLayout #-}
-        readVkLayout p
-          = peekByteOff p #{offset VkComputePipelineCreateInfo, layout}
-
-        {-# INLINE writeVkLayout #-}
-        writeVkLayout p
-          = pokeByteOff p #{offset VkComputePipelineCreateInfo, layout}
+         CanWriteField "stage" VkComputePipelineCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkComputePipelineCreateInfo, stage}
 
 instance {-# OVERLAPPING #-}
          HasField "layout" VkComputePipelineCreateInfo where
@@ -313,38 +230,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkComputePipelineCreateInfo, layout}
 
-instance CanReadField "layout" VkComputePipelineCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkLayout
+instance {-# OVERLAPPING #-}
+         CanReadField "layout" VkComputePipelineCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkComputePipelineCreateInfo, layout})
 
         {-# INLINE readField #-}
-        readField = readVkLayout
-
-instance CanWriteField "layout" VkComputePipelineCreateInfo where
-        {-# INLINE writeField #-}
-        writeField = writeVkLayout
+        readField p
+          = peekByteOff p #{offset VkComputePipelineCreateInfo, layout}
 
 instance {-# OVERLAPPING #-}
-         HasVkBasePipelineHandle VkComputePipelineCreateInfo where
-        type VkBasePipelineHandleMType VkComputePipelineCreateInfo =
-             VkPipeline
-
-        {-# NOINLINE vkBasePipelineHandle #-}
-        vkBasePipelineHandle x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkComputePipelineCreateInfo, basePipelineHandle})
-
-        {-# INLINE vkBasePipelineHandleByteOffset #-}
-        vkBasePipelineHandleByteOffset ~_
-          = #{offset VkComputePipelineCreateInfo, basePipelineHandle}
-
-        {-# INLINE readVkBasePipelineHandle #-}
-        readVkBasePipelineHandle p
-          = peekByteOff p #{offset VkComputePipelineCreateInfo, basePipelineHandle}
-
-        {-# INLINE writeVkBasePipelineHandle #-}
-        writeVkBasePipelineHandle p
-          = pokeByteOff p #{offset VkComputePipelineCreateInfo, basePipelineHandle}
+         CanWriteField "layout" VkComputePipelineCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkComputePipelineCreateInfo, layout}
 
 instance {-# OVERLAPPING #-}
          HasField "basePipelineHandle" VkComputePipelineCreateInfo where
@@ -364,41 +265,23 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkComputePipelineCreateInfo, basePipelineHandle}
 
-instance CanReadField "basePipelineHandle"
-           VkComputePipelineCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkBasePipelineHandle
+instance {-# OVERLAPPING #-}
+         CanReadField "basePipelineHandle" VkComputePipelineCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkComputePipelineCreateInfo, basePipelineHandle})
 
         {-# INLINE readField #-}
-        readField = readVkBasePipelineHandle
-
-instance CanWriteField "basePipelineHandle"
-           VkComputePipelineCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkBasePipelineHandle
+        readField p
+          = peekByteOff p #{offset VkComputePipelineCreateInfo, basePipelineHandle}
 
 instance {-# OVERLAPPING #-}
-         HasVkBasePipelineIndex VkComputePipelineCreateInfo where
-        type VkBasePipelineIndexMType VkComputePipelineCreateInfo = Int32
-
-        {-# NOINLINE vkBasePipelineIndex #-}
-        vkBasePipelineIndex x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkComputePipelineCreateInfo, basePipelineIndex})
-
-        {-# INLINE vkBasePipelineIndexByteOffset #-}
-        vkBasePipelineIndexByteOffset ~_
-          = #{offset VkComputePipelineCreateInfo, basePipelineIndex}
-
-        {-# INLINE readVkBasePipelineIndex #-}
-        readVkBasePipelineIndex p
-          = peekByteOff p #{offset VkComputePipelineCreateInfo, basePipelineIndex}
-
-        {-# INLINE writeVkBasePipelineIndex #-}
-        writeVkBasePipelineIndex p
-          = pokeByteOff p #{offset VkComputePipelineCreateInfo, basePipelineIndex}
+         CanWriteField "basePipelineHandle" VkComputePipelineCreateInfo
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkComputePipelineCreateInfo, basePipelineHandle}
 
 instance {-# OVERLAPPING #-}
          HasField "basePipelineIndex" VkComputePipelineCreateInfo where
@@ -418,42 +301,44 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkComputePipelineCreateInfo, basePipelineIndex}
 
-instance CanReadField "basePipelineIndex"
-           VkComputePipelineCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkBasePipelineIndex
+instance {-# OVERLAPPING #-}
+         CanReadField "basePipelineIndex" VkComputePipelineCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkComputePipelineCreateInfo, basePipelineIndex})
 
         {-# INLINE readField #-}
-        readField = readVkBasePipelineIndex
+        readField p
+          = peekByteOff p #{offset VkComputePipelineCreateInfo, basePipelineIndex}
 
-instance CanWriteField "basePipelineIndex"
-           VkComputePipelineCreateInfo
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "basePipelineIndex" VkComputePipelineCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkBasePipelineIndex
+        writeField p
+          = pokeByteOff p #{offset VkComputePipelineCreateInfo, basePipelineIndex}
 
 instance Show VkComputePipelineCreateInfo where
         showsPrec d x
           = showString "VkComputePipelineCreateInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkStage = " .
-                                  showsPrec d (vkStage x) .
+                                showString "stage = " .
+                                  showsPrec d (getField @"stage" x) .
                                     showString ", " .
-                                      showString "vkLayout = " .
-                                        showsPrec d (vkLayout x) .
+                                      showString "layout = " .
+                                        showsPrec d (getField @"layout" x) .
                                           showString ", " .
-                                            showString "vkBasePipelineHandle = " .
-                                              showsPrec d (vkBasePipelineHandle x) .
+                                            showString "basePipelineHandle = " .
+                                              showsPrec d (getField @"basePipelineHandle" x) .
                                                 showString ", " .
-                                                  showString "vkBasePipelineIndex = " .
-                                                    showsPrec d (vkBasePipelineIndex x) .
+                                                  showString "basePipelineIndex = " .
+                                                    showsPrec d (getField @"basePipelineIndex" x) .
                                                       showChar '}'

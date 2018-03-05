@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkInstanceCreateInfo
        (VkInstanceCreateInfo(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Bitmasks                 (VkInstanceCreateFlags)
 import           Graphics.Vulkan.Types.Enum.VkStructureType     (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkApplicationInfo (VkApplicationInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                               (unsafeDupablePerformIO)
 
 -- | > typedef struct VkInstanceCreateInfo {
@@ -79,26 +79,6 @@ instance VulkanMarshal VkInstanceCreateInfo where
         type ReturnedOnly VkInstanceCreateInfo = 'False -- ' closing tick for hsc2hs
         type StructExtends VkInstanceCreateInfo = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkInstanceCreateInfo where
-        type VkSTypeMType VkInstanceCreateInfo = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkInstanceCreateInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkInstanceCreateInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkInstanceCreateInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkInstanceCreateInfo, sType}
-
 instance {-# OVERLAPPING #-} HasField "sType" VkInstanceCreateInfo
          where
         type FieldType "sType" VkInstanceCreateInfo = VkStructureType
@@ -113,36 +93,22 @@ instance {-# OVERLAPPING #-} HasField "sType" VkInstanceCreateInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkInstanceCreateInfo, sType}
 
-instance CanReadField "sType" VkInstanceCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkInstanceCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkInstanceCreateInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkInstanceCreateInfo, sType}
 
-instance CanWriteField "sType" VkInstanceCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkInstanceCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkInstanceCreateInfo where
-        type VkPNextMType VkInstanceCreateInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkInstanceCreateInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkInstanceCreateInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkInstanceCreateInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkInstanceCreateInfo, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkInstanceCreateInfo, sType}
 
 instance {-# OVERLAPPING #-} HasField "pNext" VkInstanceCreateInfo
          where
@@ -158,36 +124,22 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkInstanceCreateInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkInstanceCreateInfo, pNext}
 
-instance CanReadField "pNext" VkInstanceCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkInstanceCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkInstanceCreateInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkInstanceCreateInfo, pNext}
 
-instance CanWriteField "pNext" VkInstanceCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext" VkInstanceCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-} HasVkFlags VkInstanceCreateInfo where
-        type VkFlagsMType VkInstanceCreateInfo = VkInstanceCreateFlags
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkInstanceCreateInfo, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkInstanceCreateInfo, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkInstanceCreateInfo, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkInstanceCreateInfo, flags}
+        writeField p
+          = pokeByteOff p #{offset VkInstanceCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-} HasField "flags" VkInstanceCreateInfo
          where
@@ -203,38 +155,22 @@ instance {-# OVERLAPPING #-} HasField "flags" VkInstanceCreateInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkInstanceCreateInfo, flags}
 
-instance CanReadField "flags" VkInstanceCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkInstanceCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkInstanceCreateInfo, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags" VkInstanceCreateInfo where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkInstanceCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkPApplicationInfo VkInstanceCreateInfo where
-        type VkPApplicationInfoMType VkInstanceCreateInfo =
-             Ptr VkApplicationInfo
-
-        {-# NOINLINE vkPApplicationInfo #-}
-        vkPApplicationInfo x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkInstanceCreateInfo, pApplicationInfo})
-
-        {-# INLINE vkPApplicationInfoByteOffset #-}
-        vkPApplicationInfoByteOffset ~_
-          = #{offset VkInstanceCreateInfo, pApplicationInfo}
-
-        {-# INLINE readVkPApplicationInfo #-}
-        readVkPApplicationInfo p
-          = peekByteOff p #{offset VkInstanceCreateInfo, pApplicationInfo}
-
-        {-# INLINE writeVkPApplicationInfo #-}
-        writeVkPApplicationInfo p
-          = pokeByteOff p #{offset VkInstanceCreateInfo, pApplicationInfo}
+         CanWriteField "flags" VkInstanceCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkInstanceCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "pApplicationInfo" VkInstanceCreateInfo where
@@ -252,38 +188,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkInstanceCreateInfo, pApplicationInfo}
 
-instance CanReadField "pApplicationInfo" VkInstanceCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkPApplicationInfo
+instance {-# OVERLAPPING #-}
+         CanReadField "pApplicationInfo" VkInstanceCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkInstanceCreateInfo, pApplicationInfo})
 
         {-# INLINE readField #-}
-        readField = readVkPApplicationInfo
-
-instance CanWriteField "pApplicationInfo" VkInstanceCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPApplicationInfo
+        readField p
+          = peekByteOff p #{offset VkInstanceCreateInfo, pApplicationInfo}
 
 instance {-# OVERLAPPING #-}
-         HasVkEnabledLayerCount VkInstanceCreateInfo where
-        type VkEnabledLayerCountMType VkInstanceCreateInfo = Word32
-
-        {-# NOINLINE vkEnabledLayerCount #-}
-        vkEnabledLayerCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkInstanceCreateInfo, enabledLayerCount})
-
-        {-# INLINE vkEnabledLayerCountByteOffset #-}
-        vkEnabledLayerCountByteOffset ~_
-          = #{offset VkInstanceCreateInfo, enabledLayerCount}
-
-        {-# INLINE readVkEnabledLayerCount #-}
-        readVkEnabledLayerCount p
-          = peekByteOff p #{offset VkInstanceCreateInfo, enabledLayerCount}
-
-        {-# INLINE writeVkEnabledLayerCount #-}
-        writeVkEnabledLayerCount p
-          = pokeByteOff p #{offset VkInstanceCreateInfo, enabledLayerCount}
+         CanWriteField "pApplicationInfo" VkInstanceCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkInstanceCreateInfo, pApplicationInfo}
 
 instance {-# OVERLAPPING #-}
          HasField "enabledLayerCount" VkInstanceCreateInfo where
@@ -300,39 +220,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkInstanceCreateInfo, enabledLayerCount}
 
-instance CanReadField "enabledLayerCount" VkInstanceCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkEnabledLayerCount
+instance {-# OVERLAPPING #-}
+         CanReadField "enabledLayerCount" VkInstanceCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkInstanceCreateInfo, enabledLayerCount})
 
         {-# INLINE readField #-}
-        readField = readVkEnabledLayerCount
-
-instance CanWriteField "enabledLayerCount" VkInstanceCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkEnabledLayerCount
+        readField p
+          = peekByteOff p #{offset VkInstanceCreateInfo, enabledLayerCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPpEnabledLayerNames VkInstanceCreateInfo where
-        type VkPpEnabledLayerNamesMType VkInstanceCreateInfo = Ptr CString
-
-        {-# NOINLINE vkPpEnabledLayerNames #-}
-        vkPpEnabledLayerNames x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkInstanceCreateInfo, ppEnabledLayerNames})
-
-        {-# INLINE vkPpEnabledLayerNamesByteOffset #-}
-        vkPpEnabledLayerNamesByteOffset ~_
-          = #{offset VkInstanceCreateInfo, ppEnabledLayerNames}
-
-        {-# INLINE readVkPpEnabledLayerNames #-}
-        readVkPpEnabledLayerNames p
-          = peekByteOff p #{offset VkInstanceCreateInfo, ppEnabledLayerNames}
-
-        {-# INLINE writeVkPpEnabledLayerNames #-}
-        writeVkPpEnabledLayerNames p
-          = pokeByteOff p #{offset VkInstanceCreateInfo, ppEnabledLayerNames}
+         CanWriteField "enabledLayerCount" VkInstanceCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkInstanceCreateInfo, enabledLayerCount}
 
 instance {-# OVERLAPPING #-}
          HasField "ppEnabledLayerNames" VkInstanceCreateInfo where
@@ -352,39 +255,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkInstanceCreateInfo, ppEnabledLayerNames}
 
-instance CanReadField "ppEnabledLayerNames" VkInstanceCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkPpEnabledLayerNames
+instance {-# OVERLAPPING #-}
+         CanReadField "ppEnabledLayerNames" VkInstanceCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkInstanceCreateInfo, ppEnabledLayerNames})
 
         {-# INLINE readField #-}
-        readField = readVkPpEnabledLayerNames
-
-instance CanWriteField "ppEnabledLayerNames" VkInstanceCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPpEnabledLayerNames
+        readField p
+          = peekByteOff p #{offset VkInstanceCreateInfo, ppEnabledLayerNames}
 
 instance {-# OVERLAPPING #-}
-         HasVkEnabledExtensionCount VkInstanceCreateInfo where
-        type VkEnabledExtensionCountMType VkInstanceCreateInfo = Word32
-
-        {-# NOINLINE vkEnabledExtensionCount #-}
-        vkEnabledExtensionCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkInstanceCreateInfo, enabledExtensionCount})
-
-        {-# INLINE vkEnabledExtensionCountByteOffset #-}
-        vkEnabledExtensionCountByteOffset ~_
-          = #{offset VkInstanceCreateInfo, enabledExtensionCount}
-
-        {-# INLINE readVkEnabledExtensionCount #-}
-        readVkEnabledExtensionCount p
-          = peekByteOff p #{offset VkInstanceCreateInfo, enabledExtensionCount}
-
-        {-# INLINE writeVkEnabledExtensionCount #-}
-        writeVkEnabledExtensionCount p
-          = pokeByteOff p #{offset VkInstanceCreateInfo, enabledExtensionCount}
+         CanWriteField "ppEnabledLayerNames" VkInstanceCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkInstanceCreateInfo, ppEnabledLayerNames}
 
 instance {-# OVERLAPPING #-}
          HasField "enabledExtensionCount" VkInstanceCreateInfo where
@@ -404,40 +290,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkInstanceCreateInfo, enabledExtensionCount}
 
-instance CanReadField "enabledExtensionCount" VkInstanceCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkEnabledExtensionCount
+instance {-# OVERLAPPING #-}
+         CanReadField "enabledExtensionCount" VkInstanceCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkInstanceCreateInfo, enabledExtensionCount})
 
         {-# INLINE readField #-}
-        readField = readVkEnabledExtensionCount
-
-instance CanWriteField "enabledExtensionCount" VkInstanceCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkEnabledExtensionCount
+        readField p
+          = peekByteOff p #{offset VkInstanceCreateInfo, enabledExtensionCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPpEnabledExtensionNames VkInstanceCreateInfo where
-        type VkPpEnabledExtensionNamesMType VkInstanceCreateInfo =
-             Ptr CString
-
-        {-# NOINLINE vkPpEnabledExtensionNames #-}
-        vkPpEnabledExtensionNames x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkInstanceCreateInfo, ppEnabledExtensionNames})
-
-        {-# INLINE vkPpEnabledExtensionNamesByteOffset #-}
-        vkPpEnabledExtensionNamesByteOffset ~_
-          = #{offset VkInstanceCreateInfo, ppEnabledExtensionNames}
-
-        {-# INLINE readVkPpEnabledExtensionNames #-}
-        readVkPpEnabledExtensionNames p
-          = peekByteOff p #{offset VkInstanceCreateInfo, ppEnabledExtensionNames}
-
-        {-# INLINE writeVkPpEnabledExtensionNames #-}
-        writeVkPpEnabledExtensionNames p
-          = pokeByteOff p #{offset VkInstanceCreateInfo, ppEnabledExtensionNames}
+         CanWriteField "enabledExtensionCount" VkInstanceCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkInstanceCreateInfo, enabledExtensionCount}
 
 instance {-# OVERLAPPING #-}
          HasField "ppEnabledExtensionNames" VkInstanceCreateInfo where
@@ -457,45 +325,50 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkInstanceCreateInfo, ppEnabledExtensionNames}
 
-instance CanReadField "ppEnabledExtensionNames"
-           VkInstanceCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkPpEnabledExtensionNames
+instance {-# OVERLAPPING #-}
+         CanReadField "ppEnabledExtensionNames" VkInstanceCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkInstanceCreateInfo, ppEnabledExtensionNames})
 
         {-# INLINE readField #-}
-        readField = readVkPpEnabledExtensionNames
+        readField p
+          = peekByteOff p #{offset VkInstanceCreateInfo, ppEnabledExtensionNames}
 
-instance CanWriteField "ppEnabledExtensionNames"
-           VkInstanceCreateInfo
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "ppEnabledExtensionNames" VkInstanceCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPpEnabledExtensionNames
+        writeField p
+          = pokeByteOff p #{offset VkInstanceCreateInfo, ppEnabledExtensionNames}
 
 instance Show VkInstanceCreateInfo where
         showsPrec d x
           = showString "VkInstanceCreateInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkPApplicationInfo = " .
-                                  showsPrec d (vkPApplicationInfo x) .
+                                showString "pApplicationInfo = " .
+                                  showsPrec d (getField @"pApplicationInfo" x) .
                                     showString ", " .
-                                      showString "vkEnabledLayerCount = " .
-                                        showsPrec d (vkEnabledLayerCount x) .
+                                      showString "enabledLayerCount = " .
+                                        showsPrec d (getField @"enabledLayerCount" x) .
                                           showString ", " .
-                                            showString "vkPpEnabledLayerNames = " .
-                                              showsPrec d (vkPpEnabledLayerNames x) .
+                                            showString "ppEnabledLayerNames = " .
+                                              showsPrec d (getField @"ppEnabledLayerNames" x) .
                                                 showString ", " .
-                                                  showString "vkEnabledExtensionCount = " .
-                                                    showsPrec d (vkEnabledExtensionCount x) .
+                                                  showString "enabledExtensionCount = " .
+                                                    showsPrec d
+                                                      (getField @"enabledExtensionCount" x)
+                                                      .
                                                       showString ", " .
-                                                        showString "vkPpEnabledExtensionNames = " .
-                                                          showsPrec d (vkPpEnabledExtensionNames x)
+                                                        showString "ppEnabledExtensionNames = " .
+                                                          showsPrec d
+                                                            (getField @"ppEnabledExtensionNames" x)
                                                             . showChar '}'

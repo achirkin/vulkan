@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkBufferViewCreateInfo
        (VkBufferViewCreateInfo(..)) where
@@ -17,7 +18,6 @@ import           Graphics.Vulkan.Types.Bitmasks             (VkBufferViewCreateF
 import           Graphics.Vulkan.Types.Enum.VkFormat        (VkFormat)
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
 import           Graphics.Vulkan.Types.Handles              (VkBuffer)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkBufferViewCreateInfo {
@@ -79,27 +79,6 @@ instance VulkanMarshal VkBufferViewCreateInfo where
         type ReturnedOnly VkBufferViewCreateInfo = 'False -- ' closing tick for hsc2hs
         type StructExtends VkBufferViewCreateInfo = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkBufferViewCreateInfo
-         where
-        type VkSTypeMType VkBufferViewCreateInfo = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBufferViewCreateInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkBufferViewCreateInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkBufferViewCreateInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkBufferViewCreateInfo, sType}
-
 instance {-# OVERLAPPING #-}
          HasField "sType" VkBufferViewCreateInfo where
         type FieldType "sType" VkBufferViewCreateInfo = VkStructureType
@@ -114,37 +93,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkBufferViewCreateInfo, sType}
 
-instance CanReadField "sType" VkBufferViewCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkBufferViewCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBufferViewCreateInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkBufferViewCreateInfo, sType}
 
-instance CanWriteField "sType" VkBufferViewCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkBufferViewCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkBufferViewCreateInfo
-         where
-        type VkPNextMType VkBufferViewCreateInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBufferViewCreateInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkBufferViewCreateInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkBufferViewCreateInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkBufferViewCreateInfo, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkBufferViewCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkBufferViewCreateInfo where
@@ -160,37 +124,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkBufferViewCreateInfo, pNext}
 
-instance CanReadField "pNext" VkBufferViewCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkBufferViewCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBufferViewCreateInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkBufferViewCreateInfo, pNext}
 
-instance CanWriteField "pNext" VkBufferViewCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext" VkBufferViewCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-} HasVkFlags VkBufferViewCreateInfo
-         where
-        type VkFlagsMType VkBufferViewCreateInfo = VkBufferViewCreateFlags
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBufferViewCreateInfo, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkBufferViewCreateInfo, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkBufferViewCreateInfo, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkBufferViewCreateInfo, flags}
+        writeField p
+          = pokeByteOff p #{offset VkBufferViewCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkBufferViewCreateInfo where
@@ -207,37 +156,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkBufferViewCreateInfo, flags}
 
-instance CanReadField "flags" VkBufferViewCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkBufferViewCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBufferViewCreateInfo, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
+        readField p
+          = peekByteOff p #{offset VkBufferViewCreateInfo, flags}
 
-instance CanWriteField "flags" VkBufferViewCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "flags" VkBufferViewCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkFlags
-
-instance {-# OVERLAPPING #-} HasVkBuffer VkBufferViewCreateInfo
-         where
-        type VkBufferMType VkBufferViewCreateInfo = VkBuffer
-
-        {-# NOINLINE vkBuffer #-}
-        vkBuffer x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBufferViewCreateInfo, buffer})
-
-        {-# INLINE vkBufferByteOffset #-}
-        vkBufferByteOffset ~_
-          = #{offset VkBufferViewCreateInfo, buffer}
-
-        {-# INLINE readVkBuffer #-}
-        readVkBuffer p
-          = peekByteOff p #{offset VkBufferViewCreateInfo, buffer}
-
-        {-# INLINE writeVkBuffer #-}
-        writeVkBuffer p
-          = pokeByteOff p #{offset VkBufferViewCreateInfo, buffer}
+        writeField p
+          = pokeByteOff p #{offset VkBufferViewCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "buffer" VkBufferViewCreateInfo where
@@ -253,37 +187,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkBufferViewCreateInfo, buffer}
 
-instance CanReadField "buffer" VkBufferViewCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkBuffer
+instance {-# OVERLAPPING #-}
+         CanReadField "buffer" VkBufferViewCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBufferViewCreateInfo, buffer})
 
         {-# INLINE readField #-}
-        readField = readVkBuffer
+        readField p
+          = peekByteOff p #{offset VkBufferViewCreateInfo, buffer}
 
-instance CanWriteField "buffer" VkBufferViewCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "buffer" VkBufferViewCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkBuffer
-
-instance {-# OVERLAPPING #-} HasVkFormat VkBufferViewCreateInfo
-         where
-        type VkFormatMType VkBufferViewCreateInfo = VkFormat
-
-        {-# NOINLINE vkFormat #-}
-        vkFormat x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBufferViewCreateInfo, format})
-
-        {-# INLINE vkFormatByteOffset #-}
-        vkFormatByteOffset ~_
-          = #{offset VkBufferViewCreateInfo, format}
-
-        {-# INLINE readVkFormat #-}
-        readVkFormat p
-          = peekByteOff p #{offset VkBufferViewCreateInfo, format}
-
-        {-# INLINE writeVkFormat #-}
-        writeVkFormat p
-          = pokeByteOff p #{offset VkBufferViewCreateInfo, format}
+        writeField p
+          = pokeByteOff p #{offset VkBufferViewCreateInfo, buffer}
 
 instance {-# OVERLAPPING #-}
          HasField "format" VkBufferViewCreateInfo where
@@ -299,37 +218,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkBufferViewCreateInfo, format}
 
-instance CanReadField "format" VkBufferViewCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkFormat
+instance {-# OVERLAPPING #-}
+         CanReadField "format" VkBufferViewCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBufferViewCreateInfo, format})
 
         {-# INLINE readField #-}
-        readField = readVkFormat
+        readField p
+          = peekByteOff p #{offset VkBufferViewCreateInfo, format}
 
-instance CanWriteField "format" VkBufferViewCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "format" VkBufferViewCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkFormat
-
-instance {-# OVERLAPPING #-} HasVkOffset VkBufferViewCreateInfo
-         where
-        type VkOffsetMType VkBufferViewCreateInfo = VkDeviceSize
-
-        {-# NOINLINE vkOffset #-}
-        vkOffset x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBufferViewCreateInfo, offset})
-
-        {-# INLINE vkOffsetByteOffset #-}
-        vkOffsetByteOffset ~_
-          = #{offset VkBufferViewCreateInfo, offset}
-
-        {-# INLINE readVkOffset #-}
-        readVkOffset p
-          = peekByteOff p #{offset VkBufferViewCreateInfo, offset}
-
-        {-# INLINE writeVkOffset #-}
-        writeVkOffset p
-          = pokeByteOff p #{offset VkBufferViewCreateInfo, offset}
+        writeField p
+          = pokeByteOff p #{offset VkBufferViewCreateInfo, format}
 
 instance {-# OVERLAPPING #-}
          HasField "offset" VkBufferViewCreateInfo where
@@ -345,37 +249,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkBufferViewCreateInfo, offset}
 
-instance CanReadField "offset" VkBufferViewCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkOffset
+instance {-# OVERLAPPING #-}
+         CanReadField "offset" VkBufferViewCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBufferViewCreateInfo, offset})
 
         {-# INLINE readField #-}
-        readField = readVkOffset
+        readField p
+          = peekByteOff p #{offset VkBufferViewCreateInfo, offset}
 
-instance CanWriteField "offset" VkBufferViewCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "offset" VkBufferViewCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkOffset
-
-instance {-# OVERLAPPING #-} HasVkRange VkBufferViewCreateInfo
-         where
-        type VkRangeMType VkBufferViewCreateInfo = VkDeviceSize
-
-        {-# NOINLINE vkRange #-}
-        vkRange x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBufferViewCreateInfo, range})
-
-        {-# INLINE vkRangeByteOffset #-}
-        vkRangeByteOffset ~_
-          = #{offset VkBufferViewCreateInfo, range}
-
-        {-# INLINE readVkRange #-}
-        readVkRange p
-          = peekByteOff p #{offset VkBufferViewCreateInfo, range}
-
-        {-# INLINE writeVkRange #-}
-        writeVkRange p
-          = pokeByteOff p #{offset VkBufferViewCreateInfo, range}
+        writeField p
+          = pokeByteOff p #{offset VkBufferViewCreateInfo, offset}
 
 instance {-# OVERLAPPING #-}
          HasField "range" VkBufferViewCreateInfo where
@@ -391,37 +280,43 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkBufferViewCreateInfo, range}
 
-instance CanReadField "range" VkBufferViewCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkRange
+instance {-# OVERLAPPING #-}
+         CanReadField "range" VkBufferViewCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBufferViewCreateInfo, range})
 
         {-# INLINE readField #-}
-        readField = readVkRange
+        readField p
+          = peekByteOff p #{offset VkBufferViewCreateInfo, range}
 
-instance CanWriteField "range" VkBufferViewCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "range" VkBufferViewCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkRange
+        writeField p
+          = pokeByteOff p #{offset VkBufferViewCreateInfo, range}
 
 instance Show VkBufferViewCreateInfo where
         showsPrec d x
           = showString "VkBufferViewCreateInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkBuffer = " .
-                                  showsPrec d (vkBuffer x) .
+                                showString "buffer = " .
+                                  showsPrec d (getField @"buffer" x) .
                                     showString ", " .
-                                      showString "vkFormat = " .
-                                        showsPrec d (vkFormat x) .
+                                      showString "format = " .
+                                        showsPrec d (getField @"format" x) .
                                           showString ", " .
-                                            showString "vkOffset = " .
-                                              showsPrec d (vkOffset x) .
+                                            showString "offset = " .
+                                              showsPrec d (getField @"offset" x) .
                                                 showString ", " .
-                                                  showString "vkRange = " .
-                                                    showsPrec d (vkRange x) . showChar '}'
+                                                  showString "range = " .
+                                                    showsPrec d (getField @"range" x) . showChar '}'

@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkRenderPassInputAttachmentAspectCreateInfoKHR
        (VkRenderPassInputAttachmentAspectCreateInfoKHR(..)) where
@@ -19,7 +20,6 @@ import           Graphics.Vulkan.Types.Struct.VkInputAttachmentAspectReferenceKH
                                                                                    (VkInputAttachmentAspectReferenceKHR)
 import           Graphics.Vulkan.Types.Struct.VkRenderPassCreateInfo
                                                                                    (VkRenderPassCreateInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe
                                                                                    (unsafeDupablePerformIO)
 
@@ -96,28 +96,6 @@ instance VulkanMarshal
              '[VkRenderPassCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkRenderPassInputAttachmentAspectCreateInfoKHR where
-        type VkSTypeMType VkRenderPassInputAttachmentAspectCreateInfoKHR =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkRenderPassInputAttachmentAspectCreateInfoKHR
          where
         type FieldType "sType"
@@ -141,42 +119,25 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, sType}
 
-instance CanReadField "sType"
-           VkRenderPassInputAttachmentAspectCreateInfoKHR
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkRenderPassInputAttachmentAspectCreateInfoKHR
          where
-        {-# INLINE getField #-}
-        getField = vkSType
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, sType}
 
-instance CanWriteField "sType"
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType"
            VkRenderPassInputAttachmentAspectCreateInfoKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-}
-         HasVkPNext VkRenderPassInputAttachmentAspectCreateInfoKHR where
-        type VkPNextMType VkRenderPassInputAttachmentAspectCreateInfoKHR =
-             Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkRenderPassInputAttachmentAspectCreateInfoKHR
@@ -202,45 +163,25 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, pNext}
 
-instance CanReadField "pNext"
-           VkRenderPassInputAttachmentAspectCreateInfoKHR
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkRenderPassInputAttachmentAspectCreateInfoKHR
          where
-        {-# INLINE getField #-}
-        getField = vkPNext
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, pNext}
 
-instance CanWriteField "pNext"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext"
            VkRenderPassInputAttachmentAspectCreateInfoKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-}
-         HasVkAspectReferenceCount
-           VkRenderPassInputAttachmentAspectCreateInfoKHR
-         where
-        type VkAspectReferenceCountMType
-               VkRenderPassInputAttachmentAspectCreateInfoKHR
-             = Word32
-
-        {-# NOINLINE vkAspectReferenceCount #-}
-        vkAspectReferenceCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, aspectReferenceCount})
-
-        {-# INLINE vkAspectReferenceCountByteOffset #-}
-        vkAspectReferenceCountByteOffset ~_
-          = #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, aspectReferenceCount}
-
-        {-# INLINE readVkAspectReferenceCount #-}
-        readVkAspectReferenceCount p
-          = peekByteOff p #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, aspectReferenceCount}
-
-        {-# INLINE writeVkAspectReferenceCount #-}
-        writeVkAspectReferenceCount p
-          = pokeByteOff p #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, aspectReferenceCount}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "aspectReferenceCount"
@@ -267,45 +208,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, aspectReferenceCount}
 
-instance CanReadField "aspectReferenceCount"
+instance {-# OVERLAPPING #-}
+         CanReadField "aspectReferenceCount"
            VkRenderPassInputAttachmentAspectCreateInfoKHR
          where
-        {-# INLINE getField #-}
-        getField = vkAspectReferenceCount
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, aspectReferenceCount})
 
         {-# INLINE readField #-}
-        readField = readVkAspectReferenceCount
+        readField p
+          = peekByteOff p #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, aspectReferenceCount}
 
-instance CanWriteField "aspectReferenceCount"
+instance {-# OVERLAPPING #-}
+         CanWriteField "aspectReferenceCount"
            VkRenderPassInputAttachmentAspectCreateInfoKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkAspectReferenceCount
-
-instance {-# OVERLAPPING #-}
-         HasVkPAspectReferences
-           VkRenderPassInputAttachmentAspectCreateInfoKHR
-         where
-        type VkPAspectReferencesMType
-               VkRenderPassInputAttachmentAspectCreateInfoKHR
-             = Ptr VkInputAttachmentAspectReferenceKHR
-
-        {-# NOINLINE vkPAspectReferences #-}
-        vkPAspectReferences x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, pAspectReferences})
-
-        {-# INLINE vkPAspectReferencesByteOffset #-}
-        vkPAspectReferencesByteOffset ~_
-          = #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, pAspectReferences}
-
-        {-# INLINE readVkPAspectReferences #-}
-        readVkPAspectReferences p
-          = peekByteOff p #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, pAspectReferences}
-
-        {-# INLINE writeVkPAspectReferences #-}
-        writeVkPAspectReferences p
-          = pokeByteOff p #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, pAspectReferences}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, aspectReferenceCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pAspectReferences"
@@ -332,32 +254,38 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, pAspectReferences}
 
-instance CanReadField "pAspectReferences"
+instance {-# OVERLAPPING #-}
+         CanReadField "pAspectReferences"
            VkRenderPassInputAttachmentAspectCreateInfoKHR
          where
-        {-# INLINE getField #-}
-        getField = vkPAspectReferences
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, pAspectReferences})
 
         {-# INLINE readField #-}
-        readField = readVkPAspectReferences
+        readField p
+          = peekByteOff p #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, pAspectReferences}
 
-instance CanWriteField "pAspectReferences"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pAspectReferences"
            VkRenderPassInputAttachmentAspectCreateInfoKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPAspectReferences
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassInputAttachmentAspectCreateInfoKHR, pAspectReferences}
 
 instance Show VkRenderPassInputAttachmentAspectCreateInfoKHR where
         showsPrec d x
           = showString "VkRenderPassInputAttachmentAspectCreateInfoKHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkAspectReferenceCount = " .
-                            showsPrec d (vkAspectReferenceCount x) .
+                          showString "aspectReferenceCount = " .
+                            showsPrec d (getField @"aspectReferenceCount" x) .
                               showString ", " .
-                                showString "vkPAspectReferences = " .
-                                  showsPrec d (vkPAspectReferences x) . showChar '}'
+                                showString "pAspectReferences = " .
+                                  showsPrec d (getField @"pAspectReferences" x) . showChar '}'

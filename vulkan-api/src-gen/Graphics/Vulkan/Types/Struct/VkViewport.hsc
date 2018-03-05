@@ -5,15 +5,15 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkViewport (VkViewport(..))
        where
-import           Foreign.Storable                    (Storable (..))
+import           Foreign.Storable                 (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.StructMembers
-import           System.IO.Unsafe                    (unsafeDupablePerformIO)
+import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 
 -- | > typedef struct VkViewport {
 --   >     float          x;
@@ -72,23 +72,6 @@ instance VulkanMarshal VkViewport where
         type ReturnedOnly VkViewport = 'False -- ' closing tick for hsc2hs
         type StructExtends VkViewport = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkX VkViewport where
-        type VkXMType VkViewport = #{type float}
-
-        {-# NOINLINE vkX #-}
-        vkX x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkViewport, x})
-
-        {-# INLINE vkXByteOffset #-}
-        vkXByteOffset ~_ = #{offset VkViewport, x}
-
-        {-# INLINE readVkX #-}
-        readVkX p = peekByteOff p #{offset VkViewport, x}
-
-        {-# INLINE writeVkX #-}
-        writeVkX p = pokeByteOff p #{offset VkViewport, x}
-
 instance {-# OVERLAPPING #-} HasField "x" VkViewport where
         type FieldType "x" VkViewport = #{type float}
         type FieldOptional "x" VkViewport = 'False -- ' closing tick for hsc2hs
@@ -102,33 +85,18 @@ instance {-# OVERLAPPING #-} HasField "x" VkViewport where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkViewport, x}
 
-instance CanReadField "x" VkViewport where
-        {-# INLINE getField #-}
-        getField = vkX
+instance {-# OVERLAPPING #-} CanReadField "x" VkViewport where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkViewport, x})
 
         {-# INLINE readField #-}
-        readField = readVkX
+        readField p = peekByteOff p #{offset VkViewport, x}
 
-instance CanWriteField "x" VkViewport where
+instance {-# OVERLAPPING #-} CanWriteField "x" VkViewport where
         {-# INLINE writeField #-}
-        writeField = writeVkX
-
-instance {-# OVERLAPPING #-} HasVkY VkViewport where
-        type VkYMType VkViewport = #{type float}
-
-        {-# NOINLINE vkY #-}
-        vkY x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkViewport, y})
-
-        {-# INLINE vkYByteOffset #-}
-        vkYByteOffset ~_ = #{offset VkViewport, y}
-
-        {-# INLINE readVkY #-}
-        readVkY p = peekByteOff p #{offset VkViewport, y}
-
-        {-# INLINE writeVkY #-}
-        writeVkY p = pokeByteOff p #{offset VkViewport, y}
+        writeField p = pokeByteOff p #{offset VkViewport, x}
 
 instance {-# OVERLAPPING #-} HasField "y" VkViewport where
         type FieldType "y" VkViewport = #{type float}
@@ -143,35 +111,18 @@ instance {-# OVERLAPPING #-} HasField "y" VkViewport where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkViewport, y}
 
-instance CanReadField "y" VkViewport where
-        {-# INLINE getField #-}
-        getField = vkY
+instance {-# OVERLAPPING #-} CanReadField "y" VkViewport where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkViewport, y})
 
         {-# INLINE readField #-}
-        readField = readVkY
+        readField p = peekByteOff p #{offset VkViewport, y}
 
-instance CanWriteField "y" VkViewport where
+instance {-# OVERLAPPING #-} CanWriteField "y" VkViewport where
         {-# INLINE writeField #-}
-        writeField = writeVkY
-
-instance {-# OVERLAPPING #-} HasVkWidth VkViewport where
-        type VkWidthMType VkViewport = #{type float}
-
-        {-# NOINLINE vkWidth #-}
-        vkWidth x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkViewport, width})
-
-        {-# INLINE vkWidthByteOffset #-}
-        vkWidthByteOffset ~_ = #{offset VkViewport, width}
-
-        {-# INLINE readVkWidth #-}
-        readVkWidth p
-          = peekByteOff p #{offset VkViewport, width}
-
-        {-# INLINE writeVkWidth #-}
-        writeVkWidth p
-          = pokeByteOff p #{offset VkViewport, width}
+        writeField p = pokeByteOff p #{offset VkViewport, y}
 
 instance {-# OVERLAPPING #-} HasField "width" VkViewport where
         type FieldType "width" VkViewport = #{type float}
@@ -186,35 +137,19 @@ instance {-# OVERLAPPING #-} HasField "width" VkViewport where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkViewport, width}
 
-instance CanReadField "width" VkViewport where
-        {-# INLINE getField #-}
-        getField = vkWidth
+instance {-# OVERLAPPING #-} CanReadField "width" VkViewport where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkViewport, width})
 
         {-# INLINE readField #-}
-        readField = readVkWidth
+        readField p = peekByteOff p #{offset VkViewport, width}
 
-instance CanWriteField "width" VkViewport where
+instance {-# OVERLAPPING #-} CanWriteField "width" VkViewport where
         {-# INLINE writeField #-}
-        writeField = writeVkWidth
-
-instance {-# OVERLAPPING #-} HasVkHeight VkViewport where
-        type VkHeightMType VkViewport = #{type float}
-
-        {-# NOINLINE vkHeight #-}
-        vkHeight x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkViewport, height})
-
-        {-# INLINE vkHeightByteOffset #-}
-        vkHeightByteOffset ~_ = #{offset VkViewport, height}
-
-        {-# INLINE readVkHeight #-}
-        readVkHeight p
-          = peekByteOff p #{offset VkViewport, height}
-
-        {-# INLINE writeVkHeight #-}
-        writeVkHeight p
-          = pokeByteOff p #{offset VkViewport, height}
+        writeField p
+          = pokeByteOff p #{offset VkViewport, width}
 
 instance {-# OVERLAPPING #-} HasField "height" VkViewport where
         type FieldType "height" VkViewport = #{type float}
@@ -229,36 +164,21 @@ instance {-# OVERLAPPING #-} HasField "height" VkViewport where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkViewport, height}
 
-instance CanReadField "height" VkViewport where
-        {-# INLINE getField #-}
-        getField = vkHeight
+instance {-# OVERLAPPING #-} CanReadField "height" VkViewport where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkViewport, height})
 
         {-# INLINE readField #-}
-        readField = readVkHeight
+        readField p
+          = peekByteOff p #{offset VkViewport, height}
 
-instance CanWriteField "height" VkViewport where
+instance {-# OVERLAPPING #-} CanWriteField "height" VkViewport
+         where
         {-# INLINE writeField #-}
-        writeField = writeVkHeight
-
-instance {-# OVERLAPPING #-} HasVkMinDepth VkViewport where
-        type VkMinDepthMType VkViewport = #{type float}
-
-        {-# NOINLINE vkMinDepth #-}
-        vkMinDepth x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkViewport, minDepth})
-
-        {-# INLINE vkMinDepthByteOffset #-}
-        vkMinDepthByteOffset ~_
-          = #{offset VkViewport, minDepth}
-
-        {-# INLINE readVkMinDepth #-}
-        readVkMinDepth p
-          = peekByteOff p #{offset VkViewport, minDepth}
-
-        {-# INLINE writeVkMinDepth #-}
-        writeVkMinDepth p
-          = pokeByteOff p #{offset VkViewport, minDepth}
+        writeField p
+          = pokeByteOff p #{offset VkViewport, height}
 
 instance {-# OVERLAPPING #-} HasField "minDepth" VkViewport where
         type FieldType "minDepth" VkViewport = #{type float}
@@ -273,36 +193,22 @@ instance {-# OVERLAPPING #-} HasField "minDepth" VkViewport where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkViewport, minDepth}
 
-instance CanReadField "minDepth" VkViewport where
-        {-# INLINE getField #-}
-        getField = vkMinDepth
+instance {-# OVERLAPPING #-} CanReadField "minDepth" VkViewport
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkViewport, minDepth})
 
         {-# INLINE readField #-}
-        readField = readVkMinDepth
+        readField p
+          = peekByteOff p #{offset VkViewport, minDepth}
 
-instance CanWriteField "minDepth" VkViewport where
+instance {-# OVERLAPPING #-} CanWriteField "minDepth" VkViewport
+         where
         {-# INLINE writeField #-}
-        writeField = writeVkMinDepth
-
-instance {-# OVERLAPPING #-} HasVkMaxDepth VkViewport where
-        type VkMaxDepthMType VkViewport = #{type float}
-
-        {-# NOINLINE vkMaxDepth #-}
-        vkMaxDepth x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkViewport, maxDepth})
-
-        {-# INLINE vkMaxDepthByteOffset #-}
-        vkMaxDepthByteOffset ~_
-          = #{offset VkViewport, maxDepth}
-
-        {-# INLINE readVkMaxDepth #-}
-        readVkMaxDepth p
-          = peekByteOff p #{offset VkViewport, maxDepth}
-
-        {-# INLINE writeVkMaxDepth #-}
-        writeVkMaxDepth p
-          = pokeByteOff p #{offset VkViewport, maxDepth}
+        writeField p
+          = pokeByteOff p #{offset VkViewport, minDepth}
 
 instance {-# OVERLAPPING #-} HasField "maxDepth" VkViewport where
         type FieldType "maxDepth" VkViewport = #{type float}
@@ -317,34 +223,40 @@ instance {-# OVERLAPPING #-} HasField "maxDepth" VkViewport where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkViewport, maxDepth}
 
-instance CanReadField "maxDepth" VkViewport where
-        {-# INLINE getField #-}
-        getField = vkMaxDepth
+instance {-# OVERLAPPING #-} CanReadField "maxDepth" VkViewport
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkViewport, maxDepth})
 
         {-# INLINE readField #-}
-        readField = readVkMaxDepth
+        readField p
+          = peekByteOff p #{offset VkViewport, maxDepth}
 
-instance CanWriteField "maxDepth" VkViewport where
+instance {-# OVERLAPPING #-} CanWriteField "maxDepth" VkViewport
+         where
         {-# INLINE writeField #-}
-        writeField = writeVkMaxDepth
+        writeField p
+          = pokeByteOff p #{offset VkViewport, maxDepth}
 
 instance Show VkViewport where
         showsPrec d x
           = showString "VkViewport {" .
-              showString "vkX = " .
-                showsPrec d (vkX x) .
+              showString "x = " .
+                showsPrec d (getField @"x" x) .
                   showString ", " .
-                    showString "vkY = " .
-                      showsPrec d (vkY x) .
+                    showString "y = " .
+                      showsPrec d (getField @"y" x) .
                         showString ", " .
-                          showString "vkWidth = " .
-                            showsPrec d (vkWidth x) .
+                          showString "width = " .
+                            showsPrec d (getField @"width" x) .
                               showString ", " .
-                                showString "vkHeight = " .
-                                  showsPrec d (vkHeight x) .
+                                showString "height = " .
+                                  showsPrec d (getField @"height" x) .
                                     showString ", " .
-                                      showString "vkMinDepth = " .
-                                        showsPrec d (vkMinDepth x) .
+                                      showString "minDepth = " .
+                                        showsPrec d (getField @"minDepth" x) .
                                           showString ", " .
-                                            showString "vkMaxDepth = " .
-                                              showsPrec d (vkMaxDepth x) . showChar '}'
+                                            showString "maxDepth = " .
+                                              showsPrec d (getField @"maxDepth" x) . showChar '}'

@@ -8,6 +8,7 @@
 {-# LANGUAGE PatternSynonyms       #-}
 {-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 {-# LANGUAGE UndecidableInstances  #-}
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceIDPropertiesKHR
@@ -25,7 +26,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes                             (VkBool32)
 import           Graphics.Vulkan.Types.Enum.VkStructureType                  (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR (VkPhysicalDeviceProperties2KHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                            (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDeviceIDPropertiesKHR {
@@ -94,27 +94,6 @@ instance VulkanMarshal VkPhysicalDeviceIDPropertiesKHR where
              '[VkPhysicalDeviceProperties2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPhysicalDeviceIDPropertiesKHR where
-        type VkSTypeMType VkPhysicalDeviceIDPropertiesKHR = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceIDPropertiesKHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPhysicalDeviceIDPropertiesKHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPhysicalDeviceIDPropertiesKHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPhysicalDeviceIDPropertiesKHR, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPhysicalDeviceIDPropertiesKHR where
         type FieldType "sType" VkPhysicalDeviceIDPropertiesKHR =
              VkStructureType
@@ -130,38 +109,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceIDPropertiesKHR, sType}
 
-instance CanReadField "sType" VkPhysicalDeviceIDPropertiesKHR where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkPhysicalDeviceIDPropertiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceIDPropertiesKHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkPhysicalDeviceIDPropertiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceIDPropertiesKHR, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkPhysicalDeviceIDPropertiesKHR where
-        type VkPNextMType VkPhysicalDeviceIDPropertiesKHR = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceIDPropertiesKHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPhysicalDeviceIDPropertiesKHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPhysicalDeviceIDPropertiesKHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPhysicalDeviceIDPropertiesKHR, pNext}
+         CanWriteField "sType" VkPhysicalDeviceIDPropertiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceIDPropertiesKHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPhysicalDeviceIDPropertiesKHR where
@@ -178,44 +141,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceIDPropertiesKHR, pNext}
 
-instance CanReadField "pNext" VkPhysicalDeviceIDPropertiesKHR where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkPhysicalDeviceIDPropertiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceIDPropertiesKHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkPhysicalDeviceIDPropertiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceIDPropertiesKHR, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkDeviceUUIDArray VkPhysicalDeviceIDPropertiesKHR where
-        type VkDeviceUUIDArrayMType VkPhysicalDeviceIDPropertiesKHR = Word8
-
-        {-# NOINLINE vkDeviceUUIDArray #-}
-        vkDeviceUUIDArray x idx
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 (idx * sizeOf (undefined :: Word8) +
-                    #{offset VkPhysicalDeviceIDPropertiesKHR, deviceUUID}))
-
-        {-# INLINE vkDeviceUUIDArrayByteOffset #-}
-        vkDeviceUUIDArrayByteOffset ~_
-          = #{offset VkPhysicalDeviceIDPropertiesKHR, deviceUUID}
-
-        {-# INLINE readVkDeviceUUIDArray #-}
-        readVkDeviceUUIDArray p idx
-          = peekByteOff p
-              (idx * sizeOf (undefined :: Word8) +
-                 #{offset VkPhysicalDeviceIDPropertiesKHR, deviceUUID})
-
-        {-# INLINE writeVkDeviceUUIDArray #-}
-        writeVkDeviceUUIDArray p idx
-          = pokeByteOff p
-              (idx * sizeOf (undefined :: Word8) +
-                 #{offset VkPhysicalDeviceIDPropertiesKHR, deviceUUID})
+         CanWriteField "pNext" VkPhysicalDeviceIDPropertiesKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceIDPropertiesKHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "deviceUUID" VkPhysicalDeviceIDPropertiesKHR where
@@ -234,7 +175,8 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceIDPropertiesKHR, deviceUUID}
 
-instance (KnownNat idx,
+instance {-# OVERLAPPING #-}
+         (KnownNat idx,
           IndexInBounds "deviceUUID" idx VkPhysicalDeviceIDPropertiesKHR) =>
          CanReadFieldArray "deviceUUID" idx VkPhysicalDeviceIDPropertiesKHR
          where
@@ -260,16 +202,25 @@ instance (KnownNat idx,
         fieldArrayLength = VK_UUID_SIZE
 
         {-# INLINE getFieldArray #-}
-        getFieldArray x
-          = vkDeviceUUIDArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+        getFieldArray = f
+          where {-# NOINLINE f #-}
+                f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
+                off
+                  = #{offset VkPhysicalDeviceIDPropertiesKHR, deviceUUID}
+                      +
+                      sizeOf (undefined :: Word8) *
+                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
         {-# INLINE readFieldArray #-}
-        readFieldArray x
-          = readVkDeviceUUIDArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+        readFieldArray p
+          = peekByteOff p
+              (#{offset VkPhysicalDeviceIDPropertiesKHR, deviceUUID}
+                 +
+                 sizeOf (undefined :: Word8) *
+                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
 
-instance (KnownNat idx,
+instance {-# OVERLAPPING #-}
+         (KnownNat idx,
           IndexInBounds "deviceUUID" idx VkPhysicalDeviceIDPropertiesKHR) =>
          CanWriteFieldArray "deviceUUID" idx VkPhysicalDeviceIDPropertiesKHR
          where
@@ -290,36 +241,12 @@ instance (KnownNat idx,
                        #-}
 
         {-# INLINE writeFieldArray #-}
-        writeFieldArray x
-          = writeVkDeviceUUIDArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
-
-instance {-# OVERLAPPING #-}
-         HasVkDriverUUIDArray VkPhysicalDeviceIDPropertiesKHR where
-        type VkDriverUUIDArrayMType VkPhysicalDeviceIDPropertiesKHR = Word8
-
-        {-# NOINLINE vkDriverUUIDArray #-}
-        vkDriverUUIDArray x idx
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 (idx * sizeOf (undefined :: Word8) +
-                    #{offset VkPhysicalDeviceIDPropertiesKHR, driverUUID}))
-
-        {-# INLINE vkDriverUUIDArrayByteOffset #-}
-        vkDriverUUIDArrayByteOffset ~_
-          = #{offset VkPhysicalDeviceIDPropertiesKHR, driverUUID}
-
-        {-# INLINE readVkDriverUUIDArray #-}
-        readVkDriverUUIDArray p idx
-          = peekByteOff p
-              (idx * sizeOf (undefined :: Word8) +
-                 #{offset VkPhysicalDeviceIDPropertiesKHR, driverUUID})
-
-        {-# INLINE writeVkDriverUUIDArray #-}
-        writeVkDriverUUIDArray p idx
+        writeFieldArray p
           = pokeByteOff p
-              (idx * sizeOf (undefined :: Word8) +
-                 #{offset VkPhysicalDeviceIDPropertiesKHR, driverUUID})
+              (#{offset VkPhysicalDeviceIDPropertiesKHR, deviceUUID}
+                 +
+                 sizeOf (undefined :: Word8) *
+                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasField "driverUUID" VkPhysicalDeviceIDPropertiesKHR where
@@ -338,7 +265,8 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceIDPropertiesKHR, driverUUID}
 
-instance (KnownNat idx,
+instance {-# OVERLAPPING #-}
+         (KnownNat idx,
           IndexInBounds "driverUUID" idx VkPhysicalDeviceIDPropertiesKHR) =>
          CanReadFieldArray "driverUUID" idx VkPhysicalDeviceIDPropertiesKHR
          where
@@ -364,16 +292,25 @@ instance (KnownNat idx,
         fieldArrayLength = VK_UUID_SIZE
 
         {-# INLINE getFieldArray #-}
-        getFieldArray x
-          = vkDriverUUIDArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+        getFieldArray = f
+          where {-# NOINLINE f #-}
+                f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
+                off
+                  = #{offset VkPhysicalDeviceIDPropertiesKHR, driverUUID}
+                      +
+                      sizeOf (undefined :: Word8) *
+                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
         {-# INLINE readFieldArray #-}
-        readFieldArray x
-          = readVkDriverUUIDArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+        readFieldArray p
+          = peekByteOff p
+              (#{offset VkPhysicalDeviceIDPropertiesKHR, driverUUID}
+                 +
+                 sizeOf (undefined :: Word8) *
+                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
 
-instance (KnownNat idx,
+instance {-# OVERLAPPING #-}
+         (KnownNat idx,
           IndexInBounds "driverUUID" idx VkPhysicalDeviceIDPropertiesKHR) =>
          CanWriteFieldArray "driverUUID" idx VkPhysicalDeviceIDPropertiesKHR
          where
@@ -394,36 +331,12 @@ instance (KnownNat idx,
                        #-}
 
         {-# INLINE writeFieldArray #-}
-        writeFieldArray x
-          = writeVkDriverUUIDArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
-
-instance {-# OVERLAPPING #-}
-         HasVkDeviceLUIDArray VkPhysicalDeviceIDPropertiesKHR where
-        type VkDeviceLUIDArrayMType VkPhysicalDeviceIDPropertiesKHR = Word8
-
-        {-# NOINLINE vkDeviceLUIDArray #-}
-        vkDeviceLUIDArray x idx
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 (idx * sizeOf (undefined :: Word8) +
-                    #{offset VkPhysicalDeviceIDPropertiesKHR, deviceLUID}))
-
-        {-# INLINE vkDeviceLUIDArrayByteOffset #-}
-        vkDeviceLUIDArrayByteOffset ~_
-          = #{offset VkPhysicalDeviceIDPropertiesKHR, deviceLUID}
-
-        {-# INLINE readVkDeviceLUIDArray #-}
-        readVkDeviceLUIDArray p idx
-          = peekByteOff p
-              (idx * sizeOf (undefined :: Word8) +
-                 #{offset VkPhysicalDeviceIDPropertiesKHR, deviceLUID})
-
-        {-# INLINE writeVkDeviceLUIDArray #-}
-        writeVkDeviceLUIDArray p idx
+        writeFieldArray p
           = pokeByteOff p
-              (idx * sizeOf (undefined :: Word8) +
-                 #{offset VkPhysicalDeviceIDPropertiesKHR, deviceLUID})
+              (#{offset VkPhysicalDeviceIDPropertiesKHR, driverUUID}
+                 +
+                 sizeOf (undefined :: Word8) *
+                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasField "deviceLUID" VkPhysicalDeviceIDPropertiesKHR where
@@ -442,7 +355,8 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceIDPropertiesKHR, deviceLUID}
 
-instance (KnownNat idx,
+instance {-# OVERLAPPING #-}
+         (KnownNat idx,
           IndexInBounds "deviceLUID" idx VkPhysicalDeviceIDPropertiesKHR) =>
          CanReadFieldArray "deviceLUID" idx VkPhysicalDeviceIDPropertiesKHR
          where
@@ -468,16 +382,25 @@ instance (KnownNat idx,
         fieldArrayLength = VK_LUID_SIZE_KHR
 
         {-# INLINE getFieldArray #-}
-        getFieldArray x
-          = vkDeviceLUIDArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+        getFieldArray = f
+          where {-# NOINLINE f #-}
+                f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
+                off
+                  = #{offset VkPhysicalDeviceIDPropertiesKHR, deviceLUID}
+                      +
+                      sizeOf (undefined :: Word8) *
+                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
         {-# INLINE readFieldArray #-}
-        readFieldArray x
-          = readVkDeviceLUIDArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+        readFieldArray p
+          = peekByteOff p
+              (#{offset VkPhysicalDeviceIDPropertiesKHR, deviceLUID}
+                 +
+                 sizeOf (undefined :: Word8) *
+                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
 
-instance (KnownNat idx,
+instance {-# OVERLAPPING #-}
+         (KnownNat idx,
           IndexInBounds "deviceLUID" idx VkPhysicalDeviceIDPropertiesKHR) =>
          CanWriteFieldArray "deviceLUID" idx VkPhysicalDeviceIDPropertiesKHR
          where
@@ -498,30 +421,12 @@ instance (KnownNat idx,
                        #-}
 
         {-# INLINE writeFieldArray #-}
-        writeFieldArray x
-          = writeVkDeviceLUIDArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
-
-instance {-# OVERLAPPING #-}
-         HasVkDeviceNodeMask VkPhysicalDeviceIDPropertiesKHR where
-        type VkDeviceNodeMaskMType VkPhysicalDeviceIDPropertiesKHR = Word32
-
-        {-# NOINLINE vkDeviceNodeMask #-}
-        vkDeviceNodeMask x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceIDPropertiesKHR, deviceNodeMask})
-
-        {-# INLINE vkDeviceNodeMaskByteOffset #-}
-        vkDeviceNodeMaskByteOffset ~_
-          = #{offset VkPhysicalDeviceIDPropertiesKHR, deviceNodeMask}
-
-        {-# INLINE readVkDeviceNodeMask #-}
-        readVkDeviceNodeMask p
-          = peekByteOff p #{offset VkPhysicalDeviceIDPropertiesKHR, deviceNodeMask}
-
-        {-# INLINE writeVkDeviceNodeMask #-}
-        writeVkDeviceNodeMask p
-          = pokeByteOff p #{offset VkPhysicalDeviceIDPropertiesKHR, deviceNodeMask}
+        writeFieldArray p
+          = pokeByteOff p
+              (#{offset VkPhysicalDeviceIDPropertiesKHR, deviceLUID}
+                 +
+                 sizeOf (undefined :: Word8) *
+                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasField "deviceNodeMask" VkPhysicalDeviceIDPropertiesKHR where
@@ -541,42 +446,23 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceIDPropertiesKHR, deviceNodeMask}
 
-instance CanReadField "deviceNodeMask"
-           VkPhysicalDeviceIDPropertiesKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkDeviceNodeMask
+instance {-# OVERLAPPING #-}
+         CanReadField "deviceNodeMask" VkPhysicalDeviceIDPropertiesKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceIDPropertiesKHR, deviceNodeMask})
 
         {-# INLINE readField #-}
-        readField = readVkDeviceNodeMask
-
-instance CanWriteField "deviceNodeMask"
-           VkPhysicalDeviceIDPropertiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkDeviceNodeMask
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceIDPropertiesKHR, deviceNodeMask}
 
 instance {-# OVERLAPPING #-}
-         HasVkDeviceLUIDValid VkPhysicalDeviceIDPropertiesKHR where
-        type VkDeviceLUIDValidMType VkPhysicalDeviceIDPropertiesKHR =
-             VkBool32
-
-        {-# NOINLINE vkDeviceLUIDValid #-}
-        vkDeviceLUIDValid x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceIDPropertiesKHR, deviceLUIDValid})
-
-        {-# INLINE vkDeviceLUIDValidByteOffset #-}
-        vkDeviceLUIDValidByteOffset ~_
-          = #{offset VkPhysicalDeviceIDPropertiesKHR, deviceLUIDValid}
-
-        {-# INLINE readVkDeviceLUIDValid #-}
-        readVkDeviceLUIDValid p
-          = peekByteOff p #{offset VkPhysicalDeviceIDPropertiesKHR, deviceLUIDValid}
-
-        {-# INLINE writeVkDeviceLUIDValid #-}
-        writeVkDeviceLUIDValid p
-          = pokeByteOff p #{offset VkPhysicalDeviceIDPropertiesKHR, deviceLUIDValid}
+         CanWriteField "deviceNodeMask" VkPhysicalDeviceIDPropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceIDPropertiesKHR, deviceNodeMask}
 
 instance {-# OVERLAPPING #-}
          HasField "deviceLUIDValid" VkPhysicalDeviceIDPropertiesKHR where
@@ -598,47 +484,91 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceIDPropertiesKHR, deviceLUIDValid}
 
-instance CanReadField "deviceLUIDValid"
-           VkPhysicalDeviceIDPropertiesKHR
+instance {-# OVERLAPPING #-}
+         CanReadField "deviceLUIDValid" VkPhysicalDeviceIDPropertiesKHR
          where
-        {-# INLINE getField #-}
-        getField = vkDeviceLUIDValid
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceIDPropertiesKHR, deviceLUIDValid})
 
         {-# INLINE readField #-}
-        readField = readVkDeviceLUIDValid
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceIDPropertiesKHR, deviceLUIDValid}
 
-instance CanWriteField "deviceLUIDValid"
-           VkPhysicalDeviceIDPropertiesKHR
+instance {-# OVERLAPPING #-}
+         CanWriteField "deviceLUIDValid" VkPhysicalDeviceIDPropertiesKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkDeviceLUIDValid
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceIDPropertiesKHR, deviceLUIDValid}
 
 instance Show VkPhysicalDeviceIDPropertiesKHR where
         showsPrec d x
           = showString "VkPhysicalDeviceIDPropertiesKHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkDeviceUUIDArray = [" .
-                            showsPrec d (map (vkDeviceUUIDArray x) [1 .. VK_UUID_SIZE]) .
-                              showChar ']' .
+                          (showString "deviceUUID = [" .
+                             showsPrec d
+                               (let s = sizeOf
+                                          (undefined ::
+                                             FieldType "deviceUUID" VkPhysicalDeviceIDPropertiesKHR)
+                                    o = fieldOffset @"deviceUUID" @VkPhysicalDeviceIDPropertiesKHR
+                                    f i
+                                      = peekByteOff (unsafePtr x) i ::
+                                          IO
+                                            (FieldType "deviceUUID" VkPhysicalDeviceIDPropertiesKHR)
+                                  in
+                                  unsafeDupablePerformIO . mapM f $
+                                    map (\ i -> o + i * s) [0 .. VK_UUID_SIZE - 1])
+                               . showChar ']')
+                            .
+                            showString ", " .
+                              (showString "driverUUID = [" .
+                                 showsPrec d
+                                   (let s = sizeOf
+                                              (undefined ::
+                                                 FieldType "driverUUID"
+                                                   VkPhysicalDeviceIDPropertiesKHR)
+                                        o = fieldOffset @"driverUUID"
+                                              @VkPhysicalDeviceIDPropertiesKHR
+                                        f i
+                                          = peekByteOff (unsafePtr x) i ::
+                                              IO
+                                                (FieldType "driverUUID"
+                                                   VkPhysicalDeviceIDPropertiesKHR)
+                                      in
+                                      unsafeDupablePerformIO . mapM f $
+                                        map (\ i -> o + i * s) [0 .. VK_UUID_SIZE - 1])
+                                   . showChar ']')
+                                .
                                 showString ", " .
-                                  showString "vkDriverUUIDArray = [" .
-                                    showsPrec d (map (vkDriverUUIDArray x) [1 .. VK_UUID_SIZE]) .
-                                      showChar ']' .
-                                        showString ", " .
-                                          showString "vkDeviceLUIDArray = [" .
-                                            showsPrec d
-                                              (map (vkDeviceLUIDArray x) [1 .. VK_LUID_SIZE_KHR])
-                                              .
-                                              showChar ']' .
-                                                showString ", " .
-                                                  showString "vkDeviceNodeMask = " .
-                                                    showsPrec d (vkDeviceNodeMask x) .
-                                                      showString ", " .
-                                                        showString "vkDeviceLUIDValid = " .
-                                                          showsPrec d (vkDeviceLUIDValid x) .
-                                                            showChar '}'
+                                  (showString "deviceLUID = [" .
+                                     showsPrec d
+                                       (let s = sizeOf
+                                                  (undefined ::
+                                                     FieldType "deviceLUID"
+                                                       VkPhysicalDeviceIDPropertiesKHR)
+                                            o = fieldOffset @"deviceLUID"
+                                                  @VkPhysicalDeviceIDPropertiesKHR
+                                            f i
+                                              = peekByteOff (unsafePtr x) i ::
+                                                  IO
+                                                    (FieldType "deviceLUID"
+                                                       VkPhysicalDeviceIDPropertiesKHR)
+                                          in
+                                          unsafeDupablePerformIO . mapM f $
+                                            map (\ i -> o + i * s) [0 .. VK_LUID_SIZE_KHR - 1])
+                                       . showChar ']')
+                                    .
+                                    showString ", " .
+                                      showString "deviceNodeMask = " .
+                                        showsPrec d (getField @"deviceNodeMask" x) .
+                                          showString ", " .
+                                            showString "deviceLUIDValid = " .
+                                              showsPrec d (getField @"deviceLUIDValid" x) .
+                                                showChar '}'

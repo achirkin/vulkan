@@ -29,9 +29,13 @@ module Graphics.Vulkan.Ext.VK_KHR_descriptor_update_template
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
         vkCreateDescriptorUpdateTemplateKHR,
+        vkCreateDescriptorUpdateTemplateKHRSafe,
         vkDestroyDescriptorUpdateTemplateKHR,
+        vkDestroyDescriptorUpdateTemplateKHRSafe,
         vkUpdateDescriptorSetWithTemplateKHR,
+        vkUpdateDescriptorSetWithTemplateKHRSafe,
         vkCmdPushDescriptorSetWithTemplateKHR,
+        vkCmdPushDescriptorSetWithTemplateKHRSafe,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,
@@ -91,6 +95,29 @@ foreign import ccall unsafe "vkCreateDescriptorUpdateTemplateKHR"
                      Ptr VkDescriptorUpdateTemplateKHR -- ^ pDescriptorUpdateTemplate
                                                        -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkCreateDescriptorUpdateTemplateKHR
+--   >     ( VkDevice device
+--   >     , const VkDescriptorUpdateTemplateCreateInfoKHR* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkDescriptorUpdateTemplateKHR* pDescriptorUpdateTemplate
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateDescriptorUpdateTemplateKHR.html vkCreateDescriptorUpdateTemplateKHR registry at www.khronos.org>
+foreign import ccall safe "vkCreateDescriptorUpdateTemplateKHR"
+               vkCreateDescriptorUpdateTemplateKHRSafe ::
+               VkDevice -- ^ device
+                        ->
+                 Ptr VkDescriptorUpdateTemplateCreateInfoKHR -- ^ pCreateInfo
+                                                             ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             ->
+                     Ptr VkDescriptorUpdateTemplateKHR -- ^ pDescriptorUpdateTemplate
+                                                       -> IO VkResult
+
 -- | > () vkDestroyDescriptorUpdateTemplateKHR
 --   >     ( VkDevice device
 --   >     , VkDescriptorUpdateTemplateKHR descriptorUpdateTemplate
@@ -100,6 +127,21 @@ foreign import ccall unsafe "vkCreateDescriptorUpdateTemplateKHR"
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroyDescriptorUpdateTemplateKHR.html vkDestroyDescriptorUpdateTemplateKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyDescriptorUpdateTemplateKHR"
                vkDestroyDescriptorUpdateTemplateKHR ::
+               VkDevice -- ^ device
+                        ->
+                 VkDescriptorUpdateTemplateKHR -- ^ descriptorUpdateTemplate
+                                               -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                            -> IO ()
+
+-- | > () vkDestroyDescriptorUpdateTemplateKHR
+--   >     ( VkDevice device
+--   >     , VkDescriptorUpdateTemplateKHR descriptorUpdateTemplate
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroyDescriptorUpdateTemplateKHR.html vkDestroyDescriptorUpdateTemplateKHR registry at www.khronos.org>
+foreign import ccall safe "vkDestroyDescriptorUpdateTemplateKHR"
+               vkDestroyDescriptorUpdateTemplateKHRSafe ::
                VkDevice -- ^ device
                         ->
                  VkDescriptorUpdateTemplateKHR -- ^ descriptorUpdateTemplate
@@ -124,6 +166,24 @@ foreign import ccall unsafe "vkUpdateDescriptorSetWithTemplateKHR"
                                                  -> Ptr Void -- ^ pData
                                                              -> IO ()
 
+-- | > () vkUpdateDescriptorSetWithTemplateKHR
+--   >     ( VkDevice device
+--   >     , VkDescriptorSet descriptorSet
+--   >     , VkDescriptorUpdateTemplateKHR descriptorUpdateTemplate
+--   >     , const void* pData
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkUpdateDescriptorSetWithTemplateKHR.html vkUpdateDescriptorSetWithTemplateKHR registry at www.khronos.org>
+foreign import ccall safe "vkUpdateDescriptorSetWithTemplateKHR"
+               vkUpdateDescriptorSetWithTemplateKHRSafe ::
+               VkDevice -- ^ device
+                        ->
+                 VkDescriptorSet -- ^ descriptorSet
+                                 ->
+                   VkDescriptorUpdateTemplateKHR -- ^ descriptorUpdateTemplate
+                                                 -> Ptr Void -- ^ pData
+                                                             -> IO ()
+
 -- | queues: 'graphics', 'compute'.
 --
 --   renderpass: @both@
@@ -139,6 +199,30 @@ foreign import ccall unsafe "vkUpdateDescriptorSetWithTemplateKHR"
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html vkCmdPushDescriptorSetWithTemplateKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdPushDescriptorSetWithTemplateKHR"
                vkCmdPushDescriptorSetWithTemplateKHR ::
+               VkCommandBuffer -- ^ commandBuffer
+                               ->
+                 VkDescriptorUpdateTemplateKHR -- ^ descriptorUpdateTemplate
+                                               ->
+                   VkPipelineLayout -- ^ layout
+                                    -> Word32 -- ^ set
+                                              -> Ptr Void -- ^ pData
+                                                          -> IO ()
+
+-- | queues: 'graphics', 'compute'.
+--
+--   renderpass: @both@
+--
+--   > () vkCmdPushDescriptorSetWithTemplateKHR
+--   >     ( VkCommandBuffer commandBuffer
+--   >     , VkDescriptorUpdateTemplateKHR descriptorUpdateTemplate
+--   >     , VkPipelineLayout layout
+--   >     , uint32_t set
+--   >     , const void* pData
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html vkCmdPushDescriptorSetWithTemplateKHR registry at www.khronos.org>
+foreign import ccall safe "vkCmdPushDescriptorSetWithTemplateKHR"
+               vkCmdPushDescriptorSetWithTemplateKHRSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
                  VkDescriptorUpdateTemplateKHR -- ^ descriptorUpdateTemplate

@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkIndirectCommandsTokenNVX
        (VkIndirectCommandsTokenNVX(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes                           (VkDeviceSize)
 import           Graphics.Vulkan.Types.Enum.VkIndirectCommandsTokenTypeNVX (VkIndirectCommandsTokenTypeNVX)
 import           Graphics.Vulkan.Types.Handles                             (VkBuffer)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                          (unsafeDupablePerformIO)
 
 -- | > typedef struct VkIndirectCommandsTokenNVX {
@@ -77,28 +77,6 @@ instance VulkanMarshal VkIndirectCommandsTokenNVX where
         type StructExtends VkIndirectCommandsTokenNVX = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkTokenType VkIndirectCommandsTokenNVX where
-        type VkTokenTypeMType VkIndirectCommandsTokenNVX =
-             VkIndirectCommandsTokenTypeNVX
-
-        {-# NOINLINE vkTokenType #-}
-        vkTokenType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkIndirectCommandsTokenNVX, tokenType})
-
-        {-# INLINE vkTokenTypeByteOffset #-}
-        vkTokenTypeByteOffset ~_
-          = #{offset VkIndirectCommandsTokenNVX, tokenType}
-
-        {-# INLINE readVkTokenType #-}
-        readVkTokenType p
-          = peekByteOff p #{offset VkIndirectCommandsTokenNVX, tokenType}
-
-        {-# INLINE writeVkTokenType #-}
-        writeVkTokenType p
-          = pokeByteOff p #{offset VkIndirectCommandsTokenNVX, tokenType}
-
-instance {-# OVERLAPPING #-}
          HasField "tokenType" VkIndirectCommandsTokenNVX where
         type FieldType "tokenType" VkIndirectCommandsTokenNVX =
              VkIndirectCommandsTokenTypeNVX
@@ -114,37 +92,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkIndirectCommandsTokenNVX, tokenType}
 
-instance CanReadField "tokenType" VkIndirectCommandsTokenNVX where
-        {-# INLINE getField #-}
-        getField = vkTokenType
+instance {-# OVERLAPPING #-}
+         CanReadField "tokenType" VkIndirectCommandsTokenNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkIndirectCommandsTokenNVX, tokenType})
 
         {-# INLINE readField #-}
-        readField = readVkTokenType
+        readField p
+          = peekByteOff p #{offset VkIndirectCommandsTokenNVX, tokenType}
 
-instance CanWriteField "tokenType" VkIndirectCommandsTokenNVX where
+instance {-# OVERLAPPING #-}
+         CanWriteField "tokenType" VkIndirectCommandsTokenNVX where
         {-# INLINE writeField #-}
-        writeField = writeVkTokenType
-
-instance {-# OVERLAPPING #-} HasVkBuffer VkIndirectCommandsTokenNVX
-         where
-        type VkBufferMType VkIndirectCommandsTokenNVX = VkBuffer
-
-        {-# NOINLINE vkBuffer #-}
-        vkBuffer x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkIndirectCommandsTokenNVX, buffer})
-
-        {-# INLINE vkBufferByteOffset #-}
-        vkBufferByteOffset ~_
-          = #{offset VkIndirectCommandsTokenNVX, buffer}
-
-        {-# INLINE readVkBuffer #-}
-        readVkBuffer p
-          = peekByteOff p #{offset VkIndirectCommandsTokenNVX, buffer}
-
-        {-# INLINE writeVkBuffer #-}
-        writeVkBuffer p
-          = pokeByteOff p #{offset VkIndirectCommandsTokenNVX, buffer}
+        writeField p
+          = pokeByteOff p #{offset VkIndirectCommandsTokenNVX, tokenType}
 
 instance {-# OVERLAPPING #-}
          HasField "buffer" VkIndirectCommandsTokenNVX where
@@ -161,37 +124,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkIndirectCommandsTokenNVX, buffer}
 
-instance CanReadField "buffer" VkIndirectCommandsTokenNVX where
-        {-# INLINE getField #-}
-        getField = vkBuffer
+instance {-# OVERLAPPING #-}
+         CanReadField "buffer" VkIndirectCommandsTokenNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkIndirectCommandsTokenNVX, buffer})
 
         {-# INLINE readField #-}
-        readField = readVkBuffer
+        readField p
+          = peekByteOff p #{offset VkIndirectCommandsTokenNVX, buffer}
 
-instance CanWriteField "buffer" VkIndirectCommandsTokenNVX where
+instance {-# OVERLAPPING #-}
+         CanWriteField "buffer" VkIndirectCommandsTokenNVX where
         {-# INLINE writeField #-}
-        writeField = writeVkBuffer
-
-instance {-# OVERLAPPING #-} HasVkOffset VkIndirectCommandsTokenNVX
-         where
-        type VkOffsetMType VkIndirectCommandsTokenNVX = VkDeviceSize
-
-        {-# NOINLINE vkOffset #-}
-        vkOffset x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkIndirectCommandsTokenNVX, offset})
-
-        {-# INLINE vkOffsetByteOffset #-}
-        vkOffsetByteOffset ~_
-          = #{offset VkIndirectCommandsTokenNVX, offset}
-
-        {-# INLINE readVkOffset #-}
-        readVkOffset p
-          = peekByteOff p #{offset VkIndirectCommandsTokenNVX, offset}
-
-        {-# INLINE writeVkOffset #-}
-        writeVkOffset p
-          = pokeByteOff p #{offset VkIndirectCommandsTokenNVX, offset}
+        writeField p
+          = pokeByteOff p #{offset VkIndirectCommandsTokenNVX, buffer}
 
 instance {-# OVERLAPPING #-}
          HasField "offset" VkIndirectCommandsTokenNVX where
@@ -208,24 +156,31 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkIndirectCommandsTokenNVX, offset}
 
-instance CanReadField "offset" VkIndirectCommandsTokenNVX where
-        {-# INLINE getField #-}
-        getField = vkOffset
+instance {-# OVERLAPPING #-}
+         CanReadField "offset" VkIndirectCommandsTokenNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkIndirectCommandsTokenNVX, offset})
 
         {-# INLINE readField #-}
-        readField = readVkOffset
+        readField p
+          = peekByteOff p #{offset VkIndirectCommandsTokenNVX, offset}
 
-instance CanWriteField "offset" VkIndirectCommandsTokenNVX where
+instance {-# OVERLAPPING #-}
+         CanWriteField "offset" VkIndirectCommandsTokenNVX where
         {-# INLINE writeField #-}
-        writeField = writeVkOffset
+        writeField p
+          = pokeByteOff p #{offset VkIndirectCommandsTokenNVX, offset}
 
 instance Show VkIndirectCommandsTokenNVX where
         showsPrec d x
           = showString "VkIndirectCommandsTokenNVX {" .
-              showString "vkTokenType = " .
-                showsPrec d (vkTokenType x) .
+              showString "tokenType = " .
+                showsPrec d (getField @"tokenType" x) .
                   showString ", " .
-                    showString "vkBuffer = " .
-                      showsPrec d (vkBuffer x) .
+                    showString "buffer = " .
+                      showsPrec d (getField @"buffer" x) .
                         showString ", " .
-                          showString "vkOffset = " . showsPrec d (vkOffset x) . showChar '}'
+                          showString "offset = " .
+                            showsPrec d (getField @"offset" x) . showChar '}'

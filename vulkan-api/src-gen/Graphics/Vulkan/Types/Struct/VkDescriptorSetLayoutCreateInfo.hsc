@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutCreateInfo
        (VkDescriptorSetLayoutCreateInfo(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkDescriptorSetLayoutCreateFlags (VkDescriptorSetLayoutCreateFlags)
 import           Graphics.Vulkan.Types.Enum.VkStructureType                  (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutBinding   (VkDescriptorSetLayoutBinding)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                            (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDescriptorSetLayoutCreateInfo {
@@ -80,27 +80,6 @@ instance VulkanMarshal VkDescriptorSetLayoutCreateInfo where
         type StructExtends VkDescriptorSetLayoutCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkDescriptorSetLayoutCreateInfo where
-        type VkSTypeMType VkDescriptorSetLayoutCreateInfo = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDescriptorSetLayoutCreateInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkDescriptorSetLayoutCreateInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkDescriptorSetLayoutCreateInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkDescriptorSetLayoutCreateInfo, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkDescriptorSetLayoutCreateInfo where
         type FieldType "sType" VkDescriptorSetLayoutCreateInfo =
              VkStructureType
@@ -116,38 +95,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDescriptorSetLayoutCreateInfo, sType}
 
-instance CanReadField "sType" VkDescriptorSetLayoutCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkDescriptorSetLayoutCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDescriptorSetLayoutCreateInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkDescriptorSetLayoutCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkDescriptorSetLayoutCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkDescriptorSetLayoutCreateInfo where
-        type VkPNextMType VkDescriptorSetLayoutCreateInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDescriptorSetLayoutCreateInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkDescriptorSetLayoutCreateInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkDescriptorSetLayoutCreateInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkDescriptorSetLayoutCreateInfo, pNext}
+         CanWriteField "sType" VkDescriptorSetLayoutCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDescriptorSetLayoutCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkDescriptorSetLayoutCreateInfo where
@@ -164,39 +127,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDescriptorSetLayoutCreateInfo, pNext}
 
-instance CanReadField "pNext" VkDescriptorSetLayoutCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkDescriptorSetLayoutCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDescriptorSetLayoutCreateInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkDescriptorSetLayoutCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkDescriptorSetLayoutCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkFlags VkDescriptorSetLayoutCreateInfo where
-        type VkFlagsMType VkDescriptorSetLayoutCreateInfo =
-             VkDescriptorSetLayoutCreateFlags
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDescriptorSetLayoutCreateInfo, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkDescriptorSetLayoutCreateInfo, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkDescriptorSetLayoutCreateInfo, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkDescriptorSetLayoutCreateInfo, flags}
+         CanWriteField "pNext" VkDescriptorSetLayoutCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDescriptorSetLayoutCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkDescriptorSetLayoutCreateInfo where
@@ -214,38 +160,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDescriptorSetLayoutCreateInfo, flags}
 
-instance CanReadField "flags" VkDescriptorSetLayoutCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkDescriptorSetLayoutCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDescriptorSetLayoutCreateInfo, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags" VkDescriptorSetLayoutCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkDescriptorSetLayoutCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkBindingCount VkDescriptorSetLayoutCreateInfo where
-        type VkBindingCountMType VkDescriptorSetLayoutCreateInfo = Word32
-
-        {-# NOINLINE vkBindingCount #-}
-        vkBindingCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDescriptorSetLayoutCreateInfo, bindingCount})
-
-        {-# INLINE vkBindingCountByteOffset #-}
-        vkBindingCountByteOffset ~_
-          = #{offset VkDescriptorSetLayoutCreateInfo, bindingCount}
-
-        {-# INLINE readVkBindingCount #-}
-        readVkBindingCount p
-          = peekByteOff p #{offset VkDescriptorSetLayoutCreateInfo, bindingCount}
-
-        {-# INLINE writeVkBindingCount #-}
-        writeVkBindingCount p
-          = pokeByteOff p #{offset VkDescriptorSetLayoutCreateInfo, bindingCount}
+         CanWriteField "flags" VkDescriptorSetLayoutCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDescriptorSetLayoutCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "bindingCount" VkDescriptorSetLayoutCreateInfo where
@@ -265,42 +195,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDescriptorSetLayoutCreateInfo, bindingCount}
 
-instance CanReadField "bindingCount"
-           VkDescriptorSetLayoutCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkBindingCount
+instance {-# OVERLAPPING #-}
+         CanReadField "bindingCount" VkDescriptorSetLayoutCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDescriptorSetLayoutCreateInfo, bindingCount})
 
         {-# INLINE readField #-}
-        readField = readVkBindingCount
-
-instance CanWriteField "bindingCount"
-           VkDescriptorSetLayoutCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkBindingCount
+        readField p
+          = peekByteOff p #{offset VkDescriptorSetLayoutCreateInfo, bindingCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPBindings VkDescriptorSetLayoutCreateInfo where
-        type VkPBindingsMType VkDescriptorSetLayoutCreateInfo =
-             Ptr VkDescriptorSetLayoutBinding
-
-        {-# NOINLINE vkPBindings #-}
-        vkPBindings x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDescriptorSetLayoutCreateInfo, pBindings})
-
-        {-# INLINE vkPBindingsByteOffset #-}
-        vkPBindingsByteOffset ~_
-          = #{offset VkDescriptorSetLayoutCreateInfo, pBindings}
-
-        {-# INLINE readVkPBindings #-}
-        readVkPBindings p
-          = peekByteOff p #{offset VkDescriptorSetLayoutCreateInfo, pBindings}
-
-        {-# INLINE writeVkPBindings #-}
-        writeVkPBindings p
-          = pokeByteOff p #{offset VkDescriptorSetLayoutCreateInfo, pBindings}
+         CanWriteField "bindingCount" VkDescriptorSetLayoutCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDescriptorSetLayoutCreateInfo, bindingCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pBindings" VkDescriptorSetLayoutCreateInfo where
@@ -320,33 +230,37 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDescriptorSetLayoutCreateInfo, pBindings}
 
-instance CanReadField "pBindings" VkDescriptorSetLayoutCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkPBindings
+instance {-# OVERLAPPING #-}
+         CanReadField "pBindings" VkDescriptorSetLayoutCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDescriptorSetLayoutCreateInfo, pBindings})
 
         {-# INLINE readField #-}
-        readField = readVkPBindings
+        readField p
+          = peekByteOff p #{offset VkDescriptorSetLayoutCreateInfo, pBindings}
 
-instance CanWriteField "pBindings" VkDescriptorSetLayoutCreateInfo
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pBindings" VkDescriptorSetLayoutCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPBindings
+        writeField p
+          = pokeByteOff p #{offset VkDescriptorSetLayoutCreateInfo, pBindings}
 
 instance Show VkDescriptorSetLayoutCreateInfo where
         showsPrec d x
           = showString "VkDescriptorSetLayoutCreateInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkBindingCount = " .
-                                  showsPrec d (vkBindingCount x) .
+                                showString "bindingCount = " .
+                                  showsPrec d (getField @"bindingCount" x) .
                                     showString ", " .
-                                      showString "vkPBindings = " .
-                                        showsPrec d (vkPBindings x) . showChar '}'
+                                      showString "pBindings = " .
+                                        showsPrec d (getField @"pBindings" x) . showChar '}'

@@ -32,8 +32,9 @@ module Graphics.Vulkan.Ext.VK_KHR_mir_surface
         -- > #include "vk_platform.h"
         --
         -- > #include <mir_toolkit/client_types.h>
-        vkCreateMirSurfaceKHR,
+        vkCreateMirSurfaceKHR, vkCreateMirSurfaceKHRSafe,
         vkGetPhysicalDeviceMirPresentationSupportKHR,
+        vkGetPhysicalDeviceMirPresentationSupportKHRSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
@@ -84,6 +85,28 @@ foreign import ccall unsafe "vkCreateMirSurfaceKHR"
                                              -> Ptr VkSurfaceKHR -- ^ pSurface
                                                                  -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkCreateMirSurfaceKHR
+--   >     ( VkInstance instance
+--   >     , const VkMirSurfaceCreateInfoKHR* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkSurfaceKHR* pSurface
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateMirSurfaceKHR.html vkCreateMirSurfaceKHR registry at www.khronos.org>
+foreign import ccall safe "vkCreateMirSurfaceKHR"
+               vkCreateMirSurfaceKHRSafe ::
+               VkInstance -- ^ instance
+                          ->
+                 Ptr VkMirSurfaceCreateInfoKHR -- ^ pCreateInfo
+                                               ->
+                   Ptr VkAllocationCallbacks -- ^ pAllocator
+                                             -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                                 -> IO VkResult
+
 -- | > VkBool32 vkGetPhysicalDeviceMirPresentationSupportKHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , uint32_t queueFamilyIndex
@@ -94,6 +117,21 @@ foreign import ccall unsafe "vkCreateMirSurfaceKHR"
 foreign import ccall unsafe
                "vkGetPhysicalDeviceMirPresentationSupportKHR"
                vkGetPhysicalDeviceMirPresentationSupportKHR ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                -> Word32 -- ^ queueFamilyIndex
+                                          -> Ptr MirConnection -- ^ connection
+                                                               -> IO VkBool32
+
+-- | > VkBool32 vkGetPhysicalDeviceMirPresentationSupportKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , uint32_t queueFamilyIndex
+--   >     , MirConnection* connection
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceMirPresentationSupportKHR.html vkGetPhysicalDeviceMirPresentationSupportKHR registry at www.khronos.org>
+foreign import ccall safe
+               "vkGetPhysicalDeviceMirPresentationSupportKHR"
+               vkGetPhysicalDeviceMirPresentationSupportKHRSafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 -> Word32 -- ^ queueFamilyIndex
                                           -> Ptr MirConnection -- ^ connection

@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkEventCreateInfo
        (VkEventCreateInfo(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Bitmasks             (VkEventCreateFlags)
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkEventCreateInfo {
@@ -70,26 +70,6 @@ instance VulkanMarshal VkEventCreateInfo where
         type ReturnedOnly VkEventCreateInfo = 'False -- ' closing tick for hsc2hs
         type StructExtends VkEventCreateInfo = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkEventCreateInfo where
-        type VkSTypeMType VkEventCreateInfo = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkEventCreateInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkEventCreateInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkEventCreateInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkEventCreateInfo, sType}
-
 instance {-# OVERLAPPING #-} HasField "sType" VkEventCreateInfo
          where
         type FieldType "sType" VkEventCreateInfo = VkStructureType
@@ -104,36 +84,22 @@ instance {-# OVERLAPPING #-} HasField "sType" VkEventCreateInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkEventCreateInfo, sType}
 
-instance CanReadField "sType" VkEventCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-} CanReadField "sType" VkEventCreateInfo
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkEventCreateInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkEventCreateInfo, sType}
 
-instance CanWriteField "sType" VkEventCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkEventCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkEventCreateInfo where
-        type VkPNextMType VkEventCreateInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkEventCreateInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkEventCreateInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkEventCreateInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkEventCreateInfo, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkEventCreateInfo, sType}
 
 instance {-# OVERLAPPING #-} HasField "pNext" VkEventCreateInfo
          where
@@ -149,36 +115,22 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkEventCreateInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkEventCreateInfo, pNext}
 
-instance CanReadField "pNext" VkEventCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-} CanReadField "pNext" VkEventCreateInfo
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkEventCreateInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkEventCreateInfo, pNext}
 
-instance CanWriteField "pNext" VkEventCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext" VkEventCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-} HasVkFlags VkEventCreateInfo where
-        type VkFlagsMType VkEventCreateInfo = VkEventCreateFlags
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkEventCreateInfo, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkEventCreateInfo, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkEventCreateInfo, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkEventCreateInfo, flags}
+        writeField p
+          = pokeByteOff p #{offset VkEventCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-} HasField "flags" VkEventCreateInfo
          where
@@ -194,24 +146,31 @@ instance {-# OVERLAPPING #-} HasField "flags" VkEventCreateInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkEventCreateInfo, flags}
 
-instance CanReadField "flags" VkEventCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-} CanReadField "flags" VkEventCreateInfo
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkEventCreateInfo, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
+        readField p
+          = peekByteOff p #{offset VkEventCreateInfo, flags}
 
-instance CanWriteField "flags" VkEventCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "flags" VkEventCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        writeField p
+          = pokeByteOff p #{offset VkEventCreateInfo, flags}
 
 instance Show VkEventCreateInfo where
         showsPrec d x
           = showString "VkEventCreateInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " . showsPrec d (vkFlags x) . showChar '}'
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) . showChar '}'

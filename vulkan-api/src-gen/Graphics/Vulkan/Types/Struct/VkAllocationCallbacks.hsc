@@ -5,20 +5,20 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkAllocationCallbacks
        (VkAllocationCallbacks(..)) where
-import           Foreign.Storable                    (Storable (..))
+import           Foreign.Storable                   (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Funcpointers  (PFN_vkAllocationFunction,
-                                                      PFN_vkFreeFunction,
-                                                      PFN_vkInternalAllocationNotification,
-                                                      PFN_vkInternalFreeNotification,
-                                                      PFN_vkReallocationFunction)
-import           Graphics.Vulkan.Types.StructMembers
-import           System.IO.Unsafe                    (unsafeDupablePerformIO)
+import           Graphics.Vulkan.Types.Funcpointers (PFN_vkAllocationFunction,
+                                                     PFN_vkFreeFunction,
+                                                     PFN_vkInternalAllocationNotification,
+                                                     PFN_vkInternalFreeNotification,
+                                                     PFN_vkReallocationFunction)
+import           System.IO.Unsafe                   (unsafeDupablePerformIO)
 
 -- | > typedef struct VkAllocationCallbacks {
 --   >     void*           pUserData;
@@ -79,27 +79,6 @@ instance VulkanMarshal VkAllocationCallbacks where
         type ReturnedOnly VkAllocationCallbacks = 'False -- ' closing tick for hsc2hs
         type StructExtends VkAllocationCallbacks = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkPUserData VkAllocationCallbacks
-         where
-        type VkPUserDataMType VkAllocationCallbacks = Ptr Void
-
-        {-# NOINLINE vkPUserData #-}
-        vkPUserData x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAllocationCallbacks, pUserData})
-
-        {-# INLINE vkPUserDataByteOffset #-}
-        vkPUserDataByteOffset ~_
-          = #{offset VkAllocationCallbacks, pUserData}
-
-        {-# INLINE readVkPUserData #-}
-        readVkPUserData p
-          = peekByteOff p #{offset VkAllocationCallbacks, pUserData}
-
-        {-# INLINE writeVkPUserData #-}
-        writeVkPUserData p
-          = pokeByteOff p #{offset VkAllocationCallbacks, pUserData}
-
 instance {-# OVERLAPPING #-}
          HasField "pUserData" VkAllocationCallbacks where
         type FieldType "pUserData" VkAllocationCallbacks = Ptr Void
@@ -115,38 +94,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkAllocationCallbacks, pUserData}
 
-instance CanReadField "pUserData" VkAllocationCallbacks where
-        {-# INLINE getField #-}
-        getField = vkPUserData
+instance {-# OVERLAPPING #-}
+         CanReadField "pUserData" VkAllocationCallbacks where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAllocationCallbacks, pUserData})
 
         {-# INLINE readField #-}
-        readField = readVkPUserData
-
-instance CanWriteField "pUserData" VkAllocationCallbacks where
-        {-# INLINE writeField #-}
-        writeField = writeVkPUserData
+        readField p
+          = peekByteOff p #{offset VkAllocationCallbacks, pUserData}
 
 instance {-# OVERLAPPING #-}
-         HasVkPfnAllocation VkAllocationCallbacks where
-        type VkPfnAllocationMType VkAllocationCallbacks =
-             PFN_vkAllocationFunction
-
-        {-# NOINLINE vkPfnAllocation #-}
-        vkPfnAllocation x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAllocationCallbacks, pfnAllocation})
-
-        {-# INLINE vkPfnAllocationByteOffset #-}
-        vkPfnAllocationByteOffset ~_
-          = #{offset VkAllocationCallbacks, pfnAllocation}
-
-        {-# INLINE readVkPfnAllocation #-}
-        readVkPfnAllocation p
-          = peekByteOff p #{offset VkAllocationCallbacks, pfnAllocation}
-
-        {-# INLINE writeVkPfnAllocation #-}
-        writeVkPfnAllocation p
-          = pokeByteOff p #{offset VkAllocationCallbacks, pfnAllocation}
+         CanWriteField "pUserData" VkAllocationCallbacks where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkAllocationCallbacks, pUserData}
 
 instance {-# OVERLAPPING #-}
          HasField "pfnAllocation" VkAllocationCallbacks where
@@ -164,38 +127,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkAllocationCallbacks, pfnAllocation}
 
-instance CanReadField "pfnAllocation" VkAllocationCallbacks where
-        {-# INLINE getField #-}
-        getField = vkPfnAllocation
+instance {-# OVERLAPPING #-}
+         CanReadField "pfnAllocation" VkAllocationCallbacks where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAllocationCallbacks, pfnAllocation})
 
         {-# INLINE readField #-}
-        readField = readVkPfnAllocation
-
-instance CanWriteField "pfnAllocation" VkAllocationCallbacks where
-        {-# INLINE writeField #-}
-        writeField = writeVkPfnAllocation
+        readField p
+          = peekByteOff p #{offset VkAllocationCallbacks, pfnAllocation}
 
 instance {-# OVERLAPPING #-}
-         HasVkPfnReallocation VkAllocationCallbacks where
-        type VkPfnReallocationMType VkAllocationCallbacks =
-             PFN_vkReallocationFunction
-
-        {-# NOINLINE vkPfnReallocation #-}
-        vkPfnReallocation x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAllocationCallbacks, pfnReallocation})
-
-        {-# INLINE vkPfnReallocationByteOffset #-}
-        vkPfnReallocationByteOffset ~_
-          = #{offset VkAllocationCallbacks, pfnReallocation}
-
-        {-# INLINE readVkPfnReallocation #-}
-        readVkPfnReallocation p
-          = peekByteOff p #{offset VkAllocationCallbacks, pfnReallocation}
-
-        {-# INLINE writeVkPfnReallocation #-}
-        writeVkPfnReallocation p
-          = pokeByteOff p #{offset VkAllocationCallbacks, pfnReallocation}
+         CanWriteField "pfnAllocation" VkAllocationCallbacks where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkAllocationCallbacks, pfnAllocation}
 
 instance {-# OVERLAPPING #-}
          HasField "pfnReallocation" VkAllocationCallbacks where
@@ -213,38 +160,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkAllocationCallbacks, pfnReallocation}
 
-instance CanReadField "pfnReallocation" VkAllocationCallbacks where
-        {-# INLINE getField #-}
-        getField = vkPfnReallocation
+instance {-# OVERLAPPING #-}
+         CanReadField "pfnReallocation" VkAllocationCallbacks where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAllocationCallbacks, pfnReallocation})
 
         {-# INLINE readField #-}
-        readField = readVkPfnReallocation
+        readField p
+          = peekByteOff p #{offset VkAllocationCallbacks, pfnReallocation}
 
-instance CanWriteField "pfnReallocation" VkAllocationCallbacks
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pfnReallocation" VkAllocationCallbacks where
         {-# INLINE writeField #-}
-        writeField = writeVkPfnReallocation
-
-instance {-# OVERLAPPING #-} HasVkPfnFree VkAllocationCallbacks
-         where
-        type VkPfnFreeMType VkAllocationCallbacks = PFN_vkFreeFunction
-
-        {-# NOINLINE vkPfnFree #-}
-        vkPfnFree x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAllocationCallbacks, pfnFree})
-
-        {-# INLINE vkPfnFreeByteOffset #-}
-        vkPfnFreeByteOffset ~_
-          = #{offset VkAllocationCallbacks, pfnFree}
-
-        {-# INLINE readVkPfnFree #-}
-        readVkPfnFree p
-          = peekByteOff p #{offset VkAllocationCallbacks, pfnFree}
-
-        {-# INLINE writeVkPfnFree #-}
-        writeVkPfnFree p
-          = pokeByteOff p #{offset VkAllocationCallbacks, pfnFree}
+        writeField p
+          = pokeByteOff p #{offset VkAllocationCallbacks, pfnReallocation}
 
 instance {-# OVERLAPPING #-}
          HasField "pfnFree" VkAllocationCallbacks where
@@ -260,38 +191,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkAllocationCallbacks, pfnFree}
 
-instance CanReadField "pfnFree" VkAllocationCallbacks where
-        {-# INLINE getField #-}
-        getField = vkPfnFree
+instance {-# OVERLAPPING #-}
+         CanReadField "pfnFree" VkAllocationCallbacks where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAllocationCallbacks, pfnFree})
 
         {-# INLINE readField #-}
-        readField = readVkPfnFree
-
-instance CanWriteField "pfnFree" VkAllocationCallbacks where
-        {-# INLINE writeField #-}
-        writeField = writeVkPfnFree
+        readField p
+          = peekByteOff p #{offset VkAllocationCallbacks, pfnFree}
 
 instance {-# OVERLAPPING #-}
-         HasVkPfnInternalAllocation VkAllocationCallbacks where
-        type VkPfnInternalAllocationMType VkAllocationCallbacks =
-             PFN_vkInternalAllocationNotification
-
-        {-# NOINLINE vkPfnInternalAllocation #-}
-        vkPfnInternalAllocation x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAllocationCallbacks, pfnInternalAllocation})
-
-        {-# INLINE vkPfnInternalAllocationByteOffset #-}
-        vkPfnInternalAllocationByteOffset ~_
-          = #{offset VkAllocationCallbacks, pfnInternalAllocation}
-
-        {-# INLINE readVkPfnInternalAllocation #-}
-        readVkPfnInternalAllocation p
-          = peekByteOff p #{offset VkAllocationCallbacks, pfnInternalAllocation}
-
-        {-# INLINE writeVkPfnInternalAllocation #-}
-        writeVkPfnInternalAllocation p
-          = pokeByteOff p #{offset VkAllocationCallbacks, pfnInternalAllocation}
+         CanWriteField "pfnFree" VkAllocationCallbacks where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkAllocationCallbacks, pfnFree}
 
 instance {-# OVERLAPPING #-}
          HasField "pfnInternalAllocation" VkAllocationCallbacks where
@@ -311,41 +226,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkAllocationCallbacks, pfnInternalAllocation}
 
-instance CanReadField "pfnInternalAllocation" VkAllocationCallbacks
-         where
-        {-# INLINE getField #-}
-        getField = vkPfnInternalAllocation
+instance {-# OVERLAPPING #-}
+         CanReadField "pfnInternalAllocation" VkAllocationCallbacks where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAllocationCallbacks, pfnInternalAllocation})
 
         {-# INLINE readField #-}
-        readField = readVkPfnInternalAllocation
-
-instance CanWriteField "pfnInternalAllocation"
-           VkAllocationCallbacks
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPfnInternalAllocation
+        readField p
+          = peekByteOff p #{offset VkAllocationCallbacks, pfnInternalAllocation}
 
 instance {-# OVERLAPPING #-}
-         HasVkPfnInternalFree VkAllocationCallbacks where
-        type VkPfnInternalFreeMType VkAllocationCallbacks =
-             PFN_vkInternalFreeNotification
-
-        {-# NOINLINE vkPfnInternalFree #-}
-        vkPfnInternalFree x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAllocationCallbacks, pfnInternalFree})
-
-        {-# INLINE vkPfnInternalFreeByteOffset #-}
-        vkPfnInternalFreeByteOffset ~_
-          = #{offset VkAllocationCallbacks, pfnInternalFree}
-
-        {-# INLINE readVkPfnInternalFree #-}
-        readVkPfnInternalFree p
-          = peekByteOff p #{offset VkAllocationCallbacks, pfnInternalFree}
-
-        {-# INLINE writeVkPfnInternalFree #-}
-        writeVkPfnInternalFree p
-          = pokeByteOff p #{offset VkAllocationCallbacks, pfnInternalFree}
+         CanWriteField "pfnInternalAllocation" VkAllocationCallbacks where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkAllocationCallbacks, pfnInternalAllocation}
 
 instance {-# OVERLAPPING #-}
          HasField "pfnInternalFree" VkAllocationCallbacks where
@@ -363,35 +259,41 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkAllocationCallbacks, pfnInternalFree}
 
-instance CanReadField "pfnInternalFree" VkAllocationCallbacks where
-        {-# INLINE getField #-}
-        getField = vkPfnInternalFree
+instance {-# OVERLAPPING #-}
+         CanReadField "pfnInternalFree" VkAllocationCallbacks where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAllocationCallbacks, pfnInternalFree})
 
         {-# INLINE readField #-}
-        readField = readVkPfnInternalFree
+        readField p
+          = peekByteOff p #{offset VkAllocationCallbacks, pfnInternalFree}
 
-instance CanWriteField "pfnInternalFree" VkAllocationCallbacks
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pfnInternalFree" VkAllocationCallbacks where
         {-# INLINE writeField #-}
-        writeField = writeVkPfnInternalFree
+        writeField p
+          = pokeByteOff p #{offset VkAllocationCallbacks, pfnInternalFree}
 
 instance Show VkAllocationCallbacks where
         showsPrec d x
           = showString "VkAllocationCallbacks {" .
-              showString "vkPUserData = " .
-                showsPrec d (vkPUserData x) .
+              showString "pUserData = " .
+                showsPrec d (getField @"pUserData" x) .
                   showString ", " .
-                    showString "vkPfnAllocation = " .
-                      showsPrec d (vkPfnAllocation x) .
+                    showString "pfnAllocation = " .
+                      showsPrec d (getField @"pfnAllocation" x) .
                         showString ", " .
-                          showString "vkPfnReallocation = " .
-                            showsPrec d (vkPfnReallocation x) .
+                          showString "pfnReallocation = " .
+                            showsPrec d (getField @"pfnReallocation" x) .
                               showString ", " .
-                                showString "vkPfnFree = " .
-                                  showsPrec d (vkPfnFree x) .
+                                showString "pfnFree = " .
+                                  showsPrec d (getField @"pfnFree" x) .
                                     showString ", " .
-                                      showString "vkPfnInternalAllocation = " .
-                                        showsPrec d (vkPfnInternalAllocation x) .
+                                      showString "pfnInternalAllocation = " .
+                                        showsPrec d (getField @"pfnInternalAllocation" x) .
                                           showString ", " .
-                                            showString "vkPfnInternalFree = " .
-                                              showsPrec d (vkPfnInternalFree x) . showChar '}'
+                                            showString "pfnInternalFree = " .
+                                              showsPrec d (getField @"pfnInternalFree" x) .
+                                                showChar '}'

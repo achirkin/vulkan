@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
        (VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes                             (VkBool32)
 import           Graphics.Vulkan.Types.Enum.VkStructureType                  (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR (VkPhysicalDeviceProperties2KHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                            (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
@@ -99,30 +99,6 @@ instance VulkanMarshal
              = '[VkPhysicalDeviceProperties2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
-         where
-        type VkSTypeMType
-               VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
-             = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType"
            VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
          where
@@ -147,44 +123,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, sType}
 
-instance CanReadField "sType"
+instance {-# OVERLAPPING #-}
+         CanReadField "sType"
            VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
          where
-        {-# INLINE getField #-}
-        getField = vkSType
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, sType}
 
-instance CanWriteField "sType"
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType"
            VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-}
-         HasVkPNext VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
-         where
-        type VkPNextMType
-               VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
-             = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext"
@@ -211,45 +169,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, pNext}
 
-instance CanReadField "pNext"
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext"
            VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
          where
-        {-# INLINE getField #-}
-        getField = vkPNext
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, pNext}
 
-instance CanWriteField "pNext"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext"
            VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-}
-         HasVkPerViewPositionAllComponents
-           VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
-         where
-        type VkPerViewPositionAllComponentsMType
-               VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
-             = VkBool32
-
-        {-# NOINLINE vkPerViewPositionAllComponents #-}
-        vkPerViewPositionAllComponents x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, perViewPositionAllComponents})
-
-        {-# INLINE vkPerViewPositionAllComponentsByteOffset #-}
-        vkPerViewPositionAllComponentsByteOffset ~_
-          = #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, perViewPositionAllComponents}
-
-        {-# INLINE readVkPerViewPositionAllComponents #-}
-        readVkPerViewPositionAllComponents p
-          = peekByteOff p #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, perViewPositionAllComponents}
-
-        {-# INLINE writeVkPerViewPositionAllComponents #-}
-        writeVkPerViewPositionAllComponents p
-          = pokeByteOff p #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, perViewPositionAllComponents}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "perViewPositionAllComponents"
@@ -276,20 +215,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, perViewPositionAllComponents}
 
-instance CanReadField "perViewPositionAllComponents"
+instance {-# OVERLAPPING #-}
+         CanReadField "perViewPositionAllComponents"
            VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
          where
-        {-# INLINE getField #-}
-        getField = vkPerViewPositionAllComponents
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, perViewPositionAllComponents})
 
         {-# INLINE readField #-}
-        readField = readVkPerViewPositionAllComponents
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, perViewPositionAllComponents}
 
-instance CanWriteField "perViewPositionAllComponents"
+instance {-# OVERLAPPING #-}
+         CanWriteField "perViewPositionAllComponents"
            VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPerViewPositionAllComponents
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX, perViewPositionAllComponents}
 
 instance Show
            VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
@@ -298,11 +243,12 @@ instance Show
           = showString
               "VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {"
               .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkPerViewPositionAllComponents = " .
-                            showsPrec d (vkPerViewPositionAllComponents x) . showChar '}'
+                          showString "perViewPositionAllComponents = " .
+                            showsPrec d (getField @"perViewPositionAllComponents" x) .
+                              showChar '}'

@@ -8,6 +8,7 @@
 {-# LANGUAGE PatternSynonyms       #-}
 {-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 {-# LANGUAGE UndecidableInstances  #-}
 module Graphics.Vulkan.Types.Struct.VkDebugMarkerMarkerInfoEXT
@@ -18,7 +19,6 @@ import           GHC.TypeLits                               (KnownNat, natVal') 
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDebugMarkerMarkerInfoEXT {
@@ -80,27 +80,6 @@ instance VulkanMarshal VkDebugMarkerMarkerInfoEXT where
         type ReturnedOnly VkDebugMarkerMarkerInfoEXT = 'False -- ' closing tick for hsc2hs
         type StructExtends VkDebugMarkerMarkerInfoEXT = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkDebugMarkerMarkerInfoEXT
-         where
-        type VkSTypeMType VkDebugMarkerMarkerInfoEXT = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerMarkerInfoEXT, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkDebugMarkerMarkerInfoEXT, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkDebugMarkerMarkerInfoEXT, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkDebugMarkerMarkerInfoEXT, sType}
-
 instance {-# OVERLAPPING #-}
          HasField "sType" VkDebugMarkerMarkerInfoEXT where
         type FieldType "sType" VkDebugMarkerMarkerInfoEXT = VkStructureType
@@ -116,37 +95,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDebugMarkerMarkerInfoEXT, sType}
 
-instance CanReadField "sType" VkDebugMarkerMarkerInfoEXT where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkDebugMarkerMarkerInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerMarkerInfoEXT, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkDebugMarkerMarkerInfoEXT, sType}
 
-instance CanWriteField "sType" VkDebugMarkerMarkerInfoEXT where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkDebugMarkerMarkerInfoEXT where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkDebugMarkerMarkerInfoEXT
-         where
-        type VkPNextMType VkDebugMarkerMarkerInfoEXT = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerMarkerInfoEXT, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkDebugMarkerMarkerInfoEXT, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkDebugMarkerMarkerInfoEXT, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkDebugMarkerMarkerInfoEXT, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkDebugMarkerMarkerInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkDebugMarkerMarkerInfoEXT where
@@ -163,37 +127,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDebugMarkerMarkerInfoEXT, pNext}
 
-instance CanReadField "pNext" VkDebugMarkerMarkerInfoEXT where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkDebugMarkerMarkerInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerMarkerInfoEXT, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkDebugMarkerMarkerInfoEXT where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkDebugMarkerMarkerInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkPMarkerName VkDebugMarkerMarkerInfoEXT where
-        type VkPMarkerNameMType VkDebugMarkerMarkerInfoEXT = CString
-
-        {-# NOINLINE vkPMarkerName #-}
-        vkPMarkerName x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerMarkerInfoEXT, pMarkerName})
-
-        {-# INLINE vkPMarkerNameByteOffset #-}
-        vkPMarkerNameByteOffset ~_
-          = #{offset VkDebugMarkerMarkerInfoEXT, pMarkerName}
-
-        {-# INLINE readVkPMarkerName #-}
-        readVkPMarkerName p
-          = peekByteOff p #{offset VkDebugMarkerMarkerInfoEXT, pMarkerName}
-
-        {-# INLINE writeVkPMarkerName #-}
-        writeVkPMarkerName p
-          = pokeByteOff p #{offset VkDebugMarkerMarkerInfoEXT, pMarkerName}
+         CanWriteField "pNext" VkDebugMarkerMarkerInfoEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDebugMarkerMarkerInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "pMarkerName" VkDebugMarkerMarkerInfoEXT where
@@ -211,46 +160,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDebugMarkerMarkerInfoEXT, pMarkerName}
 
-instance CanReadField "pMarkerName" VkDebugMarkerMarkerInfoEXT
-         where
-        {-# INLINE getField #-}
-        getField = vkPMarkerName
+instance {-# OVERLAPPING #-}
+         CanReadField "pMarkerName" VkDebugMarkerMarkerInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDebugMarkerMarkerInfoEXT, pMarkerName})
 
         {-# INLINE readField #-}
-        readField = readVkPMarkerName
-
-instance CanWriteField "pMarkerName" VkDebugMarkerMarkerInfoEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPMarkerName
+        readField p
+          = peekByteOff p #{offset VkDebugMarkerMarkerInfoEXT, pMarkerName}
 
 instance {-# OVERLAPPING #-}
-         HasVkColorArray VkDebugMarkerMarkerInfoEXT where
-        type VkColorArrayMType VkDebugMarkerMarkerInfoEXT =
-             #{type float}
-
-        {-# NOINLINE vkColorArray #-}
-        vkColorArray x idx
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 (idx * sizeOf (undefined :: #{type float}) +
-                    #{offset VkDebugMarkerMarkerInfoEXT, color}))
-
-        {-# INLINE vkColorArrayByteOffset #-}
-        vkColorArrayByteOffset ~_
-          = #{offset VkDebugMarkerMarkerInfoEXT, color}
-
-        {-# INLINE readVkColorArray #-}
-        readVkColorArray p idx
-          = peekByteOff p
-              (idx * sizeOf (undefined :: #{type float}) +
-                 #{offset VkDebugMarkerMarkerInfoEXT, color})
-
-        {-# INLINE writeVkColorArray #-}
-        writeVkColorArray p idx
-          = pokeByteOff p
-              (idx * sizeOf (undefined :: #{type float}) +
-                 #{offset VkDebugMarkerMarkerInfoEXT, color})
+         CanWriteField "pMarkerName" VkDebugMarkerMarkerInfoEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDebugMarkerMarkerInfoEXT, pMarkerName}
 
 instance {-# OVERLAPPING #-}
          HasField "color" VkDebugMarkerMarkerInfoEXT where
@@ -268,7 +193,8 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDebugMarkerMarkerInfoEXT, color}
 
-instance (KnownNat idx,
+instance {-# OVERLAPPING #-}
+         (KnownNat idx,
           IndexInBounds "color" idx VkDebugMarkerMarkerInfoEXT) =>
          CanReadFieldArray "color" idx VkDebugMarkerMarkerInfoEXT
          where
@@ -289,14 +215,23 @@ instance (KnownNat idx,
         fieldArrayLength = 4
 
         {-# INLINE getFieldArray #-}
-        getFieldArray x
-          = vkColorArray x (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+        getFieldArray = f
+          where {-# NOINLINE f #-}
+                f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
+                off
+                  = #{offset VkDebugMarkerMarkerInfoEXT, color} +
+                      sizeOf (undefined :: #{type float}) *
+                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
         {-# INLINE readFieldArray #-}
-        readFieldArray x
-          = readVkColorArray x (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+        readFieldArray p
+          = peekByteOff p
+              (#{offset VkDebugMarkerMarkerInfoEXT, color} +
+                 sizeOf (undefined :: #{type float}) *
+                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
 
-instance (KnownNat idx,
+instance {-# OVERLAPPING #-}
+         (KnownNat idx,
           IndexInBounds "color" idx VkDebugMarkerMarkerInfoEXT) =>
          CanWriteFieldArray "color" idx VkDebugMarkerMarkerInfoEXT
          where
@@ -313,22 +248,35 @@ instance (KnownNat idx,
                        CanWriteFieldArray "color" 3 VkDebugMarkerMarkerInfoEXT #-}
 
         {-# INLINE writeFieldArray #-}
-        writeFieldArray x
-          = writeVkColorArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+        writeFieldArray p
+          = pokeByteOff p
+              (#{offset VkDebugMarkerMarkerInfoEXT, color} +
+                 sizeOf (undefined :: #{type float}) *
+                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
 
 instance Show VkDebugMarkerMarkerInfoEXT where
         showsPrec d x
           = showString "VkDebugMarkerMarkerInfoEXT {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkPMarkerName = " .
-                            showsPrec d (vkPMarkerName x) .
+                          showString "pMarkerName = " .
+                            showsPrec d (getField @"pMarkerName" x) .
                               showString ", " .
-                                showString "vkColorArray = [" .
-                                  showsPrec d (map (vkColorArray x) [1 .. 4]) .
-                                    showChar ']' . showChar '}'
+                                (showString "color = [" .
+                                   showsPrec d
+                                     (let s = sizeOf
+                                                (undefined ::
+                                                   FieldType "color" VkDebugMarkerMarkerInfoEXT)
+                                          o = fieldOffset @"color" @VkDebugMarkerMarkerInfoEXT
+                                          f i
+                                            = peekByteOff (unsafePtr x) i ::
+                                                IO (FieldType "color" VkDebugMarkerMarkerInfoEXT)
+                                        in
+                                        unsafeDupablePerformIO . mapM f $
+                                          map (\ i -> o + i * s) [0 .. 4 - 1])
+                                     . showChar ']')
+                                  . showChar '}'

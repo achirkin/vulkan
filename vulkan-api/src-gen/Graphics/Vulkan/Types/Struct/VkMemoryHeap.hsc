@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkMemoryHeap (VkMemoryHeap(..))
        where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes              (VkDeviceSize)
 import           Graphics.Vulkan.Types.Enum.VkMemoryHeapFlags (VkMemoryHeapFlags)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                             (unsafeDupablePerformIO)
 
 -- | > typedef struct VkMemoryHeap {
@@ -69,25 +69,6 @@ instance VulkanMarshal VkMemoryHeap where
         type ReturnedOnly VkMemoryHeap = 'True -- ' closing tick for hsc2hs
         type StructExtends VkMemoryHeap = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSize VkMemoryHeap where
-        type VkSizeMType VkMemoryHeap = VkDeviceSize
-
-        {-# NOINLINE vkSize #-}
-        vkSize x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkMemoryHeap, size})
-
-        {-# INLINE vkSizeByteOffset #-}
-        vkSizeByteOffset ~_ = #{offset VkMemoryHeap, size}
-
-        {-# INLINE readVkSize #-}
-        readVkSize p
-          = peekByteOff p #{offset VkMemoryHeap, size}
-
-        {-# INLINE writeVkSize #-}
-        writeVkSize p
-          = pokeByteOff p #{offset VkMemoryHeap, size}
-
 instance {-# OVERLAPPING #-} HasField "size" VkMemoryHeap where
         type FieldType "size" VkMemoryHeap = VkDeviceSize
         type FieldOptional "size" VkMemoryHeap = 'False -- ' closing tick for hsc2hs
@@ -101,35 +82,21 @@ instance {-# OVERLAPPING #-} HasField "size" VkMemoryHeap where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkMemoryHeap, size}
 
-instance CanReadField "size" VkMemoryHeap where
-        {-# INLINE getField #-}
-        getField = vkSize
+instance {-# OVERLAPPING #-} CanReadField "size" VkMemoryHeap where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkMemoryHeap, size})
 
         {-# INLINE readField #-}
-        readField = readVkSize
+        readField p
+          = peekByteOff p #{offset VkMemoryHeap, size}
 
-instance CanWriteField "size" VkMemoryHeap where
+instance {-# OVERLAPPING #-} CanWriteField "size" VkMemoryHeap
+         where
         {-# INLINE writeField #-}
-        writeField = writeVkSize
-
-instance {-# OVERLAPPING #-} HasVkFlags VkMemoryHeap where
-        type VkFlagsMType VkMemoryHeap = VkMemoryHeapFlags
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkMemoryHeap, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_ = #{offset VkMemoryHeap, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkMemoryHeap, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkMemoryHeap, flags}
+        writeField p
+          = pokeByteOff p #{offset VkMemoryHeap, size}
 
 instance {-# OVERLAPPING #-} HasField "flags" VkMemoryHeap where
         type FieldType "flags" VkMemoryHeap = VkMemoryHeapFlags
@@ -144,21 +111,28 @@ instance {-# OVERLAPPING #-} HasField "flags" VkMemoryHeap where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkMemoryHeap, flags}
 
-instance CanReadField "flags" VkMemoryHeap where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-} CanReadField "flags" VkMemoryHeap
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkMemoryHeap, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
+        readField p
+          = peekByteOff p #{offset VkMemoryHeap, flags}
 
-instance CanWriteField "flags" VkMemoryHeap where
+instance {-# OVERLAPPING #-} CanWriteField "flags" VkMemoryHeap
+         where
         {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        writeField p
+          = pokeByteOff p #{offset VkMemoryHeap, flags}
 
 instance Show VkMemoryHeap where
         showsPrec d x
           = showString "VkMemoryHeap {" .
-              showString "vkSize = " .
-                showsPrec d (vkSize x) .
+              showString "size = " .
+                showsPrec d (getField @"size" x) .
                   showString ", " .
-                    showString "vkFlags = " . showsPrec d (vkFlags x) . showChar '}'
+                    showString "flags = " .
+                      showsPrec d (getField @"flags" x) . showChar '}'

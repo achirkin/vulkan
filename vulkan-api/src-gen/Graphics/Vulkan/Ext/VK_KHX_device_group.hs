@@ -60,8 +60,10 @@ module Graphics.Vulkan.Ext.VK_KHX_device_group
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         module Graphics.Vulkan.Types.Struct.VkSubmitInfo,
         -- > #include "vk_platform.h"
-        vkGetDeviceGroupPeerMemoryFeaturesKHX, vkCmdSetDeviceMaskKHX,
-        vkCmdDispatchBaseKHX, module Graphics.Vulkan.Marshal,
+        vkGetDeviceGroupPeerMemoryFeaturesKHX,
+        vkGetDeviceGroupPeerMemoryFeaturesKHXSafe, vkCmdSetDeviceMaskKHX,
+        vkCmdSetDeviceMaskKHXSafe, vkCmdDispatchBaseKHX,
+        vkCmdDispatchBaseKHXSafe, module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Handles,
         VK_KHX_DEVICE_GROUP_SPEC_VERSION,
         pattern VK_KHX_DEVICE_GROUP_SPEC_VERSION,
@@ -90,8 +92,11 @@ module Graphics.Vulkan.Ext.VK_KHX_device_group
         module Graphics.Vulkan.Types.Enum.VkDeviceGroupPresentModeFlagsKHX,
         -- > #include "vk_platform.h"
         vkGetDeviceGroupPresentCapabilitiesKHX,
+        vkGetDeviceGroupPresentCapabilitiesKHXSafe,
         vkGetDeviceGroupSurfacePresentModesKHX,
+        vkGetDeviceGroupSurfacePresentModesKHXSafe,
         vkGetPhysicalDevicePresentRectanglesKHX,
+        vkGetPhysicalDevicePresentRectanglesKHXSafe,
         module Graphics.Vulkan.Types.Enum.VkResult,
         pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_CAPABILITIES_KHX,
         -- ** Required extensions: 'VK_KHR_swapchain', 'VK_KHX_device_group_creation'.
@@ -117,7 +122,7 @@ module Graphics.Vulkan.Ext.VK_KHX_device_group
         module Graphics.Vulkan.Types.Enum.VkSwapchainCreateFlagsKHR,
         module Graphics.Vulkan.Types.Struct.VkSwapchainCreateInfoKHR,
         -- > #include "vk_platform.h"
-        vkAcquireNextImage2KHX,
+        vkAcquireNextImage2KHX, vkAcquireNextImage2KHXSafe,
         pattern VK_STRUCTURE_TYPE_IMAGE_SWAPCHAIN_CREATE_INFO_KHX,
         pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_SWAPCHAIN_INFO_KHX,
         pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_INFO_KHX,
@@ -218,6 +223,26 @@ foreign import ccall unsafe "vkGetDeviceGroupPeerMemoryFeaturesKHX"
                                     -> Ptr VkPeerMemoryFeatureFlagsKHX -- ^ pPeerMemoryFeatures
                                                                        -> IO ()
 
+-- | > () vkGetDeviceGroupPeerMemoryFeaturesKHX
+--   >     ( VkDevice device
+--   >     , uint32_t heapIndex
+--   >     , uint32_t localDeviceIndex
+--   >     , uint32_t remoteDeviceIndex
+--   >     , VkPeerMemoryFeatureFlagsKHX* pPeerMemoryFeatures
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetDeviceGroupPeerMemoryFeaturesKHX.html vkGetDeviceGroupPeerMemoryFeaturesKHX registry at www.khronos.org>
+foreign import ccall safe "vkGetDeviceGroupPeerMemoryFeaturesKHX"
+               vkGetDeviceGroupPeerMemoryFeaturesKHXSafe ::
+               VkDevice -- ^ device
+                        ->
+                 Word32 -- ^ heapIndex
+                        ->
+                   Word32 -- ^ localDeviceIndex
+                          -> Word32 -- ^ remoteDeviceIndex
+                                    -> Ptr VkPeerMemoryFeatureFlagsKHX -- ^ pPeerMemoryFeatures
+                                                                       -> IO ()
+
 -- | queues: 'graphics', 'compute', 'transfer'.
 --
 --   renderpass: @both@
@@ -232,6 +257,21 @@ foreign import ccall unsafe "vkCmdSetDeviceMaskKHX"
                vkCmdSetDeviceMaskKHX :: VkCommandBuffer -- ^ commandBuffer
                                                         -> Word32 -- ^ deviceMask
                                                                   -> IO ()
+
+-- | queues: 'graphics', 'compute', 'transfer'.
+--
+--   renderpass: @both@
+--
+--   > () vkCmdSetDeviceMaskKHX
+--   >     ( VkCommandBuffer commandBuffer
+--   >     , uint32_t deviceMask
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdSetDeviceMaskKHX.html vkCmdSetDeviceMaskKHX registry at www.khronos.org>
+foreign import ccall safe "vkCmdSetDeviceMaskKHX"
+               vkCmdSetDeviceMaskKHXSafe :: VkCommandBuffer -- ^ commandBuffer
+                                                            -> Word32 -- ^ deviceMask
+                                                                      -> IO ()
 
 -- | queues: 'compute'.
 --
@@ -250,6 +290,33 @@ foreign import ccall unsafe "vkCmdSetDeviceMaskKHX"
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdDispatchBaseKHX.html vkCmdDispatchBaseKHX registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdDispatchBaseKHX"
                vkCmdDispatchBaseKHX ::
+               VkCommandBuffer -- ^ commandBuffer
+                               ->
+                 Word32 -- ^ baseGroupX
+                        -> Word32 -- ^ baseGroupY
+                                  -> Word32 -- ^ baseGroupZ
+                                            -> Word32 -- ^ groupCountX
+                                                      -> Word32 -- ^ groupCountY
+                                                                -> Word32 -- ^ groupCountZ
+                                                                          -> IO ()
+
+-- | queues: 'compute'.
+--
+--   renderpass: @outside@
+--
+--   > () vkCmdDispatchBaseKHX
+--   >     ( VkCommandBuffer commandBuffer
+--   >     , uint32_t baseGroupX
+--   >     , uint32_t baseGroupY
+--   >     , uint32_t baseGroupZ
+--   >     , uint32_t groupCountX
+--   >     , uint32_t groupCountY
+--   >     , uint32_t groupCountZ
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdDispatchBaseKHX.html vkCmdDispatchBaseKHX registry at www.khronos.org>
+foreign import ccall safe "vkCmdDispatchBaseKHX"
+               vkCmdDispatchBaseKHXSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
                  Word32 -- ^ baseGroupX
@@ -382,6 +449,22 @@ foreign import ccall unsafe
 
 -- | Success codes: 'VK_SUCCESS'.
 --
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkGetDeviceGroupPresentCapabilitiesKHX
+--   >     ( VkDevice device
+--   >     , VkDeviceGroupPresentCapabilitiesKHX* pDeviceGroupPresentCapabilities
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetDeviceGroupPresentCapabilitiesKHX.html vkGetDeviceGroupPresentCapabilitiesKHX registry at www.khronos.org>
+foreign import ccall safe "vkGetDeviceGroupPresentCapabilitiesKHX"
+               vkGetDeviceGroupPresentCapabilitiesKHXSafe ::
+               VkDevice -- ^ device
+                        -> Ptr VkDeviceGroupPresentCapabilitiesKHX -- ^ pDeviceGroupPresentCapabilities
+                                                                   -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
 --
 --   > VkResult vkGetDeviceGroupSurfacePresentModesKHX
@@ -394,6 +477,25 @@ foreign import ccall unsafe
 foreign import ccall unsafe
                "vkGetDeviceGroupSurfacePresentModesKHX"
                vkGetDeviceGroupSurfacePresentModesKHX ::
+               VkDevice -- ^ device
+                        ->
+                 VkSurfaceKHR -- ^ surface
+                              -> Ptr VkDeviceGroupPresentModeFlagsKHX -- ^ pModes
+                                                                      -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
+--
+--   > VkResult vkGetDeviceGroupSurfacePresentModesKHX
+--   >     ( VkDevice device
+--   >     , VkSurfaceKHR surface
+--   >     , VkDeviceGroupPresentModeFlagsKHX* pModes
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetDeviceGroupSurfacePresentModesKHX.html vkGetDeviceGroupSurfacePresentModesKHX registry at www.khronos.org>
+foreign import ccall safe "vkGetDeviceGroupSurfacePresentModesKHX"
+               vkGetDeviceGroupSurfacePresentModesKHXSafe ::
                VkDevice -- ^ device
                         ->
                  VkSurfaceKHR -- ^ surface
@@ -422,6 +524,27 @@ foreign import ccall unsafe
                                             -> Ptr VkRect2D -- ^ pRects
                                                             -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkGetPhysicalDevicePresentRectanglesKHX
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , VkSurfaceKHR surface
+--   >     , uint32_t* pRectCount
+--   >     , VkRect2D* pRects
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDevicePresentRectanglesKHX.html vkGetPhysicalDevicePresentRectanglesKHX registry at www.khronos.org>
+foreign import ccall safe "vkGetPhysicalDevicePresentRectanglesKHX"
+               vkGetPhysicalDevicePresentRectanglesKHXSafe ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                ->
+                 VkSurfaceKHR -- ^ surface
+                              -> Ptr Word32 -- ^ pRectCount
+                                            -> Ptr VkRect2D -- ^ pRects
+                                                            -> IO VkResult
+
 pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_CAPABILITIES_KHX ::
         VkStructureType
 
@@ -441,6 +564,25 @@ pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_CAPABILITIES_KHX =
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkAcquireNextImage2KHX.html vkAcquireNextImage2KHX registry at www.khronos.org>
 foreign import ccall unsafe "vkAcquireNextImage2KHX"
                vkAcquireNextImage2KHX ::
+               VkDevice -- ^ device
+                        ->
+                 Ptr VkAcquireNextImageInfoKHX -- ^ pAcquireInfo
+                                               -> Ptr Word32 -- ^ pImageIndex
+                                                             -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+--
+--   > VkResult vkAcquireNextImage2KHX
+--   >     ( VkDevice device
+--   >     , const VkAcquireNextImageInfoKHX* pAcquireInfo
+--   >     , uint32_t* pImageIndex
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkAcquireNextImage2KHX.html vkAcquireNextImage2KHX registry at www.khronos.org>
+foreign import ccall safe "vkAcquireNextImage2KHX"
+               vkAcquireNextImage2KHXSafe ::
                VkDevice -- ^ device
                         ->
                  Ptr VkAcquireNextImageInfoKHX -- ^ pAcquireInfo

@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkSubmitInfo (VkSubmitInfo(..))
        where
@@ -16,7 +17,6 @@ import           Graphics.Vulkan.Types.Enum.VkPipelineStageFlags (VkPipelineStag
 import           Graphics.Vulkan.Types.Enum.VkStructureType      (VkStructureType)
 import           Graphics.Vulkan.Types.Handles                   (VkCommandBuffer,
                                                                   VkSemaphore)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSubmitInfo {
@@ -81,25 +81,6 @@ instance VulkanMarshal VkSubmitInfo where
         type ReturnedOnly VkSubmitInfo = 'False -- ' closing tick for hsc2hs
         type StructExtends VkSubmitInfo = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkSubmitInfo where
-        type VkSTypeMType VkSubmitInfo = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubmitInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_ = #{offset VkSubmitInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkSubmitInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkSubmitInfo, sType}
-
 instance {-# OVERLAPPING #-} HasField "sType" VkSubmitInfo where
         type FieldType "sType" VkSubmitInfo = VkStructureType
         type FieldOptional "sType" VkSubmitInfo = 'False -- ' closing tick for hsc2hs
@@ -113,35 +94,22 @@ instance {-# OVERLAPPING #-} HasField "sType" VkSubmitInfo where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSubmitInfo, sType}
 
-instance CanReadField "sType" VkSubmitInfo where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-} CanReadField "sType" VkSubmitInfo
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubmitInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkSubmitInfo, sType}
 
-instance CanWriteField "sType" VkSubmitInfo where
+instance {-# OVERLAPPING #-} CanWriteField "sType" VkSubmitInfo
+         where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkSubmitInfo where
-        type VkPNextMType VkSubmitInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubmitInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_ = #{offset VkSubmitInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkSubmitInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkSubmitInfo, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkSubmitInfo, sType}
 
 instance {-# OVERLAPPING #-} HasField "pNext" VkSubmitInfo where
         type FieldType "pNext" VkSubmitInfo = Ptr Void
@@ -156,37 +124,22 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkSubmitInfo where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSubmitInfo, pNext}
 
-instance CanReadField "pNext" VkSubmitInfo where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-} CanReadField "pNext" VkSubmitInfo
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubmitInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkSubmitInfo, pNext}
 
-instance CanWriteField "pNext" VkSubmitInfo where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-} HasVkWaitSemaphoreCount VkSubmitInfo
+instance {-# OVERLAPPING #-} CanWriteField "pNext" VkSubmitInfo
          where
-        type VkWaitSemaphoreCountMType VkSubmitInfo = Word32
-
-        {-# NOINLINE vkWaitSemaphoreCount #-}
-        vkWaitSemaphoreCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubmitInfo, waitSemaphoreCount})
-
-        {-# INLINE vkWaitSemaphoreCountByteOffset #-}
-        vkWaitSemaphoreCountByteOffset ~_
-          = #{offset VkSubmitInfo, waitSemaphoreCount}
-
-        {-# INLINE readVkWaitSemaphoreCount #-}
-        readVkWaitSemaphoreCount p
-          = peekByteOff p #{offset VkSubmitInfo, waitSemaphoreCount}
-
-        {-# INLINE writeVkWaitSemaphoreCount #-}
-        writeVkWaitSemaphoreCount p
-          = pokeByteOff p #{offset VkSubmitInfo, waitSemaphoreCount}
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSubmitInfo, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "waitSemaphoreCount" VkSubmitInfo where
@@ -203,37 +156,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSubmitInfo, waitSemaphoreCount}
 
-instance CanReadField "waitSemaphoreCount" VkSubmitInfo where
-        {-# INLINE getField #-}
-        getField = vkWaitSemaphoreCount
+instance {-# OVERLAPPING #-}
+         CanReadField "waitSemaphoreCount" VkSubmitInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubmitInfo, waitSemaphoreCount})
 
         {-# INLINE readField #-}
-        readField = readVkWaitSemaphoreCount
+        readField p
+          = peekByteOff p #{offset VkSubmitInfo, waitSemaphoreCount}
 
-instance CanWriteField "waitSemaphoreCount" VkSubmitInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "waitSemaphoreCount" VkSubmitInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkWaitSemaphoreCount
-
-instance {-# OVERLAPPING #-} HasVkPWaitSemaphores VkSubmitInfo
-         where
-        type VkPWaitSemaphoresMType VkSubmitInfo = Ptr VkSemaphore
-
-        {-# NOINLINE vkPWaitSemaphores #-}
-        vkPWaitSemaphores x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubmitInfo, pWaitSemaphores})
-
-        {-# INLINE vkPWaitSemaphoresByteOffset #-}
-        vkPWaitSemaphoresByteOffset ~_
-          = #{offset VkSubmitInfo, pWaitSemaphores}
-
-        {-# INLINE readVkPWaitSemaphores #-}
-        readVkPWaitSemaphores p
-          = peekByteOff p #{offset VkSubmitInfo, pWaitSemaphores}
-
-        {-# INLINE writeVkPWaitSemaphores #-}
-        writeVkPWaitSemaphores p
-          = pokeByteOff p #{offset VkSubmitInfo, pWaitSemaphores}
+        writeField p
+          = pokeByteOff p #{offset VkSubmitInfo, waitSemaphoreCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pWaitSemaphores" VkSubmitInfo where
@@ -249,38 +187,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSubmitInfo, pWaitSemaphores}
 
-instance CanReadField "pWaitSemaphores" VkSubmitInfo where
-        {-# INLINE getField #-}
-        getField = vkPWaitSemaphores
+instance {-# OVERLAPPING #-}
+         CanReadField "pWaitSemaphores" VkSubmitInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubmitInfo, pWaitSemaphores})
 
         {-# INLINE readField #-}
-        readField = readVkPWaitSemaphores
+        readField p
+          = peekByteOff p #{offset VkSubmitInfo, pWaitSemaphores}
 
-instance CanWriteField "pWaitSemaphores" VkSubmitInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pWaitSemaphores" VkSubmitInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPWaitSemaphores
-
-instance {-# OVERLAPPING #-} HasVkPWaitDstStageMask VkSubmitInfo
-         where
-        type VkPWaitDstStageMaskMType VkSubmitInfo =
-             Ptr VkPipelineStageFlags
-
-        {-# NOINLINE vkPWaitDstStageMask #-}
-        vkPWaitDstStageMask x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubmitInfo, pWaitDstStageMask})
-
-        {-# INLINE vkPWaitDstStageMaskByteOffset #-}
-        vkPWaitDstStageMaskByteOffset ~_
-          = #{offset VkSubmitInfo, pWaitDstStageMask}
-
-        {-# INLINE readVkPWaitDstStageMask #-}
-        readVkPWaitDstStageMask p
-          = peekByteOff p #{offset VkSubmitInfo, pWaitDstStageMask}
-
-        {-# INLINE writeVkPWaitDstStageMask #-}
-        writeVkPWaitDstStageMask p
-          = pokeByteOff p #{offset VkSubmitInfo, pWaitDstStageMask}
+        writeField p
+          = pokeByteOff p #{offset VkSubmitInfo, pWaitSemaphores}
 
 instance {-# OVERLAPPING #-}
          HasField "pWaitDstStageMask" VkSubmitInfo where
@@ -297,37 +219,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSubmitInfo, pWaitDstStageMask}
 
-instance CanReadField "pWaitDstStageMask" VkSubmitInfo where
-        {-# INLINE getField #-}
-        getField = vkPWaitDstStageMask
+instance {-# OVERLAPPING #-}
+         CanReadField "pWaitDstStageMask" VkSubmitInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubmitInfo, pWaitDstStageMask})
 
         {-# INLINE readField #-}
-        readField = readVkPWaitDstStageMask
+        readField p
+          = peekByteOff p #{offset VkSubmitInfo, pWaitDstStageMask}
 
-instance CanWriteField "pWaitDstStageMask" VkSubmitInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pWaitDstStageMask" VkSubmitInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPWaitDstStageMask
-
-instance {-# OVERLAPPING #-} HasVkCommandBufferCount VkSubmitInfo
-         where
-        type VkCommandBufferCountMType VkSubmitInfo = Word32
-
-        {-# NOINLINE vkCommandBufferCount #-}
-        vkCommandBufferCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubmitInfo, commandBufferCount})
-
-        {-# INLINE vkCommandBufferCountByteOffset #-}
-        vkCommandBufferCountByteOffset ~_
-          = #{offset VkSubmitInfo, commandBufferCount}
-
-        {-# INLINE readVkCommandBufferCount #-}
-        readVkCommandBufferCount p
-          = peekByteOff p #{offset VkSubmitInfo, commandBufferCount}
-
-        {-# INLINE writeVkCommandBufferCount #-}
-        writeVkCommandBufferCount p
-          = pokeByteOff p #{offset VkSubmitInfo, commandBufferCount}
+        writeField p
+          = pokeByteOff p #{offset VkSubmitInfo, pWaitDstStageMask}
 
 instance {-# OVERLAPPING #-}
          HasField "commandBufferCount" VkSubmitInfo where
@@ -344,37 +251,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSubmitInfo, commandBufferCount}
 
-instance CanReadField "commandBufferCount" VkSubmitInfo where
-        {-# INLINE getField #-}
-        getField = vkCommandBufferCount
+instance {-# OVERLAPPING #-}
+         CanReadField "commandBufferCount" VkSubmitInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubmitInfo, commandBufferCount})
 
         {-# INLINE readField #-}
-        readField = readVkCommandBufferCount
+        readField p
+          = peekByteOff p #{offset VkSubmitInfo, commandBufferCount}
 
-instance CanWriteField "commandBufferCount" VkSubmitInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "commandBufferCount" VkSubmitInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkCommandBufferCount
-
-instance {-# OVERLAPPING #-} HasVkPCommandBuffers VkSubmitInfo
-         where
-        type VkPCommandBuffersMType VkSubmitInfo = Ptr VkCommandBuffer
-
-        {-# NOINLINE vkPCommandBuffers #-}
-        vkPCommandBuffers x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubmitInfo, pCommandBuffers})
-
-        {-# INLINE vkPCommandBuffersByteOffset #-}
-        vkPCommandBuffersByteOffset ~_
-          = #{offset VkSubmitInfo, pCommandBuffers}
-
-        {-# INLINE readVkPCommandBuffers #-}
-        readVkPCommandBuffers p
-          = peekByteOff p #{offset VkSubmitInfo, pCommandBuffers}
-
-        {-# INLINE writeVkPCommandBuffers #-}
-        writeVkPCommandBuffers p
-          = pokeByteOff p #{offset VkSubmitInfo, pCommandBuffers}
+        writeField p
+          = pokeByteOff p #{offset VkSubmitInfo, commandBufferCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pCommandBuffers" VkSubmitInfo where
@@ -390,37 +282,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSubmitInfo, pCommandBuffers}
 
-instance CanReadField "pCommandBuffers" VkSubmitInfo where
-        {-# INLINE getField #-}
-        getField = vkPCommandBuffers
+instance {-# OVERLAPPING #-}
+         CanReadField "pCommandBuffers" VkSubmitInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubmitInfo, pCommandBuffers})
 
         {-# INLINE readField #-}
-        readField = readVkPCommandBuffers
+        readField p
+          = peekByteOff p #{offset VkSubmitInfo, pCommandBuffers}
 
-instance CanWriteField "pCommandBuffers" VkSubmitInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pCommandBuffers" VkSubmitInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPCommandBuffers
-
-instance {-# OVERLAPPING #-} HasVkSignalSemaphoreCount VkSubmitInfo
-         where
-        type VkSignalSemaphoreCountMType VkSubmitInfo = Word32
-
-        {-# NOINLINE vkSignalSemaphoreCount #-}
-        vkSignalSemaphoreCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubmitInfo, signalSemaphoreCount})
-
-        {-# INLINE vkSignalSemaphoreCountByteOffset #-}
-        vkSignalSemaphoreCountByteOffset ~_
-          = #{offset VkSubmitInfo, signalSemaphoreCount}
-
-        {-# INLINE readVkSignalSemaphoreCount #-}
-        readVkSignalSemaphoreCount p
-          = peekByteOff p #{offset VkSubmitInfo, signalSemaphoreCount}
-
-        {-# INLINE writeVkSignalSemaphoreCount #-}
-        writeVkSignalSemaphoreCount p
-          = pokeByteOff p #{offset VkSubmitInfo, signalSemaphoreCount}
+        writeField p
+          = pokeByteOff p #{offset VkSubmitInfo, pCommandBuffers}
 
 instance {-# OVERLAPPING #-}
          HasField "signalSemaphoreCount" VkSubmitInfo where
@@ -437,37 +314,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSubmitInfo, signalSemaphoreCount}
 
-instance CanReadField "signalSemaphoreCount" VkSubmitInfo where
-        {-# INLINE getField #-}
-        getField = vkSignalSemaphoreCount
+instance {-# OVERLAPPING #-}
+         CanReadField "signalSemaphoreCount" VkSubmitInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubmitInfo, signalSemaphoreCount})
 
         {-# INLINE readField #-}
-        readField = readVkSignalSemaphoreCount
+        readField p
+          = peekByteOff p #{offset VkSubmitInfo, signalSemaphoreCount}
 
-instance CanWriteField "signalSemaphoreCount" VkSubmitInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "signalSemaphoreCount" VkSubmitInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkSignalSemaphoreCount
-
-instance {-# OVERLAPPING #-} HasVkPSignalSemaphores VkSubmitInfo
-         where
-        type VkPSignalSemaphoresMType VkSubmitInfo = Ptr VkSemaphore
-
-        {-# NOINLINE vkPSignalSemaphores #-}
-        vkPSignalSemaphores x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubmitInfo, pSignalSemaphores})
-
-        {-# INLINE vkPSignalSemaphoresByteOffset #-}
-        vkPSignalSemaphoresByteOffset ~_
-          = #{offset VkSubmitInfo, pSignalSemaphores}
-
-        {-# INLINE readVkPSignalSemaphores #-}
-        readVkPSignalSemaphores p
-          = peekByteOff p #{offset VkSubmitInfo, pSignalSemaphores}
-
-        {-# INLINE writeVkPSignalSemaphores #-}
-        writeVkPSignalSemaphores p
-          = pokeByteOff p #{offset VkSubmitInfo, pSignalSemaphores}
+        writeField p
+          = pokeByteOff p #{offset VkSubmitInfo, signalSemaphoreCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pSignalSemaphores" VkSubmitInfo where
@@ -483,44 +345,53 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSubmitInfo, pSignalSemaphores}
 
-instance CanReadField "pSignalSemaphores" VkSubmitInfo where
-        {-# INLINE getField #-}
-        getField = vkPSignalSemaphores
+instance {-# OVERLAPPING #-}
+         CanReadField "pSignalSemaphores" VkSubmitInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubmitInfo, pSignalSemaphores})
 
         {-# INLINE readField #-}
-        readField = readVkPSignalSemaphores
+        readField p
+          = peekByteOff p #{offset VkSubmitInfo, pSignalSemaphores}
 
-instance CanWriteField "pSignalSemaphores" VkSubmitInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pSignalSemaphores" VkSubmitInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPSignalSemaphores
+        writeField p
+          = pokeByteOff p #{offset VkSubmitInfo, pSignalSemaphores}
 
 instance Show VkSubmitInfo where
         showsPrec d x
           = showString "VkSubmitInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkWaitSemaphoreCount = " .
-                            showsPrec d (vkWaitSemaphoreCount x) .
+                          showString "waitSemaphoreCount = " .
+                            showsPrec d (getField @"waitSemaphoreCount" x) .
                               showString ", " .
-                                showString "vkPWaitSemaphores = " .
-                                  showsPrec d (vkPWaitSemaphores x) .
+                                showString "pWaitSemaphores = " .
+                                  showsPrec d (getField @"pWaitSemaphores" x) .
                                     showString ", " .
-                                      showString "vkPWaitDstStageMask = " .
-                                        showsPrec d (vkPWaitDstStageMask x) .
+                                      showString "pWaitDstStageMask = " .
+                                        showsPrec d (getField @"pWaitDstStageMask" x) .
                                           showString ", " .
-                                            showString "vkCommandBufferCount = " .
-                                              showsPrec d (vkCommandBufferCount x) .
+                                            showString "commandBufferCount = " .
+                                              showsPrec d (getField @"commandBufferCount" x) .
                                                 showString ", " .
-                                                  showString "vkPCommandBuffers = " .
-                                                    showsPrec d (vkPCommandBuffers x) .
+                                                  showString "pCommandBuffers = " .
+                                                    showsPrec d (getField @"pCommandBuffers" x) .
                                                       showString ", " .
-                                                        showString "vkSignalSemaphoreCount = " .
-                                                          showsPrec d (vkSignalSemaphoreCount x) .
+                                                        showString "signalSemaphoreCount = " .
+                                                          showsPrec d
+                                                            (getField @"signalSemaphoreCount" x)
+                                                            .
                                                             showString ", " .
-                                                              showString "vkPSignalSemaphores = " .
-                                                                showsPrec d (vkPSignalSemaphores x)
+                                                              showString "pSignalSemaphores = " .
+                                                                showsPrec d
+                                                                  (getField @"pSignalSemaphores" x)
                                                                   . showChar '}'

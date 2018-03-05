@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkValidationCacheCreateInfoEXT
        (VkValidationCacheCreateInfoEXT(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Bitmasks             (VkValidationCacheCreateFlagsEXT)
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkValidationCacheCreateInfoEXT {
@@ -79,27 +79,6 @@ instance VulkanMarshal VkValidationCacheCreateInfoEXT where
         type StructExtends VkValidationCacheCreateInfoEXT = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkValidationCacheCreateInfoEXT where
-        type VkSTypeMType VkValidationCacheCreateInfoEXT = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkValidationCacheCreateInfoEXT, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkValidationCacheCreateInfoEXT, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkValidationCacheCreateInfoEXT, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkValidationCacheCreateInfoEXT, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkValidationCacheCreateInfoEXT where
         type FieldType "sType" VkValidationCacheCreateInfoEXT =
              VkStructureType
@@ -115,37 +94,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkValidationCacheCreateInfoEXT, sType}
 
-instance CanReadField "sType" VkValidationCacheCreateInfoEXT where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkValidationCacheCreateInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkValidationCacheCreateInfoEXT, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkValidationCacheCreateInfoEXT where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkValidationCacheCreateInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkValidationCacheCreateInfoEXT where
-        type VkPNextMType VkValidationCacheCreateInfoEXT = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkValidationCacheCreateInfoEXT, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkValidationCacheCreateInfoEXT, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkValidationCacheCreateInfoEXT, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkValidationCacheCreateInfoEXT, pNext}
+         CanWriteField "sType" VkValidationCacheCreateInfoEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkValidationCacheCreateInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkValidationCacheCreateInfoEXT where
@@ -162,38 +126,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkValidationCacheCreateInfoEXT, pNext}
 
-instance CanReadField "pNext" VkValidationCacheCreateInfoEXT where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkValidationCacheCreateInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkValidationCacheCreateInfoEXT, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkValidationCacheCreateInfoEXT where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkValidationCacheCreateInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkFlags VkValidationCacheCreateInfoEXT where
-        type VkFlagsMType VkValidationCacheCreateInfoEXT =
-             VkValidationCacheCreateFlagsEXT
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkValidationCacheCreateInfoEXT, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkValidationCacheCreateInfoEXT, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkValidationCacheCreateInfoEXT, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkValidationCacheCreateInfoEXT, flags}
+         CanWriteField "pNext" VkValidationCacheCreateInfoEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkValidationCacheCreateInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkValidationCacheCreateInfoEXT where
@@ -211,37 +159,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkValidationCacheCreateInfoEXT, flags}
 
-instance CanReadField "flags" VkValidationCacheCreateInfoEXT where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkValidationCacheCreateInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkValidationCacheCreateInfoEXT, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags" VkValidationCacheCreateInfoEXT where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkValidationCacheCreateInfoEXT, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkInitialDataSize VkValidationCacheCreateInfoEXT where
-        type VkInitialDataSizeMType VkValidationCacheCreateInfoEXT = CSize
-
-        {-# NOINLINE vkInitialDataSize #-}
-        vkInitialDataSize x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkValidationCacheCreateInfoEXT, initialDataSize})
-
-        {-# INLINE vkInitialDataSizeByteOffset #-}
-        vkInitialDataSizeByteOffset ~_
-          = #{offset VkValidationCacheCreateInfoEXT, initialDataSize}
-
-        {-# INLINE readVkInitialDataSize #-}
-        readVkInitialDataSize p
-          = peekByteOff p #{offset VkValidationCacheCreateInfoEXT, initialDataSize}
-
-        {-# INLINE writeVkInitialDataSize #-}
-        writeVkInitialDataSize p
-          = pokeByteOff p #{offset VkValidationCacheCreateInfoEXT, initialDataSize}
+         CanWriteField "flags" VkValidationCacheCreateInfoEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkValidationCacheCreateInfoEXT, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "initialDataSize" VkValidationCacheCreateInfoEXT where
@@ -261,41 +194,23 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkValidationCacheCreateInfoEXT, initialDataSize}
 
-instance CanReadField "initialDataSize"
-           VkValidationCacheCreateInfoEXT
-         where
-        {-# INLINE getField #-}
-        getField = vkInitialDataSize
+instance {-# OVERLAPPING #-}
+         CanReadField "initialDataSize" VkValidationCacheCreateInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkValidationCacheCreateInfoEXT, initialDataSize})
 
         {-# INLINE readField #-}
-        readField = readVkInitialDataSize
-
-instance CanWriteField "initialDataSize"
-           VkValidationCacheCreateInfoEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkInitialDataSize
+        readField p
+          = peekByteOff p #{offset VkValidationCacheCreateInfoEXT, initialDataSize}
 
 instance {-# OVERLAPPING #-}
-         HasVkPInitialData VkValidationCacheCreateInfoEXT where
-        type VkPInitialDataMType VkValidationCacheCreateInfoEXT = Ptr Void
-
-        {-# NOINLINE vkPInitialData #-}
-        vkPInitialData x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkValidationCacheCreateInfoEXT, pInitialData})
-
-        {-# INLINE vkPInitialDataByteOffset #-}
-        vkPInitialDataByteOffset ~_
-          = #{offset VkValidationCacheCreateInfoEXT, pInitialData}
-
-        {-# INLINE readVkPInitialData #-}
-        readVkPInitialData p
-          = peekByteOff p #{offset VkValidationCacheCreateInfoEXT, pInitialData}
-
-        {-# INLINE writeVkPInitialData #-}
-        writeVkPInitialData p
-          = pokeByteOff p #{offset VkValidationCacheCreateInfoEXT, pInitialData}
+         CanWriteField "initialDataSize" VkValidationCacheCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkValidationCacheCreateInfoEXT, initialDataSize}
 
 instance {-# OVERLAPPING #-}
          HasField "pInitialData" VkValidationCacheCreateInfoEXT where
@@ -315,34 +230,37 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkValidationCacheCreateInfoEXT, pInitialData}
 
-instance CanReadField "pInitialData" VkValidationCacheCreateInfoEXT
-         where
-        {-# INLINE getField #-}
-        getField = vkPInitialData
+instance {-# OVERLAPPING #-}
+         CanReadField "pInitialData" VkValidationCacheCreateInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkValidationCacheCreateInfoEXT, pInitialData})
 
         {-# INLINE readField #-}
-        readField = readVkPInitialData
+        readField p
+          = peekByteOff p #{offset VkValidationCacheCreateInfoEXT, pInitialData}
 
-instance CanWriteField "pInitialData"
-           VkValidationCacheCreateInfoEXT
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pInitialData" VkValidationCacheCreateInfoEXT where
         {-# INLINE writeField #-}
-        writeField = writeVkPInitialData
+        writeField p
+          = pokeByteOff p #{offset VkValidationCacheCreateInfoEXT, pInitialData}
 
 instance Show VkValidationCacheCreateInfoEXT where
         showsPrec d x
           = showString "VkValidationCacheCreateInfoEXT {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkInitialDataSize = " .
-                                  showsPrec d (vkInitialDataSize x) .
+                                showString "initialDataSize = " .
+                                  showsPrec d (getField @"initialDataSize" x) .
                                     showString ", " .
-                                      showString "vkPInitialData = " .
-                                        showsPrec d (vkPInitialData x) . showChar '}'
+                                      showString "pInitialData = " .
+                                        showsPrec d (getField @"pInitialData" x) . showChar '}'

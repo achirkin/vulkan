@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPhysicalDevicePushDescriptorPropertiesKHR
        (VkPhysicalDevicePushDescriptorPropertiesKHR(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType                  (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR (VkPhysicalDeviceProperties2KHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                            (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDevicePushDescriptorPropertiesKHR {
@@ -86,28 +86,6 @@ instance VulkanMarshal VkPhysicalDevicePushDescriptorPropertiesKHR
              '[VkPhysicalDeviceProperties2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPhysicalDevicePushDescriptorPropertiesKHR where
-        type VkSTypeMType VkPhysicalDevicePushDescriptorPropertiesKHR =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPhysicalDevicePushDescriptorPropertiesKHR where
         type FieldType "sType" VkPhysicalDevicePushDescriptorPropertiesKHR
              = VkStructureType
@@ -129,42 +107,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, sType}
 
-instance CanReadField "sType"
-           VkPhysicalDevicePushDescriptorPropertiesKHR
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkPhysicalDevicePushDescriptorPropertiesKHR
          where
-        {-# INLINE getField #-}
-        getField = vkSType
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType"
-           VkPhysicalDevicePushDescriptorPropertiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkPhysicalDevicePushDescriptorPropertiesKHR where
-        type VkPNextMType VkPhysicalDevicePushDescriptorPropertiesKHR =
-             Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, pNext}
+         CanWriteField "sType" VkPhysicalDevicePushDescriptorPropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPhysicalDevicePushDescriptorPropertiesKHR where
@@ -188,44 +148,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, pNext}
 
-instance CanReadField "pNext"
-           VkPhysicalDevicePushDescriptorPropertiesKHR
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkPhysicalDevicePushDescriptorPropertiesKHR
          where
-        {-# INLINE getField #-}
-        getField = vkPNext
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext"
-           VkPhysicalDevicePushDescriptorPropertiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkMaxPushDescriptors VkPhysicalDevicePushDescriptorPropertiesKHR
+         CanWriteField "pNext" VkPhysicalDevicePushDescriptorPropertiesKHR
          where
-        type VkMaxPushDescriptorsMType
-               VkPhysicalDevicePushDescriptorPropertiesKHR
-             = Word32
-
-        {-# NOINLINE vkMaxPushDescriptors #-}
-        vkMaxPushDescriptors x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, maxPushDescriptors})
-
-        {-# INLINE vkMaxPushDescriptorsByteOffset #-}
-        vkMaxPushDescriptorsByteOffset ~_
-          = #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, maxPushDescriptors}
-
-        {-# INLINE readVkMaxPushDescriptors #-}
-        readVkMaxPushDescriptors p
-          = peekByteOff p #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, maxPushDescriptors}
-
-        {-# INLINE writeVkMaxPushDescriptors #-}
-        writeVkMaxPushDescriptors p
-          = pokeByteOff p #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, maxPushDescriptors}
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "maxPushDescriptors"
@@ -252,29 +192,35 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, maxPushDescriptors}
 
-instance CanReadField "maxPushDescriptors"
+instance {-# OVERLAPPING #-}
+         CanReadField "maxPushDescriptors"
            VkPhysicalDevicePushDescriptorPropertiesKHR
          where
-        {-# INLINE getField #-}
-        getField = vkMaxPushDescriptors
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, maxPushDescriptors})
 
         {-# INLINE readField #-}
-        readField = readVkMaxPushDescriptors
+        readField p
+          = peekByteOff p #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, maxPushDescriptors}
 
-instance CanWriteField "maxPushDescriptors"
+instance {-# OVERLAPPING #-}
+         CanWriteField "maxPushDescriptors"
            VkPhysicalDevicePushDescriptorPropertiesKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkMaxPushDescriptors
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDevicePushDescriptorPropertiesKHR, maxPushDescriptors}
 
 instance Show VkPhysicalDevicePushDescriptorPropertiesKHR where
         showsPrec d x
           = showString "VkPhysicalDevicePushDescriptorPropertiesKHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkMaxPushDescriptors = " .
-                            showsPrec d (vkMaxPushDescriptors x) . showChar '}'
+                          showString "maxPushDescriptors = " .
+                            showsPrec d (getField @"maxPushDescriptors" x) . showChar '}'

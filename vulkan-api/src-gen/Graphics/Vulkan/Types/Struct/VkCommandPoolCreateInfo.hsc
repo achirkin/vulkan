@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkCommandPoolCreateInfo
        (VkCommandPoolCreateInfo(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkCommandPoolCreateFlags (VkCommandPoolCreateFlags)
 import           Graphics.Vulkan.Types.Enum.VkStructureType          (VkStructureType)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                    (unsafeDupablePerformIO)
 
 -- | > typedef struct VkCommandPoolCreateInfo {
@@ -73,27 +73,6 @@ instance VulkanMarshal VkCommandPoolCreateInfo where
         type ReturnedOnly VkCommandPoolCreateInfo = 'False -- ' closing tick for hsc2hs
         type StructExtends VkCommandPoolCreateInfo = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkCommandPoolCreateInfo
-         where
-        type VkSTypeMType VkCommandPoolCreateInfo = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkCommandPoolCreateInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkCommandPoolCreateInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkCommandPoolCreateInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkCommandPoolCreateInfo, sType}
-
 instance {-# OVERLAPPING #-}
          HasField "sType" VkCommandPoolCreateInfo where
         type FieldType "sType" VkCommandPoolCreateInfo = VkStructureType
@@ -108,37 +87,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkCommandPoolCreateInfo, sType}
 
-instance CanReadField "sType" VkCommandPoolCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkCommandPoolCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkCommandPoolCreateInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkCommandPoolCreateInfo, sType}
 
-instance CanWriteField "sType" VkCommandPoolCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkCommandPoolCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkCommandPoolCreateInfo
-         where
-        type VkPNextMType VkCommandPoolCreateInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkCommandPoolCreateInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkCommandPoolCreateInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkCommandPoolCreateInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkCommandPoolCreateInfo, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkCommandPoolCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkCommandPoolCreateInfo where
@@ -154,38 +118,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkCommandPoolCreateInfo, pNext}
 
-instance CanReadField "pNext" VkCommandPoolCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkCommandPoolCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkCommandPoolCreateInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkCommandPoolCreateInfo, pNext}
 
-instance CanWriteField "pNext" VkCommandPoolCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext" VkCommandPoolCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-} HasVkFlags VkCommandPoolCreateInfo
-         where
-        type VkFlagsMType VkCommandPoolCreateInfo =
-             VkCommandPoolCreateFlags
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkCommandPoolCreateInfo, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkCommandPoolCreateInfo, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkCommandPoolCreateInfo, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkCommandPoolCreateInfo, flags}
+        writeField p
+          = pokeByteOff p #{offset VkCommandPoolCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkCommandPoolCreateInfo where
@@ -202,37 +150,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkCommandPoolCreateInfo, flags}
 
-instance CanReadField "flags" VkCommandPoolCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkCommandPoolCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkCommandPoolCreateInfo, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags" VkCommandPoolCreateInfo where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkCommandPoolCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkQueueFamilyIndex VkCommandPoolCreateInfo where
-        type VkQueueFamilyIndexMType VkCommandPoolCreateInfo = Word32
-
-        {-# NOINLINE vkQueueFamilyIndex #-}
-        vkQueueFamilyIndex x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkCommandPoolCreateInfo, queueFamilyIndex})
-
-        {-# INLINE vkQueueFamilyIndexByteOffset #-}
-        vkQueueFamilyIndexByteOffset ~_
-          = #{offset VkCommandPoolCreateInfo, queueFamilyIndex}
-
-        {-# INLINE readVkQueueFamilyIndex #-}
-        readVkQueueFamilyIndex p
-          = peekByteOff p #{offset VkCommandPoolCreateInfo, queueFamilyIndex}
-
-        {-# INLINE writeVkQueueFamilyIndex #-}
-        writeVkQueueFamilyIndex p
-          = pokeByteOff p #{offset VkCommandPoolCreateInfo, queueFamilyIndex}
+         CanWriteField "flags" VkCommandPoolCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkCommandPoolCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "queueFamilyIndex" VkCommandPoolCreateInfo where
@@ -251,30 +184,34 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkCommandPoolCreateInfo, queueFamilyIndex}
 
-instance CanReadField "queueFamilyIndex" VkCommandPoolCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkQueueFamilyIndex
+instance {-# OVERLAPPING #-}
+         CanReadField "queueFamilyIndex" VkCommandPoolCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkCommandPoolCreateInfo, queueFamilyIndex})
 
         {-# INLINE readField #-}
-        readField = readVkQueueFamilyIndex
+        readField p
+          = peekByteOff p #{offset VkCommandPoolCreateInfo, queueFamilyIndex}
 
-instance CanWriteField "queueFamilyIndex" VkCommandPoolCreateInfo
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "queueFamilyIndex" VkCommandPoolCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkQueueFamilyIndex
+        writeField p
+          = pokeByteOff p #{offset VkCommandPoolCreateInfo, queueFamilyIndex}
 
 instance Show VkCommandPoolCreateInfo where
         showsPrec d x
           = showString "VkCommandPoolCreateInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkQueueFamilyIndex = " .
-                                  showsPrec d (vkQueueFamilyIndex x) . showChar '}'
+                                showString "queueFamilyIndex = " .
+                                  showsPrec d (getField @"queueFamilyIndex" x) . showChar '}'

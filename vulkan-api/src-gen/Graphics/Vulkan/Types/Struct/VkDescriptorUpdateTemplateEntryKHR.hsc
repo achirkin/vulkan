@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkDescriptorUpdateTemplateEntryKHR
        (VkDescriptorUpdateTemplateEntryKHR(..)) where
@@ -13,7 +14,6 @@ import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkDescriptorType (VkDescriptorType)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                            (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDescriptorUpdateTemplateEntryKHR {
@@ -81,27 +81,6 @@ instance VulkanMarshal VkDescriptorUpdateTemplateEntryKHR where
         type StructExtends VkDescriptorUpdateTemplateEntryKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkDstBinding VkDescriptorUpdateTemplateEntryKHR where
-        type VkDstBindingMType VkDescriptorUpdateTemplateEntryKHR = Word32
-
-        {-# NOINLINE vkDstBinding #-}
-        vkDstBinding x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDescriptorUpdateTemplateEntryKHR, dstBinding})
-
-        {-# INLINE vkDstBindingByteOffset #-}
-        vkDstBindingByteOffset ~_
-          = #{offset VkDescriptorUpdateTemplateEntryKHR, dstBinding}
-
-        {-# INLINE readVkDstBinding #-}
-        readVkDstBinding p
-          = peekByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, dstBinding}
-
-        {-# INLINE writeVkDstBinding #-}
-        writeVkDstBinding p
-          = pokeByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, dstBinding}
-
-instance {-# OVERLAPPING #-}
          HasField "dstBinding" VkDescriptorUpdateTemplateEntryKHR where
         type FieldType "dstBinding" VkDescriptorUpdateTemplateEntryKHR =
              Word32
@@ -119,42 +98,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDescriptorUpdateTemplateEntryKHR, dstBinding}
 
-instance CanReadField "dstBinding"
-           VkDescriptorUpdateTemplateEntryKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkDstBinding
+instance {-# OVERLAPPING #-}
+         CanReadField "dstBinding" VkDescriptorUpdateTemplateEntryKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDescriptorUpdateTemplateEntryKHR, dstBinding})
 
         {-# INLINE readField #-}
-        readField = readVkDstBinding
-
-instance CanWriteField "dstBinding"
-           VkDescriptorUpdateTemplateEntryKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkDstBinding
+        readField p
+          = peekByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, dstBinding}
 
 instance {-# OVERLAPPING #-}
-         HasVkDstArrayElement VkDescriptorUpdateTemplateEntryKHR where
-        type VkDstArrayElementMType VkDescriptorUpdateTemplateEntryKHR =
-             Word32
-
-        {-# NOINLINE vkDstArrayElement #-}
-        vkDstArrayElement x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDescriptorUpdateTemplateEntryKHR, dstArrayElement})
-
-        {-# INLINE vkDstArrayElementByteOffset #-}
-        vkDstArrayElementByteOffset ~_
-          = #{offset VkDescriptorUpdateTemplateEntryKHR, dstArrayElement}
-
-        {-# INLINE readVkDstArrayElement #-}
-        readVkDstArrayElement p
-          = peekByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, dstArrayElement}
-
-        {-# INLINE writeVkDstArrayElement #-}
-        writeVkDstArrayElement p
-          = pokeByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, dstArrayElement}
+         CanWriteField "dstBinding" VkDescriptorUpdateTemplateEntryKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, dstBinding}
 
 instance {-# OVERLAPPING #-}
          HasField "dstArrayElement" VkDescriptorUpdateTemplateEntryKHR where
@@ -178,42 +137,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDescriptorUpdateTemplateEntryKHR, dstArrayElement}
 
-instance CanReadField "dstArrayElement"
-           VkDescriptorUpdateTemplateEntryKHR
+instance {-# OVERLAPPING #-}
+         CanReadField "dstArrayElement" VkDescriptorUpdateTemplateEntryKHR
          where
-        {-# INLINE getField #-}
-        getField = vkDstArrayElement
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDescriptorUpdateTemplateEntryKHR, dstArrayElement})
 
         {-# INLINE readField #-}
-        readField = readVkDstArrayElement
-
-instance CanWriteField "dstArrayElement"
-           VkDescriptorUpdateTemplateEntryKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkDstArrayElement
+        readField p
+          = peekByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, dstArrayElement}
 
 instance {-# OVERLAPPING #-}
-         HasVkDescriptorCount VkDescriptorUpdateTemplateEntryKHR where
-        type VkDescriptorCountMType VkDescriptorUpdateTemplateEntryKHR =
-             Word32
-
-        {-# NOINLINE vkDescriptorCount #-}
-        vkDescriptorCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDescriptorUpdateTemplateEntryKHR, descriptorCount})
-
-        {-# INLINE vkDescriptorCountByteOffset #-}
-        vkDescriptorCountByteOffset ~_
-          = #{offset VkDescriptorUpdateTemplateEntryKHR, descriptorCount}
-
-        {-# INLINE readVkDescriptorCount #-}
-        readVkDescriptorCount p
-          = peekByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, descriptorCount}
-
-        {-# INLINE writeVkDescriptorCount #-}
-        writeVkDescriptorCount p
-          = pokeByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, descriptorCount}
+         CanWriteField "dstArrayElement" VkDescriptorUpdateTemplateEntryKHR
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, dstArrayElement}
 
 instance {-# OVERLAPPING #-}
          HasField "descriptorCount" VkDescriptorUpdateTemplateEntryKHR where
@@ -237,42 +178,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDescriptorUpdateTemplateEntryKHR, descriptorCount}
 
-instance CanReadField "descriptorCount"
-           VkDescriptorUpdateTemplateEntryKHR
+instance {-# OVERLAPPING #-}
+         CanReadField "descriptorCount" VkDescriptorUpdateTemplateEntryKHR
          where
-        {-# INLINE getField #-}
-        getField = vkDescriptorCount
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDescriptorUpdateTemplateEntryKHR, descriptorCount})
 
         {-# INLINE readField #-}
-        readField = readVkDescriptorCount
-
-instance CanWriteField "descriptorCount"
-           VkDescriptorUpdateTemplateEntryKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkDescriptorCount
+        readField p
+          = peekByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, descriptorCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkDescriptorType VkDescriptorUpdateTemplateEntryKHR where
-        type VkDescriptorTypeMType VkDescriptorUpdateTemplateEntryKHR =
-             VkDescriptorType
-
-        {-# NOINLINE vkDescriptorType #-}
-        vkDescriptorType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDescriptorUpdateTemplateEntryKHR, descriptorType})
-
-        {-# INLINE vkDescriptorTypeByteOffset #-}
-        vkDescriptorTypeByteOffset ~_
-          = #{offset VkDescriptorUpdateTemplateEntryKHR, descriptorType}
-
-        {-# INLINE readVkDescriptorType #-}
-        readVkDescriptorType p
-          = peekByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, descriptorType}
-
-        {-# INLINE writeVkDescriptorType #-}
-        writeVkDescriptorType p
-          = pokeByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, descriptorType}
+         CanWriteField "descriptorCount" VkDescriptorUpdateTemplateEntryKHR
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, descriptorCount}
 
 instance {-# OVERLAPPING #-}
          HasField "descriptorType" VkDescriptorUpdateTemplateEntryKHR where
@@ -296,41 +219,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDescriptorUpdateTemplateEntryKHR, descriptorType}
 
-instance CanReadField "descriptorType"
-           VkDescriptorUpdateTemplateEntryKHR
+instance {-# OVERLAPPING #-}
+         CanReadField "descriptorType" VkDescriptorUpdateTemplateEntryKHR
          where
-        {-# INLINE getField #-}
-        getField = vkDescriptorType
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDescriptorUpdateTemplateEntryKHR, descriptorType})
 
         {-# INLINE readField #-}
-        readField = readVkDescriptorType
-
-instance CanWriteField "descriptorType"
-           VkDescriptorUpdateTemplateEntryKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkDescriptorType
+        readField p
+          = peekByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, descriptorType}
 
 instance {-# OVERLAPPING #-}
-         HasVkOffset VkDescriptorUpdateTemplateEntryKHR where
-        type VkOffsetMType VkDescriptorUpdateTemplateEntryKHR = CSize
-
-        {-# NOINLINE vkOffset #-}
-        vkOffset x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDescriptorUpdateTemplateEntryKHR, offset})
-
-        {-# INLINE vkOffsetByteOffset #-}
-        vkOffsetByteOffset ~_
-          = #{offset VkDescriptorUpdateTemplateEntryKHR, offset}
-
-        {-# INLINE readVkOffset #-}
-        readVkOffset p
-          = peekByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, offset}
-
-        {-# INLINE writeVkOffset #-}
-        writeVkOffset p
-          = pokeByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, offset}
+         CanWriteField "descriptorType" VkDescriptorUpdateTemplateEntryKHR
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, descriptorType}
 
 instance {-# OVERLAPPING #-}
          HasField "offset" VkDescriptorUpdateTemplateEntryKHR where
@@ -349,39 +255,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDescriptorUpdateTemplateEntryKHR, offset}
 
-instance CanReadField "offset" VkDescriptorUpdateTemplateEntryKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkOffset
+instance {-# OVERLAPPING #-}
+         CanReadField "offset" VkDescriptorUpdateTemplateEntryKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDescriptorUpdateTemplateEntryKHR, offset})
 
         {-# INLINE readField #-}
-        readField = readVkOffset
-
-instance CanWriteField "offset" VkDescriptorUpdateTemplateEntryKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkOffset
+        readField p
+          = peekByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, offset}
 
 instance {-# OVERLAPPING #-}
-         HasVkStride VkDescriptorUpdateTemplateEntryKHR where
-        type VkStrideMType VkDescriptorUpdateTemplateEntryKHR = CSize
-
-        {-# NOINLINE vkStride #-}
-        vkStride x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDescriptorUpdateTemplateEntryKHR, stride})
-
-        {-# INLINE vkStrideByteOffset #-}
-        vkStrideByteOffset ~_
-          = #{offset VkDescriptorUpdateTemplateEntryKHR, stride}
-
-        {-# INLINE readVkStride #-}
-        readVkStride p
-          = peekByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, stride}
-
-        {-# INLINE writeVkStride #-}
-        writeVkStride p
-          = pokeByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, stride}
+         CanWriteField "offset" VkDescriptorUpdateTemplateEntryKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, offset}
 
 instance {-# OVERLAPPING #-}
          HasField "stride" VkDescriptorUpdateTemplateEntryKHR where
@@ -400,36 +289,40 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDescriptorUpdateTemplateEntryKHR, stride}
 
-instance CanReadField "stride" VkDescriptorUpdateTemplateEntryKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkStride
+instance {-# OVERLAPPING #-}
+         CanReadField "stride" VkDescriptorUpdateTemplateEntryKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDescriptorUpdateTemplateEntryKHR, stride})
 
         {-# INLINE readField #-}
-        readField = readVkStride
+        readField p
+          = peekByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, stride}
 
-instance CanWriteField "stride" VkDescriptorUpdateTemplateEntryKHR
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "stride" VkDescriptorUpdateTemplateEntryKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkStride
+        writeField p
+          = pokeByteOff p #{offset VkDescriptorUpdateTemplateEntryKHR, stride}
 
 instance Show VkDescriptorUpdateTemplateEntryKHR where
         showsPrec d x
           = showString "VkDescriptorUpdateTemplateEntryKHR {" .
-              showString "vkDstBinding = " .
-                showsPrec d (vkDstBinding x) .
+              showString "dstBinding = " .
+                showsPrec d (getField @"dstBinding" x) .
                   showString ", " .
-                    showString "vkDstArrayElement = " .
-                      showsPrec d (vkDstArrayElement x) .
+                    showString "dstArrayElement = " .
+                      showsPrec d (getField @"dstArrayElement" x) .
                         showString ", " .
-                          showString "vkDescriptorCount = " .
-                            showsPrec d (vkDescriptorCount x) .
+                          showString "descriptorCount = " .
+                            showsPrec d (getField @"descriptorCount" x) .
                               showString ", " .
-                                showString "vkDescriptorType = " .
-                                  showsPrec d (vkDescriptorType x) .
+                                showString "descriptorType = " .
+                                  showsPrec d (getField @"descriptorType" x) .
                                     showString ", " .
-                                      showString "vkOffset = " .
-                                        showsPrec d (vkOffset x) .
+                                      showString "offset = " .
+                                        showsPrec d (getField @"offset" x) .
                                           showString ", " .
-                                            showString "vkStride = " .
-                                              showsPrec d (vkStride x) . showChar '}'
+                                            showString "stride = " .
+                                              showsPrec d (getField @"stride" x) . showChar '}'

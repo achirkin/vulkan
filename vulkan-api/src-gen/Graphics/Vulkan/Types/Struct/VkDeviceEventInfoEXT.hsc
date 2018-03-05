@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkDeviceEventInfoEXT
        (VkDeviceEventInfoEXT(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkDeviceEventTypeEXT (VkDeviceEventTypeEXT)
 import           Graphics.Vulkan.Types.Enum.VkStructureType      (VkStructureType)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDeviceEventInfoEXT {
@@ -71,26 +71,6 @@ instance VulkanMarshal VkDeviceEventInfoEXT where
         type ReturnedOnly VkDeviceEventInfoEXT = 'False -- ' closing tick for hsc2hs
         type StructExtends VkDeviceEventInfoEXT = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkDeviceEventInfoEXT where
-        type VkSTypeMType VkDeviceEventInfoEXT = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceEventInfoEXT, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkDeviceEventInfoEXT, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkDeviceEventInfoEXT, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkDeviceEventInfoEXT, sType}
-
 instance {-# OVERLAPPING #-} HasField "sType" VkDeviceEventInfoEXT
          where
         type FieldType "sType" VkDeviceEventInfoEXT = VkStructureType
@@ -105,36 +85,22 @@ instance {-# OVERLAPPING #-} HasField "sType" VkDeviceEventInfoEXT
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkDeviceEventInfoEXT, sType}
 
-instance CanReadField "sType" VkDeviceEventInfoEXT where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkDeviceEventInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceEventInfoEXT, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkDeviceEventInfoEXT, sType}
 
-instance CanWriteField "sType" VkDeviceEventInfoEXT where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkDeviceEventInfoEXT where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkDeviceEventInfoEXT where
-        type VkPNextMType VkDeviceEventInfoEXT = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceEventInfoEXT, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkDeviceEventInfoEXT, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkDeviceEventInfoEXT, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkDeviceEventInfoEXT, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceEventInfoEXT, sType}
 
 instance {-# OVERLAPPING #-} HasField "pNext" VkDeviceEventInfoEXT
          where
@@ -150,37 +116,22 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkDeviceEventInfoEXT
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkDeviceEventInfoEXT, pNext}
 
-instance CanReadField "pNext" VkDeviceEventInfoEXT where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkDeviceEventInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceEventInfoEXT, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkDeviceEventInfoEXT, pNext}
 
-instance CanWriteField "pNext" VkDeviceEventInfoEXT where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext" VkDeviceEventInfoEXT where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-} HasVkDeviceEvent VkDeviceEventInfoEXT
-         where
-        type VkDeviceEventMType VkDeviceEventInfoEXT = VkDeviceEventTypeEXT
-
-        {-# NOINLINE vkDeviceEvent #-}
-        vkDeviceEvent x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceEventInfoEXT, deviceEvent})
-
-        {-# INLINE vkDeviceEventByteOffset #-}
-        vkDeviceEventByteOffset ~_
-          = #{offset VkDeviceEventInfoEXT, deviceEvent}
-
-        {-# INLINE readVkDeviceEvent #-}
-        readVkDeviceEvent p
-          = peekByteOff p #{offset VkDeviceEventInfoEXT, deviceEvent}
-
-        {-# INLINE writeVkDeviceEvent #-}
-        writeVkDeviceEvent p
-          = pokeByteOff p #{offset VkDeviceEventInfoEXT, deviceEvent}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceEventInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "deviceEvent" VkDeviceEventInfoEXT where
@@ -198,25 +149,31 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceEventInfoEXT, deviceEvent}
 
-instance CanReadField "deviceEvent" VkDeviceEventInfoEXT where
-        {-# INLINE getField #-}
-        getField = vkDeviceEvent
+instance {-# OVERLAPPING #-}
+         CanReadField "deviceEvent" VkDeviceEventInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceEventInfoEXT, deviceEvent})
 
         {-# INLINE readField #-}
-        readField = readVkDeviceEvent
+        readField p
+          = peekByteOff p #{offset VkDeviceEventInfoEXT, deviceEvent}
 
-instance CanWriteField "deviceEvent" VkDeviceEventInfoEXT where
+instance {-# OVERLAPPING #-}
+         CanWriteField "deviceEvent" VkDeviceEventInfoEXT where
         {-# INLINE writeField #-}
-        writeField = writeVkDeviceEvent
+        writeField p
+          = pokeByteOff p #{offset VkDeviceEventInfoEXT, deviceEvent}
 
 instance Show VkDeviceEventInfoEXT where
         showsPrec d x
           = showString "VkDeviceEventInfoEXT {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkDeviceEvent = " .
-                            showsPrec d (vkDeviceEvent x) . showChar '}'
+                          showString "deviceEvent = " .
+                            showsPrec d (getField @"deviceEvent" x) . showChar '}'

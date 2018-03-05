@@ -23,7 +23,8 @@ module Graphics.Vulkan.Ext.VK_KHR_bind_memory2
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
-        vkBindBufferMemory2KHR, vkBindImageMemory2KHR,
+        vkBindBufferMemory2KHR, vkBindBufferMemory2KHRSafe,
+        vkBindImageMemory2KHR, vkBindImageMemory2KHRSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
@@ -68,6 +69,24 @@ foreign import ccall unsafe "vkBindBufferMemory2KHR"
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
+--   > VkResult vkBindBufferMemory2KHR
+--   >     ( VkDevice device
+--   >     , uint32_t bindInfoCount
+--   >     , const VkBindBufferMemoryInfoKHR* pBindInfos
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkBindBufferMemory2KHR.html vkBindBufferMemory2KHR registry at www.khronos.org>
+foreign import ccall safe "vkBindBufferMemory2KHR"
+               vkBindBufferMemory2KHRSafe ::
+               VkDevice -- ^ device
+                        -> Word32 -- ^ bindInfoCount
+                                  -> Ptr VkBindBufferMemoryInfoKHR -- ^ pBindInfos
+                                                                   -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
 --   > VkResult vkBindImageMemory2KHR
 --   >     ( VkDevice device
 --   >     , uint32_t bindInfoCount
@@ -77,6 +96,24 @@ foreign import ccall unsafe "vkBindBufferMemory2KHR"
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkBindImageMemory2KHR.html vkBindImageMemory2KHR registry at www.khronos.org>
 foreign import ccall unsafe "vkBindImageMemory2KHR"
                vkBindImageMemory2KHR ::
+               VkDevice -- ^ device
+                        -> Word32 -- ^ bindInfoCount
+                                  -> Ptr VkBindImageMemoryInfoKHR -- ^ pBindInfos
+                                                                  -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkBindImageMemory2KHR
+--   >     ( VkDevice device
+--   >     , uint32_t bindInfoCount
+--   >     , const VkBindImageMemoryInfoKHR* pBindInfos
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkBindImageMemory2KHR.html vkBindImageMemory2KHR registry at www.khronos.org>
+foreign import ccall safe "vkBindImageMemory2KHR"
+               vkBindImageMemory2KHRSafe ::
                VkDevice -- ^ device
                         -> Word32 -- ^ bindInfoCount
                                   -> Ptr VkBindImageMemoryInfoKHR -- ^ pBindInfos

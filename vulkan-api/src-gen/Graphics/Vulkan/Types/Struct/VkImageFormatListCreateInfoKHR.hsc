@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkImageFormatListCreateInfoKHR
        (VkImageFormatListCreateInfoKHR(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkFormat            (VkFormat)
 import           Graphics.Vulkan.Types.Enum.VkStructureType     (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkImageCreateInfo (VkImageCreateInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                               (unsafeDupablePerformIO)
 
 -- | > typedef struct VkImageFormatListCreateInfoKHR {
@@ -80,27 +80,6 @@ instance VulkanMarshal VkImageFormatListCreateInfoKHR where
              '[VkImageCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkImageFormatListCreateInfoKHR where
-        type VkSTypeMType VkImageFormatListCreateInfoKHR = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageFormatListCreateInfoKHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkImageFormatListCreateInfoKHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkImageFormatListCreateInfoKHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkImageFormatListCreateInfoKHR, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkImageFormatListCreateInfoKHR where
         type FieldType "sType" VkImageFormatListCreateInfoKHR =
              VkStructureType
@@ -116,37 +95,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkImageFormatListCreateInfoKHR, sType}
 
-instance CanReadField "sType" VkImageFormatListCreateInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkImageFormatListCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageFormatListCreateInfoKHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkImageFormatListCreateInfoKHR where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkImageFormatListCreateInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkImageFormatListCreateInfoKHR where
-        type VkPNextMType VkImageFormatListCreateInfoKHR = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageFormatListCreateInfoKHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkImageFormatListCreateInfoKHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkImageFormatListCreateInfoKHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkImageFormatListCreateInfoKHR, pNext}
+         CanWriteField "sType" VkImageFormatListCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkImageFormatListCreateInfoKHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkImageFormatListCreateInfoKHR where
@@ -163,37 +127,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkImageFormatListCreateInfoKHR, pNext}
 
-instance CanReadField "pNext" VkImageFormatListCreateInfoKHR where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkImageFormatListCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageFormatListCreateInfoKHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkImageFormatListCreateInfoKHR where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkImageFormatListCreateInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkViewFormatCount VkImageFormatListCreateInfoKHR where
-        type VkViewFormatCountMType VkImageFormatListCreateInfoKHR = Word32
-
-        {-# NOINLINE vkViewFormatCount #-}
-        vkViewFormatCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageFormatListCreateInfoKHR, viewFormatCount})
-
-        {-# INLINE vkViewFormatCountByteOffset #-}
-        vkViewFormatCountByteOffset ~_
-          = #{offset VkImageFormatListCreateInfoKHR, viewFormatCount}
-
-        {-# INLINE readVkViewFormatCount #-}
-        readVkViewFormatCount p
-          = peekByteOff p #{offset VkImageFormatListCreateInfoKHR, viewFormatCount}
-
-        {-# INLINE writeVkViewFormatCount #-}
-        writeVkViewFormatCount p
-          = pokeByteOff p #{offset VkImageFormatListCreateInfoKHR, viewFormatCount}
+         CanWriteField "pNext" VkImageFormatListCreateInfoKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkImageFormatListCreateInfoKHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "viewFormatCount" VkImageFormatListCreateInfoKHR where
@@ -213,42 +162,23 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkImageFormatListCreateInfoKHR, viewFormatCount}
 
-instance CanReadField "viewFormatCount"
-           VkImageFormatListCreateInfoKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkViewFormatCount
+instance {-# OVERLAPPING #-}
+         CanReadField "viewFormatCount" VkImageFormatListCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageFormatListCreateInfoKHR, viewFormatCount})
 
         {-# INLINE readField #-}
-        readField = readVkViewFormatCount
-
-instance CanWriteField "viewFormatCount"
-           VkImageFormatListCreateInfoKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkViewFormatCount
+        readField p
+          = peekByteOff p #{offset VkImageFormatListCreateInfoKHR, viewFormatCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPViewFormats VkImageFormatListCreateInfoKHR where
-        type VkPViewFormatsMType VkImageFormatListCreateInfoKHR =
-             Ptr VkFormat
-
-        {-# NOINLINE vkPViewFormats #-}
-        vkPViewFormats x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageFormatListCreateInfoKHR, pViewFormats})
-
-        {-# INLINE vkPViewFormatsByteOffset #-}
-        vkPViewFormatsByteOffset ~_
-          = #{offset VkImageFormatListCreateInfoKHR, pViewFormats}
-
-        {-# INLINE readVkPViewFormats #-}
-        readVkPViewFormats p
-          = peekByteOff p #{offset VkImageFormatListCreateInfoKHR, pViewFormats}
-
-        {-# INLINE writeVkPViewFormats #-}
-        writeVkPViewFormats p
-          = pokeByteOff p #{offset VkImageFormatListCreateInfoKHR, pViewFormats}
+         CanWriteField "viewFormatCount" VkImageFormatListCreateInfoKHR
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkImageFormatListCreateInfoKHR, viewFormatCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pViewFormats" VkImageFormatListCreateInfoKHR where
@@ -268,31 +198,34 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkImageFormatListCreateInfoKHR, pViewFormats}
 
-instance CanReadField "pViewFormats" VkImageFormatListCreateInfoKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkPViewFormats
+instance {-# OVERLAPPING #-}
+         CanReadField "pViewFormats" VkImageFormatListCreateInfoKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageFormatListCreateInfoKHR, pViewFormats})
 
         {-# INLINE readField #-}
-        readField = readVkPViewFormats
+        readField p
+          = peekByteOff p #{offset VkImageFormatListCreateInfoKHR, pViewFormats}
 
-instance CanWriteField "pViewFormats"
-           VkImageFormatListCreateInfoKHR
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pViewFormats" VkImageFormatListCreateInfoKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkPViewFormats
+        writeField p
+          = pokeByteOff p #{offset VkImageFormatListCreateInfoKHR, pViewFormats}
 
 instance Show VkImageFormatListCreateInfoKHR where
         showsPrec d x
           = showString "VkImageFormatListCreateInfoKHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkViewFormatCount = " .
-                            showsPrec d (vkViewFormatCount x) .
+                          showString "viewFormatCount = " .
+                            showsPrec d (getField @"viewFormatCount" x) .
                               showString ", " .
-                                showString "vkPViewFormats = " .
-                                  showsPrec d (vkPViewFormats x) . showChar '}'
+                                showString "pViewFormats = " .
+                                  showsPrec d (getField @"pViewFormats" x) . showChar '}'

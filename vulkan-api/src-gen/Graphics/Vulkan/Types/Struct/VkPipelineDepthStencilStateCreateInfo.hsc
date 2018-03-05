@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPipelineDepthStencilStateCreateInfo
        (VkPipelineDepthStencilStateCreateInfo(..)) where
@@ -17,7 +18,6 @@ import           Graphics.Vulkan.Types.Bitmasks                (VkPipelineDepthS
 import           Graphics.Vulkan.Types.Enum.VkCompareOp        (VkCompareOp)
 import           Graphics.Vulkan.Types.Enum.VkStructureType    (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkStencilOpState (VkStencilOpState)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                              (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPipelineDepthStencilStateCreateInfo {
@@ -94,28 +94,6 @@ instance VulkanMarshal VkPipelineDepthStencilStateCreateInfo where
         type StructExtends VkPipelineDepthStencilStateCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPipelineDepthStencilStateCreateInfo where
-        type VkSTypeMType VkPipelineDepthStencilStateCreateInfo =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineDepthStencilStateCreateInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPipelineDepthStencilStateCreateInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPipelineDepthStencilStateCreateInfo where
         type FieldType "sType" VkPipelineDepthStencilStateCreateInfo =
              VkStructureType
@@ -133,40 +111,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineDepthStencilStateCreateInfo, sType}
 
-instance CanReadField "sType" VkPipelineDepthStencilStateCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkPipelineDepthStencilStateCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineDepthStencilStateCreateInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType"
-           VkPipelineDepthStencilStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkPipelineDepthStencilStateCreateInfo where
-        type VkPNextMType VkPipelineDepthStencilStateCreateInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineDepthStencilStateCreateInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPipelineDepthStencilStateCreateInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, pNext}
+         CanWriteField "sType" VkPipelineDepthStencilStateCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPipelineDepthStencilStateCreateInfo where
@@ -186,41 +146,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineDepthStencilStateCreateInfo, pNext}
 
-instance CanReadField "pNext" VkPipelineDepthStencilStateCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkPipelineDepthStencilStateCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineDepthStencilStateCreateInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext"
-           VkPipelineDepthStencilStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkFlags VkPipelineDepthStencilStateCreateInfo where
-        type VkFlagsMType VkPipelineDepthStencilStateCreateInfo =
-             VkPipelineDepthStencilStateCreateFlags
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineDepthStencilStateCreateInfo, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkPipelineDepthStencilStateCreateInfo, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, flags}
+         CanWriteField "pNext" VkPipelineDepthStencilStateCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkPipelineDepthStencilStateCreateInfo where
@@ -240,41 +181,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineDepthStencilStateCreateInfo, flags}
 
-instance CanReadField "flags" VkPipelineDepthStencilStateCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkPipelineDepthStencilStateCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineDepthStencilStateCreateInfo, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags"
-           VkPipelineDepthStencilStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkDepthTestEnable VkPipelineDepthStencilStateCreateInfo where
-        type VkDepthTestEnableMType VkPipelineDepthStencilStateCreateInfo =
-             VkBool32
-
-        {-# NOINLINE vkDepthTestEnable #-}
-        vkDepthTestEnable x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineDepthStencilStateCreateInfo, depthTestEnable})
-
-        {-# INLINE vkDepthTestEnableByteOffset #-}
-        vkDepthTestEnableByteOffset ~_
-          = #{offset VkPipelineDepthStencilStateCreateInfo, depthTestEnable}
-
-        {-# INLINE readVkDepthTestEnable #-}
-        readVkDepthTestEnable p
-          = peekByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, depthTestEnable}
-
-        {-# INLINE writeVkDepthTestEnable #-}
-        writeVkDepthTestEnable p
-          = pokeByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, depthTestEnable}
+         CanWriteField "flags" VkPipelineDepthStencilStateCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "depthTestEnable" VkPipelineDepthStencilStateCreateInfo
@@ -300,42 +222,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineDepthStencilStateCreateInfo, depthTestEnable}
 
-instance CanReadField "depthTestEnable"
+instance {-# OVERLAPPING #-}
+         CanReadField "depthTestEnable"
            VkPipelineDepthStencilStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkDepthTestEnable
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineDepthStencilStateCreateInfo, depthTestEnable})
 
         {-# INLINE readField #-}
-        readField = readVkDepthTestEnable
+        readField p
+          = peekByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, depthTestEnable}
 
-instance CanWriteField "depthTestEnable"
+instance {-# OVERLAPPING #-}
+         CanWriteField "depthTestEnable"
            VkPipelineDepthStencilStateCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkDepthTestEnable
-
-instance {-# OVERLAPPING #-}
-         HasVkDepthWriteEnable VkPipelineDepthStencilStateCreateInfo where
-        type VkDepthWriteEnableMType VkPipelineDepthStencilStateCreateInfo
-             = VkBool32
-
-        {-# NOINLINE vkDepthWriteEnable #-}
-        vkDepthWriteEnable x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineDepthStencilStateCreateInfo, depthWriteEnable})
-
-        {-# INLINE vkDepthWriteEnableByteOffset #-}
-        vkDepthWriteEnableByteOffset ~_
-          = #{offset VkPipelineDepthStencilStateCreateInfo, depthWriteEnable}
-
-        {-# INLINE readVkDepthWriteEnable #-}
-        readVkDepthWriteEnable p
-          = peekByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, depthWriteEnable}
-
-        {-# INLINE writeVkDepthWriteEnable #-}
-        writeVkDepthWriteEnable p
-          = pokeByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, depthWriteEnable}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, depthTestEnable}
 
 instance {-# OVERLAPPING #-}
          HasField "depthWriteEnable" VkPipelineDepthStencilStateCreateInfo
@@ -361,42 +267,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineDepthStencilStateCreateInfo, depthWriteEnable}
 
-instance CanReadField "depthWriteEnable"
+instance {-# OVERLAPPING #-}
+         CanReadField "depthWriteEnable"
            VkPipelineDepthStencilStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkDepthWriteEnable
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineDepthStencilStateCreateInfo, depthWriteEnable})
 
         {-# INLINE readField #-}
-        readField = readVkDepthWriteEnable
+        readField p
+          = peekByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, depthWriteEnable}
 
-instance CanWriteField "depthWriteEnable"
+instance {-# OVERLAPPING #-}
+         CanWriteField "depthWriteEnable"
            VkPipelineDepthStencilStateCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkDepthWriteEnable
-
-instance {-# OVERLAPPING #-}
-         HasVkDepthCompareOp VkPipelineDepthStencilStateCreateInfo where
-        type VkDepthCompareOpMType VkPipelineDepthStencilStateCreateInfo =
-             VkCompareOp
-
-        {-# NOINLINE vkDepthCompareOp #-}
-        vkDepthCompareOp x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineDepthStencilStateCreateInfo, depthCompareOp})
-
-        {-# INLINE vkDepthCompareOpByteOffset #-}
-        vkDepthCompareOpByteOffset ~_
-          = #{offset VkPipelineDepthStencilStateCreateInfo, depthCompareOp}
-
-        {-# INLINE readVkDepthCompareOp #-}
-        readVkDepthCompareOp p
-          = peekByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, depthCompareOp}
-
-        {-# INLINE writeVkDepthCompareOp #-}
-        writeVkDepthCompareOp p
-          = pokeByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, depthCompareOp}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, depthWriteEnable}
 
 instance {-# OVERLAPPING #-}
          HasField "depthCompareOp" VkPipelineDepthStencilStateCreateInfo
@@ -422,44 +312,25 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineDepthStencilStateCreateInfo, depthCompareOp}
 
-instance CanReadField "depthCompareOp"
-           VkPipelineDepthStencilStateCreateInfo
+instance {-# OVERLAPPING #-}
+         CanReadField "depthCompareOp" VkPipelineDepthStencilStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkDepthCompareOp
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineDepthStencilStateCreateInfo, depthCompareOp})
 
         {-# INLINE readField #-}
-        readField = readVkDepthCompareOp
+        readField p
+          = peekByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, depthCompareOp}
 
-instance CanWriteField "depthCompareOp"
+instance {-# OVERLAPPING #-}
+         CanWriteField "depthCompareOp"
            VkPipelineDepthStencilStateCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkDepthCompareOp
-
-instance {-# OVERLAPPING #-}
-         HasVkDepthBoundsTestEnable VkPipelineDepthStencilStateCreateInfo
-         where
-        type VkDepthBoundsTestEnableMType
-               VkPipelineDepthStencilStateCreateInfo
-             = VkBool32
-
-        {-# NOINLINE vkDepthBoundsTestEnable #-}
-        vkDepthBoundsTestEnable x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineDepthStencilStateCreateInfo, depthBoundsTestEnable})
-
-        {-# INLINE vkDepthBoundsTestEnableByteOffset #-}
-        vkDepthBoundsTestEnableByteOffset ~_
-          = #{offset VkPipelineDepthStencilStateCreateInfo, depthBoundsTestEnable}
-
-        {-# INLINE readVkDepthBoundsTestEnable #-}
-        readVkDepthBoundsTestEnable p
-          = peekByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, depthBoundsTestEnable}
-
-        {-# INLINE writeVkDepthBoundsTestEnable #-}
-        writeVkDepthBoundsTestEnable p
-          = pokeByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, depthBoundsTestEnable}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, depthCompareOp}
 
 instance {-# OVERLAPPING #-}
          HasField "depthBoundsTestEnable"
@@ -486,42 +357,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineDepthStencilStateCreateInfo, depthBoundsTestEnable}
 
-instance CanReadField "depthBoundsTestEnable"
+instance {-# OVERLAPPING #-}
+         CanReadField "depthBoundsTestEnable"
            VkPipelineDepthStencilStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkDepthBoundsTestEnable
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineDepthStencilStateCreateInfo, depthBoundsTestEnable})
 
         {-# INLINE readField #-}
-        readField = readVkDepthBoundsTestEnable
+        readField p
+          = peekByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, depthBoundsTestEnable}
 
-instance CanWriteField "depthBoundsTestEnable"
+instance {-# OVERLAPPING #-}
+         CanWriteField "depthBoundsTestEnable"
            VkPipelineDepthStencilStateCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkDepthBoundsTestEnable
-
-instance {-# OVERLAPPING #-}
-         HasVkStencilTestEnable VkPipelineDepthStencilStateCreateInfo where
-        type VkStencilTestEnableMType VkPipelineDepthStencilStateCreateInfo
-             = VkBool32
-
-        {-# NOINLINE vkStencilTestEnable #-}
-        vkStencilTestEnable x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineDepthStencilStateCreateInfo, stencilTestEnable})
-
-        {-# INLINE vkStencilTestEnableByteOffset #-}
-        vkStencilTestEnableByteOffset ~_
-          = #{offset VkPipelineDepthStencilStateCreateInfo, stencilTestEnable}
-
-        {-# INLINE readVkStencilTestEnable #-}
-        readVkStencilTestEnable p
-          = peekByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, stencilTestEnable}
-
-        {-# INLINE writeVkStencilTestEnable #-}
-        writeVkStencilTestEnable p
-          = pokeByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, stencilTestEnable}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, depthBoundsTestEnable}
 
 instance {-# OVERLAPPING #-}
          HasField "stencilTestEnable" VkPipelineDepthStencilStateCreateInfo
@@ -547,42 +402,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineDepthStencilStateCreateInfo, stencilTestEnable}
 
-instance CanReadField "stencilTestEnable"
+instance {-# OVERLAPPING #-}
+         CanReadField "stencilTestEnable"
            VkPipelineDepthStencilStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkStencilTestEnable
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineDepthStencilStateCreateInfo, stencilTestEnable})
 
         {-# INLINE readField #-}
-        readField = readVkStencilTestEnable
+        readField p
+          = peekByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, stencilTestEnable}
 
-instance CanWriteField "stencilTestEnable"
+instance {-# OVERLAPPING #-}
+         CanWriteField "stencilTestEnable"
            VkPipelineDepthStencilStateCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkStencilTestEnable
-
-instance {-# OVERLAPPING #-}
-         HasVkFront VkPipelineDepthStencilStateCreateInfo where
-        type VkFrontMType VkPipelineDepthStencilStateCreateInfo =
-             VkStencilOpState
-
-        {-# NOINLINE vkFront #-}
-        vkFront x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineDepthStencilStateCreateInfo, front})
-
-        {-# INLINE vkFrontByteOffset #-}
-        vkFrontByteOffset ~_
-          = #{offset VkPipelineDepthStencilStateCreateInfo, front}
-
-        {-# INLINE readVkFront #-}
-        readVkFront p
-          = peekByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, front}
-
-        {-# INLINE writeVkFront #-}
-        writeVkFront p
-          = pokeByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, front}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, stencilTestEnable}
 
 instance {-# OVERLAPPING #-}
          HasField "front" VkPipelineDepthStencilStateCreateInfo where
@@ -602,41 +441,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineDepthStencilStateCreateInfo, front}
 
-instance CanReadField "front" VkPipelineDepthStencilStateCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkFront
+instance {-# OVERLAPPING #-}
+         CanReadField "front" VkPipelineDepthStencilStateCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineDepthStencilStateCreateInfo, front})
 
         {-# INLINE readField #-}
-        readField = readVkFront
-
-instance CanWriteField "front"
-           VkPipelineDepthStencilStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFront
+        readField p
+          = peekByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, front}
 
 instance {-# OVERLAPPING #-}
-         HasVkBack VkPipelineDepthStencilStateCreateInfo where
-        type VkBackMType VkPipelineDepthStencilStateCreateInfo =
-             VkStencilOpState
-
-        {-# NOINLINE vkBack #-}
-        vkBack x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineDepthStencilStateCreateInfo, back})
-
-        {-# INLINE vkBackByteOffset #-}
-        vkBackByteOffset ~_
-          = #{offset VkPipelineDepthStencilStateCreateInfo, back}
-
-        {-# INLINE readVkBack #-}
-        readVkBack p
-          = peekByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, back}
-
-        {-# INLINE writeVkBack #-}
-        writeVkBack p
-          = pokeByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, back}
+         CanWriteField "front" VkPipelineDepthStencilStateCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, front}
 
 instance {-# OVERLAPPING #-}
          HasField "back" VkPipelineDepthStencilStateCreateInfo where
@@ -656,40 +476,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineDepthStencilStateCreateInfo, back}
 
-instance CanReadField "back" VkPipelineDepthStencilStateCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkBack
+instance {-# OVERLAPPING #-}
+         CanReadField "back" VkPipelineDepthStencilStateCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineDepthStencilStateCreateInfo, back})
 
         {-# INLINE readField #-}
-        readField = readVkBack
-
-instance CanWriteField "back" VkPipelineDepthStencilStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkBack
+        readField p
+          = peekByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, back}
 
 instance {-# OVERLAPPING #-}
-         HasVkMinDepthBounds VkPipelineDepthStencilStateCreateInfo where
-        type VkMinDepthBoundsMType VkPipelineDepthStencilStateCreateInfo =
-             #{type float}
-
-        {-# NOINLINE vkMinDepthBounds #-}
-        vkMinDepthBounds x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineDepthStencilStateCreateInfo, minDepthBounds})
-
-        {-# INLINE vkMinDepthBoundsByteOffset #-}
-        vkMinDepthBoundsByteOffset ~_
-          = #{offset VkPipelineDepthStencilStateCreateInfo, minDepthBounds}
-
-        {-# INLINE readVkMinDepthBounds #-}
-        readVkMinDepthBounds p
-          = peekByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, minDepthBounds}
-
-        {-# INLINE writeVkMinDepthBounds #-}
-        writeVkMinDepthBounds p
-          = pokeByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, minDepthBounds}
+         CanWriteField "back" VkPipelineDepthStencilStateCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, back}
 
 instance {-# OVERLAPPING #-}
          HasField "minDepthBounds" VkPipelineDepthStencilStateCreateInfo
@@ -715,42 +517,25 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineDepthStencilStateCreateInfo, minDepthBounds}
 
-instance CanReadField "minDepthBounds"
-           VkPipelineDepthStencilStateCreateInfo
+instance {-# OVERLAPPING #-}
+         CanReadField "minDepthBounds" VkPipelineDepthStencilStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkMinDepthBounds
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineDepthStencilStateCreateInfo, minDepthBounds})
 
         {-# INLINE readField #-}
-        readField = readVkMinDepthBounds
+        readField p
+          = peekByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, minDepthBounds}
 
-instance CanWriteField "minDepthBounds"
+instance {-# OVERLAPPING #-}
+         CanWriteField "minDepthBounds"
            VkPipelineDepthStencilStateCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkMinDepthBounds
-
-instance {-# OVERLAPPING #-}
-         HasVkMaxDepthBounds VkPipelineDepthStencilStateCreateInfo where
-        type VkMaxDepthBoundsMType VkPipelineDepthStencilStateCreateInfo =
-             #{type float}
-
-        {-# NOINLINE vkMaxDepthBounds #-}
-        vkMaxDepthBounds x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineDepthStencilStateCreateInfo, maxDepthBounds})
-
-        {-# INLINE vkMaxDepthBoundsByteOffset #-}
-        vkMaxDepthBoundsByteOffset ~_
-          = #{offset VkPipelineDepthStencilStateCreateInfo, maxDepthBounds}
-
-        {-# INLINE readVkMaxDepthBounds #-}
-        readVkMaxDepthBounds p
-          = peekByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, maxDepthBounds}
-
-        {-# INLINE writeVkMaxDepthBounds #-}
-        writeVkMaxDepthBounds p
-          = pokeByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, maxDepthBounds}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, minDepthBounds}
 
 instance {-# OVERLAPPING #-}
          HasField "maxDepthBounds" VkPipelineDepthStencilStateCreateInfo
@@ -776,65 +561,79 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineDepthStencilStateCreateInfo, maxDepthBounds}
 
-instance CanReadField "maxDepthBounds"
-           VkPipelineDepthStencilStateCreateInfo
+instance {-# OVERLAPPING #-}
+         CanReadField "maxDepthBounds" VkPipelineDepthStencilStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkMaxDepthBounds
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineDepthStencilStateCreateInfo, maxDepthBounds})
 
         {-# INLINE readField #-}
-        readField = readVkMaxDepthBounds
+        readField p
+          = peekByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, maxDepthBounds}
 
-instance CanWriteField "maxDepthBounds"
+instance {-# OVERLAPPING #-}
+         CanWriteField "maxDepthBounds"
            VkPipelineDepthStencilStateCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkMaxDepthBounds
+        writeField p
+          = pokeByteOff p #{offset VkPipelineDepthStencilStateCreateInfo, maxDepthBounds}
 
 instance Show VkPipelineDepthStencilStateCreateInfo where
         showsPrec d x
           = showString "VkPipelineDepthStencilStateCreateInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkDepthTestEnable = " .
-                                  showsPrec d (vkDepthTestEnable x) .
+                                showString "depthTestEnable = " .
+                                  showsPrec d (getField @"depthTestEnable" x) .
                                     showString ", " .
-                                      showString "vkDepthWriteEnable = " .
-                                        showsPrec d (vkDepthWriteEnable x) .
+                                      showString "depthWriteEnable = " .
+                                        showsPrec d (getField @"depthWriteEnable" x) .
                                           showString ", " .
-                                            showString "vkDepthCompareOp = " .
-                                              showsPrec d (vkDepthCompareOp x) .
+                                            showString "depthCompareOp = " .
+                                              showsPrec d (getField @"depthCompareOp" x) .
                                                 showString ", " .
-                                                  showString "vkDepthBoundsTestEnable = " .
-                                                    showsPrec d (vkDepthBoundsTestEnable x) .
+                                                  showString "depthBoundsTestEnable = " .
+                                                    showsPrec d
+                                                      (getField @"depthBoundsTestEnable" x)
+                                                      .
                                                       showString ", " .
-                                                        showString "vkStencilTestEnable = " .
-                                                          showsPrec d (vkStencilTestEnable x) .
+                                                        showString "stencilTestEnable = " .
+                                                          showsPrec d
+                                                            (getField @"stencilTestEnable" x)
+                                                            .
                                                             showString ", " .
-                                                              showString "vkFront = " .
-                                                                showsPrec d (vkFront x) .
+                                                              showString "front = " .
+                                                                showsPrec d (getField @"front" x) .
                                                                   showString ", " .
-                                                                    showString "vkBack = " .
-                                                                      showsPrec d (vkBack x) .
+                                                                    showString "back = " .
+                                                                      showsPrec d
+                                                                        (getField @"back" x)
+                                                                        .
                                                                         showString ", " .
                                                                           showString
-                                                                            "vkMinDepthBounds = "
+                                                                            "minDepthBounds = "
                                                                             .
                                                                             showsPrec d
-                                                                              (vkMinDepthBounds x)
+                                                                              (getField
+                                                                                 @"minDepthBounds"
+                                                                                 x)
                                                                               .
                                                                               showString ", " .
                                                                                 showString
-                                                                                  "vkMaxDepthBounds = "
+                                                                                  "maxDepthBounds = "
                                                                                   .
                                                                                   showsPrec d
-                                                                                    (vkMaxDepthBounds
+                                                                                    (getField
+                                                                                       @"maxDepthBounds"
                                                                                        x)
                                                                                     . showChar '}'

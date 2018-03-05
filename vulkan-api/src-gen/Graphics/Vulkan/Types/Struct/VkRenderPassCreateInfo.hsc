@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkRenderPassCreateInfo
        (VkRenderPassCreateInfo(..)) where
@@ -17,7 +18,6 @@ import           Graphics.Vulkan.Types.Enum.VkStructureType           (VkStructu
 import           Graphics.Vulkan.Types.Struct.VkAttachmentDescription (VkAttachmentDescription)
 import           Graphics.Vulkan.Types.Struct.VkSubpassDependency     (VkSubpassDependency)
 import           Graphics.Vulkan.Types.Struct.VkSubpassDescription    (VkSubpassDescription)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                     (unsafeDupablePerformIO)
 
 -- | > typedef struct VkRenderPassCreateInfo {
@@ -82,27 +82,6 @@ instance VulkanMarshal VkRenderPassCreateInfo where
         type ReturnedOnly VkRenderPassCreateInfo = 'False -- ' closing tick for hsc2hs
         type StructExtends VkRenderPassCreateInfo = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkRenderPassCreateInfo
-         where
-        type VkSTypeMType VkRenderPassCreateInfo = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassCreateInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkRenderPassCreateInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkRenderPassCreateInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkRenderPassCreateInfo, sType}
-
 instance {-# OVERLAPPING #-}
          HasField "sType" VkRenderPassCreateInfo where
         type FieldType "sType" VkRenderPassCreateInfo = VkStructureType
@@ -117,37 +96,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkRenderPassCreateInfo, sType}
 
-instance CanReadField "sType" VkRenderPassCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkRenderPassCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassCreateInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkRenderPassCreateInfo, sType}
 
-instance CanWriteField "sType" VkRenderPassCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkRenderPassCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkRenderPassCreateInfo
-         where
-        type VkPNextMType VkRenderPassCreateInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassCreateInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkRenderPassCreateInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkRenderPassCreateInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkRenderPassCreateInfo, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkRenderPassCreateInfo where
@@ -163,37 +127,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkRenderPassCreateInfo, pNext}
 
-instance CanReadField "pNext" VkRenderPassCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkRenderPassCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassCreateInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkRenderPassCreateInfo, pNext}
 
-instance CanWriteField "pNext" VkRenderPassCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext" VkRenderPassCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-} HasVkFlags VkRenderPassCreateInfo
-         where
-        type VkFlagsMType VkRenderPassCreateInfo = VkRenderPassCreateFlags
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassCreateInfo, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkRenderPassCreateInfo, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkRenderPassCreateInfo, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkRenderPassCreateInfo, flags}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkRenderPassCreateInfo where
@@ -210,37 +159,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkRenderPassCreateInfo, flags}
 
-instance CanReadField "flags" VkRenderPassCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkRenderPassCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassCreateInfo, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags" VkRenderPassCreateInfo where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkRenderPassCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkAttachmentCount VkRenderPassCreateInfo where
-        type VkAttachmentCountMType VkRenderPassCreateInfo = Word32
-
-        {-# NOINLINE vkAttachmentCount #-}
-        vkAttachmentCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassCreateInfo, attachmentCount})
-
-        {-# INLINE vkAttachmentCountByteOffset #-}
-        vkAttachmentCountByteOffset ~_
-          = #{offset VkRenderPassCreateInfo, attachmentCount}
-
-        {-# INLINE readVkAttachmentCount #-}
-        readVkAttachmentCount p
-          = peekByteOff p #{offset VkRenderPassCreateInfo, attachmentCount}
-
-        {-# INLINE writeVkAttachmentCount #-}
-        writeVkAttachmentCount p
-          = pokeByteOff p #{offset VkRenderPassCreateInfo, attachmentCount}
+         CanWriteField "flags" VkRenderPassCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "attachmentCount" VkRenderPassCreateInfo where
@@ -257,40 +191,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassCreateInfo, attachmentCount}
 
-instance CanReadField "attachmentCount" VkRenderPassCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkAttachmentCount
+instance {-# OVERLAPPING #-}
+         CanReadField "attachmentCount" VkRenderPassCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassCreateInfo, attachmentCount})
 
         {-# INLINE readField #-}
-        readField = readVkAttachmentCount
-
-instance CanWriteField "attachmentCount" VkRenderPassCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkAttachmentCount
+        readField p
+          = peekByteOff p #{offset VkRenderPassCreateInfo, attachmentCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPAttachments VkRenderPassCreateInfo where
-        type VkPAttachmentsMType VkRenderPassCreateInfo =
-             Ptr VkAttachmentDescription
-
-        {-# NOINLINE vkPAttachments #-}
-        vkPAttachments x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassCreateInfo, pAttachments})
-
-        {-# INLINE vkPAttachmentsByteOffset #-}
-        vkPAttachmentsByteOffset ~_
-          = #{offset VkRenderPassCreateInfo, pAttachments}
-
-        {-# INLINE readVkPAttachments #-}
-        readVkPAttachments p
-          = peekByteOff p #{offset VkRenderPassCreateInfo, pAttachments}
-
-        {-# INLINE writeVkPAttachments #-}
-        writeVkPAttachments p
-          = pokeByteOff p #{offset VkRenderPassCreateInfo, pAttachments}
+         CanWriteField "attachmentCount" VkRenderPassCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassCreateInfo, attachmentCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pAttachments" VkRenderPassCreateInfo where
@@ -308,37 +224,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassCreateInfo, pAttachments}
 
-instance CanReadField "pAttachments" VkRenderPassCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkPAttachments
+instance {-# OVERLAPPING #-}
+         CanReadField "pAttachments" VkRenderPassCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassCreateInfo, pAttachments})
 
         {-# INLINE readField #-}
-        readField = readVkPAttachments
-
-instance CanWriteField "pAttachments" VkRenderPassCreateInfo where
-        {-# INLINE writeField #-}
-        writeField = writeVkPAttachments
+        readField p
+          = peekByteOff p #{offset VkRenderPassCreateInfo, pAttachments}
 
 instance {-# OVERLAPPING #-}
-         HasVkSubpassCount VkRenderPassCreateInfo where
-        type VkSubpassCountMType VkRenderPassCreateInfo = Word32
-
-        {-# NOINLINE vkSubpassCount #-}
-        vkSubpassCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassCreateInfo, subpassCount})
-
-        {-# INLINE vkSubpassCountByteOffset #-}
-        vkSubpassCountByteOffset ~_
-          = #{offset VkRenderPassCreateInfo, subpassCount}
-
-        {-# INLINE readVkSubpassCount #-}
-        readVkSubpassCount p
-          = peekByteOff p #{offset VkRenderPassCreateInfo, subpassCount}
-
-        {-# INLINE writeVkSubpassCount #-}
-        writeVkSubpassCount p
-          = pokeByteOff p #{offset VkRenderPassCreateInfo, subpassCount}
+         CanWriteField "pAttachments" VkRenderPassCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassCreateInfo, pAttachments}
 
 instance {-# OVERLAPPING #-}
          HasField "subpassCount" VkRenderPassCreateInfo where
@@ -355,38 +256,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassCreateInfo, subpassCount}
 
-instance CanReadField "subpassCount" VkRenderPassCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkSubpassCount
+instance {-# OVERLAPPING #-}
+         CanReadField "subpassCount" VkRenderPassCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassCreateInfo, subpassCount})
 
         {-# INLINE readField #-}
-        readField = readVkSubpassCount
+        readField p
+          = peekByteOff p #{offset VkRenderPassCreateInfo, subpassCount}
 
-instance CanWriteField "subpassCount" VkRenderPassCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "subpassCount" VkRenderPassCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkSubpassCount
-
-instance {-# OVERLAPPING #-} HasVkPSubpasses VkRenderPassCreateInfo
-         where
-        type VkPSubpassesMType VkRenderPassCreateInfo =
-             Ptr VkSubpassDescription
-
-        {-# NOINLINE vkPSubpasses #-}
-        vkPSubpasses x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassCreateInfo, pSubpasses})
-
-        {-# INLINE vkPSubpassesByteOffset #-}
-        vkPSubpassesByteOffset ~_
-          = #{offset VkRenderPassCreateInfo, pSubpasses}
-
-        {-# INLINE readVkPSubpasses #-}
-        readVkPSubpasses p
-          = peekByteOff p #{offset VkRenderPassCreateInfo, pSubpasses}
-
-        {-# INLINE writeVkPSubpasses #-}
-        writeVkPSubpasses p
-          = pokeByteOff p #{offset VkRenderPassCreateInfo, pSubpasses}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassCreateInfo, subpassCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pSubpasses" VkRenderPassCreateInfo where
@@ -404,37 +289,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassCreateInfo, pSubpasses}
 
-instance CanReadField "pSubpasses" VkRenderPassCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkPSubpasses
+instance {-# OVERLAPPING #-}
+         CanReadField "pSubpasses" VkRenderPassCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassCreateInfo, pSubpasses})
 
         {-# INLINE readField #-}
-        readField = readVkPSubpasses
-
-instance CanWriteField "pSubpasses" VkRenderPassCreateInfo where
-        {-# INLINE writeField #-}
-        writeField = writeVkPSubpasses
+        readField p
+          = peekByteOff p #{offset VkRenderPassCreateInfo, pSubpasses}
 
 instance {-# OVERLAPPING #-}
-         HasVkDependencyCount VkRenderPassCreateInfo where
-        type VkDependencyCountMType VkRenderPassCreateInfo = Word32
-
-        {-# NOINLINE vkDependencyCount #-}
-        vkDependencyCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassCreateInfo, dependencyCount})
-
-        {-# INLINE vkDependencyCountByteOffset #-}
-        vkDependencyCountByteOffset ~_
-          = #{offset VkRenderPassCreateInfo, dependencyCount}
-
-        {-# INLINE readVkDependencyCount #-}
-        readVkDependencyCount p
-          = peekByteOff p #{offset VkRenderPassCreateInfo, dependencyCount}
-
-        {-# INLINE writeVkDependencyCount #-}
-        writeVkDependencyCount p
-          = pokeByteOff p #{offset VkRenderPassCreateInfo, dependencyCount}
+         CanWriteField "pSubpasses" VkRenderPassCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassCreateInfo, pSubpasses}
 
 instance {-# OVERLAPPING #-}
          HasField "dependencyCount" VkRenderPassCreateInfo where
@@ -451,40 +321,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassCreateInfo, dependencyCount}
 
-instance CanReadField "dependencyCount" VkRenderPassCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkDependencyCount
+instance {-# OVERLAPPING #-}
+         CanReadField "dependencyCount" VkRenderPassCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassCreateInfo, dependencyCount})
 
         {-# INLINE readField #-}
-        readField = readVkDependencyCount
-
-instance CanWriteField "dependencyCount" VkRenderPassCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkDependencyCount
+        readField p
+          = peekByteOff p #{offset VkRenderPassCreateInfo, dependencyCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPDependencies VkRenderPassCreateInfo where
-        type VkPDependenciesMType VkRenderPassCreateInfo =
-             Ptr VkSubpassDependency
-
-        {-# NOINLINE vkPDependencies #-}
-        vkPDependencies x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassCreateInfo, pDependencies})
-
-        {-# INLINE vkPDependenciesByteOffset #-}
-        vkPDependenciesByteOffset ~_
-          = #{offset VkRenderPassCreateInfo, pDependencies}
-
-        {-# INLINE readVkPDependencies #-}
-        readVkPDependencies p
-          = peekByteOff p #{offset VkRenderPassCreateInfo, pDependencies}
-
-        {-# INLINE writeVkPDependencies #-}
-        writeVkPDependencies p
-          = pokeByteOff p #{offset VkRenderPassCreateInfo, pDependencies}
+         CanWriteField "dependencyCount" VkRenderPassCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassCreateInfo, dependencyCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pDependencies" VkRenderPassCreateInfo where
@@ -502,44 +354,53 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassCreateInfo, pDependencies}
 
-instance CanReadField "pDependencies" VkRenderPassCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkPDependencies
+instance {-# OVERLAPPING #-}
+         CanReadField "pDependencies" VkRenderPassCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassCreateInfo, pDependencies})
 
         {-# INLINE readField #-}
-        readField = readVkPDependencies
+        readField p
+          = peekByteOff p #{offset VkRenderPassCreateInfo, pDependencies}
 
-instance CanWriteField "pDependencies" VkRenderPassCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pDependencies" VkRenderPassCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPDependencies
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassCreateInfo, pDependencies}
 
 instance Show VkRenderPassCreateInfo where
         showsPrec d x
           = showString "VkRenderPassCreateInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkAttachmentCount = " .
-                                  showsPrec d (vkAttachmentCount x) .
+                                showString "attachmentCount = " .
+                                  showsPrec d (getField @"attachmentCount" x) .
                                     showString ", " .
-                                      showString "vkPAttachments = " .
-                                        showsPrec d (vkPAttachments x) .
+                                      showString "pAttachments = " .
+                                        showsPrec d (getField @"pAttachments" x) .
                                           showString ", " .
-                                            showString "vkSubpassCount = " .
-                                              showsPrec d (vkSubpassCount x) .
+                                            showString "subpassCount = " .
+                                              showsPrec d (getField @"subpassCount" x) .
                                                 showString ", " .
-                                                  showString "vkPSubpasses = " .
-                                                    showsPrec d (vkPSubpasses x) .
+                                                  showString "pSubpasses = " .
+                                                    showsPrec d (getField @"pSubpasses" x) .
                                                       showString ", " .
-                                                        showString "vkDependencyCount = " .
-                                                          showsPrec d (vkDependencyCount x) .
+                                                        showString "dependencyCount = " .
+                                                          showsPrec d
+                                                            (getField @"dependencyCount" x)
+                                                            .
                                                             showString ", " .
-                                                              showString "vkPDependencies = " .
-                                                                showsPrec d (vkPDependencies x) .
-                                                                  showChar '}'
+                                                              showString "pDependencies = " .
+                                                                showsPrec d
+                                                                  (getField @"pDependencies" x)
+                                                                  . showChar '}'

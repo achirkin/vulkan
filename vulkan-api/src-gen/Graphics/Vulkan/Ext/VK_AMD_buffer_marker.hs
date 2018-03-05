@@ -19,7 +19,8 @@ module Graphics.Vulkan.Ext.VK_AMD_buffer_marker
         -- type: @device@
         --
         -- Extension number: @180@
-        vkCmdWriteBufferMarkerAMD, module Graphics.Vulkan.Marshal,
+        vkCmdWriteBufferMarkerAMD, vkCmdWriteBufferMarkerAMDSafe,
+        module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.VkPipelineStageFlags,
         module Graphics.Vulkan.Types.Handles,
@@ -51,6 +52,32 @@ import           Graphics.Vulkan.Types.Handles
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdWriteBufferMarkerAMD.html vkCmdWriteBufferMarkerAMD registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdWriteBufferMarkerAMD"
                vkCmdWriteBufferMarkerAMD ::
+               VkCommandBuffer -- ^ commandBuffer
+                               ->
+                 VkPipelineStageFlagBits -- ^ pipelineStage
+                                         ->
+                   VkBuffer -- ^ dstBuffer
+                            -> VkDeviceSize -- ^ dstOffset
+                                            -> Word32 -- ^ marker
+                                                      -> IO ()
+
+-- | queues: 'transfer', 'graphics', 'compute'.
+--
+--   renderpass: @both@
+--
+--   pipeline: @transfer@
+--
+--   > () vkCmdWriteBufferMarkerAMD
+--   >     ( VkCommandBuffer commandBuffer
+--   >     , VkPipelineStageFlagBits pipelineStage
+--   >     , VkBuffer dstBuffer
+--   >     , VkDeviceSize dstOffset
+--   >     , uint32_t marker
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdWriteBufferMarkerAMD.html vkCmdWriteBufferMarkerAMD registry at www.khronos.org>
+foreign import ccall safe "vkCmdWriteBufferMarkerAMD"
+               vkCmdWriteBufferMarkerAMDSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
                  VkPipelineStageFlagBits -- ^ pipelineStage

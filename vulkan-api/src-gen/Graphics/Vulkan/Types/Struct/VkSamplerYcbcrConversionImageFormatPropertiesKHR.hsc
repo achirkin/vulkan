@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkSamplerYcbcrConversionImageFormatPropertiesKHR
        (VkSamplerYcbcrConversionImageFormatPropertiesKHR(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType               (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkImageFormatProperties2KHR (VkImageFormatProperties2KHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSamplerYcbcrConversionImageFormatPropertiesKHR {
@@ -89,28 +89,6 @@ instance VulkanMarshal
              = '[VkImageFormatProperties2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkSamplerYcbcrConversionImageFormatPropertiesKHR where
-        type VkSTypeMType VkSamplerYcbcrConversionImageFormatPropertiesKHR
-             = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkSamplerYcbcrConversionImageFormatPropertiesKHR
          where
         type FieldType "sType"
@@ -134,42 +112,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, sType}
 
-instance CanReadField "sType"
+instance {-# OVERLAPPING #-}
+         CanReadField "sType"
            VkSamplerYcbcrConversionImageFormatPropertiesKHR
          where
-        {-# INLINE getField #-}
-        getField = vkSType
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, sType}
 
-instance CanWriteField "sType"
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType"
            VkSamplerYcbcrConversionImageFormatPropertiesKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-}
-         HasVkPNext VkSamplerYcbcrConversionImageFormatPropertiesKHR where
-        type VkPNextMType VkSamplerYcbcrConversionImageFormatPropertiesKHR
-             = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkSamplerYcbcrConversionImageFormatPropertiesKHR
@@ -195,45 +157,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, pNext}
 
-instance CanReadField "pNext"
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext"
            VkSamplerYcbcrConversionImageFormatPropertiesKHR
          where
-        {-# INLINE getField #-}
-        getField = vkPNext
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, pNext}
 
-instance CanWriteField "pNext"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext"
            VkSamplerYcbcrConversionImageFormatPropertiesKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-}
-         HasVkCombinedImageSamplerDescriptorCount
-           VkSamplerYcbcrConversionImageFormatPropertiesKHR
-         where
-        type VkCombinedImageSamplerDescriptorCountMType
-               VkSamplerYcbcrConversionImageFormatPropertiesKHR
-             = Word32
-
-        {-# NOINLINE vkCombinedImageSamplerDescriptorCount #-}
-        vkCombinedImageSamplerDescriptorCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, combinedImageSamplerDescriptorCount})
-
-        {-# INLINE vkCombinedImageSamplerDescriptorCountByteOffset #-}
-        vkCombinedImageSamplerDescriptorCountByteOffset ~_
-          = #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, combinedImageSamplerDescriptorCount}
-
-        {-# INLINE readVkCombinedImageSamplerDescriptorCount #-}
-        readVkCombinedImageSamplerDescriptorCount p
-          = peekByteOff p #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, combinedImageSamplerDescriptorCount}
-
-        {-# INLINE writeVkCombinedImageSamplerDescriptorCount #-}
-        writeVkCombinedImageSamplerDescriptorCount p
-          = pokeByteOff p #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, combinedImageSamplerDescriptorCount}
+        writeField p
+          = pokeByteOff p #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "combinedImageSamplerDescriptorCount"
@@ -260,31 +203,37 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, combinedImageSamplerDescriptorCount}
 
-instance CanReadField "combinedImageSamplerDescriptorCount"
+instance {-# OVERLAPPING #-}
+         CanReadField "combinedImageSamplerDescriptorCount"
            VkSamplerYcbcrConversionImageFormatPropertiesKHR
          where
-        {-# INLINE getField #-}
-        getField = vkCombinedImageSamplerDescriptorCount
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, combinedImageSamplerDescriptorCount})
 
         {-# INLINE readField #-}
-        readField = readVkCombinedImageSamplerDescriptorCount
+        readField p
+          = peekByteOff p #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, combinedImageSamplerDescriptorCount}
 
-instance CanWriteField "combinedImageSamplerDescriptorCount"
+instance {-# OVERLAPPING #-}
+         CanWriteField "combinedImageSamplerDescriptorCount"
            VkSamplerYcbcrConversionImageFormatPropertiesKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkCombinedImageSamplerDescriptorCount
+        writeField p
+          = pokeByteOff p #{offset VkSamplerYcbcrConversionImageFormatPropertiesKHR, combinedImageSamplerDescriptorCount}
 
 instance Show VkSamplerYcbcrConversionImageFormatPropertiesKHR
          where
         showsPrec d x
           = showString "VkSamplerYcbcrConversionImageFormatPropertiesKHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkCombinedImageSamplerDescriptorCount = " .
-                            showsPrec d (vkCombinedImageSamplerDescriptorCount x) .
+                          showString "combinedImageSamplerDescriptorCount = " .
+                            showsPrec d (getField @"combinedImageSamplerDescriptorCount" x) .
                               showChar '}'

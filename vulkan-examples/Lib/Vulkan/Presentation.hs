@@ -197,8 +197,8 @@ chooseSwapSurfaceFormat SwapChainSupportDetails {..}
     fmtCost f = case (getField @"format" f, getField @"colorSpace" f) of
       (VK_FORMAT_UNDEFINED, _) ->
         fmap (Min . Arg 0) $ newVkData $ \sfPtr -> do
-          writeVkFormat sfPtr VK_FORMAT_B8G8R8A8_UNORM
-          writeVkColorSpace sfPtr VK_COLOR_SPACE_SRGB_NONLINEAR_KHR
+          writeField @"format" sfPtr VK_FORMAT_B8G8R8A8_UNORM
+          writeField @"colorSpace" sfPtr VK_COLOR_SPACE_SRGB_NONLINEAR_KHR
       (VK_FORMAT_B8G8R8A8_UNORM, VK_COLOR_SPACE_SRGB_NONLINEAR_KHR) ->
         pure . Min $ Arg 1 f
       (_, _) ->

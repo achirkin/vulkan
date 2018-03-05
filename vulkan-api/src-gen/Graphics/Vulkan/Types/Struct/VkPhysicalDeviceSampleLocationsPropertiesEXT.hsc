@@ -8,6 +8,7 @@
 {-# LANGUAGE PatternSynonyms       #-}
 {-# LANGUAGE ScopedTypeVariables   #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 {-# LANGUAGE UndecidableInstances  #-}
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSampleLocationsPropertiesEXT
@@ -23,7 +24,6 @@ import           Graphics.Vulkan.Types.Enum.VkSampleCountFlags               (Vk
 import           Graphics.Vulkan.Types.Enum.VkStructureType                  (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkExtent2D                     (VkExtent2D)
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR (VkPhysicalDeviceProperties2KHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                            (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDeviceSampleLocationsPropertiesEXT {
@@ -102,28 +102,6 @@ instance VulkanMarshal VkPhysicalDeviceSampleLocationsPropertiesEXT
              '[VkPhysicalDeviceProperties2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPhysicalDeviceSampleLocationsPropertiesEXT where
-        type VkSTypeMType VkPhysicalDeviceSampleLocationsPropertiesEXT =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPhysicalDeviceSampleLocationsPropertiesEXT where
         type FieldType "sType" VkPhysicalDeviceSampleLocationsPropertiesEXT
              = VkStructureType
@@ -145,42 +123,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sType}
 
-instance CanReadField "sType"
-           VkPhysicalDeviceSampleLocationsPropertiesEXT
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkPhysicalDeviceSampleLocationsPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkSType
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType"
-           VkPhysicalDeviceSampleLocationsPropertiesEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkPhysicalDeviceSampleLocationsPropertiesEXT where
-        type VkPNextMType VkPhysicalDeviceSampleLocationsPropertiesEXT =
-             Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, pNext}
+         CanWriteField "sType" VkPhysicalDeviceSampleLocationsPropertiesEXT
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPhysicalDeviceSampleLocationsPropertiesEXT where
@@ -204,45 +164,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, pNext}
 
-instance CanReadField "pNext"
-           VkPhysicalDeviceSampleLocationsPropertiesEXT
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkPhysicalDeviceSampleLocationsPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkPNext
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext"
-           VkPhysicalDeviceSampleLocationsPropertiesEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkSampleLocationSampleCounts
-           VkPhysicalDeviceSampleLocationsPropertiesEXT
+         CanWriteField "pNext" VkPhysicalDeviceSampleLocationsPropertiesEXT
          where
-        type VkSampleLocationSampleCountsMType
-               VkPhysicalDeviceSampleLocationsPropertiesEXT
-             = VkSampleCountFlags
-
-        {-# NOINLINE vkSampleLocationSampleCounts #-}
-        vkSampleLocationSampleCounts x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationSampleCounts})
-
-        {-# INLINE vkSampleLocationSampleCountsByteOffset #-}
-        vkSampleLocationSampleCountsByteOffset ~_
-          = #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationSampleCounts}
-
-        {-# INLINE readVkSampleLocationSampleCounts #-}
-        readVkSampleLocationSampleCounts p
-          = peekByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationSampleCounts}
-
-        {-# INLINE writeVkSampleLocationSampleCounts #-}
-        writeVkSampleLocationSampleCounts p
-          = pokeByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationSampleCounts}
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "sampleLocationSampleCounts"
@@ -269,45 +208,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationSampleCounts}
 
-instance CanReadField "sampleLocationSampleCounts"
+instance {-# OVERLAPPING #-}
+         CanReadField "sampleLocationSampleCounts"
            VkPhysicalDeviceSampleLocationsPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkSampleLocationSampleCounts
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationSampleCounts})
 
         {-# INLINE readField #-}
-        readField = readVkSampleLocationSampleCounts
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationSampleCounts}
 
-instance CanWriteField "sampleLocationSampleCounts"
+instance {-# OVERLAPPING #-}
+         CanWriteField "sampleLocationSampleCounts"
            VkPhysicalDeviceSampleLocationsPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSampleLocationSampleCounts
-
-instance {-# OVERLAPPING #-}
-         HasVkMaxSampleLocationGridSize
-           VkPhysicalDeviceSampleLocationsPropertiesEXT
-         where
-        type VkMaxSampleLocationGridSizeMType
-               VkPhysicalDeviceSampleLocationsPropertiesEXT
-             = VkExtent2D
-
-        {-# NOINLINE vkMaxSampleLocationGridSize #-}
-        vkMaxSampleLocationGridSize x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, maxSampleLocationGridSize})
-
-        {-# INLINE vkMaxSampleLocationGridSizeByteOffset #-}
-        vkMaxSampleLocationGridSizeByteOffset ~_
-          = #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, maxSampleLocationGridSize}
-
-        {-# INLINE readVkMaxSampleLocationGridSize #-}
-        readVkMaxSampleLocationGridSize p
-          = peekByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, maxSampleLocationGridSize}
-
-        {-# INLINE writeVkMaxSampleLocationGridSize #-}
-        writeVkMaxSampleLocationGridSize p
-          = pokeByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, maxSampleLocationGridSize}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationSampleCounts}
 
 instance {-# OVERLAPPING #-}
          HasField "maxSampleLocationGridSize"
@@ -334,51 +254,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, maxSampleLocationGridSize}
 
-instance CanReadField "maxSampleLocationGridSize"
+instance {-# OVERLAPPING #-}
+         CanReadField "maxSampleLocationGridSize"
            VkPhysicalDeviceSampleLocationsPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkMaxSampleLocationGridSize
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, maxSampleLocationGridSize})
 
         {-# INLINE readField #-}
-        readField = readVkMaxSampleLocationGridSize
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, maxSampleLocationGridSize}
 
-instance CanWriteField "maxSampleLocationGridSize"
+instance {-# OVERLAPPING #-}
+         CanWriteField "maxSampleLocationGridSize"
            VkPhysicalDeviceSampleLocationsPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkMaxSampleLocationGridSize
-
-instance {-# OVERLAPPING #-}
-         HasVkSampleLocationCoordinateRangeArray
-           VkPhysicalDeviceSampleLocationsPropertiesEXT
-         where
-        type VkSampleLocationCoordinateRangeArrayMType
-               VkPhysicalDeviceSampleLocationsPropertiesEXT
-             = #{type float}
-
-        {-# NOINLINE vkSampleLocationCoordinateRangeArray #-}
-        vkSampleLocationCoordinateRangeArray x idx
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x)
-                 (idx * sizeOf (undefined :: #{type float}) +
-                    #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationCoordinateRange}))
-
-        {-# INLINE vkSampleLocationCoordinateRangeArrayByteOffset #-}
-        vkSampleLocationCoordinateRangeArrayByteOffset ~_
-          = #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationCoordinateRange}
-
-        {-# INLINE readVkSampleLocationCoordinateRangeArray #-}
-        readVkSampleLocationCoordinateRangeArray p idx
-          = peekByteOff p
-              (idx * sizeOf (undefined :: #{type float}) +
-                 #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationCoordinateRange})
-
-        {-# INLINE writeVkSampleLocationCoordinateRangeArray #-}
-        writeVkSampleLocationCoordinateRangeArray p idx
-          = pokeByteOff p
-              (idx * sizeOf (undefined :: #{type float}) +
-                 #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationCoordinateRange})
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, maxSampleLocationGridSize}
 
 instance {-# OVERLAPPING #-}
          HasField "sampleLocationCoordinateRange"
@@ -405,7 +300,8 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationCoordinateRange}
 
-instance (KnownNat idx,
+instance {-# OVERLAPPING #-}
+         (KnownNat idx,
           IndexInBounds "sampleLocationCoordinateRange" idx
             VkPhysicalDeviceSampleLocationsPropertiesEXT) =>
          CanReadFieldArray "sampleLocationCoordinateRange" idx
@@ -428,16 +324,25 @@ instance (KnownNat idx,
         fieldArrayLength = 2
 
         {-# INLINE getFieldArray #-}
-        getFieldArray x
-          = vkSampleLocationCoordinateRangeArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+        getFieldArray = f
+          where {-# NOINLINE f #-}
+                f x = unsafeDupablePerformIO (peekByteOff (unsafePtr x) off)
+                off
+                  = #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationCoordinateRange}
+                      +
+                      sizeOf (undefined :: #{type float}) *
+                        fromInteger (natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
 
         {-# INLINE readFieldArray #-}
-        readFieldArray x
-          = readVkSampleLocationCoordinateRangeArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
+        readFieldArray p
+          = peekByteOff p
+              (#{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationCoordinateRange}
+                 +
+                 sizeOf (undefined :: #{type float}) *
+                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
 
-instance (KnownNat idx,
+instance {-# OVERLAPPING #-}
+         (KnownNat idx,
           IndexInBounds "sampleLocationCoordinateRange" idx
             VkPhysicalDeviceSampleLocationsPropertiesEXT) =>
          CanWriteFieldArray "sampleLocationCoordinateRange" idx
@@ -454,34 +359,12 @@ instance (KnownNat idx,
                        #-}
 
         {-# INLINE writeFieldArray #-}
-        writeFieldArray x
-          = writeVkSampleLocationCoordinateRangeArray x
-              (fromInteger $ natVal' (proxy## :: Proxy## idx)) -- ' closing tick for hsc2hs
-
-instance {-# OVERLAPPING #-}
-         HasVkSampleLocationSubPixelBits
-           VkPhysicalDeviceSampleLocationsPropertiesEXT
-         where
-        type VkSampleLocationSubPixelBitsMType
-               VkPhysicalDeviceSampleLocationsPropertiesEXT
-             = Word32
-
-        {-# NOINLINE vkSampleLocationSubPixelBits #-}
-        vkSampleLocationSubPixelBits x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationSubPixelBits})
-
-        {-# INLINE vkSampleLocationSubPixelBitsByteOffset #-}
-        vkSampleLocationSubPixelBitsByteOffset ~_
-          = #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationSubPixelBits}
-
-        {-# INLINE readVkSampleLocationSubPixelBits #-}
-        readVkSampleLocationSubPixelBits p
-          = peekByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationSubPixelBits}
-
-        {-# INLINE writeVkSampleLocationSubPixelBits #-}
-        writeVkSampleLocationSubPixelBits p
-          = pokeByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationSubPixelBits}
+        writeFieldArray p
+          = pokeByteOff p
+              (#{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationCoordinateRange}
+                 +
+                 sizeOf (undefined :: #{type float}) *
+                   fromInteger (natVal' (proxy## :: Proxy## idx))) -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasField "sampleLocationSubPixelBits"
@@ -508,45 +391,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationSubPixelBits}
 
-instance CanReadField "sampleLocationSubPixelBits"
+instance {-# OVERLAPPING #-}
+         CanReadField "sampleLocationSubPixelBits"
            VkPhysicalDeviceSampleLocationsPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkSampleLocationSubPixelBits
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationSubPixelBits})
 
         {-# INLINE readField #-}
-        readField = readVkSampleLocationSubPixelBits
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationSubPixelBits}
 
-instance CanWriteField "sampleLocationSubPixelBits"
+instance {-# OVERLAPPING #-}
+         CanWriteField "sampleLocationSubPixelBits"
            VkPhysicalDeviceSampleLocationsPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkSampleLocationSubPixelBits
-
-instance {-# OVERLAPPING #-}
-         HasVkVariableSampleLocations
-           VkPhysicalDeviceSampleLocationsPropertiesEXT
-         where
-        type VkVariableSampleLocationsMType
-               VkPhysicalDeviceSampleLocationsPropertiesEXT
-             = VkBool32
-
-        {-# NOINLINE vkVariableSampleLocations #-}
-        vkVariableSampleLocations x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, variableSampleLocations})
-
-        {-# INLINE vkVariableSampleLocationsByteOffset #-}
-        vkVariableSampleLocationsByteOffset ~_
-          = #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, variableSampleLocations}
-
-        {-# INLINE readVkVariableSampleLocations #-}
-        readVkVariableSampleLocations p
-          = peekByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, variableSampleLocations}
-
-        {-# INLINE writeVkVariableSampleLocations #-}
-        writeVkVariableSampleLocations p
-          = pokeByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, variableSampleLocations}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, sampleLocationSubPixelBits}
 
 instance {-# OVERLAPPING #-}
          HasField "variableSampleLocations"
@@ -573,45 +437,65 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, variableSampleLocations}
 
-instance CanReadField "variableSampleLocations"
+instance {-# OVERLAPPING #-}
+         CanReadField "variableSampleLocations"
            VkPhysicalDeviceSampleLocationsPropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkVariableSampleLocations
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, variableSampleLocations})
 
         {-# INLINE readField #-}
-        readField = readVkVariableSampleLocations
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, variableSampleLocations}
 
-instance CanWriteField "variableSampleLocations"
+instance {-# OVERLAPPING #-}
+         CanWriteField "variableSampleLocations"
            VkPhysicalDeviceSampleLocationsPropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkVariableSampleLocations
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceSampleLocationsPropertiesEXT, variableSampleLocations}
 
 instance Show VkPhysicalDeviceSampleLocationsPropertiesEXT where
         showsPrec d x
           = showString "VkPhysicalDeviceSampleLocationsPropertiesEXT {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkSampleLocationSampleCounts = " .
-                            showsPrec d (vkSampleLocationSampleCounts x) .
+                          showString "sampleLocationSampleCounts = " .
+                            showsPrec d (getField @"sampleLocationSampleCounts" x) .
                               showString ", " .
-                                showString "vkMaxSampleLocationGridSize = " .
-                                  showsPrec d (vkMaxSampleLocationGridSize x) .
+                                showString "maxSampleLocationGridSize = " .
+                                  showsPrec d (getField @"maxSampleLocationGridSize" x) .
                                     showString ", " .
-                                      showString "vkSampleLocationCoordinateRangeArray = [" .
-                                        showsPrec d
-                                          (map (vkSampleLocationCoordinateRangeArray x) [1 .. 2])
-                                          .
-                                          showChar ']' .
-                                            showString ", " .
-                                              showString "vkSampleLocationSubPixelBits = " .
-                                                showsPrec d (vkSampleLocationSubPixelBits x) .
-                                                  showString ", " .
-                                                    showString "vkVariableSampleLocations = " .
-                                                      showsPrec d (vkVariableSampleLocations x) .
-                                                        showChar '}'
+                                      (showString "sampleLocationCoordinateRange = [" .
+                                         showsPrec d
+                                           (let s = sizeOf
+                                                      (undefined ::
+                                                         FieldType "sampleLocationCoordinateRange"
+                                                           VkPhysicalDeviceSampleLocationsPropertiesEXT)
+                                                o = fieldOffset @"sampleLocationCoordinateRange"
+                                                      @VkPhysicalDeviceSampleLocationsPropertiesEXT
+                                                f i
+                                                  = peekByteOff (unsafePtr x) i ::
+                                                      IO
+                                                        (FieldType "sampleLocationCoordinateRange"
+                                                           VkPhysicalDeviceSampleLocationsPropertiesEXT)
+                                              in
+                                              unsafeDupablePerformIO . mapM f $
+                                                map (\ i -> o + i * s) [0 .. 2 - 1])
+                                           . showChar ']')
+                                        .
+                                        showString ", " .
+                                          showString "sampleLocationSubPixelBits = " .
+                                            showsPrec d (getField @"sampleLocationSubPixelBits" x) .
+                                              showString ", " .
+                                                showString "variableSampleLocations = " .
+                                                  showsPrec d
+                                                    (getField @"variableSampleLocations" x)
+                                                    . showChar '}'

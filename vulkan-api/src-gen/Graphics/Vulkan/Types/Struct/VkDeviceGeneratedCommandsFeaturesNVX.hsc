@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkDeviceGeneratedCommandsFeaturesNVX
        (VkDeviceGeneratedCommandsFeaturesNVX(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes            (VkBool32)
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDeviceGeneratedCommandsFeaturesNVX {
@@ -80,28 +80,6 @@ instance VulkanMarshal VkDeviceGeneratedCommandsFeaturesNVX where
         type StructExtends VkDeviceGeneratedCommandsFeaturesNVX = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkDeviceGeneratedCommandsFeaturesNVX where
-        type VkSTypeMType VkDeviceGeneratedCommandsFeaturesNVX =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGeneratedCommandsFeaturesNVX, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkDeviceGeneratedCommandsFeaturesNVX, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkDeviceGeneratedCommandsFeaturesNVX, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkDeviceGeneratedCommandsFeaturesNVX, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkDeviceGeneratedCommandsFeaturesNVX where
         type FieldType "sType" VkDeviceGeneratedCommandsFeaturesNVX =
              VkStructureType
@@ -119,39 +97,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGeneratedCommandsFeaturesNVX, sType}
 
-instance CanReadField "sType" VkDeviceGeneratedCommandsFeaturesNVX
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkDeviceGeneratedCommandsFeaturesNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGeneratedCommandsFeaturesNVX, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkDeviceGeneratedCommandsFeaturesNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkDeviceGeneratedCommandsFeaturesNVX, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkDeviceGeneratedCommandsFeaturesNVX where
-        type VkPNextMType VkDeviceGeneratedCommandsFeaturesNVX = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGeneratedCommandsFeaturesNVX, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkDeviceGeneratedCommandsFeaturesNVX, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkDeviceGeneratedCommandsFeaturesNVX, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkDeviceGeneratedCommandsFeaturesNVX, pNext}
+         CanWriteField "sType" VkDeviceGeneratedCommandsFeaturesNVX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGeneratedCommandsFeaturesNVX, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkDeviceGeneratedCommandsFeaturesNVX where
@@ -171,43 +132,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGeneratedCommandsFeaturesNVX, pNext}
 
-instance CanReadField "pNext" VkDeviceGeneratedCommandsFeaturesNVX
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkDeviceGeneratedCommandsFeaturesNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGeneratedCommandsFeaturesNVX, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkDeviceGeneratedCommandsFeaturesNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkDeviceGeneratedCommandsFeaturesNVX, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkComputeBindingPointSupport
-           VkDeviceGeneratedCommandsFeaturesNVX
-         where
-        type VkComputeBindingPointSupportMType
-               VkDeviceGeneratedCommandsFeaturesNVX
-             = VkBool32
-
-        {-# NOINLINE vkComputeBindingPointSupport #-}
-        vkComputeBindingPointSupport x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceGeneratedCommandsFeaturesNVX, computeBindingPointSupport})
-
-        {-# INLINE vkComputeBindingPointSupportByteOffset #-}
-        vkComputeBindingPointSupportByteOffset ~_
-          = #{offset VkDeviceGeneratedCommandsFeaturesNVX, computeBindingPointSupport}
-
-        {-# INLINE readVkComputeBindingPointSupport #-}
-        readVkComputeBindingPointSupport p
-          = peekByteOff p #{offset VkDeviceGeneratedCommandsFeaturesNVX, computeBindingPointSupport}
-
-        {-# INLINE writeVkComputeBindingPointSupport #-}
-        writeVkComputeBindingPointSupport p
-          = pokeByteOff p #{offset VkDeviceGeneratedCommandsFeaturesNVX, computeBindingPointSupport}
+         CanWriteField "pNext" VkDeviceGeneratedCommandsFeaturesNVX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGeneratedCommandsFeaturesNVX, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "computeBindingPointSupport"
@@ -234,29 +174,36 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceGeneratedCommandsFeaturesNVX, computeBindingPointSupport}
 
-instance CanReadField "computeBindingPointSupport"
+instance {-# OVERLAPPING #-}
+         CanReadField "computeBindingPointSupport"
            VkDeviceGeneratedCommandsFeaturesNVX
          where
-        {-# INLINE getField #-}
-        getField = vkComputeBindingPointSupport
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceGeneratedCommandsFeaturesNVX, computeBindingPointSupport})
 
         {-# INLINE readField #-}
-        readField = readVkComputeBindingPointSupport
+        readField p
+          = peekByteOff p #{offset VkDeviceGeneratedCommandsFeaturesNVX, computeBindingPointSupport}
 
-instance CanWriteField "computeBindingPointSupport"
+instance {-# OVERLAPPING #-}
+         CanWriteField "computeBindingPointSupport"
            VkDeviceGeneratedCommandsFeaturesNVX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkComputeBindingPointSupport
+        writeField p
+          = pokeByteOff p #{offset VkDeviceGeneratedCommandsFeaturesNVX, computeBindingPointSupport}
 
 instance Show VkDeviceGeneratedCommandsFeaturesNVX where
         showsPrec d x
           = showString "VkDeviceGeneratedCommandsFeaturesNVX {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkComputeBindingPointSupport = " .
-                            showsPrec d (vkComputeBindingPointSupport x) . showChar '}'
+                          showString "computeBindingPointSupport = " .
+                            showsPrec d (getField @"computeBindingPointSupport" x) .
+                              showChar '}'

@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkDisplayModeParametersKHR
        (VkDisplayModeParametersKHR(..)) where
@@ -13,7 +14,6 @@ import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Struct.VkExtent2D (VkExtent2D)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                        (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDisplayModeParametersKHR {
@@ -74,27 +74,6 @@ instance VulkanMarshal VkDisplayModeParametersKHR where
         type StructExtends VkDisplayModeParametersKHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkVisibleRegion VkDisplayModeParametersKHR where
-        type VkVisibleRegionMType VkDisplayModeParametersKHR = VkExtent2D
-
-        {-# NOINLINE vkVisibleRegion #-}
-        vkVisibleRegion x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayModeParametersKHR, visibleRegion})
-
-        {-# INLINE vkVisibleRegionByteOffset #-}
-        vkVisibleRegionByteOffset ~_
-          = #{offset VkDisplayModeParametersKHR, visibleRegion}
-
-        {-# INLINE readVkVisibleRegion #-}
-        readVkVisibleRegion p
-          = peekByteOff p #{offset VkDisplayModeParametersKHR, visibleRegion}
-
-        {-# INLINE writeVkVisibleRegion #-}
-        writeVkVisibleRegion p
-          = pokeByteOff p #{offset VkDisplayModeParametersKHR, visibleRegion}
-
-instance {-# OVERLAPPING #-}
          HasField "visibleRegion" VkDisplayModeParametersKHR where
         type FieldType "visibleRegion" VkDisplayModeParametersKHR =
              VkExtent2D
@@ -112,39 +91,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDisplayModeParametersKHR, visibleRegion}
 
-instance CanReadField "visibleRegion" VkDisplayModeParametersKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkVisibleRegion
+instance {-# OVERLAPPING #-}
+         CanReadField "visibleRegion" VkDisplayModeParametersKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayModeParametersKHR, visibleRegion})
 
         {-# INLINE readField #-}
-        readField = readVkVisibleRegion
-
-instance CanWriteField "visibleRegion" VkDisplayModeParametersKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkVisibleRegion
+        readField p
+          = peekByteOff p #{offset VkDisplayModeParametersKHR, visibleRegion}
 
 instance {-# OVERLAPPING #-}
-         HasVkRefreshRate VkDisplayModeParametersKHR where
-        type VkRefreshRateMType VkDisplayModeParametersKHR = Word32
-
-        {-# NOINLINE vkRefreshRate #-}
-        vkRefreshRate x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDisplayModeParametersKHR, refreshRate})
-
-        {-# INLINE vkRefreshRateByteOffset #-}
-        vkRefreshRateByteOffset ~_
-          = #{offset VkDisplayModeParametersKHR, refreshRate}
-
-        {-# INLINE readVkRefreshRate #-}
-        readVkRefreshRate p
-          = peekByteOff p #{offset VkDisplayModeParametersKHR, refreshRate}
-
-        {-# INLINE writeVkRefreshRate #-}
-        writeVkRefreshRate p
-          = pokeByteOff p #{offset VkDisplayModeParametersKHR, refreshRate}
+         CanWriteField "visibleRegion" VkDisplayModeParametersKHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDisplayModeParametersKHR, visibleRegion}
 
 instance {-# OVERLAPPING #-}
          HasField "refreshRate" VkDisplayModeParametersKHR where
@@ -162,24 +124,28 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDisplayModeParametersKHR, refreshRate}
 
-instance CanReadField "refreshRate" VkDisplayModeParametersKHR
-         where
-        {-# INLINE getField #-}
-        getField = vkRefreshRate
+instance {-# OVERLAPPING #-}
+         CanReadField "refreshRate" VkDisplayModeParametersKHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDisplayModeParametersKHR, refreshRate})
 
         {-# INLINE readField #-}
-        readField = readVkRefreshRate
+        readField p
+          = peekByteOff p #{offset VkDisplayModeParametersKHR, refreshRate}
 
-instance CanWriteField "refreshRate" VkDisplayModeParametersKHR
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "refreshRate" VkDisplayModeParametersKHR where
         {-# INLINE writeField #-}
-        writeField = writeVkRefreshRate
+        writeField p
+          = pokeByteOff p #{offset VkDisplayModeParametersKHR, refreshRate}
 
 instance Show VkDisplayModeParametersKHR where
         showsPrec d x
           = showString "VkDisplayModeParametersKHR {" .
-              showString "vkVisibleRegion = " .
-                showsPrec d (vkVisibleRegion x) .
+              showString "visibleRegion = " .
+                showsPrec d (getField @"visibleRegion" x) .
                   showString ", " .
-                    showString "vkRefreshRate = " .
-                      showsPrec d (vkRefreshRate x) . showChar '}'
+                    showString "refreshRate = " .
+                      showsPrec d (getField @"refreshRate" x) . showChar '}'

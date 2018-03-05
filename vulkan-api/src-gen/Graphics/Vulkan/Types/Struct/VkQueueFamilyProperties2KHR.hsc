@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkQueueFamilyProperties2KHR
        (VkQueueFamilyProperties2KHR(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType           (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkQueueFamilyProperties (VkQueueFamilyProperties)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                     (unsafeDupablePerformIO)
 
 -- | > typedef struct VkQueueFamilyProperties2KHR {
@@ -75,27 +75,6 @@ instance VulkanMarshal VkQueueFamilyProperties2KHR where
         type ReturnedOnly VkQueueFamilyProperties2KHR = 'True -- ' closing tick for hsc2hs
         type StructExtends VkQueueFamilyProperties2KHR = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkQueueFamilyProperties2KHR
-         where
-        type VkSTypeMType VkQueueFamilyProperties2KHR = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkQueueFamilyProperties2KHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkQueueFamilyProperties2KHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkQueueFamilyProperties2KHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkQueueFamilyProperties2KHR, sType}
-
 instance {-# OVERLAPPING #-}
          HasField "sType" VkQueueFamilyProperties2KHR where
         type FieldType "sType" VkQueueFamilyProperties2KHR =
@@ -112,37 +91,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkQueueFamilyProperties2KHR, sType}
 
-instance CanReadField "sType" VkQueueFamilyProperties2KHR where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkQueueFamilyProperties2KHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkQueueFamilyProperties2KHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkQueueFamilyProperties2KHR, sType}
 
-instance CanWriteField "sType" VkQueueFamilyProperties2KHR where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkQueueFamilyProperties2KHR where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkQueueFamilyProperties2KHR
-         where
-        type VkPNextMType VkQueueFamilyProperties2KHR = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkQueueFamilyProperties2KHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkQueueFamilyProperties2KHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkQueueFamilyProperties2KHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkQueueFamilyProperties2KHR, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkQueueFamilyProperties2KHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkQueueFamilyProperties2KHR where
@@ -159,38 +123,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkQueueFamilyProperties2KHR, pNext}
 
-instance CanReadField "pNext" VkQueueFamilyProperties2KHR where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkQueueFamilyProperties2KHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkQueueFamilyProperties2KHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkQueueFamilyProperties2KHR where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkQueueFamilyProperties2KHR, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkQueueFamilyProperties VkQueueFamilyProperties2KHR where
-        type VkQueueFamilyPropertiesMType VkQueueFamilyProperties2KHR =
-             VkQueueFamilyProperties
-
-        {-# NOINLINE vkQueueFamilyProperties #-}
-        vkQueueFamilyProperties x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkQueueFamilyProperties2KHR, queueFamilyProperties})
-
-        {-# INLINE vkQueueFamilyPropertiesByteOffset #-}
-        vkQueueFamilyPropertiesByteOffset ~_
-          = #{offset VkQueueFamilyProperties2KHR, queueFamilyProperties}
-
-        {-# INLINE readVkQueueFamilyProperties #-}
-        readVkQueueFamilyProperties p
-          = peekByteOff p #{offset VkQueueFamilyProperties2KHR, queueFamilyProperties}
-
-        {-# INLINE writeVkQueueFamilyProperties #-}
-        writeVkQueueFamilyProperties p
-          = pokeByteOff p #{offset VkQueueFamilyProperties2KHR, queueFamilyProperties}
+         CanWriteField "pNext" VkQueueFamilyProperties2KHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkQueueFamilyProperties2KHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "queueFamilyProperties" VkQueueFamilyProperties2KHR where
@@ -214,29 +162,33 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkQueueFamilyProperties2KHR, queueFamilyProperties}
 
-instance CanReadField "queueFamilyProperties"
-           VkQueueFamilyProperties2KHR
+instance {-# OVERLAPPING #-}
+         CanReadField "queueFamilyProperties" VkQueueFamilyProperties2KHR
          where
-        {-# INLINE getField #-}
-        getField = vkQueueFamilyProperties
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkQueueFamilyProperties2KHR, queueFamilyProperties})
 
         {-# INLINE readField #-}
-        readField = readVkQueueFamilyProperties
+        readField p
+          = peekByteOff p #{offset VkQueueFamilyProperties2KHR, queueFamilyProperties}
 
-instance CanWriteField "queueFamilyProperties"
-           VkQueueFamilyProperties2KHR
+instance {-# OVERLAPPING #-}
+         CanWriteField "queueFamilyProperties" VkQueueFamilyProperties2KHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkQueueFamilyProperties
+        writeField p
+          = pokeByteOff p #{offset VkQueueFamilyProperties2KHR, queueFamilyProperties}
 
 instance Show VkQueueFamilyProperties2KHR where
         showsPrec d x
           = showString "VkQueueFamilyProperties2KHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkQueueFamilyProperties = " .
-                            showsPrec d (vkQueueFamilyProperties x) . showChar '}'
+                          showString "queueFamilyProperties = " .
+                            showsPrec d (getField @"queueFamilyProperties" x) . showChar '}'

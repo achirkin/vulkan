@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPipelineTessellationStateCreateInfo
        (VkPipelineTessellationStateCreateInfo(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Bitmasks             (VkPipelineTessellationStateCreateFlags)
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPipelineTessellationStateCreateInfo {
@@ -81,28 +81,6 @@ instance VulkanMarshal VkPipelineTessellationStateCreateInfo where
         type StructExtends VkPipelineTessellationStateCreateInfo = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPipelineTessellationStateCreateInfo where
-        type VkSTypeMType VkPipelineTessellationStateCreateInfo =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineTessellationStateCreateInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPipelineTessellationStateCreateInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPipelineTessellationStateCreateInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPipelineTessellationStateCreateInfo, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPipelineTessellationStateCreateInfo where
         type FieldType "sType" VkPipelineTessellationStateCreateInfo =
              VkStructureType
@@ -120,40 +98,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineTessellationStateCreateInfo, sType}
 
-instance CanReadField "sType" VkPipelineTessellationStateCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkPipelineTessellationStateCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineTessellationStateCreateInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType"
-           VkPipelineTessellationStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkPipelineTessellationStateCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkPipelineTessellationStateCreateInfo where
-        type VkPNextMType VkPipelineTessellationStateCreateInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineTessellationStateCreateInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPipelineTessellationStateCreateInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPipelineTessellationStateCreateInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPipelineTessellationStateCreateInfo, pNext}
+         CanWriteField "sType" VkPipelineTessellationStateCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineTessellationStateCreateInfo, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPipelineTessellationStateCreateInfo where
@@ -173,41 +133,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineTessellationStateCreateInfo, pNext}
 
-instance CanReadField "pNext" VkPipelineTessellationStateCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkPipelineTessellationStateCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineTessellationStateCreateInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext"
-           VkPipelineTessellationStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkPipelineTessellationStateCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkFlags VkPipelineTessellationStateCreateInfo where
-        type VkFlagsMType VkPipelineTessellationStateCreateInfo =
-             VkPipelineTessellationStateCreateFlags
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineTessellationStateCreateInfo, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkPipelineTessellationStateCreateInfo, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkPipelineTessellationStateCreateInfo, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkPipelineTessellationStateCreateInfo, flags}
+         CanWriteField "pNext" VkPipelineTessellationStateCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineTessellationStateCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkPipelineTessellationStateCreateInfo where
@@ -227,42 +168,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineTessellationStateCreateInfo, flags}
 
-instance CanReadField "flags" VkPipelineTessellationStateCreateInfo
-         where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkPipelineTessellationStateCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineTessellationStateCreateInfo, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags"
-           VkPipelineTessellationStateCreateInfo
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkPipelineTessellationStateCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkPatchControlPoints VkPipelineTessellationStateCreateInfo where
-        type VkPatchControlPointsMType
-               VkPipelineTessellationStateCreateInfo
-             = Word32
-
-        {-# NOINLINE vkPatchControlPoints #-}
-        vkPatchControlPoints x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPipelineTessellationStateCreateInfo, patchControlPoints})
-
-        {-# INLINE vkPatchControlPointsByteOffset #-}
-        vkPatchControlPointsByteOffset ~_
-          = #{offset VkPipelineTessellationStateCreateInfo, patchControlPoints}
-
-        {-# INLINE readVkPatchControlPoints #-}
-        readVkPatchControlPoints p
-          = peekByteOff p #{offset VkPipelineTessellationStateCreateInfo, patchControlPoints}
-
-        {-# INLINE writeVkPatchControlPoints #-}
-        writeVkPatchControlPoints p
-          = pokeByteOff p #{offset VkPipelineTessellationStateCreateInfo, patchControlPoints}
+         CanWriteField "flags" VkPipelineTessellationStateCreateInfo where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPipelineTessellationStateCreateInfo, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "patchControlPoints" VkPipelineTessellationStateCreateInfo
@@ -288,32 +209,38 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPipelineTessellationStateCreateInfo, patchControlPoints}
 
-instance CanReadField "patchControlPoints"
+instance {-# OVERLAPPING #-}
+         CanReadField "patchControlPoints"
            VkPipelineTessellationStateCreateInfo
          where
-        {-# INLINE getField #-}
-        getField = vkPatchControlPoints
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPipelineTessellationStateCreateInfo, patchControlPoints})
 
         {-# INLINE readField #-}
-        readField = readVkPatchControlPoints
+        readField p
+          = peekByteOff p #{offset VkPipelineTessellationStateCreateInfo, patchControlPoints}
 
-instance CanWriteField "patchControlPoints"
+instance {-# OVERLAPPING #-}
+         CanWriteField "patchControlPoints"
            VkPipelineTessellationStateCreateInfo
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPatchControlPoints
+        writeField p
+          = pokeByteOff p #{offset VkPipelineTessellationStateCreateInfo, patchControlPoints}
 
 instance Show VkPipelineTessellationStateCreateInfo where
         showsPrec d x
           = showString "VkPipelineTessellationStateCreateInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkPatchControlPoints = " .
-                                  showsPrec d (vkPatchControlPoints x) . showChar '}'
+                                showString "patchControlPoints = " .
+                                  showsPrec d (getField @"patchControlPoints" x) . showChar '}'

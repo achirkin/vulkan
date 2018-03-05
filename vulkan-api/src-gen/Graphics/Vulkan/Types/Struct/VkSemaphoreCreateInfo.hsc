@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkSemaphoreCreateInfo
        (VkSemaphoreCreateInfo(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Bitmasks             (VkSemaphoreCreateFlags)
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSemaphoreCreateInfo {
@@ -72,26 +72,6 @@ instance VulkanMarshal VkSemaphoreCreateInfo where
         type ReturnedOnly VkSemaphoreCreateInfo = 'False -- ' closing tick for hsc2hs
         type StructExtends VkSemaphoreCreateInfo = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkSemaphoreCreateInfo where
-        type VkSTypeMType VkSemaphoreCreateInfo = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSemaphoreCreateInfo, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkSemaphoreCreateInfo, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkSemaphoreCreateInfo, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkSemaphoreCreateInfo, sType}
-
 instance {-# OVERLAPPING #-} HasField "sType" VkSemaphoreCreateInfo
          where
         type FieldType "sType" VkSemaphoreCreateInfo = VkStructureType
@@ -106,36 +86,22 @@ instance {-# OVERLAPPING #-} HasField "sType" VkSemaphoreCreateInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSemaphoreCreateInfo, sType}
 
-instance CanReadField "sType" VkSemaphoreCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkSemaphoreCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSemaphoreCreateInfo, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkSemaphoreCreateInfo, sType}
 
-instance CanWriteField "sType" VkSemaphoreCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkSemaphoreCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkSemaphoreCreateInfo where
-        type VkPNextMType VkSemaphoreCreateInfo = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSemaphoreCreateInfo, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkSemaphoreCreateInfo, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkSemaphoreCreateInfo, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkSemaphoreCreateInfo, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkSemaphoreCreateInfo, sType}
 
 instance {-# OVERLAPPING #-} HasField "pNext" VkSemaphoreCreateInfo
          where
@@ -151,36 +117,22 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkSemaphoreCreateInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSemaphoreCreateInfo, pNext}
 
-instance CanReadField "pNext" VkSemaphoreCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkSemaphoreCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSemaphoreCreateInfo, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkSemaphoreCreateInfo, pNext}
 
-instance CanWriteField "pNext" VkSemaphoreCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext" VkSemaphoreCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-} HasVkFlags VkSemaphoreCreateInfo where
-        type VkFlagsMType VkSemaphoreCreateInfo = VkSemaphoreCreateFlags
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSemaphoreCreateInfo, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkSemaphoreCreateInfo, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkSemaphoreCreateInfo, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkSemaphoreCreateInfo, flags}
+        writeField p
+          = pokeByteOff p #{offset VkSemaphoreCreateInfo, pNext}
 
 instance {-# OVERLAPPING #-} HasField "flags" VkSemaphoreCreateInfo
          where
@@ -197,24 +149,31 @@ instance {-# OVERLAPPING #-} HasField "flags" VkSemaphoreCreateInfo
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSemaphoreCreateInfo, flags}
 
-instance CanReadField "flags" VkSemaphoreCreateInfo where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkSemaphoreCreateInfo where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSemaphoreCreateInfo, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
+        readField p
+          = peekByteOff p #{offset VkSemaphoreCreateInfo, flags}
 
-instance CanWriteField "flags" VkSemaphoreCreateInfo where
+instance {-# OVERLAPPING #-}
+         CanWriteField "flags" VkSemaphoreCreateInfo where
         {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        writeField p
+          = pokeByteOff p #{offset VkSemaphoreCreateInfo, flags}
 
 instance Show VkSemaphoreCreateInfo where
         showsPrec d x
           = showString "VkSemaphoreCreateInfo {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " . showsPrec d (vkFlags x) . showChar '}'
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) . showChar '}'

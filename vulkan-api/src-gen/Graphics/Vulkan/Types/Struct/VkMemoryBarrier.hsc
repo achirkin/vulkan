@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkMemoryBarrier
        (VkMemoryBarrier(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkAccessFlags   (VkAccessFlags)
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkMemoryBarrier {
@@ -72,25 +72,6 @@ instance VulkanMarshal VkMemoryBarrier where
         type ReturnedOnly VkMemoryBarrier = 'False -- ' closing tick for hsc2hs
         type StructExtends VkMemoryBarrier = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkMemoryBarrier where
-        type VkSTypeMType VkMemoryBarrier = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkMemoryBarrier, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_ = #{offset VkMemoryBarrier, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkMemoryBarrier, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkMemoryBarrier, sType}
-
 instance {-# OVERLAPPING #-} HasField "sType" VkMemoryBarrier where
         type FieldType "sType" VkMemoryBarrier = VkStructureType
         type FieldOptional "sType" VkMemoryBarrier = 'False -- ' closing tick for hsc2hs
@@ -104,35 +85,22 @@ instance {-# OVERLAPPING #-} HasField "sType" VkMemoryBarrier where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkMemoryBarrier, sType}
 
-instance CanReadField "sType" VkMemoryBarrier where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-} CanReadField "sType" VkMemoryBarrier
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkMemoryBarrier, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkMemoryBarrier, sType}
 
-instance CanWriteField "sType" VkMemoryBarrier where
+instance {-# OVERLAPPING #-} CanWriteField "sType" VkMemoryBarrier
+         where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkMemoryBarrier where
-        type VkPNextMType VkMemoryBarrier = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkMemoryBarrier, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_ = #{offset VkMemoryBarrier, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkMemoryBarrier, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkMemoryBarrier, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkMemoryBarrier, sType}
 
 instance {-# OVERLAPPING #-} HasField "pNext" VkMemoryBarrier where
         type FieldType "pNext" VkMemoryBarrier = Ptr Void
@@ -147,37 +115,22 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkMemoryBarrier where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkMemoryBarrier, pNext}
 
-instance CanReadField "pNext" VkMemoryBarrier where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-} CanReadField "pNext" VkMemoryBarrier
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkMemoryBarrier, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkMemoryBarrier, pNext}
 
-instance CanWriteField "pNext" VkMemoryBarrier where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-} HasVkSrcAccessMask VkMemoryBarrier
+instance {-# OVERLAPPING #-} CanWriteField "pNext" VkMemoryBarrier
          where
-        type VkSrcAccessMaskMType VkMemoryBarrier = VkAccessFlags
-
-        {-# NOINLINE vkSrcAccessMask #-}
-        vkSrcAccessMask x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkMemoryBarrier, srcAccessMask})
-
-        {-# INLINE vkSrcAccessMaskByteOffset #-}
-        vkSrcAccessMaskByteOffset ~_
-          = #{offset VkMemoryBarrier, srcAccessMask}
-
-        {-# INLINE readVkSrcAccessMask #-}
-        readVkSrcAccessMask p
-          = peekByteOff p #{offset VkMemoryBarrier, srcAccessMask}
-
-        {-# INLINE writeVkSrcAccessMask #-}
-        writeVkSrcAccessMask p
-          = pokeByteOff p #{offset VkMemoryBarrier, srcAccessMask}
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkMemoryBarrier, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "srcAccessMask" VkMemoryBarrier where
@@ -193,37 +146,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkMemoryBarrier, srcAccessMask}
 
-instance CanReadField "srcAccessMask" VkMemoryBarrier where
-        {-# INLINE getField #-}
-        getField = vkSrcAccessMask
+instance {-# OVERLAPPING #-}
+         CanReadField "srcAccessMask" VkMemoryBarrier where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkMemoryBarrier, srcAccessMask})
 
         {-# INLINE readField #-}
-        readField = readVkSrcAccessMask
+        readField p
+          = peekByteOff p #{offset VkMemoryBarrier, srcAccessMask}
 
-instance CanWriteField "srcAccessMask" VkMemoryBarrier where
+instance {-# OVERLAPPING #-}
+         CanWriteField "srcAccessMask" VkMemoryBarrier where
         {-# INLINE writeField #-}
-        writeField = writeVkSrcAccessMask
-
-instance {-# OVERLAPPING #-} HasVkDstAccessMask VkMemoryBarrier
-         where
-        type VkDstAccessMaskMType VkMemoryBarrier = VkAccessFlags
-
-        {-# NOINLINE vkDstAccessMask #-}
-        vkDstAccessMask x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkMemoryBarrier, dstAccessMask})
-
-        {-# INLINE vkDstAccessMaskByteOffset #-}
-        vkDstAccessMaskByteOffset ~_
-          = #{offset VkMemoryBarrier, dstAccessMask}
-
-        {-# INLINE readVkDstAccessMask #-}
-        readVkDstAccessMask p
-          = peekByteOff p #{offset VkMemoryBarrier, dstAccessMask}
-
-        {-# INLINE writeVkDstAccessMask #-}
-        writeVkDstAccessMask p
-          = pokeByteOff p #{offset VkMemoryBarrier, dstAccessMask}
+        writeField p
+          = pokeByteOff p #{offset VkMemoryBarrier, srcAccessMask}
 
 instance {-# OVERLAPPING #-}
          HasField "dstAccessMask" VkMemoryBarrier where
@@ -239,28 +177,34 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkMemoryBarrier, dstAccessMask}
 
-instance CanReadField "dstAccessMask" VkMemoryBarrier where
-        {-# INLINE getField #-}
-        getField = vkDstAccessMask
+instance {-# OVERLAPPING #-}
+         CanReadField "dstAccessMask" VkMemoryBarrier where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkMemoryBarrier, dstAccessMask})
 
         {-# INLINE readField #-}
-        readField = readVkDstAccessMask
+        readField p
+          = peekByteOff p #{offset VkMemoryBarrier, dstAccessMask}
 
-instance CanWriteField "dstAccessMask" VkMemoryBarrier where
+instance {-# OVERLAPPING #-}
+         CanWriteField "dstAccessMask" VkMemoryBarrier where
         {-# INLINE writeField #-}
-        writeField = writeVkDstAccessMask
+        writeField p
+          = pokeByteOff p #{offset VkMemoryBarrier, dstAccessMask}
 
 instance Show VkMemoryBarrier where
         showsPrec d x
           = showString "VkMemoryBarrier {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkSrcAccessMask = " .
-                            showsPrec d (vkSrcAccessMask x) .
+                          showString "srcAccessMask = " .
+                            showsPrec d (getField @"srcAccessMask" x) .
                               showString ", " .
-                                showString "vkDstAccessMask = " .
-                                  showsPrec d (vkDstAccessMask x) . showChar '}'
+                                showString "dstAccessMask = " .
+                                  showsPrec d (getField @"dstAccessMask" x) . showChar '}'

@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkSubpassDescription
        (VkSubpassDescription(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkPipelineBindPoint       (VkPipelineBindPoint)
 import           Graphics.Vulkan.Types.Enum.VkSubpassDescriptionFlags (VkSubpassDescriptionFlags)
 import           Graphics.Vulkan.Types.Struct.VkAttachmentReference   (VkAttachmentReference)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                     (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSubpassDescription {
@@ -82,26 +82,6 @@ instance VulkanMarshal VkSubpassDescription where
         type ReturnedOnly VkSubpassDescription = 'False -- ' closing tick for hsc2hs
         type StructExtends VkSubpassDescription = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkFlags VkSubpassDescription where
-        type VkFlagsMType VkSubpassDescription = VkSubpassDescriptionFlags
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubpassDescription, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkSubpassDescription, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkSubpassDescription, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkSubpassDescription, flags}
-
 instance {-# OVERLAPPING #-} HasField "flags" VkSubpassDescription
          where
         type FieldType "flags" VkSubpassDescription =
@@ -117,38 +97,22 @@ instance {-# OVERLAPPING #-} HasField "flags" VkSubpassDescription
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkSubpassDescription, flags}
 
-instance CanReadField "flags" VkSubpassDescription where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkSubpassDescription where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubpassDescription, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags" VkSubpassDescription where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkSubpassDescription, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkPipelineBindPoint VkSubpassDescription where
-        type VkPipelineBindPointMType VkSubpassDescription =
-             VkPipelineBindPoint
-
-        {-# NOINLINE vkPipelineBindPoint #-}
-        vkPipelineBindPoint x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubpassDescription, pipelineBindPoint})
-
-        {-# INLINE vkPipelineBindPointByteOffset #-}
-        vkPipelineBindPointByteOffset ~_
-          = #{offset VkSubpassDescription, pipelineBindPoint}
-
-        {-# INLINE readVkPipelineBindPoint #-}
-        readVkPipelineBindPoint p
-          = peekByteOff p #{offset VkSubpassDescription, pipelineBindPoint}
-
-        {-# INLINE writeVkPipelineBindPoint #-}
-        writeVkPipelineBindPoint p
-          = pokeByteOff p #{offset VkSubpassDescription, pipelineBindPoint}
+         CanWriteField "flags" VkSubpassDescription where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSubpassDescription, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "pipelineBindPoint" VkSubpassDescription where
@@ -167,39 +131,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSubpassDescription, pipelineBindPoint}
 
-instance CanReadField "pipelineBindPoint" VkSubpassDescription
-         where
-        {-# INLINE getField #-}
-        getField = vkPipelineBindPoint
+instance {-# OVERLAPPING #-}
+         CanReadField "pipelineBindPoint" VkSubpassDescription where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubpassDescription, pipelineBindPoint})
 
         {-# INLINE readField #-}
-        readField = readVkPipelineBindPoint
-
-instance CanWriteField "pipelineBindPoint" VkSubpassDescription
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPipelineBindPoint
+        readField p
+          = peekByteOff p #{offset VkSubpassDescription, pipelineBindPoint}
 
 instance {-# OVERLAPPING #-}
-         HasVkInputAttachmentCount VkSubpassDescription where
-        type VkInputAttachmentCountMType VkSubpassDescription = Word32
-
-        {-# NOINLINE vkInputAttachmentCount #-}
-        vkInputAttachmentCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubpassDescription, inputAttachmentCount})
-
-        {-# INLINE vkInputAttachmentCountByteOffset #-}
-        vkInputAttachmentCountByteOffset ~_
-          = #{offset VkSubpassDescription, inputAttachmentCount}
-
-        {-# INLINE readVkInputAttachmentCount #-}
-        readVkInputAttachmentCount p
-          = peekByteOff p #{offset VkSubpassDescription, inputAttachmentCount}
-
-        {-# INLINE writeVkInputAttachmentCount #-}
-        writeVkInputAttachmentCount p
-          = pokeByteOff p #{offset VkSubpassDescription, inputAttachmentCount}
+         CanWriteField "pipelineBindPoint" VkSubpassDescription where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSubpassDescription, pipelineBindPoint}
 
 instance {-# OVERLAPPING #-}
          HasField "inputAttachmentCount" VkSubpassDescription where
@@ -218,40 +165,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSubpassDescription, inputAttachmentCount}
 
-instance CanReadField "inputAttachmentCount" VkSubpassDescription
-         where
-        {-# INLINE getField #-}
-        getField = vkInputAttachmentCount
+instance {-# OVERLAPPING #-}
+         CanReadField "inputAttachmentCount" VkSubpassDescription where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubpassDescription, inputAttachmentCount})
 
         {-# INLINE readField #-}
-        readField = readVkInputAttachmentCount
-
-instance CanWriteField "inputAttachmentCount" VkSubpassDescription
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkInputAttachmentCount
+        readField p
+          = peekByteOff p #{offset VkSubpassDescription, inputAttachmentCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPInputAttachments VkSubpassDescription where
-        type VkPInputAttachmentsMType VkSubpassDescription =
-             Ptr VkAttachmentReference
-
-        {-# NOINLINE vkPInputAttachments #-}
-        vkPInputAttachments x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubpassDescription, pInputAttachments})
-
-        {-# INLINE vkPInputAttachmentsByteOffset #-}
-        vkPInputAttachmentsByteOffset ~_
-          = #{offset VkSubpassDescription, pInputAttachments}
-
-        {-# INLINE readVkPInputAttachments #-}
-        readVkPInputAttachments p
-          = peekByteOff p #{offset VkSubpassDescription, pInputAttachments}
-
-        {-# INLINE writeVkPInputAttachments #-}
-        writeVkPInputAttachments p
-          = pokeByteOff p #{offset VkSubpassDescription, pInputAttachments}
+         CanWriteField "inputAttachmentCount" VkSubpassDescription where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSubpassDescription, inputAttachmentCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pInputAttachments" VkSubpassDescription where
@@ -270,39 +199,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSubpassDescription, pInputAttachments}
 
-instance CanReadField "pInputAttachments" VkSubpassDescription
-         where
-        {-# INLINE getField #-}
-        getField = vkPInputAttachments
+instance {-# OVERLAPPING #-}
+         CanReadField "pInputAttachments" VkSubpassDescription where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubpassDescription, pInputAttachments})
 
         {-# INLINE readField #-}
-        readField = readVkPInputAttachments
-
-instance CanWriteField "pInputAttachments" VkSubpassDescription
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPInputAttachments
+        readField p
+          = peekByteOff p #{offset VkSubpassDescription, pInputAttachments}
 
 instance {-# OVERLAPPING #-}
-         HasVkColorAttachmentCount VkSubpassDescription where
-        type VkColorAttachmentCountMType VkSubpassDescription = Word32
-
-        {-# NOINLINE vkColorAttachmentCount #-}
-        vkColorAttachmentCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubpassDescription, colorAttachmentCount})
-
-        {-# INLINE vkColorAttachmentCountByteOffset #-}
-        vkColorAttachmentCountByteOffset ~_
-          = #{offset VkSubpassDescription, colorAttachmentCount}
-
-        {-# INLINE readVkColorAttachmentCount #-}
-        readVkColorAttachmentCount p
-          = peekByteOff p #{offset VkSubpassDescription, colorAttachmentCount}
-
-        {-# INLINE writeVkColorAttachmentCount #-}
-        writeVkColorAttachmentCount p
-          = pokeByteOff p #{offset VkSubpassDescription, colorAttachmentCount}
+         CanWriteField "pInputAttachments" VkSubpassDescription where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSubpassDescription, pInputAttachments}
 
 instance {-# OVERLAPPING #-}
          HasField "colorAttachmentCount" VkSubpassDescription where
@@ -321,40 +233,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSubpassDescription, colorAttachmentCount}
 
-instance CanReadField "colorAttachmentCount" VkSubpassDescription
-         where
-        {-# INLINE getField #-}
-        getField = vkColorAttachmentCount
+instance {-# OVERLAPPING #-}
+         CanReadField "colorAttachmentCount" VkSubpassDescription where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubpassDescription, colorAttachmentCount})
 
         {-# INLINE readField #-}
-        readField = readVkColorAttachmentCount
-
-instance CanWriteField "colorAttachmentCount" VkSubpassDescription
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkColorAttachmentCount
+        readField p
+          = peekByteOff p #{offset VkSubpassDescription, colorAttachmentCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPColorAttachments VkSubpassDescription where
-        type VkPColorAttachmentsMType VkSubpassDescription =
-             Ptr VkAttachmentReference
-
-        {-# NOINLINE vkPColorAttachments #-}
-        vkPColorAttachments x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubpassDescription, pColorAttachments})
-
-        {-# INLINE vkPColorAttachmentsByteOffset #-}
-        vkPColorAttachmentsByteOffset ~_
-          = #{offset VkSubpassDescription, pColorAttachments}
-
-        {-# INLINE readVkPColorAttachments #-}
-        readVkPColorAttachments p
-          = peekByteOff p #{offset VkSubpassDescription, pColorAttachments}
-
-        {-# INLINE writeVkPColorAttachments #-}
-        writeVkPColorAttachments p
-          = pokeByteOff p #{offset VkSubpassDescription, pColorAttachments}
+         CanWriteField "colorAttachmentCount" VkSubpassDescription where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSubpassDescription, colorAttachmentCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pColorAttachments" VkSubpassDescription where
@@ -373,40 +267,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSubpassDescription, pColorAttachments}
 
-instance CanReadField "pColorAttachments" VkSubpassDescription
-         where
-        {-# INLINE getField #-}
-        getField = vkPColorAttachments
+instance {-# OVERLAPPING #-}
+         CanReadField "pColorAttachments" VkSubpassDescription where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubpassDescription, pColorAttachments})
 
         {-# INLINE readField #-}
-        readField = readVkPColorAttachments
-
-instance CanWriteField "pColorAttachments" VkSubpassDescription
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPColorAttachments
+        readField p
+          = peekByteOff p #{offset VkSubpassDescription, pColorAttachments}
 
 instance {-# OVERLAPPING #-}
-         HasVkPResolveAttachments VkSubpassDescription where
-        type VkPResolveAttachmentsMType VkSubpassDescription =
-             Ptr VkAttachmentReference
-
-        {-# NOINLINE vkPResolveAttachments #-}
-        vkPResolveAttachments x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubpassDescription, pResolveAttachments})
-
-        {-# INLINE vkPResolveAttachmentsByteOffset #-}
-        vkPResolveAttachmentsByteOffset ~_
-          = #{offset VkSubpassDescription, pResolveAttachments}
-
-        {-# INLINE readVkPResolveAttachments #-}
-        readVkPResolveAttachments p
-          = peekByteOff p #{offset VkSubpassDescription, pResolveAttachments}
-
-        {-# INLINE writeVkPResolveAttachments #-}
-        writeVkPResolveAttachments p
-          = pokeByteOff p #{offset VkSubpassDescription, pResolveAttachments}
+         CanWriteField "pColorAttachments" VkSubpassDescription where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSubpassDescription, pColorAttachments}
 
 instance {-# OVERLAPPING #-}
          HasField "pResolveAttachments" VkSubpassDescription where
@@ -426,40 +302,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSubpassDescription, pResolveAttachments}
 
-instance CanReadField "pResolveAttachments" VkSubpassDescription
-         where
-        {-# INLINE getField #-}
-        getField = vkPResolveAttachments
+instance {-# OVERLAPPING #-}
+         CanReadField "pResolveAttachments" VkSubpassDescription where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubpassDescription, pResolveAttachments})
 
         {-# INLINE readField #-}
-        readField = readVkPResolveAttachments
-
-instance CanWriteField "pResolveAttachments" VkSubpassDescription
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPResolveAttachments
+        readField p
+          = peekByteOff p #{offset VkSubpassDescription, pResolveAttachments}
 
 instance {-# OVERLAPPING #-}
-         HasVkPDepthStencilAttachment VkSubpassDescription where
-        type VkPDepthStencilAttachmentMType VkSubpassDescription =
-             Ptr VkAttachmentReference
-
-        {-# NOINLINE vkPDepthStencilAttachment #-}
-        vkPDepthStencilAttachment x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubpassDescription, pDepthStencilAttachment})
-
-        {-# INLINE vkPDepthStencilAttachmentByteOffset #-}
-        vkPDepthStencilAttachmentByteOffset ~_
-          = #{offset VkSubpassDescription, pDepthStencilAttachment}
-
-        {-# INLINE readVkPDepthStencilAttachment #-}
-        readVkPDepthStencilAttachment p
-          = peekByteOff p #{offset VkSubpassDescription, pDepthStencilAttachment}
-
-        {-# INLINE writeVkPDepthStencilAttachment #-}
-        writeVkPDepthStencilAttachment p
-          = pokeByteOff p #{offset VkSubpassDescription, pDepthStencilAttachment}
+         CanWriteField "pResolveAttachments" VkSubpassDescription where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSubpassDescription, pResolveAttachments}
 
 instance {-# OVERLAPPING #-}
          HasField "pDepthStencilAttachment" VkSubpassDescription where
@@ -479,41 +337,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSubpassDescription, pDepthStencilAttachment}
 
-instance CanReadField "pDepthStencilAttachment"
-           VkSubpassDescription
-         where
-        {-# INLINE getField #-}
-        getField = vkPDepthStencilAttachment
+instance {-# OVERLAPPING #-}
+         CanReadField "pDepthStencilAttachment" VkSubpassDescription where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubpassDescription, pDepthStencilAttachment})
 
         {-# INLINE readField #-}
-        readField = readVkPDepthStencilAttachment
-
-instance CanWriteField "pDepthStencilAttachment"
-           VkSubpassDescription
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPDepthStencilAttachment
+        readField p
+          = peekByteOff p #{offset VkSubpassDescription, pDepthStencilAttachment}
 
 instance {-# OVERLAPPING #-}
-         HasVkPreserveAttachmentCount VkSubpassDescription where
-        type VkPreserveAttachmentCountMType VkSubpassDescription = Word32
-
-        {-# NOINLINE vkPreserveAttachmentCount #-}
-        vkPreserveAttachmentCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubpassDescription, preserveAttachmentCount})
-
-        {-# INLINE vkPreserveAttachmentCountByteOffset #-}
-        vkPreserveAttachmentCountByteOffset ~_
-          = #{offset VkSubpassDescription, preserveAttachmentCount}
-
-        {-# INLINE readVkPreserveAttachmentCount #-}
-        readVkPreserveAttachmentCount p
-          = peekByteOff p #{offset VkSubpassDescription, preserveAttachmentCount}
-
-        {-# INLINE writeVkPreserveAttachmentCount #-}
-        writeVkPreserveAttachmentCount p
-          = pokeByteOff p #{offset VkSubpassDescription, preserveAttachmentCount}
+         CanWriteField "pDepthStencilAttachment" VkSubpassDescription where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSubpassDescription, pDepthStencilAttachment}
 
 instance {-# OVERLAPPING #-}
          HasField "preserveAttachmentCount" VkSubpassDescription where
@@ -533,41 +372,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSubpassDescription, preserveAttachmentCount}
 
-instance CanReadField "preserveAttachmentCount"
-           VkSubpassDescription
-         where
-        {-# INLINE getField #-}
-        getField = vkPreserveAttachmentCount
+instance {-# OVERLAPPING #-}
+         CanReadField "preserveAttachmentCount" VkSubpassDescription where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubpassDescription, preserveAttachmentCount})
 
         {-# INLINE readField #-}
-        readField = readVkPreserveAttachmentCount
-
-instance CanWriteField "preserveAttachmentCount"
-           VkSubpassDescription
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPreserveAttachmentCount
+        readField p
+          = peekByteOff p #{offset VkSubpassDescription, preserveAttachmentCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPPreserveAttachments VkSubpassDescription where
-        type VkPPreserveAttachmentsMType VkSubpassDescription = Ptr Word32
-
-        {-# NOINLINE vkPPreserveAttachments #-}
-        vkPPreserveAttachments x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkSubpassDescription, pPreserveAttachments})
-
-        {-# INLINE vkPPreserveAttachmentsByteOffset #-}
-        vkPPreserveAttachmentsByteOffset ~_
-          = #{offset VkSubpassDescription, pPreserveAttachments}
-
-        {-# INLINE readVkPPreserveAttachments #-}
-        readVkPPreserveAttachments p
-          = peekByteOff p #{offset VkSubpassDescription, pPreserveAttachments}
-
-        {-# INLINE writeVkPPreserveAttachments #-}
-        writeVkPPreserveAttachments p
-          = pokeByteOff p #{offset VkSubpassDescription, pPreserveAttachments}
+         CanWriteField "preserveAttachmentCount" VkSubpassDescription where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkSubpassDescription, preserveAttachmentCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pPreserveAttachments" VkSubpassDescription where
@@ -587,57 +407,67 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkSubpassDescription, pPreserveAttachments}
 
-instance CanReadField "pPreserveAttachments" VkSubpassDescription
-         where
-        {-# INLINE getField #-}
-        getField = vkPPreserveAttachments
+instance {-# OVERLAPPING #-}
+         CanReadField "pPreserveAttachments" VkSubpassDescription where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkSubpassDescription, pPreserveAttachments})
 
         {-# INLINE readField #-}
-        readField = readVkPPreserveAttachments
+        readField p
+          = peekByteOff p #{offset VkSubpassDescription, pPreserveAttachments}
 
-instance CanWriteField "pPreserveAttachments" VkSubpassDescription
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pPreserveAttachments" VkSubpassDescription where
         {-# INLINE writeField #-}
-        writeField = writeVkPPreserveAttachments
+        writeField p
+          = pokeByteOff p #{offset VkSubpassDescription, pPreserveAttachments}
 
 instance Show VkSubpassDescription where
         showsPrec d x
           = showString "VkSubpassDescription {" .
-              showString "vkFlags = " .
-                showsPrec d (vkFlags x) .
+              showString "flags = " .
+                showsPrec d (getField @"flags" x) .
                   showString ", " .
-                    showString "vkPipelineBindPoint = " .
-                      showsPrec d (vkPipelineBindPoint x) .
+                    showString "pipelineBindPoint = " .
+                      showsPrec d (getField @"pipelineBindPoint" x) .
                         showString ", " .
-                          showString "vkInputAttachmentCount = " .
-                            showsPrec d (vkInputAttachmentCount x) .
+                          showString "inputAttachmentCount = " .
+                            showsPrec d (getField @"inputAttachmentCount" x) .
                               showString ", " .
-                                showString "vkPInputAttachments = " .
-                                  showsPrec d (vkPInputAttachments x) .
+                                showString "pInputAttachments = " .
+                                  showsPrec d (getField @"pInputAttachments" x) .
                                     showString ", " .
-                                      showString "vkColorAttachmentCount = " .
-                                        showsPrec d (vkColorAttachmentCount x) .
+                                      showString "colorAttachmentCount = " .
+                                        showsPrec d (getField @"colorAttachmentCount" x) .
                                           showString ", " .
-                                            showString "vkPColorAttachments = " .
-                                              showsPrec d (vkPColorAttachments x) .
+                                            showString "pColorAttachments = " .
+                                              showsPrec d (getField @"pColorAttachments" x) .
                                                 showString ", " .
-                                                  showString "vkPResolveAttachments = " .
-                                                    showsPrec d (vkPResolveAttachments x) .
+                                                  showString "pResolveAttachments = " .
+                                                    showsPrec d (getField @"pResolveAttachments" x)
+                                                      .
                                                       showString ", " .
-                                                        showString "vkPDepthStencilAttachment = " .
-                                                          showsPrec d (vkPDepthStencilAttachment x)
+                                                        showString "pDepthStencilAttachment = " .
+                                                          showsPrec d
+                                                            (getField @"pDepthStencilAttachment" x)
                                                             .
                                                             showString ", " .
                                                               showString
-                                                                "vkPreserveAttachmentCount = "
+                                                                "preserveAttachmentCount = "
                                                                 .
                                                                 showsPrec d
-                                                                  (vkPreserveAttachmentCount x)
+                                                                  (getField
+                                                                     @"preserveAttachmentCount"
+                                                                     x)
                                                                   .
                                                                   showString ", " .
                                                                     showString
-                                                                      "vkPPreserveAttachments = "
+                                                                      "pPreserveAttachments = "
                                                                       .
                                                                       showsPrec d
-                                                                        (vkPPreserveAttachments x)
+                                                                        (getField
+                                                                           @"pPreserveAttachments"
+                                                                           x)
                                                                         . showChar '}'

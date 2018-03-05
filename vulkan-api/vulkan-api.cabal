@@ -582,7 +582,6 @@ library
         Graphics.Vulkan.Types.Struct.VkViewportWScalingNV
         Graphics.Vulkan.Types.Struct.VkWriteDescriptorSet
         Graphics.Vulkan.Types.Struct.VkXYColorEXT
-        Graphics.Vulkan.Types.StructMembers
     if flag(usePlatformAndroidKhr)
       cpp-options: -DVK_USE_PLATFORM_ANDROID_KHR
       exposed-modules:

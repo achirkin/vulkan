@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPhysicalDevicePointClippingPropertiesKHR
        (VkPhysicalDevicePointClippingPropertiesKHR(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkPointClippingBehaviorKHR       (VkPointClippingBehaviorKHR)
 import           Graphics.Vulkan.Types.Enum.VkStructureType                  (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR (VkPhysicalDeviceProperties2KHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                            (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDevicePointClippingPropertiesKHR {
@@ -86,28 +86,6 @@ instance VulkanMarshal VkPhysicalDevicePointClippingPropertiesKHR
              '[VkPhysicalDeviceProperties2KHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPhysicalDevicePointClippingPropertiesKHR where
-        type VkSTypeMType VkPhysicalDevicePointClippingPropertiesKHR =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDevicePointClippingPropertiesKHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPhysicalDevicePointClippingPropertiesKHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPhysicalDevicePointClippingPropertiesKHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPhysicalDevicePointClippingPropertiesKHR, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPhysicalDevicePointClippingPropertiesKHR where
         type FieldType "sType" VkPhysicalDevicePointClippingPropertiesKHR =
              VkStructureType
@@ -128,42 +106,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDevicePointClippingPropertiesKHR, sType}
 
-instance CanReadField "sType"
-           VkPhysicalDevicePointClippingPropertiesKHR
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkPhysicalDevicePointClippingPropertiesKHR
          where
-        {-# INLINE getField #-}
-        getField = vkSType
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDevicePointClippingPropertiesKHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType"
-           VkPhysicalDevicePointClippingPropertiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkPhysicalDevicePointClippingPropertiesKHR, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkPhysicalDevicePointClippingPropertiesKHR where
-        type VkPNextMType VkPhysicalDevicePointClippingPropertiesKHR =
-             Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDevicePointClippingPropertiesKHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPhysicalDevicePointClippingPropertiesKHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPhysicalDevicePointClippingPropertiesKHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPhysicalDevicePointClippingPropertiesKHR, pNext}
+         CanWriteField "sType" VkPhysicalDevicePointClippingPropertiesKHR
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDevicePointClippingPropertiesKHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPhysicalDevicePointClippingPropertiesKHR where
@@ -186,45 +146,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDevicePointClippingPropertiesKHR, pNext}
 
-instance CanReadField "pNext"
-           VkPhysicalDevicePointClippingPropertiesKHR
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkPhysicalDevicePointClippingPropertiesKHR
          where
-        {-# INLINE getField #-}
-        getField = vkPNext
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDevicePointClippingPropertiesKHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext"
-           VkPhysicalDevicePointClippingPropertiesKHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkPhysicalDevicePointClippingPropertiesKHR, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkPointClippingBehavior
-           VkPhysicalDevicePointClippingPropertiesKHR
+         CanWriteField "pNext" VkPhysicalDevicePointClippingPropertiesKHR
          where
-        type VkPointClippingBehaviorMType
-               VkPhysicalDevicePointClippingPropertiesKHR
-             = VkPointClippingBehaviorKHR
-
-        {-# NOINLINE vkPointClippingBehavior #-}
-        vkPointClippingBehavior x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDevicePointClippingPropertiesKHR, pointClippingBehavior})
-
-        {-# INLINE vkPointClippingBehaviorByteOffset #-}
-        vkPointClippingBehaviorByteOffset ~_
-          = #{offset VkPhysicalDevicePointClippingPropertiesKHR, pointClippingBehavior}
-
-        {-# INLINE readVkPointClippingBehavior #-}
-        readVkPointClippingBehavior p
-          = peekByteOff p #{offset VkPhysicalDevicePointClippingPropertiesKHR, pointClippingBehavior}
-
-        {-# INLINE writeVkPointClippingBehavior #-}
-        writeVkPointClippingBehavior p
-          = pokeByteOff p #{offset VkPhysicalDevicePointClippingPropertiesKHR, pointClippingBehavior}
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDevicePointClippingPropertiesKHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "pointClippingBehavior"
@@ -251,29 +190,35 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDevicePointClippingPropertiesKHR, pointClippingBehavior}
 
-instance CanReadField "pointClippingBehavior"
+instance {-# OVERLAPPING #-}
+         CanReadField "pointClippingBehavior"
            VkPhysicalDevicePointClippingPropertiesKHR
          where
-        {-# INLINE getField #-}
-        getField = vkPointClippingBehavior
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDevicePointClippingPropertiesKHR, pointClippingBehavior})
 
         {-# INLINE readField #-}
-        readField = readVkPointClippingBehavior
+        readField p
+          = peekByteOff p #{offset VkPhysicalDevicePointClippingPropertiesKHR, pointClippingBehavior}
 
-instance CanWriteField "pointClippingBehavior"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pointClippingBehavior"
            VkPhysicalDevicePointClippingPropertiesKHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPointClippingBehavior
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDevicePointClippingPropertiesKHR, pointClippingBehavior}
 
 instance Show VkPhysicalDevicePointClippingPropertiesKHR where
         showsPrec d x
           = showString "VkPhysicalDevicePointClippingPropertiesKHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkPointClippingBehavior = " .
-                            showsPrec d (vkPointClippingBehavior x) . showChar '}'
+                          showString "pointClippingBehavior = " .
+                            showsPrec d (getField @"pointClippingBehavior" x) . showChar '}'

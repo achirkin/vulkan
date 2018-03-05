@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkImageResolve
        (VkImageResolve(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Struct.VkExtent3D               (VkExtent3D)
 import           Graphics.Vulkan.Types.Struct.VkImageSubresourceLayers (VkImageSubresourceLayers)
 import           Graphics.Vulkan.Types.Struct.VkOffset3D               (VkOffset3D)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                      (unsafeDupablePerformIO)
 
 -- | > typedef struct VkImageResolve {
@@ -75,28 +75,6 @@ instance VulkanMarshal VkImageResolve where
         type ReturnedOnly VkImageResolve = 'False -- ' closing tick for hsc2hs
         type StructExtends VkImageResolve = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSrcSubresource VkImageResolve
-         where
-        type VkSrcSubresourceMType VkImageResolve =
-             VkImageSubresourceLayers
-
-        {-# NOINLINE vkSrcSubresource #-}
-        vkSrcSubresource x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageResolve, srcSubresource})
-
-        {-# INLINE vkSrcSubresourceByteOffset #-}
-        vkSrcSubresourceByteOffset ~_
-          = #{offset VkImageResolve, srcSubresource}
-
-        {-# INLINE readVkSrcSubresource #-}
-        readVkSrcSubresource p
-          = peekByteOff p #{offset VkImageResolve, srcSubresource}
-
-        {-# INLINE writeVkSrcSubresource #-}
-        writeVkSrcSubresource p
-          = pokeByteOff p #{offset VkImageResolve, srcSubresource}
-
 instance {-# OVERLAPPING #-}
          HasField "srcSubresource" VkImageResolve where
         type FieldType "srcSubresource" VkImageResolve =
@@ -112,36 +90,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkImageResolve, srcSubresource}
 
-instance CanReadField "srcSubresource" VkImageResolve where
-        {-# INLINE getField #-}
-        getField = vkSrcSubresource
+instance {-# OVERLAPPING #-}
+         CanReadField "srcSubresource" VkImageResolve where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageResolve, srcSubresource})
 
         {-# INLINE readField #-}
-        readField = readVkSrcSubresource
+        readField p
+          = peekByteOff p #{offset VkImageResolve, srcSubresource}
 
-instance CanWriteField "srcSubresource" VkImageResolve where
+instance {-# OVERLAPPING #-}
+         CanWriteField "srcSubresource" VkImageResolve where
         {-# INLINE writeField #-}
-        writeField = writeVkSrcSubresource
-
-instance {-# OVERLAPPING #-} HasVkSrcOffset VkImageResolve where
-        type VkSrcOffsetMType VkImageResolve = VkOffset3D
-
-        {-# NOINLINE vkSrcOffset #-}
-        vkSrcOffset x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageResolve, srcOffset})
-
-        {-# INLINE vkSrcOffsetByteOffset #-}
-        vkSrcOffsetByteOffset ~_
-          = #{offset VkImageResolve, srcOffset}
-
-        {-# INLINE readVkSrcOffset #-}
-        readVkSrcOffset p
-          = peekByteOff p #{offset VkImageResolve, srcOffset}
-
-        {-# INLINE writeVkSrcOffset #-}
-        writeVkSrcOffset p
-          = pokeByteOff p #{offset VkImageResolve, srcOffset}
+        writeField p
+          = pokeByteOff p #{offset VkImageResolve, srcSubresource}
 
 instance {-# OVERLAPPING #-} HasField "srcOffset" VkImageResolve
          where
@@ -157,38 +121,22 @@ instance {-# OVERLAPPING #-} HasField "srcOffset" VkImageResolve
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkImageResolve, srcOffset}
 
-instance CanReadField "srcOffset" VkImageResolve where
-        {-# INLINE getField #-}
-        getField = vkSrcOffset
+instance {-# OVERLAPPING #-}
+         CanReadField "srcOffset" VkImageResolve where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageResolve, srcOffset})
 
         {-# INLINE readField #-}
-        readField = readVkSrcOffset
+        readField p
+          = peekByteOff p #{offset VkImageResolve, srcOffset}
 
-instance CanWriteField "srcOffset" VkImageResolve where
+instance {-# OVERLAPPING #-}
+         CanWriteField "srcOffset" VkImageResolve where
         {-# INLINE writeField #-}
-        writeField = writeVkSrcOffset
-
-instance {-# OVERLAPPING #-} HasVkDstSubresource VkImageResolve
-         where
-        type VkDstSubresourceMType VkImageResolve =
-             VkImageSubresourceLayers
-
-        {-# NOINLINE vkDstSubresource #-}
-        vkDstSubresource x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageResolve, dstSubresource})
-
-        {-# INLINE vkDstSubresourceByteOffset #-}
-        vkDstSubresourceByteOffset ~_
-          = #{offset VkImageResolve, dstSubresource}
-
-        {-# INLINE readVkDstSubresource #-}
-        readVkDstSubresource p
-          = peekByteOff p #{offset VkImageResolve, dstSubresource}
-
-        {-# INLINE writeVkDstSubresource #-}
-        writeVkDstSubresource p
-          = pokeByteOff p #{offset VkImageResolve, dstSubresource}
+        writeField p
+          = pokeByteOff p #{offset VkImageResolve, srcOffset}
 
 instance {-# OVERLAPPING #-}
          HasField "dstSubresource" VkImageResolve where
@@ -205,36 +153,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkImageResolve, dstSubresource}
 
-instance CanReadField "dstSubresource" VkImageResolve where
-        {-# INLINE getField #-}
-        getField = vkDstSubresource
+instance {-# OVERLAPPING #-}
+         CanReadField "dstSubresource" VkImageResolve where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageResolve, dstSubresource})
 
         {-# INLINE readField #-}
-        readField = readVkDstSubresource
+        readField p
+          = peekByteOff p #{offset VkImageResolve, dstSubresource}
 
-instance CanWriteField "dstSubresource" VkImageResolve where
+instance {-# OVERLAPPING #-}
+         CanWriteField "dstSubresource" VkImageResolve where
         {-# INLINE writeField #-}
-        writeField = writeVkDstSubresource
-
-instance {-# OVERLAPPING #-} HasVkDstOffset VkImageResolve where
-        type VkDstOffsetMType VkImageResolve = VkOffset3D
-
-        {-# NOINLINE vkDstOffset #-}
-        vkDstOffset x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageResolve, dstOffset})
-
-        {-# INLINE vkDstOffsetByteOffset #-}
-        vkDstOffsetByteOffset ~_
-          = #{offset VkImageResolve, dstOffset}
-
-        {-# INLINE readVkDstOffset #-}
-        readVkDstOffset p
-          = peekByteOff p #{offset VkImageResolve, dstOffset}
-
-        {-# INLINE writeVkDstOffset #-}
-        writeVkDstOffset p
-          = pokeByteOff p #{offset VkImageResolve, dstOffset}
+        writeField p
+          = pokeByteOff p #{offset VkImageResolve, dstSubresource}
 
 instance {-# OVERLAPPING #-} HasField "dstOffset" VkImageResolve
          where
@@ -250,36 +184,22 @@ instance {-# OVERLAPPING #-} HasField "dstOffset" VkImageResolve
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkImageResolve, dstOffset}
 
-instance CanReadField "dstOffset" VkImageResolve where
-        {-# INLINE getField #-}
-        getField = vkDstOffset
+instance {-# OVERLAPPING #-}
+         CanReadField "dstOffset" VkImageResolve where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageResolve, dstOffset})
 
         {-# INLINE readField #-}
-        readField = readVkDstOffset
+        readField p
+          = peekByteOff p #{offset VkImageResolve, dstOffset}
 
-instance CanWriteField "dstOffset" VkImageResolve where
+instance {-# OVERLAPPING #-}
+         CanWriteField "dstOffset" VkImageResolve where
         {-# INLINE writeField #-}
-        writeField = writeVkDstOffset
-
-instance {-# OVERLAPPING #-} HasVkExtent VkImageResolve where
-        type VkExtentMType VkImageResolve = VkExtent3D
-
-        {-# NOINLINE vkExtent #-}
-        vkExtent x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkImageResolve, extent})
-
-        {-# INLINE vkExtentByteOffset #-}
-        vkExtentByteOffset ~_
-          = #{offset VkImageResolve, extent}
-
-        {-# INLINE readVkExtent #-}
-        readVkExtent p
-          = peekByteOff p #{offset VkImageResolve, extent}
-
-        {-# INLINE writeVkExtent #-}
-        writeVkExtent p
-          = pokeByteOff p #{offset VkImageResolve, extent}
+        writeField p
+          = pokeByteOff p #{offset VkImageResolve, dstOffset}
 
 instance {-# OVERLAPPING #-} HasField "extent" VkImageResolve where
         type FieldType "extent" VkImageResolve = VkExtent3D
@@ -294,31 +214,37 @@ instance {-# OVERLAPPING #-} HasField "extent" VkImageResolve where
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkImageResolve, extent}
 
-instance CanReadField "extent" VkImageResolve where
-        {-# INLINE getField #-}
-        getField = vkExtent
+instance {-# OVERLAPPING #-} CanReadField "extent" VkImageResolve
+         where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkImageResolve, extent})
 
         {-# INLINE readField #-}
-        readField = readVkExtent
+        readField p
+          = peekByteOff p #{offset VkImageResolve, extent}
 
-instance CanWriteField "extent" VkImageResolve where
+instance {-# OVERLAPPING #-} CanWriteField "extent" VkImageResolve
+         where
         {-# INLINE writeField #-}
-        writeField = writeVkExtent
+        writeField p
+          = pokeByteOff p #{offset VkImageResolve, extent}
 
 instance Show VkImageResolve where
         showsPrec d x
           = showString "VkImageResolve {" .
-              showString "vkSrcSubresource = " .
-                showsPrec d (vkSrcSubresource x) .
+              showString "srcSubresource = " .
+                showsPrec d (getField @"srcSubresource" x) .
                   showString ", " .
-                    showString "vkSrcOffset = " .
-                      showsPrec d (vkSrcOffset x) .
+                    showString "srcOffset = " .
+                      showsPrec d (getField @"srcOffset" x) .
                         showString ", " .
-                          showString "vkDstSubresource = " .
-                            showsPrec d (vkDstSubresource x) .
+                          showString "dstSubresource = " .
+                            showsPrec d (getField @"dstSubresource" x) .
                               showString ", " .
-                                showString "vkDstOffset = " .
-                                  showsPrec d (vkDstOffset x) .
+                                showString "dstOffset = " .
+                                  showsPrec d (getField @"dstOffset" x) .
                                     showString ", " .
-                                      showString "vkExtent = " .
-                                        showsPrec d (vkExtent x) . showChar '}'
+                                      showString "extent = " .
+                                        showsPrec d (getField @"extent" x) . showChar '}'

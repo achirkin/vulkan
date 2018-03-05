@@ -33,11 +33,10 @@ import           Write.Commands
 import           Write.ModuleWriter
 import           Write.Types
 import           Write.Types.Enum
-import           Write.Types.Struct
 -- import           Write.Util.DeclaredNames
 
 
-genFeature :: Monad m => VkFeature -> ModuleWriter m ClassDeclarations
+genFeature :: Monad m => VkFeature -> ModuleWriter m ()
 genFeature VkFeature {..} = hoist (`evalStateT` mempty) $ do
     curlvl <- getCurrentSecLvl
     vkXml <- ask
@@ -56,7 +55,7 @@ genFeature VkFeature {..} = hoist (`evalStateT` mempty) $ do
       , ""
       , "@number = " <> number <> "@"
       ]
-    pushSecLvl $ \lvl -> mconcat <$> mapM (genRequire lvl tps cmds) reqList
+    pushSecLvl $ \lvl -> mapM_ (genRequire lvl tps cmds) reqList
 
 
 genRequire :: MonadState (Set (ModuleName ())) m
@@ -65,15 +64,14 @@ genRequire :: MonadState (Set (ModuleName ())) m
           -> Map.Map VkCommandName VkCommand
           -- -> Map.Map VkEnumName VkEnum
           -> VkRequire
-          -> ModuleWriter m ClassDeclarations
+          -> ModuleWriter m ()
 genRequire curlvl tps cmds VkRequire {..} = do
   writeOptionsPragma (Just HADDOCK) "not-home"
   writeSection curlvl $
     comment <:> showExts requireExts
-  cds <- fmap mconcat $
-    forM (Set.toList $ foldMap (findAllRequiredTypes tps) requireTypes)
+  forM_ (Set.toList $ foldMap (findAllRequiredTypes tps) requireTypes)
        $ \tname -> case Map.lookup tname tps of
-        Nothing -> pure mempty
+        Nothing -> pure ()
         Just t  -> do
 
           otn <- lift get
@@ -82,13 +80,13 @@ genRequire curlvl tps cmds VkRequire {..} = do
             Nothing -> genType t
             Just imod ->
               if Set.member imod otn
-              then pure mempty
+              then pure ()
               else do
                 lift $ put (Set.insert imod otn)
                 case imod of
                   ModuleName () m -> writeFullImport m
                 writeExportSpec $ EModuleContents () imod
-                pure mempty
+                pure ()
   tNames <- fmap mconcat $
     forM requireComms $ \cname -> case Map.lookup cname cmds of
         Nothing -> pure mempty
@@ -107,7 +105,6 @@ genRequire curlvl tps cmds VkRequire {..} = do
 
 
   forM_ requireEnums $ enumPattern >=> mapM_ (writeExport . DIPat)
-  return cds
 
 
 findAllRequiredTypes :: Map.Map VkTypeName VkType -> VkTypeName -> Set VkTypeName

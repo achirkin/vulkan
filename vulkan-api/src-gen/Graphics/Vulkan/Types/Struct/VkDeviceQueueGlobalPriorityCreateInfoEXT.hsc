@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkDeviceQueueGlobalPriorityCreateInfoEXT
        (VkDeviceQueueGlobalPriorityCreateInfoEXT(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkQueueGlobalPriorityEXT  (VkQueueGlobalPriorityEXT)
 import           Graphics.Vulkan.Types.Enum.VkStructureType           (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkDeviceQueueCreateInfo (VkDeviceQueueCreateInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                     (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDeviceQueueGlobalPriorityCreateInfoEXT {
@@ -83,28 +83,6 @@ instance VulkanMarshal VkDeviceQueueGlobalPriorityCreateInfoEXT
              '[VkDeviceQueueCreateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkDeviceQueueGlobalPriorityCreateInfoEXT where
-        type VkSTypeMType VkDeviceQueueGlobalPriorityCreateInfoEXT =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkDeviceQueueGlobalPriorityCreateInfoEXT where
         type FieldType "sType" VkDeviceQueueGlobalPriorityCreateInfoEXT =
              VkStructureType
@@ -122,42 +100,23 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, sType}
 
-instance CanReadField "sType"
-           VkDeviceQueueGlobalPriorityCreateInfoEXT
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkDeviceQueueGlobalPriorityCreateInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType"
-           VkDeviceQueueGlobalPriorityCreateInfoEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkDeviceQueueGlobalPriorityCreateInfoEXT where
-        type VkPNextMType VkDeviceQueueGlobalPriorityCreateInfoEXT =
-             Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, pNext}
+         CanWriteField "sType" VkDeviceQueueGlobalPriorityCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkDeviceQueueGlobalPriorityCreateInfoEXT where
@@ -177,42 +136,23 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, pNext}
 
-instance CanReadField "pNext"
-           VkDeviceQueueGlobalPriorityCreateInfoEXT
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkDeviceQueueGlobalPriorityCreateInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext"
-           VkDeviceQueueGlobalPriorityCreateInfoEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkGlobalPriority VkDeviceQueueGlobalPriorityCreateInfoEXT where
-        type VkGlobalPriorityMType VkDeviceQueueGlobalPriorityCreateInfoEXT
-             = VkQueueGlobalPriorityEXT
-
-        {-# NOINLINE vkGlobalPriority #-}
-        vkGlobalPriority x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, globalPriority})
-
-        {-# INLINE vkGlobalPriorityByteOffset #-}
-        vkGlobalPriorityByteOffset ~_
-          = #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, globalPriority}
-
-        {-# INLINE readVkGlobalPriority #-}
-        readVkGlobalPriority p
-          = peekByteOff p #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, globalPriority}
-
-        {-# INLINE writeVkGlobalPriority #-}
-        writeVkGlobalPriority p
-          = pokeByteOff p #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, globalPriority}
+         CanWriteField "pNext" VkDeviceQueueGlobalPriorityCreateInfoEXT
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "globalPriority" VkDeviceQueueGlobalPriorityCreateInfoEXT
@@ -238,29 +178,35 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, globalPriority}
 
-instance CanReadField "globalPriority"
+instance {-# OVERLAPPING #-}
+         CanReadField "globalPriority"
            VkDeviceQueueGlobalPriorityCreateInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkGlobalPriority
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, globalPriority})
 
         {-# INLINE readField #-}
-        readField = readVkGlobalPriority
+        readField p
+          = peekByteOff p #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, globalPriority}
 
-instance CanWriteField "globalPriority"
+instance {-# OVERLAPPING #-}
+         CanWriteField "globalPriority"
            VkDeviceQueueGlobalPriorityCreateInfoEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkGlobalPriority
+        writeField p
+          = pokeByteOff p #{offset VkDeviceQueueGlobalPriorityCreateInfoEXT, globalPriority}
 
 instance Show VkDeviceQueueGlobalPriorityCreateInfoEXT where
         showsPrec d x
           = showString "VkDeviceQueueGlobalPriorityCreateInfoEXT {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkGlobalPriority = " .
-                            showsPrec d (vkGlobalPriority x) . showChar '}'
+                          showString "globalPriority = " .
+                            showsPrec d (getField @"globalPriority" x) . showChar '}'

@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMemoryProperties2KHR
        (VkPhysicalDeviceMemoryProperties2KHR(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType                    (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMemoryProperties (VkPhysicalDeviceMemoryProperties)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                              (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDeviceMemoryProperties2KHR {
@@ -80,28 +80,6 @@ instance VulkanMarshal VkPhysicalDeviceMemoryProperties2KHR where
         type StructExtends VkPhysicalDeviceMemoryProperties2KHR = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkPhysicalDeviceMemoryProperties2KHR where
-        type VkSTypeMType VkPhysicalDeviceMemoryProperties2KHR =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceMemoryProperties2KHR, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkPhysicalDeviceMemoryProperties2KHR, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkPhysicalDeviceMemoryProperties2KHR, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkPhysicalDeviceMemoryProperties2KHR, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkPhysicalDeviceMemoryProperties2KHR where
         type FieldType "sType" VkPhysicalDeviceMemoryProperties2KHR =
              VkStructureType
@@ -119,39 +97,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceMemoryProperties2KHR, sType}
 
-instance CanReadField "sType" VkPhysicalDeviceMemoryProperties2KHR
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkPhysicalDeviceMemoryProperties2KHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceMemoryProperties2KHR, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkPhysicalDeviceMemoryProperties2KHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceMemoryProperties2KHR, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkPhysicalDeviceMemoryProperties2KHR where
-        type VkPNextMType VkPhysicalDeviceMemoryProperties2KHR = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceMemoryProperties2KHR, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkPhysicalDeviceMemoryProperties2KHR, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkPhysicalDeviceMemoryProperties2KHR, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkPhysicalDeviceMemoryProperties2KHR, pNext}
+         CanWriteField "sType" VkPhysicalDeviceMemoryProperties2KHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceMemoryProperties2KHR, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkPhysicalDeviceMemoryProperties2KHR where
@@ -171,40 +132,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceMemoryProperties2KHR, pNext}
 
-instance CanReadField "pNext" VkPhysicalDeviceMemoryProperties2KHR
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkPhysicalDeviceMemoryProperties2KHR where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceMemoryProperties2KHR, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkPhysicalDeviceMemoryProperties2KHR
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceMemoryProperties2KHR, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkMemoryProperties VkPhysicalDeviceMemoryProperties2KHR where
-        type VkMemoryPropertiesMType VkPhysicalDeviceMemoryProperties2KHR =
-             VkPhysicalDeviceMemoryProperties
-
-        {-# NOINLINE vkMemoryProperties #-}
-        vkMemoryProperties x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceMemoryProperties2KHR, memoryProperties})
-
-        {-# INLINE vkMemoryPropertiesByteOffset #-}
-        vkMemoryPropertiesByteOffset ~_
-          = #{offset VkPhysicalDeviceMemoryProperties2KHR, memoryProperties}
-
-        {-# INLINE readVkMemoryProperties #-}
-        readVkMemoryProperties p
-          = peekByteOff p #{offset VkPhysicalDeviceMemoryProperties2KHR, memoryProperties}
-
-        {-# INLINE writeVkMemoryProperties #-}
-        writeVkMemoryProperties p
-          = pokeByteOff p #{offset VkPhysicalDeviceMemoryProperties2KHR, memoryProperties}
+         CanWriteField "pNext" VkPhysicalDeviceMemoryProperties2KHR where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceMemoryProperties2KHR, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "memoryProperties" VkPhysicalDeviceMemoryProperties2KHR
@@ -230,29 +173,35 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkPhysicalDeviceMemoryProperties2KHR, memoryProperties}
 
-instance CanReadField "memoryProperties"
+instance {-# OVERLAPPING #-}
+         CanReadField "memoryProperties"
            VkPhysicalDeviceMemoryProperties2KHR
          where
-        {-# INLINE getField #-}
-        getField = vkMemoryProperties
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkPhysicalDeviceMemoryProperties2KHR, memoryProperties})
 
         {-# INLINE readField #-}
-        readField = readVkMemoryProperties
+        readField p
+          = peekByteOff p #{offset VkPhysicalDeviceMemoryProperties2KHR, memoryProperties}
 
-instance CanWriteField "memoryProperties"
+instance {-# OVERLAPPING #-}
+         CanWriteField "memoryProperties"
            VkPhysicalDeviceMemoryProperties2KHR
          where
         {-# INLINE writeField #-}
-        writeField = writeVkMemoryProperties
+        writeField p
+          = pokeByteOff p #{offset VkPhysicalDeviceMemoryProperties2KHR, memoryProperties}
 
 instance Show VkPhysicalDeviceMemoryProperties2KHR where
         showsPrec d x
           = showString "VkPhysicalDeviceMemoryProperties2KHR {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkMemoryProperties = " .
-                            showsPrec d (vkMemoryProperties x) . showChar '}'
+                          showString "memoryProperties = " .
+                            showsPrec d (getField @"memoryProperties" x) . showChar '}'

@@ -39,6 +39,7 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_capabilities
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
         vkGetPhysicalDeviceExternalFencePropertiesKHR,
+        vkGetPhysicalDeviceExternalFencePropertiesKHRSafe,
         module Graphics.Vulkan.Types.Handles,
         VK_KHR_EXTERNAL_FENCE_CAPABILITIES_SPEC_VERSION,
         pattern VK_KHR_EXTERNAL_FENCE_CAPABILITIES_SPEC_VERSION,
@@ -79,6 +80,23 @@ import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties
 foreign import ccall unsafe
                "vkGetPhysicalDeviceExternalFencePropertiesKHR"
                vkGetPhysicalDeviceExternalFencePropertiesKHR ::
+               VkPhysicalDevice -- ^ physicalDevice
+                                ->
+                 Ptr VkPhysicalDeviceExternalFenceInfoKHR -- ^ pExternalFenceInfo
+                                                          ->
+                   Ptr VkExternalFencePropertiesKHR -- ^ pExternalFenceProperties
+                                                    -> IO ()
+
+-- | > () vkGetPhysicalDeviceExternalFencePropertiesKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , const VkPhysicalDeviceExternalFenceInfoKHR* pExternalFenceInfo
+--   >     , VkExternalFencePropertiesKHR* pExternalFenceProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceExternalFencePropertiesKHR.html vkGetPhysicalDeviceExternalFencePropertiesKHR registry at www.khronos.org>
+foreign import ccall safe
+               "vkGetPhysicalDeviceExternalFencePropertiesKHR"
+               vkGetPhysicalDeviceExternalFencePropertiesKHRSafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
                  Ptr VkPhysicalDeviceExternalFenceInfoKHR -- ^ pExternalFenceInfo

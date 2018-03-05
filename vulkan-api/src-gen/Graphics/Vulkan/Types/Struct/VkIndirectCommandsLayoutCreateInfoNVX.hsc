@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkIndirectCommandsLayoutCreateInfoNVX
        (VkIndirectCommandsLayoutCreateInfoNVX(..)) where
@@ -21,7 +22,6 @@ import           Graphics.Vulkan.Types.Enum.VkStructureType
                                                                                    (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkIndirectCommandsLayoutTokenNVX
                                                                                    (VkIndirectCommandsLayoutTokenNVX)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe
                                                                                    (unsafeDupablePerformIO)
 
@@ -92,28 +92,6 @@ instance VulkanMarshal VkIndirectCommandsLayoutCreateInfoNVX where
         type StructExtends VkIndirectCommandsLayoutCreateInfoNVX = '[] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkIndirectCommandsLayoutCreateInfoNVX where
-        type VkSTypeMType VkIndirectCommandsLayoutCreateInfoNVX =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkIndirectCommandsLayoutCreateInfoNVX, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkIndirectCommandsLayoutCreateInfoNVX, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkIndirectCommandsLayoutCreateInfoNVX where
         type FieldType "sType" VkIndirectCommandsLayoutCreateInfoNVX =
              VkStructureType
@@ -131,40 +109,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkIndirectCommandsLayoutCreateInfoNVX, sType}
 
-instance CanReadField "sType" VkIndirectCommandsLayoutCreateInfoNVX
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkIndirectCommandsLayoutCreateInfoNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkIndirectCommandsLayoutCreateInfoNVX, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType"
-           VkIndirectCommandsLayoutCreateInfoNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkIndirectCommandsLayoutCreateInfoNVX where
-        type VkPNextMType VkIndirectCommandsLayoutCreateInfoNVX = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkIndirectCommandsLayoutCreateInfoNVX, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkIndirectCommandsLayoutCreateInfoNVX, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, pNext}
+         CanWriteField "sType" VkIndirectCommandsLayoutCreateInfoNVX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkIndirectCommandsLayoutCreateInfoNVX where
@@ -184,41 +144,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkIndirectCommandsLayoutCreateInfoNVX, pNext}
 
-instance CanReadField "pNext" VkIndirectCommandsLayoutCreateInfoNVX
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkIndirectCommandsLayoutCreateInfoNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkIndirectCommandsLayoutCreateInfoNVX, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext"
-           VkIndirectCommandsLayoutCreateInfoNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkPipelineBindPoint VkIndirectCommandsLayoutCreateInfoNVX where
-        type VkPipelineBindPointMType VkIndirectCommandsLayoutCreateInfoNVX
-             = VkPipelineBindPoint
-
-        {-# NOINLINE vkPipelineBindPoint #-}
-        vkPipelineBindPoint x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkIndirectCommandsLayoutCreateInfoNVX, pipelineBindPoint})
-
-        {-# INLINE vkPipelineBindPointByteOffset #-}
-        vkPipelineBindPointByteOffset ~_
-          = #{offset VkIndirectCommandsLayoutCreateInfoNVX, pipelineBindPoint}
-
-        {-# INLINE readVkPipelineBindPoint #-}
-        readVkPipelineBindPoint p
-          = peekByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, pipelineBindPoint}
-
-        {-# INLINE writeVkPipelineBindPoint #-}
-        writeVkPipelineBindPoint p
-          = pokeByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, pipelineBindPoint}
+         CanWriteField "pNext" VkIndirectCommandsLayoutCreateInfoNVX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "pipelineBindPoint" VkIndirectCommandsLayoutCreateInfoNVX
@@ -244,42 +185,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkIndirectCommandsLayoutCreateInfoNVX, pipelineBindPoint}
 
-instance CanReadField "pipelineBindPoint"
+instance {-# OVERLAPPING #-}
+         CanReadField "pipelineBindPoint"
            VkIndirectCommandsLayoutCreateInfoNVX
          where
-        {-# INLINE getField #-}
-        getField = vkPipelineBindPoint
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkIndirectCommandsLayoutCreateInfoNVX, pipelineBindPoint})
 
         {-# INLINE readField #-}
-        readField = readVkPipelineBindPoint
+        readField p
+          = peekByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, pipelineBindPoint}
 
-instance CanWriteField "pipelineBindPoint"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pipelineBindPoint"
            VkIndirectCommandsLayoutCreateInfoNVX
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPipelineBindPoint
-
-instance {-# OVERLAPPING #-}
-         HasVkFlags VkIndirectCommandsLayoutCreateInfoNVX where
-        type VkFlagsMType VkIndirectCommandsLayoutCreateInfoNVX =
-             VkIndirectCommandsLayoutUsageFlagsNVX
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkIndirectCommandsLayoutCreateInfoNVX, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkIndirectCommandsLayoutCreateInfoNVX, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, flags}
+        writeField p
+          = pokeByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, pipelineBindPoint}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkIndirectCommandsLayoutCreateInfoNVX where
@@ -299,41 +224,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkIndirectCommandsLayoutCreateInfoNVX, flags}
 
-instance CanReadField "flags" VkIndirectCommandsLayoutCreateInfoNVX
-         where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkIndirectCommandsLayoutCreateInfoNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkIndirectCommandsLayoutCreateInfoNVX, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags"
-           VkIndirectCommandsLayoutCreateInfoNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkTokenCount VkIndirectCommandsLayoutCreateInfoNVX where
-        type VkTokenCountMType VkIndirectCommandsLayoutCreateInfoNVX =
-             Word32
-
-        {-# NOINLINE vkTokenCount #-}
-        vkTokenCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkIndirectCommandsLayoutCreateInfoNVX, tokenCount})
-
-        {-# INLINE vkTokenCountByteOffset #-}
-        vkTokenCountByteOffset ~_
-          = #{offset VkIndirectCommandsLayoutCreateInfoNVX, tokenCount}
-
-        {-# INLINE readVkTokenCount #-}
-        readVkTokenCount p
-          = peekByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, tokenCount}
-
-        {-# INLINE writeVkTokenCount #-}
-        writeVkTokenCount p
-          = pokeByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, tokenCount}
+         CanWriteField "flags" VkIndirectCommandsLayoutCreateInfoNVX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "tokenCount" VkIndirectCommandsLayoutCreateInfoNVX where
@@ -356,42 +262,24 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkIndirectCommandsLayoutCreateInfoNVX, tokenCount}
 
-instance CanReadField "tokenCount"
-           VkIndirectCommandsLayoutCreateInfoNVX
+instance {-# OVERLAPPING #-}
+         CanReadField "tokenCount" VkIndirectCommandsLayoutCreateInfoNVX
          where
-        {-# INLINE getField #-}
-        getField = vkTokenCount
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkIndirectCommandsLayoutCreateInfoNVX, tokenCount})
 
         {-# INLINE readField #-}
-        readField = readVkTokenCount
-
-instance CanWriteField "tokenCount"
-           VkIndirectCommandsLayoutCreateInfoNVX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkTokenCount
+        readField p
+          = peekByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, tokenCount}
 
 instance {-# OVERLAPPING #-}
-         HasVkPTokens VkIndirectCommandsLayoutCreateInfoNVX where
-        type VkPTokensMType VkIndirectCommandsLayoutCreateInfoNVX =
-             Ptr VkIndirectCommandsLayoutTokenNVX
-
-        {-# NOINLINE vkPTokens #-}
-        vkPTokens x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkIndirectCommandsLayoutCreateInfoNVX, pTokens})
-
-        {-# INLINE vkPTokensByteOffset #-}
-        vkPTokensByteOffset ~_
-          = #{offset VkIndirectCommandsLayoutCreateInfoNVX, pTokens}
-
-        {-# INLINE readVkPTokens #-}
-        readVkPTokens p
-          = peekByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, pTokens}
-
-        {-# INLINE writeVkPTokens #-}
-        writeVkPTokens p
-          = pokeByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, pTokens}
+         CanWriteField "tokenCount" VkIndirectCommandsLayoutCreateInfoNVX
+         where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, tokenCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pTokens" VkIndirectCommandsLayoutCreateInfoNVX where
@@ -411,38 +299,40 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkIndirectCommandsLayoutCreateInfoNVX, pTokens}
 
-instance CanReadField "pTokens"
-           VkIndirectCommandsLayoutCreateInfoNVX
-         where
-        {-# INLINE getField #-}
-        getField = vkPTokens
+instance {-# OVERLAPPING #-}
+         CanReadField "pTokens" VkIndirectCommandsLayoutCreateInfoNVX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkIndirectCommandsLayoutCreateInfoNVX, pTokens})
 
         {-# INLINE readField #-}
-        readField = readVkPTokens
+        readField p
+          = peekByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, pTokens}
 
-instance CanWriteField "pTokens"
-           VkIndirectCommandsLayoutCreateInfoNVX
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pTokens" VkIndirectCommandsLayoutCreateInfoNVX where
         {-# INLINE writeField #-}
-        writeField = writeVkPTokens
+        writeField p
+          = pokeByteOff p #{offset VkIndirectCommandsLayoutCreateInfoNVX, pTokens}
 
 instance Show VkIndirectCommandsLayoutCreateInfoNVX where
         showsPrec d x
           = showString "VkIndirectCommandsLayoutCreateInfoNVX {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkPipelineBindPoint = " .
-                            showsPrec d (vkPipelineBindPoint x) .
+                          showString "pipelineBindPoint = " .
+                            showsPrec d (getField @"pipelineBindPoint" x) .
                               showString ", " .
-                                showString "vkFlags = " .
-                                  showsPrec d (vkFlags x) .
+                                showString "flags = " .
+                                  showsPrec d (getField @"flags" x) .
                                     showString ", " .
-                                      showString "vkTokenCount = " .
-                                        showsPrec d (vkTokenCount x) .
+                                      showString "tokenCount = " .
+                                        showsPrec d (getField @"tokenCount" x) .
                                           showString ", " .
-                                            showString "vkPTokens = " .
-                                              showsPrec d (vkPTokens x) . showChar '}'
+                                            showString "pTokens = " .
+                                              showsPrec d (getField @"pTokens" x) . showChar '}'

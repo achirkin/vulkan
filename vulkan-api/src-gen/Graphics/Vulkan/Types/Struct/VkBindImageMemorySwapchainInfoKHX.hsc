@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkBindImageMemorySwapchainInfoKHX
        (VkBindImageMemorySwapchainInfoKHX(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType            (VkStructureType)
 import           Graphics.Vulkan.Types.Handles                         (VkSwapchainKHR)
 import           Graphics.Vulkan.Types.Struct.VkBindImageMemoryInfoKHR (VkBindImageMemoryInfoKHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                      (unsafeDupablePerformIO)
 
 -- | > typedef struct VkBindImageMemorySwapchainInfoKHX {
@@ -81,28 +81,6 @@ instance VulkanMarshal VkBindImageMemorySwapchainInfoKHX where
              '[VkBindImageMemoryInfoKHR] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkBindImageMemorySwapchainInfoKHX where
-        type VkSTypeMType VkBindImageMemorySwapchainInfoKHX =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBindImageMemorySwapchainInfoKHX, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkBindImageMemorySwapchainInfoKHX, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkBindImageMemorySwapchainInfoKHX, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkBindImageMemorySwapchainInfoKHX, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkBindImageMemorySwapchainInfoKHX where
         type FieldType "sType" VkBindImageMemorySwapchainInfoKHX =
              VkStructureType
@@ -120,39 +98,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkBindImageMemorySwapchainInfoKHX, sType}
 
-instance CanReadField "sType" VkBindImageMemorySwapchainInfoKHX
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkBindImageMemorySwapchainInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBindImageMemorySwapchainInfoKHX, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkBindImageMemorySwapchainInfoKHX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkBindImageMemorySwapchainInfoKHX, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkBindImageMemorySwapchainInfoKHX where
-        type VkPNextMType VkBindImageMemorySwapchainInfoKHX = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBindImageMemorySwapchainInfoKHX, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkBindImageMemorySwapchainInfoKHX, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkBindImageMemorySwapchainInfoKHX, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkBindImageMemorySwapchainInfoKHX, pNext}
+         CanWriteField "sType" VkBindImageMemorySwapchainInfoKHX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkBindImageMemorySwapchainInfoKHX, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkBindImageMemorySwapchainInfoKHX where
@@ -171,40 +132,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkBindImageMemorySwapchainInfoKHX, pNext}
 
-instance CanReadField "pNext" VkBindImageMemorySwapchainInfoKHX
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkBindImageMemorySwapchainInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBindImageMemorySwapchainInfoKHX, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkBindImageMemorySwapchainInfoKHX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkBindImageMemorySwapchainInfoKHX, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkSwapchain VkBindImageMemorySwapchainInfoKHX where
-        type VkSwapchainMType VkBindImageMemorySwapchainInfoKHX =
-             VkSwapchainKHR
-
-        {-# NOINLINE vkSwapchain #-}
-        vkSwapchain x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBindImageMemorySwapchainInfoKHX, swapchain})
-
-        {-# INLINE vkSwapchainByteOffset #-}
-        vkSwapchainByteOffset ~_
-          = #{offset VkBindImageMemorySwapchainInfoKHX, swapchain}
-
-        {-# INLINE readVkSwapchain #-}
-        readVkSwapchain p
-          = peekByteOff p #{offset VkBindImageMemorySwapchainInfoKHX, swapchain}
-
-        {-# INLINE writeVkSwapchain #-}
-        writeVkSwapchain p
-          = pokeByteOff p #{offset VkBindImageMemorySwapchainInfoKHX, swapchain}
+         CanWriteField "pNext" VkBindImageMemorySwapchainInfoKHX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkBindImageMemorySwapchainInfoKHX, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "swapchain" VkBindImageMemorySwapchainInfoKHX where
@@ -224,40 +167,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkBindImageMemorySwapchainInfoKHX, swapchain}
 
-instance CanReadField "swapchain" VkBindImageMemorySwapchainInfoKHX
-         where
-        {-# INLINE getField #-}
-        getField = vkSwapchain
+instance {-# OVERLAPPING #-}
+         CanReadField "swapchain" VkBindImageMemorySwapchainInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBindImageMemorySwapchainInfoKHX, swapchain})
 
         {-# INLINE readField #-}
-        readField = readVkSwapchain
-
-instance CanWriteField "swapchain"
-           VkBindImageMemorySwapchainInfoKHX
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSwapchain
+        readField p
+          = peekByteOff p #{offset VkBindImageMemorySwapchainInfoKHX, swapchain}
 
 instance {-# OVERLAPPING #-}
-         HasVkImageIndex VkBindImageMemorySwapchainInfoKHX where
-        type VkImageIndexMType VkBindImageMemorySwapchainInfoKHX = Word32
-
-        {-# NOINLINE vkImageIndex #-}
-        vkImageIndex x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkBindImageMemorySwapchainInfoKHX, imageIndex})
-
-        {-# INLINE vkImageIndexByteOffset #-}
-        vkImageIndexByteOffset ~_
-          = #{offset VkBindImageMemorySwapchainInfoKHX, imageIndex}
-
-        {-# INLINE readVkImageIndex #-}
-        readVkImageIndex p
-          = peekByteOff p #{offset VkBindImageMemorySwapchainInfoKHX, imageIndex}
-
-        {-# INLINE writeVkImageIndex #-}
-        writeVkImageIndex p
-          = pokeByteOff p #{offset VkBindImageMemorySwapchainInfoKHX, imageIndex}
+         CanWriteField "swapchain" VkBindImageMemorySwapchainInfoKHX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkBindImageMemorySwapchainInfoKHX, swapchain}
 
 instance {-# OVERLAPPING #-}
          HasField "imageIndex" VkBindImageMemorySwapchainInfoKHX where
@@ -277,32 +202,34 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkBindImageMemorySwapchainInfoKHX, imageIndex}
 
-instance CanReadField "imageIndex"
-           VkBindImageMemorySwapchainInfoKHX
-         where
-        {-# INLINE getField #-}
-        getField = vkImageIndex
+instance {-# OVERLAPPING #-}
+         CanReadField "imageIndex" VkBindImageMemorySwapchainInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkBindImageMemorySwapchainInfoKHX, imageIndex})
 
         {-# INLINE readField #-}
-        readField = readVkImageIndex
+        readField p
+          = peekByteOff p #{offset VkBindImageMemorySwapchainInfoKHX, imageIndex}
 
-instance CanWriteField "imageIndex"
-           VkBindImageMemorySwapchainInfoKHX
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "imageIndex" VkBindImageMemorySwapchainInfoKHX where
         {-# INLINE writeField #-}
-        writeField = writeVkImageIndex
+        writeField p
+          = pokeByteOff p #{offset VkBindImageMemorySwapchainInfoKHX, imageIndex}
 
 instance Show VkBindImageMemorySwapchainInfoKHX where
         showsPrec d x
           = showString "VkBindImageMemorySwapchainInfoKHX {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkSwapchain = " .
-                            showsPrec d (vkSwapchain x) .
+                          showString "swapchain = " .
+                            showsPrec d (getField @"swapchain" x) .
                               showString ", " .
-                                showString "vkImageIndex = " .
-                                  showsPrec d (vkImageIndex x) . showChar '}'
+                                showString "imageIndex = " .
+                                  showsPrec d (getField @"imageIndex" x) . showChar '}'

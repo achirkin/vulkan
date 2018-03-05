@@ -34,7 +34,7 @@ module Graphics.Vulkan.Ext.VK_KHR_push_descriptor
         module Graphics.Vulkan.Types.Enum.VkSampleCountFlags,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
-        vkCmdPushDescriptorSetKHR,
+        vkCmdPushDescriptorSetKHR, vkCmdPushDescriptorSetKHRSafe,
         module Graphics.Vulkan.Types.Enum.VkDescriptorType,
         module Graphics.Vulkan.Types.Enum.VkImageLayout,
         module Graphics.Vulkan.Types.Enum.VkPipelineBindPoint,
@@ -88,6 +88,33 @@ import           Graphics.Vulkan.Types.Struct.VkWriteDescriptorSet
 --   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdPushDescriptorSetKHR.html vkCmdPushDescriptorSetKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdPushDescriptorSetKHR"
                vkCmdPushDescriptorSetKHR ::
+               VkCommandBuffer -- ^ commandBuffer
+                               ->
+                 VkPipelineBindPoint -- ^ pipelineBindPoint
+                                     ->
+                   VkPipelineLayout -- ^ layout
+                                    ->
+                     Word32 -- ^ set
+                            -> Word32 -- ^ descriptorWriteCount
+                                      -> Ptr VkWriteDescriptorSet -- ^ pDescriptorWrites
+                                                                  -> IO ()
+
+-- | queues: 'graphics', 'compute'.
+--
+--   renderpass: @both@
+--
+--   > () vkCmdPushDescriptorSetKHR
+--   >     ( VkCommandBuffer commandBuffer
+--   >     , VkPipelineBindPoint pipelineBindPoint
+--   >     , VkPipelineLayout layout
+--   >     , uint32_t set
+--   >     , uint32_t descriptorWriteCount
+--   >     , const VkWriteDescriptorSet* pDescriptorWrites
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdPushDescriptorSetKHR.html vkCmdPushDescriptorSetKHR registry at www.khronos.org>
+foreign import ccall safe "vkCmdPushDescriptorSetKHR"
+               vkCmdPushDescriptorSetKHRSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
                  VkPipelineBindPoint -- ^ pipelineBindPoint

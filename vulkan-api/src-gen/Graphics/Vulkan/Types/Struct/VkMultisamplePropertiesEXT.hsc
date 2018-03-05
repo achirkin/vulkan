@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkMultisamplePropertiesEXT
        (VkMultisamplePropertiesEXT(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkExtent2D    (VkExtent2D)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkMultisamplePropertiesEXT {
@@ -75,27 +75,6 @@ instance VulkanMarshal VkMultisamplePropertiesEXT where
         type ReturnedOnly VkMultisamplePropertiesEXT = 'True -- ' closing tick for hsc2hs
         type StructExtends VkMultisamplePropertiesEXT = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkMultisamplePropertiesEXT
-         where
-        type VkSTypeMType VkMultisamplePropertiesEXT = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkMultisamplePropertiesEXT, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkMultisamplePropertiesEXT, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkMultisamplePropertiesEXT, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkMultisamplePropertiesEXT, sType}
-
 instance {-# OVERLAPPING #-}
          HasField "sType" VkMultisamplePropertiesEXT where
         type FieldType "sType" VkMultisamplePropertiesEXT = VkStructureType
@@ -111,37 +90,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkMultisamplePropertiesEXT, sType}
 
-instance CanReadField "sType" VkMultisamplePropertiesEXT where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkMultisamplePropertiesEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkMultisamplePropertiesEXT, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkMultisamplePropertiesEXT, sType}
 
-instance CanWriteField "sType" VkMultisamplePropertiesEXT where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkMultisamplePropertiesEXT where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkMultisamplePropertiesEXT
-         where
-        type VkPNextMType VkMultisamplePropertiesEXT = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkMultisamplePropertiesEXT, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkMultisamplePropertiesEXT, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkMultisamplePropertiesEXT, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkMultisamplePropertiesEXT, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkMultisamplePropertiesEXT, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkMultisamplePropertiesEXT where
@@ -158,38 +122,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkMultisamplePropertiesEXT, pNext}
 
-instance CanReadField "pNext" VkMultisamplePropertiesEXT where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkMultisamplePropertiesEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkMultisamplePropertiesEXT, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkMultisamplePropertiesEXT where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkMultisamplePropertiesEXT, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkMaxSampleLocationGridSize VkMultisamplePropertiesEXT where
-        type VkMaxSampleLocationGridSizeMType VkMultisamplePropertiesEXT =
-             VkExtent2D
-
-        {-# NOINLINE vkMaxSampleLocationGridSize #-}
-        vkMaxSampleLocationGridSize x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkMultisamplePropertiesEXT, maxSampleLocationGridSize})
-
-        {-# INLINE vkMaxSampleLocationGridSizeByteOffset #-}
-        vkMaxSampleLocationGridSizeByteOffset ~_
-          = #{offset VkMultisamplePropertiesEXT, maxSampleLocationGridSize}
-
-        {-# INLINE readVkMaxSampleLocationGridSize #-}
-        readVkMaxSampleLocationGridSize p
-          = peekByteOff p #{offset VkMultisamplePropertiesEXT, maxSampleLocationGridSize}
-
-        {-# INLINE writeVkMaxSampleLocationGridSize #-}
-        writeVkMaxSampleLocationGridSize p
-          = pokeByteOff p #{offset VkMultisamplePropertiesEXT, maxSampleLocationGridSize}
+         CanWriteField "pNext" VkMultisamplePropertiesEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkMultisamplePropertiesEXT, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "maxSampleLocationGridSize" VkMultisamplePropertiesEXT
@@ -215,29 +163,35 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkMultisamplePropertiesEXT, maxSampleLocationGridSize}
 
-instance CanReadField "maxSampleLocationGridSize"
-           VkMultisamplePropertiesEXT
+instance {-# OVERLAPPING #-}
+         CanReadField "maxSampleLocationGridSize" VkMultisamplePropertiesEXT
          where
-        {-# INLINE getField #-}
-        getField = vkMaxSampleLocationGridSize
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkMultisamplePropertiesEXT, maxSampleLocationGridSize})
 
         {-# INLINE readField #-}
-        readField = readVkMaxSampleLocationGridSize
+        readField p
+          = peekByteOff p #{offset VkMultisamplePropertiesEXT, maxSampleLocationGridSize}
 
-instance CanWriteField "maxSampleLocationGridSize"
+instance {-# OVERLAPPING #-}
+         CanWriteField "maxSampleLocationGridSize"
            VkMultisamplePropertiesEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkMaxSampleLocationGridSize
+        writeField p
+          = pokeByteOff p #{offset VkMultisamplePropertiesEXT, maxSampleLocationGridSize}
 
 instance Show VkMultisamplePropertiesEXT where
         showsPrec d x
           = showString "VkMultisamplePropertiesEXT {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkMaxSampleLocationGridSize = " .
-                            showsPrec d (vkMaxSampleLocationGridSize x) . showChar '}'
+                          showString "maxSampleLocationGridSize = " .
+                            showsPrec d (getField @"maxSampleLocationGridSize" x) .
+                              showChar '}'

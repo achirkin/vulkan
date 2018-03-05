@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkCopyDescriptorSet
        (VkCopyDescriptorSet(..)) where
@@ -14,7 +15,6 @@ import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
 import           Graphics.Vulkan.Types.Handles              (VkDescriptorSet)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkCopyDescriptorSet {
@@ -78,26 +78,6 @@ instance VulkanMarshal VkCopyDescriptorSet where
         type ReturnedOnly VkCopyDescriptorSet = 'False -- ' closing tick for hsc2hs
         type StructExtends VkCopyDescriptorSet = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkCopyDescriptorSet where
-        type VkSTypeMType VkCopyDescriptorSet = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkCopyDescriptorSet, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkCopyDescriptorSet, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkCopyDescriptorSet, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkCopyDescriptorSet, sType}
-
 instance {-# OVERLAPPING #-} HasField "sType" VkCopyDescriptorSet
          where
         type FieldType "sType" VkCopyDescriptorSet = VkStructureType
@@ -112,36 +92,22 @@ instance {-# OVERLAPPING #-} HasField "sType" VkCopyDescriptorSet
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkCopyDescriptorSet, sType}
 
-instance CanReadField "sType" VkCopyDescriptorSet where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkCopyDescriptorSet where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkCopyDescriptorSet, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkCopyDescriptorSet, sType}
 
-instance CanWriteField "sType" VkCopyDescriptorSet where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkCopyDescriptorSet where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkCopyDescriptorSet where
-        type VkPNextMType VkCopyDescriptorSet = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkCopyDescriptorSet, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkCopyDescriptorSet, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkCopyDescriptorSet, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkCopyDescriptorSet, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkCopyDescriptorSet, sType}
 
 instance {-# OVERLAPPING #-} HasField "pNext" VkCopyDescriptorSet
          where
@@ -157,36 +123,22 @@ instance {-# OVERLAPPING #-} HasField "pNext" VkCopyDescriptorSet
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkCopyDescriptorSet, pNext}
 
-instance CanReadField "pNext" VkCopyDescriptorSet where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkCopyDescriptorSet where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkCopyDescriptorSet, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
+        readField p
+          = peekByteOff p #{offset VkCopyDescriptorSet, pNext}
 
-instance CanWriteField "pNext" VkCopyDescriptorSet where
+instance {-# OVERLAPPING #-}
+         CanWriteField "pNext" VkCopyDescriptorSet where
         {-# INLINE writeField #-}
-        writeField = writeVkPNext
-
-instance {-# OVERLAPPING #-} HasVkSrcSet VkCopyDescriptorSet where
-        type VkSrcSetMType VkCopyDescriptorSet = VkDescriptorSet
-
-        {-# NOINLINE vkSrcSet #-}
-        vkSrcSet x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkCopyDescriptorSet, srcSet})
-
-        {-# INLINE vkSrcSetByteOffset #-}
-        vkSrcSetByteOffset ~_
-          = #{offset VkCopyDescriptorSet, srcSet}
-
-        {-# INLINE readVkSrcSet #-}
-        readVkSrcSet p
-          = peekByteOff p #{offset VkCopyDescriptorSet, srcSet}
-
-        {-# INLINE writeVkSrcSet #-}
-        writeVkSrcSet p
-          = pokeByteOff p #{offset VkCopyDescriptorSet, srcSet}
+        writeField p
+          = pokeByteOff p #{offset VkCopyDescriptorSet, pNext}
 
 instance {-# OVERLAPPING #-} HasField "srcSet" VkCopyDescriptorSet
          where
@@ -202,37 +154,22 @@ instance {-# OVERLAPPING #-} HasField "srcSet" VkCopyDescriptorSet
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkCopyDescriptorSet, srcSet}
 
-instance CanReadField "srcSet" VkCopyDescriptorSet where
-        {-# INLINE getField #-}
-        getField = vkSrcSet
+instance {-# OVERLAPPING #-}
+         CanReadField "srcSet" VkCopyDescriptorSet where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkCopyDescriptorSet, srcSet})
 
         {-# INLINE readField #-}
-        readField = readVkSrcSet
+        readField p
+          = peekByteOff p #{offset VkCopyDescriptorSet, srcSet}
 
-instance CanWriteField "srcSet" VkCopyDescriptorSet where
+instance {-# OVERLAPPING #-}
+         CanWriteField "srcSet" VkCopyDescriptorSet where
         {-# INLINE writeField #-}
-        writeField = writeVkSrcSet
-
-instance {-# OVERLAPPING #-} HasVkSrcBinding VkCopyDescriptorSet
-         where
-        type VkSrcBindingMType VkCopyDescriptorSet = Word32
-
-        {-# NOINLINE vkSrcBinding #-}
-        vkSrcBinding x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkCopyDescriptorSet, srcBinding})
-
-        {-# INLINE vkSrcBindingByteOffset #-}
-        vkSrcBindingByteOffset ~_
-          = #{offset VkCopyDescriptorSet, srcBinding}
-
-        {-# INLINE readVkSrcBinding #-}
-        readVkSrcBinding p
-          = peekByteOff p #{offset VkCopyDescriptorSet, srcBinding}
-
-        {-# INLINE writeVkSrcBinding #-}
-        writeVkSrcBinding p
-          = pokeByteOff p #{offset VkCopyDescriptorSet, srcBinding}
+        writeField p
+          = pokeByteOff p #{offset VkCopyDescriptorSet, srcSet}
 
 instance {-# OVERLAPPING #-}
          HasField "srcBinding" VkCopyDescriptorSet where
@@ -248,37 +185,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkCopyDescriptorSet, srcBinding}
 
-instance CanReadField "srcBinding" VkCopyDescriptorSet where
-        {-# INLINE getField #-}
-        getField = vkSrcBinding
+instance {-# OVERLAPPING #-}
+         CanReadField "srcBinding" VkCopyDescriptorSet where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkCopyDescriptorSet, srcBinding})
 
         {-# INLINE readField #-}
-        readField = readVkSrcBinding
-
-instance CanWriteField "srcBinding" VkCopyDescriptorSet where
-        {-# INLINE writeField #-}
-        writeField = writeVkSrcBinding
+        readField p
+          = peekByteOff p #{offset VkCopyDescriptorSet, srcBinding}
 
 instance {-# OVERLAPPING #-}
-         HasVkSrcArrayElement VkCopyDescriptorSet where
-        type VkSrcArrayElementMType VkCopyDescriptorSet = Word32
-
-        {-# NOINLINE vkSrcArrayElement #-}
-        vkSrcArrayElement x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkCopyDescriptorSet, srcArrayElement})
-
-        {-# INLINE vkSrcArrayElementByteOffset #-}
-        vkSrcArrayElementByteOffset ~_
-          = #{offset VkCopyDescriptorSet, srcArrayElement}
-
-        {-# INLINE readVkSrcArrayElement #-}
-        readVkSrcArrayElement p
-          = peekByteOff p #{offset VkCopyDescriptorSet, srcArrayElement}
-
-        {-# INLINE writeVkSrcArrayElement #-}
-        writeVkSrcArrayElement p
-          = pokeByteOff p #{offset VkCopyDescriptorSet, srcArrayElement}
+         CanWriteField "srcBinding" VkCopyDescriptorSet where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkCopyDescriptorSet, srcBinding}
 
 instance {-# OVERLAPPING #-}
          HasField "srcArrayElement" VkCopyDescriptorSet where
@@ -295,36 +217,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkCopyDescriptorSet, srcArrayElement}
 
-instance CanReadField "srcArrayElement" VkCopyDescriptorSet where
-        {-# INLINE getField #-}
-        getField = vkSrcArrayElement
+instance {-# OVERLAPPING #-}
+         CanReadField "srcArrayElement" VkCopyDescriptorSet where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkCopyDescriptorSet, srcArrayElement})
 
         {-# INLINE readField #-}
-        readField = readVkSrcArrayElement
+        readField p
+          = peekByteOff p #{offset VkCopyDescriptorSet, srcArrayElement}
 
-instance CanWriteField "srcArrayElement" VkCopyDescriptorSet where
+instance {-# OVERLAPPING #-}
+         CanWriteField "srcArrayElement" VkCopyDescriptorSet where
         {-# INLINE writeField #-}
-        writeField = writeVkSrcArrayElement
-
-instance {-# OVERLAPPING #-} HasVkDstSet VkCopyDescriptorSet where
-        type VkDstSetMType VkCopyDescriptorSet = VkDescriptorSet
-
-        {-# NOINLINE vkDstSet #-}
-        vkDstSet x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkCopyDescriptorSet, dstSet})
-
-        {-# INLINE vkDstSetByteOffset #-}
-        vkDstSetByteOffset ~_
-          = #{offset VkCopyDescriptorSet, dstSet}
-
-        {-# INLINE readVkDstSet #-}
-        readVkDstSet p
-          = peekByteOff p #{offset VkCopyDescriptorSet, dstSet}
-
-        {-# INLINE writeVkDstSet #-}
-        writeVkDstSet p
-          = pokeByteOff p #{offset VkCopyDescriptorSet, dstSet}
+        writeField p
+          = pokeByteOff p #{offset VkCopyDescriptorSet, srcArrayElement}
 
 instance {-# OVERLAPPING #-} HasField "dstSet" VkCopyDescriptorSet
          where
@@ -340,37 +248,22 @@ instance {-# OVERLAPPING #-} HasField "dstSet" VkCopyDescriptorSet
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkCopyDescriptorSet, dstSet}
 
-instance CanReadField "dstSet" VkCopyDescriptorSet where
-        {-# INLINE getField #-}
-        getField = vkDstSet
+instance {-# OVERLAPPING #-}
+         CanReadField "dstSet" VkCopyDescriptorSet where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkCopyDescriptorSet, dstSet})
 
         {-# INLINE readField #-}
-        readField = readVkDstSet
+        readField p
+          = peekByteOff p #{offset VkCopyDescriptorSet, dstSet}
 
-instance CanWriteField "dstSet" VkCopyDescriptorSet where
+instance {-# OVERLAPPING #-}
+         CanWriteField "dstSet" VkCopyDescriptorSet where
         {-# INLINE writeField #-}
-        writeField = writeVkDstSet
-
-instance {-# OVERLAPPING #-} HasVkDstBinding VkCopyDescriptorSet
-         where
-        type VkDstBindingMType VkCopyDescriptorSet = Word32
-
-        {-# NOINLINE vkDstBinding #-}
-        vkDstBinding x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkCopyDescriptorSet, dstBinding})
-
-        {-# INLINE vkDstBindingByteOffset #-}
-        vkDstBindingByteOffset ~_
-          = #{offset VkCopyDescriptorSet, dstBinding}
-
-        {-# INLINE readVkDstBinding #-}
-        readVkDstBinding p
-          = peekByteOff p #{offset VkCopyDescriptorSet, dstBinding}
-
-        {-# INLINE writeVkDstBinding #-}
-        writeVkDstBinding p
-          = pokeByteOff p #{offset VkCopyDescriptorSet, dstBinding}
+        writeField p
+          = pokeByteOff p #{offset VkCopyDescriptorSet, dstSet}
 
 instance {-# OVERLAPPING #-}
          HasField "dstBinding" VkCopyDescriptorSet where
@@ -386,37 +279,22 @@ instance {-# OVERLAPPING #-}
         {-# INLINE fieldOffset #-}
         fieldOffset = #{offset VkCopyDescriptorSet, dstBinding}
 
-instance CanReadField "dstBinding" VkCopyDescriptorSet where
-        {-# INLINE getField #-}
-        getField = vkDstBinding
+instance {-# OVERLAPPING #-}
+         CanReadField "dstBinding" VkCopyDescriptorSet where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkCopyDescriptorSet, dstBinding})
 
         {-# INLINE readField #-}
-        readField = readVkDstBinding
-
-instance CanWriteField "dstBinding" VkCopyDescriptorSet where
-        {-# INLINE writeField #-}
-        writeField = writeVkDstBinding
+        readField p
+          = peekByteOff p #{offset VkCopyDescriptorSet, dstBinding}
 
 instance {-# OVERLAPPING #-}
-         HasVkDstArrayElement VkCopyDescriptorSet where
-        type VkDstArrayElementMType VkCopyDescriptorSet = Word32
-
-        {-# NOINLINE vkDstArrayElement #-}
-        vkDstArrayElement x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkCopyDescriptorSet, dstArrayElement})
-
-        {-# INLINE vkDstArrayElementByteOffset #-}
-        vkDstArrayElementByteOffset ~_
-          = #{offset VkCopyDescriptorSet, dstArrayElement}
-
-        {-# INLINE readVkDstArrayElement #-}
-        readVkDstArrayElement p
-          = peekByteOff p #{offset VkCopyDescriptorSet, dstArrayElement}
-
-        {-# INLINE writeVkDstArrayElement #-}
-        writeVkDstArrayElement p
-          = pokeByteOff p #{offset VkCopyDescriptorSet, dstArrayElement}
+         CanWriteField "dstBinding" VkCopyDescriptorSet where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkCopyDescriptorSet, dstBinding}
 
 instance {-# OVERLAPPING #-}
          HasField "dstArrayElement" VkCopyDescriptorSet where
@@ -433,37 +311,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkCopyDescriptorSet, dstArrayElement}
 
-instance CanReadField "dstArrayElement" VkCopyDescriptorSet where
-        {-# INLINE getField #-}
-        getField = vkDstArrayElement
+instance {-# OVERLAPPING #-}
+         CanReadField "dstArrayElement" VkCopyDescriptorSet where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkCopyDescriptorSet, dstArrayElement})
 
         {-# INLINE readField #-}
-        readField = readVkDstArrayElement
-
-instance CanWriteField "dstArrayElement" VkCopyDescriptorSet where
-        {-# INLINE writeField #-}
-        writeField = writeVkDstArrayElement
+        readField p
+          = peekByteOff p #{offset VkCopyDescriptorSet, dstArrayElement}
 
 instance {-# OVERLAPPING #-}
-         HasVkDescriptorCount VkCopyDescriptorSet where
-        type VkDescriptorCountMType VkCopyDescriptorSet = Word32
-
-        {-# NOINLINE vkDescriptorCount #-}
-        vkDescriptorCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkCopyDescriptorSet, descriptorCount})
-
-        {-# INLINE vkDescriptorCountByteOffset #-}
-        vkDescriptorCountByteOffset ~_
-          = #{offset VkCopyDescriptorSet, descriptorCount}
-
-        {-# INLINE readVkDescriptorCount #-}
-        readVkDescriptorCount p
-          = peekByteOff p #{offset VkCopyDescriptorSet, descriptorCount}
-
-        {-# INLINE writeVkDescriptorCount #-}
-        writeVkDescriptorCount p
-          = pokeByteOff p #{offset VkCopyDescriptorSet, descriptorCount}
+         CanWriteField "dstArrayElement" VkCopyDescriptorSet where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkCopyDescriptorSet, dstArrayElement}
 
 instance {-# OVERLAPPING #-}
          HasField "descriptorCount" VkCopyDescriptorSet where
@@ -480,44 +343,53 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkCopyDescriptorSet, descriptorCount}
 
-instance CanReadField "descriptorCount" VkCopyDescriptorSet where
-        {-# INLINE getField #-}
-        getField = vkDescriptorCount
+instance {-# OVERLAPPING #-}
+         CanReadField "descriptorCount" VkCopyDescriptorSet where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkCopyDescriptorSet, descriptorCount})
 
         {-# INLINE readField #-}
-        readField = readVkDescriptorCount
+        readField p
+          = peekByteOff p #{offset VkCopyDescriptorSet, descriptorCount}
 
-instance CanWriteField "descriptorCount" VkCopyDescriptorSet where
+instance {-# OVERLAPPING #-}
+         CanWriteField "descriptorCount" VkCopyDescriptorSet where
         {-# INLINE writeField #-}
-        writeField = writeVkDescriptorCount
+        writeField p
+          = pokeByteOff p #{offset VkCopyDescriptorSet, descriptorCount}
 
 instance Show VkCopyDescriptorSet where
         showsPrec d x
           = showString "VkCopyDescriptorSet {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkSrcSet = " .
-                            showsPrec d (vkSrcSet x) .
+                          showString "srcSet = " .
+                            showsPrec d (getField @"srcSet" x) .
                               showString ", " .
-                                showString "vkSrcBinding = " .
-                                  showsPrec d (vkSrcBinding x) .
+                                showString "srcBinding = " .
+                                  showsPrec d (getField @"srcBinding" x) .
                                     showString ", " .
-                                      showString "vkSrcArrayElement = " .
-                                        showsPrec d (vkSrcArrayElement x) .
+                                      showString "srcArrayElement = " .
+                                        showsPrec d (getField @"srcArrayElement" x) .
                                           showString ", " .
-                                            showString "vkDstSet = " .
-                                              showsPrec d (vkDstSet x) .
+                                            showString "dstSet = " .
+                                              showsPrec d (getField @"dstSet" x) .
                                                 showString ", " .
-                                                  showString "vkDstBinding = " .
-                                                    showsPrec d (vkDstBinding x) .
+                                                  showString "dstBinding = " .
+                                                    showsPrec d (getField @"dstBinding" x) .
                                                       showString ", " .
-                                                        showString "vkDstArrayElement = " .
-                                                          showsPrec d (vkDstArrayElement x) .
+                                                        showString "dstArrayElement = " .
+                                                          showsPrec d
+                                                            (getField @"dstArrayElement" x)
+                                                            .
                                                             showString ", " .
-                                                              showString "vkDescriptorCount = " .
-                                                                showsPrec d (vkDescriptorCount x) .
-                                                                  showChar '}'
+                                                              showString "descriptorCount = " .
+                                                                showsPrec d
+                                                                  (getField @"descriptorCount" x)
+                                                                  . showChar '}'

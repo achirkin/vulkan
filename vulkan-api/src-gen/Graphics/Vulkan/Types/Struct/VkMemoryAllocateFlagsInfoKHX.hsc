@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkMemoryAllocateFlagsInfoKHX
        (VkMemoryAllocateFlagsInfoKHX(..)) where
@@ -15,7 +16,6 @@ import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkMemoryAllocateFlagsKHX (VkMemoryAllocateFlagsKHX)
 import           Graphics.Vulkan.Types.Enum.VkStructureType          (VkStructureType)
 import           Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo   (VkMemoryAllocateInfo)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                    (unsafeDupablePerformIO)
 
 -- | > typedef struct VkMemoryAllocateFlagsInfoKHX {
@@ -80,27 +80,6 @@ instance VulkanMarshal VkMemoryAllocateFlagsInfoKHX where
              '[VkMemoryAllocateInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkMemoryAllocateFlagsInfoKHX where
-        type VkSTypeMType VkMemoryAllocateFlagsInfoKHX = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkMemoryAllocateFlagsInfoKHX, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkMemoryAllocateFlagsInfoKHX, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkMemoryAllocateFlagsInfoKHX, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkMemoryAllocateFlagsInfoKHX, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkMemoryAllocateFlagsInfoKHX where
         type FieldType "sType" VkMemoryAllocateFlagsInfoKHX =
              VkStructureType
@@ -116,37 +95,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkMemoryAllocateFlagsInfoKHX, sType}
 
-instance CanReadField "sType" VkMemoryAllocateFlagsInfoKHX where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkMemoryAllocateFlagsInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkMemoryAllocateFlagsInfoKHX, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType" VkMemoryAllocateFlagsInfoKHX where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkMemoryAllocateFlagsInfoKHX, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkMemoryAllocateFlagsInfoKHX where
-        type VkPNextMType VkMemoryAllocateFlagsInfoKHX = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkMemoryAllocateFlagsInfoKHX, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkMemoryAllocateFlagsInfoKHX, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkMemoryAllocateFlagsInfoKHX, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkMemoryAllocateFlagsInfoKHX, pNext}
+         CanWriteField "sType" VkMemoryAllocateFlagsInfoKHX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkMemoryAllocateFlagsInfoKHX, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkMemoryAllocateFlagsInfoKHX where
@@ -163,38 +127,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkMemoryAllocateFlagsInfoKHX, pNext}
 
-instance CanReadField "pNext" VkMemoryAllocateFlagsInfoKHX where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkMemoryAllocateFlagsInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkMemoryAllocateFlagsInfoKHX, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkMemoryAllocateFlagsInfoKHX where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkMemoryAllocateFlagsInfoKHX, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkFlags VkMemoryAllocateFlagsInfoKHX where
-        type VkFlagsMType VkMemoryAllocateFlagsInfoKHX =
-             VkMemoryAllocateFlagsKHX
-
-        {-# NOINLINE vkFlags #-}
-        vkFlags x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkMemoryAllocateFlagsInfoKHX, flags})
-
-        {-# INLINE vkFlagsByteOffset #-}
-        vkFlagsByteOffset ~_
-          = #{offset VkMemoryAllocateFlagsInfoKHX, flags}
-
-        {-# INLINE readVkFlags #-}
-        readVkFlags p
-          = peekByteOff p #{offset VkMemoryAllocateFlagsInfoKHX, flags}
-
-        {-# INLINE writeVkFlags #-}
-        writeVkFlags p
-          = pokeByteOff p #{offset VkMemoryAllocateFlagsInfoKHX, flags}
+         CanWriteField "pNext" VkMemoryAllocateFlagsInfoKHX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkMemoryAllocateFlagsInfoKHX, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkMemoryAllocateFlagsInfoKHX where
@@ -212,37 +160,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkMemoryAllocateFlagsInfoKHX, flags}
 
-instance CanReadField "flags" VkMemoryAllocateFlagsInfoKHX where
-        {-# INLINE getField #-}
-        getField = vkFlags
+instance {-# OVERLAPPING #-}
+         CanReadField "flags" VkMemoryAllocateFlagsInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkMemoryAllocateFlagsInfoKHX, flags})
 
         {-# INLINE readField #-}
-        readField = readVkFlags
-
-instance CanWriteField "flags" VkMemoryAllocateFlagsInfoKHX where
-        {-# INLINE writeField #-}
-        writeField = writeVkFlags
+        readField p
+          = peekByteOff p #{offset VkMemoryAllocateFlagsInfoKHX, flags}
 
 instance {-# OVERLAPPING #-}
-         HasVkDeviceMask VkMemoryAllocateFlagsInfoKHX where
-        type VkDeviceMaskMType VkMemoryAllocateFlagsInfoKHX = Word32
-
-        {-# NOINLINE vkDeviceMask #-}
-        vkDeviceMask x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkMemoryAllocateFlagsInfoKHX, deviceMask})
-
-        {-# INLINE vkDeviceMaskByteOffset #-}
-        vkDeviceMaskByteOffset ~_
-          = #{offset VkMemoryAllocateFlagsInfoKHX, deviceMask}
-
-        {-# INLINE readVkDeviceMask #-}
-        readVkDeviceMask p
-          = peekByteOff p #{offset VkMemoryAllocateFlagsInfoKHX, deviceMask}
-
-        {-# INLINE writeVkDeviceMask #-}
-        writeVkDeviceMask p
-          = pokeByteOff p #{offset VkMemoryAllocateFlagsInfoKHX, deviceMask}
+         CanWriteField "flags" VkMemoryAllocateFlagsInfoKHX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkMemoryAllocateFlagsInfoKHX, flags}
 
 instance {-# OVERLAPPING #-}
          HasField "deviceMask" VkMemoryAllocateFlagsInfoKHX where
@@ -261,30 +194,34 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkMemoryAllocateFlagsInfoKHX, deviceMask}
 
-instance CanReadField "deviceMask" VkMemoryAllocateFlagsInfoKHX
-         where
-        {-# INLINE getField #-}
-        getField = vkDeviceMask
+instance {-# OVERLAPPING #-}
+         CanReadField "deviceMask" VkMemoryAllocateFlagsInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkMemoryAllocateFlagsInfoKHX, deviceMask})
 
         {-# INLINE readField #-}
-        readField = readVkDeviceMask
+        readField p
+          = peekByteOff p #{offset VkMemoryAllocateFlagsInfoKHX, deviceMask}
 
-instance CanWriteField "deviceMask" VkMemoryAllocateFlagsInfoKHX
-         where
+instance {-# OVERLAPPING #-}
+         CanWriteField "deviceMask" VkMemoryAllocateFlagsInfoKHX where
         {-# INLINE writeField #-}
-        writeField = writeVkDeviceMask
+        writeField p
+          = pokeByteOff p #{offset VkMemoryAllocateFlagsInfoKHX, deviceMask}
 
 instance Show VkMemoryAllocateFlagsInfoKHX where
         showsPrec d x
           = showString "VkMemoryAllocateFlagsInfoKHX {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkFlags = " .
-                            showsPrec d (vkFlags x) .
+                          showString "flags = " .
+                            showsPrec d (getField @"flags" x) .
                               showString ", " .
-                                showString "vkDeviceMask = " .
-                                  showsPrec d (vkDeviceMask x) . showChar '}'
+                                showString "deviceMask = " .
+                                  showsPrec d (getField @"deviceMask" x) . showChar '}'

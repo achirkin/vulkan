@@ -52,12 +52,19 @@ genCommand command@VkCommand
     writeDecl $ ForImp rezComment (CCall Nothing) (Just (PlayRisky Nothing))
                       (Just cnameOrigStr) (Ident Nothing cnameStr) funtype
 
+    writeDecl $ ForImp rezComment (CCall Nothing) (Just (PlaySafe Nothing False))
+                      (Just cnameOrigStr) (Ident Nothing cnameSafeStr) funtype
+
     writeExport . DIVar $ unVkCommandName vkname
+    writeExport . DIVar $ unVkCommandName vknameSafe
     -- reexport all dependent types
     return . Set.fromList
            . filter (T.isInfixOf "Vk" . unVkTypeName)
            $ requiresTypes command
   where
+    vknameSafe = VkCommandName $ unVkCommandName vkname <> "Safe"
+    cnameSafe = toQName vknameSafe
+    cnameSafeStr = T.unpack $ qNameTxt cnameSafe
     cname = toQName vkname
     cnameStr = T.unpack $ qNameTxt cname
     cnameOrigStr = T.unpack cnameOrigTxt

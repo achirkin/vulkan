@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkAcquireNextImageInfoKHX
        (VkAcquireNextImageInfoKHX(..)) where
@@ -16,7 +17,6 @@ import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
 import           Graphics.Vulkan.Types.Handles              (VkFence,
                                                              VkSemaphore,
                                                              VkSwapchainKHR)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkAcquireNextImageInfoKHX {
@@ -80,27 +80,6 @@ instance VulkanMarshal VkAcquireNextImageInfoKHX where
         type ReturnedOnly VkAcquireNextImageInfoKHX = 'False -- ' closing tick for hsc2hs
         type StructExtends VkAcquireNextImageInfoKHX = '[] -- ' closing tick for hsc2hs
 
-instance {-# OVERLAPPING #-} HasVkSType VkAcquireNextImageInfoKHX
-         where
-        type VkSTypeMType VkAcquireNextImageInfoKHX = VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAcquireNextImageInfoKHX, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkAcquireNextImageInfoKHX, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkAcquireNextImageInfoKHX, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkAcquireNextImageInfoKHX, sType}
-
 instance {-# OVERLAPPING #-}
          HasField "sType" VkAcquireNextImageInfoKHX where
         type FieldType "sType" VkAcquireNextImageInfoKHX = VkStructureType
@@ -116,37 +95,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkAcquireNextImageInfoKHX, sType}
 
-instance CanReadField "sType" VkAcquireNextImageInfoKHX where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkAcquireNextImageInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAcquireNextImageInfoKHX, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
+        readField p
+          = peekByteOff p #{offset VkAcquireNextImageInfoKHX, sType}
 
-instance CanWriteField "sType" VkAcquireNextImageInfoKHX where
+instance {-# OVERLAPPING #-}
+         CanWriteField "sType" VkAcquireNextImageInfoKHX where
         {-# INLINE writeField #-}
-        writeField = writeVkSType
-
-instance {-# OVERLAPPING #-} HasVkPNext VkAcquireNextImageInfoKHX
-         where
-        type VkPNextMType VkAcquireNextImageInfoKHX = Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAcquireNextImageInfoKHX, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkAcquireNextImageInfoKHX, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkAcquireNextImageInfoKHX, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkAcquireNextImageInfoKHX, pNext}
+        writeField p
+          = pokeByteOff p #{offset VkAcquireNextImageInfoKHX, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkAcquireNextImageInfoKHX where
@@ -163,37 +127,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkAcquireNextImageInfoKHX, pNext}
 
-instance CanReadField "pNext" VkAcquireNextImageInfoKHX where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkAcquireNextImageInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAcquireNextImageInfoKHX, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext" VkAcquireNextImageInfoKHX where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkAcquireNextImageInfoKHX, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkSwapchain VkAcquireNextImageInfoKHX where
-        type VkSwapchainMType VkAcquireNextImageInfoKHX = VkSwapchainKHR
-
-        {-# NOINLINE vkSwapchain #-}
-        vkSwapchain x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAcquireNextImageInfoKHX, swapchain})
-
-        {-# INLINE vkSwapchainByteOffset #-}
-        vkSwapchainByteOffset ~_
-          = #{offset VkAcquireNextImageInfoKHX, swapchain}
-
-        {-# INLINE readVkSwapchain #-}
-        readVkSwapchain p
-          = peekByteOff p #{offset VkAcquireNextImageInfoKHX, swapchain}
-
-        {-# INLINE writeVkSwapchain #-}
-        writeVkSwapchain p
-          = pokeByteOff p #{offset VkAcquireNextImageInfoKHX, swapchain}
+         CanWriteField "pNext" VkAcquireNextImageInfoKHX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkAcquireNextImageInfoKHX, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "swapchain" VkAcquireNextImageInfoKHX where
@@ -211,37 +160,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkAcquireNextImageInfoKHX, swapchain}
 
-instance CanReadField "swapchain" VkAcquireNextImageInfoKHX where
-        {-# INLINE getField #-}
-        getField = vkSwapchain
+instance {-# OVERLAPPING #-}
+         CanReadField "swapchain" VkAcquireNextImageInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAcquireNextImageInfoKHX, swapchain})
 
         {-# INLINE readField #-}
-        readField = readVkSwapchain
+        readField p
+          = peekByteOff p #{offset VkAcquireNextImageInfoKHX, swapchain}
 
-instance CanWriteField "swapchain" VkAcquireNextImageInfoKHX where
+instance {-# OVERLAPPING #-}
+         CanWriteField "swapchain" VkAcquireNextImageInfoKHX where
         {-# INLINE writeField #-}
-        writeField = writeVkSwapchain
-
-instance {-# OVERLAPPING #-} HasVkTimeout VkAcquireNextImageInfoKHX
-         where
-        type VkTimeoutMType VkAcquireNextImageInfoKHX = Word64
-
-        {-# NOINLINE vkTimeout #-}
-        vkTimeout x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAcquireNextImageInfoKHX, timeout})
-
-        {-# INLINE vkTimeoutByteOffset #-}
-        vkTimeoutByteOffset ~_
-          = #{offset VkAcquireNextImageInfoKHX, timeout}
-
-        {-# INLINE readVkTimeout #-}
-        readVkTimeout p
-          = peekByteOff p #{offset VkAcquireNextImageInfoKHX, timeout}
-
-        {-# INLINE writeVkTimeout #-}
-        writeVkTimeout p
-          = pokeByteOff p #{offset VkAcquireNextImageInfoKHX, timeout}
+        writeField p
+          = pokeByteOff p #{offset VkAcquireNextImageInfoKHX, swapchain}
 
 instance {-# OVERLAPPING #-}
          HasField "timeout" VkAcquireNextImageInfoKHX where
@@ -258,37 +192,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkAcquireNextImageInfoKHX, timeout}
 
-instance CanReadField "timeout" VkAcquireNextImageInfoKHX where
-        {-# INLINE getField #-}
-        getField = vkTimeout
+instance {-# OVERLAPPING #-}
+         CanReadField "timeout" VkAcquireNextImageInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAcquireNextImageInfoKHX, timeout})
 
         {-# INLINE readField #-}
-        readField = readVkTimeout
-
-instance CanWriteField "timeout" VkAcquireNextImageInfoKHX where
-        {-# INLINE writeField #-}
-        writeField = writeVkTimeout
+        readField p
+          = peekByteOff p #{offset VkAcquireNextImageInfoKHX, timeout}
 
 instance {-# OVERLAPPING #-}
-         HasVkSemaphore VkAcquireNextImageInfoKHX where
-        type VkSemaphoreMType VkAcquireNextImageInfoKHX = VkSemaphore
-
-        {-# NOINLINE vkSemaphore #-}
-        vkSemaphore x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAcquireNextImageInfoKHX, semaphore})
-
-        {-# INLINE vkSemaphoreByteOffset #-}
-        vkSemaphoreByteOffset ~_
-          = #{offset VkAcquireNextImageInfoKHX, semaphore}
-
-        {-# INLINE readVkSemaphore #-}
-        readVkSemaphore p
-          = peekByteOff p #{offset VkAcquireNextImageInfoKHX, semaphore}
-
-        {-# INLINE writeVkSemaphore #-}
-        writeVkSemaphore p
-          = pokeByteOff p #{offset VkAcquireNextImageInfoKHX, semaphore}
+         CanWriteField "timeout" VkAcquireNextImageInfoKHX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkAcquireNextImageInfoKHX, timeout}
 
 instance {-# OVERLAPPING #-}
          HasField "semaphore" VkAcquireNextImageInfoKHX where
@@ -305,37 +224,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkAcquireNextImageInfoKHX, semaphore}
 
-instance CanReadField "semaphore" VkAcquireNextImageInfoKHX where
-        {-# INLINE getField #-}
-        getField = vkSemaphore
+instance {-# OVERLAPPING #-}
+         CanReadField "semaphore" VkAcquireNextImageInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAcquireNextImageInfoKHX, semaphore})
 
         {-# INLINE readField #-}
-        readField = readVkSemaphore
+        readField p
+          = peekByteOff p #{offset VkAcquireNextImageInfoKHX, semaphore}
 
-instance CanWriteField "semaphore" VkAcquireNextImageInfoKHX where
+instance {-# OVERLAPPING #-}
+         CanWriteField "semaphore" VkAcquireNextImageInfoKHX where
         {-# INLINE writeField #-}
-        writeField = writeVkSemaphore
-
-instance {-# OVERLAPPING #-} HasVkFence VkAcquireNextImageInfoKHX
-         where
-        type VkFenceMType VkAcquireNextImageInfoKHX = VkFence
-
-        {-# NOINLINE vkFence #-}
-        vkFence x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAcquireNextImageInfoKHX, fence})
-
-        {-# INLINE vkFenceByteOffset #-}
-        vkFenceByteOffset ~_
-          = #{offset VkAcquireNextImageInfoKHX, fence}
-
-        {-# INLINE readVkFence #-}
-        readVkFence p
-          = peekByteOff p #{offset VkAcquireNextImageInfoKHX, fence}
-
-        {-# INLINE writeVkFence #-}
-        writeVkFence p
-          = pokeByteOff p #{offset VkAcquireNextImageInfoKHX, fence}
+        writeField p
+          = pokeByteOff p #{offset VkAcquireNextImageInfoKHX, semaphore}
 
 instance {-# OVERLAPPING #-}
          HasField "fence" VkAcquireNextImageInfoKHX where
@@ -352,37 +256,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkAcquireNextImageInfoKHX, fence}
 
-instance CanReadField "fence" VkAcquireNextImageInfoKHX where
-        {-# INLINE getField #-}
-        getField = vkFence
+instance {-# OVERLAPPING #-}
+         CanReadField "fence" VkAcquireNextImageInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAcquireNextImageInfoKHX, fence})
 
         {-# INLINE readField #-}
-        readField = readVkFence
-
-instance CanWriteField "fence" VkAcquireNextImageInfoKHX where
-        {-# INLINE writeField #-}
-        writeField = writeVkFence
+        readField p
+          = peekByteOff p #{offset VkAcquireNextImageInfoKHX, fence}
 
 instance {-# OVERLAPPING #-}
-         HasVkDeviceMask VkAcquireNextImageInfoKHX where
-        type VkDeviceMaskMType VkAcquireNextImageInfoKHX = Word32
-
-        {-# NOINLINE vkDeviceMask #-}
-        vkDeviceMask x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkAcquireNextImageInfoKHX, deviceMask})
-
-        {-# INLINE vkDeviceMaskByteOffset #-}
-        vkDeviceMaskByteOffset ~_
-          = #{offset VkAcquireNextImageInfoKHX, deviceMask}
-
-        {-# INLINE readVkDeviceMask #-}
-        readVkDeviceMask p
-          = peekByteOff p #{offset VkAcquireNextImageInfoKHX, deviceMask}
-
-        {-# INLINE writeVkDeviceMask #-}
-        writeVkDeviceMask p
-          = pokeByteOff p #{offset VkAcquireNextImageInfoKHX, deviceMask}
+         CanWriteField "fence" VkAcquireNextImageInfoKHX where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkAcquireNextImageInfoKHX, fence}
 
 instance {-# OVERLAPPING #-}
          HasField "deviceMask" VkAcquireNextImageInfoKHX where
@@ -399,37 +288,44 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkAcquireNextImageInfoKHX, deviceMask}
 
-instance CanReadField "deviceMask" VkAcquireNextImageInfoKHX where
-        {-# INLINE getField #-}
-        getField = vkDeviceMask
+instance {-# OVERLAPPING #-}
+         CanReadField "deviceMask" VkAcquireNextImageInfoKHX where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkAcquireNextImageInfoKHX, deviceMask})
 
         {-# INLINE readField #-}
-        readField = readVkDeviceMask
+        readField p
+          = peekByteOff p #{offset VkAcquireNextImageInfoKHX, deviceMask}
 
-instance CanWriteField "deviceMask" VkAcquireNextImageInfoKHX where
+instance {-# OVERLAPPING #-}
+         CanWriteField "deviceMask" VkAcquireNextImageInfoKHX where
         {-# INLINE writeField #-}
-        writeField = writeVkDeviceMask
+        writeField p
+          = pokeByteOff p #{offset VkAcquireNextImageInfoKHX, deviceMask}
 
 instance Show VkAcquireNextImageInfoKHX where
         showsPrec d x
           = showString "VkAcquireNextImageInfoKHX {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkSwapchain = " .
-                            showsPrec d (vkSwapchain x) .
+                          showString "swapchain = " .
+                            showsPrec d (getField @"swapchain" x) .
                               showString ", " .
-                                showString "vkTimeout = " .
-                                  showsPrec d (vkTimeout x) .
+                                showString "timeout = " .
+                                  showsPrec d (getField @"timeout" x) .
                                     showString ", " .
-                                      showString "vkSemaphore = " .
-                                        showsPrec d (vkSemaphore x) .
+                                      showString "semaphore = " .
+                                        showsPrec d (getField @"semaphore" x) .
                                           showString ", " .
-                                            showString "vkFence = " .
-                                              showsPrec d (vkFence x) .
+                                            showString "fence = " .
+                                              showsPrec d (getField @"fence" x) .
                                                 showString ", " .
-                                                  showString "vkDeviceMask = " .
-                                                    showsPrec d (vkDeviceMask x) . showChar '}'
+                                                  showString "deviceMask = " .
+                                                    showsPrec d (getField @"deviceMask" x) .
+                                                      showChar '}'

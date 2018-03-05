@@ -5,6 +5,7 @@
 {-# LANGUAGE MagicHash             #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE TypeApplications      #-}
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkRenderPassSampleLocationsBeginInfoEXT
        (VkRenderPassSampleLocationsBeginInfoEXT(..)) where
@@ -16,7 +17,6 @@ import           Graphics.Vulkan.Types.Enum.VkStructureType                  (Vk
 import           Graphics.Vulkan.Types.Struct.VkAttachmentSampleLocationsEXT (VkAttachmentSampleLocationsEXT)
 import           Graphics.Vulkan.Types.Struct.VkRenderPassBeginInfo          (VkRenderPassBeginInfo)
 import           Graphics.Vulkan.Types.Struct.VkSubpassSampleLocationsEXT    (VkSubpassSampleLocationsEXT)
-import           Graphics.Vulkan.Types.StructMembers
 import           System.IO.Unsafe                                            (unsafeDupablePerformIO)
 
 -- | > typedef struct VkRenderPassSampleLocationsBeginInfoEXT {
@@ -89,28 +89,6 @@ instance VulkanMarshal VkRenderPassSampleLocationsBeginInfoEXT
              '[VkRenderPassBeginInfo] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
-         HasVkSType VkRenderPassSampleLocationsBeginInfoEXT where
-        type VkSTypeMType VkRenderPassSampleLocationsBeginInfoEXT =
-             VkStructureType
-
-        {-# NOINLINE vkSType #-}
-        vkSType x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassSampleLocationsBeginInfoEXT, sType})
-
-        {-# INLINE vkSTypeByteOffset #-}
-        vkSTypeByteOffset ~_
-          = #{offset VkRenderPassSampleLocationsBeginInfoEXT, sType}
-
-        {-# INLINE readVkSType #-}
-        readVkSType p
-          = peekByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, sType}
-
-        {-# INLINE writeVkSType #-}
-        writeVkSType p
-          = pokeByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, sType}
-
-instance {-# OVERLAPPING #-}
          HasField "sType" VkRenderPassSampleLocationsBeginInfoEXT where
         type FieldType "sType" VkRenderPassSampleLocationsBeginInfoEXT =
              VkStructureType
@@ -128,42 +106,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassSampleLocationsBeginInfoEXT, sType}
 
-instance CanReadField "sType"
-           VkRenderPassSampleLocationsBeginInfoEXT
-         where
-        {-# INLINE getField #-}
-        getField = vkSType
+instance {-# OVERLAPPING #-}
+         CanReadField "sType" VkRenderPassSampleLocationsBeginInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassSampleLocationsBeginInfoEXT, sType})
 
         {-# INLINE readField #-}
-        readField = readVkSType
-
-instance CanWriteField "sType"
-           VkRenderPassSampleLocationsBeginInfoEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkSType
+        readField p
+          = peekByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
-         HasVkPNext VkRenderPassSampleLocationsBeginInfoEXT where
-        type VkPNextMType VkRenderPassSampleLocationsBeginInfoEXT =
-             Ptr Void
-
-        {-# NOINLINE vkPNext #-}
-        vkPNext x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassSampleLocationsBeginInfoEXT, pNext})
-
-        {-# INLINE vkPNextByteOffset #-}
-        vkPNextByteOffset ~_
-          = #{offset VkRenderPassSampleLocationsBeginInfoEXT, pNext}
-
-        {-# INLINE readVkPNext #-}
-        readVkPNext p
-          = peekByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, pNext}
-
-        {-# INLINE writeVkPNext #-}
-        writeVkPNext p
-          = pokeByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, pNext}
+         CanWriteField "sType" VkRenderPassSampleLocationsBeginInfoEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, sType}
 
 instance {-# OVERLAPPING #-}
          HasField "pNext" VkRenderPassSampleLocationsBeginInfoEXT where
@@ -183,45 +141,22 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassSampleLocationsBeginInfoEXT, pNext}
 
-instance CanReadField "pNext"
-           VkRenderPassSampleLocationsBeginInfoEXT
-         where
-        {-# INLINE getField #-}
-        getField = vkPNext
+instance {-# OVERLAPPING #-}
+         CanReadField "pNext" VkRenderPassSampleLocationsBeginInfoEXT where
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassSampleLocationsBeginInfoEXT, pNext})
 
         {-# INLINE readField #-}
-        readField = readVkPNext
-
-instance CanWriteField "pNext"
-           VkRenderPassSampleLocationsBeginInfoEXT
-         where
-        {-# INLINE writeField #-}
-        writeField = writeVkPNext
+        readField p
+          = peekByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
-         HasVkAttachmentInitialSampleLocationsCount
-           VkRenderPassSampleLocationsBeginInfoEXT
-         where
-        type VkAttachmentInitialSampleLocationsCountMType
-               VkRenderPassSampleLocationsBeginInfoEXT
-             = Word32
-
-        {-# NOINLINE vkAttachmentInitialSampleLocationsCount #-}
-        vkAttachmentInitialSampleLocationsCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassSampleLocationsBeginInfoEXT, attachmentInitialSampleLocationsCount})
-
-        {-# INLINE vkAttachmentInitialSampleLocationsCountByteOffset #-}
-        vkAttachmentInitialSampleLocationsCountByteOffset ~_
-          = #{offset VkRenderPassSampleLocationsBeginInfoEXT, attachmentInitialSampleLocationsCount}
-
-        {-# INLINE readVkAttachmentInitialSampleLocationsCount #-}
-        readVkAttachmentInitialSampleLocationsCount p
-          = peekByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, attachmentInitialSampleLocationsCount}
-
-        {-# INLINE writeVkAttachmentInitialSampleLocationsCount #-}
-        writeVkAttachmentInitialSampleLocationsCount p
-          = pokeByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, attachmentInitialSampleLocationsCount}
+         CanWriteField "pNext" VkRenderPassSampleLocationsBeginInfoEXT where
+        {-# INLINE writeField #-}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, pNext}
 
 instance {-# OVERLAPPING #-}
          HasField "attachmentInitialSampleLocationsCount"
@@ -248,45 +183,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassSampleLocationsBeginInfoEXT, attachmentInitialSampleLocationsCount}
 
-instance CanReadField "attachmentInitialSampleLocationsCount"
+instance {-# OVERLAPPING #-}
+         CanReadField "attachmentInitialSampleLocationsCount"
            VkRenderPassSampleLocationsBeginInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkAttachmentInitialSampleLocationsCount
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassSampleLocationsBeginInfoEXT, attachmentInitialSampleLocationsCount})
 
         {-# INLINE readField #-}
-        readField = readVkAttachmentInitialSampleLocationsCount
+        readField p
+          = peekByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, attachmentInitialSampleLocationsCount}
 
-instance CanWriteField "attachmentInitialSampleLocationsCount"
+instance {-# OVERLAPPING #-}
+         CanWriteField "attachmentInitialSampleLocationsCount"
            VkRenderPassSampleLocationsBeginInfoEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkAttachmentInitialSampleLocationsCount
-
-instance {-# OVERLAPPING #-}
-         HasVkPAttachmentInitialSampleLocations
-           VkRenderPassSampleLocationsBeginInfoEXT
-         where
-        type VkPAttachmentInitialSampleLocationsMType
-               VkRenderPassSampleLocationsBeginInfoEXT
-             = Ptr VkAttachmentSampleLocationsEXT
-
-        {-# NOINLINE vkPAttachmentInitialSampleLocations #-}
-        vkPAttachmentInitialSampleLocations x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassSampleLocationsBeginInfoEXT, pAttachmentInitialSampleLocations})
-
-        {-# INLINE vkPAttachmentInitialSampleLocationsByteOffset #-}
-        vkPAttachmentInitialSampleLocationsByteOffset ~_
-          = #{offset VkRenderPassSampleLocationsBeginInfoEXT, pAttachmentInitialSampleLocations}
-
-        {-# INLINE readVkPAttachmentInitialSampleLocations #-}
-        readVkPAttachmentInitialSampleLocations p
-          = peekByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, pAttachmentInitialSampleLocations}
-
-        {-# INLINE writeVkPAttachmentInitialSampleLocations #-}
-        writeVkPAttachmentInitialSampleLocations p
-          = pokeByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, pAttachmentInitialSampleLocations}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, attachmentInitialSampleLocationsCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pAttachmentInitialSampleLocations"
@@ -313,45 +229,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassSampleLocationsBeginInfoEXT, pAttachmentInitialSampleLocations}
 
-instance CanReadField "pAttachmentInitialSampleLocations"
+instance {-# OVERLAPPING #-}
+         CanReadField "pAttachmentInitialSampleLocations"
            VkRenderPassSampleLocationsBeginInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkPAttachmentInitialSampleLocations
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassSampleLocationsBeginInfoEXT, pAttachmentInitialSampleLocations})
 
         {-# INLINE readField #-}
-        readField = readVkPAttachmentInitialSampleLocations
+        readField p
+          = peekByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, pAttachmentInitialSampleLocations}
 
-instance CanWriteField "pAttachmentInitialSampleLocations"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pAttachmentInitialSampleLocations"
            VkRenderPassSampleLocationsBeginInfoEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPAttachmentInitialSampleLocations
-
-instance {-# OVERLAPPING #-}
-         HasVkPostSubpassSampleLocationsCount
-           VkRenderPassSampleLocationsBeginInfoEXT
-         where
-        type VkPostSubpassSampleLocationsCountMType
-               VkRenderPassSampleLocationsBeginInfoEXT
-             = Word32
-
-        {-# NOINLINE vkPostSubpassSampleLocationsCount #-}
-        vkPostSubpassSampleLocationsCount x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassSampleLocationsBeginInfoEXT, postSubpassSampleLocationsCount})
-
-        {-# INLINE vkPostSubpassSampleLocationsCountByteOffset #-}
-        vkPostSubpassSampleLocationsCountByteOffset ~_
-          = #{offset VkRenderPassSampleLocationsBeginInfoEXT, postSubpassSampleLocationsCount}
-
-        {-# INLINE readVkPostSubpassSampleLocationsCount #-}
-        readVkPostSubpassSampleLocationsCount p
-          = peekByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, postSubpassSampleLocationsCount}
-
-        {-# INLINE writeVkPostSubpassSampleLocationsCount #-}
-        writeVkPostSubpassSampleLocationsCount p
-          = pokeByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, postSubpassSampleLocationsCount}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, pAttachmentInitialSampleLocations}
 
 instance {-# OVERLAPPING #-}
          HasField "postSubpassSampleLocationsCount"
@@ -378,45 +275,26 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassSampleLocationsBeginInfoEXT, postSubpassSampleLocationsCount}
 
-instance CanReadField "postSubpassSampleLocationsCount"
+instance {-# OVERLAPPING #-}
+         CanReadField "postSubpassSampleLocationsCount"
            VkRenderPassSampleLocationsBeginInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkPostSubpassSampleLocationsCount
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassSampleLocationsBeginInfoEXT, postSubpassSampleLocationsCount})
 
         {-# INLINE readField #-}
-        readField = readVkPostSubpassSampleLocationsCount
+        readField p
+          = peekByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, postSubpassSampleLocationsCount}
 
-instance CanWriteField "postSubpassSampleLocationsCount"
+instance {-# OVERLAPPING #-}
+         CanWriteField "postSubpassSampleLocationsCount"
            VkRenderPassSampleLocationsBeginInfoEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPostSubpassSampleLocationsCount
-
-instance {-# OVERLAPPING #-}
-         HasVkPPostSubpassSampleLocations
-           VkRenderPassSampleLocationsBeginInfoEXT
-         where
-        type VkPPostSubpassSampleLocationsMType
-               VkRenderPassSampleLocationsBeginInfoEXT
-             = Ptr VkSubpassSampleLocationsEXT
-
-        {-# NOINLINE vkPPostSubpassSampleLocations #-}
-        vkPPostSubpassSampleLocations x
-          = unsafeDupablePerformIO
-              (peekByteOff (unsafePtr x) #{offset VkRenderPassSampleLocationsBeginInfoEXT, pPostSubpassSampleLocations})
-
-        {-# INLINE vkPPostSubpassSampleLocationsByteOffset #-}
-        vkPPostSubpassSampleLocationsByteOffset ~_
-          = #{offset VkRenderPassSampleLocationsBeginInfoEXT, pPostSubpassSampleLocations}
-
-        {-# INLINE readVkPPostSubpassSampleLocations #-}
-        readVkPPostSubpassSampleLocations p
-          = peekByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, pPostSubpassSampleLocations}
-
-        {-# INLINE writeVkPPostSubpassSampleLocations #-}
-        writeVkPPostSubpassSampleLocations p
-          = pokeByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, pPostSubpassSampleLocations}
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, postSubpassSampleLocationsCount}
 
 instance {-# OVERLAPPING #-}
          HasField "pPostSubpassSampleLocations"
@@ -443,39 +321,47 @@ instance {-# OVERLAPPING #-}
         fieldOffset
           = #{offset VkRenderPassSampleLocationsBeginInfoEXT, pPostSubpassSampleLocations}
 
-instance CanReadField "pPostSubpassSampleLocations"
+instance {-# OVERLAPPING #-}
+         CanReadField "pPostSubpassSampleLocations"
            VkRenderPassSampleLocationsBeginInfoEXT
          where
-        {-# INLINE getField #-}
-        getField = vkPPostSubpassSampleLocations
+        {-# NOINLINE getField #-}
+        getField x
+          = unsafeDupablePerformIO
+              (peekByteOff (unsafePtr x) #{offset VkRenderPassSampleLocationsBeginInfoEXT, pPostSubpassSampleLocations})
 
         {-# INLINE readField #-}
-        readField = readVkPPostSubpassSampleLocations
+        readField p
+          = peekByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, pPostSubpassSampleLocations}
 
-instance CanWriteField "pPostSubpassSampleLocations"
+instance {-# OVERLAPPING #-}
+         CanWriteField "pPostSubpassSampleLocations"
            VkRenderPassSampleLocationsBeginInfoEXT
          where
         {-# INLINE writeField #-}
-        writeField = writeVkPPostSubpassSampleLocations
+        writeField p
+          = pokeByteOff p #{offset VkRenderPassSampleLocationsBeginInfoEXT, pPostSubpassSampleLocations}
 
 instance Show VkRenderPassSampleLocationsBeginInfoEXT where
         showsPrec d x
           = showString "VkRenderPassSampleLocationsBeginInfoEXT {" .
-              showString "vkSType = " .
-                showsPrec d (vkSType x) .
+              showString "sType = " .
+                showsPrec d (getField @"sType" x) .
                   showString ", " .
-                    showString "vkPNext = " .
-                      showsPrec d (vkPNext x) .
+                    showString "pNext = " .
+                      showsPrec d (getField @"pNext" x) .
                         showString ", " .
-                          showString "vkAttachmentInitialSampleLocationsCount = " .
-                            showsPrec d (vkAttachmentInitialSampleLocationsCount x) .
+                          showString "attachmentInitialSampleLocationsCount = " .
+                            showsPrec d (getField @"attachmentInitialSampleLocationsCount" x) .
                               showString ", " .
-                                showString "vkPAttachmentInitialSampleLocations = " .
-                                  showsPrec d (vkPAttachmentInitialSampleLocations x) .
+                                showString "pAttachmentInitialSampleLocations = " .
+                                  showsPrec d (getField @"pAttachmentInitialSampleLocations" x) .
                                     showString ", " .
-                                      showString "vkPostSubpassSampleLocationsCount = " .
-                                        showsPrec d (vkPostSubpassSampleLocationsCount x) .
+                                      showString "postSubpassSampleLocationsCount = " .
+                                        showsPrec d (getField @"postSubpassSampleLocationsCount" x)
+                                          .
                                           showString ", " .
-                                            showString "vkPPostSubpassSampleLocations = " .
-                                              showsPrec d (vkPPostSubpassSampleLocations x) .
-                                                showChar '}'
+                                            showString "pPostSubpassSampleLocations = " .
+                                              showsPrec d
+                                                (getField @"pPostSubpassSampleLocations" x)
+                                                . showChar '}'
