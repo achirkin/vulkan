@@ -26,7 +26,7 @@ import           System.IO.Unsafe                                            (un
 --   >     const VkDescriptorSetLayoutBinding* pBindings;
 --   > } VkDescriptorSetLayoutCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDescriptorSetLayoutCreateInfo.html VkDescriptorSetLayoutCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDescriptorSetLayoutCreateInfo.html VkDescriptorSetLayoutCreateInfo registry at www.khronos.org>
 data VkDescriptorSetLayoutCreateInfo = VkDescriptorSetLayoutCreateInfo## Addr##
                                                                         ByteArray##
 

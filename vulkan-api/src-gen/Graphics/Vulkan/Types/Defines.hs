@@ -1,35 +1,44 @@
 {-# LANGUAGE CPP             #-}
 {-# LANGUAGE DataKinds       #-}
+{-# LANGUAGE EmptyDataDecls  #-}
 {-# LANGUAGE PatternSynonyms #-}
 {-# LANGUAGE Strict          #-}
 module Graphics.Vulkan.Types.Defines
-       (-- | ===== @VK_API_VERSION@
-        -- > // DEPRECATED: This define has been removed. Specific version defines (e.g. VK_API_VERSION_1_0), or the VK_MAKE_VERSION macro, should be used instead.
-        -- > //#define VK_API_VERSION VK_MAKE_VERSION(1, 0, 0) // Patch version should always be set to 0
-        VK_API_VERSION_1_0, pattern VK_API_VERSION_1_0, Ptr(), -- | ===== @VK_DEFINE_HANDLE@
-                                                               -- Dispatchable handles are represented as `Foreign.Ptr`
-                                                               --
-                                                               -- >
-                                                               -- > #define VK_DEFINE_HANDLE(object) typedef struct object##_T* object;
-                                                               VkPtr(..),
-        -- | ===== @VK_DEFINE_NON_DISPATCHABLE_HANDLE@
-        -- Non-dispatchable handles are represented as `VkPtr`
-        --
-        -- >
-        -- > #if !defined(VK_DEFINE_NON_DISPATCHABLE_HANDLE)
-        -- > #if defined(__LP64__) || defined(_WIN64) || (defined(__x86_64__) && !defined(__ILP32__) ) || defined(_M_X64) || defined(__ia64) || defined (_M_IA64) || defined(__aarch64__) || defined(__powerpc64__)
-        -- >         #define VK_DEFINE_NON_DISPATCHABLE_HANDLE(object) typedef struct object##_T *object;
-        -- > #else
-        -- >         #define VK_DEFINE_NON_DISPATCHABLE_HANDLE(object) typedef uint64_t object;
-        -- > #endif
-        -- > #endif
-        -- >
-        VK_HEADER_VERSION, pattern VK_HEADER_VERSION, _VK_MAKE_VERSION,
-        VulkanPtr(..), pattern VK_NULL_HANDLE, _VK_VERSION_MAJOR,
-        _VK_VERSION_MINOR, _VK_VERSION_PATCH)
+       (AHardwareBuffer(), ANativeWindow(), -- | ===== @VK_API_VERSION@
+                                            -- > // DEPRECATED: This define has been removed. Specific version defines (e.g. VK_API_VERSION_1_0), or the VK_MAKE_VERSION macro, should be used instead.
+                                            -- > //#define VK_API_VERSION VK_MAKE_VERSION(1, 0, 0) // Patch version should always be set to 0
+                                            VK_API_VERSION_1_0,
+        pattern VK_API_VERSION_1_0, VK_API_VERSION_1_1,
+        pattern VK_API_VERSION_1_1, Ptr(), -- | ===== @VK_DEFINE_HANDLE@
+                                           -- Dispatchable handles are represented as `Foreign.Ptr`
+                                           --
+                                           -- >
+                                           -- > #define VK_DEFINE_HANDLE(object) typedef struct object##_T* object;
+                                           VkPtr(..), -- | ===== @VK_DEFINE_NON_DISPATCHABLE_HANDLE@
+                                                      -- Non-dispatchable handles are represented as `VkPtr`
+                                                      --
+                                                      -- >
+                                                      -- > #if !defined(VK_DEFINE_NON_DISPATCHABLE_HANDLE)
+                                                      -- > #if defined(__LP64__) || defined(_WIN64) || (defined(__x86_64__) && !defined(__ILP32__) ) || defined(_M_X64) || defined(__ia64) || defined (_M_IA64) || defined(__aarch64__) || defined(__powerpc64__)
+                                                      -- >         #define VK_DEFINE_NON_DISPATCHABLE_HANDLE(object) typedef struct object##_T *object;
+                                                      -- > #else
+                                                      -- >         #define VK_DEFINE_NON_DISPATCHABLE_HANDLE(object) typedef uint64_t object;
+                                                      -- > #endif
+                                                      -- > #endif
+                                                      -- >
+                                                      VK_HEADER_VERSION,
+        pattern VK_HEADER_VERSION, _VK_MAKE_VERSION, VulkanPtr(..),
+        pattern VK_NULL_HANDLE, _VK_VERSION_MAJOR, _VK_VERSION_MINOR,
+        _VK_VERSION_PATCH)
        where
 import           Data.Bits               (Bits (..))
 import           Graphics.Vulkan.Marshal
+
+-- | > struct AHardwareBuffer;
+data AHardwareBuffer
+
+-- | > struct ANativeWindow;
+data ANativeWindow
 
 -- | > // Vulkan 1.0 version number
 --   > #define VK_API_VERSION_1_0 VK_MAKE_VERSION(1, 0, 0)// Patch version should always be set to 0
@@ -39,13 +48,21 @@ pattern VK_API_VERSION_1_0 = 4194304
 
 type VK_API_VERSION_1_0 = 4194304
 
+-- | > // Vulkan 1.1 version number
+--   > #define VK_API_VERSION_1_1 VK_MAKE_VERSION(1, 1, 0)// Patch version should always be set to 0
+pattern VK_API_VERSION_1_1 :: (Num a, Eq a) => a
+
+pattern VK_API_VERSION_1_1 = 4198400
+
+type VK_API_VERSION_1_1 = 4198400
+
 -- | > // Version of this file
---   > #define VK_HEADER_VERSION 69
+--   > #define VK_HEADER_VERSION 71
 pattern VK_HEADER_VERSION :: (Num a, Eq a) => a
 
-pattern VK_HEADER_VERSION = 69
+pattern VK_HEADER_VERSION = 71
 
-type VK_HEADER_VERSION = 69
+type VK_HEADER_VERSION = 71
 
 -- | > #define VK_MAKE_VERSION(major, minor, patch) \
 --   >     (((major) << 22) | ((minor) << 12) | (patch))

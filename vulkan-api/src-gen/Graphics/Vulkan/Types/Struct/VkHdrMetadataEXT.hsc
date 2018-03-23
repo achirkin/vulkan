@@ -30,7 +30,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     float          maxFrameAverageLightLevel;
 --   > } VkHdrMetadataEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkHdrMetadataEXT.html VkHdrMetadataEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkHdrMetadataEXT.html VkHdrMetadataEXT registry at www.khronos.org>
 data VkHdrMetadataEXT = VkHdrMetadataEXT## Addr## ByteArray##
 
 instance Eq VkHdrMetadataEXT where

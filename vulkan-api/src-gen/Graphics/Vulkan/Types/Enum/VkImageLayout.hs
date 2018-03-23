@@ -26,7 +26,7 @@ import           Text.Read.Lex                   (Lexeme (..))
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImageLayout.html VkImageLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkImageLayout.html VkImageLayout registry at www.khronos.org>
 newtype VkImageLayout = VkImageLayout Int32
                           deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 

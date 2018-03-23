@@ -33,7 +33,7 @@ import           System.IO.Unsafe
 --   >     VkBlendOverlapEXT      blendOverlap;
 --   > } VkPipelineColorBlendAdvancedStateCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPipelineColorBlendAdvancedStateCreateInfoEXT.html VkPipelineColorBlendAdvancedStateCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPipelineColorBlendAdvancedStateCreateInfoEXT.html VkPipelineColorBlendAdvancedStateCreateInfoEXT registry at www.khronos.org>
 data VkPipelineColorBlendAdvancedStateCreateInfoEXT = VkPipelineColorBlendAdvancedStateCreateInfoEXT## Addr##
                                                                                                       ByteArray##
 

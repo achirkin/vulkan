@@ -30,7 +30,7 @@ import           System.IO.Unsafe                                   (unsafeDupab
 --   >     VkSparseMemoryBindFlagsflags;
 --   > } VkSparseImageMemoryBind;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSparseImageMemoryBind.html VkSparseImageMemoryBind registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSparseImageMemoryBind.html VkSparseImageMemoryBind registry at www.khronos.org>
 data VkSparseImageMemoryBind = VkSparseImageMemoryBind## Addr##
                                                         ByteArray##
 

@@ -57,7 +57,7 @@ import           Graphics.Vulkan.Types.Struct.VkShaderStatisticsInfoAMD
 --   >     , void* pInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetShaderInfoAMD.html vkGetShaderInfoAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetShaderInfoAMD.html vkGetShaderInfoAMD registry at www.khronos.org>
 foreign import ccall unsafe "vkGetShaderInfoAMD" vkGetShaderInfoAMD
                ::
                VkDevice -- ^ device
@@ -84,7 +84,7 @@ foreign import ccall unsafe "vkGetShaderInfoAMD" vkGetShaderInfoAMD
 --   >     , void* pInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetShaderInfoAMD.html vkGetShaderInfoAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetShaderInfoAMD.html vkGetShaderInfoAMD registry at www.khronos.org>
 foreign import ccall safe "vkGetShaderInfoAMD"
                vkGetShaderInfoAMDSafe ::
                VkDevice -- ^ device

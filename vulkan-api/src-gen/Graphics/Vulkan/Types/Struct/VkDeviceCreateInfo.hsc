@@ -32,7 +32,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     const VkPhysicalDeviceFeatures* pEnabledFeatures;
 --   > } VkDeviceCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDeviceCreateInfo.html VkDeviceCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDeviceCreateInfo.html VkDeviceCreateInfo registry at www.khronos.org>
 data VkDeviceCreateInfo = VkDeviceCreateInfo## Addr## ByteArray##
 
 instance Eq VkDeviceCreateInfo where

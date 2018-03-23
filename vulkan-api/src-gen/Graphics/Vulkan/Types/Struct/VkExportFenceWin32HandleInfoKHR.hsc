@@ -26,7 +26,7 @@ import           System.IO.Unsafe                               (unsafeDupablePe
 --   >     LPCWSTR                                    name;
 --   > } VkExportFenceWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkExportFenceWin32HandleInfoKHR.html VkExportFenceWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkExportFenceWin32HandleInfoKHR.html VkExportFenceWin32HandleInfoKHR registry at www.khronos.org>
 data VkExportFenceWin32HandleInfoKHR = VkExportFenceWin32HandleInfoKHR## Addr##
                                                                         ByteArray##
 

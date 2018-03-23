@@ -27,6 +27,7 @@ import           VkXml.CommonTypes
 import           VkXml.Sections.Types
 
 import           Write.ModuleWriter
+import           Write.Util.DeclaredNames
 
 
 genStruct :: Monad m => VkType -> ModuleWriter m ()
@@ -162,10 +163,46 @@ genStructOrUnion isUnion structOrUnion@VkTypeComposite
                  then "typedef union "
                  else "typedef struct "
 
+
+genStructOrUnion _ VkTypeSimple
+  { name = vkTName
+  , attributes = VkTypeAttrs
+      { alias = Just vkTAlias
+      }
+  }
+  = do
+    writeImport anameDeclared
+    writeDecl
+      . setComment
+        (preComment $ T.unpack [text|Alias for `$anametxt`|])
+      $ parseDecl'
+        [text|type $tnametxt = $anametxt|]
+    writeExportExplicit (DIThing tnametxt DITAll)
+      [ diToImportSpec anameDeclared
+      , diToImportSpec $ DIThing tnametxt DITNo
+      ]
+      [ diToExportSpec anameDeclared
+      , diToExportSpec $ DIThing tnametxt DITNo
+      ]
+    writeExportExplicit (DIThing tnametxt DITNo)
+      [ diToImportSpec $ DIThing tnametxt DITNo] []
+    writeExportExplicit (DIThing tnametxt DITEmpty)
+      [ diToImportSpec $ DIThing tnametxt DITEmpty] []
+  where
+    anameDeclared = DIThing anametxt DITAll
+    tname = toQName vkTName
+    aname = toQName vkTAlias
+    tnametxt = qNameTxt tname
+    anametxt = qNameTxt aname
+
+
+
 genStructOrUnion _ t
   = error $ "genStructOrUnion: expected a type with members, "
           <> "but got: "
           <> show t
+
+
 
 
 

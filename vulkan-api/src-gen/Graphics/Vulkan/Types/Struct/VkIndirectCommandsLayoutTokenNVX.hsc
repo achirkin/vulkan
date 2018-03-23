@@ -23,7 +23,7 @@ import           System.IO.Unsafe                                          (unsa
 --   >     uint32_t                         divisor;
 --   > } VkIndirectCommandsLayoutTokenNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkIndirectCommandsLayoutTokenNVX.html VkIndirectCommandsLayoutTokenNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkIndirectCommandsLayoutTokenNVX.html VkIndirectCommandsLayoutTokenNVX registry at www.khronos.org>
 data VkIndirectCommandsLayoutTokenNVX = VkIndirectCommandsLayoutTokenNVX## Addr##
                                                                           ByteArray##
 

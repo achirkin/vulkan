@@ -6,13 +6,14 @@ module Lib.Utils
     ) where
 
 import           Control.Exception
-import           Control.Monad         (when)
+import           Control.Monad            (when)
 import           Foreign.C.String
 import           Foreign.Marshal.Alloc
 import           Foreign.Marshal.Array
 import           Foreign.Ptr
 import           Foreign.Storable
 import           Graphics.Vulkan
+import           Graphics.Vulkan.Core_1_0
 
 
 -- | Use this to throw all exceptions in this project

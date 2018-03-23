@@ -47,7 +47,7 @@ module Graphics.Vulkan.Ext
     , module Graphics.Vulkan.Ext.VK_AMD_texture_gather_bias_lod
     , module Graphics.Vulkan.Ext.VK_AMD_shader_info
     , module Graphics.Vulkan.Ext.VK_AMD_shader_image_load_store_lod
-    , module Graphics.Vulkan.Ext.VK_KHX_multiview
+    , module Graphics.Vulkan.Ext.VK_KHR_multiview
     , module Graphics.Vulkan.Ext.VK_IMG_format_pvrtc
     , module Graphics.Vulkan.Ext.VK_NV_external_memory_capabilities
     , module Graphics.Vulkan.Ext.VK_NV_external_memory
@@ -60,7 +60,7 @@ module Graphics.Vulkan.Ext
 #endif
 
     , module Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
-    , module Graphics.Vulkan.Ext.VK_KHX_device_group
+    , module Graphics.Vulkan.Ext.VK_KHR_device_group
     , module Graphics.Vulkan.Ext.VK_EXT_validation_flags
 #ifdef VK_USE_PLATFORM_VI_NN
     , module Graphics.Vulkan.Ext.VK_NN_vi_surface
@@ -70,7 +70,7 @@ module Graphics.Vulkan.Ext
     , module Graphics.Vulkan.Ext.VK_EXT_shader_subgroup_ballot
     , module Graphics.Vulkan.Ext.VK_EXT_shader_subgroup_vote
     , module Graphics.Vulkan.Ext.VK_KHR_maintenance1
-    , module Graphics.Vulkan.Ext.VK_KHX_device_group_creation
+    , module Graphics.Vulkan.Ext.VK_KHR_device_group_creation
     , module Graphics.Vulkan.Ext.VK_KHR_external_memory_capabilities
     , module Graphics.Vulkan.Ext.VK_KHR_external_memory
 #ifdef VK_USE_PLATFORM_WIN32_KHR
@@ -134,6 +134,11 @@ module Graphics.Vulkan.Ext
     , module Graphics.Vulkan.Ext.VK_EXT_external_memory_dma_buf
     , module Graphics.Vulkan.Ext.VK_EXT_queue_family_foreign
     , module Graphics.Vulkan.Ext.VK_KHR_dedicated_allocation
+    , module Graphics.Vulkan.Ext.VK_EXT_debug_utils
+#ifdef VK_USE_PLATFORM_ANDROID_KHR
+    , module Graphics.Vulkan.Ext.VK_ANDROID_external_memory_android_hardware_buffer
+#endif
+
     , module Graphics.Vulkan.Ext.VK_EXT_sampler_filter_minmax
     , module Graphics.Vulkan.Ext.VK_KHR_storage_buffer_storage_class
     , module Graphics.Vulkan.Ext.VK_AMD_gpu_shader_int16
@@ -153,9 +158,11 @@ module Graphics.Vulkan.Ext
     , module Graphics.Vulkan.Ext.VK_KHR_bind_memory2
     , module Graphics.Vulkan.Ext.VK_EXT_validation_cache
     , module Graphics.Vulkan.Ext.VK_EXT_shader_viewport_index_layer
+    , module Graphics.Vulkan.Ext.VK_KHR_maintenance3
     , module Graphics.Vulkan.Ext.VK_EXT_global_priority
     , module Graphics.Vulkan.Ext.VK_EXT_external_memory_host
     , module Graphics.Vulkan.Ext.VK_AMD_buffer_marker
+    , module Graphics.Vulkan.Ext.VK_EXT_vertex_attribute_divisor
     ) where
 
 import Graphics.Vulkan.Ext.VK_KHR_surface
@@ -204,7 +211,7 @@ import Graphics.Vulkan.Ext.VK_AMD_shader_ballot
 import Graphics.Vulkan.Ext.VK_AMD_texture_gather_bias_lod
 import Graphics.Vulkan.Ext.VK_AMD_shader_info
 import Graphics.Vulkan.Ext.VK_AMD_shader_image_load_store_lod
-import Graphics.Vulkan.Ext.VK_KHX_multiview
+import Graphics.Vulkan.Ext.VK_KHR_multiview
 import Graphics.Vulkan.Ext.VK_IMG_format_pvrtc
 import Graphics.Vulkan.Ext.VK_NV_external_memory_capabilities
 import Graphics.Vulkan.Ext.VK_NV_external_memory
@@ -217,7 +224,7 @@ import Graphics.Vulkan.Ext.VK_NV_win32_keyed_mutex
 #endif
 
 import Graphics.Vulkan.Ext.VK_KHR_get_physical_device_properties2
-import Graphics.Vulkan.Ext.VK_KHX_device_group
+import Graphics.Vulkan.Ext.VK_KHR_device_group
 import Graphics.Vulkan.Ext.VK_EXT_validation_flags
 #ifdef VK_USE_PLATFORM_VI_NN
 import Graphics.Vulkan.Ext.VK_NN_vi_surface
@@ -227,7 +234,7 @@ import Graphics.Vulkan.Ext.VK_KHR_shader_draw_parameters
 import Graphics.Vulkan.Ext.VK_EXT_shader_subgroup_ballot
 import Graphics.Vulkan.Ext.VK_EXT_shader_subgroup_vote
 import Graphics.Vulkan.Ext.VK_KHR_maintenance1
-import Graphics.Vulkan.Ext.VK_KHX_device_group_creation
+import Graphics.Vulkan.Ext.VK_KHR_device_group_creation
 import Graphics.Vulkan.Ext.VK_KHR_external_memory_capabilities
 import Graphics.Vulkan.Ext.VK_KHR_external_memory
 #ifdef VK_USE_PLATFORM_WIN32_KHR
@@ -291,6 +298,11 @@ import Graphics.Vulkan.Ext.VK_MVK_macos_surface
 import Graphics.Vulkan.Ext.VK_EXT_external_memory_dma_buf
 import Graphics.Vulkan.Ext.VK_EXT_queue_family_foreign
 import Graphics.Vulkan.Ext.VK_KHR_dedicated_allocation
+import Graphics.Vulkan.Ext.VK_EXT_debug_utils
+#ifdef VK_USE_PLATFORM_ANDROID_KHR
+import Graphics.Vulkan.Ext.VK_ANDROID_external_memory_android_hardware_buffer
+#endif
+
 import Graphics.Vulkan.Ext.VK_EXT_sampler_filter_minmax
 import Graphics.Vulkan.Ext.VK_KHR_storage_buffer_storage_class
 import Graphics.Vulkan.Ext.VK_AMD_gpu_shader_int16
@@ -310,6 +322,8 @@ import Graphics.Vulkan.Ext.VK_KHR_sampler_ycbcr_conversion
 import Graphics.Vulkan.Ext.VK_KHR_bind_memory2
 import Graphics.Vulkan.Ext.VK_EXT_validation_cache
 import Graphics.Vulkan.Ext.VK_EXT_shader_viewport_index_layer
+import Graphics.Vulkan.Ext.VK_KHR_maintenance3
 import Graphics.Vulkan.Ext.VK_EXT_global_priority
 import Graphics.Vulkan.Ext.VK_EXT_external_memory_host
 import Graphics.Vulkan.Ext.VK_AMD_buffer_marker
+import Graphics.Vulkan.Ext.VK_EXT_vertex_attribute_divisor

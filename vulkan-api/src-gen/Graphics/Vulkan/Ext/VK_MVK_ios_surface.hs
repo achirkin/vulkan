@@ -17,11 +17,11 @@ module Graphics.Vulkan.Ext.VK_MVK_ios_surface
         --
         -- type: @instance@
         --
+        -- platform: @ios@
+        --
         -- Extension number: @123@
         --
         -- Required extensions: 'VK_KHR_surface'.
-        --
-        -- Protected by CPP ifdef: @VK_USE_PLATFORM_IOS_MVK@
         --
 
         -- ** Required extensions: 'VK_KHR_surface'.
@@ -68,7 +68,7 @@ import           Graphics.Vulkan.Types.Struct.VkIOSSurfaceCreateInfoMVK
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateIOSSurfaceMVK.html vkCreateIOSSurfaceMVK registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateIOSSurfaceMVK.html vkCreateIOSSurfaceMVK registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateIOSSurfaceMVK"
                vkCreateIOSSurfaceMVK ::
                VkInstance -- ^ instance
@@ -90,7 +90,7 @@ foreign import ccall unsafe "vkCreateIOSSurfaceMVK"
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateIOSSurfaceMVK.html vkCreateIOSSurfaceMVK registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateIOSSurfaceMVK.html vkCreateIOSSurfaceMVK registry at www.khronos.org>
 foreign import ccall safe "vkCreateIOSSurfaceMVK"
                vkCreateIOSSurfaceMVKSafe ::
                VkInstance -- ^ instance

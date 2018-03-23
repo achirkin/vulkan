@@ -41,6 +41,7 @@ import           Data.String                    (fromString)
 import           Data.Tuple                     (swap)
 import           GHC.Stack
 import           Graphics.Vulkan
+import           Graphics.Vulkan.Core_1_0
 
 
 data ProgramState

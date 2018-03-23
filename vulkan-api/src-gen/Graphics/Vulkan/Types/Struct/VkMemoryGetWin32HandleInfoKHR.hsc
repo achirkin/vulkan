@@ -9,23 +9,23 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkMemoryGetWin32HandleInfoKHR
        (VkMemoryGetWin32HandleInfoKHR(..)) where
-import           Foreign.Storable                                              (Storable (..))
+import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagsKHR (VkExternalMemoryHandleTypeFlagBitsKHR)
-import           Graphics.Vulkan.Types.Enum.VkStructureType                    (VkStructureType)
-import           Graphics.Vulkan.Types.Handles                                 (VkDeviceMemory)
-import           System.IO.Unsafe                                              (unsafeDupablePerformIO)
+import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlags (VkExternalMemoryHandleTypeFlagBits)
+import           Graphics.Vulkan.Types.Enum.VkStructureType                 (VkStructureType)
+import           Graphics.Vulkan.Types.Handles                              (VkDeviceMemory)
+import           System.IO.Unsafe                                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkMemoryGetWin32HandleInfoKHR {
 --   >     VkStructureType sType;
 --   >     const void*                      pNext;
 --   >     VkDeviceMemory                   memory;
---   >     VkExternalMemoryHandleTypeFlagBitsKHR handleType;
+--   >     VkExternalMemoryHandleTypeFlagBits handleType;
 --   > } VkMemoryGetWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkMemoryGetWin32HandleInfoKHR.html VkMemoryGetWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkMemoryGetWin32HandleInfoKHR.html VkMemoryGetWin32HandleInfoKHR registry at www.khronos.org>
 data VkMemoryGetWin32HandleInfoKHR = VkMemoryGetWin32HandleInfoKHR## Addr##
                                                                     ByteArray##
 
@@ -179,7 +179,7 @@ instance {-# OVERLAPPING #-}
 instance {-# OVERLAPPING #-}
          HasField "handleType" VkMemoryGetWin32HandleInfoKHR where
         type FieldType "handleType" VkMemoryGetWin32HandleInfoKHR =
-             VkExternalMemoryHandleTypeFlagBitsKHR
+             VkExternalMemoryHandleTypeFlagBits
         type FieldOptional "handleType" VkMemoryGetWin32HandleInfoKHR =
              'False -- ' closing tick for hsc2hs
         type FieldOffset "handleType" VkMemoryGetWin32HandleInfoKHR =

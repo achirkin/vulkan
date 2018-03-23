@@ -13,18 +13,18 @@
 {-# LANGUAGE UndecidableInstances  #-}
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSampleLocationsPropertiesEXT
        (VkPhysicalDeviceSampleLocationsPropertiesEXT(..)) where
-import           Foreign.Storable                                            (Storable (..))
+import           Foreign.Storable                                         (Storable (..))
 import           GHC.Prim
-import           GHC.TypeLits                                                (KnownNat,
-                                                                              natVal') -- ' closing tick for hsc2hs
+import           GHC.TypeLits                                             (KnownNat,
+                                                                           natVal') -- ' closing tick for hsc2hs
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.BaseTypes                             (VkBool32)
-import           Graphics.Vulkan.Types.Enum.VkSampleCountFlags               (VkSampleCountFlags)
-import           Graphics.Vulkan.Types.Enum.VkStructureType                  (VkStructureType)
-import           Graphics.Vulkan.Types.Struct.VkExtent2D                     (VkExtent2D)
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR (VkPhysicalDeviceProperties2KHR)
-import           System.IO.Unsafe                                            (unsafeDupablePerformIO)
+import           Graphics.Vulkan.Types.BaseTypes                          (VkBool32)
+import           Graphics.Vulkan.Types.Enum.VkSampleCountFlags            (VkSampleCountFlags)
+import           Graphics.Vulkan.Types.Enum.VkStructureType               (VkStructureType)
+import           Graphics.Vulkan.Types.Struct.VkExtent2D                  (VkExtent2D)
+import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2 (VkPhysicalDeviceProperties2)
+import           System.IO.Unsafe                                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDeviceSampleLocationsPropertiesEXT {
 --   >     VkStructureType sType;
@@ -36,7 +36,7 @@ import           System.IO.Unsafe                                            (un
 --   >     VkBool32                         variableSampleLocations;
 --   > } VkPhysicalDeviceSampleLocationsPropertiesEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceSampleLocationsPropertiesEXT.html VkPhysicalDeviceSampleLocationsPropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPhysicalDeviceSampleLocationsPropertiesEXT.html VkPhysicalDeviceSampleLocationsPropertiesEXT registry at www.khronos.org>
 data VkPhysicalDeviceSampleLocationsPropertiesEXT = VkPhysicalDeviceSampleLocationsPropertiesEXT## Addr##
                                                                                                   ByteArray##
 
@@ -99,7 +99,7 @@ instance VulkanMarshal VkPhysicalDeviceSampleLocationsPropertiesEXT
         type ReturnedOnly VkPhysicalDeviceSampleLocationsPropertiesEXT =
              'True -- ' closing tick for hsc2hs
         type StructExtends VkPhysicalDeviceSampleLocationsPropertiesEXT =
-             '[VkPhysicalDeviceProperties2KHR] -- ' closing tick for hsc2hs
+             '[VkPhysicalDeviceProperties2] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasField "sType" VkPhysicalDeviceSampleLocationsPropertiesEXT where

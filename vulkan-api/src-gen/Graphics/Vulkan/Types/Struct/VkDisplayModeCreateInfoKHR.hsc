@@ -25,7 +25,7 @@ import           System.IO.Unsafe                                        (unsafe
 --   >     VkDisplayModeParametersKHR       parameters;
 --   > } VkDisplayModeCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDisplayModeCreateInfoKHR.html VkDisplayModeCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDisplayModeCreateInfoKHR.html VkDisplayModeCreateInfoKHR registry at www.khronos.org>
 data VkDisplayModeCreateInfoKHR = VkDisplayModeCreateInfoKHR## Addr##
                                                               ByteArray##
 

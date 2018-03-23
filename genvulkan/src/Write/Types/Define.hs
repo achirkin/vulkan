@@ -14,6 +14,8 @@ import qualified Data.Text.Read                       as T
 import           Data.Word
 import           Language.Haskell.Exts.SimpleComments
 import           NeatInterpolation
+import           Text.RE.TDFA.Text
+import           Text.Read (readMaybe)
 
 import           VkXml.CommonTypes
 import           VkXml.Sections.Enums
@@ -87,14 +89,19 @@ genDefine t@VkTypeSimple
   = writeSection 0 . T.unlines
                    . ("| ===== @VK_API_VERSION@":) . map ("> " <>) $ T.lines c
 
-  | vkName == VkTypeName "VK_API_VERSION_1_0"
-  && c == "// Vulkan 1.0 version number\n#define VK_API_VERSION_1_0 VK_MAKE_VERSION(1, 0, 0)// Patch version should always be set to 0"
+    -- vkName == VkTypeName "VK_API_VERSION_XXX"
+  | True <- matched (tnameTxt ?=~ [reBS|VK_API_VERSION_[^[:space:]]+|])
+  , Just (major, minor, patch)
+    <-   matchedText (c  ?=~ [reBS|#define[[:space:]]+VK_API_VERSION_[^[:space:]]+[[:space:]]+VK_MAKE_VERSION[[:space:]]*\(.*\)|])
+    >>= \c' ->
+         matchedText (c' ?=~ [reBS|\(.*\)|])
+    >>= readMaybe . T.unpack
   = () <$ enumPattern VkEnum
-    { _vkEnumName    = VkEnumName "VK_API_VERSION_1_0"
+    { _vkEnumName    = VkEnumName tnameTxt
     , _vkEnumTName   = Nothing
     , _vkEnumComment = T.unlines . map ("> " <>) $ T.lines c
     , _vkEnumValue   = VkEnumIntegral
-      (fromIntegral (unsafeShiftL 1 22 .|. unsafeShiftL 0 12 .|. 0 :: Word32))
+      (fromIntegral (unsafeShiftL major 22 .|. unsafeShiftL minor 12 .|. patch :: Word32))
       "(Num a, Eq a) => a"
     }
 
@@ -138,6 +145,12 @@ genDefine t@VkTypeSimple
     writeExport $ DIThing "VulkanPtr" DITAll
     writeExport $ DIPat "VK_NULL_HANDLE"
 
+  | matched (c ?=~ [reBS|^struct[[:space:]]+[^[:space:]]+;$|])
+  = do
+    writePragma "EmptyDataDecls"
+    writeDecl . setComment rezComment $ parseDecl' $
+      "data " <> tnameTxt
+    writeExport $ DIThing tnameTxt DITEmpty
 
   | otherwise = error
                 $ "Write.Types.Define.genDefine: unknown define!\n"
@@ -145,6 +158,7 @@ genDefine t@VkTypeSimple
                <> show t
 
   where
+    tnameTxt = unVkTypeName vkName
     rezComment = preComment . T.unpack . T.unlines . map ("> " <>) $ T.lines c
     go imprts l1 l2 l3 lcpp ename = do
       writePragma "CPP"

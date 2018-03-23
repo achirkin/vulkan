@@ -16,11 +16,11 @@ module Graphics.Vulkan.Ext.VK_NV_win32_keyed_mutex
         --
         -- type: @device@
         --
+        -- platform: @win32@
+        --
         -- Extension number: @59@
         --
         -- Required extensions: 'VK_NV_external_memory_win32'.
-        --
-        -- Protected by CPP ifdef: @VK_USE_PLATFORM_WIN32_KHR@
         --
 
         -- ** Required extensions: 'VK_NV_external_memory_win32'.

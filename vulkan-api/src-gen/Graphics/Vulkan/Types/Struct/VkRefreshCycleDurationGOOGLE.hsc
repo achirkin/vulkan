@@ -19,7 +19,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     uint64_t                         refreshDuration;
 --   > } VkRefreshCycleDurationGOOGLE;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkRefreshCycleDurationGOOGLE.html VkRefreshCycleDurationGOOGLE registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkRefreshCycleDurationGOOGLE.html VkRefreshCycleDurationGOOGLE registry at www.khronos.org>
 data VkRefreshCycleDurationGOOGLE = VkRefreshCycleDurationGOOGLE## Addr##
                                                                   ByteArray##
 

@@ -25,7 +25,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     const char* pObjectName;
 --   > } VkDebugMarkerObjectNameInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDebugMarkerObjectNameInfoEXT.html VkDebugMarkerObjectNameInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDebugMarkerObjectNameInfoEXT.html VkDebugMarkerObjectNameInfoEXT registry at www.khronos.org>
 data VkDebugMarkerObjectNameInfoEXT = VkDebugMarkerObjectNameInfoEXT## Addr##
                                                                       ByteArray##
 

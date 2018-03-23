@@ -46,6 +46,9 @@ data VkExtAttrs
   , extNumber    :: Int
   , extReqExts   :: [VkExtensionName]
   , extProtect   :: Maybe ProtectDef
+  , extPlatform  :: Maybe VkPlatformName
+    -- ^ seems to be used in a similar way as extProtect
+  , extComment   :: Maybe Text
   } deriving Show
 
 
@@ -78,9 +81,11 @@ parseVkExtAttrs = do
   extAuthor    <- lift $ fmap VkTagName <$> attr "author"
   extType      <- lift $ attr "type"
   extProtect   <- lift (attr "protect") >>= mapM toProtectDef
+  extPlatform  <- lift $ fmap VkPlatformName <$> attr "platform"
   extReqExts   <- commaSeparated <$> lift (attr "requires")
                   >>= mapM toHaskellExt
   eextNumber   <- decOrHex <$> forceAttr "number"
+  extComment   <- lift $ attr "comment"
   case eextNumber of
     Left err -> parseFailed $ "Could not parse extension.number: " ++ err
     Right (extNumber,_) ->  pure VkExtAttrs {..}

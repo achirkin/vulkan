@@ -35,7 +35,7 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 --   >     float                  maxDepthBounds;
 --   > } VkPipelineDepthStencilStateCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPipelineDepthStencilStateCreateInfo.html VkPipelineDepthStencilStateCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPipelineDepthStencilStateCreateInfo.html VkPipelineDepthStencilStateCreateInfo registry at www.khronos.org>
 data VkPipelineDepthStencilStateCreateInfo = VkPipelineDepthStencilStateCreateInfo## Addr##
                                                                                     ByteArray##
 

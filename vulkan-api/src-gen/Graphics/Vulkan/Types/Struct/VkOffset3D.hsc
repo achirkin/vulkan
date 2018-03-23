@@ -21,7 +21,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     int32_t        z;
 --   > } VkOffset3D;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkOffset3D.html VkOffset3D registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkOffset3D.html VkOffset3D registry at www.khronos.org>
 data VkOffset3D = VkOffset3D## Addr## ByteArray##
 
 instance Eq VkOffset3D where

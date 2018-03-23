@@ -20,7 +20,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     float                            y;
 --   > } VkSampleLocationEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSampleLocationEXT.html VkSampleLocationEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSampleLocationEXT.html VkSampleLocationEXT registry at www.khronos.org>
 data VkSampleLocationEXT = VkSampleLocationEXT## Addr## ByteArray##
 
 instance Eq VkSampleLocationEXT where

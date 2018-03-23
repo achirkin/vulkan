@@ -9,29 +9,29 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkImportFenceWin32HandleInfoKHR
        (VkImportFenceWin32HandleInfoKHR(..)) where
-import           Foreign.Storable                                             (Storable (..))
+import           Foreign.Storable                                          (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.VkExternalFenceHandleTypeFlagsKHR (VkExternalFenceHandleTypeFlagBitsKHR)
-import           Graphics.Vulkan.Types.Enum.VkFenceImportFlagsKHR             (VkFenceImportFlagsKHR)
-import           Graphics.Vulkan.Types.Enum.VkStructureType                   (VkStructureType)
-import           Graphics.Vulkan.Types.Handles                                (VkFence)
-import           Graphics.Vulkan.Types.Include                                (HANDLE,
-                                                                               LPCWSTR)
-import           System.IO.Unsafe                                             (unsafeDupablePerformIO)
+import           Graphics.Vulkan.Types.Enum.VkExternalFenceHandleTypeFlags (VkExternalFenceHandleTypeFlagBits)
+import           Graphics.Vulkan.Types.Enum.VkFenceImportFlags             (VkFenceImportFlags)
+import           Graphics.Vulkan.Types.Enum.VkStructureType                (VkStructureType)
+import           Graphics.Vulkan.Types.Handles                             (VkFence)
+import           Graphics.Vulkan.Types.Include                             (HANDLE,
+                                                                            LPCWSTR)
+import           System.IO.Unsafe                                          (unsafeDupablePerformIO)
 
 -- | > typedef struct VkImportFenceWin32HandleInfoKHR {
 --   >     VkStructureType sType;
 --   >     const void*                                        pNext;
 --   >     VkFence                          fence;
---   >     VkFenceImportFlagsKHR              flags;
---   >     VkExternalFenceHandleTypeFlagBitsKHR  handleType;
+--   >     VkFenceImportFlags              flags;
+--   >     VkExternalFenceHandleTypeFlagBits  handleType;
 --   >     HANDLE                             handle;
 --   >     LPCWSTR                            name;
 --   > } VkImportFenceWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImportFenceWin32HandleInfoKHR.html VkImportFenceWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkImportFenceWin32HandleInfoKHR.html VkImportFenceWin32HandleInfoKHR registry at www.khronos.org>
 data VkImportFenceWin32HandleInfoKHR = VkImportFenceWin32HandleInfoKHR## Addr##
                                                                         ByteArray##
 
@@ -185,7 +185,7 @@ instance {-# OVERLAPPING #-}
 instance {-# OVERLAPPING #-}
          HasField "flags" VkImportFenceWin32HandleInfoKHR where
         type FieldType "flags" VkImportFenceWin32HandleInfoKHR =
-             VkFenceImportFlagsKHR
+             VkFenceImportFlags
         type FieldOptional "flags" VkImportFenceWin32HandleInfoKHR = 'True -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkImportFenceWin32HandleInfoKHR =
              #{offset VkImportFenceWin32HandleInfoKHR, flags}
@@ -218,7 +218,7 @@ instance {-# OVERLAPPING #-}
 instance {-# OVERLAPPING #-}
          HasField "handleType" VkImportFenceWin32HandleInfoKHR where
         type FieldType "handleType" VkImportFenceWin32HandleInfoKHR =
-             VkExternalFenceHandleTypeFlagBitsKHR
+             VkExternalFenceHandleTypeFlagBits
         type FieldOptional "handleType" VkImportFenceWin32HandleInfoKHR =
              'True -- ' closing tick for hsc2hs
         type FieldOffset "handleType" VkImportFenceWin32HandleInfoKHR =

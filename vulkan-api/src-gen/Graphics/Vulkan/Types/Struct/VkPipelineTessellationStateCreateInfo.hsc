@@ -24,7 +24,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     uint32_t               patchControlPoints;
 --   > } VkPipelineTessellationStateCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPipelineTessellationStateCreateInfo.html VkPipelineTessellationStateCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPipelineTessellationStateCreateInfo.html VkPipelineTessellationStateCreateInfo registry at www.khronos.org>
 data VkPipelineTessellationStateCreateInfo = VkPipelineTessellationStateCreateInfo## Addr##
                                                                                     ByteArray##
 

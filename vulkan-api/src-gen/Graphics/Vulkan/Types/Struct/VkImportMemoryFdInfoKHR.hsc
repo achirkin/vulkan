@@ -9,23 +9,23 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkImportMemoryFdInfoKHR
        (VkImportMemoryFdInfoKHR(..)) where
-import           Foreign.Storable                                              (Storable (..))
+import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagsKHR (VkExternalMemoryHandleTypeFlagBitsKHR)
-import           Graphics.Vulkan.Types.Enum.VkStructureType                    (VkStructureType)
-import           Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo             (VkMemoryAllocateInfo)
-import           System.IO.Unsafe                                              (unsafeDupablePerformIO)
+import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlags (VkExternalMemoryHandleTypeFlagBits)
+import           Graphics.Vulkan.Types.Enum.VkStructureType                 (VkStructureType)
+import           Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo          (VkMemoryAllocateInfo)
+import           System.IO.Unsafe                                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkImportMemoryFdInfoKHR {
 --   >     VkStructureType sType;
 --   >     const void*                      pNext;
---   >     VkExternalMemoryHandleTypeFlagBitsKHR handleType;
+--   >     VkExternalMemoryHandleTypeFlagBits handleType;
 --   >     int                              fd;
 --   > } VkImportMemoryFdInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImportMemoryFdInfoKHR.html VkImportMemoryFdInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkImportMemoryFdInfoKHR.html VkImportMemoryFdInfoKHR registry at www.khronos.org>
 data VkImportMemoryFdInfoKHR = VkImportMemoryFdInfoKHR## Addr##
                                                         ByteArray##
 
@@ -140,7 +140,7 @@ instance {-# OVERLAPPING #-}
 instance {-# OVERLAPPING #-}
          HasField "handleType" VkImportMemoryFdInfoKHR where
         type FieldType "handleType" VkImportMemoryFdInfoKHR =
-             VkExternalMemoryHandleTypeFlagBitsKHR
+             VkExternalMemoryHandleTypeFlagBits
         type FieldOptional "handleType" VkImportMemoryFdInfoKHR = 'True -- ' closing tick for hsc2hs
         type FieldOffset "handleType" VkImportMemoryFdInfoKHR =
              #{offset VkImportMemoryFdInfoKHR, handleType}

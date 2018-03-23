@@ -9,23 +9,23 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkFenceGetWin32HandleInfoKHR
        (VkFenceGetWin32HandleInfoKHR(..)) where
-import           Foreign.Storable                                             (Storable (..))
+import           Foreign.Storable                                          (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.VkExternalFenceHandleTypeFlagsKHR (VkExternalFenceHandleTypeFlagBitsKHR)
-import           Graphics.Vulkan.Types.Enum.VkStructureType                   (VkStructureType)
-import           Graphics.Vulkan.Types.Handles                                (VkFence)
-import           System.IO.Unsafe                                             (unsafeDupablePerformIO)
+import           Graphics.Vulkan.Types.Enum.VkExternalFenceHandleTypeFlags (VkExternalFenceHandleTypeFlagBits)
+import           Graphics.Vulkan.Types.Enum.VkStructureType                (VkStructureType)
+import           Graphics.Vulkan.Types.Handles                             (VkFence)
+import           System.IO.Unsafe                                          (unsafeDupablePerformIO)
 
 -- | > typedef struct VkFenceGetWin32HandleInfoKHR {
 --   >     VkStructureType sType;
 --   >     const void*                            pNext;
 --   >     VkFence                                fence;
---   >     VkExternalFenceHandleTypeFlagBitsKHR   handleType;
+--   >     VkExternalFenceHandleTypeFlagBits   handleType;
 --   > } VkFenceGetWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkFenceGetWin32HandleInfoKHR.html VkFenceGetWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkFenceGetWin32HandleInfoKHR.html VkFenceGetWin32HandleInfoKHR registry at www.khronos.org>
 data VkFenceGetWin32HandleInfoKHR = VkFenceGetWin32HandleInfoKHR## Addr##
                                                                   ByteArray##
 
@@ -178,7 +178,7 @@ instance {-# OVERLAPPING #-}
 instance {-# OVERLAPPING #-}
          HasField "handleType" VkFenceGetWin32HandleInfoKHR where
         type FieldType "handleType" VkFenceGetWin32HandleInfoKHR =
-             VkExternalFenceHandleTypeFlagBitsKHR
+             VkExternalFenceHandleTypeFlagBits
         type FieldOptional "handleType" VkFenceGetWin32HandleInfoKHR =
              'False -- ' closing tick for hsc2hs
         type FieldOffset "handleType" VkFenceGetWin32HandleInfoKHR =

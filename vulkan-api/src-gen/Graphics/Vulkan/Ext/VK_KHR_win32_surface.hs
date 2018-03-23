@@ -17,11 +17,11 @@ module Graphics.Vulkan.Ext.VK_KHR_win32_surface
         --
         -- type: @instance@
         --
+        -- platform: @win32@
+        --
         -- Extension number: @10@
         --
         -- Required extensions: 'VK_KHR_surface'.
-        --
-        -- Protected by CPP ifdef: @VK_USE_PLATFORM_WIN32_KHR@
         --
 
         -- ** Required extensions: 'VK_KHR_surface'.
@@ -30,8 +30,6 @@ module Graphics.Vulkan.Ext.VK_KHR_win32_surface
         module Graphics.Vulkan.Types.Bitmasks,
         module Graphics.Vulkan.Types.Struct.VkWin32SurfaceCreateInfoKHR,
         -- > #include "vk_platform.h"
-        --
-        -- > #include <windows.h>
         vkCreateWin32SurfaceKHR, vkCreateWin32SurfaceKHRSafe,
         vkGetPhysicalDeviceWin32PresentationSupportKHR,
         vkGetPhysicalDeviceWin32PresentationSupportKHRSafe,
@@ -74,7 +72,7 @@ import           Graphics.Vulkan.Types.Struct.VkWin32SurfaceCreateInfoKHR
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateWin32SurfaceKHR.html vkCreateWin32SurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateWin32SurfaceKHR.html vkCreateWin32SurfaceKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateWin32SurfaceKHR"
                vkCreateWin32SurfaceKHR ::
                VkInstance -- ^ instance
@@ -96,7 +94,7 @@ foreign import ccall unsafe "vkCreateWin32SurfaceKHR"
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateWin32SurfaceKHR.html vkCreateWin32SurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateWin32SurfaceKHR.html vkCreateWin32SurfaceKHR registry at www.khronos.org>
 foreign import ccall safe "vkCreateWin32SurfaceKHR"
                vkCreateWin32SurfaceKHRSafe ::
                VkInstance -- ^ instance
@@ -112,7 +110,7 @@ foreign import ccall safe "vkCreateWin32SurfaceKHR"
 --   >     , uint32_t queueFamilyIndex
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceWin32PresentationSupportKHR.html vkGetPhysicalDeviceWin32PresentationSupportKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceWin32PresentationSupportKHR.html vkGetPhysicalDeviceWin32PresentationSupportKHR registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceWin32PresentationSupportKHR"
                vkGetPhysicalDeviceWin32PresentationSupportKHR ::
@@ -125,7 +123,7 @@ foreign import ccall unsafe
 --   >     , uint32_t queueFamilyIndex
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceWin32PresentationSupportKHR.html vkGetPhysicalDeviceWin32PresentationSupportKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceWin32PresentationSupportKHR.html vkGetPhysicalDeviceWin32PresentationSupportKHR registry at www.khronos.org>
 foreign import ccall safe
                "vkGetPhysicalDeviceWin32PresentationSupportKHR"
                vkGetPhysicalDeviceWin32PresentationSupportKHRSafe ::

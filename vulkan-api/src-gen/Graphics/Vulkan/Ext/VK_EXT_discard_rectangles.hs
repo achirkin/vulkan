@@ -41,7 +41,7 @@ module Graphics.Vulkan.Ext.VK_EXT_discard_rectangles
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceDiscardRectanglePropertiesEXT,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR,
+        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties,
         module Graphics.Vulkan.Types.Enum.VkPhysicalDeviceType,
         module Graphics.Vulkan.Types.Struct.VkPipelineColorBlendAttachmentState,
@@ -114,7 +114,7 @@ import           Graphics.Vulkan.Types.Struct.VkOffset2D
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceDiscardRectanglePropertiesEXT
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR
+import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties
 import           Graphics.Vulkan.Types.Struct.VkPipelineColorBlendAttachmentState
 import           Graphics.Vulkan.Types.Struct.VkPipelineColorBlendStateCreateInfo
@@ -147,7 +147,7 @@ import           Graphics.Vulkan.Types.Struct.VkViewport
 --   >     , const VkRect2D* pDiscardRectangles
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdSetDiscardRectangleEXT.html vkCmdSetDiscardRectangleEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetDiscardRectangleEXT.html vkCmdSetDiscardRectangleEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdSetDiscardRectangleEXT"
                vkCmdSetDiscardRectangleEXT ::
                VkCommandBuffer -- ^ commandBuffer
@@ -167,7 +167,7 @@ foreign import ccall unsafe "vkCmdSetDiscardRectangleEXT"
 --   >     , const VkRect2D* pDiscardRectangles
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdSetDiscardRectangleEXT.html vkCmdSetDiscardRectangleEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetDiscardRectangleEXT.html vkCmdSetDiscardRectangleEXT registry at www.khronos.org>
 foreign import ccall safe "vkCmdSetDiscardRectangleEXT"
                vkCmdSetDiscardRectangleEXTSafe ::
                VkCommandBuffer -- ^ commandBuffer

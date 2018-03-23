@@ -42,13 +42,13 @@ import           VkXml.Parser
 {- |
 In the registry, enum is defined in several places:
 
-<https://www.khronos.org/registry/vulkan/specs/1.0/registry.html#_enum_tags 19.2.3. Enum tags>
+<https://www.khronos.org/registry/vulkan/specs/1.1/registry.html#_enum_tags 19.2.3. Enum tags>
 
-<https://www.khronos.org/registry/vulkan/specs/1.0/registry.html#tag-enum 12. Enumerants (enum tag)>
+<https://www.khronos.org/registry/vulkan/specs/1.1/registry.html#tag-enum 12. Enumerants (enum tag)>
 
 In addition, extensions have to define enums in a special way;
 their values are calculated as follows in the link:
-<https://www.khronos.org/registry/vulkan/specs/1.0/styleguide.html#_assigning_extension_token_values 3.10. Assigning Extension Token Values>
+<https://www.khronos.org/registry/vulkan/specs/1.1/styleguide.html#_assigning_extension_token_values 3.10. Assigning Extension Token Values>
 
 With all of the above in mind, I try to unify content of enum tags in a single haskell type.
 In the generated library, all enum values are represented as pattern synonyms.
@@ -149,7 +149,7 @@ parseVkEnum :: VkXmlParser m
             -> Maybe VkTypeName
                -- ^ Name of the type this value belongs to.
             -> Sink Event m [VkEnum]
-parseVkEnum extNumber mTypeName
+parseVkEnum baseExtNumber mTypeName
     = (^.._Just.traverse) <$> parseTagForceAttrs "enum" parseAttrs pure
   where
     parseAttrs :: ReaderT ParseLoc AttrParser [VkEnum]
@@ -160,7 +160,12 @@ parseVkEnum extNumber mTypeName
       mbitpos      <- lift $ attr "bitpos"
       mapi         <- lift $ attr "api"
       mtype        <- lift $ attr "type"
-      malias       <- lift $ attr "alias"
+      malias       <- lift (attr "alias") >>= mapM toHaskellPat
+      extNumber    <- let f Nothing = baseExtNumber
+                          f (Just t) = case decOrHex t of
+                            Left _ -> baseExtNumber
+                            Right (i, _) -> fromInteger i
+                      in lift $ f <$> attr "extnumber"
       comment      <- lift $ fromMaybe mempty <$> attr "comment"
       moffset      <- lift $ attr "offset"
       negDir       <- lift $ (Just "-" ==) <$> attr "dir"
@@ -175,7 +180,7 @@ parseVkEnum extNumber mTypeName
         case _vkEnumTName of
 
           -- if vk type name is given, we are confident the type is Int32
-          Just tname -> makeNumeric
+          Just tname -> makeNumeric extNumber
               (T.signed decOrHex <$> mvalue)
               (decOrHex <$> mbitpos)
               (decOrHex <$> moffset)
@@ -229,12 +234,13 @@ parseVkEnum extNumber mTypeName
                 <> " does not match any known enum kind."
 
       let rEnum = VkEnum{..}
+          aliasEnumL = case malias of
+            Nothing -> []
+            Just alias -> [rEnum & vkEnumName .~ alias]
 
-      aliasEnumL <- case malias of
-        Nothing -> pure []
-        Just alias -> (\a -> [rEnum & vkEnumName .~ a]) <$> toHaskellPat alias
-
-      return $ rEnum : aliasEnumL
+      return $ case (_vkEnumValue == VkEnumReference, malias) of
+        (True, Just alias) -> [rEnum & vkEnumValue .~ VkEnumAlias alias]
+        (_, _) -> rEnum : aliasEnumL
 
     fromBitpos = shiftL 1
     fromValue = id
@@ -249,23 +255,23 @@ parseVkEnum extNumber mTypeName
     --
     -- positve enum  = enum_offset(extension_number, offset)
     -- negative enum = - enum_offset(extension_number, offset)
-    fromOffset isNegDir offset
+    fromOffset extNumber isNegDir offset
       | base_value <- 1000000000
       , range_size <- 1000
       , vAbs <- base_value + range_size * (fromIntegral extNumber - 1) + offset
       , v <- if isNegDir then negate vAbs else vAbs
       = fromValue v
 
-    makeNumeric (Just (Right (value,_))) _mbitpos _moffset _ndir ttype
+    makeNumeric _ (Just (Right (value,_))) _mbitpos _moffset _ndir ttype
       = pure $ VkEnumIntegral (fromValue value) ttype
-    makeNumeric _mvalue (Just (Right (bitpos,_))) _moffset _ndir ttype
+    makeNumeric _ _mvalue (Just (Right (bitpos,_))) _moffset _ndir ttype
       = pure $ VkEnumIntegral (fromBitpos bitpos) ttype
-    makeNumeric _mvalue _mbitpos (Just (Right (offset,_))) ndir ttype
-      = pure $ VkEnumIntegral (fromOffset ndir offset) ttype
-    makeNumeric (Just (Left err)) _ _ _ _ = parseFailed
+    makeNumeric en _mvalue _mbitpos (Just (Right (offset,_))) ndir ttype
+      = pure $ VkEnumIntegral (fromOffset en ndir offset) ttype
+    makeNumeric _ (Just (Left err)) _ _ _ _ = parseFailed
               $ "Could not parse enum value: " <> err
-    makeNumeric _ (Just (Left err)) _ _ _ = parseFailed
+    makeNumeric _ _ (Just (Left err)) _ _ _ = parseFailed
               $ "Could not parse enum bitpos: " <> err
-    makeNumeric _ _ (Just (Left err)) _ _ = parseFailed
+    makeNumeric _ _ _ (Just (Left err)) _ _ = parseFailed
               $ "Could not parse enum offset: " <> err
-    makeNumeric Nothing Nothing Nothing _ _ = pure VkEnumReference
+    makeNumeric _ Nothing Nothing Nothing _ _ = pure VkEnumReference

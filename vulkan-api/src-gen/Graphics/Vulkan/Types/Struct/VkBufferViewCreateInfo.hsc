@@ -30,7 +30,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     VkDeviceSize           range;
 --   > } VkBufferViewCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkBufferViewCreateInfo.html VkBufferViewCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkBufferViewCreateInfo.html VkBufferViewCreateInfo registry at www.khronos.org>
 data VkBufferViewCreateInfo = VkBufferViewCreateInfo## Addr##
                                                       ByteArray##
 

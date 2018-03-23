@@ -25,15 +25,16 @@ module Graphics.Vulkan.Ext.VK_EXT_blend_operation_advanced
         module Graphics.Vulkan.Types.Enum.VkColorComponentFlags,
         module Graphics.Vulkan.Types.Bitmasks,
         module Graphics.Vulkan.Types.Struct.VkDeviceCreateInfo,
+        module Graphics.Vulkan.Types.Enum.VkDeviceQueueCreateFlags,
         module Graphics.Vulkan.Types.Struct.VkDeviceQueueCreateInfo,
         module Graphics.Vulkan.Types.Enum.VkLogicOp,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures2KHR,
+        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures2,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR,
+        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties,
         module Graphics.Vulkan.Types.Enum.VkPhysicalDeviceType,
         module Graphics.Vulkan.Types.Struct.VkPipelineColorBlendAdvancedStateCreateInfoEXT,
@@ -95,6 +96,7 @@ import           Graphics.Vulkan.Types.Enum.VkBlendFactor
 import           Graphics.Vulkan.Types.Enum.VkBlendOp
 import           Graphics.Vulkan.Types.Enum.VkBlendOverlapEXT
 import           Graphics.Vulkan.Types.Enum.VkColorComponentFlags
+import           Graphics.Vulkan.Types.Enum.VkDeviceQueueCreateFlags
 import           Graphics.Vulkan.Types.Enum.VkLogicOp
 import           Graphics.Vulkan.Types.Enum.VkPhysicalDeviceType
 import           Graphics.Vulkan.Types.Enum.VkSampleCountFlags
@@ -104,10 +106,10 @@ import           Graphics.Vulkan.Types.Struct.VkDeviceQueueCreateInfo
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceBlendOperationAdvancedPropertiesEXT
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures2KHR
+import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures2
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR
+import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties
 import           Graphics.Vulkan.Types.Struct.VkPipelineColorBlendAdvancedStateCreateInfoEXT
 import           Graphics.Vulkan.Types.Struct.VkPipelineColorBlendAttachmentState

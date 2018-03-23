@@ -363,8 +363,15 @@ bitmaskPattern _ _ p = error $ "Unexpected bitmask pattern " ++ show p
 
 
 enumPattern :: Monad m => VkEnum -> ModuleWriter m (Maybe Text)
-enumPattern VkEnum {..} = writePragma "PatternSynonyms" >>
-  case _vkEnumValue of
+enumPattern VkEnum {..} = do
+  writePragma "PatternSynonyms"
+  indeed <- isIdentDeclared patnameDeclared
+  if indeed
+  then do
+    writeImport patnameDeclared
+    writeExport patnameDeclared
+    return Nothing
+  else case _vkEnumValue of
     VkEnumReference -> do
           enames <- lookupDeclared (unVkEnumName _vkEnumName)
           mapM_ writeImport enames
@@ -450,4 +457,5 @@ enumPattern VkEnum {..} = writePragma "PatternSynonyms" >>
   where
     patname = toQName _vkEnumName
     patnametxt = qNameTxt patname
+    patnameDeclared = DIPat patnametxt
     rezComment = preComment $ T.unpack _vkEnumComment

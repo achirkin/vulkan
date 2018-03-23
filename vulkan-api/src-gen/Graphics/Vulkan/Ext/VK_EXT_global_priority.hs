@@ -17,7 +17,7 @@ module Graphics.Vulkan.Ext.VK_EXT_global_priority
         -- type: @device@
         --
         -- Extension number: @175@
-        module Graphics.Vulkan.Types.Bitmasks,
+        module Graphics.Vulkan.Types.Enum.VkDeviceQueueCreateFlags,
         module Graphics.Vulkan.Types.Struct.VkDeviceQueueCreateInfo,
         module Graphics.Vulkan.Types.Struct.VkDeviceQueueGlobalPriorityCreateInfoEXT,
         module Graphics.Vulkan.Types.BaseTypes,
@@ -35,7 +35,7 @@ import           GHC.Ptr
                                                                                         (Ptr (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Bitmasks
+import           Graphics.Vulkan.Types.Enum.VkDeviceQueueCreateFlags
 import           Graphics.Vulkan.Types.Enum.VkQueueGlobalPriorityEXT
 import           Graphics.Vulkan.Types.Enum.VkResult
                                                                                         (VkResult (..))

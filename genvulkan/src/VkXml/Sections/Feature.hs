@@ -35,16 +35,19 @@ data VkFeature
   } deriving Show
 
 --  "require" tags
--- https://www.khronos.org/registry/vulkan/specs/1.0/registry.html#tag-required
+-- https://www.khronos.org/registry/vulkan/specs/1.1/registry.html#tag-required
 
 
 data VkRequire
   = VkRequire
-  { comment      :: Text
-  , requireExts  :: [VkExtensionName]
-  , requireTypes :: [VkTypeName]
-  , requireEnums :: [VkEnum]
-  , requireComms :: [VkCommandName]
+  { comment        :: Text
+  , requireFeature :: Maybe Text
+    -- ^ require feature="VK_VERSION_XXX"
+    --   (section 21.2)
+  , requireExts    :: [VkExtensionName]
+  , requireTypes   :: [VkTypeName]
+  , requireEnums   :: [VkEnum]
+  , requireComms   :: [VkCommandName]
   } deriving Show
 
 
@@ -76,6 +79,7 @@ parseVkRequire extN baseExtReqs
     -- https://www.khronos.org/registry/vulkan/specs/1.0/registry.html 19.1
     parseAttrs = do
       comm     <- lift $ fromMaybe mempty <$> attr "comment"
+      mfeature <- lift $ attr "feature"
       mext     <- lift (attr "extension") >>= mapM toHaskellExt
       mprofile <- lift $ attr "profile"
       mapi     <- lift $ attr "api"
@@ -84,6 +88,7 @@ parseVkRequire extN baseExtReqs
           { comment      = comm
               <:> maybe mempty (\s -> "profile = @" <> s <> "@") mprofile
               <:> maybe mempty (\s -> "api = @" <> s <> "@") mapi
+          , requireFeature = mfeature
           , requireExts  = maybe baseExtReqs (:baseExtReqs) mext
           , requireTypes = []
           , requireEnums = []

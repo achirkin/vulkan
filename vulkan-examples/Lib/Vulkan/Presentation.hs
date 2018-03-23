@@ -19,6 +19,7 @@ import           Foreign.Marshal.Array
 import           Foreign.Storable
 import qualified Graphics.UI.GLFW                     as GLFW
 import           Graphics.Vulkan
+import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Ext.VK_KHR_surface
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
 
@@ -85,9 +86,9 @@ selectPresentationFamily dev surf (x@(i,qfp):xs)
 
 data DevQueues
   = DevQueues
-  { graphicsQueue :: VkQueue
-  , presentQueue  :: VkQueue
-  , qFamIndices   :: Ptr Word32
+  { graphicsQueue  :: VkQueue
+  , presentQueue   :: VkQueue
+  , qFamIndices    :: Ptr Word32
   , graphicsFamIdx :: Word32
   , presentFamIdx  :: Word32
   } deriving (Eq, Show)

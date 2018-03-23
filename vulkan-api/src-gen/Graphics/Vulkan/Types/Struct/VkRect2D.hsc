@@ -21,7 +21,7 @@ import           System.IO.Unsafe                        (unsafeDupablePerformIO
 --   >     VkExtent2D     extent;
 --   > } VkRect2D;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkRect2D.html VkRect2D registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkRect2D.html VkRect2D registry at www.khronos.org>
 data VkRect2D = VkRect2D## Addr## ByteArray##
 
 instance Eq VkRect2D where

@@ -17,11 +17,11 @@ module Graphics.Vulkan.Ext.VK_KHR_mir_surface
         --
         -- type: @instance@
         --
+        -- platform: @mir@
+        --
         -- Extension number: @8@
         --
         -- Required extensions: 'VK_KHR_surface'.
-        --
-        -- Protected by CPP ifdef: @VK_USE_PLATFORM_MIR_KHR@
         --
 
         -- ** Required extensions: 'VK_KHR_surface'.
@@ -30,8 +30,6 @@ module Graphics.Vulkan.Ext.VK_KHR_mir_surface
         module Graphics.Vulkan.Types.Struct.VkMirSurfaceCreateInfoKHR,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
-        --
-        -- > #include <mir_toolkit/client_types.h>
         vkCreateMirSurfaceKHR, vkCreateMirSurfaceKHRSafe,
         vkGetPhysicalDeviceMirPresentationSupportKHR,
         vkGetPhysicalDeviceMirPresentationSupportKHRSafe,
@@ -74,7 +72,7 @@ import           Graphics.Vulkan.Types.Struct.VkMirSurfaceCreateInfoKHR
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateMirSurfaceKHR.html vkCreateMirSurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateMirSurfaceKHR.html vkCreateMirSurfaceKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateMirSurfaceKHR"
                vkCreateMirSurfaceKHR ::
                VkInstance -- ^ instance
@@ -96,7 +94,7 @@ foreign import ccall unsafe "vkCreateMirSurfaceKHR"
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateMirSurfaceKHR.html vkCreateMirSurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateMirSurfaceKHR.html vkCreateMirSurfaceKHR registry at www.khronos.org>
 foreign import ccall safe "vkCreateMirSurfaceKHR"
                vkCreateMirSurfaceKHRSafe ::
                VkInstance -- ^ instance
@@ -113,7 +111,7 @@ foreign import ccall safe "vkCreateMirSurfaceKHR"
 --   >     , MirConnection* connection
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceMirPresentationSupportKHR.html vkGetPhysicalDeviceMirPresentationSupportKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceMirPresentationSupportKHR.html vkGetPhysicalDeviceMirPresentationSupportKHR registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceMirPresentationSupportKHR"
                vkGetPhysicalDeviceMirPresentationSupportKHR ::
@@ -128,7 +126,7 @@ foreign import ccall unsafe
 --   >     , MirConnection* connection
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceMirPresentationSupportKHR.html vkGetPhysicalDeviceMirPresentationSupportKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceMirPresentationSupportKHR.html vkGetPhysicalDeviceMirPresentationSupportKHR registry at www.khronos.org>
 foreign import ccall safe
                "vkGetPhysicalDeviceMirPresentationSupportKHR"
                vkGetPhysicalDeviceMirPresentationSupportKHRSafe ::

@@ -24,7 +24,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkPipeline                   pipeline;
 --   > } VkObjectTablePipelineEntryNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkObjectTablePipelineEntryNVX.html VkObjectTablePipelineEntryNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkObjectTablePipelineEntryNVX.html VkObjectTablePipelineEntryNVX registry at www.khronos.org>
 data VkObjectTablePipelineEntryNVX = VkObjectTablePipelineEntryNVX## Addr##
                                                                     ByteArray##
 

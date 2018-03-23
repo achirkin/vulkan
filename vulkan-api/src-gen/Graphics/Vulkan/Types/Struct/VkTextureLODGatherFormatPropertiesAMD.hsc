@@ -9,14 +9,14 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkTextureLODGatherFormatPropertiesAMD
        (VkTextureLODGatherFormatPropertiesAMD(..)) where
-import           Foreign.Storable                                         (Storable (..))
+import           Foreign.Storable                                      (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.BaseTypes                          (VkBool32)
-import           Graphics.Vulkan.Types.Enum.VkStructureType               (VkStructureType)
-import           Graphics.Vulkan.Types.Struct.VkImageFormatProperties2KHR (VkImageFormatProperties2KHR)
-import           System.IO.Unsafe                                         (unsafeDupablePerformIO)
+import           Graphics.Vulkan.Types.BaseTypes                       (VkBool32)
+import           Graphics.Vulkan.Types.Enum.VkStructureType            (VkStructureType)
+import           Graphics.Vulkan.Types.Struct.VkImageFormatProperties2 (VkImageFormatProperties2)
+import           System.IO.Unsafe                                      (unsafeDupablePerformIO)
 
 -- | > typedef struct VkTextureLODGatherFormatPropertiesAMD {
 --   >     VkStructureType sType;
@@ -24,7 +24,7 @@ import           System.IO.Unsafe                                         (unsaf
 --   >     VkBool32                         supportsTextureGatherLODBiasAMD;
 --   > } VkTextureLODGatherFormatPropertiesAMD;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkTextureLODGatherFormatPropertiesAMD.html VkTextureLODGatherFormatPropertiesAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkTextureLODGatherFormatPropertiesAMD.html VkTextureLODGatherFormatPropertiesAMD registry at www.khronos.org>
 data VkTextureLODGatherFormatPropertiesAMD = VkTextureLODGatherFormatPropertiesAMD## Addr##
                                                                                     ByteArray##
 
@@ -79,7 +79,7 @@ instance VulkanMarshal VkTextureLODGatherFormatPropertiesAMD where
         type CUnionType VkTextureLODGatherFormatPropertiesAMD = 'False -- ' closing tick for hsc2hs
         type ReturnedOnly VkTextureLODGatherFormatPropertiesAMD = 'True -- ' closing tick for hsc2hs
         type StructExtends VkTextureLODGatherFormatPropertiesAMD =
-             '[VkImageFormatProperties2KHR] -- ' closing tick for hsc2hs
+             '[VkImageFormatProperties2] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasField "sType" VkTextureLODGatherFormatPropertiesAMD where

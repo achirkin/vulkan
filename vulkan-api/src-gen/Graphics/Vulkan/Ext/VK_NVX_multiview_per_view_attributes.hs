@@ -18,16 +18,16 @@ module Graphics.Vulkan.Ext.VK_NVX_multiview_per_view_attributes
         --
         -- Extension number: @98@
         --
-        -- Required extensions: 'VK_KHX_multiview'.
+        -- Required extensions: 'VK_KHR_multiview'.
         --
 
-        -- ** Required extensions: 'VK_KHX_multiview'.
+        -- ** Required extensions: 'VK_KHR_multiview'.
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR,
+        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties,
         module Graphics.Vulkan.Types.Enum.VkPhysicalDeviceType,
         module Graphics.Vulkan.Types.Enum.VkSampleCountFlags,
@@ -54,7 +54,7 @@ import           Graphics.Vulkan.Types.Enum.VkSubpassDescriptionFlags
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR
+import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties
 
 pattern VK_NVX_MULTIVIEW_PER_VIEW_ATTRIBUTES_SPEC_VERSION ::

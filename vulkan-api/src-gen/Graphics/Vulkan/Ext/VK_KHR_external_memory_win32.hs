@@ -18,25 +18,23 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_win32
         --
         -- type: @device@
         --
+        -- platform: @win32@
+        --
         -- Extension number: @74@
         --
         -- Required extensions: 'VK_KHR_external_memory'.
-        --
-        -- Protected by CPP ifdef: @VK_USE_PLATFORM_WIN32_KHR@
         --
 
         -- ** Required extensions: 'VK_KHR_external_memory'.
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Struct.VkExportMemoryWin32HandleInfoKHR,
-        module Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagsKHR,
+        module Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlags,
         module Graphics.Vulkan.Types.Struct.VkImportMemoryWin32HandleInfoKHR,
         module Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo,
         module Graphics.Vulkan.Types.Struct.VkMemoryGetWin32HandleInfoKHR,
         module Graphics.Vulkan.Types.Struct.VkMemoryWin32HandlePropertiesKHR,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
-        --
-        -- > #include <windows.h>
         vkGetMemoryWin32HandleKHR, vkGetMemoryWin32HandleKHRSafe,
         vkGetMemoryWin32HandlePropertiesKHR,
         vkGetMemoryWin32HandlePropertiesKHRSafe,
@@ -55,7 +53,7 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_win32
 import           GHC.Ptr                                                       (Ptr (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagsKHR
+import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlags
 import           Graphics.Vulkan.Types.Enum.VkResult
 import           Graphics.Vulkan.Types.Enum.VkStructureType
 import           Graphics.Vulkan.Types.Handles
@@ -76,7 +74,7 @@ import           Graphics.Vulkan.Types.Struct.VkMemoryWin32HandlePropertiesKHR
 --   >     , HANDLE* pHandle
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetMemoryWin32HandleKHR.html vkGetMemoryWin32HandleKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryWin32HandleKHR.html vkGetMemoryWin32HandleKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkGetMemoryWin32HandleKHR"
                vkGetMemoryWin32HandleKHR ::
                VkDevice -- ^ device
@@ -95,7 +93,7 @@ foreign import ccall unsafe "vkGetMemoryWin32HandleKHR"
 --   >     , HANDLE* pHandle
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetMemoryWin32HandleKHR.html vkGetMemoryWin32HandleKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryWin32HandleKHR.html vkGetMemoryWin32HandleKHR registry at www.khronos.org>
 foreign import ccall safe "vkGetMemoryWin32HandleKHR"
                vkGetMemoryWin32HandleKHRSafe ::
                VkDevice -- ^ device
@@ -106,44 +104,44 @@ foreign import ccall safe "vkGetMemoryWin32HandleKHR"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR'.
+--   Error codes: 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
 --
 --   > VkResult vkGetMemoryWin32HandlePropertiesKHR
 --   >     ( VkDevice device
---   >     , VkExternalMemoryHandleTypeFlagBitsKHR handleType
+--   >     , VkExternalMemoryHandleTypeFlagBits handleType
 --   >     , HANDLE handle
 --   >     , VkMemoryWin32HandlePropertiesKHR* pMemoryWin32HandleProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetMemoryWin32HandlePropertiesKHR.html vkGetMemoryWin32HandlePropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryWin32HandlePropertiesKHR.html vkGetMemoryWin32HandlePropertiesKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkGetMemoryWin32HandlePropertiesKHR"
                vkGetMemoryWin32HandlePropertiesKHR ::
                VkDevice -- ^ device
                         ->
-                 VkExternalMemoryHandleTypeFlagBitsKHR -- ^ handleType
-                                                       ->
+                 VkExternalMemoryHandleTypeFlagBits -- ^ handleType
+                                                    ->
                    HANDLE -- ^ handle
                           -> Ptr VkMemoryWin32HandlePropertiesKHR -- ^ pMemoryWin32HandleProperties
                                                                   -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR'.
+--   Error codes: 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
 --
 --   > VkResult vkGetMemoryWin32HandlePropertiesKHR
 --   >     ( VkDevice device
---   >     , VkExternalMemoryHandleTypeFlagBitsKHR handleType
+--   >     , VkExternalMemoryHandleTypeFlagBits handleType
 --   >     , HANDLE handle
 --   >     , VkMemoryWin32HandlePropertiesKHR* pMemoryWin32HandleProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetMemoryWin32HandlePropertiesKHR.html vkGetMemoryWin32HandlePropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryWin32HandlePropertiesKHR.html vkGetMemoryWin32HandlePropertiesKHR registry at www.khronos.org>
 foreign import ccall safe "vkGetMemoryWin32HandlePropertiesKHR"
                vkGetMemoryWin32HandlePropertiesKHRSafe ::
                VkDevice -- ^ device
                         ->
-                 VkExternalMemoryHandleTypeFlagBitsKHR -- ^ handleType
-                                                       ->
+                 VkExternalMemoryHandleTypeFlagBits -- ^ handleType
+                                                    ->
                    HANDLE -- ^ handle
                           -> Ptr VkMemoryWin32HandlePropertiesKHR -- ^ pMemoryWin32HandleProperties
                                                                   -> IO VkResult

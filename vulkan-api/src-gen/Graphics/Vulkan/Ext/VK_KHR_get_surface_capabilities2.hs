@@ -80,7 +80,7 @@ import           Graphics.Vulkan.Types.Struct.VkSurfaceFormatKHR
 --   >     , VkSurfaceCapabilities2KHR* pSurfaceCapabilities
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilities2KHR.html vkGetPhysicalDeviceSurfaceCapabilities2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilities2KHR.html vkGetPhysicalDeviceSurfaceCapabilities2KHR registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceSurfaceCapabilities2KHR"
                vkGetPhysicalDeviceSurfaceCapabilities2KHR ::
@@ -101,7 +101,7 @@ foreign import ccall unsafe
 --   >     , VkSurfaceCapabilities2KHR* pSurfaceCapabilities
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilities2KHR.html vkGetPhysicalDeviceSurfaceCapabilities2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilities2KHR.html vkGetPhysicalDeviceSurfaceCapabilities2KHR registry at www.khronos.org>
 foreign import ccall safe
                "vkGetPhysicalDeviceSurfaceCapabilities2KHR"
                vkGetPhysicalDeviceSurfaceCapabilities2KHRSafe ::
@@ -123,7 +123,7 @@ foreign import ccall safe
 --   >     , VkSurfaceFormat2KHR* pSurfaceFormats
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceSurfaceFormats2KHR.html vkGetPhysicalDeviceSurfaceFormats2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceSurfaceFormats2KHR.html vkGetPhysicalDeviceSurfaceFormats2KHR registry at www.khronos.org>
 foreign import ccall unsafe "vkGetPhysicalDeviceSurfaceFormats2KHR"
                vkGetPhysicalDeviceSurfaceFormats2KHR ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -145,7 +145,7 @@ foreign import ccall unsafe "vkGetPhysicalDeviceSurfaceFormats2KHR"
 --   >     , VkSurfaceFormat2KHR* pSurfaceFormats
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceSurfaceFormats2KHR.html vkGetPhysicalDeviceSurfaceFormats2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceSurfaceFormats2KHR.html vkGetPhysicalDeviceSurfaceFormats2KHR registry at www.khronos.org>
 foreign import ccall safe "vkGetPhysicalDeviceSurfaceFormats2KHR"
                vkGetPhysicalDeviceSurfaceFormats2KHRSafe ::
                VkPhysicalDevice -- ^ physicalDevice

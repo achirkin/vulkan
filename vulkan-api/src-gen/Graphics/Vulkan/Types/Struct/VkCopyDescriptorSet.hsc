@@ -29,7 +29,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     uint32_t               descriptorCount;
 --   > } VkCopyDescriptorSet;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkCopyDescriptorSet.html VkCopyDescriptorSet registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkCopyDescriptorSet.html VkCopyDescriptorSet registry at www.khronos.org>
 data VkCopyDescriptorSet = VkCopyDescriptorSet## Addr## ByteArray##
 
 instance Eq VkCopyDescriptorSet where

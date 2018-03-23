@@ -9,13 +9,13 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkDeviceQueueCreateInfo
        (VkDeviceQueueCreateInfo(..)) where
-import           Foreign.Storable                           (Storable (..))
+import           Foreign.Storable                                    (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Bitmasks             (VkDeviceQueueCreateFlags)
-import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
-import           System.IO.Unsafe                           (unsafeDupablePerformIO)
+import           Graphics.Vulkan.Types.Enum.VkDeviceQueueCreateFlags (VkDeviceQueueCreateFlags)
+import           Graphics.Vulkan.Types.Enum.VkStructureType          (VkStructureType)
+import           System.IO.Unsafe                                    (unsafeDupablePerformIO)
 
 -- | > typedef struct VkDeviceQueueCreateInfo {
 --   >     VkStructureType sType;
@@ -26,7 +26,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     const float*    pQueuePriorities;
 --   > } VkDeviceQueueCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDeviceQueueCreateInfo.html VkDeviceQueueCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDeviceQueueCreateInfo.html VkDeviceQueueCreateInfo registry at www.khronos.org>
 data VkDeviceQueueCreateInfo = VkDeviceQueueCreateInfo## Addr##
                                                         ByteArray##
 

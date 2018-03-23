@@ -22,7 +22,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     VkColorSpaceKHR                  colorSpace;
 --   > } VkSurfaceFormatKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSurfaceFormatKHR.html VkSurfaceFormatKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSurfaceFormatKHR.html VkSurfaceFormatKHR registry at www.khronos.org>
 data VkSurfaceFormatKHR = VkSurfaceFormatKHR## Addr## ByteArray##
 
 instance Eq VkSurfaceFormatKHR where

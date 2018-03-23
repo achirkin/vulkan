@@ -17,10 +17,11 @@ import           Foreign.Marshal.Alloc
 import           Foreign.Marshal.Array
 import           Foreign.Storable
 import           Graphics.Vulkan
+import           Graphics.Vulkan.Core_1_0
 
 import           Lib.GLFW
 import           Lib.Utils
-import           Lib.Vulkan (pickPhysicalDevice)
+import           Lib.Vulkan               (pickPhysicalDevice)
 
 main :: IO ()
 main = withGLFWWindow 800 600 "03-LogicalDev-Window" $ \window ->

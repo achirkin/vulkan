@@ -35,7 +35,7 @@ module Graphics.Vulkan.Ext.VK_EXT_sample_locations
         module Graphics.Vulkan.Types.Struct.VkOffset2D,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR,
+        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSampleLocationsPropertiesEXT,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties,
         module Graphics.Vulkan.Types.Enum.VkPhysicalDeviceType,
@@ -95,7 +95,7 @@ import           Graphics.Vulkan.Types.Struct.VkMultisamplePropertiesEXT
 import           Graphics.Vulkan.Types.Struct.VkOffset2D
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR
+import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSampleLocationsPropertiesEXT
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties
 import           Graphics.Vulkan.Types.Struct.VkPipelineMultisampleStateCreateInfo
@@ -116,7 +116,7 @@ import           Graphics.Vulkan.Types.Struct.VkSubpassSampleLocationsEXT
 --   >     , const VkSampleLocationsInfoEXT* pSampleLocationsInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdSetSampleLocationsEXT.html vkCmdSetSampleLocationsEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetSampleLocationsEXT.html vkCmdSetSampleLocationsEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdSetSampleLocationsEXT"
                vkCmdSetSampleLocationsEXT ::
                VkCommandBuffer -- ^ commandBuffer
@@ -132,7 +132,7 @@ foreign import ccall unsafe "vkCmdSetSampleLocationsEXT"
 --   >     , const VkSampleLocationsInfoEXT* pSampleLocationsInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdSetSampleLocationsEXT.html vkCmdSetSampleLocationsEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetSampleLocationsEXT.html vkCmdSetSampleLocationsEXT registry at www.khronos.org>
 foreign import ccall safe "vkCmdSetSampleLocationsEXT"
                vkCmdSetSampleLocationsEXTSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -145,7 +145,7 @@ foreign import ccall safe "vkCmdSetSampleLocationsEXT"
 --   >     , VkMultisamplePropertiesEXT* pMultisampleProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceMultisamplePropertiesEXT.html vkGetPhysicalDeviceMultisamplePropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceMultisamplePropertiesEXT.html vkGetPhysicalDeviceMultisamplePropertiesEXT registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceMultisamplePropertiesEXT"
                vkGetPhysicalDeviceMultisamplePropertiesEXT ::
@@ -161,7 +161,7 @@ foreign import ccall unsafe
 --   >     , VkMultisamplePropertiesEXT* pMultisampleProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceMultisamplePropertiesEXT.html vkGetPhysicalDeviceMultisamplePropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceMultisamplePropertiesEXT.html vkGetPhysicalDeviceMultisamplePropertiesEXT registry at www.khronos.org>
 foreign import ccall safe
                "vkGetPhysicalDeviceMultisamplePropertiesEXT"
                vkGetPhysicalDeviceMultisamplePropertiesEXTSafe ::

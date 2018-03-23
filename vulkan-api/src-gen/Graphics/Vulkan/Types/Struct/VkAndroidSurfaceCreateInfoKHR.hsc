@@ -14,18 +14,18 @@ import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Bitmasks             (VkAndroidSurfaceCreateFlagsKHR)
+import           Graphics.Vulkan.Types.Defines              (ANativeWindow)
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
-import           Graphics.Vulkan.Types.Include              (ANativeWindow)
 import           System.IO.Unsafe                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkAndroidSurfaceCreateInfoKHR {
 --   >     VkStructureType sType;
---   >     const void*                      pNext;
---   >     VkAndroidSurfaceCreateFlagsKHR   flags;
---   >     ANativeWindow*                   window;
+--   >     const void*                                    pNext;
+--   >     VkAndroidSurfaceCreateFlagsKHR flags;
+--   >     struct ANativeWindow*    window;
 --   > } VkAndroidSurfaceCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkAndroidSurfaceCreateInfoKHR.html VkAndroidSurfaceCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkAndroidSurfaceCreateInfoKHR.html VkAndroidSurfaceCreateInfoKHR registry at www.khronos.org>
 data VkAndroidSurfaceCreateInfoKHR = VkAndroidSurfaceCreateInfoKHR## Addr##
                                                                     ByteArray##
 

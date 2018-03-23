@@ -32,7 +32,7 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 --   >     VkBool32               alphaToOneEnable;
 --   > } VkPipelineMultisampleStateCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPipelineMultisampleStateCreateInfo.html VkPipelineMultisampleStateCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPipelineMultisampleStateCreateInfo.html VkPipelineMultisampleStateCreateInfo registry at www.khronos.org>
 data VkPipelineMultisampleStateCreateInfo = VkPipelineMultisampleStateCreateInfo## Addr##
                                                                                   ByteArray##
 

@@ -7,12 +7,15 @@ module Write.Types.Handle
   ( genHandle
   ) where
 
+import           Control.Monad.Reader.Class
+import qualified Data.Map.Strict                      as Map
 import           Data.Semigroup
 import qualified Data.Text                            as T
 import           Language.Haskell.Exts.SimpleComments
 import           NeatInterpolation
 
 import           VkXml.CommonTypes
+import           VkXml.Sections
 import           VkXml.Sections.Types
 
 import           Write.ModuleWriter
@@ -54,5 +57,15 @@ genHandle VkTypeSimple
         [text|data $tnametxtT|]
       writeExport $ DIThing tnametxt DITNo
       writeExport $ DIThing tnametxtT DITEmpty
+
+genHandle VkTypeSimple
+    { name = vkTName
+    , attributes = VkTypeAttrs
+        { alias = Just vkTAlias
+        }
+    } = ask >>= \vk -> case Map.lookup vkTAlias (globTypes vk) of
+          Nothing -> return ()
+          Just t  -> genHandle t{ name = vkTName }
+
 genHandle t = error $ "genHandle: expected a simple handle type, but got: "
                   <> show t

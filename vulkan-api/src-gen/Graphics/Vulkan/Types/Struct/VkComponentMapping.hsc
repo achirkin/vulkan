@@ -23,7 +23,7 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 --   >     VkComponentSwizzle a;
 --   > } VkComponentMapping;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkComponentMapping.html VkComponentMapping registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkComponentMapping.html VkComponentMapping registry at www.khronos.org>
 data VkComponentMapping = VkComponentMapping## Addr## ByteArray##
 
 instance Eq VkComponentMapping where

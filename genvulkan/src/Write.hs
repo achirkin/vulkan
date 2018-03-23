@@ -27,6 +27,7 @@ import           Text.RE.TDFA.String
 import           VkXml.CommonTypes
 import           VkXml.Sections
 import           VkXml.Sections.Extensions
+import           VkXml.Sections.Feature
 import           Write.Cabal
 -- import           Write.Commands
 import           Write.Extension
@@ -67,13 +68,19 @@ generateVkSource outputDir outCabalFile vkXml = do
     (\(m, mpdf) -> flip (,) mpdf <$> writeModule outputDir m) genTModules
 
 
-  (_classDeclsCore, exportedNamesCore) <- do
-    (a, mr) <- runModuleWriter vkXml "Graphics.Vulkan.Core" exportedNamesTypes $ do
-       writePragma "Strict"
-       writePragma "DataKinds"
-       fmap mconcat $ mapM genFeature $ globFeature vkXml
-    _ <- writeModule outputDir mr
-    pure (a, globalNames mr)
+  (exportedNamesCore, fModules)
+    <- fmap mconcat . forM (globFeature vkXml) $ \feature -> do
+      let eName = T.unpack $ "Core_" <>  T.map (\c -> if isDigit c
+                                                      then c
+                                                      else '_'
+                                               ) (number feature)
+          modName = "Graphics.Vulkan." <> eName
+      (_, mr) <- runModuleWriter vkXml modName exportedNamesTypes $ do
+         writePragma "Strict"
+         writePragma "DataKinds"
+         genFeature feature
+      _ <- writeModule outputDir mr
+      pure (globalNames mr, [(T.pack modName, Nothing)])
 
 
   (_exportedNamesExts, eModules)
@@ -116,7 +123,7 @@ generateVkSource outputDir outCabalFile vkXml = do
 
 
   writeFile (toFilePath outCabalFile) . T.unpack $ genCabalFile
-    $ eModules0 <> eModules
+    $ fModules <> eModules0 <> eModules
 
 
 
@@ -169,7 +176,7 @@ writeModule outputDir mw = do
           putStrLn $ "Formatting suggestion:\n    " <> s
         writeFile pp
           $ fixSourceHooks isHsc rez'
-    putStrLn $ pp
+    putStrLn pp
     return $ T.pack modName
   where
     isHsc = "HSC2HS___" `L.isInfixOf` rez

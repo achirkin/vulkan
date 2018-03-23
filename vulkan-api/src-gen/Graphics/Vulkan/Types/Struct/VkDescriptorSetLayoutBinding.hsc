@@ -26,7 +26,7 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 --   >     const VkSampler*       pImmutableSamplers;
 --   > } VkDescriptorSetLayoutBinding;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDescriptorSetLayoutBinding.html VkDescriptorSetLayoutBinding registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDescriptorSetLayoutBinding.html VkDescriptorSetLayoutBinding registry at www.khronos.org>
 data VkDescriptorSetLayoutBinding = VkDescriptorSetLayoutBinding## Addr##
                                                                   ByteArray##
 

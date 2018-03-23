@@ -23,7 +23,7 @@ import           System.IO.Unsafe                                (unsafeDupableP
 --   >     VkSurfaceFormatKHR surfaceFormat;
 --   > } VkSurfaceFormat2KHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSurfaceFormat2KHR.html VkSurfaceFormat2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSurfaceFormat2KHR.html VkSurfaceFormat2KHR registry at www.khronos.org>
 data VkSurfaceFormat2KHR = VkSurfaceFormat2KHR## Addr## ByteArray##
 
 instance Eq VkSurfaceFormat2KHR where

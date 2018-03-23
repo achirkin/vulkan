@@ -128,7 +128,7 @@ import           Graphics.Vulkan.Types.Struct.VkObjectTableVertexBufferEntryNVX
 --   >     , const VkCmdProcessCommandsInfoNVX* pProcessCommandsInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdProcessCommandsNVX.html vkCmdProcessCommandsNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdProcessCommandsNVX.html vkCmdProcessCommandsNVX registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdProcessCommandsNVX"
                vkCmdProcessCommandsNVX ::
                VkCommandBuffer -- ^ commandBuffer
@@ -144,7 +144,7 @@ foreign import ccall unsafe "vkCmdProcessCommandsNVX"
 --   >     , const VkCmdProcessCommandsInfoNVX* pProcessCommandsInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdProcessCommandsNVX.html vkCmdProcessCommandsNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdProcessCommandsNVX.html vkCmdProcessCommandsNVX registry at www.khronos.org>
 foreign import ccall safe "vkCmdProcessCommandsNVX"
                vkCmdProcessCommandsNVXSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -160,7 +160,7 @@ foreign import ccall safe "vkCmdProcessCommandsNVX"
 --   >     , const VkCmdReserveSpaceForCommandsInfoNVX* pReserveSpaceInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdReserveSpaceForCommandsNVX.html vkCmdReserveSpaceForCommandsNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdReserveSpaceForCommandsNVX.html vkCmdReserveSpaceForCommandsNVX registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdReserveSpaceForCommandsNVX"
                vkCmdReserveSpaceForCommandsNVX ::
                VkCommandBuffer -- ^ commandBuffer
@@ -176,7 +176,7 @@ foreign import ccall unsafe "vkCmdReserveSpaceForCommandsNVX"
 --   >     , const VkCmdReserveSpaceForCommandsInfoNVX* pReserveSpaceInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdReserveSpaceForCommandsNVX.html vkCmdReserveSpaceForCommandsNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdReserveSpaceForCommandsNVX.html vkCmdReserveSpaceForCommandsNVX registry at www.khronos.org>
 foreign import ccall safe "vkCmdReserveSpaceForCommandsNVX"
                vkCmdReserveSpaceForCommandsNVXSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -194,7 +194,7 @@ foreign import ccall safe "vkCmdReserveSpaceForCommandsNVX"
 --   >     , VkIndirectCommandsLayoutNVX* pIndirectCommandsLayout
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateIndirectCommandsLayoutNVX.html vkCreateIndirectCommandsLayoutNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateIndirectCommandsLayoutNVX.html vkCreateIndirectCommandsLayoutNVX registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateIndirectCommandsLayoutNVX"
                vkCreateIndirectCommandsLayoutNVX ::
                VkDevice -- ^ device
@@ -217,7 +217,7 @@ foreign import ccall unsafe "vkCreateIndirectCommandsLayoutNVX"
 --   >     , VkIndirectCommandsLayoutNVX* pIndirectCommandsLayout
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateIndirectCommandsLayoutNVX.html vkCreateIndirectCommandsLayoutNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateIndirectCommandsLayoutNVX.html vkCreateIndirectCommandsLayoutNVX registry at www.khronos.org>
 foreign import ccall safe "vkCreateIndirectCommandsLayoutNVX"
                vkCreateIndirectCommandsLayoutNVXSafe ::
                VkDevice -- ^ device
@@ -235,7 +235,7 @@ foreign import ccall safe "vkCreateIndirectCommandsLayoutNVX"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroyIndirectCommandsLayoutNVX.html vkDestroyIndirectCommandsLayoutNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyIndirectCommandsLayoutNVX.html vkDestroyIndirectCommandsLayoutNVX registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyIndirectCommandsLayoutNVX"
                vkDestroyIndirectCommandsLayoutNVX ::
                VkDevice -- ^ device
@@ -250,7 +250,7 @@ foreign import ccall unsafe "vkDestroyIndirectCommandsLayoutNVX"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroyIndirectCommandsLayoutNVX.html vkDestroyIndirectCommandsLayoutNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyIndirectCommandsLayoutNVX.html vkDestroyIndirectCommandsLayoutNVX registry at www.khronos.org>
 foreign import ccall safe "vkDestroyIndirectCommandsLayoutNVX"
                vkDestroyIndirectCommandsLayoutNVXSafe ::
                VkDevice -- ^ device
@@ -270,7 +270,7 @@ foreign import ccall safe "vkDestroyIndirectCommandsLayoutNVX"
 --   >     , VkObjectTableNVX* pObjectTable
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateObjectTableNVX.html vkCreateObjectTableNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateObjectTableNVX.html vkCreateObjectTableNVX registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateObjectTableNVX"
                vkCreateObjectTableNVX ::
                VkDevice -- ^ device
@@ -292,7 +292,7 @@ foreign import ccall unsafe "vkCreateObjectTableNVX"
 --   >     , VkObjectTableNVX* pObjectTable
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateObjectTableNVX.html vkCreateObjectTableNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateObjectTableNVX.html vkCreateObjectTableNVX registry at www.khronos.org>
 foreign import ccall safe "vkCreateObjectTableNVX"
                vkCreateObjectTableNVXSafe ::
                VkDevice -- ^ device
@@ -309,7 +309,7 @@ foreign import ccall safe "vkCreateObjectTableNVX"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroyObjectTableNVX.html vkDestroyObjectTableNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyObjectTableNVX.html vkDestroyObjectTableNVX registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyObjectTableNVX"
                vkDestroyObjectTableNVX ::
                VkDevice -- ^ device
@@ -323,7 +323,7 @@ foreign import ccall unsafe "vkDestroyObjectTableNVX"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroyObjectTableNVX.html vkDestroyObjectTableNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyObjectTableNVX.html vkDestroyObjectTableNVX registry at www.khronos.org>
 foreign import ccall safe "vkDestroyObjectTableNVX"
                vkDestroyObjectTableNVXSafe ::
                VkDevice -- ^ device
@@ -343,7 +343,7 @@ foreign import ccall safe "vkDestroyObjectTableNVX"
 --   >     , const uint32_t* pObjectIndices
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkRegisterObjectsNVX.html vkRegisterObjectsNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkRegisterObjectsNVX.html vkRegisterObjectsNVX registry at www.khronos.org>
 foreign import ccall unsafe "vkRegisterObjectsNVX"
                vkRegisterObjectsNVX ::
                VkDevice -- ^ device
@@ -368,7 +368,7 @@ foreign import ccall unsafe "vkRegisterObjectsNVX"
 --   >     , const uint32_t* pObjectIndices
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkRegisterObjectsNVX.html vkRegisterObjectsNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkRegisterObjectsNVX.html vkRegisterObjectsNVX registry at www.khronos.org>
 foreign import ccall safe "vkRegisterObjectsNVX"
                vkRegisterObjectsNVXSafe ::
                VkDevice -- ^ device
@@ -393,7 +393,7 @@ foreign import ccall safe "vkRegisterObjectsNVX"
 --   >     , const uint32_t* pObjectIndices
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkUnregisterObjectsNVX.html vkUnregisterObjectsNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkUnregisterObjectsNVX.html vkUnregisterObjectsNVX registry at www.khronos.org>
 foreign import ccall unsafe "vkUnregisterObjectsNVX"
                vkUnregisterObjectsNVX ::
                VkDevice -- ^ device
@@ -417,7 +417,7 @@ foreign import ccall unsafe "vkUnregisterObjectsNVX"
 --   >     , const uint32_t* pObjectIndices
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkUnregisterObjectsNVX.html vkUnregisterObjectsNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkUnregisterObjectsNVX.html vkUnregisterObjectsNVX registry at www.khronos.org>
 foreign import ccall safe "vkUnregisterObjectsNVX"
                vkUnregisterObjectsNVXSafe ::
                VkDevice -- ^ device
@@ -435,7 +435,7 @@ foreign import ccall safe "vkUnregisterObjectsNVX"
 --   >     , VkDeviceGeneratedCommandsLimitsNVX* pLimits
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX.html vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX.html vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX"
                vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX ::
@@ -452,7 +452,7 @@ foreign import ccall unsafe
 --   >     , VkDeviceGeneratedCommandsLimitsNVX* pLimits
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX.html vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX.html vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX registry at www.khronos.org>
 foreign import ccall safe
                "vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX"
                vkGetPhysicalDeviceGeneratedCommandsPropertiesNVXSafe ::

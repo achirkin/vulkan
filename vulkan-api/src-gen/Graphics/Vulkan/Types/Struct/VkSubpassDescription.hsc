@@ -31,7 +31,7 @@ import           System.IO.Unsafe                                     (unsafeDup
 --   >     const uint32_t* pPreserveAttachments;
 --   > } VkSubpassDescription;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSubpassDescription.html VkSubpassDescription registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSubpassDescription.html VkSubpassDescription registry at www.khronos.org>
 data VkSubpassDescription = VkSubpassDescription## Addr## ByteArray##
 
 instance Eq VkSubpassDescription where

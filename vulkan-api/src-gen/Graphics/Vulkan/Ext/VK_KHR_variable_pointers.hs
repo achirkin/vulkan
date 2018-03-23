@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds       #-}
 {-# LANGUAGE MagicHash       #-}
@@ -22,16 +23,7 @@ module Graphics.Vulkan.Ext.VK_KHR_variable_pointers
         --
 
         -- ** Required extensions: 'VK_KHR_get_physical_device_properties2', 'VK_KHR_storage_buffer_storage_class'.
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.VkDeviceCreateInfo,
-        module Graphics.Vulkan.Types.Struct.VkDeviceQueueCreateInfo,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures2KHR,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceVariablePointerFeaturesKHR,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
-        -- > #include "vk_platform.h"
         VK_KHR_VARIABLE_POINTERS_SPEC_VERSION,
         pattern VK_KHR_VARIABLE_POINTERS_SPEC_VERSION,
         VK_KHR_VARIABLE_POINTERS_EXTENSION_NAME,
@@ -40,14 +32,9 @@ module Graphics.Vulkan.Ext.VK_KHR_variable_pointers
        where
 import           GHC.Ptr
                                                                                           (Ptr (..))
+import           Graphics.Vulkan.Core_1_1
+                                                                                          (pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES)
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.VkStructureType
-import           Graphics.Vulkan.Types.Struct.VkDeviceCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkDeviceQueueCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures2KHR
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceVariablePointerFeaturesKHR
 
 pattern VK_KHR_VARIABLE_POINTERS_SPEC_VERSION :: (Num a, Eq a) => a
@@ -79,7 +66,4 @@ type VK_KHR_VARIABLE_POINTERS_EXTENSION_NAME =
      "VK_KHR_variable_pointers"
 
 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES_KHR
-        :: VkStructureType
-
-pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES_KHR
-        = VkStructureType 1000120000
+        = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES

@@ -13,6 +13,7 @@ import           Control.Monad
 import           Data.List                            ((\\))
 import           Foreign.C.String
 import           Graphics.Vulkan
+import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Ext.VK_KHR_surface
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
 

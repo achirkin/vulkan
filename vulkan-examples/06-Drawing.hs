@@ -13,12 +13,13 @@ Finally, it draws that damn triangle!
 module Main (main) where
 
 import           Control.Exception
-import           Control.Monad           (forM_)
+import           Control.Monad                        (forM_)
 import           Foreign.Marshal.Alloc
 import           Foreign.Marshal.Array
-import           Foreign.Storable
 import           Foreign.Ptr
+import           Foreign.Storable
 import           Graphics.Vulkan
+import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
 import           Graphics.Vulkan.Marshal.Create
 

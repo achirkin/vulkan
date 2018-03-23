@@ -24,11 +24,11 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_fd
 
         -- ** Required extensions: 'VK_KHR_external_semaphore'.
         module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.Enum.VkExternalSemaphoreHandleTypeFlagsKHR,
+        module Graphics.Vulkan.Types.Enum.VkExternalSemaphoreHandleTypeFlags,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Struct.VkImportSemaphoreFdInfoKHR,
         module Graphics.Vulkan.Types.Struct.VkSemaphoreGetFdInfoKHR,
-        module Graphics.Vulkan.Types.Enum.VkSemaphoreImportFlagsKHR,
+        module Graphics.Vulkan.Types.Enum.VkSemaphoreImportFlags,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
         vkImportSemaphoreFdKHR, vkImportSemaphoreFdKHRSafe,
@@ -42,13 +42,12 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_fd
         pattern VK_STRUCTURE_TYPE_IMPORT_SEMAPHORE_FD_INFO_KHR,
         pattern VK_STRUCTURE_TYPE_SEMAPHORE_GET_FD_INFO_KHR)
        where
-import           GHC.Ptr
-                                                                                   (Ptr (..))
+import           GHC.Ptr                                                       (Ptr (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.VkExternalSemaphoreHandleTypeFlagsKHR
+import           Graphics.Vulkan.Types.Enum.VkExternalSemaphoreHandleTypeFlags
 import           Graphics.Vulkan.Types.Enum.VkResult
-import           Graphics.Vulkan.Types.Enum.VkSemaphoreImportFlagsKHR
+import           Graphics.Vulkan.Types.Enum.VkSemaphoreImportFlags
 import           Graphics.Vulkan.Types.Enum.VkStructureType
 import           Graphics.Vulkan.Types.Handles
 import           Graphics.Vulkan.Types.Struct.VkImportSemaphoreFdInfoKHR
@@ -56,14 +55,14 @@ import           Graphics.Vulkan.Types.Struct.VkSemaphoreGetFdInfoKHR
 
 -- | Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR'.
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
 --
 --   > VkResult vkImportSemaphoreFdKHR
 --   >     ( VkDevice device
 --   >     , const VkImportSemaphoreFdInfoKHR* pImportSemaphoreFdInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkImportSemaphoreFdKHR.html vkImportSemaphoreFdKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkImportSemaphoreFdKHR.html vkImportSemaphoreFdKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkImportSemaphoreFdKHR"
                vkImportSemaphoreFdKHR ::
                VkDevice -- ^ device
@@ -72,14 +71,14 @@ foreign import ccall unsafe "vkImportSemaphoreFdKHR"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR'.
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
 --
 --   > VkResult vkImportSemaphoreFdKHR
 --   >     ( VkDevice device
 --   >     , const VkImportSemaphoreFdInfoKHR* pImportSemaphoreFdInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkImportSemaphoreFdKHR.html vkImportSemaphoreFdKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkImportSemaphoreFdKHR.html vkImportSemaphoreFdKHR registry at www.khronos.org>
 foreign import ccall safe "vkImportSemaphoreFdKHR"
                vkImportSemaphoreFdKHRSafe ::
                VkDevice -- ^ device
@@ -96,7 +95,7 @@ foreign import ccall safe "vkImportSemaphoreFdKHR"
 --   >     , int* pFd
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetSemaphoreFdKHR.html vkGetSemaphoreFdKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetSemaphoreFdKHR.html vkGetSemaphoreFdKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkGetSemaphoreFdKHR"
                vkGetSemaphoreFdKHR ::
                VkDevice -- ^ device
@@ -114,7 +113,7 @@ foreign import ccall unsafe "vkGetSemaphoreFdKHR"
 --   >     , int* pFd
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetSemaphoreFdKHR.html vkGetSemaphoreFdKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetSemaphoreFdKHR.html vkGetSemaphoreFdKHR registry at www.khronos.org>
 foreign import ccall safe "vkGetSemaphoreFdKHR"
                vkGetSemaphoreFdKHRSafe ::
                VkDevice -- ^ device

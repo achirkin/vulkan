@@ -3,31 +3,11 @@
 {-# LANGUAGE Strict         #-}
 module Graphics.Vulkan.Types.Include
        (-- > #include "vk_platform.h"
-        --
-        -- > #include <X11/Xlib.h>
-        --
-        -- > #include <X11/extensions/Xrandr.h>
-        --
-        -- > #include <android/native_window.h>
-        --
-        -- > #include <mir_toolkit/client_types.h>
-        --
-        -- > #include "vulkan.h"
-        --
-        -- > #include <wayland-client.h>
-        --
-        -- > #include <windows.h>
-        --
-        -- > #include <xcb/xcb.h>
-        ANativeWindow, DWORD, Display, HANDLE, HINSTANCE, HWND, LPCWSTR,
-        MirConnection, MirSurface, RROutput, SECURITY_ATTRIBUTES, VisualID,
-        Window, WlDisplay, WlSurface, XcbConnectionT, XcbVisualidT,
-        XcbWindowT)
+        DWORD, Display, HANDLE, HINSTANCE, HWND, LPCWSTR, MirConnection,
+        MirSurface, RROutput, SECURITY_ATTRIBUTES, VisualID, Window,
+        WlDisplay, WlSurface, XcbConnectionT, XcbVisualidT, XcbWindowT)
        where
 import           Graphics.Vulkan.Marshal (CULong (..), CWchar (..), Ptr, Word32)
-
--- | Requires @android/native_window.h@
-data ANativeWindow
 
 -- | Requires @windows.h@
 type DWORD = Word32

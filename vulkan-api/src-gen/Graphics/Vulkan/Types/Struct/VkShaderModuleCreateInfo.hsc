@@ -25,7 +25,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     const uint32_t*            pCode;
 --   > } VkShaderModuleCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkShaderModuleCreateInfo.html VkShaderModuleCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkShaderModuleCreateInfo.html VkShaderModuleCreateInfo registry at www.khronos.org>
 data VkShaderModuleCreateInfo = VkShaderModuleCreateInfo## Addr##
                                                           ByteArray##
 

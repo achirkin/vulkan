@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -23,38 +24,28 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_capabilities
         --
 
         -- ** Required extensions: 'VK_KHR_get_physical_device_properties2'.
+        module Graphics.Vulkan.Types.Struct.VkExternalBufferPropertiesKHR,
+        module Graphics.Vulkan.Types.Struct.VkExternalImageFormatPropertiesKHR,
+        module Graphics.Vulkan.Types.Enum.VkExternalMemoryFeatureFlagBitsKHR,
+        module Graphics.Vulkan.Types.Bitmasks,
+        module Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagBitsKHR,
+        module Graphics.Vulkan.Types.Struct.VkExternalMemoryPropertiesKHR,
+        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalBufferInfoKHR,
+        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalImageFormatInfoKHR,
+        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceIDPropertiesKHR,
+        vkGetPhysicalDeviceExternalBufferPropertiesKHR,
+        vkGetPhysicalDeviceExternalBufferPropertiesKHRSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.VkBufferCreateFlags,
         module Graphics.Vulkan.Types.Enum.VkBufferUsageFlags,
-        module Graphics.Vulkan.Types.Struct.VkExtent3D,
-        module Graphics.Vulkan.Types.Struct.VkExternalBufferPropertiesKHR,
-        module Graphics.Vulkan.Types.Struct.VkExternalImageFormatPropertiesKHR,
-        module Graphics.Vulkan.Types.Enum.VkExternalMemoryFeatureFlagsKHR,
-        module Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagsKHR,
-        module Graphics.Vulkan.Types.Struct.VkExternalMemoryPropertiesKHR,
-        module Graphics.Vulkan.Types.Enum.VkFormat,
-        module Graphics.Vulkan.Types.Enum.VkImageCreateFlags,
-        module Graphics.Vulkan.Types.Struct.VkImageFormatProperties,
-        module Graphics.Vulkan.Types.Struct.VkImageFormatProperties2KHR,
-        module Graphics.Vulkan.Types.Enum.VkImageTiling,
-        module Graphics.Vulkan.Types.Enum.VkImageType,
-        module Graphics.Vulkan.Types.Enum.VkImageUsageFlags,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalBufferInfoKHR,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalImageFormatInfoKHR,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceIDPropertiesKHR,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceImageFormatInfo2KHR,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties,
-        module Graphics.Vulkan.Types.Enum.VkPhysicalDeviceType,
-        module Graphics.Vulkan.Types.Enum.VkSampleCountFlags,
+        module Graphics.Vulkan.Types.Enum.VkExternalMemoryFeatureFlags,
+        module Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlags,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
-        -- > #include "vk_platform.h"
-        vkGetPhysicalDeviceExternalBufferPropertiesKHR,
-        vkGetPhysicalDeviceExternalBufferPropertiesKHRSafe,
         module Graphics.Vulkan.Types.Handles,
+        module Graphics.Vulkan.Types.Struct.VkExternalBufferProperties,
+        module Graphics.Vulkan.Types.Struct.VkExternalMemoryProperties,
+        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalBufferInfo,
         VK_KHR_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION,
         pattern VK_KHR_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION,
         VK_KHR_EXTERNAL_MEMORY_CAPABILITIES_EXTENSION_NAME,
@@ -64,76 +55,86 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_capabilities
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_BUFFER_INFO_KHR,
         pattern VK_STRUCTURE_TYPE_EXTERNAL_BUFFER_PROPERTIES_KHR,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ID_PROPERTIES_KHR,
-        pattern VK_LUID_SIZE_KHR, VK_LUID_SIZE_KHR)
+        pattern VK_LUID_SIZE_KHR,
+        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT_KHR,
+        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR,
+        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR,
+        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT_KHR,
+        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT_KHR,
+        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT_KHR,
+        pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT_KHR,
+        pattern VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_KHR,
+        pattern VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_KHR,
+        pattern VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_KHR)
        where
 import           GHC.Ptr
                                                                                           (Ptr (..))
 import           Graphics.Vulkan.Constants
-                                                                                          (VK_LUID_SIZE_KHR,
-                                                                                          pattern VK_LUID_SIZE_KHR)
+                                                                                          (pattern VK_LUID_SIZE_KHR)
+import           Graphics.Vulkan.Core_1_1
+                                                                                          (pattern VK_STRUCTURE_TYPE_EXTERNAL_BUFFER_PROPERTIES,
+                                                                                          pattern VK_STRUCTURE_TYPE_EXTERNAL_IMAGE_FORMAT_PROPERTIES,
+                                                                                          pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_BUFFER_INFO,
+                                                                                          pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO,
+                                                                                          pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ID_PROPERTIES)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Types.BaseTypes
+import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkBufferCreateFlags
 import           Graphics.Vulkan.Types.Enum.VkBufferUsageFlags
-import           Graphics.Vulkan.Types.Enum.VkExternalMemoryFeatureFlagsKHR
-import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagsKHR
-import           Graphics.Vulkan.Types.Enum.VkFormat
-import           Graphics.Vulkan.Types.Enum.VkImageCreateFlags
-import           Graphics.Vulkan.Types.Enum.VkImageTiling
-import           Graphics.Vulkan.Types.Enum.VkImageType
-import           Graphics.Vulkan.Types.Enum.VkImageUsageFlags
-import           Graphics.Vulkan.Types.Enum.VkPhysicalDeviceType
-import           Graphics.Vulkan.Types.Enum.VkSampleCountFlags
+import           Graphics.Vulkan.Types.Enum.VkExternalMemoryFeatureFlagBitsKHR
+import           Graphics.Vulkan.Types.Enum.VkExternalMemoryFeatureFlags
+import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagBitsKHR
+import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlags
 import           Graphics.Vulkan.Types.Enum.VkStructureType
 import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Struct.VkExtent3D
+import           Graphics.Vulkan.Types.Struct.VkExternalBufferProperties
 import           Graphics.Vulkan.Types.Struct.VkExternalBufferPropertiesKHR
 import           Graphics.Vulkan.Types.Struct.VkExternalImageFormatPropertiesKHR
+import           Graphics.Vulkan.Types.Struct.VkExternalMemoryProperties
 import           Graphics.Vulkan.Types.Struct.VkExternalMemoryPropertiesKHR
-import           Graphics.Vulkan.Types.Struct.VkImageFormatProperties
-import           Graphics.Vulkan.Types.Struct.VkImageFormatProperties2KHR
+import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalBufferInfo
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalBufferInfoKHR
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalImageFormatInfoKHR
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceIDPropertiesKHR
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceImageFormatInfo2KHR
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties
 
--- | > () vkGetPhysicalDeviceExternalBufferPropertiesKHR
+-- | This is an alias for `vkGetPhysicalDeviceExternalBufferProperties`.
+--
+--   > () vkGetPhysicalDeviceExternalBufferPropertiesKHR
 --   >     ( VkPhysicalDevice physicalDevice
---   >     , const VkPhysicalDeviceExternalBufferInfoKHR* pExternalBufferInfo
---   >     , VkExternalBufferPropertiesKHR* pExternalBufferProperties
+--   >     , const VkPhysicalDeviceExternalBufferInfo* pExternalBufferInfo
+--   >     , VkExternalBufferProperties* pExternalBufferProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceExternalBufferPropertiesKHR.html vkGetPhysicalDeviceExternalBufferPropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalBufferPropertiesKHR.html vkGetPhysicalDeviceExternalBufferPropertiesKHR registry at www.khronos.org>
 foreign import ccall unsafe
-               "vkGetPhysicalDeviceExternalBufferPropertiesKHR"
+               "vkGetPhysicalDeviceExternalBufferProperties"
                vkGetPhysicalDeviceExternalBufferPropertiesKHR ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
-                 Ptr VkPhysicalDeviceExternalBufferInfoKHR -- ^ pExternalBufferInfo
-                                                           ->
-                   Ptr VkExternalBufferPropertiesKHR -- ^ pExternalBufferProperties
-                                                     -> IO ()
+                 Ptr VkPhysicalDeviceExternalBufferInfo -- ^ pExternalBufferInfo
+                                                        ->
+                   Ptr VkExternalBufferProperties -- ^ pExternalBufferProperties
+                                                  -> IO ()
 
--- | > () vkGetPhysicalDeviceExternalBufferPropertiesKHR
+-- | This is an alias for `vkGetPhysicalDeviceExternalBufferProperties`.
+--
+--   > () vkGetPhysicalDeviceExternalBufferPropertiesKHR
 --   >     ( VkPhysicalDevice physicalDevice
---   >     , const VkPhysicalDeviceExternalBufferInfoKHR* pExternalBufferInfo
---   >     , VkExternalBufferPropertiesKHR* pExternalBufferProperties
+--   >     , const VkPhysicalDeviceExternalBufferInfo* pExternalBufferInfo
+--   >     , VkExternalBufferProperties* pExternalBufferProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceExternalBufferPropertiesKHR.html vkGetPhysicalDeviceExternalBufferPropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalBufferPropertiesKHR.html vkGetPhysicalDeviceExternalBufferPropertiesKHR registry at www.khronos.org>
 foreign import ccall safe
-               "vkGetPhysicalDeviceExternalBufferPropertiesKHR"
+               "vkGetPhysicalDeviceExternalBufferProperties"
                vkGetPhysicalDeviceExternalBufferPropertiesKHRSafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
-                 Ptr VkPhysicalDeviceExternalBufferInfoKHR -- ^ pExternalBufferInfo
-                                                           ->
-                   Ptr VkExternalBufferPropertiesKHR -- ^ pExternalBufferProperties
-                                                     -> IO ()
+                 Ptr VkPhysicalDeviceExternalBufferInfo -- ^ pExternalBufferInfo
+                                                        ->
+                   Ptr VkExternalBufferProperties -- ^ pExternalBufferProperties
+                                                  -> IO ()
 
 pattern VK_KHR_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -169,31 +170,46 @@ type VK_KHR_EXTERNAL_MEMORY_CAPABILITIES_EXTENSION_NAME =
      "VK_KHR_external_memory_capabilities"
 
 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO_KHR
-        :: VkStructureType
-
-pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO_KHR
-        = VkStructureType 1000071000
-
-pattern VK_STRUCTURE_TYPE_EXTERNAL_IMAGE_FORMAT_PROPERTIES_KHR ::
-        VkStructureType
+        = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO
 
 pattern VK_STRUCTURE_TYPE_EXTERNAL_IMAGE_FORMAT_PROPERTIES_KHR =
-        VkStructureType 1000071001
+        VK_STRUCTURE_TYPE_EXTERNAL_IMAGE_FORMAT_PROPERTIES
 
 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_BUFFER_INFO_KHR
-        :: VkStructureType
-
-pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_BUFFER_INFO_KHR
-        = VkStructureType 1000071002
-
-pattern VK_STRUCTURE_TYPE_EXTERNAL_BUFFER_PROPERTIES_KHR ::
-        VkStructureType
+        = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_BUFFER_INFO
 
 pattern VK_STRUCTURE_TYPE_EXTERNAL_BUFFER_PROPERTIES_KHR =
-        VkStructureType 1000071003
-
-pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ID_PROPERTIES_KHR ::
-        VkStructureType
+        VK_STRUCTURE_TYPE_EXTERNAL_BUFFER_PROPERTIES
 
 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ID_PROPERTIES_KHR =
-        VkStructureType 1000071004
+        VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ID_PROPERTIES
+
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT_KHR =
+        VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT
+
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR =
+        VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT
+
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR =
+        VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT
+
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT_KHR =
+        VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT
+
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT_KHR =
+        VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT
+
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT_KHR =
+        VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT
+
+pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT_KHR =
+        VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT
+
+pattern VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_KHR =
+        VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT
+
+pattern VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_KHR =
+        VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT
+
+pattern VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_KHR =
+        VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT

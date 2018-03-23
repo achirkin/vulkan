@@ -43,7 +43,7 @@ import           Graphics.Vulkan.Types.Handles
 --   >     , VkDisplayKHR display
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkReleaseDisplayEXT.html vkReleaseDisplayEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkReleaseDisplayEXT.html vkReleaseDisplayEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkReleaseDisplayEXT"
                vkReleaseDisplayEXT ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -57,7 +57,7 @@ foreign import ccall unsafe "vkReleaseDisplayEXT"
 --   >     , VkDisplayKHR display
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkReleaseDisplayEXT.html vkReleaseDisplayEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkReleaseDisplayEXT.html vkReleaseDisplayEXT registry at www.khronos.org>
 foreign import ccall safe "vkReleaseDisplayEXT"
                vkReleaseDisplayEXTSafe ::
                VkPhysicalDevice -- ^ physicalDevice

@@ -8,6 +8,7 @@ module Lib.Vulkan.Instance
 
 import           Foreign.C.String
 import           Graphics.Vulkan
+import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Marshal.Create
 
 import           Lib.Program

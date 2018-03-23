@@ -27,7 +27,7 @@ import           System.IO.Unsafe                                       (unsafeD
 --   >     const VkDescriptorPoolSize* pPoolSizes;
 --   > } VkDescriptorPoolCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDescriptorPoolCreateInfo.html VkDescriptorPoolCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDescriptorPoolCreateInfo.html VkDescriptorPoolCreateInfo registry at www.khronos.org>
 data VkDescriptorPoolCreateInfo = VkDescriptorPoolCreateInfo## Addr##
                                                               ByteArray##
 

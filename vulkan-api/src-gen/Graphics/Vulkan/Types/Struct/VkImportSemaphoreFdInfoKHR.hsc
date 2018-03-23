@@ -9,32 +9,26 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkImportSemaphoreFdInfoKHR
        (VkImportSemaphoreFdInfoKHR(..)) where
-import           Foreign.Storable
-                                                                                   (Storable (..))
+import           Foreign.Storable                                              (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.VkExternalSemaphoreHandleTypeFlagsKHR
-                                                                                   (VkExternalSemaphoreHandleTypeFlagBitsKHR)
-import           Graphics.Vulkan.Types.Enum.VkSemaphoreImportFlagsKHR
-                                                                                   (VkSemaphoreImportFlagsKHR)
-import           Graphics.Vulkan.Types.Enum.VkStructureType
-                                                                                   (VkStructureType)
-import           Graphics.Vulkan.Types.Handles
-                                                                                   (VkSemaphore)
-import           System.IO.Unsafe
-                                                                                   (unsafeDupablePerformIO)
+import           Graphics.Vulkan.Types.Enum.VkExternalSemaphoreHandleTypeFlags (VkExternalSemaphoreHandleTypeFlagBits)
+import           Graphics.Vulkan.Types.Enum.VkSemaphoreImportFlags             (VkSemaphoreImportFlags)
+import           Graphics.Vulkan.Types.Enum.VkStructureType                    (VkStructureType)
+import           Graphics.Vulkan.Types.Handles                                 (VkSemaphore)
+import           System.IO.Unsafe                                              (unsafeDupablePerformIO)
 
 -- | > typedef struct VkImportSemaphoreFdInfoKHR {
 --   >     VkStructureType sType;
 --   >     const void*                      pNext;
 --   >     VkSemaphore    semaphore;
---   >     VkSemaphoreImportFlagsKHR flags;
---   >     VkExternalSemaphoreHandleTypeFlagBitsKHR handleType;
+--   >     VkSemaphoreImportFlags flags;
+--   >     VkExternalSemaphoreHandleTypeFlagBits handleType;
 --   >     int                              fd;
 --   > } VkImportSemaphoreFdInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImportSemaphoreFdInfoKHR.html VkImportSemaphoreFdInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkImportSemaphoreFdInfoKHR.html VkImportSemaphoreFdInfoKHR registry at www.khronos.org>
 data VkImportSemaphoreFdInfoKHR = VkImportSemaphoreFdInfoKHR## Addr##
                                                               ByteArray##
 
@@ -185,7 +179,7 @@ instance {-# OVERLAPPING #-}
 instance {-# OVERLAPPING #-}
          HasField "flags" VkImportSemaphoreFdInfoKHR where
         type FieldType "flags" VkImportSemaphoreFdInfoKHR =
-             VkSemaphoreImportFlagsKHR
+             VkSemaphoreImportFlags
         type FieldOptional "flags" VkImportSemaphoreFdInfoKHR = 'True -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkImportSemaphoreFdInfoKHR =
              #{offset VkImportSemaphoreFdInfoKHR, flags}
@@ -218,7 +212,7 @@ instance {-# OVERLAPPING #-}
 instance {-# OVERLAPPING #-}
          HasField "handleType" VkImportSemaphoreFdInfoKHR where
         type FieldType "handleType" VkImportSemaphoreFdInfoKHR =
-             VkExternalSemaphoreHandleTypeFlagBitsKHR
+             VkExternalSemaphoreHandleTypeFlagBits
         type FieldOptional "handleType" VkImportSemaphoreFdInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "handleType" VkImportSemaphoreFdInfoKHR =
              #{offset VkImportSemaphoreFdInfoKHR, handleType}

@@ -27,7 +27,7 @@ import           System.IO.Unsafe                                               
 --   >     const VkViewportWScalingNV*      pViewportWScalings;
 --   > } VkPipelineViewportWScalingStateCreateInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPipelineViewportWScalingStateCreateInfoNV.html VkPipelineViewportWScalingStateCreateInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPipelineViewportWScalingStateCreateInfoNV.html VkPipelineViewportWScalingStateCreateInfoNV registry at www.khronos.org>
 data VkPipelineViewportWScalingStateCreateInfoNV = VkPipelineViewportWScalingStateCreateInfoNV## Addr##
                                                                                                 ByteArray##
 

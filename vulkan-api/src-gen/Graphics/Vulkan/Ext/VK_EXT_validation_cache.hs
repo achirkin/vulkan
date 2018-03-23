@@ -79,7 +79,7 @@ import           Graphics.Vulkan.Types.Struct.VkValidationCacheCreateInfoEXT
 --   >     , VkValidationCacheEXT* pValidationCache
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateValidationCacheEXT.html vkCreateValidationCacheEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateValidationCacheEXT.html vkCreateValidationCacheEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateValidationCacheEXT"
                vkCreateValidationCacheEXT ::
                VkDevice -- ^ device
@@ -102,7 +102,7 @@ foreign import ccall unsafe "vkCreateValidationCacheEXT"
 --   >     , VkValidationCacheEXT* pValidationCache
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateValidationCacheEXT.html vkCreateValidationCacheEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateValidationCacheEXT.html vkCreateValidationCacheEXT registry at www.khronos.org>
 foreign import ccall safe "vkCreateValidationCacheEXT"
                vkCreateValidationCacheEXTSafe ::
                VkDevice -- ^ device
@@ -120,7 +120,7 @@ foreign import ccall safe "vkCreateValidationCacheEXT"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroyValidationCacheEXT.html vkDestroyValidationCacheEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyValidationCacheEXT.html vkDestroyValidationCacheEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyValidationCacheEXT"
                vkDestroyValidationCacheEXT ::
                VkDevice -- ^ device
@@ -135,7 +135,7 @@ foreign import ccall unsafe "vkDestroyValidationCacheEXT"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroyValidationCacheEXT.html vkDestroyValidationCacheEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyValidationCacheEXT.html vkDestroyValidationCacheEXT registry at www.khronos.org>
 foreign import ccall safe "vkDestroyValidationCacheEXT"
                vkDestroyValidationCacheEXTSafe ::
                VkDevice -- ^ device
@@ -155,7 +155,7 @@ foreign import ccall safe "vkDestroyValidationCacheEXT"
 --   >     , const VkValidationCacheEXT* pSrcCaches
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkMergeValidationCachesEXT.html vkMergeValidationCachesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkMergeValidationCachesEXT.html vkMergeValidationCachesEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkMergeValidationCachesEXT"
                vkMergeValidationCachesEXT ::
                VkDevice -- ^ device
@@ -177,7 +177,7 @@ foreign import ccall unsafe "vkMergeValidationCachesEXT"
 --   >     , const VkValidationCacheEXT* pSrcCaches
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkMergeValidationCachesEXT.html vkMergeValidationCachesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkMergeValidationCachesEXT.html vkMergeValidationCachesEXT registry at www.khronos.org>
 foreign import ccall safe "vkMergeValidationCachesEXT"
                vkMergeValidationCachesEXTSafe ::
                VkDevice -- ^ device
@@ -199,7 +199,7 @@ foreign import ccall safe "vkMergeValidationCachesEXT"
 --   >     , void* pData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetValidationCacheDataEXT.html vkGetValidationCacheDataEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetValidationCacheDataEXT.html vkGetValidationCacheDataEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkGetValidationCacheDataEXT"
                vkGetValidationCacheDataEXT ::
                VkDevice -- ^ device
@@ -220,7 +220,7 @@ foreign import ccall unsafe "vkGetValidationCacheDataEXT"
 --   >     , void* pData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetValidationCacheDataEXT.html vkGetValidationCacheDataEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetValidationCacheDataEXT.html vkGetValidationCacheDataEXT registry at www.khronos.org>
 foreign import ccall safe "vkGetValidationCacheDataEXT"
                vkGetValidationCacheDataEXTSafe ::
                VkDevice -- ^ device

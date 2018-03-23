@@ -17,11 +17,11 @@ module Graphics.Vulkan.Ext.VK_KHR_android_surface
         --
         -- type: @instance@
         --
+        -- platform: @android@
+        --
         -- Extension number: @9@
         --
         -- Required extensions: 'VK_KHR_surface'.
-        --
-        -- Protected by CPP ifdef: @VK_USE_PLATFORM_ANDROID_KHR@
         --
 
         -- ** Required extensions: 'VK_KHR_surface'.
@@ -30,16 +30,14 @@ module Graphics.Vulkan.Ext.VK_KHR_android_surface
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
-        --
-        -- > #include <android/native_window.h>
         vkCreateAndroidSurfaceKHR, vkCreateAndroidSurfaceKHRSafe,
         module Graphics.Vulkan.Marshal,
+        module Graphics.Vulkan.Types.Defines,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,
         module Graphics.Vulkan.Types.Funcpointers,
         module Graphics.Vulkan.Types.Handles,
-        module Graphics.Vulkan.Types.Include,
         module Graphics.Vulkan.Types.Struct.VkAllocationCallbacks,
         VK_KHR_ANDROID_SURFACE_SPEC_VERSION,
         pattern VK_KHR_ANDROID_SURFACE_SPEC_VERSION,
@@ -51,13 +49,13 @@ import           GHC.Ptr                                                    (Ptr
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
+import           Graphics.Vulkan.Types.Defines
 import           Graphics.Vulkan.Types.Enum.VkInternalAllocationType
 import           Graphics.Vulkan.Types.Enum.VkResult
 import           Graphics.Vulkan.Types.Enum.VkStructureType
 import           Graphics.Vulkan.Types.Enum.VkSystemAllocationScope
 import           Graphics.Vulkan.Types.Funcpointers
 import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Include
 import           Graphics.Vulkan.Types.Struct.VkAllocationCallbacks
 import           Graphics.Vulkan.Types.Struct.VkAndroidSurfaceCreateInfoKHR
 
@@ -72,7 +70,7 @@ import           Graphics.Vulkan.Types.Struct.VkAndroidSurfaceCreateInfoKHR
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateAndroidSurfaceKHR.html vkCreateAndroidSurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateAndroidSurfaceKHR.html vkCreateAndroidSurfaceKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateAndroidSurfaceKHR"
                vkCreateAndroidSurfaceKHR ::
                VkInstance -- ^ instance
@@ -94,7 +92,7 @@ foreign import ccall unsafe "vkCreateAndroidSurfaceKHR"
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateAndroidSurfaceKHR.html vkCreateAndroidSurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateAndroidSurfaceKHR.html vkCreateAndroidSurfaceKHR registry at www.khronos.org>
 foreign import ccall safe "vkCreateAndroidSurfaceKHR"
                vkCreateAndroidSurfaceKHRSafe ::
                VkInstance -- ^ instance

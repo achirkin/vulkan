@@ -9,36 +9,29 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkImportSemaphoreWin32HandleInfoKHR
        (VkImportSemaphoreWin32HandleInfoKHR(..)) where
-import           Foreign.Storable
-                                                                                   (Storable (..))
+import           Foreign.Storable                                              (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.VkExternalSemaphoreHandleTypeFlagsKHR
-                                                                                   (VkExternalSemaphoreHandleTypeFlagBitsKHR)
-import           Graphics.Vulkan.Types.Enum.VkSemaphoreImportFlagsKHR
-                                                                                   (VkSemaphoreImportFlagsKHR)
-import           Graphics.Vulkan.Types.Enum.VkStructureType
-                                                                                   (VkStructureType)
-import           Graphics.Vulkan.Types.Handles
-                                                                                   (VkSemaphore)
-import           Graphics.Vulkan.Types.Include
-                                                                                   (HANDLE,
-                                                                                   LPCWSTR)
-import           System.IO.Unsafe
-                                                                                   (unsafeDupablePerformIO)
+import           Graphics.Vulkan.Types.Enum.VkExternalSemaphoreHandleTypeFlags (VkExternalSemaphoreHandleTypeFlagBits)
+import           Graphics.Vulkan.Types.Enum.VkSemaphoreImportFlags             (VkSemaphoreImportFlags)
+import           Graphics.Vulkan.Types.Enum.VkStructureType                    (VkStructureType)
+import           Graphics.Vulkan.Types.Handles                                 (VkSemaphore)
+import           Graphics.Vulkan.Types.Include                                 (HANDLE,
+                                                                                LPCWSTR)
+import           System.IO.Unsafe                                              (unsafeDupablePerformIO)
 
 -- | > typedef struct VkImportSemaphoreWin32HandleInfoKHR {
 --   >     VkStructureType sType;
 --   >     const void*                      pNext;
 --   >     VkSemaphore    semaphore;
---   >     VkSemaphoreImportFlagsKHR flags;
---   >     VkExternalSemaphoreHandleTypeFlagBitsKHR handleType;
+--   >     VkSemaphoreImportFlags flags;
+--   >     VkExternalSemaphoreHandleTypeFlagBits handleType;
 --   >     HANDLE           handle;
 --   >     LPCWSTR          name;
 --   > } VkImportSemaphoreWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImportSemaphoreWin32HandleInfoKHR.html VkImportSemaphoreWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkImportSemaphoreWin32HandleInfoKHR.html VkImportSemaphoreWin32HandleInfoKHR registry at www.khronos.org>
 data VkImportSemaphoreWin32HandleInfoKHR = VkImportSemaphoreWin32HandleInfoKHR## Addr##
                                                                                 ByteArray##
 
@@ -202,7 +195,7 @@ instance {-# OVERLAPPING #-}
 instance {-# OVERLAPPING #-}
          HasField "flags" VkImportSemaphoreWin32HandleInfoKHR where
         type FieldType "flags" VkImportSemaphoreWin32HandleInfoKHR =
-             VkSemaphoreImportFlagsKHR
+             VkSemaphoreImportFlags
         type FieldOptional "flags" VkImportSemaphoreWin32HandleInfoKHR =
              'True -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkImportSemaphoreWin32HandleInfoKHR =
@@ -237,7 +230,7 @@ instance {-# OVERLAPPING #-}
 instance {-# OVERLAPPING #-}
          HasField "handleType" VkImportSemaphoreWin32HandleInfoKHR where
         type FieldType "handleType" VkImportSemaphoreWin32HandleInfoKHR =
-             VkExternalSemaphoreHandleTypeFlagBitsKHR
+             VkExternalSemaphoreHandleTypeFlagBits
         type FieldOptional "handleType" VkImportSemaphoreWin32HandleInfoKHR
              = 'True -- ' closing tick for hsc2hs
         type FieldOffset "handleType" VkImportSemaphoreWin32HandleInfoKHR =

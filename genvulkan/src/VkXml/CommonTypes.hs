@@ -7,6 +7,7 @@ module VkXml.CommonTypes
   , VkEnumName (..)
   , VkMemberName (..)
   , VkCommandName (..)
+  , VkPlatformName (..)
   , Sections (..), VkTagName (..)
   , VkExtensionName (..)
   , ProtectCPP (..), ProtectFlag (..), ProtectDef (..)
@@ -58,6 +59,9 @@ newtype VkCommandName = VkCommandName { unVkCommandName :: Text }
 
 
 newtype VkTagName = VkTagName { unVkTagName :: Text }
+  deriving (Eq, Ord, Show, Read, IsString)
+
+newtype VkPlatformName = VkPlatformName { unVkPlatformName :: Text }
   deriving (Eq, Ord, Show, Read, IsString)
 
 

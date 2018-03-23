@@ -22,7 +22,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     uint32_t                         memoryTypeBits;
 --   > } VkMemoryWin32HandlePropertiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkMemoryWin32HandlePropertiesKHR.html VkMemoryWin32HandlePropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkMemoryWin32HandlePropertiesKHR.html VkMemoryWin32HandlePropertiesKHR registry at www.khronos.org>
 data VkMemoryWin32HandlePropertiesKHR = VkMemoryWin32HandlePropertiesKHR## Addr##
                                                                           ByteArray##
 

@@ -26,14 +26,16 @@ module Graphics.Vulkan.Ext.VK_EXT_external_memory_host
         -- ** Required extensions: 'VK_KHR_external_memory'.
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagsKHR,
+        module Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlags,
+        module Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagBitsKHR,
+        module Graphics.Vulkan.Types.Bitmasks,
         module Graphics.Vulkan.Types.Struct.VkImportMemoryHostPointerInfoEXT,
         module Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo,
         module Graphics.Vulkan.Types.Struct.VkMemoryHostPointerPropertiesEXT,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalMemoryHostPropertiesEXT,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR,
+        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties,
         module Graphics.Vulkan.Types.Enum.VkPhysicalDeviceType,
         module Graphics.Vulkan.Types.Enum.VkSampleCountFlags,
@@ -57,7 +59,9 @@ import           GHC.Ptr
                                                                                                (Ptr (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagsKHR
+import           Graphics.Vulkan.Types.Bitmasks
+import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagBitsKHR
+import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlags
 import           Graphics.Vulkan.Types.Enum.VkPhysicalDeviceType
 import           Graphics.Vulkan.Types.Enum.VkResult
 import           Graphics.Vulkan.Types.Enum.VkSampleCountFlags
@@ -69,49 +73,49 @@ import           Graphics.Vulkan.Types.Struct.VkMemoryHostPointerPropertiesEXT
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalMemoryHostPropertiesEXT
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR
+import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties
 
 -- | Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR'.
+--   Error codes: 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
 --
 --   > VkResult vkGetMemoryHostPointerPropertiesEXT
 --   >     ( VkDevice device
---   >     , VkExternalMemoryHandleTypeFlagBitsKHR handleType
+--   >     , VkExternalMemoryHandleTypeFlagBits handleType
 --   >     , const void* pHostPointer
 --   >     , VkMemoryHostPointerPropertiesEXT* pMemoryHostPointerProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetMemoryHostPointerPropertiesEXT.html vkGetMemoryHostPointerPropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryHostPointerPropertiesEXT.html vkGetMemoryHostPointerPropertiesEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkGetMemoryHostPointerPropertiesEXT"
                vkGetMemoryHostPointerPropertiesEXT ::
                VkDevice -- ^ device
                         ->
-                 VkExternalMemoryHandleTypeFlagBitsKHR -- ^ handleType
-                                                       ->
+                 VkExternalMemoryHandleTypeFlagBits -- ^ handleType
+                                                    ->
                    Ptr Void -- ^ pHostPointer
                             -> Ptr VkMemoryHostPointerPropertiesEXT -- ^ pMemoryHostPointerProperties
                                                                     -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR'.
+--   Error codes: 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
 --
 --   > VkResult vkGetMemoryHostPointerPropertiesEXT
 --   >     ( VkDevice device
---   >     , VkExternalMemoryHandleTypeFlagBitsKHR handleType
+--   >     , VkExternalMemoryHandleTypeFlagBits handleType
 --   >     , const void* pHostPointer
 --   >     , VkMemoryHostPointerPropertiesEXT* pMemoryHostPointerProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetMemoryHostPointerPropertiesEXT.html vkGetMemoryHostPointerPropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryHostPointerPropertiesEXT.html vkGetMemoryHostPointerPropertiesEXT registry at www.khronos.org>
 foreign import ccall safe "vkGetMemoryHostPointerPropertiesEXT"
                vkGetMemoryHostPointerPropertiesEXTSafe ::
                VkDevice -- ^ device
                         ->
-                 VkExternalMemoryHandleTypeFlagBitsKHR -- ^ handleType
-                                                       ->
+                 VkExternalMemoryHandleTypeFlagBits -- ^ handleType
+                                                    ->
                    Ptr Void -- ^ pHostPointer
                             -> Ptr VkMemoryHostPointerPropertiesEXT -- ^ pMemoryHostPointerProperties
                                                                     -> IO VkResult
@@ -165,14 +169,14 @@ pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_MEMORY_HOST_PROPERTIES_EXT
 
 -- | bitpos = @7@
 pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION_BIT_EXT ::
-        VkExternalMemoryHandleTypeFlagBitsKHR
+        VkExternalMemoryHandleTypeFlagBits
 
 pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION_BIT_EXT =
-        VkExternalMemoryHandleTypeFlagBitsKHR 128
+        VkExternalMemoryHandleTypeFlagBits 128
 
 -- | bitpos = @8@
 pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY_BIT_EXT
-        :: VkExternalMemoryHandleTypeFlagBitsKHR
+        :: VkExternalMemoryHandleTypeFlagBits
 
 pattern VK_EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY_BIT_EXT
-        = VkExternalMemoryHandleTypeFlagBitsKHR 256
+        = VkExternalMemoryHandleTypeFlagBits 256

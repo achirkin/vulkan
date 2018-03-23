@@ -102,7 +102,7 @@ import           Graphics.Vulkan.Types.Struct.VkSwapchainCreateInfoKHR
 --   >     , const VkDisplayPowerInfoEXT* pDisplayPowerInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDisplayPowerControlEXT.html vkDisplayPowerControlEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDisplayPowerControlEXT.html vkDisplayPowerControlEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkDisplayPowerControlEXT"
                vkDisplayPowerControlEXT ::
                VkDevice -- ^ device
@@ -119,7 +119,7 @@ foreign import ccall unsafe "vkDisplayPowerControlEXT"
 --   >     , const VkDisplayPowerInfoEXT* pDisplayPowerInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDisplayPowerControlEXT.html vkDisplayPowerControlEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDisplayPowerControlEXT.html vkDisplayPowerControlEXT registry at www.khronos.org>
 foreign import ccall safe "vkDisplayPowerControlEXT"
                vkDisplayPowerControlEXTSafe ::
                VkDevice -- ^ device
@@ -137,7 +137,7 @@ foreign import ccall safe "vkDisplayPowerControlEXT"
 --   >     , VkFence* pFence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkRegisterDeviceEventEXT.html vkRegisterDeviceEventEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkRegisterDeviceEventEXT.html vkRegisterDeviceEventEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkRegisterDeviceEventEXT"
                vkRegisterDeviceEventEXT ::
                VkDevice -- ^ device
@@ -157,7 +157,7 @@ foreign import ccall unsafe "vkRegisterDeviceEventEXT"
 --   >     , VkFence* pFence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkRegisterDeviceEventEXT.html vkRegisterDeviceEventEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkRegisterDeviceEventEXT.html vkRegisterDeviceEventEXT registry at www.khronos.org>
 foreign import ccall safe "vkRegisterDeviceEventEXT"
                vkRegisterDeviceEventEXTSafe ::
                VkDevice -- ^ device
@@ -178,7 +178,7 @@ foreign import ccall safe "vkRegisterDeviceEventEXT"
 --   >     , VkFence* pFence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkRegisterDisplayEventEXT.html vkRegisterDisplayEventEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkRegisterDisplayEventEXT.html vkRegisterDisplayEventEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkRegisterDisplayEventEXT"
                vkRegisterDisplayEventEXT ::
                VkDevice -- ^ device
@@ -201,7 +201,7 @@ foreign import ccall unsafe "vkRegisterDisplayEventEXT"
 --   >     , VkFence* pFence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkRegisterDisplayEventEXT.html vkRegisterDisplayEventEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkRegisterDisplayEventEXT.html vkRegisterDisplayEventEXT registry at www.khronos.org>
 foreign import ccall safe "vkRegisterDisplayEventEXT"
                vkRegisterDisplayEventEXTSafe ::
                VkDevice -- ^ device
@@ -214,7 +214,9 @@ foreign import ccall safe "vkRegisterDisplayEventEXT"
                                                -> Ptr VkFence -- ^ pFence
                                                               -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR'.
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR'.
 --
 --   > VkResult vkGetSwapchainCounterEXT
 --   >     ( VkDevice device
@@ -223,7 +225,7 @@ foreign import ccall safe "vkRegisterDisplayEventEXT"
 --   >     , uint64_t* pCounterValue
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetSwapchainCounterEXT.html vkGetSwapchainCounterEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetSwapchainCounterEXT.html vkGetSwapchainCounterEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkGetSwapchainCounterEXT"
                vkGetSwapchainCounterEXT ::
                VkDevice -- ^ device
@@ -234,7 +236,9 @@ foreign import ccall unsafe "vkGetSwapchainCounterEXT"
                                                -> Ptr Word64 -- ^ pCounterValue
                                                              -> IO VkResult
 
--- | Success codes: 'VK_SUCCESS', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR'.
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR'.
 --
 --   > VkResult vkGetSwapchainCounterEXT
 --   >     ( VkDevice device
@@ -243,7 +247,7 @@ foreign import ccall unsafe "vkGetSwapchainCounterEXT"
 --   >     , uint64_t* pCounterValue
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetSwapchainCounterEXT.html vkGetSwapchainCounterEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetSwapchainCounterEXT.html vkGetSwapchainCounterEXT registry at www.khronos.org>
 foreign import ccall safe "vkGetSwapchainCounterEXT"
                vkGetSwapchainCounterEXTSafe ::
                VkDevice -- ^ device

@@ -22,7 +22,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     uint32_t               memoryTypeBits;
 --   > } VkMemoryRequirements;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkMemoryRequirements.html VkMemoryRequirements registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkMemoryRequirements.html VkMemoryRequirements registry at www.khronos.org>
 data VkMemoryRequirements = VkMemoryRequirements## Addr## ByteArray##
 
 instance Eq VkMemoryRequirements where
