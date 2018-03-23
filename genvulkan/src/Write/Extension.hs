@@ -7,15 +7,18 @@ module Write.Extension
   ( genExtension
   ) where
 
+import           Control.Applicative              ((<|>))
 import           Control.Monad.Morph              (hoist)
 import           Control.Monad.Reader.Class
 import           Control.Monad.Trans.State.Strict (evalStateT)
+import qualified Data.Map.Strict                  as Map
 import           Data.Semigroup
 import qualified Data.Text                        as T
 
 import           VkXml.CommonTypes
 import           VkXml.Sections
 import           VkXml.Sections.Extensions
+import           VkXml.Sections.Platforms
 import           Write.Feature
 import           Write.ModuleWriter
 
@@ -27,11 +30,15 @@ genExtension (VkExtension VkExtAttrs{..} ereqs) = hoist (`evalStateT` mempty) $ 
     vkXml <- ask
     let tps = globTypes vkXml
         cmds = globCommands vkXml
+        pfs = platforms $ globPlatforms vkXml
+        mplatform = extPlatform >>= \pn -> Map.lookup pn pfs
+
     writeSection curlvl $ "Vulkan extension: @" <> unVkExtensionName extName <> "@"
        <:> ("supported: @" <> extSupported <> "@")
        <:> maybe mempty (\s -> "contact: @" <> s <> "@") extContact
        <:> maybe mempty (\s -> "author: @" <> unVkTagName s <> "@") extAuthor
        <:> maybe mempty (\s -> "type: @" <> s <> "@") extType
+       <:> maybe mempty (\s -> "platform: @" <> s <> "@") (unVkPlatformName <$> extPlatform)
        <:> ("Extension number: @" <> T.pack (show extNumber) <> "@")
        <:> showExts extReqExts
        <:> maybe mempty
@@ -40,4 +47,4 @@ genExtension (VkExtension VkExtAttrs{..} ereqs) = hoist (`evalStateT` mempty) $ 
 
     _ <- pushSecLvl $ \lvl -> mconcat <$> mapM (genRequire lvl tps cmds) ereqs
 
-    pure extProtect
+    pure $ extProtect <|> protect <$> mplatform

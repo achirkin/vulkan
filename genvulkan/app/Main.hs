@@ -1,18 +1,20 @@
 module Main where
 
 import ProcessVkXml
+import Path
 import Path.IO
 
 main :: IO ()
 main = do
-  inVkH <- resolveFile' "../vulkan-docs/src/vulkan/vulkan.h"
-  outVkH <- resolveFile' "../vulkan-api/include/vulkan/vulkan.h"
-  processVulkanHFile inVkH outVkH
-  
-  inVkPlatformH <- resolveFile' "../vulkan-docs/src/vulkan/vk_platform.h"
-  outVkPlatformH <- resolveFile' "../vulkan-api/include/vulkan/vk_platform.h"
-  copyFile inVkPlatformH outVkPlatformH
+  inVkHFolder <- resolveDir' "../vulkan-docs/src/vulkan"
+  outVkHFolder <- resolveDir' "../vulkan-api/include/vulkan"
+  removeDirRecur outVkHFolder
+  createDir outVkHFolder
 
+  (_, fnames ) <- listDir inVkHFolder
+  mapM_
+    (\inVkH -> copyFile inVkH (outVkHFolder </> filename inVkH))
+    (filter ((".h" == ) . fileExtension) fnames)
 
   vkXml <- resolveFile' "../vulkan-docs/src/spec/vk.xml"
   outDir <- resolveDir' "../vulkan-api/src-gen"

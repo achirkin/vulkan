@@ -23,7 +23,7 @@ import           System.IO.Unsafe                                  (unsafeDupabl
 --   >     VkDisplayPowerStateEXT           powerState;
 --   > } VkDisplayPowerInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDisplayPowerInfoEXT.html VkDisplayPowerInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDisplayPowerInfoEXT.html VkDisplayPowerInfoEXT registry at www.khronos.org>
 data VkDisplayPowerInfoEXT = VkDisplayPowerInfoEXT## Addr##
                                                     ByteArray##
 

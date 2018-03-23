@@ -17,11 +17,11 @@ module Graphics.Vulkan.Ext.VK_KHR_wayland_surface
         --
         -- type: @instance@
         --
+        -- platform: @wayland@
+        --
         -- Extension number: @7@
         --
         -- Required extensions: 'VK_KHR_surface'.
-        --
-        -- Protected by CPP ifdef: @VK_USE_PLATFORM_WAYLAND_KHR@
         --
 
         -- ** Required extensions: 'VK_KHR_surface'.
@@ -30,8 +30,6 @@ module Graphics.Vulkan.Ext.VK_KHR_wayland_surface
         module Graphics.Vulkan.Types.Bitmasks,
         module Graphics.Vulkan.Types.Struct.VkWaylandSurfaceCreateInfoKHR,
         -- > #include "vk_platform.h"
-        --
-        -- > #include <wayland-client.h>
         vkCreateWaylandSurfaceKHR, vkCreateWaylandSurfaceKHRSafe,
         vkGetPhysicalDeviceWaylandPresentationSupportKHR,
         vkGetPhysicalDeviceWaylandPresentationSupportKHRSafe,
@@ -74,7 +72,7 @@ import           Graphics.Vulkan.Types.Struct.VkWaylandSurfaceCreateInfoKHR
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateWaylandSurfaceKHR.html vkCreateWaylandSurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateWaylandSurfaceKHR.html vkCreateWaylandSurfaceKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateWaylandSurfaceKHR"
                vkCreateWaylandSurfaceKHR ::
                VkInstance -- ^ instance
@@ -96,7 +94,7 @@ foreign import ccall unsafe "vkCreateWaylandSurfaceKHR"
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateWaylandSurfaceKHR.html vkCreateWaylandSurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateWaylandSurfaceKHR.html vkCreateWaylandSurfaceKHR registry at www.khronos.org>
 foreign import ccall safe "vkCreateWaylandSurfaceKHR"
                vkCreateWaylandSurfaceKHRSafe ::
                VkInstance -- ^ instance
@@ -113,7 +111,7 @@ foreign import ccall safe "vkCreateWaylandSurfaceKHR"
 --   >     , struct wl_display* display
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceWaylandPresentationSupportKHR.html vkGetPhysicalDeviceWaylandPresentationSupportKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceWaylandPresentationSupportKHR.html vkGetPhysicalDeviceWaylandPresentationSupportKHR registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceWaylandPresentationSupportKHR"
                vkGetPhysicalDeviceWaylandPresentationSupportKHR ::
@@ -128,7 +126,7 @@ foreign import ccall unsafe
 --   >     , struct wl_display* display
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceWaylandPresentationSupportKHR.html vkGetPhysicalDeviceWaylandPresentationSupportKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceWaylandPresentationSupportKHR.html vkGetPhysicalDeviceWaylandPresentationSupportKHR registry at www.khronos.org>
 foreign import ccall safe
                "vkGetPhysicalDeviceWaylandPresentationSupportKHR"
                vkGetPhysicalDeviceWaylandPresentationSupportKHRSafe ::

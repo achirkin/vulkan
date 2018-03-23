@@ -30,7 +30,7 @@ module Graphics.Vulkan.Ext.VK_EXT_conservative_rasterization
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceConservativeRasterizationPropertiesEXT,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR,
+        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties,
         module Graphics.Vulkan.Types.Enum.VkPhysicalDeviceType,
         module Graphics.Vulkan.Types.Bitmasks,
@@ -62,7 +62,7 @@ import           Graphics.Vulkan.Types.Enum.VkStructureType
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceConservativeRasterizationPropertiesEXT
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR
+import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties
 import           Graphics.Vulkan.Types.Struct.VkPipelineRasterizationConservativeStateCreateInfoEXT
 import           Graphics.Vulkan.Types.Struct.VkPipelineRasterizationStateCreateInfo

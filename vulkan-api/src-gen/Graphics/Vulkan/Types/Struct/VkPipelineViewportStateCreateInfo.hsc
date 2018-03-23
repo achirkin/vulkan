@@ -29,7 +29,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     const VkRect2D*        pScissors;
 --   > } VkPipelineViewportStateCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPipelineViewportStateCreateInfo.html VkPipelineViewportStateCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPipelineViewportStateCreateInfo.html VkPipelineViewportStateCreateInfo registry at www.khronos.org>
 data VkPipelineViewportStateCreateInfo = VkPipelineViewportStateCreateInfo## Addr##
                                                                             ByteArray##
 

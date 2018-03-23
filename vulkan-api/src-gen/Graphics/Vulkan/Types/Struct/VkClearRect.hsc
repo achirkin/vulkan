@@ -22,7 +22,7 @@ import           System.IO.Unsafe                      (unsafeDupablePerformIO)
 --   >     uint32_t       layerCount;
 --   > } VkClearRect;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkClearRect.html VkClearRect registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkClearRect.html VkClearRect registry at www.khronos.org>
 data VkClearRect = VkClearRect## Addr## ByteArray##
 
 instance Eq VkClearRect where

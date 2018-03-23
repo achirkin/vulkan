@@ -49,7 +49,7 @@ import           Graphics.Vulkan.Types.Handles
 --   >     , uint32_t marker
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdWriteBufferMarkerAMD.html vkCmdWriteBufferMarkerAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdWriteBufferMarkerAMD.html vkCmdWriteBufferMarkerAMD registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdWriteBufferMarkerAMD"
                vkCmdWriteBufferMarkerAMD ::
                VkCommandBuffer -- ^ commandBuffer
@@ -75,7 +75,7 @@ foreign import ccall unsafe "vkCmdWriteBufferMarkerAMD"
 --   >     , uint32_t marker
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdWriteBufferMarkerAMD.html vkCmdWriteBufferMarkerAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdWriteBufferMarkerAMD.html vkCmdWriteBufferMarkerAMD registry at www.khronos.org>
 foreign import ccall safe "vkCmdWriteBufferMarkerAMD"
                vkCmdWriteBufferMarkerAMDSafe ::
                VkCommandBuffer -- ^ commandBuffer

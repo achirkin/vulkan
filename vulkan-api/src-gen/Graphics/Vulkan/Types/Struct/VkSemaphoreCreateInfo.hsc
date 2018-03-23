@@ -23,7 +23,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     VkSemaphoreCreateFlags flags;
 --   > } VkSemaphoreCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSemaphoreCreateInfo.html VkSemaphoreCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSemaphoreCreateInfo.html VkSemaphoreCreateInfo registry at www.khronos.org>
 data VkSemaphoreCreateInfo = VkSemaphoreCreateInfo## Addr##
                                                     ByteArray##
 

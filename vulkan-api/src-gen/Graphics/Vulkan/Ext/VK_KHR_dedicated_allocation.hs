@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds       #-}
 {-# LANGUAGE MagicHash       #-}
@@ -22,14 +23,8 @@ module Graphics.Vulkan.Ext.VK_KHR_dedicated_allocation
         --
 
         -- ** Required extensions: 'VK_KHR_get_memory_requirements2'.
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo,
         module Graphics.Vulkan.Types.Struct.VkMemoryDedicatedAllocateInfoKHR,
         module Graphics.Vulkan.Types.Struct.VkMemoryDedicatedRequirementsKHR,
-        module Graphics.Vulkan.Types.Struct.VkMemoryRequirements,
-        module Graphics.Vulkan.Types.Struct.VkMemoryRequirements2KHR,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
-        -- > #include "vk_platform.h"
         VK_KHR_DEDICATED_ALLOCATION_SPEC_VERSION,
         pattern VK_KHR_DEDICATED_ALLOCATION_SPEC_VERSION,
         VK_KHR_DEDICATED_ALLOCATION_EXTENSION_NAME,
@@ -38,14 +33,11 @@ module Graphics.Vulkan.Ext.VK_KHR_dedicated_allocation
         pattern VK_STRUCTURE_TYPE_MEMORY_DEDICATED_ALLOCATE_INFO_KHR)
        where
 import           GHC.Ptr                                                       (Ptr (..))
+import           Graphics.Vulkan.Core_1_1                                      (pattern VK_STRUCTURE_TYPE_MEMORY_DEDICATED_ALLOCATE_INFO,
+                                                                                pattern VK_STRUCTURE_TYPE_MEMORY_DEDICATED_REQUIREMENTS)
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.VkStructureType
-import           Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo
 import           Graphics.Vulkan.Types.Struct.VkMemoryDedicatedAllocateInfoKHR
 import           Graphics.Vulkan.Types.Struct.VkMemoryDedicatedRequirementsKHR
-import           Graphics.Vulkan.Types.Struct.VkMemoryRequirements
-import           Graphics.Vulkan.Types.Struct.VkMemoryRequirements2KHR
 
 pattern VK_KHR_DEDICATED_ALLOCATION_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -76,14 +68,8 @@ is_VK_KHR_DEDICATED_ALLOCATION_EXTENSION_NAME
 type VK_KHR_DEDICATED_ALLOCATION_EXTENSION_NAME =
      "VK_KHR_dedicated_allocation"
 
-pattern VK_STRUCTURE_TYPE_MEMORY_DEDICATED_REQUIREMENTS_KHR ::
-        VkStructureType
-
 pattern VK_STRUCTURE_TYPE_MEMORY_DEDICATED_REQUIREMENTS_KHR =
-        VkStructureType 1000127000
-
-pattern VK_STRUCTURE_TYPE_MEMORY_DEDICATED_ALLOCATE_INFO_KHR ::
-        VkStructureType
+        VK_STRUCTURE_TYPE_MEMORY_DEDICATED_REQUIREMENTS
 
 pattern VK_STRUCTURE_TYPE_MEMORY_DEDICATED_ALLOCATE_INFO_KHR =
-        VkStructureType 1000127001
+        VK_STRUCTURE_TYPE_MEMORY_DEDICATED_ALLOCATE_INFO

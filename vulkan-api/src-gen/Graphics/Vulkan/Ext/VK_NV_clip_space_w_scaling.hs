@@ -66,7 +66,7 @@ import           Graphics.Vulkan.Types.Struct.VkViewportWScalingNV
 --   >     , const VkViewportWScalingNV* pViewportWScalings
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdSetViewportWScalingNV.html vkCmdSetViewportWScalingNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetViewportWScalingNV.html vkCmdSetViewportWScalingNV registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdSetViewportWScalingNV"
                vkCmdSetViewportWScalingNV ::
                VkCommandBuffer -- ^ commandBuffer
@@ -87,7 +87,7 @@ foreign import ccall unsafe "vkCmdSetViewportWScalingNV"
 --   >     , const VkViewportWScalingNV* pViewportWScalings
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdSetViewportWScalingNV.html vkCmdSetViewportWScalingNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetViewportWScalingNV.html vkCmdSetViewportWScalingNV registry at www.khronos.org>
 foreign import ccall safe "vkCmdSetViewportWScalingNV"
                vkCmdSetViewportWScalingNVSafe ::
                VkCommandBuffer -- ^ commandBuffer

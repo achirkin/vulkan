@@ -23,7 +23,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkSurfaceCapabilitiesKHR surfaceCapabilities;
 --   > } VkSurfaceCapabilities2KHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSurfaceCapabilities2KHR.html VkSurfaceCapabilities2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSurfaceCapabilities2KHR.html VkSurfaceCapabilities2KHR registry at www.khronos.org>
 data VkSurfaceCapabilities2KHR = VkSurfaceCapabilities2KHR## Addr##
                                                             ByteArray##
 

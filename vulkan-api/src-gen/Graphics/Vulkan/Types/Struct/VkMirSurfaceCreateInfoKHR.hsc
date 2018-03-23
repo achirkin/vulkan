@@ -27,7 +27,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     MirSurface*                      mirSurface;
 --   > } VkMirSurfaceCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkMirSurfaceCreateInfoKHR.html VkMirSurfaceCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkMirSurfaceCreateInfoKHR.html VkMirSurfaceCreateInfoKHR registry at www.khronos.org>
 data VkMirSurfaceCreateInfoKHR = VkMirSurfaceCreateInfoKHR## Addr##
                                                             ByteArray##
 

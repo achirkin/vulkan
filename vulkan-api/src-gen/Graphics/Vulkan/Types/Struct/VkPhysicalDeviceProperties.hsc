@@ -40,7 +40,7 @@ import           System.IO.Unsafe                                              (
 --   >     VkPhysicalDeviceSparseProperties sparseProperties;
 --   > } VkPhysicalDeviceProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceProperties.html VkPhysicalDeviceProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPhysicalDeviceProperties.html VkPhysicalDeviceProperties registry at www.khronos.org>
 data VkPhysicalDeviceProperties = VkPhysicalDeviceProperties## Addr##
                                                               ByteArray##
 

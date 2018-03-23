@@ -9,28 +9,23 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkSemaphoreGetFdInfoKHR
        (VkSemaphoreGetFdInfoKHR(..)) where
-import           Foreign.Storable
-                                                                                   (Storable (..))
+import           Foreign.Storable                                              (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.VkExternalSemaphoreHandleTypeFlagsKHR
-                                                                                   (VkExternalSemaphoreHandleTypeFlagBitsKHR)
-import           Graphics.Vulkan.Types.Enum.VkStructureType
-                                                                                   (VkStructureType)
-import           Graphics.Vulkan.Types.Handles
-                                                                                   (VkSemaphore)
-import           System.IO.Unsafe
-                                                                                   (unsafeDupablePerformIO)
+import           Graphics.Vulkan.Types.Enum.VkExternalSemaphoreHandleTypeFlags (VkExternalSemaphoreHandleTypeFlagBits)
+import           Graphics.Vulkan.Types.Enum.VkStructureType                    (VkStructureType)
+import           Graphics.Vulkan.Types.Handles                                 (VkSemaphore)
+import           System.IO.Unsafe                                              (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSemaphoreGetFdInfoKHR {
 --   >     VkStructureType sType;
 --   >     const void*                      pNext;
 --   >     VkSemaphore                      semaphore;
---   >     VkExternalSemaphoreHandleTypeFlagBitsKHR handleType;
+--   >     VkExternalSemaphoreHandleTypeFlagBits handleType;
 --   > } VkSemaphoreGetFdInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSemaphoreGetFdInfoKHR.html VkSemaphoreGetFdInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSemaphoreGetFdInfoKHR.html VkSemaphoreGetFdInfoKHR registry at www.khronos.org>
 data VkSemaphoreGetFdInfoKHR = VkSemaphoreGetFdInfoKHR## Addr##
                                                         ByteArray##
 
@@ -176,7 +171,7 @@ instance {-# OVERLAPPING #-}
 instance {-# OVERLAPPING #-}
          HasField "handleType" VkSemaphoreGetFdInfoKHR where
         type FieldType "handleType" VkSemaphoreGetFdInfoKHR =
-             VkExternalSemaphoreHandleTypeFlagBitsKHR
+             VkExternalSemaphoreHandleTypeFlagBits
         type FieldOptional "handleType" VkSemaphoreGetFdInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "handleType" VkSemaphoreGetFdInfoKHR =
              #{offset VkSemaphoreGetFdInfoKHR, handleType}

@@ -26,11 +26,10 @@ module Graphics.Vulkan.Ext.VK_EXT_queue_family_foreign
         pattern VK_EXT_QUEUE_FAMILY_FOREIGN_SPEC_VERSION,
         VK_EXT_QUEUE_FAMILY_FOREIGN_EXTENSION_NAME,
         pattern VK_EXT_QUEUE_FAMILY_FOREIGN_EXTENSION_NAME,
-        pattern VK_QUEUE_FAMILY_FOREIGN_EXT, VK_QUEUE_FAMILY_FOREIGN_EXT)
+        pattern VK_QUEUE_FAMILY_FOREIGN_EXT)
        where
 import           GHC.Ptr                   (Ptr (..))
-import           Graphics.Vulkan.Constants (VK_QUEUE_FAMILY_FOREIGN_EXT,
-                                            pattern VK_QUEUE_FAMILY_FOREIGN_EXT)
+import           Graphics.Vulkan.Constants (pattern VK_QUEUE_FAMILY_FOREIGN_EXT)
 import           Graphics.Vulkan.Marshal
 
 pattern VK_EXT_QUEUE_FAMILY_FOREIGN_SPEC_VERSION ::

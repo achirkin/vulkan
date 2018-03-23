@@ -23,7 +23,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     VkDeviceSize           range;
 --   > } VkDescriptorBufferInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDescriptorBufferInfo.html VkDescriptorBufferInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDescriptorBufferInfo.html VkDescriptorBufferInfo registry at www.khronos.org>
 data VkDescriptorBufferInfo = VkDescriptorBufferInfo## Addr##
                                                       ByteArray##
 

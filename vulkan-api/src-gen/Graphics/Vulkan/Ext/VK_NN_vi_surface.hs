@@ -17,11 +17,11 @@ module Graphics.Vulkan.Ext.VK_NN_vi_surface
         --
         -- type: @instance@
         --
+        -- platform: @vi@
+        --
         -- Extension number: @63@
         --
         -- Required extensions: 'VK_KHR_surface'.
-        --
-        -- Protected by CPP ifdef: @VK_USE_PLATFORM_VI_NN@
         --
 
         -- ** Required extensions: 'VK_KHR_surface'.
@@ -68,7 +68,7 @@ import           Graphics.Vulkan.Types.Struct.VkViSurfaceCreateInfoNN
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateViSurfaceNN.html vkCreateViSurfaceNN registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateViSurfaceNN.html vkCreateViSurfaceNN registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateViSurfaceNN"
                vkCreateViSurfaceNN ::
                VkInstance -- ^ instance
@@ -90,7 +90,7 @@ foreign import ccall unsafe "vkCreateViSurfaceNN"
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateViSurfaceNN.html vkCreateViSurfaceNN registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateViSurfaceNN.html vkCreateViSurfaceNN registry at www.khronos.org>
 foreign import ccall safe "vkCreateViSurfaceNN"
                vkCreateViSurfaceNNSafe ::
                VkInstance -- ^ instance

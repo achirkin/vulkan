@@ -5,9 +5,11 @@ module Graphics.Vulkan.Types.Handles
        (VkBuffer, VkBuffer_T(), VkBufferView, VkBufferView_T(),
         VkCommandBuffer, VkCommandBuffer_T(), VkCommandPool,
         VkCommandPool_T(), VkDebugReportCallbackEXT,
-        VkDebugReportCallbackEXT_T(), VkDescriptorPool,
+        VkDebugReportCallbackEXT_T(), VkDebugUtilsMessengerEXT,
+        VkDebugUtilsMessengerEXT_T(), VkDescriptorPool,
         VkDescriptorPool_T(), VkDescriptorSet, VkDescriptorSet_T(),
         VkDescriptorSetLayout, VkDescriptorSetLayout_T(),
+        VkDescriptorUpdateTemplate, VkDescriptorUpdateTemplate_T(),
         VkDescriptorUpdateTemplateKHR, VkDescriptorUpdateTemplateKHR_T(),
         VkDevice, VkDevice_T(), VkDeviceMemory, VkDeviceMemory_T(),
         VkDisplayKHR, VkDisplayKHR_T(), VkDisplayModeKHR,
@@ -20,6 +22,7 @@ module Graphics.Vulkan.Types.Handles
         VkPipelineCache_T(), VkPipelineLayout, VkPipelineLayout_T(),
         VkQueryPool, VkQueryPool_T(), VkQueue, VkQueue_T(), VkRenderPass,
         VkRenderPass_T(), VkSampler, VkSampler_T(),
+        VkSamplerYcbcrConversion, VkSamplerYcbcrConversion_T(),
         VkSamplerYcbcrConversionKHR, VkSamplerYcbcrConversionKHR_T(),
         VkSemaphore, VkSemaphore_T(), VkShaderModule, VkShaderModule_T(),
         VkSurfaceKHR, VkSurfaceKHR_T(), VkSwapchainKHR, VkSwapchainKHR_T(),
@@ -52,6 +55,11 @@ type VkDebugReportCallbackEXT = VkPtr VkDebugReportCallbackEXT_T
 -- | Opaque data type referenced by VkDebugReportCallbackEXT
 data VkDebugReportCallbackEXT_T
 
+type VkDebugUtilsMessengerEXT = VkPtr VkDebugUtilsMessengerEXT_T
+
+-- | Opaque data type referenced by VkDebugUtilsMessengerEXT
+data VkDebugUtilsMessengerEXT_T
+
 type VkDescriptorPool = VkPtr VkDescriptorPool_T
 
 -- | Opaque data type referenced by VkDescriptorPool
@@ -66,6 +74,12 @@ type VkDescriptorSetLayout = VkPtr VkDescriptorSetLayout_T
 
 -- | Opaque data type referenced by VkDescriptorSetLayout
 data VkDescriptorSetLayout_T
+
+type VkDescriptorUpdateTemplate =
+     VkPtr VkDescriptorUpdateTemplate_T
+
+-- | Opaque data type referenced by VkDescriptorUpdateTemplate
+data VkDescriptorUpdateTemplate_T
 
 type VkDescriptorUpdateTemplateKHR =
      VkPtr VkDescriptorUpdateTemplateKHR_T
@@ -173,6 +187,11 @@ type VkSampler = VkPtr VkSampler_T
 
 -- | Opaque data type referenced by VkSampler
 data VkSampler_T
+
+type VkSamplerYcbcrConversion = VkPtr VkSamplerYcbcrConversion_T
+
+-- | Opaque data type referenced by VkSamplerYcbcrConversion
+data VkSamplerYcbcrConversion_T
 
 type VkSamplerYcbcrConversionKHR =
      VkPtr VkSamplerYcbcrConversionKHR_T

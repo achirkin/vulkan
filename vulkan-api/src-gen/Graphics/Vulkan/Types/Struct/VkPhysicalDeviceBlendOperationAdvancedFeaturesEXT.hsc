@@ -9,14 +9,14 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
        (VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT(..)) where
-import           Foreign.Storable                                          (Storable (..))
+import           Foreign.Storable                                       (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.BaseTypes                           (VkBool32)
-import           Graphics.Vulkan.Types.Enum.VkStructureType                (VkStructureType)
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures2KHR (VkPhysicalDeviceFeatures2KHR)
-import           System.IO.Unsafe                                          (unsafeDupablePerformIO)
+import           Graphics.Vulkan.Types.BaseTypes                        (VkBool32)
+import           Graphics.Vulkan.Types.Enum.VkStructureType             (VkStructureType)
+import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceFeatures2 (VkPhysicalDeviceFeatures2)
+import           System.IO.Unsafe                                       (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT {
 --   >     VkStructureType sType;
@@ -24,7 +24,7 @@ import           System.IO.Unsafe                                          (unsa
 --   >     VkBool32                         advancedBlendCoherentOperations;
 --   > } VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT.html VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT.html VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT registry at www.khronos.org>
 data VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT = VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT## Addr##
                                                                                                             ByteArray##
 
@@ -89,7 +89,7 @@ instance VulkanMarshal
              = 'False -- ' closing tick for hsc2hs
         type StructExtends
                VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT
-             = '[VkPhysicalDeviceFeatures2KHR] -- ' closing tick for hsc2hs
+             = '[VkPhysicalDeviceFeatures2] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasField "sType" VkPhysicalDeviceBlendOperationAdvancedFeaturesEXT

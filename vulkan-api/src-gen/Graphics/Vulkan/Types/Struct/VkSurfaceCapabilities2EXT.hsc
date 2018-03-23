@@ -38,7 +38,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkSurfaceCounterFlagsEXT supportedSurfaceCounters;
 --   > } VkSurfaceCapabilities2EXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSurfaceCapabilities2EXT.html VkSurfaceCapabilities2EXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSurfaceCapabilities2EXT.html VkSurfaceCapabilities2EXT registry at www.khronos.org>
 data VkSurfaceCapabilities2EXT = VkSurfaceCapabilities2EXT## Addr##
                                                             ByteArray##
 

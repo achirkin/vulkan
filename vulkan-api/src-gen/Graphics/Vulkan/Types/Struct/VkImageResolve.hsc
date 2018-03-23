@@ -26,7 +26,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkExtent3D             extent;
 --   > } VkImageResolve;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImageResolve.html VkImageResolve registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkImageResolve.html VkImageResolve registry at www.khronos.org>
 data VkImageResolve = VkImageResolve## Addr## ByteArray##
 
 instance Eq VkImageResolve where

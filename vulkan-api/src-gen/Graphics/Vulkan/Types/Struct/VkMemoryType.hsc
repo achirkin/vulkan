@@ -21,7 +21,7 @@ import           System.IO.Unsafe                                 (unsafeDupable
 --   >     uint32_t               heapIndex;
 --   > } VkMemoryType;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkMemoryType.html VkMemoryType registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkMemoryType.html VkMemoryType registry at www.khronos.org>
 data VkMemoryType = VkMemoryType## Addr## ByteArray##
 
 instance Eq VkMemoryType where

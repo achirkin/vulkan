@@ -5,8 +5,8 @@
 {-# LANGUAGE TypeApplications #-}
 module Lib (runVulkanProgram) where
 
-import           Control.Exception       (displayException)
-import           Graphics.Vulkan
+import           Control.Exception                    (displayException)
+import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
 
 import           Lib.GLFW

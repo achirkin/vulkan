@@ -49,7 +49,7 @@ import           Graphics.Vulkan.Types.Struct.VkXYColorEXT
 --   >     , const VkHdrMetadataEXT* pMetadata
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkSetHdrMetadataEXT.html vkSetHdrMetadataEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkSetHdrMetadataEXT.html vkSetHdrMetadataEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkSetHdrMetadataEXT"
                vkSetHdrMetadataEXT ::
                VkDevice -- ^ device
@@ -66,7 +66,7 @@ foreign import ccall unsafe "vkSetHdrMetadataEXT"
 --   >     , const VkHdrMetadataEXT* pMetadata
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkSetHdrMetadataEXT.html vkSetHdrMetadataEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkSetHdrMetadataEXT.html vkSetHdrMetadataEXT registry at www.khronos.org>
 foreign import ccall safe "vkSetHdrMetadataEXT"
                vkSetHdrMetadataEXTSafe ::
                VkDevice -- ^ device

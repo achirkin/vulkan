@@ -9,26 +9,26 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkImportFenceFdInfoKHR
        (VkImportFenceFdInfoKHR(..)) where
-import           Foreign.Storable                                             (Storable (..))
+import           Foreign.Storable                                          (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.VkExternalFenceHandleTypeFlagsKHR (VkExternalFenceHandleTypeFlagBitsKHR)
-import           Graphics.Vulkan.Types.Enum.VkFenceImportFlagsKHR             (VkFenceImportFlagsKHR)
-import           Graphics.Vulkan.Types.Enum.VkStructureType                   (VkStructureType)
-import           Graphics.Vulkan.Types.Handles                                (VkFence)
-import           System.IO.Unsafe                                             (unsafeDupablePerformIO)
+import           Graphics.Vulkan.Types.Enum.VkExternalFenceHandleTypeFlags (VkExternalFenceHandleTypeFlagBits)
+import           Graphics.Vulkan.Types.Enum.VkFenceImportFlags             (VkFenceImportFlags)
+import           Graphics.Vulkan.Types.Enum.VkStructureType                (VkStructureType)
+import           Graphics.Vulkan.Types.Handles                             (VkFence)
+import           System.IO.Unsafe                                          (unsafeDupablePerformIO)
 
 -- | > typedef struct VkImportFenceFdInfoKHR {
 --   >     VkStructureType sType;
 --   >     const void*                            pNext;
 --   >     VkFence              fence;
---   >     VkFenceImportFlagsKHR  flags;
---   >     VkExternalFenceHandleTypeFlagBitsKHR   handleType;
+--   >     VkFenceImportFlags  flags;
+--   >     VkExternalFenceHandleTypeFlagBits   handleType;
 --   >     int                                    fd;
 --   > } VkImportFenceFdInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImportFenceFdInfoKHR.html VkImportFenceFdInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkImportFenceFdInfoKHR.html VkImportFenceFdInfoKHR registry at www.khronos.org>
 data VkImportFenceFdInfoKHR = VkImportFenceFdInfoKHR## Addr##
                                                       ByteArray##
 
@@ -172,8 +172,7 @@ instance {-# OVERLAPPING #-}
 
 instance {-# OVERLAPPING #-}
          HasField "flags" VkImportFenceFdInfoKHR where
-        type FieldType "flags" VkImportFenceFdInfoKHR =
-             VkFenceImportFlagsKHR
+        type FieldType "flags" VkImportFenceFdInfoKHR = VkFenceImportFlags
         type FieldOptional "flags" VkImportFenceFdInfoKHR = 'True -- ' closing tick for hsc2hs
         type FieldOffset "flags" VkImportFenceFdInfoKHR =
              #{offset VkImportFenceFdInfoKHR, flags}
@@ -205,7 +204,7 @@ instance {-# OVERLAPPING #-}
 instance {-# OVERLAPPING #-}
          HasField "handleType" VkImportFenceFdInfoKHR where
         type FieldType "handleType" VkImportFenceFdInfoKHR =
-             VkExternalFenceHandleTypeFlagBitsKHR
+             VkExternalFenceHandleTypeFlagBits
         type FieldOptional "handleType" VkImportFenceFdInfoKHR = 'False -- ' closing tick for hsc2hs
         type FieldOffset "handleType" VkImportFenceFdInfoKHR =
              #{offset VkImportFenceFdInfoKHR, handleType}

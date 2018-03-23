@@ -9,13 +9,13 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceDiscardRectanglePropertiesEXT
        (VkPhysicalDeviceDiscardRectanglePropertiesEXT(..)) where
-import           Foreign.Storable                                            (Storable (..))
+import           Foreign.Storable                                         (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.VkStructureType                  (VkStructureType)
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR (VkPhysicalDeviceProperties2KHR)
-import           System.IO.Unsafe                                            (unsafeDupablePerformIO)
+import           Graphics.Vulkan.Types.Enum.VkStructureType               (VkStructureType)
+import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2 (VkPhysicalDeviceProperties2)
+import           System.IO.Unsafe                                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDeviceDiscardRectanglePropertiesEXT {
 --   >     VkStructureType sType;
@@ -23,7 +23,7 @@ import           System.IO.Unsafe                                            (un
 --   >     uint32_t               maxDiscardRectangles;
 --   > } VkPhysicalDeviceDiscardRectanglePropertiesEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceDiscardRectanglePropertiesEXT.html VkPhysicalDeviceDiscardRectanglePropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPhysicalDeviceDiscardRectanglePropertiesEXT.html VkPhysicalDeviceDiscardRectanglePropertiesEXT registry at www.khronos.org>
 data VkPhysicalDeviceDiscardRectanglePropertiesEXT = VkPhysicalDeviceDiscardRectanglePropertiesEXT## Addr##
                                                                                                     ByteArray##
 
@@ -85,7 +85,7 @@ instance VulkanMarshal
         type ReturnedOnly VkPhysicalDeviceDiscardRectanglePropertiesEXT =
              'False -- ' closing tick for hsc2hs
         type StructExtends VkPhysicalDeviceDiscardRectanglePropertiesEXT =
-             '[VkPhysicalDeviceProperties2KHR] -- ' closing tick for hsc2hs
+             '[VkPhysicalDeviceProperties2] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasField "sType" VkPhysicalDeviceDiscardRectanglePropertiesEXT

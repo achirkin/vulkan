@@ -5,8 +5,12 @@ module Graphics.Vulkan.Types.Funcpointers
         newVkAllocationFunction, unwrapVkAllocationFunction,
         PFN_vkDebugReportCallbackEXT, HS_vkDebugReportCallbackEXT,
         newVkDebugReportCallbackEXT, unwrapVkDebugReportCallbackEXT,
-        PFN_vkFreeFunction, HS_vkFreeFunction, newVkFreeFunction,
-        unwrapVkFreeFunction, PFN_vkInternalAllocationNotification,
+        PFN_vkDebugUtilsMessengerCallbackEXT,
+        HS_vkDebugUtilsMessengerCallbackEXT,
+        newVkDebugUtilsMessengerCallbackEXT,
+        unwrapVkDebugUtilsMessengerCallbackEXT, PFN_vkFreeFunction,
+        HS_vkFreeFunction, newVkFreeFunction, unwrapVkFreeFunction,
+        PFN_vkInternalAllocationNotification,
         HS_vkInternalAllocationNotification,
         newVkInternalAllocationNotification,
         unwrapVkInternalAllocationNotification,
@@ -18,13 +22,26 @@ module Graphics.Vulkan.Types.Funcpointers
         unwrapVkVoidFunction)
        where
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Types.BaseTypes                       (VkBool32 (..),
-                                                                        VkFlags (..))
-import           Graphics.Vulkan.Types.Enum.VkDebugReportFlagsEXT      (VkDebugReportBitmaskEXT (..),
-                                                                        VkDebugReportFlagsEXT)
-import           Graphics.Vulkan.Types.Enum.VkDebugReportObjectTypeEXT (VkDebugReportObjectTypeEXT (..))
-import           Graphics.Vulkan.Types.Enum.VkInternalAllocationType   (VkInternalAllocationType (..))
-import           Graphics.Vulkan.Types.Enum.VkSystemAllocationScope    (VkSystemAllocationScope (..))
+import           Graphics.Vulkan.Types.BaseTypes
+                                                                                    (VkBool32 (..),
+                                                                                    VkFlags (..))
+import           Graphics.Vulkan.Types.Enum.VkDebugReportFlagsEXT
+                                                                                    (VkDebugReportBitmaskEXT (..),
+                                                                                    VkDebugReportFlagsEXT)
+import           Graphics.Vulkan.Types.Enum.VkDebugReportObjectTypeEXT
+                                                                                    (VkDebugReportObjectTypeEXT (..))
+import           Graphics.Vulkan.Types.Enum.VkDebugUtilsMessageSeverityFlagsEXT
+                                                                                    (VkDebugUtilsMessageSeverityBitmaskEXT (..),
+                                                                                    VkDebugUtilsMessageSeverityFlagBitsEXT)
+import           Graphics.Vulkan.Types.Enum.VkDebugUtilsMessageTypeFlagsEXT
+                                                                                    (VkDebugUtilsMessageTypeBitmaskEXT (..),
+                                                                                    VkDebugUtilsMessageTypeFlagsEXT)
+import           Graphics.Vulkan.Types.Enum.VkInternalAllocationType
+                                                                                    (VkInternalAllocationType (..))
+import           Graphics.Vulkan.Types.Enum.VkSystemAllocationScope
+                                                                                    (VkSystemAllocationScope (..))
+import           Graphics.Vulkan.Types.Struct.VkDebugUtilsMessengerCallbackDataEXT
+                                                                                    (VkDebugUtilsMessengerCallbackDataEXT (..))
 
 type HS_vkAllocationFunction =
      Ptr Void ->
@@ -70,6 +87,31 @@ foreign import ccall "wrapper" newVkDebugReportCallbackEXT ::
 
 foreign import ccall "dynamic" unwrapVkDebugReportCallbackEXT ::
                PFN_vkDebugReportCallbackEXT -> HS_vkDebugReportCallbackEXT
+
+type HS_vkDebugUtilsMessengerCallbackEXT =
+     VkDebugUtilsMessageSeverityFlagBitsEXT ->
+       VkDebugUtilsMessageTypeFlagsEXT ->
+         Ptr VkDebugUtilsMessengerCallbackDataEXT -> Ptr Void -> IO VkBool32
+
+-- | > typedef VkBool32 (VKAPI_PTR *PFN_vkDebugUtilsMessengerCallbackEXT)(
+--   >     VkDebugUtilsMessageSeverityFlagBitsEXT           messageSeverity,
+--   >     VkDebugUtilsMessageTypeFlagsEXT                  messageType,
+--   >     const VkDebugUtilsMessengerCallbackDataEXT*      pCallbackData,
+--   >     void*                                            pUserData);
+type PFN_vkDebugUtilsMessengerCallbackEXT =
+     FunPtr HS_vkDebugUtilsMessengerCallbackEXT
+
+-- | Wrap haskell function into C-callable FunPtr.
+--   Note, you need to free resources after using it.
+foreign import ccall "wrapper" newVkDebugUtilsMessengerCallbackEXT
+               ::
+               HS_vkDebugUtilsMessengerCallbackEXT ->
+                 IO PFN_vkDebugUtilsMessengerCallbackEXT
+
+foreign import ccall "dynamic"
+               unwrapVkDebugUtilsMessengerCallbackEXT ::
+               PFN_vkDebugUtilsMessengerCallbackEXT ->
+                 HS_vkDebugUtilsMessengerCallbackEXT
 
 type HS_vkFreeFunction = Ptr Void -> Ptr Void -> IO ()
 

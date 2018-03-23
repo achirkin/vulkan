@@ -28,7 +28,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     float            color[4];
 --   > } VkDebugMarkerMarkerInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDebugMarkerMarkerInfoEXT.html VkDebugMarkerMarkerInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDebugMarkerMarkerInfoEXT.html VkDebugMarkerMarkerInfoEXT registry at www.khronos.org>
 data VkDebugMarkerMarkerInfoEXT = VkDebugMarkerMarkerInfoEXT## Addr##
                                                               ByteArray##
 

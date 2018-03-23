@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds       #-}
 {-# LANGUAGE MagicHash       #-}
@@ -23,29 +24,22 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore
 
         -- ** Required extensions: 'VK_KHR_external_semaphore_capabilities'.
         module Graphics.Vulkan.Types.Struct.VkExportSemaphoreCreateInfoKHR,
-        module Graphics.Vulkan.Types.Enum.VkExternalSemaphoreHandleTypeFlagsKHR,
-        module Graphics.Vulkan.Types.BaseTypes,
+        module Graphics.Vulkan.Types.Enum.VkSemaphoreImportFlagBitsKHR,
         module Graphics.Vulkan.Types.Bitmasks,
-        module Graphics.Vulkan.Types.Struct.VkSemaphoreCreateInfo,
-        module Graphics.Vulkan.Types.Enum.VkSemaphoreImportFlagsKHR,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
-        -- > #include "vk_platform.h"
         VK_KHR_EXTERNAL_SEMAPHORE_SPEC_VERSION,
         pattern VK_KHR_EXTERNAL_SEMAPHORE_SPEC_VERSION,
         VK_KHR_EXTERNAL_SEMAPHORE_EXTENSION_NAME,
         pattern VK_KHR_EXTERNAL_SEMAPHORE_EXTENSION_NAME,
-        pattern VK_STRUCTURE_TYPE_EXPORT_SEMAPHORE_CREATE_INFO_KHR)
+        pattern VK_STRUCTURE_TYPE_EXPORT_SEMAPHORE_CREATE_INFO_KHR,
+        pattern VK_SEMAPHORE_IMPORT_TEMPORARY_BIT_KHR)
        where
-import           GHC.Ptr
-                                                                                   (Ptr (..))
+import           GHC.Ptr                                                     (Ptr (..))
+import           Graphics.Vulkan.Core_1_1                                    (pattern VK_STRUCTURE_TYPE_EXPORT_SEMAPHORE_CREATE_INFO)
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.VkExternalSemaphoreHandleTypeFlagsKHR
-import           Graphics.Vulkan.Types.Enum.VkSemaphoreImportFlagsKHR
-import           Graphics.Vulkan.Types.Enum.VkStructureType
+import           Graphics.Vulkan.Types.Enum.VkSemaphoreImportFlagBitsKHR
+import           Graphics.Vulkan.Types.Enum.VkSemaphoreImportFlags           (VkSemaphoreImportBitmask (..))
 import           Graphics.Vulkan.Types.Struct.VkExportSemaphoreCreateInfoKHR
-import           Graphics.Vulkan.Types.Struct.VkSemaphoreCreateInfo
 
 pattern VK_KHR_EXTERNAL_SEMAPHORE_SPEC_VERSION :: (Num a, Eq a) =>
         a
@@ -76,8 +70,8 @@ is_VK_KHR_EXTERNAL_SEMAPHORE_EXTENSION_NAME
 type VK_KHR_EXTERNAL_SEMAPHORE_EXTENSION_NAME =
      "VK_KHR_external_semaphore"
 
-pattern VK_STRUCTURE_TYPE_EXPORT_SEMAPHORE_CREATE_INFO_KHR ::
-        VkStructureType
-
 pattern VK_STRUCTURE_TYPE_EXPORT_SEMAPHORE_CREATE_INFO_KHR =
-        VkStructureType 1000077000
+        VK_STRUCTURE_TYPE_EXPORT_SEMAPHORE_CREATE_INFO
+
+pattern VK_SEMAPHORE_IMPORT_TEMPORARY_BIT_KHR =
+        VK_SEMAPHORE_IMPORT_TEMPORARY_BIT

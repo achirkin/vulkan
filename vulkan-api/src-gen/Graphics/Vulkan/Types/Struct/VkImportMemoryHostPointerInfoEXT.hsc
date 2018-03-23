@@ -9,23 +9,23 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkImportMemoryHostPointerInfoEXT
        (VkImportMemoryHostPointerInfoEXT(..)) where
-import           Foreign.Storable                                              (Storable (..))
+import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagsKHR (VkExternalMemoryHandleTypeFlagBitsKHR)
-import           Graphics.Vulkan.Types.Enum.VkStructureType                    (VkStructureType)
-import           Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo             (VkMemoryAllocateInfo)
-import           System.IO.Unsafe                                              (unsafeDupablePerformIO)
+import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlags (VkExternalMemoryHandleTypeFlagBits)
+import           Graphics.Vulkan.Types.Enum.VkStructureType                 (VkStructureType)
+import           Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo          (VkMemoryAllocateInfo)
+import           System.IO.Unsafe                                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkImportMemoryHostPointerInfoEXT {
 --   >     VkStructureType sType;
 --   >     const void* pNext;
---   >     VkExternalMemoryHandleTypeFlagBitsKHR handleType;
+--   >     VkExternalMemoryHandleTypeFlagBits handleType;
 --   >     void* pHostPointer;
 --   > } VkImportMemoryHostPointerInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImportMemoryHostPointerInfoEXT.html VkImportMemoryHostPointerInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkImportMemoryHostPointerInfoEXT.html VkImportMemoryHostPointerInfoEXT registry at www.khronos.org>
 data VkImportMemoryHostPointerInfoEXT = VkImportMemoryHostPointerInfoEXT## Addr##
                                                                           ByteArray##
 
@@ -150,7 +150,7 @@ instance {-# OVERLAPPING #-}
 instance {-# OVERLAPPING #-}
          HasField "handleType" VkImportMemoryHostPointerInfoEXT where
         type FieldType "handleType" VkImportMemoryHostPointerInfoEXT =
-             VkExternalMemoryHandleTypeFlagBitsKHR
+             VkExternalMemoryHandleTypeFlagBits
         type FieldOptional "handleType" VkImportMemoryHostPointerInfoEXT =
              'False -- ' closing tick for hsc2hs
         type FieldOffset "handleType" VkImportMemoryHostPointerInfoEXT =

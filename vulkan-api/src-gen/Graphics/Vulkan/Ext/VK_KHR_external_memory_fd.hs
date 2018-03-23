@@ -14,7 +14,7 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_fd
         --
         -- contact: @James Jones @cubanismo@
         --
-        -- author: @KHX@
+        -- author: @KHR@
         --
         -- type: @device@
         --
@@ -26,7 +26,7 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_fd
         -- ** Required extensions: 'VK_KHR_external_memory'.
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagsKHR,
+        module Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlags,
         module Graphics.Vulkan.Types.Struct.VkImportMemoryFdInfoKHR,
         module Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo,
         module Graphics.Vulkan.Types.Struct.VkMemoryFdPropertiesKHR,
@@ -45,10 +45,10 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_fd
         pattern VK_STRUCTURE_TYPE_MEMORY_FD_PROPERTIES_KHR,
         pattern VK_STRUCTURE_TYPE_MEMORY_GET_FD_INFO_KHR)
        where
-import           GHC.Ptr                                                       (Ptr (..))
+import           GHC.Ptr                                                    (Ptr (..))
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagsKHR
+import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlags
 import           Graphics.Vulkan.Types.Enum.VkResult
 import           Graphics.Vulkan.Types.Enum.VkStructureType
 import           Graphics.Vulkan.Types.Handles
@@ -67,7 +67,7 @@ import           Graphics.Vulkan.Types.Struct.VkMemoryGetFdInfoKHR
 --   >     , int* pFd
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetMemoryFdKHR.html vkGetMemoryFdKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryFdKHR.html vkGetMemoryFdKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkGetMemoryFdKHR" vkGetMemoryFdKHR ::
                VkDevice -- ^ device
                         -> Ptr VkMemoryGetFdInfoKHR -- ^ pGetFdInfo
@@ -84,7 +84,7 @@ foreign import ccall unsafe "vkGetMemoryFdKHR" vkGetMemoryFdKHR ::
 --   >     , int* pFd
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetMemoryFdKHR.html vkGetMemoryFdKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryFdKHR.html vkGetMemoryFdKHR registry at www.khronos.org>
 foreign import ccall safe "vkGetMemoryFdKHR" vkGetMemoryFdKHRSafe
                :: VkDevice -- ^ device
                            -> Ptr VkMemoryGetFdInfoKHR -- ^ pGetFdInfo
@@ -93,44 +93,44 @@ foreign import ccall safe "vkGetMemoryFdKHR" vkGetMemoryFdKHRSafe
 
 -- | Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR'.
+--   Error codes: 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
 --
 --   > VkResult vkGetMemoryFdPropertiesKHR
 --   >     ( VkDevice device
---   >     , VkExternalMemoryHandleTypeFlagBitsKHR handleType
+--   >     , VkExternalMemoryHandleTypeFlagBits handleType
 --   >     , int fd
 --   >     , VkMemoryFdPropertiesKHR* pMemoryFdProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetMemoryFdPropertiesKHR.html vkGetMemoryFdPropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryFdPropertiesKHR.html vkGetMemoryFdPropertiesKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkGetMemoryFdPropertiesKHR"
                vkGetMemoryFdPropertiesKHR ::
                VkDevice -- ^ device
                         ->
-                 VkExternalMemoryHandleTypeFlagBitsKHR -- ^ handleType
-                                                       ->
+                 VkExternalMemoryHandleTypeFlagBits -- ^ handleType
+                                                    ->
                    CInt -- ^ fd
                         -> Ptr VkMemoryFdPropertiesKHR -- ^ pMemoryFdProperties
                                                        -> IO VkResult
 
 -- | Success codes: 'VK_SUCCESS'.
 --
---   Error codes: 'VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR'.
+--   Error codes: 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
 --
 --   > VkResult vkGetMemoryFdPropertiesKHR
 --   >     ( VkDevice device
---   >     , VkExternalMemoryHandleTypeFlagBitsKHR handleType
+--   >     , VkExternalMemoryHandleTypeFlagBits handleType
 --   >     , int fd
 --   >     , VkMemoryFdPropertiesKHR* pMemoryFdProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetMemoryFdPropertiesKHR.html vkGetMemoryFdPropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryFdPropertiesKHR.html vkGetMemoryFdPropertiesKHR registry at www.khronos.org>
 foreign import ccall safe "vkGetMemoryFdPropertiesKHR"
                vkGetMemoryFdPropertiesKHRSafe ::
                VkDevice -- ^ device
                         ->
-                 VkExternalMemoryHandleTypeFlagBitsKHR -- ^ handleType
-                                                       ->
+                 VkExternalMemoryHandleTypeFlagBits -- ^ handleType
+                                                    ->
                    CInt -- ^ fd
                         -> Ptr VkMemoryFdPropertiesKHR -- ^ pMemoryFdProperties
                                                        -> IO VkResult

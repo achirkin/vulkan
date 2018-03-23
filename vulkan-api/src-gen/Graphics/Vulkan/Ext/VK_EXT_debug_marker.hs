@@ -64,7 +64,7 @@ import           Graphics.Vulkan.Types.Struct.VkDebugMarkerObjectTagInfoEXT
 --   >     , const VkDebugMarkerObjectTagInfoEXT* pTagInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDebugMarkerSetObjectTagEXT.html vkDebugMarkerSetObjectTagEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDebugMarkerSetObjectTagEXT.html vkDebugMarkerSetObjectTagEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkDebugMarkerSetObjectTagEXT"
                vkDebugMarkerSetObjectTagEXT ::
                VkDevice -- ^ device
@@ -80,7 +80,7 @@ foreign import ccall unsafe "vkDebugMarkerSetObjectTagEXT"
 --   >     , const VkDebugMarkerObjectTagInfoEXT* pTagInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDebugMarkerSetObjectTagEXT.html vkDebugMarkerSetObjectTagEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDebugMarkerSetObjectTagEXT.html vkDebugMarkerSetObjectTagEXT registry at www.khronos.org>
 foreign import ccall safe "vkDebugMarkerSetObjectTagEXT"
                vkDebugMarkerSetObjectTagEXTSafe ::
                VkDevice -- ^ device
@@ -96,7 +96,7 @@ foreign import ccall safe "vkDebugMarkerSetObjectTagEXT"
 --   >     , const VkDebugMarkerObjectNameInfoEXT* pNameInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDebugMarkerSetObjectNameEXT.html vkDebugMarkerSetObjectNameEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDebugMarkerSetObjectNameEXT.html vkDebugMarkerSetObjectNameEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkDebugMarkerSetObjectNameEXT"
                vkDebugMarkerSetObjectNameEXT ::
                VkDevice -- ^ device
@@ -112,7 +112,7 @@ foreign import ccall unsafe "vkDebugMarkerSetObjectNameEXT"
 --   >     , const VkDebugMarkerObjectNameInfoEXT* pNameInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDebugMarkerSetObjectNameEXT.html vkDebugMarkerSetObjectNameEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDebugMarkerSetObjectNameEXT.html vkDebugMarkerSetObjectNameEXT registry at www.khronos.org>
 foreign import ccall safe "vkDebugMarkerSetObjectNameEXT"
                vkDebugMarkerSetObjectNameEXTSafe ::
                VkDevice -- ^ device
@@ -128,7 +128,7 @@ foreign import ccall safe "vkDebugMarkerSetObjectNameEXT"
 --   >     , const VkDebugMarkerMarkerInfoEXT* pMarkerInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdDebugMarkerBeginEXT.html vkCmdDebugMarkerBeginEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDebugMarkerBeginEXT.html vkCmdDebugMarkerBeginEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdDebugMarkerBeginEXT"
                vkCmdDebugMarkerBeginEXT ::
                VkCommandBuffer -- ^ commandBuffer
@@ -144,7 +144,7 @@ foreign import ccall unsafe "vkCmdDebugMarkerBeginEXT"
 --   >     , const VkDebugMarkerMarkerInfoEXT* pMarkerInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdDebugMarkerBeginEXT.html vkCmdDebugMarkerBeginEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDebugMarkerBeginEXT.html vkCmdDebugMarkerBeginEXT registry at www.khronos.org>
 foreign import ccall safe "vkCmdDebugMarkerBeginEXT"
                vkCmdDebugMarkerBeginEXTSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -159,7 +159,7 @@ foreign import ccall safe "vkCmdDebugMarkerBeginEXT"
 --   >     ( VkCommandBuffer commandBuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdDebugMarkerEndEXT.html vkCmdDebugMarkerEndEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDebugMarkerEndEXT.html vkCmdDebugMarkerEndEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdDebugMarkerEndEXT"
                vkCmdDebugMarkerEndEXT :: VkCommandBuffer -- ^ commandBuffer
                                                          -> IO ()
@@ -172,7 +172,7 @@ foreign import ccall unsafe "vkCmdDebugMarkerEndEXT"
 --   >     ( VkCommandBuffer commandBuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdDebugMarkerEndEXT.html vkCmdDebugMarkerEndEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDebugMarkerEndEXT.html vkCmdDebugMarkerEndEXT registry at www.khronos.org>
 foreign import ccall safe "vkCmdDebugMarkerEndEXT"
                vkCmdDebugMarkerEndEXTSafe :: VkCommandBuffer -- ^ commandBuffer
                                                              -> IO ()
@@ -186,7 +186,7 @@ foreign import ccall safe "vkCmdDebugMarkerEndEXT"
 --   >     , const VkDebugMarkerMarkerInfoEXT* pMarkerInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdDebugMarkerInsertEXT.html vkCmdDebugMarkerInsertEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDebugMarkerInsertEXT.html vkCmdDebugMarkerInsertEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdDebugMarkerInsertEXT"
                vkCmdDebugMarkerInsertEXT ::
                VkCommandBuffer -- ^ commandBuffer
@@ -202,7 +202,7 @@ foreign import ccall unsafe "vkCmdDebugMarkerInsertEXT"
 --   >     , const VkDebugMarkerMarkerInfoEXT* pMarkerInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCmdDebugMarkerInsertEXT.html vkCmdDebugMarkerInsertEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDebugMarkerInsertEXT.html vkCmdDebugMarkerInsertEXT registry at www.khronos.org>
 foreign import ccall safe "vkCmdDebugMarkerInsertEXT"
                vkCmdDebugMarkerInsertEXTSafe ::
                VkCommandBuffer -- ^ commandBuffer

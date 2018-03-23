@@ -17,11 +17,11 @@ module Graphics.Vulkan.Ext.VK_MVK_macos_surface
         --
         -- type: @instance@
         --
+        -- platform: @macos@
+        --
         -- Extension number: @124@
         --
         -- Required extensions: 'VK_KHR_surface'.
-        --
-        -- Protected by CPP ifdef: @VK_USE_PLATFORM_MACOS_MVK@
         --
 
         -- ** Required extensions: 'VK_KHR_surface'.
@@ -68,7 +68,7 @@ import           Graphics.Vulkan.Types.Struct.VkMacOSSurfaceCreateInfoMVK
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateMacOSSurfaceMVK.html vkCreateMacOSSurfaceMVK registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateMacOSSurfaceMVK.html vkCreateMacOSSurfaceMVK registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateMacOSSurfaceMVK"
                vkCreateMacOSSurfaceMVK ::
                VkInstance -- ^ instance
@@ -90,7 +90,7 @@ foreign import ccall unsafe "vkCreateMacOSSurfaceMVK"
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateMacOSSurfaceMVK.html vkCreateMacOSSurfaceMVK registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateMacOSSurfaceMVK.html vkCreateMacOSSurfaceMVK registry at www.khronos.org>
 foreign import ccall safe "vkCreateMacOSSurfaceMVK"
                vkCreateMacOSSurfaceMVKSafe ::
                VkInstance -- ^ instance

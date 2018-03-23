@@ -37,15 +37,19 @@ type VkCommands = Map VkCommandName VkCommand
 
 data VkCommand
   = VkCommand
-  { cReturnType :: VkTypeName
-    -- ^ Always, either () or VkResult; so no pointers expected.
-  , cName       :: VkCommandName
-    -- ^ Maybe a little bit adjusted to fit haskell var logic
-  , cNameOrig   :: Text
-    -- ^ Original name appeared as-is, used for foreign calls
-  , cAttributes :: VkCommandAttrs
-  , cParameters :: [VkCommandParam]
-  } deriving Show
+    { cReturnType :: VkTypeName
+      -- ^ Always, either () or VkResult; so no pointers expected.
+    , cName       :: VkCommandName
+      -- ^ Maybe a little bit adjusted to fit haskell var logic
+    , cNameOrig   :: Text
+      -- ^ Original name appeared as-is, used for foreign calls
+    , cAttributes :: VkCommandAttrs
+    , cParameters :: [VkCommandParam]
+    }
+  | VkCommandAlias
+    { cName  :: VkCommandName
+    , cAlias :: VkCommandName
+    } deriving Show
 
 
 -- |
@@ -90,6 +94,8 @@ instance TypeScope VkCommand where
   providesTypes _ = []
   requiresTypes VkCommand {..} =
     nub $ cReturnType : (cParameters >>= requiresTypes)
+  -- this can be a problem -- we need to pull the types from alieased command
+  requiresTypes VkCommandAlias {} = []
 
 instance TypeScope VkCommandParam where
   providesTypes _ = []
@@ -111,40 +117,46 @@ parseCommands = parseTagForceAttrs "commands" (lift $ attr "comment")
 
 parseVkCommand :: VkXmlParser m => Sink Event m (Maybe VkCommand)
 parseVkCommand =
-  parseTagForceAttrs "command" parseVkCommandAttrs $ \cAttributes -> do
-    -- first element of command is always a "proto" tag
-    --  the rest are "param" tags
-    mtn <- parseTagForceAttrs "proto" (pure ()) $ \() -> do
-      mt <- tagIgnoreAttrs "type" content >>= mapM toHaskellType
-      mon <- tagIgnoreAttrs "name" content
-      mn <- mapM toHaskellComm mon
-      pure $ (,,) <$> mt <*> mn <*> mon
-    case join mtn of
-      Nothing -> parseFailed "Could not parse type/name from command.proto"
-      Just (cReturnType, cName, cNameOrig) -> do
-        cParameters <- many $ do
-           mi <- ignoreTreeContent "implicitexternsyncparams"
-           case mi of
-             Nothing -> return ()
-             Just () ->
-               traceM "Warning: ignoring <implicitexternsyncparams> tag."
-           parseVkCommandParam
-        return VkCommand {..}
+  parseTagForceAttrs "command" parseVkCommandAttrs $ \case
+    Right cAttributes -> do
+      -- first element of command is always a "proto" tag
+      --  the rest are "param" tags
+      mtn <- parseTagForceAttrs "proto" (pure ()) $ \() -> do
+        mt <- tagIgnoreAttrs "type" content >>= mapM toHaskellType
+        mon <- tagIgnoreAttrs "name" content
+        mn <- mapM toHaskellComm mon
+        pure $ (,,) <$> mt <*> mn <*> mon
+      case join mtn of
+        Nothing -> parseFailed "Could not parse type/name from command.proto"
+        Just (cReturnType, cName, cNameOrig) -> do
+          cParameters <- many $ do
+             mi <- ignoreTreeContent "implicitexternsyncparams"
+             case mi of
+               Nothing -> return ()
+               Just () ->
+                 traceM "Warning: ignoring <implicitexternsyncparams> tag."
+             parseVkCommandParam
+          return VkCommand {..}
+    Left c -> pure c
 
-
-
-parseVkCommandAttrs :: ReaderT ParseLoc AttrParser VkCommandAttrs
+parseVkCommandAttrs :: ReaderT ParseLoc AttrParser (Either VkCommand VkCommandAttrs)
 parseVkCommandAttrs = do
-    successcodes     <- commaSeparated <$> lift (attr "successcodes")
-                        >>= mapM toHaskellPat
-    errorcodes       <- commaSeparated <$> lift (attr "errorcodes")
-                        >>= mapM toHaskellPat
-    queues           <- commaSeparated <$> lift (attr "queues")
-    renderpass       <- lift $ attr "renderpass"
-    cmdbufferlevel   <- commaSeparated <$> lift (attr "cmdbufferlevel")
-    pipeline         <- lift $ attr "pipeline"
-    cComment         <- lift $ attr "comment"
-    return VkCommandAttrs {..}
+  malias <- lift (attr "alias") >>= mapM toHaskellComm
+  case malias of
+    Nothing -> do
+      successcodes     <- commaSeparated <$> lift (attr "successcodes")
+                          >>= mapM toHaskellPat
+      errorcodes       <- commaSeparated <$> lift (attr "errorcodes")
+                          >>= mapM toHaskellPat
+      queues           <- commaSeparated <$> lift (attr "queues")
+      renderpass       <- lift $ attr "renderpass"
+      cmdbufferlevel   <- commaSeparated <$> lift (attr "cmdbufferlevel")
+      pipeline         <- lift $ attr "pipeline"
+      cComment         <- lift $ attr "comment"
+      return $ Right VkCommandAttrs {..}
+    Just cAlias -> do
+      cName <- forceAttr "name" >>= toHaskellComm
+      return $ Left VkCommandAlias {..}
 
 -- TODO: use https://hackage.haskell.org/package/language-c
 --  to parse the param tag more robustly.

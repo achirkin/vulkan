@@ -12,12 +12,13 @@ import           Control.Monad
 import           Foreign.Marshal.Alloc
 import           Foreign.Marshal.Array
 import           Foreign.Storable
-import           Graphics.UI.GLFW      (ClientAPI (..), WindowHint (..))
-import qualified Graphics.UI.GLFW      as GLFW
+import           Graphics.UI.GLFW         (ClientAPI (..), WindowHint (..))
+import qualified Graphics.UI.GLFW         as GLFW
 import           Graphics.Vulkan
+import           Graphics.Vulkan.Core_1_0
 
 import           Lib.Utils
-import           Lib.Vulkan (withVulkanInstance)
+import           Lib.Vulkan               (withVulkanInstance)
 
 main :: IO ()
 main = withGLFWWindow $ \window ->

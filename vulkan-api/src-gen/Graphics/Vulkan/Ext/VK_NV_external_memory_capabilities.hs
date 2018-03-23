@@ -74,7 +74,7 @@ import           Graphics.Vulkan.Types.Struct.VkImageFormatProperties
 --   >     , VkExternalImageFormatPropertiesNV* pExternalImageFormatProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceExternalImageFormatPropertiesNV.html vkGetPhysicalDeviceExternalImageFormatPropertiesNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalImageFormatPropertiesNV.html vkGetPhysicalDeviceExternalImageFormatPropertiesNV registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceExternalImageFormatPropertiesNV"
                vkGetPhysicalDeviceExternalImageFormatPropertiesNV ::
@@ -110,7 +110,7 @@ foreign import ccall unsafe
 --   >     , VkExternalImageFormatPropertiesNV* pExternalImageFormatProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceExternalImageFormatPropertiesNV.html vkGetPhysicalDeviceExternalImageFormatPropertiesNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalImageFormatPropertiesNV.html vkGetPhysicalDeviceExternalImageFormatPropertiesNV registry at www.khronos.org>
 foreign import ccall safe
                "vkGetPhysicalDeviceExternalImageFormatPropertiesNV"
                vkGetPhysicalDeviceExternalImageFormatPropertiesNVSafe ::

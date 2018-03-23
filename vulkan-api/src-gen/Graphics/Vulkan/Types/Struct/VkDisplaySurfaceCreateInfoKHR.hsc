@@ -34,7 +34,7 @@ import           System.IO.Unsafe                                       (unsafeD
 --   >     VkExtent2D                       imageExtent;
 --   > } VkDisplaySurfaceCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkDisplaySurfaceCreateInfoKHR.html VkDisplaySurfaceCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDisplaySurfaceCreateInfoKHR.html VkDisplaySurfaceCreateInfoKHR registry at www.khronos.org>
 data VkDisplaySurfaceCreateInfoKHR = VkDisplaySurfaceCreateInfoKHR## Addr##
                                                                     ByteArray##
 

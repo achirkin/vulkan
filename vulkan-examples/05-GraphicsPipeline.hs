@@ -17,13 +17,14 @@ import           Foreign.Marshal.Alloc
 import           Foreign.Marshal.Array
 import           Foreign.Storable
 import           Graphics.Vulkan
+import           Graphics.Vulkan.Core_1_0
 
+import           Graphics.Vulkan.Ext.VK_KHR_swapchain
 import           Lib.GLFW
 import           Lib.Utils
 import           Lib.Utils.TH
 import           Lib.Vulkan
 import           Lib.Vulkan.Presentation
-import           Graphics.Vulkan.Ext.VK_KHR_swapchain
 
 windowWidth, windowHeight :: Num a => a
 windowWidth = 800

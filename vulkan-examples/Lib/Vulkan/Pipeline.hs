@@ -14,8 +14,9 @@ import           Foreign.Marshal.Alloc
 import           Foreign.Marshal.Array
 import           Foreign.Storable
 import           Graphics.Vulkan
-import           Graphics.Vulkan.Marshal.Create
+import           Graphics.Vulkan.Core_1_0
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
+import           Graphics.Vulkan.Marshal.Create
 
 import           Lib.Utils
 import           Lib.Vulkan.Presentation

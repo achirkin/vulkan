@@ -27,7 +27,7 @@ import           System.IO.Unsafe                               (unsafeDupablePe
 --   >     VkBool32               primitiveRestartEnable;
 --   > } VkPipelineInputAssemblyStateCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPipelineInputAssemblyStateCreateInfo.html VkPipelineInputAssemblyStateCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPipelineInputAssemblyStateCreateInfo.html VkPipelineInputAssemblyStateCreateInfo registry at www.khronos.org>
 data VkPipelineInputAssemblyStateCreateInfo = VkPipelineInputAssemblyStateCreateInfo## Addr##
                                                                                       ByteArray##
 

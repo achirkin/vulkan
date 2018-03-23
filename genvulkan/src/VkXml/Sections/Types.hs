@@ -85,9 +85,13 @@ data VkTypeQualifier
   | VkTypeQArrLenEnum VkEnumName
   deriving Show
 
+
+-- <https://www.khronos.org/registry/vulkan/specs/1.1/registry.html#_attributes_of_code_type_code_tags >
 data VkTypeAttrs
   = VkTypeAttrs
   { name          :: Maybe VkTypeName
+  , alias         :: Maybe VkTypeName
+    -- ^ Additional name for this type
   , category      :: VkTypeCategory
   , requires      :: Maybe VkTypeName
   , parent        :: [VkTypeName]
@@ -186,6 +190,8 @@ parseAttrVkTypeCategory = do
 parseAttrVkTypeName :: ReaderT ParseLoc AttrParser (Maybe VkTypeName)
 parseAttrVkTypeName = lift (attr "name") >>= mapM toHaskellType
 
+parseAttrVkTypeAlias :: ReaderT ParseLoc AttrParser (Maybe VkTypeName)
+parseAttrVkTypeAlias = lift (attr "alias") >>= mapM toHaskellType
 
 parseAttrVkTypeRequires :: ReaderT ParseLoc AttrParser (Maybe VkTypeName)
 parseAttrVkTypeRequires = lift (attr "requires") >>= mapM toHaskellType
@@ -212,6 +218,7 @@ parseAttrVkTypeStructextends
 
 parseVkTypeAttrs :: ReaderT ParseLoc AttrParser VkTypeAttrs
 parseVkTypeAttrs = VkTypeAttrs <$> parseAttrVkTypeName
+                               <*> parseAttrVkTypeAlias
                                <*> parseAttrVkTypeCategory
                                <*> parseAttrVkTypeRequires
                                <*> parseAttrVkTypeParent

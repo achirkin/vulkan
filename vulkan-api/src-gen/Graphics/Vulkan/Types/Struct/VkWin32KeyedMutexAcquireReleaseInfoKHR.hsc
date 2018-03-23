@@ -30,7 +30,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     const uint64_t* pReleaseKeys;
 --   > } VkWin32KeyedMutexAcquireReleaseInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkWin32KeyedMutexAcquireReleaseInfoKHR.html VkWin32KeyedMutexAcquireReleaseInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkWin32KeyedMutexAcquireReleaseInfoKHR.html VkWin32KeyedMutexAcquireReleaseInfoKHR registry at www.khronos.org>
 data VkWin32KeyedMutexAcquireReleaseInfoKHR = VkWin32KeyedMutexAcquireReleaseInfoKHR## Addr##
                                                                                       ByteArray##
 

@@ -8,6 +8,8 @@ module Write.Commands
   ) where
 
 import           Control.Monad                        (forM_, when)
+import           Control.Monad.Reader.Class
+import qualified Data.Map.Strict                      as Map
 import           Data.Maybe                           (isJust)
 import           Data.Semigroup
 import           Data.Set                             (Set)
@@ -18,9 +20,9 @@ import           Language.Haskell.Exts.Syntax
 
 import           VkXml.CommonTypes
 import           VkXml.Sections.Commands
+import           VkXml.Sections
 
 import           Write.ModuleWriter
-
 
 
 genCommand :: Monad m => VkCommand -> ModuleWriter m (Set VkTypeName)
@@ -33,6 +35,15 @@ genCommand command@VkCommand
     }
   , cParameters = vkpams
   } = do
+  indeed <- isIdentDeclared . DIVar $ unVkCommandName vkname
+  if indeed
+  then do
+    writeImport . DIVar $ unVkCommandName vkname
+    writeImport . DIVar $ unVkCommandName vknameSafe
+    writeExport . DIVar $ unVkCommandName vkname
+    writeExport . DIVar $ unVkCommandName vknameSafe
+    return Set.empty
+  else do
     regLink <- vkRegistryLink $ unVkCommandName vkname
     let rezComment = appendComLine rezComment' regLink
                  >>= preComment . T.unpack
@@ -112,3 +123,16 @@ genCommand command@VkCommand
                  . ml (renderpass attrs) (\x -> "renderpass: @" <> x <> "@")
                  . ml (pipeline attrs)   (\x -> "pipeline: @" <> x <> "@")
                  . map ("> " <>) $ T.lines c
+
+
+genCommand acom@(VkCommandAlias comname comalias)
+  = ask >>= \vk -> case Map.lookup comalias (globCommands vk) of
+      Nothing -> error $
+        "Could not find a command for an alias " <> show acom
+      Just c  -> genCommand
+        c{ cName = comname
+         , cAttributes = (cAttributes c)
+            { cComment = appendComLine (cComment (cAttributes c)) $
+                 "This is an alias for `" <> unVkCommandName comalias <> "`."
+            }
+         }

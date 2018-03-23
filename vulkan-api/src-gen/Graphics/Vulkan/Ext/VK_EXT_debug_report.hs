@@ -48,7 +48,9 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_report
         pattern VK_ERROR_VALIDATION_FAILED_EXT,
         pattern VK_STRUCTURE_TYPE_DEBUG_REPORT_CREATE_INFO_EXT,
         pattern VK_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT,
-        pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_EXT)
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION_EXT,
+        pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_EXT)
        where
 import           GHC.Ptr                                                         (Ptr (..))
 import           Graphics.Vulkan.Marshal
@@ -79,7 +81,7 @@ import           Graphics.Vulkan.Types.Struct.VkInstanceCreateInfo
 --   >     , VkDebugReportCallbackEXT* pCallback
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateDebugReportCallbackEXT.html vkCreateDebugReportCallbackEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateDebugReportCallbackEXT.html vkCreateDebugReportCallbackEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateDebugReportCallbackEXT"
                vkCreateDebugReportCallbackEXT ::
                VkInstance -- ^ instance
@@ -102,7 +104,7 @@ foreign import ccall unsafe "vkCreateDebugReportCallbackEXT"
 --   >     , VkDebugReportCallbackEXT* pCallback
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateDebugReportCallbackEXT.html vkCreateDebugReportCallbackEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateDebugReportCallbackEXT.html vkCreateDebugReportCallbackEXT registry at www.khronos.org>
 foreign import ccall safe "vkCreateDebugReportCallbackEXT"
                vkCreateDebugReportCallbackEXTSafe ::
                VkInstance -- ^ instance
@@ -120,7 +122,7 @@ foreign import ccall safe "vkCreateDebugReportCallbackEXT"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroyDebugReportCallbackEXT.html vkDestroyDebugReportCallbackEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyDebugReportCallbackEXT.html vkDestroyDebugReportCallbackEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyDebugReportCallbackEXT"
                vkDestroyDebugReportCallbackEXT ::
                VkInstance -- ^ instance
@@ -135,7 +137,7 @@ foreign import ccall unsafe "vkDestroyDebugReportCallbackEXT"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDestroyDebugReportCallbackEXT.html vkDestroyDebugReportCallbackEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyDebugReportCallbackEXT.html vkDestroyDebugReportCallbackEXT registry at www.khronos.org>
 foreign import ccall safe "vkDestroyDebugReportCallbackEXT"
                vkDestroyDebugReportCallbackEXTSafe ::
                VkInstance -- ^ instance
@@ -155,7 +157,7 @@ foreign import ccall safe "vkDestroyDebugReportCallbackEXT"
 --   >     , const char* pMessage
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDebugReportMessageEXT.html vkDebugReportMessageEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDebugReportMessageEXT.html vkDebugReportMessageEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkDebugReportMessageEXT"
                vkDebugReportMessageEXT ::
                VkInstance -- ^ instance
@@ -182,7 +184,7 @@ foreign import ccall unsafe "vkDebugReportMessageEXT"
 --   >     , const char* pMessage
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkDebugReportMessageEXT.html vkDebugReportMessageEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDebugReportMessageEXT.html vkDebugReportMessageEXT registry at www.khronos.org>
 foreign import ccall safe "vkDebugReportMessageEXT"
                vkDebugReportMessageEXTSafe ::
                VkInstance -- ^ instance
@@ -246,3 +248,15 @@ pattern VK_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT =
 
 pattern VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_EXT =
         VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION_EXT ::
+        VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION_EXT =
+        VkDebugReportObjectTypeEXT 1000156000
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_EXT
+        :: VkDebugReportObjectTypeEXT
+
+pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_EXT
+        = VkDebugReportObjectTypeEXT 1000085000

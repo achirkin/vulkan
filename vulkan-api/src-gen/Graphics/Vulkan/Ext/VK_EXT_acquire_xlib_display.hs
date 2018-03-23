@@ -17,11 +17,11 @@ module Graphics.Vulkan.Ext.VK_EXT_acquire_xlib_display
         --
         -- type: @instance@
         --
+        -- platform: @xlib_xrandr@
+        --
         -- Extension number: @90@
         --
         -- Required extensions: 'VK_EXT_direct_mode_display'.
-        --
-        -- Protected by CPP ifdef: @VK_USE_PLATFORM_XLIB_XRANDR_EXT@
         --
 
         -- ** Required extensions: 'VK_EXT_direct_mode_display'.
@@ -50,7 +50,7 @@ import           Graphics.Vulkan.Types.Include       (Display, RROutput)
 --   >     , VkDisplayKHR display
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkAcquireXlibDisplayEXT.html vkAcquireXlibDisplayEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkAcquireXlibDisplayEXT.html vkAcquireXlibDisplayEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkAcquireXlibDisplayEXT"
                vkAcquireXlibDisplayEXT ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -68,7 +68,7 @@ foreign import ccall unsafe "vkAcquireXlibDisplayEXT"
 --   >     , VkDisplayKHR display
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkAcquireXlibDisplayEXT.html vkAcquireXlibDisplayEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkAcquireXlibDisplayEXT.html vkAcquireXlibDisplayEXT registry at www.khronos.org>
 foreign import ccall safe "vkAcquireXlibDisplayEXT"
                vkAcquireXlibDisplayEXTSafe ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -85,7 +85,7 @@ foreign import ccall safe "vkAcquireXlibDisplayEXT"
 --   >     , VkDisplayKHR* pDisplay
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetRandROutputDisplayEXT.html vkGetRandROutputDisplayEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetRandROutputDisplayEXT.html vkGetRandROutputDisplayEXT registry at www.khronos.org>
 foreign import ccall unsafe "vkGetRandROutputDisplayEXT"
                vkGetRandROutputDisplayEXT ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -104,7 +104,7 @@ foreign import ccall unsafe "vkGetRandROutputDisplayEXT"
 --   >     , VkDisplayKHR* pDisplay
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetRandROutputDisplayEXT.html vkGetRandROutputDisplayEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetRandROutputDisplayEXT.html vkGetRandROutputDisplayEXT registry at www.khronos.org>
 foreign import ccall safe "vkGetRandROutputDisplayEXT"
                vkGetRandROutputDisplayEXTSafe ::
                VkPhysicalDevice -- ^ physicalDevice

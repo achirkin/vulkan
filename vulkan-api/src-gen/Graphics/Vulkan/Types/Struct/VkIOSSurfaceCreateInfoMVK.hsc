@@ -24,7 +24,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     const void*                                    pView;
 --   > } VkIOSSurfaceCreateInfoMVK;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkIOSSurfaceCreateInfoMVK.html VkIOSSurfaceCreateInfoMVK registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkIOSSurfaceCreateInfoMVK.html VkIOSSurfaceCreateInfoMVK registry at www.khronos.org>
 data VkIOSSurfaceCreateInfoMVK = VkIOSSurfaceCreateInfoMVK## Addr##
                                                             ByteArray##
 

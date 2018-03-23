@@ -18,11 +18,11 @@ module Graphics.Vulkan.Ext.VK_NV_external_memory_win32
         --
         -- type: @device@
         --
+        -- platform: @win32@
+        --
         -- Extension number: @58@
         --
         -- Required extensions: 'VK_NV_external_memory'.
-        --
-        -- Protected by CPP ifdef: @VK_USE_PLATFORM_WIN32_KHR@
         --
 
         -- ** Required extensions: 'VK_NV_external_memory'.
@@ -33,8 +33,6 @@ module Graphics.Vulkan.Ext.VK_NV_external_memory_win32
         module Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
-        --
-        -- > #include <windows.h>
         vkGetMemoryWin32HandleNV, vkGetMemoryWin32HandleNVSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkResult,
@@ -69,7 +67,7 @@ import           Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo
 --   >     , HANDLE* pHandle
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetMemoryWin32HandleNV.html vkGetMemoryWin32HandleNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryWin32HandleNV.html vkGetMemoryWin32HandleNV registry at www.khronos.org>
 foreign import ccall unsafe "vkGetMemoryWin32HandleNV"
                vkGetMemoryWin32HandleNV ::
                VkDevice -- ^ device
@@ -91,7 +89,7 @@ foreign import ccall unsafe "vkGetMemoryWin32HandleNV"
 --   >     , HANDLE* pHandle
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetMemoryWin32HandleNV.html vkGetMemoryWin32HandleNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryWin32HandleNV.html vkGetMemoryWin32HandleNV registry at www.khronos.org>
 foreign import ccall safe "vkGetMemoryWin32HandleNV"
                vkGetMemoryWin32HandleNVSafe ::
                VkDevice -- ^ device

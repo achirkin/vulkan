@@ -17,11 +17,11 @@ module Graphics.Vulkan.Ext.VK_KHR_xlib_surface
         --
         -- type: @instance@
         --
+        -- platform: @xlib@
+        --
         -- Extension number: @5@
         --
         -- Required extensions: 'VK_KHR_surface'.
-        --
-        -- Protected by CPP ifdef: @VK_USE_PLATFORM_XLIB_KHR@
         --
 
         -- ** Required extensions: 'VK_KHR_surface'.
@@ -30,8 +30,6 @@ module Graphics.Vulkan.Ext.VK_KHR_xlib_surface
         module Graphics.Vulkan.Types.Bitmasks,
         module Graphics.Vulkan.Types.Struct.VkXlibSurfaceCreateInfoKHR,
         -- > #include "vk_platform.h"
-        --
-        -- > #include <X11/Xlib.h>
         vkCreateXlibSurfaceKHR, vkCreateXlibSurfaceKHRSafe,
         vkGetPhysicalDeviceXlibPresentationSupportKHR,
         vkGetPhysicalDeviceXlibPresentationSupportKHRSafe,
@@ -74,7 +72,7 @@ import           Graphics.Vulkan.Types.Struct.VkXlibSurfaceCreateInfoKHR
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateXlibSurfaceKHR.html vkCreateXlibSurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateXlibSurfaceKHR.html vkCreateXlibSurfaceKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateXlibSurfaceKHR"
                vkCreateXlibSurfaceKHR ::
                VkInstance -- ^ instance
@@ -96,7 +94,7 @@ foreign import ccall unsafe "vkCreateXlibSurfaceKHR"
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkCreateXlibSurfaceKHR.html vkCreateXlibSurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateXlibSurfaceKHR.html vkCreateXlibSurfaceKHR registry at www.khronos.org>
 foreign import ccall safe "vkCreateXlibSurfaceKHR"
                vkCreateXlibSurfaceKHRSafe ::
                VkInstance -- ^ instance
@@ -114,7 +112,7 @@ foreign import ccall safe "vkCreateXlibSurfaceKHR"
 --   >     , VisualID visualID
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceXlibPresentationSupportKHR.html vkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceXlibPresentationSupportKHR.html vkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceXlibPresentationSupportKHR"
                vkGetPhysicalDeviceXlibPresentationSupportKHR ::
@@ -132,7 +130,7 @@ foreign import ccall unsafe
 --   >     , VisualID visualID
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceXlibPresentationSupportKHR.html vkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceXlibPresentationSupportKHR.html vkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
 foreign import ccall safe
                "vkGetPhysicalDeviceXlibPresentationSupportKHR"
                vkGetPhysicalDeviceXlibPresentationSupportKHRSafe ::

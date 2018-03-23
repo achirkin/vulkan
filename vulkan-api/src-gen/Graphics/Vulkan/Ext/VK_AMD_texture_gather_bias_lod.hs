@@ -25,7 +25,7 @@ module Graphics.Vulkan.Ext.VK_AMD_texture_gather_bias_lod
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Struct.VkExtent3D,
         module Graphics.Vulkan.Types.Struct.VkImageFormatProperties,
-        module Graphics.Vulkan.Types.Struct.VkImageFormatProperties2KHR,
+        module Graphics.Vulkan.Types.Struct.VkImageFormatProperties2,
         module Graphics.Vulkan.Types.Enum.VkSampleCountFlags,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         module Graphics.Vulkan.Types.Struct.VkTextureLODGatherFormatPropertiesAMD,
@@ -44,7 +44,7 @@ import           Graphics.Vulkan.Types.Enum.VkSampleCountFlags
 import           Graphics.Vulkan.Types.Enum.VkStructureType
 import           Graphics.Vulkan.Types.Struct.VkExtent3D
 import           Graphics.Vulkan.Types.Struct.VkImageFormatProperties
-import           Graphics.Vulkan.Types.Struct.VkImageFormatProperties2KHR
+import           Graphics.Vulkan.Types.Struct.VkImageFormatProperties2
 import           Graphics.Vulkan.Types.Struct.VkTextureLODGatherFormatPropertiesAMD
 
 pattern VK_AMD_TEXTURE_GATHER_BIAS_LOD_SPEC_VERSION ::

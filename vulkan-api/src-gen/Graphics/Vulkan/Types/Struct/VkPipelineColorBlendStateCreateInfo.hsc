@@ -45,7 +45,7 @@ import           System.IO.Unsafe
 --   >     float                  blendConstants[4];
 --   > } VkPipelineColorBlendStateCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPipelineColorBlendStateCreateInfo.html VkPipelineColorBlendStateCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPipelineColorBlendStateCreateInfo.html VkPipelineColorBlendStateCreateInfo registry at www.khronos.org>
 data VkPipelineColorBlendStateCreateInfo = VkPipelineColorBlendStateCreateInfo## Addr##
                                                                                 ByteArray##
 

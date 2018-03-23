@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds       #-}
 {-# LANGUAGE MagicHash       #-}
@@ -22,27 +23,9 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory
         --
 
         -- ** Required extensions: 'VK_KHR_external_memory_capabilities'.
-        module Graphics.Vulkan.Types.Enum.VkBufferCreateFlags,
-        module Graphics.Vulkan.Types.Struct.VkBufferCreateInfo,
-        module Graphics.Vulkan.Types.Enum.VkBufferUsageFlags,
-        module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Struct.VkExportMemoryAllocateInfoKHR,
-        module Graphics.Vulkan.Types.Struct.VkExtent3D,
         module Graphics.Vulkan.Types.Struct.VkExternalMemoryBufferCreateInfoKHR,
-        module Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagsKHR,
         module Graphics.Vulkan.Types.Struct.VkExternalMemoryImageCreateInfoKHR,
-        module Graphics.Vulkan.Types.Enum.VkFormat,
-        module Graphics.Vulkan.Types.Enum.VkImageCreateFlags,
-        module Graphics.Vulkan.Types.Struct.VkImageCreateInfo,
-        module Graphics.Vulkan.Types.Enum.VkImageLayout,
-        module Graphics.Vulkan.Types.Enum.VkImageTiling,
-        module Graphics.Vulkan.Types.Enum.VkImageType,
-        module Graphics.Vulkan.Types.Enum.VkImageUsageFlags,
-        module Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo,
-        module Graphics.Vulkan.Types.Enum.VkSampleCountFlags,
-        module Graphics.Vulkan.Types.Enum.VkSharingMode,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
-        -- > #include "vk_platform.h"
         VK_KHR_EXTERNAL_MEMORY_SPEC_VERSION,
         pattern VK_KHR_EXTERNAL_MEMORY_SPEC_VERSION,
         VK_KHR_EXTERNAL_MEMORY_EXTENSION_NAME,
@@ -51,36 +34,21 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory
         pattern VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMAGE_CREATE_INFO_KHR,
         pattern VK_STRUCTURE_TYPE_EXPORT_MEMORY_ALLOCATE_INFO_KHR,
         pattern VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR,
-        pattern VK_QUEUE_FAMILY_EXTERNAL_KHR, VK_QUEUE_FAMILY_EXTERNAL_KHR)
+        pattern VK_QUEUE_FAMILY_EXTERNAL_KHR)
        where
 import           GHC.Ptr
                                                                                    (Ptr (..))
 import           Graphics.Vulkan.Constants
-                                                                                   (VK_QUEUE_FAMILY_EXTERNAL_KHR,
-                                                                                   pattern VK_QUEUE_FAMILY_EXTERNAL_KHR)
+                                                                                   (pattern VK_QUEUE_FAMILY_EXTERNAL_KHR)
+import           Graphics.Vulkan.Core_1_1
+                                                                                   (pattern VK_ERROR_INVALID_EXTERNAL_HANDLE,
+                                                                                   pattern VK_STRUCTURE_TYPE_EXPORT_MEMORY_ALLOCATE_INFO,
+                                                                                   pattern VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_BUFFER_CREATE_INFO,
+                                                                                   pattern VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMAGE_CREATE_INFO)
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.VkBufferCreateFlags
-import           Graphics.Vulkan.Types.Enum.VkBufferUsageFlags
-import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagsKHR
-import           Graphics.Vulkan.Types.Enum.VkFormat
-import           Graphics.Vulkan.Types.Enum.VkImageCreateFlags
-import           Graphics.Vulkan.Types.Enum.VkImageLayout
-import           Graphics.Vulkan.Types.Enum.VkImageTiling
-import           Graphics.Vulkan.Types.Enum.VkImageType
-import           Graphics.Vulkan.Types.Enum.VkImageUsageFlags
-import           Graphics.Vulkan.Types.Enum.VkResult
-                                                                                   (VkResult (..))
-import           Graphics.Vulkan.Types.Enum.VkSampleCountFlags
-import           Graphics.Vulkan.Types.Enum.VkSharingMode
-import           Graphics.Vulkan.Types.Enum.VkStructureType
-import           Graphics.Vulkan.Types.Struct.VkBufferCreateInfo
 import           Graphics.Vulkan.Types.Struct.VkExportMemoryAllocateInfoKHR
-import           Graphics.Vulkan.Types.Struct.VkExtent3D
 import           Graphics.Vulkan.Types.Struct.VkExternalMemoryBufferCreateInfoKHR
 import           Graphics.Vulkan.Types.Struct.VkExternalMemoryImageCreateInfoKHR
-import           Graphics.Vulkan.Types.Struct.VkImageCreateInfo
-import           Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo
 
 pattern VK_KHR_EXTERNAL_MEMORY_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -110,25 +78,14 @@ is_VK_KHR_EXTERNAL_MEMORY_EXTENSION_NAME
 type VK_KHR_EXTERNAL_MEMORY_EXTENSION_NAME =
      "VK_KHR_external_memory"
 
-pattern VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_BUFFER_CREATE_INFO_KHR ::
-        VkStructureType
-
 pattern VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_BUFFER_CREATE_INFO_KHR =
-        VkStructureType 1000072000
-
-pattern VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMAGE_CREATE_INFO_KHR ::
-        VkStructureType
+        VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_BUFFER_CREATE_INFO
 
 pattern VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMAGE_CREATE_INFO_KHR =
-        VkStructureType 1000072001
-
-pattern VK_STRUCTURE_TYPE_EXPORT_MEMORY_ALLOCATE_INFO_KHR ::
-        VkStructureType
+        VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMAGE_CREATE_INFO
 
 pattern VK_STRUCTURE_TYPE_EXPORT_MEMORY_ALLOCATE_INFO_KHR =
-        VkStructureType 1000072002
-
-pattern VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR :: VkResult
+        VK_STRUCTURE_TYPE_EXPORT_MEMORY_ALLOCATE_INFO
 
 pattern VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR =
-        VkResult (-1000072003)
+        VK_ERROR_INVALID_EXTERNAL_HANDLE

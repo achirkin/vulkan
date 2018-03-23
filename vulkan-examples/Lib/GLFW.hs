@@ -6,10 +6,10 @@ module Lib.GLFW
     ) where
 
 import           Control.Exception
-import           Control.Monad         (unless)
+import           Control.Monad            (unless)
 import           Foreign.Marshal.Array
-import           Graphics.UI.GLFW      (ClientAPI (..), WindowHint (..))
-import qualified Graphics.UI.GLFW      as GLFW
+import           Graphics.UI.GLFW         (ClientAPI (..), WindowHint (..))
+import qualified Graphics.UI.GLFW         as GLFW
 import           Graphics.Vulkan
 
 import           Lib.Utils

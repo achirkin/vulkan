@@ -28,7 +28,7 @@ import           System.IO.Unsafe                                         (unsaf
 --   >     VkQueryPipelineStatisticFlags pipelineStatistics;
 --   > } VkQueryPoolCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkQueryPoolCreateInfo.html VkQueryPoolCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkQueryPoolCreateInfo.html VkQueryPoolCreateInfo registry at www.khronos.org>
 data VkQueryPoolCreateInfo = VkQueryPoolCreateInfo## Addr##
                                                     ByteArray##
 

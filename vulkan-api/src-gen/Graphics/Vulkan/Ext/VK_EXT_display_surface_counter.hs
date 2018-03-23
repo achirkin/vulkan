@@ -68,7 +68,7 @@ import           Graphics.Vulkan.Types.Struct.VkSurfaceCapabilities2EXT
 --   >     , VkSurfaceCapabilities2EXT* pSurfaceCapabilities
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilities2EXT.html vkGetPhysicalDeviceSurfaceCapabilities2EXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilities2EXT.html vkGetPhysicalDeviceSurfaceCapabilities2EXT registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceSurfaceCapabilities2EXT"
                vkGetPhysicalDeviceSurfaceCapabilities2EXT ::
@@ -88,7 +88,7 @@ foreign import ccall unsafe
 --   >     , VkSurfaceCapabilities2EXT* pSurfaceCapabilities
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilities2EXT.html vkGetPhysicalDeviceSurfaceCapabilities2EXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilities2EXT.html vkGetPhysicalDeviceSurfaceCapabilities2EXT registry at www.khronos.org>
 foreign import ccall safe
                "vkGetPhysicalDeviceSurfaceCapabilities2EXT"
                vkGetPhysicalDeviceSurfaceCapabilities2EXTSafe ::

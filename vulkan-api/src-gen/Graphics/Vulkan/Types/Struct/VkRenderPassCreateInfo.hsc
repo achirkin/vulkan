@@ -32,7 +32,7 @@ import           System.IO.Unsafe                                     (unsafeDup
 --   >     const VkSubpassDependency* pDependencies;
 --   > } VkRenderPassCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkRenderPassCreateInfo.html VkRenderPassCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkRenderPassCreateInfo.html VkRenderPassCreateInfo registry at www.khronos.org>
 data VkRenderPassCreateInfo = VkRenderPassCreateInfo## Addr##
                                                       ByteArray##
 

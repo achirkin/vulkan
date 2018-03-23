@@ -23,7 +23,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     const void*            pData;
 --   > } VkSpecializationInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSpecializationInfo.html VkSpecializationInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSpecializationInfo.html VkSpecializationInfo registry at www.khronos.org>
 data VkSpecializationInfo = VkSpecializationInfo## Addr## ByteArray##
 
 instance Eq VkSpecializationInfo where

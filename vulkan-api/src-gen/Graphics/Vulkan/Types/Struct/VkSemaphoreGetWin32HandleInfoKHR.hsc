@@ -9,28 +9,23 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkSemaphoreGetWin32HandleInfoKHR
        (VkSemaphoreGetWin32HandleInfoKHR(..)) where
-import           Foreign.Storable
-                                                                                   (Storable (..))
+import           Foreign.Storable                                              (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.VkExternalSemaphoreHandleTypeFlagsKHR
-                                                                                   (VkExternalSemaphoreHandleTypeFlagBitsKHR)
-import           Graphics.Vulkan.Types.Enum.VkStructureType
-                                                                                   (VkStructureType)
-import           Graphics.Vulkan.Types.Handles
-                                                                                   (VkSemaphore)
-import           System.IO.Unsafe
-                                                                                   (unsafeDupablePerformIO)
+import           Graphics.Vulkan.Types.Enum.VkExternalSemaphoreHandleTypeFlags (VkExternalSemaphoreHandleTypeFlagBits)
+import           Graphics.Vulkan.Types.Enum.VkStructureType                    (VkStructureType)
+import           Graphics.Vulkan.Types.Handles                                 (VkSemaphore)
+import           System.IO.Unsafe                                              (unsafeDupablePerformIO)
 
 -- | > typedef struct VkSemaphoreGetWin32HandleInfoKHR {
 --   >     VkStructureType sType;
 --   >     const void*                      pNext;
 --   >     VkSemaphore                      semaphore;
---   >     VkExternalSemaphoreHandleTypeFlagBitsKHR handleType;
+--   >     VkExternalSemaphoreHandleTypeFlagBits handleType;
 --   > } VkSemaphoreGetWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSemaphoreGetWin32HandleInfoKHR.html VkSemaphoreGetWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSemaphoreGetWin32HandleInfoKHR.html VkSemaphoreGetWin32HandleInfoKHR registry at www.khronos.org>
 data VkSemaphoreGetWin32HandleInfoKHR = VkSemaphoreGetWin32HandleInfoKHR## Addr##
                                                                           ByteArray##
 
@@ -189,7 +184,7 @@ instance {-# OVERLAPPING #-}
 instance {-# OVERLAPPING #-}
          HasField "handleType" VkSemaphoreGetWin32HandleInfoKHR where
         type FieldType "handleType" VkSemaphoreGetWin32HandleInfoKHR =
-             VkExternalSemaphoreHandleTypeFlagBitsKHR
+             VkExternalSemaphoreHandleTypeFlagBits
         type FieldOptional "handleType" VkSemaphoreGetWin32HandleInfoKHR =
              'False -- ' closing tick for hsc2hs
         type FieldOffset "handleType" VkSemaphoreGetWin32HandleInfoKHR =

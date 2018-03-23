@@ -21,7 +21,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     size_t                 size;
 --   > } VkSpecializationMapEntry;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSpecializationMapEntry.html VkSpecializationMapEntry registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSpecializationMapEntry.html VkSpecializationMapEntry registry at www.khronos.org>
 data VkSpecializationMapEntry = VkSpecializationMapEntry## Addr##
                                                           ByteArray##
 

@@ -33,7 +33,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkImageUsageFlags                supportedUsageFlags;
 --   > } VkSurfaceCapabilitiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkSurfaceCapabilitiesKHR.html VkSurfaceCapabilitiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSurfaceCapabilitiesKHR.html VkSurfaceCapabilitiesKHR registry at www.khronos.org>
 data VkSurfaceCapabilitiesKHR = VkSurfaceCapabilitiesKHR## Addr##
                                                           ByteArray##
 

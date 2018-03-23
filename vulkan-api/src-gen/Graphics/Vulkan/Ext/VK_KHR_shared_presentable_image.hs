@@ -73,7 +73,7 @@ import           Graphics.Vulkan.Types.Struct.VkSurfaceCapabilitiesKHR
 --   >     , VkSwapchainKHR swapchain
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetSwapchainStatusKHR.html vkGetSwapchainStatusKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetSwapchainStatusKHR.html vkGetSwapchainStatusKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkGetSwapchainStatusKHR"
                vkGetSwapchainStatusKHR ::
                VkDevice -- ^ device
@@ -89,7 +89,7 @@ foreign import ccall unsafe "vkGetSwapchainStatusKHR"
 --   >     , VkSwapchainKHR swapchain
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetSwapchainStatusKHR.html vkGetSwapchainStatusKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetSwapchainStatusKHR.html vkGetSwapchainStatusKHR registry at www.khronos.org>
 foreign import ccall safe "vkGetSwapchainStatusKHR"
                vkGetSwapchainStatusKHRSafe ::
                VkDevice -- ^ device

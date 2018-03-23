@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
@@ -19,10 +20,9 @@ module Graphics.Vulkan.Ext.VK_KHR_maintenance1
         -- type: @device@
         --
         -- Extension number: @70@
-        vkTrimCommandPoolKHR, vkTrimCommandPoolKHRSafe,
-        module Graphics.Vulkan.Marshal,
+        module Graphics.Vulkan.Types.Bitmasks, vkTrimCommandPoolKHR,
+        vkTrimCommandPoolKHRSafe, module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Bitmasks,
         module Graphics.Vulkan.Types.Handles,
         VK_KHR_MAINTENANCE1_SPEC_VERSION,
         pattern VK_KHR_MAINTENANCE1_SPEC_VERSION,
@@ -33,50 +33,53 @@ module Graphics.Vulkan.Ext.VK_KHR_maintenance1
         pattern VK_FORMAT_FEATURE_TRANSFER_DST_BIT_KHR,
         pattern VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT_KHR)
        where
-import           GHC.Ptr                                         (Ptr (..))
+import           GHC.Ptr                         (Ptr (..))
+import           Graphics.Vulkan.Core_1_1        (pattern VK_ERROR_OUT_OF_POOL_MEMORY,
+                                                  pattern VK_FORMAT_FEATURE_TRANSFER_DST_BIT,
+                                                  pattern VK_FORMAT_FEATURE_TRANSFER_SRC_BIT,
+                                                  pattern VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
-import           Graphics.Vulkan.Types.Enum.VkFormatFeatureFlags (VkFormatFeatureBitmask (..),
-                                                                  VkFormatFeatureFlagBits)
-import           Graphics.Vulkan.Types.Enum.VkImageCreateFlags   (VkImageCreateBitmask (..),
-                                                                  VkImageCreateFlagBits)
-import           Graphics.Vulkan.Types.Enum.VkResult             (VkResult (..))
 import           Graphics.Vulkan.Types.Handles
 
--- | > () vkTrimCommandPoolKHR
+-- | This is an alias for `vkTrimCommandPool`.
+--
+--   > () vkTrimCommandPoolKHR
 --   >     ( VkDevice device
 --   >     , VkCommandPool commandPool
---   >     , VkCommandPoolTrimFlagsKHR flags
+--   >     , VkCommandPoolTrimFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkTrimCommandPoolKHR.html vkTrimCommandPoolKHR registry at www.khronos.org>
-foreign import ccall unsafe "vkTrimCommandPoolKHR"
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkTrimCommandPoolKHR.html vkTrimCommandPoolKHR registry at www.khronos.org>
+foreign import ccall unsafe "vkTrimCommandPool"
                vkTrimCommandPoolKHR ::
                VkDevice -- ^ device
                         -> VkCommandPool -- ^ commandPool
-                                         -> VkCommandPoolTrimFlagsKHR -- ^ flags
-                                                                      -> IO ()
+                                         -> VkCommandPoolTrimFlags -- ^ flags
+                                                                   -> IO ()
 
--- | > () vkTrimCommandPoolKHR
+-- | This is an alias for `vkTrimCommandPool`.
+--
+--   > () vkTrimCommandPoolKHR
 --   >     ( VkDevice device
 --   >     , VkCommandPool commandPool
---   >     , VkCommandPoolTrimFlagsKHR flags
+--   >     , VkCommandPoolTrimFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkTrimCommandPoolKHR.html vkTrimCommandPoolKHR registry at www.khronos.org>
-foreign import ccall safe "vkTrimCommandPoolKHR"
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkTrimCommandPoolKHR.html vkTrimCommandPoolKHR registry at www.khronos.org>
+foreign import ccall safe "vkTrimCommandPool"
                vkTrimCommandPoolKHRSafe ::
                VkDevice -- ^ device
                         -> VkCommandPool -- ^ commandPool
-                                         -> VkCommandPoolTrimFlagsKHR -- ^ flags
-                                                                      -> IO ()
+                                         -> VkCommandPoolTrimFlags -- ^ flags
+                                                                   -> IO ()
 
 pattern VK_KHR_MAINTENANCE1_SPEC_VERSION :: (Num a, Eq a) => a
 
-pattern VK_KHR_MAINTENANCE1_SPEC_VERSION = 1
+pattern VK_KHR_MAINTENANCE1_SPEC_VERSION = 2
 
-type VK_KHR_MAINTENANCE1_SPEC_VERSION = 1
+type VK_KHR_MAINTENANCE1_SPEC_VERSION = 2
 
 pattern VK_KHR_MAINTENANCE1_EXTENSION_NAME :: CString
 
@@ -99,33 +102,14 @@ is_VK_KHR_MAINTENANCE1_EXTENSION_NAME
 
 type VK_KHR_MAINTENANCE1_EXTENSION_NAME = "VK_KHR_maintenance1"
 
-pattern VK_ERROR_OUT_OF_POOL_MEMORY_KHR :: VkResult
-
-pattern VK_ERROR_OUT_OF_POOL_MEMORY_KHR = VkResult (-1000069000)
-
--- | Format can be used as the source image of image transfer commands
---
---   bitpos = @14@
-pattern VK_FORMAT_FEATURE_TRANSFER_SRC_BIT_KHR ::
-        VkFormatFeatureFlagBits
+pattern VK_ERROR_OUT_OF_POOL_MEMORY_KHR =
+        VK_ERROR_OUT_OF_POOL_MEMORY
 
 pattern VK_FORMAT_FEATURE_TRANSFER_SRC_BIT_KHR =
-        VkFormatFeatureFlagBits 16384
-
--- | Format can be used as the destination image of image transfer commands
---
---   bitpos = @15@
-pattern VK_FORMAT_FEATURE_TRANSFER_DST_BIT_KHR ::
-        VkFormatFeatureFlagBits
+        VK_FORMAT_FEATURE_TRANSFER_SRC_BIT
 
 pattern VK_FORMAT_FEATURE_TRANSFER_DST_BIT_KHR =
-        VkFormatFeatureFlagBits 32768
-
--- | The 3D image can be viewed as a 2D or 2D array image
---
---   bitpos = @5@
-pattern VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT_KHR ::
-        VkImageCreateFlagBits
+        VK_FORMAT_FEATURE_TRANSFER_DST_BIT
 
 pattern VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT_KHR =
-        VkImageCreateFlagBits 32
+        VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT

@@ -25,7 +25,7 @@ import           System.IO.Unsafe                                 (unsafeDupable
 --   >     const VkPresentTimeGOOGLE*   pTimes;
 --   > } VkPresentTimesInfoGOOGLE;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPresentTimesInfoGOOGLE.html VkPresentTimesInfoGOOGLE registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPresentTimesInfoGOOGLE.html VkPresentTimesInfoGOOGLE registry at www.khronos.org>
 data VkPresentTimesInfoGOOGLE = VkPresentTimesInfoGOOGLE## Addr##
                                                           ByteArray##
 

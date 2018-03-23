@@ -30,7 +30,7 @@ import           System.IO.Unsafe                                 (unsafeDupable
 --   >     VkColorComponentFlags  colorWriteMask;
 --   > } VkPipelineColorBlendAttachmentState;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPipelineColorBlendAttachmentState.html VkPipelineColorBlendAttachmentState registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPipelineColorBlendAttachmentState.html VkPipelineColorBlendAttachmentState registry at www.khronos.org>
 data VkPipelineColorBlendAttachmentState = VkPipelineColorBlendAttachmentState## Addr##
                                                                                 ByteArray##
 

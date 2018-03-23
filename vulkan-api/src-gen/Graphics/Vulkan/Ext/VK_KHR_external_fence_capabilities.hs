@@ -1,3 +1,4 @@
+{-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
@@ -23,86 +24,95 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_capabilities
         --
 
         -- ** Required extensions: 'VK_KHR_get_physical_device_properties2'.
-        module Graphics.Vulkan.Marshal,
-        module Graphics.Vulkan.Types.BaseTypes,
-        module Graphics.Vulkan.Types.Enum.VkExternalFenceFeatureFlagsKHR,
-        module Graphics.Vulkan.Types.Enum.VkExternalFenceHandleTypeFlagsKHR,
+        module Graphics.Vulkan.Types.Enum.VkExternalFenceFeatureFlagBitsKHR,
+        module Graphics.Vulkan.Types.Bitmasks,
+        module Graphics.Vulkan.Types.Enum.VkExternalFenceHandleTypeFlagBitsKHR,
         module Graphics.Vulkan.Types.Struct.VkExternalFencePropertiesKHR,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalFenceInfoKHR,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceIDPropertiesKHR,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR,
-        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties,
-        module Graphics.Vulkan.Types.Enum.VkPhysicalDeviceType,
-        module Graphics.Vulkan.Types.Enum.VkSampleCountFlags,
-        module Graphics.Vulkan.Types.Enum.VkStructureType,
-        -- > #include "vk_platform.h"
         vkGetPhysicalDeviceExternalFencePropertiesKHR,
         vkGetPhysicalDeviceExternalFencePropertiesKHRSafe,
+        module Graphics.Vulkan.Marshal,
+        module Graphics.Vulkan.Types.BaseTypes,
+        module Graphics.Vulkan.Types.Enum.VkExternalFenceFeatureFlags,
+        module Graphics.Vulkan.Types.Enum.VkExternalFenceHandleTypeFlags,
+        module Graphics.Vulkan.Types.Enum.VkStructureType,
         module Graphics.Vulkan.Types.Handles,
+        module Graphics.Vulkan.Types.Struct.VkExternalFenceProperties,
+        module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalFenceInfo,
         VK_KHR_EXTERNAL_FENCE_CAPABILITIES_SPEC_VERSION,
         pattern VK_KHR_EXTERNAL_FENCE_CAPABILITIES_SPEC_VERSION,
         VK_KHR_EXTERNAL_FENCE_CAPABILITIES_EXTENSION_NAME,
         pattern VK_KHR_EXTERNAL_FENCE_CAPABILITIES_EXTENSION_NAME,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO_KHR,
         pattern VK_STRUCTURE_TYPE_EXTERNAL_FENCE_PROPERTIES_KHR,
-        pattern VK_LUID_SIZE_KHR, VK_LUID_SIZE_KHR)
+        pattern VK_LUID_SIZE_KHR,
+        pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR,
+        pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR,
+        pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR,
+        pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT_KHR,
+        pattern VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT_KHR,
+        pattern VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT_KHR)
        where
 import           GHC.Ptr
                                                                                     (Ptr (..))
 import           Graphics.Vulkan.Constants
-                                                                                    (VK_LUID_SIZE_KHR,
-                                                                                    pattern VK_LUID_SIZE_KHR)
+                                                                                    (pattern VK_LUID_SIZE_KHR)
+import           Graphics.Vulkan.Core_1_1
+                                                                                    (pattern VK_STRUCTURE_TYPE_EXTERNAL_FENCE_PROPERTIES,
+                                                                                    pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Types.BaseTypes
-import           Graphics.Vulkan.Types.Enum.VkExternalFenceFeatureFlagsKHR
-import           Graphics.Vulkan.Types.Enum.VkExternalFenceHandleTypeFlagsKHR
-import           Graphics.Vulkan.Types.Enum.VkPhysicalDeviceType
-import           Graphics.Vulkan.Types.Enum.VkSampleCountFlags
+import           Graphics.Vulkan.Types.Bitmasks
+import           Graphics.Vulkan.Types.Enum.VkExternalFenceFeatureFlagBitsKHR
+import           Graphics.Vulkan.Types.Enum.VkExternalFenceFeatureFlags
+import           Graphics.Vulkan.Types.Enum.VkExternalFenceHandleTypeFlagBitsKHR
+import           Graphics.Vulkan.Types.Enum.VkExternalFenceHandleTypeFlags
 import           Graphics.Vulkan.Types.Enum.VkStructureType
 import           Graphics.Vulkan.Types.Handles
+import           Graphics.Vulkan.Types.Struct.VkExternalFenceProperties
 import           Graphics.Vulkan.Types.Struct.VkExternalFencePropertiesKHR
+import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalFenceInfo
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalFenceInfoKHR
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceIDPropertiesKHR
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties
 
--- | > () vkGetPhysicalDeviceExternalFencePropertiesKHR
+-- | This is an alias for `vkGetPhysicalDeviceExternalFenceProperties`.
+--
+--   > () vkGetPhysicalDeviceExternalFencePropertiesKHR
 --   >     ( VkPhysicalDevice physicalDevice
---   >     , const VkPhysicalDeviceExternalFenceInfoKHR* pExternalFenceInfo
---   >     , VkExternalFencePropertiesKHR* pExternalFenceProperties
+--   >     , const VkPhysicalDeviceExternalFenceInfo* pExternalFenceInfo
+--   >     , VkExternalFenceProperties* pExternalFenceProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceExternalFencePropertiesKHR.html vkGetPhysicalDeviceExternalFencePropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalFencePropertiesKHR.html vkGetPhysicalDeviceExternalFencePropertiesKHR registry at www.khronos.org>
 foreign import ccall unsafe
-               "vkGetPhysicalDeviceExternalFencePropertiesKHR"
+               "vkGetPhysicalDeviceExternalFenceProperties"
                vkGetPhysicalDeviceExternalFencePropertiesKHR ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
-                 Ptr VkPhysicalDeviceExternalFenceInfoKHR -- ^ pExternalFenceInfo
-                                                          ->
-                   Ptr VkExternalFencePropertiesKHR -- ^ pExternalFenceProperties
-                                                    -> IO ()
+                 Ptr VkPhysicalDeviceExternalFenceInfo -- ^ pExternalFenceInfo
+                                                       ->
+                   Ptr VkExternalFenceProperties -- ^ pExternalFenceProperties
+                                                 -> IO ()
 
--- | > () vkGetPhysicalDeviceExternalFencePropertiesKHR
+-- | This is an alias for `vkGetPhysicalDeviceExternalFenceProperties`.
+--
+--   > () vkGetPhysicalDeviceExternalFencePropertiesKHR
 --   >     ( VkPhysicalDevice physicalDevice
---   >     , const VkPhysicalDeviceExternalFenceInfoKHR* pExternalFenceInfo
---   >     , VkExternalFencePropertiesKHR* pExternalFenceProperties
+--   >     , const VkPhysicalDeviceExternalFenceInfo* pExternalFenceInfo
+--   >     , VkExternalFenceProperties* pExternalFenceProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/vkGetPhysicalDeviceExternalFencePropertiesKHR.html vkGetPhysicalDeviceExternalFencePropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalFencePropertiesKHR.html vkGetPhysicalDeviceExternalFencePropertiesKHR registry at www.khronos.org>
 foreign import ccall safe
-               "vkGetPhysicalDeviceExternalFencePropertiesKHR"
+               "vkGetPhysicalDeviceExternalFenceProperties"
                vkGetPhysicalDeviceExternalFencePropertiesKHRSafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
-                 Ptr VkPhysicalDeviceExternalFenceInfoKHR -- ^ pExternalFenceInfo
-                                                          ->
-                   Ptr VkExternalFencePropertiesKHR -- ^ pExternalFenceProperties
-                                                    -> IO ()
+                 Ptr VkPhysicalDeviceExternalFenceInfo -- ^ pExternalFenceInfo
+                                                       ->
+                   Ptr VkExternalFenceProperties -- ^ pExternalFenceProperties
+                                                 -> IO ()
 
 pattern VK_KHR_EXTERNAL_FENCE_CAPABILITIES_SPEC_VERSION ::
         (Num a, Eq a) => a
@@ -136,14 +146,26 @@ is_VK_KHR_EXTERNAL_FENCE_CAPABILITIES_EXTENSION_NAME
 type VK_KHR_EXTERNAL_FENCE_CAPABILITIES_EXTENSION_NAME =
      "VK_KHR_external_fence_capabilities"
 
-pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO_KHR
-        :: VkStructureType
-
 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO_KHR =
-        VkStructureType 1000112000
-
-pattern VK_STRUCTURE_TYPE_EXTERNAL_FENCE_PROPERTIES_KHR ::
-        VkStructureType
+        VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO
 
 pattern VK_STRUCTURE_TYPE_EXTERNAL_FENCE_PROPERTIES_KHR =
-        VkStructureType 1000112001
+        VK_STRUCTURE_TYPE_EXTERNAL_FENCE_PROPERTIES
+
+pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT_KHR =
+        VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT
+
+pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT_KHR =
+        VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT
+
+pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_KHR =
+        VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT
+
+pattern VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT_KHR =
+        VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT
+
+pattern VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT_KHR =
+        VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT
+
+pattern VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT_KHR =
+        VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT

@@ -20,7 +20,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     float          ycoeff;
 --   > } VkViewportWScalingNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkViewportWScalingNV.html VkViewportWScalingNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkViewportWScalingNV.html VkViewportWScalingNV registry at www.khronos.org>
 data VkViewportWScalingNV = VkViewportWScalingNV## Addr## ByteArray##
 
 instance Eq VkViewportWScalingNV where

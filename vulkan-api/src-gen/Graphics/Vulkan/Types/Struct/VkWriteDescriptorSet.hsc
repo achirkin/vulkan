@@ -34,7 +34,7 @@ import           System.IO.Unsafe                                    (unsafeDupa
 --   >     const VkBufferView*    pTexelBufferView;
 --   > } VkWriteDescriptorSet;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkWriteDescriptorSet.html VkWriteDescriptorSet registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkWriteDescriptorSet.html VkWriteDescriptorSet registry at www.khronos.org>
 data VkWriteDescriptorSet = VkWriteDescriptorSet## Addr## ByteArray##
 
 instance Eq VkWriteDescriptorSet where

@@ -9,14 +9,14 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalMemoryHostPropertiesEXT
        (VkPhysicalDeviceExternalMemoryHostPropertiesEXT(..)) where
-import           Foreign.Storable                                            (Storable (..))
+import           Foreign.Storable                                         (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.BaseTypes                             (VkDeviceSize)
-import           Graphics.Vulkan.Types.Enum.VkStructureType                  (VkStructureType)
-import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2KHR (VkPhysicalDeviceProperties2KHR)
-import           System.IO.Unsafe                                            (unsafeDupablePerformIO)
+import           Graphics.Vulkan.Types.BaseTypes                          (VkDeviceSize)
+import           Graphics.Vulkan.Types.Enum.VkStructureType               (VkStructureType)
+import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2 (VkPhysicalDeviceProperties2)
+import           System.IO.Unsafe                                         (unsafeDupablePerformIO)
 
 -- | > typedef struct VkPhysicalDeviceExternalMemoryHostPropertiesEXT {
 --   >     VkStructureType sType;
@@ -24,7 +24,7 @@ import           System.IO.Unsafe                                            (un
 --   >     VkDeviceSize minImportedHostPointerAlignment;
 --   > } VkPhysicalDeviceExternalMemoryHostPropertiesEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceExternalMemoryHostPropertiesEXT.html VkPhysicalDeviceExternalMemoryHostPropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPhysicalDeviceExternalMemoryHostPropertiesEXT.html VkPhysicalDeviceExternalMemoryHostPropertiesEXT registry at www.khronos.org>
 data VkPhysicalDeviceExternalMemoryHostPropertiesEXT = VkPhysicalDeviceExternalMemoryHostPropertiesEXT## Addr##
                                                                                                         ByteArray##
 
@@ -87,7 +87,7 @@ instance VulkanMarshal
         type ReturnedOnly VkPhysicalDeviceExternalMemoryHostPropertiesEXT =
              'False -- ' closing tick for hsc2hs
         type StructExtends VkPhysicalDeviceExternalMemoryHostPropertiesEXT
-             = '[VkPhysicalDeviceProperties2KHR] -- ' closing tick for hsc2hs
+             = '[VkPhysicalDeviceProperties2] -- ' closing tick for hsc2hs
 
 instance {-# OVERLAPPING #-}
          HasField "sType" VkPhysicalDeviceExternalMemoryHostPropertiesEXT

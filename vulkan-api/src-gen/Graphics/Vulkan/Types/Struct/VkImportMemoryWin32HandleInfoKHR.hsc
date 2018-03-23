@@ -9,26 +9,26 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkImportMemoryWin32HandleInfoKHR
        (VkImportMemoryWin32HandleInfoKHR(..)) where
-import           Foreign.Storable                                              (Storable (..))
+import           Foreign.Storable                                           (Storable (..))
 import           GHC.Prim
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
-import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagsKHR (VkExternalMemoryHandleTypeFlagBitsKHR)
-import           Graphics.Vulkan.Types.Enum.VkStructureType                    (VkStructureType)
-import           Graphics.Vulkan.Types.Include                                 (HANDLE,
-                                                                                LPCWSTR)
-import           Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo             (VkMemoryAllocateInfo)
-import           System.IO.Unsafe                                              (unsafeDupablePerformIO)
+import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlags (VkExternalMemoryHandleTypeFlagBits)
+import           Graphics.Vulkan.Types.Enum.VkStructureType                 (VkStructureType)
+import           Graphics.Vulkan.Types.Include                              (HANDLE,
+                                                                             LPCWSTR)
+import           Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo          (VkMemoryAllocateInfo)
+import           System.IO.Unsafe                                           (unsafeDupablePerformIO)
 
 -- | > typedef struct VkImportMemoryWin32HandleInfoKHR {
 --   >     VkStructureType sType;
 --   >     const void*                      pNext;
---   >     VkExternalMemoryHandleTypeFlagBitsKHR handleType;
+--   >     VkExternalMemoryHandleTypeFlagBits handleType;
 --   >     HANDLE           handle;
 --   >     LPCWSTR          name;
 --   > } VkImportMemoryWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkImportMemoryWin32HandleInfoKHR.html VkImportMemoryWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkImportMemoryWin32HandleInfoKHR.html VkImportMemoryWin32HandleInfoKHR registry at www.khronos.org>
 data VkImportMemoryWin32HandleInfoKHR = VkImportMemoryWin32HandleInfoKHR## Addr##
                                                                           ByteArray##
 
@@ -153,7 +153,7 @@ instance {-# OVERLAPPING #-}
 instance {-# OVERLAPPING #-}
          HasField "handleType" VkImportMemoryWin32HandleInfoKHR where
         type FieldType "handleType" VkImportMemoryWin32HandleInfoKHR =
-             VkExternalMemoryHandleTypeFlagBitsKHR
+             VkExternalMemoryHandleTypeFlagBits
         type FieldOptional "handleType" VkImportMemoryWin32HandleInfoKHR =
              'True -- ' closing tick for hsc2hs
         type FieldOffset "handleType" VkImportMemoryWin32HandleInfoKHR =

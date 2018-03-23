@@ -23,7 +23,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     VkSurfaceKHR surface;
 --   > } VkPhysicalDeviceSurfaceInfo2KHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPhysicalDeviceSurfaceInfo2KHR.html VkPhysicalDeviceSurfaceInfo2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPhysicalDeviceSurfaceInfo2KHR.html VkPhysicalDeviceSurfaceInfo2KHR registry at www.khronos.org>
 data VkPhysicalDeviceSurfaceInfo2KHR = VkPhysicalDeviceSurfaceInfo2KHR## Addr##
                                                                         ByteArray##
 

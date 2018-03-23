@@ -23,7 +23,7 @@ import           System.IO.Unsafe                    (unsafeDupablePerformIO)
 --   >     uint32_t               offset;
 --   > } VkVertexInputAttributeDescription;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkVertexInputAttributeDescription.html VkVertexInputAttributeDescription registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkVertexInputAttributeDescription.html VkVertexInputAttributeDescription registry at www.khronos.org>
 data VkVertexInputAttributeDescription = VkVertexInputAttributeDescription## Addr##
                                                                             ByteArray##
 

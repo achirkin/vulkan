@@ -33,7 +33,7 @@ import           System.IO.Unsafe
 --   >     float                                                                            extraPrimitiveOverestimationSize;
 --   > } VkPipelineRasterizationConservativeStateCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkPipelineRasterizationConservativeStateCreateInfoEXT.html VkPipelineRasterizationConservativeStateCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPipelineRasterizationConservativeStateCreateInfoEXT.html VkPipelineRasterizationConservativeStateCreateInfoEXT registry at www.khronos.org>
 data VkPipelineRasterizationConservativeStateCreateInfoEXT = VkPipelineRasterizationConservativeStateCreateInfoEXT## Addr##
                                                                                                                     ByteArray##
 

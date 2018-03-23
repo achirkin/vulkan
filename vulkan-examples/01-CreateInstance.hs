@@ -11,6 +11,7 @@ Just plain haskell; c-like simple and verbose.
 module Main (main) where
 
 import Graphics.Vulkan
+import Graphics.Vulkan.Core_1_0
 import Foreign.Storable
 import Foreign.Marshal.Alloc
 import Foreign.C.String

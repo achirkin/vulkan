@@ -22,7 +22,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkObjectEntryUsageFlagsNVX   flags;
 --   > } VkObjectTableEntryNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkObjectTableEntryNVX.html VkObjectTableEntryNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkObjectTableEntryNVX.html VkObjectTableEntryNVX registry at www.khronos.org>
 data VkObjectTableEntryNVX = VkObjectTableEntryNVX## Addr##
                                                     ByteArray##
 

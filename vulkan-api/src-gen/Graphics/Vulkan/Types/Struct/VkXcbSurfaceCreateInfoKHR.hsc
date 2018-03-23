@@ -27,7 +27,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     xcb_window_t                     window;
 --   > } VkXcbSurfaceCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.0-extensions/man/html/VkXcbSurfaceCreateInfoKHR.html VkXcbSurfaceCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkXcbSurfaceCreateInfoKHR.html VkXcbSurfaceCreateInfoKHR registry at www.khronos.org>
 data VkXcbSurfaceCreateInfoKHR = VkXcbSurfaceCreateInfoKHR## Addr##
                                                             ByteArray##
 

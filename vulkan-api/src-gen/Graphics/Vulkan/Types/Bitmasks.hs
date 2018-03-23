@@ -5,15 +5,26 @@
 {-# LANGUAGE Strict                     #-}
 module Graphics.Vulkan.Types.Bitmasks
        (VkAndroidSurfaceCreateFlagsKHR(..), VkBufferViewCreateFlags(..),
-        VkCommandPoolTrimFlagsKHR(..), VkDescriptorPoolResetFlags(..),
+        VkCommandPoolTrimFlags(..), VkCommandPoolTrimFlagsKHR(..),
+        VkDebugUtilsMessengerCallbackDataFlagsEXT(..),
+        VkDebugUtilsMessengerCreateFlagsEXT(..),
+        VkDescriptorPoolResetFlags(..),
+        VkDescriptorUpdateTemplateCreateFlags(..),
         VkDescriptorUpdateTemplateCreateFlagsKHR(..),
-        VkDeviceCreateFlags(..), VkDeviceQueueCreateFlags(..),
-        VkDisplayModeCreateFlagsKHR(..),
+        VkDeviceCreateFlags(..), VkDisplayModeCreateFlagsKHR(..),
         VkDisplaySurfaceCreateFlagsKHR(..), VkEventCreateFlags(..),
-        VkFramebufferCreateFlags(..), VkIOSSurfaceCreateFlagsMVK(..),
-        VkImageViewCreateFlags(..), VkInstanceCreateFlags(..),
-        VkMacOSSurfaceCreateFlagsMVK(..), VkMemoryMapFlags(..),
-        VkMirSurfaceCreateFlagsKHR(..), VkPipelineCacheCreateFlags(..),
+        VkExternalFenceFeatureFlagsKHR(..),
+        VkExternalFenceHandleTypeFlagsKHR(..),
+        VkExternalMemoryFeatureFlagsKHR(..),
+        VkExternalMemoryHandleTypeFlagsKHR(..),
+        VkExternalSemaphoreFeatureFlagsKHR(..),
+        VkExternalSemaphoreHandleTypeFlagsKHR(..),
+        VkFenceImportFlagsKHR(..), VkFramebufferCreateFlags(..),
+        VkIOSSurfaceCreateFlagsMVK(..), VkImageViewCreateFlags(..),
+        VkInstanceCreateFlags(..), VkMacOSSurfaceCreateFlagsMVK(..),
+        VkMemoryAllocateFlagsKHR(..), VkMemoryMapFlags(..),
+        VkMirSurfaceCreateFlagsKHR(..), VkPeerMemoryFeatureFlagsKHR(..),
+        VkPipelineCacheCreateFlags(..),
         VkPipelineColorBlendStateCreateFlags(..),
         VkPipelineCoverageModulationStateCreateFlagsNV(..),
         VkPipelineCoverageToColorStateCreateFlagsNV(..),
@@ -32,8 +43,9 @@ module Graphics.Vulkan.Types.Bitmasks
         VkPipelineViewportSwizzleStateCreateFlagsNV(..),
         VkQueryPoolCreateFlags(..), VkRenderPassCreateFlags(..),
         VkSamplerCreateFlags(..), VkSemaphoreCreateFlags(..),
-        VkShaderModuleCreateFlags(..), VkValidationCacheCreateFlagsEXT(..),
-        VkViSurfaceCreateFlagsNN(..), VkWaylandSurfaceCreateFlagsKHR(..),
+        VkSemaphoreImportFlagsKHR(..), VkShaderModuleCreateFlags(..),
+        VkValidationCacheCreateFlagsEXT(..), VkViSurfaceCreateFlagsNN(..),
+        VkWaylandSurfaceCreateFlagsKHR(..),
         VkWin32SurfaceCreateFlagsKHR(..), VkXcbSurfaceCreateFlagsKHR(..),
         VkXlibSurfaceCreateFlagsKHR(..))
        where
@@ -68,6 +80,18 @@ instance Read VkBufferViewCreateFlags where
         {-# INLINE readsPrec #-}
         readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
+newtype VkCommandPoolTrimFlags = VkCommandPoolTrimFlags VkFlags
+                                   deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                             FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkCommandPoolTrimFlags where
+        {-# INLINE show #-}
+        show (VkCommandPoolTrimFlags x) = show x
+
+instance Read VkCommandPoolTrimFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
 newtype VkCommandPoolTrimFlagsKHR = VkCommandPoolTrimFlagsKHR VkFlags
                                       deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
                                                 FiniteBits, Storable, Real, Data, Generic)
@@ -80,6 +104,32 @@ instance Read VkCommandPoolTrimFlagsKHR where
         {-# INLINE readsPrec #-}
         readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
+newtype VkDebugUtilsMessengerCallbackDataFlagsEXT = VkDebugUtilsMessengerCallbackDataFlagsEXT VkFlags
+                                                      deriving (Eq, Ord, Num, Bounded, Enum,
+                                                                Integral, Bits, FiniteBits,
+                                                                Storable, Real, Data, Generic)
+
+instance Show VkDebugUtilsMessengerCallbackDataFlagsEXT where
+        {-# INLINE show #-}
+        show (VkDebugUtilsMessengerCallbackDataFlagsEXT x) = show x
+
+instance Read VkDebugUtilsMessengerCallbackDataFlagsEXT where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkDebugUtilsMessengerCreateFlagsEXT = VkDebugUtilsMessengerCreateFlagsEXT VkFlags
+                                                deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                          Bits, FiniteBits, Storable, Real, Data,
+                                                          Generic)
+
+instance Show VkDebugUtilsMessengerCreateFlagsEXT where
+        {-# INLINE show #-}
+        show (VkDebugUtilsMessengerCreateFlagsEXT x) = show x
+
+instance Read VkDebugUtilsMessengerCreateFlagsEXT where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
 newtype VkDescriptorPoolResetFlags = VkDescriptorPoolResetFlags VkFlags
                                        deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
                                                  FiniteBits, Storable, Real, Data, Generic)
@@ -89,6 +139,19 @@ instance Show VkDescriptorPoolResetFlags where
         show (VkDescriptorPoolResetFlags x) = show x
 
 instance Read VkDescriptorPoolResetFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkDescriptorUpdateTemplateCreateFlags = VkDescriptorUpdateTemplateCreateFlags VkFlags
+                                                  deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                            Bits, FiniteBits, Storable, Real, Data,
+                                                            Generic)
+
+instance Show VkDescriptorUpdateTemplateCreateFlags where
+        {-# INLINE show #-}
+        show (VkDescriptorUpdateTemplateCreateFlags x) = show x
+
+instance Read VkDescriptorUpdateTemplateCreateFlags where
         {-# INLINE readsPrec #-}
         readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
@@ -114,18 +177,6 @@ instance Show VkDeviceCreateFlags where
         show (VkDeviceCreateFlags x) = show x
 
 instance Read VkDeviceCreateFlags where
-        {-# INLINE readsPrec #-}
-        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
-
-newtype VkDeviceQueueCreateFlags = VkDeviceQueueCreateFlags VkFlags
-                                     deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
-                                               FiniteBits, Storable, Real, Data, Generic)
-
-instance Show VkDeviceQueueCreateFlags where
-        {-# INLINE show #-}
-        show (VkDeviceQueueCreateFlags x) = show x
-
-instance Read VkDeviceQueueCreateFlags where
         {-# INLINE readsPrec #-}
         readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
@@ -162,6 +213,93 @@ instance Show VkEventCreateFlags where
         show (VkEventCreateFlags x) = show x
 
 instance Read VkEventCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkExternalFenceFeatureFlagsKHR = VkExternalFenceFeatureFlagsKHR VkFlags
+                                           deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                     FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkExternalFenceFeatureFlagsKHR where
+        {-# INLINE show #-}
+        show (VkExternalFenceFeatureFlagsKHR x) = show x
+
+instance Read VkExternalFenceFeatureFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkExternalFenceHandleTypeFlagsKHR = VkExternalFenceHandleTypeFlagsKHR VkFlags
+                                              deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                        FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkExternalFenceHandleTypeFlagsKHR where
+        {-# INLINE show #-}
+        show (VkExternalFenceHandleTypeFlagsKHR x) = show x
+
+instance Read VkExternalFenceHandleTypeFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkExternalMemoryFeatureFlagsKHR = VkExternalMemoryFeatureFlagsKHR VkFlags
+                                            deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                      FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkExternalMemoryFeatureFlagsKHR where
+        {-# INLINE show #-}
+        show (VkExternalMemoryFeatureFlagsKHR x) = show x
+
+instance Read VkExternalMemoryFeatureFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkExternalMemoryHandleTypeFlagsKHR = VkExternalMemoryHandleTypeFlagsKHR VkFlags
+                                               deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                         Bits, FiniteBits, Storable, Real, Data,
+                                                         Generic)
+
+instance Show VkExternalMemoryHandleTypeFlagsKHR where
+        {-# INLINE show #-}
+        show (VkExternalMemoryHandleTypeFlagsKHR x) = show x
+
+instance Read VkExternalMemoryHandleTypeFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkExternalSemaphoreFeatureFlagsKHR = VkExternalSemaphoreFeatureFlagsKHR VkFlags
+                                               deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                         Bits, FiniteBits, Storable, Real, Data,
+                                                         Generic)
+
+instance Show VkExternalSemaphoreFeatureFlagsKHR where
+        {-# INLINE show #-}
+        show (VkExternalSemaphoreFeatureFlagsKHR x) = show x
+
+instance Read VkExternalSemaphoreFeatureFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkExternalSemaphoreHandleTypeFlagsKHR = VkExternalSemaphoreHandleTypeFlagsKHR VkFlags
+                                                  deriving (Eq, Ord, Num, Bounded, Enum, Integral,
+                                                            Bits, FiniteBits, Storable, Real, Data,
+                                                            Generic)
+
+instance Show VkExternalSemaphoreHandleTypeFlagsKHR where
+        {-# INLINE show #-}
+        show (VkExternalSemaphoreHandleTypeFlagsKHR x) = show x
+
+instance Read VkExternalSemaphoreHandleTypeFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkFenceImportFlagsKHR = VkFenceImportFlagsKHR VkFlags
+                                  deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits, FiniteBits,
+                                            Storable, Real, Data, Generic)
+
+instance Show VkFenceImportFlagsKHR where
+        {-# INLINE show #-}
+        show (VkFenceImportFlagsKHR x) = show x
+
+instance Read VkFenceImportFlagsKHR where
         {-# INLINE readsPrec #-}
         readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
@@ -225,6 +363,18 @@ instance Read VkMacOSSurfaceCreateFlagsMVK where
         {-# INLINE readsPrec #-}
         readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
+newtype VkMemoryAllocateFlagsKHR = VkMemoryAllocateFlagsKHR VkFlags
+                                     deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                               FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkMemoryAllocateFlagsKHR where
+        {-# INLINE show #-}
+        show (VkMemoryAllocateFlagsKHR x) = show x
+
+instance Read VkMemoryAllocateFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
 newtype VkMemoryMapFlags = VkMemoryMapFlags VkFlags
                              deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits, FiniteBits,
                                        Storable, Real, Data, Generic)
@@ -246,6 +396,18 @@ instance Show VkMirSurfaceCreateFlagsKHR where
         show (VkMirSurfaceCreateFlagsKHR x) = show x
 
 instance Read VkMirSurfaceCreateFlagsKHR where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkPeerMemoryFeatureFlagsKHR = VkPeerMemoryFeatureFlagsKHR VkFlags
+                                        deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                  FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkPeerMemoryFeatureFlagsKHR where
+        {-# INLINE show #-}
+        show (VkPeerMemoryFeatureFlagsKHR x) = show x
+
+instance Read VkPeerMemoryFeatureFlagsKHR where
         {-# INLINE readsPrec #-}
         readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
@@ -517,6 +679,18 @@ instance Show VkSemaphoreCreateFlags where
         show (VkSemaphoreCreateFlags x) = show x
 
 instance Read VkSemaphoreCreateFlags where
+        {-# INLINE readsPrec #-}
+        readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
+
+newtype VkSemaphoreImportFlagsKHR = VkSemaphoreImportFlagsKHR VkFlags
+                                      deriving (Eq, Ord, Num, Bounded, Enum, Integral, Bits,
+                                                FiniteBits, Storable, Real, Data, Generic)
+
+instance Show VkSemaphoreImportFlagsKHR where
+        {-# INLINE show #-}
+        show (VkSemaphoreImportFlagsKHR x) = show x
+
+instance Read VkSemaphoreImportFlagsKHR where
         {-# INLINE readsPrec #-}
         readsPrec = coerce (readsPrec :: Int -> ReadS VkFlags)
 
