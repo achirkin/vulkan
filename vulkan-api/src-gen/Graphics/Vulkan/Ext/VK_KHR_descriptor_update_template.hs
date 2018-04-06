@@ -1,10 +1,13 @@
 {-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_descriptor_update_template
        (-- * Vulkan extension: @VK_KHR_descriptor_update_template@
@@ -23,10 +26,25 @@ module Graphics.Vulkan.Ext.VK_KHR_descriptor_update_template
         module Graphics.Vulkan.Types.Struct.VkDescriptorUpdateTemplateCreateInfoKHR,
         module Graphics.Vulkan.Types.Struct.VkDescriptorUpdateTemplateEntryKHR,
         module Graphics.Vulkan.Types.Enum.VkDescriptorUpdateTemplateTypeKHR,
+        VkCreateDescriptorUpdateTemplateKHR,
+        pattern VkCreateDescriptorUpdateTemplateKHR,
+        HS_vkCreateDescriptorUpdateTemplateKHR,
+        PFN_vkCreateDescriptorUpdateTemplateKHR,
+        unwrapVkCreateDescriptorUpdateTemplateKHR,
         vkCreateDescriptorUpdateTemplateKHR,
         vkCreateDescriptorUpdateTemplateKHRSafe,
+        VkDestroyDescriptorUpdateTemplateKHR,
+        pattern VkDestroyDescriptorUpdateTemplateKHR,
+        HS_vkDestroyDescriptorUpdateTemplateKHR,
+        PFN_vkDestroyDescriptorUpdateTemplateKHR,
+        unwrapVkDestroyDescriptorUpdateTemplateKHR,
         vkDestroyDescriptorUpdateTemplateKHR,
         vkDestroyDescriptorUpdateTemplateKHRSafe,
+        VkUpdateDescriptorSetWithTemplateKHR,
+        pattern VkUpdateDescriptorSetWithTemplateKHR,
+        HS_vkUpdateDescriptorSetWithTemplateKHR,
+        PFN_vkUpdateDescriptorSetWithTemplateKHR,
+        unwrapVkUpdateDescriptorSetWithTemplateKHR,
         vkUpdateDescriptorSetWithTemplateKHR,
         vkUpdateDescriptorSetWithTemplateKHRSafe,
         module Graphics.Vulkan.Marshal,
@@ -51,6 +69,10 @@ module Graphics.Vulkan.Ext.VK_KHR_descriptor_update_template
         pattern VK_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_KHR,
         pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_DESCRIPTOR_SET_KHR,
         -- ** Required extensions: 'VK_KHR_push_descriptor'.
+        pattern VkCmdPushDescriptorSetWithTemplateKHR,
+        HS_vkCmdPushDescriptorSetWithTemplateKHR,
+        PFN_vkCmdPushDescriptorSetWithTemplateKHR,
+        unwrapVkCmdPushDescriptorSetWithTemplateKHR,
         vkCmdPushDescriptorSetWithTemplateKHR,
         vkCmdPushDescriptorSetWithTemplateKHRSafe,
         pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR,
@@ -65,10 +87,16 @@ import           Graphics.Vulkan.Core_1_1
 import           Graphics.Vulkan.Ext.VK_EXT_debug_report
                                                                                        (pattern VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_EXT)
 import           Graphics.Vulkan.Ext.VK_KHR_push_descriptor
-                                                                                       (pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR,
+                                                                                       (HS_vkCmdPushDescriptorSetWithTemplateKHR,
+                                                                                       PFN_vkCmdPushDescriptorSetWithTemplateKHR,
+                                                                                       pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR,
+                                                                                       pattern VkCmdPushDescriptorSetWithTemplateKHR,
+                                                                                       unwrapVkCmdPushDescriptorSetWithTemplateKHR,
                                                                                        vkCmdPushDescriptorSetWithTemplateKHR,
                                                                                        vkCmdPushDescriptorSetWithTemplateKHRSafe)
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc
+                                                                                       (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkDescriptorType
@@ -87,6 +115,28 @@ import           Graphics.Vulkan.Types.Struct.VkDescriptorUpdateTemplateCreateIn
 import           Graphics.Vulkan.Types.Struct.VkDescriptorUpdateTemplateEntry
 import           Graphics.Vulkan.Types.Struct.VkDescriptorUpdateTemplateEntryKHR
 
+pattern VkCreateDescriptorUpdateTemplateKHR :: CString
+
+pattern VkCreateDescriptorUpdateTemplateKHR <-
+        (is_VkCreateDescriptorUpdateTemplateKHR -> True)
+  where VkCreateDescriptorUpdateTemplateKHR
+          = _VkCreateDescriptorUpdateTemplateKHR
+
+{-# INLINE _VkCreateDescriptorUpdateTemplateKHR #-}
+
+_VkCreateDescriptorUpdateTemplateKHR :: CString
+_VkCreateDescriptorUpdateTemplateKHR
+  = Ptr "vkCreateDescriptorUpdateTemplateKHR\NUL"#
+
+{-# INLINE is_VkCreateDescriptorUpdateTemplateKHR #-}
+
+is_VkCreateDescriptorUpdateTemplateKHR :: CString -> Bool
+is_VkCreateDescriptorUpdateTemplateKHR
+  = (EQ ==) . cmpCStrings _VkCreateDescriptorUpdateTemplateKHR
+
+type VkCreateDescriptorUpdateTemplateKHR =
+     "vkCreateDescriptorUpdateTemplateKHR"
+
 -- | This is an alias for `vkCreateDescriptorUpdateTemplate`.
 --
 --   Success codes: 'VK_SUCCESS'.
@@ -101,7 +151,7 @@ import           Graphics.Vulkan.Types.Struct.VkDescriptorUpdateTemplateEntryKHR
 --   >     )
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateDescriptorUpdateTemplateKHR.html vkCreateDescriptorUpdateTemplateKHR registry at www.khronos.org>
-foreign import ccall unsafe "vkCreateDescriptorUpdateTemplate"
+foreign import ccall unsafe "vkCreateDescriptorUpdateTemplateKHR"
                vkCreateDescriptorUpdateTemplateKHR ::
                VkDevice -- ^ device
                         ->
@@ -126,7 +176,7 @@ foreign import ccall unsafe "vkCreateDescriptorUpdateTemplate"
 --   >     )
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateDescriptorUpdateTemplateKHR.html vkCreateDescriptorUpdateTemplateKHR registry at www.khronos.org>
-foreign import ccall safe "vkCreateDescriptorUpdateTemplate"
+foreign import ccall safe "vkCreateDescriptorUpdateTemplateKHR"
                vkCreateDescriptorUpdateTemplateKHRSafe ::
                VkDevice -- ^ device
                         ->
@@ -137,6 +187,71 @@ foreign import ccall safe "vkCreateDescriptorUpdateTemplate"
                      Ptr VkDescriptorUpdateTemplate -- ^ pDescriptorUpdateTemplate
                                                     -> IO VkResult
 
+-- | This is an alias for `vkCreateDescriptorUpdateTemplate`.
+--
+--   Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkCreateDescriptorUpdateTemplateKHR
+--   >     ( VkDevice device
+--   >     , const VkDescriptorUpdateTemplateCreateInfo* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkDescriptorUpdateTemplate* pDescriptorUpdateTemplate
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateDescriptorUpdateTemplateKHR.html vkCreateDescriptorUpdateTemplateKHR registry at www.khronos.org>
+type HS_vkCreateDescriptorUpdateTemplateKHR =
+     VkDevice -- ^ device
+              ->
+       Ptr VkDescriptorUpdateTemplateCreateInfo -- ^ pCreateInfo
+                                                ->
+         Ptr VkAllocationCallbacks -- ^ pAllocator
+                                   ->
+           Ptr VkDescriptorUpdateTemplate -- ^ pDescriptorUpdateTemplate
+                                          -> IO VkResult
+
+type PFN_vkCreateDescriptorUpdateTemplateKHR =
+     FunPtr HS_vkCreateDescriptorUpdateTemplateKHR
+
+foreign import ccall "dynamic"
+               unwrapVkCreateDescriptorUpdateTemplateKHR ::
+               PFN_vkCreateDescriptorUpdateTemplateKHR ->
+                 HS_vkCreateDescriptorUpdateTemplateKHR
+
+instance VulkanInstanceProc "vkCreateDescriptorUpdateTemplateKHR"
+         where
+        type VkInstanceProcType "vkCreateDescriptorUpdateTemplateKHR" =
+             HS_vkCreateDescriptorUpdateTemplateKHR
+        vkInstanceProcSymbol = _VkCreateDescriptorUpdateTemplateKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCreateDescriptorUpdateTemplateKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkDestroyDescriptorUpdateTemplateKHR :: CString
+
+pattern VkDestroyDescriptorUpdateTemplateKHR <-
+        (is_VkDestroyDescriptorUpdateTemplateKHR -> True)
+  where VkDestroyDescriptorUpdateTemplateKHR
+          = _VkDestroyDescriptorUpdateTemplateKHR
+
+{-# INLINE _VkDestroyDescriptorUpdateTemplateKHR #-}
+
+_VkDestroyDescriptorUpdateTemplateKHR :: CString
+_VkDestroyDescriptorUpdateTemplateKHR
+  = Ptr "vkDestroyDescriptorUpdateTemplateKHR\NUL"#
+
+{-# INLINE is_VkDestroyDescriptorUpdateTemplateKHR #-}
+
+is_VkDestroyDescriptorUpdateTemplateKHR :: CString -> Bool
+is_VkDestroyDescriptorUpdateTemplateKHR
+  = (EQ ==) . cmpCStrings _VkDestroyDescriptorUpdateTemplateKHR
+
+type VkDestroyDescriptorUpdateTemplateKHR =
+     "vkDestroyDescriptorUpdateTemplateKHR"
+
 -- | This is an alias for `vkDestroyDescriptorUpdateTemplate`.
 --
 --   > () vkDestroyDescriptorUpdateTemplateKHR
@@ -146,7 +261,7 @@ foreign import ccall safe "vkCreateDescriptorUpdateTemplate"
 --   >     )
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyDescriptorUpdateTemplateKHR.html vkDestroyDescriptorUpdateTemplateKHR registry at www.khronos.org>
-foreign import ccall unsafe "vkDestroyDescriptorUpdateTemplate"
+foreign import ccall unsafe "vkDestroyDescriptorUpdateTemplateKHR"
                vkDestroyDescriptorUpdateTemplateKHR ::
                VkDevice -- ^ device
                         ->
@@ -163,13 +278,70 @@ foreign import ccall unsafe "vkDestroyDescriptorUpdateTemplate"
 --   >     )
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyDescriptorUpdateTemplateKHR.html vkDestroyDescriptorUpdateTemplateKHR registry at www.khronos.org>
-foreign import ccall safe "vkDestroyDescriptorUpdateTemplate"
+foreign import ccall safe "vkDestroyDescriptorUpdateTemplateKHR"
                vkDestroyDescriptorUpdateTemplateKHRSafe ::
                VkDevice -- ^ device
                         ->
                  VkDescriptorUpdateTemplate -- ^ descriptorUpdateTemplate
                                             -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                          -> IO ()
+
+-- | This is an alias for `vkDestroyDescriptorUpdateTemplate`.
+--
+--   > () vkDestroyDescriptorUpdateTemplateKHR
+--   >     ( VkDevice device
+--   >     , VkDescriptorUpdateTemplate descriptorUpdateTemplate
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyDescriptorUpdateTemplateKHR.html vkDestroyDescriptorUpdateTemplateKHR registry at www.khronos.org>
+type HS_vkDestroyDescriptorUpdateTemplateKHR =
+     VkDevice -- ^ device
+              ->
+       VkDescriptorUpdateTemplate -- ^ descriptorUpdateTemplate
+                                  -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                               -> IO ()
+
+type PFN_vkDestroyDescriptorUpdateTemplateKHR =
+     FunPtr HS_vkDestroyDescriptorUpdateTemplateKHR
+
+foreign import ccall "dynamic"
+               unwrapVkDestroyDescriptorUpdateTemplateKHR ::
+               PFN_vkDestroyDescriptorUpdateTemplateKHR ->
+                 HS_vkDestroyDescriptorUpdateTemplateKHR
+
+instance VulkanInstanceProc "vkDestroyDescriptorUpdateTemplateKHR"
+         where
+        type VkInstanceProcType "vkDestroyDescriptorUpdateTemplateKHR" =
+             HS_vkDestroyDescriptorUpdateTemplateKHR
+        vkInstanceProcSymbol = _VkDestroyDescriptorUpdateTemplateKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkDestroyDescriptorUpdateTemplateKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkUpdateDescriptorSetWithTemplateKHR :: CString
+
+pattern VkUpdateDescriptorSetWithTemplateKHR <-
+        (is_VkUpdateDescriptorSetWithTemplateKHR -> True)
+  where VkUpdateDescriptorSetWithTemplateKHR
+          = _VkUpdateDescriptorSetWithTemplateKHR
+
+{-# INLINE _VkUpdateDescriptorSetWithTemplateKHR #-}
+
+_VkUpdateDescriptorSetWithTemplateKHR :: CString
+_VkUpdateDescriptorSetWithTemplateKHR
+  = Ptr "vkUpdateDescriptorSetWithTemplateKHR\NUL"#
+
+{-# INLINE is_VkUpdateDescriptorSetWithTemplateKHR #-}
+
+is_VkUpdateDescriptorSetWithTemplateKHR :: CString -> Bool
+is_VkUpdateDescriptorSetWithTemplateKHR
+  = (EQ ==) . cmpCStrings _VkUpdateDescriptorSetWithTemplateKHR
+
+type VkUpdateDescriptorSetWithTemplateKHR =
+     "vkUpdateDescriptorSetWithTemplateKHR"
 
 -- | This is an alias for `vkUpdateDescriptorSetWithTemplate`.
 --
@@ -181,7 +353,7 @@ foreign import ccall safe "vkDestroyDescriptorUpdateTemplate"
 --   >     )
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkUpdateDescriptorSetWithTemplateKHR.html vkUpdateDescriptorSetWithTemplateKHR registry at www.khronos.org>
-foreign import ccall unsafe "vkUpdateDescriptorSetWithTemplate"
+foreign import ccall unsafe "vkUpdateDescriptorSetWithTemplateKHR"
                vkUpdateDescriptorSetWithTemplateKHR ::
                VkDevice -- ^ device
                         ->
@@ -200,7 +372,7 @@ foreign import ccall unsafe "vkUpdateDescriptorSetWithTemplate"
 --   >     )
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkUpdateDescriptorSetWithTemplateKHR.html vkUpdateDescriptorSetWithTemplateKHR registry at www.khronos.org>
-foreign import ccall safe "vkUpdateDescriptorSetWithTemplate"
+foreign import ccall safe "vkUpdateDescriptorSetWithTemplateKHR"
                vkUpdateDescriptorSetWithTemplateKHRSafe ::
                VkDevice -- ^ device
                         ->
@@ -208,6 +380,43 @@ foreign import ccall safe "vkUpdateDescriptorSetWithTemplate"
                                  -> VkDescriptorUpdateTemplate -- ^ descriptorUpdateTemplate
                                                                -> Ptr Void -- ^ pData
                                                                            -> IO ()
+
+-- | This is an alias for `vkUpdateDescriptorSetWithTemplate`.
+--
+--   > () vkUpdateDescriptorSetWithTemplateKHR
+--   >     ( VkDevice device
+--   >     , VkDescriptorSet descriptorSet
+--   >     , VkDescriptorUpdateTemplate descriptorUpdateTemplate
+--   >     , const void* pData
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkUpdateDescriptorSetWithTemplateKHR.html vkUpdateDescriptorSetWithTemplateKHR registry at www.khronos.org>
+type HS_vkUpdateDescriptorSetWithTemplateKHR =
+     VkDevice -- ^ device
+              ->
+       VkDescriptorSet -- ^ descriptorSet
+                       -> VkDescriptorUpdateTemplate -- ^ descriptorUpdateTemplate
+                                                     -> Ptr Void -- ^ pData
+                                                                 -> IO ()
+
+type PFN_vkUpdateDescriptorSetWithTemplateKHR =
+     FunPtr HS_vkUpdateDescriptorSetWithTemplateKHR
+
+foreign import ccall "dynamic"
+               unwrapVkUpdateDescriptorSetWithTemplateKHR ::
+               PFN_vkUpdateDescriptorSetWithTemplateKHR ->
+                 HS_vkUpdateDescriptorSetWithTemplateKHR
+
+instance VulkanInstanceProc "vkUpdateDescriptorSetWithTemplateKHR"
+         where
+        type VkInstanceProcType "vkUpdateDescriptorSetWithTemplateKHR" =
+             HS_vkUpdateDescriptorSetWithTemplateKHR
+        vkInstanceProcSymbol = _VkUpdateDescriptorSetWithTemplateKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkUpdateDescriptorSetWithTemplateKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_KHR_DESCRIPTOR_UPDATE_TEMPLATE_SPEC_VERSION ::
         (Num a, Eq a) => a

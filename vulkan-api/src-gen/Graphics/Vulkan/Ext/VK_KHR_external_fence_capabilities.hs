@@ -1,10 +1,13 @@
 {-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_external_fence_capabilities
        (-- * Vulkan extension: @VK_KHR_external_fence_capabilities@
@@ -30,6 +33,11 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_capabilities
         module Graphics.Vulkan.Types.Struct.VkExternalFencePropertiesKHR,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalFenceInfoKHR,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceIDPropertiesKHR,
+        VkGetPhysicalDeviceExternalFencePropertiesKHR,
+        pattern VkGetPhysicalDeviceExternalFencePropertiesKHR,
+        HS_vkGetPhysicalDeviceExternalFencePropertiesKHR,
+        PFN_vkGetPhysicalDeviceExternalFencePropertiesKHR,
+        unwrapVkGetPhysicalDeviceExternalFencePropertiesKHR,
         vkGetPhysicalDeviceExternalFencePropertiesKHR,
         vkGetPhysicalDeviceExternalFencePropertiesKHRSafe,
         module Graphics.Vulkan.Marshal,
@@ -62,6 +70,8 @@ import           Graphics.Vulkan.Core_1_1
                                                                                     (pattern VK_STRUCTURE_TYPE_EXTERNAL_FENCE_PROPERTIES,
                                                                                     pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO)
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc
+                                                                                    (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkExternalFenceFeatureFlagBitsKHR
@@ -76,6 +86,29 @@ import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalFenceInfo
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalFenceInfoKHR
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceIDPropertiesKHR
 
+pattern VkGetPhysicalDeviceExternalFencePropertiesKHR :: CString
+
+pattern VkGetPhysicalDeviceExternalFencePropertiesKHR <-
+        (is_VkGetPhysicalDeviceExternalFencePropertiesKHR -> True)
+  where VkGetPhysicalDeviceExternalFencePropertiesKHR
+          = _VkGetPhysicalDeviceExternalFencePropertiesKHR
+
+{-# INLINE _VkGetPhysicalDeviceExternalFencePropertiesKHR #-}
+
+_VkGetPhysicalDeviceExternalFencePropertiesKHR :: CString
+_VkGetPhysicalDeviceExternalFencePropertiesKHR
+  = Ptr "vkGetPhysicalDeviceExternalFencePropertiesKHR\NUL"#
+
+{-# INLINE is_VkGetPhysicalDeviceExternalFencePropertiesKHR #-}
+
+is_VkGetPhysicalDeviceExternalFencePropertiesKHR :: CString -> Bool
+is_VkGetPhysicalDeviceExternalFencePropertiesKHR
+  = (EQ ==) .
+      cmpCStrings _VkGetPhysicalDeviceExternalFencePropertiesKHR
+
+type VkGetPhysicalDeviceExternalFencePropertiesKHR =
+     "vkGetPhysicalDeviceExternalFencePropertiesKHR"
+
 -- | This is an alias for `vkGetPhysicalDeviceExternalFenceProperties`.
 --
 --   > () vkGetPhysicalDeviceExternalFencePropertiesKHR
@@ -86,7 +119,7 @@ import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceIDPropertiesKHR
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalFencePropertiesKHR.html vkGetPhysicalDeviceExternalFencePropertiesKHR registry at www.khronos.org>
 foreign import ccall unsafe
-               "vkGetPhysicalDeviceExternalFenceProperties"
+               "vkGetPhysicalDeviceExternalFencePropertiesKHR"
                vkGetPhysicalDeviceExternalFencePropertiesKHR ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
@@ -105,7 +138,7 @@ foreign import ccall unsafe
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalFencePropertiesKHR.html vkGetPhysicalDeviceExternalFencePropertiesKHR registry at www.khronos.org>
 foreign import ccall safe
-               "vkGetPhysicalDeviceExternalFenceProperties"
+               "vkGetPhysicalDeviceExternalFencePropertiesKHR"
                vkGetPhysicalDeviceExternalFencePropertiesKHRSafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
@@ -113,6 +146,46 @@ foreign import ccall safe
                                                        ->
                    Ptr VkExternalFenceProperties -- ^ pExternalFenceProperties
                                                  -> IO ()
+
+-- | This is an alias for `vkGetPhysicalDeviceExternalFenceProperties`.
+--
+--   > () vkGetPhysicalDeviceExternalFencePropertiesKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , const VkPhysicalDeviceExternalFenceInfo* pExternalFenceInfo
+--   >     , VkExternalFenceProperties* pExternalFenceProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalFencePropertiesKHR.html vkGetPhysicalDeviceExternalFencePropertiesKHR registry at www.khronos.org>
+type HS_vkGetPhysicalDeviceExternalFencePropertiesKHR =
+     VkPhysicalDevice -- ^ physicalDevice
+                      ->
+       Ptr VkPhysicalDeviceExternalFenceInfo -- ^ pExternalFenceInfo
+                                             ->
+         Ptr VkExternalFenceProperties -- ^ pExternalFenceProperties
+                                       -> IO ()
+
+type PFN_vkGetPhysicalDeviceExternalFencePropertiesKHR =
+     FunPtr HS_vkGetPhysicalDeviceExternalFencePropertiesKHR
+
+foreign import ccall "dynamic"
+               unwrapVkGetPhysicalDeviceExternalFencePropertiesKHR ::
+               PFN_vkGetPhysicalDeviceExternalFencePropertiesKHR ->
+                 HS_vkGetPhysicalDeviceExternalFencePropertiesKHR
+
+instance VulkanInstanceProc
+           "vkGetPhysicalDeviceExternalFencePropertiesKHR"
+         where
+        type VkInstanceProcType
+               "vkGetPhysicalDeviceExternalFencePropertiesKHR"
+             = HS_vkGetPhysicalDeviceExternalFencePropertiesKHR
+        vkInstanceProcSymbol
+          = _VkGetPhysicalDeviceExternalFencePropertiesKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc
+          = unwrapVkGetPhysicalDeviceExternalFencePropertiesKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_KHR_EXTERNAL_FENCE_CAPABILITIES_SPEC_VERSION ::
         (Num a, Eq a) => a

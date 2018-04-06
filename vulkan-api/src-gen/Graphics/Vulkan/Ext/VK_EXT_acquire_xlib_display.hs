@@ -1,9 +1,12 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_EXT_acquire_xlib_display
        (-- * Vulkan extension: @VK_EXT_acquire_xlib_display@
@@ -25,7 +28,12 @@ module Graphics.Vulkan.Ext.VK_EXT_acquire_xlib_display
         --
 
         -- ** Required extensions: 'VK_EXT_direct_mode_display'.
-        vkAcquireXlibDisplayEXT, vkAcquireXlibDisplayEXTSafe,
+        VkAcquireXlibDisplayEXT, pattern VkAcquireXlibDisplayEXT,
+        HS_vkAcquireXlibDisplayEXT, PFN_vkAcquireXlibDisplayEXT,
+        unwrapVkAcquireXlibDisplayEXT, vkAcquireXlibDisplayEXT,
+        vkAcquireXlibDisplayEXTSafe, VkGetRandROutputDisplayEXT,
+        pattern VkGetRandROutputDisplayEXT, HS_vkGetRandROutputDisplayEXT,
+        PFN_vkGetRandROutputDisplayEXT, unwrapVkGetRandROutputDisplayEXT,
         vkGetRandROutputDisplayEXT, vkGetRandROutputDisplayEXTSafe,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
@@ -34,11 +42,31 @@ module Graphics.Vulkan.Ext.VK_EXT_acquire_xlib_display
         VK_EXT_ACQUIRE_XLIB_DISPLAY_EXTENSION_NAME,
         pattern VK_EXT_ACQUIRE_XLIB_DISPLAY_EXTENSION_NAME)
        where
-import           GHC.Ptr                             (Ptr (..))
+import           GHC.Ptr                              (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.Enum.VkResult
 import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Include       (Display, RROutput)
+import           Graphics.Vulkan.Types.Include        (Display, RROutput)
+
+pattern VkAcquireXlibDisplayEXT :: CString
+
+pattern VkAcquireXlibDisplayEXT <-
+        (is_VkAcquireXlibDisplayEXT -> True)
+  where VkAcquireXlibDisplayEXT = _VkAcquireXlibDisplayEXT
+
+{-# INLINE _VkAcquireXlibDisplayEXT #-}
+
+_VkAcquireXlibDisplayEXT :: CString
+_VkAcquireXlibDisplayEXT = Ptr "vkAcquireXlibDisplayEXT\NUL"#
+
+{-# INLINE is_VkAcquireXlibDisplayEXT #-}
+
+is_VkAcquireXlibDisplayEXT :: CString -> Bool
+is_VkAcquireXlibDisplayEXT
+  = (EQ ==) . cmpCStrings _VkAcquireXlibDisplayEXT
+
+type VkAcquireXlibDisplayEXT = "vkAcquireXlibDisplayEXT"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -78,6 +106,58 @@ foreign import ccall safe "vkAcquireXlibDisplayEXT"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
+--   Error codes: 'VK_ERROR_INITIALIZATION_FAILED'.
+--
+--   > VkResult vkAcquireXlibDisplayEXT
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , Display* dpy
+--   >     , VkDisplayKHR display
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkAcquireXlibDisplayEXT.html vkAcquireXlibDisplayEXT registry at www.khronos.org>
+type HS_vkAcquireXlibDisplayEXT =
+     VkPhysicalDevice -- ^ physicalDevice
+                      -> Ptr Display -- ^ dpy
+                                     -> VkDisplayKHR -- ^ display
+                                                     -> IO VkResult
+
+type PFN_vkAcquireXlibDisplayEXT =
+     FunPtr HS_vkAcquireXlibDisplayEXT
+
+foreign import ccall "dynamic" unwrapVkAcquireXlibDisplayEXT ::
+               PFN_vkAcquireXlibDisplayEXT -> HS_vkAcquireXlibDisplayEXT
+
+instance VulkanInstanceProc "vkAcquireXlibDisplayEXT" where
+        type VkInstanceProcType "vkAcquireXlibDisplayEXT" =
+             HS_vkAcquireXlibDisplayEXT
+        vkInstanceProcSymbol = _VkAcquireXlibDisplayEXT
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkAcquireXlibDisplayEXT
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetRandROutputDisplayEXT :: CString
+
+pattern VkGetRandROutputDisplayEXT <-
+        (is_VkGetRandROutputDisplayEXT -> True)
+  where VkGetRandROutputDisplayEXT = _VkGetRandROutputDisplayEXT
+
+{-# INLINE _VkGetRandROutputDisplayEXT #-}
+
+_VkGetRandROutputDisplayEXT :: CString
+_VkGetRandROutputDisplayEXT = Ptr "vkGetRandROutputDisplayEXT\NUL"#
+
+{-# INLINE is_VkGetRandROutputDisplayEXT #-}
+
+is_VkGetRandROutputDisplayEXT :: CString -> Bool
+is_VkGetRandROutputDisplayEXT
+  = (EQ ==) . cmpCStrings _VkGetRandROutputDisplayEXT
+
+type VkGetRandROutputDisplayEXT = "vkGetRandROutputDisplayEXT"
+
+-- | Success codes: 'VK_SUCCESS'.
+--
 --   > VkResult vkGetRandROutputDisplayEXT
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , Display* dpy
@@ -113,6 +193,40 @@ foreign import ccall safe "vkGetRandROutputDisplayEXT"
                              -> RROutput -- ^ rrOutput
                                          -> Ptr VkDisplayKHR -- ^ pDisplay
                                                              -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   > VkResult vkGetRandROutputDisplayEXT
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , Display* dpy
+--   >     , RROutput rrOutput
+--   >     , VkDisplayKHR* pDisplay
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetRandROutputDisplayEXT.html vkGetRandROutputDisplayEXT registry at www.khronos.org>
+type HS_vkGetRandROutputDisplayEXT =
+     VkPhysicalDevice -- ^ physicalDevice
+                      ->
+       Ptr Display -- ^ dpy
+                   -> RROutput -- ^ rrOutput
+                               -> Ptr VkDisplayKHR -- ^ pDisplay
+                                                   -> IO VkResult
+
+type PFN_vkGetRandROutputDisplayEXT =
+     FunPtr HS_vkGetRandROutputDisplayEXT
+
+foreign import ccall "dynamic" unwrapVkGetRandROutputDisplayEXT ::
+               PFN_vkGetRandROutputDisplayEXT -> HS_vkGetRandROutputDisplayEXT
+
+instance VulkanInstanceProc "vkGetRandROutputDisplayEXT" where
+        type VkInstanceProcType "vkGetRandROutputDisplayEXT" =
+             HS_vkGetRandROutputDisplayEXT
+        vkInstanceProcSymbol = _VkGetRandROutputDisplayEXT
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetRandROutputDisplayEXT
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_EXT_ACQUIRE_XLIB_DISPLAY_SPEC_VERSION ::
         (Num a, Eq a) => a

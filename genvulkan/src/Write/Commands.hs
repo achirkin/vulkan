@@ -3,6 +3,7 @@
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE RecordWildCards       #-}
 {-# LANGUAGE Strict                #-}
+{-# LANGUAGE QuasiQuotes                #-}
 module Write.Commands
   ( genCommand
   ) where
@@ -15,13 +16,17 @@ import           Data.Semigroup
 import           Data.Set                             (Set)
 import qualified Data.Set                             as Set
 import qualified Data.Text                            as T
+import           Data.Char (toUpper)
 import           Language.Haskell.Exts.SimpleComments
 import           Language.Haskell.Exts.Syntax
+import           NeatInterpolation
 
 import           VkXml.CommonTypes
 import           VkXml.Sections.Commands
+import           VkXml.Sections.Enums
 import           VkXml.Sections
 
+import           Write.Types.Enum
 import           Write.ModuleWriter
 
 
@@ -35,13 +40,21 @@ genCommand command@VkCommand
     }
   , cParameters = vkpams
   } = do
+
+  -- enum patterns
+  _ <- enumPattern VkEnum
+    { _vkEnumName = VkEnumName (T.pack firstUpCName)
+    , _vkEnumTName = Nothing
+    , _vkEnumComment = ""
+    , _vkEnumValue = VkEnumString cnameOrigTxt
+    }
+
+  -- command itself
   indeed <- isIdentDeclared . DIVar $ unVkCommandName vkname
   if indeed
   then do
-    writeImport . DIVar $ unVkCommandName vkname
-    writeImport . DIVar $ unVkCommandName vknameSafe
-    writeExport . DIVar $ unVkCommandName vkname
-    writeExport . DIVar $ unVkCommandName vknameSafe
+    writeAllImports
+    writeAllExports
     return Set.empty
   else do
     regLink <- vkRegistryLink $ unVkCommandName vkname
@@ -50,6 +63,7 @@ genCommand command@VkCommand
 
     writePragma "ForeignFunctionInterface"
     writeFullImport "Graphics.Vulkan.Marshal"
+    writeImport $ DIThing "FunPtr" DITEmpty
     forM_ (requiresTypes command) $ \p ->
       let t = unVkTypeName p
           dit = if "Vk" `T.isPrefixOf` t
@@ -60,14 +74,45 @@ genCommand command@VkCommand
           writeImport $ DIThing "VkFlags" DITAll
         writeImport $ DIThing t dit
 
+    -- foreign import unsafe
     writeDecl $ ForImp rezComment (CCall Nothing) (Just (PlayRisky Nothing))
                       (Just cnameOrigStr) (Ident Nothing cnameStr) funtype
 
+    -- foreign import safe
     writeDecl $ ForImp rezComment (CCall Nothing) (Just (PlaySafe Nothing False))
                       (Just cnameOrigStr) (Ident Nothing cnameSafeStr) funtype
 
-    writeExport . DIVar $ unVkCommandName vkname
-    writeExport . DIVar $ unVkCommandName vknameSafe
+    -- type synonym
+    writeDecl $ TypeDecl rezComment
+      (DHead Nothing $ Ident Nothing funTypeNameStrHS) funtype
+
+    -- FunPtr type synonym
+    writeDecl $ TypeDecl Nothing
+      (DHead Nothing $ Ident Nothing funTypeNameStrPFN) funTypePFN
+
+    -- unwrap C function pointer
+    writeDecl $ parseDecl'
+      [text|
+        foreign import ccall "dynamic"
+            $unwrapFun :: $funTypeNameTxtPFN -> $funTypeNameTxtHS
+      |]
+
+    -- symbol discovery instance
+    writeImport $ DIThing "VulkanInstanceProc" DITAll
+    writePragma "TypeFamilies"
+    writePragma "FlexibleInstances"
+    writeOptionsPragma (Just GHC) "-fno-warn-orphans"
+    writeDecl $ parseDecl'
+      [text|
+        instance VulkanInstanceProc "$cnameOrigTxt" where
+          type VkInstanceProcType "$cnameOrigTxt" = $funTypeNameTxtHS
+          vkInstanceProcSymbol = $vkInstanceProcSymbol
+          {-# INLINE vkInstanceProcSymbol #-}
+          unwrapVkInstanceProc = $unwrapFun
+          {-# INLINE unwrapVkInstanceProc #-}
+      |]
+
+    writeAllExports
     -- reexport all dependent types
     return . Set.fromList
            . filter (T.isInfixOf "Vk" . unVkTypeName)
@@ -79,6 +124,13 @@ genCommand command@VkCommand
     cname = toQName vkname
     cnameStr = T.unpack $ qNameTxt cname
     cnameOrigStr = T.unpack cnameOrigTxt
+    funTypeNameStrHS = "HS_" <> cnameStr
+    funTypeNameStrPFN = "PFN_" <> cnameStr
+    funTypeNameTxtHS = T.pack funTypeNameStrHS
+    funTypeNameTxtPFN = T.pack funTypeNameStrPFN
+    funTypePFN = TyApp Nothing
+      (TyCon Nothing (UnQual Nothing (Ident Nothing "FunPtr")))
+      (TyCon Nothing (UnQual Nothing (Ident Nothing funTypeNameStrHS)))
     rtype = (Nothing <$)
           $ TyApp () (TyCon () (UnQual () (Ident () "IO"))) (toType 0 vkrt)
     funtype = foldr accumRefs rtype vkpams
@@ -125,12 +177,35 @@ genCommand command@VkCommand
                  . map ("> " <>) $ T.lines c
 
 
-genCommand acom@(VkCommandAlias comname comalias)
+    firstUpCName = case T.unpack (unVkCommandName vkname) of
+      "" -> ""
+      (x:xs) -> toUpper x : xs
+    unwrapFun = T.pack $ "unwrap" <> firstUpCName
+    vkInstanceProcSymbol = T.pack $ '_' : firstUpCName
+
+    writeAllImports = do
+      writeImport $ DIThing funTypeNameTxtHS DITNo
+      writeImport $ DIThing funTypeNameTxtPFN DITNo
+      writeImport $ DIVar unwrapFun
+      writeImport . DIVar $ unVkCommandName vkname
+      writeImport . DIVar $ unVkCommandName vknameSafe
+
+    writeAllExports = do
+      writeExport $ DIThing funTypeNameTxtHS DITNo
+      writeExport $ DIThing funTypeNameTxtPFN DITNo
+      writeExport $ DIVar unwrapFun
+      writeExport . DIVar $ unVkCommandName vkname
+      writeExport . DIVar $ unVkCommandName vknameSafe
+
+
+
+genCommand acom@(VkCommandAlias comname comalias comnameOrig)
   = ask >>= \vk -> case Map.lookup comalias (globCommands vk) of
       Nothing -> error $
         "Could not find a command for an alias " <> show acom
       Just c  -> genCommand
         c{ cName = comname
+         , cNameOrig = comnameOrig
          , cAttributes = (cAttributes c)
             { cComment = appendComLine (cComment (cAttributes c)) $
                  "This is an alias for `" <> unVkCommandName comalias <> "`."

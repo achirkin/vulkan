@@ -1,9 +1,12 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_EXT_discard_rectangles
        (-- * Vulkan extension: @VK_EXT_discard_rectangles@
@@ -73,7 +76,10 @@ module Graphics.Vulkan.Ext.VK_EXT_discard_rectangles
         module Graphics.Vulkan.Types.Enum.VkVertexInputRate,
         module Graphics.Vulkan.Types.Struct.VkViewport,
         -- > #include "vk_platform.h"
-        vkCmdSetDiscardRectangleEXT, vkCmdSetDiscardRectangleEXTSafe,
+        VkCmdSetDiscardRectangleEXT, pattern VkCmdSetDiscardRectangleEXT,
+        HS_vkCmdSetDiscardRectangleEXT, PFN_vkCmdSetDiscardRectangleEXT,
+        unwrapVkCmdSetDiscardRectangleEXT, vkCmdSetDiscardRectangleEXT,
+        vkCmdSetDiscardRectangleEXTSafe,
         module Graphics.Vulkan.Types.Handles,
         VK_EXT_DISCARD_RECTANGLES_SPEC_VERSION,
         pattern VK_EXT_DISCARD_RECTANGLES_SPEC_VERSION,
@@ -86,6 +92,8 @@ module Graphics.Vulkan.Ext.VK_EXT_discard_rectangles
 import           GHC.Ptr
                                                                                              (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc
+                                                                                             (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkBlendFactor
@@ -136,6 +144,26 @@ import           Graphics.Vulkan.Types.Struct.VkVertexInputAttributeDescription
 import           Graphics.Vulkan.Types.Struct.VkVertexInputBindingDescription
 import           Graphics.Vulkan.Types.Struct.VkViewport
 
+pattern VkCmdSetDiscardRectangleEXT :: CString
+
+pattern VkCmdSetDiscardRectangleEXT <-
+        (is_VkCmdSetDiscardRectangleEXT -> True)
+  where VkCmdSetDiscardRectangleEXT = _VkCmdSetDiscardRectangleEXT
+
+{-# INLINE _VkCmdSetDiscardRectangleEXT #-}
+
+_VkCmdSetDiscardRectangleEXT :: CString
+_VkCmdSetDiscardRectangleEXT
+  = Ptr "vkCmdSetDiscardRectangleEXT\NUL"#
+
+{-# INLINE is_VkCmdSetDiscardRectangleEXT #-}
+
+is_VkCmdSetDiscardRectangleEXT :: CString -> Bool
+is_VkCmdSetDiscardRectangleEXT
+  = (EQ ==) . cmpCStrings _VkCmdSetDiscardRectangleEXT
+
+type VkCmdSetDiscardRectangleEXT = "vkCmdSetDiscardRectangleEXT"
+
 -- | queues: 'graphics'.
 --
 --   renderpass: @both@
@@ -175,6 +203,41 @@ foreign import ccall safe "vkCmdSetDiscardRectangleEXT"
                                          -> Word32 -- ^ discardRectangleCount
                                                    -> Ptr VkRect2D -- ^ pDiscardRectangles
                                                                    -> IO ()
+
+-- | queues: 'graphics'.
+--
+--   renderpass: @both@
+--
+--   > () vkCmdSetDiscardRectangleEXT
+--   >     ( VkCommandBuffer commandBuffer
+--   >     , uint32_t firstDiscardRectangle
+--   >     , uint32_t discardRectangleCount
+--   >     , const VkRect2D* pDiscardRectangles
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetDiscardRectangleEXT.html vkCmdSetDiscardRectangleEXT registry at www.khronos.org>
+type HS_vkCmdSetDiscardRectangleEXT =
+     VkCommandBuffer -- ^ commandBuffer
+                     -> Word32 -- ^ firstDiscardRectangle
+                               -> Word32 -- ^ discardRectangleCount
+                                         -> Ptr VkRect2D -- ^ pDiscardRectangles
+                                                         -> IO ()
+
+type PFN_vkCmdSetDiscardRectangleEXT =
+     FunPtr HS_vkCmdSetDiscardRectangleEXT
+
+foreign import ccall "dynamic" unwrapVkCmdSetDiscardRectangleEXT ::
+               PFN_vkCmdSetDiscardRectangleEXT -> HS_vkCmdSetDiscardRectangleEXT
+
+instance VulkanInstanceProc "vkCmdSetDiscardRectangleEXT" where
+        type VkInstanceProcType "vkCmdSetDiscardRectangleEXT" =
+             HS_vkCmdSetDiscardRectangleEXT
+        vkInstanceProcSymbol = _VkCmdSetDiscardRectangleEXT
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCmdSetDiscardRectangleEXT
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_EXT_DISCARD_RECTANGLES_SPEC_VERSION :: (Num a, Eq a) =>
         a

@@ -1,10 +1,13 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_AMD_buffer_marker
        (-- * Vulkan extension: @VK_AMD_buffer_marker@
@@ -19,8 +22,10 @@ module Graphics.Vulkan.Ext.VK_AMD_buffer_marker
         -- type: @device@
         --
         -- Extension number: @180@
-        vkCmdWriteBufferMarkerAMD, vkCmdWriteBufferMarkerAMDSafe,
-        module Graphics.Vulkan.Marshal,
+        VkCmdWriteBufferMarkerAMD, pattern VkCmdWriteBufferMarkerAMD,
+        HS_vkCmdWriteBufferMarkerAMD, PFN_vkCmdWriteBufferMarkerAMD,
+        unwrapVkCmdWriteBufferMarkerAMD, vkCmdWriteBufferMarkerAMD,
+        vkCmdWriteBufferMarkerAMDSafe, module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.VkPipelineStageFlags,
         module Graphics.Vulkan.Types.Handles,
@@ -31,9 +36,29 @@ module Graphics.Vulkan.Ext.VK_AMD_buffer_marker
        where
 import           GHC.Ptr                                         (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc            (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkPipelineStageFlags
 import           Graphics.Vulkan.Types.Handles
+
+pattern VkCmdWriteBufferMarkerAMD :: CString
+
+pattern VkCmdWriteBufferMarkerAMD <-
+        (is_VkCmdWriteBufferMarkerAMD -> True)
+  where VkCmdWriteBufferMarkerAMD = _VkCmdWriteBufferMarkerAMD
+
+{-# INLINE _VkCmdWriteBufferMarkerAMD #-}
+
+_VkCmdWriteBufferMarkerAMD :: CString
+_VkCmdWriteBufferMarkerAMD = Ptr "vkCmdWriteBufferMarkerAMD\NUL"#
+
+{-# INLINE is_VkCmdWriteBufferMarkerAMD #-}
+
+is_VkCmdWriteBufferMarkerAMD :: CString -> Bool
+is_VkCmdWriteBufferMarkerAMD
+  = (EQ ==) . cmpCStrings _VkCmdWriteBufferMarkerAMD
+
+type VkCmdWriteBufferMarkerAMD = "vkCmdWriteBufferMarkerAMD"
 
 -- | queues: 'transfer', 'graphics', 'compute'.
 --
@@ -86,6 +111,47 @@ foreign import ccall safe "vkCmdWriteBufferMarkerAMD"
                             -> VkDeviceSize -- ^ dstOffset
                                             -> Word32 -- ^ marker
                                                       -> IO ()
+
+-- | queues: 'transfer', 'graphics', 'compute'.
+--
+--   renderpass: @both@
+--
+--   pipeline: @transfer@
+--
+--   > () vkCmdWriteBufferMarkerAMD
+--   >     ( VkCommandBuffer commandBuffer
+--   >     , VkPipelineStageFlagBits pipelineStage
+--   >     , VkBuffer dstBuffer
+--   >     , VkDeviceSize dstOffset
+--   >     , uint32_t marker
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdWriteBufferMarkerAMD.html vkCmdWriteBufferMarkerAMD registry at www.khronos.org>
+type HS_vkCmdWriteBufferMarkerAMD =
+     VkCommandBuffer -- ^ commandBuffer
+                     ->
+       VkPipelineStageFlagBits -- ^ pipelineStage
+                               ->
+         VkBuffer -- ^ dstBuffer
+                  -> VkDeviceSize -- ^ dstOffset
+                                  -> Word32 -- ^ marker
+                                            -> IO ()
+
+type PFN_vkCmdWriteBufferMarkerAMD =
+     FunPtr HS_vkCmdWriteBufferMarkerAMD
+
+foreign import ccall "dynamic" unwrapVkCmdWriteBufferMarkerAMD ::
+               PFN_vkCmdWriteBufferMarkerAMD -> HS_vkCmdWriteBufferMarkerAMD
+
+instance VulkanInstanceProc "vkCmdWriteBufferMarkerAMD" where
+        type VkInstanceProcType "vkCmdWriteBufferMarkerAMD" =
+             HS_vkCmdWriteBufferMarkerAMD
+        vkInstanceProcSymbol = _VkCmdWriteBufferMarkerAMD
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCmdWriteBufferMarkerAMD
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_AMD_BUFFER_MARKER_SPEC_VERSION :: (Num a, Eq a) => a
 

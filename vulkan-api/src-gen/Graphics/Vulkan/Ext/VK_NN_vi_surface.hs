@@ -1,9 +1,12 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_NN_vi_surface
        (-- * Vulkan extension: @VK_NN_vi_surface@
@@ -30,8 +33,10 @@ module Graphics.Vulkan.Ext.VK_NN_vi_surface
         module Graphics.Vulkan.Types.Bitmasks,
         module Graphics.Vulkan.Types.Struct.VkViSurfaceCreateInfoNN,
         -- > #include "vk_platform.h"
-        vkCreateViSurfaceNN, vkCreateViSurfaceNNSafe,
-        module Graphics.Vulkan.Marshal,
+        VkCreateViSurfaceNN, pattern VkCreateViSurfaceNN,
+        HS_vkCreateViSurfaceNN, PFN_vkCreateViSurfaceNN,
+        unwrapVkCreateViSurfaceNN, vkCreateViSurfaceNN,
+        vkCreateViSurfaceNNSafe, module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,
@@ -46,6 +51,7 @@ module Graphics.Vulkan.Ext.VK_NN_vi_surface
        where
 import           GHC.Ptr                                              (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc                 (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkInternalAllocationType
@@ -56,6 +62,23 @@ import           Graphics.Vulkan.Types.Funcpointers
 import           Graphics.Vulkan.Types.Handles
 import           Graphics.Vulkan.Types.Struct.VkAllocationCallbacks
 import           Graphics.Vulkan.Types.Struct.VkViSurfaceCreateInfoNN
+
+pattern VkCreateViSurfaceNN :: CString
+
+pattern VkCreateViSurfaceNN <- (is_VkCreateViSurfaceNN -> True)
+  where VkCreateViSurfaceNN = _VkCreateViSurfaceNN
+
+{-# INLINE _VkCreateViSurfaceNN #-}
+
+_VkCreateViSurfaceNN :: CString
+_VkCreateViSurfaceNN = Ptr "vkCreateViSurfaceNN\NUL"#
+
+{-# INLINE is_VkCreateViSurfaceNN #-}
+
+is_VkCreateViSurfaceNN :: CString -> Bool
+is_VkCreateViSurfaceNN = (EQ ==) . cmpCStrings _VkCreateViSurfaceNN
+
+type VkCreateViSurfaceNN = "vkCreateViSurfaceNN"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -100,6 +123,42 @@ foreign import ccall safe "vkCreateViSurfaceNN"
                    Ptr VkAllocationCallbacks -- ^ pAllocator
                                              -> Ptr VkSurfaceKHR -- ^ pSurface
                                                                  -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
+--
+--   > VkResult vkCreateViSurfaceNN
+--   >     ( VkInstance instance
+--   >     , const VkViSurfaceCreateInfoNN* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkSurfaceKHR* pSurface
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateViSurfaceNN.html vkCreateViSurfaceNN registry at www.khronos.org>
+type HS_vkCreateViSurfaceNN =
+     VkInstance -- ^ instance
+                ->
+       Ptr VkViSurfaceCreateInfoNN -- ^ pCreateInfo
+                                   ->
+         Ptr VkAllocationCallbacks -- ^ pAllocator
+                                   -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                       -> IO VkResult
+
+type PFN_vkCreateViSurfaceNN = FunPtr HS_vkCreateViSurfaceNN
+
+foreign import ccall "dynamic" unwrapVkCreateViSurfaceNN ::
+               PFN_vkCreateViSurfaceNN -> HS_vkCreateViSurfaceNN
+
+instance VulkanInstanceProc "vkCreateViSurfaceNN" where
+        type VkInstanceProcType "vkCreateViSurfaceNN" =
+             HS_vkCreateViSurfaceNN
+        vkInstanceProcSymbol = _VkCreateViSurfaceNN
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCreateViSurfaceNN
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_NN_VI_SURFACE_SPEC_VERSION :: (Num a, Eq a) => a
 

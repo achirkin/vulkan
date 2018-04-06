@@ -1,9 +1,12 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_push_descriptor
        (-- * Vulkan extension: @VK_KHR_push_descriptor@
@@ -34,7 +37,10 @@ module Graphics.Vulkan.Ext.VK_KHR_push_descriptor
         module Graphics.Vulkan.Types.Enum.VkSampleCountFlags,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
-        vkCmdPushDescriptorSetKHR, vkCmdPushDescriptorSetKHRSafe,
+        VkCmdPushDescriptorSetKHR, pattern VkCmdPushDescriptorSetKHR,
+        HS_vkCmdPushDescriptorSetKHR, PFN_vkCmdPushDescriptorSetKHR,
+        unwrapVkCmdPushDescriptorSetKHR, vkCmdPushDescriptorSetKHR,
+        vkCmdPushDescriptorSetKHRSafe,
         module Graphics.Vulkan.Types.Enum.VkDescriptorType,
         module Graphics.Vulkan.Types.Enum.VkImageLayout,
         module Graphics.Vulkan.Types.Enum.VkPipelineBindPoint,
@@ -49,6 +55,11 @@ module Graphics.Vulkan.Ext.VK_KHR_push_descriptor
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES_KHR,
         pattern VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR,
         -- ** Required extensions: 'VK_KHR_get_physical_device_properties2'.
+        VkCmdPushDescriptorSetWithTemplateKHR,
+        pattern VkCmdPushDescriptorSetWithTemplateKHR,
+        HS_vkCmdPushDescriptorSetWithTemplateKHR,
+        PFN_vkCmdPushDescriptorSetWithTemplateKHR,
+        unwrapVkCmdPushDescriptorSetWithTemplateKHR,
         vkCmdPushDescriptorSetWithTemplateKHR,
         vkCmdPushDescriptorSetWithTemplateKHRSafe,
         pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR)
@@ -56,6 +67,8 @@ module Graphics.Vulkan.Ext.VK_KHR_push_descriptor
 import           GHC.Ptr
                                                                                            (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc
+                                                                                           (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkDescriptorSetLayoutCreateFlags
                                                                                            (VkDescriptorSetLayoutCreateBitmask (..),
@@ -77,6 +90,25 @@ import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDevicePushDescriptorPropertiesKHR
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties
 import           Graphics.Vulkan.Types.Struct.VkWriteDescriptorSet
+
+pattern VkCmdPushDescriptorSetKHR :: CString
+
+pattern VkCmdPushDescriptorSetKHR <-
+        (is_VkCmdPushDescriptorSetKHR -> True)
+  where VkCmdPushDescriptorSetKHR = _VkCmdPushDescriptorSetKHR
+
+{-# INLINE _VkCmdPushDescriptorSetKHR #-}
+
+_VkCmdPushDescriptorSetKHR :: CString
+_VkCmdPushDescriptorSetKHR = Ptr "vkCmdPushDescriptorSetKHR\NUL"#
+
+{-# INLINE is_VkCmdPushDescriptorSetKHR #-}
+
+is_VkCmdPushDescriptorSetKHR :: CString -> Bool
+is_VkCmdPushDescriptorSetKHR
+  = (EQ ==) . cmpCStrings _VkCmdPushDescriptorSetKHR
+
+type VkCmdPushDescriptorSetKHR = "vkCmdPushDescriptorSetKHR"
 
 -- | queues: 'graphics', 'compute'.
 --
@@ -132,6 +164,48 @@ foreign import ccall safe "vkCmdPushDescriptorSetKHR"
                                       -> Ptr VkWriteDescriptorSet -- ^ pDescriptorWrites
                                                                   -> IO ()
 
+-- | queues: 'graphics', 'compute'.
+--
+--   renderpass: @both@
+--
+--   > () vkCmdPushDescriptorSetKHR
+--   >     ( VkCommandBuffer commandBuffer
+--   >     , VkPipelineBindPoint pipelineBindPoint
+--   >     , VkPipelineLayout layout
+--   >     , uint32_t set
+--   >     , uint32_t descriptorWriteCount
+--   >     , const VkWriteDescriptorSet* pDescriptorWrites
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdPushDescriptorSetKHR.html vkCmdPushDescriptorSetKHR registry at www.khronos.org>
+type HS_vkCmdPushDescriptorSetKHR =
+     VkCommandBuffer -- ^ commandBuffer
+                     ->
+       VkPipelineBindPoint -- ^ pipelineBindPoint
+                           ->
+         VkPipelineLayout -- ^ layout
+                          ->
+           Word32 -- ^ set
+                  -> Word32 -- ^ descriptorWriteCount
+                            -> Ptr VkWriteDescriptorSet -- ^ pDescriptorWrites
+                                                        -> IO ()
+
+type PFN_vkCmdPushDescriptorSetKHR =
+     FunPtr HS_vkCmdPushDescriptorSetKHR
+
+foreign import ccall "dynamic" unwrapVkCmdPushDescriptorSetKHR ::
+               PFN_vkCmdPushDescriptorSetKHR -> HS_vkCmdPushDescriptorSetKHR
+
+instance VulkanInstanceProc "vkCmdPushDescriptorSetKHR" where
+        type VkInstanceProcType "vkCmdPushDescriptorSetKHR" =
+             HS_vkCmdPushDescriptorSetKHR
+        vkInstanceProcSymbol = _VkCmdPushDescriptorSetKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCmdPushDescriptorSetKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
 pattern VK_KHR_PUSH_DESCRIPTOR_SPEC_VERSION :: (Num a, Eq a) => a
 
 pattern VK_KHR_PUSH_DESCRIPTOR_SPEC_VERSION = 2
@@ -174,6 +248,28 @@ pattern VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR ::
 
 pattern VK_DESCRIPTOR_SET_LAYOUT_CREATE_PUSH_DESCRIPTOR_BIT_KHR =
         VkDescriptorSetLayoutCreateFlagBits 1
+
+pattern VkCmdPushDescriptorSetWithTemplateKHR :: CString
+
+pattern VkCmdPushDescriptorSetWithTemplateKHR <-
+        (is_VkCmdPushDescriptorSetWithTemplateKHR -> True)
+  where VkCmdPushDescriptorSetWithTemplateKHR
+          = _VkCmdPushDescriptorSetWithTemplateKHR
+
+{-# INLINE _VkCmdPushDescriptorSetWithTemplateKHR #-}
+
+_VkCmdPushDescriptorSetWithTemplateKHR :: CString
+_VkCmdPushDescriptorSetWithTemplateKHR
+  = Ptr "vkCmdPushDescriptorSetWithTemplateKHR\NUL"#
+
+{-# INLINE is_VkCmdPushDescriptorSetWithTemplateKHR #-}
+
+is_VkCmdPushDescriptorSetWithTemplateKHR :: CString -> Bool
+is_VkCmdPushDescriptorSetWithTemplateKHR
+  = (EQ ==) . cmpCStrings _VkCmdPushDescriptorSetWithTemplateKHR
+
+type VkCmdPushDescriptorSetWithTemplateKHR =
+     "vkCmdPushDescriptorSetWithTemplateKHR"
 
 -- | queues: 'graphics', 'compute'.
 --
@@ -222,6 +318,48 @@ foreign import ccall safe "vkCmdPushDescriptorSetWithTemplateKHR"
                                     -> Word32 -- ^ set
                                               -> Ptr Void -- ^ pData
                                                           -> IO ()
+
+-- | queues: 'graphics', 'compute'.
+--
+--   renderpass: @both@
+--
+--   > () vkCmdPushDescriptorSetWithTemplateKHR
+--   >     ( VkCommandBuffer commandBuffer
+--   >     , VkDescriptorUpdateTemplate descriptorUpdateTemplate
+--   >     , VkPipelineLayout layout
+--   >     , uint32_t set
+--   >     , const void* pData
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html vkCmdPushDescriptorSetWithTemplateKHR registry at www.khronos.org>
+type HS_vkCmdPushDescriptorSetWithTemplateKHR =
+     VkCommandBuffer -- ^ commandBuffer
+                     ->
+       VkDescriptorUpdateTemplate -- ^ descriptorUpdateTemplate
+                                  ->
+         VkPipelineLayout -- ^ layout
+                          -> Word32 -- ^ set
+                                    -> Ptr Void -- ^ pData
+                                                -> IO ()
+
+type PFN_vkCmdPushDescriptorSetWithTemplateKHR =
+     FunPtr HS_vkCmdPushDescriptorSetWithTemplateKHR
+
+foreign import ccall "dynamic"
+               unwrapVkCmdPushDescriptorSetWithTemplateKHR ::
+               PFN_vkCmdPushDescriptorSetWithTemplateKHR ->
+                 HS_vkCmdPushDescriptorSetWithTemplateKHR
+
+instance VulkanInstanceProc "vkCmdPushDescriptorSetWithTemplateKHR"
+         where
+        type VkInstanceProcType "vkCmdPushDescriptorSetWithTemplateKHR" =
+             HS_vkCmdPushDescriptorSetWithTemplateKHR
+        vkInstanceProcSymbol = _VkCmdPushDescriptorSetWithTemplateKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCmdPushDescriptorSetWithTemplateKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 -- | Create descriptor update template for pushed descriptor updates
 pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR ::

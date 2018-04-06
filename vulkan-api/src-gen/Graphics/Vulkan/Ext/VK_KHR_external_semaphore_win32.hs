@@ -1,9 +1,12 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_win32
        (-- * Vulkan extension: @VK_KHR_external_semaphore_win32@
@@ -38,8 +41,16 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_win32
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         module Graphics.Vulkan.Types.Struct.VkSubmitInfo,
         -- > #include "vk_platform.h"
+        VkImportSemaphoreWin32HandleKHR,
+        pattern VkImportSemaphoreWin32HandleKHR,
+        HS_vkImportSemaphoreWin32HandleKHR,
+        PFN_vkImportSemaphoreWin32HandleKHR,
+        unwrapVkImportSemaphoreWin32HandleKHR,
         vkImportSemaphoreWin32HandleKHR,
-        vkImportSemaphoreWin32HandleKHRSafe, vkGetSemaphoreWin32HandleKHR,
+        vkImportSemaphoreWin32HandleKHRSafe, VkGetSemaphoreWin32HandleKHR,
+        pattern VkGetSemaphoreWin32HandleKHR,
+        HS_vkGetSemaphoreWin32HandleKHR, PFN_vkGetSemaphoreWin32HandleKHR,
+        unwrapVkGetSemaphoreWin32HandleKHR, vkGetSemaphoreWin32HandleKHR,
         vkGetSemaphoreWin32HandleKHRSafe, module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
@@ -56,6 +67,8 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_win32
 import           GHC.Ptr
                                                                                    (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc
+                                                                                   (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkExternalSemaphoreHandleTypeFlags
@@ -71,6 +84,28 @@ import           Graphics.Vulkan.Types.Struct.VkImportSemaphoreWin32HandleInfoKH
 import           Graphics.Vulkan.Types.Struct.VkSemaphoreCreateInfo
 import           Graphics.Vulkan.Types.Struct.VkSemaphoreGetWin32HandleInfoKHR
 import           Graphics.Vulkan.Types.Struct.VkSubmitInfo
+
+pattern VkImportSemaphoreWin32HandleKHR :: CString
+
+pattern VkImportSemaphoreWin32HandleKHR <-
+        (is_VkImportSemaphoreWin32HandleKHR -> True)
+  where VkImportSemaphoreWin32HandleKHR
+          = _VkImportSemaphoreWin32HandleKHR
+
+{-# INLINE _VkImportSemaphoreWin32HandleKHR #-}
+
+_VkImportSemaphoreWin32HandleKHR :: CString
+_VkImportSemaphoreWin32HandleKHR
+  = Ptr "vkImportSemaphoreWin32HandleKHR\NUL"#
+
+{-# INLINE is_VkImportSemaphoreWin32HandleKHR #-}
+
+is_VkImportSemaphoreWin32HandleKHR :: CString -> Bool
+is_VkImportSemaphoreWin32HandleKHR
+  = (EQ ==) . cmpCStrings _VkImportSemaphoreWin32HandleKHR
+
+type VkImportSemaphoreWin32HandleKHR =
+     "vkImportSemaphoreWin32HandleKHR"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -103,6 +138,59 @@ foreign import ccall safe "vkImportSemaphoreWin32HandleKHR"
                VkDevice -- ^ device
                         -> Ptr VkImportSemaphoreWin32HandleInfoKHR -- ^ pImportSemaphoreWin32HandleInfo
                                                                    -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
+--
+--   > VkResult vkImportSemaphoreWin32HandleKHR
+--   >     ( VkDevice device
+--   >     , const VkImportSemaphoreWin32HandleInfoKHR* pImportSemaphoreWin32HandleInfo
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkImportSemaphoreWin32HandleKHR.html vkImportSemaphoreWin32HandleKHR registry at www.khronos.org>
+type HS_vkImportSemaphoreWin32HandleKHR =
+     VkDevice -- ^ device
+              -> Ptr VkImportSemaphoreWin32HandleInfoKHR -- ^ pImportSemaphoreWin32HandleInfo
+                                                         -> IO VkResult
+
+type PFN_vkImportSemaphoreWin32HandleKHR =
+     FunPtr HS_vkImportSemaphoreWin32HandleKHR
+
+foreign import ccall "dynamic"
+               unwrapVkImportSemaphoreWin32HandleKHR ::
+               PFN_vkImportSemaphoreWin32HandleKHR ->
+                 HS_vkImportSemaphoreWin32HandleKHR
+
+instance VulkanInstanceProc "vkImportSemaphoreWin32HandleKHR" where
+        type VkInstanceProcType "vkImportSemaphoreWin32HandleKHR" =
+             HS_vkImportSemaphoreWin32HandleKHR
+        vkInstanceProcSymbol = _VkImportSemaphoreWin32HandleKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkImportSemaphoreWin32HandleKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetSemaphoreWin32HandleKHR :: CString
+
+pattern VkGetSemaphoreWin32HandleKHR <-
+        (is_VkGetSemaphoreWin32HandleKHR -> True)
+  where VkGetSemaphoreWin32HandleKHR = _VkGetSemaphoreWin32HandleKHR
+
+{-# INLINE _VkGetSemaphoreWin32HandleKHR #-}
+
+_VkGetSemaphoreWin32HandleKHR :: CString
+_VkGetSemaphoreWin32HandleKHR
+  = Ptr "vkGetSemaphoreWin32HandleKHR\NUL"#
+
+{-# INLINE is_VkGetSemaphoreWin32HandleKHR #-}
+
+is_VkGetSemaphoreWin32HandleKHR :: CString -> Bool
+is_VkGetSemaphoreWin32HandleKHR
+  = (EQ ==) . cmpCStrings _VkGetSemaphoreWin32HandleKHR
+
+type VkGetSemaphoreWin32HandleKHR = "vkGetSemaphoreWin32HandleKHR"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -141,6 +229,41 @@ foreign import ccall safe "vkGetSemaphoreWin32HandleKHR"
                  Ptr VkSemaphoreGetWin32HandleInfoKHR -- ^ pGetWin32HandleInfo
                                                       -> Ptr HANDLE -- ^ pHandle
                                                                     -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
+--
+--   > VkResult vkGetSemaphoreWin32HandleKHR
+--   >     ( VkDevice device
+--   >     , const VkSemaphoreGetWin32HandleInfoKHR* pGetWin32HandleInfo
+--   >     , HANDLE* pHandle
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetSemaphoreWin32HandleKHR.html vkGetSemaphoreWin32HandleKHR registry at www.khronos.org>
+type HS_vkGetSemaphoreWin32HandleKHR =
+     VkDevice -- ^ device
+              ->
+       Ptr VkSemaphoreGetWin32HandleInfoKHR -- ^ pGetWin32HandleInfo
+                                            -> Ptr HANDLE -- ^ pHandle
+                                                          -> IO VkResult
+
+type PFN_vkGetSemaphoreWin32HandleKHR =
+     FunPtr HS_vkGetSemaphoreWin32HandleKHR
+
+foreign import ccall "dynamic" unwrapVkGetSemaphoreWin32HandleKHR
+               ::
+               PFN_vkGetSemaphoreWin32HandleKHR -> HS_vkGetSemaphoreWin32HandleKHR
+
+instance VulkanInstanceProc "vkGetSemaphoreWin32HandleKHR" where
+        type VkInstanceProcType "vkGetSemaphoreWin32HandleKHR" =
+             HS_vkGetSemaphoreWin32HandleKHR
+        vkInstanceProcSymbol = _VkGetSemaphoreWin32HandleKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetSemaphoreWin32HandleKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_KHR_EXTERNAL_SEMAPHORE_WIN32_SPEC_VERSION ::
         (Num a, Eq a) => a

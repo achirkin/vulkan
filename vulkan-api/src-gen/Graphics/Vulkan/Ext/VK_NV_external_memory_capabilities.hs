@@ -1,10 +1,13 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_NV_external_memory_capabilities
        (-- * Vulkan extension: @VK_NV_external_memory_capabilities@
@@ -27,6 +30,11 @@ module Graphics.Vulkan.Ext.VK_NV_external_memory_capabilities
         module Graphics.Vulkan.Types.Struct.VkImageFormatProperties,
         module Graphics.Vulkan.Types.Enum.VkSampleCountFlags,
         -- > #include "vk_platform.h"
+        VkGetPhysicalDeviceExternalImageFormatPropertiesNV,
+        pattern VkGetPhysicalDeviceExternalImageFormatPropertiesNV,
+        HS_vkGetPhysicalDeviceExternalImageFormatPropertiesNV,
+        PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV,
+        unwrapVkGetPhysicalDeviceExternalImageFormatPropertiesNV,
         vkGetPhysicalDeviceExternalImageFormatPropertiesNV,
         vkGetPhysicalDeviceExternalImageFormatPropertiesNVSafe,
         module Graphics.Vulkan.Marshal,
@@ -44,6 +52,7 @@ module Graphics.Vulkan.Ext.VK_NV_external_memory_capabilities
        where
 import           GHC.Ptr                                                        (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc                           (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkExternalMemoryFeatureFlagsNV
 import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagsNV
@@ -58,6 +67,32 @@ import           Graphics.Vulkan.Types.Handles
 import           Graphics.Vulkan.Types.Struct.VkExtent3D
 import           Graphics.Vulkan.Types.Struct.VkExternalImageFormatPropertiesNV
 import           Graphics.Vulkan.Types.Struct.VkImageFormatProperties
+
+pattern VkGetPhysicalDeviceExternalImageFormatPropertiesNV ::
+        CString
+
+pattern VkGetPhysicalDeviceExternalImageFormatPropertiesNV <-
+        (is_VkGetPhysicalDeviceExternalImageFormatPropertiesNV -> True)
+  where VkGetPhysicalDeviceExternalImageFormatPropertiesNV
+          = _VkGetPhysicalDeviceExternalImageFormatPropertiesNV
+
+{-# INLINE _VkGetPhysicalDeviceExternalImageFormatPropertiesNV #-}
+
+_VkGetPhysicalDeviceExternalImageFormatPropertiesNV :: CString
+_VkGetPhysicalDeviceExternalImageFormatPropertiesNV
+  = Ptr "vkGetPhysicalDeviceExternalImageFormatPropertiesNV\NUL"#
+
+{-# INLINE is_VkGetPhysicalDeviceExternalImageFormatPropertiesNV
+           #-}
+
+is_VkGetPhysicalDeviceExternalImageFormatPropertiesNV ::
+                                                      CString -> Bool
+is_VkGetPhysicalDeviceExternalImageFormatPropertiesNV
+  = (EQ ==) .
+      cmpCStrings _VkGetPhysicalDeviceExternalImageFormatPropertiesNV
+
+type VkGetPhysicalDeviceExternalImageFormatPropertiesNV =
+     "vkGetPhysicalDeviceExternalImageFormatPropertiesNV"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -130,6 +165,63 @@ foreign import ccall safe
                                                              ->
                              Ptr VkExternalImageFormatPropertiesNV -- ^ pExternalImageFormatProperties
                                                                    -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_FORMAT_NOT_SUPPORTED'.
+--
+--   > VkResult vkGetPhysicalDeviceExternalImageFormatPropertiesNV
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , VkFormat format
+--   >     , VkImageType type
+--   >     , VkImageTiling tiling
+--   >     , VkImageUsageFlags usage
+--   >     , VkImageCreateFlags flags
+--   >     , VkExternalMemoryHandleTypeFlagsNV externalHandleType
+--   >     , VkExternalImageFormatPropertiesNV* pExternalImageFormatProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalImageFormatPropertiesNV.html vkGetPhysicalDeviceExternalImageFormatPropertiesNV registry at www.khronos.org>
+type HS_vkGetPhysicalDeviceExternalImageFormatPropertiesNV =
+     VkPhysicalDevice -- ^ physicalDevice
+                      ->
+       VkFormat -- ^ format
+                ->
+         VkImageType -- ^ type
+                     ->
+           VkImageTiling -- ^ tiling
+                         ->
+             VkImageUsageFlags -- ^ usage
+                               ->
+               VkImageCreateFlags -- ^ flags
+                                  ->
+                 VkExternalMemoryHandleTypeFlagsNV -- ^ externalHandleType
+                                                   ->
+                   Ptr VkExternalImageFormatPropertiesNV -- ^ pExternalImageFormatProperties
+                                                         -> IO VkResult
+
+type PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV =
+     FunPtr HS_vkGetPhysicalDeviceExternalImageFormatPropertiesNV
+
+foreign import ccall "dynamic"
+               unwrapVkGetPhysicalDeviceExternalImageFormatPropertiesNV ::
+               PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV ->
+                 HS_vkGetPhysicalDeviceExternalImageFormatPropertiesNV
+
+instance VulkanInstanceProc
+           "vkGetPhysicalDeviceExternalImageFormatPropertiesNV"
+         where
+        type VkInstanceProcType
+               "vkGetPhysicalDeviceExternalImageFormatPropertiesNV"
+             = HS_vkGetPhysicalDeviceExternalImageFormatPropertiesNV
+        vkInstanceProcSymbol
+          = _VkGetPhysicalDeviceExternalImageFormatPropertiesNV
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc
+          = unwrapVkGetPhysicalDeviceExternalImageFormatPropertiesNV
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_NV_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION ::
         (Num a, Eq a) => a

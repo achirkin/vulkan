@@ -1,11 +1,14 @@
 {-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_EXT_debug_report
        (-- * Vulkan extension: @VK_EXT_debug_report@
@@ -30,10 +33,22 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_report
         module Graphics.Vulkan.Types.Struct.VkInstanceCreateInfo,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
+        VkCreateDebugReportCallbackEXT,
+        pattern VkCreateDebugReportCallbackEXT,
+        HS_vkCreateDebugReportCallbackEXT,
+        PFN_vkCreateDebugReportCallbackEXT,
+        unwrapVkCreateDebugReportCallbackEXT,
         vkCreateDebugReportCallbackEXT, vkCreateDebugReportCallbackEXTSafe,
+        VkDestroyDebugReportCallbackEXT,
+        pattern VkDestroyDebugReportCallbackEXT,
+        HS_vkDestroyDebugReportCallbackEXT,
+        PFN_vkDestroyDebugReportCallbackEXT,
+        unwrapVkDestroyDebugReportCallbackEXT,
         vkDestroyDebugReportCallbackEXT,
-        vkDestroyDebugReportCallbackEXTSafe, vkDebugReportMessageEXT,
-        vkDebugReportMessageEXTSafe,
+        vkDestroyDebugReportCallbackEXTSafe, VkDebugReportMessageEXT,
+        pattern VkDebugReportMessageEXT, HS_vkDebugReportMessageEXT,
+        PFN_vkDebugReportMessageEXT, unwrapVkDebugReportMessageEXT,
+        vkDebugReportMessageEXT, vkDebugReportMessageEXTSafe,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,
@@ -54,6 +69,7 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_report
        where
 import           GHC.Ptr                                                         (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc                            (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkDebugReportFlagsEXT
@@ -69,6 +85,28 @@ import           Graphics.Vulkan.Types.Struct.VkAllocationCallbacks
 import           Graphics.Vulkan.Types.Struct.VkApplicationInfo
 import           Graphics.Vulkan.Types.Struct.VkDebugReportCallbackCreateInfoEXT
 import           Graphics.Vulkan.Types.Struct.VkInstanceCreateInfo
+
+pattern VkCreateDebugReportCallbackEXT :: CString
+
+pattern VkCreateDebugReportCallbackEXT <-
+        (is_VkCreateDebugReportCallbackEXT -> True)
+  where VkCreateDebugReportCallbackEXT
+          = _VkCreateDebugReportCallbackEXT
+
+{-# INLINE _VkCreateDebugReportCallbackEXT #-}
+
+_VkCreateDebugReportCallbackEXT :: CString
+_VkCreateDebugReportCallbackEXT
+  = Ptr "vkCreateDebugReportCallbackEXT\NUL"#
+
+{-# INLINE is_VkCreateDebugReportCallbackEXT #-}
+
+is_VkCreateDebugReportCallbackEXT :: CString -> Bool
+is_VkCreateDebugReportCallbackEXT
+  = (EQ ==) . cmpCStrings _VkCreateDebugReportCallbackEXT
+
+type VkCreateDebugReportCallbackEXT =
+     "vkCreateDebugReportCallbackEXT"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -116,6 +154,68 @@ foreign import ccall safe "vkCreateDebugReportCallbackEXT"
                      Ptr VkDebugReportCallbackEXT -- ^ pCallback
                                                   -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY'.
+--
+--   > VkResult vkCreateDebugReportCallbackEXT
+--   >     ( VkInstance instance
+--   >     , const VkDebugReportCallbackCreateInfoEXT* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkDebugReportCallbackEXT* pCallback
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateDebugReportCallbackEXT.html vkCreateDebugReportCallbackEXT registry at www.khronos.org>
+type HS_vkCreateDebugReportCallbackEXT =
+     VkInstance -- ^ instance
+                ->
+       Ptr VkDebugReportCallbackCreateInfoEXT -- ^ pCreateInfo
+                                              ->
+         Ptr VkAllocationCallbacks -- ^ pAllocator
+                                   ->
+           Ptr VkDebugReportCallbackEXT -- ^ pCallback
+                                        -> IO VkResult
+
+type PFN_vkCreateDebugReportCallbackEXT =
+     FunPtr HS_vkCreateDebugReportCallbackEXT
+
+foreign import ccall "dynamic" unwrapVkCreateDebugReportCallbackEXT
+               ::
+               PFN_vkCreateDebugReportCallbackEXT ->
+                 HS_vkCreateDebugReportCallbackEXT
+
+instance VulkanInstanceProc "vkCreateDebugReportCallbackEXT" where
+        type VkInstanceProcType "vkCreateDebugReportCallbackEXT" =
+             HS_vkCreateDebugReportCallbackEXT
+        vkInstanceProcSymbol = _VkCreateDebugReportCallbackEXT
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCreateDebugReportCallbackEXT
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkDestroyDebugReportCallbackEXT :: CString
+
+pattern VkDestroyDebugReportCallbackEXT <-
+        (is_VkDestroyDebugReportCallbackEXT -> True)
+  where VkDestroyDebugReportCallbackEXT
+          = _VkDestroyDebugReportCallbackEXT
+
+{-# INLINE _VkDestroyDebugReportCallbackEXT #-}
+
+_VkDestroyDebugReportCallbackEXT :: CString
+_VkDestroyDebugReportCallbackEXT
+  = Ptr "vkDestroyDebugReportCallbackEXT\NUL"#
+
+{-# INLINE is_VkDestroyDebugReportCallbackEXT #-}
+
+is_VkDestroyDebugReportCallbackEXT :: CString -> Bool
+is_VkDestroyDebugReportCallbackEXT
+  = (EQ ==) . cmpCStrings _VkDestroyDebugReportCallbackEXT
+
+type VkDestroyDebugReportCallbackEXT =
+     "vkDestroyDebugReportCallbackEXT"
+
 -- | > () vkDestroyDebugReportCallbackEXT
 --   >     ( VkInstance instance
 --   >     , VkDebugReportCallbackEXT callback
@@ -145,6 +245,57 @@ foreign import ccall safe "vkDestroyDebugReportCallbackEXT"
                  VkDebugReportCallbackEXT -- ^ callback
                                           -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                        -> IO ()
+
+-- | > () vkDestroyDebugReportCallbackEXT
+--   >     ( VkInstance instance
+--   >     , VkDebugReportCallbackEXT callback
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyDebugReportCallbackEXT.html vkDestroyDebugReportCallbackEXT registry at www.khronos.org>
+type HS_vkDestroyDebugReportCallbackEXT =
+     VkInstance -- ^ instance
+                ->
+       VkDebugReportCallbackEXT -- ^ callback
+                                -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                             -> IO ()
+
+type PFN_vkDestroyDebugReportCallbackEXT =
+     FunPtr HS_vkDestroyDebugReportCallbackEXT
+
+foreign import ccall "dynamic"
+               unwrapVkDestroyDebugReportCallbackEXT ::
+               PFN_vkDestroyDebugReportCallbackEXT ->
+                 HS_vkDestroyDebugReportCallbackEXT
+
+instance VulkanInstanceProc "vkDestroyDebugReportCallbackEXT" where
+        type VkInstanceProcType "vkDestroyDebugReportCallbackEXT" =
+             HS_vkDestroyDebugReportCallbackEXT
+        vkInstanceProcSymbol = _VkDestroyDebugReportCallbackEXT
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkDestroyDebugReportCallbackEXT
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkDebugReportMessageEXT :: CString
+
+pattern VkDebugReportMessageEXT <-
+        (is_VkDebugReportMessageEXT -> True)
+  where VkDebugReportMessageEXT = _VkDebugReportMessageEXT
+
+{-# INLINE _VkDebugReportMessageEXT #-}
+
+_VkDebugReportMessageEXT :: CString
+_VkDebugReportMessageEXT = Ptr "vkDebugReportMessageEXT\NUL"#
+
+{-# INLINE is_VkDebugReportMessageEXT #-}
+
+is_VkDebugReportMessageEXT :: CString -> Bool
+is_VkDebugReportMessageEXT
+  = (EQ ==) . cmpCStrings _VkDebugReportMessageEXT
+
+type VkDebugReportMessageEXT = "vkDebugReportMessageEXT"
 
 -- | > () vkDebugReportMessageEXT
 --   >     ( VkInstance instance
@@ -199,6 +350,48 @@ foreign import ccall safe "vkDebugReportMessageEXT"
                                               -> CString -- ^ pLayerPrefix
                                                          -> CString -- ^ pMessage
                                                                     -> IO ()
+
+-- | > () vkDebugReportMessageEXT
+--   >     ( VkInstance instance
+--   >     , VkDebugReportFlagsEXT flags
+--   >     , VkDebugReportObjectTypeEXT objectType
+--   >     , uint64_t object
+--   >     , size_t location
+--   >     , int32_t messageCode
+--   >     , const char* pLayerPrefix
+--   >     , const char* pMessage
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDebugReportMessageEXT.html vkDebugReportMessageEXT registry at www.khronos.org>
+type HS_vkDebugReportMessageEXT =
+     VkInstance -- ^ instance
+                ->
+       VkDebugReportFlagsEXT -- ^ flags
+                             ->
+         VkDebugReportObjectTypeEXT -- ^ objectType
+                                    ->
+           Word64 -- ^ object
+                  -> CSize -- ^ location
+                           -> Int32 -- ^ messageCode
+                                    -> CString -- ^ pLayerPrefix
+                                               -> CString -- ^ pMessage
+                                                          -> IO ()
+
+type PFN_vkDebugReportMessageEXT =
+     FunPtr HS_vkDebugReportMessageEXT
+
+foreign import ccall "dynamic" unwrapVkDebugReportMessageEXT ::
+               PFN_vkDebugReportMessageEXT -> HS_vkDebugReportMessageEXT
+
+instance VulkanInstanceProc "vkDebugReportMessageEXT" where
+        type VkInstanceProcType "vkDebugReportMessageEXT" =
+             HS_vkDebugReportMessageEXT
+        vkInstanceProcSymbol = _VkDebugReportMessageEXT
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkDebugReportMessageEXT
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_EXT_DEBUG_REPORT_SPEC_VERSION :: (Num a, Eq a) => a
 

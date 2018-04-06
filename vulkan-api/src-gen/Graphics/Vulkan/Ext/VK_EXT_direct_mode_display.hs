@@ -1,9 +1,12 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_EXT_direct_mode_display
        (-- * Vulkan extension: @VK_EXT_direct_mode_display@
@@ -23,7 +26,10 @@ module Graphics.Vulkan.Ext.VK_EXT_direct_mode_display
         --
 
         -- ** Required extensions: 'VK_KHR_display'.
-        vkReleaseDisplayEXT, vkReleaseDisplayEXTSafe,
+        VkReleaseDisplayEXT, pattern VkReleaseDisplayEXT,
+        HS_vkReleaseDisplayEXT, PFN_vkReleaseDisplayEXT,
+        unwrapVkReleaseDisplayEXT, vkReleaseDisplayEXT,
+        vkReleaseDisplayEXTSafe,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_EXT_DIRECT_MODE_DISPLAY_SPEC_VERSION,
@@ -31,10 +37,28 @@ module Graphics.Vulkan.Ext.VK_EXT_direct_mode_display
         VK_EXT_DIRECT_MODE_DISPLAY_EXTENSION_NAME,
         pattern VK_EXT_DIRECT_MODE_DISPLAY_EXTENSION_NAME)
        where
-import           GHC.Ptr                             (Ptr (..))
+import           GHC.Ptr                              (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.Enum.VkResult
 import           Graphics.Vulkan.Types.Handles
+
+pattern VkReleaseDisplayEXT :: CString
+
+pattern VkReleaseDisplayEXT <- (is_VkReleaseDisplayEXT -> True)
+  where VkReleaseDisplayEXT = _VkReleaseDisplayEXT
+
+{-# INLINE _VkReleaseDisplayEXT #-}
+
+_VkReleaseDisplayEXT :: CString
+_VkReleaseDisplayEXT = Ptr "vkReleaseDisplayEXT\NUL"#
+
+{-# INLINE is_VkReleaseDisplayEXT #-}
+
+is_VkReleaseDisplayEXT :: CString -> Bool
+is_VkReleaseDisplayEXT = (EQ ==) . cmpCStrings _VkReleaseDisplayEXT
+
+type VkReleaseDisplayEXT = "vkReleaseDisplayEXT"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -63,6 +87,34 @@ foreign import ccall safe "vkReleaseDisplayEXT"
                VkPhysicalDevice -- ^ physicalDevice
                                 -> VkDisplayKHR -- ^ display
                                                 -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   > VkResult vkReleaseDisplayEXT
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , VkDisplayKHR display
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkReleaseDisplayEXT.html vkReleaseDisplayEXT registry at www.khronos.org>
+type HS_vkReleaseDisplayEXT =
+     VkPhysicalDevice -- ^ physicalDevice
+                      -> VkDisplayKHR -- ^ display
+                                      -> IO VkResult
+
+type PFN_vkReleaseDisplayEXT = FunPtr HS_vkReleaseDisplayEXT
+
+foreign import ccall "dynamic" unwrapVkReleaseDisplayEXT ::
+               PFN_vkReleaseDisplayEXT -> HS_vkReleaseDisplayEXT
+
+instance VulkanInstanceProc "vkReleaseDisplayEXT" where
+        type VkInstanceProcType "vkReleaseDisplayEXT" =
+             HS_vkReleaseDisplayEXT
+        vkInstanceProcSymbol = _VkReleaseDisplayEXT
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkReleaseDisplayEXT
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_EXT_DIRECT_MODE_DISPLAY_SPEC_VERSION :: (Num a, Eq a) =>
         a

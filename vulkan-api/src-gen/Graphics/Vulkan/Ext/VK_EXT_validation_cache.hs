@@ -1,10 +1,13 @@
 {-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_EXT_validation_cache
        (-- * Vulkan extension: @VK_EXT_validation_cache@
@@ -28,10 +31,21 @@ module Graphics.Vulkan.Ext.VK_EXT_validation_cache
         module Graphics.Vulkan.Types.Struct.VkValidationCacheCreateInfoEXT,
         module Graphics.Vulkan.Types.Enum.VkValidationCacheHeaderVersionEXT,
         -- > #include "vk_platform.h"
-        vkCreateValidationCacheEXT, vkCreateValidationCacheEXTSafe,
-        vkDestroyValidationCacheEXT, vkDestroyValidationCacheEXTSafe,
+        VkCreateValidationCacheEXT, pattern VkCreateValidationCacheEXT,
+        HS_vkCreateValidationCacheEXT, PFN_vkCreateValidationCacheEXT,
+        unwrapVkCreateValidationCacheEXT, vkCreateValidationCacheEXT,
+        vkCreateValidationCacheEXTSafe, VkDestroyValidationCacheEXT,
+        pattern VkDestroyValidationCacheEXT,
+        HS_vkDestroyValidationCacheEXT, PFN_vkDestroyValidationCacheEXT,
+        unwrapVkDestroyValidationCacheEXT, vkDestroyValidationCacheEXT,
+        vkDestroyValidationCacheEXTSafe, VkMergeValidationCachesEXT,
+        pattern VkMergeValidationCachesEXT, HS_vkMergeValidationCachesEXT,
+        PFN_vkMergeValidationCachesEXT, unwrapVkMergeValidationCachesEXT,
         vkMergeValidationCachesEXT, vkMergeValidationCachesEXTSafe,
-        vkGetValidationCacheDataEXT, vkGetValidationCacheDataEXTSafe,
+        VkGetValidationCacheDataEXT, pattern VkGetValidationCacheDataEXT,
+        HS_vkGetValidationCacheDataEXT, PFN_vkGetValidationCacheDataEXT,
+        unwrapVkGetValidationCacheDataEXT, vkGetValidationCacheDataEXT,
+        vkGetValidationCacheDataEXTSafe,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,
@@ -50,6 +64,8 @@ module Graphics.Vulkan.Ext.VK_EXT_validation_cache
 import           GHC.Ptr
                                                                                           (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc
+                                                                                          (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkDebugReportObjectTypeEXT
@@ -67,6 +83,25 @@ import           Graphics.Vulkan.Types.Struct.VkAllocationCallbacks
 import           Graphics.Vulkan.Types.Struct.VkShaderModuleCreateInfo
 import           Graphics.Vulkan.Types.Struct.VkShaderModuleValidationCacheCreateInfoEXT
 import           Graphics.Vulkan.Types.Struct.VkValidationCacheCreateInfoEXT
+
+pattern VkCreateValidationCacheEXT :: CString
+
+pattern VkCreateValidationCacheEXT <-
+        (is_VkCreateValidationCacheEXT -> True)
+  where VkCreateValidationCacheEXT = _VkCreateValidationCacheEXT
+
+{-# INLINE _VkCreateValidationCacheEXT #-}
+
+_VkCreateValidationCacheEXT :: CString
+_VkCreateValidationCacheEXT = Ptr "vkCreateValidationCacheEXT\NUL"#
+
+{-# INLINE is_VkCreateValidationCacheEXT #-}
+
+is_VkCreateValidationCacheEXT :: CString -> Bool
+is_VkCreateValidationCacheEXT
+  = (EQ ==) . cmpCStrings _VkCreateValidationCacheEXT
+
+type VkCreateValidationCacheEXT = "vkCreateValidationCacheEXT"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -114,6 +149,64 @@ foreign import ccall safe "vkCreateValidationCacheEXT"
                      Ptr VkValidationCacheEXT -- ^ pValidationCache
                                               -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY'.
+--
+--   > VkResult vkCreateValidationCacheEXT
+--   >     ( VkDevice device
+--   >     , const VkValidationCacheCreateInfoEXT* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkValidationCacheEXT* pValidationCache
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateValidationCacheEXT.html vkCreateValidationCacheEXT registry at www.khronos.org>
+type HS_vkCreateValidationCacheEXT =
+     VkDevice -- ^ device
+              ->
+       Ptr VkValidationCacheCreateInfoEXT -- ^ pCreateInfo
+                                          ->
+         Ptr VkAllocationCallbacks -- ^ pAllocator
+                                   ->
+           Ptr VkValidationCacheEXT -- ^ pValidationCache
+                                    -> IO VkResult
+
+type PFN_vkCreateValidationCacheEXT =
+     FunPtr HS_vkCreateValidationCacheEXT
+
+foreign import ccall "dynamic" unwrapVkCreateValidationCacheEXT ::
+               PFN_vkCreateValidationCacheEXT -> HS_vkCreateValidationCacheEXT
+
+instance VulkanInstanceProc "vkCreateValidationCacheEXT" where
+        type VkInstanceProcType "vkCreateValidationCacheEXT" =
+             HS_vkCreateValidationCacheEXT
+        vkInstanceProcSymbol = _VkCreateValidationCacheEXT
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCreateValidationCacheEXT
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkDestroyValidationCacheEXT :: CString
+
+pattern VkDestroyValidationCacheEXT <-
+        (is_VkDestroyValidationCacheEXT -> True)
+  where VkDestroyValidationCacheEXT = _VkDestroyValidationCacheEXT
+
+{-# INLINE _VkDestroyValidationCacheEXT #-}
+
+_VkDestroyValidationCacheEXT :: CString
+_VkDestroyValidationCacheEXT
+  = Ptr "vkDestroyValidationCacheEXT\NUL"#
+
+{-# INLINE is_VkDestroyValidationCacheEXT #-}
+
+is_VkDestroyValidationCacheEXT :: CString -> Bool
+is_VkDestroyValidationCacheEXT
+  = (EQ ==) . cmpCStrings _VkDestroyValidationCacheEXT
+
+type VkDestroyValidationCacheEXT = "vkDestroyValidationCacheEXT"
+
 -- | > () vkDestroyValidationCacheEXT
 --   >     ( VkDevice device
 --   >     , VkValidationCacheEXT validationCache
@@ -143,6 +236,55 @@ foreign import ccall safe "vkDestroyValidationCacheEXT"
                  VkValidationCacheEXT -- ^ validationCache
                                       -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                    -> IO ()
+
+-- | > () vkDestroyValidationCacheEXT
+--   >     ( VkDevice device
+--   >     , VkValidationCacheEXT validationCache
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyValidationCacheEXT.html vkDestroyValidationCacheEXT registry at www.khronos.org>
+type HS_vkDestroyValidationCacheEXT =
+     VkDevice -- ^ device
+              ->
+       VkValidationCacheEXT -- ^ validationCache
+                            -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                         -> IO ()
+
+type PFN_vkDestroyValidationCacheEXT =
+     FunPtr HS_vkDestroyValidationCacheEXT
+
+foreign import ccall "dynamic" unwrapVkDestroyValidationCacheEXT ::
+               PFN_vkDestroyValidationCacheEXT -> HS_vkDestroyValidationCacheEXT
+
+instance VulkanInstanceProc "vkDestroyValidationCacheEXT" where
+        type VkInstanceProcType "vkDestroyValidationCacheEXT" =
+             HS_vkDestroyValidationCacheEXT
+        vkInstanceProcSymbol = _VkDestroyValidationCacheEXT
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkDestroyValidationCacheEXT
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkMergeValidationCachesEXT :: CString
+
+pattern VkMergeValidationCachesEXT <-
+        (is_VkMergeValidationCachesEXT -> True)
+  where VkMergeValidationCachesEXT = _VkMergeValidationCachesEXT
+
+{-# INLINE _VkMergeValidationCachesEXT #-}
+
+_VkMergeValidationCachesEXT :: CString
+_VkMergeValidationCachesEXT = Ptr "vkMergeValidationCachesEXT\NUL"#
+
+{-# INLINE is_VkMergeValidationCachesEXT #-}
+
+is_VkMergeValidationCachesEXT :: CString -> Bool
+is_VkMergeValidationCachesEXT
+  = (EQ ==) . cmpCStrings _VkMergeValidationCachesEXT
+
+type VkMergeValidationCachesEXT = "vkMergeValidationCachesEXT"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -188,6 +330,63 @@ foreign import ccall safe "vkMergeValidationCachesEXT"
                           -> Ptr VkValidationCacheEXT -- ^ pSrcCaches
                                                       -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkMergeValidationCachesEXT
+--   >     ( VkDevice device
+--   >     , VkValidationCacheEXT dstCache
+--   >     , uint32_t srcCacheCount
+--   >     , const VkValidationCacheEXT* pSrcCaches
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkMergeValidationCachesEXT.html vkMergeValidationCachesEXT registry at www.khronos.org>
+type HS_vkMergeValidationCachesEXT =
+     VkDevice -- ^ device
+              ->
+       VkValidationCacheEXT -- ^ dstCache
+                            ->
+         Word32 -- ^ srcCacheCount
+                -> Ptr VkValidationCacheEXT -- ^ pSrcCaches
+                                            -> IO VkResult
+
+type PFN_vkMergeValidationCachesEXT =
+     FunPtr HS_vkMergeValidationCachesEXT
+
+foreign import ccall "dynamic" unwrapVkMergeValidationCachesEXT ::
+               PFN_vkMergeValidationCachesEXT -> HS_vkMergeValidationCachesEXT
+
+instance VulkanInstanceProc "vkMergeValidationCachesEXT" where
+        type VkInstanceProcType "vkMergeValidationCachesEXT" =
+             HS_vkMergeValidationCachesEXT
+        vkInstanceProcSymbol = _VkMergeValidationCachesEXT
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkMergeValidationCachesEXT
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetValidationCacheDataEXT :: CString
+
+pattern VkGetValidationCacheDataEXT <-
+        (is_VkGetValidationCacheDataEXT -> True)
+  where VkGetValidationCacheDataEXT = _VkGetValidationCacheDataEXT
+
+{-# INLINE _VkGetValidationCacheDataEXT #-}
+
+_VkGetValidationCacheDataEXT :: CString
+_VkGetValidationCacheDataEXT
+  = Ptr "vkGetValidationCacheDataEXT\NUL"#
+
+{-# INLINE is_VkGetValidationCacheDataEXT #-}
+
+is_VkGetValidationCacheDataEXT :: CString -> Bool
+is_VkGetValidationCacheDataEXT
+  = (EQ ==) . cmpCStrings _VkGetValidationCacheDataEXT
+
+type VkGetValidationCacheDataEXT = "vkGetValidationCacheDataEXT"
+
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
@@ -229,6 +428,42 @@ foreign import ccall safe "vkGetValidationCacheDataEXT"
                                       -> Ptr CSize -- ^ pDataSize
                                                    -> Ptr Void -- ^ pData
                                                                -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkGetValidationCacheDataEXT
+--   >     ( VkDevice device
+--   >     , VkValidationCacheEXT validationCache
+--   >     , size_t* pDataSize
+--   >     , void* pData
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetValidationCacheDataEXT.html vkGetValidationCacheDataEXT registry at www.khronos.org>
+type HS_vkGetValidationCacheDataEXT =
+     VkDevice -- ^ device
+              ->
+       VkValidationCacheEXT -- ^ validationCache
+                            -> Ptr CSize -- ^ pDataSize
+                                         -> Ptr Void -- ^ pData
+                                                     -> IO VkResult
+
+type PFN_vkGetValidationCacheDataEXT =
+     FunPtr HS_vkGetValidationCacheDataEXT
+
+foreign import ccall "dynamic" unwrapVkGetValidationCacheDataEXT ::
+               PFN_vkGetValidationCacheDataEXT -> HS_vkGetValidationCacheDataEXT
+
+instance VulkanInstanceProc "vkGetValidationCacheDataEXT" where
+        type VkInstanceProcType "vkGetValidationCacheDataEXT" =
+             HS_vkGetValidationCacheDataEXT
+        vkInstanceProcSymbol = _VkGetValidationCacheDataEXT
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetValidationCacheDataEXT
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_EXT_VALIDATION_CACHE_SPEC_VERSION :: (Num a, Eq a) => a
 

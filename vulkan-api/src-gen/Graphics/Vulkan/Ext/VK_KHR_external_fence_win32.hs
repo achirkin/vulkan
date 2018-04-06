@@ -1,9 +1,12 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_external_fence_win32
        (-- * Vulkan extension: @VK_KHR_external_fence_win32@
@@ -35,7 +38,12 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_win32
         module Graphics.Vulkan.Types.Struct.VkImportFenceWin32HandleInfoKHR,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
-        vkImportFenceWin32HandleKHR, vkImportFenceWin32HandleKHRSafe,
+        VkImportFenceWin32HandleKHR, pattern VkImportFenceWin32HandleKHR,
+        HS_vkImportFenceWin32HandleKHR, PFN_vkImportFenceWin32HandleKHR,
+        unwrapVkImportFenceWin32HandleKHR, vkImportFenceWin32HandleKHR,
+        vkImportFenceWin32HandleKHRSafe, VkGetFenceWin32HandleKHR,
+        pattern VkGetFenceWin32HandleKHR, HS_vkGetFenceWin32HandleKHR,
+        PFN_vkGetFenceWin32HandleKHR, unwrapVkGetFenceWin32HandleKHR,
         vkGetFenceWin32HandleKHR, vkGetFenceWin32HandleKHRSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkResult,
@@ -51,6 +59,7 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_win32
        where
 import           GHC.Ptr                                                      (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc                         (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkExternalFenceHandleTypeFlags
 import           Graphics.Vulkan.Types.Enum.VkFenceCreateFlags
@@ -63,6 +72,26 @@ import           Graphics.Vulkan.Types.Struct.VkExportFenceWin32HandleInfoKHR
 import           Graphics.Vulkan.Types.Struct.VkFenceCreateInfo
 import           Graphics.Vulkan.Types.Struct.VkFenceGetWin32HandleInfoKHR
 import           Graphics.Vulkan.Types.Struct.VkImportFenceWin32HandleInfoKHR
+
+pattern VkImportFenceWin32HandleKHR :: CString
+
+pattern VkImportFenceWin32HandleKHR <-
+        (is_VkImportFenceWin32HandleKHR -> True)
+  where VkImportFenceWin32HandleKHR = _VkImportFenceWin32HandleKHR
+
+{-# INLINE _VkImportFenceWin32HandleKHR #-}
+
+_VkImportFenceWin32HandleKHR :: CString
+_VkImportFenceWin32HandleKHR
+  = Ptr "vkImportFenceWin32HandleKHR\NUL"#
+
+{-# INLINE is_VkImportFenceWin32HandleKHR #-}
+
+is_VkImportFenceWin32HandleKHR :: CString -> Bool
+is_VkImportFenceWin32HandleKHR
+  = (EQ ==) . cmpCStrings _VkImportFenceWin32HandleKHR
+
+type VkImportFenceWin32HandleKHR = "vkImportFenceWin32HandleKHR"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -95,6 +124,56 @@ foreign import ccall safe "vkImportFenceWin32HandleKHR"
                VkDevice -- ^ device
                         -> Ptr VkImportFenceWin32HandleInfoKHR -- ^ pImportFenceWin32HandleInfo
                                                                -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
+--
+--   > VkResult vkImportFenceWin32HandleKHR
+--   >     ( VkDevice device
+--   >     , const VkImportFenceWin32HandleInfoKHR* pImportFenceWin32HandleInfo
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkImportFenceWin32HandleKHR.html vkImportFenceWin32HandleKHR registry at www.khronos.org>
+type HS_vkImportFenceWin32HandleKHR =
+     VkDevice -- ^ device
+              -> Ptr VkImportFenceWin32HandleInfoKHR -- ^ pImportFenceWin32HandleInfo
+                                                     -> IO VkResult
+
+type PFN_vkImportFenceWin32HandleKHR =
+     FunPtr HS_vkImportFenceWin32HandleKHR
+
+foreign import ccall "dynamic" unwrapVkImportFenceWin32HandleKHR ::
+               PFN_vkImportFenceWin32HandleKHR -> HS_vkImportFenceWin32HandleKHR
+
+instance VulkanInstanceProc "vkImportFenceWin32HandleKHR" where
+        type VkInstanceProcType "vkImportFenceWin32HandleKHR" =
+             HS_vkImportFenceWin32HandleKHR
+        vkInstanceProcSymbol = _VkImportFenceWin32HandleKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkImportFenceWin32HandleKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetFenceWin32HandleKHR :: CString
+
+pattern VkGetFenceWin32HandleKHR <-
+        (is_VkGetFenceWin32HandleKHR -> True)
+  where VkGetFenceWin32HandleKHR = _VkGetFenceWin32HandleKHR
+
+{-# INLINE _VkGetFenceWin32HandleKHR #-}
+
+_VkGetFenceWin32HandleKHR :: CString
+_VkGetFenceWin32HandleKHR = Ptr "vkGetFenceWin32HandleKHR\NUL"#
+
+{-# INLINE is_VkGetFenceWin32HandleKHR #-}
+
+is_VkGetFenceWin32HandleKHR :: CString -> Bool
+is_VkGetFenceWin32HandleKHR
+  = (EQ ==) . cmpCStrings _VkGetFenceWin32HandleKHR
+
+type VkGetFenceWin32HandleKHR = "vkGetFenceWin32HandleKHR"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -133,6 +212,40 @@ foreign import ccall safe "vkGetFenceWin32HandleKHR"
                  Ptr VkFenceGetWin32HandleInfoKHR -- ^ pGetWin32HandleInfo
                                                   -> Ptr HANDLE -- ^ pHandle
                                                                 -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
+--
+--   > VkResult vkGetFenceWin32HandleKHR
+--   >     ( VkDevice device
+--   >     , const VkFenceGetWin32HandleInfoKHR* pGetWin32HandleInfo
+--   >     , HANDLE* pHandle
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetFenceWin32HandleKHR.html vkGetFenceWin32HandleKHR registry at www.khronos.org>
+type HS_vkGetFenceWin32HandleKHR =
+     VkDevice -- ^ device
+              ->
+       Ptr VkFenceGetWin32HandleInfoKHR -- ^ pGetWin32HandleInfo
+                                        -> Ptr HANDLE -- ^ pHandle
+                                                      -> IO VkResult
+
+type PFN_vkGetFenceWin32HandleKHR =
+     FunPtr HS_vkGetFenceWin32HandleKHR
+
+foreign import ccall "dynamic" unwrapVkGetFenceWin32HandleKHR ::
+               PFN_vkGetFenceWin32HandleKHR -> HS_vkGetFenceWin32HandleKHR
+
+instance VulkanInstanceProc "vkGetFenceWin32HandleKHR" where
+        type VkInstanceProcType "vkGetFenceWin32HandleKHR" =
+             HS_vkGetFenceWin32HandleKHR
+        vkInstanceProcSymbol = _VkGetFenceWin32HandleKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetFenceWin32HandleKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_KHR_EXTERNAL_FENCE_WIN32_SPEC_VERSION ::
         (Num a, Eq a) => a

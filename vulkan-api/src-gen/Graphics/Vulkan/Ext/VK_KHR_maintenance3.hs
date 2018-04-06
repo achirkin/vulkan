@@ -1,10 +1,13 @@
 {-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_maintenance3
        (-- * Vulkan extension: @VK_KHR_maintenance3@
@@ -26,6 +29,11 @@ module Graphics.Vulkan.Ext.VK_KHR_maintenance3
         -- ** Required extensions: 'VK_KHR_get_physical_device_properties2'.
         module Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutSupportKHR,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMaintenance3PropertiesKHR,
+        VkGetDescriptorSetLayoutSupportKHR,
+        pattern VkGetDescriptorSetLayoutSupportKHR,
+        HS_vkGetDescriptorSetLayoutSupportKHR,
+        PFN_vkGetDescriptorSetLayoutSupportKHR,
+        unwrapVkGetDescriptorSetLayoutSupportKHR,
         vkGetDescriptorSetLayoutSupportKHR,
         vkGetDescriptorSetLayoutSupportKHRSafe,
         module Graphics.Vulkan.Marshal,
@@ -51,6 +59,8 @@ import           Graphics.Vulkan.Core_1_1
                                                                                          (pattern VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_SUPPORT,
                                                                                          pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES)
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc
+                                                                                         (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkDescriptorSetLayoutCreateFlags
 import           Graphics.Vulkan.Types.Enum.VkDescriptorType
@@ -63,6 +73,28 @@ import           Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutSupport
 import           Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutSupportKHR
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMaintenance3PropertiesKHR
 
+pattern VkGetDescriptorSetLayoutSupportKHR :: CString
+
+pattern VkGetDescriptorSetLayoutSupportKHR <-
+        (is_VkGetDescriptorSetLayoutSupportKHR -> True)
+  where VkGetDescriptorSetLayoutSupportKHR
+          = _VkGetDescriptorSetLayoutSupportKHR
+
+{-# INLINE _VkGetDescriptorSetLayoutSupportKHR #-}
+
+_VkGetDescriptorSetLayoutSupportKHR :: CString
+_VkGetDescriptorSetLayoutSupportKHR
+  = Ptr "vkGetDescriptorSetLayoutSupportKHR\NUL"#
+
+{-# INLINE is_VkGetDescriptorSetLayoutSupportKHR #-}
+
+is_VkGetDescriptorSetLayoutSupportKHR :: CString -> Bool
+is_VkGetDescriptorSetLayoutSupportKHR
+  = (EQ ==) . cmpCStrings _VkGetDescriptorSetLayoutSupportKHR
+
+type VkGetDescriptorSetLayoutSupportKHR =
+     "vkGetDescriptorSetLayoutSupportKHR"
+
 -- | This is an alias for `vkGetDescriptorSetLayoutSupport`.
 --
 --   > () vkGetDescriptorSetLayoutSupportKHR
@@ -72,7 +104,7 @@ import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMaintenance3Proper
 --   >     )
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDescriptorSetLayoutSupportKHR.html vkGetDescriptorSetLayoutSupportKHR registry at www.khronos.org>
-foreign import ccall unsafe "vkGetDescriptorSetLayoutSupport"
+foreign import ccall unsafe "vkGetDescriptorSetLayoutSupportKHR"
                vkGetDescriptorSetLayoutSupportKHR ::
                VkDevice -- ^ device
                         ->
@@ -90,7 +122,7 @@ foreign import ccall unsafe "vkGetDescriptorSetLayoutSupport"
 --   >     )
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDescriptorSetLayoutSupportKHR.html vkGetDescriptorSetLayoutSupportKHR registry at www.khronos.org>
-foreign import ccall safe "vkGetDescriptorSetLayoutSupport"
+foreign import ccall safe "vkGetDescriptorSetLayoutSupportKHR"
                vkGetDescriptorSetLayoutSupportKHRSafe ::
                VkDevice -- ^ device
                         ->
@@ -98,6 +130,42 @@ foreign import ccall safe "vkGetDescriptorSetLayoutSupport"
                                                      ->
                    Ptr VkDescriptorSetLayoutSupport -- ^ pSupport
                                                     -> IO ()
+
+-- | This is an alias for `vkGetDescriptorSetLayoutSupport`.
+--
+--   > () vkGetDescriptorSetLayoutSupportKHR
+--   >     ( VkDevice device
+--   >     , const VkDescriptorSetLayoutCreateInfo* pCreateInfo
+--   >     , VkDescriptorSetLayoutSupport* pSupport
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDescriptorSetLayoutSupportKHR.html vkGetDescriptorSetLayoutSupportKHR registry at www.khronos.org>
+type HS_vkGetDescriptorSetLayoutSupportKHR =
+     VkDevice -- ^ device
+              ->
+       Ptr VkDescriptorSetLayoutCreateInfo -- ^ pCreateInfo
+                                           ->
+         Ptr VkDescriptorSetLayoutSupport -- ^ pSupport
+                                          -> IO ()
+
+type PFN_vkGetDescriptorSetLayoutSupportKHR =
+     FunPtr HS_vkGetDescriptorSetLayoutSupportKHR
+
+foreign import ccall "dynamic"
+               unwrapVkGetDescriptorSetLayoutSupportKHR ::
+               PFN_vkGetDescriptorSetLayoutSupportKHR ->
+                 HS_vkGetDescriptorSetLayoutSupportKHR
+
+instance VulkanInstanceProc "vkGetDescriptorSetLayoutSupportKHR"
+         where
+        type VkInstanceProcType "vkGetDescriptorSetLayoutSupportKHR" =
+             HS_vkGetDescriptorSetLayoutSupportKHR
+        vkInstanceProcSymbol = _VkGetDescriptorSetLayoutSupportKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetDescriptorSetLayoutSupportKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_KHR_MAINTENANCE3_SPEC_VERSION :: (Num a, Eq a) => a
 

@@ -157,12 +157,15 @@ module Graphics.Vulkan.Ext
     , module Graphics.Vulkan.Ext.VK_KHR_sampler_ycbcr_conversion
     , module Graphics.Vulkan.Ext.VK_KHR_bind_memory2
     , module Graphics.Vulkan.Ext.VK_EXT_validation_cache
+    , module Graphics.Vulkan.Ext.VK_EXT_descriptor_indexing
     , module Graphics.Vulkan.Ext.VK_EXT_shader_viewport_index_layer
     , module Graphics.Vulkan.Ext.VK_KHR_maintenance3
     , module Graphics.Vulkan.Ext.VK_EXT_global_priority
     , module Graphics.Vulkan.Ext.VK_EXT_external_memory_host
     , module Graphics.Vulkan.Ext.VK_AMD_buffer_marker
+    , module Graphics.Vulkan.Ext.VK_AMD_shader_core_properties
     , module Graphics.Vulkan.Ext.VK_EXT_vertex_attribute_divisor
+    , module Graphics.Vulkan.Ext.VK_NV_shader_subgroup_partitioned
     ) where
 
 import Graphics.Vulkan.Ext.VK_KHR_surface
@@ -321,9 +324,12 @@ import Graphics.Vulkan.Ext.VK_EXT_post_depth_coverage
 import Graphics.Vulkan.Ext.VK_KHR_sampler_ycbcr_conversion
 import Graphics.Vulkan.Ext.VK_KHR_bind_memory2
 import Graphics.Vulkan.Ext.VK_EXT_validation_cache
+import Graphics.Vulkan.Ext.VK_EXT_descriptor_indexing
 import Graphics.Vulkan.Ext.VK_EXT_shader_viewport_index_layer
 import Graphics.Vulkan.Ext.VK_KHR_maintenance3
 import Graphics.Vulkan.Ext.VK_EXT_global_priority
 import Graphics.Vulkan.Ext.VK_EXT_external_memory_host
 import Graphics.Vulkan.Ext.VK_AMD_buffer_marker
+import Graphics.Vulkan.Ext.VK_AMD_shader_core_properties
 import Graphics.Vulkan.Ext.VK_EXT_vertex_attribute_divisor
+import Graphics.Vulkan.Ext.VK_NV_shader_subgroup_partitioned

@@ -1,9 +1,12 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_ANDROID_external_memory_android_hardware_buffer
        (-- * Vulkan extension: @VK_ANDROID_external_memory_android_hardware_buffer@
@@ -21,10 +24,10 @@ module Graphics.Vulkan.Ext.VK_ANDROID_external_memory_android_hardware_buffer
         --
         -- Extension number: @130@
         --
-        -- Required extensions: 'VK_KHR_sampler_ycbcr_conversion', 'VK_KHR_external_memory'.
+        -- Required extensions: 'VK_KHR_sampler_ycbcr_conversion', 'VK_KHR_external_memory', 'VK_EXT_queue_family_foreign'.
         --
 
-        -- ** Required extensions: 'VK_KHR_sampler_ycbcr_conversion', 'VK_KHR_external_memory'.
+        -- ** Required extensions: 'VK_KHR_sampler_ycbcr_conversion', 'VK_KHR_external_memory', 'VK_EXT_queue_family_foreign'.
         module Graphics.Vulkan.Types.Struct.VkAndroidHardwareBufferFormatPropertiesANDROID,
         module Graphics.Vulkan.Types.Struct.VkAndroidHardwareBufferPropertiesANDROID,
         module Graphics.Vulkan.Types.Struct.VkAndroidHardwareBufferUsageANDROID,
@@ -55,8 +58,18 @@ module Graphics.Vulkan.Ext.VK_ANDROID_external_memory_android_hardware_buffer
         module Graphics.Vulkan.Types.Enum.VkSharingMode,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
+        VkGetAndroidHardwareBufferPropertiesANDROID,
+        pattern VkGetAndroidHardwareBufferPropertiesANDROID,
+        HS_vkGetAndroidHardwareBufferPropertiesANDROID,
+        PFN_vkGetAndroidHardwareBufferPropertiesANDROID,
+        unwrapVkGetAndroidHardwareBufferPropertiesANDROID,
         vkGetAndroidHardwareBufferPropertiesANDROID,
         vkGetAndroidHardwareBufferPropertiesANDROIDSafe,
+        VkGetMemoryAndroidHardwareBufferANDROID,
+        pattern VkGetMemoryAndroidHardwareBufferANDROID,
+        HS_vkGetMemoryAndroidHardwareBufferANDROID,
+        PFN_vkGetMemoryAndroidHardwareBufferANDROID,
+        unwrapVkGetMemoryAndroidHardwareBufferANDROID,
         vkGetMemoryAndroidHardwareBufferANDROID,
         vkGetMemoryAndroidHardwareBufferANDROIDSafe,
         module Graphics.Vulkan.Marshal,
@@ -77,6 +90,8 @@ module Graphics.Vulkan.Ext.VK_ANDROID_external_memory_android_hardware_buffer
 import           GHC.Ptr
                                                                                               (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc
+                                                                                              (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Defines
                                                                                               (AHardwareBuffer)
@@ -113,6 +128,29 @@ import           Graphics.Vulkan.Types.Struct.VkImportAndroidHardwareBufferInfoA
 import           Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo
 import           Graphics.Vulkan.Types.Struct.VkMemoryGetAndroidHardwareBufferInfoANDROID
 import           Graphics.Vulkan.Types.Struct.VkSamplerYcbcrConversionCreateInfo
+
+pattern VkGetAndroidHardwareBufferPropertiesANDROID :: CString
+
+pattern VkGetAndroidHardwareBufferPropertiesANDROID <-
+        (is_VkGetAndroidHardwareBufferPropertiesANDROID -> True)
+  where VkGetAndroidHardwareBufferPropertiesANDROID
+          = _VkGetAndroidHardwareBufferPropertiesANDROID
+
+{-# INLINE _VkGetAndroidHardwareBufferPropertiesANDROID #-}
+
+_VkGetAndroidHardwareBufferPropertiesANDROID :: CString
+_VkGetAndroidHardwareBufferPropertiesANDROID
+  = Ptr "vkGetAndroidHardwareBufferPropertiesANDROID\NUL"#
+
+{-# INLINE is_VkGetAndroidHardwareBufferPropertiesANDROID #-}
+
+is_VkGetAndroidHardwareBufferPropertiesANDROID :: CString -> Bool
+is_VkGetAndroidHardwareBufferPropertiesANDROID
+  = (EQ ==) .
+      cmpCStrings _VkGetAndroidHardwareBufferPropertiesANDROID
+
+type VkGetAndroidHardwareBufferPropertiesANDROID =
+     "vkGetAndroidHardwareBufferPropertiesANDROID"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -158,6 +196,69 @@ foreign import ccall safe
 
 -- | Success codes: 'VK_SUCCESS'.
 --
+--   Error codes: 'VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR'.
+--
+--   > VkResult vkGetAndroidHardwareBufferPropertiesANDROID
+--   >     ( VkDevice device
+--   >     , const struct AHardwareBuffer* buffer
+--   >     , VkAndroidHardwareBufferPropertiesANDROID* pProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetAndroidHardwareBufferPropertiesANDROID.html vkGetAndroidHardwareBufferPropertiesANDROID registry at www.khronos.org>
+type HS_vkGetAndroidHardwareBufferPropertiesANDROID =
+     VkDevice -- ^ device
+              ->
+       Ptr AHardwareBuffer -- ^ buffer
+                           ->
+         Ptr VkAndroidHardwareBufferPropertiesANDROID -- ^ pProperties
+                                                      -> IO VkResult
+
+type PFN_vkGetAndroidHardwareBufferPropertiesANDROID =
+     FunPtr HS_vkGetAndroidHardwareBufferPropertiesANDROID
+
+foreign import ccall "dynamic"
+               unwrapVkGetAndroidHardwareBufferPropertiesANDROID ::
+               PFN_vkGetAndroidHardwareBufferPropertiesANDROID ->
+                 HS_vkGetAndroidHardwareBufferPropertiesANDROID
+
+instance VulkanInstanceProc
+           "vkGetAndroidHardwareBufferPropertiesANDROID"
+         where
+        type VkInstanceProcType
+               "vkGetAndroidHardwareBufferPropertiesANDROID"
+             = HS_vkGetAndroidHardwareBufferPropertiesANDROID
+        vkInstanceProcSymbol = _VkGetAndroidHardwareBufferPropertiesANDROID
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc
+          = unwrapVkGetAndroidHardwareBufferPropertiesANDROID
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetMemoryAndroidHardwareBufferANDROID :: CString
+
+pattern VkGetMemoryAndroidHardwareBufferANDROID <-
+        (is_VkGetMemoryAndroidHardwareBufferANDROID -> True)
+  where VkGetMemoryAndroidHardwareBufferANDROID
+          = _VkGetMemoryAndroidHardwareBufferANDROID
+
+{-# INLINE _VkGetMemoryAndroidHardwareBufferANDROID #-}
+
+_VkGetMemoryAndroidHardwareBufferANDROID :: CString
+_VkGetMemoryAndroidHardwareBufferANDROID
+  = Ptr "vkGetMemoryAndroidHardwareBufferANDROID\NUL"#
+
+{-# INLINE is_VkGetMemoryAndroidHardwareBufferANDROID #-}
+
+is_VkGetMemoryAndroidHardwareBufferANDROID :: CString -> Bool
+is_VkGetMemoryAndroidHardwareBufferANDROID
+  = (EQ ==) . cmpCStrings _VkGetMemoryAndroidHardwareBufferANDROID
+
+type VkGetMemoryAndroidHardwareBufferANDROID =
+     "vkGetMemoryAndroidHardwareBufferANDROID"
+
+-- | Success codes: 'VK_SUCCESS'.
+--
 --   Error codes: 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
 --
 --   > VkResult vkGetMemoryAndroidHardwareBufferANDROID
@@ -196,6 +297,46 @@ foreign import ccall safe "vkGetMemoryAndroidHardwareBufferANDROID"
                                                                  ->
                    Ptr (Ptr AHardwareBuffer) -- ^ pBuffer
                                              -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
+--
+--   > VkResult vkGetMemoryAndroidHardwareBufferANDROID
+--   >     ( VkDevice device
+--   >     , const VkMemoryGetAndroidHardwareBufferInfoANDROID* pInfo
+--   >     , struct AHardwareBuffer** pBuffer
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryAndroidHardwareBufferANDROID.html vkGetMemoryAndroidHardwareBufferANDROID registry at www.khronos.org>
+type HS_vkGetMemoryAndroidHardwareBufferANDROID =
+     VkDevice -- ^ device
+              ->
+       Ptr VkMemoryGetAndroidHardwareBufferInfoANDROID -- ^ pInfo
+                                                       ->
+         Ptr (Ptr AHardwareBuffer) -- ^ pBuffer
+                                   -> IO VkResult
+
+type PFN_vkGetMemoryAndroidHardwareBufferANDROID =
+     FunPtr HS_vkGetMemoryAndroidHardwareBufferANDROID
+
+foreign import ccall "dynamic"
+               unwrapVkGetMemoryAndroidHardwareBufferANDROID ::
+               PFN_vkGetMemoryAndroidHardwareBufferANDROID ->
+                 HS_vkGetMemoryAndroidHardwareBufferANDROID
+
+instance VulkanInstanceProc
+           "vkGetMemoryAndroidHardwareBufferANDROID"
+         where
+        type VkInstanceProcType "vkGetMemoryAndroidHardwareBufferANDROID" =
+             HS_vkGetMemoryAndroidHardwareBufferANDROID
+        vkInstanceProcSymbol = _VkGetMemoryAndroidHardwareBufferANDROID
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc
+          = unwrapVkGetMemoryAndroidHardwareBufferANDROID
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_ANDROID_EXTERNAL_MEMORY_ANDROID_HARDWARE_BUFFER_SPEC_VERSION
         :: (Num a, Eq a) => a

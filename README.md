@@ -70,8 +70,8 @@ sudo apt-get install libvulkan-dev
 
  * [ ] Try to build it on various platforms, check if specifying foreign code calling
        convention is necessary.
- * [ ] Check if it is safe to do all foreign calls unsafe,
-       mark those calls that have to be safe (all calls are unsafe currently).
+ * [ ] Remove unsafe FFI call to functions that could break at runtime.
+       Currently we have both safe and unsafe versions for every function.
  * [ ] Figure out if it is necessary to have `extra-libraries: vulkan` on various platforms
        (or, maybe, `extra-ghci-libraries` is enough?)
  * [ ] Make `Graphics.Vulkan.Marshal.Create` fill `sType` fields automatically,
@@ -79,6 +79,7 @@ sudo apt-get install libvulkan-dev
  * [x] Make `Graphics.Vulkan.Marshal.Create` provide more meaningful error
        messages when types of fields mismatch.
  * [ ] Check whether we can disallow writing `returnedonly` fields.
+ * [ ] Investigate the need to use the extension loader (`vulkan-docs/src/ext_loader`).
 
 ##### genvulkan
 

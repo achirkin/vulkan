@@ -1,11 +1,14 @@
 {-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_device_group
        (-- * Vulkan extension: @VK_KHR_device_group@
@@ -33,9 +36,19 @@ module Graphics.Vulkan.Ext.VK_KHR_device_group
         module Graphics.Vulkan.Types.Struct.VkMemoryAllocateFlagsInfoKHR,
         module Graphics.Vulkan.Types.Bitmasks,
         module Graphics.Vulkan.Types.Enum.VkPeerMemoryFeatureFlagBitsKHR,
+        VkGetDeviceGroupPeerMemoryFeaturesKHR,
+        pattern VkGetDeviceGroupPeerMemoryFeaturesKHR,
+        HS_vkGetDeviceGroupPeerMemoryFeaturesKHR,
+        PFN_vkGetDeviceGroupPeerMemoryFeaturesKHR,
+        unwrapVkGetDeviceGroupPeerMemoryFeaturesKHR,
         vkGetDeviceGroupPeerMemoryFeaturesKHR,
-        vkGetDeviceGroupPeerMemoryFeaturesKHRSafe, vkCmdSetDeviceMaskKHR,
-        vkCmdSetDeviceMaskKHRSafe, vkCmdDispatchBaseKHR,
+        vkGetDeviceGroupPeerMemoryFeaturesKHRSafe, VkCmdSetDeviceMaskKHR,
+        pattern VkCmdSetDeviceMaskKHR, HS_vkCmdSetDeviceMaskKHR,
+        PFN_vkCmdSetDeviceMaskKHR, unwrapVkCmdSetDeviceMaskKHR,
+        vkCmdSetDeviceMaskKHR, vkCmdSetDeviceMaskKHRSafe,
+        VkCmdDispatchBaseKHR, pattern VkCmdDispatchBaseKHR,
+        HS_vkCmdDispatchBaseKHR, PFN_vkCmdDispatchBaseKHR,
+        unwrapVkCmdDispatchBaseKHR, vkCmdDispatchBaseKHR,
         vkCmdDispatchBaseKHRSafe, module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.VkPeerMemoryFeatureFlags,
@@ -68,10 +81,22 @@ module Graphics.Vulkan.Ext.VK_KHR_device_group
         module Graphics.Vulkan.Types.Enum.VkDeviceGroupPresentModeFlagsKHR,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
+        pattern VkGetDeviceGroupPresentCapabilitiesKHR,
+        HS_vkGetDeviceGroupPresentCapabilitiesKHR,
+        PFN_vkGetDeviceGroupPresentCapabilitiesKHR,
+        unwrapVkGetDeviceGroupPresentCapabilitiesKHR,
         vkGetDeviceGroupPresentCapabilitiesKHR,
         vkGetDeviceGroupPresentCapabilitiesKHRSafe,
+        pattern VkGetDeviceGroupSurfacePresentModesKHR,
+        HS_vkGetDeviceGroupSurfacePresentModesKHR,
+        PFN_vkGetDeviceGroupSurfacePresentModesKHR,
+        unwrapVkGetDeviceGroupSurfacePresentModesKHR,
         vkGetDeviceGroupSurfacePresentModesKHR,
         vkGetDeviceGroupSurfacePresentModesKHRSafe,
+        pattern VkGetPhysicalDevicePresentRectanglesKHR,
+        HS_vkGetPhysicalDevicePresentRectanglesKHR,
+        PFN_vkGetPhysicalDevicePresentRectanglesKHR,
+        unwrapVkGetPhysicalDevicePresentRectanglesKHR,
         vkGetPhysicalDevicePresentRectanglesKHR,
         vkGetPhysicalDevicePresentRectanglesKHRSafe,
         pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_CAPABILITIES_KHR,
@@ -102,6 +127,8 @@ module Graphics.Vulkan.Ext.VK_KHR_device_group
         module Graphics.Vulkan.Types.Enum.VkSwapchainCreateFlagsKHR,
         module Graphics.Vulkan.Types.Struct.VkSwapchainCreateInfoKHR,
         -- > #include "vk_platform.h"
+        pattern VkAcquireNextImage2KHR, HS_vkAcquireNextImage2KHR,
+        PFN_vkAcquireNextImage2KHR, unwrapVkAcquireNextImage2KHR,
         vkAcquireNextImage2KHR, vkAcquireNextImage2KHRSafe,
         pattern VK_STRUCTURE_TYPE_IMAGE_SWAPCHAIN_CREATE_INFO_KHR,
         pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_SWAPCHAIN_INFO_KHR,
@@ -125,13 +152,29 @@ import           Graphics.Vulkan.Core_1_1
                                                                                       pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_SUBMIT_INFO,
                                                                                       pattern VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_FLAGS_INFO)
 import           Graphics.Vulkan.Ext.VK_KHR_swapchain
-                                                                                      (pattern VK_STRUCTURE_TYPE_ACQUIRE_NEXT_IMAGE_INFO_KHR,
+                                                                                      (HS_vkAcquireNextImage2KHR,
+                                                                                      HS_vkGetDeviceGroupPresentCapabilitiesKHR,
+                                                                                      HS_vkGetDeviceGroupSurfacePresentModesKHR,
+                                                                                      HS_vkGetPhysicalDevicePresentRectanglesKHR,
+                                                                                      PFN_vkAcquireNextImage2KHR,
+                                                                                      PFN_vkGetDeviceGroupPresentCapabilitiesKHR,
+                                                                                      PFN_vkGetDeviceGroupSurfacePresentModesKHR,
+                                                                                      PFN_vkGetPhysicalDevicePresentRectanglesKHR,
+                                                                                      pattern VK_STRUCTURE_TYPE_ACQUIRE_NEXT_IMAGE_INFO_KHR,
                                                                                       pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_SWAPCHAIN_INFO_KHR,
                                                                                       pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_CAPABILITIES_KHR,
                                                                                       pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_INFO_KHR,
                                                                                       pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHR,
                                                                                       pattern VK_STRUCTURE_TYPE_IMAGE_SWAPCHAIN_CREATE_INFO_KHR,
                                                                                       pattern VK_SWAPCHAIN_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT_KHR,
+                                                                                      pattern VkAcquireNextImage2KHR,
+                                                                                      pattern VkGetDeviceGroupPresentCapabilitiesKHR,
+                                                                                      pattern VkGetDeviceGroupSurfacePresentModesKHR,
+                                                                                      pattern VkGetPhysicalDevicePresentRectanglesKHR,
+                                                                                      unwrapVkAcquireNextImage2KHR,
+                                                                                      unwrapVkGetDeviceGroupPresentCapabilitiesKHR,
+                                                                                      unwrapVkGetDeviceGroupSurfacePresentModesKHR,
+                                                                                      unwrapVkGetPhysicalDevicePresentRectanglesKHR,
                                                                                       vkAcquireNextImage2KHR,
                                                                                       vkAcquireNextImage2KHRSafe,
                                                                                       vkGetDeviceGroupPresentCapabilitiesKHR,
@@ -141,6 +184,8 @@ import           Graphics.Vulkan.Ext.VK_KHR_swapchain
                                                                                       vkGetPhysicalDevicePresentRectanglesKHR,
                                                                                       vkGetPhysicalDevicePresentRectanglesKHRSafe)
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc
+                                                                                      (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkColorSpaceKHR
@@ -185,6 +230,28 @@ import           Graphics.Vulkan.Types.Struct.VkMemoryAllocateFlagsInfoKHR
 import           Graphics.Vulkan.Types.Struct.VkPresentInfoKHR
 import           Graphics.Vulkan.Types.Struct.VkSwapchainCreateInfoKHR
 
+pattern VkGetDeviceGroupPeerMemoryFeaturesKHR :: CString
+
+pattern VkGetDeviceGroupPeerMemoryFeaturesKHR <-
+        (is_VkGetDeviceGroupPeerMemoryFeaturesKHR -> True)
+  where VkGetDeviceGroupPeerMemoryFeaturesKHR
+          = _VkGetDeviceGroupPeerMemoryFeaturesKHR
+
+{-# INLINE _VkGetDeviceGroupPeerMemoryFeaturesKHR #-}
+
+_VkGetDeviceGroupPeerMemoryFeaturesKHR :: CString
+_VkGetDeviceGroupPeerMemoryFeaturesKHR
+  = Ptr "vkGetDeviceGroupPeerMemoryFeaturesKHR\NUL"#
+
+{-# INLINE is_VkGetDeviceGroupPeerMemoryFeaturesKHR #-}
+
+is_VkGetDeviceGroupPeerMemoryFeaturesKHR :: CString -> Bool
+is_VkGetDeviceGroupPeerMemoryFeaturesKHR
+  = (EQ ==) . cmpCStrings _VkGetDeviceGroupPeerMemoryFeaturesKHR
+
+type VkGetDeviceGroupPeerMemoryFeaturesKHR =
+     "vkGetDeviceGroupPeerMemoryFeaturesKHR"
+
 -- | This is an alias for `vkGetDeviceGroupPeerMemoryFeatures`.
 --
 --   > () vkGetDeviceGroupPeerMemoryFeaturesKHR
@@ -196,7 +263,7 @@ import           Graphics.Vulkan.Types.Struct.VkSwapchainCreateInfoKHR
 --   >     )
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceGroupPeerMemoryFeaturesKHR.html vkGetDeviceGroupPeerMemoryFeaturesKHR registry at www.khronos.org>
-foreign import ccall unsafe "vkGetDeviceGroupPeerMemoryFeatures"
+foreign import ccall unsafe "vkGetDeviceGroupPeerMemoryFeaturesKHR"
                vkGetDeviceGroupPeerMemoryFeaturesKHR ::
                VkDevice -- ^ device
                         ->
@@ -217,7 +284,7 @@ foreign import ccall unsafe "vkGetDeviceGroupPeerMemoryFeatures"
 --   >     )
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceGroupPeerMemoryFeaturesKHR.html vkGetDeviceGroupPeerMemoryFeaturesKHR registry at www.khronos.org>
-foreign import ccall safe "vkGetDeviceGroupPeerMemoryFeatures"
+foreign import ccall safe "vkGetDeviceGroupPeerMemoryFeaturesKHR"
                vkGetDeviceGroupPeerMemoryFeaturesKHRSafe ::
                VkDevice -- ^ device
                         ->
@@ -226,6 +293,63 @@ foreign import ccall safe "vkGetDeviceGroupPeerMemoryFeatures"
                                   -> Word32 -- ^ remoteDeviceIndex
                                             -> Ptr VkPeerMemoryFeatureFlags -- ^ pPeerMemoryFeatures
                                                                             -> IO ()
+
+-- | This is an alias for `vkGetDeviceGroupPeerMemoryFeatures`.
+--
+--   > () vkGetDeviceGroupPeerMemoryFeaturesKHR
+--   >     ( VkDevice device
+--   >     , uint32_t heapIndex
+--   >     , uint32_t localDeviceIndex
+--   >     , uint32_t remoteDeviceIndex
+--   >     , VkPeerMemoryFeatureFlags* pPeerMemoryFeatures
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceGroupPeerMemoryFeaturesKHR.html vkGetDeviceGroupPeerMemoryFeaturesKHR registry at www.khronos.org>
+type HS_vkGetDeviceGroupPeerMemoryFeaturesKHR =
+     VkDevice -- ^ device
+              ->
+       Word32 -- ^ heapIndex
+              -> Word32 -- ^ localDeviceIndex
+                        -> Word32 -- ^ remoteDeviceIndex
+                                  -> Ptr VkPeerMemoryFeatureFlags -- ^ pPeerMemoryFeatures
+                                                                  -> IO ()
+
+type PFN_vkGetDeviceGroupPeerMemoryFeaturesKHR =
+     FunPtr HS_vkGetDeviceGroupPeerMemoryFeaturesKHR
+
+foreign import ccall "dynamic"
+               unwrapVkGetDeviceGroupPeerMemoryFeaturesKHR ::
+               PFN_vkGetDeviceGroupPeerMemoryFeaturesKHR ->
+                 HS_vkGetDeviceGroupPeerMemoryFeaturesKHR
+
+instance VulkanInstanceProc "vkGetDeviceGroupPeerMemoryFeaturesKHR"
+         where
+        type VkInstanceProcType "vkGetDeviceGroupPeerMemoryFeaturesKHR" =
+             HS_vkGetDeviceGroupPeerMemoryFeaturesKHR
+        vkInstanceProcSymbol = _VkGetDeviceGroupPeerMemoryFeaturesKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetDeviceGroupPeerMemoryFeaturesKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkCmdSetDeviceMaskKHR :: CString
+
+pattern VkCmdSetDeviceMaskKHR <- (is_VkCmdSetDeviceMaskKHR -> True)
+  where VkCmdSetDeviceMaskKHR = _VkCmdSetDeviceMaskKHR
+
+{-# INLINE _VkCmdSetDeviceMaskKHR #-}
+
+_VkCmdSetDeviceMaskKHR :: CString
+_VkCmdSetDeviceMaskKHR = Ptr "vkCmdSetDeviceMaskKHR\NUL"#
+
+{-# INLINE is_VkCmdSetDeviceMaskKHR #-}
+
+is_VkCmdSetDeviceMaskKHR :: CString -> Bool
+is_VkCmdSetDeviceMaskKHR
+  = (EQ ==) . cmpCStrings _VkCmdSetDeviceMaskKHR
+
+type VkCmdSetDeviceMaskKHR = "vkCmdSetDeviceMaskKHR"
 
 -- | This is an alias for `vkCmdSetDeviceMask`.
 --
@@ -239,7 +363,7 @@ foreign import ccall safe "vkGetDeviceGroupPeerMemoryFeatures"
 --   >     )
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetDeviceMaskKHR.html vkCmdSetDeviceMaskKHR registry at www.khronos.org>
-foreign import ccall unsafe "vkCmdSetDeviceMask"
+foreign import ccall unsafe "vkCmdSetDeviceMaskKHR"
                vkCmdSetDeviceMaskKHR :: VkCommandBuffer -- ^ commandBuffer
                                                         -> Word32 -- ^ deviceMask
                                                                   -> IO ()
@@ -256,10 +380,59 @@ foreign import ccall unsafe "vkCmdSetDeviceMask"
 --   >     )
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetDeviceMaskKHR.html vkCmdSetDeviceMaskKHR registry at www.khronos.org>
-foreign import ccall safe "vkCmdSetDeviceMask"
+foreign import ccall safe "vkCmdSetDeviceMaskKHR"
                vkCmdSetDeviceMaskKHRSafe :: VkCommandBuffer -- ^ commandBuffer
                                                             -> Word32 -- ^ deviceMask
                                                                       -> IO ()
+
+-- | This is an alias for `vkCmdSetDeviceMask`.
+--
+--   queues: 'graphics', 'compute', 'transfer'.
+--
+--   renderpass: @both@
+--
+--   > () vkCmdSetDeviceMaskKHR
+--   >     ( VkCommandBuffer commandBuffer
+--   >     , uint32_t deviceMask
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetDeviceMaskKHR.html vkCmdSetDeviceMaskKHR registry at www.khronos.org>
+type HS_vkCmdSetDeviceMaskKHR = VkCommandBuffer -- ^ commandBuffer
+                                                -> Word32 -- ^ deviceMask
+                                                          -> IO ()
+
+type PFN_vkCmdSetDeviceMaskKHR = FunPtr HS_vkCmdSetDeviceMaskKHR
+
+foreign import ccall "dynamic" unwrapVkCmdSetDeviceMaskKHR ::
+               PFN_vkCmdSetDeviceMaskKHR -> HS_vkCmdSetDeviceMaskKHR
+
+instance VulkanInstanceProc "vkCmdSetDeviceMaskKHR" where
+        type VkInstanceProcType "vkCmdSetDeviceMaskKHR" =
+             HS_vkCmdSetDeviceMaskKHR
+        vkInstanceProcSymbol = _VkCmdSetDeviceMaskKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCmdSetDeviceMaskKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkCmdDispatchBaseKHR :: CString
+
+pattern VkCmdDispatchBaseKHR <- (is_VkCmdDispatchBaseKHR -> True)
+  where VkCmdDispatchBaseKHR = _VkCmdDispatchBaseKHR
+
+{-# INLINE _VkCmdDispatchBaseKHR #-}
+
+_VkCmdDispatchBaseKHR :: CString
+_VkCmdDispatchBaseKHR = Ptr "vkCmdDispatchBaseKHR\NUL"#
+
+{-# INLINE is_VkCmdDispatchBaseKHR #-}
+
+is_VkCmdDispatchBaseKHR :: CString -> Bool
+is_VkCmdDispatchBaseKHR
+  = (EQ ==) . cmpCStrings _VkCmdDispatchBaseKHR
+
+type VkCmdDispatchBaseKHR = "vkCmdDispatchBaseKHR"
 
 -- | This is an alias for `vkCmdDispatchBase`.
 --
@@ -278,7 +451,7 @@ foreign import ccall safe "vkCmdSetDeviceMask"
 --   >     )
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDispatchBaseKHR.html vkCmdDispatchBaseKHR registry at www.khronos.org>
-foreign import ccall unsafe "vkCmdDispatchBase"
+foreign import ccall unsafe "vkCmdDispatchBaseKHR"
                vkCmdDispatchBaseKHR ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -307,7 +480,7 @@ foreign import ccall unsafe "vkCmdDispatchBase"
 --   >     )
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDispatchBaseKHR.html vkCmdDispatchBaseKHR registry at www.khronos.org>
-foreign import ccall safe "vkCmdDispatchBase"
+foreign import ccall safe "vkCmdDispatchBaseKHR"
                vkCmdDispatchBaseKHRSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -318,6 +491,49 @@ foreign import ccall safe "vkCmdDispatchBase"
                                                       -> Word32 -- ^ groupCountY
                                                                 -> Word32 -- ^ groupCountZ
                                                                           -> IO ()
+
+-- | This is an alias for `vkCmdDispatchBase`.
+--
+--   queues: 'compute'.
+--
+--   renderpass: @outside@
+--
+--   > () vkCmdDispatchBaseKHR
+--   >     ( VkCommandBuffer commandBuffer
+--   >     , uint32_t baseGroupX
+--   >     , uint32_t baseGroupY
+--   >     , uint32_t baseGroupZ
+--   >     , uint32_t groupCountX
+--   >     , uint32_t groupCountY
+--   >     , uint32_t groupCountZ
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDispatchBaseKHR.html vkCmdDispatchBaseKHR registry at www.khronos.org>
+type HS_vkCmdDispatchBaseKHR =
+     VkCommandBuffer -- ^ commandBuffer
+                     ->
+       Word32 -- ^ baseGroupX
+              -> Word32 -- ^ baseGroupY
+                        -> Word32 -- ^ baseGroupZ
+                                  -> Word32 -- ^ groupCountX
+                                            -> Word32 -- ^ groupCountY
+                                                      -> Word32 -- ^ groupCountZ
+                                                                -> IO ()
+
+type PFN_vkCmdDispatchBaseKHR = FunPtr HS_vkCmdDispatchBaseKHR
+
+foreign import ccall "dynamic" unwrapVkCmdDispatchBaseKHR ::
+               PFN_vkCmdDispatchBaseKHR -> HS_vkCmdDispatchBaseKHR
+
+instance VulkanInstanceProc "vkCmdDispatchBaseKHR" where
+        type VkInstanceProcType "vkCmdDispatchBaseKHR" =
+             HS_vkCmdDispatchBaseKHR
+        vkInstanceProcSymbol = _VkCmdDispatchBaseKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCmdDispatchBaseKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_KHR_DEVICE_GROUP_SPEC_VERSION :: (Num a, Eq a) => a
 

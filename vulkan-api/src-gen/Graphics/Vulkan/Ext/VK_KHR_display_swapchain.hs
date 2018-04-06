@@ -1,9 +1,12 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_display_swapchain
        (-- * Vulkan extension: @VK_KHR_display_swapchain@
@@ -32,8 +35,10 @@ module Graphics.Vulkan.Ext.VK_KHR_display_swapchain
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
-        vkCreateSharedSwapchainsKHR, vkCreateSharedSwapchainsKHRSafe,
-        module Graphics.Vulkan.Marshal,
+        VkCreateSharedSwapchainsKHR, pattern VkCreateSharedSwapchainsKHR,
+        HS_vkCreateSharedSwapchainsKHR, PFN_vkCreateSharedSwapchainsKHR,
+        unwrapVkCreateSharedSwapchainsKHR, vkCreateSharedSwapchainsKHR,
+        vkCreateSharedSwapchainsKHRSafe, module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkColorSpaceKHR,
         module Graphics.Vulkan.Types.Enum.VkCompositeAlphaFlagsKHR,
         module Graphics.Vulkan.Types.Enum.VkFormat,
@@ -57,6 +62,7 @@ module Graphics.Vulkan.Ext.VK_KHR_display_swapchain
        where
 import           GHC.Ptr                                               (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc                  (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkColorSpaceKHR
 import           Graphics.Vulkan.Types.Enum.VkCompositeAlphaFlagsKHR
@@ -79,6 +85,26 @@ import           Graphics.Vulkan.Types.Struct.VkOffset2D
 import           Graphics.Vulkan.Types.Struct.VkPresentInfoKHR
 import           Graphics.Vulkan.Types.Struct.VkRect2D
 import           Graphics.Vulkan.Types.Struct.VkSwapchainCreateInfoKHR
+
+pattern VkCreateSharedSwapchainsKHR :: CString
+
+pattern VkCreateSharedSwapchainsKHR <-
+        (is_VkCreateSharedSwapchainsKHR -> True)
+  where VkCreateSharedSwapchainsKHR = _VkCreateSharedSwapchainsKHR
+
+{-# INLINE _VkCreateSharedSwapchainsKHR #-}
+
+_VkCreateSharedSwapchainsKHR :: CString
+_VkCreateSharedSwapchainsKHR
+  = Ptr "vkCreateSharedSwapchainsKHR\NUL"#
+
+{-# INLINE is_VkCreateSharedSwapchainsKHR #-}
+
+is_VkCreateSharedSwapchainsKHR :: CString -> Bool
+is_VkCreateSharedSwapchainsKHR
+  = (EQ ==) . cmpCStrings _VkCreateSharedSwapchainsKHR
+
+type VkCreateSharedSwapchainsKHR = "vkCreateSharedSwapchainsKHR"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -129,6 +155,46 @@ foreign import ccall safe "vkCreateSharedSwapchainsKHR"
                      Ptr VkAllocationCallbacks -- ^ pAllocator
                                                -> Ptr VkSwapchainKHR -- ^ pSwapchains
                                                                      -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INCOMPATIBLE_DISPLAY_KHR', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR'.
+--
+--   > VkResult vkCreateSharedSwapchainsKHR
+--   >     ( VkDevice device
+--   >     , uint32_t swapchainCount
+--   >     , const VkSwapchainCreateInfoKHR* pCreateInfos
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkSwapchainKHR* pSwapchains
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateSharedSwapchainsKHR.html vkCreateSharedSwapchainsKHR registry at www.khronos.org>
+type HS_vkCreateSharedSwapchainsKHR =
+     VkDevice -- ^ device
+              ->
+       Word32 -- ^ swapchainCount
+              ->
+         Ptr VkSwapchainCreateInfoKHR -- ^ pCreateInfos
+                                      ->
+           Ptr VkAllocationCallbacks -- ^ pAllocator
+                                     -> Ptr VkSwapchainKHR -- ^ pSwapchains
+                                                           -> IO VkResult
+
+type PFN_vkCreateSharedSwapchainsKHR =
+     FunPtr HS_vkCreateSharedSwapchainsKHR
+
+foreign import ccall "dynamic" unwrapVkCreateSharedSwapchainsKHR ::
+               PFN_vkCreateSharedSwapchainsKHR -> HS_vkCreateSharedSwapchainsKHR
+
+instance VulkanInstanceProc "vkCreateSharedSwapchainsKHR" where
+        type VkInstanceProcType "vkCreateSharedSwapchainsKHR" =
+             HS_vkCreateSharedSwapchainsKHR
+        vkInstanceProcSymbol = _VkCreateSharedSwapchainsKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCreateSharedSwapchainsKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_KHR_DISPLAY_SWAPCHAIN_SPEC_VERSION :: (Num a, Eq a) => a
 

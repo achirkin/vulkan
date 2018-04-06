@@ -1,9 +1,12 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_MVK_macos_surface
        (-- * Vulkan extension: @VK_MVK_macos_surface@
@@ -30,8 +33,10 @@ module Graphics.Vulkan.Ext.VK_MVK_macos_surface
         module Graphics.Vulkan.Types.Struct.VkMacOSSurfaceCreateInfoMVK,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
-        vkCreateMacOSSurfaceMVK, vkCreateMacOSSurfaceMVKSafe,
-        module Graphics.Vulkan.Marshal,
+        VkCreateMacOSSurfaceMVK, pattern VkCreateMacOSSurfaceMVK,
+        HS_vkCreateMacOSSurfaceMVK, PFN_vkCreateMacOSSurfaceMVK,
+        unwrapVkCreateMacOSSurfaceMVK, vkCreateMacOSSurfaceMVK,
+        vkCreateMacOSSurfaceMVKSafe, module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,
@@ -46,6 +51,7 @@ module Graphics.Vulkan.Ext.VK_MVK_macos_surface
        where
 import           GHC.Ptr                                                  (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc                     (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkInternalAllocationType
@@ -56,6 +62,25 @@ import           Graphics.Vulkan.Types.Funcpointers
 import           Graphics.Vulkan.Types.Handles
 import           Graphics.Vulkan.Types.Struct.VkAllocationCallbacks
 import           Graphics.Vulkan.Types.Struct.VkMacOSSurfaceCreateInfoMVK
+
+pattern VkCreateMacOSSurfaceMVK :: CString
+
+pattern VkCreateMacOSSurfaceMVK <-
+        (is_VkCreateMacOSSurfaceMVK -> True)
+  where VkCreateMacOSSurfaceMVK = _VkCreateMacOSSurfaceMVK
+
+{-# INLINE _VkCreateMacOSSurfaceMVK #-}
+
+_VkCreateMacOSSurfaceMVK :: CString
+_VkCreateMacOSSurfaceMVK = Ptr "vkCreateMacOSSurfaceMVK\NUL"#
+
+{-# INLINE is_VkCreateMacOSSurfaceMVK #-}
+
+is_VkCreateMacOSSurfaceMVK :: CString -> Bool
+is_VkCreateMacOSSurfaceMVK
+  = (EQ ==) . cmpCStrings _VkCreateMacOSSurfaceMVK
+
+type VkCreateMacOSSurfaceMVK = "vkCreateMacOSSurfaceMVK"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -100,6 +125,43 @@ foreign import ccall safe "vkCreateMacOSSurfaceMVK"
                    Ptr VkAllocationCallbacks -- ^ pAllocator
                                              -> Ptr VkSurfaceKHR -- ^ pSurface
                                                                  -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
+--
+--   > VkResult vkCreateMacOSSurfaceMVK
+--   >     ( VkInstance instance
+--   >     , const VkMacOSSurfaceCreateInfoMVK* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkSurfaceKHR* pSurface
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateMacOSSurfaceMVK.html vkCreateMacOSSurfaceMVK registry at www.khronos.org>
+type HS_vkCreateMacOSSurfaceMVK =
+     VkInstance -- ^ instance
+                ->
+       Ptr VkMacOSSurfaceCreateInfoMVK -- ^ pCreateInfo
+                                       ->
+         Ptr VkAllocationCallbacks -- ^ pAllocator
+                                   -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                       -> IO VkResult
+
+type PFN_vkCreateMacOSSurfaceMVK =
+     FunPtr HS_vkCreateMacOSSurfaceMVK
+
+foreign import ccall "dynamic" unwrapVkCreateMacOSSurfaceMVK ::
+               PFN_vkCreateMacOSSurfaceMVK -> HS_vkCreateMacOSSurfaceMVK
+
+instance VulkanInstanceProc "vkCreateMacOSSurfaceMVK" where
+        type VkInstanceProcType "vkCreateMacOSSurfaceMVK" =
+             HS_vkCreateMacOSSurfaceMVK
+        vkInstanceProcSymbol = _VkCreateMacOSSurfaceMVK
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCreateMacOSSurfaceMVK
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_MVK_MACOS_SURFACE_SPEC_VERSION :: (Num a, Eq a) => a
 

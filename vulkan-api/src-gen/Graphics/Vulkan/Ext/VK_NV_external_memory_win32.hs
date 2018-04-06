@@ -1,10 +1,13 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_NV_external_memory_win32
        (-- * Vulkan extension: @VK_NV_external_memory_win32@
@@ -33,8 +36,10 @@ module Graphics.Vulkan.Ext.VK_NV_external_memory_win32
         module Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
-        vkGetMemoryWin32HandleNV, vkGetMemoryWin32HandleNVSafe,
-        module Graphics.Vulkan.Marshal,
+        VkGetMemoryWin32HandleNV, pattern VkGetMemoryWin32HandleNV,
+        HS_vkGetMemoryWin32HandleNV, PFN_vkGetMemoryWin32HandleNV,
+        unwrapVkGetMemoryWin32HandleNV, vkGetMemoryWin32HandleNV,
+        vkGetMemoryWin32HandleNVSafe, module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_NV_EXTERNAL_MEMORY_WIN32_SPEC_VERSION,
@@ -46,6 +51,7 @@ module Graphics.Vulkan.Ext.VK_NV_external_memory_win32
        where
 import           GHC.Ptr                                                      (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc                         (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagsNV
 import           Graphics.Vulkan.Types.Enum.VkResult
@@ -55,6 +61,25 @@ import           Graphics.Vulkan.Types.Include                                (H
 import           Graphics.Vulkan.Types.Struct.VkExportMemoryWin32HandleInfoNV
 import           Graphics.Vulkan.Types.Struct.VkImportMemoryWin32HandleInfoNV
 import           Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo
+
+pattern VkGetMemoryWin32HandleNV :: CString
+
+pattern VkGetMemoryWin32HandleNV <-
+        (is_VkGetMemoryWin32HandleNV -> True)
+  where VkGetMemoryWin32HandleNV = _VkGetMemoryWin32HandleNV
+
+{-# INLINE _VkGetMemoryWin32HandleNV #-}
+
+_VkGetMemoryWin32HandleNV :: CString
+_VkGetMemoryWin32HandleNV = Ptr "vkGetMemoryWin32HandleNV\NUL"#
+
+{-# INLINE is_VkGetMemoryWin32HandleNV #-}
+
+is_VkGetMemoryWin32HandleNV :: CString -> Bool
+is_VkGetMemoryWin32HandleNV
+  = (EQ ==) . cmpCStrings _VkGetMemoryWin32HandleNV
+
+type VkGetMemoryWin32HandleNV = "vkGetMemoryWin32HandleNV"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -99,6 +124,43 @@ foreign import ccall safe "vkGetMemoryWin32HandleNV"
                    VkExternalMemoryHandleTypeFlagsNV -- ^ handleType
                                                      -> Ptr HANDLE -- ^ pHandle
                                                                    -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
+--
+--   > VkResult vkGetMemoryWin32HandleNV
+--   >     ( VkDevice device
+--   >     , VkDeviceMemory memory
+--   >     , VkExternalMemoryHandleTypeFlagsNV handleType
+--   >     , HANDLE* pHandle
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryWin32HandleNV.html vkGetMemoryWin32HandleNV registry at www.khronos.org>
+type HS_vkGetMemoryWin32HandleNV =
+     VkDevice -- ^ device
+              ->
+       VkDeviceMemory -- ^ memory
+                      ->
+         VkExternalMemoryHandleTypeFlagsNV -- ^ handleType
+                                           -> Ptr HANDLE -- ^ pHandle
+                                                         -> IO VkResult
+
+type PFN_vkGetMemoryWin32HandleNV =
+     FunPtr HS_vkGetMemoryWin32HandleNV
+
+foreign import ccall "dynamic" unwrapVkGetMemoryWin32HandleNV ::
+               PFN_vkGetMemoryWin32HandleNV -> HS_vkGetMemoryWin32HandleNV
+
+instance VulkanInstanceProc "vkGetMemoryWin32HandleNV" where
+        type VkInstanceProcType "vkGetMemoryWin32HandleNV" =
+             HS_vkGetMemoryWin32HandleNV
+        vkInstanceProcSymbol = _VkGetMemoryWin32HandleNV
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetMemoryWin32HandleNV
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_NV_EXTERNAL_MEMORY_WIN32_SPEC_VERSION ::
         (Num a, Eq a) => a

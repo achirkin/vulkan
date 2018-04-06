@@ -54,9 +54,13 @@ withVulkanInstance action =
 
     -- execute createInstance
     (vkResult, vkInstance) <- alloca $ \vkInstPtr -> do
-      vkRes <- vkCreateInstance
-        (unsafePtr iCreateInfo) -- must keep iCreateInfo alive!
-        VK_NULL_HANDLE vkInstPtr
+      -- test dynamic symbol lookup:
+      -- the code below should work exactly as the commented version
+      createInst <- vkGetInstanceProc @VkCreateInstance VK_NULL
+      vkRes <- createInst (unsafePtr iCreateInfo) VK_NULL_HANDLE vkInstPtr
+      -- vkRes <- vkCreateInstance
+      --   (unsafePtr iCreateInfo) -- must keep iCreateInfo alive!
+      --   VK_NULL_HANDLE vkInstPtr
       vkI <- peek vkInstPtr
       return (vkRes, vkI)
 

@@ -20,7 +20,7 @@ import           System.IO.Unsafe                                 (unsafeDupable
 
 -- | > typedef struct VkPresentTimesInfoGOOGLE {
 --   >     VkStructureType sType;
---   >     const void*  pNext;
+--   >     const void*                      pNext;
 --   >     uint32_t                         swapchainCount;
 --   >     const VkPresentTimeGOOGLE*   pTimes;
 --   > } VkPresentTimesInfoGOOGLE;

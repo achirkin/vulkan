@@ -1,9 +1,12 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_display
        (-- * Vulkan extension: @VK_KHR_display@
@@ -39,16 +42,48 @@ module Graphics.Vulkan.Ext.VK_KHR_display
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         module Graphics.Vulkan.Types.Enum.VkSurfaceTransformFlagsKHR,
         -- > #include "vk_platform.h"
+        VkGetPhysicalDeviceDisplayPropertiesKHR,
+        pattern VkGetPhysicalDeviceDisplayPropertiesKHR,
+        HS_vkGetPhysicalDeviceDisplayPropertiesKHR,
+        PFN_vkGetPhysicalDeviceDisplayPropertiesKHR,
+        unwrapVkGetPhysicalDeviceDisplayPropertiesKHR,
         vkGetPhysicalDeviceDisplayPropertiesKHR,
         vkGetPhysicalDeviceDisplayPropertiesKHRSafe,
+        VkGetPhysicalDeviceDisplayPlanePropertiesKHR,
+        pattern VkGetPhysicalDeviceDisplayPlanePropertiesKHR,
+        HS_vkGetPhysicalDeviceDisplayPlanePropertiesKHR,
+        PFN_vkGetPhysicalDeviceDisplayPlanePropertiesKHR,
+        unwrapVkGetPhysicalDeviceDisplayPlanePropertiesKHR,
         vkGetPhysicalDeviceDisplayPlanePropertiesKHR,
         vkGetPhysicalDeviceDisplayPlanePropertiesKHRSafe,
+        VkGetDisplayPlaneSupportedDisplaysKHR,
+        pattern VkGetDisplayPlaneSupportedDisplaysKHR,
+        HS_vkGetDisplayPlaneSupportedDisplaysKHR,
+        PFN_vkGetDisplayPlaneSupportedDisplaysKHR,
+        unwrapVkGetDisplayPlaneSupportedDisplaysKHR,
         vkGetDisplayPlaneSupportedDisplaysKHR,
         vkGetDisplayPlaneSupportedDisplaysKHRSafe,
-        vkGetDisplayModePropertiesKHR, vkGetDisplayModePropertiesKHRSafe,
+        VkGetDisplayModePropertiesKHR,
+        pattern VkGetDisplayModePropertiesKHR,
+        HS_vkGetDisplayModePropertiesKHR,
+        PFN_vkGetDisplayModePropertiesKHR,
+        unwrapVkGetDisplayModePropertiesKHR, vkGetDisplayModePropertiesKHR,
+        vkGetDisplayModePropertiesKHRSafe, VkCreateDisplayModeKHR,
+        pattern VkCreateDisplayModeKHR, HS_vkCreateDisplayModeKHR,
+        PFN_vkCreateDisplayModeKHR, unwrapVkCreateDisplayModeKHR,
         vkCreateDisplayModeKHR, vkCreateDisplayModeKHRSafe,
+        VkGetDisplayPlaneCapabilitiesKHR,
+        pattern VkGetDisplayPlaneCapabilitiesKHR,
+        HS_vkGetDisplayPlaneCapabilitiesKHR,
+        PFN_vkGetDisplayPlaneCapabilitiesKHR,
+        unwrapVkGetDisplayPlaneCapabilitiesKHR,
         vkGetDisplayPlaneCapabilitiesKHR,
         vkGetDisplayPlaneCapabilitiesKHRSafe,
+        VkCreateDisplayPlaneSurfaceKHR,
+        pattern VkCreateDisplayPlaneSurfaceKHR,
+        HS_vkCreateDisplayPlaneSurfaceKHR,
+        PFN_vkCreateDisplayPlaneSurfaceKHR,
+        unwrapVkCreateDisplayPlaneSurfaceKHR,
         vkCreateDisplayPlaneSurfaceKHR, vkCreateDisplayPlaneSurfaceKHRSafe,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
@@ -66,6 +101,7 @@ module Graphics.Vulkan.Ext.VK_KHR_display
        where
 import           GHC.Ptr                                                    (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc                       (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkDisplayPlaneAlphaFlagsKHR
@@ -87,6 +123,28 @@ import           Graphics.Vulkan.Types.Struct.VkDisplayPropertiesKHR
 import           Graphics.Vulkan.Types.Struct.VkDisplaySurfaceCreateInfoKHR
 import           Graphics.Vulkan.Types.Struct.VkExtent2D
 import           Graphics.Vulkan.Types.Struct.VkOffset2D
+
+pattern VkGetPhysicalDeviceDisplayPropertiesKHR :: CString
+
+pattern VkGetPhysicalDeviceDisplayPropertiesKHR <-
+        (is_VkGetPhysicalDeviceDisplayPropertiesKHR -> True)
+  where VkGetPhysicalDeviceDisplayPropertiesKHR
+          = _VkGetPhysicalDeviceDisplayPropertiesKHR
+
+{-# INLINE _VkGetPhysicalDeviceDisplayPropertiesKHR #-}
+
+_VkGetPhysicalDeviceDisplayPropertiesKHR :: CString
+_VkGetPhysicalDeviceDisplayPropertiesKHR
+  = Ptr "vkGetPhysicalDeviceDisplayPropertiesKHR\NUL"#
+
+{-# INLINE is_VkGetPhysicalDeviceDisplayPropertiesKHR #-}
+
+is_VkGetPhysicalDeviceDisplayPropertiesKHR :: CString -> Bool
+is_VkGetPhysicalDeviceDisplayPropertiesKHR
+  = (EQ ==) . cmpCStrings _VkGetPhysicalDeviceDisplayPropertiesKHR
+
+type VkGetPhysicalDeviceDisplayPropertiesKHR =
+     "vkGetPhysicalDeviceDisplayPropertiesKHR"
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
@@ -131,6 +189,68 @@ foreign import ccall safe "vkGetPhysicalDeviceDisplayPropertiesKHR"
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
+--   > VkResult vkGetPhysicalDeviceDisplayPropertiesKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , uint32_t* pPropertyCount
+--   >     , VkDisplayPropertiesKHR* pProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceDisplayPropertiesKHR.html vkGetPhysicalDeviceDisplayPropertiesKHR registry at www.khronos.org>
+type HS_vkGetPhysicalDeviceDisplayPropertiesKHR =
+     VkPhysicalDevice -- ^ physicalDevice
+                      ->
+       Ptr Word32 -- ^ pPropertyCount
+                  -> Ptr VkDisplayPropertiesKHR -- ^ pProperties
+                                                -> IO VkResult
+
+type PFN_vkGetPhysicalDeviceDisplayPropertiesKHR =
+     FunPtr HS_vkGetPhysicalDeviceDisplayPropertiesKHR
+
+foreign import ccall "dynamic"
+               unwrapVkGetPhysicalDeviceDisplayPropertiesKHR ::
+               PFN_vkGetPhysicalDeviceDisplayPropertiesKHR ->
+                 HS_vkGetPhysicalDeviceDisplayPropertiesKHR
+
+instance VulkanInstanceProc
+           "vkGetPhysicalDeviceDisplayPropertiesKHR"
+         where
+        type VkInstanceProcType "vkGetPhysicalDeviceDisplayPropertiesKHR" =
+             HS_vkGetPhysicalDeviceDisplayPropertiesKHR
+        vkInstanceProcSymbol = _VkGetPhysicalDeviceDisplayPropertiesKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc
+          = unwrapVkGetPhysicalDeviceDisplayPropertiesKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetPhysicalDeviceDisplayPlanePropertiesKHR :: CString
+
+pattern VkGetPhysicalDeviceDisplayPlanePropertiesKHR <-
+        (is_VkGetPhysicalDeviceDisplayPlanePropertiesKHR -> True)
+  where VkGetPhysicalDeviceDisplayPlanePropertiesKHR
+          = _VkGetPhysicalDeviceDisplayPlanePropertiesKHR
+
+{-# INLINE _VkGetPhysicalDeviceDisplayPlanePropertiesKHR #-}
+
+_VkGetPhysicalDeviceDisplayPlanePropertiesKHR :: CString
+_VkGetPhysicalDeviceDisplayPlanePropertiesKHR
+  = Ptr "vkGetPhysicalDeviceDisplayPlanePropertiesKHR\NUL"#
+
+{-# INLINE is_VkGetPhysicalDeviceDisplayPlanePropertiesKHR #-}
+
+is_VkGetPhysicalDeviceDisplayPlanePropertiesKHR :: CString -> Bool
+is_VkGetPhysicalDeviceDisplayPlanePropertiesKHR
+  = (EQ ==) .
+      cmpCStrings _VkGetPhysicalDeviceDisplayPlanePropertiesKHR
+
+type VkGetPhysicalDeviceDisplayPlanePropertiesKHR =
+     "vkGetPhysicalDeviceDisplayPlanePropertiesKHR"
+
+-- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
 --   > VkResult vkGetPhysicalDeviceDisplayPlanePropertiesKHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , uint32_t* pPropertyCount
@@ -166,6 +286,69 @@ foreign import ccall safe
                  Ptr Word32 -- ^ pPropertyCount
                             -> Ptr VkDisplayPlanePropertiesKHR -- ^ pProperties
                                                                -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkGetPhysicalDeviceDisplayPlanePropertiesKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , uint32_t* pPropertyCount
+--   >     , VkDisplayPlanePropertiesKHR* pProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceDisplayPlanePropertiesKHR.html vkGetPhysicalDeviceDisplayPlanePropertiesKHR registry at www.khronos.org>
+type HS_vkGetPhysicalDeviceDisplayPlanePropertiesKHR =
+     VkPhysicalDevice -- ^ physicalDevice
+                      ->
+       Ptr Word32 -- ^ pPropertyCount
+                  -> Ptr VkDisplayPlanePropertiesKHR -- ^ pProperties
+                                                     -> IO VkResult
+
+type PFN_vkGetPhysicalDeviceDisplayPlanePropertiesKHR =
+     FunPtr HS_vkGetPhysicalDeviceDisplayPlanePropertiesKHR
+
+foreign import ccall "dynamic"
+               unwrapVkGetPhysicalDeviceDisplayPlanePropertiesKHR ::
+               PFN_vkGetPhysicalDeviceDisplayPlanePropertiesKHR ->
+                 HS_vkGetPhysicalDeviceDisplayPlanePropertiesKHR
+
+instance VulkanInstanceProc
+           "vkGetPhysicalDeviceDisplayPlanePropertiesKHR"
+         where
+        type VkInstanceProcType
+               "vkGetPhysicalDeviceDisplayPlanePropertiesKHR"
+             = HS_vkGetPhysicalDeviceDisplayPlanePropertiesKHR
+        vkInstanceProcSymbol
+          = _VkGetPhysicalDeviceDisplayPlanePropertiesKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc
+          = unwrapVkGetPhysicalDeviceDisplayPlanePropertiesKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetDisplayPlaneSupportedDisplaysKHR :: CString
+
+pattern VkGetDisplayPlaneSupportedDisplaysKHR <-
+        (is_VkGetDisplayPlaneSupportedDisplaysKHR -> True)
+  where VkGetDisplayPlaneSupportedDisplaysKHR
+          = _VkGetDisplayPlaneSupportedDisplaysKHR
+
+{-# INLINE _VkGetDisplayPlaneSupportedDisplaysKHR #-}
+
+_VkGetDisplayPlaneSupportedDisplaysKHR :: CString
+_VkGetDisplayPlaneSupportedDisplaysKHR
+  = Ptr "vkGetDisplayPlaneSupportedDisplaysKHR\NUL"#
+
+{-# INLINE is_VkGetDisplayPlaneSupportedDisplaysKHR #-}
+
+is_VkGetDisplayPlaneSupportedDisplaysKHR :: CString -> Bool
+is_VkGetDisplayPlaneSupportedDisplaysKHR
+  = (EQ ==) . cmpCStrings _VkGetDisplayPlaneSupportedDisplaysKHR
+
+type VkGetDisplayPlaneSupportedDisplaysKHR =
+     "vkGetDisplayPlaneSupportedDisplaysKHR"
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
@@ -213,6 +396,67 @@ foreign import ccall safe "vkGetDisplayPlaneSupportedDisplaysKHR"
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
+--   > VkResult vkGetDisplayPlaneSupportedDisplaysKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , uint32_t planeIndex
+--   >     , uint32_t* pDisplayCount
+--   >     , VkDisplayKHR* pDisplays
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDisplayPlaneSupportedDisplaysKHR.html vkGetDisplayPlaneSupportedDisplaysKHR registry at www.khronos.org>
+type HS_vkGetDisplayPlaneSupportedDisplaysKHR =
+     VkPhysicalDevice -- ^ physicalDevice
+                      ->
+       Word32 -- ^ planeIndex
+              -> Ptr Word32 -- ^ pDisplayCount
+                            -> Ptr VkDisplayKHR -- ^ pDisplays
+                                                -> IO VkResult
+
+type PFN_vkGetDisplayPlaneSupportedDisplaysKHR =
+     FunPtr HS_vkGetDisplayPlaneSupportedDisplaysKHR
+
+foreign import ccall "dynamic"
+               unwrapVkGetDisplayPlaneSupportedDisplaysKHR ::
+               PFN_vkGetDisplayPlaneSupportedDisplaysKHR ->
+                 HS_vkGetDisplayPlaneSupportedDisplaysKHR
+
+instance VulkanInstanceProc "vkGetDisplayPlaneSupportedDisplaysKHR"
+         where
+        type VkInstanceProcType "vkGetDisplayPlaneSupportedDisplaysKHR" =
+             HS_vkGetDisplayPlaneSupportedDisplaysKHR
+        vkInstanceProcSymbol = _VkGetDisplayPlaneSupportedDisplaysKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetDisplayPlaneSupportedDisplaysKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetDisplayModePropertiesKHR :: CString
+
+pattern VkGetDisplayModePropertiesKHR <-
+        (is_VkGetDisplayModePropertiesKHR -> True)
+  where VkGetDisplayModePropertiesKHR
+          = _VkGetDisplayModePropertiesKHR
+
+{-# INLINE _VkGetDisplayModePropertiesKHR #-}
+
+_VkGetDisplayModePropertiesKHR :: CString
+_VkGetDisplayModePropertiesKHR
+  = Ptr "vkGetDisplayModePropertiesKHR\NUL"#
+
+{-# INLINE is_VkGetDisplayModePropertiesKHR #-}
+
+is_VkGetDisplayModePropertiesKHR :: CString -> Bool
+is_VkGetDisplayModePropertiesKHR
+  = (EQ ==) . cmpCStrings _VkGetDisplayModePropertiesKHR
+
+type VkGetDisplayModePropertiesKHR =
+     "vkGetDisplayModePropertiesKHR"
+
+-- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
 --   > VkResult vkGetDisplayModePropertiesKHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkDisplayKHR display
@@ -252,6 +496,64 @@ foreign import ccall safe "vkGetDisplayModePropertiesKHR"
                    Ptr Word32 -- ^ pPropertyCount
                               -> Ptr VkDisplayModePropertiesKHR -- ^ pProperties
                                                                 -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkGetDisplayModePropertiesKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , VkDisplayKHR display
+--   >     , uint32_t* pPropertyCount
+--   >     , VkDisplayModePropertiesKHR* pProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDisplayModePropertiesKHR.html vkGetDisplayModePropertiesKHR registry at www.khronos.org>
+type HS_vkGetDisplayModePropertiesKHR =
+     VkPhysicalDevice -- ^ physicalDevice
+                      ->
+       VkDisplayKHR -- ^ display
+                    ->
+         Ptr Word32 -- ^ pPropertyCount
+                    -> Ptr VkDisplayModePropertiesKHR -- ^ pProperties
+                                                      -> IO VkResult
+
+type PFN_vkGetDisplayModePropertiesKHR =
+     FunPtr HS_vkGetDisplayModePropertiesKHR
+
+foreign import ccall "dynamic" unwrapVkGetDisplayModePropertiesKHR
+               ::
+               PFN_vkGetDisplayModePropertiesKHR ->
+                 HS_vkGetDisplayModePropertiesKHR
+
+instance VulkanInstanceProc "vkGetDisplayModePropertiesKHR" where
+        type VkInstanceProcType "vkGetDisplayModePropertiesKHR" =
+             HS_vkGetDisplayModePropertiesKHR
+        vkInstanceProcSymbol = _VkGetDisplayModePropertiesKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetDisplayModePropertiesKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkCreateDisplayModeKHR :: CString
+
+pattern VkCreateDisplayModeKHR <-
+        (is_VkCreateDisplayModeKHR -> True)
+  where VkCreateDisplayModeKHR = _VkCreateDisplayModeKHR
+
+{-# INLINE _VkCreateDisplayModeKHR #-}
+
+_VkCreateDisplayModeKHR :: CString
+_VkCreateDisplayModeKHR = Ptr "vkCreateDisplayModeKHR\NUL"#
+
+{-# INLINE is_VkCreateDisplayModeKHR #-}
+
+is_VkCreateDisplayModeKHR :: CString -> Bool
+is_VkCreateDisplayModeKHR
+  = (EQ ==) . cmpCStrings _VkCreateDisplayModeKHR
+
+type VkCreateDisplayModeKHR = "vkCreateDisplayModeKHR"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -305,6 +607,67 @@ foreign import ccall safe "vkCreateDisplayModeKHR"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INITIALIZATION_FAILED'.
+--
+--   > VkResult vkCreateDisplayModeKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , VkDisplayKHR display
+--   >     , const VkDisplayModeCreateInfoKHR* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkDisplayModeKHR* pMode
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateDisplayModeKHR.html vkCreateDisplayModeKHR registry at www.khronos.org>
+type HS_vkCreateDisplayModeKHR =
+     VkPhysicalDevice -- ^ physicalDevice
+                      ->
+       VkDisplayKHR -- ^ display
+                    ->
+         Ptr VkDisplayModeCreateInfoKHR -- ^ pCreateInfo
+                                        ->
+           Ptr VkAllocationCallbacks -- ^ pAllocator
+                                     -> Ptr VkDisplayModeKHR -- ^ pMode
+                                                             -> IO VkResult
+
+type PFN_vkCreateDisplayModeKHR = FunPtr HS_vkCreateDisplayModeKHR
+
+foreign import ccall "dynamic" unwrapVkCreateDisplayModeKHR ::
+               PFN_vkCreateDisplayModeKHR -> HS_vkCreateDisplayModeKHR
+
+instance VulkanInstanceProc "vkCreateDisplayModeKHR" where
+        type VkInstanceProcType "vkCreateDisplayModeKHR" =
+             HS_vkCreateDisplayModeKHR
+        vkInstanceProcSymbol = _VkCreateDisplayModeKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCreateDisplayModeKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetDisplayPlaneCapabilitiesKHR :: CString
+
+pattern VkGetDisplayPlaneCapabilitiesKHR <-
+        (is_VkGetDisplayPlaneCapabilitiesKHR -> True)
+  where VkGetDisplayPlaneCapabilitiesKHR
+          = _VkGetDisplayPlaneCapabilitiesKHR
+
+{-# INLINE _VkGetDisplayPlaneCapabilitiesKHR #-}
+
+_VkGetDisplayPlaneCapabilitiesKHR :: CString
+_VkGetDisplayPlaneCapabilitiesKHR
+  = Ptr "vkGetDisplayPlaneCapabilitiesKHR\NUL"#
+
+{-# INLINE is_VkGetDisplayPlaneCapabilitiesKHR #-}
+
+is_VkGetDisplayPlaneCapabilitiesKHR :: CString -> Bool
+is_VkGetDisplayPlaneCapabilitiesKHR
+  = (EQ ==) . cmpCStrings _VkGetDisplayPlaneCapabilitiesKHR
+
+type VkGetDisplayPlaneCapabilitiesKHR =
+     "vkGetDisplayPlaneCapabilitiesKHR"
+
+-- | Success codes: 'VK_SUCCESS'.
+--
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
 --   > VkResult vkGetDisplayPlaneCapabilitiesKHR
@@ -351,6 +714,68 @@ foreign import ccall safe "vkGetDisplayPlaneCapabilitiesKHR"
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
+--   > VkResult vkGetDisplayPlaneCapabilitiesKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , VkDisplayModeKHR mode
+--   >     , uint32_t planeIndex
+--   >     , VkDisplayPlaneCapabilitiesKHR* pCapabilities
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDisplayPlaneCapabilitiesKHR.html vkGetDisplayPlaneCapabilitiesKHR registry at www.khronos.org>
+type HS_vkGetDisplayPlaneCapabilitiesKHR =
+     VkPhysicalDevice -- ^ physicalDevice
+                      ->
+       VkDisplayModeKHR -- ^ mode
+                        ->
+         Word32 -- ^ planeIndex
+                -> Ptr VkDisplayPlaneCapabilitiesKHR -- ^ pCapabilities
+                                                     -> IO VkResult
+
+type PFN_vkGetDisplayPlaneCapabilitiesKHR =
+     FunPtr HS_vkGetDisplayPlaneCapabilitiesKHR
+
+foreign import ccall "dynamic"
+               unwrapVkGetDisplayPlaneCapabilitiesKHR ::
+               PFN_vkGetDisplayPlaneCapabilitiesKHR ->
+                 HS_vkGetDisplayPlaneCapabilitiesKHR
+
+instance VulkanInstanceProc "vkGetDisplayPlaneCapabilitiesKHR"
+         where
+        type VkInstanceProcType "vkGetDisplayPlaneCapabilitiesKHR" =
+             HS_vkGetDisplayPlaneCapabilitiesKHR
+        vkInstanceProcSymbol = _VkGetDisplayPlaneCapabilitiesKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetDisplayPlaneCapabilitiesKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkCreateDisplayPlaneSurfaceKHR :: CString
+
+pattern VkCreateDisplayPlaneSurfaceKHR <-
+        (is_VkCreateDisplayPlaneSurfaceKHR -> True)
+  where VkCreateDisplayPlaneSurfaceKHR
+          = _VkCreateDisplayPlaneSurfaceKHR
+
+{-# INLINE _VkCreateDisplayPlaneSurfaceKHR #-}
+
+_VkCreateDisplayPlaneSurfaceKHR :: CString
+_VkCreateDisplayPlaneSurfaceKHR
+  = Ptr "vkCreateDisplayPlaneSurfaceKHR\NUL"#
+
+{-# INLINE is_VkCreateDisplayPlaneSurfaceKHR #-}
+
+is_VkCreateDisplayPlaneSurfaceKHR :: CString -> Bool
+is_VkCreateDisplayPlaneSurfaceKHR
+  = (EQ ==) . cmpCStrings _VkCreateDisplayPlaneSurfaceKHR
+
+type VkCreateDisplayPlaneSurfaceKHR =
+     "vkCreateDisplayPlaneSurfaceKHR"
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
 --   > VkResult vkCreateDisplayPlaneSurfaceKHR
 --   >     ( VkInstance instance
 --   >     , const VkDisplaySurfaceCreateInfoKHR* pCreateInfo
@@ -390,6 +815,45 @@ foreign import ccall safe "vkCreateDisplayPlaneSurfaceKHR"
                    Ptr VkAllocationCallbacks -- ^ pAllocator
                                              -> Ptr VkSurfaceKHR -- ^ pSurface
                                                                  -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkCreateDisplayPlaneSurfaceKHR
+--   >     ( VkInstance instance
+--   >     , const VkDisplaySurfaceCreateInfoKHR* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkSurfaceKHR* pSurface
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateDisplayPlaneSurfaceKHR.html vkCreateDisplayPlaneSurfaceKHR registry at www.khronos.org>
+type HS_vkCreateDisplayPlaneSurfaceKHR =
+     VkInstance -- ^ instance
+                ->
+       Ptr VkDisplaySurfaceCreateInfoKHR -- ^ pCreateInfo
+                                         ->
+         Ptr VkAllocationCallbacks -- ^ pAllocator
+                                   -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                       -> IO VkResult
+
+type PFN_vkCreateDisplayPlaneSurfaceKHR =
+     FunPtr HS_vkCreateDisplayPlaneSurfaceKHR
+
+foreign import ccall "dynamic" unwrapVkCreateDisplayPlaneSurfaceKHR
+               ::
+               PFN_vkCreateDisplayPlaneSurfaceKHR ->
+                 HS_vkCreateDisplayPlaneSurfaceKHR
+
+instance VulkanInstanceProc "vkCreateDisplayPlaneSurfaceKHR" where
+        type VkInstanceProcType "vkCreateDisplayPlaneSurfaceKHR" =
+             HS_vkCreateDisplayPlaneSurfaceKHR
+        vkInstanceProcSymbol = _VkCreateDisplayPlaneSurfaceKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCreateDisplayPlaneSurfaceKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_KHR_DISPLAY_SPEC_VERSION :: (Num a, Eq a) => a
 

@@ -1,9 +1,12 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_MVK_ios_surface
        (-- * Vulkan extension: @VK_MVK_ios_surface@
@@ -30,8 +33,10 @@ module Graphics.Vulkan.Ext.VK_MVK_ios_surface
         module Graphics.Vulkan.Types.Struct.VkIOSSurfaceCreateInfoMVK,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
-        vkCreateIOSSurfaceMVK, vkCreateIOSSurfaceMVKSafe,
-        module Graphics.Vulkan.Marshal,
+        VkCreateIOSSurfaceMVK, pattern VkCreateIOSSurfaceMVK,
+        HS_vkCreateIOSSurfaceMVK, PFN_vkCreateIOSSurfaceMVK,
+        unwrapVkCreateIOSSurfaceMVK, vkCreateIOSSurfaceMVK,
+        vkCreateIOSSurfaceMVKSafe, module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,
@@ -46,6 +51,7 @@ module Graphics.Vulkan.Ext.VK_MVK_ios_surface
        where
 import           GHC.Ptr                                                (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc                   (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkInternalAllocationType
@@ -56,6 +62,24 @@ import           Graphics.Vulkan.Types.Funcpointers
 import           Graphics.Vulkan.Types.Handles
 import           Graphics.Vulkan.Types.Struct.VkAllocationCallbacks
 import           Graphics.Vulkan.Types.Struct.VkIOSSurfaceCreateInfoMVK
+
+pattern VkCreateIOSSurfaceMVK :: CString
+
+pattern VkCreateIOSSurfaceMVK <- (is_VkCreateIOSSurfaceMVK -> True)
+  where VkCreateIOSSurfaceMVK = _VkCreateIOSSurfaceMVK
+
+{-# INLINE _VkCreateIOSSurfaceMVK #-}
+
+_VkCreateIOSSurfaceMVK :: CString
+_VkCreateIOSSurfaceMVK = Ptr "vkCreateIOSSurfaceMVK\NUL"#
+
+{-# INLINE is_VkCreateIOSSurfaceMVK #-}
+
+is_VkCreateIOSSurfaceMVK :: CString -> Bool
+is_VkCreateIOSSurfaceMVK
+  = (EQ ==) . cmpCStrings _VkCreateIOSSurfaceMVK
+
+type VkCreateIOSSurfaceMVK = "vkCreateIOSSurfaceMVK"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -100,6 +124,42 @@ foreign import ccall safe "vkCreateIOSSurfaceMVK"
                    Ptr VkAllocationCallbacks -- ^ pAllocator
                                              -> Ptr VkSurfaceKHR -- ^ pSurface
                                                                  -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
+--
+--   > VkResult vkCreateIOSSurfaceMVK
+--   >     ( VkInstance instance
+--   >     , const VkIOSSurfaceCreateInfoMVK* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkSurfaceKHR* pSurface
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateIOSSurfaceMVK.html vkCreateIOSSurfaceMVK registry at www.khronos.org>
+type HS_vkCreateIOSSurfaceMVK =
+     VkInstance -- ^ instance
+                ->
+       Ptr VkIOSSurfaceCreateInfoMVK -- ^ pCreateInfo
+                                     ->
+         Ptr VkAllocationCallbacks -- ^ pAllocator
+                                   -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                       -> IO VkResult
+
+type PFN_vkCreateIOSSurfaceMVK = FunPtr HS_vkCreateIOSSurfaceMVK
+
+foreign import ccall "dynamic" unwrapVkCreateIOSSurfaceMVK ::
+               PFN_vkCreateIOSSurfaceMVK -> HS_vkCreateIOSSurfaceMVK
+
+instance VulkanInstanceProc "vkCreateIOSSurfaceMVK" where
+        type VkInstanceProcType "vkCreateIOSSurfaceMVK" =
+             HS_vkCreateIOSSurfaceMVK
+        vkInstanceProcSymbol = _VkCreateIOSSurfaceMVK
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCreateIOSSurfaceMVK
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_MVK_IOS_SURFACE_SPEC_VERSION :: (Num a, Eq a) => a
 

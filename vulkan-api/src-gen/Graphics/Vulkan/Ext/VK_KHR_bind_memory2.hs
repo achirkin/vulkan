@@ -1,10 +1,13 @@
 {-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_bind_memory2
        (-- * Vulkan extension: @VK_KHR_bind_memory2@
@@ -21,7 +24,12 @@ module Graphics.Vulkan.Ext.VK_KHR_bind_memory2
         -- Extension number: @158@
         module Graphics.Vulkan.Types.Struct.VkBindBufferMemoryInfoKHR,
         module Graphics.Vulkan.Types.Struct.VkBindImageMemoryInfoKHR,
-        vkBindBufferMemory2KHR, vkBindBufferMemory2KHRSafe,
+        VkBindBufferMemory2KHR, pattern VkBindBufferMemory2KHR,
+        HS_vkBindBufferMemory2KHR, PFN_vkBindBufferMemory2KHR,
+        unwrapVkBindBufferMemory2KHR, vkBindBufferMemory2KHR,
+        vkBindBufferMemory2KHRSafe, VkBindImageMemory2KHR,
+        pattern VkBindImageMemory2KHR, HS_vkBindImageMemory2KHR,
+        PFN_vkBindImageMemory2KHR, unwrapVkBindImageMemory2KHR,
         vkBindImageMemory2KHR, vkBindImageMemory2KHRSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
@@ -43,6 +51,7 @@ import           Graphics.Vulkan.Core_1_1                               (pattern
                                                                          pattern VK_STRUCTURE_TYPE_BIND_BUFFER_MEMORY_INFO,
                                                                          pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_INFO)
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc                   (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkResult
 import           Graphics.Vulkan.Types.Enum.VkStructureType
@@ -51,6 +60,25 @@ import           Graphics.Vulkan.Types.Struct.VkBindBufferMemoryInfo
 import           Graphics.Vulkan.Types.Struct.VkBindBufferMemoryInfoKHR
 import           Graphics.Vulkan.Types.Struct.VkBindImageMemoryInfo
 import           Graphics.Vulkan.Types.Struct.VkBindImageMemoryInfoKHR
+
+pattern VkBindBufferMemory2KHR :: CString
+
+pattern VkBindBufferMemory2KHR <-
+        (is_VkBindBufferMemory2KHR -> True)
+  where VkBindBufferMemory2KHR = _VkBindBufferMemory2KHR
+
+{-# INLINE _VkBindBufferMemory2KHR #-}
+
+_VkBindBufferMemory2KHR :: CString
+_VkBindBufferMemory2KHR = Ptr "vkBindBufferMemory2KHR\NUL"#
+
+{-# INLINE is_VkBindBufferMemory2KHR #-}
+
+is_VkBindBufferMemory2KHR :: CString -> Bool
+is_VkBindBufferMemory2KHR
+  = (EQ ==) . cmpCStrings _VkBindBufferMemory2KHR
+
+type VkBindBufferMemory2KHR = "vkBindBufferMemory2KHR"
 
 -- | This is an alias for `vkBindBufferMemory2`.
 --
@@ -65,7 +93,7 @@ import           Graphics.Vulkan.Types.Struct.VkBindImageMemoryInfoKHR
 --   >     )
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkBindBufferMemory2KHR.html vkBindBufferMemory2KHR registry at www.khronos.org>
-foreign import ccall unsafe "vkBindBufferMemory2"
+foreign import ccall unsafe "vkBindBufferMemory2KHR"
                vkBindBufferMemory2KHR ::
                VkDevice -- ^ device
                         -> Word32 -- ^ bindInfoCount
@@ -85,12 +113,64 @@ foreign import ccall unsafe "vkBindBufferMemory2"
 --   >     )
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkBindBufferMemory2KHR.html vkBindBufferMemory2KHR registry at www.khronos.org>
-foreign import ccall safe "vkBindBufferMemory2"
+foreign import ccall safe "vkBindBufferMemory2KHR"
                vkBindBufferMemory2KHRSafe ::
                VkDevice -- ^ device
                         -> Word32 -- ^ bindInfoCount
                                   -> Ptr VkBindBufferMemoryInfo -- ^ pBindInfos
                                                                 -> IO VkResult
+
+-- | This is an alias for `vkBindBufferMemory2`.
+--
+--   Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkBindBufferMemory2KHR
+--   >     ( VkDevice device
+--   >     , uint32_t bindInfoCount
+--   >     , const VkBindBufferMemoryInfo* pBindInfos
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkBindBufferMemory2KHR.html vkBindBufferMemory2KHR registry at www.khronos.org>
+type HS_vkBindBufferMemory2KHR =
+     VkDevice -- ^ device
+              -> Word32 -- ^ bindInfoCount
+                        -> Ptr VkBindBufferMemoryInfo -- ^ pBindInfos
+                                                      -> IO VkResult
+
+type PFN_vkBindBufferMemory2KHR = FunPtr HS_vkBindBufferMemory2KHR
+
+foreign import ccall "dynamic" unwrapVkBindBufferMemory2KHR ::
+               PFN_vkBindBufferMemory2KHR -> HS_vkBindBufferMemory2KHR
+
+instance VulkanInstanceProc "vkBindBufferMemory2KHR" where
+        type VkInstanceProcType "vkBindBufferMemory2KHR" =
+             HS_vkBindBufferMemory2KHR
+        vkInstanceProcSymbol = _VkBindBufferMemory2KHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkBindBufferMemory2KHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkBindImageMemory2KHR :: CString
+
+pattern VkBindImageMemory2KHR <- (is_VkBindImageMemory2KHR -> True)
+  where VkBindImageMemory2KHR = _VkBindImageMemory2KHR
+
+{-# INLINE _VkBindImageMemory2KHR #-}
+
+_VkBindImageMemory2KHR :: CString
+_VkBindImageMemory2KHR = Ptr "vkBindImageMemory2KHR\NUL"#
+
+{-# INLINE is_VkBindImageMemory2KHR #-}
+
+is_VkBindImageMemory2KHR :: CString -> Bool
+is_VkBindImageMemory2KHR
+  = (EQ ==) . cmpCStrings _VkBindImageMemory2KHR
+
+type VkBindImageMemory2KHR = "vkBindImageMemory2KHR"
 
 -- | This is an alias for `vkBindImageMemory2`.
 --
@@ -105,7 +185,7 @@ foreign import ccall safe "vkBindBufferMemory2"
 --   >     )
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkBindImageMemory2KHR.html vkBindImageMemory2KHR registry at www.khronos.org>
-foreign import ccall unsafe "vkBindImageMemory2"
+foreign import ccall unsafe "vkBindImageMemory2KHR"
                vkBindImageMemory2KHR ::
                VkDevice -- ^ device
                         -> Word32 -- ^ bindInfoCount
@@ -125,12 +205,46 @@ foreign import ccall unsafe "vkBindImageMemory2"
 --   >     )
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkBindImageMemory2KHR.html vkBindImageMemory2KHR registry at www.khronos.org>
-foreign import ccall safe "vkBindImageMemory2"
+foreign import ccall safe "vkBindImageMemory2KHR"
                vkBindImageMemory2KHRSafe ::
                VkDevice -- ^ device
                         -> Word32 -- ^ bindInfoCount
                                   -> Ptr VkBindImageMemoryInfo -- ^ pBindInfos
                                                                -> IO VkResult
+
+-- | This is an alias for `vkBindImageMemory2`.
+--
+--   Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkBindImageMemory2KHR
+--   >     ( VkDevice device
+--   >     , uint32_t bindInfoCount
+--   >     , const VkBindImageMemoryInfo* pBindInfos
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkBindImageMemory2KHR.html vkBindImageMemory2KHR registry at www.khronos.org>
+type HS_vkBindImageMemory2KHR =
+     VkDevice -- ^ device
+              -> Word32 -- ^ bindInfoCount
+                        -> Ptr VkBindImageMemoryInfo -- ^ pBindInfos
+                                                     -> IO VkResult
+
+type PFN_vkBindImageMemory2KHR = FunPtr HS_vkBindImageMemory2KHR
+
+foreign import ccall "dynamic" unwrapVkBindImageMemory2KHR ::
+               PFN_vkBindImageMemory2KHR -> HS_vkBindImageMemory2KHR
+
+instance VulkanInstanceProc "vkBindImageMemory2KHR" where
+        type VkInstanceProcType "vkBindImageMemory2KHR" =
+             HS_vkBindImageMemory2KHR
+        vkInstanceProcSymbol = _VkBindImageMemory2KHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkBindImageMemory2KHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_KHR_BIND_MEMORY_2_SPEC_VERSION :: (Num a, Eq a) => a
 

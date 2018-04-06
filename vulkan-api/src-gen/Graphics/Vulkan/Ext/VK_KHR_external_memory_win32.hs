@@ -1,10 +1,13 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_external_memory_win32
        (-- * Vulkan extension: @VK_KHR_external_memory_win32@
@@ -35,7 +38,14 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_win32
         module Graphics.Vulkan.Types.Struct.VkMemoryWin32HandlePropertiesKHR,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
-        vkGetMemoryWin32HandleKHR, vkGetMemoryWin32HandleKHRSafe,
+        VkGetMemoryWin32HandleKHR, pattern VkGetMemoryWin32HandleKHR,
+        HS_vkGetMemoryWin32HandleKHR, PFN_vkGetMemoryWin32HandleKHR,
+        unwrapVkGetMemoryWin32HandleKHR, vkGetMemoryWin32HandleKHR,
+        vkGetMemoryWin32HandleKHRSafe, VkGetMemoryWin32HandlePropertiesKHR,
+        pattern VkGetMemoryWin32HandlePropertiesKHR,
+        HS_vkGetMemoryWin32HandlePropertiesKHR,
+        PFN_vkGetMemoryWin32HandlePropertiesKHR,
+        unwrapVkGetMemoryWin32HandlePropertiesKHR,
         vkGetMemoryWin32HandlePropertiesKHR,
         vkGetMemoryWin32HandlePropertiesKHRSafe,
         module Graphics.Vulkan.Marshal,
@@ -52,6 +62,7 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_win32
        where
 import           GHC.Ptr                                                       (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc                          (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlags
 import           Graphics.Vulkan.Types.Enum.VkResult
@@ -63,6 +74,25 @@ import           Graphics.Vulkan.Types.Struct.VkImportMemoryWin32HandleInfoKHR
 import           Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo
 import           Graphics.Vulkan.Types.Struct.VkMemoryGetWin32HandleInfoKHR
 import           Graphics.Vulkan.Types.Struct.VkMemoryWin32HandlePropertiesKHR
+
+pattern VkGetMemoryWin32HandleKHR :: CString
+
+pattern VkGetMemoryWin32HandleKHR <-
+        (is_VkGetMemoryWin32HandleKHR -> True)
+  where VkGetMemoryWin32HandleKHR = _VkGetMemoryWin32HandleKHR
+
+{-# INLINE _VkGetMemoryWin32HandleKHR #-}
+
+_VkGetMemoryWin32HandleKHR :: CString
+_VkGetMemoryWin32HandleKHR = Ptr "vkGetMemoryWin32HandleKHR\NUL"#
+
+{-# INLINE is_VkGetMemoryWin32HandleKHR #-}
+
+is_VkGetMemoryWin32HandleKHR :: CString -> Bool
+is_VkGetMemoryWin32HandleKHR
+  = (EQ ==) . cmpCStrings _VkGetMemoryWin32HandleKHR
+
+type VkGetMemoryWin32HandleKHR = "vkGetMemoryWin32HandleKHR"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -101,6 +131,62 @@ foreign import ccall safe "vkGetMemoryWin32HandleKHR"
                  Ptr VkMemoryGetWin32HandleInfoKHR -- ^ pGetWin32HandleInfo
                                                    -> Ptr HANDLE -- ^ pHandle
                                                                  -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
+--
+--   > VkResult vkGetMemoryWin32HandleKHR
+--   >     ( VkDevice device
+--   >     , const VkMemoryGetWin32HandleInfoKHR* pGetWin32HandleInfo
+--   >     , HANDLE* pHandle
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryWin32HandleKHR.html vkGetMemoryWin32HandleKHR registry at www.khronos.org>
+type HS_vkGetMemoryWin32HandleKHR =
+     VkDevice -- ^ device
+              ->
+       Ptr VkMemoryGetWin32HandleInfoKHR -- ^ pGetWin32HandleInfo
+                                         -> Ptr HANDLE -- ^ pHandle
+                                                       -> IO VkResult
+
+type PFN_vkGetMemoryWin32HandleKHR =
+     FunPtr HS_vkGetMemoryWin32HandleKHR
+
+foreign import ccall "dynamic" unwrapVkGetMemoryWin32HandleKHR ::
+               PFN_vkGetMemoryWin32HandleKHR -> HS_vkGetMemoryWin32HandleKHR
+
+instance VulkanInstanceProc "vkGetMemoryWin32HandleKHR" where
+        type VkInstanceProcType "vkGetMemoryWin32HandleKHR" =
+             HS_vkGetMemoryWin32HandleKHR
+        vkInstanceProcSymbol = _VkGetMemoryWin32HandleKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetMemoryWin32HandleKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetMemoryWin32HandlePropertiesKHR :: CString
+
+pattern VkGetMemoryWin32HandlePropertiesKHR <-
+        (is_VkGetMemoryWin32HandlePropertiesKHR -> True)
+  where VkGetMemoryWin32HandlePropertiesKHR
+          = _VkGetMemoryWin32HandlePropertiesKHR
+
+{-# INLINE _VkGetMemoryWin32HandlePropertiesKHR #-}
+
+_VkGetMemoryWin32HandlePropertiesKHR :: CString
+_VkGetMemoryWin32HandlePropertiesKHR
+  = Ptr "vkGetMemoryWin32HandlePropertiesKHR\NUL"#
+
+{-# INLINE is_VkGetMemoryWin32HandlePropertiesKHR #-}
+
+is_VkGetMemoryWin32HandlePropertiesKHR :: CString -> Bool
+is_VkGetMemoryWin32HandlePropertiesKHR
+  = (EQ ==) . cmpCStrings _VkGetMemoryWin32HandlePropertiesKHR
+
+type VkGetMemoryWin32HandlePropertiesKHR =
+     "vkGetMemoryWin32HandlePropertiesKHR"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -145,6 +231,46 @@ foreign import ccall safe "vkGetMemoryWin32HandlePropertiesKHR"
                    HANDLE -- ^ handle
                           -> Ptr VkMemoryWin32HandlePropertiesKHR -- ^ pMemoryWin32HandleProperties
                                                                   -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
+--
+--   > VkResult vkGetMemoryWin32HandlePropertiesKHR
+--   >     ( VkDevice device
+--   >     , VkExternalMemoryHandleTypeFlagBits handleType
+--   >     , HANDLE handle
+--   >     , VkMemoryWin32HandlePropertiesKHR* pMemoryWin32HandleProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryWin32HandlePropertiesKHR.html vkGetMemoryWin32HandlePropertiesKHR registry at www.khronos.org>
+type HS_vkGetMemoryWin32HandlePropertiesKHR =
+     VkDevice -- ^ device
+              ->
+       VkExternalMemoryHandleTypeFlagBits -- ^ handleType
+                                          ->
+         HANDLE -- ^ handle
+                -> Ptr VkMemoryWin32HandlePropertiesKHR -- ^ pMemoryWin32HandleProperties
+                                                        -> IO VkResult
+
+type PFN_vkGetMemoryWin32HandlePropertiesKHR =
+     FunPtr HS_vkGetMemoryWin32HandlePropertiesKHR
+
+foreign import ccall "dynamic"
+               unwrapVkGetMemoryWin32HandlePropertiesKHR ::
+               PFN_vkGetMemoryWin32HandlePropertiesKHR ->
+                 HS_vkGetMemoryWin32HandlePropertiesKHR
+
+instance VulkanInstanceProc "vkGetMemoryWin32HandlePropertiesKHR"
+         where
+        type VkInstanceProcType "vkGetMemoryWin32HandlePropertiesKHR" =
+             HS_vkGetMemoryWin32HandlePropertiesKHR
+        vkInstanceProcSymbol = _VkGetMemoryWin32HandlePropertiesKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetMemoryWin32HandlePropertiesKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_KHR_EXTERNAL_MEMORY_WIN32_SPEC_VERSION ::
         (Num a, Eq a) => a

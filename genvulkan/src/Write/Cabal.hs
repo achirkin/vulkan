@@ -20,6 +20,7 @@ hardcodedModules :: [Text]
 hardcodedModules =
   [ "Graphics.Vulkan"
   , "Graphics.Vulkan.Marshal"
+  , "Graphics.Vulkan.Marshal.InstanceProc"
   , "Graphics.Vulkan.Marshal.Create"
   , "Graphics.Vulkan.Marshal.Internal"
   , "Graphics.Vulkan.Constants"
@@ -76,7 +77,10 @@ genCabalFile eModules = T.unlines $
                 , ghc-prim >= 0.4 && < 0.6
               default-language:    Haskell2010
               ghc-options:         -Wall
-              extra-libraries:     vulkan
+              if os(windows)
+                extra-libraries:   vulkan-1
+              else
+                extra-libraries:   vulkan
               include-dirs:        include
 
           source-repository head
