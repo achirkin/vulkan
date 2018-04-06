@@ -30,7 +30,7 @@ import           Graphics.Vulkan.Types.Handles (VkInstance)
 --   For example, you can get @vkCreateDebugReportCallbackEXT@ function
 --   as follows:
 --
---   > vkGetInstanceProc @VkCreateDebugReportCallbackEXT
+--   > vkGetInstanceProc @VkCreateDebugReportCallbackEXT vkInstance
 class VulkanInstanceProc (proc :: Symbol) where
   -- | Haskell signature for the vulkan function
   type VkInstanceProcType proc
