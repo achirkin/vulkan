@@ -1,9 +1,12 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_external_fence_fd
        (-- * Vulkan extension: @VK_KHR_external_fence_fd@
@@ -31,8 +34,13 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_fd
         module Graphics.Vulkan.Types.Struct.VkImportFenceFdInfoKHR,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
-        vkImportFenceFdKHR, vkImportFenceFdKHRSafe, vkGetFenceFdKHR,
-        vkGetFenceFdKHRSafe, module Graphics.Vulkan.Types.Enum.VkResult,
+        VkImportFenceFdKHR, pattern VkImportFenceFdKHR,
+        HS_vkImportFenceFdKHR, PFN_vkImportFenceFdKHR,
+        unwrapVkImportFenceFdKHR, vkImportFenceFdKHR,
+        vkImportFenceFdKHRSafe, VkGetFenceFdKHR, pattern VkGetFenceFdKHR,
+        HS_vkGetFenceFdKHR, PFN_vkGetFenceFdKHR, unwrapVkGetFenceFdKHR,
+        vkGetFenceFdKHR, vkGetFenceFdKHRSafe,
+        module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_KHR_EXTERNAL_FENCE_FD_SPEC_VERSION,
         pattern VK_KHR_EXTERNAL_FENCE_FD_SPEC_VERSION,
@@ -43,6 +51,7 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_fd
        where
 import           GHC.Ptr                                                   (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc                      (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkExternalFenceHandleTypeFlags
 import           Graphics.Vulkan.Types.Enum.VkFenceImportFlags
@@ -51,6 +60,23 @@ import           Graphics.Vulkan.Types.Enum.VkStructureType
 import           Graphics.Vulkan.Types.Handles
 import           Graphics.Vulkan.Types.Struct.VkFenceGetFdInfoKHR
 import           Graphics.Vulkan.Types.Struct.VkImportFenceFdInfoKHR
+
+pattern VkImportFenceFdKHR :: CString
+
+pattern VkImportFenceFdKHR <- (is_VkImportFenceFdKHR -> True)
+  where VkImportFenceFdKHR = _VkImportFenceFdKHR
+
+{-# INLINE _VkImportFenceFdKHR #-}
+
+_VkImportFenceFdKHR :: CString
+_VkImportFenceFdKHR = Ptr "vkImportFenceFdKHR\NUL"#
+
+{-# INLINE is_VkImportFenceFdKHR #-}
+
+is_VkImportFenceFdKHR :: CString -> Bool
+is_VkImportFenceFdKHR = (EQ ==) . cmpCStrings _VkImportFenceFdKHR
+
+type VkImportFenceFdKHR = "vkImportFenceFdKHR"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -85,6 +111,53 @@ foreign import ccall safe "vkImportFenceFdKHR"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
+--
+--   > VkResult vkImportFenceFdKHR
+--   >     ( VkDevice device
+--   >     , const VkImportFenceFdInfoKHR* pImportFenceFdInfo
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkImportFenceFdKHR.html vkImportFenceFdKHR registry at www.khronos.org>
+type HS_vkImportFenceFdKHR =
+     VkDevice -- ^ device
+              -> Ptr VkImportFenceFdInfoKHR -- ^ pImportFenceFdInfo
+                                            -> IO VkResult
+
+type PFN_vkImportFenceFdKHR = FunPtr HS_vkImportFenceFdKHR
+
+foreign import ccall "dynamic" unwrapVkImportFenceFdKHR ::
+               PFN_vkImportFenceFdKHR -> HS_vkImportFenceFdKHR
+
+instance VulkanInstanceProc "vkImportFenceFdKHR" where
+        type VkInstanceProcType "vkImportFenceFdKHR" =
+             HS_vkImportFenceFdKHR
+        vkInstanceProcSymbol = _VkImportFenceFdKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkImportFenceFdKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetFenceFdKHR :: CString
+
+pattern VkGetFenceFdKHR <- (is_VkGetFenceFdKHR -> True)
+  where VkGetFenceFdKHR = _VkGetFenceFdKHR
+
+{-# INLINE _VkGetFenceFdKHR #-}
+
+_VkGetFenceFdKHR :: CString
+_VkGetFenceFdKHR = Ptr "vkGetFenceFdKHR\NUL"#
+
+{-# INLINE is_VkGetFenceFdKHR #-}
+
+is_VkGetFenceFdKHR :: CString -> Bool
+is_VkGetFenceFdKHR = (EQ ==) . cmpCStrings _VkGetFenceFdKHR
+
+type VkGetFenceFdKHR = "vkGetFenceFdKHR"
+
+-- | Success codes: 'VK_SUCCESS'.
+--
 --   Error codes: 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
 --
 --   > VkResult vkGetFenceFdKHR
@@ -116,6 +189,37 @@ foreign import ccall safe "vkGetFenceFdKHR" vkGetFenceFdKHRSafe ::
                         -> Ptr VkFenceGetFdInfoKHR -- ^ pGetFdInfo
                                                    -> Ptr CInt -- ^ pFd
                                                                -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
+--
+--   > VkResult vkGetFenceFdKHR
+--   >     ( VkDevice device
+--   >     , const VkFenceGetFdInfoKHR* pGetFdInfo
+--   >     , int* pFd
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetFenceFdKHR.html vkGetFenceFdKHR registry at www.khronos.org>
+type HS_vkGetFenceFdKHR =
+     VkDevice -- ^ device
+              -> Ptr VkFenceGetFdInfoKHR -- ^ pGetFdInfo
+                                         -> Ptr CInt -- ^ pFd
+                                                     -> IO VkResult
+
+type PFN_vkGetFenceFdKHR = FunPtr HS_vkGetFenceFdKHR
+
+foreign import ccall "dynamic" unwrapVkGetFenceFdKHR ::
+               PFN_vkGetFenceFdKHR -> HS_vkGetFenceFdKHR
+
+instance VulkanInstanceProc "vkGetFenceFdKHR" where
+        type VkInstanceProcType "vkGetFenceFdKHR" = HS_vkGetFenceFdKHR
+        vkInstanceProcSymbol = _VkGetFenceFdKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetFenceFdKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_KHR_EXTERNAL_FENCE_FD_SPEC_VERSION :: (Num a, Eq a) => a
 

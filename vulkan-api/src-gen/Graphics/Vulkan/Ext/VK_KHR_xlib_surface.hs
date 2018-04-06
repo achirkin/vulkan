@@ -1,9 +1,12 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_xlib_surface
        (-- * Vulkan extension: @VK_KHR_xlib_surface@
@@ -30,7 +33,15 @@ module Graphics.Vulkan.Ext.VK_KHR_xlib_surface
         module Graphics.Vulkan.Types.Bitmasks,
         module Graphics.Vulkan.Types.Struct.VkXlibSurfaceCreateInfoKHR,
         -- > #include "vk_platform.h"
-        vkCreateXlibSurfaceKHR, vkCreateXlibSurfaceKHRSafe,
+        VkCreateXlibSurfaceKHR, pattern VkCreateXlibSurfaceKHR,
+        HS_vkCreateXlibSurfaceKHR, PFN_vkCreateXlibSurfaceKHR,
+        unwrapVkCreateXlibSurfaceKHR, vkCreateXlibSurfaceKHR,
+        vkCreateXlibSurfaceKHRSafe,
+        VkGetPhysicalDeviceXlibPresentationSupportKHR,
+        pattern VkGetPhysicalDeviceXlibPresentationSupportKHR,
+        HS_vkGetPhysicalDeviceXlibPresentationSupportKHR,
+        PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR,
+        unwrapVkGetPhysicalDeviceXlibPresentationSupportKHR,
         vkGetPhysicalDeviceXlibPresentationSupportKHR,
         vkGetPhysicalDeviceXlibPresentationSupportKHRSafe,
         module Graphics.Vulkan.Marshal,
@@ -49,6 +60,7 @@ module Graphics.Vulkan.Ext.VK_KHR_xlib_surface
        where
 import           GHC.Ptr                                                 (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc                    (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkInternalAllocationType
@@ -60,6 +72,25 @@ import           Graphics.Vulkan.Types.Handles
 import           Graphics.Vulkan.Types.Include
 import           Graphics.Vulkan.Types.Struct.VkAllocationCallbacks
 import           Graphics.Vulkan.Types.Struct.VkXlibSurfaceCreateInfoKHR
+
+pattern VkCreateXlibSurfaceKHR :: CString
+
+pattern VkCreateXlibSurfaceKHR <-
+        (is_VkCreateXlibSurfaceKHR -> True)
+  where VkCreateXlibSurfaceKHR = _VkCreateXlibSurfaceKHR
+
+{-# INLINE _VkCreateXlibSurfaceKHR #-}
+
+_VkCreateXlibSurfaceKHR :: CString
+_VkCreateXlibSurfaceKHR = Ptr "vkCreateXlibSurfaceKHR\NUL"#
+
+{-# INLINE is_VkCreateXlibSurfaceKHR #-}
+
+is_VkCreateXlibSurfaceKHR :: CString -> Bool
+is_VkCreateXlibSurfaceKHR
+  = (EQ ==) . cmpCStrings _VkCreateXlibSurfaceKHR
+
+type VkCreateXlibSurfaceKHR = "vkCreateXlibSurfaceKHR"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -105,6 +136,65 @@ foreign import ccall safe "vkCreateXlibSurfaceKHR"
                                              -> Ptr VkSurfaceKHR -- ^ pSurface
                                                                  -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkCreateXlibSurfaceKHR
+--   >     ( VkInstance instance
+--   >     , const VkXlibSurfaceCreateInfoKHR* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkSurfaceKHR* pSurface
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateXlibSurfaceKHR.html vkCreateXlibSurfaceKHR registry at www.khronos.org>
+type HS_vkCreateXlibSurfaceKHR =
+     VkInstance -- ^ instance
+                ->
+       Ptr VkXlibSurfaceCreateInfoKHR -- ^ pCreateInfo
+                                      ->
+         Ptr VkAllocationCallbacks -- ^ pAllocator
+                                   -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                       -> IO VkResult
+
+type PFN_vkCreateXlibSurfaceKHR = FunPtr HS_vkCreateXlibSurfaceKHR
+
+foreign import ccall "dynamic" unwrapVkCreateXlibSurfaceKHR ::
+               PFN_vkCreateXlibSurfaceKHR -> HS_vkCreateXlibSurfaceKHR
+
+instance VulkanInstanceProc "vkCreateXlibSurfaceKHR" where
+        type VkInstanceProcType "vkCreateXlibSurfaceKHR" =
+             HS_vkCreateXlibSurfaceKHR
+        vkInstanceProcSymbol = _VkCreateXlibSurfaceKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCreateXlibSurfaceKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetPhysicalDeviceXlibPresentationSupportKHR :: CString
+
+pattern VkGetPhysicalDeviceXlibPresentationSupportKHR <-
+        (is_VkGetPhysicalDeviceXlibPresentationSupportKHR -> True)
+  where VkGetPhysicalDeviceXlibPresentationSupportKHR
+          = _VkGetPhysicalDeviceXlibPresentationSupportKHR
+
+{-# INLINE _VkGetPhysicalDeviceXlibPresentationSupportKHR #-}
+
+_VkGetPhysicalDeviceXlibPresentationSupportKHR :: CString
+_VkGetPhysicalDeviceXlibPresentationSupportKHR
+  = Ptr "vkGetPhysicalDeviceXlibPresentationSupportKHR\NUL"#
+
+{-# INLINE is_VkGetPhysicalDeviceXlibPresentationSupportKHR #-}
+
+is_VkGetPhysicalDeviceXlibPresentationSupportKHR :: CString -> Bool
+is_VkGetPhysicalDeviceXlibPresentationSupportKHR
+  = (EQ ==) .
+      cmpCStrings _VkGetPhysicalDeviceXlibPresentationSupportKHR
+
+type VkGetPhysicalDeviceXlibPresentationSupportKHR =
+     "vkGetPhysicalDeviceXlibPresentationSupportKHR"
+
 -- | > VkBool32 vkGetPhysicalDeviceXlibPresentationSupportKHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , uint32_t queueFamilyIndex
@@ -140,6 +230,45 @@ foreign import ccall safe
                         -> Ptr Display -- ^ dpy
                                        -> VisualID -- ^ visualID
                                                    -> IO VkBool32
+
+-- | > VkBool32 vkGetPhysicalDeviceXlibPresentationSupportKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , uint32_t queueFamilyIndex
+--   >     , Display* dpy
+--   >     , VisualID visualID
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceXlibPresentationSupportKHR.html vkGetPhysicalDeviceXlibPresentationSupportKHR registry at www.khronos.org>
+type HS_vkGetPhysicalDeviceXlibPresentationSupportKHR =
+     VkPhysicalDevice -- ^ physicalDevice
+                      ->
+       Word32 -- ^ queueFamilyIndex
+              -> Ptr Display -- ^ dpy
+                             -> VisualID -- ^ visualID
+                                         -> IO VkBool32
+
+type PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR =
+     FunPtr HS_vkGetPhysicalDeviceXlibPresentationSupportKHR
+
+foreign import ccall "dynamic"
+               unwrapVkGetPhysicalDeviceXlibPresentationSupportKHR ::
+               PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR ->
+                 HS_vkGetPhysicalDeviceXlibPresentationSupportKHR
+
+instance VulkanInstanceProc
+           "vkGetPhysicalDeviceXlibPresentationSupportKHR"
+         where
+        type VkInstanceProcType
+               "vkGetPhysicalDeviceXlibPresentationSupportKHR"
+             = HS_vkGetPhysicalDeviceXlibPresentationSupportKHR
+        vkInstanceProcSymbol
+          = _VkGetPhysicalDeviceXlibPresentationSupportKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc
+          = unwrapVkGetPhysicalDeviceXlibPresentationSupportKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_KHR_XLIB_SURFACE_SPEC_VERSION :: (Num a, Eq a) => a
 

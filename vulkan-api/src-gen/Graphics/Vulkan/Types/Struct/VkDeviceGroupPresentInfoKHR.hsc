@@ -20,7 +20,7 @@ import           System.IO.Unsafe                                            (un
 
 -- | > typedef struct VkDeviceGroupPresentInfoKHR {
 --   >     VkStructureType sType;
---   >     const void*  pNext;
+--   >     const void*                      pNext;
 --   >     uint32_t         swapchainCount;
 --   >     const uint32_t* pDeviceMasks;
 --   >     VkDeviceGroupPresentModeFlagBitsKHR mode;

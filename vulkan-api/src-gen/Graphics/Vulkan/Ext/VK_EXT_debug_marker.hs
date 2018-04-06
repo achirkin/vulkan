@@ -1,9 +1,12 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_EXT_debug_marker
        (-- * Vulkan extension: @VK_EXT_debug_marker@
@@ -30,10 +33,24 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_marker
         module Graphics.Vulkan.Types.Enum.VkDebugReportObjectTypeEXT,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
-        vkDebugMarkerSetObjectTagEXT, vkDebugMarkerSetObjectTagEXTSafe,
-        vkDebugMarkerSetObjectNameEXT, vkDebugMarkerSetObjectNameEXTSafe,
+        VkDebugMarkerSetObjectTagEXT, pattern VkDebugMarkerSetObjectTagEXT,
+        HS_vkDebugMarkerSetObjectTagEXT, PFN_vkDebugMarkerSetObjectTagEXT,
+        unwrapVkDebugMarkerSetObjectTagEXT, vkDebugMarkerSetObjectTagEXT,
+        vkDebugMarkerSetObjectTagEXTSafe, VkDebugMarkerSetObjectNameEXT,
+        pattern VkDebugMarkerSetObjectNameEXT,
+        HS_vkDebugMarkerSetObjectNameEXT,
+        PFN_vkDebugMarkerSetObjectNameEXT,
+        unwrapVkDebugMarkerSetObjectNameEXT, vkDebugMarkerSetObjectNameEXT,
+        vkDebugMarkerSetObjectNameEXTSafe, VkCmdDebugMarkerBeginEXT,
+        pattern VkCmdDebugMarkerBeginEXT, HS_vkCmdDebugMarkerBeginEXT,
+        PFN_vkCmdDebugMarkerBeginEXT, unwrapVkCmdDebugMarkerBeginEXT,
         vkCmdDebugMarkerBeginEXT, vkCmdDebugMarkerBeginEXTSafe,
-        vkCmdDebugMarkerEndEXT, vkCmdDebugMarkerEndEXTSafe,
+        VkCmdDebugMarkerEndEXT, pattern VkCmdDebugMarkerEndEXT,
+        HS_vkCmdDebugMarkerEndEXT, PFN_vkCmdDebugMarkerEndEXT,
+        unwrapVkCmdDebugMarkerEndEXT, vkCmdDebugMarkerEndEXT,
+        vkCmdDebugMarkerEndEXTSafe, VkCmdDebugMarkerInsertEXT,
+        pattern VkCmdDebugMarkerInsertEXT, HS_vkCmdDebugMarkerInsertEXT,
+        PFN_vkCmdDebugMarkerInsertEXT, unwrapVkCmdDebugMarkerInsertEXT,
         vkCmdDebugMarkerInsertEXT, vkCmdDebugMarkerInsertEXTSafe,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
@@ -47,6 +64,7 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_marker
        where
 import           GHC.Ptr                                                     (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc                        (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.Enum.VkDebugReportObjectTypeEXT
 import           Graphics.Vulkan.Types.Enum.VkResult
 import           Graphics.Vulkan.Types.Enum.VkStructureType
@@ -54,6 +72,26 @@ import           Graphics.Vulkan.Types.Handles
 import           Graphics.Vulkan.Types.Struct.VkDebugMarkerMarkerInfoEXT
 import           Graphics.Vulkan.Types.Struct.VkDebugMarkerObjectNameInfoEXT
 import           Graphics.Vulkan.Types.Struct.VkDebugMarkerObjectTagInfoEXT
+
+pattern VkDebugMarkerSetObjectTagEXT :: CString
+
+pattern VkDebugMarkerSetObjectTagEXT <-
+        (is_VkDebugMarkerSetObjectTagEXT -> True)
+  where VkDebugMarkerSetObjectTagEXT = _VkDebugMarkerSetObjectTagEXT
+
+{-# INLINE _VkDebugMarkerSetObjectTagEXT #-}
+
+_VkDebugMarkerSetObjectTagEXT :: CString
+_VkDebugMarkerSetObjectTagEXT
+  = Ptr "vkDebugMarkerSetObjectTagEXT\NUL"#
+
+{-# INLINE is_VkDebugMarkerSetObjectTagEXT #-}
+
+is_VkDebugMarkerSetObjectTagEXT :: CString -> Bool
+is_VkDebugMarkerSetObjectTagEXT
+  = (EQ ==) . cmpCStrings _VkDebugMarkerSetObjectTagEXT
+
+type VkDebugMarkerSetObjectTagEXT = "vkDebugMarkerSetObjectTagEXT"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -91,6 +129,60 @@ foreign import ccall safe "vkDebugMarkerSetObjectTagEXT"
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
+--   > VkResult vkDebugMarkerSetObjectTagEXT
+--   >     ( VkDevice device
+--   >     , const VkDebugMarkerObjectTagInfoEXT* pTagInfo
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDebugMarkerSetObjectTagEXT.html vkDebugMarkerSetObjectTagEXT registry at www.khronos.org>
+type HS_vkDebugMarkerSetObjectTagEXT =
+     VkDevice -- ^ device
+              -> Ptr VkDebugMarkerObjectTagInfoEXT -- ^ pTagInfo
+                                                   -> IO VkResult
+
+type PFN_vkDebugMarkerSetObjectTagEXT =
+     FunPtr HS_vkDebugMarkerSetObjectTagEXT
+
+foreign import ccall "dynamic" unwrapVkDebugMarkerSetObjectTagEXT
+               ::
+               PFN_vkDebugMarkerSetObjectTagEXT -> HS_vkDebugMarkerSetObjectTagEXT
+
+instance VulkanInstanceProc "vkDebugMarkerSetObjectTagEXT" where
+        type VkInstanceProcType "vkDebugMarkerSetObjectTagEXT" =
+             HS_vkDebugMarkerSetObjectTagEXT
+        vkInstanceProcSymbol = _VkDebugMarkerSetObjectTagEXT
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkDebugMarkerSetObjectTagEXT
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkDebugMarkerSetObjectNameEXT :: CString
+
+pattern VkDebugMarkerSetObjectNameEXT <-
+        (is_VkDebugMarkerSetObjectNameEXT -> True)
+  where VkDebugMarkerSetObjectNameEXT
+          = _VkDebugMarkerSetObjectNameEXT
+
+{-# INLINE _VkDebugMarkerSetObjectNameEXT #-}
+
+_VkDebugMarkerSetObjectNameEXT :: CString
+_VkDebugMarkerSetObjectNameEXT
+  = Ptr "vkDebugMarkerSetObjectNameEXT\NUL"#
+
+{-# INLINE is_VkDebugMarkerSetObjectNameEXT #-}
+
+is_VkDebugMarkerSetObjectNameEXT :: CString -> Bool
+is_VkDebugMarkerSetObjectNameEXT
+  = (EQ ==) . cmpCStrings _VkDebugMarkerSetObjectNameEXT
+
+type VkDebugMarkerSetObjectNameEXT =
+     "vkDebugMarkerSetObjectNameEXT"
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
 --   > VkResult vkDebugMarkerSetObjectNameEXT
 --   >     ( VkDevice device
 --   >     , const VkDebugMarkerObjectNameInfoEXT* pNameInfo
@@ -118,6 +210,58 @@ foreign import ccall safe "vkDebugMarkerSetObjectNameEXT"
                VkDevice -- ^ device
                         -> Ptr VkDebugMarkerObjectNameInfoEXT -- ^ pNameInfo
                                                               -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkDebugMarkerSetObjectNameEXT
+--   >     ( VkDevice device
+--   >     , const VkDebugMarkerObjectNameInfoEXT* pNameInfo
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDebugMarkerSetObjectNameEXT.html vkDebugMarkerSetObjectNameEXT registry at www.khronos.org>
+type HS_vkDebugMarkerSetObjectNameEXT =
+     VkDevice -- ^ device
+              -> Ptr VkDebugMarkerObjectNameInfoEXT -- ^ pNameInfo
+                                                    -> IO VkResult
+
+type PFN_vkDebugMarkerSetObjectNameEXT =
+     FunPtr HS_vkDebugMarkerSetObjectNameEXT
+
+foreign import ccall "dynamic" unwrapVkDebugMarkerSetObjectNameEXT
+               ::
+               PFN_vkDebugMarkerSetObjectNameEXT ->
+                 HS_vkDebugMarkerSetObjectNameEXT
+
+instance VulkanInstanceProc "vkDebugMarkerSetObjectNameEXT" where
+        type VkInstanceProcType "vkDebugMarkerSetObjectNameEXT" =
+             HS_vkDebugMarkerSetObjectNameEXT
+        vkInstanceProcSymbol = _VkDebugMarkerSetObjectNameEXT
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkDebugMarkerSetObjectNameEXT
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkCmdDebugMarkerBeginEXT :: CString
+
+pattern VkCmdDebugMarkerBeginEXT <-
+        (is_VkCmdDebugMarkerBeginEXT -> True)
+  where VkCmdDebugMarkerBeginEXT = _VkCmdDebugMarkerBeginEXT
+
+{-# INLINE _VkCmdDebugMarkerBeginEXT #-}
+
+_VkCmdDebugMarkerBeginEXT :: CString
+_VkCmdDebugMarkerBeginEXT = Ptr "vkCmdDebugMarkerBeginEXT\NUL"#
+
+{-# INLINE is_VkCmdDebugMarkerBeginEXT #-}
+
+is_VkCmdDebugMarkerBeginEXT :: CString -> Bool
+is_VkCmdDebugMarkerBeginEXT
+  = (EQ ==) . cmpCStrings _VkCmdDebugMarkerBeginEXT
+
+type VkCmdDebugMarkerBeginEXT = "vkCmdDebugMarkerBeginEXT"
 
 -- | queues: 'graphics', 'compute'.
 --
@@ -155,6 +299,56 @@ foreign import ccall safe "vkCmdDebugMarkerBeginEXT"
 --
 --   renderpass: @both@
 --
+--   > () vkCmdDebugMarkerBeginEXT
+--   >     ( VkCommandBuffer commandBuffer
+--   >     , const VkDebugMarkerMarkerInfoEXT* pMarkerInfo
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDebugMarkerBeginEXT.html vkCmdDebugMarkerBeginEXT registry at www.khronos.org>
+type HS_vkCmdDebugMarkerBeginEXT =
+     VkCommandBuffer -- ^ commandBuffer
+                     -> Ptr VkDebugMarkerMarkerInfoEXT -- ^ pMarkerInfo
+                                                       -> IO ()
+
+type PFN_vkCmdDebugMarkerBeginEXT =
+     FunPtr HS_vkCmdDebugMarkerBeginEXT
+
+foreign import ccall "dynamic" unwrapVkCmdDebugMarkerBeginEXT ::
+               PFN_vkCmdDebugMarkerBeginEXT -> HS_vkCmdDebugMarkerBeginEXT
+
+instance VulkanInstanceProc "vkCmdDebugMarkerBeginEXT" where
+        type VkInstanceProcType "vkCmdDebugMarkerBeginEXT" =
+             HS_vkCmdDebugMarkerBeginEXT
+        vkInstanceProcSymbol = _VkCmdDebugMarkerBeginEXT
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCmdDebugMarkerBeginEXT
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkCmdDebugMarkerEndEXT :: CString
+
+pattern VkCmdDebugMarkerEndEXT <-
+        (is_VkCmdDebugMarkerEndEXT -> True)
+  where VkCmdDebugMarkerEndEXT = _VkCmdDebugMarkerEndEXT
+
+{-# INLINE _VkCmdDebugMarkerEndEXT #-}
+
+_VkCmdDebugMarkerEndEXT :: CString
+_VkCmdDebugMarkerEndEXT = Ptr "vkCmdDebugMarkerEndEXT\NUL"#
+
+{-# INLINE is_VkCmdDebugMarkerEndEXT #-}
+
+is_VkCmdDebugMarkerEndEXT :: CString -> Bool
+is_VkCmdDebugMarkerEndEXT
+  = (EQ ==) . cmpCStrings _VkCmdDebugMarkerEndEXT
+
+type VkCmdDebugMarkerEndEXT = "vkCmdDebugMarkerEndEXT"
+
+-- | queues: 'graphics', 'compute'.
+--
+--   renderpass: @both@
+--
 --   > () vkCmdDebugMarkerEndEXT
 --   >     ( VkCommandBuffer commandBuffer
 --   >     )
@@ -176,6 +370,52 @@ foreign import ccall unsafe "vkCmdDebugMarkerEndEXT"
 foreign import ccall safe "vkCmdDebugMarkerEndEXT"
                vkCmdDebugMarkerEndEXTSafe :: VkCommandBuffer -- ^ commandBuffer
                                                              -> IO ()
+
+-- | queues: 'graphics', 'compute'.
+--
+--   renderpass: @both@
+--
+--   > () vkCmdDebugMarkerEndEXT
+--   >     ( VkCommandBuffer commandBuffer
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDebugMarkerEndEXT.html vkCmdDebugMarkerEndEXT registry at www.khronos.org>
+type HS_vkCmdDebugMarkerEndEXT = VkCommandBuffer -- ^ commandBuffer
+                                                 -> IO ()
+
+type PFN_vkCmdDebugMarkerEndEXT = FunPtr HS_vkCmdDebugMarkerEndEXT
+
+foreign import ccall "dynamic" unwrapVkCmdDebugMarkerEndEXT ::
+               PFN_vkCmdDebugMarkerEndEXT -> HS_vkCmdDebugMarkerEndEXT
+
+instance VulkanInstanceProc "vkCmdDebugMarkerEndEXT" where
+        type VkInstanceProcType "vkCmdDebugMarkerEndEXT" =
+             HS_vkCmdDebugMarkerEndEXT
+        vkInstanceProcSymbol = _VkCmdDebugMarkerEndEXT
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCmdDebugMarkerEndEXT
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkCmdDebugMarkerInsertEXT :: CString
+
+pattern VkCmdDebugMarkerInsertEXT <-
+        (is_VkCmdDebugMarkerInsertEXT -> True)
+  where VkCmdDebugMarkerInsertEXT = _VkCmdDebugMarkerInsertEXT
+
+{-# INLINE _VkCmdDebugMarkerInsertEXT #-}
+
+_VkCmdDebugMarkerInsertEXT :: CString
+_VkCmdDebugMarkerInsertEXT = Ptr "vkCmdDebugMarkerInsertEXT\NUL"#
+
+{-# INLINE is_VkCmdDebugMarkerInsertEXT #-}
+
+is_VkCmdDebugMarkerInsertEXT :: CString -> Bool
+is_VkCmdDebugMarkerInsertEXT
+  = (EQ ==) . cmpCStrings _VkCmdDebugMarkerInsertEXT
+
+type VkCmdDebugMarkerInsertEXT = "vkCmdDebugMarkerInsertEXT"
 
 -- | queues: 'graphics', 'compute'.
 --
@@ -208,6 +448,37 @@ foreign import ccall safe "vkCmdDebugMarkerInsertEXT"
                VkCommandBuffer -- ^ commandBuffer
                                -> Ptr VkDebugMarkerMarkerInfoEXT -- ^ pMarkerInfo
                                                                  -> IO ()
+
+-- | queues: 'graphics', 'compute'.
+--
+--   renderpass: @both@
+--
+--   > () vkCmdDebugMarkerInsertEXT
+--   >     ( VkCommandBuffer commandBuffer
+--   >     , const VkDebugMarkerMarkerInfoEXT* pMarkerInfo
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDebugMarkerInsertEXT.html vkCmdDebugMarkerInsertEXT registry at www.khronos.org>
+type HS_vkCmdDebugMarkerInsertEXT =
+     VkCommandBuffer -- ^ commandBuffer
+                     -> Ptr VkDebugMarkerMarkerInfoEXT -- ^ pMarkerInfo
+                                                       -> IO ()
+
+type PFN_vkCmdDebugMarkerInsertEXT =
+     FunPtr HS_vkCmdDebugMarkerInsertEXT
+
+foreign import ccall "dynamic" unwrapVkCmdDebugMarkerInsertEXT ::
+               PFN_vkCmdDebugMarkerInsertEXT -> HS_vkCmdDebugMarkerInsertEXT
+
+instance VulkanInstanceProc "vkCmdDebugMarkerInsertEXT" where
+        type VkInstanceProcType "vkCmdDebugMarkerInsertEXT" =
+             HS_vkCmdDebugMarkerInsertEXT
+        vkInstanceProcSymbol = _VkCmdDebugMarkerInsertEXT
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCmdDebugMarkerInsertEXT
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_EXT_DEBUG_MARKER_SPEC_VERSION :: (Num a, Eq a) => a
 

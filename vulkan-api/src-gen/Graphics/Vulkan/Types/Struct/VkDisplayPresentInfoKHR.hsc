@@ -21,7 +21,7 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 
 -- | > typedef struct VkDisplayPresentInfoKHR {
 --   >     VkStructureType sType;
---   >     const void*  pNext;
+--   >     const void*                      pNext;
 --   >     VkRect2D                         srcRect;
 --   >     VkRect2D                         dstRect;
 --   >     VkBool32                         persistent;

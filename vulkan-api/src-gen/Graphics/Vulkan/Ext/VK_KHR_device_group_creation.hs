@@ -1,10 +1,13 @@
 {-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_device_group_creation
        (-- * Vulkan extension: @VK_KHR_device_group_creation@
@@ -21,6 +24,11 @@ module Graphics.Vulkan.Ext.VK_KHR_device_group_creation
         -- Extension number: @71@
         module Graphics.Vulkan.Types.Struct.VkDeviceGroupDeviceCreateInfoKHR,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceGroupPropertiesKHR,
+        VkEnumeratePhysicalDeviceGroupsKHR,
+        pattern VkEnumeratePhysicalDeviceGroupsKHR,
+        HS_vkEnumeratePhysicalDeviceGroupsKHR,
+        PFN_vkEnumeratePhysicalDeviceGroupsKHR,
+        unwrapVkEnumeratePhysicalDeviceGroupsKHR,
         vkEnumeratePhysicalDeviceGroupsKHR,
         vkEnumeratePhysicalDeviceGroupsKHRSafe,
         module Graphics.Vulkan.Marshal,
@@ -44,6 +52,7 @@ import           Graphics.Vulkan.Core_1_1                                       
                                                                                   pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_DEVICE_CREATE_INFO,
                                                                                   pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_GROUP_PROPERTIES)
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc                            (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkResult
 import           Graphics.Vulkan.Types.Enum.VkStructureType
@@ -51,6 +60,28 @@ import           Graphics.Vulkan.Types.Handles
 import           Graphics.Vulkan.Types.Struct.VkDeviceGroupDeviceCreateInfoKHR
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceGroupProperties
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceGroupPropertiesKHR
+
+pattern VkEnumeratePhysicalDeviceGroupsKHR :: CString
+
+pattern VkEnumeratePhysicalDeviceGroupsKHR <-
+        (is_VkEnumeratePhysicalDeviceGroupsKHR -> True)
+  where VkEnumeratePhysicalDeviceGroupsKHR
+          = _VkEnumeratePhysicalDeviceGroupsKHR
+
+{-# INLINE _VkEnumeratePhysicalDeviceGroupsKHR #-}
+
+_VkEnumeratePhysicalDeviceGroupsKHR :: CString
+_VkEnumeratePhysicalDeviceGroupsKHR
+  = Ptr "vkEnumeratePhysicalDeviceGroupsKHR\NUL"#
+
+{-# INLINE is_VkEnumeratePhysicalDeviceGroupsKHR #-}
+
+is_VkEnumeratePhysicalDeviceGroupsKHR :: CString -> Bool
+is_VkEnumeratePhysicalDeviceGroupsKHR
+  = (EQ ==) . cmpCStrings _VkEnumeratePhysicalDeviceGroupsKHR
+
+type VkEnumeratePhysicalDeviceGroupsKHR =
+     "vkEnumeratePhysicalDeviceGroupsKHR"
 
 -- | This is an alias for `vkEnumeratePhysicalDeviceGroups`.
 --
@@ -65,7 +96,7 @@ import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceGroupPropertiesKHR
 --   >     )
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumeratePhysicalDeviceGroupsKHR.html vkEnumeratePhysicalDeviceGroupsKHR registry at www.khronos.org>
-foreign import ccall unsafe "vkEnumeratePhysicalDeviceGroups"
+foreign import ccall unsafe "vkEnumeratePhysicalDeviceGroupsKHR"
                vkEnumeratePhysicalDeviceGroupsKHR ::
                VkInstance -- ^ instance
                           ->
@@ -86,13 +117,52 @@ foreign import ccall unsafe "vkEnumeratePhysicalDeviceGroups"
 --   >     )
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumeratePhysicalDeviceGroupsKHR.html vkEnumeratePhysicalDeviceGroupsKHR registry at www.khronos.org>
-foreign import ccall safe "vkEnumeratePhysicalDeviceGroups"
+foreign import ccall safe "vkEnumeratePhysicalDeviceGroupsKHR"
                vkEnumeratePhysicalDeviceGroupsKHRSafe ::
                VkInstance -- ^ instance
                           ->
                  Ptr Word32 -- ^ pPhysicalDeviceGroupCount
                             -> Ptr VkPhysicalDeviceGroupProperties -- ^ pPhysicalDeviceGroupProperties
                                                                    -> IO VkResult
+
+-- | This is an alias for `vkEnumeratePhysicalDeviceGroups`.
+--
+--   Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INITIALIZATION_FAILED'.
+--
+--   > VkResult vkEnumeratePhysicalDeviceGroupsKHR
+--   >     ( VkInstance instance
+--   >     , uint32_t* pPhysicalDeviceGroupCount
+--   >     , VkPhysicalDeviceGroupProperties* pPhysicalDeviceGroupProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumeratePhysicalDeviceGroupsKHR.html vkEnumeratePhysicalDeviceGroupsKHR registry at www.khronos.org>
+type HS_vkEnumeratePhysicalDeviceGroupsKHR =
+     VkInstance -- ^ instance
+                ->
+       Ptr Word32 -- ^ pPhysicalDeviceGroupCount
+                  -> Ptr VkPhysicalDeviceGroupProperties -- ^ pPhysicalDeviceGroupProperties
+                                                         -> IO VkResult
+
+type PFN_vkEnumeratePhysicalDeviceGroupsKHR =
+     FunPtr HS_vkEnumeratePhysicalDeviceGroupsKHR
+
+foreign import ccall "dynamic"
+               unwrapVkEnumeratePhysicalDeviceGroupsKHR ::
+               PFN_vkEnumeratePhysicalDeviceGroupsKHR ->
+                 HS_vkEnumeratePhysicalDeviceGroupsKHR
+
+instance VulkanInstanceProc "vkEnumeratePhysicalDeviceGroupsKHR"
+         where
+        type VkInstanceProcType "vkEnumeratePhysicalDeviceGroupsKHR" =
+             HS_vkEnumeratePhysicalDeviceGroupsKHR
+        vkInstanceProcSymbol = _VkEnumeratePhysicalDeviceGroupsKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkEnumeratePhysicalDeviceGroupsKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_KHR_DEVICE_GROUP_CREATION_SPEC_VERSION ::
         (Num a, Eq a) => a

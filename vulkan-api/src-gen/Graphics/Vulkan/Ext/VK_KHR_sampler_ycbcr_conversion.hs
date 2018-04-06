@@ -1,10 +1,13 @@
 {-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_sampler_ycbcr_conversion
        (-- * Vulkan extension: @VK_KHR_sampler_ycbcr_conversion@
@@ -33,8 +36,18 @@ module Graphics.Vulkan.Ext.VK_KHR_sampler_ycbcr_conversion
         module Graphics.Vulkan.Types.Struct.VkSamplerYcbcrConversionInfoKHR,
         module Graphics.Vulkan.Types.Enum.VkSamplerYcbcrModelConversionKHR,
         module Graphics.Vulkan.Types.Enum.VkSamplerYcbcrRangeKHR,
+        VkCreateSamplerYcbcrConversionKHR,
+        pattern VkCreateSamplerYcbcrConversionKHR,
+        HS_vkCreateSamplerYcbcrConversionKHR,
+        PFN_vkCreateSamplerYcbcrConversionKHR,
+        unwrapVkCreateSamplerYcbcrConversionKHR,
         vkCreateSamplerYcbcrConversionKHR,
         vkCreateSamplerYcbcrConversionKHRSafe,
+        VkDestroySamplerYcbcrConversionKHR,
+        pattern VkDestroySamplerYcbcrConversionKHR,
+        HS_vkDestroySamplerYcbcrConversionKHR,
+        PFN_vkDestroySamplerYcbcrConversionKHR,
+        unwrapVkDestroySamplerYcbcrConversionKHR,
         vkDestroySamplerYcbcrConversionKHR,
         vkDestroySamplerYcbcrConversionKHRSafe,
         module Graphics.Vulkan.Marshal,
@@ -181,6 +194,8 @@ import           Graphics.Vulkan.Core_1_1
 import           Graphics.Vulkan.Ext.VK_EXT_debug_report
                                                                                                  (pattern VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION_EXT)
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc
+                                                                                                 (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkChromaLocation
 import           Graphics.Vulkan.Types.Enum.VkChromaLocationKHR
@@ -207,6 +222,28 @@ import           Graphics.Vulkan.Types.Struct.VkSamplerYcbcrConversionCreateInfo
 import           Graphics.Vulkan.Types.Struct.VkSamplerYcbcrConversionImageFormatPropertiesKHR
 import           Graphics.Vulkan.Types.Struct.VkSamplerYcbcrConversionInfoKHR
 
+pattern VkCreateSamplerYcbcrConversionKHR :: CString
+
+pattern VkCreateSamplerYcbcrConversionKHR <-
+        (is_VkCreateSamplerYcbcrConversionKHR -> True)
+  where VkCreateSamplerYcbcrConversionKHR
+          = _VkCreateSamplerYcbcrConversionKHR
+
+{-# INLINE _VkCreateSamplerYcbcrConversionKHR #-}
+
+_VkCreateSamplerYcbcrConversionKHR :: CString
+_VkCreateSamplerYcbcrConversionKHR
+  = Ptr "vkCreateSamplerYcbcrConversionKHR\NUL"#
+
+{-# INLINE is_VkCreateSamplerYcbcrConversionKHR #-}
+
+is_VkCreateSamplerYcbcrConversionKHR :: CString -> Bool
+is_VkCreateSamplerYcbcrConversionKHR
+  = (EQ ==) . cmpCStrings _VkCreateSamplerYcbcrConversionKHR
+
+type VkCreateSamplerYcbcrConversionKHR =
+     "vkCreateSamplerYcbcrConversionKHR"
+
 -- | This is an alias for `vkCreateSamplerYcbcrConversion`.
 --
 --   Success codes: 'VK_SUCCESS'.
@@ -221,7 +258,7 @@ import           Graphics.Vulkan.Types.Struct.VkSamplerYcbcrConversionInfoKHR
 --   >     )
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateSamplerYcbcrConversionKHR.html vkCreateSamplerYcbcrConversionKHR registry at www.khronos.org>
-foreign import ccall unsafe "vkCreateSamplerYcbcrConversion"
+foreign import ccall unsafe "vkCreateSamplerYcbcrConversionKHR"
                vkCreateSamplerYcbcrConversionKHR ::
                VkDevice -- ^ device
                         ->
@@ -246,7 +283,7 @@ foreign import ccall unsafe "vkCreateSamplerYcbcrConversion"
 --   >     )
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateSamplerYcbcrConversionKHR.html vkCreateSamplerYcbcrConversionKHR registry at www.khronos.org>
-foreign import ccall safe "vkCreateSamplerYcbcrConversion"
+foreign import ccall safe "vkCreateSamplerYcbcrConversionKHR"
                vkCreateSamplerYcbcrConversionKHRSafe ::
                VkDevice -- ^ device
                         ->
@@ -257,6 +294,71 @@ foreign import ccall safe "vkCreateSamplerYcbcrConversion"
                      Ptr VkSamplerYcbcrConversion -- ^ pYcbcrConversion
                                                   -> IO VkResult
 
+-- | This is an alias for `vkCreateSamplerYcbcrConversion`.
+--
+--   Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkCreateSamplerYcbcrConversionKHR
+--   >     ( VkDevice device
+--   >     , const VkSamplerYcbcrConversionCreateInfo* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkSamplerYcbcrConversion* pYcbcrConversion
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateSamplerYcbcrConversionKHR.html vkCreateSamplerYcbcrConversionKHR registry at www.khronos.org>
+type HS_vkCreateSamplerYcbcrConversionKHR =
+     VkDevice -- ^ device
+              ->
+       Ptr VkSamplerYcbcrConversionCreateInfo -- ^ pCreateInfo
+                                              ->
+         Ptr VkAllocationCallbacks -- ^ pAllocator
+                                   ->
+           Ptr VkSamplerYcbcrConversion -- ^ pYcbcrConversion
+                                        -> IO VkResult
+
+type PFN_vkCreateSamplerYcbcrConversionKHR =
+     FunPtr HS_vkCreateSamplerYcbcrConversionKHR
+
+foreign import ccall "dynamic"
+               unwrapVkCreateSamplerYcbcrConversionKHR ::
+               PFN_vkCreateSamplerYcbcrConversionKHR ->
+                 HS_vkCreateSamplerYcbcrConversionKHR
+
+instance VulkanInstanceProc "vkCreateSamplerYcbcrConversionKHR"
+         where
+        type VkInstanceProcType "vkCreateSamplerYcbcrConversionKHR" =
+             HS_vkCreateSamplerYcbcrConversionKHR
+        vkInstanceProcSymbol = _VkCreateSamplerYcbcrConversionKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCreateSamplerYcbcrConversionKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkDestroySamplerYcbcrConversionKHR :: CString
+
+pattern VkDestroySamplerYcbcrConversionKHR <-
+        (is_VkDestroySamplerYcbcrConversionKHR -> True)
+  where VkDestroySamplerYcbcrConversionKHR
+          = _VkDestroySamplerYcbcrConversionKHR
+
+{-# INLINE _VkDestroySamplerYcbcrConversionKHR #-}
+
+_VkDestroySamplerYcbcrConversionKHR :: CString
+_VkDestroySamplerYcbcrConversionKHR
+  = Ptr "vkDestroySamplerYcbcrConversionKHR\NUL"#
+
+{-# INLINE is_VkDestroySamplerYcbcrConversionKHR #-}
+
+is_VkDestroySamplerYcbcrConversionKHR :: CString -> Bool
+is_VkDestroySamplerYcbcrConversionKHR
+  = (EQ ==) . cmpCStrings _VkDestroySamplerYcbcrConversionKHR
+
+type VkDestroySamplerYcbcrConversionKHR =
+     "vkDestroySamplerYcbcrConversionKHR"
+
 -- | This is an alias for `vkDestroySamplerYcbcrConversion`.
 --
 --   > () vkDestroySamplerYcbcrConversionKHR
@@ -266,7 +368,7 @@ foreign import ccall safe "vkCreateSamplerYcbcrConversion"
 --   >     )
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroySamplerYcbcrConversionKHR.html vkDestroySamplerYcbcrConversionKHR registry at www.khronos.org>
-foreign import ccall unsafe "vkDestroySamplerYcbcrConversion"
+foreign import ccall unsafe "vkDestroySamplerYcbcrConversionKHR"
                vkDestroySamplerYcbcrConversionKHR ::
                VkDevice -- ^ device
                         ->
@@ -283,13 +385,48 @@ foreign import ccall unsafe "vkDestroySamplerYcbcrConversion"
 --   >     )
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroySamplerYcbcrConversionKHR.html vkDestroySamplerYcbcrConversionKHR registry at www.khronos.org>
-foreign import ccall safe "vkDestroySamplerYcbcrConversion"
+foreign import ccall safe "vkDestroySamplerYcbcrConversionKHR"
                vkDestroySamplerYcbcrConversionKHRSafe ::
                VkDevice -- ^ device
                         ->
                  VkSamplerYcbcrConversion -- ^ ycbcrConversion
                                           -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                        -> IO ()
+
+-- | This is an alias for `vkDestroySamplerYcbcrConversion`.
+--
+--   > () vkDestroySamplerYcbcrConversionKHR
+--   >     ( VkDevice device
+--   >     , VkSamplerYcbcrConversion ycbcrConversion
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroySamplerYcbcrConversionKHR.html vkDestroySamplerYcbcrConversionKHR registry at www.khronos.org>
+type HS_vkDestroySamplerYcbcrConversionKHR =
+     VkDevice -- ^ device
+              ->
+       VkSamplerYcbcrConversion -- ^ ycbcrConversion
+                                -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                             -> IO ()
+
+type PFN_vkDestroySamplerYcbcrConversionKHR =
+     FunPtr HS_vkDestroySamplerYcbcrConversionKHR
+
+foreign import ccall "dynamic"
+               unwrapVkDestroySamplerYcbcrConversionKHR ::
+               PFN_vkDestroySamplerYcbcrConversionKHR ->
+                 HS_vkDestroySamplerYcbcrConversionKHR
+
+instance VulkanInstanceProc "vkDestroySamplerYcbcrConversionKHR"
+         where
+        type VkInstanceProcType "vkDestroySamplerYcbcrConversionKHR" =
+             HS_vkDestroySamplerYcbcrConversionKHR
+        vkInstanceProcSymbol = _VkDestroySamplerYcbcrConversionKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkDestroySamplerYcbcrConversionKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_KHR_SAMPLER_YCBCR_CONVERSION_SPEC_VERSION ::
         (Num a, Eq a) => a

@@ -1,9 +1,12 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_NV_clip_space_w_scaling
        (-- * Vulkan extension: @VK_NV_clip_space_w_scaling@
@@ -29,7 +32,10 @@ module Graphics.Vulkan.Ext.VK_NV_clip_space_w_scaling
         module Graphics.Vulkan.Types.Struct.VkViewport,
         module Graphics.Vulkan.Types.Struct.VkViewportWScalingNV,
         -- > #include "vk_platform.h"
-        vkCmdSetViewportWScalingNV, vkCmdSetViewportWScalingNVSafe,
+        VkCmdSetViewportWScalingNV, pattern VkCmdSetViewportWScalingNV,
+        HS_vkCmdSetViewportWScalingNV, PFN_vkCmdSetViewportWScalingNV,
+        unwrapVkCmdSetViewportWScalingNV, vkCmdSetViewportWScalingNV,
+        vkCmdSetViewportWScalingNVSafe,
         module Graphics.Vulkan.Types.Handles,
         VK_NV_CLIP_SPACE_W_SCALING_SPEC_VERSION,
         pattern VK_NV_CLIP_SPACE_W_SCALING_SPEC_VERSION,
@@ -41,6 +47,8 @@ module Graphics.Vulkan.Ext.VK_NV_clip_space_w_scaling
 import           GHC.Ptr
                                                                                            (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc
+                                                                                           (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkDynamicState
@@ -54,6 +62,25 @@ import           Graphics.Vulkan.Types.Struct.VkPipelineViewportWScalingStateCre
 import           Graphics.Vulkan.Types.Struct.VkRect2D
 import           Graphics.Vulkan.Types.Struct.VkViewport
 import           Graphics.Vulkan.Types.Struct.VkViewportWScalingNV
+
+pattern VkCmdSetViewportWScalingNV :: CString
+
+pattern VkCmdSetViewportWScalingNV <-
+        (is_VkCmdSetViewportWScalingNV -> True)
+  where VkCmdSetViewportWScalingNV = _VkCmdSetViewportWScalingNV
+
+{-# INLINE _VkCmdSetViewportWScalingNV #-}
+
+_VkCmdSetViewportWScalingNV :: CString
+_VkCmdSetViewportWScalingNV = Ptr "vkCmdSetViewportWScalingNV\NUL"#
+
+{-# INLINE is_VkCmdSetViewportWScalingNV #-}
+
+is_VkCmdSetViewportWScalingNV :: CString -> Bool
+is_VkCmdSetViewportWScalingNV
+  = (EQ ==) . cmpCStrings _VkCmdSetViewportWScalingNV
+
+type VkCmdSetViewportWScalingNV = "vkCmdSetViewportWScalingNV"
 
 -- | queues: 'graphics'.
 --
@@ -96,6 +123,42 @@ foreign import ccall safe "vkCmdSetViewportWScalingNV"
                         -> Word32 -- ^ viewportCount
                                   -> Ptr VkViewportWScalingNV -- ^ pViewportWScalings
                                                               -> IO ()
+
+-- | queues: 'graphics'.
+--
+--   renderpass: @both@
+--
+--   > () vkCmdSetViewportWScalingNV
+--   >     ( VkCommandBuffer commandBuffer
+--   >     , uint32_t firstViewport
+--   >     , uint32_t viewportCount
+--   >     , const VkViewportWScalingNV* pViewportWScalings
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetViewportWScalingNV.html vkCmdSetViewportWScalingNV registry at www.khronos.org>
+type HS_vkCmdSetViewportWScalingNV =
+     VkCommandBuffer -- ^ commandBuffer
+                     ->
+       Word32 -- ^ firstViewport
+              -> Word32 -- ^ viewportCount
+                        -> Ptr VkViewportWScalingNV -- ^ pViewportWScalings
+                                                    -> IO ()
+
+type PFN_vkCmdSetViewportWScalingNV =
+     FunPtr HS_vkCmdSetViewportWScalingNV
+
+foreign import ccall "dynamic" unwrapVkCmdSetViewportWScalingNV ::
+               PFN_vkCmdSetViewportWScalingNV -> HS_vkCmdSetViewportWScalingNV
+
+instance VulkanInstanceProc "vkCmdSetViewportWScalingNV" where
+        type VkInstanceProcType "vkCmdSetViewportWScalingNV" =
+             HS_vkCmdSetViewportWScalingNV
+        vkInstanceProcSymbol = _VkCmdSetViewportWScalingNV
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCmdSetViewportWScalingNV
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_NV_CLIP_SPACE_W_SCALING_SPEC_VERSION :: (Num a, Eq a) =>
         a

@@ -1,9 +1,12 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_xcb_surface
        (-- * Vulkan extension: @VK_KHR_xcb_surface@
@@ -30,7 +33,15 @@ module Graphics.Vulkan.Ext.VK_KHR_xcb_surface
         module Graphics.Vulkan.Types.Bitmasks,
         module Graphics.Vulkan.Types.Struct.VkXcbSurfaceCreateInfoKHR,
         -- > #include "vk_platform.h"
-        vkCreateXcbSurfaceKHR, vkCreateXcbSurfaceKHRSafe,
+        VkCreateXcbSurfaceKHR, pattern VkCreateXcbSurfaceKHR,
+        HS_vkCreateXcbSurfaceKHR, PFN_vkCreateXcbSurfaceKHR,
+        unwrapVkCreateXcbSurfaceKHR, vkCreateXcbSurfaceKHR,
+        vkCreateXcbSurfaceKHRSafe,
+        VkGetPhysicalDeviceXcbPresentationSupportKHR,
+        pattern VkGetPhysicalDeviceXcbPresentationSupportKHR,
+        HS_vkGetPhysicalDeviceXcbPresentationSupportKHR,
+        PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR,
+        unwrapVkGetPhysicalDeviceXcbPresentationSupportKHR,
         vkGetPhysicalDeviceXcbPresentationSupportKHR,
         vkGetPhysicalDeviceXcbPresentationSupportKHRSafe,
         module Graphics.Vulkan.Marshal,
@@ -49,6 +60,7 @@ module Graphics.Vulkan.Ext.VK_KHR_xcb_surface
        where
 import           GHC.Ptr                                                (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc                   (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkInternalAllocationType
@@ -60,6 +72,24 @@ import           Graphics.Vulkan.Types.Handles
 import           Graphics.Vulkan.Types.Include
 import           Graphics.Vulkan.Types.Struct.VkAllocationCallbacks
 import           Graphics.Vulkan.Types.Struct.VkXcbSurfaceCreateInfoKHR
+
+pattern VkCreateXcbSurfaceKHR :: CString
+
+pattern VkCreateXcbSurfaceKHR <- (is_VkCreateXcbSurfaceKHR -> True)
+  where VkCreateXcbSurfaceKHR = _VkCreateXcbSurfaceKHR
+
+{-# INLINE _VkCreateXcbSurfaceKHR #-}
+
+_VkCreateXcbSurfaceKHR :: CString
+_VkCreateXcbSurfaceKHR = Ptr "vkCreateXcbSurfaceKHR\NUL"#
+
+{-# INLINE is_VkCreateXcbSurfaceKHR #-}
+
+is_VkCreateXcbSurfaceKHR :: CString -> Bool
+is_VkCreateXcbSurfaceKHR
+  = (EQ ==) . cmpCStrings _VkCreateXcbSurfaceKHR
+
+type VkCreateXcbSurfaceKHR = "vkCreateXcbSurfaceKHR"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -105,6 +135,65 @@ foreign import ccall safe "vkCreateXcbSurfaceKHR"
                                              -> Ptr VkSurfaceKHR -- ^ pSurface
                                                                  -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkCreateXcbSurfaceKHR
+--   >     ( VkInstance instance
+--   >     , const VkXcbSurfaceCreateInfoKHR* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkSurfaceKHR* pSurface
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateXcbSurfaceKHR.html vkCreateXcbSurfaceKHR registry at www.khronos.org>
+type HS_vkCreateXcbSurfaceKHR =
+     VkInstance -- ^ instance
+                ->
+       Ptr VkXcbSurfaceCreateInfoKHR -- ^ pCreateInfo
+                                     ->
+         Ptr VkAllocationCallbacks -- ^ pAllocator
+                                   -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                       -> IO VkResult
+
+type PFN_vkCreateXcbSurfaceKHR = FunPtr HS_vkCreateXcbSurfaceKHR
+
+foreign import ccall "dynamic" unwrapVkCreateXcbSurfaceKHR ::
+               PFN_vkCreateXcbSurfaceKHR -> HS_vkCreateXcbSurfaceKHR
+
+instance VulkanInstanceProc "vkCreateXcbSurfaceKHR" where
+        type VkInstanceProcType "vkCreateXcbSurfaceKHR" =
+             HS_vkCreateXcbSurfaceKHR
+        vkInstanceProcSymbol = _VkCreateXcbSurfaceKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCreateXcbSurfaceKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetPhysicalDeviceXcbPresentationSupportKHR :: CString
+
+pattern VkGetPhysicalDeviceXcbPresentationSupportKHR <-
+        (is_VkGetPhysicalDeviceXcbPresentationSupportKHR -> True)
+  where VkGetPhysicalDeviceXcbPresentationSupportKHR
+          = _VkGetPhysicalDeviceXcbPresentationSupportKHR
+
+{-# INLINE _VkGetPhysicalDeviceXcbPresentationSupportKHR #-}
+
+_VkGetPhysicalDeviceXcbPresentationSupportKHR :: CString
+_VkGetPhysicalDeviceXcbPresentationSupportKHR
+  = Ptr "vkGetPhysicalDeviceXcbPresentationSupportKHR\NUL"#
+
+{-# INLINE is_VkGetPhysicalDeviceXcbPresentationSupportKHR #-}
+
+is_VkGetPhysicalDeviceXcbPresentationSupportKHR :: CString -> Bool
+is_VkGetPhysicalDeviceXcbPresentationSupportKHR
+  = (EQ ==) .
+      cmpCStrings _VkGetPhysicalDeviceXcbPresentationSupportKHR
+
+type VkGetPhysicalDeviceXcbPresentationSupportKHR =
+     "vkGetPhysicalDeviceXcbPresentationSupportKHR"
+
 -- | > VkBool32 vkGetPhysicalDeviceXcbPresentationSupportKHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , uint32_t queueFamilyIndex
@@ -140,6 +229,45 @@ foreign import ccall safe
                         -> Ptr XcbConnectionT -- ^ connection
                                               -> XcbVisualidT -- ^ visual_id
                                                               -> IO VkBool32
+
+-- | > VkBool32 vkGetPhysicalDeviceXcbPresentationSupportKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , uint32_t queueFamilyIndex
+--   >     , xcb_connection_t* connection
+--   >     , xcb_visualid_t visual_id
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceXcbPresentationSupportKHR.html vkGetPhysicalDeviceXcbPresentationSupportKHR registry at www.khronos.org>
+type HS_vkGetPhysicalDeviceXcbPresentationSupportKHR =
+     VkPhysicalDevice -- ^ physicalDevice
+                      ->
+       Word32 -- ^ queueFamilyIndex
+              -> Ptr XcbConnectionT -- ^ connection
+                                    -> XcbVisualidT -- ^ visual_id
+                                                    -> IO VkBool32
+
+type PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR =
+     FunPtr HS_vkGetPhysicalDeviceXcbPresentationSupportKHR
+
+foreign import ccall "dynamic"
+               unwrapVkGetPhysicalDeviceXcbPresentationSupportKHR ::
+               PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR ->
+                 HS_vkGetPhysicalDeviceXcbPresentationSupportKHR
+
+instance VulkanInstanceProc
+           "vkGetPhysicalDeviceXcbPresentationSupportKHR"
+         where
+        type VkInstanceProcType
+               "vkGetPhysicalDeviceXcbPresentationSupportKHR"
+             = HS_vkGetPhysicalDeviceXcbPresentationSupportKHR
+        vkInstanceProcSymbol
+          = _VkGetPhysicalDeviceXcbPresentationSupportKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc
+          = unwrapVkGetPhysicalDeviceXcbPresentationSupportKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_KHR_XCB_SURFACE_SPEC_VERSION :: (Num a, Eq a) => a
 

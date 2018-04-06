@@ -1,9 +1,12 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_mir_surface
        (-- * Vulkan extension: @VK_KHR_mir_surface@
@@ -30,7 +33,15 @@ module Graphics.Vulkan.Ext.VK_KHR_mir_surface
         module Graphics.Vulkan.Types.Struct.VkMirSurfaceCreateInfoKHR,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
-        vkCreateMirSurfaceKHR, vkCreateMirSurfaceKHRSafe,
+        VkCreateMirSurfaceKHR, pattern VkCreateMirSurfaceKHR,
+        HS_vkCreateMirSurfaceKHR, PFN_vkCreateMirSurfaceKHR,
+        unwrapVkCreateMirSurfaceKHR, vkCreateMirSurfaceKHR,
+        vkCreateMirSurfaceKHRSafe,
+        VkGetPhysicalDeviceMirPresentationSupportKHR,
+        pattern VkGetPhysicalDeviceMirPresentationSupportKHR,
+        HS_vkGetPhysicalDeviceMirPresentationSupportKHR,
+        PFN_vkGetPhysicalDeviceMirPresentationSupportKHR,
+        unwrapVkGetPhysicalDeviceMirPresentationSupportKHR,
         vkGetPhysicalDeviceMirPresentationSupportKHR,
         vkGetPhysicalDeviceMirPresentationSupportKHRSafe,
         module Graphics.Vulkan.Marshal,
@@ -49,6 +60,7 @@ module Graphics.Vulkan.Ext.VK_KHR_mir_surface
        where
 import           GHC.Ptr                                                (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc                   (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkInternalAllocationType
@@ -60,6 +72,24 @@ import           Graphics.Vulkan.Types.Handles
 import           Graphics.Vulkan.Types.Include
 import           Graphics.Vulkan.Types.Struct.VkAllocationCallbacks
 import           Graphics.Vulkan.Types.Struct.VkMirSurfaceCreateInfoKHR
+
+pattern VkCreateMirSurfaceKHR :: CString
+
+pattern VkCreateMirSurfaceKHR <- (is_VkCreateMirSurfaceKHR -> True)
+  where VkCreateMirSurfaceKHR = _VkCreateMirSurfaceKHR
+
+{-# INLINE _VkCreateMirSurfaceKHR #-}
+
+_VkCreateMirSurfaceKHR :: CString
+_VkCreateMirSurfaceKHR = Ptr "vkCreateMirSurfaceKHR\NUL"#
+
+{-# INLINE is_VkCreateMirSurfaceKHR #-}
+
+is_VkCreateMirSurfaceKHR :: CString -> Bool
+is_VkCreateMirSurfaceKHR
+  = (EQ ==) . cmpCStrings _VkCreateMirSurfaceKHR
+
+type VkCreateMirSurfaceKHR = "vkCreateMirSurfaceKHR"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -105,6 +135,65 @@ foreign import ccall safe "vkCreateMirSurfaceKHR"
                                              -> Ptr VkSurfaceKHR -- ^ pSurface
                                                                  -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkCreateMirSurfaceKHR
+--   >     ( VkInstance instance
+--   >     , const VkMirSurfaceCreateInfoKHR* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkSurfaceKHR* pSurface
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateMirSurfaceKHR.html vkCreateMirSurfaceKHR registry at www.khronos.org>
+type HS_vkCreateMirSurfaceKHR =
+     VkInstance -- ^ instance
+                ->
+       Ptr VkMirSurfaceCreateInfoKHR -- ^ pCreateInfo
+                                     ->
+         Ptr VkAllocationCallbacks -- ^ pAllocator
+                                   -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                       -> IO VkResult
+
+type PFN_vkCreateMirSurfaceKHR = FunPtr HS_vkCreateMirSurfaceKHR
+
+foreign import ccall "dynamic" unwrapVkCreateMirSurfaceKHR ::
+               PFN_vkCreateMirSurfaceKHR -> HS_vkCreateMirSurfaceKHR
+
+instance VulkanInstanceProc "vkCreateMirSurfaceKHR" where
+        type VkInstanceProcType "vkCreateMirSurfaceKHR" =
+             HS_vkCreateMirSurfaceKHR
+        vkInstanceProcSymbol = _VkCreateMirSurfaceKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCreateMirSurfaceKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetPhysicalDeviceMirPresentationSupportKHR :: CString
+
+pattern VkGetPhysicalDeviceMirPresentationSupportKHR <-
+        (is_VkGetPhysicalDeviceMirPresentationSupportKHR -> True)
+  where VkGetPhysicalDeviceMirPresentationSupportKHR
+          = _VkGetPhysicalDeviceMirPresentationSupportKHR
+
+{-# INLINE _VkGetPhysicalDeviceMirPresentationSupportKHR #-}
+
+_VkGetPhysicalDeviceMirPresentationSupportKHR :: CString
+_VkGetPhysicalDeviceMirPresentationSupportKHR
+  = Ptr "vkGetPhysicalDeviceMirPresentationSupportKHR\NUL"#
+
+{-# INLINE is_VkGetPhysicalDeviceMirPresentationSupportKHR #-}
+
+is_VkGetPhysicalDeviceMirPresentationSupportKHR :: CString -> Bool
+is_VkGetPhysicalDeviceMirPresentationSupportKHR
+  = (EQ ==) .
+      cmpCStrings _VkGetPhysicalDeviceMirPresentationSupportKHR
+
+type VkGetPhysicalDeviceMirPresentationSupportKHR =
+     "vkGetPhysicalDeviceMirPresentationSupportKHR"
+
 -- | > VkBool32 vkGetPhysicalDeviceMirPresentationSupportKHR
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , uint32_t queueFamilyIndex
@@ -134,6 +223,42 @@ foreign import ccall safe
                                 -> Word32 -- ^ queueFamilyIndex
                                           -> Ptr MirConnection -- ^ connection
                                                                -> IO VkBool32
+
+-- | > VkBool32 vkGetPhysicalDeviceMirPresentationSupportKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , uint32_t queueFamilyIndex
+--   >     , MirConnection* connection
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceMirPresentationSupportKHR.html vkGetPhysicalDeviceMirPresentationSupportKHR registry at www.khronos.org>
+type HS_vkGetPhysicalDeviceMirPresentationSupportKHR =
+     VkPhysicalDevice -- ^ physicalDevice
+                      -> Word32 -- ^ queueFamilyIndex
+                                -> Ptr MirConnection -- ^ connection
+                                                     -> IO VkBool32
+
+type PFN_vkGetPhysicalDeviceMirPresentationSupportKHR =
+     FunPtr HS_vkGetPhysicalDeviceMirPresentationSupportKHR
+
+foreign import ccall "dynamic"
+               unwrapVkGetPhysicalDeviceMirPresentationSupportKHR ::
+               PFN_vkGetPhysicalDeviceMirPresentationSupportKHR ->
+                 HS_vkGetPhysicalDeviceMirPresentationSupportKHR
+
+instance VulkanInstanceProc
+           "vkGetPhysicalDeviceMirPresentationSupportKHR"
+         where
+        type VkInstanceProcType
+               "vkGetPhysicalDeviceMirPresentationSupportKHR"
+             = HS_vkGetPhysicalDeviceMirPresentationSupportKHR
+        vkInstanceProcSymbol
+          = _VkGetPhysicalDeviceMirPresentationSupportKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc
+          = unwrapVkGetPhysicalDeviceMirPresentationSupportKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_KHR_MIR_SURFACE_SPEC_VERSION :: (Num a, Eq a) => a
 

@@ -1,10 +1,13 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_EXT_sample_locations
        (-- * Vulkan extension: @VK_EXT_sample_locations@
@@ -51,7 +54,15 @@ module Graphics.Vulkan.Ext.VK_EXT_sample_locations
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         module Graphics.Vulkan.Types.Struct.VkSubpassSampleLocationsEXT,
         -- > #include "vk_platform.h"
-        vkCmdSetSampleLocationsEXT, vkCmdSetSampleLocationsEXTSafe,
+        VkCmdSetSampleLocationsEXT, pattern VkCmdSetSampleLocationsEXT,
+        HS_vkCmdSetSampleLocationsEXT, PFN_vkCmdSetSampleLocationsEXT,
+        unwrapVkCmdSetSampleLocationsEXT, vkCmdSetSampleLocationsEXT,
+        vkCmdSetSampleLocationsEXTSafe,
+        VkGetPhysicalDeviceMultisamplePropertiesEXT,
+        pattern VkGetPhysicalDeviceMultisamplePropertiesEXT,
+        HS_vkGetPhysicalDeviceMultisamplePropertiesEXT,
+        PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT,
+        unwrapVkGetPhysicalDeviceMultisamplePropertiesEXT,
         vkGetPhysicalDeviceMultisamplePropertiesEXT,
         vkGetPhysicalDeviceMultisamplePropertiesEXTSafe,
         module Graphics.Vulkan.Types.Handles,
@@ -70,6 +81,8 @@ module Graphics.Vulkan.Ext.VK_EXT_sample_locations
 import           GHC.Ptr
                                                                                             (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc
+                                                                                            (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkAccessFlags
@@ -107,6 +120,25 @@ import           Graphics.Vulkan.Types.Struct.VkSampleLocationEXT
 import           Graphics.Vulkan.Types.Struct.VkSampleLocationsInfoEXT
 import           Graphics.Vulkan.Types.Struct.VkSubpassSampleLocationsEXT
 
+pattern VkCmdSetSampleLocationsEXT :: CString
+
+pattern VkCmdSetSampleLocationsEXT <-
+        (is_VkCmdSetSampleLocationsEXT -> True)
+  where VkCmdSetSampleLocationsEXT = _VkCmdSetSampleLocationsEXT
+
+{-# INLINE _VkCmdSetSampleLocationsEXT #-}
+
+_VkCmdSetSampleLocationsEXT :: CString
+_VkCmdSetSampleLocationsEXT = Ptr "vkCmdSetSampleLocationsEXT\NUL"#
+
+{-# INLINE is_VkCmdSetSampleLocationsEXT #-}
+
+is_VkCmdSetSampleLocationsEXT :: CString -> Bool
+is_VkCmdSetSampleLocationsEXT
+  = (EQ ==) . cmpCStrings _VkCmdSetSampleLocationsEXT
+
+type VkCmdSetSampleLocationsEXT = "vkCmdSetSampleLocationsEXT"
+
 -- | queues: 'graphics'.
 --
 --   renderpass: @both@
@@ -139,6 +171,60 @@ foreign import ccall safe "vkCmdSetSampleLocationsEXT"
                                -> Ptr VkSampleLocationsInfoEXT -- ^ pSampleLocationsInfo
                                                                -> IO ()
 
+-- | queues: 'graphics'.
+--
+--   renderpass: @both@
+--
+--   > () vkCmdSetSampleLocationsEXT
+--   >     ( VkCommandBuffer commandBuffer
+--   >     , const VkSampleLocationsInfoEXT* pSampleLocationsInfo
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetSampleLocationsEXT.html vkCmdSetSampleLocationsEXT registry at www.khronos.org>
+type HS_vkCmdSetSampleLocationsEXT =
+     VkCommandBuffer -- ^ commandBuffer
+                     -> Ptr VkSampleLocationsInfoEXT -- ^ pSampleLocationsInfo
+                                                     -> IO ()
+
+type PFN_vkCmdSetSampleLocationsEXT =
+     FunPtr HS_vkCmdSetSampleLocationsEXT
+
+foreign import ccall "dynamic" unwrapVkCmdSetSampleLocationsEXT ::
+               PFN_vkCmdSetSampleLocationsEXT -> HS_vkCmdSetSampleLocationsEXT
+
+instance VulkanInstanceProc "vkCmdSetSampleLocationsEXT" where
+        type VkInstanceProcType "vkCmdSetSampleLocationsEXT" =
+             HS_vkCmdSetSampleLocationsEXT
+        vkInstanceProcSymbol = _VkCmdSetSampleLocationsEXT
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCmdSetSampleLocationsEXT
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetPhysicalDeviceMultisamplePropertiesEXT :: CString
+
+pattern VkGetPhysicalDeviceMultisamplePropertiesEXT <-
+        (is_VkGetPhysicalDeviceMultisamplePropertiesEXT -> True)
+  where VkGetPhysicalDeviceMultisamplePropertiesEXT
+          = _VkGetPhysicalDeviceMultisamplePropertiesEXT
+
+{-# INLINE _VkGetPhysicalDeviceMultisamplePropertiesEXT #-}
+
+_VkGetPhysicalDeviceMultisamplePropertiesEXT :: CString
+_VkGetPhysicalDeviceMultisamplePropertiesEXT
+  = Ptr "vkGetPhysicalDeviceMultisamplePropertiesEXT\NUL"#
+
+{-# INLINE is_VkGetPhysicalDeviceMultisamplePropertiesEXT #-}
+
+is_VkGetPhysicalDeviceMultisamplePropertiesEXT :: CString -> Bool
+is_VkGetPhysicalDeviceMultisamplePropertiesEXT
+  = (EQ ==) .
+      cmpCStrings _VkGetPhysicalDeviceMultisamplePropertiesEXT
+
+type VkGetPhysicalDeviceMultisamplePropertiesEXT =
+     "vkGetPhysicalDeviceMultisamplePropertiesEXT"
+
 -- | > () vkGetPhysicalDeviceMultisamplePropertiesEXT
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkSampleCountFlagBits samples
@@ -170,6 +256,42 @@ foreign import ccall safe
                  VkSampleCountFlagBits -- ^ samples
                                        -> Ptr VkMultisamplePropertiesEXT -- ^ pMultisampleProperties
                                                                          -> IO ()
+
+-- | > () vkGetPhysicalDeviceMultisamplePropertiesEXT
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , VkSampleCountFlagBits samples
+--   >     , VkMultisamplePropertiesEXT* pMultisampleProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceMultisamplePropertiesEXT.html vkGetPhysicalDeviceMultisamplePropertiesEXT registry at www.khronos.org>
+type HS_vkGetPhysicalDeviceMultisamplePropertiesEXT =
+     VkPhysicalDevice -- ^ physicalDevice
+                      ->
+       VkSampleCountFlagBits -- ^ samples
+                             -> Ptr VkMultisamplePropertiesEXT -- ^ pMultisampleProperties
+                                                               -> IO ()
+
+type PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT =
+     FunPtr HS_vkGetPhysicalDeviceMultisamplePropertiesEXT
+
+foreign import ccall "dynamic"
+               unwrapVkGetPhysicalDeviceMultisamplePropertiesEXT ::
+               PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT ->
+                 HS_vkGetPhysicalDeviceMultisamplePropertiesEXT
+
+instance VulkanInstanceProc
+           "vkGetPhysicalDeviceMultisamplePropertiesEXT"
+         where
+        type VkInstanceProcType
+               "vkGetPhysicalDeviceMultisamplePropertiesEXT"
+             = HS_vkGetPhysicalDeviceMultisamplePropertiesEXT
+        vkInstanceProcSymbol = _VkGetPhysicalDeviceMultisamplePropertiesEXT
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc
+          = unwrapVkGetPhysicalDeviceMultisamplePropertiesEXT
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_EXT_SAMPLE_LOCATIONS_SPEC_VERSION :: (Num a, Eq a) => a
 

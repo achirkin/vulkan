@@ -20,7 +20,7 @@ import           System.IO.Unsafe                                (unsafeDupableP
 
 -- | > typedef struct VkPresentRegionsKHR {
 --   >     VkStructureType sType;
---   >     const void*  pNext;
+--   >     const void*                      pNext;
 --   >     uint32_t                         swapchainCount;
 --   >     const VkPresentRegionKHR*   pRegions;
 --   > } VkPresentRegionsKHR;

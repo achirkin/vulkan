@@ -47,8 +47,9 @@ data VkCommand
     , cParameters :: [VkCommandParam]
     }
   | VkCommandAlias
-    { cName  :: VkCommandName
-    , cAlias :: VkCommandName
+    { cName     :: VkCommandName
+    , cAlias    :: VkCommandName
+    , cNameOrig :: Text
     } deriving Show
 
 
@@ -155,7 +156,8 @@ parseVkCommandAttrs = do
       cComment         <- lift $ attr "comment"
       return $ Right VkCommandAttrs {..}
     Just cAlias -> do
-      cName <- forceAttr "name" >>= toHaskellComm
+      cNameOrig <- forceAttr "name"
+      cName <- toHaskellComm cNameOrig
       return $ Left VkCommandAlias {..}
 
 -- TODO: use https://hackage.haskell.org/package/language-c

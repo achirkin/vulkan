@@ -1,10 +1,13 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_external_memory_fd
        (-- * Vulkan extension: @VK_KHR_external_memory_fd@
@@ -33,8 +36,12 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_fd
         module Graphics.Vulkan.Types.Struct.VkMemoryGetFdInfoKHR,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
-        vkGetMemoryFdKHR, vkGetMemoryFdKHRSafe, vkGetMemoryFdPropertiesKHR,
-        vkGetMemoryFdPropertiesKHRSafe,
+        VkGetMemoryFdKHR, pattern VkGetMemoryFdKHR, HS_vkGetMemoryFdKHR,
+        PFN_vkGetMemoryFdKHR, unwrapVkGetMemoryFdKHR, vkGetMemoryFdKHR,
+        vkGetMemoryFdKHRSafe, VkGetMemoryFdPropertiesKHR,
+        pattern VkGetMemoryFdPropertiesKHR, HS_vkGetMemoryFdPropertiesKHR,
+        PFN_vkGetMemoryFdPropertiesKHR, unwrapVkGetMemoryFdPropertiesKHR,
+        vkGetMemoryFdPropertiesKHR, vkGetMemoryFdPropertiesKHRSafe,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_KHR_EXTERNAL_MEMORY_FD_SPEC_VERSION,
@@ -47,6 +54,7 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_fd
        where
 import           GHC.Ptr                                                    (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc                       (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlags
 import           Graphics.Vulkan.Types.Enum.VkResult
@@ -56,6 +64,23 @@ import           Graphics.Vulkan.Types.Struct.VkImportMemoryFdInfoKHR
 import           Graphics.Vulkan.Types.Struct.VkMemoryAllocateInfo
 import           Graphics.Vulkan.Types.Struct.VkMemoryFdPropertiesKHR
 import           Graphics.Vulkan.Types.Struct.VkMemoryGetFdInfoKHR
+
+pattern VkGetMemoryFdKHR :: CString
+
+pattern VkGetMemoryFdKHR <- (is_VkGetMemoryFdKHR -> True)
+  where VkGetMemoryFdKHR = _VkGetMemoryFdKHR
+
+{-# INLINE _VkGetMemoryFdKHR #-}
+
+_VkGetMemoryFdKHR :: CString
+_VkGetMemoryFdKHR = Ptr "vkGetMemoryFdKHR\NUL"#
+
+{-# INLINE is_VkGetMemoryFdKHR #-}
+
+is_VkGetMemoryFdKHR :: CString -> Bool
+is_VkGetMemoryFdKHR = (EQ ==) . cmpCStrings _VkGetMemoryFdKHR
+
+type VkGetMemoryFdKHR = "vkGetMemoryFdKHR"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -90,6 +115,56 @@ foreign import ccall safe "vkGetMemoryFdKHR" vkGetMemoryFdKHRSafe
                            -> Ptr VkMemoryGetFdInfoKHR -- ^ pGetFdInfo
                                                        -> Ptr CInt -- ^ pFd
                                                                    -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
+--
+--   > VkResult vkGetMemoryFdKHR
+--   >     ( VkDevice device
+--   >     , const VkMemoryGetFdInfoKHR* pGetFdInfo
+--   >     , int* pFd
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryFdKHR.html vkGetMemoryFdKHR registry at www.khronos.org>
+type HS_vkGetMemoryFdKHR =
+     VkDevice -- ^ device
+              -> Ptr VkMemoryGetFdInfoKHR -- ^ pGetFdInfo
+                                          -> Ptr CInt -- ^ pFd
+                                                      -> IO VkResult
+
+type PFN_vkGetMemoryFdKHR = FunPtr HS_vkGetMemoryFdKHR
+
+foreign import ccall "dynamic" unwrapVkGetMemoryFdKHR ::
+               PFN_vkGetMemoryFdKHR -> HS_vkGetMemoryFdKHR
+
+instance VulkanInstanceProc "vkGetMemoryFdKHR" where
+        type VkInstanceProcType "vkGetMemoryFdKHR" = HS_vkGetMemoryFdKHR
+        vkInstanceProcSymbol = _VkGetMemoryFdKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetMemoryFdKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetMemoryFdPropertiesKHR :: CString
+
+pattern VkGetMemoryFdPropertiesKHR <-
+        (is_VkGetMemoryFdPropertiesKHR -> True)
+  where VkGetMemoryFdPropertiesKHR = _VkGetMemoryFdPropertiesKHR
+
+{-# INLINE _VkGetMemoryFdPropertiesKHR #-}
+
+_VkGetMemoryFdPropertiesKHR :: CString
+_VkGetMemoryFdPropertiesKHR = Ptr "vkGetMemoryFdPropertiesKHR\NUL"#
+
+{-# INLINE is_VkGetMemoryFdPropertiesKHR #-}
+
+is_VkGetMemoryFdPropertiesKHR :: CString -> Bool
+is_VkGetMemoryFdPropertiesKHR
+  = (EQ ==) . cmpCStrings _VkGetMemoryFdPropertiesKHR
+
+type VkGetMemoryFdPropertiesKHR = "vkGetMemoryFdPropertiesKHR"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -134,6 +209,43 @@ foreign import ccall safe "vkGetMemoryFdPropertiesKHR"
                    CInt -- ^ fd
                         -> Ptr VkMemoryFdPropertiesKHR -- ^ pMemoryFdProperties
                                                        -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
+--
+--   > VkResult vkGetMemoryFdPropertiesKHR
+--   >     ( VkDevice device
+--   >     , VkExternalMemoryHandleTypeFlagBits handleType
+--   >     , int fd
+--   >     , VkMemoryFdPropertiesKHR* pMemoryFdProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryFdPropertiesKHR.html vkGetMemoryFdPropertiesKHR registry at www.khronos.org>
+type HS_vkGetMemoryFdPropertiesKHR =
+     VkDevice -- ^ device
+              ->
+       VkExternalMemoryHandleTypeFlagBits -- ^ handleType
+                                          ->
+         CInt -- ^ fd
+              -> Ptr VkMemoryFdPropertiesKHR -- ^ pMemoryFdProperties
+                                             -> IO VkResult
+
+type PFN_vkGetMemoryFdPropertiesKHR =
+     FunPtr HS_vkGetMemoryFdPropertiesKHR
+
+foreign import ccall "dynamic" unwrapVkGetMemoryFdPropertiesKHR ::
+               PFN_vkGetMemoryFdPropertiesKHR -> HS_vkGetMemoryFdPropertiesKHR
+
+instance VulkanInstanceProc "vkGetMemoryFdPropertiesKHR" where
+        type VkInstanceProcType "vkGetMemoryFdPropertiesKHR" =
+             HS_vkGetMemoryFdPropertiesKHR
+        vkInstanceProcSymbol = _VkGetMemoryFdPropertiesKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetMemoryFdPropertiesKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_KHR_EXTERNAL_MEMORY_FD_SPEC_VERSION :: (Num a, Eq a) =>
         a

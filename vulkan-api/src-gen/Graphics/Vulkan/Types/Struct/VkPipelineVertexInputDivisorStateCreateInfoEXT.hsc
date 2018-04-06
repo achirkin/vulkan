@@ -25,7 +25,7 @@ import           System.IO.Unsafe
 
 -- | > typedef struct VkPipelineVertexInputDivisorStateCreateInfoEXT {
 --   >     VkStructureType sType;
---   >     const void*   pNext;
+--   >     const void*                         pNext;
 --   >     uint32_t                            vertexBindingDivisorCount;
 --   >     const VkVertexInputBindingDivisorDescriptionEXT*      pVertexBindingDivisors;
 --   > } VkPipelineVertexInputDivisorStateCreateInfoEXT;

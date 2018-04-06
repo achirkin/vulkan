@@ -21,7 +21,7 @@ import           System.IO.Unsafe                                               
 
 -- | > typedef struct VkPipelineViewportWScalingStateCreateInfoNV {
 --   >     VkStructureType sType;
---   >     const void*            pNext;
+--   >     const void*                      pNext;
 --   >     VkBool32               viewportWScalingEnable;
 --   >     uint32_t               viewportCount;
 --   >     const VkViewportWScalingNV*      pViewportWScalings;

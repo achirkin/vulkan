@@ -1,10 +1,13 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_AMD_shader_info
        (-- * Vulkan extension: @VK_AMD_shader_info@
@@ -26,8 +29,10 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_info
         module Graphics.Vulkan.Types.Enum.VkShaderStageFlags,
         module Graphics.Vulkan.Types.Struct.VkShaderStatisticsInfoAMD,
         -- > #include "vk_platform.h"
-        vkGetShaderInfoAMD, vkGetShaderInfoAMDSafe,
-        module Graphics.Vulkan.Types.Enum.VkResult,
+        VkGetShaderInfoAMD, pattern VkGetShaderInfoAMD,
+        HS_vkGetShaderInfoAMD, PFN_vkGetShaderInfoAMD,
+        unwrapVkGetShaderInfoAMD, vkGetShaderInfoAMD,
+        vkGetShaderInfoAMDSafe, module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_AMD_SHADER_INFO_SPEC_VERSION,
         pattern VK_AMD_SHADER_INFO_SPEC_VERSION,
@@ -36,6 +41,7 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_info
        where
 import           GHC.Ptr                                                (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc                   (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkResult
 import           Graphics.Vulkan.Types.Enum.VkShaderInfoTypeAMD
@@ -43,6 +49,23 @@ import           Graphics.Vulkan.Types.Enum.VkShaderStageFlags
 import           Graphics.Vulkan.Types.Handles
 import           Graphics.Vulkan.Types.Struct.VkShaderResourceUsageAMD
 import           Graphics.Vulkan.Types.Struct.VkShaderStatisticsInfoAMD
+
+pattern VkGetShaderInfoAMD :: CString
+
+pattern VkGetShaderInfoAMD <- (is_VkGetShaderInfoAMD -> True)
+  where VkGetShaderInfoAMD = _VkGetShaderInfoAMD
+
+{-# INLINE _VkGetShaderInfoAMD #-}
+
+_VkGetShaderInfoAMD :: CString
+_VkGetShaderInfoAMD = Ptr "vkGetShaderInfoAMD\NUL"#
+
+{-# INLINE is_VkGetShaderInfoAMD #-}
+
+is_VkGetShaderInfoAMD :: CString -> Bool
+is_VkGetShaderInfoAMD = (EQ ==) . cmpCStrings _VkGetShaderInfoAMD
+
+type VkGetShaderInfoAMD = "vkGetShaderInfoAMD"
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
@@ -97,6 +120,47 @@ foreign import ccall safe "vkGetShaderInfoAMD"
                                          -> Ptr CSize -- ^ pInfoSize
                                                       -> Ptr Void -- ^ pInfo
                                                                   -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+--   Error codes: 'VK_ERROR_FEATURE_NOT_PRESENT', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
+--
+--   > VkResult vkGetShaderInfoAMD
+--   >     ( VkDevice device
+--   >     , VkPipeline pipeline
+--   >     , VkShaderStageFlagBits shaderStage
+--   >     , VkShaderInfoTypeAMD infoType
+--   >     , size_t* pInfoSize
+--   >     , void* pInfo
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetShaderInfoAMD.html vkGetShaderInfoAMD registry at www.khronos.org>
+type HS_vkGetShaderInfoAMD =
+     VkDevice -- ^ device
+              ->
+       VkPipeline -- ^ pipeline
+                  ->
+         VkShaderStageFlagBits -- ^ shaderStage
+                               ->
+           VkShaderInfoTypeAMD -- ^ infoType
+                               -> Ptr CSize -- ^ pInfoSize
+                                            -> Ptr Void -- ^ pInfo
+                                                        -> IO VkResult
+
+type PFN_vkGetShaderInfoAMD = FunPtr HS_vkGetShaderInfoAMD
+
+foreign import ccall "dynamic" unwrapVkGetShaderInfoAMD ::
+               PFN_vkGetShaderInfoAMD -> HS_vkGetShaderInfoAMD
+
+instance VulkanInstanceProc "vkGetShaderInfoAMD" where
+        type VkInstanceProcType "vkGetShaderInfoAMD" =
+             HS_vkGetShaderInfoAMD
+        vkInstanceProcSymbol = _VkGetShaderInfoAMD
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetShaderInfoAMD
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_AMD_SHADER_INFO_SPEC_VERSION :: (Num a, Eq a) => a
 

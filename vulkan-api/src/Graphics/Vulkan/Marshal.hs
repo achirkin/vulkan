@@ -394,15 +394,6 @@ type ErrorNotWritableField (s :: Symbol) (a :: Type)
 -- * Utilities for CString
 --------------------------------------------------------------------------------
 
-
-
-
-
-
-
-
-
-
 -- | Perform an action on a C string field.
 --   The string pointers should not be used outside the callback.
 --   It will point to a correct location only as long as the struct is alive.

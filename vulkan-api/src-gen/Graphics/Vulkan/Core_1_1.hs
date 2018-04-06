@@ -1,9 +1,14 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
+{-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
+{-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Core_1_1
        (-- * Vulkan 1.1 core API interface definitions.
         -- |
@@ -16,7 +21,10 @@ module Graphics.Vulkan.Core_1_1
         --
 
         -- ** Device Initialization
-        vkEnumerateInstanceVersion, vkEnumerateInstanceVersionSafe,
+        VkEnumerateInstanceVersion, pattern VkEnumerateInstanceVersion,
+        HS_vkEnumerateInstanceVersion, PFN_vkEnumerateInstanceVersion,
+        unwrapVkEnumerateInstanceVersion, vkEnumerateInstanceVersion,
+        vkEnumerateInstanceVersionSafe,
         module Graphics.Vulkan.Types.Enum.VkResult,
         -- ** Promoted from VK_KHR_relaxed_block_layout, which has no API
         --
@@ -43,8 +51,14 @@ module Graphics.Vulkan.Core_1_1
         module Graphics.Vulkan.Types.Struct.VkBindBufferMemoryInfo,
         module Graphics.Vulkan.Types.Struct.VkBindImageMemoryInfo,
         -- > #include "vk_platform.h"
-        vkBindBufferMemory2, vkBindBufferMemory2Safe, vkBindImageMemory2,
-        vkBindImageMemory2Safe, module Graphics.Vulkan.Types.Handles,
+        VkBindBufferMemory2, pattern VkBindBufferMemory2,
+        HS_vkBindBufferMemory2, PFN_vkBindBufferMemory2,
+        unwrapVkBindBufferMemory2, vkBindBufferMemory2,
+        vkBindBufferMemory2Safe, VkBindImageMemory2,
+        pattern VkBindImageMemory2, HS_vkBindImageMemory2,
+        PFN_vkBindImageMemory2, unwrapVkBindImageMemory2,
+        vkBindImageMemory2, vkBindImageMemory2Safe,
+        module Graphics.Vulkan.Types.Handles,
         pattern VK_STRUCTURE_TYPE_BIND_BUFFER_MEMORY_INFO,
         pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_INFO,
         pattern VK_IMAGE_CREATE_ALIAS_BIT,
@@ -101,9 +115,19 @@ module Graphics.Vulkan.Core_1_1
         module Graphics.Vulkan.Types.Enum.VkSparseMemoryBindFlags,
         module Graphics.Vulkan.Types.Struct.VkSubmitInfo,
         -- > #include "vk_platform.h"
+        VkGetDeviceGroupPeerMemoryFeatures,
+        pattern VkGetDeviceGroupPeerMemoryFeatures,
+        HS_vkGetDeviceGroupPeerMemoryFeatures,
+        PFN_vkGetDeviceGroupPeerMemoryFeatures,
+        unwrapVkGetDeviceGroupPeerMemoryFeatures,
         vkGetDeviceGroupPeerMemoryFeatures,
-        vkGetDeviceGroupPeerMemoryFeaturesSafe, vkCmdSetDeviceMask,
-        vkCmdSetDeviceMaskSafe, vkCmdDispatchBase, vkCmdDispatchBaseSafe,
+        vkGetDeviceGroupPeerMemoryFeaturesSafe, VkCmdSetDeviceMask,
+        pattern VkCmdSetDeviceMask, HS_vkCmdSetDeviceMask,
+        PFN_vkCmdSetDeviceMask, unwrapVkCmdSetDeviceMask,
+        vkCmdSetDeviceMask, vkCmdSetDeviceMaskSafe, VkCmdDispatchBase,
+        pattern VkCmdDispatchBase, HS_vkCmdDispatchBase,
+        PFN_vkCmdDispatchBase, unwrapVkCmdDispatchBase, vkCmdDispatchBase,
+        vkCmdDispatchBaseSafe,
         pattern VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_FLAGS_INFO,
         pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_RENDER_PASS_BEGIN_INFO,
         pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_COMMAND_BUFFER_BEGIN_INFO,
@@ -123,6 +147,11 @@ module Graphics.Vulkan.Core_1_1
         module Graphics.Vulkan.Types.Struct.VkDeviceGroupDeviceCreateInfo,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceGroupProperties,
         -- > #include "vk_platform.h"
+        VkEnumeratePhysicalDeviceGroups,
+        pattern VkEnumeratePhysicalDeviceGroups,
+        HS_vkEnumeratePhysicalDeviceGroups,
+        PFN_vkEnumeratePhysicalDeviceGroups,
+        unwrapVkEnumeratePhysicalDeviceGroups,
         vkEnumeratePhysicalDeviceGroups,
         vkEnumeratePhysicalDeviceGroupsSafe,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_GROUP_PROPERTIES,
@@ -138,8 +167,22 @@ module Graphics.Vulkan.Core_1_1
         module Graphics.Vulkan.Types.Struct.VkSparseImageMemoryRequirements,
         module Graphics.Vulkan.Types.Struct.VkSparseImageMemoryRequirements2,
         -- > #include "vk_platform.h"
-        vkGetImageMemoryRequirements2, vkGetImageMemoryRequirements2Safe,
+        VkGetImageMemoryRequirements2,
+        pattern VkGetImageMemoryRequirements2,
+        HS_vkGetImageMemoryRequirements2,
+        PFN_vkGetImageMemoryRequirements2,
+        unwrapVkGetImageMemoryRequirements2, vkGetImageMemoryRequirements2,
+        vkGetImageMemoryRequirements2Safe, VkGetBufferMemoryRequirements2,
+        pattern VkGetBufferMemoryRequirements2,
+        HS_vkGetBufferMemoryRequirements2,
+        PFN_vkGetBufferMemoryRequirements2,
+        unwrapVkGetBufferMemoryRequirements2,
         vkGetBufferMemoryRequirements2, vkGetBufferMemoryRequirements2Safe,
+        VkGetImageSparseMemoryRequirements2,
+        pattern VkGetImageSparseMemoryRequirements2,
+        HS_vkGetImageSparseMemoryRequirements2,
+        PFN_vkGetImageSparseMemoryRequirements2,
+        unwrapVkGetImageSparseMemoryRequirements2,
         vkGetImageSparseMemoryRequirements2,
         vkGetImageSparseMemoryRequirements2Safe,
         pattern VK_STRUCTURE_TYPE_BUFFER_MEMORY_REQUIREMENTS_INFO_2,
@@ -171,16 +214,48 @@ module Graphics.Vulkan.Core_1_1
         module Graphics.Vulkan.Types.Enum.VkQueueFlags,
         module Graphics.Vulkan.Types.Struct.VkSparseImageFormatProperties2,
         -- > #include "vk_platform.h"
-        vkGetPhysicalDeviceFeatures2, vkGetPhysicalDeviceFeatures2Safe,
+        VkGetPhysicalDeviceFeatures2, pattern VkGetPhysicalDeviceFeatures2,
+        HS_vkGetPhysicalDeviceFeatures2, PFN_vkGetPhysicalDeviceFeatures2,
+        unwrapVkGetPhysicalDeviceFeatures2, vkGetPhysicalDeviceFeatures2,
+        vkGetPhysicalDeviceFeatures2Safe, VkGetPhysicalDeviceProperties2,
+        pattern VkGetPhysicalDeviceProperties2,
+        HS_vkGetPhysicalDeviceProperties2,
+        PFN_vkGetPhysicalDeviceProperties2,
+        unwrapVkGetPhysicalDeviceProperties2,
         vkGetPhysicalDeviceProperties2, vkGetPhysicalDeviceProperties2Safe,
+        VkGetPhysicalDeviceFormatProperties2,
+        pattern VkGetPhysicalDeviceFormatProperties2,
+        HS_vkGetPhysicalDeviceFormatProperties2,
+        PFN_vkGetPhysicalDeviceFormatProperties2,
+        unwrapVkGetPhysicalDeviceFormatProperties2,
         vkGetPhysicalDeviceFormatProperties2,
         vkGetPhysicalDeviceFormatProperties2Safe,
+        VkGetPhysicalDeviceImageFormatProperties2,
+        pattern VkGetPhysicalDeviceImageFormatProperties2,
+        HS_vkGetPhysicalDeviceImageFormatProperties2,
+        PFN_vkGetPhysicalDeviceImageFormatProperties2,
+        unwrapVkGetPhysicalDeviceImageFormatProperties2,
         vkGetPhysicalDeviceImageFormatProperties2,
         vkGetPhysicalDeviceImageFormatProperties2Safe,
+        VkGetPhysicalDeviceQueueFamilyProperties2,
+        pattern VkGetPhysicalDeviceQueueFamilyProperties2,
+        HS_vkGetPhysicalDeviceQueueFamilyProperties2,
+        PFN_vkGetPhysicalDeviceQueueFamilyProperties2,
+        unwrapVkGetPhysicalDeviceQueueFamilyProperties2,
         vkGetPhysicalDeviceQueueFamilyProperties2,
         vkGetPhysicalDeviceQueueFamilyProperties2Safe,
+        VkGetPhysicalDeviceMemoryProperties2,
+        pattern VkGetPhysicalDeviceMemoryProperties2,
+        HS_vkGetPhysicalDeviceMemoryProperties2,
+        PFN_vkGetPhysicalDeviceMemoryProperties2,
+        unwrapVkGetPhysicalDeviceMemoryProperties2,
         vkGetPhysicalDeviceMemoryProperties2,
         vkGetPhysicalDeviceMemoryProperties2Safe,
+        VkGetPhysicalDeviceSparseImageFormatProperties2,
+        pattern VkGetPhysicalDeviceSparseImageFormatProperties2,
+        HS_vkGetPhysicalDeviceSparseImageFormatProperties2,
+        PFN_vkGetPhysicalDeviceSparseImageFormatProperties2,
+        unwrapVkGetPhysicalDeviceSparseImageFormatProperties2,
         vkGetPhysicalDeviceSparseImageFormatProperties2,
         vkGetPhysicalDeviceSparseImageFormatProperties2Safe,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2,
@@ -196,8 +271,9 @@ module Graphics.Vulkan.Core_1_1
         --
         -- |
         -- > #include "vk_platform.h"
-        vkTrimCommandPool, vkTrimCommandPoolSafe,
-        pattern VK_ERROR_OUT_OF_POOL_MEMORY,
+        VkTrimCommandPool, pattern VkTrimCommandPool, HS_vkTrimCommandPool,
+        PFN_vkTrimCommandPool, unwrapVkTrimCommandPool, vkTrimCommandPool,
+        vkTrimCommandPoolSafe, pattern VK_ERROR_OUT_OF_POOL_MEMORY,
         pattern VK_FORMAT_FEATURE_TRANSFER_SRC_BIT,
         pattern VK_FORMAT_FEATURE_TRANSFER_DST_BIT,
         pattern VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT,
@@ -256,7 +332,9 @@ module Graphics.Vulkan.Core_1_1
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProtectedMemoryProperties,
         module Graphics.Vulkan.Types.Struct.VkProtectedSubmitInfo,
         -- > #include "vk_platform.h"
-        vkGetDeviceQueue2, vkGetDeviceQueue2Safe,
+        VkGetDeviceQueue2, pattern VkGetDeviceQueue2, HS_vkGetDeviceQueue2,
+        PFN_vkGetDeviceQueue2, unwrapVkGetDeviceQueue2, vkGetDeviceQueue2,
+        vkGetDeviceQueue2Safe,
         pattern VK_STRUCTURE_TYPE_PROTECTED_SUBMIT_INFO,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROTECTED_MEMORY_FEATURES,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROTECTED_MEMORY_PROPERTIES,
@@ -284,7 +362,17 @@ module Graphics.Vulkan.Core_1_1
         module Graphics.Vulkan.Types.Enum.VkSamplerYcbcrModelConversion,
         module Graphics.Vulkan.Types.Enum.VkSamplerYcbcrRange,
         -- > #include "vk_platform.h"
+        VkCreateSamplerYcbcrConversion,
+        pattern VkCreateSamplerYcbcrConversion,
+        HS_vkCreateSamplerYcbcrConversion,
+        PFN_vkCreateSamplerYcbcrConversion,
+        unwrapVkCreateSamplerYcbcrConversion,
         vkCreateSamplerYcbcrConversion, vkCreateSamplerYcbcrConversionSafe,
+        VkDestroySamplerYcbcrConversion,
+        pattern VkDestroySamplerYcbcrConversion,
+        HS_vkDestroySamplerYcbcrConversion,
+        PFN_vkDestroySamplerYcbcrConversion,
+        unwrapVkDestroySamplerYcbcrConversion,
         vkDestroySamplerYcbcrConversion,
         vkDestroySamplerYcbcrConversionSafe,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
@@ -349,10 +437,25 @@ module Graphics.Vulkan.Core_1_1
         module Graphics.Vulkan.Types.Struct.VkDescriptorUpdateTemplateEntry,
         module Graphics.Vulkan.Types.Enum.VkDescriptorUpdateTemplateType,
         -- > #include "vk_platform.h"
+        VkCreateDescriptorUpdateTemplate,
+        pattern VkCreateDescriptorUpdateTemplate,
+        HS_vkCreateDescriptorUpdateTemplate,
+        PFN_vkCreateDescriptorUpdateTemplate,
+        unwrapVkCreateDescriptorUpdateTemplate,
         vkCreateDescriptorUpdateTemplate,
         vkCreateDescriptorUpdateTemplateSafe,
+        VkDestroyDescriptorUpdateTemplate,
+        pattern VkDestroyDescriptorUpdateTemplate,
+        HS_vkDestroyDescriptorUpdateTemplate,
+        PFN_vkDestroyDescriptorUpdateTemplate,
+        unwrapVkDestroyDescriptorUpdateTemplate,
         vkDestroyDescriptorUpdateTemplate,
         vkDestroyDescriptorUpdateTemplateSafe,
+        VkUpdateDescriptorSetWithTemplate,
+        pattern VkUpdateDescriptorSetWithTemplate,
+        HS_vkUpdateDescriptorSetWithTemplate,
+        PFN_vkUpdateDescriptorSetWithTemplate,
+        unwrapVkUpdateDescriptorSetWithTemplate,
         vkUpdateDescriptorSetWithTemplate,
         vkUpdateDescriptorSetWithTemplateSafe,
         pattern VK_STRUCTURE_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO,
@@ -369,6 +472,11 @@ module Graphics.Vulkan.Core_1_1
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalImageFormatInfo,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceIDProperties,
         -- > #include "vk_platform.h"
+        VkGetPhysicalDeviceExternalBufferProperties,
+        pattern VkGetPhysicalDeviceExternalBufferProperties,
+        HS_vkGetPhysicalDeviceExternalBufferProperties,
+        PFN_vkGetPhysicalDeviceExternalBufferProperties,
+        unwrapVkGetPhysicalDeviceExternalBufferProperties,
         vkGetPhysicalDeviceExternalBufferProperties,
         vkGetPhysicalDeviceExternalBufferPropertiesSafe,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO,
@@ -396,6 +504,11 @@ module Graphics.Vulkan.Core_1_1
         module Graphics.Vulkan.Types.Struct.VkExternalFenceProperties,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalFenceInfo,
         -- > #include "vk_platform.h"
+        VkGetPhysicalDeviceExternalFenceProperties,
+        pattern VkGetPhysicalDeviceExternalFenceProperties,
+        HS_vkGetPhysicalDeviceExternalFenceProperties,
+        PFN_vkGetPhysicalDeviceExternalFenceProperties,
+        unwrapVkGetPhysicalDeviceExternalFenceProperties,
         vkGetPhysicalDeviceExternalFenceProperties,
         vkGetPhysicalDeviceExternalFencePropertiesSafe,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO,
@@ -419,6 +532,11 @@ module Graphics.Vulkan.Core_1_1
         module Graphics.Vulkan.Types.Struct.VkExternalSemaphoreProperties,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalSemaphoreInfo,
         -- > #include "vk_platform.h"
+        VkGetPhysicalDeviceExternalSemaphoreProperties,
+        pattern VkGetPhysicalDeviceExternalSemaphoreProperties,
+        HS_vkGetPhysicalDeviceExternalSemaphoreProperties,
+        PFN_vkGetPhysicalDeviceExternalSemaphoreProperties,
+        unwrapVkGetPhysicalDeviceExternalSemaphoreProperties,
         vkGetPhysicalDeviceExternalSemaphoreProperties,
         vkGetPhysicalDeviceExternalSemaphorePropertiesSafe,
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO,
@@ -427,6 +545,11 @@ module Graphics.Vulkan.Core_1_1
         module Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutSupport,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMaintenance3Properties,
         -- > #include "vk_platform.h"
+        VkGetDescriptorSetLayoutSupport,
+        pattern VkGetDescriptorSetLayoutSupport,
+        HS_vkGetDescriptorSetLayoutSupport,
+        PFN_vkGetDescriptorSetLayoutSupport,
+        unwrapVkGetDescriptorSetLayoutSupport,
         vkGetDescriptorSetLayoutSupport,
         vkGetDescriptorSetLayoutSupportSafe,
         module Graphics.Vulkan.Types.Enum.VkDescriptorSetLayoutCreateFlags,
@@ -439,11 +562,15 @@ module Graphics.Vulkan.Core_1_1
         -- > #include "vk_platform.h"
         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_DRAW_PARAMETER_FEATURES)
        where
+import           GHC.Ptr
+                                                                                                 (Ptr (..))
 import           Graphics.Vulkan.Constants
                                                                                                  (pattern VK_LUID_SIZE,
                                                                                                  pattern VK_MAX_DEVICE_GROUP_SIZE,
                                                                                                  pattern VK_QUEUE_FAMILY_EXTERNAL)
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc
+                                                                                                 (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkAccessFlags
@@ -639,6 +766,25 @@ import           Graphics.Vulkan.Types.Struct.VkSubmitInfo
 import           Graphics.Vulkan.Types.Struct.VkSubpassDependency
 import           Graphics.Vulkan.Types.Struct.VkSubpassDescription
 
+pattern VkEnumerateInstanceVersion :: CString
+
+pattern VkEnumerateInstanceVersion <-
+        (is_VkEnumerateInstanceVersion -> True)
+  where VkEnumerateInstanceVersion = _VkEnumerateInstanceVersion
+
+{-# INLINE _VkEnumerateInstanceVersion #-}
+
+_VkEnumerateInstanceVersion :: CString
+_VkEnumerateInstanceVersion = Ptr "vkEnumerateInstanceVersion\NUL"#
+
+{-# INLINE is_VkEnumerateInstanceVersion #-}
+
+is_VkEnumerateInstanceVersion :: CString -> Bool
+is_VkEnumerateInstanceVersion
+  = (EQ ==) . cmpCStrings _VkEnumerateInstanceVersion
+
+type VkEnumerateInstanceVersion = "vkEnumerateInstanceVersion"
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   > VkResult vkEnumerateInstanceVersion
@@ -661,11 +807,54 @@ foreign import ccall safe "vkEnumerateInstanceVersion"
                vkEnumerateInstanceVersionSafe :: Ptr Word32 -- ^ pApiVersion
                                                             -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   > VkResult vkEnumerateInstanceVersion
+--   >     ( uint32_t* pApiVersion
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumerateInstanceVersion.html vkEnumerateInstanceVersion registry at www.khronos.org>
+type HS_vkEnumerateInstanceVersion = Ptr Word32 -- ^ pApiVersion
+                                                -> IO VkResult
+
+type PFN_vkEnumerateInstanceVersion =
+     FunPtr HS_vkEnumerateInstanceVersion
+
+foreign import ccall "dynamic" unwrapVkEnumerateInstanceVersion ::
+               PFN_vkEnumerateInstanceVersion -> HS_vkEnumerateInstanceVersion
+
+instance VulkanInstanceProc "vkEnumerateInstanceVersion" where
+        type VkInstanceProcType "vkEnumerateInstanceVersion" =
+             HS_vkEnumerateInstanceVersion
+        vkInstanceProcSymbol = _VkEnumerateInstanceVersion
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkEnumerateInstanceVersion
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SUBGROUP_PROPERTIES ::
         VkStructureType
 
 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SUBGROUP_PROPERTIES =
         VkStructureType 1000094000
+
+pattern VkBindBufferMemory2 :: CString
+
+pattern VkBindBufferMemory2 <- (is_VkBindBufferMemory2 -> True)
+  where VkBindBufferMemory2 = _VkBindBufferMemory2
+
+{-# INLINE _VkBindBufferMemory2 #-}
+
+_VkBindBufferMemory2 :: CString
+_VkBindBufferMemory2 = Ptr "vkBindBufferMemory2\NUL"#
+
+{-# INLINE is_VkBindBufferMemory2 #-}
+
+is_VkBindBufferMemory2 :: CString -> Bool
+is_VkBindBufferMemory2 = (EQ ==) . cmpCStrings _VkBindBufferMemory2
+
+type VkBindBufferMemory2 = "vkBindBufferMemory2"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -707,6 +896,55 @@ foreign import ccall safe "vkBindBufferMemory2"
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
+--   > VkResult vkBindBufferMemory2
+--   >     ( VkDevice device
+--   >     , uint32_t bindInfoCount
+--   >     , const VkBindBufferMemoryInfo* pBindInfos
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkBindBufferMemory2.html vkBindBufferMemory2 registry at www.khronos.org>
+type HS_vkBindBufferMemory2 =
+     VkDevice -- ^ device
+              -> Word32 -- ^ bindInfoCount
+                        -> Ptr VkBindBufferMemoryInfo -- ^ pBindInfos
+                                                      -> IO VkResult
+
+type PFN_vkBindBufferMemory2 = FunPtr HS_vkBindBufferMemory2
+
+foreign import ccall "dynamic" unwrapVkBindBufferMemory2 ::
+               PFN_vkBindBufferMemory2 -> HS_vkBindBufferMemory2
+
+instance VulkanInstanceProc "vkBindBufferMemory2" where
+        type VkInstanceProcType "vkBindBufferMemory2" =
+             HS_vkBindBufferMemory2
+        vkInstanceProcSymbol = _VkBindBufferMemory2
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkBindBufferMemory2
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkBindImageMemory2 :: CString
+
+pattern VkBindImageMemory2 <- (is_VkBindImageMemory2 -> True)
+  where VkBindImageMemory2 = _VkBindImageMemory2
+
+{-# INLINE _VkBindImageMemory2 #-}
+
+_VkBindImageMemory2 :: CString
+_VkBindImageMemory2 = Ptr "vkBindImageMemory2\NUL"#
+
+{-# INLINE is_VkBindImageMemory2 #-}
+
+is_VkBindImageMemory2 :: CString -> Bool
+is_VkBindImageMemory2 = (EQ ==) . cmpCStrings _VkBindImageMemory2
+
+type VkBindImageMemory2 = "vkBindImageMemory2"
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
 --   > VkResult vkBindImageMemory2
 --   >     ( VkDevice device
 --   >     , uint32_t bindInfoCount
@@ -737,6 +975,38 @@ foreign import ccall safe "vkBindImageMemory2"
                         -> Word32 -- ^ bindInfoCount
                                   -> Ptr VkBindImageMemoryInfo -- ^ pBindInfos
                                                                -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkBindImageMemory2
+--   >     ( VkDevice device
+--   >     , uint32_t bindInfoCount
+--   >     , const VkBindImageMemoryInfo* pBindInfos
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkBindImageMemory2.html vkBindImageMemory2 registry at www.khronos.org>
+type HS_vkBindImageMemory2 =
+     VkDevice -- ^ device
+              -> Word32 -- ^ bindInfoCount
+                        -> Ptr VkBindImageMemoryInfo -- ^ pBindInfos
+                                                     -> IO VkResult
+
+type PFN_vkBindImageMemory2 = FunPtr HS_vkBindImageMemory2
+
+foreign import ccall "dynamic" unwrapVkBindImageMemory2 ::
+               PFN_vkBindImageMemory2 -> HS_vkBindImageMemory2
+
+instance VulkanInstanceProc "vkBindImageMemory2" where
+        type VkInstanceProcType "vkBindImageMemory2" =
+             HS_vkBindImageMemory2
+        vkInstanceProcSymbol = _VkBindImageMemory2
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkBindImageMemory2
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_STRUCTURE_TYPE_BIND_BUFFER_MEMORY_INFO ::
         VkStructureType
@@ -771,6 +1041,28 @@ pattern VK_STRUCTURE_TYPE_MEMORY_DEDICATED_ALLOCATE_INFO ::
 
 pattern VK_STRUCTURE_TYPE_MEMORY_DEDICATED_ALLOCATE_INFO =
         VkStructureType 1000127001
+
+pattern VkGetDeviceGroupPeerMemoryFeatures :: CString
+
+pattern VkGetDeviceGroupPeerMemoryFeatures <-
+        (is_VkGetDeviceGroupPeerMemoryFeatures -> True)
+  where VkGetDeviceGroupPeerMemoryFeatures
+          = _VkGetDeviceGroupPeerMemoryFeatures
+
+{-# INLINE _VkGetDeviceGroupPeerMemoryFeatures #-}
+
+_VkGetDeviceGroupPeerMemoryFeatures :: CString
+_VkGetDeviceGroupPeerMemoryFeatures
+  = Ptr "vkGetDeviceGroupPeerMemoryFeatures\NUL"#
+
+{-# INLINE is_VkGetDeviceGroupPeerMemoryFeatures #-}
+
+is_VkGetDeviceGroupPeerMemoryFeatures :: CString -> Bool
+is_VkGetDeviceGroupPeerMemoryFeatures
+  = (EQ ==) . cmpCStrings _VkGetDeviceGroupPeerMemoryFeatures
+
+type VkGetDeviceGroupPeerMemoryFeatures =
+     "vkGetDeviceGroupPeerMemoryFeatures"
 
 -- | > () vkGetDeviceGroupPeerMemoryFeatures
 --   >     ( VkDevice device
@@ -810,6 +1102,60 @@ foreign import ccall safe "vkGetDeviceGroupPeerMemoryFeatures"
                                             -> Ptr VkPeerMemoryFeatureFlags -- ^ pPeerMemoryFeatures
                                                                             -> IO ()
 
+-- | > () vkGetDeviceGroupPeerMemoryFeatures
+--   >     ( VkDevice device
+--   >     , uint32_t heapIndex
+--   >     , uint32_t localDeviceIndex
+--   >     , uint32_t remoteDeviceIndex
+--   >     , VkPeerMemoryFeatureFlags* pPeerMemoryFeatures
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceGroupPeerMemoryFeatures.html vkGetDeviceGroupPeerMemoryFeatures registry at www.khronos.org>
+type HS_vkGetDeviceGroupPeerMemoryFeatures =
+     VkDevice -- ^ device
+              ->
+       Word32 -- ^ heapIndex
+              -> Word32 -- ^ localDeviceIndex
+                        -> Word32 -- ^ remoteDeviceIndex
+                                  -> Ptr VkPeerMemoryFeatureFlags -- ^ pPeerMemoryFeatures
+                                                                  -> IO ()
+
+type PFN_vkGetDeviceGroupPeerMemoryFeatures =
+     FunPtr HS_vkGetDeviceGroupPeerMemoryFeatures
+
+foreign import ccall "dynamic"
+               unwrapVkGetDeviceGroupPeerMemoryFeatures ::
+               PFN_vkGetDeviceGroupPeerMemoryFeatures ->
+                 HS_vkGetDeviceGroupPeerMemoryFeatures
+
+instance VulkanInstanceProc "vkGetDeviceGroupPeerMemoryFeatures"
+         where
+        type VkInstanceProcType "vkGetDeviceGroupPeerMemoryFeatures" =
+             HS_vkGetDeviceGroupPeerMemoryFeatures
+        vkInstanceProcSymbol = _VkGetDeviceGroupPeerMemoryFeatures
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetDeviceGroupPeerMemoryFeatures
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkCmdSetDeviceMask :: CString
+
+pattern VkCmdSetDeviceMask <- (is_VkCmdSetDeviceMask -> True)
+  where VkCmdSetDeviceMask = _VkCmdSetDeviceMask
+
+{-# INLINE _VkCmdSetDeviceMask #-}
+
+_VkCmdSetDeviceMask :: CString
+_VkCmdSetDeviceMask = Ptr "vkCmdSetDeviceMask\NUL"#
+
+{-# INLINE is_VkCmdSetDeviceMask #-}
+
+is_VkCmdSetDeviceMask :: CString -> Bool
+is_VkCmdSetDeviceMask = (EQ ==) . cmpCStrings _VkCmdSetDeviceMask
+
+type VkCmdSetDeviceMask = "vkCmdSetDeviceMask"
+
 -- | queues: 'graphics', 'compute', 'transfer'.
 --
 --   renderpass: @both@
@@ -839,6 +1185,52 @@ foreign import ccall safe "vkCmdSetDeviceMask"
                vkCmdSetDeviceMaskSafe :: VkCommandBuffer -- ^ commandBuffer
                                                          -> Word32 -- ^ deviceMask
                                                                    -> IO ()
+
+-- | queues: 'graphics', 'compute', 'transfer'.
+--
+--   renderpass: @both@
+--
+--   > () vkCmdSetDeviceMask
+--   >     ( VkCommandBuffer commandBuffer
+--   >     , uint32_t deviceMask
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetDeviceMask.html vkCmdSetDeviceMask registry at www.khronos.org>
+type HS_vkCmdSetDeviceMask = VkCommandBuffer -- ^ commandBuffer
+                                             -> Word32 -- ^ deviceMask
+                                                       -> IO ()
+
+type PFN_vkCmdSetDeviceMask = FunPtr HS_vkCmdSetDeviceMask
+
+foreign import ccall "dynamic" unwrapVkCmdSetDeviceMask ::
+               PFN_vkCmdSetDeviceMask -> HS_vkCmdSetDeviceMask
+
+instance VulkanInstanceProc "vkCmdSetDeviceMask" where
+        type VkInstanceProcType "vkCmdSetDeviceMask" =
+             HS_vkCmdSetDeviceMask
+        vkInstanceProcSymbol = _VkCmdSetDeviceMask
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCmdSetDeviceMask
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkCmdDispatchBase :: CString
+
+pattern VkCmdDispatchBase <- (is_VkCmdDispatchBase -> True)
+  where VkCmdDispatchBase = _VkCmdDispatchBase
+
+{-# INLINE _VkCmdDispatchBase #-}
+
+_VkCmdDispatchBase :: CString
+_VkCmdDispatchBase = Ptr "vkCmdDispatchBase\NUL"#
+
+{-# INLINE is_VkCmdDispatchBase #-}
+
+is_VkCmdDispatchBase :: CString -> Bool
+is_VkCmdDispatchBase = (EQ ==) . cmpCStrings _VkCmdDispatchBase
+
+type VkCmdDispatchBase = "vkCmdDispatchBase"
 
 -- | queues: 'compute'.
 --
@@ -893,6 +1285,46 @@ foreign import ccall safe "vkCmdDispatchBase" vkCmdDispatchBaseSafe
                                                       -> Word32 -- ^ groupCountY
                                                                 -> Word32 -- ^ groupCountZ
                                                                           -> IO ()
+
+-- | queues: 'compute'.
+--
+--   renderpass: @outside@
+--
+--   > () vkCmdDispatchBase
+--   >     ( VkCommandBuffer commandBuffer
+--   >     , uint32_t baseGroupX
+--   >     , uint32_t baseGroupY
+--   >     , uint32_t baseGroupZ
+--   >     , uint32_t groupCountX
+--   >     , uint32_t groupCountY
+--   >     , uint32_t groupCountZ
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDispatchBase.html vkCmdDispatchBase registry at www.khronos.org>
+type HS_vkCmdDispatchBase =
+     VkCommandBuffer -- ^ commandBuffer
+                     ->
+       Word32 -- ^ baseGroupX
+              -> Word32 -- ^ baseGroupY
+                        -> Word32 -- ^ baseGroupZ
+                                  -> Word32 -- ^ groupCountX
+                                            -> Word32 -- ^ groupCountY
+                                                      -> Word32 -- ^ groupCountZ
+                                                                -> IO ()
+
+type PFN_vkCmdDispatchBase = FunPtr HS_vkCmdDispatchBase
+
+foreign import ccall "dynamic" unwrapVkCmdDispatchBase ::
+               PFN_vkCmdDispatchBase -> HS_vkCmdDispatchBase
+
+instance VulkanInstanceProc "vkCmdDispatchBase" where
+        type VkInstanceProcType "vkCmdDispatchBase" = HS_vkCmdDispatchBase
+        vkInstanceProcSymbol = _VkCmdDispatchBase
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCmdDispatchBase
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_FLAGS_INFO ::
         VkStructureType
@@ -966,6 +1398,28 @@ pattern VK_IMAGE_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT ::
 pattern VK_IMAGE_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT =
         VkImageCreateFlagBits 64
 
+pattern VkEnumeratePhysicalDeviceGroups :: CString
+
+pattern VkEnumeratePhysicalDeviceGroups <-
+        (is_VkEnumeratePhysicalDeviceGroups -> True)
+  where VkEnumeratePhysicalDeviceGroups
+          = _VkEnumeratePhysicalDeviceGroups
+
+{-# INLINE _VkEnumeratePhysicalDeviceGroups #-}
+
+_VkEnumeratePhysicalDeviceGroups :: CString
+_VkEnumeratePhysicalDeviceGroups
+  = Ptr "vkEnumeratePhysicalDeviceGroups\NUL"#
+
+{-# INLINE is_VkEnumeratePhysicalDeviceGroups #-}
+
+is_VkEnumeratePhysicalDeviceGroups :: CString -> Bool
+is_VkEnumeratePhysicalDeviceGroups
+  = (EQ ==) . cmpCStrings _VkEnumeratePhysicalDeviceGroups
+
+type VkEnumeratePhysicalDeviceGroups =
+     "vkEnumeratePhysicalDeviceGroups"
+
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INITIALIZATION_FAILED'.
@@ -1004,6 +1458,42 @@ foreign import ccall safe "vkEnumeratePhysicalDeviceGroups"
                             -> Ptr VkPhysicalDeviceGroupProperties -- ^ pPhysicalDeviceGroupProperties
                                                                    -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INITIALIZATION_FAILED'.
+--
+--   > VkResult vkEnumeratePhysicalDeviceGroups
+--   >     ( VkInstance instance
+--   >     , uint32_t* pPhysicalDeviceGroupCount
+--   >     , VkPhysicalDeviceGroupProperties* pPhysicalDeviceGroupProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumeratePhysicalDeviceGroups.html vkEnumeratePhysicalDeviceGroups registry at www.khronos.org>
+type HS_vkEnumeratePhysicalDeviceGroups =
+     VkInstance -- ^ instance
+                ->
+       Ptr Word32 -- ^ pPhysicalDeviceGroupCount
+                  -> Ptr VkPhysicalDeviceGroupProperties -- ^ pPhysicalDeviceGroupProperties
+                                                         -> IO VkResult
+
+type PFN_vkEnumeratePhysicalDeviceGroups =
+     FunPtr HS_vkEnumeratePhysicalDeviceGroups
+
+foreign import ccall "dynamic"
+               unwrapVkEnumeratePhysicalDeviceGroups ::
+               PFN_vkEnumeratePhysicalDeviceGroups ->
+                 HS_vkEnumeratePhysicalDeviceGroups
+
+instance VulkanInstanceProc "vkEnumeratePhysicalDeviceGroups" where
+        type VkInstanceProcType "vkEnumeratePhysicalDeviceGroups" =
+             HS_vkEnumeratePhysicalDeviceGroups
+        vkInstanceProcSymbol = _VkEnumeratePhysicalDeviceGroups
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkEnumeratePhysicalDeviceGroups
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_GROUP_PROPERTIES ::
         VkStructureType
 
@@ -1022,6 +1512,28 @@ pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_DEVICE_CREATE_INFO =
 pattern VK_MEMORY_HEAP_MULTI_INSTANCE_BIT :: VkMemoryHeapFlagBits
 
 pattern VK_MEMORY_HEAP_MULTI_INSTANCE_BIT = VkMemoryHeapFlagBits 2
+
+pattern VkGetImageMemoryRequirements2 :: CString
+
+pattern VkGetImageMemoryRequirements2 <-
+        (is_VkGetImageMemoryRequirements2 -> True)
+  where VkGetImageMemoryRequirements2
+          = _VkGetImageMemoryRequirements2
+
+{-# INLINE _VkGetImageMemoryRequirements2 #-}
+
+_VkGetImageMemoryRequirements2 :: CString
+_VkGetImageMemoryRequirements2
+  = Ptr "vkGetImageMemoryRequirements2\NUL"#
+
+{-# INLINE is_VkGetImageMemoryRequirements2 #-}
+
+is_VkGetImageMemoryRequirements2 :: CString -> Bool
+is_VkGetImageMemoryRequirements2
+  = (EQ ==) . cmpCStrings _VkGetImageMemoryRequirements2
+
+type VkGetImageMemoryRequirements2 =
+     "vkGetImageMemoryRequirements2"
 
 -- | > () vkGetImageMemoryRequirements2
 --   >     ( VkDevice device
@@ -1055,6 +1567,61 @@ foreign import ccall safe "vkGetImageMemoryRequirements2"
                    Ptr VkMemoryRequirements2 -- ^ pMemoryRequirements
                                              -> IO ()
 
+-- | > () vkGetImageMemoryRequirements2
+--   >     ( VkDevice device
+--   >     , const VkImageMemoryRequirementsInfo2* pInfo
+--   >     , VkMemoryRequirements2* pMemoryRequirements
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetImageMemoryRequirements2.html vkGetImageMemoryRequirements2 registry at www.khronos.org>
+type HS_vkGetImageMemoryRequirements2 =
+     VkDevice -- ^ device
+              ->
+       Ptr VkImageMemoryRequirementsInfo2 -- ^ pInfo
+                                          ->
+         Ptr VkMemoryRequirements2 -- ^ pMemoryRequirements
+                                   -> IO ()
+
+type PFN_vkGetImageMemoryRequirements2 =
+     FunPtr HS_vkGetImageMemoryRequirements2
+
+foreign import ccall "dynamic" unwrapVkGetImageMemoryRequirements2
+               ::
+               PFN_vkGetImageMemoryRequirements2 ->
+                 HS_vkGetImageMemoryRequirements2
+
+instance VulkanInstanceProc "vkGetImageMemoryRequirements2" where
+        type VkInstanceProcType "vkGetImageMemoryRequirements2" =
+             HS_vkGetImageMemoryRequirements2
+        vkInstanceProcSymbol = _VkGetImageMemoryRequirements2
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetImageMemoryRequirements2
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetBufferMemoryRequirements2 :: CString
+
+pattern VkGetBufferMemoryRequirements2 <-
+        (is_VkGetBufferMemoryRequirements2 -> True)
+  where VkGetBufferMemoryRequirements2
+          = _VkGetBufferMemoryRequirements2
+
+{-# INLINE _VkGetBufferMemoryRequirements2 #-}
+
+_VkGetBufferMemoryRequirements2 :: CString
+_VkGetBufferMemoryRequirements2
+  = Ptr "vkGetBufferMemoryRequirements2\NUL"#
+
+{-# INLINE is_VkGetBufferMemoryRequirements2 #-}
+
+is_VkGetBufferMemoryRequirements2 :: CString -> Bool
+is_VkGetBufferMemoryRequirements2
+  = (EQ ==) . cmpCStrings _VkGetBufferMemoryRequirements2
+
+type VkGetBufferMemoryRequirements2 =
+     "vkGetBufferMemoryRequirements2"
+
 -- | > () vkGetBufferMemoryRequirements2
 --   >     ( VkDevice device
 --   >     , const VkBufferMemoryRequirementsInfo2* pInfo
@@ -1086,6 +1653,61 @@ foreign import ccall safe "vkGetBufferMemoryRequirements2"
                                                      ->
                    Ptr VkMemoryRequirements2 -- ^ pMemoryRequirements
                                              -> IO ()
+
+-- | > () vkGetBufferMemoryRequirements2
+--   >     ( VkDevice device
+--   >     , const VkBufferMemoryRequirementsInfo2* pInfo
+--   >     , VkMemoryRequirements2* pMemoryRequirements
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetBufferMemoryRequirements2.html vkGetBufferMemoryRequirements2 registry at www.khronos.org>
+type HS_vkGetBufferMemoryRequirements2 =
+     VkDevice -- ^ device
+              ->
+       Ptr VkBufferMemoryRequirementsInfo2 -- ^ pInfo
+                                           ->
+         Ptr VkMemoryRequirements2 -- ^ pMemoryRequirements
+                                   -> IO ()
+
+type PFN_vkGetBufferMemoryRequirements2 =
+     FunPtr HS_vkGetBufferMemoryRequirements2
+
+foreign import ccall "dynamic" unwrapVkGetBufferMemoryRequirements2
+               ::
+               PFN_vkGetBufferMemoryRequirements2 ->
+                 HS_vkGetBufferMemoryRequirements2
+
+instance VulkanInstanceProc "vkGetBufferMemoryRequirements2" where
+        type VkInstanceProcType "vkGetBufferMemoryRequirements2" =
+             HS_vkGetBufferMemoryRequirements2
+        vkInstanceProcSymbol = _VkGetBufferMemoryRequirements2
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetBufferMemoryRequirements2
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetImageSparseMemoryRequirements2 :: CString
+
+pattern VkGetImageSparseMemoryRequirements2 <-
+        (is_VkGetImageSparseMemoryRequirements2 -> True)
+  where VkGetImageSparseMemoryRequirements2
+          = _VkGetImageSparseMemoryRequirements2
+
+{-# INLINE _VkGetImageSparseMemoryRequirements2 #-}
+
+_VkGetImageSparseMemoryRequirements2 :: CString
+_VkGetImageSparseMemoryRequirements2
+  = Ptr "vkGetImageSparseMemoryRequirements2\NUL"#
+
+{-# INLINE is_VkGetImageSparseMemoryRequirements2 #-}
+
+is_VkGetImageSparseMemoryRequirements2 :: CString -> Bool
+is_VkGetImageSparseMemoryRequirements2
+  = (EQ ==) . cmpCStrings _VkGetImageSparseMemoryRequirements2
+
+type VkGetImageSparseMemoryRequirements2 =
+     "vkGetImageSparseMemoryRequirements2"
 
 -- | > () vkGetImageSparseMemoryRequirements2
 --   >     ( VkDevice device
@@ -1123,6 +1745,42 @@ foreign import ccall safe "vkGetImageSparseMemoryRequirements2"
                               -> Ptr VkSparseImageMemoryRequirements2 -- ^ pSparseMemoryRequirements
                                                                       -> IO ()
 
+-- | > () vkGetImageSparseMemoryRequirements2
+--   >     ( VkDevice device
+--   >     , const VkImageSparseMemoryRequirementsInfo2* pInfo
+--   >     , uint32_t* pSparseMemoryRequirementCount
+--   >     , VkSparseImageMemoryRequirements2* pSparseMemoryRequirements
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetImageSparseMemoryRequirements2.html vkGetImageSparseMemoryRequirements2 registry at www.khronos.org>
+type HS_vkGetImageSparseMemoryRequirements2 =
+     VkDevice -- ^ device
+              ->
+       Ptr VkImageSparseMemoryRequirementsInfo2 -- ^ pInfo
+                                                ->
+         Ptr Word32 -- ^ pSparseMemoryRequirementCount
+                    -> Ptr VkSparseImageMemoryRequirements2 -- ^ pSparseMemoryRequirements
+                                                            -> IO ()
+
+type PFN_vkGetImageSparseMemoryRequirements2 =
+     FunPtr HS_vkGetImageSparseMemoryRequirements2
+
+foreign import ccall "dynamic"
+               unwrapVkGetImageSparseMemoryRequirements2 ::
+               PFN_vkGetImageSparseMemoryRequirements2 ->
+                 HS_vkGetImageSparseMemoryRequirements2
+
+instance VulkanInstanceProc "vkGetImageSparseMemoryRequirements2"
+         where
+        type VkInstanceProcType "vkGetImageSparseMemoryRequirements2" =
+             HS_vkGetImageSparseMemoryRequirements2
+        vkInstanceProcSymbol = _VkGetImageSparseMemoryRequirements2
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetImageSparseMemoryRequirements2
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
 pattern VK_STRUCTURE_TYPE_BUFFER_MEMORY_REQUIREMENTS_INFO_2 ::
         VkStructureType
 
@@ -1152,6 +1810,26 @@ pattern VK_STRUCTURE_TYPE_SPARSE_IMAGE_MEMORY_REQUIREMENTS_2 ::
 pattern VK_STRUCTURE_TYPE_SPARSE_IMAGE_MEMORY_REQUIREMENTS_2 =
         VkStructureType 1000146004
 
+pattern VkGetPhysicalDeviceFeatures2 :: CString
+
+pattern VkGetPhysicalDeviceFeatures2 <-
+        (is_VkGetPhysicalDeviceFeatures2 -> True)
+  where VkGetPhysicalDeviceFeatures2 = _VkGetPhysicalDeviceFeatures2
+
+{-# INLINE _VkGetPhysicalDeviceFeatures2 #-}
+
+_VkGetPhysicalDeviceFeatures2 :: CString
+_VkGetPhysicalDeviceFeatures2
+  = Ptr "vkGetPhysicalDeviceFeatures2\NUL"#
+
+{-# INLINE is_VkGetPhysicalDeviceFeatures2 #-}
+
+is_VkGetPhysicalDeviceFeatures2 :: CString -> Bool
+is_VkGetPhysicalDeviceFeatures2
+  = (EQ ==) . cmpCStrings _VkGetPhysicalDeviceFeatures2
+
+type VkGetPhysicalDeviceFeatures2 = "vkGetPhysicalDeviceFeatures2"
+
 -- | > () vkGetPhysicalDeviceFeatures2
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkPhysicalDeviceFeatures2* pFeatures
@@ -1176,6 +1854,56 @@ foreign import ccall safe "vkGetPhysicalDeviceFeatures2"
                                 -> Ptr VkPhysicalDeviceFeatures2 -- ^ pFeatures
                                                                  -> IO ()
 
+-- | > () vkGetPhysicalDeviceFeatures2
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , VkPhysicalDeviceFeatures2* pFeatures
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceFeatures2.html vkGetPhysicalDeviceFeatures2 registry at www.khronos.org>
+type HS_vkGetPhysicalDeviceFeatures2 =
+     VkPhysicalDevice -- ^ physicalDevice
+                      -> Ptr VkPhysicalDeviceFeatures2 -- ^ pFeatures
+                                                       -> IO ()
+
+type PFN_vkGetPhysicalDeviceFeatures2 =
+     FunPtr HS_vkGetPhysicalDeviceFeatures2
+
+foreign import ccall "dynamic" unwrapVkGetPhysicalDeviceFeatures2
+               ::
+               PFN_vkGetPhysicalDeviceFeatures2 -> HS_vkGetPhysicalDeviceFeatures2
+
+instance VulkanInstanceProc "vkGetPhysicalDeviceFeatures2" where
+        type VkInstanceProcType "vkGetPhysicalDeviceFeatures2" =
+             HS_vkGetPhysicalDeviceFeatures2
+        vkInstanceProcSymbol = _VkGetPhysicalDeviceFeatures2
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetPhysicalDeviceFeatures2
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetPhysicalDeviceProperties2 :: CString
+
+pattern VkGetPhysicalDeviceProperties2 <-
+        (is_VkGetPhysicalDeviceProperties2 -> True)
+  where VkGetPhysicalDeviceProperties2
+          = _VkGetPhysicalDeviceProperties2
+
+{-# INLINE _VkGetPhysicalDeviceProperties2 #-}
+
+_VkGetPhysicalDeviceProperties2 :: CString
+_VkGetPhysicalDeviceProperties2
+  = Ptr "vkGetPhysicalDeviceProperties2\NUL"#
+
+{-# INLINE is_VkGetPhysicalDeviceProperties2 #-}
+
+is_VkGetPhysicalDeviceProperties2 :: CString -> Bool
+is_VkGetPhysicalDeviceProperties2
+  = (EQ ==) . cmpCStrings _VkGetPhysicalDeviceProperties2
+
+type VkGetPhysicalDeviceProperties2 =
+     "vkGetPhysicalDeviceProperties2"
+
 -- | > () vkGetPhysicalDeviceProperties2
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkPhysicalDeviceProperties2* pProperties
@@ -1199,6 +1927,57 @@ foreign import ccall safe "vkGetPhysicalDeviceProperties2"
                VkPhysicalDevice -- ^ physicalDevice
                                 -> Ptr VkPhysicalDeviceProperties2 -- ^ pProperties
                                                                    -> IO ()
+
+-- | > () vkGetPhysicalDeviceProperties2
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , VkPhysicalDeviceProperties2* pProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceProperties2.html vkGetPhysicalDeviceProperties2 registry at www.khronos.org>
+type HS_vkGetPhysicalDeviceProperties2 =
+     VkPhysicalDevice -- ^ physicalDevice
+                      -> Ptr VkPhysicalDeviceProperties2 -- ^ pProperties
+                                                         -> IO ()
+
+type PFN_vkGetPhysicalDeviceProperties2 =
+     FunPtr HS_vkGetPhysicalDeviceProperties2
+
+foreign import ccall "dynamic" unwrapVkGetPhysicalDeviceProperties2
+               ::
+               PFN_vkGetPhysicalDeviceProperties2 ->
+                 HS_vkGetPhysicalDeviceProperties2
+
+instance VulkanInstanceProc "vkGetPhysicalDeviceProperties2" where
+        type VkInstanceProcType "vkGetPhysicalDeviceProperties2" =
+             HS_vkGetPhysicalDeviceProperties2
+        vkInstanceProcSymbol = _VkGetPhysicalDeviceProperties2
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetPhysicalDeviceProperties2
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetPhysicalDeviceFormatProperties2 :: CString
+
+pattern VkGetPhysicalDeviceFormatProperties2 <-
+        (is_VkGetPhysicalDeviceFormatProperties2 -> True)
+  where VkGetPhysicalDeviceFormatProperties2
+          = _VkGetPhysicalDeviceFormatProperties2
+
+{-# INLINE _VkGetPhysicalDeviceFormatProperties2 #-}
+
+_VkGetPhysicalDeviceFormatProperties2 :: CString
+_VkGetPhysicalDeviceFormatProperties2
+  = Ptr "vkGetPhysicalDeviceFormatProperties2\NUL"#
+
+{-# INLINE is_VkGetPhysicalDeviceFormatProperties2 #-}
+
+is_VkGetPhysicalDeviceFormatProperties2 :: CString -> Bool
+is_VkGetPhysicalDeviceFormatProperties2
+  = (EQ ==) . cmpCStrings _VkGetPhysicalDeviceFormatProperties2
+
+type VkGetPhysicalDeviceFormatProperties2 =
+     "vkGetPhysicalDeviceFormatProperties2"
 
 -- | > () vkGetPhysicalDeviceFormatProperties2
 --   >     ( VkPhysicalDevice physicalDevice
@@ -1227,6 +2006,60 @@ foreign import ccall safe "vkGetPhysicalDeviceFormatProperties2"
                                 -> VkFormat -- ^ format
                                             -> Ptr VkFormatProperties2 -- ^ pFormatProperties
                                                                        -> IO ()
+
+-- | > () vkGetPhysicalDeviceFormatProperties2
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , VkFormat format
+--   >     , VkFormatProperties2* pFormatProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceFormatProperties2.html vkGetPhysicalDeviceFormatProperties2 registry at www.khronos.org>
+type HS_vkGetPhysicalDeviceFormatProperties2 =
+     VkPhysicalDevice -- ^ physicalDevice
+                      -> VkFormat -- ^ format
+                                  -> Ptr VkFormatProperties2 -- ^ pFormatProperties
+                                                             -> IO ()
+
+type PFN_vkGetPhysicalDeviceFormatProperties2 =
+     FunPtr HS_vkGetPhysicalDeviceFormatProperties2
+
+foreign import ccall "dynamic"
+               unwrapVkGetPhysicalDeviceFormatProperties2 ::
+               PFN_vkGetPhysicalDeviceFormatProperties2 ->
+                 HS_vkGetPhysicalDeviceFormatProperties2
+
+instance VulkanInstanceProc "vkGetPhysicalDeviceFormatProperties2"
+         where
+        type VkInstanceProcType "vkGetPhysicalDeviceFormatProperties2" =
+             HS_vkGetPhysicalDeviceFormatProperties2
+        vkInstanceProcSymbol = _VkGetPhysicalDeviceFormatProperties2
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetPhysicalDeviceFormatProperties2
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetPhysicalDeviceImageFormatProperties2 :: CString
+
+pattern VkGetPhysicalDeviceImageFormatProperties2 <-
+        (is_VkGetPhysicalDeviceImageFormatProperties2 -> True)
+  where VkGetPhysicalDeviceImageFormatProperties2
+          = _VkGetPhysicalDeviceImageFormatProperties2
+
+{-# INLINE _VkGetPhysicalDeviceImageFormatProperties2 #-}
+
+_VkGetPhysicalDeviceImageFormatProperties2 :: CString
+_VkGetPhysicalDeviceImageFormatProperties2
+  = Ptr "vkGetPhysicalDeviceImageFormatProperties2\NUL"#
+
+{-# INLINE is_VkGetPhysicalDeviceImageFormatProperties2 #-}
+
+is_VkGetPhysicalDeviceImageFormatProperties2 :: CString -> Bool
+is_VkGetPhysicalDeviceImageFormatProperties2
+  = (EQ ==) . cmpCStrings _VkGetPhysicalDeviceImageFormatProperties2
+
+type VkGetPhysicalDeviceImageFormatProperties2 =
+     "vkGetPhysicalDeviceImageFormatProperties2"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -1270,6 +2103,68 @@ foreign import ccall safe
                    Ptr VkImageFormatProperties2 -- ^ pImageFormatProperties
                                                 -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_FORMAT_NOT_SUPPORTED'.
+--
+--   > VkResult vkGetPhysicalDeviceImageFormatProperties2
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , const VkPhysicalDeviceImageFormatInfo2* pImageFormatInfo
+--   >     , VkImageFormatProperties2* pImageFormatProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceImageFormatProperties2.html vkGetPhysicalDeviceImageFormatProperties2 registry at www.khronos.org>
+type HS_vkGetPhysicalDeviceImageFormatProperties2 =
+     VkPhysicalDevice -- ^ physicalDevice
+                      ->
+       Ptr VkPhysicalDeviceImageFormatInfo2 -- ^ pImageFormatInfo
+                                            ->
+         Ptr VkImageFormatProperties2 -- ^ pImageFormatProperties
+                                      -> IO VkResult
+
+type PFN_vkGetPhysicalDeviceImageFormatProperties2 =
+     FunPtr HS_vkGetPhysicalDeviceImageFormatProperties2
+
+foreign import ccall "dynamic"
+               unwrapVkGetPhysicalDeviceImageFormatProperties2 ::
+               PFN_vkGetPhysicalDeviceImageFormatProperties2 ->
+                 HS_vkGetPhysicalDeviceImageFormatProperties2
+
+instance VulkanInstanceProc
+           "vkGetPhysicalDeviceImageFormatProperties2"
+         where
+        type VkInstanceProcType "vkGetPhysicalDeviceImageFormatProperties2"
+             = HS_vkGetPhysicalDeviceImageFormatProperties2
+        vkInstanceProcSymbol = _VkGetPhysicalDeviceImageFormatProperties2
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc
+          = unwrapVkGetPhysicalDeviceImageFormatProperties2
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetPhysicalDeviceQueueFamilyProperties2 :: CString
+
+pattern VkGetPhysicalDeviceQueueFamilyProperties2 <-
+        (is_VkGetPhysicalDeviceQueueFamilyProperties2 -> True)
+  where VkGetPhysicalDeviceQueueFamilyProperties2
+          = _VkGetPhysicalDeviceQueueFamilyProperties2
+
+{-# INLINE _VkGetPhysicalDeviceQueueFamilyProperties2 #-}
+
+_VkGetPhysicalDeviceQueueFamilyProperties2 :: CString
+_VkGetPhysicalDeviceQueueFamilyProperties2
+  = Ptr "vkGetPhysicalDeviceQueueFamilyProperties2\NUL"#
+
+{-# INLINE is_VkGetPhysicalDeviceQueueFamilyProperties2 #-}
+
+is_VkGetPhysicalDeviceQueueFamilyProperties2 :: CString -> Bool
+is_VkGetPhysicalDeviceQueueFamilyProperties2
+  = (EQ ==) . cmpCStrings _VkGetPhysicalDeviceQueueFamilyProperties2
+
+type VkGetPhysicalDeviceQueueFamilyProperties2 =
+     "vkGetPhysicalDeviceQueueFamilyProperties2"
+
 -- | > () vkGetPhysicalDeviceQueueFamilyProperties2
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , uint32_t* pQueueFamilyPropertyCount
@@ -1302,6 +2197,63 @@ foreign import ccall safe
                             -> Ptr VkQueueFamilyProperties2 -- ^ pQueueFamilyProperties
                                                             -> IO ()
 
+-- | > () vkGetPhysicalDeviceQueueFamilyProperties2
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , uint32_t* pQueueFamilyPropertyCount
+--   >     , VkQueueFamilyProperties2* pQueueFamilyProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties2.html vkGetPhysicalDeviceQueueFamilyProperties2 registry at www.khronos.org>
+type HS_vkGetPhysicalDeviceQueueFamilyProperties2 =
+     VkPhysicalDevice -- ^ physicalDevice
+                      ->
+       Ptr Word32 -- ^ pQueueFamilyPropertyCount
+                  -> Ptr VkQueueFamilyProperties2 -- ^ pQueueFamilyProperties
+                                                  -> IO ()
+
+type PFN_vkGetPhysicalDeviceQueueFamilyProperties2 =
+     FunPtr HS_vkGetPhysicalDeviceQueueFamilyProperties2
+
+foreign import ccall "dynamic"
+               unwrapVkGetPhysicalDeviceQueueFamilyProperties2 ::
+               PFN_vkGetPhysicalDeviceQueueFamilyProperties2 ->
+                 HS_vkGetPhysicalDeviceQueueFamilyProperties2
+
+instance VulkanInstanceProc
+           "vkGetPhysicalDeviceQueueFamilyProperties2"
+         where
+        type VkInstanceProcType "vkGetPhysicalDeviceQueueFamilyProperties2"
+             = HS_vkGetPhysicalDeviceQueueFamilyProperties2
+        vkInstanceProcSymbol = _VkGetPhysicalDeviceQueueFamilyProperties2
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc
+          = unwrapVkGetPhysicalDeviceQueueFamilyProperties2
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetPhysicalDeviceMemoryProperties2 :: CString
+
+pattern VkGetPhysicalDeviceMemoryProperties2 <-
+        (is_VkGetPhysicalDeviceMemoryProperties2 -> True)
+  where VkGetPhysicalDeviceMemoryProperties2
+          = _VkGetPhysicalDeviceMemoryProperties2
+
+{-# INLINE _VkGetPhysicalDeviceMemoryProperties2 #-}
+
+_VkGetPhysicalDeviceMemoryProperties2 :: CString
+_VkGetPhysicalDeviceMemoryProperties2
+  = Ptr "vkGetPhysicalDeviceMemoryProperties2\NUL"#
+
+{-# INLINE is_VkGetPhysicalDeviceMemoryProperties2 #-}
+
+is_VkGetPhysicalDeviceMemoryProperties2 :: CString -> Bool
+is_VkGetPhysicalDeviceMemoryProperties2
+  = (EQ ==) . cmpCStrings _VkGetPhysicalDeviceMemoryProperties2
+
+type VkGetPhysicalDeviceMemoryProperties2 =
+     "vkGetPhysicalDeviceMemoryProperties2"
+
 -- | > () vkGetPhysicalDeviceMemoryProperties2
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkPhysicalDeviceMemoryProperties2* pMemoryProperties
@@ -1325,6 +2277,60 @@ foreign import ccall safe "vkGetPhysicalDeviceMemoryProperties2"
                VkPhysicalDevice -- ^ physicalDevice
                                 -> Ptr VkPhysicalDeviceMemoryProperties2 -- ^ pMemoryProperties
                                                                          -> IO ()
+
+-- | > () vkGetPhysicalDeviceMemoryProperties2
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , VkPhysicalDeviceMemoryProperties2* pMemoryProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceMemoryProperties2.html vkGetPhysicalDeviceMemoryProperties2 registry at www.khronos.org>
+type HS_vkGetPhysicalDeviceMemoryProperties2 =
+     VkPhysicalDevice -- ^ physicalDevice
+                      -> Ptr VkPhysicalDeviceMemoryProperties2 -- ^ pMemoryProperties
+                                                               -> IO ()
+
+type PFN_vkGetPhysicalDeviceMemoryProperties2 =
+     FunPtr HS_vkGetPhysicalDeviceMemoryProperties2
+
+foreign import ccall "dynamic"
+               unwrapVkGetPhysicalDeviceMemoryProperties2 ::
+               PFN_vkGetPhysicalDeviceMemoryProperties2 ->
+                 HS_vkGetPhysicalDeviceMemoryProperties2
+
+instance VulkanInstanceProc "vkGetPhysicalDeviceMemoryProperties2"
+         where
+        type VkInstanceProcType "vkGetPhysicalDeviceMemoryProperties2" =
+             HS_vkGetPhysicalDeviceMemoryProperties2
+        vkInstanceProcSymbol = _VkGetPhysicalDeviceMemoryProperties2
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetPhysicalDeviceMemoryProperties2
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetPhysicalDeviceSparseImageFormatProperties2 :: CString
+
+pattern VkGetPhysicalDeviceSparseImageFormatProperties2 <-
+        (is_VkGetPhysicalDeviceSparseImageFormatProperties2 -> True)
+  where VkGetPhysicalDeviceSparseImageFormatProperties2
+          = _VkGetPhysicalDeviceSparseImageFormatProperties2
+
+{-# INLINE _VkGetPhysicalDeviceSparseImageFormatProperties2 #-}
+
+_VkGetPhysicalDeviceSparseImageFormatProperties2 :: CString
+_VkGetPhysicalDeviceSparseImageFormatProperties2
+  = Ptr "vkGetPhysicalDeviceSparseImageFormatProperties2\NUL"#
+
+{-# INLINE is_VkGetPhysicalDeviceSparseImageFormatProperties2 #-}
+
+is_VkGetPhysicalDeviceSparseImageFormatProperties2 ::
+                                                   CString -> Bool
+is_VkGetPhysicalDeviceSparseImageFormatProperties2
+  = (EQ ==) .
+      cmpCStrings _VkGetPhysicalDeviceSparseImageFormatProperties2
+
+type VkGetPhysicalDeviceSparseImageFormatProperties2 =
+     "vkGetPhysicalDeviceSparseImageFormatProperties2"
 
 -- | > () vkGetPhysicalDeviceSparseImageFormatProperties2
 --   >     ( VkPhysicalDevice physicalDevice
@@ -1363,6 +2369,46 @@ foreign import ccall safe
                    Ptr Word32 -- ^ pPropertyCount
                               -> Ptr VkSparseImageFormatProperties2 -- ^ pProperties
                                                                     -> IO ()
+
+-- | > () vkGetPhysicalDeviceSparseImageFormatProperties2
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , const VkPhysicalDeviceSparseImageFormatInfo2* pFormatInfo
+--   >     , uint32_t* pPropertyCount
+--   >     , VkSparseImageFormatProperties2* pProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceSparseImageFormatProperties2.html vkGetPhysicalDeviceSparseImageFormatProperties2 registry at www.khronos.org>
+type HS_vkGetPhysicalDeviceSparseImageFormatProperties2 =
+     VkPhysicalDevice -- ^ physicalDevice
+                      ->
+       Ptr VkPhysicalDeviceSparseImageFormatInfo2 -- ^ pFormatInfo
+                                                  ->
+         Ptr Word32 -- ^ pPropertyCount
+                    -> Ptr VkSparseImageFormatProperties2 -- ^ pProperties
+                                                          -> IO ()
+
+type PFN_vkGetPhysicalDeviceSparseImageFormatProperties2 =
+     FunPtr HS_vkGetPhysicalDeviceSparseImageFormatProperties2
+
+foreign import ccall "dynamic"
+               unwrapVkGetPhysicalDeviceSparseImageFormatProperties2 ::
+               PFN_vkGetPhysicalDeviceSparseImageFormatProperties2 ->
+                 HS_vkGetPhysicalDeviceSparseImageFormatProperties2
+
+instance VulkanInstanceProc
+           "vkGetPhysicalDeviceSparseImageFormatProperties2"
+         where
+        type VkInstanceProcType
+               "vkGetPhysicalDeviceSparseImageFormatProperties2"
+             = HS_vkGetPhysicalDeviceSparseImageFormatProperties2
+        vkInstanceProcSymbol
+          = _VkGetPhysicalDeviceSparseImageFormatProperties2
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc
+          = unwrapVkGetPhysicalDeviceSparseImageFormatProperties2
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2 ::
         VkStructureType
@@ -1417,6 +2463,23 @@ pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2
 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2
         = VkStructureType 1000059008
 
+pattern VkTrimCommandPool :: CString
+
+pattern VkTrimCommandPool <- (is_VkTrimCommandPool -> True)
+  where VkTrimCommandPool = _VkTrimCommandPool
+
+{-# INLINE _VkTrimCommandPool #-}
+
+_VkTrimCommandPool :: CString
+_VkTrimCommandPool = Ptr "vkTrimCommandPool\NUL"#
+
+{-# INLINE is_VkTrimCommandPool #-}
+
+is_VkTrimCommandPool :: CString -> Bool
+is_VkTrimCommandPool = (EQ ==) . cmpCStrings _VkTrimCommandPool
+
+type VkTrimCommandPool = "vkTrimCommandPool"
+
 -- | > () vkTrimCommandPool
 --   >     ( VkDevice device
 --   >     , VkCommandPool commandPool
@@ -1442,6 +2505,33 @@ foreign import ccall safe "vkTrimCommandPool" vkTrimCommandPoolSafe
                            -> VkCommandPool -- ^ commandPool
                                             -> VkCommandPoolTrimFlags -- ^ flags
                                                                       -> IO ()
+
+-- | > () vkTrimCommandPool
+--   >     ( VkDevice device
+--   >     , VkCommandPool commandPool
+--   >     , VkCommandPoolTrimFlags flags
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkTrimCommandPool.html vkTrimCommandPool registry at www.khronos.org>
+type HS_vkTrimCommandPool =
+     VkDevice -- ^ device
+              -> VkCommandPool -- ^ commandPool
+                               -> VkCommandPoolTrimFlags -- ^ flags
+                                                         -> IO ()
+
+type PFN_vkTrimCommandPool = FunPtr HS_vkTrimCommandPool
+
+foreign import ccall "dynamic" unwrapVkTrimCommandPool ::
+               PFN_vkTrimCommandPool -> HS_vkTrimCommandPool
+
+instance VulkanInstanceProc "vkTrimCommandPool" where
+        type VkInstanceProcType "vkTrimCommandPool" = HS_vkTrimCommandPool
+        vkInstanceProcSymbol = _VkTrimCommandPool
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkTrimCommandPool
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_ERROR_OUT_OF_POOL_MEMORY :: VkResult
 
@@ -1552,6 +2642,23 @@ pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES
 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES
         = VkStructureType 1000120000
 
+pattern VkGetDeviceQueue2 :: CString
+
+pattern VkGetDeviceQueue2 <- (is_VkGetDeviceQueue2 -> True)
+  where VkGetDeviceQueue2 = _VkGetDeviceQueue2
+
+{-# INLINE _VkGetDeviceQueue2 #-}
+
+_VkGetDeviceQueue2 :: CString
+_VkGetDeviceQueue2 = Ptr "vkGetDeviceQueue2\NUL"#
+
+{-# INLINE is_VkGetDeviceQueue2 #-}
+
+is_VkGetDeviceQueue2 :: CString -> Bool
+is_VkGetDeviceQueue2 = (EQ ==) . cmpCStrings _VkGetDeviceQueue2
+
+type VkGetDeviceQueue2 = "vkGetDeviceQueue2"
+
 -- | > () vkGetDeviceQueue2
 --   >     ( VkDevice device
 --   >     , const VkDeviceQueueInfo2* pQueueInfo
@@ -1577,6 +2684,33 @@ foreign import ccall safe "vkGetDeviceQueue2" vkGetDeviceQueue2Safe
                            -> Ptr VkDeviceQueueInfo2 -- ^ pQueueInfo
                                                      -> Ptr VkQueue -- ^ pQueue
                                                                     -> IO ()
+
+-- | > () vkGetDeviceQueue2
+--   >     ( VkDevice device
+--   >     , const VkDeviceQueueInfo2* pQueueInfo
+--   >     , VkQueue* pQueue
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceQueue2.html vkGetDeviceQueue2 registry at www.khronos.org>
+type HS_vkGetDeviceQueue2 =
+     VkDevice -- ^ device
+              -> Ptr VkDeviceQueueInfo2 -- ^ pQueueInfo
+                                        -> Ptr VkQueue -- ^ pQueue
+                                                       -> IO ()
+
+type PFN_vkGetDeviceQueue2 = FunPtr HS_vkGetDeviceQueue2
+
+foreign import ccall "dynamic" unwrapVkGetDeviceQueue2 ::
+               PFN_vkGetDeviceQueue2 -> HS_vkGetDeviceQueue2
+
+instance VulkanInstanceProc "vkGetDeviceQueue2" where
+        type VkInstanceProcType "vkGetDeviceQueue2" = HS_vkGetDeviceQueue2
+        vkInstanceProcSymbol = _VkGetDeviceQueue2
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetDeviceQueue2
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_STRUCTURE_TYPE_PROTECTED_SUBMIT_INFO :: VkStructureType
 
@@ -1648,6 +2782,28 @@ pattern VK_COMMAND_POOL_CREATE_PROTECTED_BIT ::
 pattern VK_COMMAND_POOL_CREATE_PROTECTED_BIT =
         VkCommandPoolCreateFlagBits 4
 
+pattern VkCreateSamplerYcbcrConversion :: CString
+
+pattern VkCreateSamplerYcbcrConversion <-
+        (is_VkCreateSamplerYcbcrConversion -> True)
+  where VkCreateSamplerYcbcrConversion
+          = _VkCreateSamplerYcbcrConversion
+
+{-# INLINE _VkCreateSamplerYcbcrConversion #-}
+
+_VkCreateSamplerYcbcrConversion :: CString
+_VkCreateSamplerYcbcrConversion
+  = Ptr "vkCreateSamplerYcbcrConversion\NUL"#
+
+{-# INLINE is_VkCreateSamplerYcbcrConversion #-}
+
+is_VkCreateSamplerYcbcrConversion :: CString -> Bool
+is_VkCreateSamplerYcbcrConversion
+  = (EQ ==) . cmpCStrings _VkCreateSamplerYcbcrConversion
+
+type VkCreateSamplerYcbcrConversion =
+     "vkCreateSamplerYcbcrConversion"
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
@@ -1694,6 +2850,68 @@ foreign import ccall safe "vkCreateSamplerYcbcrConversion"
                      Ptr VkSamplerYcbcrConversion -- ^ pYcbcrConversion
                                                   -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkCreateSamplerYcbcrConversion
+--   >     ( VkDevice device
+--   >     , const VkSamplerYcbcrConversionCreateInfo* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkSamplerYcbcrConversion* pYcbcrConversion
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateSamplerYcbcrConversion.html vkCreateSamplerYcbcrConversion registry at www.khronos.org>
+type HS_vkCreateSamplerYcbcrConversion =
+     VkDevice -- ^ device
+              ->
+       Ptr VkSamplerYcbcrConversionCreateInfo -- ^ pCreateInfo
+                                              ->
+         Ptr VkAllocationCallbacks -- ^ pAllocator
+                                   ->
+           Ptr VkSamplerYcbcrConversion -- ^ pYcbcrConversion
+                                        -> IO VkResult
+
+type PFN_vkCreateSamplerYcbcrConversion =
+     FunPtr HS_vkCreateSamplerYcbcrConversion
+
+foreign import ccall "dynamic" unwrapVkCreateSamplerYcbcrConversion
+               ::
+               PFN_vkCreateSamplerYcbcrConversion ->
+                 HS_vkCreateSamplerYcbcrConversion
+
+instance VulkanInstanceProc "vkCreateSamplerYcbcrConversion" where
+        type VkInstanceProcType "vkCreateSamplerYcbcrConversion" =
+             HS_vkCreateSamplerYcbcrConversion
+        vkInstanceProcSymbol = _VkCreateSamplerYcbcrConversion
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCreateSamplerYcbcrConversion
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkDestroySamplerYcbcrConversion :: CString
+
+pattern VkDestroySamplerYcbcrConversion <-
+        (is_VkDestroySamplerYcbcrConversion -> True)
+  where VkDestroySamplerYcbcrConversion
+          = _VkDestroySamplerYcbcrConversion
+
+{-# INLINE _VkDestroySamplerYcbcrConversion #-}
+
+_VkDestroySamplerYcbcrConversion :: CString
+_VkDestroySamplerYcbcrConversion
+  = Ptr "vkDestroySamplerYcbcrConversion\NUL"#
+
+{-# INLINE is_VkDestroySamplerYcbcrConversion #-}
+
+is_VkDestroySamplerYcbcrConversion :: CString -> Bool
+is_VkDestroySamplerYcbcrConversion
+  = (EQ ==) . cmpCStrings _VkDestroySamplerYcbcrConversion
+
+type VkDestroySamplerYcbcrConversion =
+     "vkDestroySamplerYcbcrConversion"
+
 -- | > () vkDestroySamplerYcbcrConversion
 --   >     ( VkDevice device
 --   >     , VkSamplerYcbcrConversion ycbcrConversion
@@ -1723,6 +2941,38 @@ foreign import ccall safe "vkDestroySamplerYcbcrConversion"
                  VkSamplerYcbcrConversion -- ^ ycbcrConversion
                                           -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                        -> IO ()
+
+-- | > () vkDestroySamplerYcbcrConversion
+--   >     ( VkDevice device
+--   >     , VkSamplerYcbcrConversion ycbcrConversion
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroySamplerYcbcrConversion.html vkDestroySamplerYcbcrConversion registry at www.khronos.org>
+type HS_vkDestroySamplerYcbcrConversion =
+     VkDevice -- ^ device
+              ->
+       VkSamplerYcbcrConversion -- ^ ycbcrConversion
+                                -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                             -> IO ()
+
+type PFN_vkDestroySamplerYcbcrConversion =
+     FunPtr HS_vkDestroySamplerYcbcrConversion
+
+foreign import ccall "dynamic"
+               unwrapVkDestroySamplerYcbcrConversion ::
+               PFN_vkDestroySamplerYcbcrConversion ->
+                 HS_vkDestroySamplerYcbcrConversion
+
+instance VulkanInstanceProc "vkDestroySamplerYcbcrConversion" where
+        type VkInstanceProcType "vkDestroySamplerYcbcrConversion" =
+             HS_vkDestroySamplerYcbcrConversion
+        vkInstanceProcSymbol = _VkDestroySamplerYcbcrConversion
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkDestroySamplerYcbcrConversion
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_CREATE_INFO ::
         VkStructureType
@@ -2012,6 +3262,28 @@ pattern VK_FORMAT_FEATURE_COSITED_CHROMA_SAMPLES_BIT ::
 pattern VK_FORMAT_FEATURE_COSITED_CHROMA_SAMPLES_BIT =
         VkFormatFeatureFlagBits 8388608
 
+pattern VkCreateDescriptorUpdateTemplate :: CString
+
+pattern VkCreateDescriptorUpdateTemplate <-
+        (is_VkCreateDescriptorUpdateTemplate -> True)
+  where VkCreateDescriptorUpdateTemplate
+          = _VkCreateDescriptorUpdateTemplate
+
+{-# INLINE _VkCreateDescriptorUpdateTemplate #-}
+
+_VkCreateDescriptorUpdateTemplate :: CString
+_VkCreateDescriptorUpdateTemplate
+  = Ptr "vkCreateDescriptorUpdateTemplate\NUL"#
+
+{-# INLINE is_VkCreateDescriptorUpdateTemplate #-}
+
+is_VkCreateDescriptorUpdateTemplate :: CString -> Bool
+is_VkCreateDescriptorUpdateTemplate
+  = (EQ ==) . cmpCStrings _VkCreateDescriptorUpdateTemplate
+
+type VkCreateDescriptorUpdateTemplate =
+     "vkCreateDescriptorUpdateTemplate"
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
@@ -2058,6 +3330,69 @@ foreign import ccall safe "vkCreateDescriptorUpdateTemplate"
                      Ptr VkDescriptorUpdateTemplate -- ^ pDescriptorUpdateTemplate
                                                     -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkCreateDescriptorUpdateTemplate
+--   >     ( VkDevice device
+--   >     , const VkDescriptorUpdateTemplateCreateInfo* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkDescriptorUpdateTemplate* pDescriptorUpdateTemplate
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateDescriptorUpdateTemplate.html vkCreateDescriptorUpdateTemplate registry at www.khronos.org>
+type HS_vkCreateDescriptorUpdateTemplate =
+     VkDevice -- ^ device
+              ->
+       Ptr VkDescriptorUpdateTemplateCreateInfo -- ^ pCreateInfo
+                                                ->
+         Ptr VkAllocationCallbacks -- ^ pAllocator
+                                   ->
+           Ptr VkDescriptorUpdateTemplate -- ^ pDescriptorUpdateTemplate
+                                          -> IO VkResult
+
+type PFN_vkCreateDescriptorUpdateTemplate =
+     FunPtr HS_vkCreateDescriptorUpdateTemplate
+
+foreign import ccall "dynamic"
+               unwrapVkCreateDescriptorUpdateTemplate ::
+               PFN_vkCreateDescriptorUpdateTemplate ->
+                 HS_vkCreateDescriptorUpdateTemplate
+
+instance VulkanInstanceProc "vkCreateDescriptorUpdateTemplate"
+         where
+        type VkInstanceProcType "vkCreateDescriptorUpdateTemplate" =
+             HS_vkCreateDescriptorUpdateTemplate
+        vkInstanceProcSymbol = _VkCreateDescriptorUpdateTemplate
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCreateDescriptorUpdateTemplate
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkDestroyDescriptorUpdateTemplate :: CString
+
+pattern VkDestroyDescriptorUpdateTemplate <-
+        (is_VkDestroyDescriptorUpdateTemplate -> True)
+  where VkDestroyDescriptorUpdateTemplate
+          = _VkDestroyDescriptorUpdateTemplate
+
+{-# INLINE _VkDestroyDescriptorUpdateTemplate #-}
+
+_VkDestroyDescriptorUpdateTemplate :: CString
+_VkDestroyDescriptorUpdateTemplate
+  = Ptr "vkDestroyDescriptorUpdateTemplate\NUL"#
+
+{-# INLINE is_VkDestroyDescriptorUpdateTemplate #-}
+
+is_VkDestroyDescriptorUpdateTemplate :: CString -> Bool
+is_VkDestroyDescriptorUpdateTemplate
+  = (EQ ==) . cmpCStrings _VkDestroyDescriptorUpdateTemplate
+
+type VkDestroyDescriptorUpdateTemplate =
+     "vkDestroyDescriptorUpdateTemplate"
+
 -- | > () vkDestroyDescriptorUpdateTemplate
 --   >     ( VkDevice device
 --   >     , VkDescriptorUpdateTemplate descriptorUpdateTemplate
@@ -2087,6 +3422,61 @@ foreign import ccall safe "vkDestroyDescriptorUpdateTemplate"
                  VkDescriptorUpdateTemplate -- ^ descriptorUpdateTemplate
                                             -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                          -> IO ()
+
+-- | > () vkDestroyDescriptorUpdateTemplate
+--   >     ( VkDevice device
+--   >     , VkDescriptorUpdateTemplate descriptorUpdateTemplate
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyDescriptorUpdateTemplate.html vkDestroyDescriptorUpdateTemplate registry at www.khronos.org>
+type HS_vkDestroyDescriptorUpdateTemplate =
+     VkDevice -- ^ device
+              ->
+       VkDescriptorUpdateTemplate -- ^ descriptorUpdateTemplate
+                                  -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                               -> IO ()
+
+type PFN_vkDestroyDescriptorUpdateTemplate =
+     FunPtr HS_vkDestroyDescriptorUpdateTemplate
+
+foreign import ccall "dynamic"
+               unwrapVkDestroyDescriptorUpdateTemplate ::
+               PFN_vkDestroyDescriptorUpdateTemplate ->
+                 HS_vkDestroyDescriptorUpdateTemplate
+
+instance VulkanInstanceProc "vkDestroyDescriptorUpdateTemplate"
+         where
+        type VkInstanceProcType "vkDestroyDescriptorUpdateTemplate" =
+             HS_vkDestroyDescriptorUpdateTemplate
+        vkInstanceProcSymbol = _VkDestroyDescriptorUpdateTemplate
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkDestroyDescriptorUpdateTemplate
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkUpdateDescriptorSetWithTemplate :: CString
+
+pattern VkUpdateDescriptorSetWithTemplate <-
+        (is_VkUpdateDescriptorSetWithTemplate -> True)
+  where VkUpdateDescriptorSetWithTemplate
+          = _VkUpdateDescriptorSetWithTemplate
+
+{-# INLINE _VkUpdateDescriptorSetWithTemplate #-}
+
+_VkUpdateDescriptorSetWithTemplate :: CString
+_VkUpdateDescriptorSetWithTemplate
+  = Ptr "vkUpdateDescriptorSetWithTemplate\NUL"#
+
+{-# INLINE is_VkUpdateDescriptorSetWithTemplate #-}
+
+is_VkUpdateDescriptorSetWithTemplate :: CString -> Bool
+is_VkUpdateDescriptorSetWithTemplate
+  = (EQ ==) . cmpCStrings _VkUpdateDescriptorSetWithTemplate
+
+type VkUpdateDescriptorSetWithTemplate =
+     "vkUpdateDescriptorSetWithTemplate"
 
 -- | > () vkUpdateDescriptorSetWithTemplate
 --   >     ( VkDevice device
@@ -2122,6 +3512,41 @@ foreign import ccall safe "vkUpdateDescriptorSetWithTemplate"
                                                                -> Ptr Void -- ^ pData
                                                                            -> IO ()
 
+-- | > () vkUpdateDescriptorSetWithTemplate
+--   >     ( VkDevice device
+--   >     , VkDescriptorSet descriptorSet
+--   >     , VkDescriptorUpdateTemplate descriptorUpdateTemplate
+--   >     , const void* pData
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkUpdateDescriptorSetWithTemplate.html vkUpdateDescriptorSetWithTemplate registry at www.khronos.org>
+type HS_vkUpdateDescriptorSetWithTemplate =
+     VkDevice -- ^ device
+              ->
+       VkDescriptorSet -- ^ descriptorSet
+                       -> VkDescriptorUpdateTemplate -- ^ descriptorUpdateTemplate
+                                                     -> Ptr Void -- ^ pData
+                                                                 -> IO ()
+
+type PFN_vkUpdateDescriptorSetWithTemplate =
+     FunPtr HS_vkUpdateDescriptorSetWithTemplate
+
+foreign import ccall "dynamic"
+               unwrapVkUpdateDescriptorSetWithTemplate ::
+               PFN_vkUpdateDescriptorSetWithTemplate ->
+                 HS_vkUpdateDescriptorSetWithTemplate
+
+instance VulkanInstanceProc "vkUpdateDescriptorSetWithTemplate"
+         where
+        type VkInstanceProcType "vkUpdateDescriptorSetWithTemplate" =
+             HS_vkUpdateDescriptorSetWithTemplate
+        vkInstanceProcSymbol = _VkUpdateDescriptorSetWithTemplate
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkUpdateDescriptorSetWithTemplate
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
 pattern VK_STRUCTURE_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO ::
         VkStructureType
 
@@ -2132,6 +3557,29 @@ pattern VK_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE :: VkObjectType
 
 pattern VK_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE =
         VkObjectType 1000085000
+
+pattern VkGetPhysicalDeviceExternalBufferProperties :: CString
+
+pattern VkGetPhysicalDeviceExternalBufferProperties <-
+        (is_VkGetPhysicalDeviceExternalBufferProperties -> True)
+  where VkGetPhysicalDeviceExternalBufferProperties
+          = _VkGetPhysicalDeviceExternalBufferProperties
+
+{-# INLINE _VkGetPhysicalDeviceExternalBufferProperties #-}
+
+_VkGetPhysicalDeviceExternalBufferProperties :: CString
+_VkGetPhysicalDeviceExternalBufferProperties
+  = Ptr "vkGetPhysicalDeviceExternalBufferProperties\NUL"#
+
+{-# INLINE is_VkGetPhysicalDeviceExternalBufferProperties #-}
+
+is_VkGetPhysicalDeviceExternalBufferProperties :: CString -> Bool
+is_VkGetPhysicalDeviceExternalBufferProperties
+  = (EQ ==) .
+      cmpCStrings _VkGetPhysicalDeviceExternalBufferProperties
+
+type VkGetPhysicalDeviceExternalBufferProperties =
+     "vkGetPhysicalDeviceExternalBufferProperties"
 
 -- | > () vkGetPhysicalDeviceExternalBufferProperties
 --   >     ( VkPhysicalDevice physicalDevice
@@ -2166,6 +3614,43 @@ foreign import ccall safe
                                                         ->
                    Ptr VkExternalBufferProperties -- ^ pExternalBufferProperties
                                                   -> IO ()
+
+-- | > () vkGetPhysicalDeviceExternalBufferProperties
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , const VkPhysicalDeviceExternalBufferInfo* pExternalBufferInfo
+--   >     , VkExternalBufferProperties* pExternalBufferProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalBufferProperties.html vkGetPhysicalDeviceExternalBufferProperties registry at www.khronos.org>
+type HS_vkGetPhysicalDeviceExternalBufferProperties =
+     VkPhysicalDevice -- ^ physicalDevice
+                      ->
+       Ptr VkPhysicalDeviceExternalBufferInfo -- ^ pExternalBufferInfo
+                                              ->
+         Ptr VkExternalBufferProperties -- ^ pExternalBufferProperties
+                                        -> IO ()
+
+type PFN_vkGetPhysicalDeviceExternalBufferProperties =
+     FunPtr HS_vkGetPhysicalDeviceExternalBufferProperties
+
+foreign import ccall "dynamic"
+               unwrapVkGetPhysicalDeviceExternalBufferProperties ::
+               PFN_vkGetPhysicalDeviceExternalBufferProperties ->
+                 HS_vkGetPhysicalDeviceExternalBufferProperties
+
+instance VulkanInstanceProc
+           "vkGetPhysicalDeviceExternalBufferProperties"
+         where
+        type VkInstanceProcType
+               "vkGetPhysicalDeviceExternalBufferProperties"
+             = HS_vkGetPhysicalDeviceExternalBufferProperties
+        vkInstanceProcSymbol = _VkGetPhysicalDeviceExternalBufferProperties
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc
+          = unwrapVkGetPhysicalDeviceExternalBufferProperties
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO
         :: VkStructureType
@@ -2219,6 +3704,28 @@ pattern VK_ERROR_INVALID_EXTERNAL_HANDLE :: VkResult
 
 pattern VK_ERROR_INVALID_EXTERNAL_HANDLE = VkResult (-1000072003)
 
+pattern VkGetPhysicalDeviceExternalFenceProperties :: CString
+
+pattern VkGetPhysicalDeviceExternalFenceProperties <-
+        (is_VkGetPhysicalDeviceExternalFenceProperties -> True)
+  where VkGetPhysicalDeviceExternalFenceProperties
+          = _VkGetPhysicalDeviceExternalFenceProperties
+
+{-# INLINE _VkGetPhysicalDeviceExternalFenceProperties #-}
+
+_VkGetPhysicalDeviceExternalFenceProperties :: CString
+_VkGetPhysicalDeviceExternalFenceProperties
+  = Ptr "vkGetPhysicalDeviceExternalFenceProperties\NUL"#
+
+{-# INLINE is_VkGetPhysicalDeviceExternalFenceProperties #-}
+
+is_VkGetPhysicalDeviceExternalFenceProperties :: CString -> Bool
+is_VkGetPhysicalDeviceExternalFenceProperties
+  = (EQ ==) . cmpCStrings _VkGetPhysicalDeviceExternalFenceProperties
+
+type VkGetPhysicalDeviceExternalFenceProperties =
+     "vkGetPhysicalDeviceExternalFenceProperties"
+
 -- | > () vkGetPhysicalDeviceExternalFenceProperties
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , const VkPhysicalDeviceExternalFenceInfo* pExternalFenceInfo
@@ -2253,6 +3760,43 @@ foreign import ccall safe
                    Ptr VkExternalFenceProperties -- ^ pExternalFenceProperties
                                                  -> IO ()
 
+-- | > () vkGetPhysicalDeviceExternalFenceProperties
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , const VkPhysicalDeviceExternalFenceInfo* pExternalFenceInfo
+--   >     , VkExternalFenceProperties* pExternalFenceProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalFenceProperties.html vkGetPhysicalDeviceExternalFenceProperties registry at www.khronos.org>
+type HS_vkGetPhysicalDeviceExternalFenceProperties =
+     VkPhysicalDevice -- ^ physicalDevice
+                      ->
+       Ptr VkPhysicalDeviceExternalFenceInfo -- ^ pExternalFenceInfo
+                                             ->
+         Ptr VkExternalFenceProperties -- ^ pExternalFenceProperties
+                                       -> IO ()
+
+type PFN_vkGetPhysicalDeviceExternalFenceProperties =
+     FunPtr HS_vkGetPhysicalDeviceExternalFenceProperties
+
+foreign import ccall "dynamic"
+               unwrapVkGetPhysicalDeviceExternalFenceProperties ::
+               PFN_vkGetPhysicalDeviceExternalFenceProperties ->
+                 HS_vkGetPhysicalDeviceExternalFenceProperties
+
+instance VulkanInstanceProc
+           "vkGetPhysicalDeviceExternalFenceProperties"
+         where
+        type VkInstanceProcType
+               "vkGetPhysicalDeviceExternalFenceProperties"
+             = HS_vkGetPhysicalDeviceExternalFenceProperties
+        vkInstanceProcSymbol = _VkGetPhysicalDeviceExternalFenceProperties
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc
+          = unwrapVkGetPhysicalDeviceExternalFenceProperties
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO ::
         VkStructureType
 
@@ -2276,6 +3820,30 @@ pattern VK_STRUCTURE_TYPE_EXPORT_SEMAPHORE_CREATE_INFO ::
 
 pattern VK_STRUCTURE_TYPE_EXPORT_SEMAPHORE_CREATE_INFO =
         VkStructureType 1000077000
+
+pattern VkGetPhysicalDeviceExternalSemaphoreProperties :: CString
+
+pattern VkGetPhysicalDeviceExternalSemaphoreProperties <-
+        (is_VkGetPhysicalDeviceExternalSemaphoreProperties -> True)
+  where VkGetPhysicalDeviceExternalSemaphoreProperties
+          = _VkGetPhysicalDeviceExternalSemaphoreProperties
+
+{-# INLINE _VkGetPhysicalDeviceExternalSemaphoreProperties #-}
+
+_VkGetPhysicalDeviceExternalSemaphoreProperties :: CString
+_VkGetPhysicalDeviceExternalSemaphoreProperties
+  = Ptr "vkGetPhysicalDeviceExternalSemaphoreProperties\NUL"#
+
+{-# INLINE is_VkGetPhysicalDeviceExternalSemaphoreProperties #-}
+
+is_VkGetPhysicalDeviceExternalSemaphoreProperties ::
+                                                  CString -> Bool
+is_VkGetPhysicalDeviceExternalSemaphoreProperties
+  = (EQ ==) .
+      cmpCStrings _VkGetPhysicalDeviceExternalSemaphoreProperties
+
+type VkGetPhysicalDeviceExternalSemaphoreProperties =
+     "vkGetPhysicalDeviceExternalSemaphoreProperties"
 
 -- | > () vkGetPhysicalDeviceExternalSemaphoreProperties
 --   >     ( VkPhysicalDevice physicalDevice
@@ -2311,6 +3879,44 @@ foreign import ccall safe
                    Ptr VkExternalSemaphoreProperties -- ^ pExternalSemaphoreProperties
                                                      -> IO ()
 
+-- | > () vkGetPhysicalDeviceExternalSemaphoreProperties
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , const VkPhysicalDeviceExternalSemaphoreInfo* pExternalSemaphoreInfo
+--   >     , VkExternalSemaphoreProperties* pExternalSemaphoreProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalSemaphoreProperties.html vkGetPhysicalDeviceExternalSemaphoreProperties registry at www.khronos.org>
+type HS_vkGetPhysicalDeviceExternalSemaphoreProperties =
+     VkPhysicalDevice -- ^ physicalDevice
+                      ->
+       Ptr VkPhysicalDeviceExternalSemaphoreInfo -- ^ pExternalSemaphoreInfo
+                                                 ->
+         Ptr VkExternalSemaphoreProperties -- ^ pExternalSemaphoreProperties
+                                           -> IO ()
+
+type PFN_vkGetPhysicalDeviceExternalSemaphoreProperties =
+     FunPtr HS_vkGetPhysicalDeviceExternalSemaphoreProperties
+
+foreign import ccall "dynamic"
+               unwrapVkGetPhysicalDeviceExternalSemaphoreProperties ::
+               PFN_vkGetPhysicalDeviceExternalSemaphoreProperties ->
+                 HS_vkGetPhysicalDeviceExternalSemaphoreProperties
+
+instance VulkanInstanceProc
+           "vkGetPhysicalDeviceExternalSemaphoreProperties"
+         where
+        type VkInstanceProcType
+               "vkGetPhysicalDeviceExternalSemaphoreProperties"
+             = HS_vkGetPhysicalDeviceExternalSemaphoreProperties
+        vkInstanceProcSymbol
+          = _VkGetPhysicalDeviceExternalSemaphoreProperties
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc
+          = unwrapVkGetPhysicalDeviceExternalSemaphoreProperties
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO
         :: VkStructureType
 
@@ -2322,6 +3928,28 @@ pattern VK_STRUCTURE_TYPE_EXTERNAL_SEMAPHORE_PROPERTIES ::
 
 pattern VK_STRUCTURE_TYPE_EXTERNAL_SEMAPHORE_PROPERTIES =
         VkStructureType 1000076001
+
+pattern VkGetDescriptorSetLayoutSupport :: CString
+
+pattern VkGetDescriptorSetLayoutSupport <-
+        (is_VkGetDescriptorSetLayoutSupport -> True)
+  where VkGetDescriptorSetLayoutSupport
+          = _VkGetDescriptorSetLayoutSupport
+
+{-# INLINE _VkGetDescriptorSetLayoutSupport #-}
+
+_VkGetDescriptorSetLayoutSupport :: CString
+_VkGetDescriptorSetLayoutSupport
+  = Ptr "vkGetDescriptorSetLayoutSupport\NUL"#
+
+{-# INLINE is_VkGetDescriptorSetLayoutSupport #-}
+
+is_VkGetDescriptorSetLayoutSupport :: CString -> Bool
+is_VkGetDescriptorSetLayoutSupport
+  = (EQ ==) . cmpCStrings _VkGetDescriptorSetLayoutSupport
+
+type VkGetDescriptorSetLayoutSupport =
+     "vkGetDescriptorSetLayoutSupport"
 
 -- | > () vkGetDescriptorSetLayoutSupport
 --   >     ( VkDevice device
@@ -2354,6 +3982,39 @@ foreign import ccall safe "vkGetDescriptorSetLayoutSupport"
                                                      ->
                    Ptr VkDescriptorSetLayoutSupport -- ^ pSupport
                                                     -> IO ()
+
+-- | > () vkGetDescriptorSetLayoutSupport
+--   >     ( VkDevice device
+--   >     , const VkDescriptorSetLayoutCreateInfo* pCreateInfo
+--   >     , VkDescriptorSetLayoutSupport* pSupport
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDescriptorSetLayoutSupport.html vkGetDescriptorSetLayoutSupport registry at www.khronos.org>
+type HS_vkGetDescriptorSetLayoutSupport =
+     VkDevice -- ^ device
+              ->
+       Ptr VkDescriptorSetLayoutCreateInfo -- ^ pCreateInfo
+                                           ->
+         Ptr VkDescriptorSetLayoutSupport -- ^ pSupport
+                                          -> IO ()
+
+type PFN_vkGetDescriptorSetLayoutSupport =
+     FunPtr HS_vkGetDescriptorSetLayoutSupport
+
+foreign import ccall "dynamic"
+               unwrapVkGetDescriptorSetLayoutSupport ::
+               PFN_vkGetDescriptorSetLayoutSupport ->
+                 HS_vkGetDescriptorSetLayoutSupport
+
+instance VulkanInstanceProc "vkGetDescriptorSetLayoutSupport" where
+        type VkInstanceProcType "vkGetDescriptorSetLayoutSupport" =
+             HS_vkGetDescriptorSetLayoutSupport
+        vkInstanceProcSymbol = _VkGetDescriptorSetLayoutSupport
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetDescriptorSetLayoutSupport
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES
         :: VkStructureType

@@ -3,6 +3,7 @@
 --   Instead, it is hand-written to aggregate all generated code.
 module Graphics.Vulkan
   ( module Graphics.Vulkan.Marshal
+  , module Graphics.Vulkan.Marshal.InstanceProc
   , module Graphics.Vulkan.Constants
   , module Graphics.Vulkan.Types.Defines
   , module Graphics.Vulkan.Types.Funcpointers
@@ -10,9 +11,10 @@ module Graphics.Vulkan
   , module Graphics.Vulkan.Types.Include
   ) where
 
-import Graphics.Vulkan.Marshal
-import Graphics.Vulkan.Constants
-import Graphics.Vulkan.Types.Defines
-import Graphics.Vulkan.Types.Funcpointers
-import Graphics.Vulkan.Types.Handles
-import Graphics.Vulkan.Types.Include
+import           Graphics.Vulkan.Constants
+import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc
+import           Graphics.Vulkan.Types.Defines
+import           Graphics.Vulkan.Types.Funcpointers
+import           Graphics.Vulkan.Types.Handles
+import           Graphics.Vulkan.Types.Include

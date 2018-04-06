@@ -1,10 +1,13 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_swapchain
        (-- * Vulkan extension: @VK_KHR_swapchain@
@@ -24,12 +27,23 @@ module Graphics.Vulkan.Ext.VK_KHR_swapchain
         --
 
         -- ** Required extensions: 'VK_KHR_surface'.
-        vkCreateSwapchainKHR, vkCreateSwapchainKHRSafe,
+        VkCreateSwapchainKHR, pattern VkCreateSwapchainKHR,
+        HS_vkCreateSwapchainKHR, PFN_vkCreateSwapchainKHR,
+        unwrapVkCreateSwapchainKHR, vkCreateSwapchainKHR,
+        vkCreateSwapchainKHRSafe, VkDestroySwapchainKHR,
+        pattern VkDestroySwapchainKHR, HS_vkDestroySwapchainKHR,
+        PFN_vkDestroySwapchainKHR, unwrapVkDestroySwapchainKHR,
         vkDestroySwapchainKHR, vkDestroySwapchainKHRSafe,
-        vkGetSwapchainImagesKHR, vkGetSwapchainImagesKHRSafe,
+        VkGetSwapchainImagesKHR, pattern VkGetSwapchainImagesKHR,
+        HS_vkGetSwapchainImagesKHR, PFN_vkGetSwapchainImagesKHR,
+        unwrapVkGetSwapchainImagesKHR, vkGetSwapchainImagesKHR,
+        vkGetSwapchainImagesKHRSafe, VkAcquireNextImageKHR,
+        pattern VkAcquireNextImageKHR, HS_vkAcquireNextImageKHR,
+        PFN_vkAcquireNextImageKHR, unwrapVkAcquireNextImageKHR,
         vkAcquireNextImageKHR, vkAcquireNextImageKHRSafe,
-        vkQueuePresentKHR, vkQueuePresentKHRSafe,
-        module Graphics.Vulkan.Marshal,
+        VkQueuePresentKHR, pattern VkQueuePresentKHR, HS_vkQueuePresentKHR,
+        PFN_vkQueuePresentKHR, unwrapVkQueuePresentKHR, vkQueuePresentKHR,
+        vkQueuePresentKHRSafe, module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.VkColorSpaceKHR,
         module Graphics.Vulkan.Types.Enum.VkCompositeAlphaFlagsKHR,
@@ -75,13 +89,31 @@ module Graphics.Vulkan.Ext.VK_KHR_swapchain
         module Graphics.Vulkan.Types.Enum.VkImageType,
         module Graphics.Vulkan.Types.Enum.VkSampleCountFlags,
         -- > #include "vk_platform.h"
+        VkGetDeviceGroupPresentCapabilitiesKHR,
+        pattern VkGetDeviceGroupPresentCapabilitiesKHR,
+        HS_vkGetDeviceGroupPresentCapabilitiesKHR,
+        PFN_vkGetDeviceGroupPresentCapabilitiesKHR,
+        unwrapVkGetDeviceGroupPresentCapabilitiesKHR,
         vkGetDeviceGroupPresentCapabilitiesKHR,
         vkGetDeviceGroupPresentCapabilitiesKHRSafe,
+        VkGetDeviceGroupSurfacePresentModesKHR,
+        pattern VkGetDeviceGroupSurfacePresentModesKHR,
+        HS_vkGetDeviceGroupSurfacePresentModesKHR,
+        PFN_vkGetDeviceGroupSurfacePresentModesKHR,
+        unwrapVkGetDeviceGroupSurfacePresentModesKHR,
         vkGetDeviceGroupSurfacePresentModesKHR,
         vkGetDeviceGroupSurfacePresentModesKHRSafe,
+        VkGetPhysicalDevicePresentRectanglesKHR,
+        pattern VkGetPhysicalDevicePresentRectanglesKHR,
+        HS_vkGetPhysicalDevicePresentRectanglesKHR,
+        PFN_vkGetPhysicalDevicePresentRectanglesKHR,
+        unwrapVkGetPhysicalDevicePresentRectanglesKHR,
         vkGetPhysicalDevicePresentRectanglesKHR,
         vkGetPhysicalDevicePresentRectanglesKHRSafe,
-        vkAcquireNextImage2KHR, vkAcquireNextImage2KHRSafe,
+        VkAcquireNextImage2KHR, pattern VkAcquireNextImage2KHR,
+        HS_vkAcquireNextImage2KHR, PFN_vkAcquireNextImage2KHR,
+        unwrapVkAcquireNextImage2KHR, vkAcquireNextImage2KHR,
+        vkAcquireNextImage2KHRSafe,
         module Graphics.Vulkan.Types.Struct.VkOffset2D,
         module Graphics.Vulkan.Types.Struct.VkRect2D,
         pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_CAPABILITIES_KHR,
@@ -96,6 +128,8 @@ module Graphics.Vulkan.Ext.VK_KHR_swapchain
 import           GHC.Ptr
                                                                                    (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc
+                                                                                   (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkColorSpaceKHR
 import           Graphics.Vulkan.Types.Enum.VkCompositeAlphaFlagsKHR
@@ -134,6 +168,24 @@ import           Graphics.Vulkan.Types.Struct.VkOffset2D
 import           Graphics.Vulkan.Types.Struct.VkPresentInfoKHR
 import           Graphics.Vulkan.Types.Struct.VkRect2D
 import           Graphics.Vulkan.Types.Struct.VkSwapchainCreateInfoKHR
+
+pattern VkCreateSwapchainKHR :: CString
+
+pattern VkCreateSwapchainKHR <- (is_VkCreateSwapchainKHR -> True)
+  where VkCreateSwapchainKHR = _VkCreateSwapchainKHR
+
+{-# INLINE _VkCreateSwapchainKHR #-}
+
+_VkCreateSwapchainKHR :: CString
+_VkCreateSwapchainKHR = Ptr "vkCreateSwapchainKHR\NUL"#
+
+{-# INLINE is_VkCreateSwapchainKHR #-}
+
+is_VkCreateSwapchainKHR :: CString -> Bool
+is_VkCreateSwapchainKHR
+  = (EQ ==) . cmpCStrings _VkCreateSwapchainKHR
+
+type VkCreateSwapchainKHR = "vkCreateSwapchainKHR"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -179,6 +231,60 @@ foreign import ccall safe "vkCreateSwapchainKHR"
                                              -> Ptr VkSwapchainKHR -- ^ pSwapchain
                                                                    -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_SURFACE_LOST_KHR', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
+--
+--   > VkResult vkCreateSwapchainKHR
+--   >     ( VkDevice device
+--   >     , const VkSwapchainCreateInfoKHR* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkSwapchainKHR* pSwapchain
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateSwapchainKHR.html vkCreateSwapchainKHR registry at www.khronos.org>
+type HS_vkCreateSwapchainKHR =
+     VkDevice -- ^ device
+              ->
+       Ptr VkSwapchainCreateInfoKHR -- ^ pCreateInfo
+                                    ->
+         Ptr VkAllocationCallbacks -- ^ pAllocator
+                                   -> Ptr VkSwapchainKHR -- ^ pSwapchain
+                                                         -> IO VkResult
+
+type PFN_vkCreateSwapchainKHR = FunPtr HS_vkCreateSwapchainKHR
+
+foreign import ccall "dynamic" unwrapVkCreateSwapchainKHR ::
+               PFN_vkCreateSwapchainKHR -> HS_vkCreateSwapchainKHR
+
+instance VulkanInstanceProc "vkCreateSwapchainKHR" where
+        type VkInstanceProcType "vkCreateSwapchainKHR" =
+             HS_vkCreateSwapchainKHR
+        vkInstanceProcSymbol = _VkCreateSwapchainKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCreateSwapchainKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkDestroySwapchainKHR :: CString
+
+pattern VkDestroySwapchainKHR <- (is_VkDestroySwapchainKHR -> True)
+  where VkDestroySwapchainKHR = _VkDestroySwapchainKHR
+
+{-# INLINE _VkDestroySwapchainKHR #-}
+
+_VkDestroySwapchainKHR :: CString
+_VkDestroySwapchainKHR = Ptr "vkDestroySwapchainKHR\NUL"#
+
+{-# INLINE is_VkDestroySwapchainKHR #-}
+
+is_VkDestroySwapchainKHR :: CString -> Bool
+is_VkDestroySwapchainKHR
+  = (EQ ==) . cmpCStrings _VkDestroySwapchainKHR
+
+type VkDestroySwapchainKHR = "vkDestroySwapchainKHR"
+
 -- | > () vkDestroySwapchainKHR
 --   >     ( VkDevice device
 --   >     , VkSwapchainKHR swapchain
@@ -206,6 +312,53 @@ foreign import ccall safe "vkDestroySwapchainKHR"
                         -> VkSwapchainKHR -- ^ swapchain
                                           -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                        -> IO ()
+
+-- | > () vkDestroySwapchainKHR
+--   >     ( VkDevice device
+--   >     , VkSwapchainKHR swapchain
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroySwapchainKHR.html vkDestroySwapchainKHR registry at www.khronos.org>
+type HS_vkDestroySwapchainKHR =
+     VkDevice -- ^ device
+              -> VkSwapchainKHR -- ^ swapchain
+                                -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                             -> IO ()
+
+type PFN_vkDestroySwapchainKHR = FunPtr HS_vkDestroySwapchainKHR
+
+foreign import ccall "dynamic" unwrapVkDestroySwapchainKHR ::
+               PFN_vkDestroySwapchainKHR -> HS_vkDestroySwapchainKHR
+
+instance VulkanInstanceProc "vkDestroySwapchainKHR" where
+        type VkInstanceProcType "vkDestroySwapchainKHR" =
+             HS_vkDestroySwapchainKHR
+        vkInstanceProcSymbol = _VkDestroySwapchainKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkDestroySwapchainKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetSwapchainImagesKHR :: CString
+
+pattern VkGetSwapchainImagesKHR <-
+        (is_VkGetSwapchainImagesKHR -> True)
+  where VkGetSwapchainImagesKHR = _VkGetSwapchainImagesKHR
+
+{-# INLINE _VkGetSwapchainImagesKHR #-}
+
+_VkGetSwapchainImagesKHR :: CString
+_VkGetSwapchainImagesKHR = Ptr "vkGetSwapchainImagesKHR\NUL"#
+
+{-# INLINE is_VkGetSwapchainImagesKHR #-}
+
+is_VkGetSwapchainImagesKHR :: CString -> Bool
+is_VkGetSwapchainImagesKHR
+  = (EQ ==) . cmpCStrings _VkGetSwapchainImagesKHR
+
+type VkGetSwapchainImagesKHR = "vkGetSwapchainImagesKHR"
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
@@ -248,6 +401,60 @@ foreign import ccall safe "vkGetSwapchainImagesKHR"
                                 -> Ptr Word32 -- ^ pSwapchainImageCount
                                               -> Ptr VkImage -- ^ pSwapchainImages
                                                              -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkGetSwapchainImagesKHR
+--   >     ( VkDevice device
+--   >     , VkSwapchainKHR swapchain
+--   >     , uint32_t* pSwapchainImageCount
+--   >     , VkImage* pSwapchainImages
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetSwapchainImagesKHR.html vkGetSwapchainImagesKHR registry at www.khronos.org>
+type HS_vkGetSwapchainImagesKHR =
+     VkDevice -- ^ device
+              ->
+       VkSwapchainKHR -- ^ swapchain
+                      -> Ptr Word32 -- ^ pSwapchainImageCount
+                                    -> Ptr VkImage -- ^ pSwapchainImages
+                                                   -> IO VkResult
+
+type PFN_vkGetSwapchainImagesKHR =
+     FunPtr HS_vkGetSwapchainImagesKHR
+
+foreign import ccall "dynamic" unwrapVkGetSwapchainImagesKHR ::
+               PFN_vkGetSwapchainImagesKHR -> HS_vkGetSwapchainImagesKHR
+
+instance VulkanInstanceProc "vkGetSwapchainImagesKHR" where
+        type VkInstanceProcType "vkGetSwapchainImagesKHR" =
+             HS_vkGetSwapchainImagesKHR
+        vkInstanceProcSymbol = _VkGetSwapchainImagesKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetSwapchainImagesKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkAcquireNextImageKHR :: CString
+
+pattern VkAcquireNextImageKHR <- (is_VkAcquireNextImageKHR -> True)
+  where VkAcquireNextImageKHR = _VkAcquireNextImageKHR
+
+{-# INLINE _VkAcquireNextImageKHR #-}
+
+_VkAcquireNextImageKHR :: CString
+_VkAcquireNextImageKHR = Ptr "vkAcquireNextImageKHR\NUL"#
+
+{-# INLINE is_VkAcquireNextImageKHR #-}
+
+is_VkAcquireNextImageKHR :: CString -> Bool
+is_VkAcquireNextImageKHR
+  = (EQ ==) . cmpCStrings _VkAcquireNextImageKHR
+
+type VkAcquireNextImageKHR = "vkAcquireNextImageKHR"
 
 -- | Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
 --
@@ -301,6 +508,63 @@ foreign import ccall safe "vkAcquireNextImageKHR"
                                                     -> Ptr Word32 -- ^ pImageIndex
                                                                   -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+--
+--   > VkResult vkAcquireNextImageKHR
+--   >     ( VkDevice device
+--   >     , VkSwapchainKHR swapchain
+--   >     , uint64_t timeout
+--   >     , VkSemaphore semaphore
+--   >     , VkFence fence
+--   >     , uint32_t* pImageIndex
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkAcquireNextImageKHR.html vkAcquireNextImageKHR registry at www.khronos.org>
+type HS_vkAcquireNextImageKHR =
+     VkDevice -- ^ device
+              ->
+       VkSwapchainKHR -- ^ swapchain
+                      ->
+         Word64 -- ^ timeout
+                -> VkSemaphore -- ^ semaphore
+                               -> VkFence -- ^ fence
+                                          -> Ptr Word32 -- ^ pImageIndex
+                                                        -> IO VkResult
+
+type PFN_vkAcquireNextImageKHR = FunPtr HS_vkAcquireNextImageKHR
+
+foreign import ccall "dynamic" unwrapVkAcquireNextImageKHR ::
+               PFN_vkAcquireNextImageKHR -> HS_vkAcquireNextImageKHR
+
+instance VulkanInstanceProc "vkAcquireNextImageKHR" where
+        type VkInstanceProcType "vkAcquireNextImageKHR" =
+             HS_vkAcquireNextImageKHR
+        vkInstanceProcSymbol = _VkAcquireNextImageKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkAcquireNextImageKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkQueuePresentKHR :: CString
+
+pattern VkQueuePresentKHR <- (is_VkQueuePresentKHR -> True)
+  where VkQueuePresentKHR = _VkQueuePresentKHR
+
+{-# INLINE _VkQueuePresentKHR #-}
+
+_VkQueuePresentKHR :: CString
+_VkQueuePresentKHR = Ptr "vkQueuePresentKHR\NUL"#
+
+{-# INLINE is_VkQueuePresentKHR #-}
+
+is_VkQueuePresentKHR :: CString -> Bool
+is_VkQueuePresentKHR = (EQ ==) . cmpCStrings _VkQueuePresentKHR
+
+type VkQueuePresentKHR = "vkQueuePresentKHR"
+
 -- | Success codes: 'VK_SUCCESS', 'VK_SUBOPTIMAL_KHR'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
@@ -330,6 +594,35 @@ foreign import ccall safe "vkQueuePresentKHR" vkQueuePresentKHRSafe
                :: VkQueue -- ^ queue
                           -> Ptr VkPresentInfoKHR -- ^ pPresentInfo
                                                   -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS', 'VK_SUBOPTIMAL_KHR'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+--
+--   > VkResult vkQueuePresentKHR
+--   >     ( VkQueue queue
+--   >     , const VkPresentInfoKHR* pPresentInfo
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkQueuePresentKHR.html vkQueuePresentKHR registry at www.khronos.org>
+type HS_vkQueuePresentKHR =
+     VkQueue -- ^ queue
+             -> Ptr VkPresentInfoKHR -- ^ pPresentInfo
+                                     -> IO VkResult
+
+type PFN_vkQueuePresentKHR = FunPtr HS_vkQueuePresentKHR
+
+foreign import ccall "dynamic" unwrapVkQueuePresentKHR ::
+               PFN_vkQueuePresentKHR -> HS_vkQueuePresentKHR
+
+instance VulkanInstanceProc "vkQueuePresentKHR" where
+        type VkInstanceProcType "vkQueuePresentKHR" = HS_vkQueuePresentKHR
+        vkInstanceProcSymbol = _VkQueuePresentKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkQueuePresentKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_KHR_SWAPCHAIN_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -385,6 +678,28 @@ pattern VK_OBJECT_TYPE_SWAPCHAIN_KHR :: VkObjectType
 
 pattern VK_OBJECT_TYPE_SWAPCHAIN_KHR = VkObjectType 1000001000
 
+pattern VkGetDeviceGroupPresentCapabilitiesKHR :: CString
+
+pattern VkGetDeviceGroupPresentCapabilitiesKHR <-
+        (is_VkGetDeviceGroupPresentCapabilitiesKHR -> True)
+  where VkGetDeviceGroupPresentCapabilitiesKHR
+          = _VkGetDeviceGroupPresentCapabilitiesKHR
+
+{-# INLINE _VkGetDeviceGroupPresentCapabilitiesKHR #-}
+
+_VkGetDeviceGroupPresentCapabilitiesKHR :: CString
+_VkGetDeviceGroupPresentCapabilitiesKHR
+  = Ptr "vkGetDeviceGroupPresentCapabilitiesKHR\NUL"#
+
+{-# INLINE is_VkGetDeviceGroupPresentCapabilitiesKHR #-}
+
+is_VkGetDeviceGroupPresentCapabilitiesKHR :: CString -> Bool
+is_VkGetDeviceGroupPresentCapabilitiesKHR
+  = (EQ ==) . cmpCStrings _VkGetDeviceGroupPresentCapabilitiesKHR
+
+type VkGetDeviceGroupPresentCapabilitiesKHR =
+     "vkGetDeviceGroupPresentCapabilitiesKHR"
+
 -- | Success codes: 'VK_SUCCESS'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
@@ -417,6 +732,63 @@ foreign import ccall safe "vkGetDeviceGroupPresentCapabilitiesKHR"
                VkDevice -- ^ device
                         -> Ptr VkDeviceGroupPresentCapabilitiesKHR -- ^ pDeviceGroupPresentCapabilities
                                                                    -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkGetDeviceGroupPresentCapabilitiesKHR
+--   >     ( VkDevice device
+--   >     , VkDeviceGroupPresentCapabilitiesKHR* pDeviceGroupPresentCapabilities
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceGroupPresentCapabilitiesKHR.html vkGetDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
+type HS_vkGetDeviceGroupPresentCapabilitiesKHR =
+     VkDevice -- ^ device
+              -> Ptr VkDeviceGroupPresentCapabilitiesKHR -- ^ pDeviceGroupPresentCapabilities
+                                                         -> IO VkResult
+
+type PFN_vkGetDeviceGroupPresentCapabilitiesKHR =
+     FunPtr HS_vkGetDeviceGroupPresentCapabilitiesKHR
+
+foreign import ccall "dynamic"
+               unwrapVkGetDeviceGroupPresentCapabilitiesKHR ::
+               PFN_vkGetDeviceGroupPresentCapabilitiesKHR ->
+                 HS_vkGetDeviceGroupPresentCapabilitiesKHR
+
+instance VulkanInstanceProc
+           "vkGetDeviceGroupPresentCapabilitiesKHR"
+         where
+        type VkInstanceProcType "vkGetDeviceGroupPresentCapabilitiesKHR" =
+             HS_vkGetDeviceGroupPresentCapabilitiesKHR
+        vkInstanceProcSymbol = _VkGetDeviceGroupPresentCapabilitiesKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetDeviceGroupPresentCapabilitiesKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetDeviceGroupSurfacePresentModesKHR :: CString
+
+pattern VkGetDeviceGroupSurfacePresentModesKHR <-
+        (is_VkGetDeviceGroupSurfacePresentModesKHR -> True)
+  where VkGetDeviceGroupSurfacePresentModesKHR
+          = _VkGetDeviceGroupSurfacePresentModesKHR
+
+{-# INLINE _VkGetDeviceGroupSurfacePresentModesKHR #-}
+
+_VkGetDeviceGroupSurfacePresentModesKHR :: CString
+_VkGetDeviceGroupSurfacePresentModesKHR
+  = Ptr "vkGetDeviceGroupSurfacePresentModesKHR\NUL"#
+
+{-# INLINE is_VkGetDeviceGroupSurfacePresentModesKHR #-}
+
+is_VkGetDeviceGroupSurfacePresentModesKHR :: CString -> Bool
+is_VkGetDeviceGroupSurfacePresentModesKHR
+  = (EQ ==) . cmpCStrings _VkGetDeviceGroupSurfacePresentModesKHR
+
+type VkGetDeviceGroupSurfacePresentModesKHR =
+     "vkGetDeviceGroupSurfacePresentModesKHR"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -456,6 +828,66 @@ foreign import ccall safe "vkGetDeviceGroupSurfacePresentModesKHR"
                  VkSurfaceKHR -- ^ surface
                               -> Ptr VkDeviceGroupPresentModeFlagsKHR -- ^ pModes
                                                                       -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
+--
+--   > VkResult vkGetDeviceGroupSurfacePresentModesKHR
+--   >     ( VkDevice device
+--   >     , VkSurfaceKHR surface
+--   >     , VkDeviceGroupPresentModeFlagsKHR* pModes
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceGroupSurfacePresentModesKHR.html vkGetDeviceGroupSurfacePresentModesKHR registry at www.khronos.org>
+type HS_vkGetDeviceGroupSurfacePresentModesKHR =
+     VkDevice -- ^ device
+              ->
+       VkSurfaceKHR -- ^ surface
+                    -> Ptr VkDeviceGroupPresentModeFlagsKHR -- ^ pModes
+                                                            -> IO VkResult
+
+type PFN_vkGetDeviceGroupSurfacePresentModesKHR =
+     FunPtr HS_vkGetDeviceGroupSurfacePresentModesKHR
+
+foreign import ccall "dynamic"
+               unwrapVkGetDeviceGroupSurfacePresentModesKHR ::
+               PFN_vkGetDeviceGroupSurfacePresentModesKHR ->
+                 HS_vkGetDeviceGroupSurfacePresentModesKHR
+
+instance VulkanInstanceProc
+           "vkGetDeviceGroupSurfacePresentModesKHR"
+         where
+        type VkInstanceProcType "vkGetDeviceGroupSurfacePresentModesKHR" =
+             HS_vkGetDeviceGroupSurfacePresentModesKHR
+        vkInstanceProcSymbol = _VkGetDeviceGroupSurfacePresentModesKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetDeviceGroupSurfacePresentModesKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetPhysicalDevicePresentRectanglesKHR :: CString
+
+pattern VkGetPhysicalDevicePresentRectanglesKHR <-
+        (is_VkGetPhysicalDevicePresentRectanglesKHR -> True)
+  where VkGetPhysicalDevicePresentRectanglesKHR
+          = _VkGetPhysicalDevicePresentRectanglesKHR
+
+{-# INLINE _VkGetPhysicalDevicePresentRectanglesKHR #-}
+
+_VkGetPhysicalDevicePresentRectanglesKHR :: CString
+_VkGetPhysicalDevicePresentRectanglesKHR
+  = Ptr "vkGetPhysicalDevicePresentRectanglesKHR\NUL"#
+
+{-# INLINE is_VkGetPhysicalDevicePresentRectanglesKHR #-}
+
+is_VkGetPhysicalDevicePresentRectanglesKHR :: CString -> Bool
+is_VkGetPhysicalDevicePresentRectanglesKHR
+  = (EQ ==) . cmpCStrings _VkGetPhysicalDevicePresentRectanglesKHR
+
+type VkGetPhysicalDevicePresentRectanglesKHR =
+     "vkGetPhysicalDevicePresentRectanglesKHR"
 
 -- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
 --
@@ -500,6 +932,66 @@ foreign import ccall safe "vkGetPhysicalDevicePresentRectanglesKHR"
                                             -> Ptr VkRect2D -- ^ pRects
                                                             -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkGetPhysicalDevicePresentRectanglesKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , VkSurfaceKHR surface
+--   >     , uint32_t* pRectCount
+--   >     , VkRect2D* pRects
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDevicePresentRectanglesKHR.html vkGetPhysicalDevicePresentRectanglesKHR registry at www.khronos.org>
+type HS_vkGetPhysicalDevicePresentRectanglesKHR =
+     VkPhysicalDevice -- ^ physicalDevice
+                      ->
+       VkSurfaceKHR -- ^ surface
+                    -> Ptr Word32 -- ^ pRectCount
+                                  -> Ptr VkRect2D -- ^ pRects
+                                                  -> IO VkResult
+
+type PFN_vkGetPhysicalDevicePresentRectanglesKHR =
+     FunPtr HS_vkGetPhysicalDevicePresentRectanglesKHR
+
+foreign import ccall "dynamic"
+               unwrapVkGetPhysicalDevicePresentRectanglesKHR ::
+               PFN_vkGetPhysicalDevicePresentRectanglesKHR ->
+                 HS_vkGetPhysicalDevicePresentRectanglesKHR
+
+instance VulkanInstanceProc
+           "vkGetPhysicalDevicePresentRectanglesKHR"
+         where
+        type VkInstanceProcType "vkGetPhysicalDevicePresentRectanglesKHR" =
+             HS_vkGetPhysicalDevicePresentRectanglesKHR
+        vkInstanceProcSymbol = _VkGetPhysicalDevicePresentRectanglesKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc
+          = unwrapVkGetPhysicalDevicePresentRectanglesKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkAcquireNextImage2KHR :: CString
+
+pattern VkAcquireNextImage2KHR <-
+        (is_VkAcquireNextImage2KHR -> True)
+  where VkAcquireNextImage2KHR = _VkAcquireNextImage2KHR
+
+{-# INLINE _VkAcquireNextImage2KHR #-}
+
+_VkAcquireNextImage2KHR :: CString
+_VkAcquireNextImage2KHR = Ptr "vkAcquireNextImage2KHR\NUL"#
+
+{-# INLINE is_VkAcquireNextImage2KHR #-}
+
+is_VkAcquireNextImage2KHR :: CString -> Bool
+is_VkAcquireNextImage2KHR
+  = (EQ ==) . cmpCStrings _VkAcquireNextImage2KHR
+
+type VkAcquireNextImage2KHR = "vkAcquireNextImage2KHR"
+
 -- | Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
@@ -537,6 +1029,39 @@ foreign import ccall safe "vkAcquireNextImage2KHR"
                  Ptr VkAcquireNextImageInfoKHR -- ^ pAcquireInfo
                                                -> Ptr Word32 -- ^ pImageIndex
                                                              -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS', 'VK_TIMEOUT', 'VK_NOT_READY', 'VK_SUBOPTIMAL_KHR'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+--
+--   > VkResult vkAcquireNextImage2KHR
+--   >     ( VkDevice device
+--   >     , const VkAcquireNextImageInfoKHR* pAcquireInfo
+--   >     , uint32_t* pImageIndex
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkAcquireNextImage2KHR.html vkAcquireNextImage2KHR registry at www.khronos.org>
+type HS_vkAcquireNextImage2KHR =
+     VkDevice -- ^ device
+              ->
+       Ptr VkAcquireNextImageInfoKHR -- ^ pAcquireInfo
+                                     -> Ptr Word32 -- ^ pImageIndex
+                                                   -> IO VkResult
+
+type PFN_vkAcquireNextImage2KHR = FunPtr HS_vkAcquireNextImage2KHR
+
+foreign import ccall "dynamic" unwrapVkAcquireNextImage2KHR ::
+               PFN_vkAcquireNextImage2KHR -> HS_vkAcquireNextImage2KHR
+
+instance VulkanInstanceProc "vkAcquireNextImage2KHR" where
+        type VkInstanceProcType "vkAcquireNextImage2KHR" =
+             HS_vkAcquireNextImage2KHR
+        vkInstanceProcSymbol = _VkAcquireNextImage2KHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkAcquireNextImage2KHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_CAPABILITIES_KHR ::
         VkStructureType

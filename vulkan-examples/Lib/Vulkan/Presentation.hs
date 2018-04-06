@@ -34,8 +34,12 @@ withSurface vkInstance window action = do
       $ GLFW.createWindowSurface vkInstance window VK_NULL_HANDLE surfPtr
     peek surfPtr
 
-  finally (action surface) $
-    vkDestroySurfaceKHR vkInstance surface VK_NULL_HANDLE
+  finally (action surface) $ do
+    -- test dynamic symbol lookup:
+    -- the code below should work exactly as the commented version
+    -- vkDestroySurfaceKHR vkInstance surface VK_NULL_HANDLE
+    destroySurf <- vkGetInstanceProc @VkDestroySurfaceKHR vkInstance
+    destroySurf vkInstance surface VK_NULL_HANDLE 
 
 
 

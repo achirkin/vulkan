@@ -1,9 +1,12 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_android_surface
        (-- * Vulkan extension: @VK_KHR_android_surface@
@@ -30,8 +33,10 @@ module Graphics.Vulkan.Ext.VK_KHR_android_surface
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
-        vkCreateAndroidSurfaceKHR, vkCreateAndroidSurfaceKHRSafe,
-        module Graphics.Vulkan.Marshal,
+        VkCreateAndroidSurfaceKHR, pattern VkCreateAndroidSurfaceKHR,
+        HS_vkCreateAndroidSurfaceKHR, PFN_vkCreateAndroidSurfaceKHR,
+        unwrapVkCreateAndroidSurfaceKHR, vkCreateAndroidSurfaceKHR,
+        vkCreateAndroidSurfaceKHRSafe, module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Defines,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
@@ -47,6 +52,7 @@ module Graphics.Vulkan.Ext.VK_KHR_android_surface
        where
 import           GHC.Ptr                                                    (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc                       (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Defines
@@ -58,6 +64,25 @@ import           Graphics.Vulkan.Types.Funcpointers
 import           Graphics.Vulkan.Types.Handles
 import           Graphics.Vulkan.Types.Struct.VkAllocationCallbacks
 import           Graphics.Vulkan.Types.Struct.VkAndroidSurfaceCreateInfoKHR
+
+pattern VkCreateAndroidSurfaceKHR :: CString
+
+pattern VkCreateAndroidSurfaceKHR <-
+        (is_VkCreateAndroidSurfaceKHR -> True)
+  where VkCreateAndroidSurfaceKHR = _VkCreateAndroidSurfaceKHR
+
+{-# INLINE _VkCreateAndroidSurfaceKHR #-}
+
+_VkCreateAndroidSurfaceKHR :: CString
+_VkCreateAndroidSurfaceKHR = Ptr "vkCreateAndroidSurfaceKHR\NUL"#
+
+{-# INLINE is_VkCreateAndroidSurfaceKHR #-}
+
+is_VkCreateAndroidSurfaceKHR :: CString -> Bool
+is_VkCreateAndroidSurfaceKHR
+  = (EQ ==) . cmpCStrings _VkCreateAndroidSurfaceKHR
+
+type VkCreateAndroidSurfaceKHR = "vkCreateAndroidSurfaceKHR"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -102,6 +127,43 @@ foreign import ccall safe "vkCreateAndroidSurfaceKHR"
                    Ptr VkAllocationCallbacks -- ^ pAllocator
                                              -> Ptr VkSurfaceKHR -- ^ pSurface
                                                                  -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
+--
+--   > VkResult vkCreateAndroidSurfaceKHR
+--   >     ( VkInstance instance
+--   >     , const VkAndroidSurfaceCreateInfoKHR* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkSurfaceKHR* pSurface
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateAndroidSurfaceKHR.html vkCreateAndroidSurfaceKHR registry at www.khronos.org>
+type HS_vkCreateAndroidSurfaceKHR =
+     VkInstance -- ^ instance
+                ->
+       Ptr VkAndroidSurfaceCreateInfoKHR -- ^ pCreateInfo
+                                         ->
+         Ptr VkAllocationCallbacks -- ^ pAllocator
+                                   -> Ptr VkSurfaceKHR -- ^ pSurface
+                                                       -> IO VkResult
+
+type PFN_vkCreateAndroidSurfaceKHR =
+     FunPtr HS_vkCreateAndroidSurfaceKHR
+
+foreign import ccall "dynamic" unwrapVkCreateAndroidSurfaceKHR ::
+               PFN_vkCreateAndroidSurfaceKHR -> HS_vkCreateAndroidSurfaceKHR
+
+instance VulkanInstanceProc "vkCreateAndroidSurfaceKHR" where
+        type VkInstanceProcType "vkCreateAndroidSurfaceKHR" =
+             HS_vkCreateAndroidSurfaceKHR
+        vkInstanceProcSymbol = _VkCreateAndroidSurfaceKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCreateAndroidSurfaceKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_KHR_ANDROID_SURFACE_SPEC_VERSION :: (Num a, Eq a) => a
 

@@ -1,9 +1,12 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_NVX_device_generated_commands
        (-- * Vulkan extension: @VK_NVX_device_generated_commands@
@@ -42,17 +45,49 @@ module Graphics.Vulkan.Ext.VK_NVX_device_generated_commands
         module Graphics.Vulkan.Types.Enum.VkShaderStageFlags,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
-        vkCmdProcessCommandsNVX, vkCmdProcessCommandsNVXSafe,
+        VkCmdProcessCommandsNVX, pattern VkCmdProcessCommandsNVX,
+        HS_vkCmdProcessCommandsNVX, PFN_vkCmdProcessCommandsNVX,
+        unwrapVkCmdProcessCommandsNVX, vkCmdProcessCommandsNVX,
+        vkCmdProcessCommandsNVXSafe, VkCmdReserveSpaceForCommandsNVX,
+        pattern VkCmdReserveSpaceForCommandsNVX,
+        HS_vkCmdReserveSpaceForCommandsNVX,
+        PFN_vkCmdReserveSpaceForCommandsNVX,
+        unwrapVkCmdReserveSpaceForCommandsNVX,
         vkCmdReserveSpaceForCommandsNVX,
         vkCmdReserveSpaceForCommandsNVXSafe,
+        VkCreateIndirectCommandsLayoutNVX,
+        pattern VkCreateIndirectCommandsLayoutNVX,
+        HS_vkCreateIndirectCommandsLayoutNVX,
+        PFN_vkCreateIndirectCommandsLayoutNVX,
+        unwrapVkCreateIndirectCommandsLayoutNVX,
         vkCreateIndirectCommandsLayoutNVX,
         vkCreateIndirectCommandsLayoutNVXSafe,
+        VkDestroyIndirectCommandsLayoutNVX,
+        pattern VkDestroyIndirectCommandsLayoutNVX,
+        HS_vkDestroyIndirectCommandsLayoutNVX,
+        PFN_vkDestroyIndirectCommandsLayoutNVX,
+        unwrapVkDestroyIndirectCommandsLayoutNVX,
         vkDestroyIndirectCommandsLayoutNVX,
-        vkDestroyIndirectCommandsLayoutNVXSafe, vkCreateObjectTableNVX,
-        vkCreateObjectTableNVXSafe, vkDestroyObjectTableNVX,
-        vkDestroyObjectTableNVXSafe, vkRegisterObjectsNVX,
-        vkRegisterObjectsNVXSafe, vkUnregisterObjectsNVX,
+        vkDestroyIndirectCommandsLayoutNVXSafe, VkCreateObjectTableNVX,
+        pattern VkCreateObjectTableNVX, HS_vkCreateObjectTableNVX,
+        PFN_vkCreateObjectTableNVX, unwrapVkCreateObjectTableNVX,
+        vkCreateObjectTableNVX, vkCreateObjectTableNVXSafe,
+        VkDestroyObjectTableNVX, pattern VkDestroyObjectTableNVX,
+        HS_vkDestroyObjectTableNVX, PFN_vkDestroyObjectTableNVX,
+        unwrapVkDestroyObjectTableNVX, vkDestroyObjectTableNVX,
+        vkDestroyObjectTableNVXSafe, VkRegisterObjectsNVX,
+        pattern VkRegisterObjectsNVX, HS_vkRegisterObjectsNVX,
+        PFN_vkRegisterObjectsNVX, unwrapVkRegisterObjectsNVX,
+        vkRegisterObjectsNVX, vkRegisterObjectsNVXSafe,
+        VkUnregisterObjectsNVX, pattern VkUnregisterObjectsNVX,
+        HS_vkUnregisterObjectsNVX, PFN_vkUnregisterObjectsNVX,
+        unwrapVkUnregisterObjectsNVX, vkUnregisterObjectsNVX,
         vkUnregisterObjectsNVXSafe,
+        VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX,
+        pattern VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX,
+        HS_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX,
+        PFN_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX,
+        unwrapVkGetPhysicalDeviceGeneratedCommandsPropertiesNVX,
         vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX,
         vkGetPhysicalDeviceGeneratedCommandsPropertiesNVXSafe,
         module Graphics.Vulkan.Marshal,
@@ -81,6 +116,8 @@ module Graphics.Vulkan.Ext.VK_NVX_device_generated_commands
 import           GHC.Ptr
                                                                                      (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc
+                                                                                     (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkAccessFlags
                                                                                      (VkAccessBitmask (..),
@@ -119,6 +156,25 @@ import           Graphics.Vulkan.Types.Struct.VkObjectTablePipelineEntryNVX
 import           Graphics.Vulkan.Types.Struct.VkObjectTablePushConstantEntryNVX
 import           Graphics.Vulkan.Types.Struct.VkObjectTableVertexBufferEntryNVX
 
+pattern VkCmdProcessCommandsNVX :: CString
+
+pattern VkCmdProcessCommandsNVX <-
+        (is_VkCmdProcessCommandsNVX -> True)
+  where VkCmdProcessCommandsNVX = _VkCmdProcessCommandsNVX
+
+{-# INLINE _VkCmdProcessCommandsNVX #-}
+
+_VkCmdProcessCommandsNVX :: CString
+_VkCmdProcessCommandsNVX = Ptr "vkCmdProcessCommandsNVX\NUL"#
+
+{-# INLINE is_VkCmdProcessCommandsNVX #-}
+
+is_VkCmdProcessCommandsNVX :: CString -> Bool
+is_VkCmdProcessCommandsNVX
+  = (EQ ==) . cmpCStrings _VkCmdProcessCommandsNVX
+
+type VkCmdProcessCommandsNVX = "vkCmdProcessCommandsNVX"
+
 -- | queues: 'graphics', 'compute'.
 --
 --   renderpass: @inside@
@@ -155,6 +211,59 @@ foreign import ccall safe "vkCmdProcessCommandsNVX"
 --
 --   renderpass: @inside@
 --
+--   > () vkCmdProcessCommandsNVX
+--   >     ( VkCommandBuffer commandBuffer
+--   >     , const VkCmdProcessCommandsInfoNVX* pProcessCommandsInfo
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdProcessCommandsNVX.html vkCmdProcessCommandsNVX registry at www.khronos.org>
+type HS_vkCmdProcessCommandsNVX =
+     VkCommandBuffer -- ^ commandBuffer
+                     -> Ptr VkCmdProcessCommandsInfoNVX -- ^ pProcessCommandsInfo
+                                                        -> IO ()
+
+type PFN_vkCmdProcessCommandsNVX =
+     FunPtr HS_vkCmdProcessCommandsNVX
+
+foreign import ccall "dynamic" unwrapVkCmdProcessCommandsNVX ::
+               PFN_vkCmdProcessCommandsNVX -> HS_vkCmdProcessCommandsNVX
+
+instance VulkanInstanceProc "vkCmdProcessCommandsNVX" where
+        type VkInstanceProcType "vkCmdProcessCommandsNVX" =
+             HS_vkCmdProcessCommandsNVX
+        vkInstanceProcSymbol = _VkCmdProcessCommandsNVX
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCmdProcessCommandsNVX
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkCmdReserveSpaceForCommandsNVX :: CString
+
+pattern VkCmdReserveSpaceForCommandsNVX <-
+        (is_VkCmdReserveSpaceForCommandsNVX -> True)
+  where VkCmdReserveSpaceForCommandsNVX
+          = _VkCmdReserveSpaceForCommandsNVX
+
+{-# INLINE _VkCmdReserveSpaceForCommandsNVX #-}
+
+_VkCmdReserveSpaceForCommandsNVX :: CString
+_VkCmdReserveSpaceForCommandsNVX
+  = Ptr "vkCmdReserveSpaceForCommandsNVX\NUL"#
+
+{-# INLINE is_VkCmdReserveSpaceForCommandsNVX #-}
+
+is_VkCmdReserveSpaceForCommandsNVX :: CString -> Bool
+is_VkCmdReserveSpaceForCommandsNVX
+  = (EQ ==) . cmpCStrings _VkCmdReserveSpaceForCommandsNVX
+
+type VkCmdReserveSpaceForCommandsNVX =
+     "vkCmdReserveSpaceForCommandsNVX"
+
+-- | queues: 'graphics', 'compute'.
+--
+--   renderpass: @inside@
+--
 --   > () vkCmdReserveSpaceForCommandsNVX
 --   >     ( VkCommandBuffer commandBuffer
 --   >     , const VkCmdReserveSpaceForCommandsInfoNVX* pReserveSpaceInfo
@@ -182,6 +291,61 @@ foreign import ccall safe "vkCmdReserveSpaceForCommandsNVX"
                VkCommandBuffer -- ^ commandBuffer
                                -> Ptr VkCmdReserveSpaceForCommandsInfoNVX -- ^ pReserveSpaceInfo
                                                                           -> IO ()
+
+-- | queues: 'graphics', 'compute'.
+--
+--   renderpass: @inside@
+--
+--   > () vkCmdReserveSpaceForCommandsNVX
+--   >     ( VkCommandBuffer commandBuffer
+--   >     , const VkCmdReserveSpaceForCommandsInfoNVX* pReserveSpaceInfo
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdReserveSpaceForCommandsNVX.html vkCmdReserveSpaceForCommandsNVX registry at www.khronos.org>
+type HS_vkCmdReserveSpaceForCommandsNVX =
+     VkCommandBuffer -- ^ commandBuffer
+                     -> Ptr VkCmdReserveSpaceForCommandsInfoNVX -- ^ pReserveSpaceInfo
+                                                                -> IO ()
+
+type PFN_vkCmdReserveSpaceForCommandsNVX =
+     FunPtr HS_vkCmdReserveSpaceForCommandsNVX
+
+foreign import ccall "dynamic"
+               unwrapVkCmdReserveSpaceForCommandsNVX ::
+               PFN_vkCmdReserveSpaceForCommandsNVX ->
+                 HS_vkCmdReserveSpaceForCommandsNVX
+
+instance VulkanInstanceProc "vkCmdReserveSpaceForCommandsNVX" where
+        type VkInstanceProcType "vkCmdReserveSpaceForCommandsNVX" =
+             HS_vkCmdReserveSpaceForCommandsNVX
+        vkInstanceProcSymbol = _VkCmdReserveSpaceForCommandsNVX
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCmdReserveSpaceForCommandsNVX
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkCreateIndirectCommandsLayoutNVX :: CString
+
+pattern VkCreateIndirectCommandsLayoutNVX <-
+        (is_VkCreateIndirectCommandsLayoutNVX -> True)
+  where VkCreateIndirectCommandsLayoutNVX
+          = _VkCreateIndirectCommandsLayoutNVX
+
+{-# INLINE _VkCreateIndirectCommandsLayoutNVX #-}
+
+_VkCreateIndirectCommandsLayoutNVX :: CString
+_VkCreateIndirectCommandsLayoutNVX
+  = Ptr "vkCreateIndirectCommandsLayoutNVX\NUL"#
+
+{-# INLINE is_VkCreateIndirectCommandsLayoutNVX #-}
+
+is_VkCreateIndirectCommandsLayoutNVX :: CString -> Bool
+is_VkCreateIndirectCommandsLayoutNVX
+  = (EQ ==) . cmpCStrings _VkCreateIndirectCommandsLayoutNVX
+
+type VkCreateIndirectCommandsLayoutNVX =
+     "vkCreateIndirectCommandsLayoutNVX"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -229,6 +393,69 @@ foreign import ccall safe "vkCreateIndirectCommandsLayoutNVX"
                      Ptr VkIndirectCommandsLayoutNVX -- ^ pIndirectCommandsLayout
                                                      -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkCreateIndirectCommandsLayoutNVX
+--   >     ( VkDevice device
+--   >     , const VkIndirectCommandsLayoutCreateInfoNVX* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkIndirectCommandsLayoutNVX* pIndirectCommandsLayout
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateIndirectCommandsLayoutNVX.html vkCreateIndirectCommandsLayoutNVX registry at www.khronos.org>
+type HS_vkCreateIndirectCommandsLayoutNVX =
+     VkDevice -- ^ device
+              ->
+       Ptr VkIndirectCommandsLayoutCreateInfoNVX -- ^ pCreateInfo
+                                                 ->
+         Ptr VkAllocationCallbacks -- ^ pAllocator
+                                   ->
+           Ptr VkIndirectCommandsLayoutNVX -- ^ pIndirectCommandsLayout
+                                           -> IO VkResult
+
+type PFN_vkCreateIndirectCommandsLayoutNVX =
+     FunPtr HS_vkCreateIndirectCommandsLayoutNVX
+
+foreign import ccall "dynamic"
+               unwrapVkCreateIndirectCommandsLayoutNVX ::
+               PFN_vkCreateIndirectCommandsLayoutNVX ->
+                 HS_vkCreateIndirectCommandsLayoutNVX
+
+instance VulkanInstanceProc "vkCreateIndirectCommandsLayoutNVX"
+         where
+        type VkInstanceProcType "vkCreateIndirectCommandsLayoutNVX" =
+             HS_vkCreateIndirectCommandsLayoutNVX
+        vkInstanceProcSymbol = _VkCreateIndirectCommandsLayoutNVX
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCreateIndirectCommandsLayoutNVX
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkDestroyIndirectCommandsLayoutNVX :: CString
+
+pattern VkDestroyIndirectCommandsLayoutNVX <-
+        (is_VkDestroyIndirectCommandsLayoutNVX -> True)
+  where VkDestroyIndirectCommandsLayoutNVX
+          = _VkDestroyIndirectCommandsLayoutNVX
+
+{-# INLINE _VkDestroyIndirectCommandsLayoutNVX #-}
+
+_VkDestroyIndirectCommandsLayoutNVX :: CString
+_VkDestroyIndirectCommandsLayoutNVX
+  = Ptr "vkDestroyIndirectCommandsLayoutNVX\NUL"#
+
+{-# INLINE is_VkDestroyIndirectCommandsLayoutNVX #-}
+
+is_VkDestroyIndirectCommandsLayoutNVX :: CString -> Bool
+is_VkDestroyIndirectCommandsLayoutNVX
+  = (EQ ==) . cmpCStrings _VkDestroyIndirectCommandsLayoutNVX
+
+type VkDestroyIndirectCommandsLayoutNVX =
+     "vkDestroyIndirectCommandsLayoutNVX"
+
 -- | > () vkDestroyIndirectCommandsLayoutNVX
 --   >     ( VkDevice device
 --   >     , VkIndirectCommandsLayoutNVX indirectCommandsLayout
@@ -258,6 +485,58 @@ foreign import ccall safe "vkDestroyIndirectCommandsLayoutNVX"
                  VkIndirectCommandsLayoutNVX -- ^ indirectCommandsLayout
                                              -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                           -> IO ()
+
+-- | > () vkDestroyIndirectCommandsLayoutNVX
+--   >     ( VkDevice device
+--   >     , VkIndirectCommandsLayoutNVX indirectCommandsLayout
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyIndirectCommandsLayoutNVX.html vkDestroyIndirectCommandsLayoutNVX registry at www.khronos.org>
+type HS_vkDestroyIndirectCommandsLayoutNVX =
+     VkDevice -- ^ device
+              ->
+       VkIndirectCommandsLayoutNVX -- ^ indirectCommandsLayout
+                                   -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                                -> IO ()
+
+type PFN_vkDestroyIndirectCommandsLayoutNVX =
+     FunPtr HS_vkDestroyIndirectCommandsLayoutNVX
+
+foreign import ccall "dynamic"
+               unwrapVkDestroyIndirectCommandsLayoutNVX ::
+               PFN_vkDestroyIndirectCommandsLayoutNVX ->
+                 HS_vkDestroyIndirectCommandsLayoutNVX
+
+instance VulkanInstanceProc "vkDestroyIndirectCommandsLayoutNVX"
+         where
+        type VkInstanceProcType "vkDestroyIndirectCommandsLayoutNVX" =
+             HS_vkDestroyIndirectCommandsLayoutNVX
+        vkInstanceProcSymbol = _VkDestroyIndirectCommandsLayoutNVX
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkDestroyIndirectCommandsLayoutNVX
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkCreateObjectTableNVX :: CString
+
+pattern VkCreateObjectTableNVX <-
+        (is_VkCreateObjectTableNVX -> True)
+  where VkCreateObjectTableNVX = _VkCreateObjectTableNVX
+
+{-# INLINE _VkCreateObjectTableNVX #-}
+
+_VkCreateObjectTableNVX :: CString
+_VkCreateObjectTableNVX = Ptr "vkCreateObjectTableNVX\NUL"#
+
+{-# INLINE is_VkCreateObjectTableNVX #-}
+
+is_VkCreateObjectTableNVX :: CString -> Bool
+is_VkCreateObjectTableNVX
+  = (EQ ==) . cmpCStrings _VkCreateObjectTableNVX
+
+type VkCreateObjectTableNVX = "vkCreateObjectTableNVX"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -303,6 +582,61 @@ foreign import ccall safe "vkCreateObjectTableNVX"
                                              -> Ptr VkObjectTableNVX -- ^ pObjectTable
                                                                      -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkCreateObjectTableNVX
+--   >     ( VkDevice device
+--   >     , const VkObjectTableCreateInfoNVX* pCreateInfo
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     , VkObjectTableNVX* pObjectTable
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateObjectTableNVX.html vkCreateObjectTableNVX registry at www.khronos.org>
+type HS_vkCreateObjectTableNVX =
+     VkDevice -- ^ device
+              ->
+       Ptr VkObjectTableCreateInfoNVX -- ^ pCreateInfo
+                                      ->
+         Ptr VkAllocationCallbacks -- ^ pAllocator
+                                   -> Ptr VkObjectTableNVX -- ^ pObjectTable
+                                                           -> IO VkResult
+
+type PFN_vkCreateObjectTableNVX = FunPtr HS_vkCreateObjectTableNVX
+
+foreign import ccall "dynamic" unwrapVkCreateObjectTableNVX ::
+               PFN_vkCreateObjectTableNVX -> HS_vkCreateObjectTableNVX
+
+instance VulkanInstanceProc "vkCreateObjectTableNVX" where
+        type VkInstanceProcType "vkCreateObjectTableNVX" =
+             HS_vkCreateObjectTableNVX
+        vkInstanceProcSymbol = _VkCreateObjectTableNVX
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkCreateObjectTableNVX
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkDestroyObjectTableNVX :: CString
+
+pattern VkDestroyObjectTableNVX <-
+        (is_VkDestroyObjectTableNVX -> True)
+  where VkDestroyObjectTableNVX = _VkDestroyObjectTableNVX
+
+{-# INLINE _VkDestroyObjectTableNVX #-}
+
+_VkDestroyObjectTableNVX :: CString
+_VkDestroyObjectTableNVX = Ptr "vkDestroyObjectTableNVX\NUL"#
+
+{-# INLINE is_VkDestroyObjectTableNVX #-}
+
+is_VkDestroyObjectTableNVX :: CString -> Bool
+is_VkDestroyObjectTableNVX
+  = (EQ ==) . cmpCStrings _VkDestroyObjectTableNVX
+
+type VkDestroyObjectTableNVX = "vkDestroyObjectTableNVX"
+
 -- | > () vkDestroyObjectTableNVX
 --   >     ( VkDevice device
 --   >     , VkObjectTableNVX objectTable
@@ -330,6 +664,53 @@ foreign import ccall safe "vkDestroyObjectTableNVX"
                         -> VkObjectTableNVX -- ^ objectTable
                                             -> Ptr VkAllocationCallbacks -- ^ pAllocator
                                                                          -> IO ()
+
+-- | > () vkDestroyObjectTableNVX
+--   >     ( VkDevice device
+--   >     , VkObjectTableNVX objectTable
+--   >     , const VkAllocationCallbacks* pAllocator
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyObjectTableNVX.html vkDestroyObjectTableNVX registry at www.khronos.org>
+type HS_vkDestroyObjectTableNVX =
+     VkDevice -- ^ device
+              -> VkObjectTableNVX -- ^ objectTable
+                                  -> Ptr VkAllocationCallbacks -- ^ pAllocator
+                                                               -> IO ()
+
+type PFN_vkDestroyObjectTableNVX =
+     FunPtr HS_vkDestroyObjectTableNVX
+
+foreign import ccall "dynamic" unwrapVkDestroyObjectTableNVX ::
+               PFN_vkDestroyObjectTableNVX -> HS_vkDestroyObjectTableNVX
+
+instance VulkanInstanceProc "vkDestroyObjectTableNVX" where
+        type VkInstanceProcType "vkDestroyObjectTableNVX" =
+             HS_vkDestroyObjectTableNVX
+        vkInstanceProcSymbol = _VkDestroyObjectTableNVX
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkDestroyObjectTableNVX
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkRegisterObjectsNVX :: CString
+
+pattern VkRegisterObjectsNVX <- (is_VkRegisterObjectsNVX -> True)
+  where VkRegisterObjectsNVX = _VkRegisterObjectsNVX
+
+{-# INLINE _VkRegisterObjectsNVX #-}
+
+_VkRegisterObjectsNVX :: CString
+_VkRegisterObjectsNVX = Ptr "vkRegisterObjectsNVX\NUL"#
+
+{-# INLINE is_VkRegisterObjectsNVX #-}
+
+is_VkRegisterObjectsNVX :: CString -> Bool
+is_VkRegisterObjectsNVX
+  = (EQ ==) . cmpCStrings _VkRegisterObjectsNVX
+
+type VkRegisterObjectsNVX = "vkRegisterObjectsNVX"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -385,6 +766,64 @@ foreign import ccall safe "vkRegisterObjectsNVX"
 --
 --   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
 --
+--   > VkResult vkRegisterObjectsNVX
+--   >     ( VkDevice device
+--   >     , VkObjectTableNVX objectTable
+--   >     , uint32_t objectCount
+--   >     , const VkObjectTableEntryNVX* const*    ppObjectTableEntries
+--   >     , const uint32_t* pObjectIndices
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkRegisterObjectsNVX.html vkRegisterObjectsNVX registry at www.khronos.org>
+type HS_vkRegisterObjectsNVX =
+     VkDevice -- ^ device
+              ->
+       VkObjectTableNVX -- ^ objectTable
+                        ->
+         Word32 -- ^ objectCount
+                ->
+           Ptr (Ptr VkObjectTableEntryNVX) -- ^ ppObjectTableEntries
+                                           -> Ptr Word32 -- ^ pObjectIndices
+                                                         -> IO VkResult
+
+type PFN_vkRegisterObjectsNVX = FunPtr HS_vkRegisterObjectsNVX
+
+foreign import ccall "dynamic" unwrapVkRegisterObjectsNVX ::
+               PFN_vkRegisterObjectsNVX -> HS_vkRegisterObjectsNVX
+
+instance VulkanInstanceProc "vkRegisterObjectsNVX" where
+        type VkInstanceProcType "vkRegisterObjectsNVX" =
+             HS_vkRegisterObjectsNVX
+        vkInstanceProcSymbol = _VkRegisterObjectsNVX
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkRegisterObjectsNVX
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkUnregisterObjectsNVX :: CString
+
+pattern VkUnregisterObjectsNVX <-
+        (is_VkUnregisterObjectsNVX -> True)
+  where VkUnregisterObjectsNVX = _VkUnregisterObjectsNVX
+
+{-# INLINE _VkUnregisterObjectsNVX #-}
+
+_VkUnregisterObjectsNVX :: CString
+_VkUnregisterObjectsNVX = Ptr "vkUnregisterObjectsNVX\NUL"#
+
+{-# INLINE is_VkUnregisterObjectsNVX #-}
+
+is_VkUnregisterObjectsNVX :: CString -> Bool
+is_VkUnregisterObjectsNVX
+  = (EQ ==) . cmpCStrings _VkUnregisterObjectsNVX
+
+type VkUnregisterObjectsNVX = "vkUnregisterObjectsNVX"
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
 --   > VkResult vkUnregisterObjectsNVX
 --   >     ( VkDevice device
 --   >     , VkObjectTableNVX objectTable
@@ -429,6 +868,69 @@ foreign import ccall safe "vkUnregisterObjectsNVX"
                                                       -> Ptr Word32 -- ^ pObjectIndices
                                                                     -> IO VkResult
 
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
+--
+--   > VkResult vkUnregisterObjectsNVX
+--   >     ( VkDevice device
+--   >     , VkObjectTableNVX objectTable
+--   >     , uint32_t objectCount
+--   >     , const VkObjectEntryTypeNVX* pObjectEntryTypes
+--   >     , const uint32_t* pObjectIndices
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkUnregisterObjectsNVX.html vkUnregisterObjectsNVX registry at www.khronos.org>
+type HS_vkUnregisterObjectsNVX =
+     VkDevice -- ^ device
+              ->
+       VkObjectTableNVX -- ^ objectTable
+                        ->
+         Word32 -- ^ objectCount
+                -> Ptr VkObjectEntryTypeNVX -- ^ pObjectEntryTypes
+                                            -> Ptr Word32 -- ^ pObjectIndices
+                                                          -> IO VkResult
+
+type PFN_vkUnregisterObjectsNVX = FunPtr HS_vkUnregisterObjectsNVX
+
+foreign import ccall "dynamic" unwrapVkUnregisterObjectsNVX ::
+               PFN_vkUnregisterObjectsNVX -> HS_vkUnregisterObjectsNVX
+
+instance VulkanInstanceProc "vkUnregisterObjectsNVX" where
+        type VkInstanceProcType "vkUnregisterObjectsNVX" =
+             HS_vkUnregisterObjectsNVX
+        vkInstanceProcSymbol = _VkUnregisterObjectsNVX
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkUnregisterObjectsNVX
+
+        {-# INLINE unwrapVkInstanceProc #-}
+
+pattern VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX ::
+        CString
+
+pattern VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX <-
+        (is_VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX -> True)
+  where VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
+          = _VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
+
+{-# INLINE _VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX #-}
+
+_VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX :: CString
+_VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
+  = Ptr "vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX\NUL"#
+
+{-# INLINE is_VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX #-}
+
+is_VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX ::
+                                                     CString -> Bool
+is_VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
+  = (EQ ==) .
+      cmpCStrings _VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
+
+type VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX =
+     "vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX"
+
 -- | > () vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
 --   >     ( VkPhysicalDevice physicalDevice
 --   >     , VkDeviceGeneratedCommandsFeaturesNVX* pFeatures
@@ -462,6 +964,44 @@ foreign import ccall safe
                                                           ->
                    Ptr VkDeviceGeneratedCommandsLimitsNVX -- ^ pLimits
                                                           -> IO ()
+
+-- | > () vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , VkDeviceGeneratedCommandsFeaturesNVX* pFeatures
+--   >     , VkDeviceGeneratedCommandsLimitsNVX* pLimits
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX.html vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX registry at www.khronos.org>
+type HS_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX =
+     VkPhysicalDevice -- ^ physicalDevice
+                      ->
+       Ptr VkDeviceGeneratedCommandsFeaturesNVX -- ^ pFeatures
+                                                ->
+         Ptr VkDeviceGeneratedCommandsLimitsNVX -- ^ pLimits
+                                                -> IO ()
+
+type PFN_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX =
+     FunPtr HS_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
+
+foreign import ccall "dynamic"
+               unwrapVkGetPhysicalDeviceGeneratedCommandsPropertiesNVX ::
+               PFN_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX ->
+                 HS_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
+
+instance VulkanInstanceProc
+           "vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX"
+         where
+        type VkInstanceProcType
+               "vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX"
+             = HS_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
+        vkInstanceProcSymbol
+          = _VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc
+          = unwrapVkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_NVX_DEVICE_GENERATED_COMMANDS_SPEC_VERSION ::
         (Num a, Eq a) => a

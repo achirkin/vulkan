@@ -1,10 +1,13 @@
 {-# OPTIONS_GHC -fno-warn-missing-pattern-synonym-signatures#-}
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_external_memory_capabilities
        (-- * Vulkan extension: @VK_KHR_external_memory_capabilities@
@@ -33,6 +36,11 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_capabilities
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalBufferInfoKHR,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalImageFormatInfoKHR,
         module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceIDPropertiesKHR,
+        VkGetPhysicalDeviceExternalBufferPropertiesKHR,
+        pattern VkGetPhysicalDeviceExternalBufferPropertiesKHR,
+        HS_vkGetPhysicalDeviceExternalBufferPropertiesKHR,
+        PFN_vkGetPhysicalDeviceExternalBufferPropertiesKHR,
+        unwrapVkGetPhysicalDeviceExternalBufferPropertiesKHR,
         vkGetPhysicalDeviceExternalBufferPropertiesKHR,
         vkGetPhysicalDeviceExternalBufferPropertiesKHRSafe,
         module Graphics.Vulkan.Marshal,
@@ -78,6 +86,8 @@ import           Graphics.Vulkan.Core_1_1
                                                                                           pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO,
                                                                                           pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ID_PROPERTIES)
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc
+                                                                                          (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkBufferCreateFlags
@@ -98,6 +108,30 @@ import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalBufferInfo
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalImageFormatInfoKHR
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceIDPropertiesKHR
 
+pattern VkGetPhysicalDeviceExternalBufferPropertiesKHR :: CString
+
+pattern VkGetPhysicalDeviceExternalBufferPropertiesKHR <-
+        (is_VkGetPhysicalDeviceExternalBufferPropertiesKHR -> True)
+  where VkGetPhysicalDeviceExternalBufferPropertiesKHR
+          = _VkGetPhysicalDeviceExternalBufferPropertiesKHR
+
+{-# INLINE _VkGetPhysicalDeviceExternalBufferPropertiesKHR #-}
+
+_VkGetPhysicalDeviceExternalBufferPropertiesKHR :: CString
+_VkGetPhysicalDeviceExternalBufferPropertiesKHR
+  = Ptr "vkGetPhysicalDeviceExternalBufferPropertiesKHR\NUL"#
+
+{-# INLINE is_VkGetPhysicalDeviceExternalBufferPropertiesKHR #-}
+
+is_VkGetPhysicalDeviceExternalBufferPropertiesKHR ::
+                                                  CString -> Bool
+is_VkGetPhysicalDeviceExternalBufferPropertiesKHR
+  = (EQ ==) .
+      cmpCStrings _VkGetPhysicalDeviceExternalBufferPropertiesKHR
+
+type VkGetPhysicalDeviceExternalBufferPropertiesKHR =
+     "vkGetPhysicalDeviceExternalBufferPropertiesKHR"
+
 -- | This is an alias for `vkGetPhysicalDeviceExternalBufferProperties`.
 --
 --   > () vkGetPhysicalDeviceExternalBufferPropertiesKHR
@@ -108,7 +142,7 @@ import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceIDPropertiesKHR
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalBufferPropertiesKHR.html vkGetPhysicalDeviceExternalBufferPropertiesKHR registry at www.khronos.org>
 foreign import ccall unsafe
-               "vkGetPhysicalDeviceExternalBufferProperties"
+               "vkGetPhysicalDeviceExternalBufferPropertiesKHR"
                vkGetPhysicalDeviceExternalBufferPropertiesKHR ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
@@ -127,7 +161,7 @@ foreign import ccall unsafe
 --
 --   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalBufferPropertiesKHR.html vkGetPhysicalDeviceExternalBufferPropertiesKHR registry at www.khronos.org>
 foreign import ccall safe
-               "vkGetPhysicalDeviceExternalBufferProperties"
+               "vkGetPhysicalDeviceExternalBufferPropertiesKHR"
                vkGetPhysicalDeviceExternalBufferPropertiesKHRSafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
@@ -135,6 +169,46 @@ foreign import ccall safe
                                                         ->
                    Ptr VkExternalBufferProperties -- ^ pExternalBufferProperties
                                                   -> IO ()
+
+-- | This is an alias for `vkGetPhysicalDeviceExternalBufferProperties`.
+--
+--   > () vkGetPhysicalDeviceExternalBufferPropertiesKHR
+--   >     ( VkPhysicalDevice physicalDevice
+--   >     , const VkPhysicalDeviceExternalBufferInfo* pExternalBufferInfo
+--   >     , VkExternalBufferProperties* pExternalBufferProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalBufferPropertiesKHR.html vkGetPhysicalDeviceExternalBufferPropertiesKHR registry at www.khronos.org>
+type HS_vkGetPhysicalDeviceExternalBufferPropertiesKHR =
+     VkPhysicalDevice -- ^ physicalDevice
+                      ->
+       Ptr VkPhysicalDeviceExternalBufferInfo -- ^ pExternalBufferInfo
+                                              ->
+         Ptr VkExternalBufferProperties -- ^ pExternalBufferProperties
+                                        -> IO ()
+
+type PFN_vkGetPhysicalDeviceExternalBufferPropertiesKHR =
+     FunPtr HS_vkGetPhysicalDeviceExternalBufferPropertiesKHR
+
+foreign import ccall "dynamic"
+               unwrapVkGetPhysicalDeviceExternalBufferPropertiesKHR ::
+               PFN_vkGetPhysicalDeviceExternalBufferPropertiesKHR ->
+                 HS_vkGetPhysicalDeviceExternalBufferPropertiesKHR
+
+instance VulkanInstanceProc
+           "vkGetPhysicalDeviceExternalBufferPropertiesKHR"
+         where
+        type VkInstanceProcType
+               "vkGetPhysicalDeviceExternalBufferPropertiesKHR"
+             = HS_vkGetPhysicalDeviceExternalBufferPropertiesKHR
+        vkInstanceProcSymbol
+          = _VkGetPhysicalDeviceExternalBufferPropertiesKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc
+          = unwrapVkGetPhysicalDeviceExternalBufferPropertiesKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_KHR_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION ::
         (Num a, Eq a) => a

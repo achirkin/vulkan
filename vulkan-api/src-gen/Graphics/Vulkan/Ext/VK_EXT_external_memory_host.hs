@@ -1,10 +1,13 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_GHC -fno-warn-unused-imports#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_EXT_external_memory_host
        (-- * Vulkan extension: @VK_EXT_external_memory_host@
@@ -41,6 +44,11 @@ module Graphics.Vulkan.Ext.VK_EXT_external_memory_host
         module Graphics.Vulkan.Types.Enum.VkSampleCountFlags,
         module Graphics.Vulkan.Types.Enum.VkStructureType,
         -- > #include "vk_platform.h"
+        VkGetMemoryHostPointerPropertiesEXT,
+        pattern VkGetMemoryHostPointerPropertiesEXT,
+        HS_vkGetMemoryHostPointerPropertiesEXT,
+        PFN_vkGetMemoryHostPointerPropertiesEXT,
+        unwrapVkGetMemoryHostPointerPropertiesEXT,
         vkGetMemoryHostPointerPropertiesEXT,
         vkGetMemoryHostPointerPropertiesEXTSafe,
         module Graphics.Vulkan.Types.Enum.VkResult,
@@ -58,6 +66,8 @@ module Graphics.Vulkan.Ext.VK_EXT_external_memory_host
 import           GHC.Ptr
                                                                                                (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc
+                                                                                               (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagBitsKHR
@@ -75,6 +85,28 @@ import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceLimits
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2
 import           Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseProperties
+
+pattern VkGetMemoryHostPointerPropertiesEXT :: CString
+
+pattern VkGetMemoryHostPointerPropertiesEXT <-
+        (is_VkGetMemoryHostPointerPropertiesEXT -> True)
+  where VkGetMemoryHostPointerPropertiesEXT
+          = _VkGetMemoryHostPointerPropertiesEXT
+
+{-# INLINE _VkGetMemoryHostPointerPropertiesEXT #-}
+
+_VkGetMemoryHostPointerPropertiesEXT :: CString
+_VkGetMemoryHostPointerPropertiesEXT
+  = Ptr "vkGetMemoryHostPointerPropertiesEXT\NUL"#
+
+{-# INLINE is_VkGetMemoryHostPointerPropertiesEXT #-}
+
+is_VkGetMemoryHostPointerPropertiesEXT :: CString -> Bool
+is_VkGetMemoryHostPointerPropertiesEXT
+  = (EQ ==) . cmpCStrings _VkGetMemoryHostPointerPropertiesEXT
+
+type VkGetMemoryHostPointerPropertiesEXT =
+     "vkGetMemoryHostPointerPropertiesEXT"
 
 -- | Success codes: 'VK_SUCCESS'.
 --
@@ -119,6 +151,46 @@ foreign import ccall safe "vkGetMemoryHostPointerPropertiesEXT"
                    Ptr Void -- ^ pHostPointer
                             -> Ptr VkMemoryHostPointerPropertiesEXT -- ^ pMemoryHostPointerProperties
                                                                     -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS'.
+--
+--   Error codes: 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
+--
+--   > VkResult vkGetMemoryHostPointerPropertiesEXT
+--   >     ( VkDevice device
+--   >     , VkExternalMemoryHandleTypeFlagBits handleType
+--   >     , const void* pHostPointer
+--   >     , VkMemoryHostPointerPropertiesEXT* pMemoryHostPointerProperties
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryHostPointerPropertiesEXT.html vkGetMemoryHostPointerPropertiesEXT registry at www.khronos.org>
+type HS_vkGetMemoryHostPointerPropertiesEXT =
+     VkDevice -- ^ device
+              ->
+       VkExternalMemoryHandleTypeFlagBits -- ^ handleType
+                                          ->
+         Ptr Void -- ^ pHostPointer
+                  -> Ptr VkMemoryHostPointerPropertiesEXT -- ^ pMemoryHostPointerProperties
+                                                          -> IO VkResult
+
+type PFN_vkGetMemoryHostPointerPropertiesEXT =
+     FunPtr HS_vkGetMemoryHostPointerPropertiesEXT
+
+foreign import ccall "dynamic"
+               unwrapVkGetMemoryHostPointerPropertiesEXT ::
+               PFN_vkGetMemoryHostPointerPropertiesEXT ->
+                 HS_vkGetMemoryHostPointerPropertiesEXT
+
+instance VulkanInstanceProc "vkGetMemoryHostPointerPropertiesEXT"
+         where
+        type VkInstanceProcType "vkGetMemoryHostPointerPropertiesEXT" =
+             HS_vkGetMemoryHostPointerPropertiesEXT
+        vkInstanceProcSymbol = _VkGetMemoryHostPointerPropertiesEXT
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetMemoryHostPointerPropertiesEXT
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_EXT_EXTERNAL_MEMORY_HOST_SPEC_VERSION ::
         (Num a, Eq a) => a

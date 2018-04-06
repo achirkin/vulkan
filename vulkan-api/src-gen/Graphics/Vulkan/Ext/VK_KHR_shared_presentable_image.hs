@@ -1,9 +1,12 @@
+{-# OPTIONS_GHC -fno-warn-orphans#-}
 {-# OPTIONS_HADDOCK not-home#-}
 {-# LANGUAGE DataKinds                #-}
+{-# LANGUAGE FlexibleInstances        #-}
 {-# LANGUAGE ForeignFunctionInterface #-}
 {-# LANGUAGE MagicHash                #-}
 {-# LANGUAGE PatternSynonyms          #-}
 {-# LANGUAGE Strict                   #-}
+{-# LANGUAGE TypeFamilies             #-}
 {-# LANGUAGE ViewPatterns             #-}
 module Graphics.Vulkan.Ext.VK_KHR_shared_presentable_image
        (-- * Vulkan extension: @VK_KHR_shared_presentable_image@
@@ -33,7 +36,10 @@ module Graphics.Vulkan.Ext.VK_KHR_shared_presentable_image
         module Graphics.Vulkan.Types.Struct.VkSurfaceCapabilitiesKHR,
         module Graphics.Vulkan.Types.Enum.VkSurfaceTransformFlagsKHR,
         -- > #include "vk_platform.h"
-        vkGetSwapchainStatusKHR, vkGetSwapchainStatusKHRSafe,
+        VkGetSwapchainStatusKHR, pattern VkGetSwapchainStatusKHR,
+        HS_vkGetSwapchainStatusKHR, PFN_vkGetSwapchainStatusKHR,
+        unwrapVkGetSwapchainStatusKHR, vkGetSwapchainStatusKHR,
+        vkGetSwapchainStatusKHRSafe,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_KHR_SHARED_PRESENTABLE_IMAGE_SPEC_VERSION,
@@ -48,6 +54,8 @@ module Graphics.Vulkan.Ext.VK_KHR_shared_presentable_image
 import           GHC.Ptr
                                                                                      (Ptr (..))
 import           Graphics.Vulkan.Marshal
+import           Graphics.Vulkan.Marshal.InstanceProc
+                                                                                     (VulkanInstanceProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkCompositeAlphaFlagsKHR
 import           Graphics.Vulkan.Types.Enum.VkImageLayout
@@ -63,6 +71,25 @@ import           Graphics.Vulkan.Types.Struct.VkExtent2D
 import           Graphics.Vulkan.Types.Struct.VkSharedPresentSurfaceCapabilitiesKHR
 import           Graphics.Vulkan.Types.Struct.VkSurfaceCapabilities2KHR
 import           Graphics.Vulkan.Types.Struct.VkSurfaceCapabilitiesKHR
+
+pattern VkGetSwapchainStatusKHR :: CString
+
+pattern VkGetSwapchainStatusKHR <-
+        (is_VkGetSwapchainStatusKHR -> True)
+  where VkGetSwapchainStatusKHR = _VkGetSwapchainStatusKHR
+
+{-# INLINE _VkGetSwapchainStatusKHR #-}
+
+_VkGetSwapchainStatusKHR :: CString
+_VkGetSwapchainStatusKHR = Ptr "vkGetSwapchainStatusKHR\NUL"#
+
+{-# INLINE is_VkGetSwapchainStatusKHR #-}
+
+is_VkGetSwapchainStatusKHR :: CString -> Bool
+is_VkGetSwapchainStatusKHR
+  = (EQ ==) . cmpCStrings _VkGetSwapchainStatusKHR
+
+type VkGetSwapchainStatusKHR = "vkGetSwapchainStatusKHR"
 
 -- | Success codes: 'VK_SUCCESS', 'VK_SUBOPTIMAL_KHR'.
 --
@@ -95,6 +122,37 @@ foreign import ccall safe "vkGetSwapchainStatusKHR"
                VkDevice -- ^ device
                         -> VkSwapchainKHR -- ^ swapchain
                                           -> IO VkResult
+
+-- | Success codes: 'VK_SUCCESS', 'VK_SUBOPTIMAL_KHR'.
+--
+--   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
+--
+--   > VkResult vkGetSwapchainStatusKHR
+--   >     ( VkDevice device
+--   >     , VkSwapchainKHR swapchain
+--   >     )
+--
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetSwapchainStatusKHR.html vkGetSwapchainStatusKHR registry at www.khronos.org>
+type HS_vkGetSwapchainStatusKHR =
+     VkDevice -- ^ device
+              -> VkSwapchainKHR -- ^ swapchain
+                                -> IO VkResult
+
+type PFN_vkGetSwapchainStatusKHR =
+     FunPtr HS_vkGetSwapchainStatusKHR
+
+foreign import ccall "dynamic" unwrapVkGetSwapchainStatusKHR ::
+               PFN_vkGetSwapchainStatusKHR -> HS_vkGetSwapchainStatusKHR
+
+instance VulkanInstanceProc "vkGetSwapchainStatusKHR" where
+        type VkInstanceProcType "vkGetSwapchainStatusKHR" =
+             HS_vkGetSwapchainStatusKHR
+        vkInstanceProcSymbol = _VkGetSwapchainStatusKHR
+
+        {-# INLINE vkInstanceProcSymbol #-}
+        unwrapVkInstanceProc = unwrapVkGetSwapchainStatusKHR
+
+        {-# INLINE unwrapVkInstanceProc #-}
 
 pattern VK_KHR_SHARED_PRESENTABLE_IMAGE_SPEC_VERSION ::
         (Num a, Eq a) => a
