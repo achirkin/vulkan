@@ -66,7 +66,6 @@ withVulkanInstanceExt :: (VkInstance -> IO ()) -> IO ()
 withVulkanInstanceExt action = do
     -- get required extension names from GLFW
     glfwReqExts <- GLFW.getRequiredInstanceExtensions
-               >>= uncurry (peekArray . fromIntegral)
     withVulkanInstance
       "02-GLFWWindow"
       glfwReqExts

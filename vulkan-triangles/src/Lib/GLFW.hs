@@ -11,7 +11,6 @@ import qualified Graphics.UI.GLFW    as GLFW
 import           Graphics.Vulkan
 
 import           Lib.Program
-import           Lib.Program.Foreign
 import           Lib.Vulkan.Instance
 
 
@@ -63,7 +62,6 @@ createGLFWVulkanInstance :: String -> Program r VkInstance
 createGLFWVulkanInstance progName = do
     -- get required extension names from GLFW
     glfwReqExts <- liftIO GLFW.getRequiredInstanceExtensions
-      >>= uncurry (peekArray . fromIntegral)
     createVulkanInstance
       progName
       "My perfect Haskell engine"

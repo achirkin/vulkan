@@ -7,7 +7,6 @@ module Lib.GLFW
 
 import           Control.Exception
 import           Control.Monad            (unless)
-import           Foreign.Marshal.Array
 import           Graphics.UI.GLFW         (ClientAPI (..), WindowHint (..))
 import qualified Graphics.UI.GLFW         as GLFW
 import           Graphics.Vulkan
@@ -55,7 +54,6 @@ withGLFWVulkanInstance :: String -> (VkInstance -> IO a) -> IO a
 withGLFWVulkanInstance progName action = do
     -- get required extension names from GLFW
     glfwReqExts <- GLFW.getRequiredInstanceExtensions
-               >>= uncurry (peekArray . fromIntegral)
     withVulkanInstance
       progName
       glfwReqExts
