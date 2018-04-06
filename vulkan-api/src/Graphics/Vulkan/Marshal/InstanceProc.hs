@@ -10,7 +10,8 @@
 --   <https://www.khronos.org/registry/vulkan/specs/1.0/man/html/vkGetInstanceProcAddr.html vkGetInstanceProcAddr>
 --   that is a part of Vulkan core 1.0.
 module Graphics.Vulkan.Marshal.InstanceProc
-  ( VulkanInstanceProc (..), vkGetInstanceProc
+  ( VulkanInstanceProc (..)
+  , vkGetInstanceProc, vkGetInstanceProcSafe
     -- * Re-export `Foreign.Ptr`
   , FunPtr, nullFunPtr
   ) where
@@ -41,12 +42,26 @@ class VulkanInstanceProc (proc :: Symbol) where
 
 -- | An alternative to @vkGetInstanceProcAddr@ with type inference
 --   and protection against typos.
+--
+--   Note, this is an unsafe function;
+--   it does not check if the result of @vkGetInstanceProcAddr@
+--   is a null function pointer.
 vkGetInstanceProc :: forall proc . VulkanInstanceProc proc
                   => VkInstance -> IO (VkInstanceProcType proc)
 vkGetInstanceProc i
   = unwrapVkInstanceProc @proc
   <$> c'vkGetInstanceProcAddr i (vkInstanceProcSymbol @proc)
 {-# INLINE vkGetInstanceProc #-}
+
+-- | An alternative to @vkGetInstanceProcAddr@ with type inference
+--   and protection against typos.
+vkGetInstanceProcSafe :: forall proc . VulkanInstanceProc proc
+                  => VkInstance -> IO (Maybe (VkInstanceProcType proc))
+vkGetInstanceProcSafe i
+    = f <$> c'vkGetInstanceProcAddr i (vkInstanceProcSymbol @proc)
+  where
+    f p = if p == nullFunPtr then Nothing else Just (unwrapVkInstanceProc @proc p)
+{-# INLINE vkGetInstanceProcSafe #-}
 
 foreign import ccall unsafe "vkGetInstanceProcAddr"
   c'vkGetInstanceProcAddr :: VkInstance -> CString -> IO (FunPtr a)
