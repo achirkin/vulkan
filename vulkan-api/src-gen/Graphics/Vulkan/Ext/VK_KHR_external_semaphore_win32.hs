@@ -67,8 +67,8 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_win32
 import           GHC.Ptr
                                                                                    (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc
-                                                                                   (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc
+                                                                                   (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkExternalSemaphoreHandleTypeFlags
@@ -162,15 +162,15 @@ foreign import ccall "dynamic"
                PFN_vkImportSemaphoreWin32HandleKHR ->
                  HS_vkImportSemaphoreWin32HandleKHR
 
-instance VulkanInstanceProc "vkImportSemaphoreWin32HandleKHR" where
-        type VkInstanceProcType "vkImportSemaphoreWin32HandleKHR" =
+instance VulkanProc "vkImportSemaphoreWin32HandleKHR" where
+        type VkProcType "vkImportSemaphoreWin32HandleKHR" =
              HS_vkImportSemaphoreWin32HandleKHR
-        vkInstanceProcSymbol = _VkImportSemaphoreWin32HandleKHR
+        vkProcSymbol = _VkImportSemaphoreWin32HandleKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkImportSemaphoreWin32HandleKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkImportSemaphoreWin32HandleKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetSemaphoreWin32HandleKHR :: CString
 
@@ -255,15 +255,15 @@ foreign import ccall "dynamic" unwrapVkGetSemaphoreWin32HandleKHR
                ::
                PFN_vkGetSemaphoreWin32HandleKHR -> HS_vkGetSemaphoreWin32HandleKHR
 
-instance VulkanInstanceProc "vkGetSemaphoreWin32HandleKHR" where
-        type VkInstanceProcType "vkGetSemaphoreWin32HandleKHR" =
+instance VulkanProc "vkGetSemaphoreWin32HandleKHR" where
+        type VkProcType "vkGetSemaphoreWin32HandleKHR" =
              HS_vkGetSemaphoreWin32HandleKHR
-        vkInstanceProcSymbol = _VkGetSemaphoreWin32HandleKHR
+        vkProcSymbol = _VkGetSemaphoreWin32HandleKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetSemaphoreWin32HandleKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetSemaphoreWin32HandleKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_KHR_EXTERNAL_SEMAPHORE_WIN32_SPEC_VERSION ::
         (Num a, Eq a) => a

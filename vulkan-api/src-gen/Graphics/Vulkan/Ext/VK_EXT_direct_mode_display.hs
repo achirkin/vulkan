@@ -37,9 +37,9 @@ module Graphics.Vulkan.Ext.VK_EXT_direct_mode_display
         VK_EXT_DIRECT_MODE_DISPLAY_EXTENSION_NAME,
         pattern VK_EXT_DIRECT_MODE_DISPLAY_EXTENSION_NAME)
        where
-import           GHC.Ptr                              (Ptr (..))
+import           GHC.Ptr                             (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc        (VulkanProc (..))
 import           Graphics.Vulkan.Types.Enum.VkResult
 import           Graphics.Vulkan.Types.Handles
 
@@ -106,15 +106,14 @@ type PFN_vkReleaseDisplayEXT = FunPtr HS_vkReleaseDisplayEXT
 foreign import ccall "dynamic" unwrapVkReleaseDisplayEXT ::
                PFN_vkReleaseDisplayEXT -> HS_vkReleaseDisplayEXT
 
-instance VulkanInstanceProc "vkReleaseDisplayEXT" where
-        type VkInstanceProcType "vkReleaseDisplayEXT" =
-             HS_vkReleaseDisplayEXT
-        vkInstanceProcSymbol = _VkReleaseDisplayEXT
+instance VulkanProc "vkReleaseDisplayEXT" where
+        type VkProcType "vkReleaseDisplayEXT" = HS_vkReleaseDisplayEXT
+        vkProcSymbol = _VkReleaseDisplayEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkReleaseDisplayEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkReleaseDisplayEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_EXT_DIRECT_MODE_DISPLAY_SPEC_VERSION :: (Num a, Eq a) =>
         a

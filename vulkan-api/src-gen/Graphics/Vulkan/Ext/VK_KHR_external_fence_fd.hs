@@ -51,7 +51,7 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_fd
        where
 import           GHC.Ptr                                                   (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc                      (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc                              (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkExternalFenceHandleTypeFlags
 import           Graphics.Vulkan.Types.Enum.VkFenceImportFlags
@@ -129,15 +129,14 @@ type PFN_vkImportFenceFdKHR = FunPtr HS_vkImportFenceFdKHR
 foreign import ccall "dynamic" unwrapVkImportFenceFdKHR ::
                PFN_vkImportFenceFdKHR -> HS_vkImportFenceFdKHR
 
-instance VulkanInstanceProc "vkImportFenceFdKHR" where
-        type VkInstanceProcType "vkImportFenceFdKHR" =
-             HS_vkImportFenceFdKHR
-        vkInstanceProcSymbol = _VkImportFenceFdKHR
+instance VulkanProc "vkImportFenceFdKHR" where
+        type VkProcType "vkImportFenceFdKHR" = HS_vkImportFenceFdKHR
+        vkProcSymbol = _VkImportFenceFdKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkImportFenceFdKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkImportFenceFdKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetFenceFdKHR :: CString
 
@@ -212,14 +211,14 @@ type PFN_vkGetFenceFdKHR = FunPtr HS_vkGetFenceFdKHR
 foreign import ccall "dynamic" unwrapVkGetFenceFdKHR ::
                PFN_vkGetFenceFdKHR -> HS_vkGetFenceFdKHR
 
-instance VulkanInstanceProc "vkGetFenceFdKHR" where
-        type VkInstanceProcType "vkGetFenceFdKHR" = HS_vkGetFenceFdKHR
-        vkInstanceProcSymbol = _VkGetFenceFdKHR
+instance VulkanProc "vkGetFenceFdKHR" where
+        type VkProcType "vkGetFenceFdKHR" = HS_vkGetFenceFdKHR
+        vkProcSymbol = _VkGetFenceFdKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetFenceFdKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetFenceFdKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_KHR_EXTERNAL_FENCE_FD_SPEC_VERSION :: (Num a, Eq a) => a
 

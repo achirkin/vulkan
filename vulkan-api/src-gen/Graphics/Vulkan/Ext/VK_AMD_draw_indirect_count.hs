@@ -39,9 +39,9 @@ module Graphics.Vulkan.Ext.VK_AMD_draw_indirect_count
         VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME,
         pattern VK_AMD_DRAW_INDIRECT_COUNT_EXTENSION_NAME)
        where
-import           GHC.Ptr                              (Ptr (..))
+import           GHC.Ptr                         (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc    (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Handles
 
@@ -162,15 +162,15 @@ type PFN_vkCmdDrawIndirectCountAMD =
 foreign import ccall "dynamic" unwrapVkCmdDrawIndirectCountAMD ::
                PFN_vkCmdDrawIndirectCountAMD -> HS_vkCmdDrawIndirectCountAMD
 
-instance VulkanInstanceProc "vkCmdDrawIndirectCountAMD" where
-        type VkInstanceProcType "vkCmdDrawIndirectCountAMD" =
+instance VulkanProc "vkCmdDrawIndirectCountAMD" where
+        type VkProcType "vkCmdDrawIndirectCountAMD" =
              HS_vkCmdDrawIndirectCountAMD
-        vkInstanceProcSymbol = _VkCmdDrawIndirectCountAMD
+        vkProcSymbol = _VkCmdDrawIndirectCountAMD
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCmdDrawIndirectCountAMD
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCmdDrawIndirectCountAMD
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkCmdDrawIndexedIndirectCountAMD :: CString
 
@@ -294,16 +294,15 @@ foreign import ccall "dynamic"
                PFN_vkCmdDrawIndexedIndirectCountAMD ->
                  HS_vkCmdDrawIndexedIndirectCountAMD
 
-instance VulkanInstanceProc "vkCmdDrawIndexedIndirectCountAMD"
-         where
-        type VkInstanceProcType "vkCmdDrawIndexedIndirectCountAMD" =
+instance VulkanProc "vkCmdDrawIndexedIndirectCountAMD" where
+        type VkProcType "vkCmdDrawIndexedIndirectCountAMD" =
              HS_vkCmdDrawIndexedIndirectCountAMD
-        vkInstanceProcSymbol = _VkCmdDrawIndexedIndirectCountAMD
+        vkProcSymbol = _VkCmdDrawIndexedIndirectCountAMD
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCmdDrawIndexedIndirectCountAMD
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCmdDrawIndexedIndirectCountAMD
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_AMD_DRAW_INDIRECT_COUNT_SPEC_VERSION :: (Num a, Eq a) =>
         a

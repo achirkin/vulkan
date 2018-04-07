@@ -71,8 +71,8 @@ import           Graphics.Vulkan.Core_1_1
                                                                                         (pattern VK_STRUCTURE_TYPE_EXTERNAL_SEMAPHORE_PROPERTIES,
                                                                                         pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO)
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc
-                                                                                        (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc
+                                                                                        (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkExternalSemaphoreFeatureFlagBitsKHR
@@ -175,20 +175,18 @@ foreign import ccall "dynamic"
                PFN_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR ->
                  HS_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR
 
-instance VulkanInstanceProc
+instance VulkanProc
            "vkGetPhysicalDeviceExternalSemaphorePropertiesKHR"
          where
-        type VkInstanceProcType
-               "vkGetPhysicalDeviceExternalSemaphorePropertiesKHR"
+        type VkProcType "vkGetPhysicalDeviceExternalSemaphorePropertiesKHR"
              = HS_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR
-        vkInstanceProcSymbol
-          = _VkGetPhysicalDeviceExternalSemaphorePropertiesKHR
+        vkProcSymbol = _VkGetPhysicalDeviceExternalSemaphorePropertiesKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr
           = unwrapVkGetPhysicalDeviceExternalSemaphorePropertiesKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_KHR_EXTERNAL_SEMAPHORE_CAPABILITIES_SPEC_VERSION ::
         (Num a, Eq a) => a

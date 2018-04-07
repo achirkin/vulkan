@@ -64,8 +64,8 @@ module Graphics.Vulkan.Ext.VK_EXT_validation_cache
 import           GHC.Ptr
                                                                                           (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc
-                                                                                          (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc
+                                                                                          (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkDebugReportObjectTypeEXT
@@ -177,15 +177,15 @@ type PFN_vkCreateValidationCacheEXT =
 foreign import ccall "dynamic" unwrapVkCreateValidationCacheEXT ::
                PFN_vkCreateValidationCacheEXT -> HS_vkCreateValidationCacheEXT
 
-instance VulkanInstanceProc "vkCreateValidationCacheEXT" where
-        type VkInstanceProcType "vkCreateValidationCacheEXT" =
+instance VulkanProc "vkCreateValidationCacheEXT" where
+        type VkProcType "vkCreateValidationCacheEXT" =
              HS_vkCreateValidationCacheEXT
-        vkInstanceProcSymbol = _VkCreateValidationCacheEXT
+        vkProcSymbol = _VkCreateValidationCacheEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCreateValidationCacheEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCreateValidationCacheEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkDestroyValidationCacheEXT :: CString
 
@@ -257,15 +257,15 @@ type PFN_vkDestroyValidationCacheEXT =
 foreign import ccall "dynamic" unwrapVkDestroyValidationCacheEXT ::
                PFN_vkDestroyValidationCacheEXT -> HS_vkDestroyValidationCacheEXT
 
-instance VulkanInstanceProc "vkDestroyValidationCacheEXT" where
-        type VkInstanceProcType "vkDestroyValidationCacheEXT" =
+instance VulkanProc "vkDestroyValidationCacheEXT" where
+        type VkProcType "vkDestroyValidationCacheEXT" =
              HS_vkDestroyValidationCacheEXT
-        vkInstanceProcSymbol = _VkDestroyValidationCacheEXT
+        vkProcSymbol = _VkDestroyValidationCacheEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkDestroyValidationCacheEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkDestroyValidationCacheEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkMergeValidationCachesEXT :: CString
 
@@ -357,15 +357,15 @@ type PFN_vkMergeValidationCachesEXT =
 foreign import ccall "dynamic" unwrapVkMergeValidationCachesEXT ::
                PFN_vkMergeValidationCachesEXT -> HS_vkMergeValidationCachesEXT
 
-instance VulkanInstanceProc "vkMergeValidationCachesEXT" where
-        type VkInstanceProcType "vkMergeValidationCachesEXT" =
+instance VulkanProc "vkMergeValidationCachesEXT" where
+        type VkProcType "vkMergeValidationCachesEXT" =
              HS_vkMergeValidationCachesEXT
-        vkInstanceProcSymbol = _VkMergeValidationCachesEXT
+        vkProcSymbol = _VkMergeValidationCachesEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkMergeValidationCachesEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkMergeValidationCachesEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetValidationCacheDataEXT :: CString
 
@@ -455,15 +455,15 @@ type PFN_vkGetValidationCacheDataEXT =
 foreign import ccall "dynamic" unwrapVkGetValidationCacheDataEXT ::
                PFN_vkGetValidationCacheDataEXT -> HS_vkGetValidationCacheDataEXT
 
-instance VulkanInstanceProc "vkGetValidationCacheDataEXT" where
-        type VkInstanceProcType "vkGetValidationCacheDataEXT" =
+instance VulkanProc "vkGetValidationCacheDataEXT" where
+        type VkProcType "vkGetValidationCacheDataEXT" =
              HS_vkGetValidationCacheDataEXT
-        vkInstanceProcSymbol = _VkGetValidationCacheDataEXT
+        vkProcSymbol = _VkGetValidationCacheDataEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetValidationCacheDataEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetValidationCacheDataEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_EXT_VALIDATION_CACHE_SPEC_VERSION :: (Num a, Eq a) => a
 

@@ -150,8 +150,8 @@ import           Graphics.Vulkan.Core_1_1
                                                                                          pattern VK_STRUCTURE_TYPE_QUEUE_FAMILY_PROPERTIES_2,
                                                                                          pattern VK_STRUCTURE_TYPE_SPARSE_IMAGE_FORMAT_PROPERTIES_2)
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc
-                                                                                         (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc
+                                                                                         (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkDeviceQueueCreateFlags
@@ -275,15 +275,15 @@ foreign import ccall "dynamic"
                PFN_vkGetPhysicalDeviceFeatures2KHR ->
                  HS_vkGetPhysicalDeviceFeatures2KHR
 
-instance VulkanInstanceProc "vkGetPhysicalDeviceFeatures2KHR" where
-        type VkInstanceProcType "vkGetPhysicalDeviceFeatures2KHR" =
+instance VulkanProc "vkGetPhysicalDeviceFeatures2KHR" where
+        type VkProcType "vkGetPhysicalDeviceFeatures2KHR" =
              HS_vkGetPhysicalDeviceFeatures2KHR
-        vkInstanceProcSymbol = _VkGetPhysicalDeviceFeatures2KHR
+        vkProcSymbol = _VkGetPhysicalDeviceFeatures2KHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetPhysicalDeviceFeatures2KHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetPhysicalDeviceFeatures2KHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetPhysicalDeviceProperties2KHR :: CString
 
@@ -356,16 +356,15 @@ foreign import ccall "dynamic"
                PFN_vkGetPhysicalDeviceProperties2KHR ->
                  HS_vkGetPhysicalDeviceProperties2KHR
 
-instance VulkanInstanceProc "vkGetPhysicalDeviceProperties2KHR"
-         where
-        type VkInstanceProcType "vkGetPhysicalDeviceProperties2KHR" =
+instance VulkanProc "vkGetPhysicalDeviceProperties2KHR" where
+        type VkProcType "vkGetPhysicalDeviceProperties2KHR" =
              HS_vkGetPhysicalDeviceProperties2KHR
-        vkInstanceProcSymbol = _VkGetPhysicalDeviceProperties2KHR
+        vkProcSymbol = _VkGetPhysicalDeviceProperties2KHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetPhysicalDeviceProperties2KHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetPhysicalDeviceProperties2KHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetPhysicalDeviceFormatProperties2KHR :: CString
 
@@ -445,18 +444,15 @@ foreign import ccall "dynamic"
                PFN_vkGetPhysicalDeviceFormatProperties2KHR ->
                  HS_vkGetPhysicalDeviceFormatProperties2KHR
 
-instance VulkanInstanceProc
-           "vkGetPhysicalDeviceFormatProperties2KHR"
-         where
-        type VkInstanceProcType "vkGetPhysicalDeviceFormatProperties2KHR" =
+instance VulkanProc "vkGetPhysicalDeviceFormatProperties2KHR" where
+        type VkProcType "vkGetPhysicalDeviceFormatProperties2KHR" =
              HS_vkGetPhysicalDeviceFormatProperties2KHR
-        vkInstanceProcSymbol = _VkGetPhysicalDeviceFormatProperties2KHR
+        vkProcSymbol = _VkGetPhysicalDeviceFormatProperties2KHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc
-          = unwrapVkGetPhysicalDeviceFormatProperties2KHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetPhysicalDeviceFormatProperties2KHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetPhysicalDeviceImageFormatProperties2KHR :: CString
 
@@ -556,20 +552,17 @@ foreign import ccall "dynamic"
                PFN_vkGetPhysicalDeviceImageFormatProperties2KHR ->
                  HS_vkGetPhysicalDeviceImageFormatProperties2KHR
 
-instance VulkanInstanceProc
-           "vkGetPhysicalDeviceImageFormatProperties2KHR"
+instance VulkanProc "vkGetPhysicalDeviceImageFormatProperties2KHR"
          where
-        type VkInstanceProcType
-               "vkGetPhysicalDeviceImageFormatProperties2KHR"
-             = HS_vkGetPhysicalDeviceImageFormatProperties2KHR
-        vkInstanceProcSymbol
-          = _VkGetPhysicalDeviceImageFormatProperties2KHR
+        type VkProcType "vkGetPhysicalDeviceImageFormatProperties2KHR" =
+             HS_vkGetPhysicalDeviceImageFormatProperties2KHR
+        vkProcSymbol = _VkGetPhysicalDeviceImageFormatProperties2KHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr
           = unwrapVkGetPhysicalDeviceImageFormatProperties2KHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetPhysicalDeviceQueueFamilyProperties2KHR :: CString
 
@@ -654,20 +647,17 @@ foreign import ccall "dynamic"
                PFN_vkGetPhysicalDeviceQueueFamilyProperties2KHR ->
                  HS_vkGetPhysicalDeviceQueueFamilyProperties2KHR
 
-instance VulkanInstanceProc
-           "vkGetPhysicalDeviceQueueFamilyProperties2KHR"
+instance VulkanProc "vkGetPhysicalDeviceQueueFamilyProperties2KHR"
          where
-        type VkInstanceProcType
-               "vkGetPhysicalDeviceQueueFamilyProperties2KHR"
-             = HS_vkGetPhysicalDeviceQueueFamilyProperties2KHR
-        vkInstanceProcSymbol
-          = _VkGetPhysicalDeviceQueueFamilyProperties2KHR
+        type VkProcType "vkGetPhysicalDeviceQueueFamilyProperties2KHR" =
+             HS_vkGetPhysicalDeviceQueueFamilyProperties2KHR
+        vkProcSymbol = _VkGetPhysicalDeviceQueueFamilyProperties2KHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr
           = unwrapVkGetPhysicalDeviceQueueFamilyProperties2KHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetPhysicalDeviceMemoryProperties2KHR :: CString
 
@@ -741,18 +731,15 @@ foreign import ccall "dynamic"
                PFN_vkGetPhysicalDeviceMemoryProperties2KHR ->
                  HS_vkGetPhysicalDeviceMemoryProperties2KHR
 
-instance VulkanInstanceProc
-           "vkGetPhysicalDeviceMemoryProperties2KHR"
-         where
-        type VkInstanceProcType "vkGetPhysicalDeviceMemoryProperties2KHR" =
+instance VulkanProc "vkGetPhysicalDeviceMemoryProperties2KHR" where
+        type VkProcType "vkGetPhysicalDeviceMemoryProperties2KHR" =
              HS_vkGetPhysicalDeviceMemoryProperties2KHR
-        vkInstanceProcSymbol = _VkGetPhysicalDeviceMemoryProperties2KHR
+        vkProcSymbol = _VkGetPhysicalDeviceMemoryProperties2KHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc
-          = unwrapVkGetPhysicalDeviceMemoryProperties2KHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetPhysicalDeviceMemoryProperties2KHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetPhysicalDeviceSparseImageFormatProperties2KHR ::
         CString
@@ -849,20 +836,19 @@ foreign import ccall "dynamic"
                PFN_vkGetPhysicalDeviceSparseImageFormatProperties2KHR ->
                  HS_vkGetPhysicalDeviceSparseImageFormatProperties2KHR
 
-instance VulkanInstanceProc
+instance VulkanProc
            "vkGetPhysicalDeviceSparseImageFormatProperties2KHR"
          where
-        type VkInstanceProcType
+        type VkProcType
                "vkGetPhysicalDeviceSparseImageFormatProperties2KHR"
              = HS_vkGetPhysicalDeviceSparseImageFormatProperties2KHR
-        vkInstanceProcSymbol
-          = _VkGetPhysicalDeviceSparseImageFormatProperties2KHR
+        vkProcSymbol = _VkGetPhysicalDeviceSparseImageFormatProperties2KHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr
           = unwrapVkGetPhysicalDeviceSparseImageFormatProperties2KHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_KHR_GET_PHYSICAL_DEVICE_PROPERTIES_2_SPEC_VERSION ::
         (Num a, Eq a) => a

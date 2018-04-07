@@ -67,8 +67,8 @@ module Graphics.Vulkan.Ext.VK_KHR_push_descriptor
 import           GHC.Ptr
                                                                                            (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc
-                                                                                           (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc
+                                                                                           (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkDescriptorSetLayoutCreateFlags
                                                                                            (VkDescriptorSetLayoutCreateBitmask (..),
@@ -196,15 +196,15 @@ type PFN_vkCmdPushDescriptorSetKHR =
 foreign import ccall "dynamic" unwrapVkCmdPushDescriptorSetKHR ::
                PFN_vkCmdPushDescriptorSetKHR -> HS_vkCmdPushDescriptorSetKHR
 
-instance VulkanInstanceProc "vkCmdPushDescriptorSetKHR" where
-        type VkInstanceProcType "vkCmdPushDescriptorSetKHR" =
+instance VulkanProc "vkCmdPushDescriptorSetKHR" where
+        type VkProcType "vkCmdPushDescriptorSetKHR" =
              HS_vkCmdPushDescriptorSetKHR
-        vkInstanceProcSymbol = _VkCmdPushDescriptorSetKHR
+        vkProcSymbol = _VkCmdPushDescriptorSetKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCmdPushDescriptorSetKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCmdPushDescriptorSetKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_KHR_PUSH_DESCRIPTOR_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -350,16 +350,15 @@ foreign import ccall "dynamic"
                PFN_vkCmdPushDescriptorSetWithTemplateKHR ->
                  HS_vkCmdPushDescriptorSetWithTemplateKHR
 
-instance VulkanInstanceProc "vkCmdPushDescriptorSetWithTemplateKHR"
-         where
-        type VkInstanceProcType "vkCmdPushDescriptorSetWithTemplateKHR" =
+instance VulkanProc "vkCmdPushDescriptorSetWithTemplateKHR" where
+        type VkProcType "vkCmdPushDescriptorSetWithTemplateKHR" =
              HS_vkCmdPushDescriptorSetWithTemplateKHR
-        vkInstanceProcSymbol = _VkCmdPushDescriptorSetWithTemplateKHR
+        vkProcSymbol = _VkCmdPushDescriptorSetWithTemplateKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCmdPushDescriptorSetWithTemplateKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCmdPushDescriptorSetWithTemplateKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 -- | Create descriptor update template for pushed descriptor updates
 pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR ::

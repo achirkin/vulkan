@@ -82,8 +82,8 @@ import           Graphics.Vulkan.Core_1_1
                                                                                        pattern VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2,
                                                                                        pattern VK_STRUCTURE_TYPE_SPARSE_IMAGE_MEMORY_REQUIREMENTS_2)
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc
-                                                                                       (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc
+                                                                                       (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkImageAspectFlags
 import           Graphics.Vulkan.Types.Enum.VkSparseImageFormatFlags
@@ -187,16 +187,15 @@ foreign import ccall "dynamic"
                PFN_vkGetImageMemoryRequirements2KHR ->
                  HS_vkGetImageMemoryRequirements2KHR
 
-instance VulkanInstanceProc "vkGetImageMemoryRequirements2KHR"
-         where
-        type VkInstanceProcType "vkGetImageMemoryRequirements2KHR" =
+instance VulkanProc "vkGetImageMemoryRequirements2KHR" where
+        type VkProcType "vkGetImageMemoryRequirements2KHR" =
              HS_vkGetImageMemoryRequirements2KHR
-        vkInstanceProcSymbol = _VkGetImageMemoryRequirements2KHR
+        vkProcSymbol = _VkGetImageMemoryRequirements2KHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetImageMemoryRequirements2KHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetImageMemoryRequirements2KHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetBufferMemoryRequirements2KHR :: CString
 
@@ -281,16 +280,15 @@ foreign import ccall "dynamic"
                PFN_vkGetBufferMemoryRequirements2KHR ->
                  HS_vkGetBufferMemoryRequirements2KHR
 
-instance VulkanInstanceProc "vkGetBufferMemoryRequirements2KHR"
-         where
-        type VkInstanceProcType "vkGetBufferMemoryRequirements2KHR" =
+instance VulkanProc "vkGetBufferMemoryRequirements2KHR" where
+        type VkProcType "vkGetBufferMemoryRequirements2KHR" =
              HS_vkGetBufferMemoryRequirements2KHR
-        vkInstanceProcSymbol = _VkGetBufferMemoryRequirements2KHR
+        vkProcSymbol = _VkGetBufferMemoryRequirements2KHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetBufferMemoryRequirements2KHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetBufferMemoryRequirements2KHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetImageSparseMemoryRequirements2KHR :: CString
 
@@ -382,17 +380,15 @@ foreign import ccall "dynamic"
                PFN_vkGetImageSparseMemoryRequirements2KHR ->
                  HS_vkGetImageSparseMemoryRequirements2KHR
 
-instance VulkanInstanceProc
-           "vkGetImageSparseMemoryRequirements2KHR"
-         where
-        type VkInstanceProcType "vkGetImageSparseMemoryRequirements2KHR" =
+instance VulkanProc "vkGetImageSparseMemoryRequirements2KHR" where
+        type VkProcType "vkGetImageSparseMemoryRequirements2KHR" =
              HS_vkGetImageSparseMemoryRequirements2KHR
-        vkInstanceProcSymbol = _VkGetImageSparseMemoryRequirements2KHR
+        vkProcSymbol = _VkGetImageSparseMemoryRequirements2KHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetImageSparseMemoryRequirements2KHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetImageSparseMemoryRequirements2KHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_KHR_GET_MEMORY_REQUIREMENTS_2_SPEC_VERSION ::
         (Num a, Eq a) => a

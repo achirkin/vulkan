@@ -58,7 +58,7 @@ module Graphics.Vulkan.Ext.VK_GOOGLE_display_timing
        where
 import           GHC.Ptr                                                     (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc                        (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc                                (VulkanProc (..))
 import           Graphics.Vulkan.Types.Enum.VkResult
 import           Graphics.Vulkan.Types.Enum.VkStructureType
 import           Graphics.Vulkan.Types.Handles
@@ -154,15 +154,15 @@ foreign import ccall "dynamic"
                PFN_vkGetRefreshCycleDurationGOOGLE ->
                  HS_vkGetRefreshCycleDurationGOOGLE
 
-instance VulkanInstanceProc "vkGetRefreshCycleDurationGOOGLE" where
-        type VkInstanceProcType "vkGetRefreshCycleDurationGOOGLE" =
+instance VulkanProc "vkGetRefreshCycleDurationGOOGLE" where
+        type VkProcType "vkGetRefreshCycleDurationGOOGLE" =
              HS_vkGetRefreshCycleDurationGOOGLE
-        vkInstanceProcSymbol = _VkGetRefreshCycleDurationGOOGLE
+        vkProcSymbol = _VkGetRefreshCycleDurationGOOGLE
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetRefreshCycleDurationGOOGLE
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetRefreshCycleDurationGOOGLE
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetPastPresentationTimingGOOGLE :: CString
 
@@ -259,16 +259,15 @@ foreign import ccall "dynamic"
                PFN_vkGetPastPresentationTimingGOOGLE ->
                  HS_vkGetPastPresentationTimingGOOGLE
 
-instance VulkanInstanceProc "vkGetPastPresentationTimingGOOGLE"
-         where
-        type VkInstanceProcType "vkGetPastPresentationTimingGOOGLE" =
+instance VulkanProc "vkGetPastPresentationTimingGOOGLE" where
+        type VkProcType "vkGetPastPresentationTimingGOOGLE" =
              HS_vkGetPastPresentationTimingGOOGLE
-        vkInstanceProcSymbol = _VkGetPastPresentationTimingGOOGLE
+        vkProcSymbol = _VkGetPastPresentationTimingGOOGLE
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetPastPresentationTimingGOOGLE
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetPastPresentationTimingGOOGLE
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_GOOGLE_DISPLAY_TIMING_SPEC_VERSION :: (Num a, Eq a) => a
 

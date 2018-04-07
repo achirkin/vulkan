@@ -60,7 +60,7 @@ module Graphics.Vulkan.Ext.VK_KHR_xcb_surface
        where
 import           GHC.Ptr                                                (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc                   (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc                           (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkInternalAllocationType
@@ -161,15 +161,14 @@ type PFN_vkCreateXcbSurfaceKHR = FunPtr HS_vkCreateXcbSurfaceKHR
 foreign import ccall "dynamic" unwrapVkCreateXcbSurfaceKHR ::
                PFN_vkCreateXcbSurfaceKHR -> HS_vkCreateXcbSurfaceKHR
 
-instance VulkanInstanceProc "vkCreateXcbSurfaceKHR" where
-        type VkInstanceProcType "vkCreateXcbSurfaceKHR" =
-             HS_vkCreateXcbSurfaceKHR
-        vkInstanceProcSymbol = _VkCreateXcbSurfaceKHR
+instance VulkanProc "vkCreateXcbSurfaceKHR" where
+        type VkProcType "vkCreateXcbSurfaceKHR" = HS_vkCreateXcbSurfaceKHR
+        vkProcSymbol = _VkCreateXcbSurfaceKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCreateXcbSurfaceKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCreateXcbSurfaceKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetPhysicalDeviceXcbPresentationSupportKHR :: CString
 
@@ -254,20 +253,17 @@ foreign import ccall "dynamic"
                PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR ->
                  HS_vkGetPhysicalDeviceXcbPresentationSupportKHR
 
-instance VulkanInstanceProc
-           "vkGetPhysicalDeviceXcbPresentationSupportKHR"
+instance VulkanProc "vkGetPhysicalDeviceXcbPresentationSupportKHR"
          where
-        type VkInstanceProcType
-               "vkGetPhysicalDeviceXcbPresentationSupportKHR"
-             = HS_vkGetPhysicalDeviceXcbPresentationSupportKHR
-        vkInstanceProcSymbol
-          = _VkGetPhysicalDeviceXcbPresentationSupportKHR
+        type VkProcType "vkGetPhysicalDeviceXcbPresentationSupportKHR" =
+             HS_vkGetPhysicalDeviceXcbPresentationSupportKHR
+        vkProcSymbol = _VkGetPhysicalDeviceXcbPresentationSupportKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr
           = unwrapVkGetPhysicalDeviceXcbPresentationSupportKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_KHR_XCB_SURFACE_SPEC_VERSION :: (Num a, Eq a) => a
 

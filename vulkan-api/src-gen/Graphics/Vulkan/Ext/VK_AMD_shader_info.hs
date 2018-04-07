@@ -41,7 +41,7 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_info
        where
 import           GHC.Ptr                                                (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc                   (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc                           (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkResult
 import           Graphics.Vulkan.Types.Enum.VkShaderInfoTypeAMD
@@ -152,15 +152,14 @@ type PFN_vkGetShaderInfoAMD = FunPtr HS_vkGetShaderInfoAMD
 foreign import ccall "dynamic" unwrapVkGetShaderInfoAMD ::
                PFN_vkGetShaderInfoAMD -> HS_vkGetShaderInfoAMD
 
-instance VulkanInstanceProc "vkGetShaderInfoAMD" where
-        type VkInstanceProcType "vkGetShaderInfoAMD" =
-             HS_vkGetShaderInfoAMD
-        vkInstanceProcSymbol = _VkGetShaderInfoAMD
+instance VulkanProc "vkGetShaderInfoAMD" where
+        type VkProcType "vkGetShaderInfoAMD" = HS_vkGetShaderInfoAMD
+        vkProcSymbol = _VkGetShaderInfoAMD
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetShaderInfoAMD
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetShaderInfoAMD
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_AMD_SHADER_INFO_SPEC_VERSION :: (Num a, Eq a) => a
 

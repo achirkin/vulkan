@@ -36,7 +36,7 @@ module Graphics.Vulkan.Ext.VK_AMD_buffer_marker
        where
 import           GHC.Ptr                                         (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc            (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc                    (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkPipelineStageFlags
 import           Graphics.Vulkan.Types.Handles
@@ -143,15 +143,15 @@ type PFN_vkCmdWriteBufferMarkerAMD =
 foreign import ccall "dynamic" unwrapVkCmdWriteBufferMarkerAMD ::
                PFN_vkCmdWriteBufferMarkerAMD -> HS_vkCmdWriteBufferMarkerAMD
 
-instance VulkanInstanceProc "vkCmdWriteBufferMarkerAMD" where
-        type VkInstanceProcType "vkCmdWriteBufferMarkerAMD" =
+instance VulkanProc "vkCmdWriteBufferMarkerAMD" where
+        type VkProcType "vkCmdWriteBufferMarkerAMD" =
              HS_vkCmdWriteBufferMarkerAMD
-        vkInstanceProcSymbol = _VkCmdWriteBufferMarkerAMD
+        vkProcSymbol = _VkCmdWriteBufferMarkerAMD
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCmdWriteBufferMarkerAMD
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCmdWriteBufferMarkerAMD
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_AMD_BUFFER_MARKER_SPEC_VERSION :: (Num a, Eq a) => a
 

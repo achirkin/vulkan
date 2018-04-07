@@ -69,7 +69,7 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_report
        where
 import           GHC.Ptr                                                         (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc                            (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc                                    (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkDebugReportFlagsEXT
@@ -184,15 +184,15 @@ foreign import ccall "dynamic" unwrapVkCreateDebugReportCallbackEXT
                PFN_vkCreateDebugReportCallbackEXT ->
                  HS_vkCreateDebugReportCallbackEXT
 
-instance VulkanInstanceProc "vkCreateDebugReportCallbackEXT" where
-        type VkInstanceProcType "vkCreateDebugReportCallbackEXT" =
+instance VulkanProc "vkCreateDebugReportCallbackEXT" where
+        type VkProcType "vkCreateDebugReportCallbackEXT" =
              HS_vkCreateDebugReportCallbackEXT
-        vkInstanceProcSymbol = _VkCreateDebugReportCallbackEXT
+        vkProcSymbol = _VkCreateDebugReportCallbackEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCreateDebugReportCallbackEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCreateDebugReportCallbackEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkDestroyDebugReportCallbackEXT :: CString
 
@@ -268,15 +268,15 @@ foreign import ccall "dynamic"
                PFN_vkDestroyDebugReportCallbackEXT ->
                  HS_vkDestroyDebugReportCallbackEXT
 
-instance VulkanInstanceProc "vkDestroyDebugReportCallbackEXT" where
-        type VkInstanceProcType "vkDestroyDebugReportCallbackEXT" =
+instance VulkanProc "vkDestroyDebugReportCallbackEXT" where
+        type VkProcType "vkDestroyDebugReportCallbackEXT" =
              HS_vkDestroyDebugReportCallbackEXT
-        vkInstanceProcSymbol = _VkDestroyDebugReportCallbackEXT
+        vkProcSymbol = _VkDestroyDebugReportCallbackEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkDestroyDebugReportCallbackEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkDestroyDebugReportCallbackEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkDebugReportMessageEXT :: CString
 
@@ -383,15 +383,15 @@ type PFN_vkDebugReportMessageEXT =
 foreign import ccall "dynamic" unwrapVkDebugReportMessageEXT ::
                PFN_vkDebugReportMessageEXT -> HS_vkDebugReportMessageEXT
 
-instance VulkanInstanceProc "vkDebugReportMessageEXT" where
-        type VkInstanceProcType "vkDebugReportMessageEXT" =
+instance VulkanProc "vkDebugReportMessageEXT" where
+        type VkProcType "vkDebugReportMessageEXT" =
              HS_vkDebugReportMessageEXT
-        vkInstanceProcSymbol = _VkDebugReportMessageEXT
+        vkProcSymbol = _VkDebugReportMessageEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkDebugReportMessageEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkDebugReportMessageEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_EXT_DEBUG_REPORT_SPEC_VERSION :: (Num a, Eq a) => a
 

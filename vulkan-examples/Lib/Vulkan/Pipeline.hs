@@ -192,10 +192,11 @@ withGraphicsPipeline
               &* set @"basePipelineIndex" (-1)
 
         in do
+          createGPfun <- vkGetDeviceProc @VkCreateGraphicsPipelines dev
           graphicsPipeline <- withPtr gpCreateInfo
                 $ \gpciPtr -> alloca $ \gpPtr -> do
             throwingVK "vkCreateGraphicsPipelines failed!"
-              $ vkCreateGraphicsPipelines dev VK_NULL 1 gpciPtr VK_NULL gpPtr
+              $ createGPfun dev VK_NULL 1 gpciPtr VK_NULL gpPtr
             peek gpPtr
 
 

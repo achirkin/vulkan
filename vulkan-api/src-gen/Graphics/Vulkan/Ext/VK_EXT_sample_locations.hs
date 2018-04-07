@@ -81,8 +81,8 @@ module Graphics.Vulkan.Ext.VK_EXT_sample_locations
 import           GHC.Ptr
                                                                                             (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc
-                                                                                            (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc
+                                                                                            (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkAccessFlags
@@ -192,15 +192,15 @@ type PFN_vkCmdSetSampleLocationsEXT =
 foreign import ccall "dynamic" unwrapVkCmdSetSampleLocationsEXT ::
                PFN_vkCmdSetSampleLocationsEXT -> HS_vkCmdSetSampleLocationsEXT
 
-instance VulkanInstanceProc "vkCmdSetSampleLocationsEXT" where
-        type VkInstanceProcType "vkCmdSetSampleLocationsEXT" =
+instance VulkanProc "vkCmdSetSampleLocationsEXT" where
+        type VkProcType "vkCmdSetSampleLocationsEXT" =
              HS_vkCmdSetSampleLocationsEXT
-        vkInstanceProcSymbol = _VkCmdSetSampleLocationsEXT
+        vkProcSymbol = _VkCmdSetSampleLocationsEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCmdSetSampleLocationsEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCmdSetSampleLocationsEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetPhysicalDeviceMultisamplePropertiesEXT :: CString
 
@@ -279,19 +279,16 @@ foreign import ccall "dynamic"
                PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT ->
                  HS_vkGetPhysicalDeviceMultisamplePropertiesEXT
 
-instance VulkanInstanceProc
-           "vkGetPhysicalDeviceMultisamplePropertiesEXT"
+instance VulkanProc "vkGetPhysicalDeviceMultisamplePropertiesEXT"
          where
-        type VkInstanceProcType
-               "vkGetPhysicalDeviceMultisamplePropertiesEXT"
-             = HS_vkGetPhysicalDeviceMultisamplePropertiesEXT
-        vkInstanceProcSymbol = _VkGetPhysicalDeviceMultisamplePropertiesEXT
+        type VkProcType "vkGetPhysicalDeviceMultisamplePropertiesEXT" =
+             HS_vkGetPhysicalDeviceMultisamplePropertiesEXT
+        vkProcSymbol = _VkGetPhysicalDeviceMultisamplePropertiesEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc
-          = unwrapVkGetPhysicalDeviceMultisamplePropertiesEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetPhysicalDeviceMultisamplePropertiesEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_EXT_SAMPLE_LOCATIONS_SPEC_VERSION :: (Num a, Eq a) => a
 

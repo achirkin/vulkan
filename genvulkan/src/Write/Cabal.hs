@@ -20,7 +20,7 @@ hardcodedModules :: [Text]
 hardcodedModules =
   [ "Graphics.Vulkan"
   , "Graphics.Vulkan.Marshal"
-  , "Graphics.Vulkan.Marshal.InstanceProc"
+  , "Graphics.Vulkan.Marshal.Proc"
   , "Graphics.Vulkan.Marshal.Create"
   , "Graphics.Vulkan.Marshal.Internal"
   , "Graphics.Vulkan.Constants"

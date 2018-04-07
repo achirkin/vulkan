@@ -51,7 +51,7 @@ module Graphics.Vulkan.Ext.VK_NV_external_memory_win32
        where
 import           GHC.Ptr                                                      (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc                         (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc                                 (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagsNV
 import           Graphics.Vulkan.Types.Enum.VkResult
@@ -152,15 +152,15 @@ type PFN_vkGetMemoryWin32HandleNV =
 foreign import ccall "dynamic" unwrapVkGetMemoryWin32HandleNV ::
                PFN_vkGetMemoryWin32HandleNV -> HS_vkGetMemoryWin32HandleNV
 
-instance VulkanInstanceProc "vkGetMemoryWin32HandleNV" where
-        type VkInstanceProcType "vkGetMemoryWin32HandleNV" =
+instance VulkanProc "vkGetMemoryWin32HandleNV" where
+        type VkProcType "vkGetMemoryWin32HandleNV" =
              HS_vkGetMemoryWin32HandleNV
-        vkInstanceProcSymbol = _VkGetMemoryWin32HandleNV
+        vkProcSymbol = _VkGetMemoryWin32HandleNV
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetMemoryWin32HandleNV
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetMemoryWin32HandleNV
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_NV_EXTERNAL_MEMORY_WIN32_SPEC_VERSION ::
         (Num a, Eq a) => a

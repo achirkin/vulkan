@@ -194,8 +194,8 @@ import           Graphics.Vulkan.Core_1_1
 import           Graphics.Vulkan.Ext.VK_EXT_debug_report
                                                                                                  (pattern VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION_EXT)
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc
-                                                                                                 (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc
+                                                                                                 (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkChromaLocation
 import           Graphics.Vulkan.Types.Enum.VkChromaLocationKHR
@@ -326,16 +326,15 @@ foreign import ccall "dynamic"
                PFN_vkCreateSamplerYcbcrConversionKHR ->
                  HS_vkCreateSamplerYcbcrConversionKHR
 
-instance VulkanInstanceProc "vkCreateSamplerYcbcrConversionKHR"
-         where
-        type VkInstanceProcType "vkCreateSamplerYcbcrConversionKHR" =
+instance VulkanProc "vkCreateSamplerYcbcrConversionKHR" where
+        type VkProcType "vkCreateSamplerYcbcrConversionKHR" =
              HS_vkCreateSamplerYcbcrConversionKHR
-        vkInstanceProcSymbol = _VkCreateSamplerYcbcrConversionKHR
+        vkProcSymbol = _VkCreateSamplerYcbcrConversionKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCreateSamplerYcbcrConversionKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCreateSamplerYcbcrConversionKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkDestroySamplerYcbcrConversionKHR :: CString
 
@@ -417,16 +416,15 @@ foreign import ccall "dynamic"
                PFN_vkDestroySamplerYcbcrConversionKHR ->
                  HS_vkDestroySamplerYcbcrConversionKHR
 
-instance VulkanInstanceProc "vkDestroySamplerYcbcrConversionKHR"
-         where
-        type VkInstanceProcType "vkDestroySamplerYcbcrConversionKHR" =
+instance VulkanProc "vkDestroySamplerYcbcrConversionKHR" where
+        type VkProcType "vkDestroySamplerYcbcrConversionKHR" =
              HS_vkDestroySamplerYcbcrConversionKHR
-        vkInstanceProcSymbol = _VkDestroySamplerYcbcrConversionKHR
+        vkProcSymbol = _VkDestroySamplerYcbcrConversionKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkDestroySamplerYcbcrConversionKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkDestroySamplerYcbcrConversionKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_KHR_SAMPLER_YCBCR_CONVERSION_SPEC_VERSION ::
         (Num a, Eq a) => a

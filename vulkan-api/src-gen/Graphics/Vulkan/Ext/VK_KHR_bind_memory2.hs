@@ -51,7 +51,7 @@ import           Graphics.Vulkan.Core_1_1                               (pattern
                                                                          pattern VK_STRUCTURE_TYPE_BIND_BUFFER_MEMORY_INFO,
                                                                          pattern VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_INFO)
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc                   (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc                           (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkResult
 import           Graphics.Vulkan.Types.Enum.VkStructureType
@@ -144,15 +144,15 @@ type PFN_vkBindBufferMemory2KHR = FunPtr HS_vkBindBufferMemory2KHR
 foreign import ccall "dynamic" unwrapVkBindBufferMemory2KHR ::
                PFN_vkBindBufferMemory2KHR -> HS_vkBindBufferMemory2KHR
 
-instance VulkanInstanceProc "vkBindBufferMemory2KHR" where
-        type VkInstanceProcType "vkBindBufferMemory2KHR" =
+instance VulkanProc "vkBindBufferMemory2KHR" where
+        type VkProcType "vkBindBufferMemory2KHR" =
              HS_vkBindBufferMemory2KHR
-        vkInstanceProcSymbol = _VkBindBufferMemory2KHR
+        vkProcSymbol = _VkBindBufferMemory2KHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkBindBufferMemory2KHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkBindBufferMemory2KHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkBindImageMemory2KHR :: CString
 
@@ -236,15 +236,14 @@ type PFN_vkBindImageMemory2KHR = FunPtr HS_vkBindImageMemory2KHR
 foreign import ccall "dynamic" unwrapVkBindImageMemory2KHR ::
                PFN_vkBindImageMemory2KHR -> HS_vkBindImageMemory2KHR
 
-instance VulkanInstanceProc "vkBindImageMemory2KHR" where
-        type VkInstanceProcType "vkBindImageMemory2KHR" =
-             HS_vkBindImageMemory2KHR
-        vkInstanceProcSymbol = _VkBindImageMemory2KHR
+instance VulkanProc "vkBindImageMemory2KHR" where
+        type VkProcType "vkBindImageMemory2KHR" = HS_vkBindImageMemory2KHR
+        vkProcSymbol = _VkBindImageMemory2KHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkBindImageMemory2KHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkBindImageMemory2KHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_KHR_BIND_MEMORY_2_SPEC_VERSION :: (Num a, Eq a) => a
 

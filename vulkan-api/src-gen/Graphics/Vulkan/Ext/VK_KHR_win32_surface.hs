@@ -60,7 +60,7 @@ module Graphics.Vulkan.Ext.VK_KHR_win32_surface
        where
 import           GHC.Ptr                                                  (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc                     (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc                             (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkInternalAllocationType
@@ -163,15 +163,15 @@ type PFN_vkCreateWin32SurfaceKHR =
 foreign import ccall "dynamic" unwrapVkCreateWin32SurfaceKHR ::
                PFN_vkCreateWin32SurfaceKHR -> HS_vkCreateWin32SurfaceKHR
 
-instance VulkanInstanceProc "vkCreateWin32SurfaceKHR" where
-        type VkInstanceProcType "vkCreateWin32SurfaceKHR" =
+instance VulkanProc "vkCreateWin32SurfaceKHR" where
+        type VkProcType "vkCreateWin32SurfaceKHR" =
              HS_vkCreateWin32SurfaceKHR
-        vkInstanceProcSymbol = _VkCreateWin32SurfaceKHR
+        vkProcSymbol = _VkCreateWin32SurfaceKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCreateWin32SurfaceKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCreateWin32SurfaceKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetPhysicalDeviceWin32PresentationSupportKHR :: CString
 
@@ -242,20 +242,18 @@ foreign import ccall "dynamic"
                PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR ->
                  HS_vkGetPhysicalDeviceWin32PresentationSupportKHR
 
-instance VulkanInstanceProc
+instance VulkanProc
            "vkGetPhysicalDeviceWin32PresentationSupportKHR"
          where
-        type VkInstanceProcType
-               "vkGetPhysicalDeviceWin32PresentationSupportKHR"
-             = HS_vkGetPhysicalDeviceWin32PresentationSupportKHR
-        vkInstanceProcSymbol
-          = _VkGetPhysicalDeviceWin32PresentationSupportKHR
+        type VkProcType "vkGetPhysicalDeviceWin32PresentationSupportKHR" =
+             HS_vkGetPhysicalDeviceWin32PresentationSupportKHR
+        vkProcSymbol = _VkGetPhysicalDeviceWin32PresentationSupportKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr
           = unwrapVkGetPhysicalDeviceWin32PresentationSupportKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_KHR_WIN32_SURFACE_SPEC_VERSION :: (Num a, Eq a) => a
 

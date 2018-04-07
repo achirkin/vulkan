@@ -52,7 +52,7 @@ module Graphics.Vulkan.Ext.VK_KHR_android_surface
        where
 import           GHC.Ptr                                                    (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc                       (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc                               (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Defines
@@ -155,15 +155,15 @@ type PFN_vkCreateAndroidSurfaceKHR =
 foreign import ccall "dynamic" unwrapVkCreateAndroidSurfaceKHR ::
                PFN_vkCreateAndroidSurfaceKHR -> HS_vkCreateAndroidSurfaceKHR
 
-instance VulkanInstanceProc "vkCreateAndroidSurfaceKHR" where
-        type VkInstanceProcType "vkCreateAndroidSurfaceKHR" =
+instance VulkanProc "vkCreateAndroidSurfaceKHR" where
+        type VkProcType "vkCreateAndroidSurfaceKHR" =
              HS_vkCreateAndroidSurfaceKHR
-        vkInstanceProcSymbol = _VkCreateAndroidSurfaceKHR
+        vkProcSymbol = _VkCreateAndroidSurfaceKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCreateAndroidSurfaceKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCreateAndroidSurfaceKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_KHR_ANDROID_SURFACE_SPEC_VERSION :: (Num a, Eq a) => a
 

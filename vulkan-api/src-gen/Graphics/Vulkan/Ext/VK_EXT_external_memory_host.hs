@@ -66,8 +66,8 @@ module Graphics.Vulkan.Ext.VK_EXT_external_memory_host
 import           GHC.Ptr
                                                                                                (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc
-                                                                                               (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc
+                                                                                               (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagBitsKHR
@@ -181,16 +181,15 @@ foreign import ccall "dynamic"
                PFN_vkGetMemoryHostPointerPropertiesEXT ->
                  HS_vkGetMemoryHostPointerPropertiesEXT
 
-instance VulkanInstanceProc "vkGetMemoryHostPointerPropertiesEXT"
-         where
-        type VkInstanceProcType "vkGetMemoryHostPointerPropertiesEXT" =
+instance VulkanProc "vkGetMemoryHostPointerPropertiesEXT" where
+        type VkProcType "vkGetMemoryHostPointerPropertiesEXT" =
              HS_vkGetMemoryHostPointerPropertiesEXT
-        vkInstanceProcSymbol = _VkGetMemoryHostPointerPropertiesEXT
+        vkProcSymbol = _VkGetMemoryHostPointerPropertiesEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetMemoryHostPointerPropertiesEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetMemoryHostPointerPropertiesEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_EXT_EXTERNAL_MEMORY_HOST_SPEC_VERSION ::
         (Num a, Eq a) => a

@@ -59,8 +59,8 @@ import           Graphics.Vulkan.Core_1_1
                                                                                          (pattern VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_SUPPORT,
                                                                                          pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES)
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc
-                                                                                         (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc
+                                                                                         (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkDescriptorSetLayoutCreateFlags
 import           Graphics.Vulkan.Types.Enum.VkDescriptorType
@@ -156,16 +156,15 @@ foreign import ccall "dynamic"
                PFN_vkGetDescriptorSetLayoutSupportKHR ->
                  HS_vkGetDescriptorSetLayoutSupportKHR
 
-instance VulkanInstanceProc "vkGetDescriptorSetLayoutSupportKHR"
-         where
-        type VkInstanceProcType "vkGetDescriptorSetLayoutSupportKHR" =
+instance VulkanProc "vkGetDescriptorSetLayoutSupportKHR" where
+        type VkProcType "vkGetDescriptorSetLayoutSupportKHR" =
              HS_vkGetDescriptorSetLayoutSupportKHR
-        vkInstanceProcSymbol = _VkGetDescriptorSetLayoutSupportKHR
+        vkProcSymbol = _VkGetDescriptorSetLayoutSupportKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetDescriptorSetLayoutSupportKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetDescriptorSetLayoutSupportKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_KHR_MAINTENANCE3_SPEC_VERSION :: (Num a, Eq a) => a
 

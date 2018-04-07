@@ -122,7 +122,7 @@ baseDeclaredNames
    <> iva "Graphics.Vulkan.Marshal" "writeStringField"
    <> iva "Graphics.Vulkan.Marshal" "eqCStrings"
    <> iva "Graphics.Vulkan.Marshal" "eqCStringsN"
-   <> ida "Graphics.Vulkan.Marshal.InstanceProc" "VulkanInstanceProc"
+   <> ida "Graphics.Vulkan.Marshal.Proc" "VulkanProc"
    <> ida "Foreign.C.Types" "CFloat"
    <> iva "Foreign.Ptr" "nullPtr"
    <> id1 "GHC.Ptr" "Ptr"

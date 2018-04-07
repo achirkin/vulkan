@@ -52,7 +52,7 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_fd
        where
 import           GHC.Ptr                                                       (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc                          (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc                                  (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkExternalSemaphoreHandleTypeFlags
 import           Graphics.Vulkan.Types.Enum.VkResult
@@ -133,15 +133,15 @@ type PFN_vkImportSemaphoreFdKHR = FunPtr HS_vkImportSemaphoreFdKHR
 foreign import ccall "dynamic" unwrapVkImportSemaphoreFdKHR ::
                PFN_vkImportSemaphoreFdKHR -> HS_vkImportSemaphoreFdKHR
 
-instance VulkanInstanceProc "vkImportSemaphoreFdKHR" where
-        type VkInstanceProcType "vkImportSemaphoreFdKHR" =
+instance VulkanProc "vkImportSemaphoreFdKHR" where
+        type VkProcType "vkImportSemaphoreFdKHR" =
              HS_vkImportSemaphoreFdKHR
-        vkInstanceProcSymbol = _VkImportSemaphoreFdKHR
+        vkProcSymbol = _VkImportSemaphoreFdKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkImportSemaphoreFdKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkImportSemaphoreFdKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetSemaphoreFdKHR :: CString
 
@@ -218,15 +218,14 @@ type PFN_vkGetSemaphoreFdKHR = FunPtr HS_vkGetSemaphoreFdKHR
 foreign import ccall "dynamic" unwrapVkGetSemaphoreFdKHR ::
                PFN_vkGetSemaphoreFdKHR -> HS_vkGetSemaphoreFdKHR
 
-instance VulkanInstanceProc "vkGetSemaphoreFdKHR" where
-        type VkInstanceProcType "vkGetSemaphoreFdKHR" =
-             HS_vkGetSemaphoreFdKHR
-        vkInstanceProcSymbol = _VkGetSemaphoreFdKHR
+instance VulkanProc "vkGetSemaphoreFdKHR" where
+        type VkProcType "vkGetSemaphoreFdKHR" = HS_vkGetSemaphoreFdKHR
+        vkProcSymbol = _VkGetSemaphoreFdKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetSemaphoreFdKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetSemaphoreFdKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_KHR_EXTERNAL_SEMAPHORE_FD_SPEC_VERSION ::
         (Num a, Eq a) => a

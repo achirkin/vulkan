@@ -51,7 +51,7 @@ module Graphics.Vulkan.Ext.VK_MVK_ios_surface
        where
 import           GHC.Ptr                                                (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc                   (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc                           (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkInternalAllocationType
@@ -151,15 +151,14 @@ type PFN_vkCreateIOSSurfaceMVK = FunPtr HS_vkCreateIOSSurfaceMVK
 foreign import ccall "dynamic" unwrapVkCreateIOSSurfaceMVK ::
                PFN_vkCreateIOSSurfaceMVK -> HS_vkCreateIOSSurfaceMVK
 
-instance VulkanInstanceProc "vkCreateIOSSurfaceMVK" where
-        type VkInstanceProcType "vkCreateIOSSurfaceMVK" =
-             HS_vkCreateIOSSurfaceMVK
-        vkInstanceProcSymbol = _VkCreateIOSSurfaceMVK
+instance VulkanProc "vkCreateIOSSurfaceMVK" where
+        type VkProcType "vkCreateIOSSurfaceMVK" = HS_vkCreateIOSSurfaceMVK
+        vkProcSymbol = _VkCreateIOSSurfaceMVK
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCreateIOSSurfaceMVK
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCreateIOSSurfaceMVK
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_MVK_IOS_SURFACE_SPEC_VERSION :: (Num a, Eq a) => a
 

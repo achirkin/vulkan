@@ -55,7 +55,7 @@ module Graphics.Vulkan.Ext.VK_EXT_display_surface_counter
        where
 import           GHC.Ptr                                                (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc                   (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc                           (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkCompositeAlphaFlagsKHR
 import           Graphics.Vulkan.Types.Enum.VkImageUsageFlags
@@ -155,19 +155,16 @@ foreign import ccall "dynamic"
                PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT ->
                  HS_vkGetPhysicalDeviceSurfaceCapabilities2EXT
 
-instance VulkanInstanceProc
-           "vkGetPhysicalDeviceSurfaceCapabilities2EXT"
+instance VulkanProc "vkGetPhysicalDeviceSurfaceCapabilities2EXT"
          where
-        type VkInstanceProcType
-               "vkGetPhysicalDeviceSurfaceCapabilities2EXT"
-             = HS_vkGetPhysicalDeviceSurfaceCapabilities2EXT
-        vkInstanceProcSymbol = _VkGetPhysicalDeviceSurfaceCapabilities2EXT
+        type VkProcType "vkGetPhysicalDeviceSurfaceCapabilities2EXT" =
+             HS_vkGetPhysicalDeviceSurfaceCapabilities2EXT
+        vkProcSymbol = _VkGetPhysicalDeviceSurfaceCapabilities2EXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc
-          = unwrapVkGetPhysicalDeviceSurfaceCapabilities2EXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetPhysicalDeviceSurfaceCapabilities2EXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_EXT_DISPLAY_SURFACE_COUNTER_SPEC_VERSION ::
         (Num a, Eq a) => a

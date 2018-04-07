@@ -67,7 +67,7 @@ module Graphics.Vulkan.Ext.VK_KHR_get_surface_capabilities2
        where
 import           GHC.Ptr                                                      (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc                         (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc                                 (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkColorSpaceKHR
 import           Graphics.Vulkan.Types.Enum.VkCompositeAlphaFlagsKHR
@@ -175,19 +175,16 @@ foreign import ccall "dynamic"
                PFN_vkGetPhysicalDeviceSurfaceCapabilities2KHR ->
                  HS_vkGetPhysicalDeviceSurfaceCapabilities2KHR
 
-instance VulkanInstanceProc
-           "vkGetPhysicalDeviceSurfaceCapabilities2KHR"
+instance VulkanProc "vkGetPhysicalDeviceSurfaceCapabilities2KHR"
          where
-        type VkInstanceProcType
-               "vkGetPhysicalDeviceSurfaceCapabilities2KHR"
-             = HS_vkGetPhysicalDeviceSurfaceCapabilities2KHR
-        vkInstanceProcSymbol = _VkGetPhysicalDeviceSurfaceCapabilities2KHR
+        type VkProcType "vkGetPhysicalDeviceSurfaceCapabilities2KHR" =
+             HS_vkGetPhysicalDeviceSurfaceCapabilities2KHR
+        vkProcSymbol = _VkGetPhysicalDeviceSurfaceCapabilities2KHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc
-          = unwrapVkGetPhysicalDeviceSurfaceCapabilities2KHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetPhysicalDeviceSurfaceCapabilities2KHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetPhysicalDeviceSurfaceFormats2KHR :: CString
 
@@ -284,16 +281,15 @@ foreign import ccall "dynamic"
                PFN_vkGetPhysicalDeviceSurfaceFormats2KHR ->
                  HS_vkGetPhysicalDeviceSurfaceFormats2KHR
 
-instance VulkanInstanceProc "vkGetPhysicalDeviceSurfaceFormats2KHR"
-         where
-        type VkInstanceProcType "vkGetPhysicalDeviceSurfaceFormats2KHR" =
+instance VulkanProc "vkGetPhysicalDeviceSurfaceFormats2KHR" where
+        type VkProcType "vkGetPhysicalDeviceSurfaceFormats2KHR" =
              HS_vkGetPhysicalDeviceSurfaceFormats2KHR
-        vkInstanceProcSymbol = _VkGetPhysicalDeviceSurfaceFormats2KHR
+        vkProcSymbol = _VkGetPhysicalDeviceSurfaceFormats2KHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetPhysicalDeviceSurfaceFormats2KHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetPhysicalDeviceSurfaceFormats2KHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_KHR_GET_SURFACE_CAPABILITIES_2_SPEC_VERSION ::
         (Num a, Eq a) => a

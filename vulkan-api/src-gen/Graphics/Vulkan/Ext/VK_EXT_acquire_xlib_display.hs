@@ -42,12 +42,12 @@ module Graphics.Vulkan.Ext.VK_EXT_acquire_xlib_display
         VK_EXT_ACQUIRE_XLIB_DISPLAY_EXTENSION_NAME,
         pattern VK_EXT_ACQUIRE_XLIB_DISPLAY_EXTENSION_NAME)
        where
-import           GHC.Ptr                              (Ptr (..))
+import           GHC.Ptr                             (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc        (VulkanProc (..))
 import           Graphics.Vulkan.Types.Enum.VkResult
 import           Graphics.Vulkan.Types.Handles
-import           Graphics.Vulkan.Types.Include        (Display, RROutput)
+import           Graphics.Vulkan.Types.Include       (Display, RROutput)
 
 pattern VkAcquireXlibDisplayEXT :: CString
 
@@ -127,15 +127,15 @@ type PFN_vkAcquireXlibDisplayEXT =
 foreign import ccall "dynamic" unwrapVkAcquireXlibDisplayEXT ::
                PFN_vkAcquireXlibDisplayEXT -> HS_vkAcquireXlibDisplayEXT
 
-instance VulkanInstanceProc "vkAcquireXlibDisplayEXT" where
-        type VkInstanceProcType "vkAcquireXlibDisplayEXT" =
+instance VulkanProc "vkAcquireXlibDisplayEXT" where
+        type VkProcType "vkAcquireXlibDisplayEXT" =
              HS_vkAcquireXlibDisplayEXT
-        vkInstanceProcSymbol = _VkAcquireXlibDisplayEXT
+        vkProcSymbol = _VkAcquireXlibDisplayEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkAcquireXlibDisplayEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkAcquireXlibDisplayEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetRandROutputDisplayEXT :: CString
 
@@ -218,15 +218,15 @@ type PFN_vkGetRandROutputDisplayEXT =
 foreign import ccall "dynamic" unwrapVkGetRandROutputDisplayEXT ::
                PFN_vkGetRandROutputDisplayEXT -> HS_vkGetRandROutputDisplayEXT
 
-instance VulkanInstanceProc "vkGetRandROutputDisplayEXT" where
-        type VkInstanceProcType "vkGetRandROutputDisplayEXT" =
+instance VulkanProc "vkGetRandROutputDisplayEXT" where
+        type VkProcType "vkGetRandROutputDisplayEXT" =
              HS_vkGetRandROutputDisplayEXT
-        vkInstanceProcSymbol = _VkGetRandROutputDisplayEXT
+        vkProcSymbol = _VkGetRandROutputDisplayEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetRandROutputDisplayEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetRandROutputDisplayEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_EXT_ACQUIRE_XLIB_DISPLAY_SPEC_VERSION ::
         (Num a, Eq a) => a

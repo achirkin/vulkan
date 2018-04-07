@@ -109,8 +109,8 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_utils
 import           GHC.Ptr
                                                                                     (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc
-                                                                                    (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc
+                                                                                    (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkDebugUtilsMessageSeverityFlagsEXT
@@ -205,15 +205,15 @@ foreign import ccall "dynamic" unwrapVkSetDebugUtilsObjectNameEXT
                ::
                PFN_vkSetDebugUtilsObjectNameEXT -> HS_vkSetDebugUtilsObjectNameEXT
 
-instance VulkanInstanceProc "vkSetDebugUtilsObjectNameEXT" where
-        type VkInstanceProcType "vkSetDebugUtilsObjectNameEXT" =
+instance VulkanProc "vkSetDebugUtilsObjectNameEXT" where
+        type VkProcType "vkSetDebugUtilsObjectNameEXT" =
              HS_vkSetDebugUtilsObjectNameEXT
-        vkInstanceProcSymbol = _VkSetDebugUtilsObjectNameEXT
+        vkProcSymbol = _VkSetDebugUtilsObjectNameEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkSetDebugUtilsObjectNameEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkSetDebugUtilsObjectNameEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkSetDebugUtilsObjectTagEXT :: CString
 
@@ -288,15 +288,15 @@ type PFN_vkSetDebugUtilsObjectTagEXT =
 foreign import ccall "dynamic" unwrapVkSetDebugUtilsObjectTagEXT ::
                PFN_vkSetDebugUtilsObjectTagEXT -> HS_vkSetDebugUtilsObjectTagEXT
 
-instance VulkanInstanceProc "vkSetDebugUtilsObjectTagEXT" where
-        type VkInstanceProcType "vkSetDebugUtilsObjectTagEXT" =
+instance VulkanProc "vkSetDebugUtilsObjectTagEXT" where
+        type VkProcType "vkSetDebugUtilsObjectTagEXT" =
              HS_vkSetDebugUtilsObjectTagEXT
-        vkInstanceProcSymbol = _VkSetDebugUtilsObjectTagEXT
+        vkProcSymbol = _VkSetDebugUtilsObjectTagEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkSetDebugUtilsObjectTagEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkSetDebugUtilsObjectTagEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkQueueBeginDebugUtilsLabelEXT :: CString
 
@@ -363,15 +363,15 @@ foreign import ccall "dynamic" unwrapVkQueueBeginDebugUtilsLabelEXT
                PFN_vkQueueBeginDebugUtilsLabelEXT ->
                  HS_vkQueueBeginDebugUtilsLabelEXT
 
-instance VulkanInstanceProc "vkQueueBeginDebugUtilsLabelEXT" where
-        type VkInstanceProcType "vkQueueBeginDebugUtilsLabelEXT" =
+instance VulkanProc "vkQueueBeginDebugUtilsLabelEXT" where
+        type VkProcType "vkQueueBeginDebugUtilsLabelEXT" =
              HS_vkQueueBeginDebugUtilsLabelEXT
-        vkInstanceProcSymbol = _VkQueueBeginDebugUtilsLabelEXT
+        vkProcSymbol = _VkQueueBeginDebugUtilsLabelEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkQueueBeginDebugUtilsLabelEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkQueueBeginDebugUtilsLabelEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkQueueEndDebugUtilsLabelEXT :: CString
 
@@ -426,15 +426,15 @@ foreign import ccall "dynamic" unwrapVkQueueEndDebugUtilsLabelEXT
                ::
                PFN_vkQueueEndDebugUtilsLabelEXT -> HS_vkQueueEndDebugUtilsLabelEXT
 
-instance VulkanInstanceProc "vkQueueEndDebugUtilsLabelEXT" where
-        type VkInstanceProcType "vkQueueEndDebugUtilsLabelEXT" =
+instance VulkanProc "vkQueueEndDebugUtilsLabelEXT" where
+        type VkProcType "vkQueueEndDebugUtilsLabelEXT" =
              HS_vkQueueEndDebugUtilsLabelEXT
-        vkInstanceProcSymbol = _VkQueueEndDebugUtilsLabelEXT
+        vkProcSymbol = _VkQueueEndDebugUtilsLabelEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkQueueEndDebugUtilsLabelEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkQueueEndDebugUtilsLabelEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkQueueInsertDebugUtilsLabelEXT :: CString
 
@@ -501,15 +501,15 @@ foreign import ccall "dynamic"
                PFN_vkQueueInsertDebugUtilsLabelEXT ->
                  HS_vkQueueInsertDebugUtilsLabelEXT
 
-instance VulkanInstanceProc "vkQueueInsertDebugUtilsLabelEXT" where
-        type VkInstanceProcType "vkQueueInsertDebugUtilsLabelEXT" =
+instance VulkanProc "vkQueueInsertDebugUtilsLabelEXT" where
+        type VkProcType "vkQueueInsertDebugUtilsLabelEXT" =
              HS_vkQueueInsertDebugUtilsLabelEXT
-        vkInstanceProcSymbol = _VkQueueInsertDebugUtilsLabelEXT
+        vkProcSymbol = _VkQueueInsertDebugUtilsLabelEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkQueueInsertDebugUtilsLabelEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkQueueInsertDebugUtilsLabelEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkCmdBeginDebugUtilsLabelEXT :: CString
 
@@ -585,15 +585,15 @@ foreign import ccall "dynamic" unwrapVkCmdBeginDebugUtilsLabelEXT
                ::
                PFN_vkCmdBeginDebugUtilsLabelEXT -> HS_vkCmdBeginDebugUtilsLabelEXT
 
-instance VulkanInstanceProc "vkCmdBeginDebugUtilsLabelEXT" where
-        type VkInstanceProcType "vkCmdBeginDebugUtilsLabelEXT" =
+instance VulkanProc "vkCmdBeginDebugUtilsLabelEXT" where
+        type VkProcType "vkCmdBeginDebugUtilsLabelEXT" =
              HS_vkCmdBeginDebugUtilsLabelEXT
-        vkInstanceProcSymbol = _VkCmdBeginDebugUtilsLabelEXT
+        vkProcSymbol = _VkCmdBeginDebugUtilsLabelEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCmdBeginDebugUtilsLabelEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCmdBeginDebugUtilsLabelEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkCmdEndDebugUtilsLabelEXT :: CString
 
@@ -658,15 +658,15 @@ type PFN_vkCmdEndDebugUtilsLabelEXT =
 foreign import ccall "dynamic" unwrapVkCmdEndDebugUtilsLabelEXT ::
                PFN_vkCmdEndDebugUtilsLabelEXT -> HS_vkCmdEndDebugUtilsLabelEXT
 
-instance VulkanInstanceProc "vkCmdEndDebugUtilsLabelEXT" where
-        type VkInstanceProcType "vkCmdEndDebugUtilsLabelEXT" =
+instance VulkanProc "vkCmdEndDebugUtilsLabelEXT" where
+        type VkProcType "vkCmdEndDebugUtilsLabelEXT" =
              HS_vkCmdEndDebugUtilsLabelEXT
-        vkInstanceProcSymbol = _VkCmdEndDebugUtilsLabelEXT
+        vkProcSymbol = _VkCmdEndDebugUtilsLabelEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCmdEndDebugUtilsLabelEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCmdEndDebugUtilsLabelEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkCmdInsertDebugUtilsLabelEXT :: CString
 
@@ -745,15 +745,15 @@ foreign import ccall "dynamic" unwrapVkCmdInsertDebugUtilsLabelEXT
                PFN_vkCmdInsertDebugUtilsLabelEXT ->
                  HS_vkCmdInsertDebugUtilsLabelEXT
 
-instance VulkanInstanceProc "vkCmdInsertDebugUtilsLabelEXT" where
-        type VkInstanceProcType "vkCmdInsertDebugUtilsLabelEXT" =
+instance VulkanProc "vkCmdInsertDebugUtilsLabelEXT" where
+        type VkProcType "vkCmdInsertDebugUtilsLabelEXT" =
              HS_vkCmdInsertDebugUtilsLabelEXT
-        vkInstanceProcSymbol = _VkCmdInsertDebugUtilsLabelEXT
+        vkProcSymbol = _VkCmdInsertDebugUtilsLabelEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCmdInsertDebugUtilsLabelEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCmdInsertDebugUtilsLabelEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkCreateDebugUtilsMessengerEXT :: CString
 
@@ -853,15 +853,15 @@ foreign import ccall "dynamic" unwrapVkCreateDebugUtilsMessengerEXT
                PFN_vkCreateDebugUtilsMessengerEXT ->
                  HS_vkCreateDebugUtilsMessengerEXT
 
-instance VulkanInstanceProc "vkCreateDebugUtilsMessengerEXT" where
-        type VkInstanceProcType "vkCreateDebugUtilsMessengerEXT" =
+instance VulkanProc "vkCreateDebugUtilsMessengerEXT" where
+        type VkProcType "vkCreateDebugUtilsMessengerEXT" =
              HS_vkCreateDebugUtilsMessengerEXT
-        vkInstanceProcSymbol = _VkCreateDebugUtilsMessengerEXT
+        vkProcSymbol = _VkCreateDebugUtilsMessengerEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCreateDebugUtilsMessengerEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCreateDebugUtilsMessengerEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkDestroyDebugUtilsMessengerEXT :: CString
 
@@ -937,15 +937,15 @@ foreign import ccall "dynamic"
                PFN_vkDestroyDebugUtilsMessengerEXT ->
                  HS_vkDestroyDebugUtilsMessengerEXT
 
-instance VulkanInstanceProc "vkDestroyDebugUtilsMessengerEXT" where
-        type VkInstanceProcType "vkDestroyDebugUtilsMessengerEXT" =
+instance VulkanProc "vkDestroyDebugUtilsMessengerEXT" where
+        type VkProcType "vkDestroyDebugUtilsMessengerEXT" =
              HS_vkDestroyDebugUtilsMessengerEXT
-        vkInstanceProcSymbol = _VkDestroyDebugUtilsMessengerEXT
+        vkProcSymbol = _VkDestroyDebugUtilsMessengerEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkDestroyDebugUtilsMessengerEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkDestroyDebugUtilsMessengerEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkSubmitDebugUtilsMessageEXT :: CString
 
@@ -1030,15 +1030,15 @@ foreign import ccall "dynamic" unwrapVkSubmitDebugUtilsMessageEXT
                ::
                PFN_vkSubmitDebugUtilsMessageEXT -> HS_vkSubmitDebugUtilsMessageEXT
 
-instance VulkanInstanceProc "vkSubmitDebugUtilsMessageEXT" where
-        type VkInstanceProcType "vkSubmitDebugUtilsMessageEXT" =
+instance VulkanProc "vkSubmitDebugUtilsMessageEXT" where
+        type VkProcType "vkSubmitDebugUtilsMessageEXT" =
              HS_vkSubmitDebugUtilsMessageEXT
-        vkInstanceProcSymbol = _VkSubmitDebugUtilsMessageEXT
+        vkProcSymbol = _VkSubmitDebugUtilsMessageEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkSubmitDebugUtilsMessageEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkSubmitDebugUtilsMessageEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_EXT_DEBUG_UTILS_SPEC_VERSION :: (Num a, Eq a) => a
 

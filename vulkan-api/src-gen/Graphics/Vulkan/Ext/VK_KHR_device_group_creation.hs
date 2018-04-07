@@ -52,7 +52,7 @@ import           Graphics.Vulkan.Core_1_1                                       
                                                                                   pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_DEVICE_CREATE_INFO,
                                                                                   pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_GROUP_PROPERTIES)
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc                            (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc                                    (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkResult
 import           Graphics.Vulkan.Types.Enum.VkStructureType
@@ -153,16 +153,15 @@ foreign import ccall "dynamic"
                PFN_vkEnumeratePhysicalDeviceGroupsKHR ->
                  HS_vkEnumeratePhysicalDeviceGroupsKHR
 
-instance VulkanInstanceProc "vkEnumeratePhysicalDeviceGroupsKHR"
-         where
-        type VkInstanceProcType "vkEnumeratePhysicalDeviceGroupsKHR" =
+instance VulkanProc "vkEnumeratePhysicalDeviceGroupsKHR" where
+        type VkProcType "vkEnumeratePhysicalDeviceGroupsKHR" =
              HS_vkEnumeratePhysicalDeviceGroupsKHR
-        vkInstanceProcSymbol = _VkEnumeratePhysicalDeviceGroupsKHR
+        vkProcSymbol = _VkEnumeratePhysicalDeviceGroupsKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkEnumeratePhysicalDeviceGroupsKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkEnumeratePhysicalDeviceGroupsKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_KHR_DEVICE_GROUP_CREATION_SPEC_VERSION ::
         (Num a, Eq a) => a
