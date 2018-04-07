@@ -70,8 +70,8 @@ import           Graphics.Vulkan.Core_1_1
                                                                                     (pattern VK_STRUCTURE_TYPE_EXTERNAL_FENCE_PROPERTIES,
                                                                                     pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO)
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc
-                                                                                    (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc
+                                                                                    (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkExternalFenceFeatureFlagBitsKHR
@@ -172,20 +172,17 @@ foreign import ccall "dynamic"
                PFN_vkGetPhysicalDeviceExternalFencePropertiesKHR ->
                  HS_vkGetPhysicalDeviceExternalFencePropertiesKHR
 
-instance VulkanInstanceProc
-           "vkGetPhysicalDeviceExternalFencePropertiesKHR"
+instance VulkanProc "vkGetPhysicalDeviceExternalFencePropertiesKHR"
          where
-        type VkInstanceProcType
-               "vkGetPhysicalDeviceExternalFencePropertiesKHR"
-             = HS_vkGetPhysicalDeviceExternalFencePropertiesKHR
-        vkInstanceProcSymbol
-          = _VkGetPhysicalDeviceExternalFencePropertiesKHR
+        type VkProcType "vkGetPhysicalDeviceExternalFencePropertiesKHR" =
+             HS_vkGetPhysicalDeviceExternalFencePropertiesKHR
+        vkProcSymbol = _VkGetPhysicalDeviceExternalFencePropertiesKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr
           = unwrapVkGetPhysicalDeviceExternalFencePropertiesKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_KHR_EXTERNAL_FENCE_CAPABILITIES_SPEC_VERSION ::
         (Num a, Eq a) => a

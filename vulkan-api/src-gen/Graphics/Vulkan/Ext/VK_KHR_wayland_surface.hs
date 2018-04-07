@@ -60,7 +60,7 @@ module Graphics.Vulkan.Ext.VK_KHR_wayland_surface
        where
 import           GHC.Ptr                                                    (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc                       (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc                               (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkInternalAllocationType
@@ -163,15 +163,15 @@ type PFN_vkCreateWaylandSurfaceKHR =
 foreign import ccall "dynamic" unwrapVkCreateWaylandSurfaceKHR ::
                PFN_vkCreateWaylandSurfaceKHR -> HS_vkCreateWaylandSurfaceKHR
 
-instance VulkanInstanceProc "vkCreateWaylandSurfaceKHR" where
-        type VkInstanceProcType "vkCreateWaylandSurfaceKHR" =
+instance VulkanProc "vkCreateWaylandSurfaceKHR" where
+        type VkProcType "vkCreateWaylandSurfaceKHR" =
              HS_vkCreateWaylandSurfaceKHR
-        vkInstanceProcSymbol = _VkCreateWaylandSurfaceKHR
+        vkProcSymbol = _VkCreateWaylandSurfaceKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCreateWaylandSurfaceKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCreateWaylandSurfaceKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetPhysicalDeviceWaylandPresentationSupportKHR :: CString
 
@@ -248,20 +248,18 @@ foreign import ccall "dynamic"
                PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR ->
                  HS_vkGetPhysicalDeviceWaylandPresentationSupportKHR
 
-instance VulkanInstanceProc
+instance VulkanProc
            "vkGetPhysicalDeviceWaylandPresentationSupportKHR"
          where
-        type VkInstanceProcType
-               "vkGetPhysicalDeviceWaylandPresentationSupportKHR"
+        type VkProcType "vkGetPhysicalDeviceWaylandPresentationSupportKHR"
              = HS_vkGetPhysicalDeviceWaylandPresentationSupportKHR
-        vkInstanceProcSymbol
-          = _VkGetPhysicalDeviceWaylandPresentationSupportKHR
+        vkProcSymbol = _VkGetPhysicalDeviceWaylandPresentationSupportKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr
           = unwrapVkGetPhysicalDeviceWaylandPresentationSupportKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_KHR_WAYLAND_SURFACE_SPEC_VERSION :: (Num a, Eq a) => a
 

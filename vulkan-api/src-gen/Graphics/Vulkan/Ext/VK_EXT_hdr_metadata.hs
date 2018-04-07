@@ -42,7 +42,7 @@ module Graphics.Vulkan.Ext.VK_EXT_hdr_metadata
        where
 import           GHC.Ptr                                       (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc          (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc                  (VulkanProc (..))
 import           Graphics.Vulkan.Types.Enum.VkStructureType
 import           Graphics.Vulkan.Types.Handles
 import           Graphics.Vulkan.Types.Struct.VkHdrMetadataEXT
@@ -120,15 +120,14 @@ type PFN_vkSetHdrMetadataEXT = FunPtr HS_vkSetHdrMetadataEXT
 foreign import ccall "dynamic" unwrapVkSetHdrMetadataEXT ::
                PFN_vkSetHdrMetadataEXT -> HS_vkSetHdrMetadataEXT
 
-instance VulkanInstanceProc "vkSetHdrMetadataEXT" where
-        type VkInstanceProcType "vkSetHdrMetadataEXT" =
-             HS_vkSetHdrMetadataEXT
-        vkInstanceProcSymbol = _VkSetHdrMetadataEXT
+instance VulkanProc "vkSetHdrMetadataEXT" where
+        type VkProcType "vkSetHdrMetadataEXT" = HS_vkSetHdrMetadataEXT
+        vkProcSymbol = _VkSetHdrMetadataEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkSetHdrMetadataEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkSetHdrMetadataEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_EXT_HDR_METADATA_SPEC_VERSION :: (Num a, Eq a) => a
 

@@ -128,8 +128,8 @@ module Graphics.Vulkan.Ext.VK_KHR_swapchain
 import           GHC.Ptr
                                                                                    (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc
-                                                                                   (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc
+                                                                                   (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkColorSpaceKHR
 import           Graphics.Vulkan.Types.Enum.VkCompositeAlphaFlagsKHR
@@ -257,15 +257,14 @@ type PFN_vkCreateSwapchainKHR = FunPtr HS_vkCreateSwapchainKHR
 foreign import ccall "dynamic" unwrapVkCreateSwapchainKHR ::
                PFN_vkCreateSwapchainKHR -> HS_vkCreateSwapchainKHR
 
-instance VulkanInstanceProc "vkCreateSwapchainKHR" where
-        type VkInstanceProcType "vkCreateSwapchainKHR" =
-             HS_vkCreateSwapchainKHR
-        vkInstanceProcSymbol = _VkCreateSwapchainKHR
+instance VulkanProc "vkCreateSwapchainKHR" where
+        type VkProcType "vkCreateSwapchainKHR" = HS_vkCreateSwapchainKHR
+        vkProcSymbol = _VkCreateSwapchainKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCreateSwapchainKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCreateSwapchainKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkDestroySwapchainKHR :: CString
 
@@ -331,15 +330,14 @@ type PFN_vkDestroySwapchainKHR = FunPtr HS_vkDestroySwapchainKHR
 foreign import ccall "dynamic" unwrapVkDestroySwapchainKHR ::
                PFN_vkDestroySwapchainKHR -> HS_vkDestroySwapchainKHR
 
-instance VulkanInstanceProc "vkDestroySwapchainKHR" where
-        type VkInstanceProcType "vkDestroySwapchainKHR" =
-             HS_vkDestroySwapchainKHR
-        vkInstanceProcSymbol = _VkDestroySwapchainKHR
+instance VulkanProc "vkDestroySwapchainKHR" where
+        type VkProcType "vkDestroySwapchainKHR" = HS_vkDestroySwapchainKHR
+        vkProcSymbol = _VkDestroySwapchainKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkDestroySwapchainKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkDestroySwapchainKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetSwapchainImagesKHR :: CString
 
@@ -428,15 +426,15 @@ type PFN_vkGetSwapchainImagesKHR =
 foreign import ccall "dynamic" unwrapVkGetSwapchainImagesKHR ::
                PFN_vkGetSwapchainImagesKHR -> HS_vkGetSwapchainImagesKHR
 
-instance VulkanInstanceProc "vkGetSwapchainImagesKHR" where
-        type VkInstanceProcType "vkGetSwapchainImagesKHR" =
+instance VulkanProc "vkGetSwapchainImagesKHR" where
+        type VkProcType "vkGetSwapchainImagesKHR" =
              HS_vkGetSwapchainImagesKHR
-        vkInstanceProcSymbol = _VkGetSwapchainImagesKHR
+        vkProcSymbol = _VkGetSwapchainImagesKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetSwapchainImagesKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetSwapchainImagesKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkAcquireNextImageKHR :: CString
 
@@ -538,15 +536,14 @@ type PFN_vkAcquireNextImageKHR = FunPtr HS_vkAcquireNextImageKHR
 foreign import ccall "dynamic" unwrapVkAcquireNextImageKHR ::
                PFN_vkAcquireNextImageKHR -> HS_vkAcquireNextImageKHR
 
-instance VulkanInstanceProc "vkAcquireNextImageKHR" where
-        type VkInstanceProcType "vkAcquireNextImageKHR" =
-             HS_vkAcquireNextImageKHR
-        vkInstanceProcSymbol = _VkAcquireNextImageKHR
+instance VulkanProc "vkAcquireNextImageKHR" where
+        type VkProcType "vkAcquireNextImageKHR" = HS_vkAcquireNextImageKHR
+        vkProcSymbol = _VkAcquireNextImageKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkAcquireNextImageKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkAcquireNextImageKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkQueuePresentKHR :: CString
 
@@ -615,14 +612,14 @@ type PFN_vkQueuePresentKHR = FunPtr HS_vkQueuePresentKHR
 foreign import ccall "dynamic" unwrapVkQueuePresentKHR ::
                PFN_vkQueuePresentKHR -> HS_vkQueuePresentKHR
 
-instance VulkanInstanceProc "vkQueuePresentKHR" where
-        type VkInstanceProcType "vkQueuePresentKHR" = HS_vkQueuePresentKHR
-        vkInstanceProcSymbol = _VkQueuePresentKHR
+instance VulkanProc "vkQueuePresentKHR" where
+        type VkProcType "vkQueuePresentKHR" = HS_vkQueuePresentKHR
+        vkProcSymbol = _VkQueuePresentKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkQueuePresentKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkQueuePresentKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_KHR_SWAPCHAIN_SPEC_VERSION :: (Num a, Eq a) => a
 
@@ -756,17 +753,15 @@ foreign import ccall "dynamic"
                PFN_vkGetDeviceGroupPresentCapabilitiesKHR ->
                  HS_vkGetDeviceGroupPresentCapabilitiesKHR
 
-instance VulkanInstanceProc
-           "vkGetDeviceGroupPresentCapabilitiesKHR"
-         where
-        type VkInstanceProcType "vkGetDeviceGroupPresentCapabilitiesKHR" =
+instance VulkanProc "vkGetDeviceGroupPresentCapabilitiesKHR" where
+        type VkProcType "vkGetDeviceGroupPresentCapabilitiesKHR" =
              HS_vkGetDeviceGroupPresentCapabilitiesKHR
-        vkInstanceProcSymbol = _VkGetDeviceGroupPresentCapabilitiesKHR
+        vkProcSymbol = _VkGetDeviceGroupPresentCapabilitiesKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetDeviceGroupPresentCapabilitiesKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetDeviceGroupPresentCapabilitiesKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetDeviceGroupSurfacePresentModesKHR :: CString
 
@@ -855,17 +850,15 @@ foreign import ccall "dynamic"
                PFN_vkGetDeviceGroupSurfacePresentModesKHR ->
                  HS_vkGetDeviceGroupSurfacePresentModesKHR
 
-instance VulkanInstanceProc
-           "vkGetDeviceGroupSurfacePresentModesKHR"
-         where
-        type VkInstanceProcType "vkGetDeviceGroupSurfacePresentModesKHR" =
+instance VulkanProc "vkGetDeviceGroupSurfacePresentModesKHR" where
+        type VkProcType "vkGetDeviceGroupSurfacePresentModesKHR" =
              HS_vkGetDeviceGroupSurfacePresentModesKHR
-        vkInstanceProcSymbol = _VkGetDeviceGroupSurfacePresentModesKHR
+        vkProcSymbol = _VkGetDeviceGroupSurfacePresentModesKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetDeviceGroupSurfacePresentModesKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetDeviceGroupSurfacePresentModesKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetPhysicalDevicePresentRectanglesKHR :: CString
 
@@ -960,18 +953,15 @@ foreign import ccall "dynamic"
                PFN_vkGetPhysicalDevicePresentRectanglesKHR ->
                  HS_vkGetPhysicalDevicePresentRectanglesKHR
 
-instance VulkanInstanceProc
-           "vkGetPhysicalDevicePresentRectanglesKHR"
-         where
-        type VkInstanceProcType "vkGetPhysicalDevicePresentRectanglesKHR" =
+instance VulkanProc "vkGetPhysicalDevicePresentRectanglesKHR" where
+        type VkProcType "vkGetPhysicalDevicePresentRectanglesKHR" =
              HS_vkGetPhysicalDevicePresentRectanglesKHR
-        vkInstanceProcSymbol = _VkGetPhysicalDevicePresentRectanglesKHR
+        vkProcSymbol = _VkGetPhysicalDevicePresentRectanglesKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc
-          = unwrapVkGetPhysicalDevicePresentRectanglesKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetPhysicalDevicePresentRectanglesKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkAcquireNextImage2KHR :: CString
 
@@ -1053,15 +1043,15 @@ type PFN_vkAcquireNextImage2KHR = FunPtr HS_vkAcquireNextImage2KHR
 foreign import ccall "dynamic" unwrapVkAcquireNextImage2KHR ::
                PFN_vkAcquireNextImage2KHR -> HS_vkAcquireNextImage2KHR
 
-instance VulkanInstanceProc "vkAcquireNextImage2KHR" where
-        type VkInstanceProcType "vkAcquireNextImage2KHR" =
+instance VulkanProc "vkAcquireNextImage2KHR" where
+        type VkProcType "vkAcquireNextImage2KHR" =
              HS_vkAcquireNextImage2KHR
-        vkInstanceProcSymbol = _VkAcquireNextImage2KHR
+        vkProcSymbol = _VkAcquireNextImage2KHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkAcquireNextImage2KHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkAcquireNextImage2KHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_STRUCTURE_TYPE_DEVICE_GROUP_PRESENT_CAPABILITIES_KHR ::
         VkStructureType

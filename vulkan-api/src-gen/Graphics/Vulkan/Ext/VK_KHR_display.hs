@@ -101,7 +101,7 @@ module Graphics.Vulkan.Ext.VK_KHR_display
        where
 import           GHC.Ptr                                                    (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc                       (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc                               (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkDisplayPlaneAlphaFlagsKHR
@@ -211,18 +211,15 @@ foreign import ccall "dynamic"
                PFN_vkGetPhysicalDeviceDisplayPropertiesKHR ->
                  HS_vkGetPhysicalDeviceDisplayPropertiesKHR
 
-instance VulkanInstanceProc
-           "vkGetPhysicalDeviceDisplayPropertiesKHR"
-         where
-        type VkInstanceProcType "vkGetPhysicalDeviceDisplayPropertiesKHR" =
+instance VulkanProc "vkGetPhysicalDeviceDisplayPropertiesKHR" where
+        type VkProcType "vkGetPhysicalDeviceDisplayPropertiesKHR" =
              HS_vkGetPhysicalDeviceDisplayPropertiesKHR
-        vkInstanceProcSymbol = _VkGetPhysicalDeviceDisplayPropertiesKHR
+        vkProcSymbol = _VkGetPhysicalDeviceDisplayPropertiesKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc
-          = unwrapVkGetPhysicalDeviceDisplayPropertiesKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetPhysicalDeviceDisplayPropertiesKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetPhysicalDeviceDisplayPlanePropertiesKHR :: CString
 
@@ -313,20 +310,17 @@ foreign import ccall "dynamic"
                PFN_vkGetPhysicalDeviceDisplayPlanePropertiesKHR ->
                  HS_vkGetPhysicalDeviceDisplayPlanePropertiesKHR
 
-instance VulkanInstanceProc
-           "vkGetPhysicalDeviceDisplayPlanePropertiesKHR"
+instance VulkanProc "vkGetPhysicalDeviceDisplayPlanePropertiesKHR"
          where
-        type VkInstanceProcType
-               "vkGetPhysicalDeviceDisplayPlanePropertiesKHR"
-             = HS_vkGetPhysicalDeviceDisplayPlanePropertiesKHR
-        vkInstanceProcSymbol
-          = _VkGetPhysicalDeviceDisplayPlanePropertiesKHR
+        type VkProcType "vkGetPhysicalDeviceDisplayPlanePropertiesKHR" =
+             HS_vkGetPhysicalDeviceDisplayPlanePropertiesKHR
+        vkProcSymbol = _VkGetPhysicalDeviceDisplayPlanePropertiesKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr
           = unwrapVkGetPhysicalDeviceDisplayPlanePropertiesKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetDisplayPlaneSupportedDisplaysKHR :: CString
 
@@ -420,16 +414,15 @@ foreign import ccall "dynamic"
                PFN_vkGetDisplayPlaneSupportedDisplaysKHR ->
                  HS_vkGetDisplayPlaneSupportedDisplaysKHR
 
-instance VulkanInstanceProc "vkGetDisplayPlaneSupportedDisplaysKHR"
-         where
-        type VkInstanceProcType "vkGetDisplayPlaneSupportedDisplaysKHR" =
+instance VulkanProc "vkGetDisplayPlaneSupportedDisplaysKHR" where
+        type VkProcType "vkGetDisplayPlaneSupportedDisplaysKHR" =
              HS_vkGetDisplayPlaneSupportedDisplaysKHR
-        vkInstanceProcSymbol = _VkGetDisplayPlaneSupportedDisplaysKHR
+        vkProcSymbol = _VkGetDisplayPlaneSupportedDisplaysKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetDisplayPlaneSupportedDisplaysKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetDisplayPlaneSupportedDisplaysKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetDisplayModePropertiesKHR :: CString
 
@@ -526,15 +519,15 @@ foreign import ccall "dynamic" unwrapVkGetDisplayModePropertiesKHR
                PFN_vkGetDisplayModePropertiesKHR ->
                  HS_vkGetDisplayModePropertiesKHR
 
-instance VulkanInstanceProc "vkGetDisplayModePropertiesKHR" where
-        type VkInstanceProcType "vkGetDisplayModePropertiesKHR" =
+instance VulkanProc "vkGetDisplayModePropertiesKHR" where
+        type VkProcType "vkGetDisplayModePropertiesKHR" =
              HS_vkGetDisplayModePropertiesKHR
-        vkInstanceProcSymbol = _VkGetDisplayModePropertiesKHR
+        vkProcSymbol = _VkGetDisplayModePropertiesKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetDisplayModePropertiesKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetDisplayModePropertiesKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkCreateDisplayModeKHR :: CString
 
@@ -634,15 +627,15 @@ type PFN_vkCreateDisplayModeKHR = FunPtr HS_vkCreateDisplayModeKHR
 foreign import ccall "dynamic" unwrapVkCreateDisplayModeKHR ::
                PFN_vkCreateDisplayModeKHR -> HS_vkCreateDisplayModeKHR
 
-instance VulkanInstanceProc "vkCreateDisplayModeKHR" where
-        type VkInstanceProcType "vkCreateDisplayModeKHR" =
+instance VulkanProc "vkCreateDisplayModeKHR" where
+        type VkProcType "vkCreateDisplayModeKHR" =
              HS_vkCreateDisplayModeKHR
-        vkInstanceProcSymbol = _VkCreateDisplayModeKHR
+        vkProcSymbol = _VkCreateDisplayModeKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCreateDisplayModeKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCreateDisplayModeKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetDisplayPlaneCapabilitiesKHR :: CString
 
@@ -739,16 +732,15 @@ foreign import ccall "dynamic"
                PFN_vkGetDisplayPlaneCapabilitiesKHR ->
                  HS_vkGetDisplayPlaneCapabilitiesKHR
 
-instance VulkanInstanceProc "vkGetDisplayPlaneCapabilitiesKHR"
-         where
-        type VkInstanceProcType "vkGetDisplayPlaneCapabilitiesKHR" =
+instance VulkanProc "vkGetDisplayPlaneCapabilitiesKHR" where
+        type VkProcType "vkGetDisplayPlaneCapabilitiesKHR" =
              HS_vkGetDisplayPlaneCapabilitiesKHR
-        vkInstanceProcSymbol = _VkGetDisplayPlaneCapabilitiesKHR
+        vkProcSymbol = _VkGetDisplayPlaneCapabilitiesKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetDisplayPlaneCapabilitiesKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetDisplayPlaneCapabilitiesKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkCreateDisplayPlaneSurfaceKHR :: CString
 
@@ -845,15 +837,15 @@ foreign import ccall "dynamic" unwrapVkCreateDisplayPlaneSurfaceKHR
                PFN_vkCreateDisplayPlaneSurfaceKHR ->
                  HS_vkCreateDisplayPlaneSurfaceKHR
 
-instance VulkanInstanceProc "vkCreateDisplayPlaneSurfaceKHR" where
-        type VkInstanceProcType "vkCreateDisplayPlaneSurfaceKHR" =
+instance VulkanProc "vkCreateDisplayPlaneSurfaceKHR" where
+        type VkProcType "vkCreateDisplayPlaneSurfaceKHR" =
              HS_vkCreateDisplayPlaneSurfaceKHR
-        vkInstanceProcSymbol = _VkCreateDisplayPlaneSurfaceKHR
+        vkProcSymbol = _VkCreateDisplayPlaneSurfaceKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCreateDisplayPlaneSurfaceKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCreateDisplayPlaneSurfaceKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_KHR_DISPLAY_SPEC_VERSION :: (Num a, Eq a) => a
 

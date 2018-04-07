@@ -90,8 +90,8 @@ module Graphics.Vulkan.Ext.VK_ANDROID_external_memory_android_hardware_buffer
 import           GHC.Ptr
                                                                                               (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc
-                                                                                              (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc
+                                                                                              (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Defines
                                                                                               (AHardwareBuffer)
@@ -221,19 +221,16 @@ foreign import ccall "dynamic"
                PFN_vkGetAndroidHardwareBufferPropertiesANDROID ->
                  HS_vkGetAndroidHardwareBufferPropertiesANDROID
 
-instance VulkanInstanceProc
-           "vkGetAndroidHardwareBufferPropertiesANDROID"
+instance VulkanProc "vkGetAndroidHardwareBufferPropertiesANDROID"
          where
-        type VkInstanceProcType
-               "vkGetAndroidHardwareBufferPropertiesANDROID"
-             = HS_vkGetAndroidHardwareBufferPropertiesANDROID
-        vkInstanceProcSymbol = _VkGetAndroidHardwareBufferPropertiesANDROID
+        type VkProcType "vkGetAndroidHardwareBufferPropertiesANDROID" =
+             HS_vkGetAndroidHardwareBufferPropertiesANDROID
+        vkProcSymbol = _VkGetAndroidHardwareBufferPropertiesANDROID
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc
-          = unwrapVkGetAndroidHardwareBufferPropertiesANDROID
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetAndroidHardwareBufferPropertiesANDROID
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetMemoryAndroidHardwareBufferANDROID :: CString
 
@@ -325,18 +322,15 @@ foreign import ccall "dynamic"
                PFN_vkGetMemoryAndroidHardwareBufferANDROID ->
                  HS_vkGetMemoryAndroidHardwareBufferANDROID
 
-instance VulkanInstanceProc
-           "vkGetMemoryAndroidHardwareBufferANDROID"
-         where
-        type VkInstanceProcType "vkGetMemoryAndroidHardwareBufferANDROID" =
+instance VulkanProc "vkGetMemoryAndroidHardwareBufferANDROID" where
+        type VkProcType "vkGetMemoryAndroidHardwareBufferANDROID" =
              HS_vkGetMemoryAndroidHardwareBufferANDROID
-        vkInstanceProcSymbol = _VkGetMemoryAndroidHardwareBufferANDROID
+        vkProcSymbol = _VkGetMemoryAndroidHardwareBufferANDROID
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc
-          = unwrapVkGetMemoryAndroidHardwareBufferANDROID
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetMemoryAndroidHardwareBufferANDROID
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_ANDROID_EXTERNAL_MEMORY_ANDROID_HARDWARE_BUFFER_SPEC_VERSION
         :: (Num a, Eq a) => a

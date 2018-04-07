@@ -184,8 +184,8 @@ import           Graphics.Vulkan.Ext.VK_KHR_swapchain
                                                                                       vkGetPhysicalDevicePresentRectanglesKHR,
                                                                                       vkGetPhysicalDevicePresentRectanglesKHRSafe)
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc
-                                                                                      (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc
+                                                                                      (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkColorSpaceKHR
@@ -322,16 +322,15 @@ foreign import ccall "dynamic"
                PFN_vkGetDeviceGroupPeerMemoryFeaturesKHR ->
                  HS_vkGetDeviceGroupPeerMemoryFeaturesKHR
 
-instance VulkanInstanceProc "vkGetDeviceGroupPeerMemoryFeaturesKHR"
-         where
-        type VkInstanceProcType "vkGetDeviceGroupPeerMemoryFeaturesKHR" =
+instance VulkanProc "vkGetDeviceGroupPeerMemoryFeaturesKHR" where
+        type VkProcType "vkGetDeviceGroupPeerMemoryFeaturesKHR" =
              HS_vkGetDeviceGroupPeerMemoryFeaturesKHR
-        vkInstanceProcSymbol = _VkGetDeviceGroupPeerMemoryFeaturesKHR
+        vkProcSymbol = _VkGetDeviceGroupPeerMemoryFeaturesKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetDeviceGroupPeerMemoryFeaturesKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetDeviceGroupPeerMemoryFeaturesKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkCmdSetDeviceMaskKHR :: CString
 
@@ -406,15 +405,14 @@ type PFN_vkCmdSetDeviceMaskKHR = FunPtr HS_vkCmdSetDeviceMaskKHR
 foreign import ccall "dynamic" unwrapVkCmdSetDeviceMaskKHR ::
                PFN_vkCmdSetDeviceMaskKHR -> HS_vkCmdSetDeviceMaskKHR
 
-instance VulkanInstanceProc "vkCmdSetDeviceMaskKHR" where
-        type VkInstanceProcType "vkCmdSetDeviceMaskKHR" =
-             HS_vkCmdSetDeviceMaskKHR
-        vkInstanceProcSymbol = _VkCmdSetDeviceMaskKHR
+instance VulkanProc "vkCmdSetDeviceMaskKHR" where
+        type VkProcType "vkCmdSetDeviceMaskKHR" = HS_vkCmdSetDeviceMaskKHR
+        vkProcSymbol = _VkCmdSetDeviceMaskKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCmdSetDeviceMaskKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCmdSetDeviceMaskKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkCmdDispatchBaseKHR :: CString
 
@@ -525,15 +523,14 @@ type PFN_vkCmdDispatchBaseKHR = FunPtr HS_vkCmdDispatchBaseKHR
 foreign import ccall "dynamic" unwrapVkCmdDispatchBaseKHR ::
                PFN_vkCmdDispatchBaseKHR -> HS_vkCmdDispatchBaseKHR
 
-instance VulkanInstanceProc "vkCmdDispatchBaseKHR" where
-        type VkInstanceProcType "vkCmdDispatchBaseKHR" =
-             HS_vkCmdDispatchBaseKHR
-        vkInstanceProcSymbol = _VkCmdDispatchBaseKHR
+instance VulkanProc "vkCmdDispatchBaseKHR" where
+        type VkProcType "vkCmdDispatchBaseKHR" = HS_vkCmdDispatchBaseKHR
+        vkProcSymbol = _VkCmdDispatchBaseKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCmdDispatchBaseKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCmdDispatchBaseKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_KHR_DEVICE_GROUP_SPEC_VERSION :: (Num a, Eq a) => a
 

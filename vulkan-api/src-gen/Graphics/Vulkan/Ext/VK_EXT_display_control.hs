@@ -80,7 +80,7 @@ module Graphics.Vulkan.Ext.VK_EXT_display_control
        where
 import           GHC.Ptr                                                      (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc                         (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc                                 (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkColorSpaceKHR
 import           Graphics.Vulkan.Types.Enum.VkCompositeAlphaFlagsKHR
@@ -183,15 +183,15 @@ type PFN_vkDisplayPowerControlEXT =
 foreign import ccall "dynamic" unwrapVkDisplayPowerControlEXT ::
                PFN_vkDisplayPowerControlEXT -> HS_vkDisplayPowerControlEXT
 
-instance VulkanInstanceProc "vkDisplayPowerControlEXT" where
-        type VkInstanceProcType "vkDisplayPowerControlEXT" =
+instance VulkanProc "vkDisplayPowerControlEXT" where
+        type VkProcType "vkDisplayPowerControlEXT" =
              HS_vkDisplayPowerControlEXT
-        vkInstanceProcSymbol = _VkDisplayPowerControlEXT
+        vkProcSymbol = _VkDisplayPowerControlEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkDisplayPowerControlEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkDisplayPowerControlEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkRegisterDeviceEventEXT :: CString
 
@@ -277,15 +277,15 @@ type PFN_vkRegisterDeviceEventEXT =
 foreign import ccall "dynamic" unwrapVkRegisterDeviceEventEXT ::
                PFN_vkRegisterDeviceEventEXT -> HS_vkRegisterDeviceEventEXT
 
-instance VulkanInstanceProc "vkRegisterDeviceEventEXT" where
-        type VkInstanceProcType "vkRegisterDeviceEventEXT" =
+instance VulkanProc "vkRegisterDeviceEventEXT" where
+        type VkProcType "vkRegisterDeviceEventEXT" =
              HS_vkRegisterDeviceEventEXT
-        vkInstanceProcSymbol = _VkRegisterDeviceEventEXT
+        vkProcSymbol = _VkRegisterDeviceEventEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkRegisterDeviceEventEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkRegisterDeviceEventEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkRegisterDisplayEventEXT :: CString
 
@@ -380,15 +380,15 @@ type PFN_vkRegisterDisplayEventEXT =
 foreign import ccall "dynamic" unwrapVkRegisterDisplayEventEXT ::
                PFN_vkRegisterDisplayEventEXT -> HS_vkRegisterDisplayEventEXT
 
-instance VulkanInstanceProc "vkRegisterDisplayEventEXT" where
-        type VkInstanceProcType "vkRegisterDisplayEventEXT" =
+instance VulkanProc "vkRegisterDisplayEventEXT" where
+        type VkProcType "vkRegisterDisplayEventEXT" =
              HS_vkRegisterDisplayEventEXT
-        vkInstanceProcSymbol = _VkRegisterDisplayEventEXT
+        vkProcSymbol = _VkRegisterDisplayEventEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkRegisterDisplayEventEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkRegisterDisplayEventEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetSwapchainCounterEXT :: CString
 
@@ -480,15 +480,15 @@ type PFN_vkGetSwapchainCounterEXT =
 foreign import ccall "dynamic" unwrapVkGetSwapchainCounterEXT ::
                PFN_vkGetSwapchainCounterEXT -> HS_vkGetSwapchainCounterEXT
 
-instance VulkanInstanceProc "vkGetSwapchainCounterEXT" where
-        type VkInstanceProcType "vkGetSwapchainCounterEXT" =
+instance VulkanProc "vkGetSwapchainCounterEXT" where
+        type VkProcType "vkGetSwapchainCounterEXT" =
              HS_vkGetSwapchainCounterEXT
-        vkInstanceProcSymbol = _VkGetSwapchainCounterEXT
+        vkProcSymbol = _VkGetSwapchainCounterEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetSwapchainCounterEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetSwapchainCounterEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_EXT_DISPLAY_CONTROL_SPEC_VERSION :: (Num a, Eq a) => a
 

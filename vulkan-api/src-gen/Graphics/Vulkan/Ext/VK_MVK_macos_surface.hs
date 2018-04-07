@@ -51,7 +51,7 @@ module Graphics.Vulkan.Ext.VK_MVK_macos_surface
        where
 import           GHC.Ptr                                                  (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc                     (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc                             (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkInternalAllocationType
@@ -153,15 +153,15 @@ type PFN_vkCreateMacOSSurfaceMVK =
 foreign import ccall "dynamic" unwrapVkCreateMacOSSurfaceMVK ::
                PFN_vkCreateMacOSSurfaceMVK -> HS_vkCreateMacOSSurfaceMVK
 
-instance VulkanInstanceProc "vkCreateMacOSSurfaceMVK" where
-        type VkInstanceProcType "vkCreateMacOSSurfaceMVK" =
+instance VulkanProc "vkCreateMacOSSurfaceMVK" where
+        type VkProcType "vkCreateMacOSSurfaceMVK" =
              HS_vkCreateMacOSSurfaceMVK
-        vkInstanceProcSymbol = _VkCreateMacOSSurfaceMVK
+        vkProcSymbol = _VkCreateMacOSSurfaceMVK
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCreateMacOSSurfaceMVK
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCreateMacOSSurfaceMVK
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_MVK_MACOS_SURFACE_SPEC_VERSION :: (Num a, Eq a) => a
 

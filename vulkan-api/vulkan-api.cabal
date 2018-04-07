@@ -182,8 +182,8 @@ library
         Graphics.Vulkan.Ext.VK_NV_viewport_swizzle
         Graphics.Vulkan.Marshal
         Graphics.Vulkan.Marshal.Create
-        Graphics.Vulkan.Marshal.InstanceProc
         Graphics.Vulkan.Marshal.Internal
+        Graphics.Vulkan.Marshal.Proc
         Graphics.Vulkan.Types.BaseTypes
         Graphics.Vulkan.Types.Bitmasks
         Graphics.Vulkan.Types.Defines

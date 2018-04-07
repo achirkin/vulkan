@@ -92,8 +92,8 @@ module Graphics.Vulkan.Ext.VK_EXT_discard_rectangles
 import           GHC.Ptr
                                                                                              (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc
-                                                                                             (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc
+                                                                                             (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkBlendFactor
@@ -229,15 +229,15 @@ type PFN_vkCmdSetDiscardRectangleEXT =
 foreign import ccall "dynamic" unwrapVkCmdSetDiscardRectangleEXT ::
                PFN_vkCmdSetDiscardRectangleEXT -> HS_vkCmdSetDiscardRectangleEXT
 
-instance VulkanInstanceProc "vkCmdSetDiscardRectangleEXT" where
-        type VkInstanceProcType "vkCmdSetDiscardRectangleEXT" =
+instance VulkanProc "vkCmdSetDiscardRectangleEXT" where
+        type VkProcType "vkCmdSetDiscardRectangleEXT" =
              HS_vkCmdSetDiscardRectangleEXT
-        vkInstanceProcSymbol = _VkCmdSetDiscardRectangleEXT
+        vkProcSymbol = _VkCmdSetDiscardRectangleEXT
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCmdSetDiscardRectangleEXT
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCmdSetDiscardRectangleEXT
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_EXT_DISCARD_RECTANGLES_SPEC_VERSION :: (Num a, Eq a) =>
         a

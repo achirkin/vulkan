@@ -54,7 +54,7 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_fd
        where
 import           GHC.Ptr                                                    (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc                       (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc                               (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlags
 import           Graphics.Vulkan.Types.Enum.VkResult
@@ -138,14 +138,14 @@ type PFN_vkGetMemoryFdKHR = FunPtr HS_vkGetMemoryFdKHR
 foreign import ccall "dynamic" unwrapVkGetMemoryFdKHR ::
                PFN_vkGetMemoryFdKHR -> HS_vkGetMemoryFdKHR
 
-instance VulkanInstanceProc "vkGetMemoryFdKHR" where
-        type VkInstanceProcType "vkGetMemoryFdKHR" = HS_vkGetMemoryFdKHR
-        vkInstanceProcSymbol = _VkGetMemoryFdKHR
+instance VulkanProc "vkGetMemoryFdKHR" where
+        type VkProcType "vkGetMemoryFdKHR" = HS_vkGetMemoryFdKHR
+        vkProcSymbol = _VkGetMemoryFdKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetMemoryFdKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetMemoryFdKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetMemoryFdPropertiesKHR :: CString
 
@@ -237,15 +237,15 @@ type PFN_vkGetMemoryFdPropertiesKHR =
 foreign import ccall "dynamic" unwrapVkGetMemoryFdPropertiesKHR ::
                PFN_vkGetMemoryFdPropertiesKHR -> HS_vkGetMemoryFdPropertiesKHR
 
-instance VulkanInstanceProc "vkGetMemoryFdPropertiesKHR" where
-        type VkInstanceProcType "vkGetMemoryFdPropertiesKHR" =
+instance VulkanProc "vkGetMemoryFdPropertiesKHR" where
+        type VkProcType "vkGetMemoryFdPropertiesKHR" =
              HS_vkGetMemoryFdPropertiesKHR
-        vkInstanceProcSymbol = _VkGetMemoryFdPropertiesKHR
+        vkProcSymbol = _VkGetMemoryFdPropertiesKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetMemoryFdPropertiesKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetMemoryFdPropertiesKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_KHR_EXTERNAL_MEMORY_FD_SPEC_VERSION :: (Num a, Eq a) =>
         a

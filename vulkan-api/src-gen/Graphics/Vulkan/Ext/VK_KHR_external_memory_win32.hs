@@ -62,7 +62,7 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_win32
        where
 import           GHC.Ptr                                                       (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc                          (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc                                  (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlags
 import           Graphics.Vulkan.Types.Enum.VkResult
@@ -156,15 +156,15 @@ type PFN_vkGetMemoryWin32HandleKHR =
 foreign import ccall "dynamic" unwrapVkGetMemoryWin32HandleKHR ::
                PFN_vkGetMemoryWin32HandleKHR -> HS_vkGetMemoryWin32HandleKHR
 
-instance VulkanInstanceProc "vkGetMemoryWin32HandleKHR" where
-        type VkInstanceProcType "vkGetMemoryWin32HandleKHR" =
+instance VulkanProc "vkGetMemoryWin32HandleKHR" where
+        type VkProcType "vkGetMemoryWin32HandleKHR" =
              HS_vkGetMemoryWin32HandleKHR
-        vkInstanceProcSymbol = _VkGetMemoryWin32HandleKHR
+        vkProcSymbol = _VkGetMemoryWin32HandleKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetMemoryWin32HandleKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetMemoryWin32HandleKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetMemoryWin32HandlePropertiesKHR :: CString
 
@@ -261,16 +261,15 @@ foreign import ccall "dynamic"
                PFN_vkGetMemoryWin32HandlePropertiesKHR ->
                  HS_vkGetMemoryWin32HandlePropertiesKHR
 
-instance VulkanInstanceProc "vkGetMemoryWin32HandlePropertiesKHR"
-         where
-        type VkInstanceProcType "vkGetMemoryWin32HandlePropertiesKHR" =
+instance VulkanProc "vkGetMemoryWin32HandlePropertiesKHR" where
+        type VkProcType "vkGetMemoryWin32HandlePropertiesKHR" =
              HS_vkGetMemoryWin32HandlePropertiesKHR
-        vkInstanceProcSymbol = _VkGetMemoryWin32HandlePropertiesKHR
+        vkProcSymbol = _VkGetMemoryWin32HandlePropertiesKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetMemoryWin32HandlePropertiesKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetMemoryWin32HandlePropertiesKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_KHR_EXTERNAL_MEMORY_WIN32_SPEC_VERSION ::
         (Num a, Eq a) => a

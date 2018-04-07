@@ -1,5 +1,5 @@
 name:                vulkan-examples
-version:             0.1.0.0
+version:             0.2.0.0
 synopsis:            Use cases for vulkan-api
 description:         Some examples of using vulkan-api bindings.
 homepage:            https://github.com/achirkin/genvulkan#readme

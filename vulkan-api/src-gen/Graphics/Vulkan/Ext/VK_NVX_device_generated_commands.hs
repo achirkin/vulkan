@@ -116,8 +116,8 @@ module Graphics.Vulkan.Ext.VK_NVX_device_generated_commands
 import           GHC.Ptr
                                                                                      (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc
-                                                                                     (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc
+                                                                                     (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkAccessFlags
                                                                                      (VkAccessBitmask (..),
@@ -228,15 +228,15 @@ type PFN_vkCmdProcessCommandsNVX =
 foreign import ccall "dynamic" unwrapVkCmdProcessCommandsNVX ::
                PFN_vkCmdProcessCommandsNVX -> HS_vkCmdProcessCommandsNVX
 
-instance VulkanInstanceProc "vkCmdProcessCommandsNVX" where
-        type VkInstanceProcType "vkCmdProcessCommandsNVX" =
+instance VulkanProc "vkCmdProcessCommandsNVX" where
+        type VkProcType "vkCmdProcessCommandsNVX" =
              HS_vkCmdProcessCommandsNVX
-        vkInstanceProcSymbol = _VkCmdProcessCommandsNVX
+        vkProcSymbol = _VkCmdProcessCommandsNVX
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCmdProcessCommandsNVX
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCmdProcessCommandsNVX
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkCmdReserveSpaceForCommandsNVX :: CString
 
@@ -315,15 +315,15 @@ foreign import ccall "dynamic"
                PFN_vkCmdReserveSpaceForCommandsNVX ->
                  HS_vkCmdReserveSpaceForCommandsNVX
 
-instance VulkanInstanceProc "vkCmdReserveSpaceForCommandsNVX" where
-        type VkInstanceProcType "vkCmdReserveSpaceForCommandsNVX" =
+instance VulkanProc "vkCmdReserveSpaceForCommandsNVX" where
+        type VkProcType "vkCmdReserveSpaceForCommandsNVX" =
              HS_vkCmdReserveSpaceForCommandsNVX
-        vkInstanceProcSymbol = _VkCmdReserveSpaceForCommandsNVX
+        vkProcSymbol = _VkCmdReserveSpaceForCommandsNVX
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCmdReserveSpaceForCommandsNVX
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCmdReserveSpaceForCommandsNVX
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkCreateIndirectCommandsLayoutNVX :: CString
 
@@ -423,16 +423,15 @@ foreign import ccall "dynamic"
                PFN_vkCreateIndirectCommandsLayoutNVX ->
                  HS_vkCreateIndirectCommandsLayoutNVX
 
-instance VulkanInstanceProc "vkCreateIndirectCommandsLayoutNVX"
-         where
-        type VkInstanceProcType "vkCreateIndirectCommandsLayoutNVX" =
+instance VulkanProc "vkCreateIndirectCommandsLayoutNVX" where
+        type VkProcType "vkCreateIndirectCommandsLayoutNVX" =
              HS_vkCreateIndirectCommandsLayoutNVX
-        vkInstanceProcSymbol = _VkCreateIndirectCommandsLayoutNVX
+        vkProcSymbol = _VkCreateIndirectCommandsLayoutNVX
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCreateIndirectCommandsLayoutNVX
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCreateIndirectCommandsLayoutNVX
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkDestroyIndirectCommandsLayoutNVX :: CString
 
@@ -508,16 +507,15 @@ foreign import ccall "dynamic"
                PFN_vkDestroyIndirectCommandsLayoutNVX ->
                  HS_vkDestroyIndirectCommandsLayoutNVX
 
-instance VulkanInstanceProc "vkDestroyIndirectCommandsLayoutNVX"
-         where
-        type VkInstanceProcType "vkDestroyIndirectCommandsLayoutNVX" =
+instance VulkanProc "vkDestroyIndirectCommandsLayoutNVX" where
+        type VkProcType "vkDestroyIndirectCommandsLayoutNVX" =
              HS_vkDestroyIndirectCommandsLayoutNVX
-        vkInstanceProcSymbol = _VkDestroyIndirectCommandsLayoutNVX
+        vkProcSymbol = _VkDestroyIndirectCommandsLayoutNVX
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkDestroyIndirectCommandsLayoutNVX
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkDestroyIndirectCommandsLayoutNVX
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkCreateObjectTableNVX :: CString
 
@@ -608,15 +606,15 @@ type PFN_vkCreateObjectTableNVX = FunPtr HS_vkCreateObjectTableNVX
 foreign import ccall "dynamic" unwrapVkCreateObjectTableNVX ::
                PFN_vkCreateObjectTableNVX -> HS_vkCreateObjectTableNVX
 
-instance VulkanInstanceProc "vkCreateObjectTableNVX" where
-        type VkInstanceProcType "vkCreateObjectTableNVX" =
+instance VulkanProc "vkCreateObjectTableNVX" where
+        type VkProcType "vkCreateObjectTableNVX" =
              HS_vkCreateObjectTableNVX
-        vkInstanceProcSymbol = _VkCreateObjectTableNVX
+        vkProcSymbol = _VkCreateObjectTableNVX
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCreateObjectTableNVX
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCreateObjectTableNVX
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkDestroyObjectTableNVX :: CString
 
@@ -684,15 +682,15 @@ type PFN_vkDestroyObjectTableNVX =
 foreign import ccall "dynamic" unwrapVkDestroyObjectTableNVX ::
                PFN_vkDestroyObjectTableNVX -> HS_vkDestroyObjectTableNVX
 
-instance VulkanInstanceProc "vkDestroyObjectTableNVX" where
-        type VkInstanceProcType "vkDestroyObjectTableNVX" =
+instance VulkanProc "vkDestroyObjectTableNVX" where
+        type VkProcType "vkDestroyObjectTableNVX" =
              HS_vkDestroyObjectTableNVX
-        vkInstanceProcSymbol = _VkDestroyObjectTableNVX
+        vkProcSymbol = _VkDestroyObjectTableNVX
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkDestroyObjectTableNVX
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkDestroyObjectTableNVX
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkRegisterObjectsNVX :: CString
 
@@ -791,15 +789,14 @@ type PFN_vkRegisterObjectsNVX = FunPtr HS_vkRegisterObjectsNVX
 foreign import ccall "dynamic" unwrapVkRegisterObjectsNVX ::
                PFN_vkRegisterObjectsNVX -> HS_vkRegisterObjectsNVX
 
-instance VulkanInstanceProc "vkRegisterObjectsNVX" where
-        type VkInstanceProcType "vkRegisterObjectsNVX" =
-             HS_vkRegisterObjectsNVX
-        vkInstanceProcSymbol = _VkRegisterObjectsNVX
+instance VulkanProc "vkRegisterObjectsNVX" where
+        type VkProcType "vkRegisterObjectsNVX" = HS_vkRegisterObjectsNVX
+        vkProcSymbol = _VkRegisterObjectsNVX
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkRegisterObjectsNVX
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkRegisterObjectsNVX
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkUnregisterObjectsNVX :: CString
 
@@ -896,15 +893,15 @@ type PFN_vkUnregisterObjectsNVX = FunPtr HS_vkUnregisterObjectsNVX
 foreign import ccall "dynamic" unwrapVkUnregisterObjectsNVX ::
                PFN_vkUnregisterObjectsNVX -> HS_vkUnregisterObjectsNVX
 
-instance VulkanInstanceProc "vkUnregisterObjectsNVX" where
-        type VkInstanceProcType "vkUnregisterObjectsNVX" =
+instance VulkanProc "vkUnregisterObjectsNVX" where
+        type VkProcType "vkUnregisterObjectsNVX" =
              HS_vkUnregisterObjectsNVX
-        vkInstanceProcSymbol = _VkUnregisterObjectsNVX
+        vkProcSymbol = _VkUnregisterObjectsNVX
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkUnregisterObjectsNVX
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkUnregisterObjectsNVX
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX ::
         CString
@@ -988,20 +985,18 @@ foreign import ccall "dynamic"
                PFN_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX ->
                  HS_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
 
-instance VulkanInstanceProc
+instance VulkanProc
            "vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX"
          where
-        type VkInstanceProcType
-               "vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX"
+        type VkProcType "vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX"
              = HS_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
-        vkInstanceProcSymbol
-          = _VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
+        vkProcSymbol = _VkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr
           = unwrapVkGetPhysicalDeviceGeneratedCommandsPropertiesNVX
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_NVX_DEVICE_GENERATED_COMMANDS_SPEC_VERSION ::
         (Num a, Eq a) => a

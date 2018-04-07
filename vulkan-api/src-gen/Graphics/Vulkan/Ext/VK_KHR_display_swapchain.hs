@@ -62,7 +62,7 @@ module Graphics.Vulkan.Ext.VK_KHR_display_swapchain
        where
 import           GHC.Ptr                                               (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc                  (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc                          (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkColorSpaceKHR
 import           Graphics.Vulkan.Types.Enum.VkCompositeAlphaFlagsKHR
@@ -186,15 +186,15 @@ type PFN_vkCreateSharedSwapchainsKHR =
 foreign import ccall "dynamic" unwrapVkCreateSharedSwapchainsKHR ::
                PFN_vkCreateSharedSwapchainsKHR -> HS_vkCreateSharedSwapchainsKHR
 
-instance VulkanInstanceProc "vkCreateSharedSwapchainsKHR" where
-        type VkInstanceProcType "vkCreateSharedSwapchainsKHR" =
+instance VulkanProc "vkCreateSharedSwapchainsKHR" where
+        type VkProcType "vkCreateSharedSwapchainsKHR" =
              HS_vkCreateSharedSwapchainsKHR
-        vkInstanceProcSymbol = _VkCreateSharedSwapchainsKHR
+        vkProcSymbol = _VkCreateSharedSwapchainsKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCreateSharedSwapchainsKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCreateSharedSwapchainsKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_KHR_DISPLAY_SWAPCHAIN_SPEC_VERSION :: (Num a, Eq a) => a
 

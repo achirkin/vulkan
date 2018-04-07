@@ -51,7 +51,7 @@ module Graphics.Vulkan.Ext.VK_NN_vi_surface
        where
 import           GHC.Ptr                                              (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc                 (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc                         (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkInternalAllocationType
@@ -150,15 +150,14 @@ type PFN_vkCreateViSurfaceNN = FunPtr HS_vkCreateViSurfaceNN
 foreign import ccall "dynamic" unwrapVkCreateViSurfaceNN ::
                PFN_vkCreateViSurfaceNN -> HS_vkCreateViSurfaceNN
 
-instance VulkanInstanceProc "vkCreateViSurfaceNN" where
-        type VkInstanceProcType "vkCreateViSurfaceNN" =
-             HS_vkCreateViSurfaceNN
-        vkInstanceProcSymbol = _VkCreateViSurfaceNN
+instance VulkanProc "vkCreateViSurfaceNN" where
+        type VkProcType "vkCreateViSurfaceNN" = HS_vkCreateViSurfaceNN
+        vkProcSymbol = _VkCreateViSurfaceNN
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCreateViSurfaceNN
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCreateViSurfaceNN
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_NN_VI_SURFACE_SPEC_VERSION :: (Num a, Eq a) => a
 

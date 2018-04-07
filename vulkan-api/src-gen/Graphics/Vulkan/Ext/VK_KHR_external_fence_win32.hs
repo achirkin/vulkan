@@ -59,7 +59,7 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_win32
        where
 import           GHC.Ptr                                                      (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc                         (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc                                 (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkExternalFenceHandleTypeFlags
 import           Graphics.Vulkan.Types.Enum.VkFenceCreateFlags
@@ -146,15 +146,15 @@ type PFN_vkImportFenceWin32HandleKHR =
 foreign import ccall "dynamic" unwrapVkImportFenceWin32HandleKHR ::
                PFN_vkImportFenceWin32HandleKHR -> HS_vkImportFenceWin32HandleKHR
 
-instance VulkanInstanceProc "vkImportFenceWin32HandleKHR" where
-        type VkInstanceProcType "vkImportFenceWin32HandleKHR" =
+instance VulkanProc "vkImportFenceWin32HandleKHR" where
+        type VkProcType "vkImportFenceWin32HandleKHR" =
              HS_vkImportFenceWin32HandleKHR
-        vkInstanceProcSymbol = _VkImportFenceWin32HandleKHR
+        vkProcSymbol = _VkImportFenceWin32HandleKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkImportFenceWin32HandleKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkImportFenceWin32HandleKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetFenceWin32HandleKHR :: CString
 
@@ -237,15 +237,15 @@ type PFN_vkGetFenceWin32HandleKHR =
 foreign import ccall "dynamic" unwrapVkGetFenceWin32HandleKHR ::
                PFN_vkGetFenceWin32HandleKHR -> HS_vkGetFenceWin32HandleKHR
 
-instance VulkanInstanceProc "vkGetFenceWin32HandleKHR" where
-        type VkInstanceProcType "vkGetFenceWin32HandleKHR" =
+instance VulkanProc "vkGetFenceWin32HandleKHR" where
+        type VkProcType "vkGetFenceWin32HandleKHR" =
              HS_vkGetFenceWin32HandleKHR
-        vkInstanceProcSymbol = _VkGetFenceWin32HandleKHR
+        vkProcSymbol = _VkGetFenceWin32HandleKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetFenceWin32HandleKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetFenceWin32HandleKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_KHR_EXTERNAL_FENCE_WIN32_SPEC_VERSION ::
         (Num a, Eq a) => a

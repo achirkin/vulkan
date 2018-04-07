@@ -52,7 +52,7 @@ module Graphics.Vulkan.Ext.VK_NV_external_memory_capabilities
        where
 import           GHC.Ptr                                                        (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc                           (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc                                   (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkExternalMemoryFeatureFlagsNV
 import           Graphics.Vulkan.Types.Enum.VkExternalMemoryHandleTypeFlagsNV
@@ -208,20 +208,19 @@ foreign import ccall "dynamic"
                PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV ->
                  HS_vkGetPhysicalDeviceExternalImageFormatPropertiesNV
 
-instance VulkanInstanceProc
+instance VulkanProc
            "vkGetPhysicalDeviceExternalImageFormatPropertiesNV"
          where
-        type VkInstanceProcType
+        type VkProcType
                "vkGetPhysicalDeviceExternalImageFormatPropertiesNV"
              = HS_vkGetPhysicalDeviceExternalImageFormatPropertiesNV
-        vkInstanceProcSymbol
-          = _VkGetPhysicalDeviceExternalImageFormatPropertiesNV
+        vkProcSymbol = _VkGetPhysicalDeviceExternalImageFormatPropertiesNV
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr
           = unwrapVkGetPhysicalDeviceExternalImageFormatPropertiesNV
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_NV_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION ::
         (Num a, Eq a) => a

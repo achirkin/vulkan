@@ -47,8 +47,8 @@ module Graphics.Vulkan.Ext.VK_NV_clip_space_w_scaling
 import           GHC.Ptr
                                                                                            (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc
-                                                                                           (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc
+                                                                                           (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkDynamicState
@@ -150,15 +150,15 @@ type PFN_vkCmdSetViewportWScalingNV =
 foreign import ccall "dynamic" unwrapVkCmdSetViewportWScalingNV ::
                PFN_vkCmdSetViewportWScalingNV -> HS_vkCmdSetViewportWScalingNV
 
-instance VulkanInstanceProc "vkCmdSetViewportWScalingNV" where
-        type VkInstanceProcType "vkCmdSetViewportWScalingNV" =
+instance VulkanProc "vkCmdSetViewportWScalingNV" where
+        type VkProcType "vkCmdSetViewportWScalingNV" =
              HS_vkCmdSetViewportWScalingNV
-        vkInstanceProcSymbol = _VkCmdSetViewportWScalingNV
+        vkProcSymbol = _VkCmdSetViewportWScalingNV
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkCmdSetViewportWScalingNV
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkCmdSetViewportWScalingNV
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_NV_CLIP_SPACE_W_SCALING_SPEC_VERSION :: (Num a, Eq a) =>
         a

@@ -86,8 +86,8 @@ import           Graphics.Vulkan.Core_1_1
                                                                                           pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO,
                                                                                           pattern VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ID_PROPERTIES)
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc
-                                                                                          (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc
+                                                                                          (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Bitmasks
 import           Graphics.Vulkan.Types.Enum.VkBufferCreateFlags
@@ -195,20 +195,18 @@ foreign import ccall "dynamic"
                PFN_vkGetPhysicalDeviceExternalBufferPropertiesKHR ->
                  HS_vkGetPhysicalDeviceExternalBufferPropertiesKHR
 
-instance VulkanInstanceProc
+instance VulkanProc
            "vkGetPhysicalDeviceExternalBufferPropertiesKHR"
          where
-        type VkInstanceProcType
-               "vkGetPhysicalDeviceExternalBufferPropertiesKHR"
-             = HS_vkGetPhysicalDeviceExternalBufferPropertiesKHR
-        vkInstanceProcSymbol
-          = _VkGetPhysicalDeviceExternalBufferPropertiesKHR
+        type VkProcType "vkGetPhysicalDeviceExternalBufferPropertiesKHR" =
+             HS_vkGetPhysicalDeviceExternalBufferPropertiesKHR
+        vkProcSymbol = _VkGetPhysicalDeviceExternalBufferPropertiesKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr
           = unwrapVkGetPhysicalDeviceExternalBufferPropertiesKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_KHR_EXTERNAL_MEMORY_CAPABILITIES_SPEC_VERSION ::
         (Num a, Eq a) => a

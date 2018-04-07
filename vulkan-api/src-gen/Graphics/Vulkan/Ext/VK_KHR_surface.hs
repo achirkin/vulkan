@@ -80,7 +80,7 @@ module Graphics.Vulkan.Ext.VK_KHR_surface
        where
 import           GHC.Ptr                                               (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc                  (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc                          (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkColorSpaceKHR
 import           Graphics.Vulkan.Types.Enum.VkCompositeAlphaFlagsKHR
@@ -162,15 +162,14 @@ type PFN_vkDestroySurfaceKHR = FunPtr HS_vkDestroySurfaceKHR
 foreign import ccall "dynamic" unwrapVkDestroySurfaceKHR ::
                PFN_vkDestroySurfaceKHR -> HS_vkDestroySurfaceKHR
 
-instance VulkanInstanceProc "vkDestroySurfaceKHR" where
-        type VkInstanceProcType "vkDestroySurfaceKHR" =
-             HS_vkDestroySurfaceKHR
-        vkInstanceProcSymbol = _VkDestroySurfaceKHR
+instance VulkanProc "vkDestroySurfaceKHR" where
+        type VkProcType "vkDestroySurfaceKHR" = HS_vkDestroySurfaceKHR
+        vkProcSymbol = _VkDestroySurfaceKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkDestroySurfaceKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkDestroySurfaceKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetPhysicalDeviceSurfaceSupportKHR :: CString
 
@@ -264,16 +263,15 @@ foreign import ccall "dynamic"
                PFN_vkGetPhysicalDeviceSurfaceSupportKHR ->
                  HS_vkGetPhysicalDeviceSurfaceSupportKHR
 
-instance VulkanInstanceProc "vkGetPhysicalDeviceSurfaceSupportKHR"
-         where
-        type VkInstanceProcType "vkGetPhysicalDeviceSurfaceSupportKHR" =
+instance VulkanProc "vkGetPhysicalDeviceSurfaceSupportKHR" where
+        type VkProcType "vkGetPhysicalDeviceSurfaceSupportKHR" =
              HS_vkGetPhysicalDeviceSurfaceSupportKHR
-        vkInstanceProcSymbol = _VkGetPhysicalDeviceSurfaceSupportKHR
+        vkProcSymbol = _VkGetPhysicalDeviceSurfaceSupportKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetPhysicalDeviceSurfaceSupportKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetPhysicalDeviceSurfaceSupportKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetPhysicalDeviceSurfaceCapabilitiesKHR :: CString
 
@@ -363,18 +361,16 @@ foreign import ccall "dynamic"
                PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR ->
                  HS_vkGetPhysicalDeviceSurfaceCapabilitiesKHR
 
-instance VulkanInstanceProc
-           "vkGetPhysicalDeviceSurfaceCapabilitiesKHR"
+instance VulkanProc "vkGetPhysicalDeviceSurfaceCapabilitiesKHR"
          where
-        type VkInstanceProcType "vkGetPhysicalDeviceSurfaceCapabilitiesKHR"
-             = HS_vkGetPhysicalDeviceSurfaceCapabilitiesKHR
-        vkInstanceProcSymbol = _VkGetPhysicalDeviceSurfaceCapabilitiesKHR
+        type VkProcType "vkGetPhysicalDeviceSurfaceCapabilitiesKHR" =
+             HS_vkGetPhysicalDeviceSurfaceCapabilitiesKHR
+        vkProcSymbol = _VkGetPhysicalDeviceSurfaceCapabilitiesKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc
-          = unwrapVkGetPhysicalDeviceSurfaceCapabilitiesKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetPhysicalDeviceSurfaceCapabilitiesKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetPhysicalDeviceSurfaceFormatsKHR :: CString
 
@@ -468,16 +464,15 @@ foreign import ccall "dynamic"
                PFN_vkGetPhysicalDeviceSurfaceFormatsKHR ->
                  HS_vkGetPhysicalDeviceSurfaceFormatsKHR
 
-instance VulkanInstanceProc "vkGetPhysicalDeviceSurfaceFormatsKHR"
-         where
-        type VkInstanceProcType "vkGetPhysicalDeviceSurfaceFormatsKHR" =
+instance VulkanProc "vkGetPhysicalDeviceSurfaceFormatsKHR" where
+        type VkProcType "vkGetPhysicalDeviceSurfaceFormatsKHR" =
              HS_vkGetPhysicalDeviceSurfaceFormatsKHR
-        vkInstanceProcSymbol = _VkGetPhysicalDeviceSurfaceFormatsKHR
+        vkProcSymbol = _VkGetPhysicalDeviceSurfaceFormatsKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetPhysicalDeviceSurfaceFormatsKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetPhysicalDeviceSurfaceFormatsKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VkGetPhysicalDeviceSurfacePresentModesKHR :: CString
 
@@ -573,18 +568,16 @@ foreign import ccall "dynamic"
                PFN_vkGetPhysicalDeviceSurfacePresentModesKHR ->
                  HS_vkGetPhysicalDeviceSurfacePresentModesKHR
 
-instance VulkanInstanceProc
-           "vkGetPhysicalDeviceSurfacePresentModesKHR"
+instance VulkanProc "vkGetPhysicalDeviceSurfacePresentModesKHR"
          where
-        type VkInstanceProcType "vkGetPhysicalDeviceSurfacePresentModesKHR"
-             = HS_vkGetPhysicalDeviceSurfacePresentModesKHR
-        vkInstanceProcSymbol = _VkGetPhysicalDeviceSurfacePresentModesKHR
+        type VkProcType "vkGetPhysicalDeviceSurfacePresentModesKHR" =
+             HS_vkGetPhysicalDeviceSurfacePresentModesKHR
+        vkProcSymbol = _VkGetPhysicalDeviceSurfacePresentModesKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc
-          = unwrapVkGetPhysicalDeviceSurfacePresentModesKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetPhysicalDeviceSurfacePresentModesKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_KHR_SURFACE_SPEC_VERSION :: (Num a, Eq a) => a
 

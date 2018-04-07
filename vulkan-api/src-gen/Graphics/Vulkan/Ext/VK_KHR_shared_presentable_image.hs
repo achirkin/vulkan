@@ -54,8 +54,8 @@ module Graphics.Vulkan.Ext.VK_KHR_shared_presentable_image
 import           GHC.Ptr
                                                                                      (Ptr (..))
 import           Graphics.Vulkan.Marshal
-import           Graphics.Vulkan.Marshal.InstanceProc
-                                                                                     (VulkanInstanceProc (..))
+import           Graphics.Vulkan.Marshal.Proc
+                                                                                     (VulkanProc (..))
 import           Graphics.Vulkan.Types.BaseTypes
 import           Graphics.Vulkan.Types.Enum.VkCompositeAlphaFlagsKHR
 import           Graphics.Vulkan.Types.Enum.VkImageLayout
@@ -144,15 +144,15 @@ type PFN_vkGetSwapchainStatusKHR =
 foreign import ccall "dynamic" unwrapVkGetSwapchainStatusKHR ::
                PFN_vkGetSwapchainStatusKHR -> HS_vkGetSwapchainStatusKHR
 
-instance VulkanInstanceProc "vkGetSwapchainStatusKHR" where
-        type VkInstanceProcType "vkGetSwapchainStatusKHR" =
+instance VulkanProc "vkGetSwapchainStatusKHR" where
+        type VkProcType "vkGetSwapchainStatusKHR" =
              HS_vkGetSwapchainStatusKHR
-        vkInstanceProcSymbol = _VkGetSwapchainStatusKHR
+        vkProcSymbol = _VkGetSwapchainStatusKHR
 
-        {-# INLINE vkInstanceProcSymbol #-}
-        unwrapVkInstanceProc = unwrapVkGetSwapchainStatusKHR
+        {-# INLINE vkProcSymbol #-}
+        unwrapVkProcPtr = unwrapVkGetSwapchainStatusKHR
 
-        {-# INLINE unwrapVkInstanceProc #-}
+        {-# INLINE unwrapVkProcPtr #-}
 
 pattern VK_KHR_SHARED_PRESENTABLE_IMAGE_SPEC_VERSION ::
         (Num a, Eq a) => a

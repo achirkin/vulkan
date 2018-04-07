@@ -98,18 +98,18 @@ genCommand command@VkCommand
       |]
 
     -- symbol discovery instance
-    writeImport $ DIThing "VulkanInstanceProc" DITAll
+    writeImport $ DIThing "VulkanProc" DITAll
     writePragma "TypeFamilies"
     writePragma "FlexibleInstances"
     writeOptionsPragma (Just GHC) "-fno-warn-orphans"
     writeDecl $ parseDecl'
       [text|
-        instance VulkanInstanceProc "$cnameOrigTxt" where
-          type VkInstanceProcType "$cnameOrigTxt" = $funTypeNameTxtHS
-          vkInstanceProcSymbol = $vkInstanceProcSymbol
-          {-# INLINE vkInstanceProcSymbol #-}
-          unwrapVkInstanceProc = $unwrapFun
-          {-# INLINE unwrapVkInstanceProc #-}
+        instance VulkanProc "$cnameOrigTxt" where
+          type VkProcType "$cnameOrigTxt" = $funTypeNameTxtHS
+          vkProcSymbol = $vkInstanceProcSymbol
+          {-# INLINE vkProcSymbol #-}
+          unwrapVkProcPtr = $unwrapFun
+          {-# INLINE unwrapVkProcPtr #-}
       |]
 
     writeAllExports
