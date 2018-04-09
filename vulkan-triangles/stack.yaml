@@ -9,8 +9,8 @@ packages:
   - location: ../vulkan-api
     extra-dep: true
   - location:
-      git: https://github.com/achirkin/GLFW-b
-      commit: 1c34109deeb5ed465df783830c2ecf54a8daa873
+      git: https://github.com/bsl/GLFW-b
+      commit: 071aae2bb5f998ab9414700dbeb6b50551228763
     extra-dep: true
   - location:
       git: https://github.com/bsl/bindings-GLFW
