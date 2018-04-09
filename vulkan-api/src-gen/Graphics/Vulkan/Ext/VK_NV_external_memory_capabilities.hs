@@ -35,8 +35,6 @@ module Graphics.Vulkan.Ext.VK_NV_external_memory_capabilities
         HS_vkGetPhysicalDeviceExternalImageFormatPropertiesNV,
         PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV,
         unwrapVkGetPhysicalDeviceExternalImageFormatPropertiesNV,
-        vkGetPhysicalDeviceExternalImageFormatPropertiesNV,
-        vkGetPhysicalDeviceExternalImageFormatPropertiesNVSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkFormat,
         module Graphics.Vulkan.Types.Enum.VkImageCreateFlags,
@@ -109,79 +107,7 @@ type VkGetPhysicalDeviceExternalImageFormatPropertiesNV =
 --   >     , VkExternalImageFormatPropertiesNV* pExternalImageFormatProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalImageFormatPropertiesNV.html vkGetPhysicalDeviceExternalImageFormatPropertiesNV registry at www.khronos.org>
-foreign import ccall unsafe
-               "vkGetPhysicalDeviceExternalImageFormatPropertiesNV"
-               vkGetPhysicalDeviceExternalImageFormatPropertiesNV ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                ->
-                 VkFormat -- ^ format
-                          ->
-                   VkImageType -- ^ type
-                               ->
-                     VkImageTiling -- ^ tiling
-                                   ->
-                       VkImageUsageFlags -- ^ usage
-                                         ->
-                         VkImageCreateFlags -- ^ flags
-                                            ->
-                           VkExternalMemoryHandleTypeFlagsNV -- ^ externalHandleType
-                                                             ->
-                             Ptr VkExternalImageFormatPropertiesNV -- ^ pExternalImageFormatProperties
-                                                                   -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_FORMAT_NOT_SUPPORTED'.
---
---   > VkResult vkGetPhysicalDeviceExternalImageFormatPropertiesNV
---   >     ( VkPhysicalDevice physicalDevice
---   >     , VkFormat format
---   >     , VkImageType type
---   >     , VkImageTiling tiling
---   >     , VkImageUsageFlags usage
---   >     , VkImageCreateFlags flags
---   >     , VkExternalMemoryHandleTypeFlagsNV externalHandleType
---   >     , VkExternalImageFormatPropertiesNV* pExternalImageFormatProperties
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalImageFormatPropertiesNV.html vkGetPhysicalDeviceExternalImageFormatPropertiesNV registry at www.khronos.org>
-foreign import ccall safe
-               "vkGetPhysicalDeviceExternalImageFormatPropertiesNV"
-               vkGetPhysicalDeviceExternalImageFormatPropertiesNVSafe ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                ->
-                 VkFormat -- ^ format
-                          ->
-                   VkImageType -- ^ type
-                               ->
-                     VkImageTiling -- ^ tiling
-                                   ->
-                       VkImageUsageFlags -- ^ usage
-                                         ->
-                         VkImageCreateFlags -- ^ flags
-                                            ->
-                           VkExternalMemoryHandleTypeFlagsNV -- ^ externalHandleType
-                                                             ->
-                             Ptr VkExternalImageFormatPropertiesNV -- ^ pExternalImageFormatProperties
-                                                                   -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_FORMAT_NOT_SUPPORTED'.
---
---   > VkResult vkGetPhysicalDeviceExternalImageFormatPropertiesNV
---   >     ( VkPhysicalDevice physicalDevice
---   >     , VkFormat format
---   >     , VkImageType type
---   >     , VkImageTiling tiling
---   >     , VkImageUsageFlags usage
---   >     , VkImageCreateFlags flags
---   >     , VkExternalMemoryHandleTypeFlagsNV externalHandleType
---   >     , VkExternalImageFormatPropertiesNV* pExternalImageFormatProperties
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalImageFormatPropertiesNV.html vkGetPhysicalDeviceExternalImageFormatPropertiesNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalImageFormatPropertiesNVvkGetPhysicalDeviceExternalImageFormatPropertiesNV registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceExternalImageFormatPropertiesNV =
      VkPhysicalDevice -- ^ physicalDevice
                       ->

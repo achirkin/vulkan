@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkPipelineCacheCreateInfo
        (VkPipelineCacheCreateInfo(..)) where
 import           Foreign.Storable                           (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                   (Addr##, ByteArray##,
+                                                             byteArrayContents##,
+                                                             plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Bitmasks             (VkPipelineCacheCreateFlags)
@@ -25,7 +27,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     const void*            pInitialData;
 --   > } VkPipelineCacheCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPipelineCacheCreateInfo.html VkPipelineCacheCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPipelineCacheCreateInfoVkPipelineCacheCreateInfo registry at www.khronos.org>
 data VkPipelineCacheCreateInfo = VkPipelineCacheCreateInfo## Addr##
                                                             ByteArray##
 

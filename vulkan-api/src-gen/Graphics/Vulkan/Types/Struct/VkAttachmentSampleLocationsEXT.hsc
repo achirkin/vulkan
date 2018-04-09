@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkAttachmentSampleLocationsEXT
        (VkAttachmentSampleLocationsEXT(..)) where
 import           Foreign.Storable                                      (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                              (Addr##, ByteArray##,
+                                                                        byteArrayContents##,
+                                                                        plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Struct.VkSampleLocationsInfoEXT (VkSampleLocationsInfoEXT)
@@ -21,7 +23,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkSampleLocationsInfoEXT         sampleLocationsInfo;
 --   > } VkAttachmentSampleLocationsEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkAttachmentSampleLocationsEXT.html VkAttachmentSampleLocationsEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkAttachmentSampleLocationsEXTVkAttachmentSampleLocationsEXT registry at www.khronos.org>
 data VkAttachmentSampleLocationsEXT = VkAttachmentSampleLocationsEXT## Addr##
                                                                       ByteArray##
 

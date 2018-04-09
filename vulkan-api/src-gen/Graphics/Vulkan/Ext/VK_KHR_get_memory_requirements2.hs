@@ -32,22 +32,16 @@ module Graphics.Vulkan.Ext.VK_KHR_get_memory_requirements2
         HS_vkGetImageMemoryRequirements2KHR,
         PFN_vkGetImageMemoryRequirements2KHR,
         unwrapVkGetImageMemoryRequirements2KHR,
-        vkGetImageMemoryRequirements2KHR,
-        vkGetImageMemoryRequirements2KHRSafe,
         VkGetBufferMemoryRequirements2KHR,
         pattern VkGetBufferMemoryRequirements2KHR,
         HS_vkGetBufferMemoryRequirements2KHR,
         PFN_vkGetBufferMemoryRequirements2KHR,
         unwrapVkGetBufferMemoryRequirements2KHR,
-        vkGetBufferMemoryRequirements2KHR,
-        vkGetBufferMemoryRequirements2KHRSafe,
         VkGetImageSparseMemoryRequirements2KHR,
         pattern VkGetImageSparseMemoryRequirements2KHR,
         HS_vkGetImageSparseMemoryRequirements2KHR,
         PFN_vkGetImageSparseMemoryRequirements2KHR,
         unwrapVkGetImageSparseMemoryRequirements2KHR,
-        vkGetImageSparseMemoryRequirements2KHR,
-        vkGetImageSparseMemoryRequirements2KHRSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.VkImageAspectFlags,
@@ -134,43 +128,7 @@ type VkGetImageMemoryRequirements2KHR =
 --   >     , VkMemoryRequirements2* pMemoryRequirements
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetImageMemoryRequirements2KHR.html vkGetImageMemoryRequirements2KHR registry at www.khronos.org>
-foreign import ccall unsafe "vkGetImageMemoryRequirements2KHR"
-               vkGetImageMemoryRequirements2KHR ::
-               VkDevice -- ^ device
-                        ->
-                 Ptr VkImageMemoryRequirementsInfo2 -- ^ pInfo
-                                                    ->
-                   Ptr VkMemoryRequirements2 -- ^ pMemoryRequirements
-                                             -> IO ()
-
--- | This is an alias for `vkGetImageMemoryRequirements2`.
---
---   > () vkGetImageMemoryRequirements2KHR
---   >     ( VkDevice device
---   >     , const VkImageMemoryRequirementsInfo2* pInfo
---   >     , VkMemoryRequirements2* pMemoryRequirements
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetImageMemoryRequirements2KHR.html vkGetImageMemoryRequirements2KHR registry at www.khronos.org>
-foreign import ccall safe "vkGetImageMemoryRequirements2KHR"
-               vkGetImageMemoryRequirements2KHRSafe ::
-               VkDevice -- ^ device
-                        ->
-                 Ptr VkImageMemoryRequirementsInfo2 -- ^ pInfo
-                                                    ->
-                   Ptr VkMemoryRequirements2 -- ^ pMemoryRequirements
-                                             -> IO ()
-
--- | This is an alias for `vkGetImageMemoryRequirements2`.
---
---   > () vkGetImageMemoryRequirements2KHR
---   >     ( VkDevice device
---   >     , const VkImageMemoryRequirementsInfo2* pInfo
---   >     , VkMemoryRequirements2* pMemoryRequirements
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetImageMemoryRequirements2KHR.html vkGetImageMemoryRequirements2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageMemoryRequirements2KHRvkGetImageMemoryRequirements2KHR registry at www.khronos.org>
 type HS_vkGetImageMemoryRequirements2KHR =
      VkDevice -- ^ device
               ->
@@ -227,43 +185,7 @@ type VkGetBufferMemoryRequirements2KHR =
 --   >     , VkMemoryRequirements2* pMemoryRequirements
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetBufferMemoryRequirements2KHR.html vkGetBufferMemoryRequirements2KHR registry at www.khronos.org>
-foreign import ccall unsafe "vkGetBufferMemoryRequirements2KHR"
-               vkGetBufferMemoryRequirements2KHR ::
-               VkDevice -- ^ device
-                        ->
-                 Ptr VkBufferMemoryRequirementsInfo2 -- ^ pInfo
-                                                     ->
-                   Ptr VkMemoryRequirements2 -- ^ pMemoryRequirements
-                                             -> IO ()
-
--- | This is an alias for `vkGetBufferMemoryRequirements2`.
---
---   > () vkGetBufferMemoryRequirements2KHR
---   >     ( VkDevice device
---   >     , const VkBufferMemoryRequirementsInfo2* pInfo
---   >     , VkMemoryRequirements2* pMemoryRequirements
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetBufferMemoryRequirements2KHR.html vkGetBufferMemoryRequirements2KHR registry at www.khronos.org>
-foreign import ccall safe "vkGetBufferMemoryRequirements2KHR"
-               vkGetBufferMemoryRequirements2KHRSafe ::
-               VkDevice -- ^ device
-                        ->
-                 Ptr VkBufferMemoryRequirementsInfo2 -- ^ pInfo
-                                                     ->
-                   Ptr VkMemoryRequirements2 -- ^ pMemoryRequirements
-                                             -> IO ()
-
--- | This is an alias for `vkGetBufferMemoryRequirements2`.
---
---   > () vkGetBufferMemoryRequirements2KHR
---   >     ( VkDevice device
---   >     , const VkBufferMemoryRequirementsInfo2* pInfo
---   >     , VkMemoryRequirements2* pMemoryRequirements
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetBufferMemoryRequirements2KHR.html vkGetBufferMemoryRequirements2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetBufferMemoryRequirements2KHRvkGetBufferMemoryRequirements2KHR registry at www.khronos.org>
 type HS_vkGetBufferMemoryRequirements2KHR =
      VkDevice -- ^ device
               ->
@@ -321,48 +243,7 @@ type VkGetImageSparseMemoryRequirements2KHR =
 --   >     , VkSparseImageMemoryRequirements2* pSparseMemoryRequirements
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetImageSparseMemoryRequirements2KHR.html vkGetImageSparseMemoryRequirements2KHR registry at www.khronos.org>
-foreign import ccall unsafe
-               "vkGetImageSparseMemoryRequirements2KHR"
-               vkGetImageSparseMemoryRequirements2KHR ::
-               VkDevice -- ^ device
-                        ->
-                 Ptr VkImageSparseMemoryRequirementsInfo2 -- ^ pInfo
-                                                          ->
-                   Ptr Word32 -- ^ pSparseMemoryRequirementCount
-                              -> Ptr VkSparseImageMemoryRequirements2 -- ^ pSparseMemoryRequirements
-                                                                      -> IO ()
-
--- | This is an alias for `vkGetImageSparseMemoryRequirements2`.
---
---   > () vkGetImageSparseMemoryRequirements2KHR
---   >     ( VkDevice device
---   >     , const VkImageSparseMemoryRequirementsInfo2* pInfo
---   >     , uint32_t* pSparseMemoryRequirementCount
---   >     , VkSparseImageMemoryRequirements2* pSparseMemoryRequirements
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetImageSparseMemoryRequirements2KHR.html vkGetImageSparseMemoryRequirements2KHR registry at www.khronos.org>
-foreign import ccall safe "vkGetImageSparseMemoryRequirements2KHR"
-               vkGetImageSparseMemoryRequirements2KHRSafe ::
-               VkDevice -- ^ device
-                        ->
-                 Ptr VkImageSparseMemoryRequirementsInfo2 -- ^ pInfo
-                                                          ->
-                   Ptr Word32 -- ^ pSparseMemoryRequirementCount
-                              -> Ptr VkSparseImageMemoryRequirements2 -- ^ pSparseMemoryRequirements
-                                                                      -> IO ()
-
--- | This is an alias for `vkGetImageSparseMemoryRequirements2`.
---
---   > () vkGetImageSparseMemoryRequirements2KHR
---   >     ( VkDevice device
---   >     , const VkImageSparseMemoryRequirementsInfo2* pInfo
---   >     , uint32_t* pSparseMemoryRequirementCount
---   >     , VkSparseImageMemoryRequirements2* pSparseMemoryRequirements
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetImageSparseMemoryRequirements2KHR.html vkGetImageSparseMemoryRequirements2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetImageSparseMemoryRequirements2KHRvkGetImageSparseMemoryRequirements2KHR registry at www.khronos.org>
 type HS_vkGetImageSparseMemoryRequirements2KHR =
      VkDevice -- ^ device
               ->

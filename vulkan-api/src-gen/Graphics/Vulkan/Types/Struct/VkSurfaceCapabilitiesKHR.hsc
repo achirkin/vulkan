@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkSurfaceCapabilitiesKHR
        (VkSurfaceCapabilitiesKHR(..)) where
 import           Foreign.Storable                                      (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                              (Addr##, ByteArray##,
+                                                                        byteArrayContents##,
+                                                                        plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkCompositeAlphaFlagsKHR   (VkCompositeAlphaFlagsKHR)
@@ -33,7 +35,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkImageUsageFlags                supportedUsageFlags;
 --   > } VkSurfaceCapabilitiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSurfaceCapabilitiesKHR.html VkSurfaceCapabilitiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSurfaceCapabilitiesKHRVkSurfaceCapabilitiesKHR registry at www.khronos.org>
 data VkSurfaceCapabilitiesKHR = VkSurfaceCapabilitiesKHR## Addr##
                                                           ByteArray##
 

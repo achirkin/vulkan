@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkDispatchIndirectCommand
        (VkDispatchIndirectCommand(..)) where
 import           Foreign.Storable                 (Storable (..))
-import           GHC.Prim
+import           GHC.Base                         (Addr##, ByteArray##,
+                                                   byteArrayContents##,
+                                                   plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
@@ -21,7 +23,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     uint32_t               z;
 --   > } VkDispatchIndirectCommand;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDispatchIndirectCommand.html VkDispatchIndirectCommand registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDispatchIndirectCommandVkDispatchIndirectCommand registry at www.khronos.org>
 data VkDispatchIndirectCommand = VkDispatchIndirectCommand## Addr##
                                                             ByteArray##
 

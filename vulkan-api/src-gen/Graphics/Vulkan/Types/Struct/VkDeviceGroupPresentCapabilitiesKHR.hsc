@@ -14,7 +14,12 @@
 module Graphics.Vulkan.Types.Struct.VkDeviceGroupPresentCapabilitiesKHR
        (VkDeviceGroupPresentCapabilitiesKHR(..)) where
 import           Foreign.Storable                                            (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                                    (Addr##,
+                                                                              ByteArray##,
+                                                                              Proxy##,
+                                                                              byteArrayContents##,
+                                                                              plusAddr##,
+                                                                              proxy##)
 import           GHC.TypeLits                                                (KnownNat,
                                                                               natVal') -- ' closing tick for hsc2hs
 import           Graphics.Vulkan.Constants                                   (VK_MAX_DEVICE_GROUP_SIZE,
@@ -32,7 +37,7 @@ import           System.IO.Unsafe                                            (un
 --   >     VkDeviceGroupPresentModeFlagsKHR modes;
 --   > } VkDeviceGroupPresentCapabilitiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDeviceGroupPresentCapabilitiesKHR.html VkDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDeviceGroupPresentCapabilitiesKHRVkDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
 data VkDeviceGroupPresentCapabilitiesKHR = VkDeviceGroupPresentCapabilitiesKHR## Addr##
                                                                                 ByteArray##
 

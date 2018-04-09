@@ -11,7 +11,11 @@ module Graphics.Vulkan.Types.Struct.VkGraphicsPipelineCreateInfo
        (VkGraphicsPipelineCreateInfo(..)) where
 import           Foreign.Storable
                                                                                       (Storable (..))
-import           GHC.Prim
+import           GHC.Base
+                                                                                      (Addr##,
+                                                                                      ByteArray##,
+                                                                                      byteArrayContents##,
+                                                                                      plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkPipelineCreateFlags
@@ -67,7 +71,7 @@ import           System.IO.Unsafe
 --   >     int32_t                basePipelineIndex;
 --   > } VkGraphicsPipelineCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkGraphicsPipelineCreateInfo.html VkGraphicsPipelineCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkGraphicsPipelineCreateInfoVkGraphicsPipelineCreateInfo registry at www.khronos.org>
 data VkGraphicsPipelineCreateInfo = VkGraphicsPipelineCreateInfo## Addr##
                                                                   ByteArray##
 

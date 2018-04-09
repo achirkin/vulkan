@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkImportSemaphoreWin32HandleInfoKHR
        (VkImportSemaphoreWin32HandleInfoKHR(..)) where
 import           Foreign.Storable                                              (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                                      (Addr##,
+                                                                                ByteArray##,
+                                                                                byteArrayContents##,
+                                                                                plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkExternalSemaphoreHandleTypeFlags (VkExternalSemaphoreHandleTypeFlagBits)
@@ -31,7 +34,7 @@ import           System.IO.Unsafe                                              (
 --   >     LPCWSTR          name;
 --   > } VkImportSemaphoreWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkImportSemaphoreWin32HandleInfoKHR.html VkImportSemaphoreWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImportSemaphoreWin32HandleInfoKHRVkImportSemaphoreWin32HandleInfoKHR registry at www.khronos.org>
 data VkImportSemaphoreWin32HandleInfoKHR = VkImportSemaphoreWin32HandleInfoKHR## Addr##
                                                                                 ByteArray##
 

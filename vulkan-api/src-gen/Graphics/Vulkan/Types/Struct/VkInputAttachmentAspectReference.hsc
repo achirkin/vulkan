@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkInputAttachmentAspectReference
        (VkInputAttachmentAspectReference(..)) where
 import           Foreign.Storable                              (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                      (Addr##,
+                                                                ByteArray##,
+                                                                byteArrayContents##,
+                                                                plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkImageAspectFlags (VkImageAspectFlags)
@@ -22,7 +25,7 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 --   >     VkImageAspectFlags              aspectMask;
 --   > } VkInputAttachmentAspectReference;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkInputAttachmentAspectReference.html VkInputAttachmentAspectReference registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkInputAttachmentAspectReferenceVkInputAttachmentAspectReference registry at www.khronos.org>
 data VkInputAttachmentAspectReference = VkInputAttachmentAspectReference## Addr##
                                                                           ByteArray##
 

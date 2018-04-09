@@ -36,10 +36,8 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_fd
         -- > #include "vk_platform.h"
         VkImportFenceFdKHR, pattern VkImportFenceFdKHR,
         HS_vkImportFenceFdKHR, PFN_vkImportFenceFdKHR,
-        unwrapVkImportFenceFdKHR, vkImportFenceFdKHR,
-        vkImportFenceFdKHRSafe, VkGetFenceFdKHR, pattern VkGetFenceFdKHR,
+        unwrapVkImportFenceFdKHR, VkGetFenceFdKHR, pattern VkGetFenceFdKHR,
         HS_vkGetFenceFdKHR, PFN_vkGetFenceFdKHR, unwrapVkGetFenceFdKHR,
-        vkGetFenceFdKHR, vkGetFenceFdKHRSafe,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_KHR_EXTERNAL_FENCE_FD_SPEC_VERSION,
@@ -87,38 +85,7 @@ type VkImportFenceFdKHR = "vkImportFenceFdKHR"
 --   >     , const VkImportFenceFdInfoKHR* pImportFenceFdInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkImportFenceFdKHR.html vkImportFenceFdKHR registry at www.khronos.org>
-foreign import ccall unsafe "vkImportFenceFdKHR" vkImportFenceFdKHR
-               :: VkDevice -- ^ device
-                           -> Ptr VkImportFenceFdInfoKHR -- ^ pImportFenceFdInfo
-                                                         -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
---
---   > VkResult vkImportFenceFdKHR
---   >     ( VkDevice device
---   >     , const VkImportFenceFdInfoKHR* pImportFenceFdInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkImportFenceFdKHR.html vkImportFenceFdKHR registry at www.khronos.org>
-foreign import ccall safe "vkImportFenceFdKHR"
-               vkImportFenceFdKHRSafe ::
-               VkDevice -- ^ device
-                        -> Ptr VkImportFenceFdInfoKHR -- ^ pImportFenceFdInfo
-                                                      -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
---
---   > VkResult vkImportFenceFdKHR
---   >     ( VkDevice device
---   >     , const VkImportFenceFdInfoKHR* pImportFenceFdInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkImportFenceFdKHR.html vkImportFenceFdKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkImportFenceFdKHRvkImportFenceFdKHR registry at www.khronos.org>
 type HS_vkImportFenceFdKHR =
      VkDevice -- ^ device
               -> Ptr VkImportFenceFdInfoKHR -- ^ pImportFenceFdInfo
@@ -165,41 +132,7 @@ type VkGetFenceFdKHR = "vkGetFenceFdKHR"
 --   >     , int* pFd
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetFenceFdKHR.html vkGetFenceFdKHR registry at www.khronos.org>
-foreign import ccall unsafe "vkGetFenceFdKHR" vkGetFenceFdKHR ::
-               VkDevice -- ^ device
-                        -> Ptr VkFenceGetFdInfoKHR -- ^ pGetFdInfo
-                                                   -> Ptr CInt -- ^ pFd
-                                                               -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
---
---   > VkResult vkGetFenceFdKHR
---   >     ( VkDevice device
---   >     , const VkFenceGetFdInfoKHR* pGetFdInfo
---   >     , int* pFd
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetFenceFdKHR.html vkGetFenceFdKHR registry at www.khronos.org>
-foreign import ccall safe "vkGetFenceFdKHR" vkGetFenceFdKHRSafe ::
-               VkDevice -- ^ device
-                        -> Ptr VkFenceGetFdInfoKHR -- ^ pGetFdInfo
-                                                   -> Ptr CInt -- ^ pFd
-                                                               -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
---
---   > VkResult vkGetFenceFdKHR
---   >     ( VkDevice device
---   >     , const VkFenceGetFdInfoKHR* pGetFdInfo
---   >     , int* pFd
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetFenceFdKHR.html vkGetFenceFdKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetFenceFdKHRvkGetFenceFdKHR registry at www.khronos.org>
 type HS_vkGetFenceFdKHR =
      VkDevice -- ^ device
               -> Ptr VkFenceGetFdInfoKHR -- ^ pGetFdInfo

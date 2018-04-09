@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkSubmitInfo (VkSubmitInfo(..))
        where
 import           Foreign.Storable                                (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                        (Addr##,
+                                                                  ByteArray##,
+                                                                  byteArrayContents##,
+                                                                  plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkPipelineStageFlags (VkPipelineStageFlags)
@@ -31,7 +34,7 @@ import           System.IO.Unsafe                                (unsafeDupableP
 --   >     const VkSemaphore*     pSignalSemaphores;
 --   > } VkSubmitInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSubmitInfo.html VkSubmitInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSubmitInfoVkSubmitInfo registry at www.khronos.org>
 data VkSubmitInfo = VkSubmitInfo## Addr## ByteArray##
 
 instance Eq VkSubmitInfo where

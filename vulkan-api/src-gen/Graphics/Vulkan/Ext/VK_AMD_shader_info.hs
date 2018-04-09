@@ -31,8 +31,8 @@ module Graphics.Vulkan.Ext.VK_AMD_shader_info
         -- > #include "vk_platform.h"
         VkGetShaderInfoAMD, pattern VkGetShaderInfoAMD,
         HS_vkGetShaderInfoAMD, PFN_vkGetShaderInfoAMD,
-        unwrapVkGetShaderInfoAMD, vkGetShaderInfoAMD,
-        vkGetShaderInfoAMDSafe, module Graphics.Vulkan.Types.Enum.VkResult,
+        unwrapVkGetShaderInfoAMD,
+        module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_AMD_SHADER_INFO_SPEC_VERSION,
         pattern VK_AMD_SHADER_INFO_SPEC_VERSION,
@@ -80,61 +80,7 @@ type VkGetShaderInfoAMD = "vkGetShaderInfoAMD"
 --   >     , void* pInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetShaderInfoAMD.html vkGetShaderInfoAMD registry at www.khronos.org>
-foreign import ccall unsafe "vkGetShaderInfoAMD" vkGetShaderInfoAMD
-               ::
-               VkDevice -- ^ device
-                        ->
-                 VkPipeline -- ^ pipeline
-                            ->
-                   VkShaderStageFlagBits -- ^ shaderStage
-                                         ->
-                     VkShaderInfoTypeAMD -- ^ infoType
-                                         -> Ptr CSize -- ^ pInfoSize
-                                                      -> Ptr Void -- ^ pInfo
-                                                                  -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
---
---   Error codes: 'VK_ERROR_FEATURE_NOT_PRESENT', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
---
---   > VkResult vkGetShaderInfoAMD
---   >     ( VkDevice device
---   >     , VkPipeline pipeline
---   >     , VkShaderStageFlagBits shaderStage
---   >     , VkShaderInfoTypeAMD infoType
---   >     , size_t* pInfoSize
---   >     , void* pInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetShaderInfoAMD.html vkGetShaderInfoAMD registry at www.khronos.org>
-foreign import ccall safe "vkGetShaderInfoAMD"
-               vkGetShaderInfoAMDSafe ::
-               VkDevice -- ^ device
-                        ->
-                 VkPipeline -- ^ pipeline
-                            ->
-                   VkShaderStageFlagBits -- ^ shaderStage
-                                         ->
-                     VkShaderInfoTypeAMD -- ^ infoType
-                                         -> Ptr CSize -- ^ pInfoSize
-                                                      -> Ptr Void -- ^ pInfo
-                                                                  -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
---
---   Error codes: 'VK_ERROR_FEATURE_NOT_PRESENT', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
---
---   > VkResult vkGetShaderInfoAMD
---   >     ( VkDevice device
---   >     , VkPipeline pipeline
---   >     , VkShaderStageFlagBits shaderStage
---   >     , VkShaderInfoTypeAMD infoType
---   >     , size_t* pInfoSize
---   >     , void* pInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetShaderInfoAMD.html vkGetShaderInfoAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetShaderInfoAMDvkGetShaderInfoAMD registry at www.khronos.org>
 type HS_vkGetShaderInfoAMD =
      VkDevice -- ^ device
               ->

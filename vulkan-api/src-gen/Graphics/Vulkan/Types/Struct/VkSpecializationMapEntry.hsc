@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkSpecializationMapEntry
        (VkSpecializationMapEntry(..)) where
 import           Foreign.Storable                 (Storable (..))
-import           GHC.Prim
+import           GHC.Base                         (Addr##, ByteArray##,
+                                                   byteArrayContents##,
+                                                   plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
@@ -21,7 +23,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     size_t                 size;
 --   > } VkSpecializationMapEntry;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSpecializationMapEntry.html VkSpecializationMapEntry registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSpecializationMapEntryVkSpecializationMapEntry registry at www.khronos.org>
 data VkSpecializationMapEntry = VkSpecializationMapEntry## Addr##
                                                           ByteArray##
 

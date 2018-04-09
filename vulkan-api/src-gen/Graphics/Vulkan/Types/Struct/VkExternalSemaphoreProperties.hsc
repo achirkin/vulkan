@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkExternalSemaphoreProperties
        (VkExternalSemaphoreProperties(..)) where
 import           Foreign.Storable                                              (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                                      (Addr##,
+                                                                                ByteArray##,
+                                                                                byteArrayContents##,
+                                                                                plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkExternalSemaphoreFeatureFlags    (VkExternalSemaphoreFeatureFlags)
@@ -26,7 +29,7 @@ import           System.IO.Unsafe                                              (
 --   >     VkExternalSemaphoreFeatureFlags externalSemaphoreFeatures;
 --   > } VkExternalSemaphoreProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkExternalSemaphoreProperties.html VkExternalSemaphoreProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkExternalSemaphorePropertiesVkExternalSemaphoreProperties registry at www.khronos.org>
 data VkExternalSemaphoreProperties = VkExternalSemaphoreProperties## Addr##
                                                                     ByteArray##
 

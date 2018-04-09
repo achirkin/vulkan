@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkSurfaceFormatKHR
        (VkSurfaceFormatKHR(..)) where
 import           Foreign.Storable                           (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                   (Addr##, ByteArray##,
+                                                             byteArrayContents##,
+                                                             plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkColorSpaceKHR (VkColorSpaceKHR)
@@ -22,7 +24,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     VkColorSpaceKHR                  colorSpace;
 --   > } VkSurfaceFormatKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSurfaceFormatKHR.html VkSurfaceFormatKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSurfaceFormatKHRVkSurfaceFormatKHR registry at www.khronos.org>
 data VkSurfaceFormatKHR = VkSurfaceFormatKHR## Addr## ByteArray##
 
 instance Eq VkSurfaceFormatKHR where

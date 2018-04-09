@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkVertexInputAttributeDescription
        (VkVertexInputAttributeDescription(..)) where
 import           Foreign.Storable                    (Storable (..))
-import           GHC.Prim
+import           GHC.Base                            (Addr##, ByteArray##,
+                                                      byteArrayContents##,
+                                                      plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkFormat (VkFormat)
@@ -23,7 +25,7 @@ import           System.IO.Unsafe                    (unsafeDupablePerformIO)
 --   >     uint32_t               offset;
 --   > } VkVertexInputAttributeDescription;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkVertexInputAttributeDescription.html VkVertexInputAttributeDescription registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkVertexInputAttributeDescriptionVkVertexInputAttributeDescription registry at www.khronos.org>
 data VkVertexInputAttributeDescription = VkVertexInputAttributeDescription## Addr##
                                                                             ByteArray##
 

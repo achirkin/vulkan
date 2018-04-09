@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkSparseImageMemoryRequirements2
        (VkSparseImageMemoryRequirements2(..)) where
 import           Foreign.Storable                                             (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                                     (Addr##,
+                                                                               ByteArray##,
+                                                                               byteArrayContents##,
+                                                                               plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType                   (VkStructureType)
@@ -23,7 +26,7 @@ import           System.IO.Unsafe                                             (u
 --   >     VkSparseImageMemoryRequirements                                      memoryRequirements;
 --   > } VkSparseImageMemoryRequirements2;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSparseImageMemoryRequirements2.html VkSparseImageMemoryRequirements2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSparseImageMemoryRequirements2VkSparseImageMemoryRequirements2 registry at www.khronos.org>
 data VkSparseImageMemoryRequirements2 = VkSparseImageMemoryRequirements2## Addr##
                                                                           ByteArray##
 

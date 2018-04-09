@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceShaderCorePropertiesAMD
        (VkPhysicalDeviceShaderCorePropertiesAMD(..)) where
 import           Foreign.Storable                                         (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                                 (Addr##,
+                                                                           ByteArray##,
+                                                                           byteArrayContents##,
+                                                                           plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType               (VkStructureType)
@@ -36,7 +39,7 @@ import           System.IO.Unsafe                                         (unsaf
 --   >     uint32_t vgprAllocationGranularity;
 --   > } VkPhysicalDeviceShaderCorePropertiesAMD;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPhysicalDeviceShaderCorePropertiesAMD.html VkPhysicalDeviceShaderCorePropertiesAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceShaderCorePropertiesAMDVkPhysicalDeviceShaderCorePropertiesAMD registry at www.khronos.org>
 data VkPhysicalDeviceShaderCorePropertiesAMD = VkPhysicalDeviceShaderCorePropertiesAMD## Addr##
                                                                                         ByteArray##
 

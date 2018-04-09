@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkAcquireNextImageInfoKHR
        (VkAcquireNextImageInfoKHR(..)) where
 import           Foreign.Storable                           (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                   (Addr##, ByteArray##,
+                                                             byteArrayContents##,
+                                                             plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
@@ -29,7 +31,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     uint32_t                         deviceMask;
 --   > } VkAcquireNextImageInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkAcquireNextImageInfoKHR.html VkAcquireNextImageInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkAcquireNextImageInfoKHRVkAcquireNextImageInfoKHR registry at www.khronos.org>
 data VkAcquireNextImageInfoKHR = VkAcquireNextImageInfoKHR## Addr##
                                                             ByteArray##
 

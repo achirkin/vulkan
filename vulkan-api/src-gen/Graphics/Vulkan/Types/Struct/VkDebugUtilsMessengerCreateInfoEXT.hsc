@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkDebugUtilsMessengerCreateInfoEXT
        (VkDebugUtilsMessengerCreateInfoEXT(..)) where
 import           Foreign.Storable                                               (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                                       (Addr##,
+                                                                                 ByteArray##,
+                                                                                 byteArrayContents##,
+                                                                                 plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Bitmasks                                 (VkDebugUtilsMessengerCreateFlagsEXT)
@@ -31,7 +34,7 @@ import           System.IO.Unsafe                                               
 --   >     void*                                pUserData;
 --   > } VkDebugUtilsMessengerCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDebugUtilsMessengerCreateInfoEXT.html VkDebugUtilsMessengerCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDebugUtilsMessengerCreateInfoEXTVkDebugUtilsMessengerCreateInfoEXT registry at www.khronos.org>
 data VkDebugUtilsMessengerCreateInfoEXT = VkDebugUtilsMessengerCreateInfoEXT## Addr##
                                                                               ByteArray##
 

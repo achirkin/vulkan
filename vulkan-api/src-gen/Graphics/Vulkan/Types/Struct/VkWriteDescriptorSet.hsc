@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkWriteDescriptorSet
        (VkWriteDescriptorSet(..)) where
 import           Foreign.Storable                                    (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                            (Addr##,
+                                                                      ByteArray##,
+                                                                      byteArrayContents##,
+                                                                      plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkDescriptorType         (VkDescriptorType)
@@ -34,7 +37,7 @@ import           System.IO.Unsafe                                    (unsafeDupa
 --   >     const VkBufferView*    pTexelBufferView;
 --   > } VkWriteDescriptorSet;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkWriteDescriptorSet.html VkWriteDescriptorSet registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkWriteDescriptorSetVkWriteDescriptorSet registry at www.khronos.org>
 data VkWriteDescriptorSet = VkWriteDescriptorSet## Addr## ByteArray##
 
 instance Eq VkWriteDescriptorSet where

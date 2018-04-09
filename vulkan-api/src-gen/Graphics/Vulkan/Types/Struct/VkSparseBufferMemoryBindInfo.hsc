@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkSparseBufferMemoryBindInfo
        (VkSparseBufferMemoryBindInfo(..)) where
 import           Foreign.Storable                                (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                        (Addr##,
+                                                                  ByteArray##,
+                                                                  byteArrayContents##,
+                                                                  plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Handles                   (VkBuffer)
@@ -23,7 +26,7 @@ import           System.IO.Unsafe                                (unsafeDupableP
 --   >     const VkSparseMemoryBind* pBinds;
 --   > } VkSparseBufferMemoryBindInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSparseBufferMemoryBindInfo.html VkSparseBufferMemoryBindInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSparseBufferMemoryBindInfoVkSparseBufferMemoryBindInfo registry at www.khronos.org>
 data VkSparseBufferMemoryBindInfo = VkSparseBufferMemoryBindInfo## Addr##
                                                                   ByteArray##
 

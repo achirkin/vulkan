@@ -38,8 +38,7 @@ module Graphics.Vulkan.Ext.VK_KHR_shared_presentable_image
         -- > #include "vk_platform.h"
         VkGetSwapchainStatusKHR, pattern VkGetSwapchainStatusKHR,
         HS_vkGetSwapchainStatusKHR, PFN_vkGetSwapchainStatusKHR,
-        unwrapVkGetSwapchainStatusKHR, vkGetSwapchainStatusKHR,
-        vkGetSwapchainStatusKHRSafe,
+        unwrapVkGetSwapchainStatusKHR,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_KHR_SHARED_PRESENTABLE_IMAGE_SPEC_VERSION,
@@ -100,39 +99,7 @@ type VkGetSwapchainStatusKHR = "vkGetSwapchainStatusKHR"
 --   >     , VkSwapchainKHR swapchain
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetSwapchainStatusKHR.html vkGetSwapchainStatusKHR registry at www.khronos.org>
-foreign import ccall unsafe "vkGetSwapchainStatusKHR"
-               vkGetSwapchainStatusKHR ::
-               VkDevice -- ^ device
-                        -> VkSwapchainKHR -- ^ swapchain
-                                          -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS', 'VK_SUBOPTIMAL_KHR'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
---
---   > VkResult vkGetSwapchainStatusKHR
---   >     ( VkDevice device
---   >     , VkSwapchainKHR swapchain
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetSwapchainStatusKHR.html vkGetSwapchainStatusKHR registry at www.khronos.org>
-foreign import ccall safe "vkGetSwapchainStatusKHR"
-               vkGetSwapchainStatusKHRSafe ::
-               VkDevice -- ^ device
-                        -> VkSwapchainKHR -- ^ swapchain
-                                          -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS', 'VK_SUBOPTIMAL_KHR'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_DEVICE_LOST', 'VK_ERROR_OUT_OF_DATE_KHR', 'VK_ERROR_SURFACE_LOST_KHR'.
---
---   > VkResult vkGetSwapchainStatusKHR
---   >     ( VkDevice device
---   >     , VkSwapchainKHR swapchain
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetSwapchainStatusKHR.html vkGetSwapchainStatusKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSwapchainStatusKHRvkGetSwapchainStatusKHR registry at www.khronos.org>
 type HS_vkGetSwapchainStatusKHR =
      VkDevice -- ^ device
               -> VkSwapchainKHR -- ^ swapchain

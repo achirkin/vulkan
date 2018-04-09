@@ -136,8 +136,8 @@ lookupDiModuleImports di = ModuleWriter $ gets (Map.lookup di . globalNames)
 isIdentDeclared :: Monad m => DeclaredIdent -> ModuleWriter m Bool
 isIdentDeclared di = ModuleWriter $ gets $ \mr ->
   let mm = fmap ((mName mr ==) . fst) . Map.lookup di $ globalNames mr
-  in if Just False == mm
-     then True else False
+  in Just False == mm
+
 
 lookupDeclared :: (Monad m, Coercible a Text)
                => a -> ModuleWriter m [DeclaredIdent]
@@ -513,7 +513,7 @@ vkRegistryLink tname = do
     vkXml <- ask
     pure $ "<https://www.khronos.org/registry/vulkan/specs/"
         <> Feature.number (last $ globFeature vkXml)
-        <> "-extensions/man/html/" <> tname <> ".html "
+        <> "-extensions/html/vkspec.html#" <> tname
         <> tname <> " registry at www.khronos.org>"
 
 

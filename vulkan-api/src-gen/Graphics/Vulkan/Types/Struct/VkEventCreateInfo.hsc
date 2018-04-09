@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkEventCreateInfo
        (VkEventCreateInfo(..)) where
 import           Foreign.Storable                           (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                   (Addr##, ByteArray##,
+                                                             byteArrayContents##,
+                                                             plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Bitmasks             (VkEventCreateFlags)
@@ -23,7 +25,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     VkEventCreateFlags     flags;
 --   > } VkEventCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkEventCreateInfo.html VkEventCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkEventCreateInfoVkEventCreateInfo registry at www.khronos.org>
 data VkEventCreateInfo = VkEventCreateInfo## Addr## ByteArray##
 
 instance Eq VkEventCreateInfo where

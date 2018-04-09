@@ -14,7 +14,12 @@
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties
        (VkPhysicalDeviceProperties(..)) where
 import           Foreign.Storable                                              (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                                      (Addr##,
+                                                                                ByteArray##,
+                                                                                Proxy##,
+                                                                                byteArrayContents##,
+                                                                                plusAddr##,
+                                                                                proxy##)
 import           GHC.TypeLits                                                  (KnownNat,
                                                                                 natVal') -- ' closing tick for hsc2hs
 import           Graphics.Vulkan.Constants                                     (VK_MAX_PHYSICAL_DEVICE_NAME_SIZE,
@@ -40,7 +45,7 @@ import           System.IO.Unsafe                                              (
 --   >     VkPhysicalDeviceSparseProperties sparseProperties;
 --   > } VkPhysicalDeviceProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPhysicalDeviceProperties.html VkPhysicalDeviceProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDevicePropertiesVkPhysicalDeviceProperties registry at www.khronos.org>
 data VkPhysicalDeviceProperties = VkPhysicalDeviceProperties## Addr##
                                                               ByteArray##
 

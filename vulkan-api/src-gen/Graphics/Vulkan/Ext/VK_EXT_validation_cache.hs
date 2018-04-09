@@ -33,19 +33,15 @@ module Graphics.Vulkan.Ext.VK_EXT_validation_cache
         -- > #include "vk_platform.h"
         VkCreateValidationCacheEXT, pattern VkCreateValidationCacheEXT,
         HS_vkCreateValidationCacheEXT, PFN_vkCreateValidationCacheEXT,
-        unwrapVkCreateValidationCacheEXT, vkCreateValidationCacheEXT,
-        vkCreateValidationCacheEXTSafe, VkDestroyValidationCacheEXT,
+        unwrapVkCreateValidationCacheEXT, VkDestroyValidationCacheEXT,
         pattern VkDestroyValidationCacheEXT,
         HS_vkDestroyValidationCacheEXT, PFN_vkDestroyValidationCacheEXT,
-        unwrapVkDestroyValidationCacheEXT, vkDestroyValidationCacheEXT,
-        vkDestroyValidationCacheEXTSafe, VkMergeValidationCachesEXT,
+        unwrapVkDestroyValidationCacheEXT, VkMergeValidationCachesEXT,
         pattern VkMergeValidationCachesEXT, HS_vkMergeValidationCachesEXT,
         PFN_vkMergeValidationCachesEXT, unwrapVkMergeValidationCachesEXT,
-        vkMergeValidationCachesEXT, vkMergeValidationCachesEXTSafe,
         VkGetValidationCacheDataEXT, pattern VkGetValidationCacheDataEXT,
         HS_vkGetValidationCacheDataEXT, PFN_vkGetValidationCacheDataEXT,
-        unwrapVkGetValidationCacheDataEXT, vkGetValidationCacheDataEXT,
-        vkGetValidationCacheDataEXTSafe,
+        unwrapVkGetValidationCacheDataEXT,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,
@@ -114,53 +110,7 @@ type VkCreateValidationCacheEXT = "vkCreateValidationCacheEXT"
 --   >     , VkValidationCacheEXT* pValidationCache
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateValidationCacheEXT.html vkCreateValidationCacheEXT registry at www.khronos.org>
-foreign import ccall unsafe "vkCreateValidationCacheEXT"
-               vkCreateValidationCacheEXT ::
-               VkDevice -- ^ device
-                        ->
-                 Ptr VkValidationCacheCreateInfoEXT -- ^ pCreateInfo
-                                                    ->
-                   Ptr VkAllocationCallbacks -- ^ pAllocator
-                                             ->
-                     Ptr VkValidationCacheEXT -- ^ pValidationCache
-                                              -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY'.
---
---   > VkResult vkCreateValidationCacheEXT
---   >     ( VkDevice device
---   >     , const VkValidationCacheCreateInfoEXT* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkValidationCacheEXT* pValidationCache
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateValidationCacheEXT.html vkCreateValidationCacheEXT registry at www.khronos.org>
-foreign import ccall safe "vkCreateValidationCacheEXT"
-               vkCreateValidationCacheEXTSafe ::
-               VkDevice -- ^ device
-                        ->
-                 Ptr VkValidationCacheCreateInfoEXT -- ^ pCreateInfo
-                                                    ->
-                   Ptr VkAllocationCallbacks -- ^ pAllocator
-                                             ->
-                     Ptr VkValidationCacheEXT -- ^ pValidationCache
-                                              -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY'.
---
---   > VkResult vkCreateValidationCacheEXT
---   >     ( VkDevice device
---   >     , const VkValidationCacheCreateInfoEXT* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkValidationCacheEXT* pValidationCache
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateValidationCacheEXT.html vkCreateValidationCacheEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateValidationCacheEXTvkCreateValidationCacheEXT registry at www.khronos.org>
 type HS_vkCreateValidationCacheEXT =
      VkDevice -- ^ device
               ->
@@ -213,37 +163,7 @@ type VkDestroyValidationCacheEXT = "vkDestroyValidationCacheEXT"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyValidationCacheEXT.html vkDestroyValidationCacheEXT registry at www.khronos.org>
-foreign import ccall unsafe "vkDestroyValidationCacheEXT"
-               vkDestroyValidationCacheEXT ::
-               VkDevice -- ^ device
-                        ->
-                 VkValidationCacheEXT -- ^ validationCache
-                                      -> Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                   -> IO ()
-
--- | > () vkDestroyValidationCacheEXT
---   >     ( VkDevice device
---   >     , VkValidationCacheEXT validationCache
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyValidationCacheEXT.html vkDestroyValidationCacheEXT registry at www.khronos.org>
-foreign import ccall safe "vkDestroyValidationCacheEXT"
-               vkDestroyValidationCacheEXTSafe ::
-               VkDevice -- ^ device
-                        ->
-                 VkValidationCacheEXT -- ^ validationCache
-                                      -> Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                   -> IO ()
-
--- | > () vkDestroyValidationCacheEXT
---   >     ( VkDevice device
---   >     , VkValidationCacheEXT validationCache
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyValidationCacheEXT.html vkDestroyValidationCacheEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyValidationCacheEXTvkDestroyValidationCacheEXT registry at www.khronos.org>
 type HS_vkDestroyValidationCacheEXT =
      VkDevice -- ^ device
               ->
@@ -297,51 +217,7 @@ type VkMergeValidationCachesEXT = "vkMergeValidationCachesEXT"
 --   >     , const VkValidationCacheEXT* pSrcCaches
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkMergeValidationCachesEXT.html vkMergeValidationCachesEXT registry at www.khronos.org>
-foreign import ccall unsafe "vkMergeValidationCachesEXT"
-               vkMergeValidationCachesEXT ::
-               VkDevice -- ^ device
-                        ->
-                 VkValidationCacheEXT -- ^ dstCache
-                                      ->
-                   Word32 -- ^ srcCacheCount
-                          -> Ptr VkValidationCacheEXT -- ^ pSrcCaches
-                                                      -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
---   > VkResult vkMergeValidationCachesEXT
---   >     ( VkDevice device
---   >     , VkValidationCacheEXT dstCache
---   >     , uint32_t srcCacheCount
---   >     , const VkValidationCacheEXT* pSrcCaches
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkMergeValidationCachesEXT.html vkMergeValidationCachesEXT registry at www.khronos.org>
-foreign import ccall safe "vkMergeValidationCachesEXT"
-               vkMergeValidationCachesEXTSafe ::
-               VkDevice -- ^ device
-                        ->
-                 VkValidationCacheEXT -- ^ dstCache
-                                      ->
-                   Word32 -- ^ srcCacheCount
-                          -> Ptr VkValidationCacheEXT -- ^ pSrcCaches
-                                                      -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
---   > VkResult vkMergeValidationCachesEXT
---   >     ( VkDevice device
---   >     , VkValidationCacheEXT dstCache
---   >     , uint32_t srcCacheCount
---   >     , const VkValidationCacheEXT* pSrcCaches
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkMergeValidationCachesEXT.html vkMergeValidationCachesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkMergeValidationCachesEXTvkMergeValidationCachesEXT registry at www.khronos.org>
 type HS_vkMergeValidationCachesEXT =
      VkDevice -- ^ device
               ->
@@ -398,49 +274,7 @@ type VkGetValidationCacheDataEXT = "vkGetValidationCacheDataEXT"
 --   >     , void* pData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetValidationCacheDataEXT.html vkGetValidationCacheDataEXT registry at www.khronos.org>
-foreign import ccall unsafe "vkGetValidationCacheDataEXT"
-               vkGetValidationCacheDataEXT ::
-               VkDevice -- ^ device
-                        ->
-                 VkValidationCacheEXT -- ^ validationCache
-                                      -> Ptr CSize -- ^ pDataSize
-                                                   -> Ptr Void -- ^ pData
-                                                               -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
---   > VkResult vkGetValidationCacheDataEXT
---   >     ( VkDevice device
---   >     , VkValidationCacheEXT validationCache
---   >     , size_t* pDataSize
---   >     , void* pData
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetValidationCacheDataEXT.html vkGetValidationCacheDataEXT registry at www.khronos.org>
-foreign import ccall safe "vkGetValidationCacheDataEXT"
-               vkGetValidationCacheDataEXTSafe ::
-               VkDevice -- ^ device
-                        ->
-                 VkValidationCacheEXT -- ^ validationCache
-                                      -> Ptr CSize -- ^ pDataSize
-                                                   -> Ptr Void -- ^ pData
-                                                               -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
---   > VkResult vkGetValidationCacheDataEXT
---   >     ( VkDevice device
---   >     , VkValidationCacheEXT validationCache
---   >     , size_t* pDataSize
---   >     , void* pData
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetValidationCacheDataEXT.html vkGetValidationCacheDataEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetValidationCacheDataEXTvkGetValidationCacheDataEXT registry at www.khronos.org>
 type HS_vkGetValidationCacheDataEXT =
      VkDevice -- ^ device
               ->

@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkImagePlaneMemoryRequirementsInfo
        (VkImagePlaneMemoryRequirementsInfo(..)) where
 import           Foreign.Storable                                            (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                                    (Addr##,
+                                                                              ByteArray##,
+                                                                              byteArrayContents##,
+                                                                              plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkImageAspectFlags               (VkImageAspectFlagBits)
@@ -24,7 +27,7 @@ import           System.IO.Unsafe                                            (un
 --   >     VkImageAspectFlagBits            planeAspect;
 --   > } VkImagePlaneMemoryRequirementsInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkImagePlaneMemoryRequirementsInfo.html VkImagePlaneMemoryRequirementsInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImagePlaneMemoryRequirementsInfoVkImagePlaneMemoryRequirementsInfo registry at www.khronos.org>
 data VkImagePlaneMemoryRequirementsInfo = VkImagePlaneMemoryRequirementsInfo## Addr##
                                                                               ByteArray##
 

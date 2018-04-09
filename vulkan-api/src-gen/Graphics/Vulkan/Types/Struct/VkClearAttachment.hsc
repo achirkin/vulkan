@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkClearAttachment
        (VkClearAttachment(..)) where
 import           Foreign.Storable                              (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                      (Addr##,
+                                                                ByteArray##,
+                                                                byteArrayContents##,
+                                                                plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkImageAspectFlags (VkImageAspectFlags)
@@ -23,7 +26,7 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 --   >     VkClearValue           clearValue;
 --   > } VkClearAttachment;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkClearAttachment.html VkClearAttachment registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkClearAttachmentVkClearAttachment registry at www.khronos.org>
 data VkClearAttachment = VkClearAttachment## Addr## ByteArray##
 
 instance Eq VkClearAttachment where

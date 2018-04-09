@@ -14,7 +14,9 @@
 module Graphics.Vulkan.Types.Struct.VkExtensionProperties
        (VkExtensionProperties(..)) where
 import           Foreign.Storable                 (Storable (..))
-import           GHC.Prim
+import           GHC.Base                         (Addr##, ByteArray##, Proxy##,
+                                                   byteArrayContents##,
+                                                   plusAddr##, proxy##)
 import           GHC.TypeLits                     (KnownNat, natVal') -- ' closing tick for hsc2hs
 import           Graphics.Vulkan.Constants        (VK_MAX_EXTENSION_NAME_SIZE, pattern VK_MAX_EXTENSION_NAME_SIZE)
 import           Graphics.Vulkan.Marshal
@@ -26,7 +28,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     uint32_t        specVersion;
 --   > } VkExtensionProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkExtensionProperties.html VkExtensionProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkExtensionPropertiesVkExtensionProperties registry at www.khronos.org>
 data VkExtensionProperties = VkExtensionProperties## Addr##
                                                     ByteArray##
 

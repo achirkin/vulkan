@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkDescriptorPoolSize
        (VkDescriptorPoolSize(..)) where
 import           Foreign.Storable                            (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                    (Addr##, ByteArray##,
+                                                              byteArrayContents##,
+                                                              plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkDescriptorType (VkDescriptorType)
@@ -21,7 +23,7 @@ import           System.IO.Unsafe                            (unsafeDupablePerfo
 --   >     uint32_t               descriptorCount;
 --   > } VkDescriptorPoolSize;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDescriptorPoolSize.html VkDescriptorPoolSize registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDescriptorPoolSizeVkDescriptorPoolSize registry at www.khronos.org>
 data VkDescriptorPoolSize = VkDescriptorPoolSize## Addr## ByteArray##
 
 instance Eq VkDescriptorPoolSize where

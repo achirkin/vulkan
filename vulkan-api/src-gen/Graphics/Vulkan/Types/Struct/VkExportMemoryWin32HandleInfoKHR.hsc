@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkExportMemoryWin32HandleInfoKHR
        (VkExportMemoryWin32HandleInfoKHR(..)) where
 import           Foreign.Storable                                  (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                          (Addr##,
+                                                                    ByteArray##,
+                                                                    byteArrayContents##,
+                                                                    plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType        (VkStructureType)
@@ -28,7 +31,7 @@ import           System.IO.Unsafe                                  (unsafeDupabl
 --   >     LPCWSTR                          name;
 --   > } VkExportMemoryWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkExportMemoryWin32HandleInfoKHR.html VkExportMemoryWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkExportMemoryWin32HandleInfoKHRVkExportMemoryWin32HandleInfoKHR registry at www.khronos.org>
 data VkExportMemoryWin32HandleInfoKHR = VkExportMemoryWin32HandleInfoKHR## Addr##
                                                                           ByteArray##
 

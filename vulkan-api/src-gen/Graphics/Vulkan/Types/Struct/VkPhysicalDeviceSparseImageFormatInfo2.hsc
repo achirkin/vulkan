@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceSparseImageFormatInfo2
        (VkPhysicalDeviceSparseImageFormatInfo2(..)) where
 import           Foreign.Storable                              (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                      (Addr##,
+                                                                ByteArray##,
+                                                                byteArrayContents##,
+                                                                plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkFormat           (VkFormat)
@@ -31,7 +34,7 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 --   >     VkImageTiling                    tiling;
 --   > } VkPhysicalDeviceSparseImageFormatInfo2;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPhysicalDeviceSparseImageFormatInfo2.html VkPhysicalDeviceSparseImageFormatInfo2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceSparseImageFormatInfo2VkPhysicalDeviceSparseImageFormatInfo2 registry at www.khronos.org>
 data VkPhysicalDeviceSparseImageFormatInfo2 = VkPhysicalDeviceSparseImageFormatInfo2## Addr##
                                                                                       ByteArray##
 

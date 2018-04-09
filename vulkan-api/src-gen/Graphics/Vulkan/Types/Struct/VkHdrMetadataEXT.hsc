@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkHdrMetadataEXT
        (VkHdrMetadataEXT(..)) where
 import           Foreign.Storable                           (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                   (Addr##, ByteArray##,
+                                                             byteArrayContents##,
+                                                             plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
@@ -30,7 +32,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     float          maxFrameAverageLightLevel;
 --   > } VkHdrMetadataEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkHdrMetadataEXT.html VkHdrMetadataEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkHdrMetadataEXTVkHdrMetadataEXT registry at www.khronos.org>
 data VkHdrMetadataEXT = VkHdrMetadataEXT## Addr## ByteArray##
 
 instance Eq VkHdrMetadataEXT where

@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkDeviceGroupBindSparseInfo
        (VkDeviceGroupBindSparseInfo(..)) where
 import           Foreign.Storable                              (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                      (Addr##,
+                                                                ByteArray##,
+                                                                byteArrayContents##,
+                                                                plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType    (VkStructureType)
@@ -24,7 +27,7 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 --   >     uint32_t                         memoryDeviceIndex;
 --   > } VkDeviceGroupBindSparseInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDeviceGroupBindSparseInfo.html VkDeviceGroupBindSparseInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDeviceGroupBindSparseInfoVkDeviceGroupBindSparseInfo registry at www.khronos.org>
 data VkDeviceGroupBindSparseInfo = VkDeviceGroupBindSparseInfo## Addr##
                                                                 ByteArray##
 

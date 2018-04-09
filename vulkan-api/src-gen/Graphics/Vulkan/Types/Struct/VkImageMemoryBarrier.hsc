@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkImageMemoryBarrier
        (VkImageMemoryBarrier(..)) where
 import           Foreign.Storable                                     (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                             (Addr##, ByteArray##,
+                                                                       byteArrayContents##,
+                                                                       plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkAccessFlags             (VkAccessFlags)
@@ -33,7 +35,7 @@ import           System.IO.Unsafe                                     (unsafeDup
 --   >     VkImageSubresourceRange subresourceRange;
 --   > } VkImageMemoryBarrier;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkImageMemoryBarrier.html VkImageMemoryBarrier registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImageMemoryBarrierVkImageMemoryBarrier registry at www.khronos.org>
 data VkImageMemoryBarrier = VkImageMemoryBarrier## Addr## ByteArray##
 
 instance Eq VkImageMemoryBarrier where

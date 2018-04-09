@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkPipelineVertexInputStateCreateInfo
        (VkPipelineVertexInputStateCreateInfo(..)) where
 import           Foreign.Storable                                               (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                                       (Addr##,
+                                                                                 ByteArray##,
+                                                                                 byteArrayContents##,
+                                                                                 plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Bitmasks                                 (VkPipelineVertexInputStateCreateFlags)
@@ -29,7 +32,7 @@ import           System.IO.Unsafe                                               
 --   >     const VkVertexInputAttributeDescription* pVertexAttributeDescriptions;
 --   > } VkPipelineVertexInputStateCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPipelineVertexInputStateCreateInfo.html VkPipelineVertexInputStateCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPipelineVertexInputStateCreateInfoVkPipelineVertexInputStateCreateInfo registry at www.khronos.org>
 data VkPipelineVertexInputStateCreateInfo = VkPipelineVertexInputStateCreateInfo## Addr##
                                                                                   ByteArray##
 

@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkDescriptorUpdateTemplateEntry
        (VkDescriptorUpdateTemplateEntry(..)) where
 import           Foreign.Storable                            (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                    (Addr##, ByteArray##,
+                                                              byteArrayContents##,
+                                                              plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkDescriptorType (VkDescriptorType)
@@ -25,7 +27,7 @@ import           System.IO.Unsafe                            (unsafeDupablePerfo
 --   >     size_t                           stride;
 --   > } VkDescriptorUpdateTemplateEntry;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDescriptorUpdateTemplateEntry.html VkDescriptorUpdateTemplateEntry registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDescriptorUpdateTemplateEntryVkDescriptorUpdateTemplateEntry registry at www.khronos.org>
 data VkDescriptorUpdateTemplateEntry = VkDescriptorUpdateTemplateEntry## Addr##
                                                                         ByteArray##
 

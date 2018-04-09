@@ -39,8 +39,7 @@ module Graphics.Vulkan.Ext.VK_KHR_push_descriptor
         -- > #include "vk_platform.h"
         VkCmdPushDescriptorSetKHR, pattern VkCmdPushDescriptorSetKHR,
         HS_vkCmdPushDescriptorSetKHR, PFN_vkCmdPushDescriptorSetKHR,
-        unwrapVkCmdPushDescriptorSetKHR, vkCmdPushDescriptorSetKHR,
-        vkCmdPushDescriptorSetKHRSafe,
+        unwrapVkCmdPushDescriptorSetKHR,
         module Graphics.Vulkan.Types.Enum.VkDescriptorType,
         module Graphics.Vulkan.Types.Enum.VkImageLayout,
         module Graphics.Vulkan.Types.Enum.VkPipelineBindPoint,
@@ -60,8 +59,6 @@ module Graphics.Vulkan.Ext.VK_KHR_push_descriptor
         HS_vkCmdPushDescriptorSetWithTemplateKHR,
         PFN_vkCmdPushDescriptorSetWithTemplateKHR,
         unwrapVkCmdPushDescriptorSetWithTemplateKHR,
-        vkCmdPushDescriptorSetWithTemplateKHR,
-        vkCmdPushDescriptorSetWithTemplateKHRSafe,
         pattern VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_PUSH_DESCRIPTORS_KHR)
        where
 import           GHC.Ptr
@@ -123,61 +120,7 @@ type VkCmdPushDescriptorSetKHR = "vkCmdPushDescriptorSetKHR"
 --   >     , const VkWriteDescriptorSet* pDescriptorWrites
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdPushDescriptorSetKHR.html vkCmdPushDescriptorSetKHR registry at www.khronos.org>
-foreign import ccall unsafe "vkCmdPushDescriptorSetKHR"
-               vkCmdPushDescriptorSetKHR ::
-               VkCommandBuffer -- ^ commandBuffer
-                               ->
-                 VkPipelineBindPoint -- ^ pipelineBindPoint
-                                     ->
-                   VkPipelineLayout -- ^ layout
-                                    ->
-                     Word32 -- ^ set
-                            -> Word32 -- ^ descriptorWriteCount
-                                      -> Ptr VkWriteDescriptorSet -- ^ pDescriptorWrites
-                                                                  -> IO ()
-
--- | queues: 'graphics', 'compute'.
---
---   renderpass: @both@
---
---   > () vkCmdPushDescriptorSetKHR
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkPipelineBindPoint pipelineBindPoint
---   >     , VkPipelineLayout layout
---   >     , uint32_t set
---   >     , uint32_t descriptorWriteCount
---   >     , const VkWriteDescriptorSet* pDescriptorWrites
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdPushDescriptorSetKHR.html vkCmdPushDescriptorSetKHR registry at www.khronos.org>
-foreign import ccall safe "vkCmdPushDescriptorSetKHR"
-               vkCmdPushDescriptorSetKHRSafe ::
-               VkCommandBuffer -- ^ commandBuffer
-                               ->
-                 VkPipelineBindPoint -- ^ pipelineBindPoint
-                                     ->
-                   VkPipelineLayout -- ^ layout
-                                    ->
-                     Word32 -- ^ set
-                            -> Word32 -- ^ descriptorWriteCount
-                                      -> Ptr VkWriteDescriptorSet -- ^ pDescriptorWrites
-                                                                  -> IO ()
-
--- | queues: 'graphics', 'compute'.
---
---   renderpass: @both@
---
---   > () vkCmdPushDescriptorSetKHR
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkPipelineBindPoint pipelineBindPoint
---   >     , VkPipelineLayout layout
---   >     , uint32_t set
---   >     , uint32_t descriptorWriteCount
---   >     , const VkWriteDescriptorSet* pDescriptorWrites
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdPushDescriptorSetKHR.html vkCmdPushDescriptorSetKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdPushDescriptorSetKHRvkCmdPushDescriptorSetKHR registry at www.khronos.org>
 type HS_vkCmdPushDescriptorSetKHR =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -283,55 +226,7 @@ type VkCmdPushDescriptorSetWithTemplateKHR =
 --   >     , const void* pData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html vkCmdPushDescriptorSetWithTemplateKHR registry at www.khronos.org>
-foreign import ccall unsafe "vkCmdPushDescriptorSetWithTemplateKHR"
-               vkCmdPushDescriptorSetWithTemplateKHR ::
-               VkCommandBuffer -- ^ commandBuffer
-                               ->
-                 VkDescriptorUpdateTemplate -- ^ descriptorUpdateTemplate
-                                            ->
-                   VkPipelineLayout -- ^ layout
-                                    -> Word32 -- ^ set
-                                              -> Ptr Void -- ^ pData
-                                                          -> IO ()
-
--- | queues: 'graphics', 'compute'.
---
---   renderpass: @both@
---
---   > () vkCmdPushDescriptorSetWithTemplateKHR
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkDescriptorUpdateTemplate descriptorUpdateTemplate
---   >     , VkPipelineLayout layout
---   >     , uint32_t set
---   >     , const void* pData
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html vkCmdPushDescriptorSetWithTemplateKHR registry at www.khronos.org>
-foreign import ccall safe "vkCmdPushDescriptorSetWithTemplateKHR"
-               vkCmdPushDescriptorSetWithTemplateKHRSafe ::
-               VkCommandBuffer -- ^ commandBuffer
-                               ->
-                 VkDescriptorUpdateTemplate -- ^ descriptorUpdateTemplate
-                                            ->
-                   VkPipelineLayout -- ^ layout
-                                    -> Word32 -- ^ set
-                                              -> Ptr Void -- ^ pData
-                                                          -> IO ()
-
--- | queues: 'graphics', 'compute'.
---
---   renderpass: @both@
---
---   > () vkCmdPushDescriptorSetWithTemplateKHR
---   >     ( VkCommandBuffer commandBuffer
---   >     , VkDescriptorUpdateTemplate descriptorUpdateTemplate
---   >     , VkPipelineLayout layout
---   >     , uint32_t set
---   >     , const void* pData
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html vkCmdPushDescriptorSetWithTemplateKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdPushDescriptorSetWithTemplateKHRvkCmdPushDescriptorSetWithTemplateKHR registry at www.khronos.org>
 type HS_vkCmdPushDescriptorSetWithTemplateKHR =
      VkCommandBuffer -- ^ commandBuffer
                      ->

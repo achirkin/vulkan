@@ -55,6 +55,10 @@ genStructOrUnion isUnion structOrUnion@VkTypeComposite
     writePragma "MagicHash"
 
     writeImport $ DIThing "Storable" DITAll
+    writeImport $ DIThing "Addr#" DITNo
+    writeImport $ DIThing "ByteArray#" DITNo
+    writeImport $ DIVar "plusAddr#"
+    writeImport $ DIVar "byteArrayContents#"
     -- writeImport $ DIThing "IO" DITAll
     -- writeImport $ DIThing "Int" DITAll
     -- writeImport $ DIThing "Ptr" DITAll
@@ -62,7 +66,6 @@ genStructOrUnion isUnion structOrUnion@VkTypeComposite
     -- writeImport $ DIThing "ForeignPtrContents" DITAll
     -- writeImport $ DIVar   "newForeignPtr_"
 
-    writeFullImport "GHC.Prim"
     writeFullImport "Graphics.Vulkan.Marshal"
     writeFullImport "Graphics.Vulkan.Marshal.Internal"
     forM_ (requiresTypes structOrUnion) $ \(VkTypeName n) ->
@@ -305,6 +308,9 @@ genStructField _structAttrs structNameTxt structType VkTypeMember{..} _offsetE S
       writeImport $ DIThing valueTypeTxt DITNo
       writeImport $ DIThing sfiRTypeTxt DITNo
       writeImport $ DIThing structTypeTxt DITAll
+      when (isJust sfiTyElemN) $ do
+        writeImport $ DIThing "Proxy#" DITNo
+        writeImport $ DIVar "proxy#"
       case memberData of
             VkTypeData { name = Just (_, [VkTypeQArrLenEnum n]) }
               -> writeImport $ DIThing (unVkEnumName n) DITNo

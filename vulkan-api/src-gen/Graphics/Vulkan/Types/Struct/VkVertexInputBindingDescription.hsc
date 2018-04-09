@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkVertexInputBindingDescription
        (VkVertexInputBindingDescription(..)) where
 import           Foreign.Storable                             (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                     (Addr##,
+                                                               ByteArray##,
+                                                               byteArrayContents##,
+                                                               plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkVertexInputRate (VkVertexInputRate)
@@ -22,7 +25,7 @@ import           System.IO.Unsafe                             (unsafeDupablePerf
 --   >     VkVertexInputRate      inputRate;
 --   > } VkVertexInputBindingDescription;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkVertexInputBindingDescription.html VkVertexInputBindingDescription registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkVertexInputBindingDescriptionVkVertexInputBindingDescription registry at www.khronos.org>
 data VkVertexInputBindingDescription = VkVertexInputBindingDescription## Addr##
                                                                         ByteArray##
 

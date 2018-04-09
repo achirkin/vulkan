@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkDebugUtilsObjectNameInfoEXT
        (VkDebugUtilsObjectNameInfoEXT(..)) where
 import           Foreign.Storable                           (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                   (Addr##, ByteArray##,
+                                                             byteArrayContents##,
+                                                             plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkObjectType    (VkObjectType)
@@ -25,7 +27,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     const char*      pObjectName;
 --   > } VkDebugUtilsObjectNameInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDebugUtilsObjectNameInfoEXT.html VkDebugUtilsObjectNameInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDebugUtilsObjectNameInfoEXTVkDebugUtilsObjectNameInfoEXT registry at www.khronos.org>
 data VkDebugUtilsObjectNameInfoEXT = VkDebugUtilsObjectNameInfoEXT## Addr##
                                                                     ByteArray##
 

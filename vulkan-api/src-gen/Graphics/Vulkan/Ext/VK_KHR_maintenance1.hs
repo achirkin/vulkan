@@ -26,7 +26,6 @@ module Graphics.Vulkan.Ext.VK_KHR_maintenance1
         module Graphics.Vulkan.Types.Bitmasks, VkTrimCommandPoolKHR,
         pattern VkTrimCommandPoolKHR, HS_vkTrimCommandPoolKHR,
         PFN_vkTrimCommandPoolKHR, unwrapVkTrimCommandPoolKHR,
-        vkTrimCommandPoolKHR, vkTrimCommandPoolKHRSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Handles,
@@ -76,39 +75,7 @@ type VkTrimCommandPoolKHR = "vkTrimCommandPoolKHR"
 --   >     , VkCommandPoolTrimFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkTrimCommandPoolKHR.html vkTrimCommandPoolKHR registry at www.khronos.org>
-foreign import ccall unsafe "vkTrimCommandPoolKHR"
-               vkTrimCommandPoolKHR ::
-               VkDevice -- ^ device
-                        -> VkCommandPool -- ^ commandPool
-                                         -> VkCommandPoolTrimFlags -- ^ flags
-                                                                   -> IO ()
-
--- | This is an alias for `vkTrimCommandPool`.
---
---   > () vkTrimCommandPoolKHR
---   >     ( VkDevice device
---   >     , VkCommandPool commandPool
---   >     , VkCommandPoolTrimFlags flags
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkTrimCommandPoolKHR.html vkTrimCommandPoolKHR registry at www.khronos.org>
-foreign import ccall safe "vkTrimCommandPoolKHR"
-               vkTrimCommandPoolKHRSafe ::
-               VkDevice -- ^ device
-                        -> VkCommandPool -- ^ commandPool
-                                         -> VkCommandPoolTrimFlags -- ^ flags
-                                                                   -> IO ()
-
--- | This is an alias for `vkTrimCommandPool`.
---
---   > () vkTrimCommandPoolKHR
---   >     ( VkDevice device
---   >     , VkCommandPool commandPool
---   >     , VkCommandPoolTrimFlags flags
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkTrimCommandPoolKHR.html vkTrimCommandPoolKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkTrimCommandPoolKHRvkTrimCommandPoolKHR registry at www.khronos.org>
 type HS_vkTrimCommandPoolKHR =
      VkDevice -- ^ device
               -> VkCommandPool -- ^ commandPool

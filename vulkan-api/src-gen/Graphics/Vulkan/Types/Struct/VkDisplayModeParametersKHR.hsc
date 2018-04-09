@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkDisplayModeParametersKHR
        (VkDisplayModeParametersKHR(..)) where
 import           Foreign.Storable                        (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                (Addr##, ByteArray##,
+                                                          byteArrayContents##,
+                                                          plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Struct.VkExtent2D (VkExtent2D)
@@ -21,7 +23,7 @@ import           System.IO.Unsafe                        (unsafeDupablePerformIO
 --   >     uint32_t                         refreshRate;
 --   > } VkDisplayModeParametersKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDisplayModeParametersKHR.html VkDisplayModeParametersKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDisplayModeParametersKHRVkDisplayModeParametersKHR registry at www.khronos.org>
 data VkDisplayModeParametersKHR = VkDisplayModeParametersKHR## Addr##
                                                               ByteArray##
 

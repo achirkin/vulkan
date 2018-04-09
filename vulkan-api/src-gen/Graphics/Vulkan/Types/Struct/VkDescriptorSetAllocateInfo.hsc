@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkDescriptorSetAllocateInfo
        (VkDescriptorSetAllocateInfo(..)) where
 import           Foreign.Storable                           (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                   (Addr##, ByteArray##,
+                                                             byteArrayContents##,
+                                                             plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
@@ -25,7 +27,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     const VkDescriptorSetLayout* pSetLayouts;
 --   > } VkDescriptorSetAllocateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDescriptorSetAllocateInfo.html VkDescriptorSetAllocateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDescriptorSetAllocateInfoVkDescriptorSetAllocateInfo registry at www.khronos.org>
 data VkDescriptorSetAllocateInfo = VkDescriptorSetAllocateInfo## Addr##
                                                                 ByteArray##
 

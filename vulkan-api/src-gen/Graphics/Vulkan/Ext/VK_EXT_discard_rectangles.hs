@@ -78,8 +78,7 @@ module Graphics.Vulkan.Ext.VK_EXT_discard_rectangles
         -- > #include "vk_platform.h"
         VkCmdSetDiscardRectangleEXT, pattern VkCmdSetDiscardRectangleEXT,
         HS_vkCmdSetDiscardRectangleEXT, PFN_vkCmdSetDiscardRectangleEXT,
-        unwrapVkCmdSetDiscardRectangleEXT, vkCmdSetDiscardRectangleEXT,
-        vkCmdSetDiscardRectangleEXTSafe,
+        unwrapVkCmdSetDiscardRectangleEXT,
         module Graphics.Vulkan.Types.Handles,
         VK_EXT_DISCARD_RECTANGLES_SPEC_VERSION,
         pattern VK_EXT_DISCARD_RECTANGLES_SPEC_VERSION,
@@ -175,47 +174,7 @@ type VkCmdSetDiscardRectangleEXT = "vkCmdSetDiscardRectangleEXT"
 --   >     , const VkRect2D* pDiscardRectangles
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetDiscardRectangleEXT.html vkCmdSetDiscardRectangleEXT registry at www.khronos.org>
-foreign import ccall unsafe "vkCmdSetDiscardRectangleEXT"
-               vkCmdSetDiscardRectangleEXT ::
-               VkCommandBuffer -- ^ commandBuffer
-                               -> Word32 -- ^ firstDiscardRectangle
-                                         -> Word32 -- ^ discardRectangleCount
-                                                   -> Ptr VkRect2D -- ^ pDiscardRectangles
-                                                                   -> IO ()
-
--- | queues: 'graphics'.
---
---   renderpass: @both@
---
---   > () vkCmdSetDiscardRectangleEXT
---   >     ( VkCommandBuffer commandBuffer
---   >     , uint32_t firstDiscardRectangle
---   >     , uint32_t discardRectangleCount
---   >     , const VkRect2D* pDiscardRectangles
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetDiscardRectangleEXT.html vkCmdSetDiscardRectangleEXT registry at www.khronos.org>
-foreign import ccall safe "vkCmdSetDiscardRectangleEXT"
-               vkCmdSetDiscardRectangleEXTSafe ::
-               VkCommandBuffer -- ^ commandBuffer
-                               -> Word32 -- ^ firstDiscardRectangle
-                                         -> Word32 -- ^ discardRectangleCount
-                                                   -> Ptr VkRect2D -- ^ pDiscardRectangles
-                                                                   -> IO ()
-
--- | queues: 'graphics'.
---
---   renderpass: @both@
---
---   > () vkCmdSetDiscardRectangleEXT
---   >     ( VkCommandBuffer commandBuffer
---   >     , uint32_t firstDiscardRectangle
---   >     , uint32_t discardRectangleCount
---   >     , const VkRect2D* pDiscardRectangles
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetDiscardRectangleEXT.html vkCmdSetDiscardRectangleEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetDiscardRectangleEXTvkCmdSetDiscardRectangleEXT registry at www.khronos.org>
 type HS_vkCmdSetDiscardRectangleEXT =
      VkCommandBuffer -- ^ commandBuffer
                      -> Word32 -- ^ firstDiscardRectangle

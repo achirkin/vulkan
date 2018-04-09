@@ -35,8 +35,7 @@ module Graphics.Vulkan.Ext.VK_MVK_macos_surface
         -- > #include "vk_platform.h"
         VkCreateMacOSSurfaceMVK, pattern VkCreateMacOSSurfaceMVK,
         HS_vkCreateMacOSSurfaceMVK, PFN_vkCreateMacOSSurfaceMVK,
-        unwrapVkCreateMacOSSurfaceMVK, vkCreateMacOSSurfaceMVK,
-        vkCreateMacOSSurfaceMVKSafe, module Graphics.Vulkan.Marshal,
+        unwrapVkCreateMacOSSurfaceMVK, module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,
@@ -93,51 +92,7 @@ type VkCreateMacOSSurfaceMVK = "vkCreateMacOSSurfaceMVK"
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateMacOSSurfaceMVK.html vkCreateMacOSSurfaceMVK registry at www.khronos.org>
-foreign import ccall unsafe "vkCreateMacOSSurfaceMVK"
-               vkCreateMacOSSurfaceMVK ::
-               VkInstance -- ^ instance
-                          ->
-                 Ptr VkMacOSSurfaceCreateInfoMVK -- ^ pCreateInfo
-                                                 ->
-                   Ptr VkAllocationCallbacks -- ^ pAllocator
-                                             -> Ptr VkSurfaceKHR -- ^ pSurface
-                                                                 -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
---
---   > VkResult vkCreateMacOSSurfaceMVK
---   >     ( VkInstance instance
---   >     , const VkMacOSSurfaceCreateInfoMVK* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkSurfaceKHR* pSurface
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateMacOSSurfaceMVK.html vkCreateMacOSSurfaceMVK registry at www.khronos.org>
-foreign import ccall safe "vkCreateMacOSSurfaceMVK"
-               vkCreateMacOSSurfaceMVKSafe ::
-               VkInstance -- ^ instance
-                          ->
-                 Ptr VkMacOSSurfaceCreateInfoMVK -- ^ pCreateInfo
-                                                 ->
-                   Ptr VkAllocationCallbacks -- ^ pAllocator
-                                             -> Ptr VkSurfaceKHR -- ^ pSurface
-                                                                 -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
---
---   > VkResult vkCreateMacOSSurfaceMVK
---   >     ( VkInstance instance
---   >     , const VkMacOSSurfaceCreateInfoMVK* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkSurfaceKHR* pSurface
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateMacOSSurfaceMVK.html vkCreateMacOSSurfaceMVK registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateMacOSSurfaceMVKvkCreateMacOSSurfaceMVK registry at www.khronos.org>
 type HS_vkCreateMacOSSurfaceMVK =
      VkInstance -- ^ instance
                 ->

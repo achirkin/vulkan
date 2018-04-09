@@ -46,12 +46,9 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_win32
         HS_vkImportSemaphoreWin32HandleKHR,
         PFN_vkImportSemaphoreWin32HandleKHR,
         unwrapVkImportSemaphoreWin32HandleKHR,
-        vkImportSemaphoreWin32HandleKHR,
-        vkImportSemaphoreWin32HandleKHRSafe, VkGetSemaphoreWin32HandleKHR,
-        pattern VkGetSemaphoreWin32HandleKHR,
+        VkGetSemaphoreWin32HandleKHR, pattern VkGetSemaphoreWin32HandleKHR,
         HS_vkGetSemaphoreWin32HandleKHR, PFN_vkGetSemaphoreWin32HandleKHR,
-        unwrapVkGetSemaphoreWin32HandleKHR, vkGetSemaphoreWin32HandleKHR,
-        vkGetSemaphoreWin32HandleKHRSafe, module Graphics.Vulkan.Marshal,
+        unwrapVkGetSemaphoreWin32HandleKHR, module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         module Graphics.Vulkan.Types.Include,
@@ -116,39 +113,7 @@ type VkImportSemaphoreWin32HandleKHR =
 --   >     , const VkImportSemaphoreWin32HandleInfoKHR* pImportSemaphoreWin32HandleInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkImportSemaphoreWin32HandleKHR.html vkImportSemaphoreWin32HandleKHR registry at www.khronos.org>
-foreign import ccall unsafe "vkImportSemaphoreWin32HandleKHR"
-               vkImportSemaphoreWin32HandleKHR ::
-               VkDevice -- ^ device
-                        -> Ptr VkImportSemaphoreWin32HandleInfoKHR -- ^ pImportSemaphoreWin32HandleInfo
-                                                                   -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
---
---   > VkResult vkImportSemaphoreWin32HandleKHR
---   >     ( VkDevice device
---   >     , const VkImportSemaphoreWin32HandleInfoKHR* pImportSemaphoreWin32HandleInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkImportSemaphoreWin32HandleKHR.html vkImportSemaphoreWin32HandleKHR registry at www.khronos.org>
-foreign import ccall safe "vkImportSemaphoreWin32HandleKHR"
-               vkImportSemaphoreWin32HandleKHRSafe ::
-               VkDevice -- ^ device
-                        -> Ptr VkImportSemaphoreWin32HandleInfoKHR -- ^ pImportSemaphoreWin32HandleInfo
-                                                                   -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
---
---   > VkResult vkImportSemaphoreWin32HandleKHR
---   >     ( VkDevice device
---   >     , const VkImportSemaphoreWin32HandleInfoKHR* pImportSemaphoreWin32HandleInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkImportSemaphoreWin32HandleKHR.html vkImportSemaphoreWin32HandleKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkImportSemaphoreWin32HandleKHRvkImportSemaphoreWin32HandleKHR registry at www.khronos.org>
 type HS_vkImportSemaphoreWin32HandleKHR =
      VkDevice -- ^ device
               -> Ptr VkImportSemaphoreWin32HandleInfoKHR -- ^ pImportSemaphoreWin32HandleInfo
@@ -202,45 +167,7 @@ type VkGetSemaphoreWin32HandleKHR = "vkGetSemaphoreWin32HandleKHR"
 --   >     , HANDLE* pHandle
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetSemaphoreWin32HandleKHR.html vkGetSemaphoreWin32HandleKHR registry at www.khronos.org>
-foreign import ccall unsafe "vkGetSemaphoreWin32HandleKHR"
-               vkGetSemaphoreWin32HandleKHR ::
-               VkDevice -- ^ device
-                        ->
-                 Ptr VkSemaphoreGetWin32HandleInfoKHR -- ^ pGetWin32HandleInfo
-                                                      -> Ptr HANDLE -- ^ pHandle
-                                                                    -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
---
---   > VkResult vkGetSemaphoreWin32HandleKHR
---   >     ( VkDevice device
---   >     , const VkSemaphoreGetWin32HandleInfoKHR* pGetWin32HandleInfo
---   >     , HANDLE* pHandle
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetSemaphoreWin32HandleKHR.html vkGetSemaphoreWin32HandleKHR registry at www.khronos.org>
-foreign import ccall safe "vkGetSemaphoreWin32HandleKHR"
-               vkGetSemaphoreWin32HandleKHRSafe ::
-               VkDevice -- ^ device
-                        ->
-                 Ptr VkSemaphoreGetWin32HandleInfoKHR -- ^ pGetWin32HandleInfo
-                                                      -> Ptr HANDLE -- ^ pHandle
-                                                                    -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
---
---   > VkResult vkGetSemaphoreWin32HandleKHR
---   >     ( VkDevice device
---   >     , const VkSemaphoreGetWin32HandleInfoKHR* pGetWin32HandleInfo
---   >     , HANDLE* pHandle
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetSemaphoreWin32HandleKHR.html vkGetSemaphoreWin32HandleKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSemaphoreWin32HandleKHRvkGetSemaphoreWin32HandleKHR registry at www.khronos.org>
 type HS_vkGetSemaphoreWin32HandleKHR =
      VkDevice -- ^ device
               ->

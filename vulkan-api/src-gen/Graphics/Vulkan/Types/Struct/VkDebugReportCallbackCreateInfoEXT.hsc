@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkDebugReportCallbackCreateInfoEXT
        (VkDebugReportCallbackCreateInfoEXT(..)) where
 import           Foreign.Storable                                  (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                          (Addr##,
+                                                                    ByteArray##,
+                                                                    byteArrayContents##,
+                                                                    plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkDebugReportFlagsEXT  (VkDebugReportFlagsEXT)
@@ -27,7 +30,7 @@ import           System.IO.Unsafe                                  (unsafeDupabl
 --   >     void*            pUserData;
 --   > } VkDebugReportCallbackCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDebugReportCallbackCreateInfoEXT.html VkDebugReportCallbackCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDebugReportCallbackCreateInfoEXTVkDebugReportCallbackCreateInfoEXT registry at www.khronos.org>
 data VkDebugReportCallbackCreateInfoEXT = VkDebugReportCallbackCreateInfoEXT## Addr##
                                                                               ByteArray##
 

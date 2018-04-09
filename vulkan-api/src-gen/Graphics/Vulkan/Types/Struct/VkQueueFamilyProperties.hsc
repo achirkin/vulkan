@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkQueueFamilyProperties
        (VkQueueFamilyProperties(..)) where
 import           Foreign.Storable                        (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                (Addr##, ByteArray##,
+                                                          byteArrayContents##,
+                                                          plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkQueueFlags (VkQueueFlags)
@@ -24,7 +26,7 @@ import           System.IO.Unsafe                        (unsafeDupablePerformIO
 --   >     VkExtent3D             minImageTransferGranularity;
 --   > } VkQueueFamilyProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkQueueFamilyProperties.html VkQueueFamilyProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkQueueFamilyPropertiesVkQueueFamilyProperties registry at www.khronos.org>
 data VkQueueFamilyProperties = VkQueueFamilyProperties## Addr##
                                                         ByteArray##
 

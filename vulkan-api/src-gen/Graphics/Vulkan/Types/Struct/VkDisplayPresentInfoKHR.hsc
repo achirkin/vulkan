@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkDisplayPresentInfoKHR
        (VkDisplayPresentInfoKHR(..)) where
 import           Foreign.Storable                              (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                      (Addr##,
+                                                                ByteArray##,
+                                                                byteArrayContents##,
+                                                                plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes               (VkBool32)
@@ -27,7 +30,7 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 --   >     VkBool32                         persistent;
 --   > } VkDisplayPresentInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDisplayPresentInfoKHR.html VkDisplayPresentInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDisplayPresentInfoKHRVkDisplayPresentInfoKHR registry at www.khronos.org>
 data VkDisplayPresentInfoKHR = VkDisplayPresentInfoKHR## Addr##
                                                         ByteArray##
 

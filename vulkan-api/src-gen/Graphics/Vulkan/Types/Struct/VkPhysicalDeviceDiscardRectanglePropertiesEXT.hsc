@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceDiscardRectanglePropertiesEXT
        (VkPhysicalDeviceDiscardRectanglePropertiesEXT(..)) where
 import           Foreign.Storable                                         (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                                 (Addr##,
+                                                                           ByteArray##,
+                                                                           byteArrayContents##,
+                                                                           plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType               (VkStructureType)
@@ -23,7 +26,7 @@ import           System.IO.Unsafe                                         (unsaf
 --   >     uint32_t               maxDiscardRectangles;
 --   > } VkPhysicalDeviceDiscardRectanglePropertiesEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPhysicalDeviceDiscardRectanglePropertiesEXT.html VkPhysicalDeviceDiscardRectanglePropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceDiscardRectanglePropertiesEXTVkPhysicalDeviceDiscardRectanglePropertiesEXT registry at www.khronos.org>
 data VkPhysicalDeviceDiscardRectanglePropertiesEXT = VkPhysicalDeviceDiscardRectanglePropertiesEXT## Addr##
                                                                                                     ByteArray##
 

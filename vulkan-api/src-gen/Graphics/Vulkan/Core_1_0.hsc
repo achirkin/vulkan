@@ -930,7 +930,7 @@ type VkCreateInstance = "vkCreateInstance"
 --   >     , VkInstance* pInstance
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateInstance.html vkCreateInstance registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateInstancevkCreateInstance registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateInstance" vkCreateInstance ::
                Ptr VkInstanceCreateInfo -- ^ pCreateInfo
                                         ->
@@ -948,7 +948,7 @@ foreign import ccall unsafe "vkCreateInstance" vkCreateInstance ::
 --   >     , VkInstance* pInstance
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateInstance.html vkCreateInstance registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateInstancevkCreateInstance registry at www.khronos.org>
 foreign import ccall safe "vkCreateInstance" vkCreateInstanceSafe
                ::
                Ptr VkInstanceCreateInfo -- ^ pCreateInfo
@@ -967,7 +967,7 @@ foreign import ccall safe "vkCreateInstance" vkCreateInstanceSafe
 --   >     , VkInstance* pInstance
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateInstance.html vkCreateInstance registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateInstancevkCreateInstance registry at www.khronos.org>
 type HS_vkCreateInstance =
      Ptr VkInstanceCreateInfo -- ^ pCreateInfo
                               ->
@@ -1011,7 +1011,7 @@ type VkDestroyInstance = "vkDestroyInstance"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyInstance.html vkDestroyInstance registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyInstancevkDestroyInstance registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyInstance" vkDestroyInstance
                :: VkInstance -- ^ instance
                              -> Ptr VkAllocationCallbacks -- ^ pAllocator
@@ -1022,7 +1022,7 @@ foreign import ccall unsafe "vkDestroyInstance" vkDestroyInstance
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyInstance.html vkDestroyInstance registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyInstancevkDestroyInstance registry at www.khronos.org>
 foreign import ccall safe "vkDestroyInstance" vkDestroyInstanceSafe
                :: VkInstance -- ^ instance
                              -> Ptr VkAllocationCallbacks -- ^ pAllocator
@@ -1033,7 +1033,7 @@ foreign import ccall safe "vkDestroyInstance" vkDestroyInstanceSafe
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyInstance.html vkDestroyInstance registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyInstancevkDestroyInstance registry at www.khronos.org>
 type HS_vkDestroyInstance =
      VkInstance -- ^ instance
                 -> Ptr VkAllocationCallbacks -- ^ pAllocator
@@ -1082,7 +1082,7 @@ type VkEnumeratePhysicalDevices = "vkEnumeratePhysicalDevices"
 --   >     , VkPhysicalDevice* pPhysicalDevices
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumeratePhysicalDevices.html vkEnumeratePhysicalDevices registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumeratePhysicalDevicesvkEnumeratePhysicalDevices registry at www.khronos.org>
 foreign import ccall unsafe "vkEnumeratePhysicalDevices"
                vkEnumeratePhysicalDevices ::
                VkInstance -- ^ instance
@@ -1100,7 +1100,7 @@ foreign import ccall unsafe "vkEnumeratePhysicalDevices"
 --   >     , VkPhysicalDevice* pPhysicalDevices
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumeratePhysicalDevices.html vkEnumeratePhysicalDevices registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumeratePhysicalDevicesvkEnumeratePhysicalDevices registry at www.khronos.org>
 foreign import ccall safe "vkEnumeratePhysicalDevices"
                vkEnumeratePhysicalDevicesSafe ::
                VkInstance -- ^ instance
@@ -1118,7 +1118,7 @@ foreign import ccall safe "vkEnumeratePhysicalDevices"
 --   >     , VkPhysicalDevice* pPhysicalDevices
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumeratePhysicalDevices.html vkEnumeratePhysicalDevices registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumeratePhysicalDevicesvkEnumeratePhysicalDevices registry at www.khronos.org>
 type HS_vkEnumeratePhysicalDevices =
      VkInstance -- ^ instance
                 -> Ptr Word32 -- ^ pPhysicalDeviceCount
@@ -1166,7 +1166,7 @@ type VkGetPhysicalDeviceFeatures = "vkGetPhysicalDeviceFeatures"
 --   >     , VkPhysicalDeviceFeatures* pFeatures
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceFeatures.html vkGetPhysicalDeviceFeatures registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceFeaturesvkGetPhysicalDeviceFeatures registry at www.khronos.org>
 foreign import ccall unsafe "vkGetPhysicalDeviceFeatures"
                vkGetPhysicalDeviceFeatures ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -1178,7 +1178,7 @@ foreign import ccall unsafe "vkGetPhysicalDeviceFeatures"
 --   >     , VkPhysicalDeviceFeatures* pFeatures
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceFeatures.html vkGetPhysicalDeviceFeatures registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceFeaturesvkGetPhysicalDeviceFeatures registry at www.khronos.org>
 foreign import ccall safe "vkGetPhysicalDeviceFeatures"
                vkGetPhysicalDeviceFeaturesSafe ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -1190,7 +1190,7 @@ foreign import ccall safe "vkGetPhysicalDeviceFeatures"
 --   >     , VkPhysicalDeviceFeatures* pFeatures
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceFeatures.html vkGetPhysicalDeviceFeatures registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceFeaturesvkGetPhysicalDeviceFeatures registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceFeatures =
      VkPhysicalDevice -- ^ physicalDevice
                       -> Ptr VkPhysicalDeviceFeatures -- ^ pFeatures
@@ -1240,7 +1240,7 @@ type VkGetPhysicalDeviceFormatProperties =
 --   >     , VkFormatProperties* pFormatProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceFormatProperties.html vkGetPhysicalDeviceFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceFormatPropertiesvkGetPhysicalDeviceFormatProperties registry at www.khronos.org>
 foreign import ccall unsafe "vkGetPhysicalDeviceFormatProperties"
                vkGetPhysicalDeviceFormatProperties ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -1254,7 +1254,7 @@ foreign import ccall unsafe "vkGetPhysicalDeviceFormatProperties"
 --   >     , VkFormatProperties* pFormatProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceFormatProperties.html vkGetPhysicalDeviceFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceFormatPropertiesvkGetPhysicalDeviceFormatProperties registry at www.khronos.org>
 foreign import ccall safe "vkGetPhysicalDeviceFormatProperties"
                vkGetPhysicalDeviceFormatPropertiesSafe ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -1268,7 +1268,7 @@ foreign import ccall safe "vkGetPhysicalDeviceFormatProperties"
 --   >     , VkFormatProperties* pFormatProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceFormatProperties.html vkGetPhysicalDeviceFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceFormatPropertiesvkGetPhysicalDeviceFormatProperties registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceFormatProperties =
      VkPhysicalDevice -- ^ physicalDevice
                       -> VkFormat -- ^ format
@@ -1329,7 +1329,7 @@ type VkGetPhysicalDeviceImageFormatProperties =
 --   >     , VkImageFormatProperties* pImageFormatProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceImageFormatProperties.html vkGetPhysicalDeviceImageFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceImageFormatPropertiesvkGetPhysicalDeviceImageFormatProperties registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceImageFormatProperties"
                vkGetPhysicalDeviceImageFormatProperties ::
@@ -1361,7 +1361,7 @@ foreign import ccall unsafe
 --   >     , VkImageFormatProperties* pImageFormatProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceImageFormatProperties.html vkGetPhysicalDeviceImageFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceImageFormatPropertiesvkGetPhysicalDeviceImageFormatProperties registry at www.khronos.org>
 foreign import ccall safe
                "vkGetPhysicalDeviceImageFormatProperties"
                vkGetPhysicalDeviceImageFormatPropertiesSafe ::
@@ -1393,7 +1393,7 @@ foreign import ccall safe
 --   >     , VkImageFormatProperties* pImageFormatProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceImageFormatProperties.html vkGetPhysicalDeviceImageFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceImageFormatPropertiesvkGetPhysicalDeviceImageFormatProperties registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceImageFormatProperties =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -1455,7 +1455,7 @@ type VkGetPhysicalDeviceProperties =
 --   >     , VkPhysicalDeviceProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceProperties.html vkGetPhysicalDeviceProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDevicePropertiesvkGetPhysicalDeviceProperties registry at www.khronos.org>
 foreign import ccall unsafe "vkGetPhysicalDeviceProperties"
                vkGetPhysicalDeviceProperties ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -1467,7 +1467,7 @@ foreign import ccall unsafe "vkGetPhysicalDeviceProperties"
 --   >     , VkPhysicalDeviceProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceProperties.html vkGetPhysicalDeviceProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDevicePropertiesvkGetPhysicalDeviceProperties registry at www.khronos.org>
 foreign import ccall safe "vkGetPhysicalDeviceProperties"
                vkGetPhysicalDevicePropertiesSafe ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -1479,7 +1479,7 @@ foreign import ccall safe "vkGetPhysicalDeviceProperties"
 --   >     , VkPhysicalDeviceProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceProperties.html vkGetPhysicalDeviceProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDevicePropertiesvkGetPhysicalDeviceProperties registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceProperties =
      VkPhysicalDevice -- ^ physicalDevice
                       -> Ptr VkPhysicalDeviceProperties -- ^ pProperties
@@ -1531,7 +1531,7 @@ type VkGetPhysicalDeviceQueueFamilyProperties =
 --   >     , VkQueueFamilyProperties* pQueueFamilyProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties.html vkGetPhysicalDeviceQueueFamilyProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceQueueFamilyPropertiesvkGetPhysicalDeviceQueueFamilyProperties registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceQueueFamilyProperties"
                vkGetPhysicalDeviceQueueFamilyProperties ::
@@ -1547,7 +1547,7 @@ foreign import ccall unsafe
 --   >     , VkQueueFamilyProperties* pQueueFamilyProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties.html vkGetPhysicalDeviceQueueFamilyProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceQueueFamilyPropertiesvkGetPhysicalDeviceQueueFamilyProperties registry at www.khronos.org>
 foreign import ccall safe
                "vkGetPhysicalDeviceQueueFamilyProperties"
                vkGetPhysicalDeviceQueueFamilyPropertiesSafe ::
@@ -1563,7 +1563,7 @@ foreign import ccall safe
 --   >     , VkQueueFamilyProperties* pQueueFamilyProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties.html vkGetPhysicalDeviceQueueFamilyProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceQueueFamilyPropertiesvkGetPhysicalDeviceQueueFamilyProperties registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceQueueFamilyProperties =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -1617,7 +1617,7 @@ type VkGetPhysicalDeviceMemoryProperties =
 --   >     , VkPhysicalDeviceMemoryProperties* pMemoryProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceMemoryProperties.html vkGetPhysicalDeviceMemoryProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceMemoryPropertiesvkGetPhysicalDeviceMemoryProperties registry at www.khronos.org>
 foreign import ccall unsafe "vkGetPhysicalDeviceMemoryProperties"
                vkGetPhysicalDeviceMemoryProperties ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -1629,7 +1629,7 @@ foreign import ccall unsafe "vkGetPhysicalDeviceMemoryProperties"
 --   >     , VkPhysicalDeviceMemoryProperties* pMemoryProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceMemoryProperties.html vkGetPhysicalDeviceMemoryProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceMemoryPropertiesvkGetPhysicalDeviceMemoryProperties registry at www.khronos.org>
 foreign import ccall safe "vkGetPhysicalDeviceMemoryProperties"
                vkGetPhysicalDeviceMemoryPropertiesSafe ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -1641,7 +1641,7 @@ foreign import ccall safe "vkGetPhysicalDeviceMemoryProperties"
 --   >     , VkPhysicalDeviceMemoryProperties* pMemoryProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceMemoryProperties.html vkGetPhysicalDeviceMemoryProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceMemoryPropertiesvkGetPhysicalDeviceMemoryProperties registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceMemoryProperties =
      VkPhysicalDevice -- ^ physicalDevice
                       -> Ptr VkPhysicalDeviceMemoryProperties -- ^ pMemoryProperties
@@ -1688,7 +1688,7 @@ type VkGetInstanceProcAddr = "vkGetInstanceProcAddr"
 --   >     , const char* pName
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetInstanceProcAddr.html vkGetInstanceProcAddr registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetInstanceProcAddrvkGetInstanceProcAddr registry at www.khronos.org>
 foreign import ccall unsafe "vkGetInstanceProcAddr"
                vkGetInstanceProcAddr ::
                VkInstance -- ^ instance
@@ -1700,7 +1700,7 @@ foreign import ccall unsafe "vkGetInstanceProcAddr"
 --   >     , const char* pName
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetInstanceProcAddr.html vkGetInstanceProcAddr registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetInstanceProcAddrvkGetInstanceProcAddr registry at www.khronos.org>
 foreign import ccall safe "vkGetInstanceProcAddr"
                vkGetInstanceProcAddrSafe ::
                VkInstance -- ^ instance
@@ -1712,7 +1712,7 @@ foreign import ccall safe "vkGetInstanceProcAddr"
 --   >     , const char* pName
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetInstanceProcAddr.html vkGetInstanceProcAddr registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetInstanceProcAddrvkGetInstanceProcAddr registry at www.khronos.org>
 type HS_vkGetInstanceProcAddr =
      VkInstance -- ^ instance
                 -> CString -- ^ pName
@@ -1754,7 +1754,7 @@ type VkGetDeviceProcAddr = "vkGetDeviceProcAddr"
 --   >     , const char* pName
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceProcAddr.html vkGetDeviceProcAddr registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetDeviceProcAddrvkGetDeviceProcAddr registry at www.khronos.org>
 foreign import ccall unsafe "vkGetDeviceProcAddr"
                vkGetDeviceProcAddr :: VkDevice -- ^ device
                                                -> CString -- ^ pName
@@ -1765,7 +1765,7 @@ foreign import ccall unsafe "vkGetDeviceProcAddr"
 --   >     , const char* pName
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceProcAddr.html vkGetDeviceProcAddr registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetDeviceProcAddrvkGetDeviceProcAddr registry at www.khronos.org>
 foreign import ccall safe "vkGetDeviceProcAddr"
                vkGetDeviceProcAddrSafe ::
                VkDevice -- ^ device
@@ -1777,7 +1777,7 @@ foreign import ccall safe "vkGetDeviceProcAddr"
 --   >     , const char* pName
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceProcAddr.html vkGetDeviceProcAddr registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetDeviceProcAddrvkGetDeviceProcAddr registry at www.khronos.org>
 type HS_vkGetDeviceProcAddr =
      VkDevice -- ^ device
               -> CString -- ^ pName
@@ -1825,7 +1825,7 @@ type VkCreateDevice = "vkCreateDevice"
 --   >     , VkDevice* pDevice
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateDevice.html vkCreateDevice registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateDevicevkCreateDevice registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateDevice" vkCreateDevice ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
@@ -1846,7 +1846,7 @@ foreign import ccall unsafe "vkCreateDevice" vkCreateDevice ::
 --   >     , VkDevice* pDevice
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateDevice.html vkCreateDevice registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateDevicevkCreateDevice registry at www.khronos.org>
 foreign import ccall safe "vkCreateDevice" vkCreateDeviceSafe ::
                VkPhysicalDevice -- ^ physicalDevice
                                 ->
@@ -1867,7 +1867,7 @@ foreign import ccall safe "vkCreateDevice" vkCreateDeviceSafe ::
 --   >     , VkDevice* pDevice
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateDevice.html vkCreateDevice registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateDevicevkCreateDevice registry at www.khronos.org>
 type HS_vkCreateDevice =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -1913,7 +1913,7 @@ type VkDestroyDevice = "vkDestroyDevice"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyDevice.html vkDestroyDevice registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyDevicevkDestroyDevice registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyDevice" vkDestroyDevice ::
                VkDevice -- ^ device
                         -> Ptr VkAllocationCallbacks -- ^ pAllocator
@@ -1924,7 +1924,7 @@ foreign import ccall unsafe "vkDestroyDevice" vkDestroyDevice ::
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyDevice.html vkDestroyDevice registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyDevicevkDestroyDevice registry at www.khronos.org>
 foreign import ccall safe "vkDestroyDevice" vkDestroyDeviceSafe ::
                VkDevice -- ^ device
                         -> Ptr VkAllocationCallbacks -- ^ pAllocator
@@ -1935,7 +1935,7 @@ foreign import ccall safe "vkDestroyDevice" vkDestroyDeviceSafe ::
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyDevice.html vkDestroyDevice registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyDevicevkDestroyDevice registry at www.khronos.org>
 type HS_vkDestroyDevice =
      VkDevice -- ^ device
               -> Ptr VkAllocationCallbacks -- ^ pAllocator
@@ -1987,7 +1987,7 @@ type VkEnumerateInstanceExtensionProperties =
 --   >     , VkExtensionProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumerateInstanceExtensionProperties.html vkEnumerateInstanceExtensionProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateInstanceExtensionPropertiesvkEnumerateInstanceExtensionProperties registry at www.khronos.org>
 foreign import ccall unsafe
                "vkEnumerateInstanceExtensionProperties"
                vkEnumerateInstanceExtensionProperties ::
@@ -2006,7 +2006,7 @@ foreign import ccall unsafe
 --   >     , VkExtensionProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumerateInstanceExtensionProperties.html vkEnumerateInstanceExtensionProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateInstanceExtensionPropertiesvkEnumerateInstanceExtensionProperties registry at www.khronos.org>
 foreign import ccall safe "vkEnumerateInstanceExtensionProperties"
                vkEnumerateInstanceExtensionPropertiesSafe ::
                CString -- ^ pLayerName
@@ -2024,7 +2024,7 @@ foreign import ccall safe "vkEnumerateInstanceExtensionProperties"
 --   >     , VkExtensionProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumerateInstanceExtensionProperties.html vkEnumerateInstanceExtensionProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateInstanceExtensionPropertiesvkEnumerateInstanceExtensionProperties registry at www.khronos.org>
 type HS_vkEnumerateInstanceExtensionProperties =
      CString -- ^ pLayerName
              -> Ptr Word32 -- ^ pPropertyCount
@@ -2082,7 +2082,7 @@ type VkEnumerateDeviceExtensionProperties =
 --   >     , VkExtensionProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumerateDeviceExtensionProperties.html vkEnumerateDeviceExtensionProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateDeviceExtensionPropertiesvkEnumerateDeviceExtensionProperties registry at www.khronos.org>
 foreign import ccall unsafe "vkEnumerateDeviceExtensionProperties"
                vkEnumerateDeviceExtensionProperties ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -2103,7 +2103,7 @@ foreign import ccall unsafe "vkEnumerateDeviceExtensionProperties"
 --   >     , VkExtensionProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumerateDeviceExtensionProperties.html vkEnumerateDeviceExtensionProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateDeviceExtensionPropertiesvkEnumerateDeviceExtensionProperties registry at www.khronos.org>
 foreign import ccall safe "vkEnumerateDeviceExtensionProperties"
                vkEnumerateDeviceExtensionPropertiesSafe ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -2124,7 +2124,7 @@ foreign import ccall safe "vkEnumerateDeviceExtensionProperties"
 --   >     , VkExtensionProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumerateDeviceExtensionProperties.html vkEnumerateDeviceExtensionProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateDeviceExtensionPropertiesvkEnumerateDeviceExtensionProperties registry at www.khronos.org>
 type HS_vkEnumerateDeviceExtensionProperties =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -2182,7 +2182,7 @@ type VkEnumerateInstanceLayerProperties =
 --   >     , VkLayerProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumerateInstanceLayerProperties.html vkEnumerateInstanceLayerProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateInstanceLayerPropertiesvkEnumerateInstanceLayerProperties registry at www.khronos.org>
 foreign import ccall unsafe "vkEnumerateInstanceLayerProperties"
                vkEnumerateInstanceLayerProperties ::
                Ptr Word32 -- ^ pPropertyCount
@@ -2198,7 +2198,7 @@ foreign import ccall unsafe "vkEnumerateInstanceLayerProperties"
 --   >     , VkLayerProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumerateInstanceLayerProperties.html vkEnumerateInstanceLayerProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateInstanceLayerPropertiesvkEnumerateInstanceLayerProperties registry at www.khronos.org>
 foreign import ccall safe "vkEnumerateInstanceLayerProperties"
                vkEnumerateInstanceLayerPropertiesSafe ::
                Ptr Word32 -- ^ pPropertyCount
@@ -2214,7 +2214,7 @@ foreign import ccall safe "vkEnumerateInstanceLayerProperties"
 --   >     , VkLayerProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumerateInstanceLayerProperties.html vkEnumerateInstanceLayerProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateInstanceLayerPropertiesvkEnumerateInstanceLayerProperties registry at www.khronos.org>
 type HS_vkEnumerateInstanceLayerProperties =
      Ptr Word32 -- ^ pPropertyCount
                 -> Ptr VkLayerProperties -- ^ pProperties
@@ -2270,7 +2270,7 @@ type VkEnumerateDeviceLayerProperties =
 --   >     , VkLayerProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumerateDeviceLayerProperties.html vkEnumerateDeviceLayerProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateDeviceLayerPropertiesvkEnumerateDeviceLayerProperties registry at www.khronos.org>
 foreign import ccall unsafe "vkEnumerateDeviceLayerProperties"
                vkEnumerateDeviceLayerProperties ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -2289,7 +2289,7 @@ foreign import ccall unsafe "vkEnumerateDeviceLayerProperties"
 --   >     , VkLayerProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumerateDeviceLayerProperties.html vkEnumerateDeviceLayerProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateDeviceLayerPropertiesvkEnumerateDeviceLayerProperties registry at www.khronos.org>
 foreign import ccall safe "vkEnumerateDeviceLayerProperties"
                vkEnumerateDeviceLayerPropertiesSafe ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -2308,7 +2308,7 @@ foreign import ccall safe "vkEnumerateDeviceLayerProperties"
 --   >     , VkLayerProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumerateDeviceLayerProperties.html vkEnumerateDeviceLayerProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEnumerateDeviceLayerPropertiesvkEnumerateDeviceLayerProperties registry at www.khronos.org>
 type HS_vkEnumerateDeviceLayerProperties =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -2358,7 +2358,7 @@ type VkGetDeviceQueue = "vkGetDeviceQueue"
 --   >     , VkQueue* pQueue
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceQueue.html vkGetDeviceQueue registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetDeviceQueuevkGetDeviceQueue registry at www.khronos.org>
 foreign import ccall unsafe "vkGetDeviceQueue" vkGetDeviceQueue ::
                VkDevice -- ^ device
                         -> Word32 -- ^ queueFamilyIndex
@@ -2373,7 +2373,7 @@ foreign import ccall unsafe "vkGetDeviceQueue" vkGetDeviceQueue ::
 --   >     , VkQueue* pQueue
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceQueue.html vkGetDeviceQueue registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetDeviceQueuevkGetDeviceQueue registry at www.khronos.org>
 foreign import ccall safe "vkGetDeviceQueue" vkGetDeviceQueueSafe
                :: VkDevice -- ^ device
                            -> Word32 -- ^ queueFamilyIndex
@@ -2388,7 +2388,7 @@ foreign import ccall safe "vkGetDeviceQueue" vkGetDeviceQueueSafe
 --   >     , VkQueue* pQueue
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceQueue.html vkGetDeviceQueue registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetDeviceQueuevkGetDeviceQueue registry at www.khronos.org>
 type HS_vkGetDeviceQueue =
      VkDevice -- ^ device
               -> Word32 -- ^ queueFamilyIndex
@@ -2438,7 +2438,7 @@ type VkQueueSubmit = "vkQueueSubmit"
 --   >     , VkFence fence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkQueueSubmit.html vkQueueSubmit registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkQueueSubmitvkQueueSubmit registry at www.khronos.org>
 foreign import ccall unsafe "vkQueueSubmit" vkQueueSubmit ::
                VkQueue -- ^ queue
                        -> Word32 -- ^ submitCount
@@ -2457,7 +2457,7 @@ foreign import ccall unsafe "vkQueueSubmit" vkQueueSubmit ::
 --   >     , VkFence fence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkQueueSubmit.html vkQueueSubmit registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkQueueSubmitvkQueueSubmit registry at www.khronos.org>
 foreign import ccall safe "vkQueueSubmit" vkQueueSubmitSafe ::
                VkQueue -- ^ queue
                        -> Word32 -- ^ submitCount
@@ -2476,7 +2476,7 @@ foreign import ccall safe "vkQueueSubmit" vkQueueSubmitSafe ::
 --   >     , VkFence fence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkQueueSubmit.html vkQueueSubmit registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkQueueSubmitvkQueueSubmit registry at www.khronos.org>
 type HS_vkQueueSubmit =
      VkQueue -- ^ queue
              -> Word32 -- ^ submitCount
@@ -2523,7 +2523,7 @@ type VkQueueWaitIdle = "vkQueueWaitIdle"
 --   >     ( VkQueue queue
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkQueueWaitIdle.html vkQueueWaitIdle registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkQueueWaitIdlevkQueueWaitIdle registry at www.khronos.org>
 foreign import ccall unsafe "vkQueueWaitIdle" vkQueueWaitIdle ::
                VkQueue -- ^ queue
                        -> IO VkResult
@@ -2536,7 +2536,7 @@ foreign import ccall unsafe "vkQueueWaitIdle" vkQueueWaitIdle ::
 --   >     ( VkQueue queue
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkQueueWaitIdle.html vkQueueWaitIdle registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkQueueWaitIdlevkQueueWaitIdle registry at www.khronos.org>
 foreign import ccall safe "vkQueueWaitIdle" vkQueueWaitIdleSafe ::
                VkQueue -- ^ queue
                        -> IO VkResult
@@ -2549,7 +2549,7 @@ foreign import ccall safe "vkQueueWaitIdle" vkQueueWaitIdleSafe ::
 --   >     ( VkQueue queue
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkQueueWaitIdle.html vkQueueWaitIdle registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkQueueWaitIdlevkQueueWaitIdle registry at www.khronos.org>
 type HS_vkQueueWaitIdle = VkQueue -- ^ queue
                                   -> IO VkResult
 
@@ -2592,7 +2592,7 @@ type VkDeviceWaitIdle = "vkDeviceWaitIdle"
 --   >     ( VkDevice device
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDeviceWaitIdle.html vkDeviceWaitIdle registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDeviceWaitIdlevkDeviceWaitIdle registry at www.khronos.org>
 foreign import ccall unsafe "vkDeviceWaitIdle" vkDeviceWaitIdle ::
                VkDevice -- ^ device
                         -> IO VkResult
@@ -2605,7 +2605,7 @@ foreign import ccall unsafe "vkDeviceWaitIdle" vkDeviceWaitIdle ::
 --   >     ( VkDevice device
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDeviceWaitIdle.html vkDeviceWaitIdle registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDeviceWaitIdlevkDeviceWaitIdle registry at www.khronos.org>
 foreign import ccall safe "vkDeviceWaitIdle" vkDeviceWaitIdleSafe
                :: VkDevice -- ^ device
                            -> IO VkResult
@@ -2618,7 +2618,7 @@ foreign import ccall safe "vkDeviceWaitIdle" vkDeviceWaitIdleSafe
 --   >     ( VkDevice device
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDeviceWaitIdle.html vkDeviceWaitIdle registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDeviceWaitIdlevkDeviceWaitIdle registry at www.khronos.org>
 type HS_vkDeviceWaitIdle = VkDevice -- ^ device
                                     -> IO VkResult
 
@@ -2664,7 +2664,7 @@ type VkAllocateMemory = "vkAllocateMemory"
 --   >     , VkDeviceMemory* pMemory
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkAllocateMemory.html vkAllocateMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkAllocateMemoryvkAllocateMemory registry at www.khronos.org>
 foreign import ccall unsafe "vkAllocateMemory" vkAllocateMemory ::
                VkDevice -- ^ device
                         ->
@@ -2685,7 +2685,7 @@ foreign import ccall unsafe "vkAllocateMemory" vkAllocateMemory ::
 --   >     , VkDeviceMemory* pMemory
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkAllocateMemory.html vkAllocateMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkAllocateMemoryvkAllocateMemory registry at www.khronos.org>
 foreign import ccall safe "vkAllocateMemory" vkAllocateMemorySafe
                ::
                VkDevice -- ^ device
@@ -2707,7 +2707,7 @@ foreign import ccall safe "vkAllocateMemory" vkAllocateMemorySafe
 --   >     , VkDeviceMemory* pMemory
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkAllocateMemory.html vkAllocateMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkAllocateMemoryvkAllocateMemory registry at www.khronos.org>
 type HS_vkAllocateMemory =
      VkDevice -- ^ device
               ->
@@ -2754,7 +2754,7 @@ type VkFreeMemory = "vkFreeMemory"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkFreeMemory.html vkFreeMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFreeMemoryvkFreeMemory registry at www.khronos.org>
 foreign import ccall unsafe "vkFreeMemory" vkFreeMemory ::
                VkDevice -- ^ device
                         -> VkDeviceMemory -- ^ memory
@@ -2767,7 +2767,7 @@ foreign import ccall unsafe "vkFreeMemory" vkFreeMemory ::
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkFreeMemory.html vkFreeMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFreeMemoryvkFreeMemory registry at www.khronos.org>
 foreign import ccall safe "vkFreeMemory" vkFreeMemorySafe ::
                VkDevice -- ^ device
                         -> VkDeviceMemory -- ^ memory
@@ -2780,7 +2780,7 @@ foreign import ccall safe "vkFreeMemory" vkFreeMemorySafe ::
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkFreeMemory.html vkFreeMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFreeMemoryvkFreeMemory registry at www.khronos.org>
 type HS_vkFreeMemory =
      VkDevice -- ^ device
               -> VkDeviceMemory -- ^ memory
@@ -2831,7 +2831,7 @@ type VkMapMemory = "vkMapMemory"
 --   >     , void** ppData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkMapMemory.html vkMapMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkMapMemoryvkMapMemory registry at www.khronos.org>
 foreign import ccall unsafe "vkMapMemory" vkMapMemory ::
                VkDevice -- ^ device
                         ->
@@ -2857,7 +2857,7 @@ foreign import ccall unsafe "vkMapMemory" vkMapMemory ::
 --   >     , void** ppData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkMapMemory.html vkMapMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkMapMemoryvkMapMemory registry at www.khronos.org>
 foreign import ccall safe "vkMapMemory" vkMapMemorySafe ::
                VkDevice -- ^ device
                         ->
@@ -2883,7 +2883,7 @@ foreign import ccall safe "vkMapMemory" vkMapMemorySafe ::
 --   >     , void** ppData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkMapMemory.html vkMapMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkMapMemoryvkMapMemory registry at www.khronos.org>
 type HS_vkMapMemory =
      VkDevice -- ^ device
               ->
@@ -2932,7 +2932,7 @@ type VkUnmapMemory = "vkUnmapMemory"
 --   >     , VkDeviceMemory memory
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkUnmapMemory.html vkUnmapMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkUnmapMemoryvkUnmapMemory registry at www.khronos.org>
 foreign import ccall unsafe "vkUnmapMemory" vkUnmapMemory ::
                VkDevice -- ^ device
                         -> VkDeviceMemory -- ^ memory
@@ -2943,7 +2943,7 @@ foreign import ccall unsafe "vkUnmapMemory" vkUnmapMemory ::
 --   >     , VkDeviceMemory memory
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkUnmapMemory.html vkUnmapMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkUnmapMemoryvkUnmapMemory registry at www.khronos.org>
 foreign import ccall safe "vkUnmapMemory" vkUnmapMemorySafe ::
                VkDevice -- ^ device
                         -> VkDeviceMemory -- ^ memory
@@ -2954,7 +2954,7 @@ foreign import ccall safe "vkUnmapMemory" vkUnmapMemorySafe ::
 --   >     , VkDeviceMemory memory
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkUnmapMemory.html vkUnmapMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkUnmapMemoryvkUnmapMemory registry at www.khronos.org>
 type HS_vkUnmapMemory = VkDevice -- ^ device
                                  -> VkDeviceMemory -- ^ memory
                                                    -> IO ()
@@ -3002,7 +3002,7 @@ type VkFlushMappedMemoryRanges = "vkFlushMappedMemoryRanges"
 --   >     , const VkMappedMemoryRange* pMemoryRanges
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkFlushMappedMemoryRanges.html vkFlushMappedMemoryRanges registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFlushMappedMemoryRangesvkFlushMappedMemoryRanges registry at www.khronos.org>
 foreign import ccall unsafe "vkFlushMappedMemoryRanges"
                vkFlushMappedMemoryRanges ::
                VkDevice -- ^ device
@@ -3020,7 +3020,7 @@ foreign import ccall unsafe "vkFlushMappedMemoryRanges"
 --   >     , const VkMappedMemoryRange* pMemoryRanges
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkFlushMappedMemoryRanges.html vkFlushMappedMemoryRanges registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFlushMappedMemoryRangesvkFlushMappedMemoryRanges registry at www.khronos.org>
 foreign import ccall safe "vkFlushMappedMemoryRanges"
                vkFlushMappedMemoryRangesSafe ::
                VkDevice -- ^ device
@@ -3038,7 +3038,7 @@ foreign import ccall safe "vkFlushMappedMemoryRanges"
 --   >     , const VkMappedMemoryRange* pMemoryRanges
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkFlushMappedMemoryRanges.html vkFlushMappedMemoryRanges registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFlushMappedMemoryRangesvkFlushMappedMemoryRanges registry at www.khronos.org>
 type HS_vkFlushMappedMemoryRanges =
      VkDevice -- ^ device
               -> Word32 -- ^ memoryRangeCount
@@ -3093,7 +3093,7 @@ type VkInvalidateMappedMemoryRanges =
 --   >     , const VkMappedMemoryRange* pMemoryRanges
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkInvalidateMappedMemoryRanges.html vkInvalidateMappedMemoryRanges registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkInvalidateMappedMemoryRangesvkInvalidateMappedMemoryRanges registry at www.khronos.org>
 foreign import ccall unsafe "vkInvalidateMappedMemoryRanges"
                vkInvalidateMappedMemoryRanges ::
                VkDevice -- ^ device
@@ -3111,7 +3111,7 @@ foreign import ccall unsafe "vkInvalidateMappedMemoryRanges"
 --   >     , const VkMappedMemoryRange* pMemoryRanges
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkInvalidateMappedMemoryRanges.html vkInvalidateMappedMemoryRanges registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkInvalidateMappedMemoryRangesvkInvalidateMappedMemoryRanges registry at www.khronos.org>
 foreign import ccall safe "vkInvalidateMappedMemoryRanges"
                vkInvalidateMappedMemoryRangesSafe ::
                VkDevice -- ^ device
@@ -3129,7 +3129,7 @@ foreign import ccall safe "vkInvalidateMappedMemoryRanges"
 --   >     , const VkMappedMemoryRange* pMemoryRanges
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkInvalidateMappedMemoryRanges.html vkInvalidateMappedMemoryRanges registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkInvalidateMappedMemoryRangesvkInvalidateMappedMemoryRanges registry at www.khronos.org>
 type HS_vkInvalidateMappedMemoryRanges =
      VkDevice -- ^ device
               -> Word32 -- ^ memoryRangeCount
@@ -3180,7 +3180,7 @@ type VkGetDeviceMemoryCommitment = "vkGetDeviceMemoryCommitment"
 --   >     , VkDeviceSize* pCommittedMemoryInBytes
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceMemoryCommitment.html vkGetDeviceMemoryCommitment registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetDeviceMemoryCommitmentvkGetDeviceMemoryCommitment registry at www.khronos.org>
 foreign import ccall unsafe "vkGetDeviceMemoryCommitment"
                vkGetDeviceMemoryCommitment ::
                VkDevice -- ^ device
@@ -3194,7 +3194,7 @@ foreign import ccall unsafe "vkGetDeviceMemoryCommitment"
 --   >     , VkDeviceSize* pCommittedMemoryInBytes
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceMemoryCommitment.html vkGetDeviceMemoryCommitment registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetDeviceMemoryCommitmentvkGetDeviceMemoryCommitment registry at www.khronos.org>
 foreign import ccall safe "vkGetDeviceMemoryCommitment"
                vkGetDeviceMemoryCommitmentSafe ::
                VkDevice -- ^ device
@@ -3208,7 +3208,7 @@ foreign import ccall safe "vkGetDeviceMemoryCommitment"
 --   >     , VkDeviceSize* pCommittedMemoryInBytes
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceMemoryCommitment.html vkGetDeviceMemoryCommitment registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetDeviceMemoryCommitmentvkGetDeviceMemoryCommitment registry at www.khronos.org>
 type HS_vkGetDeviceMemoryCommitment =
      VkDevice -- ^ device
               -> VkDeviceMemory -- ^ memory
@@ -3259,7 +3259,7 @@ type VkBindBufferMemory = "vkBindBufferMemory"
 --   >     , VkDeviceSize memoryOffset
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkBindBufferMemory.html vkBindBufferMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkBindBufferMemoryvkBindBufferMemory registry at www.khronos.org>
 foreign import ccall unsafe "vkBindBufferMemory" vkBindBufferMemory
                ::
                VkDevice -- ^ device
@@ -3280,7 +3280,7 @@ foreign import ccall unsafe "vkBindBufferMemory" vkBindBufferMemory
 --   >     , VkDeviceSize memoryOffset
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkBindBufferMemory.html vkBindBufferMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkBindBufferMemoryvkBindBufferMemory registry at www.khronos.org>
 foreign import ccall safe "vkBindBufferMemory"
                vkBindBufferMemorySafe ::
                VkDevice -- ^ device
@@ -3301,7 +3301,7 @@ foreign import ccall safe "vkBindBufferMemory"
 --   >     , VkDeviceSize memoryOffset
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkBindBufferMemory.html vkBindBufferMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkBindBufferMemoryvkBindBufferMemory registry at www.khronos.org>
 type HS_vkBindBufferMemory =
      VkDevice -- ^ device
               ->
@@ -3352,7 +3352,7 @@ type VkBindImageMemory = "vkBindImageMemory"
 --   >     , VkDeviceSize memoryOffset
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkBindImageMemory.html vkBindImageMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkBindImageMemoryvkBindImageMemory registry at www.khronos.org>
 foreign import ccall unsafe "vkBindImageMemory" vkBindImageMemory
                ::
                VkDevice -- ^ device
@@ -3373,7 +3373,7 @@ foreign import ccall unsafe "vkBindImageMemory" vkBindImageMemory
 --   >     , VkDeviceSize memoryOffset
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkBindImageMemory.html vkBindImageMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkBindImageMemoryvkBindImageMemory registry at www.khronos.org>
 foreign import ccall safe "vkBindImageMemory" vkBindImageMemorySafe
                ::
                VkDevice -- ^ device
@@ -3394,7 +3394,7 @@ foreign import ccall safe "vkBindImageMemory" vkBindImageMemorySafe
 --   >     , VkDeviceSize memoryOffset
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkBindImageMemory.html vkBindImageMemory registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkBindImageMemoryvkBindImageMemory registry at www.khronos.org>
 type HS_vkBindImageMemory =
      VkDevice -- ^ device
               ->
@@ -3445,7 +3445,7 @@ type VkGetBufferMemoryRequirements =
 --   >     , VkMemoryRequirements* pMemoryRequirements
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetBufferMemoryRequirements.html vkGetBufferMemoryRequirements registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetBufferMemoryRequirementsvkGetBufferMemoryRequirements registry at www.khronos.org>
 foreign import ccall unsafe "vkGetBufferMemoryRequirements"
                vkGetBufferMemoryRequirements ::
                VkDevice -- ^ device
@@ -3459,7 +3459,7 @@ foreign import ccall unsafe "vkGetBufferMemoryRequirements"
 --   >     , VkMemoryRequirements* pMemoryRequirements
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetBufferMemoryRequirements.html vkGetBufferMemoryRequirements registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetBufferMemoryRequirementsvkGetBufferMemoryRequirements registry at www.khronos.org>
 foreign import ccall safe "vkGetBufferMemoryRequirements"
                vkGetBufferMemoryRequirementsSafe ::
                VkDevice -- ^ device
@@ -3473,7 +3473,7 @@ foreign import ccall safe "vkGetBufferMemoryRequirements"
 --   >     , VkMemoryRequirements* pMemoryRequirements
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetBufferMemoryRequirements.html vkGetBufferMemoryRequirements registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetBufferMemoryRequirementsvkGetBufferMemoryRequirements registry at www.khronos.org>
 type HS_vkGetBufferMemoryRequirements =
      VkDevice -- ^ device
               -> VkBuffer -- ^ buffer
@@ -3524,7 +3524,7 @@ type VkGetImageMemoryRequirements = "vkGetImageMemoryRequirements"
 --   >     , VkMemoryRequirements* pMemoryRequirements
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetImageMemoryRequirements.html vkGetImageMemoryRequirements registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetImageMemoryRequirementsvkGetImageMemoryRequirements registry at www.khronos.org>
 foreign import ccall unsafe "vkGetImageMemoryRequirements"
                vkGetImageMemoryRequirements ::
                VkDevice -- ^ device
@@ -3538,7 +3538,7 @@ foreign import ccall unsafe "vkGetImageMemoryRequirements"
 --   >     , VkMemoryRequirements* pMemoryRequirements
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetImageMemoryRequirements.html vkGetImageMemoryRequirements registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetImageMemoryRequirementsvkGetImageMemoryRequirements registry at www.khronos.org>
 foreign import ccall safe "vkGetImageMemoryRequirements"
                vkGetImageMemoryRequirementsSafe ::
                VkDevice -- ^ device
@@ -3552,7 +3552,7 @@ foreign import ccall safe "vkGetImageMemoryRequirements"
 --   >     , VkMemoryRequirements* pMemoryRequirements
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetImageMemoryRequirements.html vkGetImageMemoryRequirements registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetImageMemoryRequirementsvkGetImageMemoryRequirements registry at www.khronos.org>
 type HS_vkGetImageMemoryRequirements =
      VkDevice -- ^ device
               -> VkImage -- ^ image
@@ -3605,7 +3605,7 @@ type VkGetImageSparseMemoryRequirements =
 --   >     , VkSparseImageMemoryRequirements* pSparseMemoryRequirements
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetImageSparseMemoryRequirements.html vkGetImageSparseMemoryRequirements registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetImageSparseMemoryRequirementsvkGetImageSparseMemoryRequirements registry at www.khronos.org>
 foreign import ccall unsafe "vkGetImageSparseMemoryRequirements"
                vkGetImageSparseMemoryRequirements ::
                VkDevice -- ^ device
@@ -3623,7 +3623,7 @@ foreign import ccall unsafe "vkGetImageSparseMemoryRequirements"
 --   >     , VkSparseImageMemoryRequirements* pSparseMemoryRequirements
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetImageSparseMemoryRequirements.html vkGetImageSparseMemoryRequirements registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetImageSparseMemoryRequirementsvkGetImageSparseMemoryRequirements registry at www.khronos.org>
 foreign import ccall safe "vkGetImageSparseMemoryRequirements"
                vkGetImageSparseMemoryRequirementsSafe ::
                VkDevice -- ^ device
@@ -3641,7 +3641,7 @@ foreign import ccall safe "vkGetImageSparseMemoryRequirements"
 --   >     , VkSparseImageMemoryRequirements* pSparseMemoryRequirements
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetImageSparseMemoryRequirements.html vkGetImageSparseMemoryRequirements registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetImageSparseMemoryRequirementsvkGetImageSparseMemoryRequirements registry at www.khronos.org>
 type HS_vkGetImageSparseMemoryRequirements =
      VkDevice -- ^ device
               ->
@@ -3704,7 +3704,7 @@ type VkGetPhysicalDeviceSparseImageFormatProperties =
 --   >     , VkSparseImageFormatProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceSparseImageFormatProperties.html vkGetPhysicalDeviceSparseImageFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceSparseImageFormatPropertiesvkGetPhysicalDeviceSparseImageFormatProperties registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceSparseImageFormatProperties"
                vkGetPhysicalDeviceSparseImageFormatProperties ::
@@ -3735,7 +3735,7 @@ foreign import ccall unsafe
 --   >     , VkSparseImageFormatProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceSparseImageFormatProperties.html vkGetPhysicalDeviceSparseImageFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceSparseImageFormatPropertiesvkGetPhysicalDeviceSparseImageFormatProperties registry at www.khronos.org>
 foreign import ccall safe
                "vkGetPhysicalDeviceSparseImageFormatProperties"
                vkGetPhysicalDeviceSparseImageFormatPropertiesSafe ::
@@ -3766,7 +3766,7 @@ foreign import ccall safe
 --   >     , VkSparseImageFormatProperties* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceSparseImageFormatProperties.html vkGetPhysicalDeviceSparseImageFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPhysicalDeviceSparseImageFormatPropertiesvkGetPhysicalDeviceSparseImageFormatProperties registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceSparseImageFormatProperties =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -3835,7 +3835,7 @@ type VkQueueBindSparse = "vkQueueBindSparse"
 --   >     , VkFence fence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkQueueBindSparse.html vkQueueBindSparse registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkQueueBindSparsevkQueueBindSparse registry at www.khronos.org>
 foreign import ccall unsafe "vkQueueBindSparse" vkQueueBindSparse
                ::
                VkQueue -- ^ queue
@@ -3857,7 +3857,7 @@ foreign import ccall unsafe "vkQueueBindSparse" vkQueueBindSparse
 --   >     , VkFence fence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkQueueBindSparse.html vkQueueBindSparse registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkQueueBindSparsevkQueueBindSparse registry at www.khronos.org>
 foreign import ccall safe "vkQueueBindSparse" vkQueueBindSparseSafe
                ::
                VkQueue -- ^ queue
@@ -3879,7 +3879,7 @@ foreign import ccall safe "vkQueueBindSparse" vkQueueBindSparseSafe
 --   >     , VkFence fence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkQueueBindSparse.html vkQueueBindSparse registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkQueueBindSparsevkQueueBindSparse registry at www.khronos.org>
 type HS_vkQueueBindSparse =
      VkQueue -- ^ queue
              -> Word32 -- ^ bindInfoCount
@@ -3929,7 +3929,7 @@ type VkCreateFence = "vkCreateFence"
 --   >     , VkFence* pFence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateFence.html vkCreateFence registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateFencevkCreateFence registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateFence" vkCreateFence ::
                VkDevice -- ^ device
                         ->
@@ -3950,7 +3950,7 @@ foreign import ccall unsafe "vkCreateFence" vkCreateFence ::
 --   >     , VkFence* pFence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateFence.html vkCreateFence registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateFencevkCreateFence registry at www.khronos.org>
 foreign import ccall safe "vkCreateFence" vkCreateFenceSafe ::
                VkDevice -- ^ device
                         ->
@@ -3971,7 +3971,7 @@ foreign import ccall safe "vkCreateFence" vkCreateFenceSafe ::
 --   >     , VkFence* pFence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateFence.html vkCreateFence registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateFencevkCreateFence registry at www.khronos.org>
 type HS_vkCreateFence =
      VkDevice -- ^ device
               ->
@@ -4018,7 +4018,7 @@ type VkDestroyFence = "vkDestroyFence"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyFence.html vkDestroyFence registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyFencevkDestroyFence registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyFence" vkDestroyFence ::
                VkDevice -- ^ device
                         -> VkFence -- ^ fence
@@ -4031,7 +4031,7 @@ foreign import ccall unsafe "vkDestroyFence" vkDestroyFence ::
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyFence.html vkDestroyFence registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyFencevkDestroyFence registry at www.khronos.org>
 foreign import ccall safe "vkDestroyFence" vkDestroyFenceSafe ::
                VkDevice -- ^ device
                         -> VkFence -- ^ fence
@@ -4044,7 +4044,7 @@ foreign import ccall safe "vkDestroyFence" vkDestroyFenceSafe ::
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyFence.html vkDestroyFence registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyFencevkDestroyFence registry at www.khronos.org>
 type HS_vkDestroyFence =
      VkDevice -- ^ device
               -> VkFence -- ^ fence
@@ -4092,7 +4092,7 @@ type VkResetFences = "vkResetFences"
 --   >     , const VkFence* pFences
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkResetFences.html vkResetFences registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetFencesvkResetFences registry at www.khronos.org>
 foreign import ccall unsafe "vkResetFences" vkResetFences ::
                VkDevice -- ^ device
                         -> Word32 -- ^ fenceCount
@@ -4109,7 +4109,7 @@ foreign import ccall unsafe "vkResetFences" vkResetFences ::
 --   >     , const VkFence* pFences
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkResetFences.html vkResetFences registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetFencesvkResetFences registry at www.khronos.org>
 foreign import ccall safe "vkResetFences" vkResetFencesSafe ::
                VkDevice -- ^ device
                         -> Word32 -- ^ fenceCount
@@ -4126,7 +4126,7 @@ foreign import ccall safe "vkResetFences" vkResetFencesSafe ::
 --   >     , const VkFence* pFences
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkResetFences.html vkResetFences registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetFencesvkResetFences registry at www.khronos.org>
 type HS_vkResetFences =
      VkDevice -- ^ device
               -> Word32 -- ^ fenceCount
@@ -4173,7 +4173,7 @@ type VkGetFenceStatus = "vkGetFenceStatus"
 --   >     , VkFence fence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetFenceStatus.html vkGetFenceStatus registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetFenceStatusvkGetFenceStatus registry at www.khronos.org>
 foreign import ccall unsafe "vkGetFenceStatus" vkGetFenceStatus ::
                VkDevice -- ^ device
                         -> VkFence -- ^ fence
@@ -4188,7 +4188,7 @@ foreign import ccall unsafe "vkGetFenceStatus" vkGetFenceStatus ::
 --   >     , VkFence fence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetFenceStatus.html vkGetFenceStatus registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetFenceStatusvkGetFenceStatus registry at www.khronos.org>
 foreign import ccall safe "vkGetFenceStatus" vkGetFenceStatusSafe
                :: VkDevice -- ^ device
                            -> VkFence -- ^ fence
@@ -4203,7 +4203,7 @@ foreign import ccall safe "vkGetFenceStatus" vkGetFenceStatusSafe
 --   >     , VkFence fence
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetFenceStatus.html vkGetFenceStatus registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetFenceStatusvkGetFenceStatus registry at www.khronos.org>
 type HS_vkGetFenceStatus = VkDevice -- ^ device
                                     -> VkFence -- ^ fence
                                                -> IO VkResult
@@ -4251,7 +4251,7 @@ type VkWaitForFences = "vkWaitForFences"
 --   >     , uint64_t timeout
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkWaitForFences.html vkWaitForFences registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkWaitForFencesvkWaitForFences registry at www.khronos.org>
 foreign import ccall unsafe "vkWaitForFences" vkWaitForFences ::
                VkDevice -- ^ device
                         ->
@@ -4273,7 +4273,7 @@ foreign import ccall unsafe "vkWaitForFences" vkWaitForFences ::
 --   >     , uint64_t timeout
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkWaitForFences.html vkWaitForFences registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkWaitForFencesvkWaitForFences registry at www.khronos.org>
 foreign import ccall safe "vkWaitForFences" vkWaitForFencesSafe ::
                VkDevice -- ^ device
                         ->
@@ -4295,7 +4295,7 @@ foreign import ccall safe "vkWaitForFences" vkWaitForFencesSafe ::
 --   >     , uint64_t timeout
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkWaitForFences.html vkWaitForFences registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkWaitForFencesvkWaitForFences registry at www.khronos.org>
 type HS_vkWaitForFences =
      VkDevice -- ^ device
               ->
@@ -4347,7 +4347,7 @@ type VkCreateSemaphore = "vkCreateSemaphore"
 --   >     , VkSemaphore* pSemaphore
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateSemaphore.html vkCreateSemaphore registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateSemaphorevkCreateSemaphore registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateSemaphore" vkCreateSemaphore
                ::
                VkDevice -- ^ device
@@ -4369,7 +4369,7 @@ foreign import ccall unsafe "vkCreateSemaphore" vkCreateSemaphore
 --   >     , VkSemaphore* pSemaphore
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateSemaphore.html vkCreateSemaphore registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateSemaphorevkCreateSemaphore registry at www.khronos.org>
 foreign import ccall safe "vkCreateSemaphore" vkCreateSemaphoreSafe
                ::
                VkDevice -- ^ device
@@ -4391,7 +4391,7 @@ foreign import ccall safe "vkCreateSemaphore" vkCreateSemaphoreSafe
 --   >     , VkSemaphore* pSemaphore
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateSemaphore.html vkCreateSemaphore registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateSemaphorevkCreateSemaphore registry at www.khronos.org>
 type HS_vkCreateSemaphore =
      VkDevice -- ^ device
               ->
@@ -4438,7 +4438,7 @@ type VkDestroySemaphore = "vkDestroySemaphore"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroySemaphore.html vkDestroySemaphore registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroySemaphorevkDestroySemaphore registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroySemaphore" vkDestroySemaphore
                :: VkDevice -- ^ device
                            -> VkSemaphore -- ^ semaphore
@@ -4451,7 +4451,7 @@ foreign import ccall unsafe "vkDestroySemaphore" vkDestroySemaphore
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroySemaphore.html vkDestroySemaphore registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroySemaphorevkDestroySemaphore registry at www.khronos.org>
 foreign import ccall safe "vkDestroySemaphore"
                vkDestroySemaphoreSafe ::
                VkDevice -- ^ device
@@ -4465,7 +4465,7 @@ foreign import ccall safe "vkDestroySemaphore"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroySemaphore.html vkDestroySemaphore registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroySemaphorevkDestroySemaphore registry at www.khronos.org>
 type HS_vkDestroySemaphore =
      VkDevice -- ^ device
               -> VkSemaphore -- ^ semaphore
@@ -4514,7 +4514,7 @@ type VkCreateEvent = "vkCreateEvent"
 --   >     , VkEvent* pEvent
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateEvent.html vkCreateEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateEventvkCreateEvent registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateEvent" vkCreateEvent ::
                VkDevice -- ^ device
                         ->
@@ -4535,7 +4535,7 @@ foreign import ccall unsafe "vkCreateEvent" vkCreateEvent ::
 --   >     , VkEvent* pEvent
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateEvent.html vkCreateEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateEventvkCreateEvent registry at www.khronos.org>
 foreign import ccall safe "vkCreateEvent" vkCreateEventSafe ::
                VkDevice -- ^ device
                         ->
@@ -4556,7 +4556,7 @@ foreign import ccall safe "vkCreateEvent" vkCreateEventSafe ::
 --   >     , VkEvent* pEvent
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateEvent.html vkCreateEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateEventvkCreateEvent registry at www.khronos.org>
 type HS_vkCreateEvent =
      VkDevice -- ^ device
               ->
@@ -4603,7 +4603,7 @@ type VkDestroyEvent = "vkDestroyEvent"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyEvent.html vkDestroyEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyEventvkDestroyEvent registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyEvent" vkDestroyEvent ::
                VkDevice -- ^ device
                         -> VkEvent -- ^ event
@@ -4616,7 +4616,7 @@ foreign import ccall unsafe "vkDestroyEvent" vkDestroyEvent ::
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyEvent.html vkDestroyEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyEventvkDestroyEvent registry at www.khronos.org>
 foreign import ccall safe "vkDestroyEvent" vkDestroyEventSafe ::
                VkDevice -- ^ device
                         -> VkEvent -- ^ event
@@ -4629,7 +4629,7 @@ foreign import ccall safe "vkDestroyEvent" vkDestroyEventSafe ::
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyEvent.html vkDestroyEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyEventvkDestroyEvent registry at www.khronos.org>
 type HS_vkDestroyEvent =
      VkDevice -- ^ device
               -> VkEvent -- ^ event
@@ -4676,7 +4676,7 @@ type VkGetEventStatus = "vkGetEventStatus"
 --   >     , VkEvent event
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetEventStatus.html vkGetEventStatus registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetEventStatusvkGetEventStatus registry at www.khronos.org>
 foreign import ccall unsafe "vkGetEventStatus" vkGetEventStatus ::
                VkDevice -- ^ device
                         -> VkEvent -- ^ event
@@ -4691,7 +4691,7 @@ foreign import ccall unsafe "vkGetEventStatus" vkGetEventStatus ::
 --   >     , VkEvent event
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetEventStatus.html vkGetEventStatus registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetEventStatusvkGetEventStatus registry at www.khronos.org>
 foreign import ccall safe "vkGetEventStatus" vkGetEventStatusSafe
                :: VkDevice -- ^ device
                            -> VkEvent -- ^ event
@@ -4706,7 +4706,7 @@ foreign import ccall safe "vkGetEventStatus" vkGetEventStatusSafe
 --   >     , VkEvent event
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetEventStatus.html vkGetEventStatus registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetEventStatusvkGetEventStatus registry at www.khronos.org>
 type HS_vkGetEventStatus = VkDevice -- ^ device
                                     -> VkEvent -- ^ event
                                                -> IO VkResult
@@ -4751,7 +4751,7 @@ type VkSetEvent = "vkSetEvent"
 --   >     , VkEvent event
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkSetEvent.html vkSetEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkSetEventvkSetEvent registry at www.khronos.org>
 foreign import ccall unsafe "vkSetEvent" vkSetEvent ::
                VkDevice -- ^ device
                         -> VkEvent -- ^ event
@@ -4766,7 +4766,7 @@ foreign import ccall unsafe "vkSetEvent" vkSetEvent ::
 --   >     , VkEvent event
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkSetEvent.html vkSetEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkSetEventvkSetEvent registry at www.khronos.org>
 foreign import ccall safe "vkSetEvent" vkSetEventSafe ::
                VkDevice -- ^ device
                         -> VkEvent -- ^ event
@@ -4781,7 +4781,7 @@ foreign import ccall safe "vkSetEvent" vkSetEventSafe ::
 --   >     , VkEvent event
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkSetEvent.html vkSetEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkSetEventvkSetEvent registry at www.khronos.org>
 type HS_vkSetEvent = VkDevice -- ^ device
                               -> VkEvent -- ^ event
                                          -> IO VkResult
@@ -4826,7 +4826,7 @@ type VkResetEvent = "vkResetEvent"
 --   >     , VkEvent event
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkResetEvent.html vkResetEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetEventvkResetEvent registry at www.khronos.org>
 foreign import ccall unsafe "vkResetEvent" vkResetEvent ::
                VkDevice -- ^ device
                         -> VkEvent -- ^ event
@@ -4841,7 +4841,7 @@ foreign import ccall unsafe "vkResetEvent" vkResetEvent ::
 --   >     , VkEvent event
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkResetEvent.html vkResetEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetEventvkResetEvent registry at www.khronos.org>
 foreign import ccall safe "vkResetEvent" vkResetEventSafe ::
                VkDevice -- ^ device
                         -> VkEvent -- ^ event
@@ -4856,7 +4856,7 @@ foreign import ccall safe "vkResetEvent" vkResetEventSafe ::
 --   >     , VkEvent event
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkResetEvent.html vkResetEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetEventvkResetEvent registry at www.khronos.org>
 type HS_vkResetEvent = VkDevice -- ^ device
                                 -> VkEvent -- ^ event
                                            -> IO VkResult
@@ -4903,7 +4903,7 @@ type VkCreateQueryPool = "vkCreateQueryPool"
 --   >     , VkQueryPool* pQueryPool
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateQueryPool.html vkCreateQueryPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateQueryPoolvkCreateQueryPool registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateQueryPool" vkCreateQueryPool
                ::
                VkDevice -- ^ device
@@ -4925,7 +4925,7 @@ foreign import ccall unsafe "vkCreateQueryPool" vkCreateQueryPool
 --   >     , VkQueryPool* pQueryPool
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateQueryPool.html vkCreateQueryPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateQueryPoolvkCreateQueryPool registry at www.khronos.org>
 foreign import ccall safe "vkCreateQueryPool" vkCreateQueryPoolSafe
                ::
                VkDevice -- ^ device
@@ -4947,7 +4947,7 @@ foreign import ccall safe "vkCreateQueryPool" vkCreateQueryPoolSafe
 --   >     , VkQueryPool* pQueryPool
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateQueryPool.html vkCreateQueryPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateQueryPoolvkCreateQueryPool registry at www.khronos.org>
 type HS_vkCreateQueryPool =
      VkDevice -- ^ device
               ->
@@ -4994,7 +4994,7 @@ type VkDestroyQueryPool = "vkDestroyQueryPool"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyQueryPool.html vkDestroyQueryPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyQueryPoolvkDestroyQueryPool registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyQueryPool" vkDestroyQueryPool
                :: VkDevice -- ^ device
                            -> VkQueryPool -- ^ queryPool
@@ -5007,7 +5007,7 @@ foreign import ccall unsafe "vkDestroyQueryPool" vkDestroyQueryPool
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyQueryPool.html vkDestroyQueryPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyQueryPoolvkDestroyQueryPool registry at www.khronos.org>
 foreign import ccall safe "vkDestroyQueryPool"
                vkDestroyQueryPoolSafe ::
                VkDevice -- ^ device
@@ -5021,7 +5021,7 @@ foreign import ccall safe "vkDestroyQueryPool"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyQueryPool.html vkDestroyQueryPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyQueryPoolvkDestroyQueryPool registry at www.khronos.org>
 type HS_vkDestroyQueryPool =
      VkDevice -- ^ device
               -> VkQueryPool -- ^ queryPool
@@ -5075,7 +5075,7 @@ type VkGetQueryPoolResults = "vkGetQueryPoolResults"
 --   >     , VkQueryResultFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetQueryPoolResults.html vkGetQueryPoolResults registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetQueryPoolResultsvkGetQueryPoolResults registry at www.khronos.org>
 foreign import ccall unsafe "vkGetQueryPoolResults"
                vkGetQueryPoolResults ::
                VkDevice -- ^ device
@@ -5108,7 +5108,7 @@ foreign import ccall unsafe "vkGetQueryPoolResults"
 --   >     , VkQueryResultFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetQueryPoolResults.html vkGetQueryPoolResults registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetQueryPoolResultsvkGetQueryPoolResults registry at www.khronos.org>
 foreign import ccall safe "vkGetQueryPoolResults"
                vkGetQueryPoolResultsSafe ::
                VkDevice -- ^ device
@@ -5141,7 +5141,7 @@ foreign import ccall safe "vkGetQueryPoolResults"
 --   >     , VkQueryResultFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetQueryPoolResults.html vkGetQueryPoolResults registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetQueryPoolResultsvkGetQueryPoolResults registry at www.khronos.org>
 type HS_vkGetQueryPoolResults =
      VkDevice -- ^ device
               ->
@@ -5200,7 +5200,7 @@ type VkCreateBuffer = "vkCreateBuffer"
 --   >     , VkBuffer* pBuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateBuffer.html vkCreateBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateBuffervkCreateBuffer registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateBuffer" vkCreateBuffer ::
                VkDevice -- ^ device
                         ->
@@ -5221,7 +5221,7 @@ foreign import ccall unsafe "vkCreateBuffer" vkCreateBuffer ::
 --   >     , VkBuffer* pBuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateBuffer.html vkCreateBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateBuffervkCreateBuffer registry at www.khronos.org>
 foreign import ccall safe "vkCreateBuffer" vkCreateBufferSafe ::
                VkDevice -- ^ device
                         ->
@@ -5242,7 +5242,7 @@ foreign import ccall safe "vkCreateBuffer" vkCreateBufferSafe ::
 --   >     , VkBuffer* pBuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateBuffer.html vkCreateBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateBuffervkCreateBuffer registry at www.khronos.org>
 type HS_vkCreateBuffer =
      VkDevice -- ^ device
               ->
@@ -5289,7 +5289,7 @@ type VkDestroyBuffer = "vkDestroyBuffer"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyBuffer.html vkDestroyBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyBuffervkDestroyBuffer registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyBuffer" vkDestroyBuffer ::
                VkDevice -- ^ device
                         -> VkBuffer -- ^ buffer
@@ -5302,7 +5302,7 @@ foreign import ccall unsafe "vkDestroyBuffer" vkDestroyBuffer ::
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyBuffer.html vkDestroyBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyBuffervkDestroyBuffer registry at www.khronos.org>
 foreign import ccall safe "vkDestroyBuffer" vkDestroyBufferSafe ::
                VkDevice -- ^ device
                         -> VkBuffer -- ^ buffer
@@ -5315,7 +5315,7 @@ foreign import ccall safe "vkDestroyBuffer" vkDestroyBufferSafe ::
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyBuffer.html vkDestroyBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyBuffervkDestroyBuffer registry at www.khronos.org>
 type HS_vkDestroyBuffer =
      VkDevice -- ^ device
               -> VkBuffer -- ^ buffer
@@ -5364,7 +5364,7 @@ type VkCreateBufferView = "vkCreateBufferView"
 --   >     , VkBufferView* pView
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateBufferView.html vkCreateBufferView registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateBufferViewvkCreateBufferView registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateBufferView" vkCreateBufferView
                ::
                VkDevice -- ^ device
@@ -5386,7 +5386,7 @@ foreign import ccall unsafe "vkCreateBufferView" vkCreateBufferView
 --   >     , VkBufferView* pView
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateBufferView.html vkCreateBufferView registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateBufferViewvkCreateBufferView registry at www.khronos.org>
 foreign import ccall safe "vkCreateBufferView"
                vkCreateBufferViewSafe ::
                VkDevice -- ^ device
@@ -5408,7 +5408,7 @@ foreign import ccall safe "vkCreateBufferView"
 --   >     , VkBufferView* pView
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateBufferView.html vkCreateBufferView registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateBufferViewvkCreateBufferView registry at www.khronos.org>
 type HS_vkCreateBufferView =
      VkDevice -- ^ device
               ->
@@ -5455,7 +5455,7 @@ type VkDestroyBufferView = "vkDestroyBufferView"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyBufferView.html vkDestroyBufferView registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyBufferViewvkDestroyBufferView registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyBufferView"
                vkDestroyBufferView ::
                VkDevice -- ^ device
@@ -5469,7 +5469,7 @@ foreign import ccall unsafe "vkDestroyBufferView"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyBufferView.html vkDestroyBufferView registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyBufferViewvkDestroyBufferView registry at www.khronos.org>
 foreign import ccall safe "vkDestroyBufferView"
                vkDestroyBufferViewSafe ::
                VkDevice -- ^ device
@@ -5483,7 +5483,7 @@ foreign import ccall safe "vkDestroyBufferView"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyBufferView.html vkDestroyBufferView registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyBufferViewvkDestroyBufferView registry at www.khronos.org>
 type HS_vkDestroyBufferView =
      VkDevice -- ^ device
               -> VkBufferView -- ^ bufferView
@@ -5532,7 +5532,7 @@ type VkCreateImage = "vkCreateImage"
 --   >     , VkImage* pImage
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateImage.html vkCreateImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateImagevkCreateImage registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateImage" vkCreateImage ::
                VkDevice -- ^ device
                         ->
@@ -5553,7 +5553,7 @@ foreign import ccall unsafe "vkCreateImage" vkCreateImage ::
 --   >     , VkImage* pImage
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateImage.html vkCreateImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateImagevkCreateImage registry at www.khronos.org>
 foreign import ccall safe "vkCreateImage" vkCreateImageSafe ::
                VkDevice -- ^ device
                         ->
@@ -5574,7 +5574,7 @@ foreign import ccall safe "vkCreateImage" vkCreateImageSafe ::
 --   >     , VkImage* pImage
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateImage.html vkCreateImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateImagevkCreateImage registry at www.khronos.org>
 type HS_vkCreateImage =
      VkDevice -- ^ device
               ->
@@ -5621,7 +5621,7 @@ type VkDestroyImage = "vkDestroyImage"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyImage.html vkDestroyImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyImagevkDestroyImage registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyImage" vkDestroyImage ::
                VkDevice -- ^ device
                         -> VkImage -- ^ image
@@ -5634,7 +5634,7 @@ foreign import ccall unsafe "vkDestroyImage" vkDestroyImage ::
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyImage.html vkDestroyImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyImagevkDestroyImage registry at www.khronos.org>
 foreign import ccall safe "vkDestroyImage" vkDestroyImageSafe ::
                VkDevice -- ^ device
                         -> VkImage -- ^ image
@@ -5647,7 +5647,7 @@ foreign import ccall safe "vkDestroyImage" vkDestroyImageSafe ::
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyImage.html vkDestroyImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyImagevkDestroyImage registry at www.khronos.org>
 type HS_vkDestroyImage =
      VkDevice -- ^ device
               -> VkImage -- ^ image
@@ -5695,7 +5695,7 @@ type VkGetImageSubresourceLayout = "vkGetImageSubresourceLayout"
 --   >     , VkSubresourceLayout* pLayout
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetImageSubresourceLayout.html vkGetImageSubresourceLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetImageSubresourceLayoutvkGetImageSubresourceLayout registry at www.khronos.org>
 foreign import ccall unsafe "vkGetImageSubresourceLayout"
                vkGetImageSubresourceLayout ::
                VkDevice -- ^ device
@@ -5713,7 +5713,7 @@ foreign import ccall unsafe "vkGetImageSubresourceLayout"
 --   >     , VkSubresourceLayout* pLayout
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetImageSubresourceLayout.html vkGetImageSubresourceLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetImageSubresourceLayoutvkGetImageSubresourceLayout registry at www.khronos.org>
 foreign import ccall safe "vkGetImageSubresourceLayout"
                vkGetImageSubresourceLayoutSafe ::
                VkDevice -- ^ device
@@ -5731,7 +5731,7 @@ foreign import ccall safe "vkGetImageSubresourceLayout"
 --   >     , VkSubresourceLayout* pLayout
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetImageSubresourceLayout.html vkGetImageSubresourceLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetImageSubresourceLayoutvkGetImageSubresourceLayout registry at www.khronos.org>
 type HS_vkGetImageSubresourceLayout =
      VkDevice -- ^ device
               ->
@@ -5785,7 +5785,7 @@ type VkCreateImageView = "vkCreateImageView"
 --   >     , VkImageView* pView
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateImageView.html vkCreateImageView registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateImageViewvkCreateImageView registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateImageView" vkCreateImageView
                ::
                VkDevice -- ^ device
@@ -5807,7 +5807,7 @@ foreign import ccall unsafe "vkCreateImageView" vkCreateImageView
 --   >     , VkImageView* pView
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateImageView.html vkCreateImageView registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateImageViewvkCreateImageView registry at www.khronos.org>
 foreign import ccall safe "vkCreateImageView" vkCreateImageViewSafe
                ::
                VkDevice -- ^ device
@@ -5829,7 +5829,7 @@ foreign import ccall safe "vkCreateImageView" vkCreateImageViewSafe
 --   >     , VkImageView* pView
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateImageView.html vkCreateImageView registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateImageViewvkCreateImageView registry at www.khronos.org>
 type HS_vkCreateImageView =
      VkDevice -- ^ device
               ->
@@ -5876,7 +5876,7 @@ type VkDestroyImageView = "vkDestroyImageView"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyImageView.html vkDestroyImageView registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyImageViewvkDestroyImageView registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyImageView" vkDestroyImageView
                :: VkDevice -- ^ device
                            -> VkImageView -- ^ imageView
@@ -5889,7 +5889,7 @@ foreign import ccall unsafe "vkDestroyImageView" vkDestroyImageView
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyImageView.html vkDestroyImageView registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyImageViewvkDestroyImageView registry at www.khronos.org>
 foreign import ccall safe "vkDestroyImageView"
                vkDestroyImageViewSafe ::
                VkDevice -- ^ device
@@ -5903,7 +5903,7 @@ foreign import ccall safe "vkDestroyImageView"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyImageView.html vkDestroyImageView registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyImageViewvkDestroyImageView registry at www.khronos.org>
 type HS_vkDestroyImageView =
      VkDevice -- ^ device
               -> VkImageView -- ^ imageView
@@ -5953,7 +5953,7 @@ type VkCreateShaderModule = "vkCreateShaderModule"
 --   >     , VkShaderModule* pShaderModule
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateShaderModule.html vkCreateShaderModule registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateShaderModulevkCreateShaderModule registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateShaderModule"
                vkCreateShaderModule ::
                VkDevice -- ^ device
@@ -5975,7 +5975,7 @@ foreign import ccall unsafe "vkCreateShaderModule"
 --   >     , VkShaderModule* pShaderModule
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateShaderModule.html vkCreateShaderModule registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateShaderModulevkCreateShaderModule registry at www.khronos.org>
 foreign import ccall safe "vkCreateShaderModule"
                vkCreateShaderModuleSafe ::
                VkDevice -- ^ device
@@ -5997,7 +5997,7 @@ foreign import ccall safe "vkCreateShaderModule"
 --   >     , VkShaderModule* pShaderModule
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateShaderModule.html vkCreateShaderModule registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateShaderModulevkCreateShaderModule registry at www.khronos.org>
 type HS_vkCreateShaderModule =
      VkDevice -- ^ device
               ->
@@ -6045,7 +6045,7 @@ type VkDestroyShaderModule = "vkDestroyShaderModule"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyShaderModule.html vkDestroyShaderModule registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyShaderModulevkDestroyShaderModule registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyShaderModule"
                vkDestroyShaderModule ::
                VkDevice -- ^ device
@@ -6059,7 +6059,7 @@ foreign import ccall unsafe "vkDestroyShaderModule"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyShaderModule.html vkDestroyShaderModule registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyShaderModulevkDestroyShaderModule registry at www.khronos.org>
 foreign import ccall safe "vkDestroyShaderModule"
                vkDestroyShaderModuleSafe ::
                VkDevice -- ^ device
@@ -6073,7 +6073,7 @@ foreign import ccall safe "vkDestroyShaderModule"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyShaderModule.html vkDestroyShaderModule registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyShaderModulevkDestroyShaderModule registry at www.khronos.org>
 type HS_vkDestroyShaderModule =
      VkDevice -- ^ device
               -> VkShaderModule -- ^ shaderModule
@@ -6123,7 +6123,7 @@ type VkCreatePipelineCache = "vkCreatePipelineCache"
 --   >     , VkPipelineCache* pPipelineCache
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreatePipelineCache.html vkCreatePipelineCache registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreatePipelineCachevkCreatePipelineCache registry at www.khronos.org>
 foreign import ccall unsafe "vkCreatePipelineCache"
                vkCreatePipelineCache ::
                VkDevice -- ^ device
@@ -6145,7 +6145,7 @@ foreign import ccall unsafe "vkCreatePipelineCache"
 --   >     , VkPipelineCache* pPipelineCache
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreatePipelineCache.html vkCreatePipelineCache registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreatePipelineCachevkCreatePipelineCache registry at www.khronos.org>
 foreign import ccall safe "vkCreatePipelineCache"
                vkCreatePipelineCacheSafe ::
                VkDevice -- ^ device
@@ -6167,7 +6167,7 @@ foreign import ccall safe "vkCreatePipelineCache"
 --   >     , VkPipelineCache* pPipelineCache
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreatePipelineCache.html vkCreatePipelineCache registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreatePipelineCachevkCreatePipelineCache registry at www.khronos.org>
 type HS_vkCreatePipelineCache =
      VkDevice -- ^ device
               ->
@@ -6216,7 +6216,7 @@ type VkDestroyPipelineCache = "vkDestroyPipelineCache"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyPipelineCache.html vkDestroyPipelineCache registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyPipelineCachevkDestroyPipelineCache registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyPipelineCache"
                vkDestroyPipelineCache ::
                VkDevice -- ^ device
@@ -6230,7 +6230,7 @@ foreign import ccall unsafe "vkDestroyPipelineCache"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyPipelineCache.html vkDestroyPipelineCache registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyPipelineCachevkDestroyPipelineCache registry at www.khronos.org>
 foreign import ccall safe "vkDestroyPipelineCache"
                vkDestroyPipelineCacheSafe ::
                VkDevice -- ^ device
@@ -6244,7 +6244,7 @@ foreign import ccall safe "vkDestroyPipelineCache"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyPipelineCache.html vkDestroyPipelineCache registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyPipelineCachevkDestroyPipelineCache registry at www.khronos.org>
 type HS_vkDestroyPipelineCache =
      VkDevice -- ^ device
               -> VkPipelineCache -- ^ pipelineCache
@@ -6296,7 +6296,7 @@ type VkGetPipelineCacheData = "vkGetPipelineCacheData"
 --   >     , void* pData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPipelineCacheData.html vkGetPipelineCacheData registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPipelineCacheDatavkGetPipelineCacheData registry at www.khronos.org>
 foreign import ccall unsafe "vkGetPipelineCacheData"
                vkGetPipelineCacheData ::
                VkDevice -- ^ device
@@ -6316,7 +6316,7 @@ foreign import ccall unsafe "vkGetPipelineCacheData"
 --   >     , void* pData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPipelineCacheData.html vkGetPipelineCacheData registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPipelineCacheDatavkGetPipelineCacheData registry at www.khronos.org>
 foreign import ccall safe "vkGetPipelineCacheData"
                vkGetPipelineCacheDataSafe ::
                VkDevice -- ^ device
@@ -6336,7 +6336,7 @@ foreign import ccall safe "vkGetPipelineCacheData"
 --   >     , void* pData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPipelineCacheData.html vkGetPipelineCacheData registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetPipelineCacheDatavkGetPipelineCacheData registry at www.khronos.org>
 type HS_vkGetPipelineCacheData =
      VkDevice -- ^ device
               -> VkPipelineCache -- ^ pipelineCache
@@ -6388,7 +6388,7 @@ type VkMergePipelineCaches = "vkMergePipelineCaches"
 --   >     , const VkPipelineCache* pSrcCaches
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkMergePipelineCaches.html vkMergePipelineCaches registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkMergePipelineCachesvkMergePipelineCaches registry at www.khronos.org>
 foreign import ccall unsafe "vkMergePipelineCaches"
                vkMergePipelineCaches ::
                VkDevice -- ^ device
@@ -6409,7 +6409,7 @@ foreign import ccall unsafe "vkMergePipelineCaches"
 --   >     , const VkPipelineCache* pSrcCaches
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkMergePipelineCaches.html vkMergePipelineCaches registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkMergePipelineCachesvkMergePipelineCaches registry at www.khronos.org>
 foreign import ccall safe "vkMergePipelineCaches"
                vkMergePipelineCachesSafe ::
                VkDevice -- ^ device
@@ -6430,7 +6430,7 @@ foreign import ccall safe "vkMergePipelineCaches"
 --   >     , const VkPipelineCache* pSrcCaches
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkMergePipelineCaches.html vkMergePipelineCaches registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkMergePipelineCachesvkMergePipelineCaches registry at www.khronos.org>
 type HS_vkMergePipelineCaches =
      VkDevice -- ^ device
               ->
@@ -6485,7 +6485,7 @@ type VkCreateGraphicsPipelines = "vkCreateGraphicsPipelines"
 --   >     , VkPipeline* pPipelines
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateGraphicsPipelines.html vkCreateGraphicsPipelines registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateGraphicsPipelinesvkCreateGraphicsPipelines registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateGraphicsPipelines"
                vkCreateGraphicsPipelines ::
                VkDevice -- ^ device
@@ -6513,7 +6513,7 @@ foreign import ccall unsafe "vkCreateGraphicsPipelines"
 --   >     , VkPipeline* pPipelines
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateGraphicsPipelines.html vkCreateGraphicsPipelines registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateGraphicsPipelinesvkCreateGraphicsPipelines registry at www.khronos.org>
 foreign import ccall safe "vkCreateGraphicsPipelines"
                vkCreateGraphicsPipelinesSafe ::
                VkDevice -- ^ device
@@ -6541,7 +6541,7 @@ foreign import ccall safe "vkCreateGraphicsPipelines"
 --   >     , VkPipeline* pPipelines
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateGraphicsPipelines.html vkCreateGraphicsPipelines registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateGraphicsPipelinesvkCreateGraphicsPipelines registry at www.khronos.org>
 type HS_vkCreateGraphicsPipelines =
      VkDevice -- ^ device
               ->
@@ -6603,7 +6603,7 @@ type VkCreateComputePipelines = "vkCreateComputePipelines"
 --   >     , VkPipeline* pPipelines
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateComputePipelines.html vkCreateComputePipelines registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateComputePipelinesvkCreateComputePipelines registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateComputePipelines"
                vkCreateComputePipelines ::
                VkDevice -- ^ device
@@ -6631,7 +6631,7 @@ foreign import ccall unsafe "vkCreateComputePipelines"
 --   >     , VkPipeline* pPipelines
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateComputePipelines.html vkCreateComputePipelines registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateComputePipelinesvkCreateComputePipelines registry at www.khronos.org>
 foreign import ccall safe "vkCreateComputePipelines"
                vkCreateComputePipelinesSafe ::
                VkDevice -- ^ device
@@ -6659,7 +6659,7 @@ foreign import ccall safe "vkCreateComputePipelines"
 --   >     , VkPipeline* pPipelines
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateComputePipelines.html vkCreateComputePipelines registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateComputePipelinesvkCreateComputePipelines registry at www.khronos.org>
 type HS_vkCreateComputePipelines =
      VkDevice -- ^ device
               ->
@@ -6712,7 +6712,7 @@ type VkDestroyPipeline = "vkDestroyPipeline"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyPipeline.html vkDestroyPipeline registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyPipelinevkDestroyPipeline registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyPipeline" vkDestroyPipeline
                :: VkDevice -- ^ device
                            -> VkPipeline -- ^ pipeline
@@ -6725,7 +6725,7 @@ foreign import ccall unsafe "vkDestroyPipeline" vkDestroyPipeline
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyPipeline.html vkDestroyPipeline registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyPipelinevkDestroyPipeline registry at www.khronos.org>
 foreign import ccall safe "vkDestroyPipeline" vkDestroyPipelineSafe
                :: VkDevice -- ^ device
                            -> VkPipeline -- ^ pipeline
@@ -6738,7 +6738,7 @@ foreign import ccall safe "vkDestroyPipeline" vkDestroyPipelineSafe
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyPipeline.html vkDestroyPipeline registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyPipelinevkDestroyPipeline registry at www.khronos.org>
 type HS_vkDestroyPipeline =
      VkDevice -- ^ device
               -> VkPipeline -- ^ pipeline
@@ -6789,7 +6789,7 @@ type VkCreatePipelineLayout = "vkCreatePipelineLayout"
 --   >     , VkPipelineLayout* pPipelineLayout
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreatePipelineLayout.html vkCreatePipelineLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreatePipelineLayoutvkCreatePipelineLayout registry at www.khronos.org>
 foreign import ccall unsafe "vkCreatePipelineLayout"
                vkCreatePipelineLayout ::
                VkDevice -- ^ device
@@ -6811,7 +6811,7 @@ foreign import ccall unsafe "vkCreatePipelineLayout"
 --   >     , VkPipelineLayout* pPipelineLayout
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreatePipelineLayout.html vkCreatePipelineLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreatePipelineLayoutvkCreatePipelineLayout registry at www.khronos.org>
 foreign import ccall safe "vkCreatePipelineLayout"
                vkCreatePipelineLayoutSafe ::
                VkDevice -- ^ device
@@ -6833,7 +6833,7 @@ foreign import ccall safe "vkCreatePipelineLayout"
 --   >     , VkPipelineLayout* pPipelineLayout
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreatePipelineLayout.html vkCreatePipelineLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreatePipelineLayoutvkCreatePipelineLayout registry at www.khronos.org>
 type HS_vkCreatePipelineLayout =
      VkDevice -- ^ device
               ->
@@ -6883,7 +6883,7 @@ type VkDestroyPipelineLayout = "vkDestroyPipelineLayout"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyPipelineLayout.html vkDestroyPipelineLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyPipelineLayoutvkDestroyPipelineLayout registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyPipelineLayout"
                vkDestroyPipelineLayout ::
                VkDevice -- ^ device
@@ -6897,7 +6897,7 @@ foreign import ccall unsafe "vkDestroyPipelineLayout"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyPipelineLayout.html vkDestroyPipelineLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyPipelineLayoutvkDestroyPipelineLayout registry at www.khronos.org>
 foreign import ccall safe "vkDestroyPipelineLayout"
                vkDestroyPipelineLayoutSafe ::
                VkDevice -- ^ device
@@ -6911,7 +6911,7 @@ foreign import ccall safe "vkDestroyPipelineLayout"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyPipelineLayout.html vkDestroyPipelineLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyPipelineLayoutvkDestroyPipelineLayout registry at www.khronos.org>
 type HS_vkDestroyPipelineLayout =
      VkDevice -- ^ device
               -> VkPipelineLayout -- ^ pipelineLayout
@@ -6962,7 +6962,7 @@ type VkCreateSampler = "vkCreateSampler"
 --   >     , VkSampler* pSampler
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateSampler.html vkCreateSampler registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateSamplervkCreateSampler registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateSampler" vkCreateSampler ::
                VkDevice -- ^ device
                         ->
@@ -6983,7 +6983,7 @@ foreign import ccall unsafe "vkCreateSampler" vkCreateSampler ::
 --   >     , VkSampler* pSampler
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateSampler.html vkCreateSampler registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateSamplervkCreateSampler registry at www.khronos.org>
 foreign import ccall safe "vkCreateSampler" vkCreateSamplerSafe ::
                VkDevice -- ^ device
                         ->
@@ -7004,7 +7004,7 @@ foreign import ccall safe "vkCreateSampler" vkCreateSamplerSafe ::
 --   >     , VkSampler* pSampler
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateSampler.html vkCreateSampler registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateSamplervkCreateSampler registry at www.khronos.org>
 type HS_vkCreateSampler =
      VkDevice -- ^ device
               ->
@@ -7051,7 +7051,7 @@ type VkDestroySampler = "vkDestroySampler"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroySampler.html vkDestroySampler registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroySamplervkDestroySampler registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroySampler" vkDestroySampler ::
                VkDevice -- ^ device
                         -> VkSampler -- ^ sampler
@@ -7064,7 +7064,7 @@ foreign import ccall unsafe "vkDestroySampler" vkDestroySampler ::
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroySampler.html vkDestroySampler registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroySamplervkDestroySampler registry at www.khronos.org>
 foreign import ccall safe "vkDestroySampler" vkDestroySamplerSafe
                :: VkDevice -- ^ device
                            -> VkSampler -- ^ sampler
@@ -7077,7 +7077,7 @@ foreign import ccall safe "vkDestroySampler" vkDestroySamplerSafe
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroySampler.html vkDestroySampler registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroySamplervkDestroySampler registry at www.khronos.org>
 type HS_vkDestroySampler =
      VkDevice -- ^ device
               -> VkSampler -- ^ sampler
@@ -7129,7 +7129,7 @@ type VkCreateDescriptorSetLayout = "vkCreateDescriptorSetLayout"
 --   >     , VkDescriptorSetLayout* pSetLayout
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateDescriptorSetLayout.html vkCreateDescriptorSetLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateDescriptorSetLayoutvkCreateDescriptorSetLayout registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateDescriptorSetLayout"
                vkCreateDescriptorSetLayout ::
                VkDevice -- ^ device
@@ -7152,7 +7152,7 @@ foreign import ccall unsafe "vkCreateDescriptorSetLayout"
 --   >     , VkDescriptorSetLayout* pSetLayout
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateDescriptorSetLayout.html vkCreateDescriptorSetLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateDescriptorSetLayoutvkCreateDescriptorSetLayout registry at www.khronos.org>
 foreign import ccall safe "vkCreateDescriptorSetLayout"
                vkCreateDescriptorSetLayoutSafe ::
                VkDevice -- ^ device
@@ -7175,7 +7175,7 @@ foreign import ccall safe "vkCreateDescriptorSetLayout"
 --   >     , VkDescriptorSetLayout* pSetLayout
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateDescriptorSetLayout.html vkCreateDescriptorSetLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateDescriptorSetLayoutvkCreateDescriptorSetLayout registry at www.khronos.org>
 type HS_vkCreateDescriptorSetLayout =
      VkDevice -- ^ device
               ->
@@ -7228,7 +7228,7 @@ type VkDestroyDescriptorSetLayout = "vkDestroyDescriptorSetLayout"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyDescriptorSetLayout.html vkDestroyDescriptorSetLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyDescriptorSetLayoutvkDestroyDescriptorSetLayout registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyDescriptorSetLayout"
                vkDestroyDescriptorSetLayout ::
                VkDevice -- ^ device
@@ -7243,7 +7243,7 @@ foreign import ccall unsafe "vkDestroyDescriptorSetLayout"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyDescriptorSetLayout.html vkDestroyDescriptorSetLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyDescriptorSetLayoutvkDestroyDescriptorSetLayout registry at www.khronos.org>
 foreign import ccall safe "vkDestroyDescriptorSetLayout"
                vkDestroyDescriptorSetLayoutSafe ::
                VkDevice -- ^ device
@@ -7258,7 +7258,7 @@ foreign import ccall safe "vkDestroyDescriptorSetLayout"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyDescriptorSetLayout.html vkDestroyDescriptorSetLayout registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyDescriptorSetLayoutvkDestroyDescriptorSetLayout registry at www.khronos.org>
 type HS_vkDestroyDescriptorSetLayout =
      VkDevice -- ^ device
               ->
@@ -7313,7 +7313,7 @@ type VkCreateDescriptorPool = "vkCreateDescriptorPool"
 --   >     , VkDescriptorPool* pDescriptorPool
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateDescriptorPool.html vkCreateDescriptorPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateDescriptorPoolvkCreateDescriptorPool registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateDescriptorPool"
                vkCreateDescriptorPool ::
                VkDevice -- ^ device
@@ -7335,7 +7335,7 @@ foreign import ccall unsafe "vkCreateDescriptorPool"
 --   >     , VkDescriptorPool* pDescriptorPool
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateDescriptorPool.html vkCreateDescriptorPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateDescriptorPoolvkCreateDescriptorPool registry at www.khronos.org>
 foreign import ccall safe "vkCreateDescriptorPool"
                vkCreateDescriptorPoolSafe ::
                VkDevice -- ^ device
@@ -7357,7 +7357,7 @@ foreign import ccall safe "vkCreateDescriptorPool"
 --   >     , VkDescriptorPool* pDescriptorPool
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateDescriptorPool.html vkCreateDescriptorPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateDescriptorPoolvkCreateDescriptorPool registry at www.khronos.org>
 type HS_vkCreateDescriptorPool =
      VkDevice -- ^ device
               ->
@@ -7407,7 +7407,7 @@ type VkDestroyDescriptorPool = "vkDestroyDescriptorPool"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyDescriptorPool.html vkDestroyDescriptorPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyDescriptorPoolvkDestroyDescriptorPool registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyDescriptorPool"
                vkDestroyDescriptorPool ::
                VkDevice -- ^ device
@@ -7421,7 +7421,7 @@ foreign import ccall unsafe "vkDestroyDescriptorPool"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyDescriptorPool.html vkDestroyDescriptorPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyDescriptorPoolvkDestroyDescriptorPool registry at www.khronos.org>
 foreign import ccall safe "vkDestroyDescriptorPool"
                vkDestroyDescriptorPoolSafe ::
                VkDevice -- ^ device
@@ -7435,7 +7435,7 @@ foreign import ccall safe "vkDestroyDescriptorPool"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyDescriptorPool.html vkDestroyDescriptorPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyDescriptorPoolvkDestroyDescriptorPool registry at www.khronos.org>
 type HS_vkDestroyDescriptorPool =
      VkDevice -- ^ device
               -> VkDescriptorPool -- ^ descriptorPool
@@ -7486,7 +7486,7 @@ type VkResetDescriptorPool = "vkResetDescriptorPool"
 --   >     , VkDescriptorPoolResetFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkResetDescriptorPool.html vkResetDescriptorPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetDescriptorPoolvkResetDescriptorPool registry at www.khronos.org>
 foreign import ccall unsafe "vkResetDescriptorPool"
                vkResetDescriptorPool ::
                VkDevice -- ^ device
@@ -7505,7 +7505,7 @@ foreign import ccall unsafe "vkResetDescriptorPool"
 --   >     , VkDescriptorPoolResetFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkResetDescriptorPool.html vkResetDescriptorPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetDescriptorPoolvkResetDescriptorPool registry at www.khronos.org>
 foreign import ccall safe "vkResetDescriptorPool"
                vkResetDescriptorPoolSafe ::
                VkDevice -- ^ device
@@ -7524,7 +7524,7 @@ foreign import ccall safe "vkResetDescriptorPool"
 --   >     , VkDescriptorPoolResetFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkResetDescriptorPool.html vkResetDescriptorPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetDescriptorPoolvkResetDescriptorPool registry at www.khronos.org>
 type HS_vkResetDescriptorPool =
      VkDevice -- ^ device
               ->
@@ -7575,7 +7575,7 @@ type VkAllocateDescriptorSets = "vkAllocateDescriptorSets"
 --   >     , VkDescriptorSet* pDescriptorSets
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkAllocateDescriptorSets.html vkAllocateDescriptorSets registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkAllocateDescriptorSetsvkAllocateDescriptorSets registry at www.khronos.org>
 foreign import ccall unsafe "vkAllocateDescriptorSets"
                vkAllocateDescriptorSets ::
                VkDevice -- ^ device
@@ -7595,7 +7595,7 @@ foreign import ccall unsafe "vkAllocateDescriptorSets"
 --   >     , VkDescriptorSet* pDescriptorSets
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkAllocateDescriptorSets.html vkAllocateDescriptorSets registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkAllocateDescriptorSetsvkAllocateDescriptorSets registry at www.khronos.org>
 foreign import ccall safe "vkAllocateDescriptorSets"
                vkAllocateDescriptorSetsSafe ::
                VkDevice -- ^ device
@@ -7615,7 +7615,7 @@ foreign import ccall safe "vkAllocateDescriptorSets"
 --   >     , VkDescriptorSet* pDescriptorSets
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkAllocateDescriptorSets.html vkAllocateDescriptorSets registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkAllocateDescriptorSetsvkAllocateDescriptorSets registry at www.khronos.org>
 type HS_vkAllocateDescriptorSets =
      VkDevice -- ^ device
               ->
@@ -7669,7 +7669,7 @@ type VkFreeDescriptorSets = "vkFreeDescriptorSets"
 --   >     , const VkDescriptorSet* pDescriptorSets
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkFreeDescriptorSets.html vkFreeDescriptorSets registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFreeDescriptorSetsvkFreeDescriptorSets registry at www.khronos.org>
 foreign import ccall unsafe "vkFreeDescriptorSets"
                vkFreeDescriptorSets ::
                VkDevice -- ^ device
@@ -7690,7 +7690,7 @@ foreign import ccall unsafe "vkFreeDescriptorSets"
 --   >     , const VkDescriptorSet* pDescriptorSets
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkFreeDescriptorSets.html vkFreeDescriptorSets registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFreeDescriptorSetsvkFreeDescriptorSets registry at www.khronos.org>
 foreign import ccall safe "vkFreeDescriptorSets"
                vkFreeDescriptorSetsSafe ::
                VkDevice -- ^ device
@@ -7711,7 +7711,7 @@ foreign import ccall safe "vkFreeDescriptorSets"
 --   >     , const VkDescriptorSet* pDescriptorSets
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkFreeDescriptorSets.html vkFreeDescriptorSets registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFreeDescriptorSetsvkFreeDescriptorSets registry at www.khronos.org>
 type HS_vkFreeDescriptorSets =
      VkDevice -- ^ device
               ->
@@ -7761,7 +7761,7 @@ type VkUpdateDescriptorSets = "vkUpdateDescriptorSets"
 --   >     , const VkCopyDescriptorSet* pDescriptorCopies
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkUpdateDescriptorSets.html vkUpdateDescriptorSets registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkUpdateDescriptorSetsvkUpdateDescriptorSets registry at www.khronos.org>
 foreign import ccall unsafe "vkUpdateDescriptorSets"
                vkUpdateDescriptorSets ::
                VkDevice -- ^ device
@@ -7782,7 +7782,7 @@ foreign import ccall unsafe "vkUpdateDescriptorSets"
 --   >     , const VkCopyDescriptorSet* pDescriptorCopies
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkUpdateDescriptorSets.html vkUpdateDescriptorSets registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkUpdateDescriptorSetsvkUpdateDescriptorSets registry at www.khronos.org>
 foreign import ccall safe "vkUpdateDescriptorSets"
                vkUpdateDescriptorSetsSafe ::
                VkDevice -- ^ device
@@ -7803,7 +7803,7 @@ foreign import ccall safe "vkUpdateDescriptorSets"
 --   >     , const VkCopyDescriptorSet* pDescriptorCopies
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkUpdateDescriptorSets.html vkUpdateDescriptorSets registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkUpdateDescriptorSetsvkUpdateDescriptorSets registry at www.khronos.org>
 type HS_vkUpdateDescriptorSets =
      VkDevice -- ^ device
               ->
@@ -7858,7 +7858,7 @@ type VkCreateFramebuffer = "vkCreateFramebuffer"
 --   >     , VkFramebuffer* pFramebuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateFramebuffer.html vkCreateFramebuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateFramebuffervkCreateFramebuffer registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateFramebuffer"
                vkCreateFramebuffer ::
                VkDevice -- ^ device
@@ -7880,7 +7880,7 @@ foreign import ccall unsafe "vkCreateFramebuffer"
 --   >     , VkFramebuffer* pFramebuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateFramebuffer.html vkCreateFramebuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateFramebuffervkCreateFramebuffer registry at www.khronos.org>
 foreign import ccall safe "vkCreateFramebuffer"
                vkCreateFramebufferSafe ::
                VkDevice -- ^ device
@@ -7902,7 +7902,7 @@ foreign import ccall safe "vkCreateFramebuffer"
 --   >     , VkFramebuffer* pFramebuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateFramebuffer.html vkCreateFramebuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateFramebuffervkCreateFramebuffer registry at www.khronos.org>
 type HS_vkCreateFramebuffer =
      VkDevice -- ^ device
               ->
@@ -7950,7 +7950,7 @@ type VkDestroyFramebuffer = "vkDestroyFramebuffer"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyFramebuffer.html vkDestroyFramebuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyFramebuffervkDestroyFramebuffer registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyFramebuffer"
                vkDestroyFramebuffer ::
                VkDevice -- ^ device
@@ -7964,7 +7964,7 @@ foreign import ccall unsafe "vkDestroyFramebuffer"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyFramebuffer.html vkDestroyFramebuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyFramebuffervkDestroyFramebuffer registry at www.khronos.org>
 foreign import ccall safe "vkDestroyFramebuffer"
                vkDestroyFramebufferSafe ::
                VkDevice -- ^ device
@@ -7978,7 +7978,7 @@ foreign import ccall safe "vkDestroyFramebuffer"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyFramebuffer.html vkDestroyFramebuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyFramebuffervkDestroyFramebuffer registry at www.khronos.org>
 type HS_vkDestroyFramebuffer =
      VkDevice -- ^ device
               -> VkFramebuffer -- ^ framebuffer
@@ -8027,7 +8027,7 @@ type VkCreateRenderPass = "vkCreateRenderPass"
 --   >     , VkRenderPass* pRenderPass
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateRenderPass.html vkCreateRenderPass registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateRenderPassvkCreateRenderPass registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateRenderPass" vkCreateRenderPass
                ::
                VkDevice -- ^ device
@@ -8049,7 +8049,7 @@ foreign import ccall unsafe "vkCreateRenderPass" vkCreateRenderPass
 --   >     , VkRenderPass* pRenderPass
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateRenderPass.html vkCreateRenderPass registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateRenderPassvkCreateRenderPass registry at www.khronos.org>
 foreign import ccall safe "vkCreateRenderPass"
                vkCreateRenderPassSafe ::
                VkDevice -- ^ device
@@ -8071,7 +8071,7 @@ foreign import ccall safe "vkCreateRenderPass"
 --   >     , VkRenderPass* pRenderPass
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateRenderPass.html vkCreateRenderPass registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateRenderPassvkCreateRenderPass registry at www.khronos.org>
 type HS_vkCreateRenderPass =
      VkDevice -- ^ device
               ->
@@ -8118,7 +8118,7 @@ type VkDestroyRenderPass = "vkDestroyRenderPass"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyRenderPass.html vkDestroyRenderPass registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyRenderPassvkDestroyRenderPass registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyRenderPass"
                vkDestroyRenderPass ::
                VkDevice -- ^ device
@@ -8132,7 +8132,7 @@ foreign import ccall unsafe "vkDestroyRenderPass"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyRenderPass.html vkDestroyRenderPass registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyRenderPassvkDestroyRenderPass registry at www.khronos.org>
 foreign import ccall safe "vkDestroyRenderPass"
                vkDestroyRenderPassSafe ::
                VkDevice -- ^ device
@@ -8146,7 +8146,7 @@ foreign import ccall safe "vkDestroyRenderPass"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyRenderPass.html vkDestroyRenderPass registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyRenderPassvkDestroyRenderPass registry at www.khronos.org>
 type HS_vkDestroyRenderPass =
      VkDevice -- ^ device
               -> VkRenderPass -- ^ renderPass
@@ -8192,7 +8192,7 @@ type VkGetRenderAreaGranularity = "vkGetRenderAreaGranularity"
 --   >     , VkExtent2D* pGranularity
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetRenderAreaGranularity.html vkGetRenderAreaGranularity registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetRenderAreaGranularityvkGetRenderAreaGranularity registry at www.khronos.org>
 foreign import ccall unsafe "vkGetRenderAreaGranularity"
                vkGetRenderAreaGranularity ::
                VkDevice -- ^ device
@@ -8206,7 +8206,7 @@ foreign import ccall unsafe "vkGetRenderAreaGranularity"
 --   >     , VkExtent2D* pGranularity
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetRenderAreaGranularity.html vkGetRenderAreaGranularity registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetRenderAreaGranularityvkGetRenderAreaGranularity registry at www.khronos.org>
 foreign import ccall safe "vkGetRenderAreaGranularity"
                vkGetRenderAreaGranularitySafe ::
                VkDevice -- ^ device
@@ -8220,7 +8220,7 @@ foreign import ccall safe "vkGetRenderAreaGranularity"
 --   >     , VkExtent2D* pGranularity
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetRenderAreaGranularity.html vkGetRenderAreaGranularity registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkGetRenderAreaGranularityvkGetRenderAreaGranularity registry at www.khronos.org>
 type HS_vkGetRenderAreaGranularity =
      VkDevice -- ^ device
               -> VkRenderPass -- ^ renderPass
@@ -8271,7 +8271,7 @@ type VkCreateCommandPool = "vkCreateCommandPool"
 --   >     , VkCommandPool* pCommandPool
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateCommandPool.html vkCreateCommandPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateCommandPoolvkCreateCommandPool registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateCommandPool"
                vkCreateCommandPool ::
                VkDevice -- ^ device
@@ -8293,7 +8293,7 @@ foreign import ccall unsafe "vkCreateCommandPool"
 --   >     , VkCommandPool* pCommandPool
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateCommandPool.html vkCreateCommandPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateCommandPoolvkCreateCommandPool registry at www.khronos.org>
 foreign import ccall safe "vkCreateCommandPool"
                vkCreateCommandPoolSafe ::
                VkDevice -- ^ device
@@ -8315,7 +8315,7 @@ foreign import ccall safe "vkCreateCommandPool"
 --   >     , VkCommandPool* pCommandPool
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateCommandPool.html vkCreateCommandPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCreateCommandPoolvkCreateCommandPool registry at www.khronos.org>
 type HS_vkCreateCommandPool =
      VkDevice -- ^ device
               ->
@@ -8363,7 +8363,7 @@ type VkDestroyCommandPool = "vkDestroyCommandPool"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyCommandPool.html vkDestroyCommandPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyCommandPoolvkDestroyCommandPool registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroyCommandPool"
                vkDestroyCommandPool ::
                VkDevice -- ^ device
@@ -8377,7 +8377,7 @@ foreign import ccall unsafe "vkDestroyCommandPool"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyCommandPool.html vkDestroyCommandPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyCommandPoolvkDestroyCommandPool registry at www.khronos.org>
 foreign import ccall safe "vkDestroyCommandPool"
                vkDestroyCommandPoolSafe ::
                VkDevice -- ^ device
@@ -8391,7 +8391,7 @@ foreign import ccall safe "vkDestroyCommandPool"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyCommandPool.html vkDestroyCommandPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkDestroyCommandPoolvkDestroyCommandPool registry at www.khronos.org>
 type HS_vkDestroyCommandPool =
      VkDevice -- ^ device
               -> VkCommandPool -- ^ commandPool
@@ -8439,7 +8439,7 @@ type VkResetCommandPool = "vkResetCommandPool"
 --   >     , VkCommandPoolResetFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkResetCommandPool.html vkResetCommandPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetCommandPoolvkResetCommandPool registry at www.khronos.org>
 foreign import ccall unsafe "vkResetCommandPool" vkResetCommandPool
                ::
                VkDevice -- ^ device
@@ -8457,7 +8457,7 @@ foreign import ccall unsafe "vkResetCommandPool" vkResetCommandPool
 --   >     , VkCommandPoolResetFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkResetCommandPool.html vkResetCommandPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetCommandPoolvkResetCommandPool registry at www.khronos.org>
 foreign import ccall safe "vkResetCommandPool"
                vkResetCommandPoolSafe ::
                VkDevice -- ^ device
@@ -8475,7 +8475,7 @@ foreign import ccall safe "vkResetCommandPool"
 --   >     , VkCommandPoolResetFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkResetCommandPool.html vkResetCommandPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetCommandPoolvkResetCommandPool registry at www.khronos.org>
 type HS_vkResetCommandPool =
      VkDevice -- ^ device
               -> VkCommandPool -- ^ commandPool
@@ -8525,7 +8525,7 @@ type VkAllocateCommandBuffers = "vkAllocateCommandBuffers"
 --   >     , VkCommandBuffer* pCommandBuffers
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkAllocateCommandBuffers.html vkAllocateCommandBuffers registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkAllocateCommandBuffersvkAllocateCommandBuffers registry at www.khronos.org>
 foreign import ccall unsafe "vkAllocateCommandBuffers"
                vkAllocateCommandBuffers ::
                VkDevice -- ^ device
@@ -8545,7 +8545,7 @@ foreign import ccall unsafe "vkAllocateCommandBuffers"
 --   >     , VkCommandBuffer* pCommandBuffers
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkAllocateCommandBuffers.html vkAllocateCommandBuffers registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkAllocateCommandBuffersvkAllocateCommandBuffers registry at www.khronos.org>
 foreign import ccall safe "vkAllocateCommandBuffers"
                vkAllocateCommandBuffersSafe ::
                VkDevice -- ^ device
@@ -8565,7 +8565,7 @@ foreign import ccall safe "vkAllocateCommandBuffers"
 --   >     , VkCommandBuffer* pCommandBuffers
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkAllocateCommandBuffers.html vkAllocateCommandBuffers registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkAllocateCommandBuffersvkAllocateCommandBuffers registry at www.khronos.org>
 type HS_vkAllocateCommandBuffers =
      VkDevice -- ^ device
               ->
@@ -8615,7 +8615,7 @@ type VkFreeCommandBuffers = "vkFreeCommandBuffers"
 --   >     , const VkCommandBuffer* pCommandBuffers
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkFreeCommandBuffers.html vkFreeCommandBuffers registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFreeCommandBuffersvkFreeCommandBuffers registry at www.khronos.org>
 foreign import ccall unsafe "vkFreeCommandBuffers"
                vkFreeCommandBuffers ::
                VkDevice -- ^ device
@@ -8631,7 +8631,7 @@ foreign import ccall unsafe "vkFreeCommandBuffers"
 --   >     , const VkCommandBuffer* pCommandBuffers
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkFreeCommandBuffers.html vkFreeCommandBuffers registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFreeCommandBuffersvkFreeCommandBuffers registry at www.khronos.org>
 foreign import ccall safe "vkFreeCommandBuffers"
                vkFreeCommandBuffersSafe ::
                VkDevice -- ^ device
@@ -8647,7 +8647,7 @@ foreign import ccall safe "vkFreeCommandBuffers"
 --   >     , const VkCommandBuffer* pCommandBuffers
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkFreeCommandBuffers.html vkFreeCommandBuffers registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkFreeCommandBuffersvkFreeCommandBuffers registry at www.khronos.org>
 type HS_vkFreeCommandBuffers =
      VkDevice -- ^ device
               -> VkCommandPool -- ^ commandPool
@@ -8696,7 +8696,7 @@ type VkBeginCommandBuffer = "vkBeginCommandBuffer"
 --   >     , const VkCommandBufferBeginInfo* pBeginInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkBeginCommandBuffer.html vkBeginCommandBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkBeginCommandBuffervkBeginCommandBuffer registry at www.khronos.org>
 foreign import ccall unsafe "vkBeginCommandBuffer"
                vkBeginCommandBuffer ::
                VkCommandBuffer -- ^ commandBuffer
@@ -8712,7 +8712,7 @@ foreign import ccall unsafe "vkBeginCommandBuffer"
 --   >     , const VkCommandBufferBeginInfo* pBeginInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkBeginCommandBuffer.html vkBeginCommandBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkBeginCommandBuffervkBeginCommandBuffer registry at www.khronos.org>
 foreign import ccall safe "vkBeginCommandBuffer"
                vkBeginCommandBufferSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -8728,7 +8728,7 @@ foreign import ccall safe "vkBeginCommandBuffer"
 --   >     , const VkCommandBufferBeginInfo* pBeginInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkBeginCommandBuffer.html vkBeginCommandBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkBeginCommandBuffervkBeginCommandBuffer registry at www.khronos.org>
 type HS_vkBeginCommandBuffer =
      VkCommandBuffer -- ^ commandBuffer
                      -> Ptr VkCommandBufferBeginInfo -- ^ pBeginInfo
@@ -8773,7 +8773,7 @@ type VkEndCommandBuffer = "vkEndCommandBuffer"
 --   >     ( VkCommandBuffer commandBuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEndCommandBuffer.html vkEndCommandBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEndCommandBuffervkEndCommandBuffer registry at www.khronos.org>
 foreign import ccall unsafe "vkEndCommandBuffer" vkEndCommandBuffer
                :: VkCommandBuffer -- ^ commandBuffer
                                   -> IO VkResult
@@ -8786,7 +8786,7 @@ foreign import ccall unsafe "vkEndCommandBuffer" vkEndCommandBuffer
 --   >     ( VkCommandBuffer commandBuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEndCommandBuffer.html vkEndCommandBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEndCommandBuffervkEndCommandBuffer registry at www.khronos.org>
 foreign import ccall safe "vkEndCommandBuffer"
                vkEndCommandBufferSafe :: VkCommandBuffer -- ^ commandBuffer
                                                          -> IO VkResult
@@ -8799,7 +8799,7 @@ foreign import ccall safe "vkEndCommandBuffer"
 --   >     ( VkCommandBuffer commandBuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEndCommandBuffer.html vkEndCommandBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkEndCommandBuffervkEndCommandBuffer registry at www.khronos.org>
 type HS_vkEndCommandBuffer = VkCommandBuffer -- ^ commandBuffer
                                              -> IO VkResult
 
@@ -8844,7 +8844,7 @@ type VkResetCommandBuffer = "vkResetCommandBuffer"
 --   >     , VkCommandBufferResetFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkResetCommandBuffer.html vkResetCommandBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetCommandBuffervkResetCommandBuffer registry at www.khronos.org>
 foreign import ccall unsafe "vkResetCommandBuffer"
                vkResetCommandBuffer ::
                VkCommandBuffer -- ^ commandBuffer
@@ -8860,7 +8860,7 @@ foreign import ccall unsafe "vkResetCommandBuffer"
 --   >     , VkCommandBufferResetFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkResetCommandBuffer.html vkResetCommandBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetCommandBuffervkResetCommandBuffer registry at www.khronos.org>
 foreign import ccall safe "vkResetCommandBuffer"
                vkResetCommandBufferSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -8876,7 +8876,7 @@ foreign import ccall safe "vkResetCommandBuffer"
 --   >     , VkCommandBufferResetFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkResetCommandBuffer.html vkResetCommandBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkResetCommandBuffervkResetCommandBuffer registry at www.khronos.org>
 type HS_vkResetCommandBuffer =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkCommandBufferResetFlags -- ^ flags
@@ -8923,7 +8923,7 @@ type VkCmdBindPipeline = "vkCmdBindPipeline"
 --   >     , VkPipeline pipeline
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBindPipeline.html vkCmdBindPipeline registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindPipelinevkCmdBindPipeline registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdBindPipeline" vkCmdBindPipeline
                :: VkCommandBuffer -- ^ commandBuffer
                                   -> VkPipelineBindPoint -- ^ pipelineBindPoint
@@ -8940,7 +8940,7 @@ foreign import ccall unsafe "vkCmdBindPipeline" vkCmdBindPipeline
 --   >     , VkPipeline pipeline
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBindPipeline.html vkCmdBindPipeline registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindPipelinevkCmdBindPipeline registry at www.khronos.org>
 foreign import ccall safe "vkCmdBindPipeline" vkCmdBindPipelineSafe
                :: VkCommandBuffer -- ^ commandBuffer
                                   -> VkPipelineBindPoint -- ^ pipelineBindPoint
@@ -8957,7 +8957,7 @@ foreign import ccall safe "vkCmdBindPipeline" vkCmdBindPipelineSafe
 --   >     , VkPipeline pipeline
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBindPipeline.html vkCmdBindPipeline registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindPipelinevkCmdBindPipeline registry at www.khronos.org>
 type HS_vkCmdBindPipeline =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkPipelineBindPoint -- ^ pipelineBindPoint
@@ -9006,7 +9006,7 @@ type VkCmdSetViewport = "vkCmdSetViewport"
 --   >     , const VkViewport* pViewports
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetViewport.html vkCmdSetViewport registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetViewportvkCmdSetViewport registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdSetViewport" vkCmdSetViewport ::
                VkCommandBuffer -- ^ commandBuffer
                                -> Word32 -- ^ firstViewport
@@ -9025,7 +9025,7 @@ foreign import ccall unsafe "vkCmdSetViewport" vkCmdSetViewport ::
 --   >     , const VkViewport* pViewports
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetViewport.html vkCmdSetViewport registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetViewportvkCmdSetViewport registry at www.khronos.org>
 foreign import ccall safe "vkCmdSetViewport" vkCmdSetViewportSafe
                :: VkCommandBuffer -- ^ commandBuffer
                                   -> Word32 -- ^ firstViewport
@@ -9044,7 +9044,7 @@ foreign import ccall safe "vkCmdSetViewport" vkCmdSetViewportSafe
 --   >     , const VkViewport* pViewports
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetViewport.html vkCmdSetViewport registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetViewportvkCmdSetViewport registry at www.khronos.org>
 type HS_vkCmdSetViewport =
      VkCommandBuffer -- ^ commandBuffer
                      -> Word32 -- ^ firstViewport
@@ -9094,7 +9094,7 @@ type VkCmdSetScissor = "vkCmdSetScissor"
 --   >     , const VkRect2D* pScissors
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetScissor.html vkCmdSetScissor registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetScissorvkCmdSetScissor registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdSetScissor" vkCmdSetScissor ::
                VkCommandBuffer -- ^ commandBuffer
                                -> Word32 -- ^ firstScissor
@@ -9113,7 +9113,7 @@ foreign import ccall unsafe "vkCmdSetScissor" vkCmdSetScissor ::
 --   >     , const VkRect2D* pScissors
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetScissor.html vkCmdSetScissor registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetScissorvkCmdSetScissor registry at www.khronos.org>
 foreign import ccall safe "vkCmdSetScissor" vkCmdSetScissorSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                -> Word32 -- ^ firstScissor
@@ -9132,7 +9132,7 @@ foreign import ccall safe "vkCmdSetScissor" vkCmdSetScissorSafe ::
 --   >     , const VkRect2D* pScissors
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetScissor.html vkCmdSetScissor registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetScissorvkCmdSetScissor registry at www.khronos.org>
 type HS_vkCmdSetScissor =
      VkCommandBuffer -- ^ commandBuffer
                      -> Word32 -- ^ firstScissor
@@ -9180,7 +9180,7 @@ type VkCmdSetLineWidth = "vkCmdSetLineWidth"
 --   >     , float lineWidth
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetLineWidth.html vkCmdSetLineWidth registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetLineWidthvkCmdSetLineWidth registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdSetLineWidth" vkCmdSetLineWidth
                :: VkCommandBuffer -- ^ commandBuffer
                                   -> #{type float} -> IO ()
@@ -9194,7 +9194,7 @@ foreign import ccall unsafe "vkCmdSetLineWidth" vkCmdSetLineWidth
 --   >     , float lineWidth
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetLineWidth.html vkCmdSetLineWidth registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetLineWidthvkCmdSetLineWidth registry at www.khronos.org>
 foreign import ccall safe "vkCmdSetLineWidth" vkCmdSetLineWidthSafe
                :: VkCommandBuffer -- ^ commandBuffer
                                   -> #{type float} -> IO ()
@@ -9208,7 +9208,7 @@ foreign import ccall safe "vkCmdSetLineWidth" vkCmdSetLineWidthSafe
 --   >     , float lineWidth
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetLineWidth.html vkCmdSetLineWidth registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetLineWidthvkCmdSetLineWidth registry at www.khronos.org>
 type HS_vkCmdSetLineWidth =
      VkCommandBuffer -- ^ commandBuffer
                      -> #{type float} -> IO ()
@@ -9255,7 +9255,7 @@ type VkCmdSetDepthBias = "vkCmdSetDepthBias"
 --   >     , float depthBiasSlopeFactor
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetDepthBias.html vkCmdSetDepthBias registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetDepthBiasvkCmdSetDepthBias registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdSetDepthBias" vkCmdSetDepthBias
                ::
                VkCommandBuffer -- ^ commandBuffer
@@ -9274,7 +9274,7 @@ foreign import ccall unsafe "vkCmdSetDepthBias" vkCmdSetDepthBias
 --   >     , float depthBiasSlopeFactor
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetDepthBias.html vkCmdSetDepthBias registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetDepthBiasvkCmdSetDepthBias registry at www.khronos.org>
 foreign import ccall safe "vkCmdSetDepthBias" vkCmdSetDepthBiasSafe
                ::
                VkCommandBuffer -- ^ commandBuffer
@@ -9293,7 +9293,7 @@ foreign import ccall safe "vkCmdSetDepthBias" vkCmdSetDepthBiasSafe
 --   >     , float depthBiasSlopeFactor
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetDepthBias.html vkCmdSetDepthBias registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetDepthBiasvkCmdSetDepthBias registry at www.khronos.org>
 type HS_vkCmdSetDepthBias =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -9342,7 +9342,7 @@ type VkCmdSetBlendConstants = "vkCmdSetBlendConstants"
 --   >     , const float blendConstants[4]
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetBlendConstants.html vkCmdSetBlendConstants registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetBlendConstantsvkCmdSetBlendConstants registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdSetBlendConstants"
                vkCmdSetBlendConstants ::
                VkCommandBuffer -- ^ commandBuffer
@@ -9358,7 +9358,7 @@ foreign import ccall unsafe "vkCmdSetBlendConstants"
 --   >     , const float blendConstants[4]
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetBlendConstants.html vkCmdSetBlendConstants registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetBlendConstantsvkCmdSetBlendConstants registry at www.khronos.org>
 foreign import ccall safe "vkCmdSetBlendConstants"
                vkCmdSetBlendConstantsSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -9374,7 +9374,7 @@ foreign import ccall safe "vkCmdSetBlendConstants"
 --   >     , const float blendConstants[4]
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetBlendConstants.html vkCmdSetBlendConstants registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetBlendConstantsvkCmdSetBlendConstants registry at www.khronos.org>
 type HS_vkCmdSetBlendConstants =
      VkCommandBuffer -- ^ commandBuffer
                      -> Ptr #{type float} -- ^ blendConstants
@@ -9422,7 +9422,7 @@ type VkCmdSetDepthBounds = "vkCmdSetDepthBounds"
 --   >     , float maxDepthBounds
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetDepthBounds.html vkCmdSetDepthBounds registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetDepthBoundsvkCmdSetDepthBounds registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdSetDepthBounds"
                vkCmdSetDepthBounds ::
                VkCommandBuffer -- ^ commandBuffer
@@ -9439,7 +9439,7 @@ foreign import ccall unsafe "vkCmdSetDepthBounds"
 --   >     , float maxDepthBounds
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetDepthBounds.html vkCmdSetDepthBounds registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetDepthBoundsvkCmdSetDepthBounds registry at www.khronos.org>
 foreign import ccall safe "vkCmdSetDepthBounds"
                vkCmdSetDepthBoundsSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -9456,7 +9456,7 @@ foreign import ccall safe "vkCmdSetDepthBounds"
 --   >     , float maxDepthBounds
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetDepthBounds.html vkCmdSetDepthBounds registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetDepthBoundsvkCmdSetDepthBounds registry at www.khronos.org>
 type HS_vkCmdSetDepthBounds =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -9505,7 +9505,7 @@ type VkCmdSetStencilCompareMask = "vkCmdSetStencilCompareMask"
 --   >     , uint32_t compareMask
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetStencilCompareMask.html vkCmdSetStencilCompareMask registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetStencilCompareMaskvkCmdSetStencilCompareMask registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdSetStencilCompareMask"
                vkCmdSetStencilCompareMask ::
                VkCommandBuffer -- ^ commandBuffer
@@ -9523,7 +9523,7 @@ foreign import ccall unsafe "vkCmdSetStencilCompareMask"
 --   >     , uint32_t compareMask
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetStencilCompareMask.html vkCmdSetStencilCompareMask registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetStencilCompareMaskvkCmdSetStencilCompareMask registry at www.khronos.org>
 foreign import ccall safe "vkCmdSetStencilCompareMask"
                vkCmdSetStencilCompareMaskSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -9541,7 +9541,7 @@ foreign import ccall safe "vkCmdSetStencilCompareMask"
 --   >     , uint32_t compareMask
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetStencilCompareMask.html vkCmdSetStencilCompareMask registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetStencilCompareMaskvkCmdSetStencilCompareMask registry at www.khronos.org>
 type HS_vkCmdSetStencilCompareMask =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkStencilFaceFlags -- ^ faceMask
@@ -9593,7 +9593,7 @@ type VkCmdSetStencilWriteMask = "vkCmdSetStencilWriteMask"
 --   >     , uint32_t writeMask
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetStencilWriteMask.html vkCmdSetStencilWriteMask registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetStencilWriteMaskvkCmdSetStencilWriteMask registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdSetStencilWriteMask"
                vkCmdSetStencilWriteMask ::
                VkCommandBuffer -- ^ commandBuffer
@@ -9611,7 +9611,7 @@ foreign import ccall unsafe "vkCmdSetStencilWriteMask"
 --   >     , uint32_t writeMask
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetStencilWriteMask.html vkCmdSetStencilWriteMask registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetStencilWriteMaskvkCmdSetStencilWriteMask registry at www.khronos.org>
 foreign import ccall safe "vkCmdSetStencilWriteMask"
                vkCmdSetStencilWriteMaskSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -9629,7 +9629,7 @@ foreign import ccall safe "vkCmdSetStencilWriteMask"
 --   >     , uint32_t writeMask
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetStencilWriteMask.html vkCmdSetStencilWriteMask registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetStencilWriteMaskvkCmdSetStencilWriteMask registry at www.khronos.org>
 type HS_vkCmdSetStencilWriteMask =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkStencilFaceFlags -- ^ faceMask
@@ -9681,7 +9681,7 @@ type VkCmdSetStencilReference = "vkCmdSetStencilReference"
 --   >     , uint32_t reference
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetStencilReference.html vkCmdSetStencilReference registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetStencilReferencevkCmdSetStencilReference registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdSetStencilReference"
                vkCmdSetStencilReference ::
                VkCommandBuffer -- ^ commandBuffer
@@ -9699,7 +9699,7 @@ foreign import ccall unsafe "vkCmdSetStencilReference"
 --   >     , uint32_t reference
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetStencilReference.html vkCmdSetStencilReference registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetStencilReferencevkCmdSetStencilReference registry at www.khronos.org>
 foreign import ccall safe "vkCmdSetStencilReference"
                vkCmdSetStencilReferenceSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -9717,7 +9717,7 @@ foreign import ccall safe "vkCmdSetStencilReference"
 --   >     , uint32_t reference
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetStencilReference.html vkCmdSetStencilReference registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetStencilReferencevkCmdSetStencilReference registry at www.khronos.org>
 type HS_vkCmdSetStencilReference =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkStencilFaceFlags -- ^ faceMask
@@ -9774,7 +9774,7 @@ type VkCmdBindDescriptorSets = "vkCmdBindDescriptorSets"
 --   >     , const uint32_t* pDynamicOffsets
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBindDescriptorSets.html vkCmdBindDescriptorSets registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindDescriptorSetsvkCmdBindDescriptorSets registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdBindDescriptorSets"
                vkCmdBindDescriptorSets ::
                VkCommandBuffer -- ^ commandBuffer
@@ -9806,7 +9806,7 @@ foreign import ccall unsafe "vkCmdBindDescriptorSets"
 --   >     , const uint32_t* pDynamicOffsets
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBindDescriptorSets.html vkCmdBindDescriptorSets registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindDescriptorSetsvkCmdBindDescriptorSets registry at www.khronos.org>
 foreign import ccall safe "vkCmdBindDescriptorSets"
                vkCmdBindDescriptorSetsSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -9838,7 +9838,7 @@ foreign import ccall safe "vkCmdBindDescriptorSets"
 --   >     , const uint32_t* pDynamicOffsets
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBindDescriptorSets.html vkCmdBindDescriptorSets registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindDescriptorSetsvkCmdBindDescriptorSets registry at www.khronos.org>
 type HS_vkCmdBindDescriptorSets =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -9899,7 +9899,7 @@ type VkCmdBindIndexBuffer = "vkCmdBindIndexBuffer"
 --   >     , VkIndexType indexType
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBindIndexBuffer.html vkCmdBindIndexBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindIndexBuffervkCmdBindIndexBuffer registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdBindIndexBuffer"
                vkCmdBindIndexBuffer ::
                VkCommandBuffer -- ^ commandBuffer
@@ -9919,7 +9919,7 @@ foreign import ccall unsafe "vkCmdBindIndexBuffer"
 --   >     , VkIndexType indexType
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBindIndexBuffer.html vkCmdBindIndexBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindIndexBuffervkCmdBindIndexBuffer registry at www.khronos.org>
 foreign import ccall safe "vkCmdBindIndexBuffer"
                vkCmdBindIndexBufferSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -9939,7 +9939,7 @@ foreign import ccall safe "vkCmdBindIndexBuffer"
 --   >     , VkIndexType indexType
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBindIndexBuffer.html vkCmdBindIndexBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindIndexBuffervkCmdBindIndexBuffer registry at www.khronos.org>
 type HS_vkCmdBindIndexBuffer =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkBuffer -- ^ buffer
@@ -9992,7 +9992,7 @@ type VkCmdBindVertexBuffers = "vkCmdBindVertexBuffers"
 --   >     , const VkDeviceSize* pOffsets
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBindVertexBuffers.html vkCmdBindVertexBuffers registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindVertexBuffersvkCmdBindVertexBuffers registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdBindVertexBuffers"
                vkCmdBindVertexBuffers ::
                VkCommandBuffer -- ^ commandBuffer
@@ -10015,7 +10015,7 @@ foreign import ccall unsafe "vkCmdBindVertexBuffers"
 --   >     , const VkDeviceSize* pOffsets
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBindVertexBuffers.html vkCmdBindVertexBuffers registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindVertexBuffersvkCmdBindVertexBuffers registry at www.khronos.org>
 foreign import ccall safe "vkCmdBindVertexBuffers"
                vkCmdBindVertexBuffersSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -10038,7 +10038,7 @@ foreign import ccall safe "vkCmdBindVertexBuffers"
 --   >     , const VkDeviceSize* pOffsets
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBindVertexBuffers.html vkCmdBindVertexBuffers registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBindVertexBuffersvkCmdBindVertexBuffers registry at www.khronos.org>
 type HS_vkCmdBindVertexBuffers =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -10094,7 +10094,7 @@ type VkCmdDraw = "vkCmdDraw"
 --   >     , uint32_t firstInstance
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDraw.html vkCmdDraw registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawvkCmdDraw registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdDraw" vkCmdDraw ::
                VkCommandBuffer -- ^ commandBuffer
                                -> Word32 -- ^ vertexCount
@@ -10117,7 +10117,7 @@ foreign import ccall unsafe "vkCmdDraw" vkCmdDraw ::
 --   >     , uint32_t firstInstance
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDraw.html vkCmdDraw registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawvkCmdDraw registry at www.khronos.org>
 foreign import ccall safe "vkCmdDraw" vkCmdDrawSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                -> Word32 -- ^ vertexCount
@@ -10140,7 +10140,7 @@ foreign import ccall safe "vkCmdDraw" vkCmdDrawSafe ::
 --   >     , uint32_t firstInstance
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDraw.html vkCmdDraw registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawvkCmdDraw registry at www.khronos.org>
 type HS_vkCmdDraw =
      VkCommandBuffer -- ^ commandBuffer
                      -> Word32 -- ^ vertexCount
@@ -10195,7 +10195,7 @@ type VkCmdDrawIndexed = "vkCmdDrawIndexed"
 --   >     , uint32_t firstInstance
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDrawIndexed.html vkCmdDrawIndexed registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawIndexedvkCmdDrawIndexed registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdDrawIndexed" vkCmdDrawIndexed ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -10221,7 +10221,7 @@ foreign import ccall unsafe "vkCmdDrawIndexed" vkCmdDrawIndexed ::
 --   >     , uint32_t firstInstance
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDrawIndexed.html vkCmdDrawIndexed registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawIndexedvkCmdDrawIndexed registry at www.khronos.org>
 foreign import ccall safe "vkCmdDrawIndexed" vkCmdDrawIndexedSafe
                ::
                VkCommandBuffer -- ^ commandBuffer
@@ -10248,7 +10248,7 @@ foreign import ccall safe "vkCmdDrawIndexed" vkCmdDrawIndexedSafe
 --   >     , uint32_t firstInstance
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDrawIndexed.html vkCmdDrawIndexed registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawIndexedvkCmdDrawIndexed registry at www.khronos.org>
 type HS_vkCmdDrawIndexed =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -10304,7 +10304,7 @@ type VkCmdDrawIndirect = "vkCmdDrawIndirect"
 --   >     , uint32_t stride
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDrawIndirect.html vkCmdDrawIndirect registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawIndirectvkCmdDrawIndirect registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdDrawIndirect" vkCmdDrawIndirect
                ::
                VkCommandBuffer -- ^ commandBuffer
@@ -10329,7 +10329,7 @@ foreign import ccall unsafe "vkCmdDrawIndirect" vkCmdDrawIndirect
 --   >     , uint32_t stride
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDrawIndirect.html vkCmdDrawIndirect registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawIndirectvkCmdDrawIndirect registry at www.khronos.org>
 foreign import ccall safe "vkCmdDrawIndirect" vkCmdDrawIndirectSafe
                ::
                VkCommandBuffer -- ^ commandBuffer
@@ -10354,7 +10354,7 @@ foreign import ccall safe "vkCmdDrawIndirect" vkCmdDrawIndirectSafe
 --   >     , uint32_t stride
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDrawIndirect.html vkCmdDrawIndirect registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawIndirectvkCmdDrawIndirect registry at www.khronos.org>
 type HS_vkCmdDrawIndirect =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -10411,7 +10411,7 @@ type VkCmdDrawIndexedIndirect = "vkCmdDrawIndexedIndirect"
 --   >     , uint32_t stride
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDrawIndexedIndirect.html vkCmdDrawIndexedIndirect registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawIndexedIndirectvkCmdDrawIndexedIndirect registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdDrawIndexedIndirect"
                vkCmdDrawIndexedIndirect ::
                VkCommandBuffer -- ^ commandBuffer
@@ -10436,7 +10436,7 @@ foreign import ccall unsafe "vkCmdDrawIndexedIndirect"
 --   >     , uint32_t stride
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDrawIndexedIndirect.html vkCmdDrawIndexedIndirect registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawIndexedIndirectvkCmdDrawIndexedIndirect registry at www.khronos.org>
 foreign import ccall safe "vkCmdDrawIndexedIndirect"
                vkCmdDrawIndexedIndirectSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -10461,7 +10461,7 @@ foreign import ccall safe "vkCmdDrawIndexedIndirect"
 --   >     , uint32_t stride
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDrawIndexedIndirect.html vkCmdDrawIndexedIndirect registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDrawIndexedIndirectvkCmdDrawIndexedIndirect registry at www.khronos.org>
 type HS_vkCmdDrawIndexedIndirect =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -10517,7 +10517,7 @@ type VkCmdDispatch = "vkCmdDispatch"
 --   >     , uint32_t groupCountZ
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDispatch.html vkCmdDispatch registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDispatchvkCmdDispatch registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdDispatch" vkCmdDispatch ::
                VkCommandBuffer -- ^ commandBuffer
                                -> Word32 -- ^ groupCountX
@@ -10538,7 +10538,7 @@ foreign import ccall unsafe "vkCmdDispatch" vkCmdDispatch ::
 --   >     , uint32_t groupCountZ
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDispatch.html vkCmdDispatch registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDispatchvkCmdDispatch registry at www.khronos.org>
 foreign import ccall safe "vkCmdDispatch" vkCmdDispatchSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                -> Word32 -- ^ groupCountX
@@ -10559,7 +10559,7 @@ foreign import ccall safe "vkCmdDispatch" vkCmdDispatchSafe ::
 --   >     , uint32_t groupCountZ
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDispatch.html vkCmdDispatch registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDispatchvkCmdDispatch registry at www.khronos.org>
 type HS_vkCmdDispatch =
      VkCommandBuffer -- ^ commandBuffer
                      -> Word32 -- ^ groupCountX
@@ -10611,7 +10611,7 @@ type VkCmdDispatchIndirect = "vkCmdDispatchIndirect"
 --   >     , VkDeviceSize offset
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDispatchIndirect.html vkCmdDispatchIndirect registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDispatchIndirectvkCmdDispatchIndirect registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdDispatchIndirect"
                vkCmdDispatchIndirect ::
                VkCommandBuffer -- ^ commandBuffer
@@ -10631,7 +10631,7 @@ foreign import ccall unsafe "vkCmdDispatchIndirect"
 --   >     , VkDeviceSize offset
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDispatchIndirect.html vkCmdDispatchIndirect registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDispatchIndirectvkCmdDispatchIndirect registry at www.khronos.org>
 foreign import ccall safe "vkCmdDispatchIndirect"
                vkCmdDispatchIndirectSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -10651,7 +10651,7 @@ foreign import ccall safe "vkCmdDispatchIndirect"
 --   >     , VkDeviceSize offset
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDispatchIndirect.html vkCmdDispatchIndirect registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdDispatchIndirectvkCmdDispatchIndirect registry at www.khronos.org>
 type HS_vkCmdDispatchIndirect =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkBuffer -- ^ buffer
@@ -10703,7 +10703,7 @@ type VkCmdCopyBuffer = "vkCmdCopyBuffer"
 --   >     , const VkBufferCopy* pRegions
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdCopyBuffer.html vkCmdCopyBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyBuffervkCmdCopyBuffer registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdCopyBuffer" vkCmdCopyBuffer ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -10727,7 +10727,7 @@ foreign import ccall unsafe "vkCmdCopyBuffer" vkCmdCopyBuffer ::
 --   >     , const VkBufferCopy* pRegions
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdCopyBuffer.html vkCmdCopyBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyBuffervkCmdCopyBuffer registry at www.khronos.org>
 foreign import ccall safe "vkCmdCopyBuffer" vkCmdCopyBufferSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -10751,7 +10751,7 @@ foreign import ccall safe "vkCmdCopyBuffer" vkCmdCopyBufferSafe ::
 --   >     , const VkBufferCopy* pRegions
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdCopyBuffer.html vkCmdCopyBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyBuffervkCmdCopyBuffer registry at www.khronos.org>
 type HS_vkCmdCopyBuffer =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -10808,7 +10808,7 @@ type VkCmdCopyImage = "vkCmdCopyImage"
 --   >     , const VkImageCopy* pRegions
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdCopyImage.html vkCmdCopyImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyImagevkCmdCopyImage registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdCopyImage" vkCmdCopyImage ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -10838,7 +10838,7 @@ foreign import ccall unsafe "vkCmdCopyImage" vkCmdCopyImage ::
 --   >     , const VkImageCopy* pRegions
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdCopyImage.html vkCmdCopyImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyImagevkCmdCopyImage registry at www.khronos.org>
 foreign import ccall safe "vkCmdCopyImage" vkCmdCopyImageSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -10868,7 +10868,7 @@ foreign import ccall safe "vkCmdCopyImage" vkCmdCopyImageSafe ::
 --   >     , const VkImageCopy* pRegions
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdCopyImage.html vkCmdCopyImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyImagevkCmdCopyImage registry at www.khronos.org>
 type HS_vkCmdCopyImage =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -10930,7 +10930,7 @@ type VkCmdBlitImage = "vkCmdBlitImage"
 --   >     , VkFilter filter
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBlitImage.html vkCmdBlitImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBlitImagevkCmdBlitImage registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdBlitImage" vkCmdBlitImage ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -10963,7 +10963,7 @@ foreign import ccall unsafe "vkCmdBlitImage" vkCmdBlitImage ::
 --   >     , VkFilter filter
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBlitImage.html vkCmdBlitImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBlitImagevkCmdBlitImage registry at www.khronos.org>
 foreign import ccall safe "vkCmdBlitImage" vkCmdBlitImageSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -10996,7 +10996,7 @@ foreign import ccall safe "vkCmdBlitImage" vkCmdBlitImageSafe ::
 --   >     , VkFilter filter
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBlitImage.html vkCmdBlitImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBlitImagevkCmdBlitImage registry at www.khronos.org>
 type HS_vkCmdBlitImage =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -11060,7 +11060,7 @@ type VkCmdCopyBufferToImage = "vkCmdCopyBufferToImage"
 --   >     , const VkBufferImageCopy* pRegions
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdCopyBufferToImage.html vkCmdCopyBufferToImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyBufferToImagevkCmdCopyBufferToImage registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdCopyBufferToImage"
                vkCmdCopyBufferToImage ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11089,7 +11089,7 @@ foreign import ccall unsafe "vkCmdCopyBufferToImage"
 --   >     , const VkBufferImageCopy* pRegions
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdCopyBufferToImage.html vkCmdCopyBufferToImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyBufferToImagevkCmdCopyBufferToImage registry at www.khronos.org>
 foreign import ccall safe "vkCmdCopyBufferToImage"
                vkCmdCopyBufferToImageSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11118,7 +11118,7 @@ foreign import ccall safe "vkCmdCopyBufferToImage"
 --   >     , const VkBufferImageCopy* pRegions
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdCopyBufferToImage.html vkCmdCopyBufferToImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyBufferToImagevkCmdCopyBufferToImage registry at www.khronos.org>
 type HS_vkCmdCopyBufferToImage =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -11180,7 +11180,7 @@ type VkCmdCopyImageToBuffer = "vkCmdCopyImageToBuffer"
 --   >     , const VkBufferImageCopy* pRegions
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdCopyImageToBuffer.html vkCmdCopyImageToBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyImageToBuffervkCmdCopyImageToBuffer registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdCopyImageToBuffer"
                vkCmdCopyImageToBuffer ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11209,7 +11209,7 @@ foreign import ccall unsafe "vkCmdCopyImageToBuffer"
 --   >     , const VkBufferImageCopy* pRegions
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdCopyImageToBuffer.html vkCmdCopyImageToBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyImageToBuffervkCmdCopyImageToBuffer registry at www.khronos.org>
 foreign import ccall safe "vkCmdCopyImageToBuffer"
                vkCmdCopyImageToBufferSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11238,7 +11238,7 @@ foreign import ccall safe "vkCmdCopyImageToBuffer"
 --   >     , const VkBufferImageCopy* pRegions
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdCopyImageToBuffer.html vkCmdCopyImageToBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyImageToBuffervkCmdCopyImageToBuffer registry at www.khronos.org>
 type HS_vkCmdCopyImageToBuffer =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -11297,7 +11297,7 @@ type VkCmdUpdateBuffer = "vkCmdUpdateBuffer"
 --   >     , const void* pData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdUpdateBuffer.html vkCmdUpdateBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdUpdateBuffervkCmdUpdateBuffer registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdUpdateBuffer" vkCmdUpdateBuffer
                ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11322,7 +11322,7 @@ foreign import ccall unsafe "vkCmdUpdateBuffer" vkCmdUpdateBuffer
 --   >     , const void* pData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdUpdateBuffer.html vkCmdUpdateBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdUpdateBuffervkCmdUpdateBuffer registry at www.khronos.org>
 foreign import ccall safe "vkCmdUpdateBuffer" vkCmdUpdateBufferSafe
                ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11347,7 +11347,7 @@ foreign import ccall safe "vkCmdUpdateBuffer" vkCmdUpdateBufferSafe
 --   >     , const void* pData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdUpdateBuffer.html vkCmdUpdateBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdUpdateBuffervkCmdUpdateBuffer registry at www.khronos.org>
 type HS_vkCmdUpdateBuffer =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -11404,7 +11404,7 @@ type VkCmdFillBuffer = "vkCmdFillBuffer"
 --   >     , uint32_t data
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdFillBuffer.html vkCmdFillBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdFillBuffervkCmdFillBuffer registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdFillBuffer" vkCmdFillBuffer ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -11430,7 +11430,7 @@ foreign import ccall unsafe "vkCmdFillBuffer" vkCmdFillBuffer ::
 --   >     , uint32_t data
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdFillBuffer.html vkCmdFillBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdFillBuffervkCmdFillBuffer registry at www.khronos.org>
 foreign import ccall safe "vkCmdFillBuffer" vkCmdFillBufferSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -11456,7 +11456,7 @@ foreign import ccall safe "vkCmdFillBuffer" vkCmdFillBufferSafe ::
 --   >     , uint32_t data
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdFillBuffer.html vkCmdFillBuffer registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdFillBuffervkCmdFillBuffer registry at www.khronos.org>
 type HS_vkCmdFillBuffer =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -11513,7 +11513,7 @@ type VkCmdClearColorImage = "vkCmdClearColorImage"
 --   >     , const VkImageSubresourceRange* pRanges
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdClearColorImage.html vkCmdClearColorImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdClearColorImagevkCmdClearColorImage registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdClearColorImage"
                vkCmdClearColorImage ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11543,7 +11543,7 @@ foreign import ccall unsafe "vkCmdClearColorImage"
 --   >     , const VkImageSubresourceRange* pRanges
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdClearColorImage.html vkCmdClearColorImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdClearColorImagevkCmdClearColorImage registry at www.khronos.org>
 foreign import ccall safe "vkCmdClearColorImage"
                vkCmdClearColorImageSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11573,7 +11573,7 @@ foreign import ccall safe "vkCmdClearColorImage"
 --   >     , const VkImageSubresourceRange* pRanges
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdClearColorImage.html vkCmdClearColorImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdClearColorImagevkCmdClearColorImage registry at www.khronos.org>
 type HS_vkCmdClearColorImage =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -11636,7 +11636,7 @@ type VkCmdClearDepthStencilImage = "vkCmdClearDepthStencilImage"
 --   >     , const VkImageSubresourceRange* pRanges
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdClearDepthStencilImage.html vkCmdClearDepthStencilImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdClearDepthStencilImagevkCmdClearDepthStencilImage registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdClearDepthStencilImage"
                vkCmdClearDepthStencilImage ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11666,7 +11666,7 @@ foreign import ccall unsafe "vkCmdClearDepthStencilImage"
 --   >     , const VkImageSubresourceRange* pRanges
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdClearDepthStencilImage.html vkCmdClearDepthStencilImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdClearDepthStencilImagevkCmdClearDepthStencilImage registry at www.khronos.org>
 foreign import ccall safe "vkCmdClearDepthStencilImage"
                vkCmdClearDepthStencilImageSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11696,7 +11696,7 @@ foreign import ccall safe "vkCmdClearDepthStencilImage"
 --   >     , const VkImageSubresourceRange* pRanges
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdClearDepthStencilImage.html vkCmdClearDepthStencilImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdClearDepthStencilImagevkCmdClearDepthStencilImage registry at www.khronos.org>
 type HS_vkCmdClearDepthStencilImage =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -11758,7 +11758,7 @@ type VkCmdClearAttachments = "vkCmdClearAttachments"
 --   >     , const VkClearRect* pRects
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdClearAttachments.html vkCmdClearAttachments registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdClearAttachmentsvkCmdClearAttachments registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdClearAttachments"
                vkCmdClearAttachments ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11784,7 +11784,7 @@ foreign import ccall unsafe "vkCmdClearAttachments"
 --   >     , const VkClearRect* pRects
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdClearAttachments.html vkCmdClearAttachments registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdClearAttachmentsvkCmdClearAttachments registry at www.khronos.org>
 foreign import ccall safe "vkCmdClearAttachments"
                vkCmdClearAttachmentsSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11810,7 +11810,7 @@ foreign import ccall safe "vkCmdClearAttachments"
 --   >     , const VkClearRect* pRects
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdClearAttachments.html vkCmdClearAttachments registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdClearAttachmentsvkCmdClearAttachments registry at www.khronos.org>
 type HS_vkCmdClearAttachments =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -11868,7 +11868,7 @@ type VkCmdResolveImage = "vkCmdResolveImage"
 --   >     , const VkImageResolve* pRegions
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdResolveImage.html vkCmdResolveImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdResolveImagevkCmdResolveImage registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdResolveImage" vkCmdResolveImage
                ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11899,7 +11899,7 @@ foreign import ccall unsafe "vkCmdResolveImage" vkCmdResolveImage
 --   >     , const VkImageResolve* pRegions
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdResolveImage.html vkCmdResolveImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdResolveImagevkCmdResolveImage registry at www.khronos.org>
 foreign import ccall safe "vkCmdResolveImage" vkCmdResolveImageSafe
                ::
                VkCommandBuffer -- ^ commandBuffer
@@ -11930,7 +11930,7 @@ foreign import ccall safe "vkCmdResolveImage" vkCmdResolveImageSafe
 --   >     , const VkImageResolve* pRegions
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdResolveImage.html vkCmdResolveImage registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdResolveImagevkCmdResolveImage registry at www.khronos.org>
 type HS_vkCmdResolveImage =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -11985,7 +11985,7 @@ type VkCmdSetEvent = "vkCmdSetEvent"
 --   >     , VkPipelineStageFlags stageMask
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetEvent.html vkCmdSetEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetEventvkCmdSetEvent registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdSetEvent" vkCmdSetEvent ::
                VkCommandBuffer -- ^ commandBuffer
                                -> VkEvent -- ^ event
@@ -12002,7 +12002,7 @@ foreign import ccall unsafe "vkCmdSetEvent" vkCmdSetEvent ::
 --   >     , VkPipelineStageFlags stageMask
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetEvent.html vkCmdSetEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetEventvkCmdSetEvent registry at www.khronos.org>
 foreign import ccall safe "vkCmdSetEvent" vkCmdSetEventSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                -> VkEvent -- ^ event
@@ -12019,7 +12019,7 @@ foreign import ccall safe "vkCmdSetEvent" vkCmdSetEventSafe ::
 --   >     , VkPipelineStageFlags stageMask
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetEvent.html vkCmdSetEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdSetEventvkCmdSetEvent registry at www.khronos.org>
 type HS_vkCmdSetEvent =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkEvent -- ^ event
@@ -12067,7 +12067,7 @@ type VkCmdResetEvent = "vkCmdResetEvent"
 --   >     , VkPipelineStageFlags stageMask
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdResetEvent.html vkCmdResetEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdResetEventvkCmdResetEvent registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdResetEvent" vkCmdResetEvent ::
                VkCommandBuffer -- ^ commandBuffer
                                -> VkEvent -- ^ event
@@ -12084,7 +12084,7 @@ foreign import ccall unsafe "vkCmdResetEvent" vkCmdResetEvent ::
 --   >     , VkPipelineStageFlags stageMask
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdResetEvent.html vkCmdResetEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdResetEventvkCmdResetEvent registry at www.khronos.org>
 foreign import ccall safe "vkCmdResetEvent" vkCmdResetEventSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                -> VkEvent -- ^ event
@@ -12101,7 +12101,7 @@ foreign import ccall safe "vkCmdResetEvent" vkCmdResetEventSafe ::
 --   >     , VkPipelineStageFlags stageMask
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdResetEvent.html vkCmdResetEvent registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdResetEventvkCmdResetEvent registry at www.khronos.org>
 type HS_vkCmdResetEvent =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkEvent -- ^ event
@@ -12157,7 +12157,7 @@ type VkCmdWaitEvents = "vkCmdWaitEvents"
 --   >     , const VkImageMemoryBarrier* pImageMemoryBarriers
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdWaitEvents.html vkCmdWaitEvents registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdWaitEventsvkCmdWaitEvents registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdWaitEvents" vkCmdWaitEvents ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -12199,7 +12199,7 @@ foreign import ccall unsafe "vkCmdWaitEvents" vkCmdWaitEvents ::
 --   >     , const VkImageMemoryBarrier* pImageMemoryBarriers
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdWaitEvents.html vkCmdWaitEvents registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdWaitEventsvkCmdWaitEvents registry at www.khronos.org>
 foreign import ccall safe "vkCmdWaitEvents" vkCmdWaitEventsSafe ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -12241,7 +12241,7 @@ foreign import ccall safe "vkCmdWaitEvents" vkCmdWaitEventsSafe ::
 --   >     , const VkImageMemoryBarrier* pImageMemoryBarriers
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdWaitEvents.html vkCmdWaitEvents registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdWaitEventsvkCmdWaitEvents registry at www.khronos.org>
 type HS_vkCmdWaitEvents =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -12314,7 +12314,7 @@ type VkCmdPipelineBarrier = "vkCmdPipelineBarrier"
 --   >     , const VkImageMemoryBarrier* pImageMemoryBarriers
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdPipelineBarrier.html vkCmdPipelineBarrier registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdPipelineBarriervkCmdPipelineBarrier registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdPipelineBarrier"
                vkCmdPipelineBarrier ::
                VkCommandBuffer -- ^ commandBuffer
@@ -12354,7 +12354,7 @@ foreign import ccall unsafe "vkCmdPipelineBarrier"
 --   >     , const VkImageMemoryBarrier* pImageMemoryBarriers
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdPipelineBarrier.html vkCmdPipelineBarrier registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdPipelineBarriervkCmdPipelineBarrier registry at www.khronos.org>
 foreign import ccall safe "vkCmdPipelineBarrier"
                vkCmdPipelineBarrierSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -12394,7 +12394,7 @@ foreign import ccall safe "vkCmdPipelineBarrier"
 --   >     , const VkImageMemoryBarrier* pImageMemoryBarriers
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdPipelineBarrier.html vkCmdPipelineBarrier registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdPipelineBarriervkCmdPipelineBarrier registry at www.khronos.org>
 type HS_vkCmdPipelineBarrier =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -12458,7 +12458,7 @@ type VkCmdBeginQuery = "vkCmdBeginQuery"
 --   >     , VkQueryControlFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBeginQuery.html vkCmdBeginQuery registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBeginQueryvkCmdBeginQuery registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdBeginQuery" vkCmdBeginQuery ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -12478,7 +12478,7 @@ foreign import ccall unsafe "vkCmdBeginQuery" vkCmdBeginQuery ::
 --   >     , VkQueryControlFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBeginQuery.html vkCmdBeginQuery registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBeginQueryvkCmdBeginQuery registry at www.khronos.org>
 foreign import ccall safe "vkCmdBeginQuery" vkCmdBeginQuerySafe ::
                VkCommandBuffer -- ^ commandBuffer
                                ->
@@ -12498,7 +12498,7 @@ foreign import ccall safe "vkCmdBeginQuery" vkCmdBeginQuerySafe ::
 --   >     , VkQueryControlFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBeginQuery.html vkCmdBeginQuery registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBeginQueryvkCmdBeginQuery registry at www.khronos.org>
 type HS_vkCmdBeginQuery =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -12548,7 +12548,7 @@ type VkCmdEndQuery = "vkCmdEndQuery"
 --   >     , uint32_t query
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdEndQuery.html vkCmdEndQuery registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdEndQueryvkCmdEndQuery registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdEndQuery" vkCmdEndQuery ::
                VkCommandBuffer -- ^ commandBuffer
                                -> VkQueryPool -- ^ queryPool
@@ -12565,7 +12565,7 @@ foreign import ccall unsafe "vkCmdEndQuery" vkCmdEndQuery ::
 --   >     , uint32_t query
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdEndQuery.html vkCmdEndQuery registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdEndQueryvkCmdEndQuery registry at www.khronos.org>
 foreign import ccall safe "vkCmdEndQuery" vkCmdEndQuerySafe ::
                VkCommandBuffer -- ^ commandBuffer
                                -> VkQueryPool -- ^ queryPool
@@ -12582,7 +12582,7 @@ foreign import ccall safe "vkCmdEndQuery" vkCmdEndQuerySafe ::
 --   >     , uint32_t query
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdEndQuery.html vkCmdEndQuery registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdEndQueryvkCmdEndQuery registry at www.khronos.org>
 type HS_vkCmdEndQuery =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkQueryPool -- ^ queryPool
@@ -12631,7 +12631,7 @@ type VkCmdResetQueryPool = "vkCmdResetQueryPool"
 --   >     , uint32_t queryCount
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdResetQueryPool.html vkCmdResetQueryPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdResetQueryPoolvkCmdResetQueryPool registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdResetQueryPool"
                vkCmdResetQueryPool ::
                VkCommandBuffer -- ^ commandBuffer
@@ -12651,7 +12651,7 @@ foreign import ccall unsafe "vkCmdResetQueryPool"
 --   >     , uint32_t queryCount
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdResetQueryPool.html vkCmdResetQueryPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdResetQueryPoolvkCmdResetQueryPool registry at www.khronos.org>
 foreign import ccall safe "vkCmdResetQueryPool"
                vkCmdResetQueryPoolSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -12671,7 +12671,7 @@ foreign import ccall safe "vkCmdResetQueryPool"
 --   >     , uint32_t queryCount
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdResetQueryPool.html vkCmdResetQueryPool registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdResetQueryPoolvkCmdResetQueryPool registry at www.khronos.org>
 type HS_vkCmdResetQueryPool =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkQueryPool -- ^ queryPool
@@ -12723,7 +12723,7 @@ type VkCmdWriteTimestamp = "vkCmdWriteTimestamp"
 --   >     , uint32_t query
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdWriteTimestamp.html vkCmdWriteTimestamp registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdWriteTimestampvkCmdWriteTimestamp registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdWriteTimestamp"
                vkCmdWriteTimestamp ::
                VkCommandBuffer -- ^ commandBuffer
@@ -12746,7 +12746,7 @@ foreign import ccall unsafe "vkCmdWriteTimestamp"
 --   >     , uint32_t query
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdWriteTimestamp.html vkCmdWriteTimestamp registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdWriteTimestampvkCmdWriteTimestamp registry at www.khronos.org>
 foreign import ccall safe "vkCmdWriteTimestamp"
                vkCmdWriteTimestampSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -12769,7 +12769,7 @@ foreign import ccall safe "vkCmdWriteTimestamp"
 --   >     , uint32_t query
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdWriteTimestamp.html vkCmdWriteTimestamp registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdWriteTimestampvkCmdWriteTimestamp registry at www.khronos.org>
 type HS_vkCmdWriteTimestamp =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -12828,7 +12828,7 @@ type VkCmdCopyQueryPoolResults = "vkCmdCopyQueryPoolResults"
 --   >     , VkQueryResultFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdCopyQueryPoolResults.html vkCmdCopyQueryPoolResults registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyQueryPoolResultsvkCmdCopyQueryPoolResults registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdCopyQueryPoolResults"
                vkCmdCopyQueryPoolResults ::
                VkCommandBuffer -- ^ commandBuffer
@@ -12863,7 +12863,7 @@ foreign import ccall unsafe "vkCmdCopyQueryPoolResults"
 --   >     , VkQueryResultFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdCopyQueryPoolResults.html vkCmdCopyQueryPoolResults registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyQueryPoolResultsvkCmdCopyQueryPoolResults registry at www.khronos.org>
 foreign import ccall safe "vkCmdCopyQueryPoolResults"
                vkCmdCopyQueryPoolResultsSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -12898,7 +12898,7 @@ foreign import ccall safe "vkCmdCopyQueryPoolResults"
 --   >     , VkQueryResultFlags flags
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdCopyQueryPoolResults.html vkCmdCopyQueryPoolResults registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdCopyQueryPoolResultsvkCmdCopyQueryPoolResults registry at www.khronos.org>
 type HS_vkCmdCopyQueryPoolResults =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -12961,7 +12961,7 @@ type VkCmdPushConstants = "vkCmdPushConstants"
 --   >     , const void* pValues
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdPushConstants.html vkCmdPushConstants registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdPushConstantsvkCmdPushConstants registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdPushConstants" vkCmdPushConstants
                ::
                VkCommandBuffer -- ^ commandBuffer
@@ -12987,7 +12987,7 @@ foreign import ccall unsafe "vkCmdPushConstants" vkCmdPushConstants
 --   >     , const void* pValues
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdPushConstants.html vkCmdPushConstants registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdPushConstantsvkCmdPushConstants registry at www.khronos.org>
 foreign import ccall safe "vkCmdPushConstants"
                vkCmdPushConstantsSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -13013,7 +13013,7 @@ foreign import ccall safe "vkCmdPushConstants"
 --   >     , const void* pValues
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdPushConstants.html vkCmdPushConstants registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdPushConstantsvkCmdPushConstants registry at www.khronos.org>
 type HS_vkCmdPushConstants =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -13069,7 +13069,7 @@ type VkCmdBeginRenderPass = "vkCmdBeginRenderPass"
 --   >     , VkSubpassContents contents
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBeginRenderPass.html vkCmdBeginRenderPass registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBeginRenderPassvkCmdBeginRenderPass registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdBeginRenderPass"
                vkCmdBeginRenderPass ::
                VkCommandBuffer -- ^ commandBuffer
@@ -13090,7 +13090,7 @@ foreign import ccall unsafe "vkCmdBeginRenderPass"
 --   >     , VkSubpassContents contents
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBeginRenderPass.html vkCmdBeginRenderPass registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBeginRenderPassvkCmdBeginRenderPass registry at www.khronos.org>
 foreign import ccall safe "vkCmdBeginRenderPass"
                vkCmdBeginRenderPassSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -13111,7 +13111,7 @@ foreign import ccall safe "vkCmdBeginRenderPass"
 --   >     , VkSubpassContents contents
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBeginRenderPass.html vkCmdBeginRenderPass registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdBeginRenderPassvkCmdBeginRenderPass registry at www.khronos.org>
 type HS_vkCmdBeginRenderPass =
      VkCommandBuffer -- ^ commandBuffer
                      ->
@@ -13161,7 +13161,7 @@ type VkCmdNextSubpass = "vkCmdNextSubpass"
 --   >     , VkSubpassContents contents
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdNextSubpass.html vkCmdNextSubpass registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdNextSubpassvkCmdNextSubpass registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdNextSubpass" vkCmdNextSubpass ::
                VkCommandBuffer -- ^ commandBuffer
                                -> VkSubpassContents -- ^ contents
@@ -13178,7 +13178,7 @@ foreign import ccall unsafe "vkCmdNextSubpass" vkCmdNextSubpass ::
 --   >     , VkSubpassContents contents
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdNextSubpass.html vkCmdNextSubpass registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdNextSubpassvkCmdNextSubpass registry at www.khronos.org>
 foreign import ccall safe "vkCmdNextSubpass" vkCmdNextSubpassSafe
                :: VkCommandBuffer -- ^ commandBuffer
                                   -> VkSubpassContents -- ^ contents
@@ -13195,7 +13195,7 @@ foreign import ccall safe "vkCmdNextSubpass" vkCmdNextSubpassSafe
 --   >     , VkSubpassContents contents
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdNextSubpass.html vkCmdNextSubpass registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdNextSubpassvkCmdNextSubpass registry at www.khronos.org>
 type HS_vkCmdNextSubpass =
      VkCommandBuffer -- ^ commandBuffer
                      -> VkSubpassContents -- ^ contents
@@ -13242,7 +13242,7 @@ type VkCmdEndRenderPass = "vkCmdEndRenderPass"
 --   >     ( VkCommandBuffer commandBuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdEndRenderPass.html vkCmdEndRenderPass registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdEndRenderPassvkCmdEndRenderPass registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdEndRenderPass" vkCmdEndRenderPass
                :: VkCommandBuffer -- ^ commandBuffer
                                   -> IO ()
@@ -13257,7 +13257,7 @@ foreign import ccall unsafe "vkCmdEndRenderPass" vkCmdEndRenderPass
 --   >     ( VkCommandBuffer commandBuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdEndRenderPass.html vkCmdEndRenderPass registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdEndRenderPassvkCmdEndRenderPass registry at www.khronos.org>
 foreign import ccall safe "vkCmdEndRenderPass"
                vkCmdEndRenderPassSafe :: VkCommandBuffer -- ^ commandBuffer
                                                          -> IO ()
@@ -13272,7 +13272,7 @@ foreign import ccall safe "vkCmdEndRenderPass"
 --   >     ( VkCommandBuffer commandBuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdEndRenderPass.html vkCmdEndRenderPass registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdEndRenderPassvkCmdEndRenderPass registry at www.khronos.org>
 type HS_vkCmdEndRenderPass = VkCommandBuffer -- ^ commandBuffer
                                              -> IO ()
 
@@ -13318,7 +13318,7 @@ type VkCmdExecuteCommands = "vkCmdExecuteCommands"
 --   >     , const VkCommandBuffer* pCommandBuffers
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdExecuteCommands.html vkCmdExecuteCommands registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdExecuteCommandsvkCmdExecuteCommands registry at www.khronos.org>
 foreign import ccall unsafe "vkCmdExecuteCommands"
                vkCmdExecuteCommands ::
                VkCommandBuffer -- ^ commandBuffer
@@ -13336,7 +13336,7 @@ foreign import ccall unsafe "vkCmdExecuteCommands"
 --   >     , const VkCommandBuffer* pCommandBuffers
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdExecuteCommands.html vkCmdExecuteCommands registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdExecuteCommandsvkCmdExecuteCommands registry at www.khronos.org>
 foreign import ccall safe "vkCmdExecuteCommands"
                vkCmdExecuteCommandsSafe ::
                VkCommandBuffer -- ^ commandBuffer
@@ -13354,7 +13354,7 @@ foreign import ccall safe "vkCmdExecuteCommands"
 --   >     , const VkCommandBuffer* pCommandBuffers
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdExecuteCommands.html vkCmdExecuteCommands registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##vkCmdExecuteCommandsvkCmdExecuteCommands registry at www.khronos.org>
 type HS_vkCmdExecuteCommands =
      VkCommandBuffer -- ^ commandBuffer
                      -> Word32 -- ^ commandBufferCount

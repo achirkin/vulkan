@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkMemoryRequirements2
        (VkMemoryRequirements2(..)) where
 import           Foreign.Storable                                  (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                          (Addr##,
+                                                                    ByteArray##,
+                                                                    byteArrayContents##,
+                                                                    plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType        (VkStructureType)
@@ -23,7 +26,7 @@ import           System.IO.Unsafe                                  (unsafeDupabl
 --   >     VkMemoryRequirements                                                 memoryRequirements;
 --   > } VkMemoryRequirements2;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkMemoryRequirements2.html VkMemoryRequirements2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkMemoryRequirements2VkMemoryRequirements2 registry at www.khronos.org>
 data VkMemoryRequirements2 = VkMemoryRequirements2## Addr##
                                                     ByteArray##
 

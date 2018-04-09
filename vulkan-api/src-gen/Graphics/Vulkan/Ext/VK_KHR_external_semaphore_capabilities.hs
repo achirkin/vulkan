@@ -38,8 +38,6 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_capabilities
         HS_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR,
         PFN_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR,
         unwrapVkGetPhysicalDeviceExternalSemaphorePropertiesKHR,
-        vkGetPhysicalDeviceExternalSemaphorePropertiesKHR,
-        vkGetPhysicalDeviceExternalSemaphorePropertiesKHRSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.VkExternalSemaphoreFeatureFlags,
@@ -120,45 +118,7 @@ type VkGetPhysicalDeviceExternalSemaphorePropertiesKHR =
 --   >     , VkExternalSemaphoreProperties* pExternalSemaphoreProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalSemaphorePropertiesKHR.html vkGetPhysicalDeviceExternalSemaphorePropertiesKHR registry at www.khronos.org>
-foreign import ccall unsafe
-               "vkGetPhysicalDeviceExternalSemaphorePropertiesKHR"
-               vkGetPhysicalDeviceExternalSemaphorePropertiesKHR ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                ->
-                 Ptr VkPhysicalDeviceExternalSemaphoreInfo -- ^ pExternalSemaphoreInfo
-                                                           ->
-                   Ptr VkExternalSemaphoreProperties -- ^ pExternalSemaphoreProperties
-                                                     -> IO ()
-
--- | This is an alias for `vkGetPhysicalDeviceExternalSemaphoreProperties`.
---
---   > () vkGetPhysicalDeviceExternalSemaphorePropertiesKHR
---   >     ( VkPhysicalDevice physicalDevice
---   >     , const VkPhysicalDeviceExternalSemaphoreInfo* pExternalSemaphoreInfo
---   >     , VkExternalSemaphoreProperties* pExternalSemaphoreProperties
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalSemaphorePropertiesKHR.html vkGetPhysicalDeviceExternalSemaphorePropertiesKHR registry at www.khronos.org>
-foreign import ccall safe
-               "vkGetPhysicalDeviceExternalSemaphorePropertiesKHR"
-               vkGetPhysicalDeviceExternalSemaphorePropertiesKHRSafe ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                ->
-                 Ptr VkPhysicalDeviceExternalSemaphoreInfo -- ^ pExternalSemaphoreInfo
-                                                           ->
-                   Ptr VkExternalSemaphoreProperties -- ^ pExternalSemaphoreProperties
-                                                     -> IO ()
-
--- | This is an alias for `vkGetPhysicalDeviceExternalSemaphoreProperties`.
---
---   > () vkGetPhysicalDeviceExternalSemaphorePropertiesKHR
---   >     ( VkPhysicalDevice physicalDevice
---   >     , const VkPhysicalDeviceExternalSemaphoreInfo* pExternalSemaphoreInfo
---   >     , VkExternalSemaphoreProperties* pExternalSemaphoreProperties
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalSemaphorePropertiesKHR.html vkGetPhysicalDeviceExternalSemaphorePropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalSemaphorePropertiesKHRvkGetPhysicalDeviceExternalSemaphorePropertiesKHR registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceExternalSemaphorePropertiesKHR =
      VkPhysicalDevice -- ^ physicalDevice
                       ->

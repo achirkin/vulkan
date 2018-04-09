@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkSurfaceCapabilities2EXT
        (VkSurfaceCapabilities2EXT(..)) where
 import           Foreign.Storable                                      (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                              (Addr##, ByteArray##,
+                                                                        byteArrayContents##,
+                                                                        plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkCompositeAlphaFlagsKHR   (VkCompositeAlphaFlagsKHR)
@@ -38,7 +40,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkSurfaceCounterFlagsEXT supportedSurfaceCounters;
 --   > } VkSurfaceCapabilities2EXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSurfaceCapabilities2EXT.html VkSurfaceCapabilities2EXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSurfaceCapabilities2EXTVkSurfaceCapabilities2EXT registry at www.khronos.org>
 data VkSurfaceCapabilities2EXT = VkSurfaceCapabilities2EXT## Addr##
                                                             ByteArray##
 

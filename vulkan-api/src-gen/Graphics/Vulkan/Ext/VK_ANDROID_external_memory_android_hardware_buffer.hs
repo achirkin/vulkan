@@ -63,15 +63,11 @@ module Graphics.Vulkan.Ext.VK_ANDROID_external_memory_android_hardware_buffer
         HS_vkGetAndroidHardwareBufferPropertiesANDROID,
         PFN_vkGetAndroidHardwareBufferPropertiesANDROID,
         unwrapVkGetAndroidHardwareBufferPropertiesANDROID,
-        vkGetAndroidHardwareBufferPropertiesANDROID,
-        vkGetAndroidHardwareBufferPropertiesANDROIDSafe,
         VkGetMemoryAndroidHardwareBufferANDROID,
         pattern VkGetMemoryAndroidHardwareBufferANDROID,
         HS_vkGetMemoryAndroidHardwareBufferANDROID,
         PFN_vkGetMemoryAndroidHardwareBufferANDROID,
         unwrapVkGetMemoryAndroidHardwareBufferANDROID,
-        vkGetMemoryAndroidHardwareBufferANDROID,
-        vkGetMemoryAndroidHardwareBufferANDROIDSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
@@ -162,49 +158,7 @@ type VkGetAndroidHardwareBufferPropertiesANDROID =
 --   >     , VkAndroidHardwareBufferPropertiesANDROID* pProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetAndroidHardwareBufferPropertiesANDROID.html vkGetAndroidHardwareBufferPropertiesANDROID registry at www.khronos.org>
-foreign import ccall unsafe
-               "vkGetAndroidHardwareBufferPropertiesANDROID"
-               vkGetAndroidHardwareBufferPropertiesANDROID ::
-               VkDevice -- ^ device
-                        ->
-                 Ptr AHardwareBuffer -- ^ buffer
-                                     ->
-                   Ptr VkAndroidHardwareBufferPropertiesANDROID -- ^ pProperties
-                                                                -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR'.
---
---   > VkResult vkGetAndroidHardwareBufferPropertiesANDROID
---   >     ( VkDevice device
---   >     , const struct AHardwareBuffer* buffer
---   >     , VkAndroidHardwareBufferPropertiesANDROID* pProperties
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetAndroidHardwareBufferPropertiesANDROID.html vkGetAndroidHardwareBufferPropertiesANDROID registry at www.khronos.org>
-foreign import ccall safe
-               "vkGetAndroidHardwareBufferPropertiesANDROID"
-               vkGetAndroidHardwareBufferPropertiesANDROIDSafe ::
-               VkDevice -- ^ device
-                        ->
-                 Ptr AHardwareBuffer -- ^ buffer
-                                     ->
-                   Ptr VkAndroidHardwareBufferPropertiesANDROID -- ^ pProperties
-                                                                -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_INVALID_EXTERNAL_HANDLE_KHR'.
---
---   > VkResult vkGetAndroidHardwareBufferPropertiesANDROID
---   >     ( VkDevice device
---   >     , const struct AHardwareBuffer* buffer
---   >     , VkAndroidHardwareBufferPropertiesANDROID* pProperties
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetAndroidHardwareBufferPropertiesANDROID.html vkGetAndroidHardwareBufferPropertiesANDROID registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetAndroidHardwareBufferPropertiesANDROIDvkGetAndroidHardwareBufferPropertiesANDROID registry at www.khronos.org>
 type HS_vkGetAndroidHardwareBufferPropertiesANDROID =
      VkDevice -- ^ device
               ->
@@ -264,48 +218,7 @@ type VkGetMemoryAndroidHardwareBufferANDROID =
 --   >     , struct AHardwareBuffer** pBuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryAndroidHardwareBufferANDROID.html vkGetMemoryAndroidHardwareBufferANDROID registry at www.khronos.org>
-foreign import ccall unsafe
-               "vkGetMemoryAndroidHardwareBufferANDROID"
-               vkGetMemoryAndroidHardwareBufferANDROID ::
-               VkDevice -- ^ device
-                        ->
-                 Ptr VkMemoryGetAndroidHardwareBufferInfoANDROID -- ^ pInfo
-                                                                 ->
-                   Ptr (Ptr AHardwareBuffer) -- ^ pBuffer
-                                             -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
---
---   > VkResult vkGetMemoryAndroidHardwareBufferANDROID
---   >     ( VkDevice device
---   >     , const VkMemoryGetAndroidHardwareBufferInfoANDROID* pInfo
---   >     , struct AHardwareBuffer** pBuffer
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryAndroidHardwareBufferANDROID.html vkGetMemoryAndroidHardwareBufferANDROID registry at www.khronos.org>
-foreign import ccall safe "vkGetMemoryAndroidHardwareBufferANDROID"
-               vkGetMemoryAndroidHardwareBufferANDROIDSafe ::
-               VkDevice -- ^ device
-                        ->
-                 Ptr VkMemoryGetAndroidHardwareBufferInfoANDROID -- ^ pInfo
-                                                                 ->
-                   Ptr (Ptr AHardwareBuffer) -- ^ pBuffer
-                                             -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
---
---   > VkResult vkGetMemoryAndroidHardwareBufferANDROID
---   >     ( VkDevice device
---   >     , const VkMemoryGetAndroidHardwareBufferInfoANDROID* pInfo
---   >     , struct AHardwareBuffer** pBuffer
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryAndroidHardwareBufferANDROID.html vkGetMemoryAndroidHardwareBufferANDROID registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetMemoryAndroidHardwareBufferANDROIDvkGetMemoryAndroidHardwareBufferANDROID registry at www.khronos.org>
 type HS_vkGetMemoryAndroidHardwareBufferANDROID =
      VkDevice -- ^ device
               ->

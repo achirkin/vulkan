@@ -9,7 +9,9 @@
 {-# LANGUAGE TypeFamilies          #-}
 module Graphics.Vulkan.Types.Struct.VkRect2D (VkRect2D(..)) where
 import           Foreign.Storable                        (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                (Addr##, ByteArray##,
+                                                          byteArrayContents##,
+                                                          plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Struct.VkExtent2D (VkExtent2D)
@@ -21,7 +23,7 @@ import           System.IO.Unsafe                        (unsafeDupablePerformIO
 --   >     VkExtent2D     extent;
 --   > } VkRect2D;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkRect2D.html VkRect2D registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkRect2DVkRect2D registry at www.khronos.org>
 data VkRect2D = VkRect2D## Addr## ByteArray##
 
 instance Eq VkRect2D where

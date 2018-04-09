@@ -20,7 +20,7 @@ import           Text.Read.Lex                   (Lexeme (..))
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSamplerMipmapMode.html VkSamplerMipmapMode registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSamplerMipmapModeVkSamplerMipmapMode registry at www.khronos.org>
 newtype VkSamplerMipmapMode = VkSamplerMipmapMode Int32
                                 deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 

@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkMemoryType (VkMemoryType(..))
        where
 import           Foreign.Storable                                 (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                         (Addr##,
+                                                                   ByteArray##,
+                                                                   byteArrayContents##,
+                                                                   plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkMemoryPropertyFlags (VkMemoryPropertyFlags)
@@ -21,7 +24,7 @@ import           System.IO.Unsafe                                 (unsafeDupable
 --   >     uint32_t               heapIndex;
 --   > } VkMemoryType;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkMemoryType.html VkMemoryType registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkMemoryTypeVkMemoryType registry at www.khronos.org>
 data VkMemoryType = VkMemoryType## Addr## ByteArray##
 
 instance Eq VkMemoryType where

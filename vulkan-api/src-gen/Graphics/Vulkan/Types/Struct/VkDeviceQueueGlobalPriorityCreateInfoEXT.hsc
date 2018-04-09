@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkDeviceQueueGlobalPriorityCreateInfoEXT
        (VkDeviceQueueGlobalPriorityCreateInfoEXT(..)) where
 import           Foreign.Storable                                     (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                             (Addr##, ByteArray##,
+                                                                       byteArrayContents##,
+                                                                       plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkQueueGlobalPriorityEXT  (VkQueueGlobalPriorityEXT)
@@ -24,7 +26,7 @@ import           System.IO.Unsafe                                     (unsafeDup
 --   >     VkQueueGlobalPriorityEXT       globalPriority;
 --   > } VkDeviceQueueGlobalPriorityCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDeviceQueueGlobalPriorityCreateInfoEXT.html VkDeviceQueueGlobalPriorityCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDeviceQueueGlobalPriorityCreateInfoEXTVkDeviceQueueGlobalPriorityCreateInfoEXT registry at www.khronos.org>
 data VkDeviceQueueGlobalPriorityCreateInfoEXT = VkDeviceQueueGlobalPriorityCreateInfoEXT## Addr##
                                                                                           ByteArray##
 

@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutBinding
        (VkDescriptorSetLayoutBinding(..)) where
 import           Foreign.Storable                              (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                      (Addr##,
+                                                                ByteArray##,
+                                                                byteArrayContents##,
+                                                                plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkDescriptorType   (VkDescriptorType)
@@ -26,7 +29,7 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 --   >     const VkSampler*       pImmutableSamplers;
 --   > } VkDescriptorSetLayoutBinding;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDescriptorSetLayoutBinding.html VkDescriptorSetLayoutBinding registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDescriptorSetLayoutBindingVkDescriptorSetLayoutBinding registry at www.khronos.org>
 data VkDescriptorSetLayoutBinding = VkDescriptorSetLayoutBinding## Addr##
                                                                   ByteArray##
 

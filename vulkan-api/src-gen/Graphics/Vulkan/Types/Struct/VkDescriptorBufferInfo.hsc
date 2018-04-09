@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkDescriptorBufferInfo
        (VkDescriptorBufferInfo(..)) where
 import           Foreign.Storable                 (Storable (..))
-import           GHC.Prim
+import           GHC.Base                         (Addr##, ByteArray##,
+                                                   byteArrayContents##,
+                                                   plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes  (VkDeviceSize)
@@ -23,7 +25,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     VkDeviceSize           range;
 --   > } VkDescriptorBufferInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDescriptorBufferInfo.html VkDescriptorBufferInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDescriptorBufferInfoVkDescriptorBufferInfo registry at www.khronos.org>
 data VkDescriptorBufferInfo = VkDescriptorBufferInfo## Addr##
                                                       ByteArray##
 

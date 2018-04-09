@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMaintenance3Properties
        (VkPhysicalDeviceMaintenance3Properties(..)) where
 import           Foreign.Storable                                         (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                                 (Addr##,
+                                                                           ByteArray##,
+                                                                           byteArrayContents##,
+                                                                           plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes                          (VkDeviceSize)
@@ -25,7 +28,7 @@ import           System.IO.Unsafe                                         (unsaf
 --   >     VkDeviceSize                     maxMemoryAllocationSize;
 --   > } VkPhysicalDeviceMaintenance3Properties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPhysicalDeviceMaintenance3Properties.html VkPhysicalDeviceMaintenance3Properties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceMaintenance3PropertiesVkPhysicalDeviceMaintenance3Properties registry at www.khronos.org>
 data VkPhysicalDeviceMaintenance3Properties = VkPhysicalDeviceMaintenance3Properties## Addr##
                                                                                       ByteArray##
 

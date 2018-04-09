@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProtectedMemoryProperties
        (VkPhysicalDeviceProtectedMemoryProperties(..)) where
 import           Foreign.Storable                                         (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                                 (Addr##,
+                                                                           ByteArray##,
+                                                                           byteArrayContents##,
+                                                                           plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes                          (VkBool32)
@@ -24,7 +27,7 @@ import           System.IO.Unsafe                                         (unsaf
 --   >     VkBool32                            protectedNoFault;
 --   > } VkPhysicalDeviceProtectedMemoryProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPhysicalDeviceProtectedMemoryProperties.html VkPhysicalDeviceProtectedMemoryProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceProtectedMemoryPropertiesVkPhysicalDeviceProtectedMemoryProperties registry at www.khronos.org>
 data VkPhysicalDeviceProtectedMemoryProperties = VkPhysicalDeviceProtectedMemoryProperties## Addr##
                                                                                             ByteArray##
 

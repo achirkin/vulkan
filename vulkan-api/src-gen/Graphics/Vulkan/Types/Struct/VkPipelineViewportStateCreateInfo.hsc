@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkPipelineViewportStateCreateInfo
        (VkPipelineViewportStateCreateInfo(..)) where
 import           Foreign.Storable                           (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                   (Addr##, ByteArray##,
+                                                             byteArrayContents##,
+                                                             plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Bitmasks             (VkPipelineViewportStateCreateFlags)
@@ -29,7 +31,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     const VkRect2D*        pScissors;
 --   > } VkPipelineViewportStateCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPipelineViewportStateCreateInfo.html VkPipelineViewportStateCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPipelineViewportStateCreateInfoVkPipelineViewportStateCreateInfo registry at www.khronos.org>
 data VkPipelineViewportStateCreateInfo = VkPipelineViewportStateCreateInfo## Addr##
                                                                             ByteArray##
 

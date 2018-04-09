@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkPushConstantRange
        (VkPushConstantRange(..)) where
 import           Foreign.Storable                              (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                      (Addr##,
+                                                                ByteArray##,
+                                                                byteArrayContents##,
+                                                                plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkShaderStageFlags (VkShaderStageFlags)
@@ -22,7 +25,7 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 --   >     uint32_t               size;
 --   > } VkPushConstantRange;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPushConstantRange.html VkPushConstantRange registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPushConstantRangeVkPushConstantRange registry at www.khronos.org>
 data VkPushConstantRange = VkPushConstantRange## Addr## ByteArray##
 
 instance Eq VkPushConstantRange where

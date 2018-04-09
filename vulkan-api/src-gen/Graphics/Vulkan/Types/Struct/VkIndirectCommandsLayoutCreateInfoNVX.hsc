@@ -11,7 +11,11 @@ module Graphics.Vulkan.Types.Struct.VkIndirectCommandsLayoutCreateInfoNVX
        (VkIndirectCommandsLayoutCreateInfoNVX(..)) where
 import           Foreign.Storable
                                                                                    (Storable (..))
-import           GHC.Prim
+import           GHC.Base
+                                                                                   (Addr##,
+                                                                                   ByteArray##,
+                                                                                   byteArrayContents##,
+                                                                                   plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkIndirectCommandsLayoutUsageFlagsNVX
@@ -34,7 +38,7 @@ import           System.IO.Unsafe
 --   >     const VkIndirectCommandsLayoutTokenNVX*  pTokens;
 --   > } VkIndirectCommandsLayoutCreateInfoNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkIndirectCommandsLayoutCreateInfoNVX.html VkIndirectCommandsLayoutCreateInfoNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkIndirectCommandsLayoutCreateInfoNVXVkIndirectCommandsLayoutCreateInfoNVX registry at www.khronos.org>
 data VkIndirectCommandsLayoutCreateInfoNVX = VkIndirectCommandsLayoutCreateInfoNVX## Addr##
                                                                                     ByteArray##
 

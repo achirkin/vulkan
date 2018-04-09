@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkPhysicalDevice16BitStorageFeatures
        (VkPhysicalDevice16BitStorageFeatures(..)) where
 import           Foreign.Storable                                       (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                               (Addr##, ByteArray##,
+                                                                         byteArrayContents##,
+                                                                         plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes                        (VkBool32)
@@ -28,7 +30,7 @@ import           System.IO.Unsafe                                       (unsafeD
 --   >     VkBool32                         storageInputOutput16;
 --   > } VkPhysicalDevice16BitStorageFeatures;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPhysicalDevice16BitStorageFeatures.html VkPhysicalDevice16BitStorageFeatures registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDevice16BitStorageFeaturesVkPhysicalDevice16BitStorageFeatures registry at www.khronos.org>
 data VkPhysicalDevice16BitStorageFeatures = VkPhysicalDevice16BitStorageFeatures## Addr##
                                                                                   ByteArray##
 

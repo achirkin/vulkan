@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkImportSemaphoreFdInfoKHR
        (VkImportSemaphoreFdInfoKHR(..)) where
 import           Foreign.Storable                                              (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                                      (Addr##,
+                                                                                ByteArray##,
+                                                                                byteArrayContents##,
+                                                                                plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkExternalSemaphoreHandleTypeFlags (VkExternalSemaphoreHandleTypeFlagBits)
@@ -28,7 +31,7 @@ import           System.IO.Unsafe                                              (
 --   >     int                              fd;
 --   > } VkImportSemaphoreFdInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkImportSemaphoreFdInfoKHR.html VkImportSemaphoreFdInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImportSemaphoreFdInfoKHRVkImportSemaphoreFdInfoKHR registry at www.khronos.org>
 data VkImportSemaphoreFdInfoKHR = VkImportSemaphoreFdInfoKHR## Addr##
                                                               ByteArray##
 

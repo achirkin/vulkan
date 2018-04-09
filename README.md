@@ -14,11 +14,20 @@ Features of the bindings:
     Moreover, it is not necessary to convert them at all, if one prefers to
     manage corresponding memory manually.
   * Document the generated code as much as possible with references to vulkan registry.
-  * Use no dependencies except `base` and `ghc-prim`.
+  * Use no dependencies except `base`.
 
 # vulkan-api
 
 Generated haskell bindings for vulkan api.
+
+  * The generated library is rather big; consider using `-split-objs` or `-split-sections`
+    to reduce the size of a project.
+    Note, enabling one of these options can make the library compiling painfully
+    long time (take some coffee... or watch a movie).
+  * Please, post a bug report if getting `undefined symbol` error during linking
+    of the library.
+    As a temporary workaround, one can disable `shared` library and dynamic executable linking
+    of haskell packages.
 
 # genvulkan
 
@@ -50,6 +59,7 @@ Prerequisites
 A more haskell-style example of a vulkan program.
 This is a combined result of programs in `vulkan-examples` with a little cleaner code.
 
+
 ## Building
 
 
@@ -72,14 +82,18 @@ sudo apt-get install libvulkan-dev
        convention is necessary.
  * [ ] Remove unsafe FFI call to functions that could break at runtime.
        Currently we have both safe and unsafe versions for every function.
- * [ ] Figure out if it is necessary to have `extra-libraries: vulkan` on various platforms
-       (or, maybe, `extra-ghci-libraries` is enough?)
+ * [x] Figure out if it is necessary to have `extra-libraries: vulkan` on various platforms
+       (or, maybe, `extra-ghci-libraries` is enough?).
+       An alternative would be to make a C stub to get all functions via `vk***ProcAddr`,
+       which seems not the best option due to performance considerations of doing
+       dynamic wrapping FFI.
  * [ ] Make `Graphics.Vulkan.Marshal.Create` fill `sType` fields automatically,
        together with optional fields
  * [x] Make `Graphics.Vulkan.Marshal.Create` provide more meaningful error
        messages when types of fields mismatch.
  * [ ] Check whether we can disallow writing `returnedonly` fields.
- * [ ] Investigate the need to use the extension loader (`vulkan-docs/src/ext_loader`).
+ * [x] Investigate the need to use the extension loader (`vulkan-docs/src/ext_loader`).
+       `Graphics.Vulkan.Marshal.Proc` seems to be good enough for this low-level binding.
 
 ##### genvulkan
 

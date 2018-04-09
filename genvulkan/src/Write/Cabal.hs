@@ -74,7 +74,6 @@ genCabalFile eModules = T.unlines $
           DUMMY (have to keep it here for NeatInterpolation to work properly)
               build-depends:
                   base >= 4.7 && < 5
-                , ghc-prim >= 0.4 && < 0.6
               default-language:    Haskell2010
               ghc-options:         -Wall
               if os(windows)

@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkClearRect (VkClearRect(..))
        where
 import           Foreign.Storable                      (Storable (..))
-import           GHC.Prim
+import           GHC.Base                              (Addr##, ByteArray##,
+                                                        byteArrayContents##,
+                                                        plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Struct.VkRect2D (VkRect2D)
@@ -22,7 +24,7 @@ import           System.IO.Unsafe                      (unsafeDupablePerformIO)
 --   >     uint32_t       layerCount;
 --   > } VkClearRect;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkClearRect.html VkClearRect registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkClearRectVkClearRect registry at www.khronos.org>
 data VkClearRect = VkClearRect## Addr## ByteArray##
 
 instance Eq VkClearRect where

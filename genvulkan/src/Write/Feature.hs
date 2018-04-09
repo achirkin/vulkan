@@ -55,17 +55,18 @@ genFeature VkFeature {..} = hoist (`evalStateT` mempty) $ do
       , ""
       , "@number = " <> number <> "@"
       ]
-    pushSecLvl $ \lvl -> mapM_ (genRequire lvl tps cmds) reqList
+    pushSecLvl $ \lvl -> mapM_ (genRequire True lvl tps cmds) reqList
 
 
 genRequire :: MonadState (Set (ModuleName ())) m
-          => Int
+          => Bool -- ^ whether to generate FFI
+          -> Int
           -> Map.Map VkTypeName VkType
           -> Map.Map VkCommandName VkCommand
           -- -> Map.Map VkEnumName VkEnum
           -> VkRequire
           -> ModuleWriter m ()
-genRequire curlvl tps cmds VkRequire {..} = do
+genRequire genFFI curlvl tps cmds VkRequire {..} = do
   writeOptionsPragma (Just HADDOCK) "not-home"
   writeSection curlvl $
     comment <:> showExts requireExts
@@ -90,7 +91,7 @@ genRequire curlvl tps cmds VkRequire {..} = do
   tNames <- fmap mconcat $
     forM requireComms $ \cname -> case Map.lookup cname cmds of
         Nothing -> pure mempty
-        Just t  -> genCommand t
+        Just t  -> genCommand genFFI t
 
   emodNames <- foldM (\s (VkTypeName n) ->
                          fmap (Set.union s . maybe mempty Set.singleton)

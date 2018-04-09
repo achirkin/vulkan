@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkSamplerYcbcrConversionImageFormatProperties
        (VkSamplerYcbcrConversionImageFormatProperties(..)) where
 import           Foreign.Storable                                      (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                              (Addr##, ByteArray##,
+                                                                        byteArrayContents##,
+                                                                        plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType            (VkStructureType)
@@ -23,7 +25,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     uint32_t                         combinedImageSamplerDescriptorCount;
 --   > } VkSamplerYcbcrConversionImageFormatProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSamplerYcbcrConversionImageFormatProperties.html VkSamplerYcbcrConversionImageFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSamplerYcbcrConversionImageFormatPropertiesVkSamplerYcbcrConversionImageFormatProperties registry at www.khronos.org>
 data VkSamplerYcbcrConversionImageFormatProperties = VkSamplerYcbcrConversionImageFormatProperties## Addr##
                                                                                                     ByteArray##
 

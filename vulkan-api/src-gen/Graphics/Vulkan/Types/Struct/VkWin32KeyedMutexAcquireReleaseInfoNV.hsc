@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkWin32KeyedMutexAcquireReleaseInfoNV
        (VkWin32KeyedMutexAcquireReleaseInfoNV(..)) where
 import           Foreign.Storable                           (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                   (Addr##, ByteArray##,
+                                                             byteArrayContents##,
+                                                             plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
@@ -30,7 +32,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     const uint64_t*                  pReleaseKeys;
 --   > } VkWin32KeyedMutexAcquireReleaseInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkWin32KeyedMutexAcquireReleaseInfoNV.html VkWin32KeyedMutexAcquireReleaseInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkWin32KeyedMutexAcquireReleaseInfoNVVkWin32KeyedMutexAcquireReleaseInfoNV registry at www.khronos.org>
 data VkWin32KeyedMutexAcquireReleaseInfoNV = VkWin32KeyedMutexAcquireReleaseInfoNV## Addr##
                                                                                     ByteArray##
 

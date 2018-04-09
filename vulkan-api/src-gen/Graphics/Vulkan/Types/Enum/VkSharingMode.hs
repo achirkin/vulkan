@@ -20,7 +20,7 @@ import           Text.Read.Lex                   (Lexeme (..))
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSharingMode.html VkSharingMode registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkSharingModeVkSharingMode registry at www.khronos.org>
 newtype VkSharingMode = VkSharingMode Int32
                           deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 

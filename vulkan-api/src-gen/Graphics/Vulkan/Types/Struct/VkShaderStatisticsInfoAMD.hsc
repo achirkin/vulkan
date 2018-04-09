@@ -14,7 +14,11 @@
 module Graphics.Vulkan.Types.Struct.VkShaderStatisticsInfoAMD
        (VkShaderStatisticsInfoAMD(..)) where
 import           Foreign.Storable                                      (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                              (Addr##, ByteArray##,
+                                                                        Proxy##,
+                                                                        byteArrayContents##,
+                                                                        plusAddr##,
+                                                                        proxy##)
 import           GHC.TypeLits                                          (KnownNat,
                                                                         natVal') -- ' closing tick for hsc2hs
 import           Graphics.Vulkan.Marshal
@@ -33,7 +37,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     uint32_t computeWorkGroupSize[3];
 --   > } VkShaderStatisticsInfoAMD;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkShaderStatisticsInfoAMD.html VkShaderStatisticsInfoAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkShaderStatisticsInfoAMDVkShaderStatisticsInfoAMD registry at www.khronos.org>
 data VkShaderStatisticsInfoAMD = VkShaderStatisticsInfoAMD## Addr##
                                                             ByteArray##
 

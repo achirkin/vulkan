@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMultiviewFeatures
        (VkPhysicalDeviceMultiviewFeatures(..)) where
 import           Foreign.Storable                                       (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                               (Addr##, ByteArray##,
+                                                                         byteArrayContents##,
+                                                                         plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes                        (VkBool32)
@@ -27,7 +29,7 @@ import           System.IO.Unsafe                                       (unsafeD
 --   >     VkBool32                         multiviewTessellationShader;
 --   > } VkPhysicalDeviceMultiviewFeatures;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPhysicalDeviceMultiviewFeatures.html VkPhysicalDeviceMultiviewFeatures registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceMultiviewFeaturesVkPhysicalDeviceMultiviewFeatures registry at www.khronos.org>
 data VkPhysicalDeviceMultiviewFeatures = VkPhysicalDeviceMultiviewFeatures## Addr##
                                                                             ByteArray##
 

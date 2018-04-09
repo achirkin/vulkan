@@ -14,7 +14,10 @@
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceMemoryProperties
        (VkPhysicalDeviceMemoryProperties(..)) where
 import           Foreign.Storable                          (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                  (Addr##, ByteArray##,
+                                                            Proxy##,
+                                                            byteArrayContents##,
+                                                            plusAddr##, proxy##)
 import           GHC.TypeLits                              (KnownNat, natVal') -- ' closing tick for hsc2hs
 import           Graphics.Vulkan.Constants                 (VK_MAX_MEMORY_HEAPS, pattern VK_MAX_MEMORY_HEAPS,
                                                             VK_MAX_MEMORY_TYPES,
@@ -32,7 +35,7 @@ import           System.IO.Unsafe                          (unsafeDupablePerform
 --   >     VkMemoryHeap           memoryHeaps[VK_MAX_MEMORY_HEAPS];
 --   > } VkPhysicalDeviceMemoryProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPhysicalDeviceMemoryProperties.html VkPhysicalDeviceMemoryProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceMemoryPropertiesVkPhysicalDeviceMemoryProperties registry at www.khronos.org>
 data VkPhysicalDeviceMemoryProperties = VkPhysicalDeviceMemoryProperties## Addr##
                                                                           ByteArray##
 

@@ -37,8 +37,11 @@ import           Foreign.Marshal.Alloc            (finalizerFree, free)
 import           Foreign.Marshal.Array            (newArray, pokeArray0)
 import           Foreign.Ptr                      (nullPtr, plusPtr)
 import           Foreign.Storable                 (Storable)
-import           GHC.Base                         (IO (..))
-import           GHC.Prim
+import           GHC.Base                         (ByteArray#, IO (..),
+                                                   RealWorld, State#, Weak#,
+                                                   addCFinalizerToWeak#,
+                                                   mkWeak#, mkWeakNoFinalizer#,
+                                                   nullAddr#)
 import           GHC.Ptr                          (FunPtr (..), Ptr (..))
 import           GHC.TypeLits
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)

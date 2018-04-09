@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkObjectTablePipelineEntryNVX
        (VkObjectTablePipelineEntryNVX(..)) where
 import           Foreign.Storable                                      (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                              (Addr##, ByteArray##,
+                                                                        byteArrayContents##,
+                                                                        plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkObjectEntryTypeNVX       (VkObjectEntryTypeNVX)
@@ -24,7 +26,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkPipeline                   pipeline;
 --   > } VkObjectTablePipelineEntryNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkObjectTablePipelineEntryNVX.html VkObjectTablePipelineEntryNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkObjectTablePipelineEntryNVXVkObjectTablePipelineEntryNVX registry at www.khronos.org>
 data VkObjectTablePipelineEntryNVX = VkObjectTablePipelineEntryNVX## Addr##
                                                                     ByteArray##
 

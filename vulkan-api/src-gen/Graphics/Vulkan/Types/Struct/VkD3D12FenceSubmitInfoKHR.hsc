@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkD3D12FenceSubmitInfoKHR
        (VkD3D12FenceSubmitInfoKHR(..)) where
 import           Foreign.Storable                           (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                   (Addr##, ByteArray##,
+                                                             byteArrayContents##,
+                                                             plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
@@ -26,7 +28,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     const uint64_t* pSignalSemaphoreValues;
 --   > } VkD3D12FenceSubmitInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkD3D12FenceSubmitInfoKHR.html VkD3D12FenceSubmitInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkD3D12FenceSubmitInfoKHRVkD3D12FenceSubmitInfoKHR registry at www.khronos.org>
 data VkD3D12FenceSubmitInfoKHR = VkD3D12FenceSubmitInfoKHR## Addr##
                                                             ByteArray##
 

@@ -198,7 +198,7 @@ type VkCreateSwapchainKHR = "vkCreateSwapchainKHR"
 --   >     , VkSwapchainKHR* pSwapchain
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateSwapchainKHR.html vkCreateSwapchainKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSwapchainKHRvkCreateSwapchainKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateSwapchainKHR"
                vkCreateSwapchainKHR ::
                VkDevice -- ^ device
@@ -220,7 +220,7 @@ foreign import ccall unsafe "vkCreateSwapchainKHR"
 --   >     , VkSwapchainKHR* pSwapchain
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateSwapchainKHR.html vkCreateSwapchainKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSwapchainKHRvkCreateSwapchainKHR registry at www.khronos.org>
 foreign import ccall safe "vkCreateSwapchainKHR"
                vkCreateSwapchainKHRSafe ::
                VkDevice -- ^ device
@@ -242,7 +242,7 @@ foreign import ccall safe "vkCreateSwapchainKHR"
 --   >     , VkSwapchainKHR* pSwapchain
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateSwapchainKHR.html vkCreateSwapchainKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSwapchainKHRvkCreateSwapchainKHR registry at www.khronos.org>
 type HS_vkCreateSwapchainKHR =
      VkDevice -- ^ device
               ->
@@ -290,7 +290,7 @@ type VkDestroySwapchainKHR = "vkDestroySwapchainKHR"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroySwapchainKHR.html vkDestroySwapchainKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySwapchainKHRvkDestroySwapchainKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkDestroySwapchainKHR"
                vkDestroySwapchainKHR ::
                VkDevice -- ^ device
@@ -304,7 +304,7 @@ foreign import ccall unsafe "vkDestroySwapchainKHR"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroySwapchainKHR.html vkDestroySwapchainKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySwapchainKHRvkDestroySwapchainKHR registry at www.khronos.org>
 foreign import ccall safe "vkDestroySwapchainKHR"
                vkDestroySwapchainKHRSafe ::
                VkDevice -- ^ device
@@ -318,7 +318,7 @@ foreign import ccall safe "vkDestroySwapchainKHR"
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroySwapchainKHR.html vkDestroySwapchainKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySwapchainKHRvkDestroySwapchainKHR registry at www.khronos.org>
 type HS_vkDestroySwapchainKHR =
      VkDevice -- ^ device
               -> VkSwapchainKHR -- ^ swapchain
@@ -369,7 +369,7 @@ type VkGetSwapchainImagesKHR = "vkGetSwapchainImagesKHR"
 --   >     , VkImage* pSwapchainImages
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetSwapchainImagesKHR.html vkGetSwapchainImagesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSwapchainImagesKHRvkGetSwapchainImagesKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkGetSwapchainImagesKHR"
                vkGetSwapchainImagesKHR ::
                VkDevice -- ^ device
@@ -390,7 +390,7 @@ foreign import ccall unsafe "vkGetSwapchainImagesKHR"
 --   >     , VkImage* pSwapchainImages
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetSwapchainImagesKHR.html vkGetSwapchainImagesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSwapchainImagesKHRvkGetSwapchainImagesKHR registry at www.khronos.org>
 foreign import ccall safe "vkGetSwapchainImagesKHR"
                vkGetSwapchainImagesKHRSafe ::
                VkDevice -- ^ device
@@ -411,7 +411,7 @@ foreign import ccall safe "vkGetSwapchainImagesKHR"
 --   >     , VkImage* pSwapchainImages
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetSwapchainImagesKHR.html vkGetSwapchainImagesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSwapchainImagesKHRvkGetSwapchainImagesKHR registry at www.khronos.org>
 type HS_vkGetSwapchainImagesKHR =
      VkDevice -- ^ device
               ->
@@ -467,7 +467,7 @@ type VkAcquireNextImageKHR = "vkAcquireNextImageKHR"
 --   >     , uint32_t* pImageIndex
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkAcquireNextImageKHR.html vkAcquireNextImageKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImageKHRvkAcquireNextImageKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkAcquireNextImageKHR"
                vkAcquireNextImageKHR ::
                VkDevice -- ^ device
@@ -493,7 +493,7 @@ foreign import ccall unsafe "vkAcquireNextImageKHR"
 --   >     , uint32_t* pImageIndex
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkAcquireNextImageKHR.html vkAcquireNextImageKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImageKHRvkAcquireNextImageKHR registry at www.khronos.org>
 foreign import ccall safe "vkAcquireNextImageKHR"
                vkAcquireNextImageKHRSafe ::
                VkDevice -- ^ device
@@ -519,7 +519,7 @@ foreign import ccall safe "vkAcquireNextImageKHR"
 --   >     , uint32_t* pImageIndex
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkAcquireNextImageKHR.html vkAcquireNextImageKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImageKHRvkAcquireNextImageKHR registry at www.khronos.org>
 type HS_vkAcquireNextImageKHR =
      VkDevice -- ^ device
               ->
@@ -571,7 +571,7 @@ type VkQueuePresentKHR = "vkQueuePresentKHR"
 --   >     , const VkPresentInfoKHR* pPresentInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkQueuePresentKHR.html vkQueuePresentKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueuePresentKHRvkQueuePresentKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkQueuePresentKHR" vkQueuePresentKHR
                :: VkQueue -- ^ queue
                           -> Ptr VkPresentInfoKHR -- ^ pPresentInfo
@@ -586,7 +586,7 @@ foreign import ccall unsafe "vkQueuePresentKHR" vkQueuePresentKHR
 --   >     , const VkPresentInfoKHR* pPresentInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkQueuePresentKHR.html vkQueuePresentKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueuePresentKHRvkQueuePresentKHR registry at www.khronos.org>
 foreign import ccall safe "vkQueuePresentKHR" vkQueuePresentKHRSafe
                :: VkQueue -- ^ queue
                           -> Ptr VkPresentInfoKHR -- ^ pPresentInfo
@@ -601,7 +601,7 @@ foreign import ccall safe "vkQueuePresentKHR" vkQueuePresentKHRSafe
 --   >     , const VkPresentInfoKHR* pPresentInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkQueuePresentKHR.html vkQueuePresentKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueuePresentKHRvkQueuePresentKHR registry at www.khronos.org>
 type HS_vkQueuePresentKHR =
      VkQueue -- ^ queue
              -> Ptr VkPresentInfoKHR -- ^ pPresentInfo
@@ -706,7 +706,7 @@ type VkGetDeviceGroupPresentCapabilitiesKHR =
 --   >     , VkDeviceGroupPresentCapabilitiesKHR* pDeviceGroupPresentCapabilities
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceGroupPresentCapabilitiesKHR.html vkGetDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPresentCapabilitiesKHRvkGetDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetDeviceGroupPresentCapabilitiesKHR"
                vkGetDeviceGroupPresentCapabilitiesKHR ::
@@ -723,7 +723,7 @@ foreign import ccall unsafe
 --   >     , VkDeviceGroupPresentCapabilitiesKHR* pDeviceGroupPresentCapabilities
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceGroupPresentCapabilitiesKHR.html vkGetDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPresentCapabilitiesKHRvkGetDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
 foreign import ccall safe "vkGetDeviceGroupPresentCapabilitiesKHR"
                vkGetDeviceGroupPresentCapabilitiesKHRSafe ::
                VkDevice -- ^ device
@@ -739,7 +739,7 @@ foreign import ccall safe "vkGetDeviceGroupPresentCapabilitiesKHR"
 --   >     , VkDeviceGroupPresentCapabilitiesKHR* pDeviceGroupPresentCapabilities
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceGroupPresentCapabilitiesKHR.html vkGetDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupPresentCapabilitiesKHRvkGetDeviceGroupPresentCapabilitiesKHR registry at www.khronos.org>
 type HS_vkGetDeviceGroupPresentCapabilitiesKHR =
      VkDevice -- ^ device
               -> Ptr VkDeviceGroupPresentCapabilitiesKHR -- ^ pDeviceGroupPresentCapabilities
@@ -795,7 +795,7 @@ type VkGetDeviceGroupSurfacePresentModesKHR =
 --   >     , VkDeviceGroupPresentModeFlagsKHR* pModes
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceGroupSurfacePresentModesKHR.html vkGetDeviceGroupSurfacePresentModesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupSurfacePresentModesKHRvkGetDeviceGroupSurfacePresentModesKHR registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetDeviceGroupSurfacePresentModesKHR"
                vkGetDeviceGroupSurfacePresentModesKHR ::
@@ -815,7 +815,7 @@ foreign import ccall unsafe
 --   >     , VkDeviceGroupPresentModeFlagsKHR* pModes
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceGroupSurfacePresentModesKHR.html vkGetDeviceGroupSurfacePresentModesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupSurfacePresentModesKHRvkGetDeviceGroupSurfacePresentModesKHR registry at www.khronos.org>
 foreign import ccall safe "vkGetDeviceGroupSurfacePresentModesKHR"
                vkGetDeviceGroupSurfacePresentModesKHRSafe ::
                VkDevice -- ^ device
@@ -834,7 +834,7 @@ foreign import ccall safe "vkGetDeviceGroupSurfacePresentModesKHR"
 --   >     , VkDeviceGroupPresentModeFlagsKHR* pModes
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceGroupSurfacePresentModesKHR.html vkGetDeviceGroupSurfacePresentModesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDeviceGroupSurfacePresentModesKHRvkGetDeviceGroupSurfacePresentModesKHR registry at www.khronos.org>
 type HS_vkGetDeviceGroupSurfacePresentModesKHR =
      VkDevice -- ^ device
               ->
@@ -893,7 +893,7 @@ type VkGetPhysicalDevicePresentRectanglesKHR =
 --   >     , VkRect2D* pRects
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDevicePresentRectanglesKHR.html vkGetPhysicalDevicePresentRectanglesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDevicePresentRectanglesKHRvkGetPhysicalDevicePresentRectanglesKHR registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDevicePresentRectanglesKHR"
                vkGetPhysicalDevicePresentRectanglesKHR ::
@@ -915,7 +915,7 @@ foreign import ccall unsafe
 --   >     , VkRect2D* pRects
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDevicePresentRectanglesKHR.html vkGetPhysicalDevicePresentRectanglesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDevicePresentRectanglesKHRvkGetPhysicalDevicePresentRectanglesKHR registry at www.khronos.org>
 foreign import ccall safe "vkGetPhysicalDevicePresentRectanglesKHR"
                vkGetPhysicalDevicePresentRectanglesKHRSafe ::
                VkPhysicalDevice -- ^ physicalDevice
@@ -936,7 +936,7 @@ foreign import ccall safe "vkGetPhysicalDevicePresentRectanglesKHR"
 --   >     , VkRect2D* pRects
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDevicePresentRectanglesKHR.html vkGetPhysicalDevicePresentRectanglesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDevicePresentRectanglesKHRvkGetPhysicalDevicePresentRectanglesKHR registry at www.khronos.org>
 type HS_vkGetPhysicalDevicePresentRectanglesKHR =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -992,7 +992,7 @@ type VkAcquireNextImage2KHR = "vkAcquireNextImage2KHR"
 --   >     , uint32_t* pImageIndex
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkAcquireNextImage2KHR.html vkAcquireNextImage2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImage2KHRvkAcquireNextImage2KHR registry at www.khronos.org>
 foreign import ccall unsafe "vkAcquireNextImage2KHR"
                vkAcquireNextImage2KHR ::
                VkDevice -- ^ device
@@ -1011,7 +1011,7 @@ foreign import ccall unsafe "vkAcquireNextImage2KHR"
 --   >     , uint32_t* pImageIndex
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkAcquireNextImage2KHR.html vkAcquireNextImage2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImage2KHRvkAcquireNextImage2KHR registry at www.khronos.org>
 foreign import ccall safe "vkAcquireNextImage2KHR"
                vkAcquireNextImage2KHRSafe ::
                VkDevice -- ^ device
@@ -1030,7 +1030,7 @@ foreign import ccall safe "vkAcquireNextImage2KHR"
 --   >     , uint32_t* pImageIndex
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkAcquireNextImage2KHR.html vkAcquireNextImage2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkAcquireNextImage2KHRvkAcquireNextImage2KHR registry at www.khronos.org>
 type HS_vkAcquireNextImage2KHR =
      VkDevice -- ^ device
               ->

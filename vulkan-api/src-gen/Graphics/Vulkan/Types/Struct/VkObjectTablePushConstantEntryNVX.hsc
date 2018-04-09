@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkObjectTablePushConstantEntryNVX
        (VkObjectTablePushConstantEntryNVX(..)) where
 import           Foreign.Storable                                      (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                              (Addr##, ByteArray##,
+                                                                        byteArrayContents##,
+                                                                        plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkObjectEntryTypeNVX       (VkObjectEntryTypeNVX)
@@ -26,7 +28,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkShaderStageFlags           stageFlags;
 --   > } VkObjectTablePushConstantEntryNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkObjectTablePushConstantEntryNVX.html VkObjectTablePushConstantEntryNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkObjectTablePushConstantEntryNVXVkObjectTablePushConstantEntryNVX registry at www.khronos.org>
 data VkObjectTablePushConstantEntryNVX = VkObjectTablePushConstantEntryNVX## Addr##
                                                                             ByteArray##
 

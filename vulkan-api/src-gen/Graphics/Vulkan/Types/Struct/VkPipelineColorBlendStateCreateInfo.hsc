@@ -15,7 +15,13 @@ module Graphics.Vulkan.Types.Struct.VkPipelineColorBlendStateCreateInfo
        (VkPipelineColorBlendStateCreateInfo(..)) where
 import           Foreign.Storable
                                                                                    (Storable (..))
-import           GHC.Prim
+import           GHC.Base
+                                                                                   (Addr##,
+                                                                                   ByteArray##,
+                                                                                   Proxy##,
+                                                                                   byteArrayContents##,
+                                                                                   plusAddr##,
+                                                                                   proxy##)
 import           GHC.TypeLits
                                                                                    (KnownNat,
                                                                                    natVal') -- ' closing tick for hsc2hs
@@ -45,7 +51,7 @@ import           System.IO.Unsafe
 --   >     float                  blendConstants[4];
 --   > } VkPipelineColorBlendStateCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPipelineColorBlendStateCreateInfo.html VkPipelineColorBlendStateCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPipelineColorBlendStateCreateInfoVkPipelineColorBlendStateCreateInfo registry at www.khronos.org>
 data VkPipelineColorBlendStateCreateInfo = VkPipelineColorBlendStateCreateInfo## Addr##
                                                                                 ByteArray##
 
