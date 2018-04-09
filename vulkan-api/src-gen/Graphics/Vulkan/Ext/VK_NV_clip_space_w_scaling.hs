@@ -34,8 +34,7 @@ module Graphics.Vulkan.Ext.VK_NV_clip_space_w_scaling
         -- > #include "vk_platform.h"
         VkCmdSetViewportWScalingNV, pattern VkCmdSetViewportWScalingNV,
         HS_vkCmdSetViewportWScalingNV, PFN_vkCmdSetViewportWScalingNV,
-        unwrapVkCmdSetViewportWScalingNV, vkCmdSetViewportWScalingNV,
-        vkCmdSetViewportWScalingNVSafe,
+        unwrapVkCmdSetViewportWScalingNV,
         module Graphics.Vulkan.Types.Handles,
         VK_NV_CLIP_SPACE_W_SCALING_SPEC_VERSION,
         pattern VK_NV_CLIP_SPACE_W_SCALING_SPEC_VERSION,
@@ -93,49 +92,7 @@ type VkCmdSetViewportWScalingNV = "vkCmdSetViewportWScalingNV"
 --   >     , const VkViewportWScalingNV* pViewportWScalings
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetViewportWScalingNV.html vkCmdSetViewportWScalingNV registry at www.khronos.org>
-foreign import ccall unsafe "vkCmdSetViewportWScalingNV"
-               vkCmdSetViewportWScalingNV ::
-               VkCommandBuffer -- ^ commandBuffer
-                               ->
-                 Word32 -- ^ firstViewport
-                        -> Word32 -- ^ viewportCount
-                                  -> Ptr VkViewportWScalingNV -- ^ pViewportWScalings
-                                                              -> IO ()
-
--- | queues: 'graphics'.
---
---   renderpass: @both@
---
---   > () vkCmdSetViewportWScalingNV
---   >     ( VkCommandBuffer commandBuffer
---   >     , uint32_t firstViewport
---   >     , uint32_t viewportCount
---   >     , const VkViewportWScalingNV* pViewportWScalings
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetViewportWScalingNV.html vkCmdSetViewportWScalingNV registry at www.khronos.org>
-foreign import ccall safe "vkCmdSetViewportWScalingNV"
-               vkCmdSetViewportWScalingNVSafe ::
-               VkCommandBuffer -- ^ commandBuffer
-                               ->
-                 Word32 -- ^ firstViewport
-                        -> Word32 -- ^ viewportCount
-                                  -> Ptr VkViewportWScalingNV -- ^ pViewportWScalings
-                                                              -> IO ()
-
--- | queues: 'graphics'.
---
---   renderpass: @both@
---
---   > () vkCmdSetViewportWScalingNV
---   >     ( VkCommandBuffer commandBuffer
---   >     , uint32_t firstViewport
---   >     , uint32_t viewportCount
---   >     , const VkViewportWScalingNV* pViewportWScalings
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetViewportWScalingNV.html vkCmdSetViewportWScalingNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdSetViewportWScalingNVvkCmdSetViewportWScalingNV registry at www.khronos.org>
 type HS_vkCmdSetViewportWScalingNV =
      VkCommandBuffer -- ^ commandBuffer
                      ->

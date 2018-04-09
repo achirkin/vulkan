@@ -29,8 +29,6 @@ module Graphics.Vulkan.Ext.VK_KHR_device_group_creation
         HS_vkEnumeratePhysicalDeviceGroupsKHR,
         PFN_vkEnumeratePhysicalDeviceGroupsKHR,
         unwrapVkEnumeratePhysicalDeviceGroupsKHR,
-        vkEnumeratePhysicalDeviceGroupsKHR,
-        vkEnumeratePhysicalDeviceGroupsKHRSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.VkResult,
@@ -95,49 +93,7 @@ type VkEnumeratePhysicalDeviceGroupsKHR =
 --   >     , VkPhysicalDeviceGroupProperties* pPhysicalDeviceGroupProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumeratePhysicalDeviceGroupsKHR.html vkEnumeratePhysicalDeviceGroupsKHR registry at www.khronos.org>
-foreign import ccall unsafe "vkEnumeratePhysicalDeviceGroupsKHR"
-               vkEnumeratePhysicalDeviceGroupsKHR ::
-               VkInstance -- ^ instance
-                          ->
-                 Ptr Word32 -- ^ pPhysicalDeviceGroupCount
-                            -> Ptr VkPhysicalDeviceGroupProperties -- ^ pPhysicalDeviceGroupProperties
-                                                                   -> IO VkResult
-
--- | This is an alias for `vkEnumeratePhysicalDeviceGroups`.
---
---   Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INITIALIZATION_FAILED'.
---
---   > VkResult vkEnumeratePhysicalDeviceGroupsKHR
---   >     ( VkInstance instance
---   >     , uint32_t* pPhysicalDeviceGroupCount
---   >     , VkPhysicalDeviceGroupProperties* pPhysicalDeviceGroupProperties
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumeratePhysicalDeviceGroupsKHR.html vkEnumeratePhysicalDeviceGroupsKHR registry at www.khronos.org>
-foreign import ccall safe "vkEnumeratePhysicalDeviceGroupsKHR"
-               vkEnumeratePhysicalDeviceGroupsKHRSafe ::
-               VkInstance -- ^ instance
-                          ->
-                 Ptr Word32 -- ^ pPhysicalDeviceGroupCount
-                            -> Ptr VkPhysicalDeviceGroupProperties -- ^ pPhysicalDeviceGroupProperties
-                                                                   -> IO VkResult
-
--- | This is an alias for `vkEnumeratePhysicalDeviceGroups`.
---
---   Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_INITIALIZATION_FAILED'.
---
---   > VkResult vkEnumeratePhysicalDeviceGroupsKHR
---   >     ( VkInstance instance
---   >     , uint32_t* pPhysicalDeviceGroupCount
---   >     , VkPhysicalDeviceGroupProperties* pPhysicalDeviceGroupProperties
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumeratePhysicalDeviceGroupsKHR.html vkEnumeratePhysicalDeviceGroupsKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkEnumeratePhysicalDeviceGroupsKHRvkEnumeratePhysicalDeviceGroupsKHR registry at www.khronos.org>
 type HS_vkEnumeratePhysicalDeviceGroupsKHR =
      VkInstance -- ^ instance
                 ->

@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkViSurfaceCreateInfoNN
        (VkViSurfaceCreateInfoNN(..)) where
 import           Foreign.Storable                           (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                   (Addr##, ByteArray##,
+                                                             byteArrayContents##,
+                                                             plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Bitmasks             (VkViSurfaceCreateFlagsNN)
@@ -24,7 +26,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     void*                            window;
 --   > } VkViSurfaceCreateInfoNN;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkViSurfaceCreateInfoNN.html VkViSurfaceCreateInfoNN registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkViSurfaceCreateInfoNNVkViSurfaceCreateInfoNN registry at www.khronos.org>
 data VkViSurfaceCreateInfoNN = VkViSurfaceCreateInfoNN## Addr##
                                                         ByteArray##
 

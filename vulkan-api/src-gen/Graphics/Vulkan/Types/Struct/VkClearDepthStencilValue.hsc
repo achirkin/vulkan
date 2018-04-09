@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkClearDepthStencilValue
        (VkClearDepthStencilValue(..)) where
 import           Foreign.Storable                 (Storable (..))
-import           GHC.Prim
+import           GHC.Base                         (Addr##, ByteArray##,
+                                                   byteArrayContents##,
+                                                   plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
@@ -20,7 +22,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     uint32_t               stencil;
 --   > } VkClearDepthStencilValue;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkClearDepthStencilValue.html VkClearDepthStencilValue registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkClearDepthStencilValueVkClearDepthStencilValue registry at www.khronos.org>
 data VkClearDepthStencilValue = VkClearDepthStencilValue## Addr##
                                                           ByteArray##
 

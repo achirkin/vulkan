@@ -38,8 +38,6 @@ module Graphics.Vulkan.Ext.VK_KHR_external_fence_capabilities
         HS_vkGetPhysicalDeviceExternalFencePropertiesKHR,
         PFN_vkGetPhysicalDeviceExternalFencePropertiesKHR,
         unwrapVkGetPhysicalDeviceExternalFencePropertiesKHR,
-        vkGetPhysicalDeviceExternalFencePropertiesKHR,
-        vkGetPhysicalDeviceExternalFencePropertiesKHRSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.VkExternalFenceFeatureFlags,
@@ -117,45 +115,7 @@ type VkGetPhysicalDeviceExternalFencePropertiesKHR =
 --   >     , VkExternalFenceProperties* pExternalFenceProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalFencePropertiesKHR.html vkGetPhysicalDeviceExternalFencePropertiesKHR registry at www.khronos.org>
-foreign import ccall unsafe
-               "vkGetPhysicalDeviceExternalFencePropertiesKHR"
-               vkGetPhysicalDeviceExternalFencePropertiesKHR ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                ->
-                 Ptr VkPhysicalDeviceExternalFenceInfo -- ^ pExternalFenceInfo
-                                                       ->
-                   Ptr VkExternalFenceProperties -- ^ pExternalFenceProperties
-                                                 -> IO ()
-
--- | This is an alias for `vkGetPhysicalDeviceExternalFenceProperties`.
---
---   > () vkGetPhysicalDeviceExternalFencePropertiesKHR
---   >     ( VkPhysicalDevice physicalDevice
---   >     , const VkPhysicalDeviceExternalFenceInfo* pExternalFenceInfo
---   >     , VkExternalFenceProperties* pExternalFenceProperties
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalFencePropertiesKHR.html vkGetPhysicalDeviceExternalFencePropertiesKHR registry at www.khronos.org>
-foreign import ccall safe
-               "vkGetPhysicalDeviceExternalFencePropertiesKHR"
-               vkGetPhysicalDeviceExternalFencePropertiesKHRSafe ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                ->
-                 Ptr VkPhysicalDeviceExternalFenceInfo -- ^ pExternalFenceInfo
-                                                       ->
-                   Ptr VkExternalFenceProperties -- ^ pExternalFenceProperties
-                                                 -> IO ()
-
--- | This is an alias for `vkGetPhysicalDeviceExternalFenceProperties`.
---
---   > () vkGetPhysicalDeviceExternalFencePropertiesKHR
---   >     ( VkPhysicalDevice physicalDevice
---   >     , const VkPhysicalDeviceExternalFenceInfo* pExternalFenceInfo
---   >     , VkExternalFenceProperties* pExternalFenceProperties
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalFencePropertiesKHR.html vkGetPhysicalDeviceExternalFencePropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalFencePropertiesKHRvkGetPhysicalDeviceExternalFencePropertiesKHR registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceExternalFencePropertiesKHR =
      VkPhysicalDevice -- ^ physicalDevice
                       ->

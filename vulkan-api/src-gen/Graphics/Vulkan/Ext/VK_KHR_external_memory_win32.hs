@@ -40,14 +40,12 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_win32
         -- > #include "vk_platform.h"
         VkGetMemoryWin32HandleKHR, pattern VkGetMemoryWin32HandleKHR,
         HS_vkGetMemoryWin32HandleKHR, PFN_vkGetMemoryWin32HandleKHR,
-        unwrapVkGetMemoryWin32HandleKHR, vkGetMemoryWin32HandleKHR,
-        vkGetMemoryWin32HandleKHRSafe, VkGetMemoryWin32HandlePropertiesKHR,
+        unwrapVkGetMemoryWin32HandleKHR,
+        VkGetMemoryWin32HandlePropertiesKHR,
         pattern VkGetMemoryWin32HandlePropertiesKHR,
         HS_vkGetMemoryWin32HandlePropertiesKHR,
         PFN_vkGetMemoryWin32HandlePropertiesKHR,
         unwrapVkGetMemoryWin32HandlePropertiesKHR,
-        vkGetMemoryWin32HandlePropertiesKHR,
-        vkGetMemoryWin32HandlePropertiesKHRSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
@@ -104,45 +102,7 @@ type VkGetMemoryWin32HandleKHR = "vkGetMemoryWin32HandleKHR"
 --   >     , HANDLE* pHandle
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryWin32HandleKHR.html vkGetMemoryWin32HandleKHR registry at www.khronos.org>
-foreign import ccall unsafe "vkGetMemoryWin32HandleKHR"
-               vkGetMemoryWin32HandleKHR ::
-               VkDevice -- ^ device
-                        ->
-                 Ptr VkMemoryGetWin32HandleInfoKHR -- ^ pGetWin32HandleInfo
-                                                   -> Ptr HANDLE -- ^ pHandle
-                                                                 -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
---
---   > VkResult vkGetMemoryWin32HandleKHR
---   >     ( VkDevice device
---   >     , const VkMemoryGetWin32HandleInfoKHR* pGetWin32HandleInfo
---   >     , HANDLE* pHandle
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryWin32HandleKHR.html vkGetMemoryWin32HandleKHR registry at www.khronos.org>
-foreign import ccall safe "vkGetMemoryWin32HandleKHR"
-               vkGetMemoryWin32HandleKHRSafe ::
-               VkDevice -- ^ device
-                        ->
-                 Ptr VkMemoryGetWin32HandleInfoKHR -- ^ pGetWin32HandleInfo
-                                                   -> Ptr HANDLE -- ^ pHandle
-                                                                 -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
---
---   > VkResult vkGetMemoryWin32HandleKHR
---   >     ( VkDevice device
---   >     , const VkMemoryGetWin32HandleInfoKHR* pGetWin32HandleInfo
---   >     , HANDLE* pHandle
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryWin32HandleKHR.html vkGetMemoryWin32HandleKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetMemoryWin32HandleKHRvkGetMemoryWin32HandleKHR registry at www.khronos.org>
 type HS_vkGetMemoryWin32HandleKHR =
      VkDevice -- ^ device
               ->
@@ -199,51 +159,7 @@ type VkGetMemoryWin32HandlePropertiesKHR =
 --   >     , VkMemoryWin32HandlePropertiesKHR* pMemoryWin32HandleProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryWin32HandlePropertiesKHR.html vkGetMemoryWin32HandlePropertiesKHR registry at www.khronos.org>
-foreign import ccall unsafe "vkGetMemoryWin32HandlePropertiesKHR"
-               vkGetMemoryWin32HandlePropertiesKHR ::
-               VkDevice -- ^ device
-                        ->
-                 VkExternalMemoryHandleTypeFlagBits -- ^ handleType
-                                                    ->
-                   HANDLE -- ^ handle
-                          -> Ptr VkMemoryWin32HandlePropertiesKHR -- ^ pMemoryWin32HandleProperties
-                                                                  -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
---
---   > VkResult vkGetMemoryWin32HandlePropertiesKHR
---   >     ( VkDevice device
---   >     , VkExternalMemoryHandleTypeFlagBits handleType
---   >     , HANDLE handle
---   >     , VkMemoryWin32HandlePropertiesKHR* pMemoryWin32HandleProperties
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryWin32HandlePropertiesKHR.html vkGetMemoryWin32HandlePropertiesKHR registry at www.khronos.org>
-foreign import ccall safe "vkGetMemoryWin32HandlePropertiesKHR"
-               vkGetMemoryWin32HandlePropertiesKHRSafe ::
-               VkDevice -- ^ device
-                        ->
-                 VkExternalMemoryHandleTypeFlagBits -- ^ handleType
-                                                    ->
-                   HANDLE -- ^ handle
-                          -> Ptr VkMemoryWin32HandlePropertiesKHR -- ^ pMemoryWin32HandleProperties
-                                                                  -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
---
---   > VkResult vkGetMemoryWin32HandlePropertiesKHR
---   >     ( VkDevice device
---   >     , VkExternalMemoryHandleTypeFlagBits handleType
---   >     , HANDLE handle
---   >     , VkMemoryWin32HandlePropertiesKHR* pMemoryWin32HandleProperties
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryWin32HandlePropertiesKHR.html vkGetMemoryWin32HandlePropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetMemoryWin32HandlePropertiesKHRvkGetMemoryWin32HandlePropertiesKHR registry at www.khronos.org>
 type HS_vkGetMemoryWin32HandlePropertiesKHR =
      VkDevice -- ^ device
               ->

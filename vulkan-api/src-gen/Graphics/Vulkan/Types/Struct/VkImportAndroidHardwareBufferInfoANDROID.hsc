@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkImportAndroidHardwareBufferInfoANDROID
        (VkImportAndroidHardwareBufferInfoANDROID(..)) where
 import           Foreign.Storable                                  (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                          (Addr##,
+                                                                    ByteArray##,
+                                                                    byteArrayContents##,
+                                                                    plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Defines                     (AHardwareBuffer)
@@ -24,7 +27,7 @@ import           System.IO.Unsafe                                  (unsafeDupabl
 --   >     struct AHardwareBuffer*            buffer;
 --   > } VkImportAndroidHardwareBufferInfoANDROID;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkImportAndroidHardwareBufferInfoANDROID.html VkImportAndroidHardwareBufferInfoANDROID registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImportAndroidHardwareBufferInfoANDROIDVkImportAndroidHardwareBufferInfoANDROID registry at www.khronos.org>
 data VkImportAndroidHardwareBufferInfoANDROID = VkImportAndroidHardwareBufferInfoANDROID## Addr##
                                                                                           ByteArray##
 

@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceExternalMemoryHostPropertiesEXT
        (VkPhysicalDeviceExternalMemoryHostPropertiesEXT(..)) where
 import           Foreign.Storable                                         (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                                 (Addr##,
+                                                                           ByteArray##,
+                                                                           byteArrayContents##,
+                                                                           plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes                          (VkDeviceSize)
@@ -24,7 +27,7 @@ import           System.IO.Unsafe                                         (unsaf
 --   >     VkDeviceSize minImportedHostPointerAlignment;
 --   > } VkPhysicalDeviceExternalMemoryHostPropertiesEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPhysicalDeviceExternalMemoryHostPropertiesEXT.html VkPhysicalDeviceExternalMemoryHostPropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceExternalMemoryHostPropertiesEXTVkPhysicalDeviceExternalMemoryHostPropertiesEXT registry at www.khronos.org>
 data VkPhysicalDeviceExternalMemoryHostPropertiesEXT = VkPhysicalDeviceExternalMemoryHostPropertiesEXT## Addr##
                                                                                                         ByteArray##
 

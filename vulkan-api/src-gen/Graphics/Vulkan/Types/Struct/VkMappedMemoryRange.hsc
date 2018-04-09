@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkMappedMemoryRange
        (VkMappedMemoryRange(..)) where
 import           Foreign.Storable                           (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                   (Addr##, ByteArray##,
+                                                             byteArrayContents##,
+                                                             plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes            (VkDeviceSize)
@@ -26,7 +28,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     VkDeviceSize           size;
 --   > } VkMappedMemoryRange;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkMappedMemoryRange.html VkMappedMemoryRange registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkMappedMemoryRangeVkMappedMemoryRange registry at www.khronos.org>
 data VkMappedMemoryRange = VkMappedMemoryRange## Addr## ByteArray##
 
 instance Eq VkMappedMemoryRange where

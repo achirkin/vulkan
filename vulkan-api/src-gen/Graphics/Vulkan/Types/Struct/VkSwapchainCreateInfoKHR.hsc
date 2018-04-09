@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkSwapchainCreateInfoKHR
        (VkSwapchainCreateInfoKHR(..)) where
 import           Foreign.Storable                                      (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                              (Addr##, ByteArray##,
+                                                                        byteArrayContents##,
+                                                                        plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes                       (VkBool32)
@@ -49,7 +51,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkSwapchainKHR   oldSwapchain;
 --   > } VkSwapchainCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSwapchainCreateInfoKHR.html VkSwapchainCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSwapchainCreateInfoKHRVkSwapchainCreateInfoKHR registry at www.khronos.org>
 data VkSwapchainCreateInfoKHR = VkSwapchainCreateInfoKHR## Addr##
                                                           ByteArray##
 

@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkDedicatedAllocationImageCreateInfoNV
        (VkDedicatedAllocationImageCreateInfoNV(..)) where
 import           Foreign.Storable                               (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                       (Addr##,
+                                                                 ByteArray##,
+                                                                 byteArrayContents##,
+                                                                 plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes                (VkBool32)
@@ -24,7 +27,7 @@ import           System.IO.Unsafe                               (unsafeDupablePe
 --   >     VkBool32                         dedicatedAllocation;
 --   > } VkDedicatedAllocationImageCreateInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDedicatedAllocationImageCreateInfoNV.html VkDedicatedAllocationImageCreateInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDedicatedAllocationImageCreateInfoNVVkDedicatedAllocationImageCreateInfoNV registry at www.khronos.org>
 data VkDedicatedAllocationImageCreateInfoNV = VkDedicatedAllocationImageCreateInfoNV## Addr##
                                                                                       ByteArray##
 

@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceProperties2
        (VkPhysicalDeviceProperties2(..)) where
 import           Foreign.Storable                                        (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                                (Addr##, ByteArray##,
+                                                                          byteArrayContents##,
+                                                                          plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType              (VkStructureType)
@@ -23,7 +25,7 @@ import           System.IO.Unsafe                                        (unsafe
 --   >     VkPhysicalDeviceProperties       properties;
 --   > } VkPhysicalDeviceProperties2;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPhysicalDeviceProperties2.html VkPhysicalDeviceProperties2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceProperties2VkPhysicalDeviceProperties2 registry at www.khronos.org>
 data VkPhysicalDeviceProperties2 = VkPhysicalDeviceProperties2## Addr##
                                                                 ByteArray##
 

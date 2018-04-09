@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkDeviceGroupRenderPassBeginInfo
        (VkDeviceGroupRenderPassBeginInfo(..)) where
 import           Foreign.Storable                                   (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                           (Addr##,
+                                                                     ByteArray##,
+                                                                     byteArrayContents##,
+                                                                     plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType         (VkStructureType)
@@ -26,7 +29,7 @@ import           System.IO.Unsafe                                   (unsafeDupab
 --   >     const VkRect2D*  pDeviceRenderAreas;
 --   > } VkDeviceGroupRenderPassBeginInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDeviceGroupRenderPassBeginInfo.html VkDeviceGroupRenderPassBeginInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDeviceGroupRenderPassBeginInfoVkDeviceGroupRenderPassBeginInfo registry at www.khronos.org>
 data VkDeviceGroupRenderPassBeginInfo = VkDeviceGroupRenderPassBeginInfo## Addr##
                                                                           ByteArray##
 

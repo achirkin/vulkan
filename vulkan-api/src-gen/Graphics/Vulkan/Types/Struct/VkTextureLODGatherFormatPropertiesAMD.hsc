@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkTextureLODGatherFormatPropertiesAMD
        (VkTextureLODGatherFormatPropertiesAMD(..)) where
 import           Foreign.Storable                                      (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                              (Addr##, ByteArray##,
+                                                                        byteArrayContents##,
+                                                                        plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes                       (VkBool32)
@@ -24,7 +26,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkBool32                         supportsTextureGatherLODBiasAMD;
 --   > } VkTextureLODGatherFormatPropertiesAMD;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkTextureLODGatherFormatPropertiesAMD.html VkTextureLODGatherFormatPropertiesAMD registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkTextureLODGatherFormatPropertiesAMDVkTextureLODGatherFormatPropertiesAMD registry at www.khronos.org>
 data VkTextureLODGatherFormatPropertiesAMD = VkTextureLODGatherFormatPropertiesAMD## Addr##
                                                                                     ByteArray##
 

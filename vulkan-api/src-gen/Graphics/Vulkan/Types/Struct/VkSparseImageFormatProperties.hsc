@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkSparseImageFormatProperties
        (VkSparseImageFormatProperties(..)) where
 import           Foreign.Storable                                    (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                            (Addr##,
+                                                                      ByteArray##,
+                                                                      byteArrayContents##,
+                                                                      plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkImageAspectFlags       (VkImageAspectFlags)
@@ -24,7 +27,7 @@ import           System.IO.Unsafe                                    (unsafeDupa
 --   >     VkSparseImageFormatFlags flags;
 --   > } VkSparseImageFormatProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSparseImageFormatProperties.html VkSparseImageFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSparseImageFormatPropertiesVkSparseImageFormatProperties registry at www.khronos.org>
 data VkSparseImageFormatProperties = VkSparseImageFormatProperties## Addr##
                                                                     ByteArray##
 

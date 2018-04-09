@@ -35,8 +35,7 @@ module Graphics.Vulkan.Ext.VK_NN_vi_surface
         -- > #include "vk_platform.h"
         VkCreateViSurfaceNN, pattern VkCreateViSurfaceNN,
         HS_vkCreateViSurfaceNN, PFN_vkCreateViSurfaceNN,
-        unwrapVkCreateViSurfaceNN, vkCreateViSurfaceNN,
-        vkCreateViSurfaceNNSafe, module Graphics.Vulkan.Marshal,
+        unwrapVkCreateViSurfaceNN, module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,
@@ -91,51 +90,7 @@ type VkCreateViSurfaceNN = "vkCreateViSurfaceNN"
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateViSurfaceNN.html vkCreateViSurfaceNN registry at www.khronos.org>
-foreign import ccall unsafe "vkCreateViSurfaceNN"
-               vkCreateViSurfaceNN ::
-               VkInstance -- ^ instance
-                          ->
-                 Ptr VkViSurfaceCreateInfoNN -- ^ pCreateInfo
-                                             ->
-                   Ptr VkAllocationCallbacks -- ^ pAllocator
-                                             -> Ptr VkSurfaceKHR -- ^ pSurface
-                                                                 -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
---
---   > VkResult vkCreateViSurfaceNN
---   >     ( VkInstance instance
---   >     , const VkViSurfaceCreateInfoNN* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkSurfaceKHR* pSurface
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateViSurfaceNN.html vkCreateViSurfaceNN registry at www.khronos.org>
-foreign import ccall safe "vkCreateViSurfaceNN"
-               vkCreateViSurfaceNNSafe ::
-               VkInstance -- ^ instance
-                          ->
-                 Ptr VkViSurfaceCreateInfoNN -- ^ pCreateInfo
-                                             ->
-                   Ptr VkAllocationCallbacks -- ^ pAllocator
-                                             -> Ptr VkSurfaceKHR -- ^ pSurface
-                                                                 -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
---
---   > VkResult vkCreateViSurfaceNN
---   >     ( VkInstance instance
---   >     , const VkViSurfaceCreateInfoNN* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkSurfaceKHR* pSurface
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateViSurfaceNN.html vkCreateViSurfaceNN registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateViSurfaceNNvkCreateViSurfaceNN registry at www.khronos.org>
 type HS_vkCreateViSurfaceNN =
      VkInstance -- ^ instance
                 ->

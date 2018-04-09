@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkSurfaceCapabilities2KHR
        (VkSurfaceCapabilities2KHR(..)) where
 import           Foreign.Storable                                      (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                              (Addr##, ByteArray##,
+                                                                        byteArrayContents##,
+                                                                        plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType            (VkStructureType)
@@ -23,7 +25,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkSurfaceCapabilitiesKHR surfaceCapabilities;
 --   > } VkSurfaceCapabilities2KHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSurfaceCapabilities2KHR.html VkSurfaceCapabilities2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSurfaceCapabilities2KHRVkSurfaceCapabilities2KHR registry at www.khronos.org>
 data VkSurfaceCapabilities2KHR = VkSurfaceCapabilities2KHR## Addr##
                                                             ByteArray##
 

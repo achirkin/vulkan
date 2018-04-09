@@ -36,11 +36,9 @@ module Graphics.Vulkan.Ext.VK_KHR_external_semaphore_fd
         -- > #include "vk_platform.h"
         VkImportSemaphoreFdKHR, pattern VkImportSemaphoreFdKHR,
         HS_vkImportSemaphoreFdKHR, PFN_vkImportSemaphoreFdKHR,
-        unwrapVkImportSemaphoreFdKHR, vkImportSemaphoreFdKHR,
-        vkImportSemaphoreFdKHRSafe, VkGetSemaphoreFdKHR,
+        unwrapVkImportSemaphoreFdKHR, VkGetSemaphoreFdKHR,
         pattern VkGetSemaphoreFdKHR, HS_vkGetSemaphoreFdKHR,
         PFN_vkGetSemaphoreFdKHR, unwrapVkGetSemaphoreFdKHR,
-        vkGetSemaphoreFdKHR, vkGetSemaphoreFdKHRSafe,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_KHR_EXTERNAL_SEMAPHORE_FD_SPEC_VERSION,
@@ -90,39 +88,7 @@ type VkImportSemaphoreFdKHR = "vkImportSemaphoreFdKHR"
 --   >     , const VkImportSemaphoreFdInfoKHR* pImportSemaphoreFdInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkImportSemaphoreFdKHR.html vkImportSemaphoreFdKHR registry at www.khronos.org>
-foreign import ccall unsafe "vkImportSemaphoreFdKHR"
-               vkImportSemaphoreFdKHR ::
-               VkDevice -- ^ device
-                        -> Ptr VkImportSemaphoreFdInfoKHR -- ^ pImportSemaphoreFdInfo
-                                                          -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
---
---   > VkResult vkImportSemaphoreFdKHR
---   >     ( VkDevice device
---   >     , const VkImportSemaphoreFdInfoKHR* pImportSemaphoreFdInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkImportSemaphoreFdKHR.html vkImportSemaphoreFdKHR registry at www.khronos.org>
-foreign import ccall safe "vkImportSemaphoreFdKHR"
-               vkImportSemaphoreFdKHRSafe ::
-               VkDevice -- ^ device
-                        -> Ptr VkImportSemaphoreFdInfoKHR -- ^ pImportSemaphoreFdInfo
-                                                          -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
---
---   > VkResult vkImportSemaphoreFdKHR
---   >     ( VkDevice device
---   >     , const VkImportSemaphoreFdInfoKHR* pImportSemaphoreFdInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkImportSemaphoreFdKHR.html vkImportSemaphoreFdKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkImportSemaphoreFdKHRvkImportSemaphoreFdKHR registry at www.khronos.org>
 type HS_vkImportSemaphoreFdKHR =
      VkDevice -- ^ device
               -> Ptr VkImportSemaphoreFdInfoKHR -- ^ pImportSemaphoreFdInfo
@@ -170,43 +136,7 @@ type VkGetSemaphoreFdKHR = "vkGetSemaphoreFdKHR"
 --   >     , int* pFd
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetSemaphoreFdKHR.html vkGetSemaphoreFdKHR registry at www.khronos.org>
-foreign import ccall unsafe "vkGetSemaphoreFdKHR"
-               vkGetSemaphoreFdKHR ::
-               VkDevice -- ^ device
-                        -> Ptr VkSemaphoreGetFdInfoKHR -- ^ pGetFdInfo
-                                                       -> Ptr CInt -- ^ pFd
-                                                                   -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
---
---   > VkResult vkGetSemaphoreFdKHR
---   >     ( VkDevice device
---   >     , const VkSemaphoreGetFdInfoKHR* pGetFdInfo
---   >     , int* pFd
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetSemaphoreFdKHR.html vkGetSemaphoreFdKHR registry at www.khronos.org>
-foreign import ccall safe "vkGetSemaphoreFdKHR"
-               vkGetSemaphoreFdKHRSafe ::
-               VkDevice -- ^ device
-                        -> Ptr VkSemaphoreGetFdInfoKHR -- ^ pGetFdInfo
-                                                       -> Ptr CInt -- ^ pFd
-                                                                   -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_TOO_MANY_OBJECTS', 'VK_ERROR_OUT_OF_HOST_MEMORY'.
---
---   > VkResult vkGetSemaphoreFdKHR
---   >     ( VkDevice device
---   >     , const VkSemaphoreGetFdInfoKHR* pGetFdInfo
---   >     , int* pFd
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetSemaphoreFdKHR.html vkGetSemaphoreFdKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetSemaphoreFdKHRvkGetSemaphoreFdKHR registry at www.khronos.org>
 type HS_vkGetSemaphoreFdKHR =
      VkDevice -- ^ device
               -> Ptr VkSemaphoreGetFdInfoKHR -- ^ pGetFdInfo

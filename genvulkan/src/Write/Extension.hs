@@ -32,6 +32,7 @@ genExtension (VkExtension VkExtAttrs{..} ereqs) = hoist (`evalStateT` mempty) $ 
         cmds = globCommands vkXml
         pfs = platforms $ globPlatforms vkXml
         mplatform = extPlatform >>= \pn -> Map.lookup pn pfs
+        genFFI = extName `elem` whitelistedExtensions
 
     writeSection curlvl $ "Vulkan extension: @" <> unVkExtensionName extName <> "@"
        <:> ("supported: @" <> extSupported <> "@")
@@ -45,6 +46,30 @@ genExtension (VkExtension VkExtAttrs{..} ereqs) = hoist (`evalStateT` mempty) $ 
           (\s -> "Protected by CPP ifdef: @" <> unProtectCPP (protectCPP s) <> "@")
           extProtect
 
-    _ <- pushSecLvl $ \lvl -> mconcat <$> mapM (genRequire lvl tps cmds) ereqs
+    _ <- pushSecLvl $ \lvl -> mconcat <$> mapM (genRequire genFFI lvl tps cmds) ereqs
 
     pure $ extProtect <|> protect <$> mplatform
+
+
+-- | Vulkan loader does not expose all vulkan functions statically,
+--   because different platforms and vendors have different extensions enabled
+--    and different functions implemented.
+--   However, Vulkan loader provides all core functions statically.
+--   On top of this, vulkan provides symbols for some WSI extensions.
+--
+--   This list contains extensions that are guarenteed to be present in the
+--   loader library.
+whitelistedExtensions :: [VkExtensionName]
+whitelistedExtensions = fmap VkExtensionName
+  [ -- Vulkan loader provides symbols for WSI extensions functions
+    "VK_KHR_surface"
+  , "VK_KHR_swapchain"
+  , "VK_KHR_display"
+  , "VK_KHR_display_swapchain"
+  , "VK_KHR_android_surface"
+  , "VK_KHR_mir_surface"
+  , "VK_KHR_wayland_surface"
+  , "VK_KHR_win32_surface"
+  , "VK_KHR_xcb_surface"
+  , "VK_KHR_xlib_surface"
+  ]

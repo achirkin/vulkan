@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkRenderPassCreateInfo
        (VkRenderPassCreateInfo(..)) where
 import           Foreign.Storable                                     (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                             (Addr##, ByteArray##,
+                                                                       byteArrayContents##,
+                                                                       plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Bitmasks                       (VkRenderPassCreateFlags)
@@ -32,7 +34,7 @@ import           System.IO.Unsafe                                     (unsafeDup
 --   >     const VkSubpassDependency* pDependencies;
 --   > } VkRenderPassCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkRenderPassCreateInfo.html VkRenderPassCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkRenderPassCreateInfoVkRenderPassCreateInfo registry at www.khronos.org>
 data VkRenderPassCreateInfo = VkRenderPassCreateInfo## Addr##
                                                       ByteArray##
 

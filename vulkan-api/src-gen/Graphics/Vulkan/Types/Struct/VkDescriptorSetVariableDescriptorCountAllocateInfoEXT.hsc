@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkDescriptorSetVariableDescriptorCountAllocateInfoEXT
        (VkDescriptorSetVariableDescriptorCountAllocateInfoEXT(..)) where
 import           Foreign.Storable                                         (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                                 (Addr##,
+                                                                           ByteArray##,
+                                                                           byteArrayContents##,
+                                                                           plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType               (VkStructureType)
@@ -24,7 +27,7 @@ import           System.IO.Unsafe                                         (unsaf
 --   >     const uint32_t* pDescriptorCounts;
 --   > } VkDescriptorSetVariableDescriptorCountAllocateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDescriptorSetVariableDescriptorCountAllocateInfoEXT.html VkDescriptorSetVariableDescriptorCountAllocateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDescriptorSetVariableDescriptorCountAllocateInfoEXTVkDescriptorSetVariableDescriptorCountAllocateInfoEXT registry at www.khronos.org>
 data VkDescriptorSetVariableDescriptorCountAllocateInfoEXT = VkDescriptorSetVariableDescriptorCountAllocateInfoEXT## Addr##
                                                                                                                     ByteArray##
 

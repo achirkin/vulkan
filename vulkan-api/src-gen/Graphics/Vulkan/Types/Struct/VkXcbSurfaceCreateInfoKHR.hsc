@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkXcbSurfaceCreateInfoKHR
        (VkXcbSurfaceCreateInfoKHR(..)) where
 import           Foreign.Storable                           (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                   (Addr##, ByteArray##,
+                                                             byteArrayContents##,
+                                                             plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Bitmasks             (VkXcbSurfaceCreateFlagsKHR)
@@ -27,7 +29,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     xcb_window_t                     window;
 --   > } VkXcbSurfaceCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkXcbSurfaceCreateInfoKHR.html VkXcbSurfaceCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkXcbSurfaceCreateInfoKHRVkXcbSurfaceCreateInfoKHR registry at www.khronos.org>
 data VkXcbSurfaceCreateInfoKHR = VkXcbSurfaceCreateInfoKHR## Addr##
                                                             ByteArray##
 

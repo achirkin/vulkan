@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkDisplayModeCreateInfoKHR
        (VkDisplayModeCreateInfoKHR(..)) where
 import           Foreign.Storable                                        (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                                (Addr##, ByteArray##,
+                                                                          byteArrayContents##,
+                                                                          plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Bitmasks                          (VkDisplayModeCreateFlagsKHR)
@@ -25,7 +27,7 @@ import           System.IO.Unsafe                                        (unsafe
 --   >     VkDisplayModeParametersKHR       parameters;
 --   > } VkDisplayModeCreateInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDisplayModeCreateInfoKHR.html VkDisplayModeCreateInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDisplayModeCreateInfoKHRVkDisplayModeCreateInfoKHR registry at www.khronos.org>
 data VkDisplayModeCreateInfoKHR = VkDisplayModeCreateInfoKHR## Addr##
                                                               ByteArray##
 

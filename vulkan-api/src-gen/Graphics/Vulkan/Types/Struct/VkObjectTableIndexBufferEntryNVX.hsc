@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkObjectTableIndexBufferEntryNVX
        (VkObjectTableIndexBufferEntryNVX(..)) where
 import           Foreign.Storable                                      (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                              (Addr##, ByteArray##,
+                                                                        byteArrayContents##,
+                                                                        plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkIndexType                (VkIndexType)
@@ -26,7 +28,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkIndexType                  indexType;
 --   > } VkObjectTableIndexBufferEntryNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkObjectTableIndexBufferEntryNVX.html VkObjectTableIndexBufferEntryNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkObjectTableIndexBufferEntryNVXVkObjectTableIndexBufferEntryNVX registry at www.khronos.org>
 data VkObjectTableIndexBufferEntryNVX = VkObjectTableIndexBufferEntryNVX## Addr##
                                                                           ByteArray##
 

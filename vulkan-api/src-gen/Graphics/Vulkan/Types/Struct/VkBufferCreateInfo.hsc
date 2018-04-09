@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkBufferCreateInfo
        (VkBufferCreateInfo(..)) where
 import           Foreign.Storable                               (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                       (Addr##,
+                                                                 ByteArray##,
+                                                                 byteArrayContents##,
+                                                                 plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes                (VkDeviceSize)
@@ -31,7 +34,7 @@ import           System.IO.Unsafe                               (unsafeDupablePe
 --   >     const uint32_t*        pQueueFamilyIndices;
 --   > } VkBufferCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkBufferCreateInfo.html VkBufferCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkBufferCreateInfoVkBufferCreateInfo registry at www.khronos.org>
 data VkBufferCreateInfo = VkBufferCreateInfo## Addr## ByteArray##
 
 instance Eq VkBufferCreateInfo where

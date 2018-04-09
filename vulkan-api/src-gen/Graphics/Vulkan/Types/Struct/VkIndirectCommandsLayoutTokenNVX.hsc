@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkIndirectCommandsLayoutTokenNVX
        (VkIndirectCommandsLayoutTokenNVX(..)) where
 import           Foreign.Storable                                          (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                                  (Addr##,
+                                                                            ByteArray##,
+                                                                            byteArrayContents##,
+                                                                            plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkIndirectCommandsTokenTypeNVX (VkIndirectCommandsTokenTypeNVX)
@@ -23,7 +26,7 @@ import           System.IO.Unsafe                                          (unsa
 --   >     uint32_t                         divisor;
 --   > } VkIndirectCommandsLayoutTokenNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkIndirectCommandsLayoutTokenNVX.html VkIndirectCommandsLayoutTokenNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkIndirectCommandsLayoutTokenNVXVkIndirectCommandsLayoutTokenNVX registry at www.khronos.org>
 data VkIndirectCommandsLayoutTokenNVX = VkIndirectCommandsLayoutTokenNVX## Addr##
                                                                           ByteArray##
 

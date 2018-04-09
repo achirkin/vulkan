@@ -11,7 +11,11 @@ module Graphics.Vulkan.Types.Struct.VkPipelineSampleLocationsStateCreateInfoEXT
        (VkPipelineSampleLocationsStateCreateInfoEXT(..)) where
 import           Foreign.Storable
                                                                                     (Storable (..))
-import           GHC.Prim
+import           GHC.Base
+                                                                                    (Addr##,
+                                                                                    ByteArray##,
+                                                                                    byteArrayContents##,
+                                                                                    plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes
@@ -32,7 +36,7 @@ import           System.IO.Unsafe
 --   >     VkSampleLocationsInfoEXT         sampleLocationsInfo;
 --   > } VkPipelineSampleLocationsStateCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPipelineSampleLocationsStateCreateInfoEXT.html VkPipelineSampleLocationsStateCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPipelineSampleLocationsStateCreateInfoEXTVkPipelineSampleLocationsStateCreateInfoEXT registry at www.khronos.org>
 data VkPipelineSampleLocationsStateCreateInfoEXT = VkPipelineSampleLocationsStateCreateInfoEXT## Addr##
                                                                                                 ByteArray##
 

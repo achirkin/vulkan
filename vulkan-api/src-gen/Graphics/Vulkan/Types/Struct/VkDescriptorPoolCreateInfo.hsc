@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkDescriptorPoolCreateInfo
        (VkDescriptorPoolCreateInfo(..)) where
 import           Foreign.Storable                                       (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                               (Addr##, ByteArray##,
+                                                                         byteArrayContents##,
+                                                                         plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkDescriptorPoolCreateFlags (VkDescriptorPoolCreateFlags)
@@ -27,7 +29,7 @@ import           System.IO.Unsafe                                       (unsafeD
 --   >     const VkDescriptorPoolSize* pPoolSizes;
 --   > } VkDescriptorPoolCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDescriptorPoolCreateInfo.html VkDescriptorPoolCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDescriptorPoolCreateInfoVkDescriptorPoolCreateInfo registry at www.khronos.org>
 data VkDescriptorPoolCreateInfo = VkDescriptorPoolCreateInfo## Addr##
                                                               ByteArray##
 

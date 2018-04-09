@@ -32,8 +32,7 @@ module Graphics.Vulkan.Ext.VK_EXT_hdr_metadata
         -- > #include "vk_platform.h"
         VkSetHdrMetadataEXT, pattern VkSetHdrMetadataEXT,
         HS_vkSetHdrMetadataEXT, PFN_vkSetHdrMetadataEXT,
-        unwrapVkSetHdrMetadataEXT, vkSetHdrMetadataEXT,
-        vkSetHdrMetadataEXTSafe, module Graphics.Vulkan.Types.Handles,
+        unwrapVkSetHdrMetadataEXT, module Graphics.Vulkan.Types.Handles,
         VK_EXT_HDR_METADATA_SPEC_VERSION,
         pattern VK_EXT_HDR_METADATA_SPEC_VERSION,
         VK_EXT_HDR_METADATA_EXTENSION_NAME,
@@ -72,41 +71,7 @@ type VkSetHdrMetadataEXT = "vkSetHdrMetadataEXT"
 --   >     , const VkHdrMetadataEXT* pMetadata
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkSetHdrMetadataEXT.html vkSetHdrMetadataEXT registry at www.khronos.org>
-foreign import ccall unsafe "vkSetHdrMetadataEXT"
-               vkSetHdrMetadataEXT ::
-               VkDevice -- ^ device
-                        ->
-                 Word32 -- ^ swapchainCount
-                        -> Ptr VkSwapchainKHR -- ^ pSwapchains
-                                              -> Ptr VkHdrMetadataEXT -- ^ pMetadata
-                                                                      -> IO ()
-
--- | > () vkSetHdrMetadataEXT
---   >     ( VkDevice device
---   >     , uint32_t swapchainCount
---   >     , const VkSwapchainKHR* pSwapchains
---   >     , const VkHdrMetadataEXT* pMetadata
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkSetHdrMetadataEXT.html vkSetHdrMetadataEXT registry at www.khronos.org>
-foreign import ccall safe "vkSetHdrMetadataEXT"
-               vkSetHdrMetadataEXTSafe ::
-               VkDevice -- ^ device
-                        ->
-                 Word32 -- ^ swapchainCount
-                        -> Ptr VkSwapchainKHR -- ^ pSwapchains
-                                              -> Ptr VkHdrMetadataEXT -- ^ pMetadata
-                                                                      -> IO ()
-
--- | > () vkSetHdrMetadataEXT
---   >     ( VkDevice device
---   >     , uint32_t swapchainCount
---   >     , const VkSwapchainKHR* pSwapchains
---   >     , const VkHdrMetadataEXT* pMetadata
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkSetHdrMetadataEXT.html vkSetHdrMetadataEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkSetHdrMetadataEXTvkSetHdrMetadataEXT registry at www.khronos.org>
 type HS_vkSetHdrMetadataEXT =
      VkDevice -- ^ device
               ->

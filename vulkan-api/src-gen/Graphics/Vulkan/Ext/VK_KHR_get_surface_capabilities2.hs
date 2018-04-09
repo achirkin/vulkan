@@ -45,15 +45,11 @@ module Graphics.Vulkan.Ext.VK_KHR_get_surface_capabilities2
         HS_vkGetPhysicalDeviceSurfaceCapabilities2KHR,
         PFN_vkGetPhysicalDeviceSurfaceCapabilities2KHR,
         unwrapVkGetPhysicalDeviceSurfaceCapabilities2KHR,
-        vkGetPhysicalDeviceSurfaceCapabilities2KHR,
-        vkGetPhysicalDeviceSurfaceCapabilities2KHRSafe,
         VkGetPhysicalDeviceSurfaceFormats2KHR,
         pattern VkGetPhysicalDeviceSurfaceFormats2KHR,
         HS_vkGetPhysicalDeviceSurfaceFormats2KHR,
         PFN_vkGetPhysicalDeviceSurfaceFormats2KHR,
         unwrapVkGetPhysicalDeviceSurfaceFormats2KHR,
-        vkGetPhysicalDeviceSurfaceFormats2KHR,
-        vkGetPhysicalDeviceSurfaceFormats2KHRSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
@@ -116,49 +112,7 @@ type VkGetPhysicalDeviceSurfaceCapabilities2KHR =
 --   >     , VkSurfaceCapabilities2KHR* pSurfaceCapabilities
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilities2KHR.html vkGetPhysicalDeviceSurfaceCapabilities2KHR registry at www.khronos.org>
-foreign import ccall unsafe
-               "vkGetPhysicalDeviceSurfaceCapabilities2KHR"
-               vkGetPhysicalDeviceSurfaceCapabilities2KHR ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                ->
-                 Ptr VkPhysicalDeviceSurfaceInfo2KHR -- ^ pSurfaceInfo
-                                                     ->
-                   Ptr VkSurfaceCapabilities2KHR -- ^ pSurfaceCapabilities
-                                                 -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
---
---   > VkResult vkGetPhysicalDeviceSurfaceCapabilities2KHR
---   >     ( VkPhysicalDevice physicalDevice
---   >     , const VkPhysicalDeviceSurfaceInfo2KHR* pSurfaceInfo
---   >     , VkSurfaceCapabilities2KHR* pSurfaceCapabilities
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilities2KHR.html vkGetPhysicalDeviceSurfaceCapabilities2KHR registry at www.khronos.org>
-foreign import ccall safe
-               "vkGetPhysicalDeviceSurfaceCapabilities2KHR"
-               vkGetPhysicalDeviceSurfaceCapabilities2KHRSafe ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                ->
-                 Ptr VkPhysicalDeviceSurfaceInfo2KHR -- ^ pSurfaceInfo
-                                                     ->
-                   Ptr VkSurfaceCapabilities2KHR -- ^ pSurfaceCapabilities
-                                                 -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
---
---   > VkResult vkGetPhysicalDeviceSurfaceCapabilities2KHR
---   >     ( VkPhysicalDevice physicalDevice
---   >     , const VkPhysicalDeviceSurfaceInfo2KHR* pSurfaceInfo
---   >     , VkSurfaceCapabilities2KHR* pSurfaceCapabilities
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilities2KHR.html vkGetPhysicalDeviceSurfaceCapabilities2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceCapabilities2KHRvkGetPhysicalDeviceSurfaceCapabilities2KHR registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceSurfaceCapabilities2KHR =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
@@ -219,51 +173,7 @@ type VkGetPhysicalDeviceSurfaceFormats2KHR =
 --   >     , VkSurfaceFormat2KHR* pSurfaceFormats
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceSurfaceFormats2KHR.html vkGetPhysicalDeviceSurfaceFormats2KHR registry at www.khronos.org>
-foreign import ccall unsafe "vkGetPhysicalDeviceSurfaceFormats2KHR"
-               vkGetPhysicalDeviceSurfaceFormats2KHR ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                ->
-                 Ptr VkPhysicalDeviceSurfaceInfo2KHR -- ^ pSurfaceInfo
-                                                     ->
-                   Ptr Word32 -- ^ pSurfaceFormatCount
-                              -> Ptr VkSurfaceFormat2KHR -- ^ pSurfaceFormats
-                                                         -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
---
---   > VkResult vkGetPhysicalDeviceSurfaceFormats2KHR
---   >     ( VkPhysicalDevice physicalDevice
---   >     , const VkPhysicalDeviceSurfaceInfo2KHR* pSurfaceInfo
---   >     , uint32_t* pSurfaceFormatCount
---   >     , VkSurfaceFormat2KHR* pSurfaceFormats
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceSurfaceFormats2KHR.html vkGetPhysicalDeviceSurfaceFormats2KHR registry at www.khronos.org>
-foreign import ccall safe "vkGetPhysicalDeviceSurfaceFormats2KHR"
-               vkGetPhysicalDeviceSurfaceFormats2KHRSafe ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                ->
-                 Ptr VkPhysicalDeviceSurfaceInfo2KHR -- ^ pSurfaceInfo
-                                                     ->
-                   Ptr Word32 -- ^ pSurfaceFormatCount
-                              -> Ptr VkSurfaceFormat2KHR -- ^ pSurfaceFormats
-                                                         -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS', 'VK_INCOMPLETE'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
---
---   > VkResult vkGetPhysicalDeviceSurfaceFormats2KHR
---   >     ( VkPhysicalDevice physicalDevice
---   >     , const VkPhysicalDeviceSurfaceInfo2KHR* pSurfaceInfo
---   >     , uint32_t* pSurfaceFormatCount
---   >     , VkSurfaceFormat2KHR* pSurfaceFormats
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceSurfaceFormats2KHR.html vkGetPhysicalDeviceSurfaceFormats2KHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceFormats2KHRvkGetPhysicalDeviceSurfaceFormats2KHR registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceSurfaceFormats2KHR =
      VkPhysicalDevice -- ^ physicalDevice
                       ->

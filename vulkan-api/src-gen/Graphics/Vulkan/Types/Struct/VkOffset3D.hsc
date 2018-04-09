@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkOffset3D (VkOffset3D(..))
        where
 import           Foreign.Storable                 (Storable (..))
-import           GHC.Prim
+import           GHC.Base                         (Addr##, ByteArray##,
+                                                   byteArrayContents##,
+                                                   plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
@@ -21,7 +23,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     int32_t        z;
 --   > } VkOffset3D;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkOffset3D.html VkOffset3D registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkOffset3DVkOffset3D registry at www.khronos.org>
 data VkOffset3D = VkOffset3D## Addr## ByteArray##
 
 instance Eq VkOffset3D where

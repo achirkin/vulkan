@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkObjectTableCreateInfoNVX
        (VkObjectTableCreateInfoNVX(..)) where
 import           Foreign.Storable                                      (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                              (Addr##, ByteArray##,
+                                                                        byteArrayContents##,
+                                                                        plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkObjectEntryTypeNVX       (VkObjectEntryTypeNVX)
@@ -32,7 +34,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     uint32_t maxPipelineLayouts;
 --   > } VkObjectTableCreateInfoNVX;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkObjectTableCreateInfoNVX.html VkObjectTableCreateInfoNVX registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkObjectTableCreateInfoNVXVkObjectTableCreateInfoNVX registry at www.khronos.org>
 data VkObjectTableCreateInfoNVX = VkObjectTableCreateInfoNVX## Addr##
                                                               ByteArray##
 

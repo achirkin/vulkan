@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkPresentRegionKHR
        (VkPresentRegionKHR(..)) where
 import           Foreign.Storable                            (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                    (Addr##, ByteArray##,
+                                                              byteArrayContents##,
+                                                              plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Struct.VkRectLayerKHR (VkRectLayerKHR)
@@ -21,7 +23,7 @@ import           System.IO.Unsafe                            (unsafeDupablePerfo
 --   >     const VkRectLayerKHR*   pRectangles;
 --   > } VkPresentRegionKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPresentRegionKHR.html VkPresentRegionKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPresentRegionKHRVkPresentRegionKHR registry at www.khronos.org>
 data VkPresentRegionKHR = VkPresentRegionKHR## Addr## ByteArray##
 
 instance Eq VkPresentRegionKHR where

@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkDebugMarkerObjectTagInfoEXT
        (VkDebugMarkerObjectTagInfoEXT(..)) where
 import           Foreign.Storable                                      (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                              (Addr##, ByteArray##,
+                                                                        byteArrayContents##,
+                                                                        plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkDebugReportObjectTypeEXT (VkDebugReportObjectTypeEXT)
@@ -27,7 +29,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     const void*        pTag;
 --   > } VkDebugMarkerObjectTagInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDebugMarkerObjectTagInfoEXT.html VkDebugMarkerObjectTagInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDebugMarkerObjectTagInfoEXTVkDebugMarkerObjectTagInfoEXT registry at www.khronos.org>
 data VkDebugMarkerObjectTagInfoEXT = VkDebugMarkerObjectTagInfoEXT## Addr##
                                                                     ByteArray##
 

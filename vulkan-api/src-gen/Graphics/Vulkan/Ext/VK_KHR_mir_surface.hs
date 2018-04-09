@@ -102,7 +102,7 @@ type VkCreateMirSurfaceKHR = "vkCreateMirSurfaceKHR"
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateMirSurfaceKHR.html vkCreateMirSurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateMirSurfaceKHRvkCreateMirSurfaceKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateMirSurfaceKHR"
                vkCreateMirSurfaceKHR ::
                VkInstance -- ^ instance
@@ -124,7 +124,7 @@ foreign import ccall unsafe "vkCreateMirSurfaceKHR"
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateMirSurfaceKHR.html vkCreateMirSurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateMirSurfaceKHRvkCreateMirSurfaceKHR registry at www.khronos.org>
 foreign import ccall safe "vkCreateMirSurfaceKHR"
                vkCreateMirSurfaceKHRSafe ::
                VkInstance -- ^ instance
@@ -146,7 +146,7 @@ foreign import ccall safe "vkCreateMirSurfaceKHR"
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateMirSurfaceKHR.html vkCreateMirSurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateMirSurfaceKHRvkCreateMirSurfaceKHR registry at www.khronos.org>
 type HS_vkCreateMirSurfaceKHR =
      VkInstance -- ^ instance
                 ->
@@ -199,7 +199,7 @@ type VkGetPhysicalDeviceMirPresentationSupportKHR =
 --   >     , MirConnection* connection
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceMirPresentationSupportKHR.html vkGetPhysicalDeviceMirPresentationSupportKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceMirPresentationSupportKHRvkGetPhysicalDeviceMirPresentationSupportKHR registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceMirPresentationSupportKHR"
                vkGetPhysicalDeviceMirPresentationSupportKHR ::
@@ -214,7 +214,7 @@ foreign import ccall unsafe
 --   >     , MirConnection* connection
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceMirPresentationSupportKHR.html vkGetPhysicalDeviceMirPresentationSupportKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceMirPresentationSupportKHRvkGetPhysicalDeviceMirPresentationSupportKHR registry at www.khronos.org>
 foreign import ccall safe
                "vkGetPhysicalDeviceMirPresentationSupportKHR"
                vkGetPhysicalDeviceMirPresentationSupportKHRSafe ::
@@ -229,7 +229,7 @@ foreign import ccall safe
 --   >     , MirConnection* connection
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceMirPresentationSupportKHR.html vkGetPhysicalDeviceMirPresentationSupportKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceMirPresentationSupportKHRvkGetPhysicalDeviceMirPresentationSupportKHR registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceMirPresentationSupportKHR =
      VkPhysicalDevice -- ^ physicalDevice
                       -> Word32 -- ^ queueFamilyIndex

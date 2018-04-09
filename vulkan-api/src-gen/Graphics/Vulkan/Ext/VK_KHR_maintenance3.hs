@@ -34,8 +34,6 @@ module Graphics.Vulkan.Ext.VK_KHR_maintenance3
         HS_vkGetDescriptorSetLayoutSupportKHR,
         PFN_vkGetDescriptorSetLayoutSupportKHR,
         unwrapVkGetDescriptorSetLayoutSupportKHR,
-        vkGetDescriptorSetLayoutSupportKHR,
-        vkGetDescriptorSetLayoutSupportKHRSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.VkDescriptorSetLayoutCreateFlags,
@@ -103,43 +101,7 @@ type VkGetDescriptorSetLayoutSupportKHR =
 --   >     , VkDescriptorSetLayoutSupport* pSupport
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDescriptorSetLayoutSupportKHR.html vkGetDescriptorSetLayoutSupportKHR registry at www.khronos.org>
-foreign import ccall unsafe "vkGetDescriptorSetLayoutSupportKHR"
-               vkGetDescriptorSetLayoutSupportKHR ::
-               VkDevice -- ^ device
-                        ->
-                 Ptr VkDescriptorSetLayoutCreateInfo -- ^ pCreateInfo
-                                                     ->
-                   Ptr VkDescriptorSetLayoutSupport -- ^ pSupport
-                                                    -> IO ()
-
--- | This is an alias for `vkGetDescriptorSetLayoutSupport`.
---
---   > () vkGetDescriptorSetLayoutSupportKHR
---   >     ( VkDevice device
---   >     , const VkDescriptorSetLayoutCreateInfo* pCreateInfo
---   >     , VkDescriptorSetLayoutSupport* pSupport
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDescriptorSetLayoutSupportKHR.html vkGetDescriptorSetLayoutSupportKHR registry at www.khronos.org>
-foreign import ccall safe "vkGetDescriptorSetLayoutSupportKHR"
-               vkGetDescriptorSetLayoutSupportKHRSafe ::
-               VkDevice -- ^ device
-                        ->
-                 Ptr VkDescriptorSetLayoutCreateInfo -- ^ pCreateInfo
-                                                     ->
-                   Ptr VkDescriptorSetLayoutSupport -- ^ pSupport
-                                                    -> IO ()
-
--- | This is an alias for `vkGetDescriptorSetLayoutSupport`.
---
---   > () vkGetDescriptorSetLayoutSupportKHR
---   >     ( VkDevice device
---   >     , const VkDescriptorSetLayoutCreateInfo* pCreateInfo
---   >     , VkDescriptorSetLayoutSupport* pSupport
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDescriptorSetLayoutSupportKHR.html vkGetDescriptorSetLayoutSupportKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetDescriptorSetLayoutSupportKHRvkGetDescriptorSetLayoutSupportKHR registry at www.khronos.org>
 type HS_vkGetDescriptorSetLayoutSupportKHR =
      VkDevice -- ^ device
               ->

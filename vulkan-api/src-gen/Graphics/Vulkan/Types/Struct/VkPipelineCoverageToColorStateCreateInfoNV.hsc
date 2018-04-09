@@ -11,7 +11,11 @@ module Graphics.Vulkan.Types.Struct.VkPipelineCoverageToColorStateCreateInfoNV
        (VkPipelineCoverageToColorStateCreateInfoNV(..)) where
 import           Foreign.Storable
                                                                                     (Storable (..))
-import           GHC.Prim
+import           GHC.Base
+                                                                                    (Addr##,
+                                                                                    ByteArray##,
+                                                                                    byteArrayContents##,
+                                                                                    plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes
@@ -33,7 +37,7 @@ import           System.IO.Unsafe
 --   >     uint32_t         coverageToColorLocation;
 --   > } VkPipelineCoverageToColorStateCreateInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPipelineCoverageToColorStateCreateInfoNV.html VkPipelineCoverageToColorStateCreateInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPipelineCoverageToColorStateCreateInfoNVVkPipelineCoverageToColorStateCreateInfoNV registry at www.khronos.org>
 data VkPipelineCoverageToColorStateCreateInfoNV = VkPipelineCoverageToColorStateCreateInfoNV## Addr##
                                                                                               ByteArray##
 

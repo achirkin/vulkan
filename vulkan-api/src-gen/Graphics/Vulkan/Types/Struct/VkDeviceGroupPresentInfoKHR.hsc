@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkDeviceGroupPresentInfoKHR
        (VkDeviceGroupPresentInfoKHR(..)) where
 import           Foreign.Storable                                            (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                                    (Addr##,
+                                                                              ByteArray##,
+                                                                              byteArrayContents##,
+                                                                              plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkDeviceGroupPresentModeFlagsKHR (VkDeviceGroupPresentModeFlagBitsKHR)
@@ -26,7 +29,7 @@ import           System.IO.Unsafe                                            (un
 --   >     VkDeviceGroupPresentModeFlagBitsKHR mode;
 --   > } VkDeviceGroupPresentInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDeviceGroupPresentInfoKHR.html VkDeviceGroupPresentInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDeviceGroupPresentInfoKHRVkDeviceGroupPresentInfoKHR registry at www.khronos.org>
 data VkDeviceGroupPresentInfoKHR = VkDeviceGroupPresentInfoKHR## Addr##
                                                                 ByteArray##
 

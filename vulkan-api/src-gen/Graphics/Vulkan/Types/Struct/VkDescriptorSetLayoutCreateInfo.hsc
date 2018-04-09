@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkDescriptorSetLayoutCreateInfo
        (VkDescriptorSetLayoutCreateInfo(..)) where
 import           Foreign.Storable                                            (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                                    (Addr##,
+                                                                              ByteArray##,
+                                                                              byteArrayContents##,
+                                                                              plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkDescriptorSetLayoutCreateFlags (VkDescriptorSetLayoutCreateFlags)
@@ -26,7 +29,7 @@ import           System.IO.Unsafe                                            (un
 --   >     const VkDescriptorSetLayoutBinding* pBindings;
 --   > } VkDescriptorSetLayoutCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDescriptorSetLayoutCreateInfo.html VkDescriptorSetLayoutCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDescriptorSetLayoutCreateInfoVkDescriptorSetLayoutCreateInfo registry at www.khronos.org>
 data VkDescriptorSetLayoutCreateInfo = VkDescriptorSetLayoutCreateInfo## Addr##
                                                                         ByteArray##
 

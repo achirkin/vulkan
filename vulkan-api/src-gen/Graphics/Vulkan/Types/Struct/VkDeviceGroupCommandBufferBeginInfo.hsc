@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkDeviceGroupCommandBufferBeginInfo
        (VkDeviceGroupCommandBufferBeginInfo(..)) where
 import           Foreign.Storable                                      (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                              (Addr##, ByteArray##,
+                                                                        byteArrayContents##,
+                                                                        plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType            (VkStructureType)
@@ -23,7 +25,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     uint32_t                         deviceMask;
 --   > } VkDeviceGroupCommandBufferBeginInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDeviceGroupCommandBufferBeginInfo.html VkDeviceGroupCommandBufferBeginInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDeviceGroupCommandBufferBeginInfoVkDeviceGroupCommandBufferBeginInfo registry at www.khronos.org>
 data VkDeviceGroupCommandBufferBeginInfo = VkDeviceGroupCommandBufferBeginInfo## Addr##
                                                                                 ByteArray##
 

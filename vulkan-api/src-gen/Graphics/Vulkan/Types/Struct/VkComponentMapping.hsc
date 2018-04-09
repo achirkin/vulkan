@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkComponentMapping
        (VkComponentMapping(..)) where
 import           Foreign.Storable                              (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                      (Addr##,
+                                                                ByteArray##,
+                                                                byteArrayContents##,
+                                                                plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkComponentSwizzle (VkComponentSwizzle)
@@ -23,7 +26,7 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 --   >     VkComponentSwizzle a;
 --   > } VkComponentMapping;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkComponentMapping.html VkComponentMapping registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkComponentMappingVkComponentMapping registry at www.khronos.org>
 data VkComponentMapping = VkComponentMapping## Addr## ByteArray##
 
 instance Eq VkComponentMapping where

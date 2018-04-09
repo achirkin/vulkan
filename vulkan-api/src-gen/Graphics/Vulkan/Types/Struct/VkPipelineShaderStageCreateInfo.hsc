@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkPipelineShaderStageCreateInfo
        (VkPipelineShaderStageCreateInfo(..)) where
 import           Foreign.Storable                                  (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                          (Addr##,
+                                                                    ByteArray##,
+                                                                    byteArrayContents##,
+                                                                    plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Bitmasks                    (VkPipelineShaderStageCreateFlags)
@@ -30,7 +33,7 @@ import           System.IO.Unsafe                                  (unsafeDupabl
 --   >     const VkSpecializationInfo* pSpecializationInfo;
 --   > } VkPipelineShaderStageCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPipelineShaderStageCreateInfo.html VkPipelineShaderStageCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPipelineShaderStageCreateInfoVkPipelineShaderStageCreateInfo registry at www.khronos.org>
 data VkPipelineShaderStageCreateInfo = VkPipelineShaderStageCreateInfo## Addr##
                                                                         ByteArray##
 

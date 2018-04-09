@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkExtent3D (VkExtent3D(..))
        where
 import           Foreign.Storable                 (Storable (..))
-import           GHC.Prim
+import           GHC.Base                         (Addr##, ByteArray##,
+                                                   byteArrayContents##,
+                                                   plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
@@ -21,7 +23,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     uint32_t        depth;
 --   > } VkExtent3D;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkExtent3D.html VkExtent3D registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkExtent3DVkExtent3D registry at www.khronos.org>
 data VkExtent3D = VkExtent3D## Addr## ByteArray##
 
 instance Eq VkExtent3D where

@@ -39,56 +39,45 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_utils
         -- > #include "vk_platform.h"
         VkSetDebugUtilsObjectNameEXT, pattern VkSetDebugUtilsObjectNameEXT,
         HS_vkSetDebugUtilsObjectNameEXT, PFN_vkSetDebugUtilsObjectNameEXT,
-        unwrapVkSetDebugUtilsObjectNameEXT, vkSetDebugUtilsObjectNameEXT,
-        vkSetDebugUtilsObjectNameEXTSafe, VkSetDebugUtilsObjectTagEXT,
+        unwrapVkSetDebugUtilsObjectNameEXT, VkSetDebugUtilsObjectTagEXT,
         pattern VkSetDebugUtilsObjectTagEXT,
         HS_vkSetDebugUtilsObjectTagEXT, PFN_vkSetDebugUtilsObjectTagEXT,
-        unwrapVkSetDebugUtilsObjectTagEXT, vkSetDebugUtilsObjectTagEXT,
-        vkSetDebugUtilsObjectTagEXTSafe, VkQueueBeginDebugUtilsLabelEXT,
+        unwrapVkSetDebugUtilsObjectTagEXT, VkQueueBeginDebugUtilsLabelEXT,
         pattern VkQueueBeginDebugUtilsLabelEXT,
         HS_vkQueueBeginDebugUtilsLabelEXT,
         PFN_vkQueueBeginDebugUtilsLabelEXT,
-        unwrapVkQueueBeginDebugUtilsLabelEXT,
-        vkQueueBeginDebugUtilsLabelEXT, vkQueueBeginDebugUtilsLabelEXTSafe,
-        VkQueueEndDebugUtilsLabelEXT, pattern VkQueueEndDebugUtilsLabelEXT,
+        unwrapVkQueueBeginDebugUtilsLabelEXT, VkQueueEndDebugUtilsLabelEXT,
+        pattern VkQueueEndDebugUtilsLabelEXT,
         HS_vkQueueEndDebugUtilsLabelEXT, PFN_vkQueueEndDebugUtilsLabelEXT,
-        unwrapVkQueueEndDebugUtilsLabelEXT, vkQueueEndDebugUtilsLabelEXT,
-        vkQueueEndDebugUtilsLabelEXTSafe, VkQueueInsertDebugUtilsLabelEXT,
+        unwrapVkQueueEndDebugUtilsLabelEXT,
+        VkQueueInsertDebugUtilsLabelEXT,
         pattern VkQueueInsertDebugUtilsLabelEXT,
         HS_vkQueueInsertDebugUtilsLabelEXT,
         PFN_vkQueueInsertDebugUtilsLabelEXT,
         unwrapVkQueueInsertDebugUtilsLabelEXT,
-        vkQueueInsertDebugUtilsLabelEXT,
-        vkQueueInsertDebugUtilsLabelEXTSafe, VkCmdBeginDebugUtilsLabelEXT,
-        pattern VkCmdBeginDebugUtilsLabelEXT,
+        VkCmdBeginDebugUtilsLabelEXT, pattern VkCmdBeginDebugUtilsLabelEXT,
         HS_vkCmdBeginDebugUtilsLabelEXT, PFN_vkCmdBeginDebugUtilsLabelEXT,
-        unwrapVkCmdBeginDebugUtilsLabelEXT, vkCmdBeginDebugUtilsLabelEXT,
-        vkCmdBeginDebugUtilsLabelEXTSafe, VkCmdEndDebugUtilsLabelEXT,
+        unwrapVkCmdBeginDebugUtilsLabelEXT, VkCmdEndDebugUtilsLabelEXT,
         pattern VkCmdEndDebugUtilsLabelEXT, HS_vkCmdEndDebugUtilsLabelEXT,
         PFN_vkCmdEndDebugUtilsLabelEXT, unwrapVkCmdEndDebugUtilsLabelEXT,
-        vkCmdEndDebugUtilsLabelEXT, vkCmdEndDebugUtilsLabelEXTSafe,
         VkCmdInsertDebugUtilsLabelEXT,
         pattern VkCmdInsertDebugUtilsLabelEXT,
         HS_vkCmdInsertDebugUtilsLabelEXT,
         PFN_vkCmdInsertDebugUtilsLabelEXT,
-        unwrapVkCmdInsertDebugUtilsLabelEXT, vkCmdInsertDebugUtilsLabelEXT,
-        vkCmdInsertDebugUtilsLabelEXTSafe, VkCreateDebugUtilsMessengerEXT,
+        unwrapVkCmdInsertDebugUtilsLabelEXT,
+        VkCreateDebugUtilsMessengerEXT,
         pattern VkCreateDebugUtilsMessengerEXT,
         HS_vkCreateDebugUtilsMessengerEXT,
         PFN_vkCreateDebugUtilsMessengerEXT,
         unwrapVkCreateDebugUtilsMessengerEXT,
-        vkCreateDebugUtilsMessengerEXT, vkCreateDebugUtilsMessengerEXTSafe,
         VkDestroyDebugUtilsMessengerEXT,
         pattern VkDestroyDebugUtilsMessengerEXT,
         HS_vkDestroyDebugUtilsMessengerEXT,
         PFN_vkDestroyDebugUtilsMessengerEXT,
         unwrapVkDestroyDebugUtilsMessengerEXT,
-        vkDestroyDebugUtilsMessengerEXT,
-        vkDestroyDebugUtilsMessengerEXTSafe, VkSubmitDebugUtilsMessageEXT,
-        pattern VkSubmitDebugUtilsMessageEXT,
+        VkSubmitDebugUtilsMessageEXT, pattern VkSubmitDebugUtilsMessageEXT,
         HS_vkSubmitDebugUtilsMessageEXT, PFN_vkSubmitDebugUtilsMessageEXT,
-        unwrapVkSubmitDebugUtilsMessageEXT, vkSubmitDebugUtilsMessageEXT,
-        vkSubmitDebugUtilsMessageEXTSafe,
+        unwrapVkSubmitDebugUtilsMessageEXT,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,
@@ -160,39 +149,7 @@ type VkSetDebugUtilsObjectNameEXT = "vkSetDebugUtilsObjectNameEXT"
 --   >     , const VkDebugUtilsObjectNameInfoEXT* pNameInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkSetDebugUtilsObjectNameEXT.html vkSetDebugUtilsObjectNameEXT registry at www.khronos.org>
-foreign import ccall unsafe "vkSetDebugUtilsObjectNameEXT"
-               vkSetDebugUtilsObjectNameEXT ::
-               VkDevice -- ^ device
-                        -> Ptr VkDebugUtilsObjectNameInfoEXT -- ^ pNameInfo
-                                                             -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
---   > VkResult vkSetDebugUtilsObjectNameEXT
---   >     ( VkDevice device
---   >     , const VkDebugUtilsObjectNameInfoEXT* pNameInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkSetDebugUtilsObjectNameEXT.html vkSetDebugUtilsObjectNameEXT registry at www.khronos.org>
-foreign import ccall safe "vkSetDebugUtilsObjectNameEXT"
-               vkSetDebugUtilsObjectNameEXTSafe ::
-               VkDevice -- ^ device
-                        -> Ptr VkDebugUtilsObjectNameInfoEXT -- ^ pNameInfo
-                                                             -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
---   > VkResult vkSetDebugUtilsObjectNameEXT
---   >     ( VkDevice device
---   >     , const VkDebugUtilsObjectNameInfoEXT* pNameInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkSetDebugUtilsObjectNameEXT.html vkSetDebugUtilsObjectNameEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkSetDebugUtilsObjectNameEXTvkSetDebugUtilsObjectNameEXT registry at www.khronos.org>
 type HS_vkSetDebugUtilsObjectNameEXT =
      VkDevice -- ^ device
               -> Ptr VkDebugUtilsObjectNameInfoEXT -- ^ pNameInfo
@@ -244,39 +201,7 @@ type VkSetDebugUtilsObjectTagEXT = "vkSetDebugUtilsObjectTagEXT"
 --   >     , const VkDebugUtilsObjectTagInfoEXT* pTagInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkSetDebugUtilsObjectTagEXT.html vkSetDebugUtilsObjectTagEXT registry at www.khronos.org>
-foreign import ccall unsafe "vkSetDebugUtilsObjectTagEXT"
-               vkSetDebugUtilsObjectTagEXT ::
-               VkDevice -- ^ device
-                        -> Ptr VkDebugUtilsObjectTagInfoEXT -- ^ pTagInfo
-                                                            -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
---   > VkResult vkSetDebugUtilsObjectTagEXT
---   >     ( VkDevice device
---   >     , const VkDebugUtilsObjectTagInfoEXT* pTagInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkSetDebugUtilsObjectTagEXT.html vkSetDebugUtilsObjectTagEXT registry at www.khronos.org>
-foreign import ccall safe "vkSetDebugUtilsObjectTagEXT"
-               vkSetDebugUtilsObjectTagEXTSafe ::
-               VkDevice -- ^ device
-                        -> Ptr VkDebugUtilsObjectTagInfoEXT -- ^ pTagInfo
-                                                            -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
---   > VkResult vkSetDebugUtilsObjectTagEXT
---   >     ( VkDevice device
---   >     , const VkDebugUtilsObjectTagInfoEXT* pTagInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkSetDebugUtilsObjectTagEXT.html vkSetDebugUtilsObjectTagEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkSetDebugUtilsObjectTagEXTvkSetDebugUtilsObjectTagEXT registry at www.khronos.org>
 type HS_vkSetDebugUtilsObjectTagEXT =
      VkDevice -- ^ device
               -> Ptr VkDebugUtilsObjectTagInfoEXT -- ^ pTagInfo
@@ -325,31 +250,7 @@ type VkQueueBeginDebugUtilsLabelEXT =
 --   >     , const VkDebugUtilsLabelEXT* pLabelInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkQueueBeginDebugUtilsLabelEXT.html vkQueueBeginDebugUtilsLabelEXT registry at www.khronos.org>
-foreign import ccall unsafe "vkQueueBeginDebugUtilsLabelEXT"
-               vkQueueBeginDebugUtilsLabelEXT ::
-               VkQueue -- ^ queue
-                       -> Ptr VkDebugUtilsLabelEXT -- ^ pLabelInfo
-                                                   -> IO ()
-
--- | > () vkQueueBeginDebugUtilsLabelEXT
---   >     ( VkQueue queue
---   >     , const VkDebugUtilsLabelEXT* pLabelInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkQueueBeginDebugUtilsLabelEXT.html vkQueueBeginDebugUtilsLabelEXT registry at www.khronos.org>
-foreign import ccall safe "vkQueueBeginDebugUtilsLabelEXT"
-               vkQueueBeginDebugUtilsLabelEXTSafe ::
-               VkQueue -- ^ queue
-                       -> Ptr VkDebugUtilsLabelEXT -- ^ pLabelInfo
-                                                   -> IO ()
-
--- | > () vkQueueBeginDebugUtilsLabelEXT
---   >     ( VkQueue queue
---   >     , const VkDebugUtilsLabelEXT* pLabelInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkQueueBeginDebugUtilsLabelEXT.html vkQueueBeginDebugUtilsLabelEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueueBeginDebugUtilsLabelEXTvkQueueBeginDebugUtilsLabelEXT registry at www.khronos.org>
 type HS_vkQueueBeginDebugUtilsLabelEXT =
      VkQueue -- ^ queue
              -> Ptr VkDebugUtilsLabelEXT -- ^ pLabelInfo
@@ -397,25 +298,7 @@ type VkQueueEndDebugUtilsLabelEXT = "vkQueueEndDebugUtilsLabelEXT"
 --   >     ( VkQueue queue
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkQueueEndDebugUtilsLabelEXT.html vkQueueEndDebugUtilsLabelEXT registry at www.khronos.org>
-foreign import ccall unsafe "vkQueueEndDebugUtilsLabelEXT"
-               vkQueueEndDebugUtilsLabelEXT :: VkQueue -- ^ queue
-                                                       -> IO ()
-
--- | > () vkQueueEndDebugUtilsLabelEXT
---   >     ( VkQueue queue
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkQueueEndDebugUtilsLabelEXT.html vkQueueEndDebugUtilsLabelEXT registry at www.khronos.org>
-foreign import ccall safe "vkQueueEndDebugUtilsLabelEXT"
-               vkQueueEndDebugUtilsLabelEXTSafe :: VkQueue -- ^ queue
-                                                           -> IO ()
-
--- | > () vkQueueEndDebugUtilsLabelEXT
---   >     ( VkQueue queue
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkQueueEndDebugUtilsLabelEXT.html vkQueueEndDebugUtilsLabelEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueueEndDebugUtilsLabelEXTvkQueueEndDebugUtilsLabelEXT registry at www.khronos.org>
 type HS_vkQueueEndDebugUtilsLabelEXT = VkQueue -- ^ queue
                                                -> IO ()
 
@@ -463,31 +346,7 @@ type VkQueueInsertDebugUtilsLabelEXT =
 --   >     , const VkDebugUtilsLabelEXT* pLabelInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkQueueInsertDebugUtilsLabelEXT.html vkQueueInsertDebugUtilsLabelEXT registry at www.khronos.org>
-foreign import ccall unsafe "vkQueueInsertDebugUtilsLabelEXT"
-               vkQueueInsertDebugUtilsLabelEXT ::
-               VkQueue -- ^ queue
-                       -> Ptr VkDebugUtilsLabelEXT -- ^ pLabelInfo
-                                                   -> IO ()
-
--- | > () vkQueueInsertDebugUtilsLabelEXT
---   >     ( VkQueue queue
---   >     , const VkDebugUtilsLabelEXT* pLabelInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkQueueInsertDebugUtilsLabelEXT.html vkQueueInsertDebugUtilsLabelEXT registry at www.khronos.org>
-foreign import ccall safe "vkQueueInsertDebugUtilsLabelEXT"
-               vkQueueInsertDebugUtilsLabelEXTSafe ::
-               VkQueue -- ^ queue
-                       -> Ptr VkDebugUtilsLabelEXT -- ^ pLabelInfo
-                                                   -> IO ()
-
--- | > () vkQueueInsertDebugUtilsLabelEXT
---   >     ( VkQueue queue
---   >     , const VkDebugUtilsLabelEXT* pLabelInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkQueueInsertDebugUtilsLabelEXT.html vkQueueInsertDebugUtilsLabelEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkQueueInsertDebugUtilsLabelEXTvkQueueInsertDebugUtilsLabelEXT registry at www.khronos.org>
 type HS_vkQueueInsertDebugUtilsLabelEXT =
      VkQueue -- ^ queue
              -> Ptr VkDebugUtilsLabelEXT -- ^ pLabelInfo
@@ -540,39 +399,7 @@ type VkCmdBeginDebugUtilsLabelEXT = "vkCmdBeginDebugUtilsLabelEXT"
 --   >     , const VkDebugUtilsLabelEXT* pLabelInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBeginDebugUtilsLabelEXT.html vkCmdBeginDebugUtilsLabelEXT registry at www.khronos.org>
-foreign import ccall unsafe "vkCmdBeginDebugUtilsLabelEXT"
-               vkCmdBeginDebugUtilsLabelEXT ::
-               VkCommandBuffer -- ^ commandBuffer
-                               -> Ptr VkDebugUtilsLabelEXT -- ^ pLabelInfo
-                                                           -> IO ()
-
--- | queues: 'graphics', 'compute'.
---
---   renderpass: @both@
---
---   > () vkCmdBeginDebugUtilsLabelEXT
---   >     ( VkCommandBuffer commandBuffer
---   >     , const VkDebugUtilsLabelEXT* pLabelInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBeginDebugUtilsLabelEXT.html vkCmdBeginDebugUtilsLabelEXT registry at www.khronos.org>
-foreign import ccall safe "vkCmdBeginDebugUtilsLabelEXT"
-               vkCmdBeginDebugUtilsLabelEXTSafe ::
-               VkCommandBuffer -- ^ commandBuffer
-                               -> Ptr VkDebugUtilsLabelEXT -- ^ pLabelInfo
-                                                           -> IO ()
-
--- | queues: 'graphics', 'compute'.
---
---   renderpass: @both@
---
---   > () vkCmdBeginDebugUtilsLabelEXT
---   >     ( VkCommandBuffer commandBuffer
---   >     , const VkDebugUtilsLabelEXT* pLabelInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBeginDebugUtilsLabelEXT.html vkCmdBeginDebugUtilsLabelEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdBeginDebugUtilsLabelEXTvkCmdBeginDebugUtilsLabelEXT registry at www.khronos.org>
 type HS_vkCmdBeginDebugUtilsLabelEXT =
      VkCommandBuffer -- ^ commandBuffer
                      -> Ptr VkDebugUtilsLabelEXT -- ^ pLabelInfo
@@ -622,33 +449,7 @@ type VkCmdEndDebugUtilsLabelEXT = "vkCmdEndDebugUtilsLabelEXT"
 --   >     ( VkCommandBuffer commandBuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdEndDebugUtilsLabelEXT.html vkCmdEndDebugUtilsLabelEXT registry at www.khronos.org>
-foreign import ccall unsafe "vkCmdEndDebugUtilsLabelEXT"
-               vkCmdEndDebugUtilsLabelEXT :: VkCommandBuffer -- ^ commandBuffer
-                                                             -> IO ()
-
--- | queues: 'graphics', 'compute'.
---
---   renderpass: @both@
---
---   > () vkCmdEndDebugUtilsLabelEXT
---   >     ( VkCommandBuffer commandBuffer
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdEndDebugUtilsLabelEXT.html vkCmdEndDebugUtilsLabelEXT registry at www.khronos.org>
-foreign import ccall safe "vkCmdEndDebugUtilsLabelEXT"
-               vkCmdEndDebugUtilsLabelEXTSafe :: VkCommandBuffer -- ^ commandBuffer
-                                                                 -> IO ()
-
--- | queues: 'graphics', 'compute'.
---
---   renderpass: @both@
---
---   > () vkCmdEndDebugUtilsLabelEXT
---   >     ( VkCommandBuffer commandBuffer
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdEndDebugUtilsLabelEXT.html vkCmdEndDebugUtilsLabelEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdEndDebugUtilsLabelEXTvkCmdEndDebugUtilsLabelEXT registry at www.khronos.org>
 type HS_vkCmdEndDebugUtilsLabelEXT = VkCommandBuffer -- ^ commandBuffer
                                                      -> IO ()
 
@@ -699,39 +500,7 @@ type VkCmdInsertDebugUtilsLabelEXT =
 --   >     , const VkDebugUtilsLabelEXT* pLabelInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdInsertDebugUtilsLabelEXT.html vkCmdInsertDebugUtilsLabelEXT registry at www.khronos.org>
-foreign import ccall unsafe "vkCmdInsertDebugUtilsLabelEXT"
-               vkCmdInsertDebugUtilsLabelEXT ::
-               VkCommandBuffer -- ^ commandBuffer
-                               -> Ptr VkDebugUtilsLabelEXT -- ^ pLabelInfo
-                                                           -> IO ()
-
--- | queues: 'graphics', 'compute'.
---
---   renderpass: @both@
---
---   > () vkCmdInsertDebugUtilsLabelEXT
---   >     ( VkCommandBuffer commandBuffer
---   >     , const VkDebugUtilsLabelEXT* pLabelInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdInsertDebugUtilsLabelEXT.html vkCmdInsertDebugUtilsLabelEXT registry at www.khronos.org>
-foreign import ccall safe "vkCmdInsertDebugUtilsLabelEXT"
-               vkCmdInsertDebugUtilsLabelEXTSafe ::
-               VkCommandBuffer -- ^ commandBuffer
-                               -> Ptr VkDebugUtilsLabelEXT -- ^ pLabelInfo
-                                                           -> IO ()
-
--- | queues: 'graphics', 'compute'.
---
---   renderpass: @both@
---
---   > () vkCmdInsertDebugUtilsLabelEXT
---   >     ( VkCommandBuffer commandBuffer
---   >     , const VkDebugUtilsLabelEXT* pLabelInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdInsertDebugUtilsLabelEXT.html vkCmdInsertDebugUtilsLabelEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdInsertDebugUtilsLabelEXTvkCmdInsertDebugUtilsLabelEXT registry at www.khronos.org>
 type HS_vkCmdInsertDebugUtilsLabelEXT =
      VkCommandBuffer -- ^ commandBuffer
                      -> Ptr VkDebugUtilsLabelEXT -- ^ pLabelInfo
@@ -788,53 +557,7 @@ type VkCreateDebugUtilsMessengerEXT =
 --   >     , VkDebugUtilsMessengerEXT* pMessenger
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateDebugUtilsMessengerEXT.html vkCreateDebugUtilsMessengerEXT registry at www.khronos.org>
-foreign import ccall unsafe "vkCreateDebugUtilsMessengerEXT"
-               vkCreateDebugUtilsMessengerEXT ::
-               VkInstance -- ^ instance
-                          ->
-                 Ptr VkDebugUtilsMessengerCreateInfoEXT -- ^ pCreateInfo
-                                                        ->
-                   Ptr VkAllocationCallbacks -- ^ pAllocator
-                                             ->
-                     Ptr VkDebugUtilsMessengerEXT -- ^ pMessenger
-                                                  -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY'.
---
---   > VkResult vkCreateDebugUtilsMessengerEXT
---   >     ( VkInstance instance
---   >     , const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkDebugUtilsMessengerEXT* pMessenger
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateDebugUtilsMessengerEXT.html vkCreateDebugUtilsMessengerEXT registry at www.khronos.org>
-foreign import ccall safe "vkCreateDebugUtilsMessengerEXT"
-               vkCreateDebugUtilsMessengerEXTSafe ::
-               VkInstance -- ^ instance
-                          ->
-                 Ptr VkDebugUtilsMessengerCreateInfoEXT -- ^ pCreateInfo
-                                                        ->
-                   Ptr VkAllocationCallbacks -- ^ pAllocator
-                                             ->
-                     Ptr VkDebugUtilsMessengerEXT -- ^ pMessenger
-                                                  -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY'.
---
---   > VkResult vkCreateDebugUtilsMessengerEXT
---   >     ( VkInstance instance
---   >     , const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkDebugUtilsMessengerEXT* pMessenger
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateDebugUtilsMessengerEXT.html vkCreateDebugUtilsMessengerEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateDebugUtilsMessengerEXTvkCreateDebugUtilsMessengerEXT registry at www.khronos.org>
 type HS_vkCreateDebugUtilsMessengerEXT =
      VkInstance -- ^ instance
                 ->
@@ -891,37 +614,7 @@ type VkDestroyDebugUtilsMessengerEXT =
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyDebugUtilsMessengerEXT.html vkDestroyDebugUtilsMessengerEXT registry at www.khronos.org>
-foreign import ccall unsafe "vkDestroyDebugUtilsMessengerEXT"
-               vkDestroyDebugUtilsMessengerEXT ::
-               VkInstance -- ^ instance
-                          ->
-                 VkDebugUtilsMessengerEXT -- ^ messenger
-                                          -> Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                       -> IO ()
-
--- | > () vkDestroyDebugUtilsMessengerEXT
---   >     ( VkInstance instance
---   >     , VkDebugUtilsMessengerEXT messenger
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyDebugUtilsMessengerEXT.html vkDestroyDebugUtilsMessengerEXT registry at www.khronos.org>
-foreign import ccall safe "vkDestroyDebugUtilsMessengerEXT"
-               vkDestroyDebugUtilsMessengerEXTSafe ::
-               VkInstance -- ^ instance
-                          ->
-                 VkDebugUtilsMessengerEXT -- ^ messenger
-                                          -> Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                       -> IO ()
-
--- | > () vkDestroyDebugUtilsMessengerEXT
---   >     ( VkInstance instance
---   >     , VkDebugUtilsMessengerEXT messenger
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyDebugUtilsMessengerEXT.html vkDestroyDebugUtilsMessengerEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroyDebugUtilsMessengerEXTvkDestroyDebugUtilsMessengerEXT registry at www.khronos.org>
 type HS_vkDestroyDebugUtilsMessengerEXT =
      VkInstance -- ^ instance
                 ->
@@ -974,45 +667,7 @@ type VkSubmitDebugUtilsMessageEXT = "vkSubmitDebugUtilsMessageEXT"
 --   >     , const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkSubmitDebugUtilsMessageEXT.html vkSubmitDebugUtilsMessageEXT registry at www.khronos.org>
-foreign import ccall unsafe "vkSubmitDebugUtilsMessageEXT"
-               vkSubmitDebugUtilsMessageEXT ::
-               VkInstance -- ^ instance
-                          ->
-                 VkDebugUtilsMessageSeverityFlagBitsEXT -- ^ messageSeverity
-                                                        ->
-                   VkDebugUtilsMessageTypeFlagsEXT -- ^ messageTypes
-                                                   ->
-                     Ptr VkDebugUtilsMessengerCallbackDataEXT -- ^ pCallbackData
-                                                              -> IO ()
-
--- | > () vkSubmitDebugUtilsMessageEXT
---   >     ( VkInstance instance
---   >     , VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity
---   >     , VkDebugUtilsMessageTypeFlagsEXT messageTypes
---   >     , const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkSubmitDebugUtilsMessageEXT.html vkSubmitDebugUtilsMessageEXT registry at www.khronos.org>
-foreign import ccall safe "vkSubmitDebugUtilsMessageEXT"
-               vkSubmitDebugUtilsMessageEXTSafe ::
-               VkInstance -- ^ instance
-                          ->
-                 VkDebugUtilsMessageSeverityFlagBitsEXT -- ^ messageSeverity
-                                                        ->
-                   VkDebugUtilsMessageTypeFlagsEXT -- ^ messageTypes
-                                                   ->
-                     Ptr VkDebugUtilsMessengerCallbackDataEXT -- ^ pCallbackData
-                                                              -> IO ()
-
--- | > () vkSubmitDebugUtilsMessageEXT
---   >     ( VkInstance instance
---   >     , VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity
---   >     , VkDebugUtilsMessageTypeFlagsEXT messageTypes
---   >     , const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkSubmitDebugUtilsMessageEXT.html vkSubmitDebugUtilsMessageEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkSubmitDebugUtilsMessageEXTvkSubmitDebugUtilsMessageEXT registry at www.khronos.org>
 type HS_vkSubmitDebugUtilsMessageEXT =
      VkInstance -- ^ instance
                 ->

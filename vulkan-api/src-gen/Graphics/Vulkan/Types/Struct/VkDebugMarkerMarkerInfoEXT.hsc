@@ -14,7 +14,10 @@
 module Graphics.Vulkan.Types.Struct.VkDebugMarkerMarkerInfoEXT
        (VkDebugMarkerMarkerInfoEXT(..)) where
 import           Foreign.Storable                           (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                   (Addr##, ByteArray##,
+                                                             Proxy##,
+                                                             byteArrayContents##,
+                                                             plusAddr##, proxy##)
 import           GHC.TypeLits                               (KnownNat, natVal') -- ' closing tick for hsc2hs
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
@@ -28,7 +31,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     float            color[4];
 --   > } VkDebugMarkerMarkerInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDebugMarkerMarkerInfoEXT.html VkDebugMarkerMarkerInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDebugMarkerMarkerInfoEXTVkDebugMarkerMarkerInfoEXT registry at www.khronos.org>
 data VkDebugMarkerMarkerInfoEXT = VkDebugMarkerMarkerInfoEXT## Addr##
                                                               ByteArray##
 

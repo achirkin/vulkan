@@ -41,15 +41,11 @@ module Graphics.Vulkan.Ext.VK_KHR_sampler_ycbcr_conversion
         HS_vkCreateSamplerYcbcrConversionKHR,
         PFN_vkCreateSamplerYcbcrConversionKHR,
         unwrapVkCreateSamplerYcbcrConversionKHR,
-        vkCreateSamplerYcbcrConversionKHR,
-        vkCreateSamplerYcbcrConversionKHRSafe,
         VkDestroySamplerYcbcrConversionKHR,
         pattern VkDestroySamplerYcbcrConversionKHR,
         HS_vkDestroySamplerYcbcrConversionKHR,
         PFN_vkDestroySamplerYcbcrConversionKHR,
         unwrapVkDestroySamplerYcbcrConversionKHR,
-        vkDestroySamplerYcbcrConversionKHR,
-        vkDestroySamplerYcbcrConversionKHRSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.VkChromaLocation,
@@ -257,57 +253,7 @@ type VkCreateSamplerYcbcrConversionKHR =
 --   >     , VkSamplerYcbcrConversion* pYcbcrConversion
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateSamplerYcbcrConversionKHR.html vkCreateSamplerYcbcrConversionKHR registry at www.khronos.org>
-foreign import ccall unsafe "vkCreateSamplerYcbcrConversionKHR"
-               vkCreateSamplerYcbcrConversionKHR ::
-               VkDevice -- ^ device
-                        ->
-                 Ptr VkSamplerYcbcrConversionCreateInfo -- ^ pCreateInfo
-                                                        ->
-                   Ptr VkAllocationCallbacks -- ^ pAllocator
-                                             ->
-                     Ptr VkSamplerYcbcrConversion -- ^ pYcbcrConversion
-                                                  -> IO VkResult
-
--- | This is an alias for `vkCreateSamplerYcbcrConversion`.
---
---   Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
---   > VkResult vkCreateSamplerYcbcrConversionKHR
---   >     ( VkDevice device
---   >     , const VkSamplerYcbcrConversionCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkSamplerYcbcrConversion* pYcbcrConversion
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateSamplerYcbcrConversionKHR.html vkCreateSamplerYcbcrConversionKHR registry at www.khronos.org>
-foreign import ccall safe "vkCreateSamplerYcbcrConversionKHR"
-               vkCreateSamplerYcbcrConversionKHRSafe ::
-               VkDevice -- ^ device
-                        ->
-                 Ptr VkSamplerYcbcrConversionCreateInfo -- ^ pCreateInfo
-                                                        ->
-                   Ptr VkAllocationCallbacks -- ^ pAllocator
-                                             ->
-                     Ptr VkSamplerYcbcrConversion -- ^ pYcbcrConversion
-                                                  -> IO VkResult
-
--- | This is an alias for `vkCreateSamplerYcbcrConversion`.
---
---   Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
---   > VkResult vkCreateSamplerYcbcrConversionKHR
---   >     ( VkDevice device
---   >     , const VkSamplerYcbcrConversionCreateInfo* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkSamplerYcbcrConversion* pYcbcrConversion
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateSamplerYcbcrConversionKHR.html vkCreateSamplerYcbcrConversionKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSamplerYcbcrConversionKHRvkCreateSamplerYcbcrConversionKHR registry at www.khronos.org>
 type HS_vkCreateSamplerYcbcrConversionKHR =
      VkDevice -- ^ device
               ->
@@ -366,41 +312,7 @@ type VkDestroySamplerYcbcrConversionKHR =
 --   >     , const VkAllocationCallbacks* pAllocator
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroySamplerYcbcrConversionKHR.html vkDestroySamplerYcbcrConversionKHR registry at www.khronos.org>
-foreign import ccall unsafe "vkDestroySamplerYcbcrConversionKHR"
-               vkDestroySamplerYcbcrConversionKHR ::
-               VkDevice -- ^ device
-                        ->
-                 VkSamplerYcbcrConversion -- ^ ycbcrConversion
-                                          -> Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                       -> IO ()
-
--- | This is an alias for `vkDestroySamplerYcbcrConversion`.
---
---   > () vkDestroySamplerYcbcrConversionKHR
---   >     ( VkDevice device
---   >     , VkSamplerYcbcrConversion ycbcrConversion
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroySamplerYcbcrConversionKHR.html vkDestroySamplerYcbcrConversionKHR registry at www.khronos.org>
-foreign import ccall safe "vkDestroySamplerYcbcrConversionKHR"
-               vkDestroySamplerYcbcrConversionKHRSafe ::
-               VkDevice -- ^ device
-                        ->
-                 VkSamplerYcbcrConversion -- ^ ycbcrConversion
-                                          -> Ptr VkAllocationCallbacks -- ^ pAllocator
-                                                                       -> IO ()
-
--- | This is an alias for `vkDestroySamplerYcbcrConversion`.
---
---   > () vkDestroySamplerYcbcrConversionKHR
---   >     ( VkDevice device
---   >     , VkSamplerYcbcrConversion ycbcrConversion
---   >     , const VkAllocationCallbacks* pAllocator
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroySamplerYcbcrConversionKHR.html vkDestroySamplerYcbcrConversionKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDestroySamplerYcbcrConversionKHRvkDestroySamplerYcbcrConversionKHR registry at www.khronos.org>
 type HS_vkDestroySamplerYcbcrConversionKHR =
      VkDevice -- ^ device
               ->

@@ -95,7 +95,7 @@ type VkCreateAndroidSurfaceKHR = "vkCreateAndroidSurfaceKHR"
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateAndroidSurfaceKHR.html vkCreateAndroidSurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateAndroidSurfaceKHRvkCreateAndroidSurfaceKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateAndroidSurfaceKHR"
                vkCreateAndroidSurfaceKHR ::
                VkInstance -- ^ instance
@@ -117,7 +117,7 @@ foreign import ccall unsafe "vkCreateAndroidSurfaceKHR"
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateAndroidSurfaceKHR.html vkCreateAndroidSurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateAndroidSurfaceKHRvkCreateAndroidSurfaceKHR registry at www.khronos.org>
 foreign import ccall safe "vkCreateAndroidSurfaceKHR"
                vkCreateAndroidSurfaceKHRSafe ::
                VkInstance -- ^ instance
@@ -139,7 +139,7 @@ foreign import ccall safe "vkCreateAndroidSurfaceKHR"
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateAndroidSurfaceKHR.html vkCreateAndroidSurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateAndroidSurfaceKHRvkCreateAndroidSurfaceKHR registry at www.khronos.org>
 type HS_vkCreateAndroidSurfaceKHR =
      VkInstance -- ^ instance
                 ->

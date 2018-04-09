@@ -14,7 +14,11 @@
 module Graphics.Vulkan.Types.Struct.VkImageBlit (VkImageBlit(..))
        where
 import           Foreign.Storable                                      (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                              (Addr##, ByteArray##,
+                                                                        Proxy##,
+                                                                        byteArrayContents##,
+                                                                        plusAddr##,
+                                                                        proxy##)
 import           GHC.TypeLits                                          (KnownNat,
                                                                         natVal') -- ' closing tick for hsc2hs
 import           Graphics.Vulkan.Marshal
@@ -30,7 +34,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkOffset3D             dstOffsets[2];
 --   > } VkImageBlit;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkImageBlit.html VkImageBlit registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImageBlitVkImageBlit registry at www.khronos.org>
 data VkImageBlit = VkImageBlit## Addr## ByteArray##
 
 instance Eq VkImageBlit where

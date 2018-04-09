@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkDedicatedAllocationMemoryAllocateInfoNV
        (VkDedicatedAllocationMemoryAllocateInfoNV(..)) where
 import           Foreign.Storable                                  (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                          (Addr##,
+                                                                    ByteArray##,
+                                                                    byteArrayContents##,
+                                                                    plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType        (VkStructureType)
@@ -26,7 +29,7 @@ import           System.IO.Unsafe                                  (unsafeDupabl
 --   >     VkBuffer         buffer;
 --   > } VkDedicatedAllocationMemoryAllocateInfoNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDedicatedAllocationMemoryAllocateInfoNV.html VkDedicatedAllocationMemoryAllocateInfoNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDedicatedAllocationMemoryAllocateInfoNVVkDedicatedAllocationMemoryAllocateInfoNV registry at www.khronos.org>
 data VkDedicatedAllocationMemoryAllocateInfoNV = VkDedicatedAllocationMemoryAllocateInfoNV## Addr##
                                                                                             ByteArray##
 

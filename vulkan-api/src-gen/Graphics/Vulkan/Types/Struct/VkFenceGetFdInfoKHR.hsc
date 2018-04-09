@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkFenceGetFdInfoKHR
        (VkFenceGetFdInfoKHR(..)) where
 import           Foreign.Storable                                          (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                                  (Addr##,
+                                                                            ByteArray##,
+                                                                            byteArrayContents##,
+                                                                            plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkExternalFenceHandleTypeFlags (VkExternalFenceHandleTypeFlagBits)
@@ -25,7 +28,7 @@ import           System.IO.Unsafe                                          (unsa
 --   >     VkExternalFenceHandleTypeFlagBits   handleType;
 --   > } VkFenceGetFdInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkFenceGetFdInfoKHR.html VkFenceGetFdInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkFenceGetFdInfoKHRVkFenceGetFdInfoKHR registry at www.khronos.org>
 data VkFenceGetFdInfoKHR = VkFenceGetFdInfoKHR## Addr## ByteArray##
 
 instance Eq VkFenceGetFdInfoKHR where

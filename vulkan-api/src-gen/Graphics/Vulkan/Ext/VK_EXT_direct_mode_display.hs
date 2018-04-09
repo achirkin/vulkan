@@ -28,8 +28,7 @@ module Graphics.Vulkan.Ext.VK_EXT_direct_mode_display
         -- ** Required extensions: 'VK_KHR_display'.
         VkReleaseDisplayEXT, pattern VkReleaseDisplayEXT,
         HS_vkReleaseDisplayEXT, PFN_vkReleaseDisplayEXT,
-        unwrapVkReleaseDisplayEXT, vkReleaseDisplayEXT,
-        vkReleaseDisplayEXTSafe,
+        unwrapVkReleaseDisplayEXT,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_EXT_DIRECT_MODE_DISPLAY_SPEC_VERSION,
@@ -67,35 +66,7 @@ type VkReleaseDisplayEXT = "vkReleaseDisplayEXT"
 --   >     , VkDisplayKHR display
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkReleaseDisplayEXT.html vkReleaseDisplayEXT registry at www.khronos.org>
-foreign import ccall unsafe "vkReleaseDisplayEXT"
-               vkReleaseDisplayEXT ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                -> VkDisplayKHR -- ^ display
-                                                -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   > VkResult vkReleaseDisplayEXT
---   >     ( VkPhysicalDevice physicalDevice
---   >     , VkDisplayKHR display
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkReleaseDisplayEXT.html vkReleaseDisplayEXT registry at www.khronos.org>
-foreign import ccall safe "vkReleaseDisplayEXT"
-               vkReleaseDisplayEXTSafe ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                -> VkDisplayKHR -- ^ display
-                                                -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   > VkResult vkReleaseDisplayEXT
---   >     ( VkPhysicalDevice physicalDevice
---   >     , VkDisplayKHR display
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkReleaseDisplayEXT.html vkReleaseDisplayEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkReleaseDisplayEXTvkReleaseDisplayEXT registry at www.khronos.org>
 type HS_vkReleaseDisplayEXT =
      VkPhysicalDevice -- ^ physicalDevice
                       -> VkDisplayKHR -- ^ display

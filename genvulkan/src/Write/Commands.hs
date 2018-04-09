@@ -30,8 +30,8 @@ import           Write.Types.Enum
 import           Write.ModuleWriter
 
 
-genCommand :: Monad m => VkCommand -> ModuleWriter m (Set VkTypeName)
-genCommand command@VkCommand
+genCommand :: Monad m => Bool -> VkCommand -> ModuleWriter m (Set VkTypeName)
+genCommand genFFI command@VkCommand
   { cName = vkname
   , cNameOrig = cnameOrigTxt
   , cReturnType = vkrt
@@ -50,7 +50,7 @@ genCommand command@VkCommand
     }
 
   -- command itself
-  indeed <- isIdentDeclared . DIVar $ unVkCommandName vkname
+  indeed <- isIdentDeclared $ DIVar unwrapFun
   if indeed
   then do
     writeAllImports
@@ -74,13 +74,14 @@ genCommand command@VkCommand
           writeImport $ DIThing "VkFlags" DITAll
         writeImport $ DIThing t dit
 
-    -- foreign import unsafe
-    writeDecl $ ForImp rezComment (CCall Nothing) (Just (PlayRisky Nothing))
-                      (Just cnameOrigStr) (Ident Nothing cnameStr) funtype
+    when genFFI $ do
+      -- foreign import unsafe
+      writeDecl $ ForImp rezComment (CCall Nothing) (Just (PlayRisky Nothing))
+                        (Just cnameOrigStr) (Ident Nothing cnameStr) funtype
 
-    -- foreign import safe
-    writeDecl $ ForImp rezComment (CCall Nothing) (Just (PlaySafe Nothing False))
-                      (Just cnameOrigStr) (Ident Nothing cnameSafeStr) funtype
+      -- foreign import safe
+      writeDecl $ ForImp rezComment (CCall Nothing) (Just (PlaySafe Nothing False))
+                        (Just cnameOrigStr) (Ident Nothing cnameSafeStr) funtype
 
     -- type synonym
     writeDecl $ TypeDecl rezComment
@@ -187,23 +188,25 @@ genCommand command@VkCommand
       writeImport $ DIThing funTypeNameTxtHS DITNo
       writeImport $ DIThing funTypeNameTxtPFN DITNo
       writeImport $ DIVar unwrapFun
-      writeImport . DIVar $ unVkCommandName vkname
-      writeImport . DIVar $ unVkCommandName vknameSafe
+      when genFFI $ do
+        writeImport . DIVar $ unVkCommandName vkname
+        writeImport . DIVar $ unVkCommandName vknameSafe
 
     writeAllExports = do
       writeExport $ DIThing funTypeNameTxtHS DITNo
       writeExport $ DIThing funTypeNameTxtPFN DITNo
       writeExport $ DIVar unwrapFun
-      writeExport . DIVar $ unVkCommandName vkname
-      writeExport . DIVar $ unVkCommandName vknameSafe
+      when genFFI $ do
+        writeExport . DIVar $ unVkCommandName vkname
+        writeExport . DIVar $ unVkCommandName vknameSafe
 
 
 
-genCommand acom@(VkCommandAlias comname comalias comnameOrig)
+genCommand genFFI acom@(VkCommandAlias comname comalias comnameOrig)
   = ask >>= \vk -> case Map.lookup comalias (globCommands vk) of
       Nothing -> error $
         "Could not find a command for an alias " <> show acom
-      Just c  -> genCommand
+      Just c  -> genCommand genFFI
         c{ cName = comname
          , cNameOrig = comnameOrig
          , cAttributes = (cAttributes c)

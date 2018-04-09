@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkSubpassDescription
        (VkSubpassDescription(..)) where
 import           Foreign.Storable                                     (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                             (Addr##, ByteArray##,
+                                                                       byteArrayContents##,
+                                                                       plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkPipelineBindPoint       (VkPipelineBindPoint)
@@ -31,7 +33,7 @@ import           System.IO.Unsafe                                     (unsafeDup
 --   >     const uint32_t* pPreserveAttachments;
 --   > } VkSubpassDescription;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSubpassDescription.html VkSubpassDescription registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSubpassDescriptionVkSubpassDescription registry at www.khronos.org>
 data VkSubpassDescription = VkSubpassDescription## Addr## ByteArray##
 
 instance Eq VkSubpassDescription where

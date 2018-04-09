@@ -14,7 +14,12 @@
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceIDProperties
        (VkPhysicalDeviceIDProperties(..)) where
 import           Foreign.Storable                                         (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                                 (Addr##,
+                                                                           ByteArray##,
+                                                                           Proxy##,
+                                                                           byteArrayContents##,
+                                                                           plusAddr##,
+                                                                           proxy##)
 import           GHC.TypeLits                                             (KnownNat,
                                                                            natVal') -- ' closing tick for hsc2hs
 import           Graphics.Vulkan.Constants                                (VK_LUID_SIZE,
@@ -38,7 +43,7 @@ import           System.IO.Unsafe                                         (unsaf
 --   >     VkBool32                         deviceLUIDValid;
 --   > } VkPhysicalDeviceIDProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPhysicalDeviceIDProperties.html VkPhysicalDeviceIDProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceIDPropertiesVkPhysicalDeviceIDProperties registry at www.khronos.org>
 data VkPhysicalDeviceIDProperties = VkPhysicalDeviceIDProperties## Addr##
                                                                   ByteArray##
 

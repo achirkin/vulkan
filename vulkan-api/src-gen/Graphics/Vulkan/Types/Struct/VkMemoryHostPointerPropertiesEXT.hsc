@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkMemoryHostPointerPropertiesEXT
        (VkMemoryHostPointerPropertiesEXT(..)) where
 import           Foreign.Storable                           (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                   (Addr##, ByteArray##,
+                                                             byteArrayContents##,
+                                                             plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType (VkStructureType)
@@ -22,7 +24,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     uint32_t memoryTypeBits;
 --   > } VkMemoryHostPointerPropertiesEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkMemoryHostPointerPropertiesEXT.html VkMemoryHostPointerPropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkMemoryHostPointerPropertiesEXTVkMemoryHostPointerPropertiesEXT registry at www.khronos.org>
 data VkMemoryHostPointerPropertiesEXT = VkMemoryHostPointerPropertiesEXT## Addr##
                                                                           ByteArray##
 

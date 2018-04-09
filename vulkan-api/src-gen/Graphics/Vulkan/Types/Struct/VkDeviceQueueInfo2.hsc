@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkDeviceQueueInfo2
        (VkDeviceQueueInfo2(..)) where
 import           Foreign.Storable                                    (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                            (Addr##,
+                                                                      ByteArray##,
+                                                                      byteArrayContents##,
+                                                                      plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkDeviceQueueCreateFlags (VkDeviceQueueCreateFlags)
@@ -25,7 +28,7 @@ import           System.IO.Unsafe                                    (unsafeDupa
 --   >     uint32_t                            queueIndex;
 --   > } VkDeviceQueueInfo2;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDeviceQueueInfo2.html VkDeviceQueueInfo2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDeviceQueueInfo2VkDeviceQueueInfo2 registry at www.khronos.org>
 data VkDeviceQueueInfo2 = VkDeviceQueueInfo2## Addr## ByteArray##
 
 instance Eq VkDeviceQueueInfo2 where

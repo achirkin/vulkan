@@ -11,7 +11,11 @@ module Graphics.Vulkan.Types.Struct.VkPipelineColorBlendAdvancedStateCreateInfoE
        (VkPipelineColorBlendAdvancedStateCreateInfoEXT(..)) where
 import           Foreign.Storable
                                                                                    (Storable (..))
-import           GHC.Prim
+import           GHC.Base
+                                                                                   (Addr##,
+                                                                                   ByteArray##,
+                                                                                   byteArrayContents##,
+                                                                                   plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes
@@ -33,7 +37,7 @@ import           System.IO.Unsafe
 --   >     VkBlendOverlapEXT      blendOverlap;
 --   > } VkPipelineColorBlendAdvancedStateCreateInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPipelineColorBlendAdvancedStateCreateInfoEXT.html VkPipelineColorBlendAdvancedStateCreateInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPipelineColorBlendAdvancedStateCreateInfoEXTVkPipelineColorBlendAdvancedStateCreateInfoEXT registry at www.khronos.org>
 data VkPipelineColorBlendAdvancedStateCreateInfoEXT = VkPipelineColorBlendAdvancedStateCreateInfoEXT## Addr##
                                                                                                       ByteArray##
 

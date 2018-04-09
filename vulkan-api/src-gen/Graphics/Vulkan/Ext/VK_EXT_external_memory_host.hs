@@ -49,8 +49,6 @@ module Graphics.Vulkan.Ext.VK_EXT_external_memory_host
         HS_vkGetMemoryHostPointerPropertiesEXT,
         PFN_vkGetMemoryHostPointerPropertiesEXT,
         unwrapVkGetMemoryHostPointerPropertiesEXT,
-        vkGetMemoryHostPointerPropertiesEXT,
-        vkGetMemoryHostPointerPropertiesEXTSafe,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_EXT_EXTERNAL_MEMORY_HOST_SPEC_VERSION,
@@ -119,51 +117,7 @@ type VkGetMemoryHostPointerPropertiesEXT =
 --   >     , VkMemoryHostPointerPropertiesEXT* pMemoryHostPointerProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryHostPointerPropertiesEXT.html vkGetMemoryHostPointerPropertiesEXT registry at www.khronos.org>
-foreign import ccall unsafe "vkGetMemoryHostPointerPropertiesEXT"
-               vkGetMemoryHostPointerPropertiesEXT ::
-               VkDevice -- ^ device
-                        ->
-                 VkExternalMemoryHandleTypeFlagBits -- ^ handleType
-                                                    ->
-                   Ptr Void -- ^ pHostPointer
-                            -> Ptr VkMemoryHostPointerPropertiesEXT -- ^ pMemoryHostPointerProperties
-                                                                    -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
---
---   > VkResult vkGetMemoryHostPointerPropertiesEXT
---   >     ( VkDevice device
---   >     , VkExternalMemoryHandleTypeFlagBits handleType
---   >     , const void* pHostPointer
---   >     , VkMemoryHostPointerPropertiesEXT* pMemoryHostPointerProperties
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryHostPointerPropertiesEXT.html vkGetMemoryHostPointerPropertiesEXT registry at www.khronos.org>
-foreign import ccall safe "vkGetMemoryHostPointerPropertiesEXT"
-               vkGetMemoryHostPointerPropertiesEXTSafe ::
-               VkDevice -- ^ device
-                        ->
-                 VkExternalMemoryHandleTypeFlagBits -- ^ handleType
-                                                    ->
-                   Ptr Void -- ^ pHostPointer
-                            -> Ptr VkMemoryHostPointerPropertiesEXT -- ^ pMemoryHostPointerProperties
-                                                                    -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_INVALID_EXTERNAL_HANDLE'.
---
---   > VkResult vkGetMemoryHostPointerPropertiesEXT
---   >     ( VkDevice device
---   >     , VkExternalMemoryHandleTypeFlagBits handleType
---   >     , const void* pHostPointer
---   >     , VkMemoryHostPointerPropertiesEXT* pMemoryHostPointerProperties
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetMemoryHostPointerPropertiesEXT.html vkGetMemoryHostPointerPropertiesEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetMemoryHostPointerPropertiesEXTvkGetMemoryHostPointerPropertiesEXT registry at www.khronos.org>
 type HS_vkGetMemoryHostPointerPropertiesEXT =
      VkDevice -- ^ device
               ->

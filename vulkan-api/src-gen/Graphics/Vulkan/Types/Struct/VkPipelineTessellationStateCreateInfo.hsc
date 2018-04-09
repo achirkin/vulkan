@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkPipelineTessellationStateCreateInfo
        (VkPipelineTessellationStateCreateInfo(..)) where
 import           Foreign.Storable                           (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                   (Addr##, ByteArray##,
+                                                             byteArrayContents##,
+                                                             plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Bitmasks             (VkPipelineTessellationStateCreateFlags)
@@ -24,7 +26,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     uint32_t               patchControlPoints;
 --   > } VkPipelineTessellationStateCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPipelineTessellationStateCreateInfo.html VkPipelineTessellationStateCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPipelineTessellationStateCreateInfoVkPipelineTessellationStateCreateInfo registry at www.khronos.org>
 data VkPipelineTessellationStateCreateInfo = VkPipelineTessellationStateCreateInfo## Addr##
                                                                                     ByteArray##
 

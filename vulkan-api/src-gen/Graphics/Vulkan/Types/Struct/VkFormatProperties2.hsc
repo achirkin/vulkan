@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkFormatProperties2
        (VkFormatProperties2(..)) where
 import           Foreign.Storable                                (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                        (Addr##,
+                                                                  ByteArray##,
+                                                                  byteArrayContents##,
+                                                                  plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType      (VkStructureType)
@@ -23,7 +26,7 @@ import           System.IO.Unsafe                                (unsafeDupableP
 --   >     VkFormatProperties               formatProperties;
 --   > } VkFormatProperties2;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkFormatProperties2.html VkFormatProperties2 registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkFormatProperties2VkFormatProperties2 registry at www.khronos.org>
 data VkFormatProperties2 = VkFormatProperties2## Addr## ByteArray##
 
 instance Eq VkFormatProperties2 where

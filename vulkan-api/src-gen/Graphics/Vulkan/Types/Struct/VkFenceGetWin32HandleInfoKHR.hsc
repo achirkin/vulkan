@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkFenceGetWin32HandleInfoKHR
        (VkFenceGetWin32HandleInfoKHR(..)) where
 import           Foreign.Storable                                          (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                                  (Addr##,
+                                                                            ByteArray##,
+                                                                            byteArrayContents##,
+                                                                            plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkExternalFenceHandleTypeFlags (VkExternalFenceHandleTypeFlagBits)
@@ -25,7 +28,7 @@ import           System.IO.Unsafe                                          (unsa
 --   >     VkExternalFenceHandleTypeFlagBits   handleType;
 --   > } VkFenceGetWin32HandleInfoKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkFenceGetWin32HandleInfoKHR.html VkFenceGetWin32HandleInfoKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkFenceGetWin32HandleInfoKHRVkFenceGetWin32HandleInfoKHR registry at www.khronos.org>
 data VkFenceGetWin32HandleInfoKHR = VkFenceGetWin32HandleInfoKHR## Addr##
                                                                   ByteArray##
 

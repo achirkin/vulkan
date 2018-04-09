@@ -102,7 +102,7 @@ type VkCreateXcbSurfaceKHR = "vkCreateXcbSurfaceKHR"
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateXcbSurfaceKHR.html vkCreateXcbSurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateXcbSurfaceKHRvkCreateXcbSurfaceKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateXcbSurfaceKHR"
                vkCreateXcbSurfaceKHR ::
                VkInstance -- ^ instance
@@ -124,7 +124,7 @@ foreign import ccall unsafe "vkCreateXcbSurfaceKHR"
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateXcbSurfaceKHR.html vkCreateXcbSurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateXcbSurfaceKHRvkCreateXcbSurfaceKHR registry at www.khronos.org>
 foreign import ccall safe "vkCreateXcbSurfaceKHR"
                vkCreateXcbSurfaceKHRSafe ::
                VkInstance -- ^ instance
@@ -146,7 +146,7 @@ foreign import ccall safe "vkCreateXcbSurfaceKHR"
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateXcbSurfaceKHR.html vkCreateXcbSurfaceKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateXcbSurfaceKHRvkCreateXcbSurfaceKHR registry at www.khronos.org>
 type HS_vkCreateXcbSurfaceKHR =
      VkInstance -- ^ instance
                 ->
@@ -200,7 +200,7 @@ type VkGetPhysicalDeviceXcbPresentationSupportKHR =
 --   >     , xcb_visualid_t visual_id
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceXcbPresentationSupportKHR.html vkGetPhysicalDeviceXcbPresentationSupportKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceXcbPresentationSupportKHRvkGetPhysicalDeviceXcbPresentationSupportKHR registry at www.khronos.org>
 foreign import ccall unsafe
                "vkGetPhysicalDeviceXcbPresentationSupportKHR"
                vkGetPhysicalDeviceXcbPresentationSupportKHR ::
@@ -218,7 +218,7 @@ foreign import ccall unsafe
 --   >     , xcb_visualid_t visual_id
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceXcbPresentationSupportKHR.html vkGetPhysicalDeviceXcbPresentationSupportKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceXcbPresentationSupportKHRvkGetPhysicalDeviceXcbPresentationSupportKHR registry at www.khronos.org>
 foreign import ccall safe
                "vkGetPhysicalDeviceXcbPresentationSupportKHR"
                vkGetPhysicalDeviceXcbPresentationSupportKHRSafe ::
@@ -236,7 +236,7 @@ foreign import ccall safe
 --   >     , xcb_visualid_t visual_id
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceXcbPresentationSupportKHR.html vkGetPhysicalDeviceXcbPresentationSupportKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceXcbPresentationSupportKHRvkGetPhysicalDeviceXcbPresentationSupportKHR registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceXcbPresentationSupportKHR =
      VkPhysicalDevice -- ^ physicalDevice
                       ->

@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkClearValue (VkClearValue(..))
        where
 import           Foreign.Storable                                      (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                              (Addr##, ByteArray##,
+                                                                        byteArrayContents##,
+                                                                        plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Struct.VkClearColorValue        (VkClearColorValue)
@@ -24,7 +26,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkClearDepthStencilValue depthStencil;
 --   > } VkClearValue;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkClearValue.html VkClearValue registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkClearValueVkClearValue registry at www.khronos.org>
 data VkClearValue = VkClearValue## Addr## ByteArray##
 
 instance Eq VkClearValue where

@@ -41,8 +41,6 @@ module Graphics.Vulkan.Ext.VK_EXT_display_surface_counter
         HS_vkGetPhysicalDeviceSurfaceCapabilities2EXT,
         PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT,
         unwrapVkGetPhysicalDeviceSurfaceCapabilities2EXT,
-        vkGetPhysicalDeviceSurfaceCapabilities2EXT,
-        vkGetPhysicalDeviceSurfaceCapabilities2EXTSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
@@ -99,47 +97,7 @@ type VkGetPhysicalDeviceSurfaceCapabilities2EXT =
 --   >     , VkSurfaceCapabilities2EXT* pSurfaceCapabilities
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilities2EXT.html vkGetPhysicalDeviceSurfaceCapabilities2EXT registry at www.khronos.org>
-foreign import ccall unsafe
-               "vkGetPhysicalDeviceSurfaceCapabilities2EXT"
-               vkGetPhysicalDeviceSurfaceCapabilities2EXT ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                ->
-                 VkSurfaceKHR -- ^ surface
-                              -> Ptr VkSurfaceCapabilities2EXT -- ^ pSurfaceCapabilities
-                                                               -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
---
---   > VkResult vkGetPhysicalDeviceSurfaceCapabilities2EXT
---   >     ( VkPhysicalDevice physicalDevice
---   >     , VkSurfaceKHR surface
---   >     , VkSurfaceCapabilities2EXT* pSurfaceCapabilities
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilities2EXT.html vkGetPhysicalDeviceSurfaceCapabilities2EXT registry at www.khronos.org>
-foreign import ccall safe
-               "vkGetPhysicalDeviceSurfaceCapabilities2EXT"
-               vkGetPhysicalDeviceSurfaceCapabilities2EXTSafe ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                ->
-                 VkSurfaceKHR -- ^ surface
-                              -> Ptr VkSurfaceCapabilities2EXT -- ^ pSurfaceCapabilities
-                                                               -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_SURFACE_LOST_KHR'.
---
---   > VkResult vkGetPhysicalDeviceSurfaceCapabilities2EXT
---   >     ( VkPhysicalDevice physicalDevice
---   >     , VkSurfaceKHR surface
---   >     , VkSurfaceCapabilities2EXT* pSurfaceCapabilities
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceSurfaceCapabilities2EXT.html vkGetPhysicalDeviceSurfaceCapabilities2EXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceSurfaceCapabilities2EXTvkGetPhysicalDeviceSurfaceCapabilities2EXT registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceSurfaceCapabilities2EXT =
      VkPhysicalDevice -- ^ physicalDevice
                       ->

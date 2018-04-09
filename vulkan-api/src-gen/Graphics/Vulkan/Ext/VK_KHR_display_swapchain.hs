@@ -118,7 +118,7 @@ type VkCreateSharedSwapchainsKHR = "vkCreateSharedSwapchainsKHR"
 --   >     , VkSwapchainKHR* pSwapchains
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateSharedSwapchainsKHR.html vkCreateSharedSwapchainsKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSharedSwapchainsKHRvkCreateSharedSwapchainsKHR registry at www.khronos.org>
 foreign import ccall unsafe "vkCreateSharedSwapchainsKHR"
                vkCreateSharedSwapchainsKHR ::
                VkDevice -- ^ device
@@ -143,7 +143,7 @@ foreign import ccall unsafe "vkCreateSharedSwapchainsKHR"
 --   >     , VkSwapchainKHR* pSwapchains
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateSharedSwapchainsKHR.html vkCreateSharedSwapchainsKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSharedSwapchainsKHRvkCreateSharedSwapchainsKHR registry at www.khronos.org>
 foreign import ccall safe "vkCreateSharedSwapchainsKHR"
                vkCreateSharedSwapchainsKHRSafe ::
                VkDevice -- ^ device
@@ -168,7 +168,7 @@ foreign import ccall safe "vkCreateSharedSwapchainsKHR"
 --   >     , VkSwapchainKHR* pSwapchains
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateSharedSwapchainsKHR.html vkCreateSharedSwapchainsKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateSharedSwapchainsKHRvkCreateSharedSwapchainsKHR registry at www.khronos.org>
 type HS_vkCreateSharedSwapchainsKHR =
      VkDevice -- ^ device
               ->

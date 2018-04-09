@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkDisplayPlaneCapabilitiesKHR
        (VkDisplayPlaneCapabilitiesKHR(..)) where
 import           Foreign.Storable                                       (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                               (Addr##, ByteArray##,
+                                                                         byteArrayContents##,
+                                                                         plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkDisplayPlaneAlphaFlagsKHR (VkDisplayPlaneAlphaFlagsKHR)
@@ -30,7 +32,7 @@ import           System.IO.Unsafe                                       (unsafeD
 --   >     VkExtent2D                       maxDstExtent;
 --   > } VkDisplayPlaneCapabilitiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDisplayPlaneCapabilitiesKHR.html VkDisplayPlaneCapabilitiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDisplayPlaneCapabilitiesKHRVkDisplayPlaneCapabilitiesKHR registry at www.khronos.org>
 data VkDisplayPlaneCapabilitiesKHR = VkDisplayPlaneCapabilitiesKHR## Addr##
                                                                     ByteArray##
 

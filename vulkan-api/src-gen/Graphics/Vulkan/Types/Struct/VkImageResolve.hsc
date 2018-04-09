@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkImageResolve
        (VkImageResolve(..)) where
 import           Foreign.Storable                                      (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                              (Addr##, ByteArray##,
+                                                                        byteArrayContents##,
+                                                                        plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Struct.VkExtent3D               (VkExtent3D)
@@ -26,7 +28,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     VkExtent3D             extent;
 --   > } VkImageResolve;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkImageResolve.html VkImageResolve registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImageResolveVkImageResolve registry at www.khronos.org>
 data VkImageResolve = VkImageResolve## Addr## ByteArray##
 
 instance Eq VkImageResolve where

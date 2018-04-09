@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkViewportSwizzleNV
        (VkViewportSwizzleNV(..)) where
 import           Foreign.Storable                                         (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                                 (Addr##,
+                                                                           ByteArray##,
+                                                                           byteArrayContents##,
+                                                                           plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkViewportCoordinateSwizzleNV (VkViewportCoordinateSwizzleNV)
@@ -23,7 +26,7 @@ import           System.IO.Unsafe                                         (unsaf
 --   >     VkViewportCoordinateSwizzleNV          w;
 --   > } VkViewportSwizzleNV;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkViewportSwizzleNV.html VkViewportSwizzleNV registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkViewportSwizzleNVVkViewportSwizzleNV registry at www.khronos.org>
 data VkViewportSwizzleNV = VkViewportSwizzleNV## Addr## ByteArray##
 
 instance Eq VkViewportSwizzleNV where

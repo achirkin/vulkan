@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkFenceCreateInfo
        (VkFenceCreateInfo(..)) where
 import           Foreign.Storable                              (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                      (Addr##,
+                                                                ByteArray##,
+                                                                byteArrayContents##,
+                                                                plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkFenceCreateFlags (VkFenceCreateFlags)
@@ -23,7 +26,7 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 --   >     VkFenceCreateFlags     flags;
 --   > } VkFenceCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkFenceCreateInfo.html VkFenceCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkFenceCreateInfoVkFenceCreateInfo registry at www.khronos.org>
 data VkFenceCreateInfo = VkFenceCreateInfo## Addr## ByteArray##
 
 instance Eq VkFenceCreateInfo where

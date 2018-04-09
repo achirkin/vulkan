@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkExternalImageFormatProperties
        (VkExternalImageFormatProperties(..)) where
 import           Foreign.Storable                                        (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                                (Addr##, ByteArray##,
+                                                                          byteArrayContents##,
+                                                                          plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkStructureType              (VkStructureType)
@@ -24,7 +26,7 @@ import           System.IO.Unsafe                                        (unsafe
 --   >     VkExternalMemoryProperties externalMemoryProperties;
 --   > } VkExternalImageFormatProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkExternalImageFormatProperties.html VkExternalImageFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkExternalImageFormatPropertiesVkExternalImageFormatProperties registry at www.khronos.org>
 data VkExternalImageFormatProperties = VkExternalImageFormatProperties## Addr##
                                                                         ByteArray##
 

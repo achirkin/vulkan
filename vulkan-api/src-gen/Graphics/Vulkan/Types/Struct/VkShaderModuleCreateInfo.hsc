@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkShaderModuleCreateInfo
        (VkShaderModuleCreateInfo(..)) where
 import           Foreign.Storable                           (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                   (Addr##, ByteArray##,
+                                                             byteArrayContents##,
+                                                             plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Bitmasks             (VkShaderModuleCreateFlags)
@@ -25,7 +27,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     const uint32_t*            pCode;
 --   > } VkShaderModuleCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkShaderModuleCreateInfo.html VkShaderModuleCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkShaderModuleCreateInfoVkShaderModuleCreateInfo registry at www.khronos.org>
 data VkShaderModuleCreateInfo = VkShaderModuleCreateInfo## Addr##
                                                           ByteArray##
 

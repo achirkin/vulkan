@@ -20,7 +20,7 @@ import           Text.Read.Lex                   (Lexeme (..))
 
 -- | type = @enum@
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkValidationCheckEXT.html VkValidationCheckEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#VkValidationCheckEXTVkValidationCheckEXT registry at www.khronos.org>
 newtype VkValidationCheckEXT = VkValidationCheckEXT Int32
                                  deriving (Eq, Ord, Num, Bounded, Storable, Enum, Data, Generic)
 

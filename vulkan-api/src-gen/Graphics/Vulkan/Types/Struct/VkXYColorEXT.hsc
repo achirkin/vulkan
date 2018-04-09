@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkXYColorEXT (VkXYColorEXT(..))
        where
 import           Foreign.Storable                 (Storable (..))
-import           GHC.Prim
+import           GHC.Base                         (Addr##, ByteArray##,
+                                                   byteArrayContents##,
+                                                   plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           System.IO.Unsafe                 (unsafeDupablePerformIO)
@@ -22,7 +24,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     float   y;
 --   > } VkXYColorEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkXYColorEXT.html VkXYColorEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkXYColorEXTVkXYColorEXT registry at www.khronos.org>
 data VkXYColorEXT = VkXYColorEXT## Addr## ByteArray##
 
 instance Eq VkXYColorEXT where

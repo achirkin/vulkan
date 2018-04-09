@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkDisplayEventInfoEXT
        (VkDisplayEventInfoEXT(..)) where
 import           Foreign.Storable                                 (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                         (Addr##,
+                                                                   ByteArray##,
+                                                                   byteArrayContents##,
+                                                                   plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkDisplayEventTypeEXT (VkDisplayEventTypeEXT)
@@ -23,7 +26,7 @@ import           System.IO.Unsafe                                 (unsafeDupable
 --   >     VkDisplayEventTypeEXT            displayEvent;
 --   > } VkDisplayEventInfoEXT;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDisplayEventInfoEXT.html VkDisplayEventInfoEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDisplayEventInfoEXTVkDisplayEventInfoEXT registry at www.khronos.org>
 data VkDisplayEventInfoEXT = VkDisplayEventInfoEXT## Addr##
                                                     ByteArray##
 

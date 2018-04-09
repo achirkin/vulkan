@@ -14,7 +14,10 @@
 module Graphics.Vulkan.Types.Struct.VkPhysicalDeviceGroupProperties
        (VkPhysicalDeviceGroupProperties(..)) where
 import           Foreign.Storable                           (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                   (Addr##, ByteArray##,
+                                                             Proxy##,
+                                                             byteArrayContents##,
+                                                             plusAddr##, proxy##)
 import           GHC.TypeLits                               (KnownNat, natVal') -- ' closing tick for hsc2hs
 import           Graphics.Vulkan.Constants                  (VK_MAX_DEVICE_GROUP_SIZE,
                                                              pattern VK_MAX_DEVICE_GROUP_SIZE)
@@ -33,7 +36,7 @@ import           System.IO.Unsafe                           (unsafeDupablePerfor
 --   >     VkBool32                         subsetAllocation;
 --   > } VkPhysicalDeviceGroupProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPhysicalDeviceGroupProperties.html VkPhysicalDeviceGroupProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPhysicalDeviceGroupPropertiesVkPhysicalDeviceGroupProperties registry at www.khronos.org>
 data VkPhysicalDeviceGroupProperties = VkPhysicalDeviceGroupProperties## Addr##
                                                                         ByteArray##
 

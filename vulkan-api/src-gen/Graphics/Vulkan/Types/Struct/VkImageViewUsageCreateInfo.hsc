@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkImageViewUsageCreateInfo
        (VkImageViewUsageCreateInfo(..)) where
 import           Foreign.Storable                                   (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                           (Addr##,
+                                                                     ByteArray##,
+                                                                     byteArrayContents##,
+                                                                     plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkImageUsageFlags       (VkImageUsageFlags)
@@ -24,7 +27,7 @@ import           System.IO.Unsafe                                   (unsafeDupab
 --   >     VkImageUsageFlags usage;
 --   > } VkImageViewUsageCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkImageViewUsageCreateInfo.html VkImageViewUsageCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImageViewUsageCreateInfoVkImageViewUsageCreateInfo registry at www.khronos.org>
 data VkImageViewUsageCreateInfo = VkImageViewUsageCreateInfo## Addr##
                                                               ByteArray##
 

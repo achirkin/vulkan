@@ -14,7 +14,9 @@
 module Graphics.Vulkan.Types.Struct.VkClearColorValue
        (VkClearColorValue(..)) where
 import           Foreign.Storable                 (Storable (..))
-import           GHC.Prim
+import           GHC.Base                         (Addr##, ByteArray##, Proxy##,
+                                                   byteArrayContents##,
+                                                   plusAddr##, proxy##)
 import           GHC.TypeLits                     (KnownNat, natVal') -- ' closing tick for hsc2hs
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
@@ -28,7 +30,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     uint32_t               uint32[4];
 --   > } VkClearColorValue;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkClearColorValue.html VkClearColorValue registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkClearColorValueVkClearColorValue registry at www.khronos.org>
 data VkClearColorValue = VkClearColorValue## Addr## ByteArray##
 
 instance Eq VkClearColorValue where

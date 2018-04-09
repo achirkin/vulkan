@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkInstanceCreateInfo
        (VkInstanceCreateInfo(..)) where
 import           Foreign.Storable                               (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                       (Addr##,
+                                                                 ByteArray##,
+                                                                 byteArrayContents##,
+                                                                 plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Bitmasks                 (VkInstanceCreateFlags)
@@ -29,7 +32,7 @@ import           System.IO.Unsafe                               (unsafeDupablePe
 --   >     const char* const*      ppEnabledExtensionNames;
 --   > } VkInstanceCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkInstanceCreateInfo.html VkInstanceCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkInstanceCreateInfoVkInstanceCreateInfo registry at www.khronos.org>
 data VkInstanceCreateInfo = VkInstanceCreateInfo## Addr## ByteArray##
 
 instance Eq VkInstanceCreateInfo where

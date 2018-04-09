@@ -35,23 +35,18 @@ module Graphics.Vulkan.Ext.VK_EXT_debug_marker
         -- > #include "vk_platform.h"
         VkDebugMarkerSetObjectTagEXT, pattern VkDebugMarkerSetObjectTagEXT,
         HS_vkDebugMarkerSetObjectTagEXT, PFN_vkDebugMarkerSetObjectTagEXT,
-        unwrapVkDebugMarkerSetObjectTagEXT, vkDebugMarkerSetObjectTagEXT,
-        vkDebugMarkerSetObjectTagEXTSafe, VkDebugMarkerSetObjectNameEXT,
+        unwrapVkDebugMarkerSetObjectTagEXT, VkDebugMarkerSetObjectNameEXT,
         pattern VkDebugMarkerSetObjectNameEXT,
         HS_vkDebugMarkerSetObjectNameEXT,
         PFN_vkDebugMarkerSetObjectNameEXT,
-        unwrapVkDebugMarkerSetObjectNameEXT, vkDebugMarkerSetObjectNameEXT,
-        vkDebugMarkerSetObjectNameEXTSafe, VkCmdDebugMarkerBeginEXT,
+        unwrapVkDebugMarkerSetObjectNameEXT, VkCmdDebugMarkerBeginEXT,
         pattern VkCmdDebugMarkerBeginEXT, HS_vkCmdDebugMarkerBeginEXT,
         PFN_vkCmdDebugMarkerBeginEXT, unwrapVkCmdDebugMarkerBeginEXT,
-        vkCmdDebugMarkerBeginEXT, vkCmdDebugMarkerBeginEXTSafe,
         VkCmdDebugMarkerEndEXT, pattern VkCmdDebugMarkerEndEXT,
         HS_vkCmdDebugMarkerEndEXT, PFN_vkCmdDebugMarkerEndEXT,
-        unwrapVkCmdDebugMarkerEndEXT, vkCmdDebugMarkerEndEXT,
-        vkCmdDebugMarkerEndEXTSafe, VkCmdDebugMarkerInsertEXT,
+        unwrapVkCmdDebugMarkerEndEXT, VkCmdDebugMarkerInsertEXT,
         pattern VkCmdDebugMarkerInsertEXT, HS_vkCmdDebugMarkerInsertEXT,
         PFN_vkCmdDebugMarkerInsertEXT, unwrapVkCmdDebugMarkerInsertEXT,
-        vkCmdDebugMarkerInsertEXT, vkCmdDebugMarkerInsertEXTSafe,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Handles,
         VK_EXT_DEBUG_MARKER_SPEC_VERSION,
@@ -102,39 +97,7 @@ type VkDebugMarkerSetObjectTagEXT = "vkDebugMarkerSetObjectTagEXT"
 --   >     , const VkDebugMarkerObjectTagInfoEXT* pTagInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDebugMarkerSetObjectTagEXT.html vkDebugMarkerSetObjectTagEXT registry at www.khronos.org>
-foreign import ccall unsafe "vkDebugMarkerSetObjectTagEXT"
-               vkDebugMarkerSetObjectTagEXT ::
-               VkDevice -- ^ device
-                        -> Ptr VkDebugMarkerObjectTagInfoEXT -- ^ pTagInfo
-                                                             -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
---   > VkResult vkDebugMarkerSetObjectTagEXT
---   >     ( VkDevice device
---   >     , const VkDebugMarkerObjectTagInfoEXT* pTagInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDebugMarkerSetObjectTagEXT.html vkDebugMarkerSetObjectTagEXT registry at www.khronos.org>
-foreign import ccall safe "vkDebugMarkerSetObjectTagEXT"
-               vkDebugMarkerSetObjectTagEXTSafe ::
-               VkDevice -- ^ device
-                        -> Ptr VkDebugMarkerObjectTagInfoEXT -- ^ pTagInfo
-                                                             -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
---   > VkResult vkDebugMarkerSetObjectTagEXT
---   >     ( VkDevice device
---   >     , const VkDebugMarkerObjectTagInfoEXT* pTagInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDebugMarkerSetObjectTagEXT.html vkDebugMarkerSetObjectTagEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDebugMarkerSetObjectTagEXTvkDebugMarkerSetObjectTagEXT registry at www.khronos.org>
 type HS_vkDebugMarkerSetObjectTagEXT =
      VkDevice -- ^ device
               -> Ptr VkDebugMarkerObjectTagInfoEXT -- ^ pTagInfo
@@ -188,39 +151,7 @@ type VkDebugMarkerSetObjectNameEXT =
 --   >     , const VkDebugMarkerObjectNameInfoEXT* pNameInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDebugMarkerSetObjectNameEXT.html vkDebugMarkerSetObjectNameEXT registry at www.khronos.org>
-foreign import ccall unsafe "vkDebugMarkerSetObjectNameEXT"
-               vkDebugMarkerSetObjectNameEXT ::
-               VkDevice -- ^ device
-                        -> Ptr VkDebugMarkerObjectNameInfoEXT -- ^ pNameInfo
-                                                              -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
---   > VkResult vkDebugMarkerSetObjectNameEXT
---   >     ( VkDevice device
---   >     , const VkDebugMarkerObjectNameInfoEXT* pNameInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDebugMarkerSetObjectNameEXT.html vkDebugMarkerSetObjectNameEXT registry at www.khronos.org>
-foreign import ccall safe "vkDebugMarkerSetObjectNameEXT"
-               vkDebugMarkerSetObjectNameEXTSafe ::
-               VkDevice -- ^ device
-                        -> Ptr VkDebugMarkerObjectNameInfoEXT -- ^ pNameInfo
-                                                              -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY'.
---
---   > VkResult vkDebugMarkerSetObjectNameEXT
---   >     ( VkDevice device
---   >     , const VkDebugMarkerObjectNameInfoEXT* pNameInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDebugMarkerSetObjectNameEXT.html vkDebugMarkerSetObjectNameEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkDebugMarkerSetObjectNameEXTvkDebugMarkerSetObjectNameEXT registry at www.khronos.org>
 type HS_vkDebugMarkerSetObjectNameEXT =
      VkDevice -- ^ device
               -> Ptr VkDebugMarkerObjectNameInfoEXT -- ^ pNameInfo
@@ -272,39 +203,7 @@ type VkCmdDebugMarkerBeginEXT = "vkCmdDebugMarkerBeginEXT"
 --   >     , const VkDebugMarkerMarkerInfoEXT* pMarkerInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDebugMarkerBeginEXT.html vkCmdDebugMarkerBeginEXT registry at www.khronos.org>
-foreign import ccall unsafe "vkCmdDebugMarkerBeginEXT"
-               vkCmdDebugMarkerBeginEXT ::
-               VkCommandBuffer -- ^ commandBuffer
-                               -> Ptr VkDebugMarkerMarkerInfoEXT -- ^ pMarkerInfo
-                                                                 -> IO ()
-
--- | queues: 'graphics', 'compute'.
---
---   renderpass: @both@
---
---   > () vkCmdDebugMarkerBeginEXT
---   >     ( VkCommandBuffer commandBuffer
---   >     , const VkDebugMarkerMarkerInfoEXT* pMarkerInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDebugMarkerBeginEXT.html vkCmdDebugMarkerBeginEXT registry at www.khronos.org>
-foreign import ccall safe "vkCmdDebugMarkerBeginEXT"
-               vkCmdDebugMarkerBeginEXTSafe ::
-               VkCommandBuffer -- ^ commandBuffer
-                               -> Ptr VkDebugMarkerMarkerInfoEXT -- ^ pMarkerInfo
-                                                                 -> IO ()
-
--- | queues: 'graphics', 'compute'.
---
---   renderpass: @both@
---
---   > () vkCmdDebugMarkerBeginEXT
---   >     ( VkCommandBuffer commandBuffer
---   >     , const VkDebugMarkerMarkerInfoEXT* pMarkerInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDebugMarkerBeginEXT.html vkCmdDebugMarkerBeginEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDebugMarkerBeginEXTvkCmdDebugMarkerBeginEXT registry at www.khronos.org>
 type HS_vkCmdDebugMarkerBeginEXT =
      VkCommandBuffer -- ^ commandBuffer
                      -> Ptr VkDebugMarkerMarkerInfoEXT -- ^ pMarkerInfo
@@ -353,33 +252,7 @@ type VkCmdDebugMarkerEndEXT = "vkCmdDebugMarkerEndEXT"
 --   >     ( VkCommandBuffer commandBuffer
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDebugMarkerEndEXT.html vkCmdDebugMarkerEndEXT registry at www.khronos.org>
-foreign import ccall unsafe "vkCmdDebugMarkerEndEXT"
-               vkCmdDebugMarkerEndEXT :: VkCommandBuffer -- ^ commandBuffer
-                                                         -> IO ()
-
--- | queues: 'graphics', 'compute'.
---
---   renderpass: @both@
---
---   > () vkCmdDebugMarkerEndEXT
---   >     ( VkCommandBuffer commandBuffer
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDebugMarkerEndEXT.html vkCmdDebugMarkerEndEXT registry at www.khronos.org>
-foreign import ccall safe "vkCmdDebugMarkerEndEXT"
-               vkCmdDebugMarkerEndEXTSafe :: VkCommandBuffer -- ^ commandBuffer
-                                                             -> IO ()
-
--- | queues: 'graphics', 'compute'.
---
---   renderpass: @both@
---
---   > () vkCmdDebugMarkerEndEXT
---   >     ( VkCommandBuffer commandBuffer
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDebugMarkerEndEXT.html vkCmdDebugMarkerEndEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDebugMarkerEndEXTvkCmdDebugMarkerEndEXT registry at www.khronos.org>
 type HS_vkCmdDebugMarkerEndEXT = VkCommandBuffer -- ^ commandBuffer
                                                  -> IO ()
 
@@ -426,39 +299,7 @@ type VkCmdDebugMarkerInsertEXT = "vkCmdDebugMarkerInsertEXT"
 --   >     , const VkDebugMarkerMarkerInfoEXT* pMarkerInfo
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDebugMarkerInsertEXT.html vkCmdDebugMarkerInsertEXT registry at www.khronos.org>
-foreign import ccall unsafe "vkCmdDebugMarkerInsertEXT"
-               vkCmdDebugMarkerInsertEXT ::
-               VkCommandBuffer -- ^ commandBuffer
-                               -> Ptr VkDebugMarkerMarkerInfoEXT -- ^ pMarkerInfo
-                                                                 -> IO ()
-
--- | queues: 'graphics', 'compute'.
---
---   renderpass: @both@
---
---   > () vkCmdDebugMarkerInsertEXT
---   >     ( VkCommandBuffer commandBuffer
---   >     , const VkDebugMarkerMarkerInfoEXT* pMarkerInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDebugMarkerInsertEXT.html vkCmdDebugMarkerInsertEXT registry at www.khronos.org>
-foreign import ccall safe "vkCmdDebugMarkerInsertEXT"
-               vkCmdDebugMarkerInsertEXTSafe ::
-               VkCommandBuffer -- ^ commandBuffer
-                               -> Ptr VkDebugMarkerMarkerInfoEXT -- ^ pMarkerInfo
-                                                                 -> IO ()
-
--- | queues: 'graphics', 'compute'.
---
---   renderpass: @both@
---
---   > () vkCmdDebugMarkerInsertEXT
---   >     ( VkCommandBuffer commandBuffer
---   >     , const VkDebugMarkerMarkerInfoEXT* pMarkerInfo
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDebugMarkerInsertEXT.html vkCmdDebugMarkerInsertEXT registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCmdDebugMarkerInsertEXTvkCmdDebugMarkerInsertEXT registry at www.khronos.org>
 type HS_vkCmdDebugMarkerInsertEXT =
      VkCommandBuffer -- ^ commandBuffer
                      -> Ptr VkDebugMarkerMarkerInfoEXT -- ^ pMarkerInfo

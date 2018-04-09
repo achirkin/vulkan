@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkAllocationCallbacks
        (VkAllocationCallbacks(..)) where
 import           Foreign.Storable                   (Storable (..))
-import           GHC.Prim
+import           GHC.Base                           (Addr##, ByteArray##,
+                                                     byteArrayContents##,
+                                                     plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Funcpointers (PFN_vkAllocationFunction,
@@ -29,7 +31,7 @@ import           System.IO.Unsafe                   (unsafeDupablePerformIO)
 --   >     PFN_vkInternalFreeNotification pfnInternalFree;
 --   > } VkAllocationCallbacks;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkAllocationCallbacks.html VkAllocationCallbacks registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkAllocationCallbacksVkAllocationCallbacks registry at www.khronos.org>
 data VkAllocationCallbacks = VkAllocationCallbacks## Addr##
                                                     ByteArray##
 

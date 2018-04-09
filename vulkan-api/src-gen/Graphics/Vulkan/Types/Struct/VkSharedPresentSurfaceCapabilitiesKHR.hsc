@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkSharedPresentSurfaceCapabilitiesKHR
        (VkSharedPresentSurfaceCapabilitiesKHR(..)) where
 import           Foreign.Storable                                       (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                               (Addr##, ByteArray##,
+                                                                         byteArrayContents##,
+                                                                         plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkImageUsageFlags           (VkImageUsageFlags)
@@ -24,7 +26,7 @@ import           System.IO.Unsafe                                       (unsafeD
 --   >     VkImageUsageFlags sharedPresentSupportedUsageFlags;
 --   > } VkSharedPresentSurfaceCapabilitiesKHR;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSharedPresentSurfaceCapabilitiesKHR.html VkSharedPresentSurfaceCapabilitiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkSharedPresentSurfaceCapabilitiesKHRVkSharedPresentSurfaceCapabilitiesKHR registry at www.khronos.org>
 data VkSharedPresentSurfaceCapabilitiesKHR = VkSharedPresentSurfaceCapabilitiesKHR## Addr##
                                                                                     ByteArray##
 

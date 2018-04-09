@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkCommandBufferAllocateInfo
        (VkCommandBufferAllocateInfo(..)) where
 import           Foreign.Storable                                (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                        (Addr##,
+                                                                  ByteArray##,
+                                                                  byteArrayContents##,
+                                                                  plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkCommandBufferLevel (VkCommandBufferLevel)
@@ -26,7 +29,7 @@ import           System.IO.Unsafe                                (unsafeDupableP
 --   >     uint32_t               commandBufferCount;
 --   > } VkCommandBufferAllocateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkCommandBufferAllocateInfo.html VkCommandBufferAllocateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkCommandBufferAllocateInfoVkCommandBufferAllocateInfo registry at www.khronos.org>
 data VkCommandBufferAllocateInfo = VkCommandBufferAllocateInfo## Addr##
                                                                 ByteArray##
 

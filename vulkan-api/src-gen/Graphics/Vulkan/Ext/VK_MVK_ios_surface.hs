@@ -35,8 +35,7 @@ module Graphics.Vulkan.Ext.VK_MVK_ios_surface
         -- > #include "vk_platform.h"
         VkCreateIOSSurfaceMVK, pattern VkCreateIOSSurfaceMVK,
         HS_vkCreateIOSSurfaceMVK, PFN_vkCreateIOSSurfaceMVK,
-        unwrapVkCreateIOSSurfaceMVK, vkCreateIOSSurfaceMVK,
-        vkCreateIOSSurfaceMVKSafe, module Graphics.Vulkan.Marshal,
+        unwrapVkCreateIOSSurfaceMVK, module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.Enum.VkInternalAllocationType,
         module Graphics.Vulkan.Types.Enum.VkResult,
         module Graphics.Vulkan.Types.Enum.VkSystemAllocationScope,
@@ -92,51 +91,7 @@ type VkCreateIOSSurfaceMVK = "vkCreateIOSSurfaceMVK"
 --   >     , VkSurfaceKHR* pSurface
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateIOSSurfaceMVK.html vkCreateIOSSurfaceMVK registry at www.khronos.org>
-foreign import ccall unsafe "vkCreateIOSSurfaceMVK"
-               vkCreateIOSSurfaceMVK ::
-               VkInstance -- ^ instance
-                          ->
-                 Ptr VkIOSSurfaceCreateInfoMVK -- ^ pCreateInfo
-                                               ->
-                   Ptr VkAllocationCallbacks -- ^ pAllocator
-                                             -> Ptr VkSurfaceKHR -- ^ pSurface
-                                                                 -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
---
---   > VkResult vkCreateIOSSurfaceMVK
---   >     ( VkInstance instance
---   >     , const VkIOSSurfaceCreateInfoMVK* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkSurfaceKHR* pSurface
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateIOSSurfaceMVK.html vkCreateIOSSurfaceMVK registry at www.khronos.org>
-foreign import ccall safe "vkCreateIOSSurfaceMVK"
-               vkCreateIOSSurfaceMVKSafe ::
-               VkInstance -- ^ instance
-                          ->
-                 Ptr VkIOSSurfaceCreateInfoMVK -- ^ pCreateInfo
-                                               ->
-                   Ptr VkAllocationCallbacks -- ^ pAllocator
-                                             -> Ptr VkSurfaceKHR -- ^ pSurface
-                                                                 -> IO VkResult
-
--- | Success codes: 'VK_SUCCESS'.
---
---   Error codes: 'VK_ERROR_OUT_OF_HOST_MEMORY', 'VK_ERROR_OUT_OF_DEVICE_MEMORY', 'VK_ERROR_NATIVE_WINDOW_IN_USE_KHR'.
---
---   > VkResult vkCreateIOSSurfaceMVK
---   >     ( VkInstance instance
---   >     , const VkIOSSurfaceCreateInfoMVK* pCreateInfo
---   >     , const VkAllocationCallbacks* pAllocator
---   >     , VkSurfaceKHR* pSurface
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateIOSSurfaceMVK.html vkCreateIOSSurfaceMVK registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkCreateIOSSurfaceMVKvkCreateIOSSurfaceMVK registry at www.khronos.org>
 type HS_vkCreateIOSSurfaceMVK =
      VkInstance -- ^ instance
                 ->

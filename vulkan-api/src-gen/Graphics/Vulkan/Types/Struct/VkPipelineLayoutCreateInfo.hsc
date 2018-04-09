@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkPipelineLayoutCreateInfo
        (VkPipelineLayoutCreateInfo(..)) where
 import           Foreign.Storable                                 (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                         (Addr##,
+                                                                   ByteArray##,
+                                                                   byteArrayContents##,
+                                                                   plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Bitmasks                   (VkPipelineLayoutCreateFlags)
@@ -29,7 +32,7 @@ import           System.IO.Unsafe                                 (unsafeDupable
 --   >     const VkPushConstantRange* pPushConstantRanges;
 --   > } VkPipelineLayoutCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPipelineLayoutCreateInfo.html VkPipelineLayoutCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkPipelineLayoutCreateInfoVkPipelineLayoutCreateInfo registry at www.khronos.org>
 data VkPipelineLayoutCreateInfo = VkPipelineLayoutCreateInfo## Addr##
                                                               ByteArray##
 

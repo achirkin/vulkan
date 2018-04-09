@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkExportFenceCreateInfo
        (VkExportFenceCreateInfo(..)) where
 import           Foreign.Storable                                          (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                                  (Addr##,
+                                                                            ByteArray##,
+                                                                            byteArrayContents##,
+                                                                            plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Enum.VkExternalFenceHandleTypeFlags (VkExternalFenceHandleTypeFlags)
@@ -24,7 +27,7 @@ import           System.IO.Unsafe                                          (unsa
 --   >     VkExternalFenceHandleTypeFlags handleTypes;
 --   > } VkExportFenceCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkExportFenceCreateInfo.html VkExportFenceCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkExportFenceCreateInfoVkExportFenceCreateInfo registry at www.khronos.org>
 data VkExportFenceCreateInfo = VkExportFenceCreateInfo## Addr##
                                                         ByteArray##
 

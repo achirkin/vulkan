@@ -14,7 +14,9 @@
 module Graphics.Vulkan.Types.Struct.VkLayerProperties
        (VkLayerProperties(..)) where
 import           Foreign.Storable                 (Storable (..))
-import           GHC.Prim
+import           GHC.Base                         (Addr##, ByteArray##, Proxy##,
+                                                   byteArrayContents##,
+                                                   plusAddr##, proxy##)
 import           GHC.TypeLits                     (KnownNat, natVal') -- ' closing tick for hsc2hs
 import           Graphics.Vulkan.Constants        (VK_MAX_DESCRIPTION_SIZE, pattern VK_MAX_DESCRIPTION_SIZE,
                                                    VK_MAX_EXTENSION_NAME_SIZE,
@@ -30,7 +32,7 @@ import           System.IO.Unsafe                 (unsafeDupablePerformIO)
 --   >     char            description[VK_MAX_DESCRIPTION_SIZE];
 --   > } VkLayerProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkLayerProperties.html VkLayerProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkLayerPropertiesVkLayerProperties registry at www.khronos.org>
 data VkLayerProperties = VkLayerProperties## Addr## ByteArray##
 
 instance Eq VkLayerProperties where

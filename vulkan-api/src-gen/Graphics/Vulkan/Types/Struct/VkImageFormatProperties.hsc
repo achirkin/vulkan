@@ -10,7 +10,10 @@
 module Graphics.Vulkan.Types.Struct.VkImageFormatProperties
        (VkImageFormatProperties(..)) where
 import           Foreign.Storable                              (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                      (Addr##,
+                                                                ByteArray##,
+                                                                byteArrayContents##,
+                                                                plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.BaseTypes               (VkDeviceSize)
@@ -26,7 +29,7 @@ import           System.IO.Unsafe                              (unsafeDupablePer
 --   >     VkDeviceSize           maxResourceSize;
 --   > } VkImageFormatProperties;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkImageFormatProperties.html VkImageFormatProperties registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkImageFormatPropertiesVkImageFormatProperties registry at www.khronos.org>
 data VkImageFormatProperties = VkImageFormatProperties## Addr##
                                                         ByteArray##
 

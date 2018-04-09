@@ -10,7 +10,9 @@
 module Graphics.Vulkan.Types.Struct.VkDeviceCreateInfo
        (VkDeviceCreateInfo(..)) where
 import           Foreign.Storable                                      (Storable (..))
-import           GHC.Prim
+import           GHC.Base                                              (Addr##, ByteArray##,
+                                                                        byteArrayContents##,
+                                                                        plusAddr##)
 import           Graphics.Vulkan.Marshal
 import           Graphics.Vulkan.Marshal.Internal
 import           Graphics.Vulkan.Types.Bitmasks                        (VkDeviceCreateFlags)
@@ -32,7 +34,7 @@ import           System.IO.Unsafe                                      (unsafeDu
 --   >     const VkPhysicalDeviceFeatures* pEnabledFeatures;
 --   > } VkDeviceCreateInfo;
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDeviceCreateInfo.html VkDeviceCreateInfo registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html##VkDeviceCreateInfoVkDeviceCreateInfo registry at www.khronos.org>
 data VkDeviceCreateInfo = VkDeviceCreateInfo## Addr## ByteArray##
 
 instance Eq VkDeviceCreateInfo where

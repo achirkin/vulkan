@@ -24,10 +24,13 @@ module Graphics.Vulkan.Marshal.Internal
 import           Foreign.C.Types    (CInt (..), CSize (..))
 import           Foreign.ForeignPtr (ForeignPtr, newForeignPtr_)
 import           Foreign.Storable   (Storable (..))
-import           GHC.Base           (isTrue#)
-import           GHC.Prim
+import           GHC.Base           (Addr#, ByteArray#, IO (..), Int (..), Int#,
+                                     byteArrayContents#, copyAddrToByteArray#,
+                                     eqAddr#, isTrue#, minusAddr#,
+                                     newAlignedPinnedByteArray#, touch#,
+                                     unsafeCoerce#, unsafeFreezeByteArray#,
+                                     (*#), (+#), (>=#))
 import           GHC.Ptr            (Ptr (..))
-import           GHC.Types          (IO (..), Int (..))
 
 import           GHC.ForeignPtr     (ForeignPtr (..), ForeignPtrContents (..))
 

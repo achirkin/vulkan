@@ -41,8 +41,6 @@ module Graphics.Vulkan.Ext.VK_KHR_external_memory_capabilities
         HS_vkGetPhysicalDeviceExternalBufferPropertiesKHR,
         PFN_vkGetPhysicalDeviceExternalBufferPropertiesKHR,
         unwrapVkGetPhysicalDeviceExternalBufferPropertiesKHR,
-        vkGetPhysicalDeviceExternalBufferPropertiesKHR,
-        vkGetPhysicalDeviceExternalBufferPropertiesKHRSafe,
         module Graphics.Vulkan.Marshal,
         module Graphics.Vulkan.Types.BaseTypes,
         module Graphics.Vulkan.Types.Enum.VkBufferCreateFlags,
@@ -140,45 +138,7 @@ type VkGetPhysicalDeviceExternalBufferPropertiesKHR =
 --   >     , VkExternalBufferProperties* pExternalBufferProperties
 --   >     )
 --
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalBufferPropertiesKHR.html vkGetPhysicalDeviceExternalBufferPropertiesKHR registry at www.khronos.org>
-foreign import ccall unsafe
-               "vkGetPhysicalDeviceExternalBufferPropertiesKHR"
-               vkGetPhysicalDeviceExternalBufferPropertiesKHR ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                ->
-                 Ptr VkPhysicalDeviceExternalBufferInfo -- ^ pExternalBufferInfo
-                                                        ->
-                   Ptr VkExternalBufferProperties -- ^ pExternalBufferProperties
-                                                  -> IO ()
-
--- | This is an alias for `vkGetPhysicalDeviceExternalBufferProperties`.
---
---   > () vkGetPhysicalDeviceExternalBufferPropertiesKHR
---   >     ( VkPhysicalDevice physicalDevice
---   >     , const VkPhysicalDeviceExternalBufferInfo* pExternalBufferInfo
---   >     , VkExternalBufferProperties* pExternalBufferProperties
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalBufferPropertiesKHR.html vkGetPhysicalDeviceExternalBufferPropertiesKHR registry at www.khronos.org>
-foreign import ccall safe
-               "vkGetPhysicalDeviceExternalBufferPropertiesKHR"
-               vkGetPhysicalDeviceExternalBufferPropertiesKHRSafe ::
-               VkPhysicalDevice -- ^ physicalDevice
-                                ->
-                 Ptr VkPhysicalDeviceExternalBufferInfo -- ^ pExternalBufferInfo
-                                                        ->
-                   Ptr VkExternalBufferProperties -- ^ pExternalBufferProperties
-                                                  -> IO ()
-
--- | This is an alias for `vkGetPhysicalDeviceExternalBufferProperties`.
---
---   > () vkGetPhysicalDeviceExternalBufferPropertiesKHR
---   >     ( VkPhysicalDevice physicalDevice
---   >     , const VkPhysicalDeviceExternalBufferInfo* pExternalBufferInfo
---   >     , VkExternalBufferProperties* pExternalBufferProperties
---   >     )
---
---   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalBufferPropertiesKHR.html vkGetPhysicalDeviceExternalBufferPropertiesKHR registry at www.khronos.org>
+--   <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/vkspec.html#vkGetPhysicalDeviceExternalBufferPropertiesKHRvkGetPhysicalDeviceExternalBufferPropertiesKHR registry at www.khronos.org>
 type HS_vkGetPhysicalDeviceExternalBufferPropertiesKHR =
      VkPhysicalDevice -- ^ physicalDevice
                       ->
